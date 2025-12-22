@@ -22,7 +22,9 @@ import {
   Users,
   MoreVertical,
   PhoneIncoming,
-  PhoneOutgoing
+  PhoneOutgoing,
+  CheckCircle2,
+  XCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -41,6 +43,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useMultiChannelCall, CallChannel, CallSession } from '@/hooks/useMultiChannelCall';
+import { useWavoipCall } from '@/hooks/useWavoipCall';
 import { mockContacts, getInitials, formatDuration } from '@/data/mockData';
 
 const dialPadButtons = [
@@ -96,8 +99,19 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     toggleMute,
     toggleHold,
     toggleRecording,
-    addTranscript
+    addTranscript,
+    configureChannel
   } = useMultiChannelCall();
+
+  // Wavoip hook
+  const wavoip = useWavoipCall();
+
+  // Update channel configuration based on Wavoip status
+  useEffect(() => {
+    if (wavoip.isConfigured) {
+      configureChannel('wavoip', { enabled: true, configured: true });
+    }
+  }, [wavoip.isConfigured, configureChannel]);
 
   // ElevenLabs conversation hook for WebRTC
   const conversation = useConversation({
@@ -168,10 +182,21 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
         endCall();
       }
     } else if (activeChannel === 'wavoip') {
-      // Wavoip call - placeholder for future implementation
-      toast.info('Wavoip: Configure sua instância primeiro', {
-        description: 'Vá em Configurações > Integrações > Wavoip'
-      });
+      // Wavoip WhatsApp call
+      if (!phoneNumber) {
+        toast.error('Digite um número WhatsApp para ligar');
+        return;
+      }
+
+      const call = initiateCall('wavoip', phoneNumber, `WhatsApp ${phoneNumber}`);
+      onCallStart?.(call);
+
+      const success = await wavoip.startCall(phoneNumber);
+      if (success) {
+        updateCallStatus('active');
+      } else {
+        endCall();
+      }
     } else if (activeChannel === 'twilio') {
       // Twilio call - placeholder
       toast.info('Twilio: Configure sua conta primeiro', {
@@ -193,9 +218,11 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     }
   }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart]);
 
-  const handleEndCall = useCallback(() => {
+  const handleEndCall = useCallback(async () => {
     if (currentCall?.channel === 'webrtc') {
       conversation.endSession();
+    } else if (currentCall?.channel === 'wavoip') {
+      await wavoip.endCall();
     }
     
     if (currentCall) {
@@ -203,7 +230,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     }
     
     endCall();
-  }, [currentCall, conversation, endCall, onCallEnd]);
+  }, [currentCall, conversation, wavoip, endCall, onCallEnd]);
 
   const handleToggleVolume = useCallback(async () => {
     const newVolume = volume > 0 ? 0 : 1;
@@ -539,34 +566,85 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                 </div>
               )}
 
-              {/* Wavoip placeholder */}
+              {/* Wavoip status */}
               {activeChannel === 'wavoip' && !isInCall && (
-                <div className="p-4 rounded-lg border border-dashed border-green-500/50 bg-green-500/5 text-center">
-                  <MessageCircle className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                  <p className="font-medium text-green-700">WhatsApp Calls</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Configure sua conta Wavoip para habilitar chamadas WhatsApp
+                <div className={cn(
+                  "p-4 rounded-lg border text-center",
+                  wavoip.isConfigured 
+                    ? "border-green-500/30 bg-green-500/5" 
+                    : "border-dashed border-yellow-500/50 bg-yellow-500/5"
+                )}>
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <MessageCircle className={cn(
+                      "h-8 w-8",
+                      wavoip.isConfigured ? "text-green-500" : "text-yellow-500"
+                    )} />
+                    {wavoip.isConfigured ? (
+                      <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    ) : (
+                      <XCircle className="h-5 w-5 text-yellow-500" />
+                    )}
+                  </div>
+                  <p className={cn(
+                    "font-medium",
+                    wavoip.isConfigured ? "text-green-700" : "text-yellow-700"
+                  )}>
+                    {wavoip.isConfigured ? 'WhatsApp Conectado' : 'WhatsApp Calls'}
                   </p>
-                  <Button variant="outline" size="sm" className="mt-3 gap-2">
-                    <Settings className="h-3 w-3" />
-                    Configurar Wavoip
-                  </Button>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {wavoip.isConfigured 
+                      ? 'Pronto para fazer chamadas de voz via WhatsApp'
+                      : 'Configure o token Wavoip nas configurações'
+                    }
+                  </p>
+                  {wavoip.isConfigured && (
+                    <div className="flex items-center justify-center gap-1 mt-2">
+                      <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                      <span className="text-xs text-green-600">Online</span>
+                    </div>
+                  )}
+                  {wavoip.error && !wavoip.isConfigured && (
+                    <p className="text-xs text-destructive mt-2">{wavoip.error}</p>
+                  )}
+                  {!wavoip.isConfigured && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="mt-3 gap-2"
+                      onClick={() => wavoip.checkConfiguration()}
+                    >
+                      <Settings className="h-3 w-3" />
+                      Verificar Conexão
+                    </Button>
+                  )}
                 </div>
               )}
 
               {/* Call button */}
               {!isInCall && (
                 <Button
-                  className="w-full h-14 gap-2 text-lg"
+                  className={cn(
+                    "w-full h-14 gap-2 text-lg",
+                    activeChannel === 'wavoip' && wavoip.isConfigured && "bg-green-600 hover:bg-green-700"
+                  )}
                   onClick={handleStartCall}
-                  disabled={activeChannel !== 'webrtc' && !phoneNumber}
+                  disabled={
+                    (activeChannel !== 'webrtc' && !phoneNumber) ||
+                    (activeChannel === 'wavoip' && !wavoip.isConfigured)
+                  }
                 >
-                  {isInCall ? (
+                  {wavoip.status === 'connecting' ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : activeChannel === 'wavoip' ? (
+                    <MessageCircle className="h-5 w-5" />
                   ) : (
                     <Phone className="h-5 w-5" />
                   )}
-                  {activeChannel === 'webrtc' ? 'Iniciar Chamada IA' : 'Ligar'}
+                  {activeChannel === 'webrtc' 
+                    ? 'Iniciar Chamada IA' 
+                    : activeChannel === 'wavoip' 
+                    ? 'Ligar via WhatsApp' 
+                    : 'Ligar'}
                 </Button>
               )}
             </TabsContent>

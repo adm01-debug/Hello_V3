@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.elevenlabs-conversation-token]
 verify_jwt = false
+
+[functions.wavoip-call]
+verify_jwt = false
