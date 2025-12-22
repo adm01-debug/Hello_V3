@@ -14,6 +14,7 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import CallHistory from "./pages/CallHistory";
 import CallAnalytics from "./pages/CallAnalytics";
+import Alerts from "./pages/Alerts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/history" element={<History />} />
               <Route path="/call-history" element={<CallHistory />} />
               <Route path="/analytics" element={<CallAnalytics />} />
+              <Route path="/alerts" element={<Alerts />} />
               <Route path="/ai" element={<AIAssistant />} />
               <Route path="/voice" element={<Voice />} />
               <Route path="/reports" element={<Reports />} />
