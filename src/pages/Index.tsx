@@ -1,11 +1,17 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { VoiceCommandPanel } from '@/components/VoiceCommandPanel';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background p-6">
+      <div className="mx-auto max-w-4xl">
+        <header className="mb-8">
+          <h1 className="text-3xl font-bold tracking-tight">Painel VoIP</h1>
+          <p className="text-muted-foreground">
+            Controle chamadas usando comandos de voz
+          </p>
+        </header>
+
+        <VoiceCommandPanel />
       </div>
     </div>
   );
