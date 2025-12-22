@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
@@ -7,17 +7,21 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 import { 
   User, 
   Phone, 
   Bell, 
-  Shield, 
-  Palette,
   Volume2,
   Mic,
-  Save
+  Save,
+  Link,
+  ExternalLink,
+  CheckCircle2,
+  AlertCircle
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { useBitrix } from '@/hooks/useBitrix';
 
 const Settings = () => {
   const [notifications, setNotifications] = useState({
@@ -26,6 +30,12 @@ const Settings = () => {
     voicemail: true,
     sound: true,
   });
+
+  const { isConfigured: bitrixConfigured, isLoading: bitrixLoading, checkConfiguration } = useBitrix();
+
+  useEffect(() => {
+    checkConfiguration();
+  }, [checkConfiguration]);
 
   const handleSave = () => {
     toast({
@@ -42,10 +52,14 @@ const Settings = () => {
       </div>
 
       <Tabs defaultValue="profile" className="space-y-6">
-        <TabsList className="grid w-full max-w-lg grid-cols-4">
+        <TabsList className="grid w-full max-w-2xl grid-cols-5">
           <TabsTrigger value="profile" className="gap-2">
             <User className="h-4 w-4" />
             Perfil
+          </TabsTrigger>
+          <TabsTrigger value="integrations" className="gap-2">
+            <Link className="h-4 w-4" />
+            Integrações
           </TabsTrigger>
           <TabsTrigger value="voip" className="gap-2">
             <Phone className="h-4 w-4" />
@@ -112,6 +126,106 @@ const Settings = () => {
               </Button>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* Integrations Tab */}
+        <TabsContent value="integrations">
+          <div className="space-y-6">
+            {/* Bitrix24 Integration */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <img 
+                        src="https://www.bitrix24.com.br/images/b24/menu-icon.svg" 
+                        alt="Bitrix24" 
+                        className="h-6 w-6"
+                      />
+                      Bitrix24
+                      {bitrixConfigured === true && (
+                        <Badge variant="default" className="bg-green-500/10 text-green-500 border-green-500/20">
+                          <CheckCircle2 className="h-3 w-3 mr-1" />
+                          Conectado
+                        </Badge>
+                      )}
+                      {bitrixConfigured === false && (
+                        <Badge variant="secondary" className="bg-yellow-500/10 text-yellow-500 border-yellow-500/20">
+                          <AlertCircle className="h-3 w-3 mr-1" />
+                          Não configurado
+                        </Badge>
+                      )}
+                    </CardTitle>
+                    <CardDescription>
+                      CRM, Telefonia e Webhooks do Bitrix24
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="rounded-lg border border-muted bg-muted/30 p-4">
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Para conectar ao Bitrix24, você precisa configurar a <strong>URL do Webhook</strong> nas configurações do backend.
+                  </p>
+                  <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
+                    <li>Acesse seu Bitrix24 → Aplicativos → Webhooks</li>
+                    <li>Crie um webhook de entrada com as permissões: CRM, Telefonia</li>
+                    <li>Copie a URL do webhook (ex: https://seudominio.bitrix24.com.br/rest/1/abc123/)</li>
+                    <li>Configure a secret BITRIX_WEBHOOK_URL no backend</li>
+                  </ol>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className="p-4 rounded-lg border">
+                    <h4 className="font-medium flex items-center gap-2 mb-2">
+                      <User className="h-4 w-4 text-primary" />
+                      CRM
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      Contatos, Leads e Negócios sincronizados automaticamente
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-lg border">
+                    <h4 className="font-medium flex items-center gap-2 mb-2">
+                      <Phone className="h-4 w-4 text-primary" />
+                      Telefonia
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      Chamadas registradas automaticamente no histórico
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-lg border">
+                    <h4 className="font-medium flex items-center gap-2 mb-2">
+                      <Link className="h-4 w-4 text-primary" />
+                      Webhooks
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      Eventos em tempo real entre os sistemas
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  <Button 
+                    variant="outline" 
+                    className="gap-2"
+                    onClick={() => window.open('https://www.bitrix24.com.br/apps/webhooks.php', '_blank')}
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Abrir Bitrix24 Webhooks
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="gap-2"
+                    disabled={bitrixLoading}
+                    onClick={() => checkConfiguration()}
+                  >
+                    {bitrixLoading ? 'Verificando...' : 'Testar Conexão'}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         {/* VoIP Tab */}

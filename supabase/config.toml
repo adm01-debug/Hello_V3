@@ -23,3 +23,6 @@ verify_jwt = false
 
 [functions.wavoip-call]
 verify_jwt = false
+
+[functions.bitrix-api]
+verify_jwt = false
