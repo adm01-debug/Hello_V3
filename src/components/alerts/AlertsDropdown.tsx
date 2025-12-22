@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Bell, AlertTriangle, AlertCircle, Info, Check } from 'lucide-react';
+import { Bell, AlertTriangle, AlertCircle, Info, Check, FlaskConical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -101,6 +101,71 @@ export function AlertsDropdown() {
     }
   };
 
+  const createTestAlerts = async () => {
+    // First, get or create a test session
+    let sessionId: string;
+    
+    const { data: existingSession } = await supabase
+      .from('call_sessions')
+      .select('id')
+      .limit(1)
+      .single();
+
+    if (existingSession) {
+      sessionId = existingSession.id;
+    } else {
+      const { data: newSession, error: sessionError } = await supabase
+        .from('call_sessions')
+        .insert({
+          caller_name: 'Cliente Teste',
+          caller_phone: '+55 11 99999-9999',
+          agent_name: 'Agente Teste',
+          status: 'completed',
+        })
+        .select('id')
+        .single();
+
+      if (sessionError || !newSession) {
+        toast.error('Erro ao criar sessão de teste');
+        return;
+      }
+      sessionId = newSession.id;
+    }
+
+    const testAlerts = [
+      {
+        call_session_id: sessionId,
+        alert_type: 'negative_sentiment',
+        severity: 'critical',
+        title: 'Sentimento Negativo Detectado',
+        message: 'Cliente expressou frustração durante a chamada. Recomenda-se acompanhamento.',
+      },
+      {
+        call_session_id: sessionId,
+        alert_type: 'low_satisfaction',
+        severity: 'warning',
+        title: 'Satisfação Baixa',
+        message: 'Pontuação de satisfação do cliente: 2/10. Verificar qualidade do atendimento.',
+      },
+      {
+        call_session_id: sessionId,
+        alert_type: 'high_urgency',
+        severity: 'critical',
+        title: 'Alta Urgência',
+        message: 'Chamada marcada como urgente. Cliente solicitou resolução imediata.',
+      },
+    ];
+
+    const { error } = await supabase.from('call_alerts').insert(testAlerts);
+
+    if (error) {
+      toast.error('Erro ao criar alertas de teste');
+      console.error('Error creating test alerts:', error);
+    } else {
+      toast.success('3 alertas de teste criados!');
+    }
+  };
+
   const getSeverityIcon = (severity: string) => {
     switch (severity) {
       case 'critical':
@@ -141,17 +206,31 @@ export function AlertsDropdown() {
       <DropdownMenuContent align="end" className="w-80">
         <DropdownMenuLabel className="flex items-center justify-between">
           <span>Alertas</span>
-          {unreadCount > 0 && (
+          <div className="flex items-center gap-1">
             <Button
               variant="ghost"
               size="sm"
               className="h-auto p-1 text-xs"
-              onClick={markAllAsRead}
+              onClick={(e) => {
+                e.preventDefault();
+                createTestAlerts();
+              }}
             >
-              <Check className="h-3 w-3 mr-1" />
-              Marcar todos como lidos
+              <FlaskConical className="h-3 w-3 mr-1" />
+              Testar
             </Button>
-          )}
+            {unreadCount > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-auto p-1 text-xs"
+                onClick={markAllAsRead}
+              >
+                <Check className="h-3 w-3 mr-1" />
+                Marcar lidos
+              </Button>
+            )}
+          </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <ScrollArea className="h-[300px]">
