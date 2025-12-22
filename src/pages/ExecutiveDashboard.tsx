@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Phone,
   Users,
@@ -12,6 +12,7 @@ import {
   Target,
   BarChart3,
   Calendar,
+  RefreshCw,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -99,12 +100,9 @@ export default function ExecutiveDashboard() {
   const [topAgents, setTopAgents] = useState<TopAgent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [period, setPeriod] = useState<string>('week');
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
 
-  useEffect(() => {
-    fetchAllMetrics();
-  }, [period]);
-
-  const getDateFilter = () => {
+  const getDateFilter = useCallback(() => {
     const now = new Date();
     switch (period) {
       case 'today':
@@ -118,7 +116,45 @@ export default function ExecutiveDashboard() {
       default:
         return subDays(new Date(), 7);
     }
-  };
+  }, [period]);
+
+  // Initial fetch and period change
+  useEffect(() => {
+    fetchAllMetrics();
+  }, [period]);
+
+  // Realtime subscription for call_sessions, call_summaries, and call_alerts
+  useEffect(() => {
+    const channel = supabase
+      .channel('executive-dashboard-realtime')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'call_sessions' },
+        () => {
+          fetchAllMetrics();
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'call_summaries' },
+        () => {
+          fetchAllMetrics();
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'call_alerts' },
+        () => {
+          fetchAllMetrics();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [period]);
+
 
   const getPeriodLabel = () => {
     switch (period) {
@@ -304,6 +340,7 @@ export default function ExecutiveDashboard() {
 
     setTopAgents(topAgentsData);
     setIsLoading(false);
+    setLastUpdate(new Date());
   };
 
   const formatDuration = (seconds: number) => {
@@ -348,19 +385,27 @@ export default function ExecutiveDashboard() {
             Visão consolidada de todas as métricas do call center
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <Calendar className="h-4 w-4 text-muted-foreground" />
-          <Select value={period} onValueChange={setPeriod}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Selecione o período" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="today">Hoje</SelectItem>
-              <SelectItem value="week">Últimos 7 dias</SelectItem>
-              <SelectItem value="month">Últimos 30 dias</SelectItem>
-              <SelectItem value="all">Todo período</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <RefreshCw className="h-4 w-4 animate-pulse text-green-500" />
+            <span>
+              Atualizado: {format(lastUpdate, 'HH:mm:ss', { locale: ptBR })}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <Select value={period} onValueChange={setPeriod}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Selecione o período" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="today">Hoje</SelectItem>
+                <SelectItem value="week">Últimos 7 dias</SelectItem>
+                <SelectItem value="month">Últimos 30 dias</SelectItem>
+                <SelectItem value="all">Todo período</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
