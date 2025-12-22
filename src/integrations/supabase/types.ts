@@ -14,7 +14,171 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      call_analyses: {
+        Row: {
+          call_session_id: string
+          created_at: string
+          emotion: string | null
+          id: string
+          message_analyzed: string | null
+          risk_alert: string | null
+          sentiment: string | null
+          speaker_role: string | null
+          suggestion: string | null
+          urgency: string | null
+        }
+        Insert: {
+          call_session_id: string
+          created_at?: string
+          emotion?: string | null
+          id?: string
+          message_analyzed?: string | null
+          risk_alert?: string | null
+          sentiment?: string | null
+          speaker_role?: string | null
+          suggestion?: string | null
+          urgency?: string | null
+        }
+        Update: {
+          call_session_id?: string
+          created_at?: string
+          emotion?: string | null
+          id?: string
+          message_analyzed?: string | null
+          risk_alert?: string | null
+          sentiment?: string | null
+          speaker_role?: string | null
+          suggestion?: string | null
+          urgency?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_analyses_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      call_sessions: {
+        Row: {
+          agent_name: string | null
+          caller_name: string | null
+          caller_phone: string | null
+          created_at: string
+          duration_seconds: number | null
+          ended_at: string | null
+          id: string
+          started_at: string
+          status: string | null
+        }
+        Insert: {
+          agent_name?: string | null
+          caller_name?: string | null
+          caller_phone?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          status?: string | null
+        }
+        Update: {
+          agent_name?: string | null
+          caller_name?: string | null
+          caller_phone?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
+      call_summaries: {
+        Row: {
+          agent_performance_score: number | null
+          call_session_id: string
+          created_at: string
+          customer_satisfaction: number | null
+          id: string
+          main_topics: string[] | null
+          next_steps: string[] | null
+          overall_sentiment: string | null
+          summary: string | null
+        }
+        Insert: {
+          agent_performance_score?: number | null
+          call_session_id: string
+          created_at?: string
+          customer_satisfaction?: number | null
+          id?: string
+          main_topics?: string[] | null
+          next_steps?: string[] | null
+          overall_sentiment?: string | null
+          summary?: string | null
+        }
+        Update: {
+          agent_performance_score?: number | null
+          call_session_id?: string
+          created_at?: string
+          customer_satisfaction?: number | null
+          id?: string
+          main_topics?: string[] | null
+          next_steps?: string[] | null
+          overall_sentiment?: string | null
+          summary?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_summaries_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      call_transcriptions: {
+        Row: {
+          call_session_id: string
+          created_at: string
+          end_time: number | null
+          id: string
+          speaker: string
+          start_time: number | null
+          text: string
+        }
+        Insert: {
+          call_session_id: string
+          created_at?: string
+          end_time?: number | null
+          id?: string
+          speaker: string
+          start_time?: number | null
+          text: string
+        }
+        Update: {
+          call_session_id?: string
+          created_at?: string
+          end_time?: number | null
+          id?: string
+          speaker?: string
+          start_time?: number | null
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_transcriptions_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

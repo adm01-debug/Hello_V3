@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { 
   Phone, 
   PhoneOff, 
@@ -10,13 +10,17 @@ import {
   Volume2,
   MoreHorizontal,
   Bot,
-  FileText
+  FileText,
+  Save,
+  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatDuration, mockActiveCall } from '@/data/mockData';
 import { cn } from '@/lib/utils';
 import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
 import { LiveTranscription } from '@/components/calls/LiveTranscription';
+import { useCallSession } from '@/hooks/useCallSession';
+import { toast } from 'sonner';
 
 interface TranscriptEntry {
   id: string;
@@ -24,6 +28,19 @@ interface TranscriptEntry {
   speaker: 'agent' | 'customer';
   speakerLabel: string;
   timestamp: Date;
+  startTime?: number;
+  endTime?: number;
+}
+
+interface AnalysisEntry {
+  sentiment: string;
+  urgency: string;
+  emotion: string;
+  suggestion: string;
+  riskAlert: boolean;
+  riskReason: string;
+  messageAnalyzed: string;
+  speakerRole: string;
 }
 
 export function ActiveCallBar() {
@@ -34,6 +51,15 @@ export function ActiveCallBar() {
   const [showAIAnalysis, setShowAIAnalysis] = useState(false);
   const [showTranscription, setShowTranscription] = useState(false);
   const [transcripts, setTranscripts] = useState<TranscriptEntry[]>([]);
+  
+  const { currentSession, isSaving, startSession, endSession, addTranscript, addAnalysis } = useCallSession();
+
+  // Start session when call connects
+  useEffect(() => {
+    if (call && call.status === 'connected' && !currentSession) {
+      startSession(call.contactName, call.contactPhone, 'Agente Demo');
+    }
+  }, [call, currentSession, startSession]);
 
   useEffect(() => {
     if (!call || call.status !== 'connected') return;
@@ -47,15 +73,25 @@ export function ActiveCallBar() {
 
   const handleTranscript = useCallback((entry: TranscriptEntry) => {
     setTranscripts(prev => [...prev, entry]);
-  }, []);
+    addTranscript(entry);
+  }, [addTranscript]);
+
+  const handleAnalysis = useCallback((analysis: AnalysisEntry) => {
+    addAnalysis(analysis);
+  }, [addAnalysis]);
 
   if (!call) return null;
 
-  const handleHangup = () => {
+  const handleHangup = async () => {
+    if (currentSession) {
+      await endSession(duration);
+      toast.success('Chamada salva no histórico');
+    }
     setCall(null);
     setShowAIAnalysis(false);
     setShowTranscription(false);
     setTranscripts([]);
+    setDuration(0);
   };
 
   return (
@@ -200,6 +236,7 @@ export function ActiveCallBar() {
         contactName={call.contactName}
         onClose={() => setShowAIAnalysis(false)}
         transcripts={transcripts}
+        onAnalysis={handleAnalysis}
       />
     </>
   );
