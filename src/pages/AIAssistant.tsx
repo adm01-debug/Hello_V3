@@ -1,5 +1,7 @@
 import { AICallAnalysis } from '@/components/ai/AICallAnalysis';
-import { Bot, Sparkles, Zap, Shield } from 'lucide-react';
+import { CallSimulation } from '@/components/ai/CallSimulation';
+import { Bot, Sparkles, Zap, Shield, PlayCircle } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const AIAssistant = () => {
   return (
@@ -53,8 +55,27 @@ const AIAssistant = () => {
         </div>
       </div>
 
-      {/* Main Analysis Component */}
-      <AICallAnalysis />
+      {/* Main Content with Tabs */}
+      <Tabs defaultValue="simulation" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="simulation" className="gap-2">
+            <PlayCircle className="h-4 w-4" />
+            Simulação ao Vivo
+          </TabsTrigger>
+          <TabsTrigger value="analysis" className="gap-2">
+            <Bot className="h-4 w-4" />
+            Análise de Chamadas
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="simulation">
+          <CallSimulation />
+        </TabsContent>
+
+        <TabsContent value="analysis">
+          <AICallAnalysis />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
