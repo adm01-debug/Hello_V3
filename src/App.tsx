@@ -16,6 +16,7 @@ import CallHistory from "./pages/CallHistory";
 import CallAnalytics from "./pages/CallAnalytics";
 import Alerts from "./pages/Alerts";
 import AgentRanking from "./pages/AgentRanking";
+import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
               <Route path="/analytics" element={<CallAnalytics />} />
               <Route path="/alerts" element={<Alerts />} />
               <Route path="/ranking" element={<AgentRanking />} />
+              <Route path="/executive" element={<ExecutiveDashboard />} />
               <Route path="/ai" element={<AIAssistant />} />
               <Route path="/voice" element={<Voice />} />
               <Route path="/reports" element={<Reports />} />
