@@ -8,17 +8,20 @@ import {
   Play,
   PhoneForwarded,
   Volume2,
-  MoreHorizontal
+  MoreHorizontal,
+  Bot
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatDuration, mockActiveCall } from '@/data/mockData';
 import { cn } from '@/lib/utils';
+import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
 
 export function ActiveCallBar() {
   const [call, setCall] = useState(mockActiveCall);
   const [duration, setDuration] = useState(0);
   const [muted, setMuted] = useState(false);
   const [onHold, setOnHold] = useState(false);
+  const [showAIAnalysis, setShowAIAnalysis] = useState(false);
 
   useEffect(() => {
     if (!call || call.status !== 'connected') return;
@@ -34,105 +37,131 @@ export function ActiveCallBar() {
 
   const handleHangup = () => {
     setCall(null);
+    setShowAIAnalysis(false);
   };
 
   return (
-    <div className={cn(
-      'relative border-b border-border bg-card px-6 py-3 animate-fade-in',
-      call.status === 'connected' && 'bg-success/5 border-success/20',
-      onHold && 'bg-warning/5 border-warning/20'
-    )}>
-      {/* Pulse indicator */}
+    <>
       <div className={cn(
-        'absolute left-0 top-0 h-full w-1',
-        call.status === 'connected' && !onHold && 'bg-success',
-        onHold && 'bg-warning animate-pulse',
-        call.status === 'ringing' && 'bg-primary animate-pulse'
-      )} />
+        'relative border-b border-border bg-card px-6 py-3 animate-fade-in',
+        call.status === 'connected' && 'bg-success/5 border-success/20',
+        onHold && 'bg-warning/5 border-warning/20'
+      )}>
+        {/* Pulse indicator */}
+        <div className={cn(
+          'absolute left-0 top-0 h-full w-1',
+          call.status === 'connected' && !onHold && 'bg-success',
+          onHold && 'bg-warning animate-pulse',
+          call.status === 'ringing' && 'bg-primary animate-pulse'
+        )} />
 
-      <div className="flex items-center justify-between">
-        {/* Call Info */}
-        <div className="flex items-center gap-4">
-          <div className={cn(
-            'flex h-10 w-10 items-center justify-center rounded-full',
-            call.status === 'connected' && !onHold && 'bg-success/20 text-success',
-            onHold && 'bg-warning/20 text-warning',
-            call.status === 'ringing' && 'bg-primary/20 text-primary animate-ring'
-          )}>
-            <Phone className="h-5 w-5" />
+        <div className="flex items-center justify-between">
+          {/* Call Info */}
+          <div className="flex items-center gap-4">
+            <div className={cn(
+              'flex h-10 w-10 items-center justify-center rounded-full',
+              call.status === 'connected' && !onHold && 'bg-success/20 text-success',
+              onHold && 'bg-warning/20 text-warning',
+              call.status === 'ringing' && 'bg-primary/20 text-primary animate-ring'
+            )}>
+              <Phone className="h-5 w-5" />
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-foreground">
+                  {call.contactName}
+                </span>
+                <span className={cn(
+                  'rounded-full px-2 py-0.5 text-xs font-medium',
+                  call.type === 'incoming' ? 'bg-primary/10 text-primary' : 'bg-secondary text-secondary-foreground'
+                )}>
+                  {call.type === 'incoming' ? 'Entrada' : 'Saída'}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>{call.contactPhone}</span>
+                <span>•</span>
+                <span className="font-mono">{formatDuration(duration)}</span>
+                {onHold && (
+                  <>
+                    <span>•</span>
+                    <span className="text-warning">Em espera</span>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
 
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-foreground">
-                {call.contactName}
-              </span>
-              <span className={cn(
-                'rounded-full px-2 py-0.5 text-xs font-medium',
-                call.type === 'incoming' ? 'bg-primary/10 text-primary' : 'bg-secondary text-secondary-foreground'
-              )}>
-                {call.type === 'incoming' ? 'Entrada' : 'Saída'}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>{call.contactPhone}</span>
-              <span>•</span>
-              <span className="font-mono">{formatDuration(duration)}</span>
-              {onHold && (
-                <>
-                  <span>•</span>
-                  <span className="text-warning">Em espera</span>
-                </>
+          {/* Call Controls */}
+          <div className="flex items-center gap-2">
+            {/* AI Analysis Toggle */}
+            <Button
+              variant={showAIAnalysis ? 'default' : 'outline'}
+              size="sm"
+              className={cn(
+                'gap-2',
+                showAIAnalysis && 'bg-primary text-primary-foreground'
               )}
-            </div>
+              onClick={() => setShowAIAnalysis(!showAIAnalysis)}
+            >
+              <Bot className="h-4 w-4" />
+              IA
+            </Button>
+
+            <div className="mx-2 h-6 w-px bg-border" />
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMuted(!muted)}
+              className={cn(muted && 'bg-destructive/10 text-destructive hover:bg-destructive/20 hover:text-destructive')}
+            >
+              {muted ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setOnHold(!onHold)}
+              className={cn(onHold && 'bg-warning/10 text-warning hover:bg-warning/20 hover:text-warning')}
+            >
+              {onHold ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+            </Button>
+
+            <Button variant="ghost" size="icon">
+              <Volume2 className="h-4 w-4" />
+            </Button>
+
+            <Button variant="ghost" size="icon">
+              <PhoneForwarded className="h-4 w-4" />
+            </Button>
+
+            <Button variant="ghost" size="icon">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+
+            <div className="mx-2 h-6 w-px bg-border" />
+
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={handleHangup}
+              className="gap-2"
+            >
+              <PhoneOff className="h-4 w-4" />
+              Encerrar
+            </Button>
           </div>
-        </div>
-
-        {/* Call Controls */}
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setMuted(!muted)}
-            className={cn(muted && 'bg-destructive/10 text-destructive hover:bg-destructive/20 hover:text-destructive')}
-          >
-            {muted ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setOnHold(!onHold)}
-            className={cn(onHold && 'bg-warning/10 text-warning hover:bg-warning/20 hover:text-warning')}
-          >
-            {onHold ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
-          </Button>
-
-          <Button variant="ghost" size="icon">
-            <Volume2 className="h-4 w-4" />
-          </Button>
-
-          <Button variant="ghost" size="icon">
-            <PhoneForwarded className="h-4 w-4" />
-          </Button>
-
-          <Button variant="ghost" size="icon">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-
-          <div className="mx-2 h-6 w-px bg-border" />
-
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={handleHangup}
-            className="gap-2"
-          >
-            <PhoneOff className="h-4 w-4" />
-            Encerrar
-          </Button>
         </div>
       </div>
-    </div>
+
+      {/* Live AI Analysis Panel */}
+      <LiveCallAnalysis
+        isActive={showAIAnalysis && call.status === 'connected'}
+        contactName={call.contactName}
+        onClose={() => setShowAIAnalysis(false)}
+      />
+    </>
   );
 }
