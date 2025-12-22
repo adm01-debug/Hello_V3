@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Trophy, Medal, Phone, Star, Users, FlaskConical } from 'lucide-react';
+import { Trophy, Medal, Phone, Star, Users, FlaskConical, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +22,18 @@ import {
 } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import { format, subDays, startOfDay, eachDayOfInterval } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 interface AgentStats {
   name: string;
@@ -33,14 +45,32 @@ interface AgentStats {
   score: number;
 }
 
+interface PerformanceDataPoint {
+  date: string;
+  [agentName: string]: string | number;
+}
+
+const AGENT_COLORS = [
+  'hsl(var(--chart-1))',
+  'hsl(var(--chart-2))',
+  'hsl(var(--chart-3))',
+  'hsl(var(--chart-4))',
+  'hsl(var(--chart-5))',
+  '#f59e0b',
+  '#8b5cf6',
+  '#ec4899',
+];
+
 export default function AgentRanking() {
   const [agents, setAgents] = useState<AgentStats[]>([]);
+  const [performanceData, setPerformanceData] = useState<PerformanceDataPoint[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState<string>('score');
   const [period, setPeriod] = useState<string>('all');
 
   useEffect(() => {
     fetchAgentStats();
+    fetchPerformanceHistory();
   }, [period]);
 
   const fetchAgentStats = async () => {
@@ -190,6 +220,84 @@ export default function AgentRanking() {
 
     setAgents(agentStats);
     setIsLoading(false);
+  };
+
+  const fetchPerformanceHistory = async () => {
+    // Get last 7 days
+    const endDate = new Date();
+    const startDate = subDays(endDate, 6);
+    const days = eachDayOfInterval({ start: startDate, end: endDate });
+
+    const { data: sessions, error: sessionsError } = await supabase
+      .from('call_sessions')
+      .select('id, agent_name, created_at')
+      .gte('created_at', startDate.toISOString())
+      .order('created_at', { ascending: true });
+
+    if (sessionsError) {
+      console.error('Error fetching performance history:', sessionsError);
+      return;
+    }
+
+    const { data: summaries, error: summariesError } = await supabase
+      .from('call_summaries')
+      .select('call_session_id, agent_performance_score');
+
+    if (summariesError) {
+      console.error('Error fetching summaries:', summariesError);
+      return;
+    }
+
+    // Create a map of session_id to performance score
+    const sessionPerformanceMap = new Map<string, number>();
+    summaries?.forEach((s) => {
+      if (s.agent_performance_score) {
+        sessionPerformanceMap.set(s.call_session_id, s.agent_performance_score);
+      }
+    });
+
+    // Group sessions by day and agent
+    const agentDailyPerformance = new Map<string, Map<string, number[]>>();
+    const agentNames = new Set<string>();
+
+    sessions?.forEach((session) => {
+      if (!session.agent_name) return;
+      
+      agentNames.add(session.agent_name);
+      const dayKey = format(new Date(session.created_at), 'yyyy-MM-dd');
+      const performance = sessionPerformanceMap.get(session.id);
+
+      if (performance) {
+        if (!agentDailyPerformance.has(dayKey)) {
+          agentDailyPerformance.set(dayKey, new Map());
+        }
+        const dayMap = agentDailyPerformance.get(dayKey)!;
+        if (!dayMap.has(session.agent_name)) {
+          dayMap.set(session.agent_name, []);
+        }
+        dayMap.get(session.agent_name)!.push(performance);
+      }
+    });
+
+    // Build chart data
+    const chartData: PerformanceDataPoint[] = days.map((day) => {
+      const dayKey = format(day, 'yyyy-MM-dd');
+      const dayLabel = format(day, 'dd/MM', { locale: ptBR });
+      const point: PerformanceDataPoint = { date: dayLabel };
+
+      agentNames.forEach((agentName) => {
+        const dayMap = agentDailyPerformance.get(dayKey);
+        const performances = dayMap?.get(agentName) || [];
+        const avg = performances.length > 0 
+          ? performances.reduce((a, b) => a + b, 0) / performances.length 
+          : 0;
+        point[agentName] = Number(avg.toFixed(1));
+      });
+
+      return point;
+    });
+
+    setPerformanceData(chartData);
   };
 
   useEffect(() => {
@@ -408,6 +516,64 @@ export default function AgentRanking() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Performance Evolution Chart */}
+      {performanceData.length > 0 && agents.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-primary" />
+              Evolução de Performance (Últimos 7 dias)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[350px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={performanceData}>
+                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <XAxis 
+                    dataKey="date" 
+                    className="text-xs"
+                    tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                  />
+                  <YAxis 
+                    domain={[0, 10]} 
+                    className="text-xs"
+                    tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                    label={{ 
+                      value: 'Performance', 
+                      angle: -90, 
+                      position: 'insideLeft',
+                      fill: 'hsl(var(--muted-foreground))'
+                    }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--popover))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px',
+                      color: 'hsl(var(--popover-foreground))'
+                    }}
+                  />
+                  <Legend />
+                  {agents.slice(0, 8).map((agent, index) => (
+                    <Line
+                      key={agent.name}
+                      type="monotone"
+                      dataKey={agent.name}
+                      stroke={AGENT_COLORS[index % AGENT_COLORS.length]}
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
+                      connectNulls
+                    />
+                  ))}
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Top 3 Podium */}
       {topAgents.length >= 3 && (
