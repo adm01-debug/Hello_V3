@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { 
   Phone, 
   Clock, 
@@ -13,7 +13,9 @@ import {
   Loader2,
   TrendingUp,
   TrendingDown,
-  Minus
+  Minus,
+  X,
+  Tag
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,9 +30,22 @@ import {
   DialogDescription
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
+import { format, isWithinInterval, startOfDay, endOfDay, subDays, subWeeks, subMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 interface CallSession {
@@ -42,6 +57,14 @@ interface CallSession {
   ended_at: string | null;
   duration_seconds: number | null;
   status: string | null;
+}
+
+interface SessionWithSummary extends CallSession {
+  summary?: {
+    overall_sentiment: string | null;
+    main_topics: string[] | null;
+    customer_satisfaction: number | null;
+  };
 }
 
 interface Transcription {
@@ -75,15 +98,37 @@ interface CallSummary {
   next_steps: string[] | null;
 }
 
+type DateRangePreset = 'all' | 'today' | 'week' | 'month' | 'custom';
+type SentimentFilter = 'all' | 'positive' | 'neutral' | 'negative';
+type DurationFilter = 'all' | 'short' | 'medium' | 'long';
+
 export default function CallHistory() {
-  const [sessions, setSessions] = useState<CallSession[]>([]);
+  const [sessions, setSessions] = useState<SessionWithSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedSession, setSelectedSession] = useState<CallSession | null>(null);
+  const [selectedSession, setSelectedSession] = useState<SessionWithSummary | null>(null);
   const [sessionTranscripts, setSessionTranscripts] = useState<Transcription[]>([]);
   const [sessionAnalyses, setSessionAnalyses] = useState<Analysis[]>([]);
   const [sessionSummary, setSessionSummary] = useState<CallSummary | null>(null);
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  
+  // Filters
+  const [showFilters, setShowFilters] = useState(false);
+  const [dateRangePreset, setDateRangePreset] = useState<DateRangePreset>('all');
+  const [customDateFrom, setCustomDateFrom] = useState<Date | undefined>();
+  const [customDateTo, setCustomDateTo] = useState<Date | undefined>();
+  const [sentimentFilter, setSentimentFilter] = useState<SentimentFilter>('all');
+  const [durationFilter, setDurationFilter] = useState<DurationFilter>('all');
+  const [topicFilter, setTopicFilter] = useState<string>('');
+  
+  // All unique topics from sessions
+  const allTopics = useMemo(() => {
+    const topics = new Set<string>();
+    sessions.forEach(s => {
+      s.summary?.main_topics?.forEach(t => topics.add(t));
+    });
+    return Array.from(topics).sort();
+  }, [sessions]);
 
   useEffect(() => {
     fetchSessions();
@@ -92,14 +137,39 @@ export default function CallHistory() {
   const fetchSessions = async () => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase
+      // Fetch sessions with summaries
+      const { data: sessionsData, error: sessionsError } = await supabase
         .from('call_sessions')
         .select('*')
         .order('started_at', { ascending: false })
-        .limit(50);
+        .limit(100);
 
-      if (error) throw error;
-      setSessions(data || []);
+      if (sessionsError) throw sessionsError;
+
+      // Fetch summaries for all sessions
+      const sessionIds = sessionsData?.map(s => s.id) || [];
+      const { data: summariesData, error: summariesError } = await supabase
+        .from('call_summaries')
+        .select('call_session_id, overall_sentiment, main_topics, customer_satisfaction')
+        .in('call_session_id', sessionIds);
+
+      if (summariesError) throw summariesError;
+
+      // Merge summaries with sessions
+      const summariesMap = new Map(
+        summariesData?.map(s => [s.call_session_id, {
+          overall_sentiment: s.overall_sentiment,
+          main_topics: s.main_topics,
+          customer_satisfaction: s.customer_satisfaction
+        }])
+      );
+
+      const sessionsWithSummary: SessionWithSummary[] = (sessionsData || []).map(session => ({
+        ...session,
+        summary: summariesMap.get(session.id)
+      }));
+
+      setSessions(sessionsWithSummary);
     } catch (error) {
       console.error('Error fetching sessions:', error);
     } finally {
@@ -142,7 +212,7 @@ export default function CallHistory() {
     }
   };
 
-  const handleSessionClick = async (session: CallSession) => {
+  const handleSessionClick = async (session: SessionWithSummary) => {
     setSelectedSession(session);
     await fetchSessionDetails(session.id);
   };
@@ -154,15 +224,98 @@ export default function CallHistory() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const filteredSessions = sessions.filter(session => {
-    if (!searchQuery) return true;
-    const query = searchQuery.toLowerCase();
-    return (
-      session.caller_name?.toLowerCase().includes(query) ||
-      session.caller_phone?.toLowerCase().includes(query) ||
-      session.agent_name?.toLowerCase().includes(query)
-    );
-  });
+  const getDateRange = (): { from: Date; to: Date } | null => {
+    const now = new Date();
+    switch (dateRangePreset) {
+      case 'today':
+        return { from: startOfDay(now), to: endOfDay(now) };
+      case 'week':
+        return { from: subWeeks(now, 1), to: now };
+      case 'month':
+        return { from: subMonths(now, 1), to: now };
+      case 'custom':
+        if (customDateFrom && customDateTo) {
+          return { from: startOfDay(customDateFrom), to: endOfDay(customDateTo) };
+        }
+        return null;
+      default:
+        return null;
+    }
+  };
+
+  const getDurationRange = (filter: DurationFilter): { min: number; max: number } | null => {
+    switch (filter) {
+      case 'short': return { min: 0, max: 60 }; // < 1 min
+      case 'medium': return { min: 60, max: 300 }; // 1-5 min
+      case 'long': return { min: 300, max: Infinity }; // > 5 min
+      default: return null;
+    }
+  };
+
+  const filteredSessions = useMemo(() => {
+    return sessions.filter(session => {
+      // Text search
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        const matchesText = 
+          session.caller_name?.toLowerCase().includes(query) ||
+          session.caller_phone?.toLowerCase().includes(query) ||
+          session.agent_name?.toLowerCase().includes(query);
+        if (!matchesText) return false;
+      }
+
+      // Date filter
+      const dateRange = getDateRange();
+      if (dateRange) {
+        const sessionDate = new Date(session.started_at);
+        if (!isWithinInterval(sessionDate, { start: dateRange.from, end: dateRange.to })) {
+          return false;
+        }
+      }
+
+      // Sentiment filter
+      if (sentimentFilter !== 'all') {
+        if (session.summary?.overall_sentiment !== sentimentFilter) {
+          return false;
+        }
+      }
+
+      // Duration filter
+      const durationRange = getDurationRange(durationFilter);
+      if (durationRange) {
+        const duration = session.duration_seconds || 0;
+        if (duration < durationRange.min || duration >= durationRange.max) {
+          return false;
+        }
+      }
+
+      // Topic filter
+      if (topicFilter) {
+        const topics = session.summary?.main_topics || [];
+        if (!topics.some(t => t.toLowerCase().includes(topicFilter.toLowerCase()))) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [sessions, searchQuery, dateRangePreset, customDateFrom, customDateTo, sentimentFilter, durationFilter, topicFilter]);
+
+  const activeFiltersCount = [
+    dateRangePreset !== 'all',
+    sentimentFilter !== 'all',
+    durationFilter !== 'all',
+    topicFilter !== ''
+  ].filter(Boolean).length;
+
+  const clearFilters = () => {
+    setDateRangePreset('all');
+    setCustomDateFrom(undefined);
+    setCustomDateTo(undefined);
+    setSentimentFilter('all');
+    setDurationFilter('all');
+    setTopicFilter('');
+  };
 
   const exportTranscript = () => {
     if (!selectedSession || sessionTranscripts.length === 0) return;
@@ -180,6 +333,24 @@ export default function CallHistory() {
     URL.revokeObjectURL(url);
   };
 
+  const getSentimentBadge = (sentiment: string | null | undefined) => {
+    if (!sentiment) return null;
+    return (
+      <Badge variant="outline" className={cn(
+        'text-xs',
+        sentiment === 'positive' ? 'text-success border-success/50' :
+        sentiment === 'negative' ? 'text-destructive border-destructive/50' : 
+        'text-warning border-warning/50'
+      )}>
+        {sentiment === 'positive' ? <TrendingUp className="h-3 w-3 mr-1" /> :
+         sentiment === 'negative' ? <TrendingDown className="h-3 w-3 mr-1" /> :
+         <Minus className="h-3 w-3 mr-1" />}
+        {sentiment === 'positive' ? 'Positivo' : 
+         sentiment === 'negative' ? 'Negativo' : 'Neutro'}
+      </Badge>
+    );
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -195,21 +366,187 @@ export default function CallHistory() {
         </Button>
       </div>
 
-      {/* Search */}
-      <div className="flex gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Buscar por nome, telefone ou agente..."
-            className="pl-10"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+      {/* Search and Filters */}
+      <div className="space-y-4">
+        <div className="flex gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Buscar por nome, telefone ou agente..."
+              className="pl-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <Button 
+            variant={showFilters ? 'default' : 'outline'} 
+            className="gap-2"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <Filter className="h-4 w-4" />
+            Filtros
+            {activeFiltersCount > 0 && (
+              <Badge variant="secondary" className="ml-1 h-5 w-5 rounded-full p-0 flex items-center justify-center">
+                {activeFiltersCount}
+              </Badge>
+            )}
+          </Button>
         </div>
-        <Button variant="outline" className="gap-2">
-          <Filter className="h-4 w-4" />
-          Filtros
-        </Button>
+
+        {/* Filter Panel */}
+        {showFilters && (
+          <Card className="border-dashed">
+            <CardContent className="pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Date Filter */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    Período
+                  </label>
+                  <Select value={dateRangePreset} onValueChange={(v) => setDateRangePreset(v as DateRangePreset)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecionar período" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos os períodos</SelectItem>
+                      <SelectItem value="today">Hoje</SelectItem>
+                      <SelectItem value="week">Última semana</SelectItem>
+                      <SelectItem value="month">Último mês</SelectItem>
+                      <SelectItem value="custom">Período personalizado</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  {dateRangePreset === 'custom' && (
+                    <div className="flex gap-2 mt-2">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline" size="sm" className="flex-1 justify-start text-left font-normal">
+                            {customDateFrom ? format(customDateFrom, 'dd/MM/yy') : 'De'}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <CalendarComponent
+                            mode="single"
+                            selected={customDateFrom}
+                            onSelect={setCustomDateFrom}
+                            initialFocus
+                            className="pointer-events-auto"
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline" size="sm" className="flex-1 justify-start text-left font-normal">
+                            {customDateTo ? format(customDateTo, 'dd/MM/yy') : 'Até'}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <CalendarComponent
+                            mode="single"
+                            selected={customDateTo}
+                            onSelect={setCustomDateTo}
+                            initialFocus
+                            className="pointer-events-auto"
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  )}
+                </div>
+
+                {/* Sentiment Filter */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4" />
+                    Sentimento
+                  </label>
+                  <Select value={sentimentFilter} onValueChange={(v) => setSentimentFilter(v as SentimentFilter)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecionar sentimento" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos</SelectItem>
+                      <SelectItem value="positive">
+                        <span className="flex items-center gap-2">
+                          <TrendingUp className="h-3 w-3 text-success" />
+                          Positivo
+                        </span>
+                      </SelectItem>
+                      <SelectItem value="neutral">
+                        <span className="flex items-center gap-2">
+                          <Minus className="h-3 w-3 text-warning" />
+                          Neutro
+                        </span>
+                      </SelectItem>
+                      <SelectItem value="negative">
+                        <span className="flex items-center gap-2">
+                          <TrendingDown className="h-3 w-3 text-destructive" />
+                          Negativo
+                        </span>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Duration Filter */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    Duração
+                  </label>
+                  <Select value={durationFilter} onValueChange={(v) => setDurationFilter(v as DurationFilter)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecionar duração" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todas</SelectItem>
+                      <SelectItem value="short">Curta (&lt; 1 min)</SelectItem>
+                      <SelectItem value="medium">Média (1-5 min)</SelectItem>
+                      <SelectItem value="long">Longa (&gt; 5 min)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Topic Filter */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <Tag className="h-4 w-4" />
+                    Tópico
+                  </label>
+                  {allTopics.length > 0 ? (
+                    <Select value={topicFilter} onValueChange={setTopicFilter}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecionar tópico" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">Todos os tópicos</SelectItem>
+                        {allTopics.map(topic => (
+                          <SelectItem key={topic} value={topic}>{topic}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Input
+                      placeholder="Buscar tópico..."
+                      value={topicFilter}
+                      onChange={(e) => setTopicFilter(e.target.value)}
+                    />
+                  )}
+                </div>
+              </div>
+
+              {activeFiltersCount > 0 && (
+                <div className="flex justify-end mt-4">
+                  <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-2">
+                    <X className="h-4 w-4" />
+                    Limpar filtros
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Sessions List */}
@@ -232,11 +569,13 @@ export default function CallHistory() {
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <Phone className="h-12 w-12 text-muted-foreground/50 mb-4" />
               <p className="text-muted-foreground">
-                Nenhuma chamada encontrada
+                {activeFiltersCount > 0 ? 'Nenhuma chamada encontrada com os filtros aplicados' : 'Nenhuma chamada encontrada'}
               </p>
-              <p className="text-sm text-muted-foreground/80">
-                As chamadas serão salvas automaticamente quando você encerrar uma ligação
-              </p>
+              {activeFiltersCount > 0 && (
+                <Button variant="link" onClick={clearFilters}>
+                  Limpar filtros
+                </Button>
+              )}
             </div>
           ) : (
             <ScrollArea className="h-[500px]">
@@ -262,6 +601,7 @@ export default function CallHistory() {
                           <Badge variant="outline" className="text-xs">
                             {session.status === 'completed' ? 'Concluída' : 'Em andamento'}
                           </Badge>
+                          {getSentimentBadge(session.summary?.overall_sentiment)}
                         </div>
                         <div className="flex items-center gap-3 text-sm text-muted-foreground">
                           <span>{session.caller_phone || 'Sem número'}</span>
@@ -270,6 +610,15 @@ export default function CallHistory() {
                             <User className="h-3 w-3" />
                             {session.agent_name || 'N/A'}
                           </span>
+                          {session.summary?.main_topics && session.summary.main_topics.length > 0 && (
+                            <>
+                              <span>•</span>
+                              <span className="flex items-center gap-1">
+                                <Tag className="h-3 w-3" />
+                                {session.summary.main_topics.slice(0, 2).join(', ')}
+                              </span>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -338,8 +687,61 @@ export default function CallHistory() {
                 )}
               </div>
 
+              {/* Summary Card */}
+              {sessionSummary && (
+                <Card className="mb-4 bg-primary/5 border-primary/20">
+                  <CardContent className="pt-4">
+                    <div className="space-y-3">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h4 className="font-medium text-sm text-primary mb-1">Resumo da Chamada</h4>
+                          <p className="text-sm">{sessionSummary.summary}</p>
+                        </div>
+                        {getSentimentBadge(sessionSummary.overall_sentiment)}
+                      </div>
+                      
+                      {sessionSummary.main_topics && sessionSummary.main_topics.length > 0 && (
+                        <div className="flex flex-wrap gap-1">
+                          {sessionSummary.main_topics.map((topic, i) => (
+                            <Badge key={i} variant="secondary" className="text-xs">
+                              {topic}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="flex gap-6 text-sm">
+                        {sessionSummary.customer_satisfaction && (
+                          <div>
+                            <span className="text-muted-foreground">Satisfação: </span>
+                            <span className="font-medium">{sessionSummary.customer_satisfaction}/10</span>
+                          </div>
+                        )}
+                        {sessionSummary.agent_performance_score && (
+                          <div>
+                            <span className="text-muted-foreground">Performance: </span>
+                            <span className="font-medium">{sessionSummary.agent_performance_score}/10</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {sessionSummary.next_steps && sessionSummary.next_steps.length > 0 && (
+                        <div>
+                          <span className="text-xs text-muted-foreground">Próximos passos:</span>
+                          <ul className="list-disc list-inside text-sm mt-1">
+                            {sessionSummary.next_steps.map((step, i) => (
+                              <li key={i}>{step}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               <TabsContent value="transcription">
-                <ScrollArea className="h-[400px] rounded-lg border border-border p-4">
+                <ScrollArea className="h-[350px] rounded-lg border border-border p-4">
                   {sessionTranscripts.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-12">
                       <MessageSquare className="h-12 w-12 text-muted-foreground/50 mb-4" />
@@ -384,7 +786,7 @@ export default function CallHistory() {
               </TabsContent>
 
               <TabsContent value="analysis">
-                <ScrollArea className="h-[400px] rounded-lg border border-border p-4">
+                <ScrollArea className="h-[350px] rounded-lg border border-border p-4">
                   {sessionAnalyses.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-12">
                       <Brain className="h-12 w-12 text-muted-foreground/50 mb-4" />
