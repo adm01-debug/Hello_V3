@@ -88,6 +88,16 @@ interface TopAgent {
   performance: number;
 }
 
+interface GoalsComparison {
+  name: string;
+  callsTarget: number;
+  callsActual: number;
+  satisfactionTarget: number;
+  satisfactionActual: number;
+  performanceTarget: number;
+  performanceActual: number;
+}
+
 export default function ExecutiveDashboard() {
   const [metrics, setMetrics] = useState<DashboardMetrics>({
     totalCalls: 0,
@@ -105,6 +115,7 @@ export default function ExecutiveDashboard() {
   const [satisfactionTrend, setSatisfactionTrend] = useState<SatisfactionTrend[]>([]);
   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
   const [topAgents, setTopAgents] = useState<TopAgent[]>([]);
+  const [goalsComparison, setGoalsComparison] = useState<GoalsComparison[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [period, setPeriod] = useState<string>('week');
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
@@ -199,6 +210,11 @@ export default function ExecutiveDashboard() {
       .from('call_alerts')
       .select('*')
       .eq('is_read', false);
+
+    // Fetch agent goals
+    const { data: agentGoals } = await supabase
+      .from('agent_goals')
+      .select('*');
 
     if (!sessions) {
       setIsLoading(false);
@@ -374,6 +390,39 @@ export default function ExecutiveDashboard() {
       .slice(0, 5);
 
     setTopAgents(topAgentsData);
+
+    // Build goals comparison data
+    if (agentGoals && agentGoals.length > 0) {
+      const goalsComparisonData = agentGoals.map((goal) => {
+        const agentData = topAgentsData.find((a) => a.name === goal.agent_name) || 
+          Array.from(agentStats.entries())
+            .map(([name, stats]) => ({
+              name,
+              calls: stats.calls,
+              satisfaction:
+                stats.satisfaction.length > 0
+                  ? stats.satisfaction.reduce((a, b) => a + b, 0) / stats.satisfaction.length
+                  : 0,
+              performance:
+                stats.performance.length > 0
+                  ? stats.performance.reduce((a, b) => a + b, 0) / stats.performance.length
+                  : 0,
+            }))
+            .find((a) => a.name === goal.agent_name);
+        
+        return {
+          name: goal.agent_name,
+          callsTarget: goal.calls_target,
+          callsActual: agentData?.calls || 0,
+          satisfactionTarget: Number(goal.satisfaction_target),
+          satisfactionActual: Number(agentData?.satisfaction?.toFixed(1) || 0),
+          performanceTarget: Number(goal.performance_target),
+          performanceActual: Number(agentData?.performance?.toFixed(1) || 0),
+        };
+      });
+      setGoalsComparison(goalsComparisonData);
+    }
+
     setIsLoading(false);
     setLastUpdate(new Date());
   };
@@ -745,6 +794,98 @@ export default function ExecutiveDashboard() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Goals vs Actual Comparison */}
+      {goalsComparison.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Target className="h-5 w-5" />
+              Metas vs Realizado por Agente
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-6">
+              {goalsComparison.map((agent) => {
+                const callsPercent = Math.min((agent.callsActual / agent.callsTarget) * 100, 100);
+                const satisfactionPercent = Math.min((agent.satisfactionActual / agent.satisfactionTarget) * 100, 100);
+                const performancePercent = Math.min((agent.performanceActual / agent.performanceTarget) * 100, 100);
+                
+                const callsAchieved = agent.callsActual >= agent.callsTarget;
+                const satisfactionAchieved = agent.satisfactionActual >= agent.satisfactionTarget;
+                const performanceAchieved = agent.performanceActual >= agent.performanceTarget;
+                const allAchieved = callsAchieved && satisfactionAchieved && performanceAchieved;
+
+                return (
+                  <div key={agent.name} className="border rounded-lg p-4 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-lg">{agent.name}</h4>
+                      {allAchieved ? (
+                        <Badge className="bg-green-500">Todas as metas atingidas</Badge>
+                      ) : (
+                        <Badge variant="secondary">Em progresso</Badge>
+                      )}
+                    </div>
+                    
+                    <div className="grid gap-4 md:grid-cols-3">
+                      {/* Calls */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="flex items-center gap-1">
+                            <Phone className="h-3 w-3" />
+                            Chamadas
+                          </span>
+                          <span className={callsAchieved ? 'text-green-500 font-medium' : ''}>
+                            {agent.callsActual}/{agent.callsTarget}
+                          </span>
+                        </div>
+                        <Progress 
+                          value={callsPercent} 
+                          className={`h-2 ${callsAchieved ? '[&>div]:bg-green-500' : ''}`}
+                        />
+                      </div>
+
+                      {/* Satisfaction */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="flex items-center gap-1">
+                            <Star className="h-3 w-3" />
+                            Satisfação
+                          </span>
+                          <span className={satisfactionAchieved ? 'text-green-500 font-medium' : ''}>
+                            {agent.satisfactionActual}/{agent.satisfactionTarget}
+                          </span>
+                        </div>
+                        <Progress 
+                          value={satisfactionPercent} 
+                          className={`h-2 ${satisfactionAchieved ? '[&>div]:bg-green-500' : ''}`}
+                        />
+                      </div>
+
+                      {/* Performance */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="flex items-center gap-1">
+                            <Activity className="h-3 w-3" />
+                            Performance
+                          </span>
+                          <span className={performanceAchieved ? 'text-green-500 font-medium' : ''}>
+                            {agent.performanceActual}/{agent.performanceTarget}
+                          </span>
+                        </div>
+                        <Progress 
+                          value={performancePercent} 
+                          className={`h-2 ${performanceAchieved ? '[&>div]:bg-green-500' : ''}`}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
