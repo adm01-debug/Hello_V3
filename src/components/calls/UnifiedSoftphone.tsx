@@ -1,0 +1,662 @@
+import { useState, useCallback, useEffect } from 'react';
+import { useConversation } from '@elevenlabs/react';
+import { 
+  Phone, 
+  PhoneOff, 
+  Mic, 
+  MicOff, 
+  Pause,
+  Play,
+  Volume2,
+  VolumeX,
+  PhoneForwarded,
+  Delete,
+  Radio,
+  MessageCircle,
+  Headphones,
+  Waves,
+  Loader2,
+  Circle,
+  Settings,
+  History,
+  Users,
+  MoreVertical,
+  PhoneIncoming,
+  PhoneOutgoing
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { useMultiChannelCall, CallChannel, CallSession } from '@/hooks/useMultiChannelCall';
+import { mockContacts, getInitials, formatDuration } from '@/data/mockData';
+
+const dialPadButtons = [
+  { digit: '1', letters: '' },
+  { digit: '2', letters: 'ABC' },
+  { digit: '3', letters: 'DEF' },
+  { digit: '4', letters: 'GHI' },
+  { digit: '5', letters: 'JKL' },
+  { digit: '6', letters: 'MNO' },
+  { digit: '7', letters: 'PQRS' },
+  { digit: '8', letters: 'TUV' },
+  { digit: '9', letters: 'WXYZ' },
+  { digit: '*', letters: '' },
+  { digit: '0', letters: '+' },
+  { digit: '#', letters: '' },
+];
+
+const channelIcons: Record<CallChannel, React.ComponentType<{ className?: string }>> = {
+  webrtc: Radio,
+  twilio: Phone,
+  wavoip: MessageCircle,
+  sip: Headphones
+};
+
+const channelColors: Record<CallChannel, string> = {
+  webrtc: 'text-blue-500',
+  twilio: 'text-red-500',
+  wavoip: 'text-green-500',
+  sip: 'text-purple-500'
+};
+
+interface UnifiedSoftphoneProps {
+  onCallStart?: (call: CallSession) => void;
+  onCallEnd?: (call: CallSession) => void;
+  onTranscript?: (text: string, speaker: 'user' | 'agent') => void;
+}
+
+export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: UnifiedSoftphoneProps) {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [activeTab, setActiveTab] = useState<'dialpad' | 'contacts' | 'history'>('dialpad');
+  const [volume, setVolume] = useState(1);
+  
+  const {
+    activeChannel,
+    currentCall,
+    callHistory,
+    channels,
+    isInCall,
+    setActiveChannel,
+    initiateCall,
+    updateCallStatus,
+    endCall,
+    toggleMute,
+    toggleHold,
+    toggleRecording,
+    addTranscript
+  } = useMultiChannelCall();
+
+  // ElevenLabs conversation hook for WebRTC
+  const conversation = useConversation({
+    onConnect: () => {
+      console.log('WebRTC connected');
+      updateCallStatus('active');
+      toast.success('Conectado');
+    },
+    onDisconnect: () => {
+      console.log('WebRTC disconnected');
+      handleEndCall();
+    },
+    onMessage: (message) => {
+      const msgAny = message as any;
+      if (msgAny.user_transcription_event?.user_transcript) {
+        const text = msgAny.user_transcription_event.user_transcript;
+        addTranscript('user', text);
+        onTranscript?.(text, 'user');
+      } else if (msgAny.agent_response_event?.agent_response) {
+        const text = msgAny.agent_response_event.agent_response;
+        addTranscript('agent', text);
+        onTranscript?.(text, 'agent');
+      }
+    },
+    onError: (error) => {
+      console.error('Conversation error:', error);
+      toast.error('Erro na conexão');
+      handleEndCall();
+    },
+  });
+
+  const handleDigitPress = (digit: string) => {
+    setPhoneNumber(prev => prev + digit);
+    // Play DTMF tone simulation
+    if (isInCall && currentCall?.channel !== 'webrtc') {
+      // TODO: Send DTMF through appropriate channel
+    }
+  };
+
+  const handleBackspace = () => {
+    setPhoneNumber(prev => prev.slice(0, -1));
+  };
+
+  const handleStartCall = useCallback(async () => {
+    if (activeChannel === 'webrtc') {
+      // WebRTC call with ElevenLabs
+      try {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+        
+        const call = initiateCall('webrtc', undefined, 'Agente IA');
+        onCallStart?.(call);
+        
+        // Get signed URL from edge function
+        const { data, error } = await supabase.functions.invoke('elevenlabs-conversation-token', {
+          body: { useDefaultAgent: true }
+        });
+
+        if (error || !data?.signed_url) {
+          throw new Error(data?.error || 'Falha ao obter token');
+        }
+
+        await conversation.startSession({
+          signedUrl: data.signed_url,
+        });
+      } catch (error) {
+        console.error('Failed to start WebRTC call:', error);
+        toast.error(error instanceof Error ? error.message : 'Falha ao iniciar chamada');
+        endCall();
+      }
+    } else if (activeChannel === 'wavoip') {
+      // Wavoip call - placeholder for future implementation
+      toast.info('Wavoip: Configure sua instância primeiro', {
+        description: 'Vá em Configurações > Integrações > Wavoip'
+      });
+    } else if (activeChannel === 'twilio') {
+      // Twilio call - placeholder
+      toast.info('Twilio: Configure sua conta primeiro', {
+        description: 'Vá em Configurações > Integrações > Twilio'
+      });
+    } else {
+      // SIP call - placeholder
+      if (!phoneNumber) {
+        toast.error('Digite um número para ligar');
+        return;
+      }
+      
+      const call = initiateCall('sip', phoneNumber);
+      onCallStart?.(call);
+      
+      // Simulate connection
+      setTimeout(() => updateCallStatus('ringing'), 500);
+      setTimeout(() => updateCallStatus('active'), 2000);
+    }
+  }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart]);
+
+  const handleEndCall = useCallback(() => {
+    if (currentCall?.channel === 'webrtc') {
+      conversation.endSession();
+    }
+    
+    if (currentCall) {
+      onCallEnd?.(currentCall);
+    }
+    
+    endCall();
+  }, [currentCall, conversation, endCall, onCallEnd]);
+
+  const handleToggleVolume = useCallback(async () => {
+    const newVolume = volume > 0 ? 0 : 1;
+    setVolume(newVolume);
+    if (currentCall?.channel === 'webrtc') {
+      await conversation.setVolume({ volume: newVolume });
+    }
+    toast.info(newVolume > 0 ? 'Som ativado' : 'Som desativado');
+  }, [volume, currentCall, conversation]);
+
+  const handleMuteToggle = useCallback(() => {
+    toggleMute();
+    toast.info(currentCall?.isMuted ? 'Microfone ativado' : 'Microfone desativado');
+  }, [toggleMute, currentCall]);
+
+  const handleHoldToggle = useCallback(() => {
+    toggleHold();
+    toast.info(currentCall?.isOnHold ? 'Chamada retomada' : 'Chamada em espera');
+  }, [toggleHold, currentCall]);
+
+  const handleRecordToggle = useCallback(() => {
+    toggleRecording();
+    toast.info(currentCall?.isRecording ? 'Gravação parada' : 'Gravação iniciada');
+  }, [toggleRecording, currentCall]);
+
+  const quickContacts = mockContacts.filter(c => c.favorite).slice(0, 6);
+  const enabledChannels = channels.filter(ch => ch.enabled);
+  const ChannelIcon = channelIcons[activeChannel];
+  const isSpeaking = conversation.isSpeaking;
+
+  return (
+    <TooltipProvider>
+      <Card className="w-full max-w-md mx-auto overflow-hidden">
+        {/* Header with channel selector */}
+        <CardHeader className="pb-3 border-b">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ChannelIcon className={cn("h-5 w-5", channelColors[activeChannel])} />
+              <div>
+                <CardTitle className="text-lg">Softphone</CardTitle>
+                <CardDescription className="text-xs">
+                  {channels.find(ch => ch.id === activeChannel)?.description}
+                </CardDescription>
+              </div>
+            </div>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Badge variant="secondary" className="text-xs">
+                    {channels.find(ch => ch.id === activeChannel)?.name}
+                  </Badge>
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {channels.map((channel) => {
+                  const Icon = channelIcons[channel.id];
+                  return (
+                    <DropdownMenuItem
+                      key={channel.id}
+                      onClick={() => !isInCall && setActiveChannel(channel.id)}
+                      disabled={!channel.enabled || isInCall}
+                      className="gap-2"
+                    >
+                      <Icon className={cn("h-4 w-4", channelColors[channel.id])} />
+                      <span>{channel.name}</span>
+                      {!channel.configured && (
+                        <Badge variant="outline" className="ml-auto text-xs">
+                          Config
+                        </Badge>
+                      )}
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </CardHeader>
+
+        <CardContent className="p-0">
+          {/* Active Call Display */}
+          {isInCall && currentCall && (
+            <div className={cn(
+              "p-4 border-b transition-colors",
+              currentCall.status === 'active' 
+                ? isSpeaking ? "bg-primary/10" : "bg-success/10"
+                : currentCall.status === 'on-hold'
+                ? "bg-warning/10"
+                : "bg-muted/50"
+            )}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className={cn(
+                    "h-10 w-10 rounded-full flex items-center justify-center",
+                    currentCall.status === 'active' ? "bg-success" : "bg-muted"
+                  )}>
+                    {currentCall.direction === 'inbound' ? (
+                      <PhoneIncoming className="h-5 w-5 text-white" />
+                    ) : (
+                      <PhoneOutgoing className="h-5 w-5 text-white" />
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-medium">
+                      {currentCall.contactName || currentCall.phoneNumber || 'Chamada Ativa'}
+                    </p>
+                    <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      <ChannelIcon className="h-3 w-3" />
+                      {channels.find(ch => ch.id === currentCall.channel)?.name}
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="text-right">
+                  <p className="text-2xl font-mono font-bold">
+                    {formatDuration(currentCall.duration)}
+                  </p>
+                  <Badge 
+                    variant={
+                      currentCall.status === 'active' ? 'default' :
+                      currentCall.status === 'on-hold' ? 'secondary' :
+                      'outline'
+                    }
+                    className="text-xs"
+                  >
+                    {currentCall.status === 'connecting' && 'Conectando'}
+                    {currentCall.status === 'ringing' && 'Chamando'}
+                    {currentCall.status === 'active' && (isSpeaking ? 'Agente falando' : 'Ativo')}
+                    {currentCall.status === 'on-hold' && 'Em espera'}
+                  </Badge>
+                </div>
+              </div>
+
+              {/* Recording indicator */}
+              {currentCall.isRecording && (
+                <div className="flex items-center gap-2 text-xs text-destructive mb-2">
+                  <Circle className="h-2 w-2 fill-current animate-pulse" />
+                  Gravando
+                </div>
+              )}
+
+              {/* In-call transcripts */}
+              {currentCall.transcripts.length > 0 && (
+                <ScrollArea className="h-24 rounded border bg-background/50 p-2">
+                  {currentCall.transcripts.slice(-5).map((t, i) => (
+                    <p key={i} className={cn(
+                      "text-xs mb-1",
+                      t.role === 'user' ? "text-primary" : "text-muted-foreground"
+                    )}>
+                      <span className="font-medium">
+                        {t.role === 'user' ? 'Você: ' : 'Agente: '}
+                      </span>
+                      {t.text}
+                    </p>
+                  ))}
+                </ScrollArea>
+              )}
+
+              {/* In-call controls */}
+              <div className="flex justify-center gap-2 mt-3">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className={cn(
+                        "h-11 w-11 rounded-full",
+                        currentCall.isMuted && "bg-destructive/10 text-destructive border-destructive/30"
+                      )}
+                      onClick={handleMuteToggle}
+                    >
+                      {currentCall.isMuted ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Mudo</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className={cn(
+                        "h-11 w-11 rounded-full",
+                        currentCall.isOnHold && "bg-warning/10 text-warning border-warning/30"
+                      )}
+                      onClick={handleHoldToggle}
+                    >
+                      {currentCall.isOnHold ? <Play className="h-5 w-5" /> : <Pause className="h-5 w-5" />}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Espera</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className={cn(
+                        "h-11 w-11 rounded-full",
+                        volume === 0 && "bg-muted"
+                      )}
+                      onClick={handleToggleVolume}
+                    >
+                      {volume > 0 ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Volume</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className={cn(
+                        "h-11 w-11 rounded-full",
+                        currentCall.isRecording && "bg-destructive/10 text-destructive border-destructive/30"
+                      )}
+                      onClick={handleRecordToggle}
+                    >
+                      <Circle className={cn("h-5 w-5", currentCall.isRecording && "fill-current")} />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Gravar</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-11 w-11 rounded-full"
+                    >
+                      <PhoneForwarded className="h-5 w-5" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Transferir</TooltipContent>
+                </Tooltip>
+
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  className="h-11 w-11 rounded-full"
+                  onClick={handleEndCall}
+                >
+                  <PhoneOff className="h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Main content tabs */}
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="p-4">
+            <TabsList className="grid w-full grid-cols-3 mb-4">
+              <TabsTrigger value="dialpad" className="gap-1 text-xs">
+                <Phone className="h-3 w-3" />
+                Teclado
+              </TabsTrigger>
+              <TabsTrigger value="contacts" className="gap-1 text-xs">
+                <Users className="h-3 w-3" />
+                Contatos
+              </TabsTrigger>
+              <TabsTrigger value="history" className="gap-1 text-xs">
+                <History className="h-3 w-3" />
+                Recentes
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Dialpad Tab */}
+            <TabsContent value="dialpad" className="space-y-4 mt-0">
+              {/* Number display */}
+              <div className="relative">
+                <Input
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder={activeChannel === 'webrtc' ? 'Chamada IA' : 'Digite o número'}
+                  className="h-12 text-center text-xl font-mono tracking-wider pr-10"
+                  disabled={activeChannel === 'webrtc'}
+                />
+                {phoneNumber && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
+                    onClick={handleBackspace}
+                  >
+                    <Delete className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+
+              {/* Dialpad */}
+              {activeChannel !== 'webrtc' && (
+                <div className="grid grid-cols-3 gap-2">
+                  {dialPadButtons.map(({ digit, letters }) => (
+                    <Button
+                      key={digit}
+                      variant="outline"
+                      className="h-14 flex-col gap-0 text-lg font-medium"
+                      onClick={() => handleDigitPress(digit)}
+                      disabled={isInCall}
+                    >
+                      <span>{digit}</span>
+                      {letters && (
+                        <span className="text-[9px] text-muted-foreground">{letters}</span>
+                      )}
+                    </Button>
+                  ))}
+                </div>
+              )}
+
+              {/* WebRTC info when selected */}
+              {activeChannel === 'webrtc' && !isInCall && (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-primary/5 border border-primary/20">
+                    <Waves className="h-8 w-8 text-primary" />
+                    <div>
+                      <p className="font-medium">Chamada com Agente IA</p>
+                      <p className="text-xs text-muted-foreground">
+                        Converse naturalmente com o agente de voz
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <ul className="text-xs text-muted-foreground space-y-1 pl-4">
+                    <li>• Transcrição em tempo real</li>
+                    <li>• Sem necessidade de número</li>
+                    <li>• IA conversacional avançada</li>
+                  </ul>
+                </div>
+              )}
+
+              {/* Wavoip placeholder */}
+              {activeChannel === 'wavoip' && !isInCall && (
+                <div className="p-4 rounded-lg border border-dashed border-green-500/50 bg-green-500/5 text-center">
+                  <MessageCircle className="h-8 w-8 text-green-500 mx-auto mb-2" />
+                  <p className="font-medium text-green-700">WhatsApp Calls</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Configure sua conta Wavoip para habilitar chamadas WhatsApp
+                  </p>
+                  <Button variant="outline" size="sm" className="mt-3 gap-2">
+                    <Settings className="h-3 w-3" />
+                    Configurar Wavoip
+                  </Button>
+                </div>
+              )}
+
+              {/* Call button */}
+              {!isInCall && (
+                <Button
+                  className="w-full h-14 gap-2 text-lg"
+                  onClick={handleStartCall}
+                  disabled={activeChannel !== 'webrtc' && !phoneNumber}
+                >
+                  {isInCall ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <Phone className="h-5 w-5" />
+                  )}
+                  {activeChannel === 'webrtc' ? 'Iniciar Chamada IA' : 'Ligar'}
+                </Button>
+              )}
+            </TabsContent>
+
+            {/* Contacts Tab */}
+            <TabsContent value="contacts" className="mt-0">
+              <ScrollArea className="h-[300px]">
+                <div className="grid grid-cols-2 gap-2">
+                  {quickContacts.map((contact) => (
+                    <Button
+                      key={contact.id}
+                      variant="outline"
+                      className="h-auto flex-col gap-1 p-3"
+                      onClick={() => {
+                        if (activeChannel !== 'webrtc') {
+                          setPhoneNumber(contact.phone.replace(/\D/g, ''));
+                          setActiveTab('dialpad');
+                        }
+                        toast.info(`${contact.name} selecionado`);
+                      }}
+                      disabled={isInCall || activeChannel === 'webrtc'}
+                    >
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
+                        {getInitials(contact.name)}
+                      </div>
+                      <span className="text-xs font-medium truncate w-full">{contact.name}</span>
+                      <span className="text-[10px] text-muted-foreground truncate w-full">
+                        {contact.company}
+                      </span>
+                    </Button>
+                  ))}
+                </div>
+              </ScrollArea>
+            </TabsContent>
+
+            {/* History Tab */}
+            <TabsContent value="history" className="mt-0">
+              <ScrollArea className="h-[300px]">
+                {callHistory.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <History className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p className="text-sm">Nenhuma chamada recente</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {callHistory.map((call) => {
+                      const CallIcon = channelIcons[call.channel];
+                      return (
+                        <div
+                          key={call.id}
+                          className="flex items-center gap-3 p-3 rounded-lg border hover:bg-accent/50 cursor-pointer"
+                          onClick={() => {
+                            if (call.phoneNumber) {
+                              setPhoneNumber(call.phoneNumber);
+                              setActiveTab('dialpad');
+                            }
+                          }}
+                        >
+                          <div className={cn(
+                            "h-9 w-9 rounded-full flex items-center justify-center",
+                            call.direction === 'inbound' ? "bg-blue-500/10" : "bg-green-500/10"
+                          )}>
+                            {call.direction === 'inbound' ? (
+                              <PhoneIncoming className="h-4 w-4 text-blue-500" />
+                            ) : (
+                              <PhoneOutgoing className="h-4 w-4 text-green-500" />
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium truncate">
+                              {call.contactName || call.phoneNumber || 'Chamada'}
+                            </p>
+                            <p className="text-xs text-muted-foreground flex items-center gap-1">
+                              <CallIcon className="h-3 w-3" />
+                              {formatDuration(call.duration)}
+                            </p>
+                          </div>
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Phone className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </ScrollArea>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    </TooltipProvider>
+  );
+}
