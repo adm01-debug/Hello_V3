@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.realtime-analysis]
 verify_jwt = false
+
+[functions.generate-summary]
+verify_jwt = false
