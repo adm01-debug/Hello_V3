@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Trophy, Medal, Phone, Star, Users, FlaskConical, TrendingUp } from 'lucide-react';
+import { Trophy, Medal, Phone, Star, Users, FlaskConical, TrendingUp, Target, CheckCircle2, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -44,6 +44,18 @@ interface AgentStats {
   completedCalls: number;
   score: number;
 }
+
+interface AgentGoals {
+  callsTarget: number;
+  satisfactionTarget: number;
+  performanceTarget: number;
+}
+
+const DEFAULT_GOALS: AgentGoals = {
+  callsTarget: 50,
+  satisfactionTarget: 8,
+  performanceTarget: 8,
+};
 
 interface PerformanceDataPoint {
   date: string;
@@ -636,6 +648,113 @@ export default function AgentRanking() {
                   <span className="text-xl font-bold text-amber-600">3º</span>
                 </div>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Goals vs Achieved */}
+      {agents.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Target className="h-5 w-5 text-primary" />
+              Metas vs Realizado
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {agents.slice(0, 6).map((agent) => {
+                const callsProgress = Math.min((agent.totalCalls / DEFAULT_GOALS.callsTarget) * 100, 100);
+                const satisfactionProgress = Math.min((agent.avgSatisfaction / DEFAULT_GOALS.satisfactionTarget) * 100, 100);
+                const performanceProgress = Math.min((agent.avgPerformance / DEFAULT_GOALS.performanceTarget) * 100, 100);
+                
+                const callsAchieved = agent.totalCalls >= DEFAULT_GOALS.callsTarget;
+                const satisfactionAchieved = agent.avgSatisfaction >= DEFAULT_GOALS.satisfactionTarget;
+                const performanceAchieved = agent.avgPerformance >= DEFAULT_GOALS.performanceTarget;
+                const allAchieved = callsAchieved && satisfactionAchieved && performanceAchieved;
+
+                return (
+                  <div
+                    key={agent.name}
+                    className={`p-4 rounded-lg border ${allAchieved ? 'border-green-500/30 bg-green-500/5' : 'border-border'}`}
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <Avatar className="h-10 w-10">
+                        <AvatarFallback className="text-sm">
+                          {agent.name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <h4 className="font-semibold">{agent.name}</h4>
+                        <div className="flex items-center gap-1">
+                          {allAchieved ? (
+                            <>
+                              <CheckCircle2 className="h-3 w-3 text-green-500" />
+                              <span className="text-xs text-green-500">Todas as metas atingidas</span>
+                            </>
+                          ) : (
+                            <>
+                              <XCircle className="h-3 w-3 text-muted-foreground" />
+                              <span className="text-xs text-muted-foreground">Metas pendentes</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      {/* Calls Goal */}
+                      <div>
+                        <div className="flex items-center justify-between text-sm mb-1">
+                          <span className="text-muted-foreground">Chamadas</span>
+                          <span className={callsAchieved ? 'text-green-500 font-medium' : ''}>
+                            {agent.totalCalls}/{DEFAULT_GOALS.callsTarget}
+                          </span>
+                        </div>
+                        <div className="relative">
+                          <Progress value={callsProgress} className="h-2" />
+                          {callsAchieved && (
+                            <CheckCircle2 className="h-3 w-3 text-green-500 absolute -right-1 -top-0.5" />
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Satisfaction Goal */}
+                      <div>
+                        <div className="flex items-center justify-between text-sm mb-1">
+                          <span className="text-muted-foreground">Satisfação</span>
+                          <span className={satisfactionAchieved ? 'text-green-500 font-medium' : ''}>
+                            {agent.avgSatisfaction.toFixed(1)}/{DEFAULT_GOALS.satisfactionTarget}
+                          </span>
+                        </div>
+                        <div className="relative">
+                          <Progress value={satisfactionProgress} className="h-2" />
+                          {satisfactionAchieved && (
+                            <CheckCircle2 className="h-3 w-3 text-green-500 absolute -right-1 -top-0.5" />
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Performance Goal */}
+                      <div>
+                        <div className="flex items-center justify-between text-sm mb-1">
+                          <span className="text-muted-foreground">Performance</span>
+                          <span className={performanceAchieved ? 'text-green-500 font-medium' : ''}>
+                            {agent.avgPerformance.toFixed(1)}/{DEFAULT_GOALS.performanceTarget}
+                          </span>
+                        </div>
+                        <div className="relative">
+                          <Progress value={performanceProgress} className="h-2" />
+                          {performanceAchieved && (
+                            <CheckCircle2 className="h-3 w-3 text-green-500 absolute -right-1 -top-0.5" />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </CardContent>
         </Card>
