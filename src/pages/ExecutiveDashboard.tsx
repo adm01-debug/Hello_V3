@@ -11,10 +11,18 @@ import {
   Activity,
   Target,
   BarChart3,
+  Calendar,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import {
   AreaChart,
@@ -90,18 +98,53 @@ export default function ExecutiveDashboard() {
   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
   const [topAgents, setTopAgents] = useState<TopAgent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [period, setPeriod] = useState<string>('week');
 
   useEffect(() => {
     fetchAllMetrics();
-  }, []);
+  }, [period]);
+
+  const getDateFilter = () => {
+    const now = new Date();
+    switch (period) {
+      case 'today':
+        return new Date(now.setHours(0, 0, 0, 0));
+      case 'week':
+        return subDays(new Date(), 7);
+      case 'month':
+        return subDays(new Date(), 30);
+      case 'all':
+        return new Date(0);
+      default:
+        return subDays(new Date(), 7);
+    }
+  };
+
+  const getPeriodLabel = () => {
+    switch (period) {
+      case 'today':
+        return 'hoje';
+      case 'week':
+        return 'últimos 7 dias';
+      case 'month':
+        return 'últimos 30 dias';
+      case 'all':
+        return 'todo período';
+      default:
+        return 'últimos 7 dias';
+    }
+  };
 
   const fetchAllMetrics = async () => {
     setIsLoading(true);
+    const dateFilter = getDateFilter();
 
-    // Fetch call sessions
-    const { data: sessions } = await supabase
-      .from('call_sessions')
-      .select('*');
+    // Fetch call sessions with period filter
+    let sessionsQuery = supabase.from('call_sessions').select('*');
+    if (period !== 'all') {
+      sessionsQuery = sessionsQuery.gte('created_at', dateFilter.toISOString());
+    }
+    const { data: sessions } = await sessionsQuery;
 
     // Fetch summaries
     const { data: summaries } = await supabase
@@ -119,6 +162,10 @@ export default function ExecutiveDashboard() {
       return;
     }
 
+    // Filter summaries to match sessions in period
+    const sessionIds = new Set(sessions.map((s) => s.id));
+    const filteredSummaries = summaries?.filter((s) => sessionIds.has(s.call_session_id)) || [];
+
     // Calculate basic metrics
     const totalCalls = sessions.length;
     const uniqueAgents = new Set(sessions.map((s) => s.agent_name).filter(Boolean));
@@ -128,10 +175,10 @@ export default function ExecutiveDashboard() {
     const avgDuration =
       sessions.reduce((sum, s) => sum + (s.duration_seconds || 0), 0) / (totalCalls || 1);
 
-    // Calculate satisfaction and performance from summaries
-    const validSummaries = summaries?.filter(
+    // Calculate satisfaction and performance from filtered summaries
+    const validSummaries = filteredSummaries.filter(
       (s) => s.customer_satisfaction && s.agent_performance_score
-    ) || [];
+    );
     const avgSatisfaction =
       validSummaries.reduce((sum, s) => sum + (s.customer_satisfaction || 0), 0) /
       (validSummaries.length || 1);
@@ -294,11 +341,27 @@ export default function ExecutiveDashboard() {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold">Dashboard Executivo</h1>
-        <p className="text-muted-foreground">
-          Visão consolidada de todas as métricas do call center
-        </p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Dashboard Executivo</h1>
+          <p className="text-muted-foreground">
+            Visão consolidada de todas as métricas do call center
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Calendar className="h-4 w-4 text-muted-foreground" />
+          <Select value={period} onValueChange={setPeriod}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Selecione o período" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="today">Hoje</SelectItem>
+              <SelectItem value="week">Últimos 7 dias</SelectItem>
+              <SelectItem value="month">Últimos 30 dias</SelectItem>
+              <SelectItem value="all">Todo período</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* KPI Cards Row 1 */}
@@ -311,7 +374,9 @@ export default function ExecutiveDashboard() {
           <CardContent>
             <div className="text-3xl font-bold">{metrics.totalCalls}</div>
             <div className="flex items-center justify-between mt-1">
-              <span className="text-xs text-muted-foreground">vs últimos 7 dias</span>
+              <span className="text-xs text-muted-foreground">
+                {period === 'all' ? 'período total' : `vs ${getPeriodLabel()}`}
+              </span>
               <TrendIndicator value={metrics.callsTrend} />
             </div>
           </CardContent>
