@@ -87,6 +87,7 @@ export default function AgentRanking() {
   const [agents, setAgents] = useState<AgentStats[]>([]);
   const [performanceData, setPerformanceData] = useState<PerformanceDataPoint[]>([]);
   const [agentGoals, setAgentGoals] = useState<Map<string, AgentGoals>>(new Map());
+  const [notifiedAgents, setNotifiedAgents] = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState<string>('score');
   const [period, setPeriod] = useState<string>('all');
@@ -98,6 +99,52 @@ export default function AgentRanking() {
     fetchPerformanceHistory();
     fetchAgentGoals();
   }, [period]);
+
+  // Check for goal achievements when agents or goals change
+  useEffect(() => {
+    if (agents.length > 0 && agentGoals.size >= 0) {
+      checkGoalAchievements();
+    }
+  }, [agents, agentGoals]);
+
+  const checkGoalAchievements = async () => {
+    for (const agent of agents) {
+      const goals = getGoalsForAgent(agent.name);
+      const callsAchieved = agent.totalCalls >= goals.calls_target;
+      const satisfactionAchieved = agent.avgSatisfaction >= goals.satisfaction_target;
+      const performanceAchieved = agent.avgPerformance >= goals.performance_target;
+      const allAchieved = callsAchieved && satisfactionAchieved && performanceAchieved;
+
+      if (allAchieved && !notifiedAgents.has(agent.name)) {
+        // Mark as notified to avoid duplicate notifications
+        setNotifiedAgents((prev) => new Set(prev).add(agent.name));
+
+        // Show toast notification
+        toast.success(`🎉 ${agent.name} atingiu todas as metas!`, {
+          description: `Chamadas: ${agent.totalCalls}, Satisfação: ${agent.avgSatisfaction.toFixed(1)}, Performance: ${agent.avgPerformance.toFixed(1)}`,
+          duration: 6000,
+        });
+
+        // Create alert in database
+        const { data: session } = await supabase
+          .from('call_sessions')
+          .select('id')
+          .eq('agent_name', agent.name)
+          .limit(1)
+          .maybeSingle();
+
+        if (session) {
+          await supabase.from('call_alerts').insert({
+            call_session_id: session.id,
+            alert_type: 'goals_achieved',
+            severity: 'info',
+            title: `${agent.name} atingiu todas as metas!`,
+            message: `Parabéns! O agente ${agent.name} completou todas as metas: ${agent.totalCalls} chamadas, ${agent.avgSatisfaction.toFixed(1)} satisfação, ${agent.avgPerformance.toFixed(1)} performance.`,
+          });
+        }
+      }
+    }
+  };
 
   const fetchAgentGoals = async () => {
     const { data, error } = await supabase
