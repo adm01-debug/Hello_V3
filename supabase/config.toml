@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.analyze-call]
 verify_jwt = false
+
+[functions.realtime-analysis]
+verify_jwt = false
