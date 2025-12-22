@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      call_alerts: {
+        Row: {
+          alert_type: string
+          call_session_id: string
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string
+          severity: string
+          title: string
+        }
+        Insert: {
+          alert_type: string
+          call_session_id: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message: string
+          severity?: string
+          title: string
+        }
+        Update: {
+          alert_type?: string
+          call_session_id?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          severity?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_alerts_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       call_analyses: {
         Row: {
           call_session_id: string

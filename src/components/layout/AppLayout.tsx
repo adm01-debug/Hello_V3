@@ -2,9 +2,9 @@ import { ReactNode } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from './AppSidebar';
 import { ActiveCallBar } from '@/components/calls/ActiveCallBar';
-import { Bell, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { AlertsDropdown } from '@/components/alerts/AlertsDropdown';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -32,12 +32,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5" />
-                <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-destructive-foreground">
-                  3
-                </span>
-              </Button>
+              <AlertsDropdown />
             </div>
           </header>
 
