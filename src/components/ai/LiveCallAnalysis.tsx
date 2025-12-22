@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { 
   Bot, 
   TrendingUp, 
@@ -16,7 +16,8 @@ import {
   MessageSquare,
   X,
   Maximize2,
-  Minimize2
+  Minimize2,
+  Link2
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -36,9 +37,11 @@ interface RealtimeInsight {
   timestamp: Date;
 }
 
-interface ConversationMessage {
-  role: 'agent' | 'customer';
+interface TranscriptEntry {
+  id: string;
   text: string;
+  speaker: 'agent' | 'customer';
+  speakerLabel: string;
   timestamp: Date;
 }
 
@@ -46,6 +49,7 @@ interface LiveCallAnalysisProps {
   isActive: boolean;
   contactName: string;
   onClose: () => void;
+  transcripts?: TranscriptEntry[];
 }
 
 const emotionIcons: Record<string, React.ReactNode> = {
@@ -55,27 +59,18 @@ const emotionIcons: Record<string, React.ReactNode> = {
   irritado: <Angry className="h-4 w-4 text-destructive" />,
   ansioso: <Frown className="h-4 w-4 text-warning" />,
   confuso: <HelpCircle className="h-4 w-4 text-muted-foreground" />,
+  neutro: <Meh className="h-4 w-4 text-muted-foreground" />,
 };
 
-// Simulated conversation for demo
-const simulatedConversation: ConversationMessage[] = [
-  { role: 'agent', text: 'Bom dia! Meu nome é Lucas, como posso ajudar?', timestamp: new Date() },
-  { role: 'customer', text: 'Oi, preciso resolver um problema com minha fatura. Está vindo cobrança errada há 3 meses!', timestamp: new Date() },
-  { role: 'agent', text: 'Entendo sua frustração. Deixe-me verificar sua conta para resolver isso.', timestamp: new Date() },
-  { role: 'customer', text: 'Espero que resolvam dessa vez porque já liguei várias vezes.', timestamp: new Date() },
-  { role: 'agent', text: 'Peço desculpas pelos transtornos. Encontrei o erro e vou corrigir agora mesmo.', timestamp: new Date() },
-  { role: 'customer', text: 'Obrigado, fico no aguardo.', timestamp: new Date() },
-];
-
-export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAnalysisProps) {
+export function LiveCallAnalysis({ isActive, contactName, onClose, transcripts = [] }: LiveCallAnalysisProps) {
   const [insights, setInsights] = useState<RealtimeInsight[]>([]);
-  const [conversation, setConversation] = useState<ConversationMessage[]>([]);
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [overallSentiment, setOverallSentiment] = useState(50);
+  const [isConnectedToTranscription, setIsConnectedToTranscription] = useState(false);
+  const lastAnalyzedIndexRef = useRef(0);
 
-  const analyzeMessage = useCallback(async (message: ConversationMessage, context: string) => {
+  const analyzeTranscript = useCallback(async (text: string, speaker: string, context: string) => {
     setIsAnalyzing(true);
     
     try {
@@ -88,9 +83,9 @@ export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAna
             'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
           },
           body: JSON.stringify({
-            latestMessage: message.text,
+            latestMessage: text,
             conversationContext: context,
-            speakerRole: message.role,
+            speakerRole: speaker,
           }),
         }
       );
@@ -99,12 +94,12 @@ export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAna
         const insight: RealtimeInsight = await response.json();
         insight.timestamp = new Date();
         
-        setInsights(prev => [...prev, insight]);
+        setInsights(prev => [...prev.slice(-9), insight]); // Keep last 10 insights
 
         // Update overall sentiment
         const sentimentValue = insight.sentiment === 'positive' ? 75 : 
                               insight.sentiment === 'negative' ? 25 : 50;
-        setOverallSentiment(prev => Math.round((prev + sentimentValue) / 2));
+        setOverallSentiment(prev => Math.round((prev * 0.7) + (sentimentValue * 0.3)));
       }
     } catch (error) {
       console.error('Analysis error:', error);
@@ -113,30 +108,39 @@ export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAna
     }
   }, []);
 
-  // Simulate real-time conversation
+  // Analyze new transcripts when they arrive
   useEffect(() => {
-    if (!isActive) return;
-
-    const interval = setInterval(() => {
-      if (currentMessageIndex < simulatedConversation.length) {
-        const newMessage = {
-          ...simulatedConversation[currentMessageIndex],
-          timestamp: new Date(),
-        };
-        
-        setConversation(prev => {
-          const updated = [...prev, newMessage];
-          const context = updated.slice(-5).map(m => `${m.role}: ${m.text}`).join('\n');
-          analyzeMessage(newMessage, context);
-          return updated;
-        });
-        
-        setCurrentMessageIndex(prev => prev + 1);
+    if (!isActive || transcripts.length === 0) return;
+    
+    // Check if we have new transcripts to analyze
+    if (transcripts.length > lastAnalyzedIndexRef.current) {
+      setIsConnectedToTranscription(true);
+      
+      // Get new transcripts since last analysis
+      const newTranscripts = transcripts.slice(lastAnalyzedIndexRef.current);
+      lastAnalyzedIndexRef.current = transcripts.length;
+      
+      // Build context from last 5 messages
+      const context = transcripts
+        .slice(-5)
+        .map(t => `${t.speaker === 'agent' ? 'Agente' : 'Cliente'}: ${t.text}`)
+        .join('\n');
+      
+      // Analyze the latest transcript
+      const latestTranscript = newTranscripts[newTranscripts.length - 1];
+      if (latestTranscript) {
+        analyzeTranscript(latestTranscript.text, latestTranscript.speaker, context);
       }
-    }, 4000);
+    }
+  }, [isActive, transcripts, analyzeTranscript]);
 
-    return () => clearInterval(interval);
-  }, [isActive, currentMessageIndex, analyzeMessage]);
+  // Reset when deactivated
+  useEffect(() => {
+    if (!isActive) {
+      lastAnalyzedIndexRef.current = 0;
+      setIsConnectedToTranscription(false);
+    }
+  }, [isActive]);
 
   const latestInsight = insights[insights.length - 1];
 
@@ -176,6 +180,12 @@ export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAna
             <Activity className="h-3 w-3 animate-pulse text-success" />
             Ativo
           </Badge>
+          {isConnectedToTranscription && (
+            <Badge variant="secondary" className="ml-1 gap-1 text-xs">
+              <Link2 className="h-3 w-3" />
+              Conectado
+            </Badge>
+          )}
         </CardTitle>
         <div className="flex items-center gap-1">
           <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setIsExpanded(!isExpanded)}>
@@ -192,7 +202,9 @@ export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAna
         <div className="flex items-center justify-between">
           <div>
             <p className="font-medium">{contactName}</p>
-            <p className="text-xs text-muted-foreground">{conversation.length} mensagens</p>
+            <p className="text-xs text-muted-foreground">
+              {transcripts.length} mensagens • {insights.length} análises
+            </p>
           </div>
           <div className="text-right">
             <p className="text-xs text-muted-foreground">Sentimento Geral</p>
@@ -217,6 +229,19 @@ export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAna
 
         <Progress value={overallSentiment} className="h-2" />
 
+        {/* Connection Status */}
+        {!isConnectedToTranscription && transcripts.length === 0 && (
+          <div className="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/5 p-3">
+            <Link2 className="h-4 w-4 text-primary" />
+            <div>
+              <p className="text-sm font-medium text-primary">Aguardando transcrição</p>
+              <p className="text-xs text-muted-foreground">
+                Ative a transcrição ao vivo para análise em tempo real
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Risk Alert */}
         {latestInsight?.riskAlert && (
           <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 p-3 animate-pulse">
@@ -232,7 +257,7 @@ export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAna
         {latestInsight && (
           <div className="space-y-3">
             {/* Current State */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="outline" className={cn('gap-1', getSentimentColor(latestInsight.sentiment))}>
                 {latestInsight.sentiment === 'positive' ? <TrendingUp className="h-3 w-3" /> :
                  latestInsight.sentiment === 'negative' ? <TrendingDown className="h-3 w-3" /> :
@@ -277,38 +302,48 @@ export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAna
           </div>
         )}
 
-        {/* Conversation Preview */}
-        {isExpanded && (
+        {/* Conversation Preview from Real Transcripts */}
+        {isExpanded && transcripts.length > 0 && (
+          <div className="space-y-2">
+            <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+              <MessageSquare className="h-3 w-3" />
+              Transcrição Recente
+            </p>
+            <ScrollArea className="h-[120px] rounded-lg border border-border bg-accent/30 p-2">
+              <div className="space-y-2">
+                {transcripts.slice(-4).map((msg) => (
+                  <div
+                    key={msg.id}
+                    className={cn(
+                      'rounded-lg p-2 text-xs',
+                      msg.speaker === 'agent' 
+                        ? 'bg-primary/10 text-primary ml-4' 
+                        : 'bg-warning/10 text-warning mr-4'
+                    )}
+                  >
+                    <span className="font-medium">
+                      {msg.speaker === 'agent' ? 'Agente:' : 'Cliente:'}
+                    </span>{' '}
+                    {msg.text}
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+        )}
+
+        {/* Waiting state when no transcripts */}
+        {isExpanded && transcripts.length === 0 && (
           <div className="space-y-2">
             <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
               <MessageSquare className="h-3 w-3" />
               Conversa
             </p>
-            <ScrollArea className="h-[120px] rounded-lg border border-border bg-accent/30 p-2">
-              <div className="space-y-2">
-                {conversation.slice(-4).map((msg, index) => (
-                  <div
-                    key={index}
-                    className={cn(
-                      'rounded-lg p-2 text-xs',
-                      msg.role === 'agent' 
-                        ? 'bg-primary/10 text-primary ml-4' 
-                        : 'bg-muted mr-4'
-                    )}
-                  >
-                    <span className="font-medium">
-                      {msg.role === 'agent' ? 'Agente:' : 'Cliente:'}
-                    </span>{' '}
-                    {msg.text}
-                  </div>
-                ))}
-                {conversation.length === 0 && (
-                  <p className="text-center text-xs text-muted-foreground py-4">
-                    Aguardando conversa...
-                  </p>
-                )}
-              </div>
-            </ScrollArea>
+            <div className="h-[120px] rounded-lg border border-border bg-accent/30 p-2 flex items-center justify-center">
+              <p className="text-center text-xs text-muted-foreground">
+                Aguardando transcrição...
+              </p>
+            </div>
           </div>
         )}
 
@@ -316,7 +351,7 @@ export function LiveCallAnalysis({ isActive, contactName, onClose }: LiveCallAna
         {isAnalyzing && (
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
             <div className="h-2 w-2 animate-bounce rounded-full bg-primary" />
-            <span>Analisando...</span>
+            <span>Analisando transcrição...</span>
           </div>
         )}
       </CardContent>

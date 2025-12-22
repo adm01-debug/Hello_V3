@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { 
   Phone, 
   PhoneOff, 
@@ -18,6 +18,14 @@ import { cn } from '@/lib/utils';
 import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
 import { LiveTranscription } from '@/components/calls/LiveTranscription';
 
+interface TranscriptEntry {
+  id: string;
+  text: string;
+  speaker: 'agent' | 'customer';
+  speakerLabel: string;
+  timestamp: Date;
+}
+
 export function ActiveCallBar() {
   const [call, setCall] = useState(mockActiveCall);
   const [duration, setDuration] = useState(0);
@@ -25,6 +33,7 @@ export function ActiveCallBar() {
   const [onHold, setOnHold] = useState(false);
   const [showAIAnalysis, setShowAIAnalysis] = useState(false);
   const [showTranscription, setShowTranscription] = useState(false);
+  const [transcripts, setTranscripts] = useState<TranscriptEntry[]>([]);
 
   useEffect(() => {
     if (!call || call.status !== 'connected') return;
@@ -36,12 +45,17 @@ export function ActiveCallBar() {
     return () => clearInterval(interval);
   }, [call]);
 
+  const handleTranscript = useCallback((entry: TranscriptEntry) => {
+    setTranscripts(prev => [...prev, entry]);
+  }, []);
+
   if (!call) return null;
 
   const handleHangup = () => {
     setCall(null);
     setShowAIAnalysis(false);
     setShowTranscription(false);
+    setTranscripts([]);
   };
 
   return (
@@ -177,13 +191,15 @@ export function ActiveCallBar() {
       {/* Live Transcription Panel */}
       <LiveTranscription
         isActive={showTranscription && call.status === 'connected'}
+        onTranscript={handleTranscript}
       />
 
-      {/* Live AI Analysis Panel */}
+      {/* Live AI Analysis Panel - Now connected to transcripts */}
       <LiveCallAnalysis
         isActive={showAIAnalysis && call.status === 'connected'}
         contactName={call.contactName}
         onClose={() => setShowAIAnalysis(false)}
+        transcripts={transcripts}
       />
     </>
   );
