@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Trophy, Medal, TrendingUp, TrendingDown, Phone, Clock, Star, Users } from 'lucide-react';
+import { Trophy, Medal, Phone, Star, Users, FlaskConical } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -207,6 +208,86 @@ export default function AgentRanking() {
     setAgents(sorted);
   }, [sortBy]);
 
+  const createTestData = async () => {
+    const agentNames = [
+      'Lucas Ferreira',
+      'Ana Carolina Silva',
+      'Pedro Santos',
+      'Mariana Costa',
+      'João Oliveira',
+      'Beatriz Almeida',
+    ];
+
+    const sentiments = ['positive', 'neutral', 'negative'];
+    const topics = ['Suporte Técnico', 'Cobrança', 'Vendas', 'Cancelamento', 'Dúvidas', 'Reclamação'];
+
+    try {
+      // Create sessions for each agent
+      for (const agentName of agentNames) {
+        const numCalls = Math.floor(Math.random() * 10) + 5; // 5-15 calls per agent
+
+        for (let i = 0; i < numCalls; i++) {
+          const durationSeconds = Math.floor(Math.random() * 600) + 120; // 2-12 minutes
+          const status = Math.random() > 0.1 ? 'completed' : 'missed';
+
+          // Create call session
+          const { data: session, error: sessionError } = await supabase
+            .from('call_sessions')
+            .insert({
+              agent_name: agentName,
+              caller_name: `Cliente ${Math.floor(Math.random() * 1000)}`,
+              caller_phone: `+55 11 9${Math.floor(Math.random() * 90000000 + 10000000)}`,
+              status,
+              duration_seconds: status === 'completed' ? durationSeconds : 0,
+              started_at: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+              ended_at: status === 'completed' 
+                ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000 + durationSeconds * 1000).toISOString()
+                : null,
+            })
+            .select('id')
+            .single();
+
+          if (sessionError) {
+            console.error('Error creating session:', sessionError);
+            continue;
+          }
+
+          if (session && status === 'completed') {
+            // Create call summary
+            const satisfaction = Math.floor(Math.random() * 5) + 5; // 5-10
+            const performance = Math.floor(Math.random() * 4) + 6; // 6-10
+
+            await supabase.from('call_summaries').insert({
+              call_session_id: session.id,
+              summary: `Atendimento realizado por ${agentName}. Cliente atendido com sucesso.`,
+              overall_sentiment: sentiments[Math.floor(Math.random() * sentiments.length)],
+              customer_satisfaction: satisfaction,
+              agent_performance_score: performance,
+              main_topics: [topics[Math.floor(Math.random() * topics.length)]],
+              next_steps: ['Acompanhar caso', 'Enviar documentação'],
+            });
+
+            // Create call analysis
+            await supabase.from('call_analyses').insert({
+              call_session_id: session.id,
+              sentiment: sentiments[Math.floor(Math.random() * sentiments.length)],
+              emotion: ['satisfied', 'neutral', 'frustrated'][Math.floor(Math.random() * 3)],
+              urgency: ['low', 'medium', 'high'][Math.floor(Math.random() * 3)],
+              suggestion: 'Manter padrão de atendimento',
+              message_analyzed: 'Análise da chamada completa',
+            });
+          }
+        }
+      }
+
+      toast.success('Dados de teste criados com sucesso!');
+      fetchAgentStats();
+    } catch (error) {
+      console.error('Error creating test data:', error);
+      toast.error('Erro ao criar dados de teste');
+    }
+  };
+
   const getRankIcon = (index: number) => {
     switch (index) {
       case 0:
@@ -250,7 +331,11 @@ export default function AgentRanking() {
             Comparativo de desempenho entre os agentes
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" onClick={createTestData}>
+            <FlaskConical className="h-4 w-4 mr-2" />
+            Criar Dados de Teste
+          </Button>
           <Select value={period} onValueChange={setPeriod}>
             <SelectTrigger className="w-[150px]">
               <SelectValue placeholder="Período" />
