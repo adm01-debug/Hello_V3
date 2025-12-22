@@ -816,16 +816,72 @@ export default function ExecutiveDashboard() {
                 const performanceAchieved = agent.performanceActual >= agent.performanceTarget;
                 const allAchieved = callsAchieved && satisfactionAchieved && performanceAchieved;
 
+                // Check if below 60% threshold (critical)
+                const callsCritical = callsPercent < 60;
+                const satisfactionCritical = satisfactionPercent < 60;
+                const performanceCritical = performancePercent < 60;
+                const hasCriticalMetric = callsCritical || satisfactionCritical || performanceCritical;
+
+                const getProgressClass = (achieved: boolean, critical: boolean) => {
+                  if (achieved) return '[&>div]:bg-green-500';
+                  if (critical) return '[&>div]:bg-red-500';
+                  return '[&>div]:bg-amber-500';
+                };
+
+                const getTextClass = (achieved: boolean, critical: boolean) => {
+                  if (achieved) return 'text-green-500 font-medium';
+                  if (critical) return 'text-red-500 font-medium';
+                  return 'text-amber-500 font-medium';
+                };
+
                 return (
-                  <div key={agent.name} className="border rounded-lg p-4 space-y-4">
+                  <div 
+                    key={agent.name} 
+                    className={`border rounded-lg p-4 space-y-4 ${
+                      hasCriticalMetric 
+                        ? 'border-red-500/50 bg-red-500/5' 
+                        : allAchieved 
+                          ? 'border-green-500/50 bg-green-500/5' 
+                          : ''
+                    }`}
+                  >
                     <div className="flex items-center justify-between">
-                      <h4 className="font-semibold text-lg">{agent.name}</h4>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-semibold text-lg">{agent.name}</h4>
+                        {hasCriticalMetric && (
+                          <AlertTriangle className="h-5 w-5 text-red-500 animate-pulse" />
+                        )}
+                      </div>
                       {allAchieved ? (
-                        <Badge className="bg-green-500">Todas as metas atingidas</Badge>
+                        <Badge className="bg-green-500">
+                          <CheckCircle2 className="h-3 w-3 mr-1" />
+                          Todas as metas atingidas
+                        </Badge>
+                      ) : hasCriticalMetric ? (
+                        <Badge variant="destructive">
+                          <AlertTriangle className="h-3 w-3 mr-1" />
+                          Abaixo da meta crítica
+                        </Badge>
                       ) : (
                         <Badge variant="secondary">Em progresso</Badge>
                       )}
                     </div>
+                    
+                    {hasCriticalMetric && (
+                      <div className="flex items-start gap-2 p-3 rounded-md bg-red-500/10 border border-red-500/30">
+                        <AlertTriangle className="h-4 w-4 text-red-500 mt-0.5 shrink-0" />
+                        <div className="text-sm text-red-500">
+                          <span className="font-medium">Atenção:</span> Este agente está significativamente abaixo das metas em{' '}
+                          {[
+                            callsCritical && 'chamadas',
+                            satisfactionCritical && 'satisfação',
+                            performanceCritical && 'performance',
+                          ]
+                            .filter(Boolean)
+                            .join(', ')}.
+                        </div>
+                      </div>
+                    )}
                     
                     <div className="grid gap-4 md:grid-cols-3">
                       {/* Calls */}
@@ -834,14 +890,15 @@ export default function ExecutiveDashboard() {
                           <span className="flex items-center gap-1">
                             <Phone className="h-3 w-3" />
                             Chamadas
+                            {callsCritical && <AlertTriangle className="h-3 w-3 text-red-500" />}
                           </span>
-                          <span className={callsAchieved ? 'text-green-500 font-medium' : ''}>
+                          <span className={getTextClass(callsAchieved, callsCritical)}>
                             {agent.callsActual}/{agent.callsTarget}
                           </span>
                         </div>
                         <Progress 
                           value={callsPercent} 
-                          className={`h-2 ${callsAchieved ? '[&>div]:bg-green-500' : ''}`}
+                          className={`h-2 ${getProgressClass(callsAchieved, callsCritical)}`}
                         />
                       </div>
 
@@ -851,14 +908,15 @@ export default function ExecutiveDashboard() {
                           <span className="flex items-center gap-1">
                             <Star className="h-3 w-3" />
                             Satisfação
+                            {satisfactionCritical && <AlertTriangle className="h-3 w-3 text-red-500" />}
                           </span>
-                          <span className={satisfactionAchieved ? 'text-green-500 font-medium' : ''}>
+                          <span className={getTextClass(satisfactionAchieved, satisfactionCritical)}>
                             {agent.satisfactionActual}/{agent.satisfactionTarget}
                           </span>
                         </div>
                         <Progress 
                           value={satisfactionPercent} 
-                          className={`h-2 ${satisfactionAchieved ? '[&>div]:bg-green-500' : ''}`}
+                          className={`h-2 ${getProgressClass(satisfactionAchieved, satisfactionCritical)}`}
                         />
                       </div>
 
@@ -868,14 +926,15 @@ export default function ExecutiveDashboard() {
                           <span className="flex items-center gap-1">
                             <Activity className="h-3 w-3" />
                             Performance
+                            {performanceCritical && <AlertTriangle className="h-3 w-3 text-red-500" />}
                           </span>
-                          <span className={performanceAchieved ? 'text-green-500 font-medium' : ''}>
+                          <span className={getTextClass(performanceAchieved, performanceCritical)}>
                             {agent.performanceActual}/{agent.performanceTarget}
                           </span>
                         </div>
                         <Progress 
                           value={performancePercent} 
-                          className={`h-2 ${performanceAchieved ? '[&>div]:bg-green-500' : ''}`}
+                          className={`h-2 ${getProgressClass(performanceAchieved, performanceCritical)}`}
                         />
                       </div>
                     </div>
