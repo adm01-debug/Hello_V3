@@ -11,7 +11,8 @@ import {
   FileText,
   PieChart,
   Bell,
-  Trophy
+  Trophy,
+  Gauge
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -31,6 +32,7 @@ import { cn } from '@/lib/utils';
 
 const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
+  { title: 'Executivo', url: '/executive', icon: Gauge },
   { title: 'Chamadas', url: '/calls', icon: Phone },
   { title: 'Contatos', url: '/contacts', icon: Users },
   { title: 'Histórico', url: '/history', icon: Clock },
