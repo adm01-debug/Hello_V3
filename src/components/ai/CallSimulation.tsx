@@ -248,6 +248,7 @@ export function CallSimulation() {
           contactName="João Silva"
           onClose={() => setShowAnalysis(false)}
           transcripts={transcripts}
+          inline={true}
         />
       )}
     </div>
