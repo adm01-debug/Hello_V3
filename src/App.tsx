@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Contacts from "./pages/Contacts";
 import History from "./pages/History";
 import Calls from "./pages/Calls";
+import AIAssistant from "./pages/AIAssistant";
 import Voice from "./pages/Voice";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
@@ -28,6 +29,7 @@ const App = () => (
               <Route path="/calls" element={<Calls />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/history" element={<History />} />
+              <Route path="/ai" element={<AIAssistant />} />
               <Route path="/voice" element={<Voice />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/settings" element={<Settings />} />
