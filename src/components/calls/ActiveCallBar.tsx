@@ -9,12 +9,14 @@ import {
   PhoneForwarded,
   Volume2,
   MoreHorizontal,
-  Bot
+  Bot,
+  FileText
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatDuration, mockActiveCall } from '@/data/mockData';
 import { cn } from '@/lib/utils';
 import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
+import { LiveTranscription } from '@/components/calls/LiveTranscription';
 
 export function ActiveCallBar() {
   const [call, setCall] = useState(mockActiveCall);
@@ -22,6 +24,7 @@ export function ActiveCallBar() {
   const [muted, setMuted] = useState(false);
   const [onHold, setOnHold] = useState(false);
   const [showAIAnalysis, setShowAIAnalysis] = useState(false);
+  const [showTranscription, setShowTranscription] = useState(false);
 
   useEffect(() => {
     if (!call || call.status !== 'connected') return;
@@ -38,6 +41,7 @@ export function ActiveCallBar() {
   const handleHangup = () => {
     setCall(null);
     setShowAIAnalysis(false);
+    setShowTranscription(false);
   };
 
   return (
@@ -95,6 +99,20 @@ export function ActiveCallBar() {
 
           {/* Call Controls */}
           <div className="flex items-center gap-2">
+            {/* Transcription Toggle */}
+            <Button
+              variant={showTranscription ? 'default' : 'outline'}
+              size="sm"
+              className={cn(
+                'gap-2',
+                showTranscription && 'bg-primary text-primary-foreground'
+              )}
+              onClick={() => setShowTranscription(!showTranscription)}
+            >
+              <FileText className="h-4 w-4" />
+              Transcrição
+            </Button>
+
             {/* AI Analysis Toggle */}
             <Button
               variant={showAIAnalysis ? 'default' : 'outline'}
@@ -155,6 +173,11 @@ export function ActiveCallBar() {
           </div>
         </div>
       </div>
+
+      {/* Live Transcription Panel */}
+      <LiveTranscription
+        isActive={showTranscription && call.status === 'connected'}
+      />
 
       {/* Live AI Analysis Panel */}
       <LiveCallAnalysis
