@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, forwardRef } from 'react';
 import { 
   Bot, 
   TrendingUp, 
@@ -50,6 +50,7 @@ interface LiveCallAnalysisProps {
   contactName: string;
   onClose: () => void;
   transcripts?: TranscriptEntry[];
+  inline?: boolean;
   onAnalysis?: (analysis: {
     sentiment: string;
     urgency: string;
@@ -72,7 +73,8 @@ const emotionIcons: Record<string, React.ReactNode> = {
   neutro: <Meh className="h-4 w-4 text-muted-foreground" />,
 };
 
-export function LiveCallAnalysis({ isActive, contactName, onClose, transcripts = [], onAnalysis }: LiveCallAnalysisProps) {
+export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps>(
+  function LiveCallAnalysis({ isActive, contactName, onClose, transcripts = [], inline = false, onAnalysis }, ref) {
   const [insights, setInsights] = useState<RealtimeInsight[]>([]);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -185,10 +187,14 @@ export function LiveCallAnalysis({ isActive, contactName, onClose, transcripts =
   if (!isActive) return null;
 
   return (
-    <Card className={cn(
-      'fixed bottom-4 right-4 z-50 shadow-2xl transition-all duration-300',
-      isExpanded ? 'w-[420px]' : 'w-[320px]'
-    )}>
+    <Card 
+      ref={ref}
+      className={cn(
+        'shadow-xl transition-all duration-300',
+        inline ? 'w-full' : 'fixed bottom-4 right-4 z-50',
+        !inline && (isExpanded ? 'w-[420px]' : 'w-[320px]')
+      )}
+    >
       <CardHeader className="flex flex-row items-center justify-between border-b border-border py-3">
         <CardTitle className="flex items-center gap-2 text-base">
           <div className="relative">
@@ -379,4 +385,4 @@ export function LiveCallAnalysis({ isActive, contactName, onClose, transcripts =
       </CardContent>
     </Card>
   );
-}
+});
