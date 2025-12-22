@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Trophy, Medal, Phone, Star, Users, FlaskConical, TrendingUp, Target, CheckCircle2, XCircle } from 'lucide-react';
+import { Trophy, Medal, Phone, Star, Users, FlaskConical, TrendingUp, Target, CheckCircle2, XCircle, Settings2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Table,
   TableBody,
@@ -20,6 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import {
@@ -32,7 +41,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { format, subDays, startOfDay, eachDayOfInterval } from 'date-fns';
+import { format, subDays, eachDayOfInterval } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 interface AgentStats {
@@ -46,15 +55,16 @@ interface AgentStats {
 }
 
 interface AgentGoals {
-  callsTarget: number;
-  satisfactionTarget: number;
-  performanceTarget: number;
+  agent_name: string;
+  calls_target: number;
+  satisfaction_target: number;
+  performance_target: number;
 }
 
-const DEFAULT_GOALS: AgentGoals = {
-  callsTarget: 50,
-  satisfactionTarget: 8,
-  performanceTarget: 8,
+const DEFAULT_GOALS = {
+  calls_target: 50,
+  satisfaction_target: 8,
+  performance_target: 8,
 };
 
 interface PerformanceDataPoint {
@@ -76,14 +86,66 @@ const AGENT_COLORS = [
 export default function AgentRanking() {
   const [agents, setAgents] = useState<AgentStats[]>([]);
   const [performanceData, setPerformanceData] = useState<PerformanceDataPoint[]>([]);
+  const [agentGoals, setAgentGoals] = useState<Map<string, AgentGoals>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState<string>('score');
   const [period, setPeriod] = useState<string>('all');
+  const [editingGoals, setEditingGoals] = useState<AgentGoals | null>(null);
+  const [goalsDialogOpen, setGoalsDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchAgentStats();
     fetchPerformanceHistory();
+    fetchAgentGoals();
   }, [period]);
+
+  const fetchAgentGoals = async () => {
+    const { data, error } = await supabase
+      .from('agent_goals')
+      .select('*');
+
+    if (error) {
+      console.error('Error fetching goals:', error);
+      return;
+    }
+
+    const goalsMap = new Map<string, AgentGoals>();
+    data?.forEach((g) => {
+      goalsMap.set(g.agent_name, g as AgentGoals);
+    });
+    setAgentGoals(goalsMap);
+  };
+
+  const getGoalsForAgent = (agentName: string) => {
+    return agentGoals.get(agentName) || {
+      agent_name: agentName,
+      ...DEFAULT_GOALS,
+    };
+  };
+
+  const saveGoals = async () => {
+    if (!editingGoals) return;
+
+    const { error } = await supabase
+      .from('agent_goals')
+      .upsert({
+        agent_name: editingGoals.agent_name,
+        calls_target: editingGoals.calls_target,
+        satisfaction_target: editingGoals.satisfaction_target,
+        performance_target: editingGoals.performance_target,
+      }, { onConflict: 'agent_name' });
+
+    if (error) {
+      toast.error('Erro ao salvar metas');
+      console.error('Error saving goals:', error);
+      return;
+    }
+
+    toast.success('Metas salvas com sucesso!');
+    fetchAgentGoals();
+    setGoalsDialogOpen(false);
+    setEditingGoals(null);
+  };
 
   const fetchAgentStats = async () => {
     setIsLoading(true);
@@ -665,13 +727,14 @@ export default function AgentRanking() {
           <CardContent>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {agents.slice(0, 6).map((agent) => {
-                const callsProgress = Math.min((agent.totalCalls / DEFAULT_GOALS.callsTarget) * 100, 100);
-                const satisfactionProgress = Math.min((agent.avgSatisfaction / DEFAULT_GOALS.satisfactionTarget) * 100, 100);
-                const performanceProgress = Math.min((agent.avgPerformance / DEFAULT_GOALS.performanceTarget) * 100, 100);
+                const goals = getGoalsForAgent(agent.name);
+                const callsProgress = Math.min((agent.totalCalls / goals.calls_target) * 100, 100);
+                const satisfactionProgress = Math.min((agent.avgSatisfaction / goals.satisfaction_target) * 100, 100);
+                const performanceProgress = Math.min((agent.avgPerformance / goals.performance_target) * 100, 100);
                 
-                const callsAchieved = agent.totalCalls >= DEFAULT_GOALS.callsTarget;
-                const satisfactionAchieved = agent.avgSatisfaction >= DEFAULT_GOALS.satisfactionTarget;
-                const performanceAchieved = agent.avgPerformance >= DEFAULT_GOALS.performanceTarget;
+                const callsAchieved = agent.totalCalls >= goals.calls_target;
+                const satisfactionAchieved = agent.avgSatisfaction >= goals.satisfaction_target;
+                const performanceAchieved = agent.avgPerformance >= goals.performance_target;
                 const allAchieved = callsAchieved && satisfactionAchieved && performanceAchieved;
 
                 return (
@@ -701,6 +764,17 @@ export default function AgentRanking() {
                           )}
                         </div>
                       </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => {
+                          setEditingGoals(goals);
+                          setGoalsDialogOpen(true);
+                        }}
+                      >
+                        <Settings2 className="h-4 w-4" />
+                      </Button>
                     </div>
 
                     <div className="space-y-3">
@@ -709,7 +783,7 @@ export default function AgentRanking() {
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-muted-foreground">Chamadas</span>
                           <span className={callsAchieved ? 'text-green-500 font-medium' : ''}>
-                            {agent.totalCalls}/{DEFAULT_GOALS.callsTarget}
+                            {agent.totalCalls}/{goals.calls_target}
                           </span>
                         </div>
                         <div className="relative">
@@ -725,7 +799,7 @@ export default function AgentRanking() {
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-muted-foreground">Satisfação</span>
                           <span className={satisfactionAchieved ? 'text-green-500 font-medium' : ''}>
-                            {agent.avgSatisfaction.toFixed(1)}/{DEFAULT_GOALS.satisfactionTarget}
+                            {agent.avgSatisfaction.toFixed(1)}/{goals.satisfaction_target}
                           </span>
                         </div>
                         <div className="relative">
@@ -741,7 +815,7 @@ export default function AgentRanking() {
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-muted-foreground">Performance</span>
                           <span className={performanceAchieved ? 'text-green-500 font-medium' : ''}>
-                            {agent.avgPerformance.toFixed(1)}/{DEFAULT_GOALS.performanceTarget}
+                            {agent.avgPerformance.toFixed(1)}/{goals.performance_target}
                           </span>
                         </div>
                         <div className="relative">
@@ -850,6 +924,77 @@ export default function AgentRanking() {
           )}
         </CardContent>
       </Card>
+
+      {/* Goals Configuration Dialog */}
+      <Dialog open={goalsDialogOpen} onOpenChange={setGoalsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Configurar Metas - {editingGoals?.agent_name}</DialogTitle>
+          </DialogHeader>
+          {editingGoals && (
+            <div className="space-y-4 pt-4">
+              <div className="space-y-2">
+                <Label htmlFor="calls_target">Meta de Chamadas</Label>
+                <Input
+                  id="calls_target"
+                  type="number"
+                  min={1}
+                  max={500}
+                  value={editingGoals.calls_target}
+                  onChange={(e) =>
+                    setEditingGoals({
+                      ...editingGoals,
+                      calls_target: Math.max(1, Math.min(500, parseInt(e.target.value) || 1)),
+                    })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="satisfaction_target">Meta de Satisfação (1-10)</Label>
+                <Input
+                  id="satisfaction_target"
+                  type="number"
+                  min={1}
+                  max={10}
+                  step={0.1}
+                  value={editingGoals.satisfaction_target}
+                  onChange={(e) =>
+                    setEditingGoals({
+                      ...editingGoals,
+                      satisfaction_target: Math.max(1, Math.min(10, parseFloat(e.target.value) || 1)),
+                    })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="performance_target">Meta de Performance (1-10)</Label>
+                <Input
+                  id="performance_target"
+                  type="number"
+                  min={1}
+                  max={10}
+                  step={0.1}
+                  value={editingGoals.performance_target}
+                  onChange={(e) =>
+                    setEditingGoals({
+                      ...editingGoals,
+                      performance_target: Math.max(1, Math.min(10, parseFloat(e.target.value) || 1)),
+                    })
+                  }
+                />
+              </div>
+              <div className="flex justify-end gap-2 pt-4">
+                <Button variant="outline" onClick={() => setGoalsDialogOpen(false)}>
+                  Cancelar
+                </Button>
+                <Button onClick={saveGoals}>
+                  Salvar Metas
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
