@@ -11,7 +11,6 @@ import {
   MoreHorizontal,
   Bot,
   FileText,
-  Save,
   Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -20,6 +19,7 @@ import { cn } from '@/lib/utils';
 import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
 import { LiveTranscription } from '@/components/calls/LiveTranscription';
 import { useCallSession } from '@/hooks/useCallSession';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 interface TranscriptEntry {
@@ -51,6 +51,7 @@ export function ActiveCallBar() {
   const [showAIAnalysis, setShowAIAnalysis] = useState(false);
   const [showTranscription, setShowTranscription] = useState(false);
   const [transcripts, setTranscripts] = useState<TranscriptEntry[]>([]);
+  const [isEnding, setIsEnding] = useState(false);
   
   const { currentSession, isSaving, startSession, endSession, addTranscript, addAnalysis } = useCallSession();
 
@@ -84,8 +85,51 @@ export function ActiveCallBar() {
 
   const handleHangup = async () => {
     if (currentSession) {
-      await endSession(duration);
-      toast.success('Chamada salva no histórico');
+      setIsEnding(true);
+      
+      try {
+        // Generate AI summary if we have transcripts
+        let summary;
+        if (transcripts.length > 0) {
+          toast.info('Gerando resumo da chamada...');
+          
+          const { data, error } = await supabase.functions.invoke('generate-summary', {
+            body: {
+              callInfo: {
+                callerName: call?.contactName || 'Cliente',
+                duration,
+                transcripts: transcripts.map(t => ({
+                  speaker: t.speaker === 'agent' ? 'Agente' : 'Cliente',
+                  text: t.text
+                }))
+              }
+            }
+          });
+
+          if (error) {
+            console.error('Error generating summary:', error);
+            toast.error('Erro ao gerar resumo, salvando sem resumo');
+          } else if (data && !data.error) {
+            summary = {
+              summary: data.summary,
+              mainTopics: data.mainTopics,
+              overallSentiment: data.overallSentiment,
+              customerSatisfaction: data.customerSatisfaction,
+              agentPerformance: data.agentPerformance,
+              nextSteps: data.nextSteps
+            };
+          }
+        }
+        
+        await endSession(duration, summary);
+        toast.success('Chamada salva com resumo no histórico');
+      } catch (error) {
+        console.error('Error ending call:', error);
+        await endSession(duration);
+        toast.success('Chamada salva no histórico');
+      } finally {
+        setIsEnding(false);
+      }
     }
     setCall(null);
     setShowAIAnalysis(false);
@@ -215,10 +259,15 @@ export function ActiveCallBar() {
               variant="destructive"
               size="sm"
               onClick={handleHangup}
+              disabled={isEnding}
               className="gap-2"
             >
-              <PhoneOff className="h-4 w-4" />
-              Encerrar
+              {isEnding ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <PhoneOff className="h-4 w-4" />
+              )}
+              {isEnding ? 'Gerando resumo...' : 'Encerrar'}
             </Button>
           </div>
         </div>
