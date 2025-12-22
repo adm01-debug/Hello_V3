@@ -120,26 +120,6 @@ const Calls = () => {
                 </Button>
               </div>
 
-              {/* Twilio */}
-              <div className="flex items-center gap-3 p-3 rounded-lg border">
-                <div className="p-2 rounded-lg bg-red-500/10">
-                  <Phone className="h-5 w-5 text-red-500" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <p className="font-medium">Twilio</p>
-                    <Badge variant="outline" className="text-xs">Pendente</Badge>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Chamadas telefônicas SIP/PSTN
-                  </p>
-                </div>
-                <Button variant="outline" size="sm" className="gap-1">
-                  <ExternalLink className="h-3 w-3" />
-                  Configurar
-                </Button>
-              </div>
-
               {/* SIP */}
               <div className="flex items-center gap-3 p-3 rounded-lg border">
                 <div className="p-2 rounded-lg bg-purple-500/10">

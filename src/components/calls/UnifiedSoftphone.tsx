@@ -63,14 +63,12 @@ const dialPadButtons = [
 
 const channelIcons: Record<CallChannel, React.ComponentType<{ className?: string }>> = {
   webrtc: Radio,
-  twilio: Phone,
   wavoip: MessageCircle,
   sip: Headphones
 };
 
 const channelColors: Record<CallChannel, string> = {
   webrtc: 'text-blue-500',
-  twilio: 'text-red-500',
   wavoip: 'text-green-500',
   sip: 'text-purple-500'
 };
@@ -197,11 +195,6 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       } else {
         endCall();
       }
-    } else if (activeChannel === 'twilio') {
-      // Twilio call - placeholder
-      toast.info('Twilio: Configure sua conta primeiro', {
-        description: 'Vá em Configurações > Integrações > Twilio'
-      });
     } else {
       // SIP call - placeholder
       if (!phoneNumber) {

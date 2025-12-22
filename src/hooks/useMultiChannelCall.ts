@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 
-export type CallChannel = 'webrtc' | 'twilio' | 'wavoip' | 'sip';
+export type CallChannel = 'webrtc' | 'wavoip' | 'sip';
 export type CallStatus = 'idle' | 'connecting' | 'ringing' | 'active' | 'on-hold' | 'ended';
 export type CallDirection = 'inbound' | 'outbound';
 
@@ -36,14 +36,6 @@ const AVAILABLE_CHANNELS: ChannelConfig[] = [
     configured: true,
     icon: 'Radio',
     description: 'Chamadas via navegador com IA'
-  },
-  {
-    id: 'twilio',
-    name: 'Twilio',
-    enabled: false,
-    configured: false,
-    icon: 'Phone',
-    description: 'Chamadas telefônicas SIP'
   },
   {
     id: 'wavoip',
