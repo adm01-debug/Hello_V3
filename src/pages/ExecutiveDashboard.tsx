@@ -70,6 +70,12 @@ interface CallsByDay {
   completed: number;
 }
 
+interface SatisfactionTrend {
+  date: string;
+  satisfaction: number;
+  performance: number;
+}
+
 interface SentimentData {
   name: string;
   value: number;
@@ -96,6 +102,7 @@ export default function ExecutiveDashboard() {
     satisfactionTrend: 0,
   });
   const [callsByDay, setCallsByDay] = useState<CallsByDay[]>([]);
+  const [satisfactionTrend, setSatisfactionTrend] = useState<SatisfactionTrend[]>([]);
   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
   const [topAgents, setTopAgents] = useState<TopAgent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -269,6 +276,34 @@ export default function ExecutiveDashboard() {
       };
     });
     setCallsByDay(callsByDayData);
+
+    // Satisfaction and Performance trend by day
+    const satisfactionTrendData = days.map((day) => {
+      const dayStr = format(day, 'yyyy-MM-dd');
+      const daySessions = sessions.filter(
+        (s) => format(new Date(s.created_at), 'yyyy-MM-dd') === dayStr
+      );
+      const daySessionIds = new Set(daySessions.map((s) => s.id));
+      const daySummaries = summaries?.filter((s) => daySessionIds.has(s.call_session_id)) || [];
+      
+      const validDaySummaries = daySummaries.filter(
+        (s) => s.customer_satisfaction || s.agent_performance_score
+      );
+      
+      const avgDaySatisfaction = validDaySummaries.length > 0
+        ? validDaySummaries.reduce((sum, s) => sum + (s.customer_satisfaction || 0), 0) / validDaySummaries.length
+        : 0;
+      const avgDayPerformance = validDaySummaries.length > 0
+        ? validDaySummaries.reduce((sum, s) => sum + (s.agent_performance_score || 0), 0) / validDaySummaries.length
+        : 0;
+      
+      return {
+        date: format(day, 'dd/MM', { locale: ptBR }),
+        satisfaction: Number(avgDaySatisfaction.toFixed(1)),
+        performance: Number(avgDayPerformance.toFixed(1)),
+      };
+    });
+    setSatisfactionTrend(satisfactionTrendData);
 
     // Sentiment distribution
     const sentimentCounts: Record<string, number> = {
@@ -564,6 +599,57 @@ export default function ExecutiveDashboard() {
                     name="Concluídas"
                     stroke="hsl(var(--chart-2))"
                     fill="hsl(var(--chart-2))"
+                    fillOpacity={0.3}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Satisfaction Trend Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Star className="h-5 w-5 text-yellow-500" />
+              Tendência de Satisfação e Performance (7 dias)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={satisfactionTrend}>
+                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <XAxis
+                    dataKey="date"
+                    tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                  />
+                  <YAxis
+                    domain={[0, 10]}
+                    tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--popover))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px',
+                    }}
+                  />
+                  <Legend />
+                  <Area
+                    type="monotone"
+                    dataKey="satisfaction"
+                    name="Satisfação"
+                    stroke="hsl(var(--chart-3))"
+                    fill="hsl(var(--chart-3))"
+                    fillOpacity={0.3}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="performance"
+                    name="Performance"
+                    stroke="hsl(var(--chart-4))"
+                    fill="hsl(var(--chart-4))"
                     fillOpacity={0.3}
                   />
                 </AreaChart>
