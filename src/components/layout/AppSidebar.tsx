@@ -7,7 +7,8 @@ import {
   Settings,
   Headphones,
   BarChart3,
-  Bot
+  Bot,
+  FileText
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -35,6 +36,7 @@ const mainNavItems = [
 const toolsNavItems = [
   { title: 'Assistente IA', url: '/ai', icon: Bot },
   { title: 'Comando de Voz', url: '/voice', icon: Mic },
+  { title: 'Transcrições', url: '/call-history', icon: FileText },
   { title: 'Relatórios', url: '/reports', icon: BarChart3 },
 ];
 

@@ -50,6 +50,16 @@ interface LiveCallAnalysisProps {
   contactName: string;
   onClose: () => void;
   transcripts?: TranscriptEntry[];
+  onAnalysis?: (analysis: {
+    sentiment: string;
+    urgency: string;
+    emotion: string;
+    suggestion: string;
+    riskAlert: boolean;
+    riskReason: string;
+    messageAnalyzed: string;
+    speakerRole: string;
+  }) => void;
 }
 
 const emotionIcons: Record<string, React.ReactNode> = {
@@ -62,7 +72,7 @@ const emotionIcons: Record<string, React.ReactNode> = {
   neutro: <Meh className="h-4 w-4 text-muted-foreground" />,
 };
 
-export function LiveCallAnalysis({ isActive, contactName, onClose, transcripts = [] }: LiveCallAnalysisProps) {
+export function LiveCallAnalysis({ isActive, contactName, onClose, transcripts = [], onAnalysis }: LiveCallAnalysisProps) {
   const [insights, setInsights] = useState<RealtimeInsight[]>([]);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -100,13 +110,25 @@ export function LiveCallAnalysis({ isActive, contactName, onClose, transcripts =
         const sentimentValue = insight.sentiment === 'positive' ? 75 : 
                               insight.sentiment === 'negative' ? 25 : 50;
         setOverallSentiment(prev => Math.round((prev * 0.7) + (sentimentValue * 0.3)));
+
+        // Send analysis to parent for saving
+        onAnalysis?.({
+          sentiment: insight.sentiment,
+          urgency: insight.urgency,
+          emotion: insight.emotion,
+          suggestion: insight.suggestion,
+          riskAlert: insight.riskAlert,
+          riskReason: insight.riskReason,
+          messageAnalyzed: text,
+          speakerRole: speaker,
+        });
       }
     } catch (error) {
       console.error('Analysis error:', error);
     } finally {
       setIsAnalyzing(false);
     }
-  }, []);
+  }, [onAnalysis]);
 
   // Analyze new transcripts when they arrive
   useEffect(() => {
