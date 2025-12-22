@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_goals: {
+        Row: {
+          agent_name: string
+          calls_target: number
+          created_at: string
+          id: string
+          performance_target: number
+          satisfaction_target: number
+          updated_at: string
+        }
+        Insert: {
+          agent_name: string
+          calls_target?: number
+          created_at?: string
+          id?: string
+          performance_target?: number
+          satisfaction_target?: number
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string
+          calls_target?: number
+          created_at?: string
+          id?: string
+          performance_target?: number
+          satisfaction_target?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       call_alerts: {
         Row: {
           alert_type: string
