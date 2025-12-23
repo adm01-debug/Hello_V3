@@ -12,7 +12,8 @@ import {
   PieChart,
   Bell,
   Trophy,
-  Gauge
+  Gauge,
+  Brain
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -35,6 +36,7 @@ const mainNavItems = [
   { title: 'Executivo', url: '/executive', icon: Gauge },
   { title: 'Chamadas', url: '/calls', icon: Phone },
   { title: 'Contatos', url: '/contacts', icon: Users },
+  { title: 'Insights', url: '/contacts/insights', icon: Brain },
   { title: 'Histórico', url: '/history', icon: Clock },
 ];
 
