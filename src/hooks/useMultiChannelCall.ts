@@ -1,8 +1,15 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 
 export type CallChannel = 'webrtc' | 'wavoip' | 'sip';
-export type CallStatus = 'idle' | 'connecting' | 'ringing' | 'active' | 'on-hold' | 'ended' | 'conference';
+export type CallStatus = 'idle' | 'connecting' | 'ringing' | 'active' | 'on-hold' | 'ended' | 'conference' | 'transferring';
 export type CallDirection = 'inbound' | 'outbound';
+export type TransferType = 'blind' | 'attended';
+
+export interface TransferTarget {
+  type: 'agent' | 'external';
+  name?: string;
+  phoneNumber: string;
+}
 
 export interface CallSession {
   id: string;
@@ -18,6 +25,8 @@ export interface CallSession {
   isRecording: boolean;
   isInConference: boolean;
   conferenceId?: string;
+  isTransferring?: boolean;
+  transferTarget?: TransferTarget;
   transcripts: Array<{ role: 'user' | 'agent' | 'system'; text: string; timestamp: Date }>;
 }
 
@@ -405,6 +414,82 @@ export function useMultiChannelCall() {
     );
   }, [activeCalls]);
 
+  // Transfer call to agent or external number
+  const transferCall = useCallback((
+    callId: string, 
+    target: TransferTarget, 
+    transferType: TransferType
+  ) => {
+    setActiveCalls(prev => prev.map(call => {
+      if (call.id !== callId) return call;
+      
+      if (transferType === 'blind') {
+        // Blind transfer - immediately mark as transferring then end
+        return {
+          ...call,
+          status: 'transferring' as CallStatus,
+          isTransferring: true,
+          transferTarget: target
+        };
+      } else {
+        // Attended transfer - put on hold and start consultation
+        return {
+          ...call,
+          isOnHold: true,
+          status: 'on-hold' as CallStatus,
+          isTransferring: true,
+          transferTarget: target
+        };
+      }
+    }));
+
+    // For blind transfer, simulate completion after a short delay
+    if (transferType === 'blind') {
+      setTimeout(() => {
+        completeTransfer(callId);
+      }, 2000);
+    }
+  }, []);
+
+  // Complete the transfer
+  const completeTransfer = useCallback((callId: string) => {
+    const call = activeCalls.find(c => c.id === callId);
+    if (!call) return;
+
+    stopDurationTimer(callId);
+    
+    const transferredCall: CallSession = {
+      ...call,
+      status: 'ended'
+    };
+    setCallHistory(prev => [transferredCall, ...prev].slice(0, 50));
+    
+    setActiveCalls(prev => prev.filter(c => c.id !== callId));
+    
+    // Switch to another active call if available
+    const remaining = activeCalls.filter(c => c.id !== callId);
+    if (remaining.length > 0 && activeCallId === callId) {
+      setActiveCallId(remaining[0].id);
+      setActiveChannel(remaining[0].channel);
+    } else if (remaining.length === 0) {
+      setActiveCallId(null);
+    }
+  }, [activeCalls, activeCallId, stopDurationTimer]);
+
+  // Cancel ongoing transfer
+  const cancelTransfer = useCallback((callId: string) => {
+    setActiveCalls(prev => prev.map(call => {
+      if (call.id !== callId) return call;
+      return {
+        ...call,
+        isOnHold: false,
+        status: 'active' as CallStatus,
+        isTransferring: false,
+        transferTarget: undefined
+      };
+    }));
+  }, []);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -447,6 +532,11 @@ export function useMultiChannelCall() {
     addToConference,
     removeFromConference,
     endConference,
-    getCallsAvailableForConference
+    getCallsAvailableForConference,
+    
+    // Transfer actions
+    transferCall,
+    completeTransfer,
+    cancelTransfer
   };
 }

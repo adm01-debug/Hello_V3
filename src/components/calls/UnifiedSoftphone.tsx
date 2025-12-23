@@ -107,7 +107,8 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     startConference,
     addToConference,
     removeFromConference,
-    endConference
+    endConference,
+    transferCall
   } = useMultiChannelCall();
 
   // Wavoip hook
@@ -308,6 +309,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
               onAddToConference={addToConference}
               onRemoveFromConference={removeFromConference}
               onEndConference={endConference}
+              onTransferCall={transferCall}
             />
             
             <DropdownMenu>

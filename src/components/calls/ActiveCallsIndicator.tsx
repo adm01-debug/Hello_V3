@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell, Merge, X, UserPlus } from 'lucide-react';
+import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell, Merge, X, UserPlus, PhoneForwarded } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { CallSession, CallChannel, ConferenceCall } from '@/hooks/useMultiChannelCall';
+import { CallSession, CallChannel, ConferenceCall, TransferTarget, TransferType } from '@/hooks/useMultiChannelCall';
 import { formatDuration } from '@/data/mockData';
 import { useHoldReminder, REMINDER_INTERVALS, ReminderInterval } from '@/hooks/useHoldReminder';
+import { TransferCallDialog } from './TransferCallDialog';
 import {
   Popover,
   PopoverContent,
@@ -33,6 +34,7 @@ interface ActiveCallsIndicatorProps {
   onAddToConference: (callId: string) => void;
   onRemoveFromConference: (callId: string) => void;
   onEndConference: () => void;
+  onTransferCall: (callId: string, target: TransferTarget, transferType: TransferType) => void;
 }
 
 const channelLabels: Record<CallChannel, string> = {
@@ -51,11 +53,23 @@ export function ActiveCallsIndicator({
   onStartConference,
   onAddToConference,
   onRemoveFromConference,
-  onEndConference
+  onEndConference,
+  onTransferCall
 }: ActiveCallsIndicatorProps) {
   const { isEnabled, interval, toggleReminder, changeInterval, callsOnHold, initAudio } = useHoldReminder(activeCalls);
   const [selectedForConference, setSelectedForConference] = useState<string[]>([]);
   const [isSelectingForConference, setIsSelectingForConference] = useState(false);
+  const [transferDialogOpen, setTransferDialogOpen] = useState(false);
+  const [transferCallId, setTransferCallId] = useState<string | null>(null);
+
+  if (activeCalls.length === 0) return null;
+
+  const transferCall = activeCalls.find(c => c.id === transferCallId);
+
+  const handleOpenTransferDialog = (callId: string) => {
+    setTransferCallId(callId);
+    setTransferDialogOpen(true);
+  };
 
   if (activeCalls.length === 0) return null;
 
@@ -342,6 +356,23 @@ export function ActiveCallsIndicator({
               
               {!isSelectingForConference && !call.isInConference && (
                 <div className="flex items-center gap-1">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenTransferDialog(call.id);
+                        }}
+                        disabled={call.isTransferring}
+                      >
+                        <PhoneForwarded className="h-3.5 w-3.5" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Transferir</TooltipContent>
+                  </Tooltip>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -370,10 +401,24 @@ export function ActiveCallsIndicator({
                   </Button>
                 </div>
               )}
+
+              {call.isTransferring && (
+                <Badge variant="outline" className="text-xs animate-pulse">
+                  Transferindo...
+                </Badge>
+              )}
             </div>
           ))}
         </div>
       </PopoverContent>
+
+      <TransferCallDialog
+        open={transferDialogOpen}
+        onOpenChange={setTransferDialogOpen}
+        callId={transferCallId || ''}
+        callerName={transferCall?.contactName || transferCall?.phoneNumber}
+        onTransfer={onTransferCall}
+      />
     </Popover>
   );
 }
