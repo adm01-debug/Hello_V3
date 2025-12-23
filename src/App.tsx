@@ -19,6 +19,7 @@ import Alerts from "./pages/Alerts";
 import AgentRanking from "./pages/AgentRanking";
 import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import Recordings from "./pages/Recordings";
+import HoldMetrics from "./pages/HoldMetrics";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/voice" element={<Voice />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/recordings" element={<Recordings />} />
+              <Route path="/hold-metrics" element={<HoldMetrics />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
