@@ -163,12 +163,87 @@ export function useHoldReminder(activeCalls: CallSession[]) {
   const [activeAlerts, setActiveAlerts] = useState<HoldAlert[]>([]);
   const [lastReminderTime, setLastReminderTime] = useState<Record<string, number>>({});
   const [alertedCalls, setAlertedCalls] = useState<Record<string, { warning: boolean; critical: boolean }>>({});
+  const [browserNotificationsEnabled, setBrowserNotificationsEnabled] = useState(false);
   
   const intervalRef = useRef<number | null>(null);
   const playSoundRef = useRef<(() => void) | null>(null);
   const playUrgentSoundRef = useRef<(() => void) | null>(null);
   
   const intervalMs = interval * 1000;
+
+  // Check browser notification permission on mount
+  useEffect(() => {
+    if ('Notification' in window) {
+      setBrowserNotificationsEnabled(Notification.permission === 'granted');
+    }
+  }, []);
+
+  // Request browser notification permission
+  const requestBrowserNotifications = useCallback(async () => {
+    if (!('Notification' in window)) {
+      toast({
+        title: "Notificações não suportadas",
+        description: "Seu navegador não suporta notificações nativas.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    try {
+      const permission = await Notification.requestPermission();
+      const granted = permission === 'granted';
+      setBrowserNotificationsEnabled(granted);
+      
+      if (granted) {
+        toast({
+          title: "Notificações ativadas",
+          description: "Você receberá alertas críticos de espera no navegador.",
+        });
+      } else {
+        toast({
+          title: "Permissão negada",
+          description: "Você não receberá notificações nativas do navegador.",
+          variant: "destructive",
+        });
+      }
+      
+      return granted;
+    } catch (error) {
+      console.log('Failed to request notification permission:', error);
+      return false;
+    }
+  }, []);
+
+  // Send browser notification for critical alerts
+  const sendBrowserNotification = useCallback((alert: HoldAlert) => {
+    if (!browserNotificationsEnabled || Notification.permission !== 'granted') return;
+
+    try {
+      const notification = new Notification(
+        alert.severity === 'critical' 
+          ? '🚨 Alerta Crítico de Espera' 
+          : '⚠️ Alerta de Tempo em Espera',
+        {
+          body: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)}${alert.severity === 'critical' ? ' - Atenção urgente necessária!' : ''}`,
+          icon: '/favicon.ico',
+          tag: `hold-alert-${alert.callId}`,
+          requireInteraction: alert.severity === 'critical',
+        }
+      );
+
+      notification.onclick = () => {
+        window.focus();
+        notification.close();
+      };
+
+      // Auto close non-critical after 10s
+      if (alert.severity !== 'critical') {
+        setTimeout(() => notification.close(), 10000);
+      }
+    } catch (error) {
+      console.log('Failed to send browser notification:', error);
+    }
+  }, [browserNotificationsEnabled]);
 
   // Initialize audio on first user interaction
   const initAudio = useCallback(() => {
@@ -252,6 +327,9 @@ export function useHoldReminder(activeCalls: CallSession[]) {
           }
         }
         
+        // Send browser notification for critical alerts
+        sendBrowserNotification(alert);
+        
         showThresholdAlert(alert);
       } else if (holdTime >= alertThreshold && !callAlerts.warning) {
         // Warning alert: at the threshold
@@ -284,7 +362,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     }
     
     setAlertedCalls(newAlertedCalls);
-  }, [activeCalls, alertsEnabled, alertThreshold, alertedCalls, showThresholdAlert]);
+  }, [activeCalls, alertsEnabled, alertThreshold, alertedCalls, showThresholdAlert, sendBrowserNotification]);
 
   const playHoldReminder = useCallback(() => {
     if (!isEnabled) return;
@@ -430,11 +508,13 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     alertThreshold,
     alertsEnabled,
     activeAlerts,
+    browserNotificationsEnabled,
     toggleReminder,
     toggleAlerts,
     changeInterval,
     changeAlertThreshold,
     clearAlerts,
+    requestBrowserNotifications,
     callsOnHold: getCallsOnHold(),
     initAudio
   };
