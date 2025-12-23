@@ -45,7 +45,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useMultiChannelCall, CallChannel, CallSession } from '@/hooks/useMultiChannelCall';
 import { useWavoipCall } from '@/hooks/useWavoipCall';
 import { mockContacts, getInitials, formatDuration } from '@/data/mockData';
-
+import { ActiveCallsIndicator } from './ActiveCallsIndicator';
 const dialPadButtons = [
   { digit: '1', letters: '' },
   { digit: '2', letters: 'ABC' },
@@ -87,11 +87,15 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   const {
     activeChannel,
     currentCall,
+    activeCalls,
+    activeCallId,
     callHistory,
     channels,
     isInCall,
+    canAddCall,
     setActiveChannel,
     initiateCall,
+    switchToCall,
     updateCallStatus,
     endCall,
     toggleMute,
@@ -154,12 +158,21 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   };
 
   const handleStartCall = useCallback(async () => {
+    if (!canAddCall) {
+      toast.error('Máximo de 3 chamadas simultâneas atingido');
+      return;
+    }
+
     if (activeChannel === 'webrtc') {
       // WebRTC call with ElevenLabs
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
         
         const call = initiateCall('webrtc', undefined, 'Agente IA');
+        if (!call) {
+          toast.error('Não foi possível iniciar a chamada');
+          return;
+        }
         onCallStart?.(call);
         
         // Get signed URL from edge function
@@ -187,13 +200,17 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       }
 
       const call = initiateCall('wavoip', phoneNumber, `WhatsApp ${phoneNumber}`);
+      if (!call) {
+        toast.error('Não foi possível iniciar a chamada');
+        return;
+      }
       onCallStart?.(call);
 
       const success = await wavoip.startCall(phoneNumber);
       if (success) {
-        updateCallStatus('active');
+        updateCallStatus('active', call.id);
       } else {
-        endCall();
+        endCall(call.id);
       }
     } else {
       // SIP call - placeholder
@@ -203,13 +220,17 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       }
       
       const call = initiateCall('sip', phoneNumber);
+      if (!call) {
+        toast.error('Não foi possível iniciar a chamada');
+        return;
+      }
       onCallStart?.(call);
       
       // Simulate connection
-      setTimeout(() => updateCallStatus('ringing'), 500);
-      setTimeout(() => updateCallStatus('active'), 2000);
+      setTimeout(() => updateCallStatus('ringing', call.id), 500);
+      setTimeout(() => updateCallStatus('active', call.id), 2000);
     }
-  }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart]);
+  }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart, canAddCall]);
 
   const handleEndCall = useCallback(async () => {
     if (currentCall?.channel === 'webrtc') {
@@ -269,6 +290,15 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                 </CardDescription>
               </div>
             </div>
+
+            {/* Active calls indicator */}
+            <ActiveCallsIndicator
+              activeCalls={activeCalls}
+              activeCallId={activeCallId}
+              onSwitchCall={switchToCall}
+              onEndCall={endCall}
+              onToggleHold={toggleHold}
+            />
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -613,8 +643,8 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                 </div>
               )}
 
-              {/* Call button */}
-              {!isInCall && (
+              {/* Call button - show even when in call if can add more */}
+              {(!isInCall || canAddCall) && (
                 <Button
                   className={cn(
                     "w-full h-14 gap-2 text-lg",
@@ -623,7 +653,8 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                   onClick={handleStartCall}
                   disabled={
                     (activeChannel !== 'webrtc' && !phoneNumber) ||
-                    (activeChannel === 'wavoip' && !wavoip.isConfigured)
+                    (activeChannel === 'wavoip' && !wavoip.isConfigured) ||
+                    !canAddCall
                   }
                 >
                   {wavoip.status === 'connecting' ? (
@@ -633,11 +664,15 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                   ) : (
                     <Phone className="h-5 w-5" />
                   )}
-                  {activeChannel === 'webrtc' 
-                    ? 'Iniciar Chamada IA' 
-                    : activeChannel === 'wavoip' 
-                    ? 'Ligar via WhatsApp' 
-                    : 'Ligar'}
+                  {isInCall ? (
+                    <>Nova Chamada ({activeCalls.length}/3)</>
+                  ) : (
+                    activeChannel === 'webrtc' 
+                      ? 'Iniciar Chamada IA' 
+                      : activeChannel === 'wavoip' 
+                      ? 'Ligar via WhatsApp' 
+                      : 'Ligar'
+                  )}
                 </Button>
               )}
             </TabsContent>
