@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-
+import { supabase } from '@/integrations/supabase/client';
 export type CallChannel = 'webrtc' | 'wavoip' | 'sip';
 export type CallStatus = 'idle' | 'connecting' | 'ringing' | 'active' | 'on-hold' | 'ended' | 'conference' | 'transferring';
 export type CallDirection = 'inbound' | 'outbound';
@@ -31,6 +31,9 @@ export interface CallSession {
   isTransferring?: boolean;
   transferTarget?: TransferTarget;
   transcripts: Array<{ role: 'user' | 'agent' | 'system'; text: string; timestamp: Date }>;
+  // Database tracking fields
+  dbSessionId?: string; // ID from call_sessions table
+  agentName?: string; // Name of the agent handling the call
 }
 
 export interface ConferenceCall {
@@ -272,18 +275,83 @@ export function useMultiChannelCall() {
     }
   }, []);
 
+  // Persist hold event to database
+  const persistHoldEvent = useCallback(async (
+    callId: string,
+    callSessionId: string | undefined,
+    agentName: string | undefined,
+    action: 'start' | 'end',
+    durationSeconds?: number
+  ) => {
+    try {
+      if (action === 'start') {
+        // Create a new hold event
+        const { error } = await supabase
+          .from('hold_events')
+          .insert({
+            call_session_id: callSessionId || null,
+            agent_name: agentName || null,
+            started_at: new Date().toISOString(),
+          });
+        
+        if (error) {
+          console.error('Error persisting hold start event:', error);
+        } else {
+          console.log(`[Hold Event] Started for call ${callId}`);
+        }
+      } else {
+        // Update the most recent hold event for this call with end time and duration
+        const { data: recentEvent, error: fetchError } = await supabase
+          .from('hold_events')
+          .select('id')
+          .eq('call_session_id', callSessionId)
+          .is('ended_at', null)
+          .order('started_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (fetchError) {
+          console.error('Error fetching hold event:', fetchError);
+          return;
+        }
+
+        if (recentEvent) {
+          const { error: updateError } = await supabase
+            .from('hold_events')
+            .update({
+              ended_at: new Date().toISOString(),
+              duration_seconds: durationSeconds || 0,
+            })
+            .eq('id', recentEvent.id);
+
+          if (updateError) {
+            console.error('Error updating hold event:', updateError);
+          } else {
+            console.log(`[Hold Event] Ended for call ${callId}, duration: ${durationSeconds}s`);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error persisting hold event:', error);
+    }
+  }, []);
+
   // Toggle hold for current call with hold time tracking
   const toggleHold = useCallback((callId?: string) => {
     const targetCallId = callId || activeCallId;
     if (!targetCallId) return;
+
+    // Find the call to get its metadata for persistence
+    const targetCall = activeCalls.find(c => c.id === targetCallId);
 
     setActiveCalls(prev => prev.map(call => {
       if (call.id !== targetCallId) return call;
       const newIsOnHold = !call.isOnHold;
       
       if (newIsOnHold) {
-        // Starting hold - start timer
+        // Starting hold - start timer and persist
         startHoldTimer(targetCallId);
+        persistHoldEvent(targetCallId, call.dbSessionId, call.agentName, 'start');
         return { 
           ...call, 
           isOnHold: true,
@@ -292,8 +360,13 @@ export function useMultiChannelCall() {
           status: 'on-hold' as CallStatus
         };
       } else {
-        // Ending hold - stop timer
+        // Ending hold - stop timer and persist
         stopHoldTimer(targetCallId);
+        // Calculate duration since hold started
+        const holdDuration = call.holdStartedAt 
+          ? Math.floor((Date.now() - call.holdStartedAt.getTime()) / 1000)
+          : 0;
+        persistHoldEvent(targetCallId, call.dbSessionId, call.agentName, 'end', holdDuration);
         return { 
           ...call, 
           isOnHold: false,
@@ -302,7 +375,14 @@ export function useMultiChannelCall() {
         };
       }
     }));
-  }, [activeCallId, startHoldTimer, stopHoldTimer]);
+  }, [activeCallId, activeCalls, startHoldTimer, stopHoldTimer, persistHoldEvent]);
+
+  // Set database session ID for a call
+  const setCallDbSession = useCallback((callId: string, dbSessionId: string, agentName?: string) => {
+    setActiveCalls(prev => prev.map(call => 
+      call.id === callId ? { ...call, dbSessionId, agentName } : call
+    ));
+  }, []);
 
   // Toggle recording for current call
   const toggleRecording = useCallback((callId?: string) => {
@@ -628,6 +708,9 @@ export function useMultiChannelCall() {
     // Transfer actions
     transferCall,
     completeTransfer,
-    cancelTransfer
+    cancelTransfer,
+    
+    // Database session tracking
+    setCallDbSession
   };
 }
