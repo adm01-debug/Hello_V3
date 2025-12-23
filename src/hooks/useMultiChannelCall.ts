@@ -36,6 +36,8 @@ export interface ConferenceCall {
   startedAt: Date;
   duration: number;
   isActive: boolean;
+  isRecording: boolean;
+  recordingStartedAt?: Date;
 }
 
 export interface ChannelConfig {
@@ -290,19 +292,21 @@ export function useMultiChannelCall() {
     return activeCalls.find(c => c.id === callId) || null;
   }, [activeCalls]);
 
-  // Start conference call - merge multiple calls
+  // Start conference call - merge multiple calls with automatic recording
   const startConference = useCallback((callIds: string[]) => {
     if (callIds.length < 2) return null;
 
     const conferenceId = `conf-${Date.now()}`;
+    const now = new Date();
     
-    // Update all participating calls
+    // Update all participating calls - enable recording automatically
     setActiveCalls(prev => prev.map(call => {
       if (callIds.includes(call.id)) {
         return {
           ...call,
           isInConference: true,
           isOnHold: false,
+          isRecording: true, // Auto-enable recording for conference
           status: 'conference' as CallStatus,
           conferenceId
         };
@@ -313,9 +317,11 @@ export function useMultiChannelCall() {
     const newConference: ConferenceCall = {
       id: conferenceId,
       participantIds: callIds,
-      startedAt: new Date(),
+      startedAt: now,
       duration: 0,
-      isActive: true
+      isActive: true,
+      isRecording: true, // Conference recording enabled by default
+      recordingStartedAt: now
     };
 
     setConference(newConference);
@@ -325,10 +331,11 @@ export function useMultiChannelCall() {
       setConference(prev => prev ? { ...prev, duration: prev.duration + 1 } : null);
     }, 1000);
 
+    console.log(`[Conference] Started with auto-recording: ${conferenceId}`);
     return newConference;
   }, []);
 
-  // Add call to existing conference
+  // Add call to existing conference - inherit recording state
   const addToConference = useCallback((callId: string) => {
     if (!conference) return;
 
@@ -338,6 +345,7 @@ export function useMultiChannelCall() {
           ...call,
           isInConference: true,
           isOnHold: false,
+          isRecording: conference.isRecording, // Inherit conference recording state
           status: 'conference' as CallStatus,
           conferenceId: conference.id
         };
@@ -349,6 +357,8 @@ export function useMultiChannelCall() {
       ...prev,
       participantIds: [...prev.participantIds, callId]
     } : null);
+    
+    console.log(`[Conference] Added call ${callId} with recording: ${conference.isRecording}`);
   }, [conference]);
 
   // Remove call from conference
@@ -380,6 +390,32 @@ export function useMultiChannelCall() {
     }
   }, [conference]);
 
+  // Toggle conference recording
+  const toggleConferenceRecording = useCallback(() => {
+    if (!conference) return;
+
+    const newRecordingState = !conference.isRecording;
+    
+    // Update all participating calls
+    setActiveCalls(prev => prev.map(call => {
+      if (call.conferenceId === conference.id) {
+        return {
+          ...call,
+          isRecording: newRecordingState
+        };
+      }
+      return call;
+    }));
+
+    setConference(prev => prev ? {
+      ...prev,
+      isRecording: newRecordingState,
+      recordingStartedAt: newRecordingState ? new Date() : undefined
+    } : null);
+    
+    console.log(`[Conference] Recording ${newRecordingState ? 'started' : 'stopped'}`);
+  }, [conference]);
+
   // End conference call
   const endConference = useCallback(() => {
     if (!conference) return;
@@ -390,12 +426,15 @@ export function useMultiChannelCall() {
       conferenceDurationRef.current = null;
     }
 
-    // Update all participating calls back to active
+    console.log(`[Conference] Ended. Recording was: ${conference.isRecording}`);
+
+    // Update all participating calls back to active, stop recording
     setActiveCalls(prev => prev.map(call => {
       if (call.conferenceId === conference.id) {
         return {
           ...call,
           isInConference: false,
+          isRecording: false, // Stop recording when conference ends
           status: 'active' as CallStatus,
           conferenceId: undefined
         };
@@ -533,6 +572,7 @@ export function useMultiChannelCall() {
     removeFromConference,
     endConference,
     getCallsAvailableForConference,
+    toggleConferenceRecording,
     
     // Transfer actions
     transferCall,
