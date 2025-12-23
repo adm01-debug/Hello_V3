@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { CallSession, CallChannel } from '@/hooks/useMultiChannelCall';
 import { formatDuration } from '@/data/mockData';
-import { useHoldReminder } from '@/hooks/useHoldReminder';
+import { useHoldReminder, REMINDER_INTERVALS, ReminderInterval } from '@/hooks/useHoldReminder';
 import {
   Popover,
   PopoverContent,
@@ -15,6 +15,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from '@/components/ui/toggle-group';
 
 interface ActiveCallsIndicatorProps {
   activeCalls: CallSession[];
@@ -37,14 +41,21 @@ export function ActiveCallsIndicator({
   onEndCall,
   onToggleHold
 }: ActiveCallsIndicatorProps) {
-  const { isEnabled, toggleReminder, callsOnHold, initAudio } = useHoldReminder(activeCalls);
+  const { isEnabled, interval, toggleReminder, changeInterval, callsOnHold, initAudio } = useHoldReminder(activeCalls);
 
   if (activeCalls.length === 0) return null;
 
   const handleToggleReminder = (e: React.MouseEvent) => {
     e.stopPropagation();
-    initAudio(); // Initialize audio on user interaction
+    initAudio();
     toggleReminder();
+  };
+
+  const handleIntervalChange = (value: string) => {
+    if (value) {
+      initAudio();
+      changeInterval(Number(value) as ReminderInterval);
+    }
   };
 
   return (
@@ -101,11 +112,33 @@ export function ActiveCallsIndicator({
           </div>
           
           {callsOnHold.length > 0 && (
-            <div className="px-2 py-1.5 bg-warning/10 border border-warning/30 rounded-md flex items-center gap-2">
-              <Volume2 className="h-4 w-4 text-warning animate-pulse" />
-              <span className="text-xs text-warning-foreground">
-                {callsOnHold.length} chamada{callsOnHold.length > 1 ? 's' : ''} em espera • Lembrete a cada 30s
-              </span>
+            <div className="px-2 py-2 bg-warning/10 border border-warning/30 rounded-md space-y-2">
+              <div className="flex items-center gap-2">
+                <Volume2 className="h-4 w-4 text-warning animate-pulse" />
+                <span className="text-xs text-warning-foreground">
+                  {callsOnHold.length} chamada{callsOnHold.length > 1 ? 's' : ''} em espera
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Intervalo:</span>
+                <ToggleGroup
+                  type="single"
+                  value={interval.toString()}
+                  onValueChange={handleIntervalChange}
+                  className="gap-1"
+                >
+                  {REMINDER_INTERVALS.map((opt) => (
+                    <ToggleGroupItem
+                      key={opt.value}
+                      value={opt.value.toString()}
+                      size="sm"
+                      className="h-6 px-2 text-xs"
+                    >
+                      {opt.label}
+                    </ToggleGroupItem>
+                  ))}
+                </ToggleGroup>
+              </div>
             </div>
           )}
           
