@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell, Merge, X, UserPlus, PhoneForwarded, Mic, MicOff, Clock } from 'lucide-react';
+import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell, Merge, X, UserPlus, PhoneForwarded, Mic, MicOff, Clock, AlertTriangle, BellRing } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { CallSession, CallChannel, ConferenceCall, TransferTarget, TransferType } from '@/hooks/useMultiChannelCall';
 import { formatDuration } from '@/data/mockData';
-import { useHoldReminder, REMINDER_INTERVALS, ReminderInterval } from '@/hooks/useHoldReminder';
+import { useHoldReminder, REMINDER_INTERVALS, ALERT_THRESHOLDS, ReminderInterval, HoldAlertThreshold } from '@/hooks/useHoldReminder';
 import { TransferCallDialog } from './TransferCallDialog';
 import {
   Popover,
@@ -58,7 +58,20 @@ export function ActiveCallsIndicator({
   onTransferCall,
   onToggleConferenceRecording
 }: ActiveCallsIndicatorProps) {
-  const { isEnabled, interval, toggleReminder, changeInterval, callsOnHold, initAudio } = useHoldReminder(activeCalls);
+  const { 
+    isEnabled, 
+    interval, 
+    alertThreshold,
+    alertsEnabled,
+    activeAlerts,
+    toggleReminder, 
+    toggleAlerts,
+    changeInterval, 
+    changeAlertThreshold,
+    clearAlerts,
+    callsOnHold, 
+    initAudio 
+  } = useHoldReminder(activeCalls);
   const [selectedForConference, setSelectedForConference] = useState<string[]>([]);
   const [isSelectingForConference, setIsSelectingForConference] = useState(false);
   const [transferDialogOpen, setTransferDialogOpen] = useState(false);
@@ -167,15 +180,17 @@ export function ActiveCallsIndicator({
           </div>
           
           {callsOnHold.length > 0 && (
-            <div className="px-2 py-2 bg-warning/10 border border-warning/30 rounded-md space-y-2">
+            <div className="px-2 py-2 bg-warning/10 border border-warning/30 rounded-md space-y-3">
               <div className="flex items-center gap-2">
                 <Volume2 className="h-4 w-4 text-warning animate-pulse" />
                 <span className="text-xs text-warning-foreground">
                   {callsOnHold.length} chamada{callsOnHold.length > 1 ? 's' : ''} em espera
                 </span>
               </div>
+              
+              {/* Reminder interval */}
               <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">Intervalo:</span>
+                <span className="text-xs text-muted-foreground">Lembrete:</span>
                 <ToggleGroup
                   type="single"
                   value={interval.toString()}
@@ -194,6 +209,100 @@ export function ActiveCallsIndicator({
                   ))}
                 </ToggleGroup>
               </div>
+
+              {/* Alert threshold */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className={cn(
+                          "h-5 w-5",
+                          alertsEnabled ? "text-destructive" : "text-muted-foreground"
+                        )}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          initAudio();
+                          toggleAlerts();
+                        }}
+                      >
+                        {alertsEnabled ? (
+                          <AlertTriangle className="h-3 w-3" />
+                        ) : (
+                          <BellRing className="h-3 w-3" />
+                        )}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {alertsEnabled ? 'Desativar alertas de limite' : 'Ativar alertas de limite'}
+                    </TooltipContent>
+                  </Tooltip>
+                  <span className="text-xs text-muted-foreground">Alerta:</span>
+                </div>
+                <ToggleGroup
+                  type="single"
+                  value={alertThreshold.toString()}
+                  onValueChange={(value) => {
+                    if (value) {
+                      initAudio();
+                      changeAlertThreshold(Number(value) as HoldAlertThreshold);
+                    }
+                  }}
+                  className="gap-1"
+                  disabled={!alertsEnabled}
+                >
+                  {ALERT_THRESHOLDS.slice(0, 4).map((opt) => (
+                    <ToggleGroupItem
+                      key={opt.value}
+                      value={opt.value.toString()}
+                      size="sm"
+                      className="h-6 px-2 text-xs"
+                    >
+                      {opt.label}
+                    </ToggleGroupItem>
+                  ))}
+                </ToggleGroup>
+              </div>
+
+              {/* Active alerts */}
+              {activeAlerts.length > 0 && (
+                <div className="pt-2 border-t border-warning/20 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-destructive">
+                      {activeAlerts.length} alerta{activeAlerts.length > 1 ? 's' : ''} ativo{activeAlerts.length > 1 ? 's' : ''}
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-5 text-xs px-2"
+                      onClick={clearAlerts}
+                    >
+                      Limpar
+                    </Button>
+                  </div>
+                  {activeAlerts.slice(0, 3).map((alert, idx) => (
+                    <div 
+                      key={`${alert.callId}-${idx}`}
+                      className={cn(
+                        "flex items-center gap-2 p-1.5 rounded text-xs",
+                        alert.severity === 'critical' 
+                          ? "bg-destructive/10 text-destructive" 
+                          : "bg-warning/10 text-warning-foreground"
+                      )}
+                    >
+                      {alert.severity === 'critical' ? (
+                        <AlertTriangle className="h-3 w-3 animate-pulse" />
+                      ) : (
+                        <Clock className="h-3 w-3" />
+                      )}
+                      <span className="truncate flex-1">{alert.callName}</span>
+                      <span className="font-mono">{formatDuration(alert.holdTime)}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

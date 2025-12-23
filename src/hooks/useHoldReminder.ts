@@ -3,15 +3,35 @@ import { CallSession } from './useMultiChannelCall';
 import { toast } from '@/hooks/use-toast';
 
 export type ReminderInterval = 15 | 30 | 60;
+export type HoldAlertThreshold = 30 | 60 | 120 | 180 | 300;
 
 const STORAGE_KEY_INTERVAL = 'holdReminder_interval';
 const STORAGE_KEY_ENABLED = 'holdReminder_enabled';
+const STORAGE_KEY_ALERT_THRESHOLD = 'holdReminder_alertThreshold';
+const STORAGE_KEY_ALERTS_ENABLED = 'holdReminder_alertsEnabled';
 
 export const REMINDER_INTERVALS: { value: ReminderInterval; label: string }[] = [
   { value: 15, label: '15s' },
   { value: 30, label: '30s' },
   { value: 60, label: '60s' },
 ];
+
+export const ALERT_THRESHOLDS: { value: HoldAlertThreshold; label: string }[] = [
+  { value: 30, label: '30s' },
+  { value: 60, label: '1min' },
+  { value: 120, label: '2min' },
+  { value: 180, label: '3min' },
+  { value: 300, label: '5min' },
+];
+
+export interface HoldAlert {
+  callId: string;
+  callName: string;
+  holdTime: number;
+  threshold: number;
+  triggeredAt: Date;
+  severity: 'warning' | 'critical';
+}
 
 // Load saved preferences from localStorage
 const loadSavedInterval = (): ReminderInterval => {
@@ -37,6 +57,33 @@ const loadSavedEnabled = (): boolean => {
     }
   } catch (e) {
     console.log('Failed to load enabled state from localStorage');
+  }
+  return true;
+};
+
+const loadSavedAlertThreshold = (): HoldAlertThreshold => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_ALERT_THRESHOLD);
+    if (saved) {
+      const parsed = parseInt(saved, 10);
+      if ([30, 60, 120, 180, 300].includes(parsed)) {
+        return parsed as HoldAlertThreshold;
+      }
+    }
+  } catch (e) {
+    console.log('Failed to load alert threshold from localStorage');
+  }
+  return 60;
+};
+
+const loadSavedAlertsEnabled = (): boolean => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_ALERTS_ENABLED);
+    if (saved !== null) {
+      return saved === 'true';
+    }
+  } catch (e) {
+    console.log('Failed to load alerts enabled state from localStorage');
   }
   return true;
 };
@@ -81,12 +128,45 @@ const createNotificationSound = () => {
   };
 };
 
+// Create urgent alert sound
+const createUrgentSound = () => {
+  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+  
+  return () => {
+    // Three rapid beeps for urgent alert
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = 880; // Higher pitch for urgency
+        oscillator.type = 'square';
+        
+        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.15);
+      }, i * 200);
+    }
+  };
+};
+
 export function useHoldReminder(activeCalls: CallSession[]) {
   const [isEnabled, setIsEnabled] = useState(loadSavedEnabled);
   const [interval, setInterval] = useState<ReminderInterval>(loadSavedInterval);
+  const [alertThreshold, setAlertThreshold] = useState<HoldAlertThreshold>(loadSavedAlertThreshold);
+  const [alertsEnabled, setAlertsEnabled] = useState(loadSavedAlertsEnabled);
+  const [activeAlerts, setActiveAlerts] = useState<HoldAlert[]>([]);
   const [lastReminderTime, setLastReminderTime] = useState<Record<string, number>>({});
+  const [alertedCalls, setAlertedCalls] = useState<Record<string, { warning: boolean; critical: boolean }>>({});
+  
   const intervalRef = useRef<number | null>(null);
   const playSoundRef = useRef<(() => void) | null>(null);
+  const playUrgentSoundRef = useRef<(() => void) | null>(null);
   
   const intervalMs = interval * 1000;
 
@@ -95,7 +175,19 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     if (!playSoundRef.current) {
       playSoundRef.current = createNotificationSound();
     }
+    if (!playUrgentSoundRef.current) {
+      playUrgentSoundRef.current = createUrgentSound();
+    }
   }, []);
+
+  const formatHoldTime = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    if (mins > 0) {
+      return `${mins}m ${secs}s`;
+    }
+    return `${secs}s`;
+  };
 
   const showVisualNotification = useCallback((callsOnHold: CallSession[]) => {
     const callNames = callsOnHold
@@ -111,6 +203,88 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       duration: 5000,
     });
   }, []);
+
+  const showThresholdAlert = useCallback((alert: HoldAlert) => {
+    const isCritical = alert.severity === 'critical';
+    
+    toast({
+      title: isCritical ? "🚨 Alerta Crítico de Espera" : "⚠️ Alerta de Tempo em Espera",
+      description: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)}${isCritical ? ' - Atenção urgente necessária!' : ''}`,
+      variant: isCritical ? "destructive" : "default",
+      duration: isCritical ? 10000 : 7000,
+    });
+  }, []);
+
+  // Check for hold time threshold alerts
+  const checkHoldAlerts = useCallback(() => {
+    if (!alertsEnabled) return;
+
+    const callsOnHold = activeCalls.filter(call => call.isOnHold);
+    const newAlerts: HoldAlert[] = [];
+    const newAlertedCalls = { ...alertedCalls };
+
+    callsOnHold.forEach(call => {
+      const holdTime = call.totalHoldTime;
+      const callName = call.contactName || call.phoneNumber || 'Chamada';
+      const callAlerts = newAlertedCalls[call.id] || { warning: false, critical: false };
+      
+      // Critical alert: 2x the threshold
+      const criticalThreshold = alertThreshold * 2;
+      
+      if (holdTime >= criticalThreshold && !callAlerts.critical) {
+        const alert: HoldAlert = {
+          callId: call.id,
+          callName,
+          holdTime,
+          threshold: criticalThreshold,
+          triggeredAt: new Date(),
+          severity: 'critical'
+        };
+        newAlerts.push(alert);
+        newAlertedCalls[call.id] = { ...callAlerts, critical: true };
+        
+        // Play urgent sound
+        if (playUrgentSoundRef.current) {
+          try {
+            playUrgentSoundRef.current();
+          } catch (error) {
+            console.log('Urgent audio playback failed:', error);
+          }
+        }
+        
+        showThresholdAlert(alert);
+      } else if (holdTime >= alertThreshold && !callAlerts.warning) {
+        // Warning alert: at the threshold
+        const alert: HoldAlert = {
+          callId: call.id,
+          callName,
+          holdTime,
+          threshold: alertThreshold,
+          triggeredAt: new Date(),
+          severity: 'warning'
+        };
+        newAlerts.push(alert);
+        newAlertedCalls[call.id] = { ...callAlerts, warning: true };
+        
+        // Play regular sound
+        if (playSoundRef.current) {
+          try {
+            playSoundRef.current();
+          } catch (error) {
+            console.log('Audio playback failed:', error);
+          }
+        }
+        
+        showThresholdAlert(alert);
+      }
+    });
+
+    if (newAlerts.length > 0) {
+      setActiveAlerts(prev => [...prev, ...newAlerts].slice(-20)); // Keep last 20 alerts
+    }
+    
+    setAlertedCalls(newAlertedCalls);
+  }, [activeCalls, alertsEnabled, alertThreshold, alertedCalls, showThresholdAlert]);
 
   const playHoldReminder = useCallback(() => {
     if (!isEnabled) return;
@@ -155,6 +329,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
   useEffect(() => {
     intervalRef.current = window.setInterval(() => {
       playHoldReminder();
+      checkHoldAlerts();
     }, 1000);
 
     return () => {
@@ -162,11 +337,12 @@ export function useHoldReminder(activeCalls: CallSession[]) {
         clearInterval(intervalRef.current);
       }
     };
-  }, [playHoldReminder]);
+  }, [playHoldReminder, checkHoldAlerts]);
 
-  // Clean up reminder times for ended calls
+  // Clean up reminder times and alerted calls for ended calls
   useEffect(() => {
     const activeCallIds = new Set(activeCalls.map(c => c.id));
+    
     setLastReminderTime(prev => {
       const cleaned: Record<string, number> = {};
       Object.entries(prev).forEach(([id, time]) => {
@@ -176,6 +352,22 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       });
       return cleaned;
     });
+
+    setAlertedCalls(prev => {
+      const cleaned: Record<string, { warning: boolean; critical: boolean }> = {};
+      Object.entries(prev).forEach(([id, alerts]) => {
+        if (activeCallIds.has(id)) {
+          cleaned[id] = alerts;
+        }
+      });
+      return cleaned;
+    });
+
+    // Reset alerts for calls that are no longer on hold
+    setActiveAlerts(prev => prev.filter(alert => {
+      const call = activeCalls.find(c => c.id === alert.callId);
+      return call && call.isOnHold;
+    }));
   }, [activeCalls]);
 
   const toggleReminder = useCallback(() => {
@@ -185,6 +377,18 @@ export function useHoldReminder(activeCalls: CallSession[]) {
         localStorage.setItem(STORAGE_KEY_ENABLED, String(newValue));
       } catch (e) {
         console.log('Failed to save enabled state to localStorage');
+      }
+      return newValue;
+    });
+  }, []);
+
+  const toggleAlerts = useCallback(() => {
+    setAlertsEnabled(prev => {
+      const newValue = !prev;
+      try {
+        localStorage.setItem(STORAGE_KEY_ALERTS_ENABLED, String(newValue));
+      } catch (e) {
+        console.log('Failed to save alerts enabled state to localStorage');
       }
       return newValue;
     });
@@ -201,6 +405,21 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     setLastReminderTime({});
   }, []);
 
+  const changeAlertThreshold = useCallback((newThreshold: HoldAlertThreshold) => {
+    setAlertThreshold(newThreshold);
+    try {
+      localStorage.setItem(STORAGE_KEY_ALERT_THRESHOLD, String(newThreshold));
+    } catch (e) {
+      console.log('Failed to save alert threshold to localStorage');
+    }
+    // Reset alerted calls so new threshold takes effect
+    setAlertedCalls({});
+  }, []);
+
+  const clearAlerts = useCallback(() => {
+    setActiveAlerts([]);
+  }, []);
+
   const getCallsOnHold = useCallback(() => {
     return activeCalls.filter(call => call.isOnHold);
   }, [activeCalls]);
@@ -208,8 +427,14 @@ export function useHoldReminder(activeCalls: CallSession[]) {
   return {
     isEnabled,
     interval,
+    alertThreshold,
+    alertsEnabled,
+    activeAlerts,
     toggleReminder,
+    toggleAlerts,
     changeInterval,
+    changeAlertThreshold,
+    clearAlerts,
     callsOnHold: getCallsOnHold(),
     initAudio
   };
