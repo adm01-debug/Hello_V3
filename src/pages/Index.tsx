@@ -4,6 +4,7 @@ import { CallVolumeChart } from '@/components/dashboard/CallVolumeChart';
 import { RecentCalls } from '@/components/dashboard/RecentCalls';
 import { AgentsList } from '@/components/dashboard/AgentsList';
 import { QueueStatus } from '@/components/dashboard/QueueStatus';
+import { ActiveCallsRealtime } from '@/components/dashboard/ActiveCallsRealtime';
 import { mockDashboardStats, formatDuration } from '@/data/mockData';
 
 const Index = () => {
@@ -45,6 +46,9 @@ const Index = () => {
           icon={<Users className="h-6 w-6" />}
         />
       </div>
+
+      {/* Active Calls Realtime */}
+      <ActiveCallsRealtime />
 
       {/* Charts and Lists */}
       <div className="grid gap-6 lg:grid-cols-3">
