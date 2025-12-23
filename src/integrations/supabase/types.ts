@@ -168,6 +168,50 @@ export type Database = {
           },
         ]
       }
+      call_recordings: {
+        Row: {
+          call_session_id: string | null
+          conference_id: string | null
+          created_at: string
+          duration_seconds: number | null
+          file_path: string
+          file_size_bytes: number | null
+          id: string
+          participant_count: number | null
+          recorded_at: string
+        }
+        Insert: {
+          call_session_id?: string | null
+          conference_id?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          file_path: string
+          file_size_bytes?: number | null
+          id?: string
+          participant_count?: number | null
+          recorded_at?: string
+        }
+        Update: {
+          call_session_id?: string | null
+          conference_id?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          file_path?: string
+          file_size_bytes?: number | null
+          id?: string
+          participant_count?: number | null
+          recorded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_recordings_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       call_sessions: {
         Row: {
           agent_name: string | null

@@ -44,6 +44,7 @@ import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useMultiChannelCall, CallChannel, CallSession } from '@/hooks/useMultiChannelCall';
 import { useWavoipCall } from '@/hooks/useWavoipCall';
+import { useConferenceRecording } from '@/hooks/useConferenceRecording';
 import { mockContacts, getInitials, formatDuration } from '@/data/mockData';
 import { ActiveCallsIndicator } from './ActiveCallsIndicator';
 const dialPadButtons = [
@@ -114,6 +115,19 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
 
   // Wavoip hook
   const wavoip = useWavoipCall();
+
+  // Conference recording hook
+  const { isRecording: isConferenceRecording, isSaving: isSavingRecording } = useConferenceRecording({
+    conference,
+    onRecordingStarted: () => {
+      console.log('[UnifiedSoftphone] Conference recording started');
+      toast.info('Gravação da conferência iniciada');
+    },
+    onRecordingSaved: (filePath) => {
+      console.log('[UnifiedSoftphone] Conference recording saved:', filePath);
+      toast.success('Gravação da conferência salva');
+    }
+  });
 
   // Update channel configuration based on Wavoip status
   useEffect(() => {
