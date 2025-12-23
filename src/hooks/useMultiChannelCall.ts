@@ -28,6 +28,8 @@ export interface ChannelConfig {
   description: string;
 }
 
+const MAX_SIMULTANEOUS_CALLS = 3;
+
 const AVAILABLE_CHANNELS: ChannelConfig[] = [
   {
     id: 'webrtc',
@@ -57,29 +59,46 @@ const AVAILABLE_CHANNELS: ChannelConfig[] = [
 
 export function useMultiChannelCall() {
   const [activeChannel, setActiveChannel] = useState<CallChannel>('webrtc');
-  const [currentCall, setCurrentCall] = useState<CallSession | null>(null);
+  const [activeCalls, setActiveCalls] = useState<CallSession[]>([]);
+  const [activeCallId, setActiveCallId] = useState<string | null>(null);
   const [callHistory, setCallHistory] = useState<CallSession[]>([]);
   const [channels, setChannels] = useState<ChannelConfig[]>(AVAILABLE_CHANNELS);
   
-  const durationIntervalRef = useRef<number | null>(null);
+  const durationIntervalsRef = useRef<Map<string, number>>(new Map());
 
-  // Start duration timer
-  const startDurationTimer = useCallback(() => {
-    if (durationIntervalRef.current) {
-      clearInterval(durationIntervalRef.current);
+  // Get current active call
+  const currentCall = activeCalls.find(c => c.id === activeCallId) || null;
+
+  // Start duration timer for a specific call
+  const startDurationTimer = useCallback((callId: string) => {
+    // Clear existing timer if any
+    const existingTimer = durationIntervalsRef.current.get(callId);
+    if (existingTimer) {
+      clearInterval(existingTimer);
     }
     
-    durationIntervalRef.current = window.setInterval(() => {
-      setCurrentCall(prev => prev ? { ...prev, duration: prev.duration + 1 } : null);
+    const timer = window.setInterval(() => {
+      setActiveCalls(prev => prev.map(call => 
+        call.id === callId ? { ...call, duration: call.duration + 1 } : call
+      ));
     }, 1000);
+    
+    durationIntervalsRef.current.set(callId, timer);
   }, []);
 
-  // Stop duration timer
-  const stopDurationTimer = useCallback(() => {
-    if (durationIntervalRef.current) {
-      clearInterval(durationIntervalRef.current);
-      durationIntervalRef.current = null;
+  // Stop duration timer for a specific call
+  const stopDurationTimer = useCallback((callId: string) => {
+    const timer = durationIntervalsRef.current.get(callId);
+    if (timer) {
+      clearInterval(timer);
+      durationIntervalsRef.current.delete(callId);
     }
+  }, []);
+
+  // Stop all duration timers
+  const stopAllTimers = useCallback(() => {
+    durationIntervalsRef.current.forEach((timer) => clearInterval(timer));
+    durationIntervalsRef.current.clear();
   }, []);
 
   // Initialize a new call
@@ -87,7 +106,12 @@ export function useMultiChannelCall() {
     channel: CallChannel,
     phoneNumber?: string,
     contactName?: string
-  ) => {
+  ): CallSession | null => {
+    // Check if max calls reached
+    if (activeCalls.length >= MAX_SIMULTANEOUS_CALLS) {
+      return null;
+    }
+
     const newCall: CallSession = {
       id: `call-${Date.now()}`,
       channel,
@@ -103,76 +127,134 @@ export function useMultiChannelCall() {
       transcripts: []
     };
     
-    setCurrentCall(newCall);
+    setActiveCalls(prev => [...prev, newCall]);
+    setActiveCallId(newCall.id);
     setActiveChannel(channel);
     
     return newCall;
-  }, []);
+  }, [activeCalls.length]);
 
-  // Update call status
-  const updateCallStatus = useCallback((status: CallStatus) => {
-    setCurrentCall(prev => {
-      if (!prev) return null;
+  // Switch to a different active call
+  const switchToCall = useCallback((callId: string) => {
+    const call = activeCalls.find(c => c.id === callId);
+    if (call) {
+      setActiveCallId(callId);
+      setActiveChannel(call.channel);
+    }
+  }, [activeCalls]);
+
+  // Update call status for a specific call
+  const updateCallStatus = useCallback((status: CallStatus, callId?: string) => {
+    const targetCallId = callId || activeCallId;
+    if (!targetCallId) return;
+
+    setActiveCalls(prev => prev.map(call => {
+      if (call.id !== targetCallId) return call;
       
-      if (status === 'active' && prev.status !== 'active') {
-        startDurationTimer();
+      if (status === 'active' && call.status !== 'active') {
+        startDurationTimer(targetCallId);
       }
       
-      return { ...prev, status };
-    });
-  }, [startDurationTimer]);
+      return { ...call, status };
+    }));
+  }, [activeCallId, startDurationTimer]);
 
-  // End current call
-  const endCall = useCallback(() => {
-    stopDurationTimer();
+  // End a specific call
+  const endCall = useCallback((callId?: string) => {
+    const targetCallId = callId || activeCallId;
+    if (!targetCallId) return;
+
+    stopDurationTimer(targetCallId);
     
-    if (currentCall) {
-      const endedCall: CallSession = {
-        ...currentCall,
+    const endedCall = activeCalls.find(c => c.id === targetCallId);
+    if (endedCall) {
+      const finalCall: CallSession = {
+        ...endedCall,
         status: 'ended'
       };
-      setCallHistory(prev => [endedCall, ...prev].slice(0, 50));
+      setCallHistory(prev => [finalCall, ...prev].slice(0, 50));
     }
     
-    setCurrentCall(null);
-  }, [currentCall, stopDurationTimer]);
+    setActiveCalls(prev => prev.filter(c => c.id !== targetCallId));
+    
+    // Switch to another active call if available
+    setActiveCalls(prev => {
+      const remaining = prev.filter(c => c.id !== targetCallId);
+      if (remaining.length > 0 && activeCallId === targetCallId) {
+        setActiveCallId(remaining[0].id);
+        setActiveChannel(remaining[0].channel);
+      } else if (remaining.length === 0) {
+        setActiveCallId(null);
+      }
+      return remaining;
+    });
+  }, [activeCallId, activeCalls, stopDurationTimer]);
 
-  // Toggle mute
-  const toggleMute = useCallback(() => {
-    setCurrentCall(prev => prev ? { ...prev, isMuted: !prev.isMuted } : null);
-  }, []);
+  // End all calls
+  const endAllCalls = useCallback(() => {
+    stopAllTimers();
+    
+    activeCalls.forEach(call => {
+      const finalCall: CallSession = { ...call, status: 'ended' };
+      setCallHistory(prev => [finalCall, ...prev].slice(0, 50));
+    });
+    
+    setActiveCalls([]);
+    setActiveCallId(null);
+  }, [activeCalls, stopAllTimers]);
 
-  // Toggle hold
-  const toggleHold = useCallback(() => {
-    setCurrentCall(prev => {
-      if (!prev) return null;
-      const newIsOnHold = !prev.isOnHold;
+  // Toggle mute for current call
+  const toggleMute = useCallback((callId?: string) => {
+    const targetCallId = callId || activeCallId;
+    if (!targetCallId) return;
+
+    setActiveCalls(prev => prev.map(call => 
+      call.id === targetCallId ? { ...call, isMuted: !call.isMuted } : call
+    ));
+  }, [activeCallId]);
+
+  // Toggle hold for current call
+  const toggleHold = useCallback((callId?: string) => {
+    const targetCallId = callId || activeCallId;
+    if (!targetCallId) return;
+
+    setActiveCalls(prev => prev.map(call => {
+      if (call.id !== targetCallId) return call;
+      const newIsOnHold = !call.isOnHold;
       return { 
-        ...prev, 
+        ...call, 
         isOnHold: newIsOnHold,
         status: newIsOnHold ? 'on-hold' : 'active'
       };
-    });
-  }, []);
+    }));
+  }, [activeCallId]);
 
-  // Toggle recording
-  const toggleRecording = useCallback(() => {
-    setCurrentCall(prev => prev ? { ...prev, isRecording: !prev.isRecording } : null);
-  }, []);
+  // Toggle recording for current call
+  const toggleRecording = useCallback((callId?: string) => {
+    const targetCallId = callId || activeCallId;
+    if (!targetCallId) return;
 
-  // Add transcript
-  const addTranscript = useCallback((role: 'user' | 'agent' | 'system', text: string) => {
-    setCurrentCall(prev => {
-      if (!prev) return null;
+    setActiveCalls(prev => prev.map(call => 
+      call.id === targetCallId ? { ...call, isRecording: !call.isRecording } : call
+    ));
+  }, [activeCallId]);
+
+  // Add transcript to current call
+  const addTranscript = useCallback((role: 'user' | 'agent' | 'system', text: string, callId?: string) => {
+    const targetCallId = callId || activeCallId;
+    if (!targetCallId) return;
+
+    setActiveCalls(prev => prev.map(call => {
+      if (call.id !== targetCallId) return call;
       return {
-        ...prev,
+        ...call,
         transcripts: [
-          ...prev.transcripts,
+          ...call.transcripts,
           { role, text, timestamp: new Date() }
         ]
       };
-    });
-  }, []);
+    }));
+  }, [activeCallId]);
 
   // Configure channel
   const configureChannel = useCallback((channelId: CallChannel, config: Partial<ChannelConfig>) => {
@@ -181,30 +263,42 @@ export function useMultiChannelCall() {
     ));
   }, []);
 
+  // Get call by ID
+  const getCallById = useCallback((callId: string) => {
+    return activeCalls.find(c => c.id === callId) || null;
+  }, [activeCalls]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      stopDurationTimer();
+      stopAllTimers();
     };
-  }, [stopDurationTimer]);
+  }, [stopAllTimers]);
 
   return {
     // State
     activeChannel,
     currentCall,
+    activeCalls,
+    activeCallId,
     callHistory,
     channels,
-    isInCall: currentCall !== null && currentCall.status !== 'ended',
+    isInCall: activeCalls.length > 0,
+    canAddCall: activeCalls.length < MAX_SIMULTANEOUS_CALLS,
+    maxCalls: MAX_SIMULTANEOUS_CALLS,
     
     // Actions
     setActiveChannel,
     initiateCall,
+    switchToCall,
     updateCallStatus,
     endCall,
+    endAllCalls,
     toggleMute,
     toggleHold,
     toggleRecording,
     addTranscript,
-    configureChannel
+    configureChannel,
+    getCallById
   };
 }
