@@ -1,14 +1,20 @@
-import { Phone, PhoneOff, Pause, Play, Users } from 'lucide-react';
+import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { CallSession, CallChannel } from '@/hooks/useMultiChannelCall';
 import { formatDuration } from '@/data/mockData';
+import { useHoldReminder } from '@/hooks/useHoldReminder';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface ActiveCallsIndicatorProps {
   activeCalls: CallSession[];
@@ -31,7 +37,15 @@ export function ActiveCallsIndicator({
   onEndCall,
   onToggleHold
 }: ActiveCallsIndicatorProps) {
+  const { isEnabled, toggleReminder, callsOnHold, initAudio } = useHoldReminder(activeCalls);
+
   if (activeCalls.length === 0) return null;
+
+  const handleToggleReminder = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    initAudio(); // Initialize audio on user interaction
+    toggleReminder();
+  };
 
   return (
     <Popover>
@@ -57,8 +71,43 @@ export function ActiveCallsIndicator({
         <div className="space-y-2">
           <div className="flex items-center justify-between px-2 py-1">
             <span className="text-sm font-medium">Chamadas Ativas</span>
-            <Badge variant="outline">{activeCalls.length}/3</Badge>
+            <div className="flex items-center gap-2">
+              {callsOnHold.length > 0 && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className={cn(
+                        "h-7 w-7",
+                        isEnabled ? "text-primary" : "text-muted-foreground"
+                      )}
+                      onClick={handleToggleReminder}
+                    >
+                      {isEnabled ? (
+                        <Bell className="h-4 w-4" />
+                      ) : (
+                        <VolumeX className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {isEnabled ? 'Desativar lembrete sonoro' : 'Ativar lembrete sonoro'}
+                  </TooltipContent>
+                </Tooltip>
+              )}
+              <Badge variant="outline">{activeCalls.length}/3</Badge>
+            </div>
           </div>
+          
+          {callsOnHold.length > 0 && (
+            <div className="px-2 py-1.5 bg-warning/10 border border-warning/30 rounded-md flex items-center gap-2">
+              <Volume2 className="h-4 w-4 text-warning animate-pulse" />
+              <span className="text-xs text-warning-foreground">
+                {callsOnHold.length} chamada{callsOnHold.length > 1 ? 's' : ''} em espera • Lembrete a cada 30s
+              </span>
+            </div>
+          )}
           
           {activeCalls.map((call) => (
             <div
