@@ -4,11 +4,42 @@ import { toast } from '@/hooks/use-toast';
 
 export type ReminderInterval = 15 | 30 | 60;
 
+const STORAGE_KEY_INTERVAL = 'holdReminder_interval';
+const STORAGE_KEY_ENABLED = 'holdReminder_enabled';
+
 export const REMINDER_INTERVALS: { value: ReminderInterval; label: string }[] = [
   { value: 15, label: '15s' },
   { value: 30, label: '30s' },
   { value: 60, label: '60s' },
 ];
+
+// Load saved preferences from localStorage
+const loadSavedInterval = (): ReminderInterval => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_INTERVAL);
+    if (saved) {
+      const parsed = parseInt(saved, 10);
+      if (parsed === 15 || parsed === 30 || parsed === 60) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.log('Failed to load interval from localStorage');
+  }
+  return 30;
+};
+
+const loadSavedEnabled = (): boolean => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_ENABLED);
+    if (saved !== null) {
+      return saved === 'true';
+    }
+  } catch (e) {
+    console.log('Failed to load enabled state from localStorage');
+  }
+  return true;
+};
 
 // Create notification sound using Web Audio API
 const createNotificationSound = () => {
@@ -51,8 +82,8 @@ const createNotificationSound = () => {
 };
 
 export function useHoldReminder(activeCalls: CallSession[]) {
-  const [isEnabled, setIsEnabled] = useState(true);
-  const [interval, setInterval] = useState<ReminderInterval>(30);
+  const [isEnabled, setIsEnabled] = useState(loadSavedEnabled);
+  const [interval, setInterval] = useState<ReminderInterval>(loadSavedInterval);
   const [lastReminderTime, setLastReminderTime] = useState<Record<string, number>>({});
   const intervalRef = useRef<number | null>(null);
   const playSoundRef = useRef<(() => void) | null>(null);
@@ -148,11 +179,24 @@ export function useHoldReminder(activeCalls: CallSession[]) {
   }, [activeCalls]);
 
   const toggleReminder = useCallback(() => {
-    setIsEnabled(prev => !prev);
+    setIsEnabled(prev => {
+      const newValue = !prev;
+      try {
+        localStorage.setItem(STORAGE_KEY_ENABLED, String(newValue));
+      } catch (e) {
+        console.log('Failed to save enabled state to localStorage');
+      }
+      return newValue;
+    });
   }, []);
 
   const changeInterval = useCallback((newInterval: ReminderInterval) => {
     setInterval(newInterval);
+    try {
+      localStorage.setItem(STORAGE_KEY_INTERVAL, String(newInterval));
+    } catch (e) {
+      console.log('Failed to save interval to localStorage');
+    }
     // Reset reminder times so the new interval takes effect immediately
     setLastReminderTime({});
   }, []);
