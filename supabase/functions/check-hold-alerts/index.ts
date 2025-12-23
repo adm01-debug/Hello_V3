@@ -26,18 +26,28 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Parse optional config from request body
-    let config = DEFAULT_CONFIG;
-    try {
-      const body = await req.json();
-      if (body.warningThresholdSeconds) {
-        config.warningThresholdSeconds = body.warningThresholdSeconds;
+    // Fetch config from database
+    let config = { ...DEFAULT_CONFIG };
+    const { data: settingsData, error: settingsError } = await supabase
+      .from('hold_alert_settings')
+      .select('*')
+      .limit(1)
+      .maybeSingle();
+
+    if (settingsError) {
+      console.error('Error fetching settings, using defaults:', settingsError);
+    } else if (settingsData) {
+      config.warningThresholdSeconds = settingsData.warning_threshold_seconds;
+      config.criticalThresholdSeconds = settingsData.critical_threshold_seconds;
+      
+      // If alerts are disabled, return early
+      if (!settingsData.enabled) {
+        console.log('Hold alerts are disabled');
+        return new Response(
+          JSON.stringify({ success: true, message: 'Hold alerts are disabled' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       }
-      if (body.criticalThresholdSeconds) {
-        config.criticalThresholdSeconds = body.criticalThresholdSeconds;
-      }
-    } catch {
-      // Use defaults if no body provided
     }
 
     console.log('Checking hold alerts with config:', config);

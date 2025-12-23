@@ -57,6 +57,7 @@ const toolsNavItems = [
 ];
 
 const settingsNavItems = [
+  { title: 'Config. Alertas', url: '/hold-settings', icon: AlertTriangle },
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];
 
