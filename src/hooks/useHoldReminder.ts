@@ -1,7 +1,13 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { CallSession } from './useMultiChannelCall';
 
-const REMINDER_INTERVAL_MS = 30000; // 30 seconds
+export type ReminderInterval = 15 | 30 | 60;
+
+export const REMINDER_INTERVALS: { value: ReminderInterval; label: string }[] = [
+  { value: 15, label: '15s' },
+  { value: 30, label: '30s' },
+  { value: 60, label: '60s' },
+];
 
 // Create notification sound using Web Audio API
 const createNotificationSound = () => {
@@ -45,10 +51,13 @@ const createNotificationSound = () => {
 
 export function useHoldReminder(activeCalls: CallSession[]) {
   const [isEnabled, setIsEnabled] = useState(true);
+  const [interval, setInterval] = useState<ReminderInterval>(30);
   const [lastReminderTime, setLastReminderTime] = useState<Record<string, number>>({});
   const intervalRef = useRef<number | null>(null);
   const playSoundRef = useRef<(() => void) | null>(null);
   
+  const intervalMs = interval * 1000;
+
   // Initialize audio on first user interaction
   const initAudio = useCallback(() => {
     if (!playSoundRef.current) {
@@ -72,7 +81,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     
     callsOnHold.forEach(call => {
       const lastReminder = lastReminderTime[call.id] || 0;
-      if (now - lastReminder >= REMINDER_INTERVAL_MS) {
+      if (now - lastReminder >= intervalMs) {
         shouldPlay = true;
         newLastReminderTime[call.id] = now;
       }
@@ -87,7 +96,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     }
     
     setLastReminderTime(newLastReminderTime);
-  }, [activeCalls, isEnabled, lastReminderTime, initAudio]);
+  }, [activeCalls, isEnabled, lastReminderTime, initAudio, intervalMs]);
 
   // Check for calls on hold every second
   useEffect(() => {
@@ -120,13 +129,21 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     setIsEnabled(prev => !prev);
   }, []);
 
+  const changeInterval = useCallback((newInterval: ReminderInterval) => {
+    setInterval(newInterval);
+    // Reset reminder times so the new interval takes effect immediately
+    setLastReminderTime({});
+  }, []);
+
   const getCallsOnHold = useCallback(() => {
     return activeCalls.filter(call => call.isOnHold);
   }, [activeCalls]);
 
   return {
     isEnabled,
+    interval,
     toggleReminder,
+    changeInterval,
     callsOnHold: getCallsOnHold(),
     initAudio
   };
