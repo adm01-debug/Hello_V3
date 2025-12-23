@@ -35,3 +35,6 @@ verify_jwt = false
 
 [functions.transcribe-recording]
 verify_jwt = false
+
+[functions.analyze-sentiment]
+verify_jwt = false

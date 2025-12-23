@@ -37,7 +37,19 @@ import {
   Trash2,
   FileText,
   Sparkles,
+  Brain,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  Smile,
+  Frown,
+  Meh,
+  Heart,
+  Zap,
+  AlertTriangle,
 } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
@@ -61,6 +73,25 @@ interface TranscriptionSegment {
   end_time: number | null;
 }
 
+interface SentimentAnalysis {
+  overall_sentiment: 'positive' | 'negative' | 'neutral' | 'mixed';
+  sentiment_score: number;
+  emotions: {
+    joy: number;
+    sadness: number;
+    anger: number;
+    fear: number;
+    surprise: number;
+  };
+  key_moments: {
+    text: string;
+    sentiment: string;
+    emotion: string;
+  }[];
+  summary: string;
+  customer_satisfaction_estimate: number;
+}
+
 export default function Recordings() {
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [loading, setLoading] = useState(true);
@@ -73,11 +104,13 @@ export default function Recordings() {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const [transcribing, setTranscribing] = useState<string | null>(null);
+  const [analyzingSentiment, setAnalyzingSentiment] = useState(false);
   const [transcriptionDialog, setTranscriptionDialog] = useState(false);
   const [currentTranscription, setCurrentTranscription] = useState<{
     text: string;
     segments: TranscriptionSegment[];
     recording: Recording | null;
+    sentiment?: SentimentAnalysis | null;
   } | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -296,6 +329,47 @@ export default function Recordings() {
       toast.error('Erro ao transcrever gravação');
     } finally {
       setTranscribing(null);
+    }
+  };
+
+  const handleAnalyzeSentiment = async () => {
+    if (!currentTranscription?.text) return;
+    
+    setAnalyzingSentiment(true);
+    
+    try {
+      toast.info('Analisando sentimento...', { duration: 3000 });
+      
+      const { data, error } = await supabase.functions.invoke('analyze-sentiment', {
+        body: {
+          transcription: currentTranscription.text,
+          callSessionId: currentTranscription.recording?.call_session_id,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        setCurrentTranscription(prev => prev ? {
+          ...prev,
+          sentiment: {
+            overall_sentiment: data.overall_sentiment,
+            sentiment_score: data.sentiment_score,
+            emotions: data.emotions,
+            key_moments: data.key_moments,
+            summary: data.summary,
+            customer_satisfaction_estimate: data.customer_satisfaction_estimate,
+          }
+        } : null);
+        toast.success('Análise de sentimento concluída!');
+      } else {
+        throw new Error(data.error || 'Erro desconhecido');
+      }
+    } catch (error) {
+      console.error('Sentiment analysis error:', error);
+      toast.error('Erro ao analisar sentimento');
+    } finally {
+      setAnalyzingSentiment(false);
     }
   };
 
@@ -549,58 +623,216 @@ export default function Recordings() {
 
       {/* Transcription Dialog */}
       <Dialog open={transcriptionDialog} onOpenChange={setTranscriptionDialog}>
-        <DialogContent className="max-w-3xl max-h-[80vh]">
+        <DialogContent className="max-w-4xl max-h-[85vh]">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-primary" />
-              Transcrição da Gravação
+              Transcrição e Análise de Sentimento
             </DialogTitle>
           </DialogHeader>
           
           {currentTranscription && (
             <div className="space-y-4">
               {currentTranscription.recording && (
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    {format(new Date(currentTranscription.recording.recorded_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
-                  </div>
-                  {currentTranscription.recording.duration_seconds && (
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      {formatDuration(currentTranscription.recording.duration_seconds)}
+                      <Calendar className="h-4 w-4" />
+                      {format(new Date(currentTranscription.recording.recorded_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
                     </div>
+                    {currentTranscription.recording.duration_seconds && (
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        {formatDuration(currentTranscription.recording.duration_seconds)}
+                      </div>
+                    )}
+                  </div>
+                  
+                  {!currentTranscription.sentiment && (
+                    <Button
+                      onClick={handleAnalyzeSentiment}
+                      disabled={analyzingSentiment}
+                      variant="outline"
+                      size="sm"
+                    >
+                      {analyzingSentiment ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <Brain className="h-4 w-4 mr-2" />
+                      )}
+                      Analisar Sentimento
+                    </Button>
                   )}
                 </div>
               )}
 
-              <ScrollArea className="h-[400px] rounded-md border p-4">
-                {currentTranscription.segments.length > 0 ? (
-                  <div className="space-y-4">
-                    {currentTranscription.segments.map((segment, index) => (
-                      <div key={index} className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="text-xs">
-                            {segment.speaker}
-                          </Badge>
-                          {segment.start_time !== null && (
-                            <span className="text-xs text-muted-foreground">
-                              {formatDuration(segment.start_time)}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-sm text-foreground pl-2 border-l-2 border-primary/30">
-                          {segment.text}
-                        </p>
+              <Tabs defaultValue="transcription" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="transcription">Transcrição</TabsTrigger>
+                  <TabsTrigger value="sentiment" disabled={!currentTranscription.sentiment}>
+                    Análise de Sentimento
+                    {currentTranscription.sentiment && (
+                      <Badge 
+                        variant={
+                          currentTranscription.sentiment.overall_sentiment === 'positive' ? 'default' :
+                          currentTranscription.sentiment.overall_sentiment === 'negative' ? 'destructive' :
+                          'secondary'
+                        }
+                        className="ml-2 text-xs"
+                      >
+                        {currentTranscription.sentiment.overall_sentiment === 'positive' && <Smile className="h-3 w-3 mr-1" />}
+                        {currentTranscription.sentiment.overall_sentiment === 'negative' && <Frown className="h-3 w-3 mr-1" />}
+                        {(currentTranscription.sentiment.overall_sentiment === 'neutral' || currentTranscription.sentiment.overall_sentiment === 'mixed') && <Meh className="h-3 w-3 mr-1" />}
+                        {currentTranscription.sentiment.overall_sentiment}
+                      </Badge>
+                    )}
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="transcription" className="mt-4">
+                  <ScrollArea className="h-[350px] rounded-md border p-4">
+                    {currentTranscription.segments.length > 0 ? (
+                      <div className="space-y-4">
+                        {currentTranscription.segments.map((segment, index) => (
+                          <div key={index} className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="secondary" className="text-xs">
+                                {segment.speaker}
+                              </Badge>
+                              {segment.start_time !== null && (
+                                <span className="text-xs text-muted-foreground">
+                                  {formatDuration(segment.start_time)}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-sm text-foreground pl-2 border-l-2 border-primary/30">
+                              {segment.text}
+                            </p>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-foreground whitespace-pre-wrap">
-                    {currentTranscription.text}
-                  </p>
-                )}
-              </ScrollArea>
+                    ) : (
+                      <p className="text-foreground whitespace-pre-wrap">
+                        {currentTranscription.text}
+                      </p>
+                    )}
+                  </ScrollArea>
+                </TabsContent>
+                
+                <TabsContent value="sentiment" className="mt-4">
+                  {currentTranscription.sentiment && (
+                    <ScrollArea className="h-[350px]">
+                      <div className="space-y-6 pr-4">
+                        {/* Summary */}
+                        <div className="p-4 rounded-lg bg-muted/50">
+                          <h4 className="font-medium mb-2 flex items-center gap-2">
+                            <Sparkles className="h-4 w-4 text-primary" />
+                            Resumo
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {currentTranscription.sentiment.summary}
+                          </p>
+                        </div>
+
+                        {/* Sentiment Score and Satisfaction */}
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 rounded-lg border">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm font-medium">Score de Sentimento</span>
+                              {currentTranscription.sentiment.sentiment_score > 0 ? (
+                                <TrendingUp className="h-4 w-4 text-green-500" />
+                              ) : currentTranscription.sentiment.sentiment_score < 0 ? (
+                                <TrendingDown className="h-4 w-4 text-red-500" />
+                              ) : (
+                                <Minus className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </div>
+                            <div className="text-2xl font-bold">
+                              {(currentTranscription.sentiment.sentiment_score * 100).toFixed(0)}%
+                            </div>
+                            <Progress 
+                              value={(currentTranscription.sentiment.sentiment_score + 1) * 50} 
+                              className="h-2 mt-2"
+                            />
+                          </div>
+                          
+                          <div className="p-4 rounded-lg border">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm font-medium">Satisfação Estimada</span>
+                              <Heart className="h-4 w-4 text-red-500" />
+                            </div>
+                            <div className="text-2xl font-bold">
+                              {currentTranscription.sentiment.customer_satisfaction_estimate}/10
+                            </div>
+                            <Progress 
+                              value={currentTranscription.sentiment.customer_satisfaction_estimate * 10} 
+                              className="h-2 mt-2"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Emotions */}
+                        <div className="p-4 rounded-lg border">
+                          <h4 className="font-medium mb-4 flex items-center gap-2">
+                            <Zap className="h-4 w-4 text-yellow-500" />
+                            Emoções Detectadas
+                          </h4>
+                          <div className="space-y-3">
+                            {[
+                              { key: 'joy', label: 'Alegria', icon: '😊', color: 'bg-green-500' },
+                              { key: 'sadness', label: 'Tristeza', icon: '😢', color: 'bg-blue-500' },
+                              { key: 'anger', label: 'Raiva', icon: '😠', color: 'bg-red-500' },
+                              { key: 'fear', label: 'Medo', icon: '😨', color: 'bg-purple-500' },
+                              { key: 'surprise', label: 'Surpresa', icon: '😮', color: 'bg-yellow-500' },
+                            ].map(({ key, label, icon, color }) => (
+                              <div key={key} className="flex items-center gap-3">
+                                <span className="text-lg">{icon}</span>
+                                <span className="text-sm w-20">{label}</span>
+                                <div className="flex-1">
+                                  <Progress 
+                                    value={(currentTranscription.sentiment?.emotions[key as keyof typeof currentTranscription.sentiment.emotions] || 0) * 100} 
+                                    className="h-2"
+                                  />
+                                </div>
+                                <span className="text-sm text-muted-foreground w-12 text-right">
+                                  {((currentTranscription.sentiment?.emotions[key as keyof typeof currentTranscription.sentiment.emotions] || 0) * 100).toFixed(0)}%
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Key Moments */}
+                        {currentTranscription.sentiment.key_moments.length > 0 && (
+                          <div className="p-4 rounded-lg border">
+                            <h4 className="font-medium mb-4 flex items-center gap-2">
+                              <AlertTriangle className="h-4 w-4 text-orange-500" />
+                              Momentos-Chave
+                            </h4>
+                            <div className="space-y-3">
+                              {currentTranscription.sentiment.key_moments.map((moment, index) => (
+                                <div key={index} className="p-3 rounded bg-muted/50">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <Badge variant="outline" className="text-xs">
+                                      {moment.sentiment}
+                                    </Badge>
+                                    <Badge variant="secondary" className="text-xs">
+                                      {moment.emotion}
+                                    </Badge>
+                                  </div>
+                                  <p className="text-sm text-muted-foreground italic">
+                                    "{moment.text}"
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </ScrollArea>
+                  )}
+                </TabsContent>
+              </Tabs>
 
               <div className="flex justify-end gap-2">
                 <Button
