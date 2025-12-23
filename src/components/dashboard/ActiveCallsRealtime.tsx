@@ -1,9 +1,12 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Phone, Pause, Clock, User, Filter } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Phone, Pause, Clock, User, Filter, Volume2, VolumeX } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useHoldSoundAlert } from '@/hooks/useHoldSoundAlert';
 
 interface ActiveCall {
   id: string;
@@ -29,6 +32,9 @@ export const ActiveCallsRealtime = () => {
   const [activeHolds, setActiveHolds] = useState<ActiveHoldEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedAgent, setSelectedAgent] = useState<string>('all');
+
+  // Sound alert hook
+  const { soundEnabled, toggleSound, settings } = useHoldSoundAlert(activeHolds);
 
   const fetchActiveCalls = async () => {
     const { data, error } = await supabase
@@ -108,6 +114,13 @@ export const ActiveCallsRealtime = () => {
     return Math.floor((now - startTime) / 1000);
   };
 
+  // Get hold severity based on duration and settings
+  const getHoldSeverity = (holdDuration: number): 'normal' | 'warning' | 'critical' => {
+    if (holdDuration >= settings.critical_threshold_seconds) return 'critical';
+    if (holdDuration >= settings.warning_threshold_seconds) return 'warning';
+    return 'normal';
+  };
+
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -168,22 +181,45 @@ export const ActiveCallsRealtime = () => {
               </Badge>
             )}
           </CardTitle>
-          {agents.length > 0 && (
-            <Select value={selectedAgent} onValueChange={setSelectedAgent}>
-              <SelectTrigger className="w-[180px]">
-                <Filter className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Filtrar por agente" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todos os agentes</SelectItem>
-                {agents.map(agent => (
-                  <SelectItem key={agent} value={agent}>
-                    {agent}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
+          <div className="flex items-center gap-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={toggleSound}
+                    className={soundEnabled ? 'text-primary' : 'text-muted-foreground'}
+                  >
+                    {soundEnabled ? (
+                      <Volume2 className="h-4 w-4" />
+                    ) : (
+                      <VolumeX className="h-4 w-4" />
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{soundEnabled ? 'Desativar som de alerta' : 'Ativar som de alerta'}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            {agents.length > 0 && (
+              <Select value={selectedAgent} onValueChange={setSelectedAgent}>
+                <SelectTrigger className="w-[180px]">
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Filtrar por agente" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos os agentes</SelectItem>
+                  {agents.map(agent => (
+                    <SelectItem key={agent} value={agent}>
+                      {agent}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
         </div>
       </CardHeader>
       <CardContent>
@@ -197,6 +233,7 @@ export const ActiveCallsRealtime = () => {
             {filteredCalls.map(call => {
               const onHold = isCallOnHold(call.id);
               const holdDuration = getHoldDuration(call.id);
+              const holdSeverity = onHold ? getHoldSeverity(holdDuration) : 'normal';
               const callDuration = Math.floor(
                 (Date.now() - new Date(call.started_at).getTime()) / 1000
               );
@@ -205,7 +242,11 @@ export const ActiveCallsRealtime = () => {
                 <div
                   key={call.id}
                   className={`p-4 rounded-lg border transition-colors ${
-                    onHold
+                    holdSeverity === 'critical'
+                      ? 'border-destructive bg-destructive/10 animate-pulse'
+                      : holdSeverity === 'warning'
+                      ? 'border-orange-500/50 bg-orange-500/5'
+                      : onHold
                       ? 'border-destructive/50 bg-destructive/5 animate-pulse'
                       : 'border-border bg-card'
                   }`}
@@ -214,11 +255,23 @@ export const ActiveCallsRealtime = () => {
                     <div className="flex items-center gap-3">
                       <div
                         className={`p-2 rounded-full ${
-                          onHold ? 'bg-destructive/10' : 'bg-primary/10'
+                          holdSeverity === 'critical'
+                            ? 'bg-destructive/20'
+                            : holdSeverity === 'warning'
+                            ? 'bg-orange-500/20'
+                            : onHold
+                            ? 'bg-destructive/10'
+                            : 'bg-primary/10'
                         }`}
                       >
                         {onHold ? (
-                          <Pause className="h-4 w-4 text-destructive" />
+                          <Pause className={`h-4 w-4 ${
+                            holdSeverity === 'critical'
+                              ? 'text-destructive'
+                              : holdSeverity === 'warning'
+                              ? 'text-orange-500'
+                              : 'text-destructive'
+                          }`} />
                         ) : (
                           <Phone className="h-4 w-4 text-primary" />
                         )}
@@ -236,7 +289,16 @@ export const ActiveCallsRealtime = () => {
                     </div>
                     <div className="flex flex-col items-end gap-1">
                       {onHold ? (
-                        <Badge variant="destructive" className="animate-pulse">
+                        <Badge 
+                          variant="destructive" 
+                          className={`${
+                            holdSeverity === 'critical'
+                              ? 'bg-destructive animate-pulse'
+                              : holdSeverity === 'warning'
+                              ? 'bg-orange-500 hover:bg-orange-600'
+                              : 'animate-pulse'
+                          }`}
+                        >
                           <Pause className="h-3 w-3 mr-1" />
                           Em Espera {formatDuration(holdDuration)}
                         </Badge>
