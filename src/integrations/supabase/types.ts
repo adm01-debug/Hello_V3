@@ -221,6 +221,8 @@ export type Database = {
           created_at: string
           duration_seconds: number | null
           ended_at: string | null
+          hold_count: number | null
+          hold_time_seconds: number | null
           id: string
           started_at: string
           status: string | null
@@ -233,6 +235,8 @@ export type Database = {
           created_at?: string
           duration_seconds?: number | null
           ended_at?: string | null
+          hold_count?: number | null
+          hold_time_seconds?: number | null
           id?: string
           started_at?: string
           status?: string | null
@@ -245,6 +249,8 @@ export type Database = {
           created_at?: string
           duration_seconds?: number | null
           ended_at?: string | null
+          hold_count?: number | null
+          hold_time_seconds?: number | null
           id?: string
           started_at?: string
           status?: string | null
@@ -507,6 +513,44 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      hold_events: {
+        Row: {
+          agent_name: string | null
+          call_session_id: string | null
+          created_at: string
+          duration_seconds: number | null
+          ended_at: string | null
+          id: string
+          started_at: string
+        }
+        Insert: {
+          agent_name?: string | null
+          call_session_id?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+        }
+        Update: {
+          agent_name?: string | null
+          call_session_id?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hold_events_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
