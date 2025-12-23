@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import Index from "./pages/Index";
 import Contacts from "./pages/Contacts";
+import ContactInsights from "./pages/ContactInsights";
 import History from "./pages/History";
 import Calls from "./pages/Calls";
 import AIAssistant from "./pages/AIAssistant";
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/calls" element={<Calls />} />
               <Route path="/contacts" element={<Contacts />} />
+              <Route path="/contacts/insights" element={<ContactInsights />} />
               <Route path="/history" element={<History />} />
               <Route path="/call-history" element={<CallHistory />} />
               <Route path="/analytics" element={<CallAnalytics />} />
