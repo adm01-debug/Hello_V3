@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell, Merge, X, UserPlus, PhoneForwarded, Mic, MicOff } from 'lucide-react';
+import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell, Merge, X, UserPlus, PhoneForwarded, Mic, MicOff, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -389,6 +389,22 @@ export function ActiveCallsIndicator({
                     <span>{channelLabels[call.channel]}</span>
                     <span>•</span>
                     <span className="font-mono">{formatDuration(call.duration)}</span>
+                    {call.totalHoldTime > 0 && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="flex items-center gap-0.5 text-warning cursor-help">
+                            <Clock className="h-3 w-3" />
+                            <span className="font-mono">{formatDuration(call.totalHoldTime)}</span>
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <div className="text-xs">
+                            <p>Tempo em espera: {formatDuration(call.totalHoldTime)}</p>
+                            <p className="text-muted-foreground">Em espera {call.holdCount}x</p>
+                          </div>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
                     {call.isInConference && (
                       <>
                         <span>•</span>

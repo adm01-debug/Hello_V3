@@ -20,6 +20,9 @@ export interface CallSession {
   contactName?: string;
   startedAt?: Date;
   duration: number;
+  totalHoldTime: number; // Total time spent on hold in seconds
+  holdStartedAt?: Date; // When current hold started
+  holdCount: number; // Number of times put on hold
   isMuted: boolean;
   isOnHold: boolean;
   isRecording: boolean;
@@ -87,6 +90,7 @@ export function useMultiChannelCall() {
   const [conference, setConference] = useState<ConferenceCall | null>(null);
   
   const durationIntervalsRef = useRef<Map<string, number>>(new Map());
+  const holdTimeIntervalsRef = useRef<Map<string, number>>(new Map());
   const conferenceDurationRef = useRef<number | null>(null);
 
   // Get current active call
@@ -122,6 +126,8 @@ export function useMultiChannelCall() {
   const stopAllTimers = useCallback(() => {
     durationIntervalsRef.current.forEach((timer) => clearInterval(timer));
     durationIntervalsRef.current.clear();
+    holdTimeIntervalsRef.current.forEach((timer) => clearInterval(timer));
+    holdTimeIntervalsRef.current.clear();
   }, []);
 
   // Initialize a new call
@@ -144,6 +150,8 @@ export function useMultiChannelCall() {
       contactName,
       startedAt: new Date(),
       duration: 0,
+      totalHoldTime: 0,
+      holdCount: 0,
       isMuted: false,
       isOnHold: false,
       isRecording: false,
@@ -237,7 +245,34 @@ export function useMultiChannelCall() {
     ));
   }, [activeCallId]);
 
-  // Toggle hold for current call
+  // Start hold time timer for a specific call
+  const startHoldTimer = useCallback((callId: string) => {
+    const existingTimer = holdTimeIntervalsRef.current.get(callId);
+    if (existingTimer) {
+      clearInterval(existingTimer);
+    }
+    
+    const timer = window.setInterval(() => {
+      setActiveCalls(prev => prev.map(call => 
+        call.id === callId && call.isOnHold 
+          ? { ...call, totalHoldTime: call.totalHoldTime + 1 } 
+          : call
+      ));
+    }, 1000);
+    
+    holdTimeIntervalsRef.current.set(callId, timer);
+  }, []);
+
+  // Stop hold time timer for a specific call
+  const stopHoldTimer = useCallback((callId: string) => {
+    const timer = holdTimeIntervalsRef.current.get(callId);
+    if (timer) {
+      clearInterval(timer);
+      holdTimeIntervalsRef.current.delete(callId);
+    }
+  }, []);
+
+  // Toggle hold for current call with hold time tracking
   const toggleHold = useCallback((callId?: string) => {
     const targetCallId = callId || activeCallId;
     if (!targetCallId) return;
@@ -245,13 +280,29 @@ export function useMultiChannelCall() {
     setActiveCalls(prev => prev.map(call => {
       if (call.id !== targetCallId) return call;
       const newIsOnHold = !call.isOnHold;
-      return { 
-        ...call, 
-        isOnHold: newIsOnHold,
-        status: newIsOnHold ? 'on-hold' : 'active'
-      };
+      
+      if (newIsOnHold) {
+        // Starting hold - start timer
+        startHoldTimer(targetCallId);
+        return { 
+          ...call, 
+          isOnHold: true,
+          holdStartedAt: new Date(),
+          holdCount: call.holdCount + 1,
+          status: 'on-hold' as CallStatus
+        };
+      } else {
+        // Ending hold - stop timer
+        stopHoldTimer(targetCallId);
+        return { 
+          ...call, 
+          isOnHold: false,
+          holdStartedAt: undefined,
+          status: 'active' as CallStatus
+        };
+      }
     }));
-  }, [activeCallId]);
+  }, [activeCallId, startHoldTimer, stopHoldTimer]);
 
   // Toggle recording for current call
   const toggleRecording = useCallback((callId?: string) => {
