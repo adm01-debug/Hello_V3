@@ -38,6 +38,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -45,6 +47,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useMultiChannelCall, CallChannel, CallSession } from '@/hooks/useMultiChannelCall';
 import { useWavoipCall } from '@/hooks/useWavoipCall';
 import { useConferenceRecording } from '@/hooks/useConferenceRecording';
+import { useAgentStatus } from '@/hooks/useAgentStatus';
 import { mockContacts, getInitials, formatDuration } from '@/data/mockData';
 import { ActiveCallsIndicator } from './ActiveCallsIndicator';
 const dialPadButtons = [
@@ -116,6 +119,17 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   // Wavoip hook
   const wavoip = useWavoipCall();
 
+  // Agent status hook
+  const { 
+    currentAgent, 
+    agents,
+    setAgent,
+    clearAgent,
+    setStatusBusy, 
+    setStatusAvailable,
+    setStatusAway
+  } = useAgentStatus();
+
   // Conference recording hook
   const { isRecording: isConferenceRecording, isSaving: isSavingRecording } = useConferenceRecording({
     conference,
@@ -184,6 +198,11 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       return;
     }
 
+    // Update agent status to busy when starting first call
+    if (activeCalls.length === 0) {
+      setStatusBusy();
+    }
+
     if (activeChannel === 'webrtc') {
       // WebRTC call with ElevenLabs
       try {
@@ -192,6 +211,8 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
         const call = initiateCall('webrtc', undefined, 'Agente IA');
         if (!call) {
           toast.error('Não foi possível iniciar a chamada');
+          // Revert status if call failed
+          if (activeCalls.length === 0) setStatusAvailable();
           return;
         }
         onCallStart?.(call);
@@ -251,7 +272,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       setTimeout(() => updateCallStatus('ringing', call.id), 500);
       setTimeout(() => updateCallStatus('active', call.id), 2000);
     }
-  }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart, canAddCall]);
+  }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart, canAddCall, activeCalls.length, setStatusBusy, setStatusAvailable]);
 
   const handleEndCall = useCallback(async () => {
     if (currentCall?.channel === 'webrtc') {
@@ -265,7 +286,13 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     }
     
     endCall();
-  }, [currentCall, conversation, wavoip, endCall, onCallEnd]);
+
+    // Update agent status to available when ending last call
+    // Check if this was the last active call (will be 1 because we haven't removed it yet)
+    if (activeCalls.length <= 1) {
+      setStatusAvailable();
+    }
+  }, [currentCall, conversation, wavoip, endCall, onCallEnd, activeCalls.length, setStatusAvailable]);
 
   const handleToggleVolume = useCallback(async () => {
     const newVolume = volume > 0 ? 0 : 1;
@@ -306,8 +333,22 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
               <ChannelIcon className={cn("h-5 w-5", channelColors[activeChannel])} />
               <div>
                 <CardTitle className="text-lg">Softphone</CardTitle>
-                <CardDescription className="text-xs">
-                  {channels.find(ch => ch.id === activeChannel)?.description}
+                <CardDescription className="text-xs flex items-center gap-2">
+                  {currentAgent ? (
+                    <>
+                      <span className={cn(
+                        "h-2 w-2 rounded-full",
+                        currentAgent.status === 'available' ? "bg-success" :
+                        currentAgent.status === 'busy' ? "bg-destructive" :
+                        currentAgent.status === 'away' ? "bg-warning" : "bg-muted-foreground"
+                      )} />
+                      {currentAgent.name} ({currentAgent.status === 'available' ? 'Disponível' :
+                        currentAgent.status === 'busy' ? 'Ocupado' :
+                        currentAgent.status === 'away' ? 'Ausente' : 'Offline'})
+                    </>
+                  ) : (
+                    channels.find(ch => ch.id === activeChannel)?.description
+                  )}
                 </CardDescription>
               </div>
             </div>
@@ -328,6 +369,82 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
               onToggleConferenceRecording={toggleConferenceRecording}
             />
             
+            {/* Agent selector dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  {currentAgent ? (
+                    <>
+                      <span className={cn(
+                        "h-2 w-2 rounded-full",
+                        currentAgent.status === 'available' ? "bg-success" :
+                        currentAgent.status === 'busy' ? "bg-destructive" :
+                        currentAgent.status === 'away' ? "bg-warning" : "bg-muted-foreground"
+                      )} />
+                      <span className="text-xs max-w-20 truncate">{currentAgent.name.split(' ')[0]}</span>
+                    </>
+                  ) : (
+                    <span className="text-xs text-muted-foreground">Selecionar Agente</span>
+                  )}
+                  <Users className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>Selecionar Agente</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {agents.map((agent) => (
+                  <DropdownMenuItem
+                    key={agent.id}
+                    onClick={() => setAgent(agent.id)}
+                    disabled={isInCall && currentAgent?.id !== agent.id}
+                    className="gap-2"
+                  >
+                    <span className={cn(
+                      "h-2 w-2 rounded-full",
+                      agent.status === 'available' ? "bg-success" :
+                      agent.status === 'busy' ? "bg-destructive" :
+                      agent.status === 'away' ? "bg-warning" : "bg-muted-foreground"
+                    )} />
+                    <span className="flex-1">{agent.name}</span>
+                    {currentAgent?.id === agent.id && (
+                      <CheckCircle2 className="h-4 w-4 text-primary" />
+                    )}
+                  </DropdownMenuItem>
+                ))}
+                {currentAgent && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel className="text-xs text-muted-foreground">Status</DropdownMenuLabel>
+                    <DropdownMenuItem 
+                      onClick={() => setStatusAvailable()}
+                      disabled={isInCall}
+                      className="gap-2"
+                    >
+                      <span className="h-2 w-2 rounded-full bg-success" />
+                      Disponível
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setStatusAway()}
+                      disabled={isInCall}
+                      className="gap-2"
+                    >
+                      <span className="h-2 w-2 rounded-full bg-warning" />
+                      Ausente
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                      onClick={clearAgent}
+                      disabled={isInCall}
+                      className="text-destructive"
+                    >
+                      Sair
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            {/* Channel dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="gap-2">
