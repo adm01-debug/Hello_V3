@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 
 export type CallChannel = 'webrtc' | 'wavoip' | 'sip';
-export type CallStatus = 'idle' | 'connecting' | 'ringing' | 'active' | 'on-hold' | 'ended';
+export type CallStatus = 'idle' | 'connecting' | 'ringing' | 'active' | 'on-hold' | 'ended' | 'conference';
 export type CallDirection = 'inbound' | 'outbound';
 
 export interface CallSession {
@@ -16,7 +16,17 @@ export interface CallSession {
   isMuted: boolean;
   isOnHold: boolean;
   isRecording: boolean;
+  isInConference: boolean;
+  conferenceId?: string;
   transcripts: Array<{ role: 'user' | 'agent' | 'system'; text: string; timestamp: Date }>;
+}
+
+export interface ConferenceCall {
+  id: string;
+  participantIds: string[];
+  startedAt: Date;
+  duration: number;
+  isActive: boolean;
 }
 
 export interface ChannelConfig {
@@ -63,8 +73,10 @@ export function useMultiChannelCall() {
   const [activeCallId, setActiveCallId] = useState<string | null>(null);
   const [callHistory, setCallHistory] = useState<CallSession[]>([]);
   const [channels, setChannels] = useState<ChannelConfig[]>(AVAILABLE_CHANNELS);
+  const [conference, setConference] = useState<ConferenceCall | null>(null);
   
   const durationIntervalsRef = useRef<Map<string, number>>(new Map());
+  const conferenceDurationRef = useRef<number | null>(null);
 
   // Get current active call
   const currentCall = activeCalls.find(c => c.id === activeCallId) || null;
@@ -124,6 +136,7 @@ export function useMultiChannelCall() {
       isMuted: false,
       isOnHold: false,
       isRecording: false,
+      isInConference: false,
       transcripts: []
     };
     
@@ -268,10 +281,137 @@ export function useMultiChannelCall() {
     return activeCalls.find(c => c.id === callId) || null;
   }, [activeCalls]);
 
+  // Start conference call - merge multiple calls
+  const startConference = useCallback((callIds: string[]) => {
+    if (callIds.length < 2) return null;
+
+    const conferenceId = `conf-${Date.now()}`;
+    
+    // Update all participating calls
+    setActiveCalls(prev => prev.map(call => {
+      if (callIds.includes(call.id)) {
+        return {
+          ...call,
+          isInConference: true,
+          isOnHold: false,
+          status: 'conference' as CallStatus,
+          conferenceId
+        };
+      }
+      return call;
+    }));
+
+    const newConference: ConferenceCall = {
+      id: conferenceId,
+      participantIds: callIds,
+      startedAt: new Date(),
+      duration: 0,
+      isActive: true
+    };
+
+    setConference(newConference);
+
+    // Start conference duration timer
+    conferenceDurationRef.current = window.setInterval(() => {
+      setConference(prev => prev ? { ...prev, duration: prev.duration + 1 } : null);
+    }, 1000);
+
+    return newConference;
+  }, []);
+
+  // Add call to existing conference
+  const addToConference = useCallback((callId: string) => {
+    if (!conference) return;
+
+    setActiveCalls(prev => prev.map(call => {
+      if (call.id === callId) {
+        return {
+          ...call,
+          isInConference: true,
+          isOnHold: false,
+          status: 'conference' as CallStatus,
+          conferenceId: conference.id
+        };
+      }
+      return call;
+    }));
+
+    setConference(prev => prev ? {
+      ...prev,
+      participantIds: [...prev.participantIds, callId]
+    } : null);
+  }, [conference]);
+
+  // Remove call from conference
+  const removeFromConference = useCallback((callId: string) => {
+    if (!conference) return;
+
+    setActiveCalls(prev => prev.map(call => {
+      if (call.id === callId) {
+        return {
+          ...call,
+          isInConference: false,
+          status: 'active' as CallStatus,
+          conferenceId: undefined
+        };
+      }
+      return call;
+    }));
+
+    const newParticipantIds = conference.participantIds.filter(id => id !== callId);
+    
+    // If only one participant left, end conference
+    if (newParticipantIds.length < 2) {
+      endConference();
+    } else {
+      setConference(prev => prev ? {
+        ...prev,
+        participantIds: newParticipantIds
+      } : null);
+    }
+  }, [conference]);
+
+  // End conference call
+  const endConference = useCallback(() => {
+    if (!conference) return;
+
+    // Stop conference timer
+    if (conferenceDurationRef.current) {
+      clearInterval(conferenceDurationRef.current);
+      conferenceDurationRef.current = null;
+    }
+
+    // Update all participating calls back to active
+    setActiveCalls(prev => prev.map(call => {
+      if (call.conferenceId === conference.id) {
+        return {
+          ...call,
+          isInConference: false,
+          status: 'active' as CallStatus,
+          conferenceId: undefined
+        };
+      }
+      return call;
+    }));
+
+    setConference(null);
+  }, [conference]);
+
+  // Get calls available for conference (not already in conference)
+  const getCallsAvailableForConference = useCallback(() => {
+    return activeCalls.filter(call => 
+      !call.isInConference && 
+      (call.status === 'active' || call.status === 'on-hold')
+    );
+  }, [activeCalls]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       stopAllTimers();
+      if (conferenceDurationRef.current) {
+        clearInterval(conferenceDurationRef.current);
+      }
     };
   }, [stopAllTimers]);
 
@@ -283,6 +423,7 @@ export function useMultiChannelCall() {
     activeCallId,
     callHistory,
     channels,
+    conference,
     isInCall: activeCalls.length > 0,
     canAddCall: activeCalls.length < MAX_SIMULTANEOUS_CALLS,
     maxCalls: MAX_SIMULTANEOUS_CALLS,
@@ -299,6 +440,13 @@ export function useMultiChannelCall() {
     toggleRecording,
     addTranscript,
     configureChannel,
-    getCallById
+    getCallById,
+    
+    // Conference actions
+    startConference,
+    addToConference,
+    removeFromConference,
+    endConference,
+    getCallsAvailableForConference
   };
 }

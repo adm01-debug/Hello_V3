@@ -91,6 +91,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     activeCallId,
     callHistory,
     channels,
+    conference,
     isInCall,
     canAddCall,
     setActiveChannel,
@@ -102,7 +103,11 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     toggleHold,
     toggleRecording,
     addTranscript,
-    configureChannel
+    configureChannel,
+    startConference,
+    addToConference,
+    removeFromConference,
+    endConference
   } = useMultiChannelCall();
 
   // Wavoip hook
@@ -295,9 +300,14 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
             <ActiveCallsIndicator
               activeCalls={activeCalls}
               activeCallId={activeCallId}
+              conference={conference}
               onSwitchCall={switchToCall}
               onEndCall={endCall}
               onToggleHold={toggleHold}
+              onStartConference={startConference}
+              onAddToConference={addToConference}
+              onRemoveFromConference={removeFromConference}
+              onEndConference={endConference}
             />
             
             <DropdownMenu>
