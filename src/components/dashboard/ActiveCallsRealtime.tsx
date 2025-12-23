@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Phone, Pause, Clock, User } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Phone, Pause, Clock, User, Filter } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 
 interface ActiveCall {
   id: string;
@@ -29,6 +28,7 @@ export const ActiveCallsRealtime = () => {
   const [activeCalls, setActiveCalls] = useState<ActiveCall[]>([]);
   const [activeHolds, setActiveHolds] = useState<ActiveHoldEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedAgent, setSelectedAgent] = useState<string>('all');
 
   const fetchActiveCalls = async () => {
     const { data, error } = await supabase
@@ -123,6 +123,20 @@ export const ActiveCallsRealtime = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Get unique agents from active calls
+  const agents = useMemo(() => {
+    const agentNames = activeCalls
+      .map(call => call.agent_name)
+      .filter((name): name is string => !!name);
+    return [...new Set(agentNames)].sort();
+  }, [activeCalls]);
+
+  // Filter calls by selected agent
+  const filteredCalls = useMemo(() => {
+    if (selectedAgent === 'all') return activeCalls;
+    return activeCalls.filter(call => call.agent_name === selectedAgent);
+  }, [activeCalls, selectedAgent]);
+
   if (loading) {
     return (
       <Card>
@@ -144,25 +158,43 @@ export const ActiveCallsRealtime = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Phone className="h-5 w-5 text-primary" />
-          Chamadas Ativas
-          {activeCalls.length > 0 && (
-            <Badge variant="secondary" className="ml-2">
-              {activeCalls.length}
-            </Badge>
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2">
+            <Phone className="h-5 w-5 text-primary" />
+            Chamadas Ativas
+            {filteredCalls.length > 0 && (
+              <Badge variant="secondary" className="ml-2">
+                {filteredCalls.length}
+              </Badge>
+            )}
+          </CardTitle>
+          {agents.length > 0 && (
+            <Select value={selectedAgent} onValueChange={setSelectedAgent}>
+              <SelectTrigger className="w-[180px]">
+                <Filter className="h-4 w-4 mr-2" />
+                <SelectValue placeholder="Filtrar por agente" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos os agentes</SelectItem>
+                {agents.map(agent => (
+                  <SelectItem key={agent} value={agent}>
+                    {agent}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           )}
-        </CardTitle>
+        </div>
       </CardHeader>
       <CardContent>
-        {activeCalls.length === 0 ? (
+        {filteredCalls.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Phone className="h-12 w-12 mx-auto mb-3 opacity-20" />
-            <p>Nenhuma chamada ativa no momento</p>
+            <p>{selectedAgent === 'all' ? 'Nenhuma chamada ativa no momento' : `Nenhuma chamada ativa para ${selectedAgent}`}</p>
           </div>
         ) : (
           <div className="space-y-3">
-            {activeCalls.map(call => {
+            {filteredCalls.map(call => {
               const onHold = isCallOnHold(call.id);
               const holdDuration = getHoldDuration(call.id);
               const callDuration = Math.floor(
