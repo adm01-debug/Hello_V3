@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { CallSession } from './useMultiChannelCall';
+import { toast } from '@/hooks/use-toast';
 
 export type ReminderInterval = 15 | 30 | 60;
 
@@ -65,6 +66,21 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     }
   }, []);
 
+  const showVisualNotification = useCallback((callsOnHold: CallSession[]) => {
+    const callNames = callsOnHold
+      .map(call => call.contactName || call.phoneNumber || 'Chamada')
+      .join(', ');
+    
+    toast({
+      title: "📞 Chamada em espera",
+      description: callsOnHold.length === 1 
+        ? `${callNames} aguardando atenção`
+        : `${callsOnHold.length} chamadas aguardando: ${callNames}`,
+      variant: "default",
+      duration: 5000,
+    });
+  }, []);
+
   const playHoldReminder = useCallback(() => {
     if (!isEnabled) return;
     
@@ -77,26 +93,32 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     
     const now = Date.now();
     const newLastReminderTime = { ...lastReminderTime };
-    let shouldPlay = false;
+    let shouldNotify = false;
     
     callsOnHold.forEach(call => {
       const lastReminder = lastReminderTime[call.id] || 0;
       if (now - lastReminder >= intervalMs) {
-        shouldPlay = true;
+        shouldNotify = true;
         newLastReminderTime[call.id] = now;
       }
     });
     
-    if (shouldPlay && playSoundRef.current) {
-      try {
-        playSoundRef.current();
-      } catch (error) {
-        console.log('Audio playback failed:', error);
+    if (shouldNotify) {
+      // Play sound
+      if (playSoundRef.current) {
+        try {
+          playSoundRef.current();
+        } catch (error) {
+          console.log('Audio playback failed:', error);
+        }
       }
+      
+      // Show visual notification
+      showVisualNotification(callsOnHold);
     }
     
     setLastReminderTime(newLastReminderTime);
-  }, [activeCalls, isEnabled, lastReminderTime, initAudio, intervalMs]);
+  }, [activeCalls, isEnabled, lastReminderTime, initAudio, intervalMs, showVisualNotification]);
 
   // Check for calls on hold every second
   useEffect(() => {
