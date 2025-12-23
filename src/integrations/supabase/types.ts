@@ -261,6 +261,59 @@ export type Database = {
           },
         ]
       }
+      contact_alerts: {
+        Row: {
+          actioned_at: string | null
+          actioned_by: string | null
+          alert_type: string
+          contact_id: string
+          created_at: string
+          id: string
+          is_actioned: boolean
+          is_read: boolean
+          message: string
+          severity: string
+          title: string
+          trigger_data: Json | null
+        }
+        Insert: {
+          actioned_at?: string | null
+          actioned_by?: string | null
+          alert_type: string
+          contact_id: string
+          created_at?: string
+          id?: string
+          is_actioned?: boolean
+          is_read?: boolean
+          message: string
+          severity?: string
+          title: string
+          trigger_data?: Json | null
+        }
+        Update: {
+          actioned_at?: string | null
+          actioned_by?: string | null
+          alert_type?: string
+          contact_id?: string
+          created_at?: string
+          id?: string
+          is_actioned?: boolean
+          is_read?: boolean
+          message?: string
+          severity?: string
+          title?: string
+          trigger_data?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_alerts_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_interactions: {
         Row: {
           agent_name: string | null

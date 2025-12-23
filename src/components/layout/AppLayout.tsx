@@ -5,6 +5,7 @@ import { ActiveCallBar } from '@/components/calls/ActiveCallBar';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { AlertsDropdown } from '@/components/alerts/AlertsDropdown';
+import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdown';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -32,6 +33,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             </div>
 
             <div className="flex items-center gap-3">
+              <ContactAlertsDropdown />
               <AlertsDropdown />
             </div>
           </header>
