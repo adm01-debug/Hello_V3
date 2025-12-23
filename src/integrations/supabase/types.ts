@@ -137,6 +137,7 @@ export type Database = {
           agent_name: string | null
           caller_name: string | null
           caller_phone: string | null
+          contact_id: string | null
           created_at: string
           duration_seconds: number | null
           ended_at: string | null
@@ -148,6 +149,7 @@ export type Database = {
           agent_name?: string | null
           caller_name?: string | null
           caller_phone?: string | null
+          contact_id?: string | null
           created_at?: string
           duration_seconds?: number | null
           ended_at?: string | null
@@ -159,6 +161,7 @@ export type Database = {
           agent_name?: string | null
           caller_name?: string | null
           caller_phone?: string | null
+          contact_id?: string | null
           created_at?: string
           duration_seconds?: number | null
           ended_at?: string | null
@@ -166,7 +169,15 @@ export type Database = {
           started_at?: string
           status?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "call_sessions_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       call_summaries: {
         Row: {
@@ -249,6 +260,120 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      contact_interactions: {
+        Row: {
+          agent_name: string | null
+          call_session_id: string | null
+          contact_id: string
+          created_at: string
+          direction: string | null
+          duration_seconds: number | null
+          id: string
+          interaction_type: string
+          metadata: Json | null
+          sentiment: string | null
+          summary: string | null
+          topics: string[] | null
+          transcript: string | null
+        }
+        Insert: {
+          agent_name?: string | null
+          call_session_id?: string | null
+          contact_id: string
+          created_at?: string
+          direction?: string | null
+          duration_seconds?: number | null
+          id?: string
+          interaction_type?: string
+          metadata?: Json | null
+          sentiment?: string | null
+          summary?: string | null
+          topics?: string[] | null
+          transcript?: string | null
+        }
+        Update: {
+          agent_name?: string | null
+          call_session_id?: string | null
+          contact_id?: string
+          created_at?: string
+          direction?: string | null
+          duration_seconds?: number | null
+          id?: string
+          interaction_type?: string
+          metadata?: Json | null
+          sentiment?: string | null
+          summary?: string | null
+          topics?: string[] | null
+          transcript?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_interactions_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contact_interactions_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contacts: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string | null
+          external_id: string | null
+          id: string
+          name: string
+          notes: string | null
+          personality_insights: Json | null
+          phone: string | null
+          position: string | null
+          preferences: Json | null
+          source: string | null
+          tags: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          external_id?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          personality_insights?: Json | null
+          phone?: string | null
+          position?: string | null
+          preferences?: Json | null
+          source?: string | null
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          external_id?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          personality_insights?: Json | null
+          phone?: string | null
+          position?: string | null
+          preferences?: Json | null
+          source?: string | null
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
       }
     }
     Views: {

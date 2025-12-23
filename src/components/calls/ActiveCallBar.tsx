@@ -19,6 +19,7 @@ import { cn } from '@/lib/utils';
 import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
 import { LiveTranscription } from '@/components/calls/LiveTranscription';
 import { useCallSession } from '@/hooks/useCallSession';
+import { useContacts } from '@/hooks/useContacts';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -54,6 +55,7 @@ export function ActiveCallBar() {
   const [isEnding, setIsEnding] = useState(false);
   
   const { currentSession, isSaving, startSession, endSession, addTranscript, addAnalysis } = useCallSession();
+  const { findOrCreateContact, addContactInteraction } = useContacts();
 
   // Start session when call connects
   useEffect(() => {
@@ -122,6 +124,25 @@ export function ActiveCallBar() {
         }
         
         await endSession(duration, summary);
+
+        // Save interaction to contact
+        if (call?.contactPhone) {
+          const contact = await findOrCreateContact(call.contactPhone, call.contactName);
+          if (contact) {
+            await addContactInteraction(contact.id, {
+              interaction_type: 'call',
+              direction: call.type === 'incoming' ? 'inbound' : 'outbound',
+              summary: summary?.summary,
+              transcript: transcripts.map(t => `${t.speakerLabel}: ${t.text}`).join('\n'),
+              sentiment: summary?.overallSentiment,
+              topics: summary?.mainTopics,
+              duration_seconds: duration,
+              agent_name: 'Agente Demo',
+              call_session_id: currentSession.id
+            });
+          }
+        }
+
         toast.success('Chamada salva com resumo no histórico');
       } catch (error) {
         console.error('Error ending call:', error);
