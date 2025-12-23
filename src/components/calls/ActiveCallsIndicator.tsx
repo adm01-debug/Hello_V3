@@ -1,8 +1,9 @@
-import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell } from 'lucide-react';
+import { useState } from 'react';
+import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell, Merge, X, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { CallSession, CallChannel } from '@/hooks/useMultiChannelCall';
+import { CallSession, CallChannel, ConferenceCall } from '@/hooks/useMultiChannelCall';
 import { formatDuration } from '@/data/mockData';
 import { useHoldReminder, REMINDER_INTERVALS, ReminderInterval } from '@/hooks/useHoldReminder';
 import {
@@ -19,13 +20,19 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from '@/components/ui/toggle-group';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface ActiveCallsIndicatorProps {
   activeCalls: CallSession[];
   activeCallId: string | null;
+  conference: ConferenceCall | null;
   onSwitchCall: (callId: string) => void;
   onEndCall: (callId: string) => void;
   onToggleHold: (callId: string) => void;
+  onStartConference: (callIds: string[]) => void;
+  onAddToConference: (callId: string) => void;
+  onRemoveFromConference: (callId: string) => void;
+  onEndConference: () => void;
 }
 
 const channelLabels: Record<CallChannel, string> = {
@@ -37,11 +44,18 @@ const channelLabels: Record<CallChannel, string> = {
 export function ActiveCallsIndicator({
   activeCalls,
   activeCallId,
+  conference,
   onSwitchCall,
   onEndCall,
-  onToggleHold
+  onToggleHold,
+  onStartConference,
+  onAddToConference,
+  onRemoveFromConference,
+  onEndConference
 }: ActiveCallsIndicatorProps) {
   const { isEnabled, interval, toggleReminder, changeInterval, callsOnHold, initAudio } = useHoldReminder(activeCalls);
+  const [selectedForConference, setSelectedForConference] = useState<string[]>([]);
+  const [isSelectingForConference, setIsSelectingForConference] = useState(false);
 
   if (activeCalls.length === 0) return null;
 
@@ -57,6 +71,31 @@ export function ActiveCallsIndicator({
       changeInterval(Number(value) as ReminderInterval);
     }
   };
+
+  const handleToggleSelectForConference = (callId: string) => {
+    setSelectedForConference(prev => 
+      prev.includes(callId) 
+        ? prev.filter(id => id !== callId)
+        : [...prev, callId]
+    );
+  };
+
+  const handleStartConference = () => {
+    if (selectedForConference.length >= 2) {
+      onStartConference(selectedForConference);
+      setSelectedForConference([]);
+      setIsSelectingForConference(false);
+    }
+  };
+
+  const handleCancelSelection = () => {
+    setSelectedForConference([]);
+    setIsSelectingForConference(false);
+  };
+
+  const callsNotInConference = activeCalls.filter(c => !c.isInConference);
+  const callsInConference = activeCalls.filter(c => c.isInConference);
+  const canStartConference = callsNotInConference.length >= 2 && !conference;
 
   return (
     <Popover>
@@ -78,7 +117,7 @@ export function ActiveCallsIndicator({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-2" align="end">
+      <PopoverContent className="w-96 p-2" align="end">
         <div className="space-y-2">
           <div className="flex items-center justify-between px-2 py-1">
             <span className="text-sm font-medium">Chamadas Ativas</span>
@@ -141,30 +180,148 @@ export function ActiveCallsIndicator({
               </div>
             </div>
           )}
+
+          {/* Conference Controls */}
+          {canStartConference && !isSelectingForConference && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full gap-2"
+              onClick={() => setIsSelectingForConference(true)}
+            >
+              <Merge className="h-4 w-4" />
+              Iniciar Conferência
+            </Button>
+          )}
+
+          {isSelectingForConference && (
+            <div className="p-2 bg-primary/5 border border-primary/20 rounded-md space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-primary">Selecione chamadas para mesclar:</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6"
+                  onClick={handleCancelSelection}
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="flex-1 gap-1"
+                  disabled={selectedForConference.length < 2}
+                  onClick={handleStartConference}
+                >
+                  <Merge className="h-3 w-3" />
+                  Mesclar ({selectedForConference.length})
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Active Conference */}
+          {conference && (
+            <div className="p-3 bg-success/10 border border-success/30 rounded-md space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-full bg-success flex items-center justify-center">
+                    <Users className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">Conferência Ativa</p>
+                    <p className="text-xs text-muted-foreground">
+                      {callsInConference.length} participantes • {formatDuration(conference.duration)}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={onEndConference}
+                >
+                  Encerrar
+                </Button>
+              </div>
+              
+              <div className="space-y-1">
+                {callsInConference.map((call) => (
+                  <div
+                    key={call.id}
+                    className="flex items-center justify-between p-2 bg-background/50 rounded text-xs"
+                  >
+                    <span>{call.contactName || call.phoneNumber || 'Chamada'}</span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6"
+                      onClick={() => onRemoveFromConference(call.id)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+
+              {callsNotInConference.length > 0 && (
+                <div className="pt-2 border-t border-success/20">
+                  <p className="text-xs text-muted-foreground mb-1">Adicionar à conferência:</p>
+                  {callsNotInConference.map((call) => (
+                    <Button
+                      key={call.id}
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start gap-2 h-8"
+                      onClick={() => onAddToConference(call.id)}
+                    >
+                      <UserPlus className="h-3 w-3" />
+                      {call.contactName || call.phoneNumber || 'Chamada'}
+                    </Button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
           
+          {/* Individual Calls */}
           {activeCalls.map((call) => (
             <div
               key={call.id}
               className={cn(
-                "flex items-center justify-between p-3 rounded-lg border transition-colors cursor-pointer",
+                "flex items-center justify-between p-3 rounded-lg border transition-colors",
                 call.id === activeCallId 
                   ? "bg-primary/10 border-primary/30" 
                   : "bg-muted/50 hover:bg-muted",
-                call.isOnHold && "opacity-60"
+                call.isOnHold && "opacity-60",
+                call.isInConference && "border-success/30 bg-success/5"
               )}
-              onClick={() => onSwitchCall(call.id)}
             >
-              <div className="flex items-center gap-3">
-                <div className={cn(
-                  "h-8 w-8 rounded-full flex items-center justify-center text-white",
-                  call.isOnHold ? "bg-warning" : "bg-success"
-                )}>
-                  {call.isOnHold ? (
-                    <Pause className="h-4 w-4" />
-                  ) : (
-                    <Phone className="h-4 w-4" />
-                  )}
-                </div>
+              <div 
+                className="flex items-center gap-3 cursor-pointer flex-1"
+                onClick={() => !isSelectingForConference && onSwitchCall(call.id)}
+              >
+                {isSelectingForConference && !call.isInConference ? (
+                  <Checkbox
+                    checked={selectedForConference.includes(call.id)}
+                    onCheckedChange={() => handleToggleSelectForConference(call.id)}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ) : (
+                  <div className={cn(
+                    "h-8 w-8 rounded-full flex items-center justify-center text-white",
+                    call.isInConference ? "bg-success" : call.isOnHold ? "bg-warning" : "bg-success"
+                  )}>
+                    {call.isInConference ? (
+                      <Users className="h-4 w-4" />
+                    ) : call.isOnHold ? (
+                      <Pause className="h-4 w-4" />
+                    ) : (
+                      <Phone className="h-4 w-4" />
+                    )}
+                  </div>
+                )}
                 <div>
                   <p className="text-sm font-medium">
                     {call.contactName || call.phoneNumber || 'Chamada'}
@@ -173,38 +330,46 @@ export function ActiveCallsIndicator({
                     <span>{channelLabels[call.channel]}</span>
                     <span>•</span>
                     <span className="font-mono">{formatDuration(call.duration)}</span>
+                    {call.isInConference && (
+                      <>
+                        <span>•</span>
+                        <Badge variant="outline" className="text-[10px] px-1 py-0">Conferência</Badge>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
               
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-7 w-7"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleHold(call.id);
-                  }}
-                >
-                  {call.isOnHold ? (
-                    <Play className="h-3.5 w-3.5" />
-                  ) : (
-                    <Pause className="h-3.5 w-3.5" />
-                  )}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-7 w-7 text-destructive hover:text-destructive"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onEndCall(call.id);
-                  }}
-                >
-                  <PhoneOff className="h-3.5 w-3.5" />
-                </Button>
-              </div>
+              {!isSelectingForConference && !call.isInConference && (
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleHold(call.id);
+                    }}
+                  >
+                    {call.isOnHold ? (
+                      <Play className="h-3.5 w-3.5" />
+                    ) : (
+                      <Pause className="h-3.5 w-3.5" />
+                    )}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7 text-destructive hover:text-destructive"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEndCall(call.id);
+                    }}
+                  >
+                    <PhoneOff className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
+              )}
             </div>
           ))}
         </div>
