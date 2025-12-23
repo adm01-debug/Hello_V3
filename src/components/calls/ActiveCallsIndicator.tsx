@@ -64,11 +64,13 @@ export function ActiveCallsIndicator({
     alertThreshold,
     alertsEnabled,
     activeAlerts,
+    browserNotificationsEnabled,
     toggleReminder, 
     toggleAlerts,
     changeInterval, 
     changeAlertThreshold,
     clearAlerts,
+    requestBrowserNotifications,
     callsOnHold, 
     initAudio 
   } = useHoldReminder(activeCalls);
@@ -264,6 +266,28 @@ export function ActiveCallsIndicator({
                     </ToggleGroupItem>
                   ))}
                 </ToggleGroup>
+              </div>
+
+              {/* Browser notifications toggle */}
+              <div className="flex items-center justify-between pt-2 border-t border-warning/20">
+                <span className="text-xs text-muted-foreground">Notificações do navegador:</span>
+                {browserNotificationsEnabled ? (
+                  <Badge variant="outline" className="text-xs bg-green-500/10 text-green-600 border-green-500/30">
+                    Ativadas
+                  </Badge>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-6 text-xs px-2"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      requestBrowserNotifications();
+                    }}
+                  >
+                    Ativar
+                  </Button>
+                )}
               </div>
 
               {/* Active alerts */}
