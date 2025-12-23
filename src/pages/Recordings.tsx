@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Table,
   TableBody,
@@ -13,6 +14,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import {
   Play,
   Pause,
@@ -28,6 +35,8 @@ import {
   Clock,
   Users,
   Trash2,
+  FileText,
+  Sparkles,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -45,6 +54,13 @@ interface Recording {
   created_at: string;
 }
 
+interface TranscriptionSegment {
+  speaker: string;
+  text: string;
+  start_time: number | null;
+  end_time: number | null;
+}
+
 export default function Recordings() {
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,6 +72,13 @@ export default function Recordings() {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
+  const [transcribing, setTranscribing] = useState<string | null>(null);
+  const [transcriptionDialog, setTranscriptionDialog] = useState(false);
+  const [currentTranscription, setCurrentTranscription] = useState<{
+    text: string;
+    segments: TranscriptionSegment[];
+    recording: Recording | null;
+  } | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -206,6 +229,73 @@ export default function Recordings() {
     } catch (error) {
       console.error('Error deleting recording:', error);
       toast.error('Erro ao excluir gravação');
+    }
+  };
+
+  const handleTranscribe = async (recording: Recording) => {
+    setTranscribing(recording.id);
+    
+    try {
+      toast.info('Iniciando transcrição...', { duration: 3000 });
+      
+      const { data, error } = await supabase.functions.invoke('transcribe-recording', {
+        body: {
+          recordingId: recording.id,
+          filePath: recording.file_path,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        // Parse segments from words if available
+        const segments: TranscriptionSegment[] = [];
+        if (data.words && data.words.length > 0) {
+          let currentSpeaker = '';
+          let currentText = '';
+          let startTime = 0;
+          
+          for (const word of data.words) {
+            const speaker = word.speaker || 'Speaker';
+            if (speaker !== currentSpeaker && currentText) {
+              segments.push({
+                speaker: currentSpeaker,
+                text: currentText.trim(),
+                start_time: startTime,
+                end_time: word.start,
+              });
+              currentText = '';
+              startTime = word.start;
+            }
+            currentSpeaker = speaker;
+            currentText += word.text + ' ';
+          }
+          
+          if (currentText) {
+            segments.push({
+              speaker: currentSpeaker,
+              text: currentText.trim(),
+              start_time: startTime,
+              end_time: data.words[data.words.length - 1]?.end || 0,
+            });
+          }
+        }
+
+        setCurrentTranscription({
+          text: data.text,
+          segments,
+          recording,
+        });
+        setTranscriptionDialog(true);
+        toast.success('Transcrição concluída!');
+      } else {
+        throw new Error(data.error || 'Erro desconhecido');
+      }
+    } catch (error) {
+      console.error('Transcription error:', error);
+      toast.error('Erro ao transcrever gravação');
+    } finally {
+      setTranscribing(null);
     }
   };
 
@@ -422,6 +512,19 @@ export default function Recordings() {
                         <Button
                           variant="ghost"
                           size="icon"
+                          onClick={() => handleTranscribe(recording)}
+                          disabled={transcribing === recording.id}
+                          title="Transcrever gravação"
+                        >
+                          {transcribing === recording.id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <FileText className="h-4 w-4" />
+                          )}
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
                           onClick={() => handleDownload(recording)}
                         >
                           <Download className="h-4 w-4" />
@@ -443,6 +546,80 @@ export default function Recordings() {
           )}
         </CardContent>
       </Card>
+
+      {/* Transcription Dialog */}
+      <Dialog open={transcriptionDialog} onOpenChange={setTranscriptionDialog}>
+        <DialogContent className="max-w-3xl max-h-[80vh]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              Transcrição da Gravação
+            </DialogTitle>
+          </DialogHeader>
+          
+          {currentTranscription && (
+            <div className="space-y-4">
+              {currentTranscription.recording && (
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <Calendar className="h-4 w-4" />
+                    {format(new Date(currentTranscription.recording.recorded_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+                  </div>
+                  {currentTranscription.recording.duration_seconds && (
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-4 w-4" />
+                      {formatDuration(currentTranscription.recording.duration_seconds)}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <ScrollArea className="h-[400px] rounded-md border p-4">
+                {currentTranscription.segments.length > 0 ? (
+                  <div className="space-y-4">
+                    {currentTranscription.segments.map((segment, index) => (
+                      <div key={index} className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <Badge variant="secondary" className="text-xs">
+                            {segment.speaker}
+                          </Badge>
+                          {segment.start_time !== null && (
+                            <span className="text-xs text-muted-foreground">
+                              {formatDuration(segment.start_time)}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm text-foreground pl-2 border-l-2 border-primary/30">
+                          {segment.text}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-foreground whitespace-pre-wrap">
+                    {currentTranscription.text}
+                  </p>
+                )}
+              </ScrollArea>
+
+              <div className="flex justify-end gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    navigator.clipboard.writeText(currentTranscription.text);
+                    toast.success('Transcrição copiada!');
+                  }}
+                >
+                  Copiar Texto
+                </Button>
+                <Button onClick={() => setTranscriptionDialog(false)}>
+                  Fechar
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

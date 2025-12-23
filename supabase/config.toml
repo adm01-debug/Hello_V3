@@ -32,3 +32,6 @@ verify_jwt = false
 
 [functions.check-contact-alerts]
 verify_jwt = false
+
+[functions.transcribe-recording]
+verify_jwt = false
