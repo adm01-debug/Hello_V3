@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle, AlertCircle, Info, Check, Filter, Trash2, FlaskConical, Users, Phone, CheckCircle2, XCircle, RefreshCw } from 'lucide-react';
+import { AlertsTrendChart } from '@/components/alerts/AlertsTrendChart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -414,6 +415,9 @@ export default function Alerts() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Trend Chart */}
+      <AlertsTrendChart />
 
       {/* Filters */}
       <Card>
