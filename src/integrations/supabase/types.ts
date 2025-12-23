@@ -514,6 +514,39 @@ export type Database = {
         }
         Relationships: []
       }
+      hold_alert_settings: {
+        Row: {
+          created_at: string
+          critical_threshold_seconds: number
+          enabled: boolean
+          id: string
+          notify_on_critical: boolean
+          notify_on_warning: boolean
+          updated_at: string
+          warning_threshold_seconds: number
+        }
+        Insert: {
+          created_at?: string
+          critical_threshold_seconds?: number
+          enabled?: boolean
+          id?: string
+          notify_on_critical?: boolean
+          notify_on_warning?: boolean
+          updated_at?: string
+          warning_threshold_seconds?: number
+        }
+        Update: {
+          created_at?: string
+          critical_threshold_seconds?: number
+          enabled?: boolean
+          id?: string
+          notify_on_critical?: boolean
+          notify_on_warning?: boolean
+          updated_at?: string
+          warning_threshold_seconds?: number
+        }
+        Relationships: []
+      }
       hold_events: {
         Row: {
           agent_name: string | null

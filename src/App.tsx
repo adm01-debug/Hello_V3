@@ -21,6 +21,7 @@ import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import Recordings from "./pages/Recordings";
 import HoldMetrics from "./pages/HoldMetrics";
 import HoldAlerts from "./pages/HoldAlerts";
+import HoldAlertSettings from "./pages/HoldAlertSettings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => (
               <Route path="/recordings" element={<Recordings />} />
               <Route path="/hold-metrics" element={<HoldMetrics />} />
               <Route path="/hold-alerts" element={<HoldAlerts />} />
+              <Route path="/hold-settings" element={<HoldAlertSettings />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
