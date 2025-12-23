@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell, Merge, X, UserPlus, PhoneForwarded } from 'lucide-react';
+import { Phone, PhoneOff, Pause, Play, Users, Volume2, VolumeX, Bell, Merge, X, UserPlus, PhoneForwarded, Mic, MicOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -35,6 +35,7 @@ interface ActiveCallsIndicatorProps {
   onRemoveFromConference: (callId: string) => void;
   onEndConference: () => void;
   onTransferCall: (callId: string, target: TransferTarget, transferType: TransferType) => void;
+  onToggleConferenceRecording?: () => void;
 }
 
 const channelLabels: Record<CallChannel, string> = {
@@ -54,7 +55,8 @@ export function ActiveCallsIndicator({
   onAddToConference,
   onRemoveFromConference,
   onEndConference,
-  onTransferCall
+  onTransferCall,
+  onToggleConferenceRecording
 }: ActiveCallsIndicatorProps) {
   const { isEnabled, interval, toggleReminder, changeInterval, callsOnHold, initAudio } = useHoldReminder(activeCalls);
   const [selectedForConference, setSelectedForConference] = useState<string[]>([]);
@@ -251,14 +253,52 @@ export function ActiveCallsIndicator({
                     </p>
                   </div>
                 </div>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={onEndConference}
-                >
-                  Encerrar
-                </Button>
+                <div className="flex items-center gap-1">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant={conference.isRecording ? "default" : "outline"}
+                        size="sm"
+                        className={cn(
+                          "gap-1",
+                          conference.isRecording && "bg-destructive hover:bg-destructive/90"
+                        )}
+                        onClick={onToggleConferenceRecording}
+                      >
+                        {conference.isRecording ? (
+                          <>
+                            <Mic className="h-3 w-3 animate-pulse" />
+                            <span className="text-xs">REC</span>
+                          </>
+                        ) : (
+                          <>
+                            <MicOff className="h-3 w-3" />
+                            <span className="text-xs">Gravar</span>
+                          </>
+                        )}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {conference.isRecording ? 'Parar gravação' : 'Iniciar gravação'}
+                    </TooltipContent>
+                  </Tooltip>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={onEndConference}
+                  >
+                    Encerrar
+                  </Button>
+                </div>
               </div>
+
+              {/* Recording Status Banner */}
+              {conference.isRecording && (
+                <div className="flex items-center gap-2 px-2 py-1.5 bg-destructive/10 border border-destructive/20 rounded text-xs">
+                  <div className="h-2 w-2 rounded-full bg-destructive animate-pulse" />
+                  <span className="text-destructive font-medium">Gravação automática ativa</span>
+                </div>
+              )}
               
               <div className="space-y-1">
                 {callsInConference.map((call) => (
@@ -266,7 +306,12 @@ export function ActiveCallsIndicator({
                     key={call.id}
                     className="flex items-center justify-between p-2 bg-background/50 rounded text-xs"
                   >
-                    <span>{call.contactName || call.phoneNumber || 'Chamada'}</span>
+                    <div className="flex items-center gap-2">
+                      <span>{call.contactName || call.phoneNumber || 'Chamada'}</span>
+                      {call.isRecording && (
+                        <div className="h-1.5 w-1.5 rounded-full bg-destructive animate-pulse" />
+                      )}
+                    </div>
                     <Button
                       variant="ghost"
                       size="icon"
