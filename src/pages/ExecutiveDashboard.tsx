@@ -13,6 +13,8 @@ import {
   BarChart3,
   Calendar,
   RefreshCw,
+  Pause,
+  Timer,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -62,6 +64,12 @@ interface DashboardMetrics {
   criticalAlerts: number;
   callsTrend: number;
   satisfactionTrend: number;
+  // Hold metrics
+  totalHoldTime: number;
+  avgHoldTime: number;
+  holdCount: number;
+  holdRate: number;
+  holdAlerts: number;
 }
 
 interface CallsByDay {
@@ -98,6 +106,13 @@ interface GoalsComparison {
   performanceActual: number;
 }
 
+interface HoldByAgent {
+  name: string;
+  holdTime: number;
+  holdCount: number;
+  avgHoldTime: number;
+}
+
 export default function ExecutiveDashboard() {
   const [metrics, setMetrics] = useState<DashboardMetrics>({
     totalCalls: 0,
@@ -110,12 +125,18 @@ export default function ExecutiveDashboard() {
     criticalAlerts: 0,
     callsTrend: 0,
     satisfactionTrend: 0,
+    totalHoldTime: 0,
+    avgHoldTime: 0,
+    holdCount: 0,
+    holdRate: 0,
+    holdAlerts: 0,
   });
   const [callsByDay, setCallsByDay] = useState<CallsByDay[]>([]);
   const [satisfactionTrend, setSatisfactionTrend] = useState<SatisfactionTrend[]>([]);
   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
   const [topAgents, setTopAgents] = useState<TopAgent[]>([]);
   const [goalsComparison, setGoalsComparison] = useState<GoalsComparison[]>([]);
+  const [holdByAgent, setHoldByAgent] = useState<HoldByAgent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [period, setPeriod] = useState<string>('week');
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
@@ -216,6 +237,13 @@ export default function ExecutiveDashboard() {
       .from('agent_goals')
       .select('*');
 
+    // Fetch hold events
+    let holdQuery = supabase.from('hold_events').select('*');
+    if (period !== 'all') {
+      holdQuery = holdQuery.gte('created_at', dateFilter.toISOString());
+    }
+    const { data: holdEvents } = await holdQuery;
+
     if (!sessions) {
       setIsLoading(false);
       return;
@@ -261,6 +289,42 @@ export default function ExecutiveDashboard() {
     ).length;
     const callsTrend = prev7Days > 0 ? ((last7Days - prev7Days) / prev7Days) * 100 : 0;
 
+    // Calculate hold metrics
+    const totalHoldTime = holdEvents?.reduce((sum, h) => sum + (h.duration_seconds || 0), 0) || 0;
+    const holdCount = holdEvents?.length || 0;
+    const avgHoldTime = holdCount > 0 ? totalHoldTime / holdCount : 0;
+    const callsWithHold = new Set(holdEvents?.map(h => h.call_session_id).filter(Boolean)).size;
+    const holdRate = totalCalls > 0 ? (callsWithHold / totalCalls) * 100 : 0;
+    
+    // Hold alerts (alerts related to hold)
+    const holdAlerts = alerts?.filter((a) => 
+      a.alert_type?.includes('hold') || 
+      a.title?.toLowerCase().includes('espera') ||
+      a.title?.toLowerCase().includes('hold')
+    ).length || 0;
+
+    // Calculate hold by agent
+    const holdByAgentMap = new Map<string, { holdTime: number; holdCount: number }>();
+    holdEvents?.forEach((h) => {
+      if (!h.agent_name) return;
+      const current = holdByAgentMap.get(h.agent_name) || { holdTime: 0, holdCount: 0 };
+      current.holdTime += h.duration_seconds || 0;
+      current.holdCount += 1;
+      holdByAgentMap.set(h.agent_name, current);
+    });
+    
+    const holdByAgentData = Array.from(holdByAgentMap.entries())
+      .map(([name, stats]) => ({
+        name,
+        holdTime: stats.holdTime,
+        holdCount: stats.holdCount,
+        avgHoldTime: stats.holdCount > 0 ? stats.holdTime / stats.holdCount : 0,
+      }))
+      .sort((a, b) => b.holdTime - a.holdTime)
+      .slice(0, 5);
+    
+    setHoldByAgent(holdByAgentData);
+
     setMetrics({
       totalCalls,
       totalAgents,
@@ -272,6 +336,11 @@ export default function ExecutiveDashboard() {
       criticalAlerts,
       callsTrend,
       satisfactionTrend: 0,
+      totalHoldTime,
+      avgHoldTime,
+      holdCount,
+      holdRate,
+      holdAlerts,
     });
 
     // Calls by day for last 7 days
@@ -606,6 +675,56 @@ export default function ExecutiveDashboard() {
         </Card>
       </div>
 
+      {/* Hold Metrics Row */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="border-orange-500/30 bg-orange-500/5">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Tempo Total em Espera</CardTitle>
+            <Pause className="h-4 w-4 text-orange-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-orange-500">{formatDuration(metrics.totalHoldTime)}</div>
+            <p className="text-xs text-muted-foreground mt-1">{metrics.holdCount} eventos de hold</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-orange-500/30 bg-orange-500/5">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Média por Hold</CardTitle>
+            <Timer className="h-4 w-4 text-orange-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">{formatDuration(metrics.avgHoldTime)}</div>
+            <Progress 
+              value={Math.min((metrics.avgHoldTime / 120) * 100, 100)} 
+              className={`h-2 mt-2 ${metrics.avgHoldTime > 60 ? '[&>div]:bg-red-500' : metrics.avgHoldTime > 30 ? '[&>div]:bg-yellow-500' : '[&>div]:bg-green-500'}`}
+            />
+          </CardContent>
+        </Card>
+
+        <Card className="border-orange-500/30 bg-orange-500/5">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Taxa de Hold</CardTitle>
+            <Clock className="h-4 w-4 text-orange-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">{metrics.holdRate.toFixed(1)}%</div>
+            <p className="text-xs text-muted-foreground mt-1">Chamadas com espera</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-orange-500/30 bg-orange-500/5">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Alertas de Espera</CardTitle>
+            <AlertTriangle className="h-4 w-4 text-orange-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">{metrics.holdAlerts}</div>
+            <p className="text-xs text-muted-foreground mt-1">Pendentes</p>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Charts Row */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Calls Trend Chart */}
@@ -748,6 +867,53 @@ export default function ExecutiveDashboard() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Hold by Agent Chart */}
+        {holdByAgent.length > 0 && (
+          <Card className="border-orange-500/30">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Pause className="h-5 w-5 text-orange-500" />
+                Tempo em Espera por Agente
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[300px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={holdByAgent} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                    <XAxis type="number" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      width={120}
+                      tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: 'hsl(var(--popover))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px',
+                      }}
+                      formatter={(value: number, name: string) => {
+                        if (name === 'Tempo Total' || name === 'Média') {
+                          const mins = Math.floor(value / 60);
+                          const secs = Math.round(value % 60);
+                          return [`${mins}m ${secs}s`, name];
+                        }
+                        return [value, name];
+                      }}
+                    />
+                    <Legend />
+                    <Bar dataKey="holdTime" name="Tempo Total" fill="hsl(24, 100%, 50%)" />
+                    <Bar dataKey="holdCount" name="Eventos" fill="hsl(24, 80%, 65%)" />
+                    <Bar dataKey="avgHoldTime" name="Média" fill="hsl(24, 60%, 75%)" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Top Agents */}
