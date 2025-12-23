@@ -15,7 +15,8 @@ import {
   Gauge,
   Brain,
   Disc,
-  Timer
+  Timer,
+  AlertTriangle
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -48,6 +49,7 @@ const toolsNavItems = [
   { title: 'Transcrições', url: '/call-history', icon: FileText },
   { title: 'Gravações', url: '/recordings', icon: Disc },
   { title: 'Métricas de Espera', url: '/hold-metrics', icon: Timer },
+  { title: 'Alertas de Espera', url: '/hold-alerts', icon: AlertTriangle },
   { title: 'Analytics', url: '/analytics', icon: PieChart },
   { title: 'Alertas', url: '/alerts', icon: Bell },
   { title: 'Ranking', url: '/ranking', icon: Trophy },
