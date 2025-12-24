@@ -6,6 +6,8 @@ import { AgentsList } from '@/components/dashboard/AgentsList';
 import { QueueStatus } from '@/components/dashboard/QueueStatus';
 import { ActiveCallsRealtime } from '@/components/dashboard/ActiveCallsRealtime';
 import { HoldTrendChart } from '@/components/dashboard/HoldTrendChart';
+import { WhisperPanel } from '@/components/supervisor/WhisperPanel';
+import { WhisperNotification } from '@/components/agent/WhisperNotification';
 import { mockDashboardStats, formatDuration } from '@/data/mockData';
 
 const Index = () => {
@@ -64,10 +66,14 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-3">
         <RecentCalls />
         <AgentsList />
+        <WhisperPanel />
       </div>
+
+      {/* Whisper Notification for agents - simulating agent view */}
+      <WhisperNotification agentName="Carlos Silva" />
     </div>
   );
 };

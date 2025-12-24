@@ -585,6 +585,44 @@ export type Database = {
           },
         ]
       }
+      whisper_messages: {
+        Row: {
+          agent_name: string
+          call_session_id: string
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string
+          supervisor_name: string
+        }
+        Insert: {
+          agent_name: string
+          call_session_id: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message: string
+          supervisor_name: string
+        }
+        Update: {
+          agent_name?: string
+          call_session_id?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          supervisor_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whisper_messages_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
