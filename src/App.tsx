@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { AchievementNotificationProvider } from "@/components/gamification/AchievementNotificationProvider";
 import Index from "./pages/Index";
 import Contacts from "./pages/Contacts";
 import ContactInsights from "./pages/ContactInsights";
@@ -35,31 +36,33 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <div className="dark">
-          <AppLayout>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/calls" element={<Calls />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/contacts/insights" element={<ContactInsights />} />
-              <Route path="/history" element={<History />} />
-              <Route path="/call-history" element={<CallHistory />} />
-              <Route path="/analytics" element={<CallAnalytics />} />
-              <Route path="/alerts" element={<Alerts />} />
-              <Route path="/ranking" element={<AgentRanking />} />
-              <Route path="/executive" element={<ExecutiveDashboard />} />
-              <Route path="/ai" element={<AIAssistant />} />
-              <Route path="/voice" element={<Voice />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/recordings" element={<Recordings />} />
-              <Route path="/hold-metrics" element={<HoldMetrics />} />
-              <Route path="/hold-alerts" element={<HoldAlerts />} />
-              <Route path="/hold-settings" element={<HoldAlertSettings />} />
-              <Route path="/callbacks" element={<Callbacks />} />
-              <Route path="/dialer" element={<Dialer />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AppLayout>
+          <AchievementNotificationProvider>
+            <AppLayout>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/calls" element={<Calls />} />
+                <Route path="/contacts" element={<Contacts />} />
+                <Route path="/contacts/insights" element={<ContactInsights />} />
+                <Route path="/history" element={<History />} />
+                <Route path="/call-history" element={<CallHistory />} />
+                <Route path="/analytics" element={<CallAnalytics />} />
+                <Route path="/alerts" element={<Alerts />} />
+                <Route path="/ranking" element={<AgentRanking />} />
+                <Route path="/executive" element={<ExecutiveDashboard />} />
+                <Route path="/ai" element={<AIAssistant />} />
+                <Route path="/voice" element={<Voice />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/recordings" element={<Recordings />} />
+                <Route path="/hold-metrics" element={<HoldMetrics />} />
+                <Route path="/hold-alerts" element={<HoldAlerts />} />
+                <Route path="/hold-settings" element={<HoldAlertSettings />} />
+                <Route path="/callbacks" element={<Callbacks />} />
+                <Route path="/dialer" element={<Dialer />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </AppLayout>
+          </AchievementNotificationProvider>
         </div>
       </BrowserRouter>
     </TooltipProvider>
