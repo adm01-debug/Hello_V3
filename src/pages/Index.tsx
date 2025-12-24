@@ -6,8 +6,9 @@ import { AgentsList } from '@/components/dashboard/AgentsList';
 import { QueueStatus } from '@/components/dashboard/QueueStatus';
 import { ActiveCallsRealtime } from '@/components/dashboard/ActiveCallsRealtime';
 import { HoldTrendChart } from '@/components/dashboard/HoldTrendChart';
-import { WhisperPanel } from '@/components/supervisor/WhisperPanel';
+import { SupervisorPanel } from '@/components/supervisor/SupervisorPanel';
 import { WhisperNotification } from '@/components/agent/WhisperNotification';
+import { BargeInNotification } from '@/components/agent/BargeInNotification';
 import { mockDashboardStats, formatDuration } from '@/data/mockData';
 
 const Index = () => {
@@ -69,11 +70,12 @@ const Index = () => {
       <div className="grid gap-6 lg:grid-cols-3">
         <RecentCalls />
         <AgentsList />
-        <WhisperPanel />
+        <SupervisorPanel />
       </div>
 
-      {/* Whisper Notification for agents - simulating agent view */}
+      {/* Agent Notifications - simulating agent view */}
       <WhisperNotification agentName="Carlos Silva" />
+      <BargeInNotification agentName="Carlos Silva" />
     </div>
   );
 };
