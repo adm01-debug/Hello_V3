@@ -33,7 +33,8 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { QueueTrendChart } from './QueueTrendChart';
-import { useCriticalAlertNotifications } from '@/hooks/useCriticalAlertNotifications';
+import { useCriticalAlertNotifications, AlertSoundConfig } from '@/hooks/useCriticalAlertNotifications';
+import { AlertSoundSettings } from './AlertSoundSettings';
 
 interface ActiveCall {
   id: string;
@@ -80,6 +81,14 @@ export const SupervisorPanel = () => {
   const [loading, setLoading] = useState(true);
   const [showTrendChart, setShowTrendChart] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundConfig, setSoundConfig] = useState<AlertSoundConfig>({
+    warningFrequency: 520,
+    warningPattern: 'single',
+    warningVolume: 0.2,
+    criticalFrequency: 880,
+    criticalPattern: 'urgent',
+    criticalVolume: 0.3,
+  });
   const [queueMetrics, setQueueMetrics] = useState<QueueMetrics>({
     avgWaitTime: 0,
     abandonmentRate: 0,
@@ -100,6 +109,7 @@ export const SupervisorPanel = () => {
     enabled: true,
     soundEnabled,
     browserNotificationsEnabled: true,
+    soundConfig,
   });
 
   // Initialize audio context on first user interaction
@@ -353,27 +363,34 @@ export const SupervisorPanel = () => {
               </Badge>
             )}
           </CardTitle>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button 
-                  variant={soundEnabled ? 'default' : 'outline'} 
-                  size="icon"
-                  className="h-8 w-8"
-                  onClick={soundEnabled ? () => setSoundEnabled(false) : handleEnableSound}
-                >
-                  {soundEnabled ? (
-                    <Bell className="h-4 w-4" />
-                  ) : (
-                    <BellOff className="h-4 w-4" />
-                  )}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{soundEnabled ? 'Desativar notificações sonoras' : 'Ativar notificações sonoras'}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <div className="flex items-center gap-1">
+            <AlertSoundSettings
+              config={soundConfig}
+              onConfigChange={setSoundConfig}
+              onTestSound={playAlertSound}
+            />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant={soundEnabled ? 'default' : 'outline'} 
+                    size="icon"
+                    className="h-8 w-8"
+                    onClick={soundEnabled ? () => setSoundEnabled(false) : handleEnableSound}
+                  >
+                    {soundEnabled ? (
+                      <Bell className="h-4 w-4" />
+                    ) : (
+                      <BellOff className="h-4 w-4" />
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{soundEnabled ? 'Desativar notificações sonoras' : 'Ativar notificações sonoras'}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
