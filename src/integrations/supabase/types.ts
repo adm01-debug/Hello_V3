@@ -80,6 +80,47 @@ export type Database = {
         }
         Relationships: []
       }
+      barge_in_sessions: {
+        Row: {
+          agent_name: string
+          call_session_id: string
+          created_at: string
+          ended_at: string | null
+          id: string
+          started_at: string
+          status: string
+          supervisor_name: string
+        }
+        Insert: {
+          agent_name: string
+          call_session_id: string
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          status?: string
+          supervisor_name: string
+        }
+        Update: {
+          agent_name?: string
+          call_session_id?: string
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          status?: string
+          supervisor_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "barge_in_sessions_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       call_alerts: {
         Row: {
           alert_type: string
