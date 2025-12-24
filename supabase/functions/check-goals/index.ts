@@ -159,8 +159,35 @@ serve(async (req) => {
 
       console.log(`Goal "${goal.name}": current=${currentValue}, status=${status}`);
 
-      // Create alert if needed
+      // Create alert and record violation if needed
       if (status !== 'ok') {
+        // Calculate deviation percentage
+        let deviationPercentage = 0;
+        if (goal.target_value !== 0) {
+          deviationPercentage = Math.abs((currentValue - goal.target_value) / goal.target_value * 100);
+        }
+
+        // Record violation in history
+        const violationData = {
+          goal_id: goal.id,
+          goal_name: goal.name,
+          metric_type: goal.metric_type,
+          target_value: goal.target_value,
+          actual_value: currentValue,
+          threshold_type: status,
+          deviation_percentage: Math.round(deviationPercentage * 10) / 10,
+        };
+
+        const { error: violationError } = await supabase
+          .from('goal_violations')
+          .insert(violationData);
+
+        if (violationError) {
+          console.error('Error recording violation:', violationError);
+        } else {
+          console.log(`Violation recorded for goal "${goal.name}"`);
+        }
+
         const shouldNotify = 
           (status === 'warning' && goal.notify_on_warning) ||
           (status === 'critical' && goal.notify_on_critical);

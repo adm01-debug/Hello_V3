@@ -910,6 +910,50 @@ export type Database = {
           },
         ]
       }
+      goal_violations: {
+        Row: {
+          actual_value: number
+          created_at: string
+          deviation_percentage: number | null
+          goal_id: string
+          goal_name: string
+          id: string
+          metric_type: string
+          target_value: number
+          threshold_type: string
+        }
+        Insert: {
+          actual_value: number
+          created_at?: string
+          deviation_percentage?: number | null
+          goal_id: string
+          goal_name: string
+          id?: string
+          metric_type: string
+          target_value: number
+          threshold_type?: string
+        }
+        Update: {
+          actual_value?: number
+          created_at?: string
+          deviation_percentage?: number | null
+          goal_id?: string
+          goal_name?: string
+          id?: string
+          metric_type?: string
+          target_value?: number
+          threshold_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "goal_violations_goal_id_fkey"
+            columns: ["goal_id"]
+            isOneToOne: false
+            referencedRelation: "dashboard_goals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hold_alert_settings: {
         Row: {
           created_at: string
