@@ -25,6 +25,7 @@ import HoldAlerts from "./pages/HoldAlerts";
 import HoldAlertSettings from "./pages/HoldAlertSettings";
 import Callbacks from "./pages/Callbacks";
 import Dialer from "./pages/Dialer";
+import Coaching from "./pages/Coaching";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,6 +59,7 @@ const App = () => (
                 <Route path="/hold-settings" element={<HoldAlertSettings />} />
                 <Route path="/callbacks" element={<Callbacks />} />
                 <Route path="/dialer" element={<Dialer />} />
+                <Route path="/coaching" element={<Coaching />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

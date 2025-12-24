@@ -513,6 +513,59 @@ export type Database = {
           },
         ]
       }
+      coaching_recommendations: {
+        Row: {
+          action_items: string[] | null
+          agent_id: string
+          category: string
+          completed_at: string | null
+          created_at: string
+          description: string
+          id: string
+          metrics_snapshot: Json | null
+          priority: string
+          reviewed_at: string | null
+          status: string
+          title: string
+        }
+        Insert: {
+          action_items?: string[] | null
+          agent_id: string
+          category: string
+          completed_at?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          metrics_snapshot?: Json | null
+          priority?: string
+          reviewed_at?: string | null
+          status?: string
+          title: string
+        }
+        Update: {
+          action_items?: string[] | null
+          agent_id?: string
+          category?: string
+          completed_at?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          metrics_snapshot?: Json | null
+          priority?: string
+          reviewed_at?: string | null
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coaching_recommendations_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_alerts: {
         Row: {
           actioned_at: string | null
