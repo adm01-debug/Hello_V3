@@ -145,6 +145,13 @@ export const ActiveCallsRealtime = () => {
     return [...new Set(agentNames)].sort();
   }, [activeCalls]);
 
+  // Count calls by status
+  const statusCounts = useMemo(() => {
+    const onHoldCount = activeCalls.filter(call => isCallOnHold(call.id)).length;
+    const inCallCount = activeCalls.length - onHoldCount;
+    return { onHold: onHoldCount, inCall: inCallCount, total: activeCalls.length };
+  }, [activeCalls, activeHolds]);
+
   // Filter calls by selected agent and hold status
   const filteredCalls = useMemo(() => {
     let filtered = activeCalls;
@@ -186,15 +193,53 @@ export const ActiveCallsRealtime = () => {
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <Phone className="h-5 w-5 text-primary" />
-            Chamadas Ativas
-            {filteredCalls.length > 0 && (
-              <Badge variant="secondary" className="ml-2">
-                {filteredCalls.length}
-              </Badge>
+          <div className="flex flex-col gap-2">
+            <CardTitle className="flex items-center gap-2">
+              <Phone className="h-5 w-5 text-primary" />
+              Chamadas Ativas
+              {filteredCalls.length > 0 && (
+                <Badge variant="secondary" className="ml-2">
+                  {filteredCalls.length}
+                </Badge>
+              )}
+            </CardTitle>
+            {statusCounts.total > 0 && (
+              <div className="flex items-center gap-3 text-sm">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-500/10 border border-green-500/20 cursor-default">
+                        <Phone className="h-3 w-3 text-green-500" />
+                        <span className="font-medium text-green-600 dark:text-green-400">{statusCounts.inCall}</span>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{statusCounts.inCall} chamada{statusCounts.inCall !== 1 ? 's' : ''} em andamento</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md cursor-default ${
+                        statusCounts.onHold > 0 
+                          ? 'bg-destructive/10 border border-destructive/20' 
+                          : 'bg-muted border border-border'
+                      }`}>
+                        <Pause className={`h-3 w-3 ${statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
+                        <span className={`font-medium ${statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`}>
+                          {statusCounts.onHold}
+                        </span>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{statusCounts.onHold} chamada{statusCounts.onHold !== 1 ? 's' : ''} em espera</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             )}
-          </CardTitle>
+          </div>
           <div className="flex items-center gap-2">
             <TooltipProvider>
               <Tooltip>
