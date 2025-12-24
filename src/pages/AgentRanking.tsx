@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Trophy, Medal, Phone, Star, Users, FlaskConical, TrendingUp, Target, CheckCircle2, XCircle, Settings2 } from 'lucide-react';
+import { Trophy, Medal, Phone, Star, Users, FlaskConical, TrendingUp, Target, CheckCircle2, XCircle, Settings2, Award, Gamepad2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -29,6 +29,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import {
@@ -43,6 +44,9 @@ import {
 } from 'recharts';
 import { format, subDays, eachDayOfInterval } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { BadgesShowcase } from '@/components/gamification/BadgesShowcase';
+import { useGamification } from '@/hooks/useGamification';
+import { useAgentStatus } from '@/hooks/useAgentStatus';
 
 interface AgentStats {
   name: string;
@@ -93,6 +97,17 @@ export default function AgentRanking() {
   const [period, setPeriod] = useState<string>('all');
   const [editingGoals, setEditingGoals] = useState<AgentGoals | null>(null);
   const [goalsDialogOpen, setGoalsDialogOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('ranking');
+  
+  const { agents: agentsList, currentAgent } = useAgentStatus();
+  const [selectedAgentId, setSelectedAgentId] = useState<string | undefined>();
+  const { badges, agentBadges, isLoading: badgesLoading } = useGamification(selectedAgentId);
+
+  useEffect(() => {
+    if (currentAgent?.id && !selectedAgentId) {
+      setSelectedAgentId(currentAgent.id);
+    }
+  }, [currentAgent]);
 
   useEffect(() => {
     fetchAgentStats();
@@ -554,11 +569,14 @@ export default function AgentRanking() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Ranking de Agentes</h1>
-          <p className="text-muted-foreground">
-            Comparativo de desempenho entre os agentes
-          </p>
+        <div className="flex items-center gap-3">
+          <Gamepad2 className="h-8 w-8 text-primary" />
+          <div>
+            <h1 className="text-3xl font-bold">Gamificação & Ranking</h1>
+            <p className="text-muted-foreground">
+              Conquistas, badges e comparativo de desempenho
+            </p>
+          </div>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" onClick={createTestData}>
@@ -971,6 +989,9 @@ export default function AgentRanking() {
           )}
         </CardContent>
       </Card>
+
+      {/* Badges Showcase */}
+      <BadgesShowcase badges={badges} agentBadges={agentBadges} />
 
       {/* Goals Configuration Dialog */}
       <Dialog open={goalsDialogOpen} onOpenChange={setGoalsDialogOpen}>
