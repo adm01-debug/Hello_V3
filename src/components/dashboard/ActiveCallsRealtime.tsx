@@ -32,6 +32,7 @@ export const ActiveCallsRealtime = () => {
   const [activeHolds, setActiveHolds] = useState<ActiveHoldEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedAgent, setSelectedAgent] = useState<string>('all');
+  const [selectedHoldStatus, setSelectedHoldStatus] = useState<string>('all');
 
   // Sound alert hook
   const { soundEnabled, toggleSound, settings } = useHoldSoundAlert(activeHolds);
@@ -144,11 +145,24 @@ export const ActiveCallsRealtime = () => {
     return [...new Set(agentNames)].sort();
   }, [activeCalls]);
 
-  // Filter calls by selected agent
+  // Filter calls by selected agent and hold status
   const filteredCalls = useMemo(() => {
-    if (selectedAgent === 'all') return activeCalls;
-    return activeCalls.filter(call => call.agent_name === selectedAgent);
-  }, [activeCalls, selectedAgent]);
+    let filtered = activeCalls;
+    
+    // Filter by agent
+    if (selectedAgent !== 'all') {
+      filtered = filtered.filter(call => call.agent_name === selectedAgent);
+    }
+    
+    // Filter by hold status
+    if (selectedHoldStatus === 'on_hold') {
+      filtered = filtered.filter(call => isCallOnHold(call.id));
+    } else if (selectedHoldStatus === 'in_call') {
+      filtered = filtered.filter(call => !isCallOnHold(call.id));
+    }
+    
+    return filtered;
+  }, [activeCalls, selectedAgent, selectedHoldStatus, activeHolds]);
 
   if (loading) {
     return (
@@ -203,6 +217,17 @@ export const ActiveCallsRealtime = () => {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+            <Select value={selectedHoldStatus} onValueChange={setSelectedHoldStatus}>
+              <SelectTrigger className="w-[140px]">
+                <Pause className="h-4 w-4 mr-2" />
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos</SelectItem>
+                <SelectItem value="on_hold">Em Espera</SelectItem>
+                <SelectItem value="in_call">Em Chamada</SelectItem>
+              </SelectContent>
+            </Select>
             {agents.length > 0 && (
               <Select value={selectedAgent} onValueChange={setSelectedAgent}>
                 <SelectTrigger className="w-[180px]">
