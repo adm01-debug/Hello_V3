@@ -145,11 +145,25 @@ export const ActiveCallsRealtime = () => {
     return [...new Set(agentNames)].sort();
   }, [activeCalls]);
 
-  // Count calls by status
+  // Count calls by status and check for critical/warning holds
   const statusCounts = useMemo(() => {
-    const onHoldCount = activeCalls.filter(call => isCallOnHold(call.id)).length;
+    const callsOnHold = activeCalls.filter(call => isCallOnHold(call.id));
+    const onHoldCount = callsOnHold.length;
     const inCallCount = activeCalls.length - onHoldCount;
-    return { onHold: onHoldCount, inCall: inCallCount, total: activeCalls.length };
+    
+    // Check severity of holds
+    let hasCritical = false;
+    let hasWarning = false;
+    callsOnHold.forEach(call => {
+      const holdDuration = getHoldDuration(call.id);
+      const severity = getHoldSeverity(holdDuration);
+      if (severity === 'critical') hasCritical = true;
+      if (severity === 'warning') hasWarning = true;
+    });
+    
+    const maxSeverity = hasCritical ? 'critical' : hasWarning ? 'warning' : 'normal';
+    
+    return { onHold: onHoldCount, inCall: inCallCount, total: activeCalls.length, maxSeverity };
   }, [activeCalls, activeHolds]);
 
   // Filter calls by selected agent and hold status
@@ -221,19 +235,43 @@ export const ActiveCallsRealtime = () => {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md cursor-default ${
-                        statusCounts.onHold > 0 
+                      <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md cursor-default transition-all ${
+                        statusCounts.maxSeverity === 'critical'
+                          ? 'bg-destructive/20 border border-destructive/40 animate-pulse'
+                          : statusCounts.maxSeverity === 'warning'
+                          ? 'bg-orange-500/20 border border-orange-500/40 animate-pulse'
+                          : statusCounts.onHold > 0 
                           ? 'bg-destructive/10 border border-destructive/20' 
                           : 'bg-muted border border-border'
                       }`}>
-                        <Pause className={`h-3 w-3 ${statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
-                        <span className={`font-medium ${statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`}>
+                        <Pause className={`h-3 w-3 ${
+                          statusCounts.maxSeverity === 'critical'
+                            ? 'text-destructive'
+                            : statusCounts.maxSeverity === 'warning'
+                            ? 'text-orange-500'
+                            : statusCounts.onHold > 0 
+                            ? 'text-destructive' 
+                            : 'text-muted-foreground'
+                        }`} />
+                        <span className={`font-medium ${
+                          statusCounts.maxSeverity === 'critical'
+                            ? 'text-destructive'
+                            : statusCounts.maxSeverity === 'warning'
+                            ? 'text-orange-500'
+                            : statusCounts.onHold > 0 
+                            ? 'text-destructive' 
+                            : 'text-muted-foreground'
+                        }`}>
                           {statusCounts.onHold}
                         </span>
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>{statusCounts.onHold} chamada{statusCounts.onHold !== 1 ? 's' : ''} em espera</p>
+                      <p>
+                        {statusCounts.onHold} chamada{statusCounts.onHold !== 1 ? 's' : ''} em espera
+                        {statusCounts.maxSeverity === 'critical' && ' (crítico!)'}
+                        {statusCounts.maxSeverity === 'warning' && ' (atenção)'}
+                      </p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
