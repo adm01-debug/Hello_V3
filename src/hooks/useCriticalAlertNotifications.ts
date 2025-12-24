@@ -11,17 +11,37 @@ interface CriticalAlert {
   created_at: string;
 }
 
+export interface AlertSoundConfig {
+  warningFrequency: number;
+  warningPattern: 'single' | 'double' | 'triple';
+  warningVolume: number;
+  criticalFrequency: number;
+  criticalPattern: 'single' | 'double' | 'triple' | 'urgent';
+  criticalVolume: number;
+}
+
+const DEFAULT_SOUND_CONFIG: AlertSoundConfig = {
+  warningFrequency: 520,
+  warningPattern: 'single',
+  warningVolume: 0.2,
+  criticalFrequency: 880,
+  criticalPattern: 'urgent',
+  criticalVolume: 0.3,
+};
+
 interface UseCriticalAlertNotificationsOptions {
   enabled?: boolean;
   soundEnabled?: boolean;
   browserNotificationsEnabled?: boolean;
+  soundConfig?: AlertSoundConfig;
 }
 
 export const useCriticalAlertNotifications = (options: UseCriticalAlertNotificationsOptions = {}) => {
   const { 
     enabled = true, 
     soundEnabled = true, 
-    browserNotificationsEnabled = true 
+    browserNotificationsEnabled = true,
+    soundConfig = DEFAULT_SOUND_CONFIG,
   } = options;
   
   const [notificationPermission, setNotificationPermission] = useState<NotificationPermission>('default');
@@ -46,7 +66,57 @@ export const useCriticalAlertNotifications = (options: UseCriticalAlertNotificat
     return audioContextRef.current;
   }, []);
 
-  // Play alert sound using Web Audio API
+  // Play beep pattern based on configuration
+  const playBeepPattern = useCallback((
+    audioContext: AudioContext,
+    frequency: number,
+    volume: number,
+    pattern: 'single' | 'double' | 'triple' | 'urgent'
+  ) => {
+    const beepDuration = 0.15;
+    const gapDuration = 0.1;
+    
+    const playBeep = (startTime: number, freq: number) => {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(freq, startTime);
+      gainNode.gain.setValueAtTime(volume, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + beepDuration);
+      
+      oscillator.start(startTime);
+      oscillator.stop(startTime + beepDuration);
+    };
+
+    const currentTime = audioContext.currentTime;
+
+    switch (pattern) {
+      case 'single':
+        playBeep(currentTime, frequency);
+        break;
+      case 'double':
+        playBeep(currentTime, frequency);
+        playBeep(currentTime + beepDuration + gapDuration, frequency);
+        break;
+      case 'triple':
+        playBeep(currentTime, frequency);
+        playBeep(currentTime + beepDuration + gapDuration, frequency);
+        playBeep(currentTime + 2 * (beepDuration + gapDuration), frequency);
+        break;
+      case 'urgent':
+        // Alternating high-low pattern
+        playBeep(currentTime, frequency);
+        playBeep(currentTime + beepDuration + gapDuration, frequency * 0.75);
+        playBeep(currentTime + 2 * (beepDuration + gapDuration), frequency);
+        playBeep(currentTime + 3 * (beepDuration + gapDuration), frequency * 0.75);
+        break;
+    }
+  }, []);
+
+  // Play alert sound using Web Audio API with configurable settings
   const playAlertSound = useCallback((severity: 'warning' | 'critical') => {
     if (!soundEnabled) return;
 
@@ -58,39 +128,25 @@ export const useCriticalAlertNotifications = (options: UseCriticalAlertNotificat
         audioContext.resume();
       }
 
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      // Different frequencies for different severities
       if (severity === 'critical') {
-        // Urgent beep pattern for critical
-        oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
-        oscillator.frequency.setValueAtTime(660, audioContext.currentTime + 0.1);
-        oscillator.frequency.setValueAtTime(880, audioContext.currentTime + 0.2);
-        oscillator.frequency.setValueAtTime(660, audioContext.currentTime + 0.3);
-        
-        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.5);
+        playBeepPattern(
+          audioContext,
+          soundConfig.criticalFrequency,
+          soundConfig.criticalVolume,
+          soundConfig.criticalPattern
+        );
       } else {
-        // Single beep for warning
-        oscillator.frequency.setValueAtTime(520, audioContext.currentTime);
-        
-        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.3);
+        playBeepPattern(
+          audioContext,
+          soundConfig.warningFrequency,
+          soundConfig.warningVolume,
+          soundConfig.warningPattern
+        );
       }
     } catch (error) {
       console.error('Error playing alert sound:', error);
     }
-  }, [soundEnabled, initAudioContext]);
+  }, [soundEnabled, initAudioContext, playBeepPattern, soundConfig]);
 
   // Show browser notification
   const showBrowserNotification = useCallback((alert: CriticalAlert) => {
@@ -208,5 +264,6 @@ export const useCriticalAlertNotifications = (options: UseCriticalAlertNotificat
     requestNotificationPermission,
     playAlertSound,
     initAudioContext,
+    defaultSoundConfig: DEFAULT_SOUND_CONFIG,
   };
 };
