@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,18 +12,49 @@ serve(async (req) => {
   }
 
   try {
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY is not configured');
+      console.error('LOVABLE_API_KEY not configured');
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    const { latestMessage, conversationContext, speakerRole } = await req.json();
+    const body = await req.json();
+    const { latestMessage, conversationContext, speakerRole } = body;
 
-    if (!latestMessage) {
-      throw new Error('No message provided');
+    if (!latestMessage || typeof latestMessage !== 'string') {
+      return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log('Analyzing in real-time:', latestMessage.substring(0, 50) + '...');
+    console.log('Real-time analysis for user:', user.id);
 
     const systemPrompt = `Você é um assistente de análise em tempo real para agentes de call center.
 Analise a última mensagem no contexto da conversa e forneça feedback instantâneo.
@@ -36,15 +68,17 @@ Responda APENAS com um JSON válido:
   "keywords": ["palavra1", "palavra2"],
   "riskAlert": true/false,
   "riskReason": "motivo do alerta se houver"
-}
+}`;
 
-Seja conciso e objetivo. Foque em ajudar o agente em tempo real.`;
+    const safeContext = String(conversationContext || 'Início da chamada').slice(0, 2000);
+    const safeMessage = latestMessage.slice(0, 1000);
+    const safeSpeaker = speakerRole === 'agent' ? 'Agente' : 'Cliente';
 
     const userPrompt = `Contexto da conversa:
-${conversationContext || 'Início da chamada'}
+${safeContext}
 
-Última mensagem (${speakerRole === 'agent' ? 'Agente' : 'Cliente'}):
-"${latestMessage}"
+Última mensagem (${safeSpeaker}):
+"${safeMessage}"
 
 Analise e forneça feedback instantâneo.`;
 
@@ -55,7 +89,7 @@ Analise e forneça feedback instantâneo.`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash-lite', // Fastest model for real-time
+        model: 'google/gemini-2.5-flash-lite',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
@@ -64,13 +98,17 @@ Analise e forneça feedback instantâneo.`;
     });
 
     if (!response.ok) {
+      console.error('AI Gateway error:', response.status);
       if (response.status === 429) {
-        return new Response(JSON.stringify({ error: 'Rate limit exceeded' }), {
+        return new Response(JSON.stringify({ error: 'Limite excedido' }), {
           status: 429,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
-      throw new Error(`AI Gateway error: ${response.status}`);
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const aiResponse = await response.json();
@@ -101,8 +139,7 @@ Analise e forneça feedback instantâneo.`;
     });
   } catch (error) {
     console.error('Real-time analysis error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    return new Response(JSON.stringify({ error: 'Erro interno' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -6,54 +7,72 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const ELEVENLABS_API_KEY = Deno.env.get("ELEVENLABS_API_KEY");
     
     if (!ELEVENLABS_API_KEY) {
       console.error("ELEVENLABS_API_KEY not configured");
       return new Response(
-        JSON.stringify({ error: "ElevenLabs API key not configured" }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: "Serviço não configurado" }),
+        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    const { agentId } = await req.json();
+    const body = await req.json();
+    const { agentId } = body;
 
-    if (!agentId) {
+    if (!agentId || typeof agentId !== 'string') {
       return new Response(
-        JSON.stringify({ error: "Agent ID is required" }),
+        JSON.stringify({ error: "Dados inválidos" }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    console.log("Requesting conversation token for agent:", agentId);
+    console.log("Requesting conversation token for user:", user.id);
 
-    // Get WebRTC conversation token from ElevenLabs
     const response = await fetch(
-      `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${agentId}`,
+      `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(agentId)}`,
       {
-        headers: {
-          "xi-api-key": ELEVENLABS_API_KEY,
-        },
+        headers: { "xi-api-key": ELEVENLABS_API_KEY },
       }
     );
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("ElevenLabs API error:", response.status, errorText);
+      console.error("ElevenLabs API error:", response.status);
       return new Response(
-        JSON.stringify({ error: "Failed to get conversation token", details: errorText }),
+        JSON.stringify({ error: "Erro no serviço de voz" }),
         { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     const data = await response.json();
-    console.log("Successfully obtained signed URL");
 
     return new Response(
       JSON.stringify({ signed_url: data.signed_url }),
@@ -62,7 +81,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("Error in elevenlabs-conversation-token:", error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }),
+      JSON.stringify({ error: "Erro interno" }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -25,18 +26,48 @@ serve(async (req) => {
   }
 
   try {
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY is not configured');
+      console.error('LOVABLE_API_KEY not configured');
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const { transcript, callInfo } = await req.json();
 
-    if (!transcript) {
-      throw new Error('No transcript provided');
+    if (!transcript || typeof transcript !== 'string') {
+      return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log('Analyzing call transcript:', transcript.substring(0, 100) + '...');
+    console.log('Analyzing call for user:', user.id);
 
     const systemPrompt = `Você é um especialista em análise de chamadas de call center.
 Analise a transcrição da chamada e forneça insights detalhados.
@@ -59,13 +90,13 @@ Responda APENAS com um JSON válido no seguinte formato:
 Seja objetivo e profissional na análise.`;
 
     const userPrompt = `Informações da chamada:
-${callInfo ? `- Contato: ${callInfo.contactName}
-- Telefone: ${callInfo.phone}
-- Duração: ${callInfo.duration}
-- Tipo: ${callInfo.type}` : 'Não disponível'}
+${callInfo ? `- Contato: ${String(callInfo.contactName || '').slice(0, 100)}
+- Telefone: ${String(callInfo.phone || '').slice(0, 20)}
+- Duração: ${String(callInfo.duration || '').slice(0, 20)}
+- Tipo: ${String(callInfo.type || '').slice(0, 50)}` : 'Não disponível'}
 
 Transcrição:
-${transcript}`;
+${transcript.slice(0, 10000)}`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -83,27 +114,22 @@ ${transcript}`;
     });
 
     if (!response.ok) {
+      console.error('AI Gateway error:', response.status);
       if (response.status === 429) {
-        return new Response(JSON.stringify({ error: 'Rate limit exceeded, please try again later.' }), {
+        return new Response(JSON.stringify({ error: 'Limite de requisições excedido' }), {
           status: 429,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: 'Payment required, please add credits.' }), {
-          status: 402,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        });
-      }
-      throw new Error(`AI Gateway error: ${response.status}`);
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const aiResponse = await response.json();
     const content = aiResponse.choices?.[0]?.message?.content;
 
-    console.log('AI response:', content);
-
-    // Parse the JSON response
     let analysis: AnalysisResult;
     try {
       const jsonMatch = content.match(/\{[\s\S]*\}/);
@@ -113,7 +139,7 @@ ${transcript}`;
         throw new Error('No JSON found in response');
       }
     } catch (parseError) {
-      console.error('Failed to parse AI response:', parseError);
+      console.error('Failed to parse AI response');
       analysis = {
         summary: 'Não foi possível analisar a chamada.',
         sentiment: 'neutral',
@@ -130,8 +156,7 @@ ${transcript}`;
     });
   } catch (error) {
     console.error('Analysis error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    return new Response(JSON.stringify({ error: 'Erro interno' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

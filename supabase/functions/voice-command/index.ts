@@ -1,15 +1,10 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
-
-interface VoiceCommand {
-  action: 'call' | 'transfer' | 'hold' | 'hangup' | 'mute' | 'unmute' | 'unknown';
-  target?: string;
-  confidence: number;
-}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -17,26 +12,57 @@ serve(async (req) => {
   }
 
   try {
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY is not configured');
+      console.error('LOVABLE_API_KEY not configured');
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    const { transcript } = await req.json();
+    const body = await req.json();
+    const { transcript } = body;
 
-    if (!transcript) {
-      throw new Error('No transcript provided');
+    if (!transcript || typeof transcript !== 'string') {
+      return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log('Processing transcript:', transcript);
+    console.log('Processing voice command for user:', user.id);
 
     const systemPrompt = `Você é um assistente de parsing de comandos de voz para um sistema VoIP.
 Analise o texto do usuário e extraia a intenção e o alvo do comando.
 
 Comandos suportados:
 - "ligar para [nome/número]" → action: "call", target: nome ou número
-- "transferir para [nome/número]" ou "transferir chamada para [nome/número]" → action: "transfer", target: nome ou número
-- "colocar em espera" ou "aguarde" ou "espera" → action: "hold"
+- "transferir para [nome/número]" → action: "transfer", target: nome ou número
+- "colocar em espera" ou "aguarde" → action: "hold"
 - "desligar" ou "encerrar chamada" → action: "hangup"
 - "mutar" ou "silenciar" → action: "mute"
 - "desmutar" ou "ativar áudio" → action: "unmute"
@@ -48,6 +74,8 @@ Responda APENAS com um JSON válido no formato:
   "confidence": 0.0 a 1.0
 }`;
 
+    const safeTranscript = transcript.slice(0, 500);
+
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -58,58 +86,46 @@ Responda APENAS com um JSON válido no formato:
         model: 'google/gemini-2.5-flash',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: transcript }
+          { role: 'user', content: safeTranscript }
         ],
       }),
     });
 
     if (!response.ok) {
+      console.error('AI Gateway error:', response.status);
       if (response.status === 429) {
-        return new Response(JSON.stringify({ error: 'Rate limit exceeded, please try again later.' }), {
+        return new Response(JSON.stringify({ error: 'Limite excedido' }), {
           status: 429,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: 'Payment required, please add credits.' }), {
-          status: 402,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        });
-      }
-      const errorText = await response.text();
-      console.error('AI Gateway error:', response.status, errorText);
-      throw new Error(`AI Gateway error: ${response.status}`);
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const aiResponse = await response.json();
     const content = aiResponse.choices?.[0]?.message?.content;
 
-    console.log('AI response:', content);
-
-    // Parse the JSON response
-    let command: VoiceCommand;
+    let command;
     try {
-      // Extract JSON from the response (it might be wrapped in markdown code blocks)
       const jsonMatch = content.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         command = JSON.parse(jsonMatch[0]);
       } else {
         throw new Error('No JSON found in response');
       }
-    } catch (parseError) {
-      console.error('Failed to parse AI response:', parseError);
+    } catch {
       command = { action: 'unknown', confidence: 0 };
     }
-
-    console.log('Parsed command:', command);
 
     return new Response(JSON.stringify(command), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Command processing error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    return new Response(JSON.stringify({ error: 'Erro interno' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

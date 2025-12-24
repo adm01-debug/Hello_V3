@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,52 +12,76 @@ serve(async (req) => {
   }
 
   try {
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const ELEVENLABS_API_KEY = Deno.env.get('ELEVENLABS_API_KEY');
     if (!ELEVENLABS_API_KEY) {
-      throw new Error('ELEVENLABS_API_KEY is not configured');
+      console.error('ELEVENLABS_API_KEY not configured');
+      return new Response(JSON.stringify({ error: 'Serviço não configurado' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const formData = await req.formData();
     const audioFile = formData.get('audio') as File;
 
     if (!audioFile) {
-      throw new Error('No audio file provided');
+      return new Response(JSON.stringify({ error: 'Arquivo de áudio é obrigatório' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log('Received audio file:', audioFile.name, 'size:', audioFile.size, 'type:', audioFile.type);
+    console.log('Transcribing audio for user:', user.id, 'size:', audioFile.size);
 
-    // Read the audio file as array buffer
     const audioBuffer = await audioFile.arrayBuffer();
     const audioBlob = new Blob([audioBuffer], { type: 'audio/webm' });
 
-    // Prepare form data for ElevenLabs
     const apiFormData = new FormData();
     apiFormData.append('file', audioBlob, 'recording.webm');
     apiFormData.append('model_id', 'scribe_v1');
-    apiFormData.append('language_code', 'por'); // Portuguese
-    apiFormData.append('diarize', 'true'); // Enable speaker diarization
+    apiFormData.append('language_code', 'por');
+    apiFormData.append('diarize', 'true');
     apiFormData.append('tag_audio_events', 'false');
-
-    console.log('Sending to ElevenLabs with diarization enabled...');
 
     const response = await fetch('https://api.elevenlabs.io/v1/speech-to-text', {
       method: 'POST',
-      headers: {
-        'xi-api-key': ELEVENLABS_API_KEY,
-      },
+      headers: { 'xi-api-key': ELEVENLABS_API_KEY },
       body: apiFormData,
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('ElevenLabs API error:', response.status, errorText);
-      throw new Error(`ElevenLabs API error: ${response.status} - ${errorText}`);
+      console.error('ElevenLabs API error:', response.status);
+      return new Response(JSON.stringify({ error: 'Erro no serviço de transcrição' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const transcription = await response.json();
-    console.log('Transcription result:', JSON.stringify(transcription));
 
-    // Process words with speaker labels
     const segments: { speaker: string; text: string; start: number; end: number }[] = [];
     
     if (transcription.words && transcription.words.length > 0) {
@@ -69,7 +94,6 @@ serve(async (req) => {
         const speaker = word.speaker || 'speaker_0';
         
         if (speaker !== currentSpeaker) {
-          // Save current segment
           if (currentText.trim()) {
             segments.push({
               speaker: currentSpeaker,
@@ -78,7 +102,6 @@ serve(async (req) => {
               end: segmentEnd,
             });
           }
-          // Start new segment
           currentSpeaker = speaker;
           currentText = word.text;
           segmentStart = word.start || 0;
@@ -88,7 +111,6 @@ serve(async (req) => {
         segmentEnd = word.end || 0;
       }
 
-      // Add last segment
       if (currentText.trim()) {
         segments.push({
           speaker: currentSpeaker,
@@ -108,8 +130,7 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Transcription error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    return new Response(JSON.stringify({ error: 'Erro interno' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

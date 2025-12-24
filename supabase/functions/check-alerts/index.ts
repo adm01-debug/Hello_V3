@@ -20,13 +20,46 @@ serve(async (req) => {
   }
 
   try {
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
-    const { callSessionId, sentiment, satisfaction, urgency, callerName }: AlertCheckRequest = await req.json();
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Use service role for database operations
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+
+    const body: AlertCheckRequest = await req.json();
     
-    console.log('Checking alerts for call:', { callSessionId, sentiment, satisfaction, urgency });
+    // Validate input
+    if (!body.callSessionId || typeof body.callSessionId !== 'string') {
+      return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const { callSessionId, sentiment, satisfaction, urgency, callerName } = body;
+    
+    console.log('Checking alerts for call:', callSessionId, 'by user:', user.id);
 
     const alerts: Array<{
       call_session_id: string;
@@ -36,42 +69,40 @@ serve(async (req) => {
       message: string;
     }> = [];
 
-    // Check for negative sentiment
-    if (sentiment && ['negative', 'very_negative', 'frustrated', 'angry'].includes(sentiment.toLowerCase())) {
+    const safeCallerName = String(callerName || 'cliente').slice(0, 100);
+
+    if (sentiment && ['negative', 'very_negative', 'frustrated', 'angry'].includes(String(sentiment).toLowerCase())) {
       alerts.push({
         call_session_id: callSessionId,
         alert_type: 'negative_sentiment',
-        severity: sentiment.toLowerCase().includes('very') || sentiment.toLowerCase().includes('angry') ? 'critical' : 'warning',
+        severity: String(sentiment).toLowerCase().includes('very') || String(sentiment).toLowerCase().includes('angry') ? 'critical' : 'warning',
         title: 'Sentimento Negativo Detectado',
-        message: `A chamada com ${callerName || 'cliente'} apresentou sentimento ${sentiment}. Ação recomendada: acompanhamento do cliente.`
+        message: `A chamada com ${safeCallerName} apresentou sentimento negativo. Ação recomendada: acompanhamento do cliente.`
       });
     }
 
-    // Check for low satisfaction
-    if (satisfaction !== undefined && satisfaction < 6) {
+    if (satisfaction !== undefined && typeof satisfaction === 'number' && satisfaction < 6) {
       alerts.push({
         call_session_id: callSessionId,
         alert_type: 'low_satisfaction',
         severity: satisfaction < 4 ? 'critical' : 'warning',
         title: 'Satisfação Baixa',
-        message: `Chamada com ${callerName || 'cliente'} teve satisfação de ${satisfaction}/10. Considere entrar em contato para resolução.`
+        message: `Chamada com ${safeCallerName} teve satisfação de ${Math.min(10, Math.max(0, satisfaction))}/10.`
       });
     }
 
-    // Check for high urgency
-    if (urgency && ['high', 'critical', 'urgent'].includes(urgency.toLowerCase())) {
+    if (urgency && ['high', 'critical', 'urgent'].includes(String(urgency).toLowerCase())) {
       alerts.push({
         call_session_id: callSessionId,
         alert_type: 'high_urgency',
-        severity: urgency.toLowerCase() === 'critical' ? 'critical' : 'warning',
+        severity: String(urgency).toLowerCase() === 'critical' ? 'critical' : 'warning',
         title: 'Urgência Alta',
-        message: `Chamada com ${callerName || 'cliente'} marcada como ${urgency}. Priorize o atendimento.`
+        message: `Chamada com ${safeCallerName} marcada como urgente. Priorize o atendimento.`
       });
     }
 
-    // Insert alerts if any
     if (alerts.length > 0) {
-      const { error } = await supabase.from('call_alerts').insert(alerts);
+      const { error } = await supabaseAdmin.from('call_alerts').insert(alerts);
       if (error) {
         console.error('Error inserting alerts:', error);
         throw error;
@@ -86,9 +117,8 @@ serve(async (req) => {
 
   } catch (error: unknown) {
     console.error('Error in check-alerts:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: 'Erro interno' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

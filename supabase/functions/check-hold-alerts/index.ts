@@ -6,226 +6,92 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface HoldAlertConfig {
-  warningThresholdSeconds: number;
-  criticalThresholdSeconds: number;
-}
-
-const DEFAULT_CONFIG: HoldAlertConfig = {
-  warningThresholdSeconds: 60,  // 1 minute
-  criticalThresholdSeconds: 180, // 3 minutes
-};
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    // Fetch config from database
-    let config = { ...DEFAULT_CONFIG };
-    const { data: settingsData, error: settingsError } = await supabase
-      .from('hold_alert_settings')
-      .select('*')
-      .limit(1)
-      .maybeSingle();
-
-    if (settingsError) {
-      console.error('Error fetching settings, using defaults:', settingsError);
-    } else if (settingsData) {
-      config.warningThresholdSeconds = settingsData.warning_threshold_seconds;
-      config.criticalThresholdSeconds = settingsData.critical_threshold_seconds;
-      
-      // If alerts are disabled, return early
-      if (!settingsData.enabled) {
-        console.log('Hold alerts are disabled');
-        return new Response(
-          JSON.stringify({ success: true, message: 'Hold alerts are disabled' }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log('Checking hold alerts with config:', config);
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
 
-    // Get active hold events (calls currently on hold)
-    const { data: activeHolds, error: holdsError } = await supabase
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+
+    const { data: settingsData } = await supabaseAdmin
+      .from('hold_alert_settings').select('*').limit(1).maybeSingle();
+
+    const config = {
+      warningThresholdSeconds: settingsData?.warning_threshold_seconds || 60,
+      criticalThresholdSeconds: settingsData?.critical_threshold_seconds || 180,
+    };
+
+    if (settingsData && !settingsData.enabled) {
+      return new Response(JSON.stringify({ success: true, message: 'Alertas desabilitados' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const { data: activeHolds } = await supabaseAdmin
       .from('hold_events')
-      .select(`
-        id,
-        call_session_id,
-        started_at,
-        agent_name,
-        call_sessions (
-          caller_name,
-          caller_phone
-        )
-      `)
+      .select('id, call_session_id, started_at, agent_name, call_sessions(caller_name)')
       .is('ended_at', null);
 
-    if (holdsError) {
-      console.error('Error fetching hold events:', holdsError);
-      throw holdsError;
-    }
-
-    console.log(`Found ${activeHolds?.length || 0} active hold events`);
-
-    const alerts: Array<{
-      call_session_id: string;
-      alert_type: string;
-      severity: string;
-      title: string;
-      message: string;
-    }> = [];
-
+    const alerts: any[] = [];
     const now = new Date();
 
     for (const hold of activeHolds || []) {
-      const holdStartTime = new Date(hold.started_at);
-      const holdDurationSeconds = Math.floor((now.getTime() - holdStartTime.getTime()) / 1000);
-      
-      const callSession = hold.call_sessions as { caller_name?: string; caller_phone?: string } | null;
-      const callerIdentifier = callSession?.caller_name || callSession?.caller_phone || 'Cliente';
+      const holdDurationSeconds = Math.floor((now.getTime() - new Date(hold.started_at).getTime()) / 1000);
+      const { data: existingAlerts } = await supabaseAdmin
+        .from('call_alerts').select('severity').eq('call_session_id', hold.call_session_id)
+        .eq('alert_type', 'hold_time_exceeded').order('created_at', { ascending: false }).limit(1);
 
-      // Check if we already have an alert for this hold event
-      const { data: existingAlerts } = await supabase
-        .from('call_alerts')
-        .select('id, severity')
-        .eq('call_session_id', hold.call_session_id)
-        .eq('alert_type', 'hold_time_exceeded')
-        .order('created_at', { ascending: false })
-        .limit(1);
+      const lastSeverity = existingAlerts?.[0]?.severity;
+      let severity: string | null = null;
 
-      const lastAlertSeverity = existingAlerts?.[0]?.severity;
-
-      // Determine alert severity based on hold duration
-      let severity: 'warning' | 'critical' | null = null;
-
-      if (holdDurationSeconds >= config.criticalThresholdSeconds) {
-        // Only create critical alert if we haven't already
-        if (lastAlertSeverity !== 'critical') {
-          severity = 'critical';
-        }
-      } else if (holdDurationSeconds >= config.warningThresholdSeconds) {
-        // Only create warning alert if we haven't created any alert yet
-        if (!lastAlertSeverity) {
-          severity = 'warning';
-        }
+      if (holdDurationSeconds >= config.criticalThresholdSeconds && lastSeverity !== 'critical') {
+        severity = 'critical';
+      } else if (holdDurationSeconds >= config.warningThresholdSeconds && !lastSeverity) {
+        severity = 'warning';
       }
 
       if (severity) {
-        const minutes = Math.floor(holdDurationSeconds / 60);
-        const seconds = holdDurationSeconds % 60;
-        const durationText = minutes > 0 
-          ? `${minutes}min ${seconds}s` 
-          : `${seconds}s`;
-
         alerts.push({
-          call_session_id: hold.call_session_id,
-          alert_type: 'hold_time_exceeded',
-          severity,
-          title: severity === 'critical' 
-            ? '🚨 Tempo de Espera Crítico' 
-            : '⚠️ Tempo de Espera Elevado',
-          message: severity === 'critical'
-            ? `${callerIdentifier} está em espera há ${durationText} (limite crítico: ${Math.floor(config.criticalThresholdSeconds / 60)}min). Agente: ${hold.agent_name || 'Não identificado'}. Ação imediata necessária!`
-            : `${callerIdentifier} está em espera há ${durationText} (limite: ${Math.floor(config.warningThresholdSeconds / 60)}min). Agente: ${hold.agent_name || 'Não identificado'}. Considere retomar a chamada.`
+          call_session_id: hold.call_session_id, alert_type: 'hold_time_exceeded', severity,
+          title: severity === 'critical' ? 'Tempo de Espera Crítico' : 'Tempo de Espera Elevado',
+          message: `Cliente em espera há ${Math.floor(holdDurationSeconds / 60)}min. Agente: ${hold.agent_name || 'N/A'}`
         });
-
-        console.log(`Creating ${severity} alert for hold event ${hold.id}, duration: ${durationText}`);
       }
     }
 
-    // Insert alerts if any
     if (alerts.length > 0) {
-      const { error: insertError } = await supabase.from('call_alerts').insert(alerts);
-      if (insertError) {
-        console.error('Error inserting hold alerts:', insertError);
-        throw insertError;
-      }
-      console.log(`Created ${alerts.length} hold alerts`);
+      await supabaseAdmin.from('call_alerts').insert(alerts);
     }
 
-    // Also check completed hold events with excessive duration
-    const { data: recentCompletedHolds, error: completedError } = await supabase
-      .from('hold_events')
-      .select(`
-        id,
-        call_session_id,
-        duration_seconds,
-        agent_name,
-        ended_at,
-        call_sessions (
-          caller_name,
-          caller_phone
-        )
-      `)
-      .not('ended_at', 'is', null)
-      .gte('ended_at', new Date(Date.now() - 5 * 60 * 1000).toISOString()) // Last 5 minutes
-      .gte('duration_seconds', config.warningThresholdSeconds);
-
-    if (completedError) {
-      console.error('Error fetching completed holds:', completedError);
-    } else {
-      console.log(`Found ${recentCompletedHolds?.length || 0} recently completed long holds`);
-
-      for (const hold of recentCompletedHolds || []) {
-        // Check if we already have an alert for this specific completed hold
-        const { data: existingAlerts } = await supabase
-          .from('call_alerts')
-          .select('id')
-          .eq('call_session_id', hold.call_session_id)
-          .eq('alert_type', 'hold_completed_long')
-          .limit(1);
-
-        if (!existingAlerts?.length && hold.duration_seconds) {
-          const callSession = hold.call_sessions as { caller_name?: string; caller_phone?: string } | null;
-          const callerIdentifier = callSession?.caller_name || callSession?.caller_phone || 'Cliente';
-          const minutes = Math.floor(hold.duration_seconds / 60);
-          const seconds = hold.duration_seconds % 60;
-          const durationText = minutes > 0 ? `${minutes}min ${seconds}s` : `${seconds}s`;
-
-          const severity = hold.duration_seconds >= config.criticalThresholdSeconds ? 'critical' : 'warning';
-
-          const { error: insertError } = await supabase.from('call_alerts').insert({
-            call_session_id: hold.call_session_id,
-            alert_type: 'hold_completed_long',
-            severity,
-            title: severity === 'critical' 
-              ? '📊 Hold Crítico Finalizado' 
-              : '📊 Hold Longo Finalizado',
-            message: `${callerIdentifier} ficou em espera por ${durationText}. Agente: ${hold.agent_name || 'Não identificado'}. Revise o atendimento para melhorias.`
-          });
-
-          if (insertError) {
-            console.error('Error inserting completed hold alert:', insertError);
-          } else {
-            console.log(`Created completed hold alert for session ${hold.call_session_id}`);
-          }
-        }
-      }
-    }
-
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        activeHoldsChecked: activeHolds?.length || 0,
-        alertsCreated: alerts.length,
-        config 
-      }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
-  } catch (error: unknown) {
-    console.error('Error in check-hold-alerts:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return new Response(
-      JSON.stringify({ error: errorMessage }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ success: true, activeHoldsChecked: activeHolds?.length || 0, alertsCreated: alerts.length }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return new Response(JSON.stringify({ error: 'Erro interno' }), {
+      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

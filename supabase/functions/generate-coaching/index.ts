@@ -13,52 +13,89 @@ serve(async (req) => {
   }
 
   try {
-    const { agentId } = await req.json();
-    
-    if (!agentId) {
-      throw new Error('Agent ID is required');
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log('Generating coaching recommendations for agent:', agentId);
-
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Check if user is supervisor or admin
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+
+    const { data: profile } = await supabaseAdmin
+      .from('user_profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+
+    if (!profile || !['supervisor', 'admin'].includes(profile.role)) {
+      return new Response(JSON.stringify({ error: 'Acesso negado' }), {
+        status: 403,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const body = await req.json();
+    const { agentId } = body;
+    
+    if (!agentId || typeof agentId !== 'string') {
+      return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    console.log('Generating coaching for agent:', agentId, 'by user:', user.id);
 
     // Fetch agent info
-    const { data: agent, error: agentError } = await supabase
+    const { data: agent, error: agentError } = await supabaseAdmin
       .from('agents')
       .select('*')
       .eq('id', agentId)
       .maybeSingle();
 
     if (agentError || !agent) {
-      throw new Error('Agent not found');
+      return new Response(JSON.stringify({ error: 'Agente não encontrado' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log('Found agent:', agent.name);
-
     // Fetch agent's call sessions
-    const { data: sessions, error: sessionsError } = await supabase
+    const { data: sessions } = await supabaseAdmin
       .from('call_sessions')
       .select('*')
       .eq('agent_name', agent.name)
       .order('created_at', { ascending: false })
       .limit(50);
 
-    if (sessionsError) {
-      console.error('Error fetching sessions:', sessionsError);
-    }
-
     // Fetch call summaries
     const sessionIds = sessions?.map(s => s.id) || [];
-    const { data: summaries } = await supabase
+    const { data: summaries } = await supabaseAdmin
       .from('call_summaries')
       .select('*')
       .in('call_session_id', sessionIds);
 
     // Fetch agent goals
-    const { data: goals } = await supabase
+    const { data: goals } = await supabaseAdmin
       .from('agent_goals')
       .select('*')
       .eq('agent_name', agent.name)
@@ -83,10 +120,14 @@ serve(async (req) => {
       goals: goals || { calls_target: 50, satisfaction_target: 8, performance_target: 8 }
     };
 
-    console.log('Calculated metrics:', metrics);
-
-    // Use Lovable AI (Gemini) for analysis
+    // Use Lovable AI for analysis
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+    if (!lovableApiKey) {
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
     
     const prompt = `Você é um coach de call center especializado. Analise as métricas deste agente e gere recomendações de coaching personalizadas em português.
 
@@ -117,9 +158,7 @@ Gere exatamente 3 recomendações de coaching no formato JSON:
       "action_items": ["ação 1", "ação 2", "ação 3"]
     }
   ]
-}
-
-Baseie as recomendações nas áreas que precisam de melhoria. Se as métricas estiverem boas, sugira formas de manter ou melhorar ainda mais.`;
+}`;
 
     const aiResponse = await fetch('https://api.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -129,44 +168,38 @@ Baseie as recomendações nas áreas que precisam de melhoria. Se as métricas e
       },
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'user', content: prompt }
-        ],
+        messages: [{ role: 'user', content: prompt }],
         response_format: { type: 'json_object' }
       }),
     });
 
     if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      console.error('AI API error:', errorText);
-      throw new Error('Failed to generate AI recommendations');
+      console.error('AI API error:', aiResponse.status);
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const aiData = await aiResponse.json();
-    console.log('AI response received');
-
     let recommendations;
     try {
       const content = aiData.choices[0].message.content;
       recommendations = JSON.parse(content).recommendations;
-    } catch (parseError) {
-      console.error('Error parsing AI response:', parseError);
-      // Fallback recommendations
-      recommendations = [
-        {
-          category: 'efficiency',
-          priority: 'medium',
-          title: 'Otimizar tempo de atendimento',
-          description: 'Baseado nas métricas atuais, há oportunidade de melhorar a eficiência no atendimento.',
-          action_items: ['Revisar scripts de atendimento', 'Praticar resoluções rápidas', 'Usar templates de resposta']
-        }
-      ];
+    } catch {
+      recommendations = [{
+        category: 'efficiency',
+        priority: 'medium',
+        title: 'Otimizar tempo de atendimento',
+        description: 'Há oportunidade de melhorar a eficiência no atendimento.',
+        action_items: ['Revisar scripts', 'Praticar resoluções rápidas', 'Usar templates']
+      }];
     }
 
-    // Save recommendations to database
+    // Save recommendations
     const savedRecommendations = [];
     for (const rec of recommendations) {
-      const { data: saved, error: saveError } = await supabase
+      const { data: saved, error: saveError } = await supabaseAdmin
         .from('coaching_recommendations')
         .insert({
           agent_id: agentId,
@@ -181,14 +214,10 @@ Baseie as recomendações nas áreas que precisam de melhoria. Se as métricas e
         .select()
         .single();
 
-      if (saveError) {
-        console.error('Error saving recommendation:', saveError);
-      } else {
+      if (!saveError && saved) {
         savedRecommendations.push(saved);
       }
     }
-
-    console.log('Saved', savedRecommendations.length, 'recommendations');
 
     return new Response(JSON.stringify({ 
       success: true, 
@@ -199,9 +228,8 @@ Baseie as recomendações nas áreas que precisam de melhoria. Se as métricas e
     });
 
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error('Error in generate-coaching function:', errorMessage);
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    console.error('Error in generate-coaching function:', error);
+    return new Response(JSON.stringify({ error: 'Erro interno' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
