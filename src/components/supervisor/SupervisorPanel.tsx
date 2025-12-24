@@ -35,6 +35,7 @@ import { toast } from 'sonner';
 import { QueueTrendChart } from './QueueTrendChart';
 import { useCriticalAlertNotifications, AlertSoundConfig } from '@/hooks/useCriticalAlertNotifications';
 import { AlertSoundSettings } from './AlertSoundSettings';
+import { SoundProfileManager } from './SoundProfileManager';
 
 interface ActiveCall {
   id: string;
@@ -381,6 +382,10 @@ export const SupervisorPanel = () => {
             )}
           </CardTitle>
           <div className="flex items-center gap-1">
+            <SoundProfileManager
+              currentConfig={soundConfig}
+              onApplyProfile={handleSoundConfigChange}
+            />
             <AlertSoundSettings
               config={soundConfig}
               onConfigChange={handleSoundConfigChange}

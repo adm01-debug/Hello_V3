@@ -18,7 +18,8 @@ import {
   Timer,
   AlertTriangle,
   Calendar,
-  Activity
+  Activity,
+  History
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -39,6 +40,7 @@ import { cn } from '@/lib/utils';
 const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
   { title: 'Executivo', url: '/executive', icon: Gauge },
+  { title: 'Métricas Fila', url: '/queue-dashboard', icon: Activity },
   { title: 'Chamadas', url: '/calls', icon: Phone },
   { title: 'Discador', url: '/dialer', icon: Phone },
   { title: 'Contatos', url: '/contacts', icon: Users },
@@ -57,6 +59,7 @@ const toolsNavItems = [
   { title: 'Alertas de Espera', url: '/hold-alerts', icon: AlertTriangle },
   { title: 'Analytics', url: '/analytics', icon: PieChart },
   { title: 'Alertas', url: '/alerts', icon: Bell },
+  { title: 'Histórico Alertas', url: '/alert-history', icon: History },
   { title: 'Gamificação', url: '/ranking', icon: Trophy },
   { title: 'Relatórios', url: '/reports', icon: BarChart3 },
 ];
