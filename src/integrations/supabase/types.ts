@@ -555,6 +555,138 @@ export type Database = {
         }
         Relationships: []
       }
+      dialer_campaigns: {
+        Row: {
+          call_timeout_seconds: number
+          completed_contacts: number | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          max_concurrent_calls: number
+          mode: string
+          name: string
+          retry_attempts: number
+          retry_delay_minutes: number
+          status: string
+          successful_contacts: number | null
+          total_contacts: number | null
+          updated_at: string
+          working_hours_end: string | null
+          working_hours_start: string | null
+        }
+        Insert: {
+          call_timeout_seconds?: number
+          completed_contacts?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          max_concurrent_calls?: number
+          mode?: string
+          name: string
+          retry_attempts?: number
+          retry_delay_minutes?: number
+          status?: string
+          successful_contacts?: number | null
+          total_contacts?: number | null
+          updated_at?: string
+          working_hours_end?: string | null
+          working_hours_start?: string | null
+        }
+        Update: {
+          call_timeout_seconds?: number
+          completed_contacts?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          max_concurrent_calls?: number
+          mode?: string
+          name?: string
+          retry_attempts?: number
+          retry_delay_minutes?: number
+          status?: string
+          successful_contacts?: number | null
+          total_contacts?: number | null
+          updated_at?: string
+          working_hours_end?: string | null
+          working_hours_start?: string | null
+        }
+        Relationships: []
+      }
+      dialer_queue: {
+        Row: {
+          assigned_agent: string | null
+          attempts: number
+          call_duration_seconds: number | null
+          campaign_id: string
+          contact_id: string | null
+          created_at: string
+          id: string
+          last_attempt_at: string | null
+          name: string | null
+          next_attempt_at: string | null
+          phone: string
+          priority: number
+          result: string | null
+          result_notes: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_agent?: string | null
+          attempts?: number
+          call_duration_seconds?: number | null
+          campaign_id: string
+          contact_id?: string | null
+          created_at?: string
+          id?: string
+          last_attempt_at?: string | null
+          name?: string | null
+          next_attempt_at?: string | null
+          phone: string
+          priority?: number
+          result?: string | null
+          result_notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_agent?: string | null
+          attempts?: number
+          call_duration_seconds?: number | null
+          campaign_id?: string
+          contact_id?: string | null
+          created_at?: string
+          id?: string
+          last_attempt_at?: string | null
+          name?: string | null
+          next_attempt_at?: string | null
+          phone?: string
+          priority?: number
+          result?: string | null
+          result_notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dialer_queue_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "dialer_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dialer_queue_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hold_alert_settings: {
         Row: {
           created_at: string
