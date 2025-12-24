@@ -55,7 +55,7 @@ const toolsNavItems = [
   { title: 'Alertas de Espera', url: '/hold-alerts', icon: AlertTriangle },
   { title: 'Analytics', url: '/analytics', icon: PieChart },
   { title: 'Alertas', url: '/alerts', icon: Bell },
-  { title: 'Ranking', url: '/ranking', icon: Trophy },
+  { title: 'Gamificação', url: '/ranking', icon: Trophy },
   { title: 'Relatórios', url: '/reports', icon: BarChart3 },
 ];
 

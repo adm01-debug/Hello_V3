@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_badges: {
+        Row: {
+          agent_id: string
+          badge_id: string
+          earned_at: string
+          id: string
+        }
+        Insert: {
+          agent_id: string
+          badge_id: string
+          earned_at?: string
+          id?: string
+        }
+        Update: {
+          agent_id?: string
+          badge_id?: string
+          earned_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_badges_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_badges_badge_id_fkey"
+            columns: ["badge_id"]
+            isOneToOne: false
+            referencedRelation: "badges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       agent_goals: {
         Row: {
           agent_name: string
@@ -43,6 +79,56 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      agent_weekly_stats: {
+        Row: {
+          agent_id: string
+          avg_performance: number | null
+          avg_satisfaction: number | null
+          badges_earned: number
+          created_at: string
+          id: string
+          points_earned: number
+          total_calls: number
+          total_duration_seconds: number
+          updated_at: string
+          week_start: string
+        }
+        Insert: {
+          agent_id: string
+          avg_performance?: number | null
+          avg_satisfaction?: number | null
+          badges_earned?: number
+          created_at?: string
+          id?: string
+          points_earned?: number
+          total_calls?: number
+          total_duration_seconds?: number
+          updated_at?: string
+          week_start: string
+        }
+        Update: {
+          agent_id?: string
+          avg_performance?: number | null
+          avg_satisfaction?: number | null
+          badges_earned?: number
+          created_at?: string
+          id?: string
+          points_earned?: number
+          total_calls?: number
+          total_duration_seconds?: number
+          updated_at?: string
+          week_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_weekly_stats_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       agents: {
         Row: {
@@ -77,6 +163,45 @@ export type Database = {
           name?: string
           status?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      badges: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          name: string
+          points: number
+          requirement_type: string
+          requirement_value: number
+          tier: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description: string
+          icon?: string
+          id?: string
+          name: string
+          points?: number
+          requirement_type: string
+          requirement_value: number
+          tier?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          name?: string
+          points?: number
+          requirement_type?: string
+          requirement_value?: number
+          tier?: string
         }
         Relationships: []
       }
