@@ -26,11 +26,14 @@ import {
   Activity,
   AlertTriangle,
   ChevronDown,
-  BarChart3
+  BarChart3,
+  Bell,
+  BellOff
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { QueueTrendChart } from './QueueTrendChart';
+import { useCriticalAlertNotifications } from '@/hooks/useCriticalAlertNotifications';
 
 interface ActiveCall {
   id: string;
@@ -76,6 +79,7 @@ export const SupervisorPanel = () => {
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showTrendChart, setShowTrendChart] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
   const [queueMetrics, setQueueMetrics] = useState<QueueMetrics>({
     avgWaitTime: 0,
     abandonmentRate: 0,
@@ -85,6 +89,35 @@ export const SupervisorPanel = () => {
     serviceLevelPercent: 0
   });
   const supervisorName = 'Supervisor';
+
+  // Critical alert notifications
+  const { 
+    notificationPermission, 
+    requestNotificationPermission,
+    initAudioContext,
+    playAlertSound 
+  } = useCriticalAlertNotifications({
+    enabled: true,
+    soundEnabled,
+    browserNotificationsEnabled: true,
+  });
+
+  // Initialize audio context on first user interaction
+  const handleEnableSound = async () => {
+    initAudioContext();
+    setSoundEnabled(true);
+    
+    // Request browser notification permission
+    const granted = await requestNotificationPermission();
+    if (granted) {
+      toast.success('Notificações ativadas');
+    } else {
+      toast.info('Notificações sonoras ativadas. Para notificações do navegador, habilite nas configurações.');
+    }
+    
+    // Play test sound
+    playAlertSound('warning');
+  };
 
   const fetchActiveCalls = async () => {
     const { data, error } = await supabase
@@ -309,16 +342,39 @@ export const SupervisorPanel = () => {
   return (
     <Card className="h-full">
       <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2">
-          <Radio className="h-5 w-5 text-primary" />
-          Painel do Supervisor
-          {activeBargeIn && (
-            <Badge variant="destructive" className="ml-2 animate-pulse">
-              <PhoneCall className="h-3 w-3 mr-1" />
-              Em Conferência
-            </Badge>
-          )}
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2">
+            <Radio className="h-5 w-5 text-primary" />
+            Painel do Supervisor
+            {activeBargeIn && (
+              <Badge variant="destructive" className="ml-2 animate-pulse">
+                <PhoneCall className="h-3 w-3 mr-1" />
+                Em Conferência
+              </Badge>
+            )}
+          </CardTitle>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button 
+                  variant={soundEnabled ? 'default' : 'outline'} 
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={soundEnabled ? () => setSoundEnabled(false) : handleEnableSound}
+                >
+                  {soundEnabled ? (
+                    <Bell className="h-4 w-4" />
+                  ) : (
+                    <BellOff className="h-4 w-4" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{soundEnabled ? 'Desativar notificações sonoras' : 'Ativar notificações sonoras'}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Queue Metrics */}
