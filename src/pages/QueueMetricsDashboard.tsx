@@ -22,7 +22,8 @@ import {
   Gauge,
   Target,
   Settings,
-  Zap
+  Zap,
+  History
 } from 'lucide-react';
 import { 
   LineChart, 
@@ -37,6 +38,7 @@ import {
 } from 'recharts';
 import { format } from 'date-fns';
 import { DashboardGoalsSettings, DashboardGoal } from '@/components/dashboard/DashboardGoalsSettings';
+import { GoalViolationsHistory } from '@/components/dashboard/GoalViolationsHistory';
 
 interface QueueMetrics {
   activeCalls: number;
@@ -382,6 +384,10 @@ const QueueMetricsDashboard = () => {
               </Badge>
             )}
           </TabsTrigger>
+          <TabsTrigger value="history" className="flex items-center gap-2">
+            <History className="h-4 w-4" />
+            Histórico
+          </TabsTrigger>
           <TabsTrigger value="settings" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
             Configurações
@@ -705,6 +711,10 @@ const QueueMetricsDashboard = () => {
               </CardContent>
             </Card>
           )}
+        </TabsContent>
+
+        <TabsContent value="history">
+          <GoalViolationsHistory />
         </TabsContent>
 
         <TabsContent value="settings">
