@@ -23,6 +23,7 @@ import HoldMetrics from "./pages/HoldMetrics";
 import HoldAlerts from "./pages/HoldAlerts";
 import HoldAlertSettings from "./pages/HoldAlertSettings";
 import Callbacks from "./pages/Callbacks";
+import Dialer from "./pages/Dialer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,7 @@ const App = () => (
               <Route path="/hold-alerts" element={<HoldAlerts />} />
               <Route path="/hold-settings" element={<HoldAlertSettings />} />
               <Route path="/callbacks" element={<Callbacks />} />
+              <Route path="/dialer" element={<Dialer />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

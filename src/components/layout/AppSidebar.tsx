@@ -39,6 +39,7 @@ const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
   { title: 'Executivo', url: '/executive', icon: Gauge },
   { title: 'Chamadas', url: '/calls', icon: Phone },
+  { title: 'Discador', url: '/dialer', icon: Phone },
   { title: 'Contatos', url: '/contacts', icon: Users },
   { title: 'Insights', url: '/contacts/insights', icon: Brain },
   { title: 'Histórico', url: '/history', icon: Clock },
