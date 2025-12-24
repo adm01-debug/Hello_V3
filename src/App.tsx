@@ -28,6 +28,7 @@ import HoldAlertSettings from "./pages/HoldAlertSettings";
 import Callbacks from "./pages/Callbacks";
 import Dialer from "./pages/Dialer";
 import Coaching from "./pages/Coaching";
+import QueueMetricsAlertSettings from "./pages/QueueMetricsAlertSettings";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Unauthorized from "./pages/Unauthorized";
@@ -76,6 +77,11 @@ const App = () => (
                         <Route path="/hold-metrics" element={<HoldMetrics />} />
                         <Route path="/hold-alerts" element={<HoldAlerts />} />
                         <Route path="/hold-settings" element={<HoldAlertSettings />} />
+                        <Route path="/queue-metrics-settings" element={
+                          <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
+                            <QueueMetricsAlertSettings />
+                          </ProtectedRoute>
+                        } />
                         <Route path="/callbacks" element={<Callbacks />} />
                         <Route path="/dialer" element={
                           <ProtectedRoute requiredRoles={['supervisor', 'admin']}>

@@ -6,14 +6,14 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Default thresholds
+// Default thresholds (used as fallback)
 const DEFAULT_THRESHOLDS = {
-  avgWaitTimeWarning: 45,      // seconds
-  avgWaitTimeCritical: 90,     // seconds
-  abandonmentRateWarning: 10,  // percent
-  abandonmentRateCritical: 20, // percent
-  serviceLevelWarning: 80,     // percent (below this triggers warning)
-  serviceLevelCritical: 60,    // percent (below this triggers critical)
+  avgWaitTimeWarning: 45,
+  avgWaitTimeCritical: 90,
+  abandonmentRateWarning: 10,
+  abandonmentRateCritical: 20,
+  serviceLevelWarning: 80,
+  serviceLevelCritical: 60,
 };
 
 serve(async (req) => {
@@ -27,6 +27,36 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Fetch settings from database
+    const { data: settingsData } = await supabaseAdmin
+      .from('queue_metrics_settings')
+      .select('*')
+      .limit(1)
+      .maybeSingle();
+
+    // Check if alerts are enabled
+    if (settingsData && !settingsData.enabled) {
+      console.log('Queue metrics alerts are disabled');
+      return new Response(JSON.stringify({ 
+        success: true, 
+        message: 'Alertas de métricas de fila estão desabilitados' 
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Use settings from database or defaults
+    const thresholds = {
+      avgWaitTimeWarning: settingsData?.avg_wait_time_warning || DEFAULT_THRESHOLDS.avgWaitTimeWarning,
+      avgWaitTimeCritical: settingsData?.avg_wait_time_critical || DEFAULT_THRESHOLDS.avgWaitTimeCritical,
+      abandonmentRateWarning: settingsData?.abandonment_rate_warning || DEFAULT_THRESHOLDS.abandonmentRateWarning,
+      abandonmentRateCritical: settingsData?.abandonment_rate_critical || DEFAULT_THRESHOLDS.abandonmentRateCritical,
+      serviceLevelWarning: settingsData?.service_level_warning || DEFAULT_THRESHOLDS.serviceLevelWarning,
+      serviceLevelCritical: settingsData?.service_level_critical || DEFAULT_THRESHOLDS.serviceLevelCritical,
+    };
+
+    console.log('Using thresholds:', thresholds);
 
     // Get today's date at midnight
     const today = new Date();
@@ -113,26 +143,26 @@ serve(async (req) => {
     };
 
     // Average wait time alerts
-    if (avgWaitTime >= DEFAULT_THRESHOLDS.avgWaitTimeCritical && !hasRecentAlert('avg_wait_time_exceeded', 'critical')) {
+    if (avgWaitTime >= thresholds.avgWaitTimeCritical && !hasRecentAlert('avg_wait_time_exceeded', 'critical')) {
       alerts.push({
         call_session_id: recentCall.id,
         alert_type: 'avg_wait_time_exceeded',
         severity: 'critical',
         title: 'Tempo de Espera Médio Crítico',
-        message: `O tempo médio de espera na última hora é de ${avgWaitTime}s (limite: ${DEFAULT_THRESHOLDS.avgWaitTimeCritical}s). Considere adicionar mais agentes.`
+        message: `O tempo médio de espera na última hora é de ${avgWaitTime}s (limite: ${thresholds.avgWaitTimeCritical}s). Considere adicionar mais agentes.`
       });
-    } else if (avgWaitTime >= DEFAULT_THRESHOLDS.avgWaitTimeWarning && !hasRecentAlert('avg_wait_time_exceeded', 'warning')) {
+    } else if (avgWaitTime >= thresholds.avgWaitTimeWarning && !hasRecentAlert('avg_wait_time_exceeded', 'warning')) {
       alerts.push({
         call_session_id: recentCall.id,
         alert_type: 'avg_wait_time_exceeded',
         severity: 'warning',
         title: 'Tempo de Espera Médio Elevado',
-        message: `O tempo médio de espera na última hora é de ${avgWaitTime}s (limite: ${DEFAULT_THRESHOLDS.avgWaitTimeWarning}s).`
+        message: `O tempo médio de espera na última hora é de ${avgWaitTime}s (limite: ${thresholds.avgWaitTimeWarning}s).`
       });
     }
 
     // Abandonment rate alerts
-    if (abandonmentRate >= DEFAULT_THRESHOLDS.abandonmentRateCritical && !hasRecentAlert('abandonment_rate_exceeded', 'critical')) {
+    if (abandonmentRate >= thresholds.abandonmentRateCritical && !hasRecentAlert('abandonment_rate_exceeded', 'critical')) {
       alerts.push({
         call_session_id: recentCall.id,
         alert_type: 'abandonment_rate_exceeded',
@@ -140,7 +170,7 @@ serve(async (req) => {
         title: 'Taxa de Abandono Crítica',
         message: `Taxa de abandono na última hora: ${abandonmentRate}% (${abandoned.length} de ${total} chamadas). Ação imediata necessária.`
       });
-    } else if (abandonmentRate >= DEFAULT_THRESHOLDS.abandonmentRateWarning && !hasRecentAlert('abandonment_rate_exceeded', 'warning')) {
+    } else if (abandonmentRate >= thresholds.abandonmentRateWarning && !hasRecentAlert('abandonment_rate_exceeded', 'warning')) {
       alerts.push({
         call_session_id: recentCall.id,
         alert_type: 'abandonment_rate_exceeded',
@@ -151,21 +181,21 @@ serve(async (req) => {
     }
 
     // Service level alerts (inverted - low is bad)
-    if (serviceLevelPercent <= DEFAULT_THRESHOLDS.serviceLevelCritical && !hasRecentAlert('service_level_low', 'critical')) {
+    if (serviceLevelPercent <= thresholds.serviceLevelCritical && !hasRecentAlert('service_level_low', 'critical')) {
       alerts.push({
         call_session_id: recentCall.id,
         alert_type: 'service_level_low',
         severity: 'critical',
         title: 'Nível de Serviço Crítico',
-        message: `Apenas ${serviceLevelPercent}% das chamadas foram atendidas em até 30s (meta: ${DEFAULT_THRESHOLDS.serviceLevelWarning}%).`
+        message: `Apenas ${serviceLevelPercent}% das chamadas foram atendidas em até 30s (meta: ${thresholds.serviceLevelWarning}%).`
       });
-    } else if (serviceLevelPercent <= DEFAULT_THRESHOLDS.serviceLevelWarning && !hasRecentAlert('service_level_low', 'warning')) {
+    } else if (serviceLevelPercent <= thresholds.serviceLevelWarning && !hasRecentAlert('service_level_low', 'warning')) {
       alerts.push({
         call_session_id: recentCall.id,
         alert_type: 'service_level_low',
         severity: 'warning',
         title: 'Nível de Serviço Baixo',
-        message: `Nível de serviço na última hora: ${serviceLevelPercent}% (meta: ${DEFAULT_THRESHOLDS.serviceLevelWarning}%).`
+        message: `Nível de serviço na última hora: ${serviceLevelPercent}% (meta: ${thresholds.serviceLevelWarning}%).`
       });
     }
 

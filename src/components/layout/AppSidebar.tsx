@@ -17,7 +17,8 @@ import {
   Disc,
   Timer,
   AlertTriangle,
-  Calendar
+  Calendar,
+  Activity
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -61,7 +62,8 @@ const toolsNavItems = [
 ];
 
 const settingsNavItems = [
-  { title: 'Config. Alertas', url: '/hold-settings', icon: AlertTriangle },
+  { title: 'Alertas de Hold', url: '/hold-settings', icon: AlertTriangle },
+  { title: 'Alertas de Fila', url: '/queue-metrics-settings', icon: Activity },
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];
 
