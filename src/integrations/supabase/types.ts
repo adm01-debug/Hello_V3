@@ -733,6 +733,51 @@ export type Database = {
         }
         Relationships: []
       }
+      dashboard_goals: {
+        Row: {
+          comparison_operator: string
+          created_at: string
+          critical_threshold: number
+          id: string
+          is_active: boolean
+          metric_type: string
+          name: string
+          notify_on_critical: boolean
+          notify_on_warning: boolean
+          target_value: number
+          updated_at: string
+          warning_threshold: number
+        }
+        Insert: {
+          comparison_operator?: string
+          created_at?: string
+          critical_threshold: number
+          id?: string
+          is_active?: boolean
+          metric_type: string
+          name: string
+          notify_on_critical?: boolean
+          notify_on_warning?: boolean
+          target_value: number
+          updated_at?: string
+          warning_threshold: number
+        }
+        Update: {
+          comparison_operator?: string
+          created_at?: string
+          critical_threshold?: number
+          id?: string
+          is_active?: boolean
+          metric_type?: string
+          name?: string
+          notify_on_critical?: boolean
+          notify_on_warning?: boolean
+          target_value?: number
+          updated_at?: string
+          warning_threshold?: number
+        }
+        Relationships: []
+      }
       dialer_campaigns: {
         Row: {
           call_timeout_seconds: number
