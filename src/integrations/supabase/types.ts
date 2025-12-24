@@ -936,6 +936,48 @@ export type Database = {
           },
         ]
       }
+      queue_metrics_settings: {
+        Row: {
+          abandonment_rate_critical: number
+          abandonment_rate_warning: number
+          avg_wait_time_critical: number
+          avg_wait_time_warning: number
+          check_interval_minutes: number
+          created_at: string
+          enabled: boolean
+          id: string
+          service_level_critical: number
+          service_level_warning: number
+          updated_at: string
+        }
+        Insert: {
+          abandonment_rate_critical?: number
+          abandonment_rate_warning?: number
+          avg_wait_time_critical?: number
+          avg_wait_time_warning?: number
+          check_interval_minutes?: number
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          service_level_critical?: number
+          service_level_warning?: number
+          updated_at?: string
+        }
+        Update: {
+          abandonment_rate_critical?: number
+          abandonment_rate_warning?: number
+          avg_wait_time_critical?: number
+          avg_wait_time_warning?: number
+          check_interval_minutes?: number
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          service_level_critical?: number
+          service_level_warning?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       scheduled_callbacks: {
         Row: {
           assigned_agent: string | null
