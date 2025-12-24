@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { 
   Headphones, 
   Phone, 
@@ -23,10 +24,13 @@ import {
   Timer,
   TrendingDown,
   Activity,
-  AlertTriangle
+  AlertTriangle,
+  ChevronDown,
+  BarChart3
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { QueueTrendChart } from './QueueTrendChart';
 
 interface ActiveCall {
   id: string;
@@ -71,6 +75,7 @@ export const SupervisorPanel = () => {
   const [activeBargeIn, setActiveBargeIn] = useState<BargeInSession | null>(null);
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showTrendChart, setShowTrendChart] = useState(false);
   const [queueMetrics, setQueueMetrics] = useState<QueueMetrics>({
     avgWaitTime: 0,
     abandonmentRate: 0,
@@ -392,6 +397,23 @@ export const SupervisorPanel = () => {
             </Tooltip>
           </TooltipProvider>
         </div>
+
+        {/* Trend Chart Collapsible */}
+        <Collapsible open={showTrendChart} onOpenChange={setShowTrendChart}>
+          <CollapsibleTrigger asChild>
+            <Button variant="ghost" size="sm" className="w-full justify-between text-xs h-8">
+              <span className="flex items-center gap-1.5">
+                <BarChart3 className="h-3.5 w-3.5" />
+                Tendência do Dia
+              </span>
+              <ChevronDown className={`h-4 w-4 transition-transform ${showTrendChart ? 'rotate-180' : ''}`} />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="pt-2">
+            <QueueTrendChart />
+          </CollapsibleContent>
+        </Collapsible>
+
         {/* Active Barge-in Banner */}
         {activeBargeIn && (
           <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/30 animate-pulse">
