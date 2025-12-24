@@ -47,3 +47,6 @@ verify_jwt = true
 
 [functions.check-queue-metrics]
 verify_jwt = false
+
+[functions.check-goals]
+verify_jwt = false
