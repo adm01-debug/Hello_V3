@@ -5,6 +5,7 @@ import { RecentCalls } from '@/components/dashboard/RecentCalls';
 import { AgentsList } from '@/components/dashboard/AgentsList';
 import { QueueStatus } from '@/components/dashboard/QueueStatus';
 import { ActiveCallsRealtime } from '@/components/dashboard/ActiveCallsRealtime';
+import { HoldTrendChart } from '@/components/dashboard/HoldTrendChart';
 import { mockDashboardStats, formatDuration } from '@/data/mockData';
 
 const Index = () => {
@@ -48,7 +49,10 @@ const Index = () => {
       </div>
 
       {/* Active Calls Realtime */}
-      <ActiveCallsRealtime />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <ActiveCallsRealtime />
+        <HoldTrendChart />
+      </div>
 
       {/* Charts and Lists */}
       <div className="grid gap-6 lg:grid-cols-3">
