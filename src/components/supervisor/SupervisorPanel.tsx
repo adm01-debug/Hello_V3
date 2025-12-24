@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,7 +19,11 @@ import {
   Users,
   PhoneCall,
   PhoneOff,
-  Radio
+  Radio,
+  Timer,
+  TrendingDown,
+  Activity,
+  AlertTriangle
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -31,6 +35,7 @@ interface ActiveCall {
   agent_name: string | null;
   started_at: string;
   status: string | null;
+  hold_time_seconds: number | null;
 }
 
 interface WhisperMessage {
@@ -49,6 +54,15 @@ interface BargeInSession {
   started_at: string;
 }
 
+interface QueueMetrics {
+  avgWaitTime: number;
+  abandonmentRate: number;
+  totalCompleted: number;
+  totalAbandoned: number;
+  longestWait: number;
+  serviceLevelPercent: number;
+}
+
 export const SupervisorPanel = () => {
   const [activeCalls, setActiveCalls] = useState<ActiveCall[]>([]);
   const [selectedCall, setSelectedCall] = useState<ActiveCall | null>(null);
@@ -57,6 +71,14 @@ export const SupervisorPanel = () => {
   const [activeBargeIn, setActiveBargeIn] = useState<BargeInSession | null>(null);
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [queueMetrics, setQueueMetrics] = useState<QueueMetrics>({
+    avgWaitTime: 0,
+    abandonmentRate: 0,
+    totalCompleted: 0,
+    totalAbandoned: 0,
+    longestWait: 0,
+    serviceLevelPercent: 0
+  });
   const supervisorName = 'Supervisor';
 
   const fetchActiveCalls = async () => {
@@ -70,6 +92,54 @@ export const SupervisorPanel = () => {
       setActiveCalls(data);
     }
     setLoading(false);
+  };
+
+  const fetchQueueMetrics = async () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Fetch completed calls today
+    const { data: completedCalls, error: completedError } = await supabase
+      .from('call_sessions')
+      .select('duration_seconds, hold_time_seconds, started_at, ended_at')
+      .eq('status', 'completed')
+      .gte('created_at', today.toISOString());
+
+    // Fetch abandoned calls (calls that ended without agent or very short duration)
+    const { data: abandonedCalls, error: abandonedError } = await supabase
+      .from('call_sessions')
+      .select('*')
+      .in('status', ['abandoned', 'missed'])
+      .gte('created_at', today.toISOString());
+
+    if (!completedError && !abandonedError) {
+      const completed = completedCalls || [];
+      const abandoned = abandonedCalls || [];
+      const total = completed.length + abandoned.length;
+
+      // Calculate average wait/hold time
+      const totalHoldTime = completed.reduce((sum, call) => sum + (call.hold_time_seconds || 0), 0);
+      const avgWaitTime = completed.length > 0 ? Math.round(totalHoldTime / completed.length) : 0;
+
+      // Find longest wait
+      const longestWait = completed.reduce((max, call) => Math.max(max, call.hold_time_seconds || 0), 0);
+
+      // Abandonment rate
+      const abandonmentRate = total > 0 ? Math.round((abandoned.length / total) * 100) : 0;
+
+      // Service level (calls answered within 30 seconds threshold)
+      const answeredQuickly = completed.filter(call => (call.hold_time_seconds || 0) <= 30).length;
+      const serviceLevelPercent = completed.length > 0 ? Math.round((answeredQuickly / completed.length) * 100) : 100;
+
+      setQueueMetrics({
+        avgWaitTime,
+        abandonmentRate,
+        totalCompleted: completed.length,
+        totalAbandoned: abandoned.length,
+        longestWait,
+        serviceLevelPercent
+      });
+    }
   };
 
   const fetchActiveBargeIn = async () => {
@@ -101,15 +171,23 @@ export const SupervisorPanel = () => {
   useEffect(() => {
     fetchActiveCalls();
     fetchActiveBargeIn();
+    fetchQueueMetrics();
 
     const channel = supabase
       .channel('supervisor-panel-updates')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'call_sessions' }, () => fetchActiveCalls())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'call_sessions' }, () => {
+        fetchActiveCalls();
+        fetchQueueMetrics();
+      })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'barge_in_sessions' }, () => fetchActiveBargeIn())
       .subscribe();
 
+    // Refresh metrics every 30 seconds
+    const metricsInterval = setInterval(fetchQueueMetrics, 30000);
+
     return () => {
       supabase.removeChannel(channel);
+      clearInterval(metricsInterval);
     };
   }, []);
 
@@ -216,6 +294,13 @@ export const SupervisorPanel = () => {
     return activeBargeIn?.call_session_id === callId;
   };
 
+  const formatWaitTime = (seconds: number) => {
+    if (seconds < 60) return `${seconds}s`;
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}m ${secs}s`;
+  };
+
   return (
     <Card className="h-full">
       <CardHeader className="pb-3">
@@ -231,6 +316,82 @@ export const SupervisorPanel = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* Queue Metrics */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="p-2.5 rounded-lg border bg-accent/30">
+                  <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                    <Timer className="h-3.5 w-3.5" />
+                    <span className="text-xs">Espera Média</span>
+                  </div>
+                  <p className="text-lg font-bold">{formatWaitTime(queueMetrics.avgWaitTime)}</p>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Tempo médio de espera das chamadas hoje</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className={`p-2.5 rounded-lg border ${queueMetrics.abandonmentRate > 10 ? 'bg-destructive/10 border-destructive/30' : 'bg-accent/30'}`}>
+                  <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                    <TrendingDown className={`h-3.5 w-3.5 ${queueMetrics.abandonmentRate > 10 ? 'text-destructive' : ''}`} />
+                    <span className="text-xs">Abandono</span>
+                  </div>
+                  <p className={`text-lg font-bold ${queueMetrics.abandonmentRate > 10 ? 'text-destructive' : ''}`}>
+                    {queueMetrics.abandonmentRate}%
+                  </p>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{queueMetrics.totalAbandoned} chamadas abandonadas de {queueMetrics.totalCompleted + queueMetrics.totalAbandoned} total</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className={`p-2.5 rounded-lg border ${queueMetrics.serviceLevelPercent < 80 ? 'bg-warning/10 border-warning/30' : 'bg-accent/30'}`}>
+                  <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                    <Activity className={`h-3.5 w-3.5 ${queueMetrics.serviceLevelPercent < 80 ? 'text-warning' : ''}`} />
+                    <span className="text-xs">Nível Serviço</span>
+                  </div>
+                  <p className={`text-lg font-bold ${queueMetrics.serviceLevelPercent < 80 ? 'text-warning' : ''}`}>
+                    {queueMetrics.serviceLevelPercent}%
+                  </p>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Chamadas atendidas em até 30 segundos</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className={`p-2.5 rounded-lg border ${queueMetrics.longestWait > 120 ? 'bg-destructive/10 border-destructive/30' : 'bg-accent/30'}`}>
+                  <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                    <AlertTriangle className={`h-3.5 w-3.5 ${queueMetrics.longestWait > 120 ? 'text-destructive' : ''}`} />
+                    <span className="text-xs">Maior Espera</span>
+                  </div>
+                  <p className={`text-lg font-bold ${queueMetrics.longestWait > 120 ? 'text-destructive' : ''}`}>
+                    {formatWaitTime(queueMetrics.longestWait)}
+                  </p>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Maior tempo de espera registrado hoje</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         {/* Active Barge-in Banner */}
         {activeBargeIn && (
           <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/30 animate-pulse">
