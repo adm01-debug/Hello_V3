@@ -18,7 +18,8 @@ import {
   AlertCircle,
   Lightbulb,
   Loader2,
-  RefreshCw
+  RefreshCw,
+  Route
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -37,6 +38,7 @@ import { ptBR } from 'date-fns/locale';
 import { Contact, ContactInteraction, useContacts } from '@/hooks/useContacts';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { CustomerJourneyTimeline } from './CustomerJourneyTimeline';
 
 interface PersonalityProfile {
   personality_traits: string[];
@@ -210,14 +212,18 @@ export function ContactDetailSheet({
         <Separator className="my-4" />
 
         <Tabs defaultValue="info" className="flex-1">
-          <TabsList className="w-full">
-            <TabsTrigger value="info" className="flex-1">Info</TabsTrigger>
-            <TabsTrigger value="profile" className="flex-1 gap-1">
+          <TabsList className="w-full grid grid-cols-4">
+            <TabsTrigger value="info">Info</TabsTrigger>
+            <TabsTrigger value="journey" className="gap-1">
+              <Route className="h-3 w-3" />
+              Jornada
+            </TabsTrigger>
+            <TabsTrigger value="profile" className="gap-1">
               <Brain className="h-3 w-3" />
               Perfil IA
             </TabsTrigger>
-            <TabsTrigger value="history" className="flex-1">
-              Histórico ({interactions.length})
+            <TabsTrigger value="history">
+              Histórico
             </TabsTrigger>
           </TabsList>
 
@@ -286,6 +292,14 @@ export function ContactDetailSheet({
               <span className="text-muted-foreground">Origem</span>
               <Badge variant="outline">{contact.source}</Badge>
             </div>
+          </TabsContent>
+
+          <TabsContent value="journey" className="mt-4">
+            <CustomerJourneyTimeline 
+              contactId={contact.id}
+              interactions={interactions}
+              contactCreatedAt={contact.created_at}
+            />
           </TabsContent>
 
           <TabsContent value="profile" className="mt-4">
