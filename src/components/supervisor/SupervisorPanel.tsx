@@ -80,14 +80,20 @@ export const SupervisorPanel = () => {
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showTrendChart, setShowTrendChart] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [soundConfig, setSoundConfig] = useState<AlertSoundConfig>({
-    warningFrequency: 520,
-    warningPattern: 'single',
-    warningVolume: 0.2,
-    criticalFrequency: 880,
-    criticalPattern: 'urgent',
-    criticalVolume: 0.3,
+  const [soundEnabled, setSoundEnabled] = useState(() => {
+    const saved = localStorage.getItem('supervisor-sound-enabled');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+  const [soundConfig, setSoundConfig] = useState<AlertSoundConfig>(() => {
+    const saved = localStorage.getItem('supervisor-sound-config');
+    return saved ? JSON.parse(saved) : {
+      warningFrequency: 520,
+      warningPattern: 'single',
+      warningVolume: 0.2,
+      criticalFrequency: 880,
+      criticalPattern: 'urgent',
+      criticalVolume: 0.3,
+    };
   });
   const [queueMetrics, setQueueMetrics] = useState<QueueMetrics>({
     avgWaitTime: 0,
@@ -112,10 +118,21 @@ export const SupervisorPanel = () => {
     soundConfig,
   });
 
+  // Persist sound settings to localStorage
+  const handleSoundEnabledChange = (enabled: boolean) => {
+    setSoundEnabled(enabled);
+    localStorage.setItem('supervisor-sound-enabled', JSON.stringify(enabled));
+  };
+
+  const handleSoundConfigChange = (config: AlertSoundConfig) => {
+    setSoundConfig(config);
+    localStorage.setItem('supervisor-sound-config', JSON.stringify(config));
+  };
+
   // Initialize audio context on first user interaction
   const handleEnableSound = async () => {
     initAudioContext();
-    setSoundEnabled(true);
+    handleSoundEnabledChange(true);
     
     // Request browser notification permission
     const granted = await requestNotificationPermission();
@@ -366,7 +383,7 @@ export const SupervisorPanel = () => {
           <div className="flex items-center gap-1">
             <AlertSoundSettings
               config={soundConfig}
-              onConfigChange={setSoundConfig}
+              onConfigChange={handleSoundConfigChange}
               onTestSound={playAlertSound}
             />
             <TooltipProvider>
@@ -376,7 +393,7 @@ export const SupervisorPanel = () => {
                     variant={soundEnabled ? 'default' : 'outline'} 
                     size="icon"
                     className="h-8 w-8"
-                    onClick={soundEnabled ? () => setSoundEnabled(false) : handleEnableSound}
+                    onClick={soundEnabled ? () => handleSoundEnabledChange(false) : handleEnableSound}
                   >
                     {soundEnabled ? (
                       <Bell className="h-4 w-4" />
