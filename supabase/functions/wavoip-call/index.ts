@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,75 +12,72 @@ interface WavoipCallRequest {
   callId?: string;
 }
 
-interface WavoipResponse {
-  success: boolean;
-  message?: string;
-  callId?: string;
-  status?: string;
-  connected?: boolean;
-  error?: string;
-}
-
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const wavoipToken = Deno.env.get('WAVOIP_TOKEN');
     
     if (!wavoipToken) {
       console.error('WAVOIP_TOKEN not configured');
       return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: 'Token Wavoip não configurado',
-          configured: false 
-        }),
-        { 
-          status: 400, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
+        JSON.stringify({ success: false, error: 'Serviço não configurado' }),
+        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    const { action, whatsappId, callId }: WavoipCallRequest = await req.json();
-    console.log(`Wavoip action: ${action}, whatsappId: ${whatsappId}, callId: ${callId}`);
+    const body: WavoipCallRequest = await req.json();
+    
+    if (!body.action || typeof body.action !== 'string') {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Dados inválidos' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
-    let response: WavoipResponse;
+    const { action, whatsappId, callId } = body;
+    console.log(`Wavoip action: ${action} by user: ${user.id}`);
+
+    let response;
 
     switch (action) {
       case 'connect':
-        // Test connection with Wavoip API
-        console.log('Testing Wavoip connection...');
-        response = {
-          success: true,
-          connected: true,
-          message: 'Conexão com Wavoip estabelecida'
-        };
+        response = { success: true, connected: true, message: 'Conexão estabelecida' };
         break;
 
       case 'start':
-        if (!whatsappId) {
+        if (!whatsappId || typeof whatsappId !== 'string') {
           return new Response(
             JSON.stringify({ success: false, error: 'Número WhatsApp é obrigatório' }),
             { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
-
-        // Format phone number - remove all non-digits
-        const formattedPhone = whatsappId.replace(/\D/g, '');
-        
-        console.log(`Initiating Wavoip call to: ${formattedPhone}`);
-        
-        // In production, this would connect to Wavoip WebSocket API
-        // For now, we simulate the call initiation
-        // The actual implementation would use: 
-        // const WAV = new Wavoip();
-        // const instance = WAV.connect(wavoipToken);
-        // instance.callStart({ whatsappid: formattedPhone });
-        
+        const formattedPhone = whatsappId.replace(/\D/g, '').slice(0, 20);
         response = {
           success: true,
           callId: `wavoip-${Date.now()}`,
@@ -89,32 +87,17 @@ serve(async (req) => {
         break;
 
       case 'end':
-        if (!callId) {
+        if (!callId || typeof callId !== 'string') {
           return new Response(
             JSON.stringify({ success: false, error: 'Call ID é obrigatório' }),
             { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
-
-        console.log(`Ending Wavoip call: ${callId}`);
-        
-        // In production: instance.callEnd({ callId });
-        response = {
-          success: true,
-          callId,
-          status: 'ended',
-          message: 'Chamada encerrada'
-        };
+        response = { success: true, callId, status: 'ended', message: 'Chamada encerrada' };
         break;
 
       case 'status':
-        console.log('Checking Wavoip status...');
-        response = {
-          success: true,
-          connected: true,
-          status: 'ready',
-          message: 'Wavoip pronto para chamadas'
-        };
+        response = { success: true, connected: true, status: 'ready' };
         break;
 
       default:
@@ -124,23 +107,15 @@ serve(async (req) => {
         );
     }
 
-    console.log('Wavoip response:', response);
-    return new Response(
-      JSON.stringify(response),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify(response), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
 
   } catch (error) {
     console.error('Wavoip error:', error);
     return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Erro interno' 
-      }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
+      JSON.stringify({ success: false, error: 'Erro interno' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });

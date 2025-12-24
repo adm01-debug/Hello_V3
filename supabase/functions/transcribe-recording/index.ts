@@ -12,82 +12,96 @@ serve(async (req) => {
   }
 
   try {
-    const { recordingId, filePath } = await req.json();
-    
-    if (!recordingId || !filePath) {
-      throw new Error('recordingId and filePath are required');
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log(`Starting transcription for recording: ${recordingId}, file: ${filePath}`);
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const body = await req.json();
+    const { recordingId, filePath } = body;
+    
+    if (!recordingId || !filePath || typeof recordingId !== 'string' || typeof filePath !== 'string') {
+      return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    console.log(`Transcribing recording for user: ${user.id}`);
 
     const ELEVENLABS_API_KEY = Deno.env.get('ELEVENLABS_API_KEY');
-    const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
     if (!ELEVENLABS_API_KEY) {
-      throw new Error('ELEVENLABS_API_KEY is not configured');
+      console.error('ELEVENLABS_API_KEY not configured');
+      return new Response(JSON.stringify({ error: 'Serviço não configurado' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    // Create Supabase client with service role for storage access
-    const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+    const supabaseAdmin = createClient(supabaseUrl, SUPABASE_SERVICE_ROLE_KEY!);
 
-    // Download the audio file from storage
-    console.log('Downloading audio file from storage...');
-    const { data: fileData, error: downloadError } = await supabase.storage
+    const { data: fileData, error: downloadError } = await supabaseAdmin.storage
       .from('call-recordings')
       .download(filePath);
 
     if (downloadError || !fileData) {
       console.error('Failed to download file:', downloadError);
-      throw new Error(`Failed to download audio file: ${downloadError?.message || 'Unknown error'}`);
+      return new Response(JSON.stringify({ error: 'Arquivo não encontrado' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log(`Downloaded file, size: ${fileData.size} bytes`);
-
-    // Prepare form data for ElevenLabs API
     const formData = new FormData();
     formData.append('file', fileData, 'recording.webm');
     formData.append('model_id', 'scribe_v1');
-    formData.append('language_code', 'por'); // Portuguese
-    formData.append('diarize', 'true'); // Enable speaker identification
+    formData.append('language_code', 'por');
+    formData.append('diarize', 'true');
     formData.append('tag_audio_events', 'true');
 
-    console.log('Sending to ElevenLabs for transcription...');
-
-    // Send to ElevenLabs Speech-to-Text API
     const response = await fetch('https://api.elevenlabs.io/v1/speech-to-text', {
       method: 'POST',
-      headers: {
-        'xi-api-key': ELEVENLABS_API_KEY,
-      },
+      headers: { 'xi-api-key': ELEVENLABS_API_KEY },
       body: formData,
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('ElevenLabs API error:', response.status, errorText);
-      throw new Error(`ElevenLabs API error: ${response.status} - ${errorText}`);
+      console.error('ElevenLabs API error:', response.status);
+      return new Response(JSON.stringify({ error: 'Erro no serviço de transcrição' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const transcription = await response.json();
-    console.log('Transcription received successfully');
 
-    // Get the recording to find associated call_session_id
-    const { data: recording, error: recordingError } = await supabase
+    const { data: recording } = await supabaseAdmin
       .from('call_recordings')
       .select('call_session_id')
       .eq('id', recordingId)
       .maybeSingle();
 
-    if (recordingError) {
-      console.error('Error fetching recording:', recordingError);
-    }
-
-    // Save transcription to database if we have a call_session_id
     if (recording?.call_session_id && transcription.words) {
-      console.log('Saving transcription to database...');
-      
-      // Group words by speaker for better readability
       let currentSpeaker = '';
       let currentText = '';
       let currentStartTime = 0;
@@ -105,14 +119,13 @@ serve(async (req) => {
             end_time: word.start,
           });
           currentText = '';
-          currentStartTime = word.start;
+          currentStartTime = word.start || 0;
         }
         
         currentSpeaker = speaker;
         currentText += word.text + ' ';
       }
 
-      // Add last segment
       if (currentText) {
         transcriptionEntries.push({
           call_session_id: recording.call_session_id,
@@ -123,17 +136,8 @@ serve(async (req) => {
         });
       }
 
-      // Insert transcription entries
       if (transcriptionEntries.length > 0) {
-        const { error: insertError } = await supabase
-          .from('call_transcriptions')
-          .insert(transcriptionEntries);
-
-        if (insertError) {
-          console.error('Error saving transcription:', insertError);
-        } else {
-          console.log(`Saved ${transcriptionEntries.length} transcription segments`);
-        }
+        await supabaseAdmin.from('call_transcriptions').insert(transcriptionEntries);
       }
     }
 
@@ -149,14 +153,8 @@ serve(async (req) => {
   } catch (error) {
     console.error('Transcription error:', error);
     return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
-      }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
+      JSON.stringify({ success: false, error: 'Erro interno' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });

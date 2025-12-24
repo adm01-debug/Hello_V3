@@ -1,43 +1,46 @@
 project_id = "hxuxusgzlemffsbwlixq"
 
 [functions.voice-transcribe]
-verify_jwt = false
+verify_jwt = true
 
 [functions.voice-command]
-verify_jwt = false
+verify_jwt = true
 
 [functions.analyze-call]
-verify_jwt = false
+verify_jwt = true
 
 [functions.realtime-analysis]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-summary]
-verify_jwt = false
+verify_jwt = true
 
 [functions.check-alerts]
-verify_jwt = false
+verify_jwt = true
 
 [functions.elevenlabs-conversation-token]
-verify_jwt = false
+verify_jwt = true
 
 [functions.wavoip-call]
-verify_jwt = false
+verify_jwt = true
 
 [functions.bitrix-api]
-verify_jwt = false
+verify_jwt = true
 
 [functions.analyze-contact-profile]
-verify_jwt = false
+verify_jwt = true
 
 [functions.check-contact-alerts]
-verify_jwt = false
+verify_jwt = true
 
 [functions.transcribe-recording]
-verify_jwt = false
+verify_jwt = true
 
 [functions.analyze-sentiment]
-verify_jwt = false
+verify_jwt = true
 
 [functions.check-hold-alerts]
-verify_jwt = false
+verify_jwt = true
+
+[functions.generate-coaching]
+verify_jwt = true

@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,138 +12,118 @@ interface BitrixRequest {
 }
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const webhookUrl = Deno.env.get('BITRIX_WEBHOOK_URL');
     
     if (!webhookUrl) {
       console.error('BITRIX_WEBHOOK_URL not configured');
       return new Response(
-        JSON.stringify({ 
-          error: 'Bitrix não configurado',
-          configured: false,
-          message: 'Configure a URL do webhook do Bitrix24 nas configurações'
-        }),
-        { 
-          status: 200, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
+        JSON.stringify({ error: 'Serviço não configurado' }),
+        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    const { action, params } = await req.json() as BitrixRequest;
-    console.log(`Bitrix API action: ${action}`, params);
+    const body = await req.json() as BitrixRequest;
+    
+    if (!body.action || typeof body.action !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'Dados inválidos' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const { action, params } = body;
+    console.log(`Bitrix API action: ${action} by user: ${user.id}`);
 
     let endpoint = '';
-    let method = 'GET';
-    let body: Record<string, unknown> | null = null;
 
     switch (action) {
-      // CRM - Contacts
       case 'get_contacts':
         endpoint = 'crm.contact.list';
-        body = params || {};
         break;
-
-      // CRM - Leads
       case 'get_leads':
         endpoint = 'crm.lead.list';
-        body = params || {};
         break;
-
       case 'create_lead':
         endpoint = 'crm.lead.add';
-        method = 'POST';
-        body = { fields: params };
         break;
-
       case 'update_lead':
         endpoint = 'crm.lead.update';
-        method = 'POST';
-        body = params || {};
         break;
-
-      // CRM - Deals
       case 'get_deals':
         endpoint = 'crm.deal.list';
-        body = params || {};
         break;
-
-      // Telephony
       case 'create_call':
-        endpoint = 'telephony.externalcall.register';
-        method = 'POST';
-        body = params || {};
-        break;
-
       case 'register_call':
         endpoint = 'telephony.externalcall.register';
-        method = 'POST';
-        body = params || {};
         break;
-
       case 'finish_call':
         endpoint = 'telephony.externalcall.finish';
-        method = 'POST';
-        body = params || {};
         break;
-
-      // User
       case 'get_user':
         endpoint = 'user.current';
         break;
-
       default:
         return new Response(
-          JSON.stringify({ error: 'Ação não suportada', action }),
+          JSON.stringify({ error: 'Ação não suportada' }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
     }
 
     const url = `${webhookUrl}${endpoint}`;
-    console.log(`Calling Bitrix API: ${url}`);
 
     const response = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body || {}),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params || {}),
     });
 
     const data = await response.json();
-    console.log('Bitrix API response:', JSON.stringify(data).substring(0, 500));
 
     if (data.error) {
-      console.error('Bitrix API error:', data.error, data.error_description);
+      console.error('Bitrix API error:', data.error);
       return new Response(
-        JSON.stringify({ 
-          error: data.error_description || data.error,
-          bitrix_error: data.error 
-        }),
+        JSON.stringify({ error: 'Erro na integração' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        data: data.result,
-        total: data.total,
-        configured: true
-      }),
+      JSON.stringify({ success: true, data: data.result, total: data.total }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Error in bitrix-api function:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: 'Erro interno' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
