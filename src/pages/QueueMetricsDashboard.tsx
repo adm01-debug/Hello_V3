@@ -21,7 +21,8 @@ import {
   AlertCircle,
   Gauge,
   Target,
-  Settings
+  Settings,
+  Zap
 } from 'lucide-react';
 import { 
   LineChart, 
@@ -81,6 +82,7 @@ const QueueMetricsDashboard = () => {
   const [goals, setGoals] = useState<DashboardGoal[]>([]);
   const [goalStatuses, setGoalStatuses] = useState<GoalStatus[]>([]);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [checkingGoals, setCheckingGoals] = useState(false);
 
   const fetchGoals = async () => {
     const { data, error } = await supabase
@@ -321,6 +323,28 @@ const QueueMetricsDashboard = () => {
   const criticalGoals = goalStatuses.filter(g => g.status === 'critical');
   const warningGoals = goalStatuses.filter(g => g.status === 'warning');
 
+  const runGoalsCheck = async () => {
+    setCheckingGoals(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('check-goals');
+      
+      if (error) {
+        console.error('Error checking goals:', error);
+        toast.error('Erro ao verificar metas');
+      } else {
+        toast.success(`Verificação concluída: ${data.alertsCreated} alertas criados`);
+        // Refresh metrics after check
+        fetchMetrics();
+        fetchGoals();
+      }
+    } catch (error) {
+      console.error('Error invoking check-goals:', error);
+      toast.error('Erro ao verificar metas');
+    } finally {
+      setCheckingGoals(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -332,6 +356,10 @@ const QueueMetricsDashboard = () => {
           <div className="text-sm text-muted-foreground">
             Última atualização: {format(lastUpdate, 'HH:mm:ss')}
           </div>
+          <Button onClick={runGoalsCheck} disabled={checkingGoals} size="sm" variant="outline">
+            <Zap className={`h-4 w-4 mr-2 ${checkingGoals ? 'animate-pulse' : ''}`} />
+            Verificar Metas
+          </Button>
           <Button onClick={fetchMetrics} disabled={loading} size="sm">
             <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
             Atualizar
