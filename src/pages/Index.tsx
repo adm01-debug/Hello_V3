@@ -9,6 +9,7 @@ import { HoldTrendChart } from '@/components/dashboard/HoldTrendChart';
 import { SupervisorPanel } from '@/components/supervisor/SupervisorPanel';
 import { WhisperNotification } from '@/components/agent/WhisperNotification';
 import { BargeInNotification } from '@/components/agent/BargeInNotification';
+import { ScheduledCallbacksList } from '@/components/callbacks/ScheduledCallbacksList';
 import { mockDashboardStats, formatDuration } from '@/data/mockData';
 
 const Index = () => {
@@ -67,10 +68,14 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-2">
+        <ScheduledCallbacksList />
+        <SupervisorPanel />
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
         <RecentCalls />
         <AgentsList />
-        <SupervisorPanel />
       </div>
 
       {/* Agent Notifications - simulating agent view */}

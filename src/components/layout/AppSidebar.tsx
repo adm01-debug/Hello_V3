@@ -16,7 +16,8 @@ import {
   Brain,
   Disc,
   Timer,
-  AlertTriangle
+  AlertTriangle,
+  Calendar
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -46,6 +47,7 @@ const mainNavItems = [
 const toolsNavItems = [
   { title: 'Assistente IA', url: '/ai', icon: Bot },
   { title: 'Comando de Voz', url: '/voice', icon: Mic },
+  { title: 'Callbacks', url: '/callbacks', icon: Calendar },
   { title: 'Transcrições', url: '/call-history', icon: FileText },
   { title: 'Gravações', url: '/recordings', icon: Disc },
   { title: 'Métricas de Espera', url: '/hold-metrics', icon: Timer },
