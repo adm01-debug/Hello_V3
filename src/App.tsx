@@ -29,6 +29,8 @@ import Callbacks from "./pages/Callbacks";
 import Dialer from "./pages/Dialer";
 import Coaching from "./pages/Coaching";
 import QueueMetricsAlertSettings from "./pages/QueueMetricsAlertSettings";
+import AlertHistory from "./pages/AlertHistory";
+import QueueMetricsDashboard from "./pages/QueueMetricsDashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Unauthorized from "./pages/Unauthorized";
@@ -64,6 +66,12 @@ const App = () => (
                         <Route path="/call-history" element={<CallHistory />} />
                         <Route path="/analytics" element={<CallAnalytics />} />
                         <Route path="/alerts" element={<Alerts />} />
+                        <Route path="/alert-history" element={<AlertHistory />} />
+                        <Route path="/queue-dashboard" element={
+                          <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
+                            <QueueMetricsDashboard />
+                          </ProtectedRoute>
+                        } />
                         <Route path="/ranking" element={<AgentRanking />} />
                         <Route path="/executive" element={
                           <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
