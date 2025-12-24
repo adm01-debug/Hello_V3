@@ -44,3 +44,6 @@ verify_jwt = true
 
 [functions.generate-coaching]
 verify_jwt = true
+
+[functions.check-queue-metrics]
+verify_jwt = false
