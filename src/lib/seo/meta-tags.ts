@@ -1,83 +1,72 @@
-export interface MetaTags {
+export interface MetaTag {
+  name?: string;
+  property?: string;
+  content: string;
+}
+
+export interface SEOConfig {
   title: string;
   description: string;
   keywords?: string[];
-  author?: string;
   image?: string;
   url?: string;
-  type?: 'website' | 'article' | 'product';
-  twitterCard?: 'summary' | 'summary_large_image';
+  type?: string;
+  author?: string;
 }
 
-export function generateMetaTags(tags: MetaTags): string {
-  const meta: string[] = [];
+export function generateMetaTags(config: SEOConfig): MetaTag[] {
+  const tags: MetaTag[] = [
+    { name: 'description', content: config.description },
+    { property: 'og:title', content: config.title },
+    { property: 'og:description', content: config.description },
+    { name: 'twitter:title', content: config.title },
+    { name: 'twitter:description', content: config.description },
+    { name: 'twitter:card', content: 'summary_large_image' },
+  ];
 
-  // Basic meta tags
-  meta.push(`<title>${tags.title}</title>`);
-  meta.push(`<meta name="description" content="${tags.description}" />`);
-  
-  if (tags.keywords) {
-    meta.push(`<meta name="keywords" content="${tags.keywords.join(', ')}" />`);
-  }
-  
-  if (tags.author) {
-    meta.push(`<meta name="author" content="${tags.author}" />`);
-  }
-
-  // Open Graph
-  meta.push(`<meta property="og:title" content="${tags.title}" />`);
-  meta.push(`<meta property="og:description" content="${tags.description}" />`);
-  meta.push(`<meta property="og:type" content="${tags.type || 'website'}" />`);
-  
-  if (tags.url) {
-    meta.push(`<meta property="og:url" content="${tags.url}" />`);
-  }
-  
-  if (tags.image) {
-    meta.push(`<meta property="og:image" content="${tags.image}" />`);
+  if (config.keywords) {
+    tags.push({ name: 'keywords', content: config.keywords.join(', ') });
   }
 
-  // Twitter Card
-  meta.push(`<meta name="twitter:card" content="${tags.twitterCard || 'summary'}" />`);
-  meta.push(`<meta name="twitter:title" content="${tags.title}" />`);
-  meta.push(`<meta name="twitter:description" content="${tags.description}" />`);
-  
-  if (tags.image) {
-    meta.push(`<meta name="twitter:image" content="${tags.image}" />`);
+  if (config.image) {
+    tags.push(
+      { property: 'og:image', content: config.image },
+      { name: 'twitter:image', content: config.image }
+    );
   }
 
-  return meta.join('
-');
+  if (config.url) {
+    tags.push({ property: 'og:url', content: config.url });
+  }
+
+  if (config.type) {
+    tags.push({ property: 'og:type', content: config.type });
+  }
+
+  if (config.author) {
+    tags.push({ name: 'author', content: config.author });
+  }
+
+  return tags;
 }
 
-export function setMetaTags(tags: MetaTags) {
-  document.title = tags.title;
+export function applyMetaTags(config: SEOConfig) {
+  document.title = config.title;
   
-  const setMeta = (name: string, content: string, property = false) => {
-    const attribute = property ? 'property' : 'name';
-    let meta = document.querySelector(`meta[${attribute}="${name}"]`);
+  const tags = generateMetaTags(config);
+  tags.forEach(tag => {
+    const key = tag.name || tag.property;
+    if (!key) return;
+
+    let element = document.querySelector(`meta[${tag.name ? 'name' : 'property'}="${key}"]`);
     
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute(attribute, name);
-      document.head.appendChild(meta);
+    if (!element) {
+      element = document.createElement('meta');
+      if (tag.name) element.setAttribute('name', tag.name);
+      if (tag.property) element.setAttribute('property', tag.property);
+      document.head.appendChild(element);
     }
     
-    meta.setAttribute('content', content);
-  };
-
-  setMeta('description', tags.description);
-  setMeta('og:title', tags.title, true);
-  setMeta('og:description', tags.description, true);
-  setMeta('twitter:title', tags.title);
-  setMeta('twitter:description', tags.description);
-  
-  if (tags.image) {
-    setMeta('og:image', tags.image, true);
-    setMeta('twitter:image', tags.image);
-  }
-  
-  if (tags.url) {
-    setMeta('og:url', tags.url, true);
-  }
+    element.setAttribute('content', tag.content);
+  });
 }
