@@ -38,6 +38,7 @@ import NotFound from "./pages/NotFound";
 import AuditLogs from "./pages/AuditLogs";
 import SecurityReport from "./pages/SecurityReport";
 import SecurityMonitoring from "./pages/SecurityMonitoring";
+import IPWhitelist from "./pages/IPWhitelist";
 
 const queryClient = new QueryClient();
 
@@ -114,6 +115,11 @@ const App = () => (
                         <Route path="/security-monitoring" element={
                           <ProtectedRoute requiredRoles={['admin']}>
                             <SecurityMonitoring />
+                          </ProtectedRoute>
+                        } />
+                        <Route path="/ip-whitelist" element={
+                          <ProtectedRoute requiredRoles={['admin']}>
+                            <IPWhitelist />
                           </ProtectedRoute>
                         } />
                         <Route path="*" element={<NotFound />} />

@@ -50,3 +50,6 @@ verify_jwt = false
 
 [functions.check-goals]
 verify_jwt = false
+
+[functions.validate-ip]
+verify_jwt = true
