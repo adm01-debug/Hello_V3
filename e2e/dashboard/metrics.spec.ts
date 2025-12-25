@@ -1,24 +1,30 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Dashboard Metrics E2E', () => {
-  test.beforeEach(async ({ page }) => {
+  test('should display key metrics', async ({ page }) => {
     await page.goto('/dashboard');
-  });
-
-  test('should display all metrics', async ({ page }) => {
-    await expect(page.locator('.metric-card')).toHaveCount(4);
-  });
-
-  test('should update metrics in real-time', async ({ page }) => {
-    const initialValue = await page.locator('.metric-value').first().textContent();
-    await page.waitForTimeout(5000);
-    const updatedValue = await page.locator('.metric-value').first().textContent();
     
-    expect(updatedValue).toBeDefined();
+    await expect(page.locator('[data-testid="total-users"]')).toBeVisible();
+    await expect(page.locator('[data-testid="revenue"]')).toBeVisible();
+    await expect(page.locator('[data-testid="active-calls"]')).toBeVisible();
   });
 
-  test('should filter metrics by date range', async ({ page }) => {
-    await page.selectOption('select[name="dateRange"]', 'last7days');
-    await expect(page.locator('.chart')).toBeVisible();
+  test('should refresh metrics', async ({ page }) => {
+    await page.goto('/dashboard');
+    const initialValue = await page.locator('[data-testid="total-users"]').textContent();
+    
+    await page.click('button:has-text("Refresh")');
+    await page.waitForTimeout(1000);
+    
+    const newValue = await page.locator('[data-testid="total-users"]').textContent();
+    expect(newValue).toBeDefined();
+  });
+
+  test('should filter by date range', async ({ page }) => {
+    await page.goto('/dashboard');
+    await page.click('[data-testid="date-filter"]');
+    await page.click('text=Last 7 days');
+    
+    await expect(page.locator('.chart-container')).toBeVisible();
   });
 });
