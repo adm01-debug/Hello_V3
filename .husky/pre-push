@@ -1,12 +1,12 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-echo "🔍 Running pre-push checks..."
+echo "🧪 Running pre-push hooks..."
 
 # Run tests
 npm test
 
-# Check build
+# Run build
 npm run build
 
 echo "✅ Pre-push checks passed!"
