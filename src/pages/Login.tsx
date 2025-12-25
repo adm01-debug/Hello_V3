@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useIPValidation } from '@/hooks/useIPValidation';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -95,6 +96,24 @@ export default function Login() {
           // IP not authorized - sign out and block access
           await signOut();
           setIpBlocked(true);
+          
+          // Send notification to admin about blocked IP
+          try {
+            await supabase.functions.invoke('notify-blocked-ip', {
+              body: {
+                ip: ipInfo?.ip || 'Não detectado',
+                email: email,
+                country: ipInfo?.country,
+                city: ipInfo?.city,
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString(),
+              },
+            });
+            console.log('[LOGIN] Notificação de IP bloqueado enviada');
+          } catch (notifyError) {
+            console.error('[LOGIN] Erro ao enviar notificação:', notifyError);
+          }
+          
           toast.error('Acesso bloqueado', {
             description: 'Seu IP não está autorizado para acessar o sistema. Entre em contato com o administrador.',
             duration: 10000,
