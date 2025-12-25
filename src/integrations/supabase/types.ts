@@ -1204,6 +1204,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_access_agent_data: {
+        Args: { target_agent_name: string }
+        Returns: boolean
+      }
+      get_user_agent_id: { Args: never; Returns: string }
+      get_user_agent_name: { Args: never; Returns: string }
       get_user_role: { Args: never; Returns: string }
       is_admin_or_supervisor: { Args: never; Returns: boolean }
     }
