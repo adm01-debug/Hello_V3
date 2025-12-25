@@ -1,46 +1,39 @@
 import React from 'react';
 
-interface SkeletonLoaderProps {
+interface SkeletonProps {
   className?: string;
-  variant?: 'text' | 'circular' | 'rectangular';
-  width?: string | number;
-  height?: string | number;
-  lines?: number;
+  count?: number;
 }
 
-export function SkeletonLoader({
-  className = '',
-  variant = 'text',
-  width,
-  height,
-  lines = 1,
-}: SkeletonLoaderProps) {
-  const baseClasses = 'animate-pulse bg-gray-200 dark:bg-gray-700';
-  
-  const variantClasses = {
-    text: 'h-4 rounded',
-    circular: 'rounded-full',
-    rectangular: 'rounded-md',
-  };
-
-  if (variant === 'text' && lines > 1) {
-    return (
-      <div className="space-y-2">
-        {Array.from({ length: lines }).map((_, i) => (
-          <div
-            key={i}
-            className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-            style={{ width: i === lines - 1 ? '80%' : '100%', height }}
-          />
-        ))}
-      </div>
-    );
-  }
-
+export function SkeletonLoader({ className = '', count = 1 }: SkeletonProps) {
   return (
-    <div
-      className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-      style={{ width, height }}
-    />
+    <>
+      {Array.from({ length: count }).map((_, i) => (
+        <div
+          key={i}
+          className={`animate-pulse rounded-md bg-muted ${className}`}
+        />
+      ))}
+    </>
+  );
+}
+
+export function SkeletonText({ lines = 3 }: { lines?: number }) {
+  return (
+    <div className="space-y-2">
+      {Array.from({ length: lines }).map((_, i) => (
+        <SkeletonLoader key={i} className="h-4 w-full" />
+      ))}
+    </div>
+  );
+}
+
+export function SkeletonCard() {
+  return (
+    <div className="rounded-lg border p-4">
+      <SkeletonLoader className="mb-4 h-48 w-full" />
+      <SkeletonLoader className="mb-2 h-6 w-3/4" />
+      <SkeletonText lines={2} />
+    </div>
   );
 }
