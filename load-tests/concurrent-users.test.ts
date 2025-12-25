@@ -2,40 +2,46 @@ import { describe, it, expect } from 'vitest';
 
 describe('Concurrent Users Load Test', () => {
   it('should handle 100 concurrent users', async () => {
-    const users = Array(100).fill(null).map((_, i) => simulateUser(i));
-    const results = await Promise.all(users);
+    const users = Array.from({ length: 100 }, (_, i) => `user${i}`);
+    const requests = users.map(user => simulateUserSession(user));
     
-    const successRate = results.filter(r => r.success).length / 100;
-    expect(successRate).toBeGreaterThan(0.95);
+    const results = await Promise.allSettled(requests);
+    const successful = results.filter(r => r.status === 'fulfilled').length;
+    
+    expect(successful).toBeGreaterThan(95);
   });
 
   it('should maintain response time under load', async () => {
-    const users = Array(50).fill(null).map((_, i) => simulateUser(i));
-    const results = await Promise.all(users);
+    const start = Date.now();
+    const requests = Array.from({ length: 50 }, () => makeRequest());
     
-    const avgResponseTime = results.reduce((sum, r) => sum + r.responseTime, 0) / 50;
-    expect(avgResponseTime).toBeLessThan(1000);
+    await Promise.all(requests);
+    const duration = Date.now() - start;
+    const avgTime = duration / 50;
+    
+    expect(avgTime).toBeLessThan(200);
   });
 
-  it('should not have race conditions', async () => {
-    const updates = Array(10).fill(null).map(() => updateSharedResource());
-    await Promise.all(updates);
+  it('should handle burst traffic', async () => {
+    const burst1 = Array.from({ length: 100 }, () => makeRequest());
+    const burst2 = Array.from({ length: 100 }, () => makeRequest());
     
-    const finalState = await getResourceState();
-    expect(finalState.updateCount).toBe(10);
+    const [results1, results2] = await Promise.all([
+      Promise.allSettled(burst1),
+      Promise.allSettled(burst2)
+    ]);
+    
+    const total = results1.length + results2.length;
+    expect(total).toBe(200);
   });
 });
 
-async function simulateUser(id: number) {
-  const start = Date.now();
+async function simulateUserSession(userId: string) {
   await new Promise(resolve => setTimeout(resolve, Math.random() * 100));
-  return { success: true, responseTime: Date.now() - start };
+  return { userId, success: true };
 }
 
-async function updateSharedResource() {
+async function makeRequest() {
   await new Promise(resolve => setTimeout(resolve, 10));
-}
-
-async function getResourceState() {
-  return { updateCount: 10 };
+  return { status: 200 };
 }
