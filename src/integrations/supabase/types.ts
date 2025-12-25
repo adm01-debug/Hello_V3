@@ -290,6 +290,9 @@ export type Database = {
       }
       blocked_access_logs: {
         Row: {
+          city: string | null
+          country: string | null
+          country_code: string | null
           created_at: string
           id: string
           ip_address: string
@@ -299,6 +302,9 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          city?: string | null
+          country?: string | null
+          country_code?: string | null
           created_at?: string
           id?: string
           ip_address: string
@@ -308,6 +314,9 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          city?: string | null
+          country?: string | null
+          country_code?: string | null
           created_at?: string
           id?: string
           ip_address?: string
