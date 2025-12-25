@@ -70,6 +70,7 @@ const settingsNavItems = [
   { title: 'Alertas de Fila', url: '/queue-metrics-settings', icon: Activity },
   { title: 'Logs de Auditoria', url: '/audit-logs', icon: Shield },
   { title: 'Monitoramento', url: '/security-monitoring', icon: Activity },
+  { title: 'Whitelist IPs', url: '/ip-whitelist', icon: Shield },
   { title: 'Relatório Segurança', url: '/security-report', icon: Shield },
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];

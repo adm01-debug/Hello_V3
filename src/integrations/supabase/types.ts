@@ -288,6 +288,36 @@ export type Database = {
           },
         ]
       }
+      blocked_access_logs: {
+        Row: {
+          created_at: string
+          id: string
+          ip_address: string
+          reason: string
+          user_agent: string | null
+          user_email: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_address: string
+          reason: string
+          user_agent?: string | null
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_address?: string
+          reason?: string
+          user_agent?: string | null
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       call_alerts: {
         Row: {
           alert_type: string
@@ -1067,6 +1097,33 @@ export type Database = {
           },
         ]
       }
+      ip_whitelist: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          ip_address: string
+          is_cidr: boolean
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          ip_address: string
+          is_cidr?: boolean
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          ip_address?: string
+          is_cidr?: boolean
+        }
+        Relationships: []
+      }
       queue_metrics_settings: {
         Row: {
           abandonment_rate_critical: number
@@ -1210,6 +1267,57 @@ export type Database = {
         }
         Relationships: []
       }
+      user_allowed_ips: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          ip_address: string
+          is_cidr: boolean
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          ip_address: string
+          is_cidr?: boolean
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          ip_address?: string
+          is_cidr?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_ip_restrictions: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_profiles: {
         Row: {
           agent_id: string | null
@@ -1293,6 +1401,14 @@ export type Database = {
     Functions: {
       can_access_agent_data: {
         Args: { target_agent_name: string }
+        Returns: boolean
+      }
+      check_ip_allowed: {
+        Args: { p_ip_address: string; p_user_id: string }
+        Returns: boolean
+      }
+      check_ip_in_cidr: {
+        Args: { p_cidr: string; p_ip: string }
         Returns: boolean
       }
       get_user_agent_id: { Args: never; Returns: string }
