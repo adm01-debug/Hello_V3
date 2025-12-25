@@ -47,6 +47,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { format, isWithinInterval, startOfDay, endOfDay, subDays, subWeeks, subMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { useAuditLog } from '@/hooks/useAuditLog';
 
 interface CallSession {
   id: string;
@@ -103,6 +104,7 @@ type SentimentFilter = 'all' | 'positive' | 'neutral' | 'negative';
 type DurationFilter = 'all' | 'short' | 'medium' | 'long';
 
 export default function CallHistory() {
+  const { logCallTranscriptionAccess, logCallAnalysisAccess, logDataExport } = useAuditLog();
   const [sessions, setSessions] = useState<SessionWithSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -214,6 +216,9 @@ export default function CallHistory() {
 
   const handleSessionClick = async (session: SessionWithSummary) => {
     setSelectedSession(session);
+    // Log audit event for transcription/analysis access
+    logCallTranscriptionAccess(session.id);
+    logCallAnalysisAccess(session.id);
     await fetchSessionDetails(session.id);
   };
 
@@ -319,6 +324,9 @@ export default function CallHistory() {
 
   const exportTranscript = () => {
     if (!selectedSession || sessionTranscripts.length === 0) return;
+    
+    // Log audit event for export
+    logDataExport('call_transcription', sessionTranscripts.length);
     
     const text = sessionTranscripts
       .map(t => `[${t.speaker === 'agent' ? 'Agente' : 'Cliente'}]: ${t.text}`)

@@ -39,6 +39,7 @@ import { Contact, ContactInteraction, useContacts } from '@/hooks/useContacts';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { CustomerJourneyTimeline } from './CustomerJourneyTimeline';
+import { useAuditLog } from '@/hooks/useAuditLog';
 
 interface PersonalityProfile {
   personality_traits: string[];
@@ -72,6 +73,7 @@ export function ContactDetailSheet({
   onCall
 }: ContactDetailSheetProps) {
   const { getContactInteractions, fetchContacts } = useContacts();
+  const { logContactAccess } = useAuditLog();
   const [interactions, setInteractions] = useState<ContactInteraction[]>([]);
   const [loadingInteractions, setLoadingInteractions] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -79,6 +81,9 @@ export function ContactDetailSheet({
 
   useEffect(() => {
     if (contact && open) {
+      // Log audit event for contact access
+      logContactAccess(contact.id, contact.name);
+      
       setLoadingInteractions(true);
       getContactInteractions(contact.id)
         .then(setInteractions)
@@ -91,7 +96,7 @@ export function ContactDetailSheet({
         setProfile(null);
       }
     }
-  }, [contact, open, getContactInteractions]);
+  }, [contact, open, getContactInteractions, logContactAccess]);
 
   const analyzeProfile = useCallback(async () => {
     if (!contact) return;
