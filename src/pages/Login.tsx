@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { useIPValidation } from '@/hooks/useIPValidation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-import { Loader2, Phone, Shield } from 'lucide-react';
+import { Loader2, Phone, Shield, ShieldX } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn } = useAuthContext();
+  const [ipBlocked, setIpBlocked] = useState(false);
+  const { signIn, signOut } = useAuthContext();
+  const { validateIP } = useIPValidation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,9 +24,10 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setIpBlocked(false);
 
     try {
-      const { error } = await signIn(email, password);
+      const { data, error } = await signIn(email, password);
       
       if (error) {
         toast.error('Erro ao fazer login', {
@@ -31,10 +35,27 @@ export default function Login() {
             ? 'Email ou senha incorretos'
             : 'Verifique suas credenciais e tente novamente',
         });
-      } else {
-        toast.success('Login realizado com sucesso');
-        navigate(from, { replace: true });
+        return;
       }
+
+      // Validate IP after successful authentication
+      if (data?.user) {
+        const ipResult = await validateIP(data.user.id, email);
+        
+        if (!ipResult.allowed) {
+          // IP not authorized - sign out and block access
+          await signOut();
+          setIpBlocked(true);
+          toast.error('Acesso bloqueado', {
+            description: 'Seu IP não está autorizado para acessar o sistema. Entre em contato com o administrador.',
+            duration: 10000,
+          });
+          return;
+        }
+      }
+
+      toast.success('Login realizado com sucesso');
+      navigate(from, { replace: true });
     } catch (err) {
       toast.error('Erro inesperado');
     } finally {
