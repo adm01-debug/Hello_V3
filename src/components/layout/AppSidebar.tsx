@@ -69,6 +69,7 @@ const settingsNavItems = [
   { title: 'Alertas de Hold', url: '/hold-settings', icon: AlertTriangle },
   { title: 'Alertas de Fila', url: '/queue-metrics-settings', icon: Activity },
   { title: 'Logs de Auditoria', url: '/audit-logs', icon: Shield },
+  { title: 'Relatório Segurança', url: '/security-report', icon: Shield },
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];
 
