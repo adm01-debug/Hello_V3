@@ -53,6 +53,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
+import { useAuditLog } from '@/hooks/useAuditLog';
 
 interface Recording {
   id: string;
@@ -93,6 +94,7 @@ interface SentimentAnalysis {
 }
 
 export default function Recordings() {
+  const { logCallRecordingDownload, logCallTranscriptionAccess } = useAuditLog();
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -216,6 +218,9 @@ export default function Recordings() {
   };
 
   const handleDownload = async (recording: Recording) => {
+    // Log audit event for download
+    logCallRecordingDownload(recording.id, recording.file_path);
+    
     const url = await getSignedUrl(recording.file_path);
     if (!url) {
       toast.error('Erro ao baixar gravação');
@@ -267,6 +272,8 @@ export default function Recordings() {
 
   const handleTranscribe = async (recording: Recording) => {
     setTranscribing(recording.id);
+    // Log audit event for transcription access
+    logCallTranscriptionAccess(recording.call_session_id || recording.id);
     
     try {
       toast.info('Iniciando transcrição...', { duration: 3000 });

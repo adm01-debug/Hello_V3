@@ -22,6 +22,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCoaching, CoachingRecommendation } from '@/hooks/useCoaching';
 import { useAgentStatus } from '@/hooks/useAgentStatus';
+import { useAuditLog } from '@/hooks/useAuditLog';
 import { cn } from '@/lib/utils';
 
 const categoryConfig: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
@@ -47,6 +48,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
 
 export function CoachingPanel() {
   const { agents, currentAgent, setAgent } = useAgentStatus();
+  const { logCoachingAccess, logAgentProfileAccess } = useAuditLog();
   const [selectedAgentId, setSelectedAgentId] = useState<string | undefined>(currentAgent?.id);
   const [filterStatus, setFilterStatus] = useState<string>('all');
 
@@ -70,8 +72,19 @@ export function CoachingPanel() {
     const agent = agents.find(a => a.id === agentId);
     if (agent) {
       setAgent(agentId);
+      // Log audit event for agent profile access
+      logAgentProfileAccess(agentId, agent.name);
     }
   };
+
+  // Log coaching access when recommendations are viewed
+  useEffect(() => {
+    if (recommendations.length > 0 && selectedAgentId) {
+      recommendations.forEach(rec => {
+        logCoachingAccess(rec.id, agents.find(a => a.id === selectedAgentId)?.name);
+      });
+    }
+  }, [recommendations.length, selectedAgentId]);
 
   const filteredRecommendations = recommendations.filter(rec => 
     filterStatus === 'all' || rec.status === filterStatus
