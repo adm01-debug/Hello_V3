@@ -18,17 +18,11 @@ export const BREAKPOINT_VALUES = {
 
 export type Breakpoint = keyof typeof BREAKPOINTS;
 
-export function getBreakpoint(): Breakpoint {
-  const width = window.innerWidth;
-  
-  if (width >= BREAKPOINT_VALUES['2xl']) return '2xl';
-  if (width >= BREAKPOINT_VALUES.xl) return 'xl';
-  if (width >= BREAKPOINT_VALUES.lg) return 'lg';
-  if (width >= BREAKPOINT_VALUES.md) return 'md';
-  if (width >= BREAKPOINT_VALUES.sm) return 'sm';
-  return 'xs';
+export function getBreakpointValue(breakpoint: Breakpoint): number {
+  return BREAKPOINT_VALUES[breakpoint];
 }
 
 export function isBreakpoint(breakpoint: Breakpoint): boolean {
-  return window.innerWidth >= BREAKPOINT_VALUES[breakpoint];
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth >= getBreakpointValue(breakpoint);
 }
