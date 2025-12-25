@@ -1,37 +1,34 @@
-export const mediaQueries = {
-  xs: `@media (min-width: 320px)`,
-  sm: `@media (min-width: 640px)`,
-  md: `@media (min-width: 768px)`,
-  lg: `@media (min-width: 1024px)`,
-  xl: `@media (min-width: 1280px)`,
-  '2xl': `@media (min-width: 1536px)`,
-  
-  mobile: `@media (max-width: 767px)`,
-  tablet: `@media (min-width: 768px) and (max-width: 1023px)`,
-  desktop: `@media (min-width: 1024px)`,
-  
-  portrait: `@media (orientation: portrait)`,
-  landscape: `@media (orientation: landscape)`,
-  
-  touch: `@media (hover: none) and (pointer: coarse)`,
-  mouse: `@media (hover: hover) and (pointer: fine)`,
-  
-  reducedMotion: `@media (prefers-reduced-motion: reduce)`,
-  darkMode: `@media (prefers-color-scheme: dark)`,
-  lightMode: `@media (prefers-color-scheme: light)`,
-} as const;
+import { useEffect, useState } from 'react';
+import { Breakpoint, getBreakpointValue } from './breakpoints';
 
 export function useMediaQuery(query: string): boolean {
-  if (typeof window === 'undefined') return false;
-  
-  const mediaQuery = window.matchMedia(query);
-  const [matches, setMatches] = React.useState(mediaQuery.matches);
+  const [matches, setMatches] = useState(false);
 
-  React.useEffect(() => {
-    const handler = (event: MediaQueryListEvent) => setMatches(event.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, [mediaQuery]);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    setMatches(media.matches);
+
+    const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, [query]);
 
   return matches;
+}
+
+export function useBreakpoint(breakpoint: Breakpoint): boolean {
+  const minWidth = getBreakpointValue(breakpoint);
+  return useMediaQuery(`(min-width: ${minWidth}px)`);
+}
+
+export function useIsMobile(): boolean {
+  return useMediaQuery('(max-width: 768px)');
+}
+
+export function useIsTablet(): boolean {
+  return useMediaQuery('(min-width: 769px) and (max-width: 1023px)');
+}
+
+export function useIsDesktop(): boolean {
+  return useMediaQuery('(min-width: 1024px)');
 }
