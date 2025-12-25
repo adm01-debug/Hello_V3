@@ -8,14 +8,19 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
-import { Loader2, Phone, Shield, ShieldX, Globe, Wifi } from 'lucide-react';
+import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [ipBlocked, setIpBlocked] = useState(false);
-  const [detectedIP, setDetectedIP] = useState<string | null>(null);
+  const [ipInfo, setIpInfo] = useState<{
+    ip: string;
+    country: string;
+    city: string;
+    countryCode: string;
+  } | null>(null);
   const [ipLoading, setIpLoading] = useState(true);
   const { signIn, signOut } = useAuthContext();
   const { validateIP } = useIPValidation();
@@ -24,21 +29,45 @@ export default function Login() {
 
   const from = location.state?.from?.pathname || '/';
 
-  // Fetch user's IP address on component mount
+  // Fetch user's IP address and geolocation on component mount
   useEffect(() => {
-    const fetchIP = async () => {
+    const fetchIPInfo = async () => {
       try {
-        const response = await fetch('https://api.ipify.org?format=json');
+        // Using ip-api.com for geolocation (free, no API key required)
+        const response = await fetch('http://ip-api.com/json/?fields=status,country,countryCode,city,query');
         const data = await response.json();
-        setDetectedIP(data.ip);
+        
+        if (data.status === 'success') {
+          setIpInfo({
+            ip: data.query,
+            country: data.country,
+            city: data.city,
+            countryCode: data.countryCode,
+          });
+        } else {
+          // Fallback to ipify if ip-api fails
+          const fallbackResponse = await fetch('https://api.ipify.org?format=json');
+          const fallbackData = await fallbackResponse.json();
+          setIpInfo({
+            ip: fallbackData.ip,
+            country: 'Desconhecido',
+            city: 'Desconhecido',
+            countryCode: '',
+          });
+        }
       } catch (error) {
-        console.error('Failed to fetch IP:', error);
-        setDetectedIP('Não detectado');
+        console.error('Failed to fetch IP info:', error);
+        setIpInfo({
+          ip: 'Não detectado',
+          country: 'Desconhecido',
+          city: 'Desconhecido',
+          countryCode: '',
+        });
       } finally {
         setIpLoading(false);
       }
     };
-    fetchIP();
+    fetchIPInfo();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -118,18 +147,31 @@ export default function Login() {
                   </span>
                 )}
               </div>
-              <AlertDescription className="text-xs mt-1">
+              <AlertDescription className="text-xs mt-1 space-y-1">
                 {ipLoading ? (
                   <span className="flex items-center gap-2">
                     <Loader2 className="h-3 w-3 animate-spin" />
-                    Detectando IP...
+                    Detectando localização...
                   </span>
                 ) : ipBlocked ? (
                   <span className="text-destructive">
-                    Seu IP ({detectedIP}) não está na lista de IPs autorizados. Entre em contato com o administrador.
+                    Seu IP ({ipInfo?.ip}) não está na lista de IPs autorizados. Entre em contato com o administrador.
                   </span>
                 ) : (
-                  <span className="font-mono">{detectedIP}</span>
+                  <div className="space-y-1">
+                    <div className="font-mono">{ipInfo?.ip}</div>
+                    <div className="flex items-center gap-1 text-muted-foreground">
+                      <MapPin className="h-3 w-3" />
+                      <span>
+                        {ipInfo?.city && ipInfo?.city !== 'Desconhecido' 
+                          ? `${ipInfo.city}, ${ipInfo.country}` 
+                          : ipInfo?.country || 'Localização desconhecida'}
+                        {ipInfo?.countryCode && (
+                          <span className="ml-1 text-xs opacity-70">({ipInfo.countryCode})</span>
+                        )}
+                      </span>
+                    </div>
+                  </div>
                 )}
               </AlertDescription>
             </div>
