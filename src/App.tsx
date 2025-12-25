@@ -36,6 +36,7 @@ import Register from "./pages/Register";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 import AuditLogs from "./pages/AuditLogs";
+import SecurityReport from "./pages/SecurityReport";
 
 const queryClient = new QueryClient();
 
@@ -102,6 +103,11 @@ const App = () => (
                         <Route path="/audit-logs" element={
                           <ProtectedRoute requiredRoles={['admin']}>
                             <AuditLogs />
+                          </ProtectedRoute>
+                        } />
+                        <Route path="/security-report" element={
+                          <ProtectedRoute requiredRoles={['admin']}>
+                            <SecurityReport />
                           </ProtectedRoute>
                         } />
                         <Route path="*" element={<NotFound />} />
