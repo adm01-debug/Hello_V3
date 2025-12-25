@@ -35,6 +35,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
+import AuditLogs from "./pages/AuditLogs";
 
 const queryClient = new QueryClient();
 
@@ -98,6 +99,11 @@ const App = () => (
                         } />
                         <Route path="/coaching" element={<Coaching />} />
                         <Route path="/settings" element={<Settings />} />
+                        <Route path="/audit-logs" element={
+                          <ProtectedRoute requiredRoles={['admin']}>
+                            <AuditLogs />
+                          </ProtectedRoute>
+                        } />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
                     </AppLayout>
