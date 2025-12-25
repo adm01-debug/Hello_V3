@@ -1165,6 +1165,51 @@ export type Database = {
           },
         ]
       }
+      security_alerts: {
+        Row: {
+          alert_type: string
+          created_at: string
+          description: string
+          id: string
+          is_resolved: boolean
+          resolved_at: string | null
+          resolved_by: string | null
+          severity: string
+          source_user_email: string | null
+          source_user_id: string | null
+          title: string
+          trigger_data: Json | null
+        }
+        Insert: {
+          alert_type: string
+          created_at?: string
+          description: string
+          id?: string
+          is_resolved?: boolean
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: string
+          source_user_email?: string | null
+          source_user_id?: string | null
+          title: string
+          trigger_data?: Json | null
+        }
+        Update: {
+          alert_type?: string
+          created_at?: string
+          description?: string
+          id?: string
+          is_resolved?: boolean
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: string
+          source_user_email?: string | null
+          source_user_id?: string | null
+          title?: string
+          trigger_data?: Json | null
+        }
+        Relationships: []
+      }
       user_profiles: {
         Row: {
           agent_id: string | null
