@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { format, subDays, startOfDay, endOfDay, eachDayOfInterval, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Search, RefreshCw, ShieldX, Globe, MapPin, TrendingUp } from "lucide-react";
+import { Search, RefreshCw, ShieldX, Globe, MapPin, TrendingUp, Filter, X } from "lucide-react";
 import { toast } from "sonner";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
 
@@ -46,9 +46,15 @@ const BlockedAccessLogs = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [dateRange, setDateRange] = useState("7");
+  const [countryFilter, setCountryFilter] = useState<string>("all");
+  const [reasonFilter, setReasonFilter] = useState<string>("all");
   const [dailyStats, setDailyStats] = useState<DailyStats[]>([]);
   const [reasonStats, setReasonStats] = useState<ReasonStats[]>([]);
   const [countryStats, setCountryStats] = useState<CountryStats[]>([]);
+
+  // Get unique countries and reasons for filter options
+  const uniqueCountriesList = Array.from(new Set(logs.map(l => l.country).filter(Boolean))) as string[];
+  const uniqueReasonsList = Array.from(new Set(logs.map(l => l.reason).filter(Boolean))) as string[];
 
   const fetchLogs = async () => {
     setLoading(true);
@@ -125,14 +131,25 @@ const BlockedAccessLogs = () => {
 
   const filteredLogs = logs.filter(log => {
     const searchLower = searchTerm.toLowerCase();
-    return (
+    const matchesSearch = !searchTerm || (
       log.ip_address?.toLowerCase().includes(searchLower) ||
       log.user_email?.toLowerCase().includes(searchLower) ||
       log.reason?.toLowerCase().includes(searchLower) ||
       log.country?.toLowerCase().includes(searchLower) ||
       log.city?.toLowerCase().includes(searchLower)
     );
+    const matchesCountry = countryFilter === "all" || log.country === countryFilter;
+    const matchesReason = reasonFilter === "all" || log.reason === reasonFilter;
+    return matchesSearch && matchesCountry && matchesReason;
   });
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setCountryFilter("all");
+    setReasonFilter("all");
+  };
+
+  const hasActiveFilters = searchTerm || countryFilter !== "all" || reasonFilter !== "all";
 
   const totalBlocks = logs.length;
   const uniqueIPs = new Set(logs.map(l => l.ip_address)).size;
@@ -376,16 +393,66 @@ const BlockedAccessLogs = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-2 mb-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Buscar por IP, email, motivo, país..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-8"
-              />
+          <div className="flex flex-col gap-4 mb-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="relative flex-1 min-w-[200px]">
+                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar por IP, email..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-8"
+                />
+              </div>
+              
+              <Select value={countryFilter} onValueChange={setCountryFilter}>
+                <SelectTrigger className="w-[180px]">
+                  <Globe className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Filtrar por país" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos os países</SelectItem>
+                  {uniqueCountriesList.sort().map(country => (
+                    <SelectItem key={country} value={country}>
+                      {country}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={reasonFilter} onValueChange={setReasonFilter}>
+                <SelectTrigger className="w-[200px]">
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Filtrar por motivo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos os motivos</SelectItem>
+                  {uniqueReasonsList.sort().map(reason => (
+                    <SelectItem key={reason} value={reason}>
+                      {reason}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              {hasActiveFilters && (
+                <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-1">
+                  <X className="h-4 w-4" />
+                  Limpar filtros
+                </Button>
+              )}
             </div>
+            
+            {hasActiveFilters && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Filter className="h-4 w-4" />
+                <span>
+                  Mostrando {filteredLogs.length} de {logs.length} registros
+                  {countryFilter !== "all" && <Badge variant="secondary" className="ml-2">{countryFilter}</Badge>}
+                  {reasonFilter !== "all" && <Badge variant="secondary" className="ml-2">{reasonFilter}</Badge>}
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="rounded-md border">
