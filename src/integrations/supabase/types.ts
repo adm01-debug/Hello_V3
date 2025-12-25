@@ -1263,6 +1263,7 @@ export type Database = {
         }
         Returns: string
       }
+      validate_audit_insert: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
