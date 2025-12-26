@@ -2,10 +2,48 @@ openapi: 3.0.0
 info:
   title: Hello API
   version: 1.0.0
+  description: API documentation for Hello application
+
+servers:
+  - url: https://api.hello.app/v1
+    description: Production
+  - url: http://localhost:8080/v1
+    description: Development
+
 paths:
-  /api/calls:
+  /calls:
     get:
       summary: List calls
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Call'
+
+components:
+  schemas:
+    Call:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        status:
+          type: string
+          enum: [active, completed, failed]
+        duration:
+          type: integer
