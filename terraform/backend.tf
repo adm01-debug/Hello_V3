@@ -1,30 +1,20 @@
 terraform {
-  required_version = ">= 1.0"
-  
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.23"
-    }
-  }
-  
   backend "s3" {
     bucket         = "hello-terraform-state"
-    key            = "production/terraform.tfstate"
+    key            = "prod/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
-    dynamodb_table = "hello-terraform-locks"
+    dynamodb_table = "terraform-state-lock"
   }
 }
 
-provider "aws" {
-  region = var.region
-  
-  default_tags {
-    tags = var.tags
+resource "aws_dynamodb_table" "terraform_lock" {
+  name           = "terraform-state-lock"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "LockID"
+
+  attribute {
+    name = "LockID"
+    type = "S"
   }
 }
