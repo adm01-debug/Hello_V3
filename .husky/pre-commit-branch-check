@@ -1,0 +1,16 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Valid patterns: feat/*, fix/*, docs/*, etc
+PATTERN="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore)/.+"
+
+if ! echo "$BRANCH" | grep -qE "$PATTERN" && [ "$BRANCH" != "main" ] && [ "$BRANCH" != "develop" ]; then
+    echo "❌ Invalid branch name: $BRANCH"
+    echo "Format: <type>/<description>"
+    echo "Example: feat/add-login"
+    exit 1
+fi
+
+echo "✅ Branch name valid"
