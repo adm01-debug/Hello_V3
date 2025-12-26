@@ -1,0 +1,42 @@
+# Pull Request Labeler Configuration
+'frontend':
+  - 'src/components/**/*'
+  - 'src/pages/**/*'
+  - 'src/lib/ui/**/*'
+
+'backend':
+  - 'src/lib/api/**/*'
+  - 'src/lib/database/**/*'
+  - 'supabase/**/*'
+
+'documentation':
+  - 'docs/**/*'
+  - '*.md'
+  - 'README.md'
+
+'tests':
+  - 'src/__tests__/**/*'
+  - '**/*.test.ts'
+  - '**/*.spec.ts'
+
+'ci/cd':
+  - '.github/workflows/**/*'
+  - '.github/**/*'
+
+'infrastructure':
+  - 'k8s/**/*'
+  - 'terraform/**/*'
+  - 'docker/**/*'
+
+'dependencies':
+  - 'package.json'
+  - 'package-lock.json'
+  - 'yarn.lock'
+
+'security':
+  - 'src/lib/security/**/*'
+  - 'security-tests/**/*'
+
+'performance':
+  - 'src/lib/performance/**/*'
+  - 'performance-tests/**/*'
