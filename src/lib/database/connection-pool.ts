@@ -1,74 +1,96 @@
-import { Pool, PoolConfig } from 'pg';
+import { Pool, PoolConfig, PoolClient, QueryResult } from 'pg';
 
-interface ConnectionPoolConfig extends PoolConfig {
-  min?: number;
-  max?: number;
-  idleTimeoutMillis?: number;
-  connectionTimeoutMillis?: number;
-}
-
-const DEFAULT_POOL_CONFIG: ConnectionPoolConfig = {
-  min: 2,
-  max: 10,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
+const poolConfig: PoolConfig = {
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '5432'),
+  database: process.env.DB_NAME || 'hello',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD,
+  min: parseInt(process.env.DB_POOL_MIN || '2'),
+  max: parseInt(process.env.DB_POOL_MAX || '10'),
+  idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT || '30000'),
+  connectionTimeoutMillis: parseInt(process.env.DB_CONNECT_TIMEOUT || '10000'),
+  statement_timeout: parseInt(process.env.DB_STATEMENT_TIMEOUT || '30000'),
+  query_timeout: parseInt(process.env.DB_QUERY_TIMEOUT || '30000'),
+  allowExitOnIdle: false,
 };
 
-export class DatabaseConnectionPool {
+class DatabasePool {
   private pool: Pool;
-  private config: ConnectionPoolConfig;
+  private queryCount: number = 0;
+  private errorCount: number = 0;
 
-  constructor(config: ConnectionPoolConfig = {}) {
-    this.config = {
-      ...DEFAULT_POOL_CONFIG,
-      ...config,
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT || '5432'),
-      database: process.env.DB_NAME || 'hello',
-      user: process.env.DB_USER || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
-    };
-
-    this.pool = new Pool(this.config);
+  constructor() {
+    this.pool = new Pool(poolConfig);
     this.setupEventHandlers();
   }
 
   private setupEventHandlers() {
-    this.pool.on('connect', (client) => {
-      console.log('New client connected to database');
+    this.pool.on('connect', (client: PoolClient) => {
+      console.log('New client connected to pool');
+      client.on('error', (err: Error) => {
+        console.error('Idle client error:', err);
+        this.errorCount++;
+      });
     });
 
-    this.pool.on('acquire', (client) => {
+    this.pool.on('acquire', () => {
       console.log('Client acquired from pool');
     });
 
-    this.pool.on('remove', (client) => {
+    this.pool.on('remove', () => {
       console.log('Client removed from pool');
     });
 
-    this.pool.on('error', (err, client) => {
-      console.error('Unexpected error on idle client', err);
+    this.pool.on('error', (err: Error) => {
+      console.error('Pool error:', err);
+      this.errorCount++;
     });
   }
 
-  async query(text: string, params?: any[]) {
+  // Execute query with automatic client release
+  async query<T = any>(
+    text: string,
+    params?: any[]
+  ): Promise<QueryResult<T>> {
     const start = Date.now();
+    
     try {
-      const res = await this.pool.query(text, params);
+      this.queryCount++;
+      const result = await this.pool.query<T>(text, params);
       const duration = Date.now() - start;
       
-      if (duration > 100) {
-        console.warn(`Slow query (${duration}ms):`, text);
+      if (duration > 1000) {
+        console.warn(`Slow query detected (${duration}ms):`, text.substring(0, 100));
       }
       
-      return res;
+      return result;
     } catch (error) {
+      this.errorCount++;
       console.error('Query error:', error);
+      console.error('Query:', text);
+      console.error('Params:', params);
       throw error;
     }
   }
 
-  async transaction<T>(callback: (client: any) => Promise<T>): Promise<T> {
+  // Execute query with explicit client management
+  async withClient<T>(
+    callback: (client: PoolClient) => Promise<T>
+  ): Promise<T> {
+    const client = await this.pool.connect();
+    
+    try {
+      return await callback(client);
+    } finally {
+      client.release();
+    }
+  }
+
+  // Transaction helper
+  async transaction<T>(
+    callback: (client: PoolClient) => Promise<T>
+  ): Promise<T> {
     const client = await this.pool.connect();
     
     try {
@@ -78,23 +100,80 @@ export class DatabaseConnectionPool {
       return result;
     } catch (error) {
       await client.query('ROLLBACK');
+      console.error('Transaction rolled back:', error);
       throw error;
     } finally {
       client.release();
     }
   }
 
-  async getStats() {
+  // Batch insert helper
+  async batchInsert(
+    table: string,
+    columns: string[],
+    values: any[][],
+    onConflict?: string
+  ): Promise<number> {
+    if (values.length === 0) return 0;
+    
+    const placeholders = values
+      .map((_, i) => {
+        const offset = i * columns.length;
+        const params = columns.map((_, j) => `$${offset + j + 1}`).join(', ');
+        return `(${params})`;
+      })
+      .join(', ');
+    
+    const flatValues = values.flat();
+    const query = `
+      INSERT INTO ${table} (${columns.join(', ')})
+      VALUES ${placeholders}
+      ${onConflict || ''}
+    `;
+    
+    const result = await this.query(query, flatValues);
+    return result.rowCount || 0;
+  }
+
+  // Pool statistics
+  getStats() {
     return {
-      total: this.pool.totalCount,
-      idle: this.pool.idleCount,
-      waiting: this.pool.waitingCount,
+      totalCount: this.pool.totalCount,
+      idleCount: this.pool.idleCount,
+      waitingCount: this.pool.waitingCount,
+      queryCount: this.queryCount,
+      errorCount: this.errorCount,
+      config: {
+        min: poolConfig.min,
+        max: poolConfig.max,
+        idleTimeout: poolConfig.idleTimeoutMillis,
+      },
     };
   }
 
-  async end() {
-    await this.pool.end();
+  // Health check
+  async healthCheck(): Promise<boolean> {
+    try {
+      const result = await this.query('SELECT 1 as health');
+      return result.rows[0]?.health === 1;
+    } catch (error) {
+      console.error('Health check failed:', error);
+      return false;
+    }
+  }
+
+  // Graceful shutdown
+  async end(): Promise<void> {
+    try {
+      await this.pool.end();
+      console.log('Database pool closed');
+    } catch (error) {
+      console.error('Error closing pool:', error);
+    }
   }
 }
 
-export const db = new DatabaseConnectionPool();
+// Singleton instance
+export const db = new DatabasePool();
+
+export default db;
