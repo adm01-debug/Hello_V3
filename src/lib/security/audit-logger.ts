@@ -1,234 +1,120 @@
-import { createClient } from '@supabase/supabase-js';
+import { RedisClient } from '../cache/redis-client';
 
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL!,
-  process.env.VITE_SUPABASE_SERVICE_KEY!
-);
-
-type Severity = 'low' | 'medium' | 'high' | 'critical';
-
-interface AuditLogEntry {
-  user_id: string;
-  action: string;
-  resource: string;
-  resource_id?: string;
-  timestamp: string;
-  ip_address?: string;
-  user_agent?: string;
-  metadata?: Record<string, any>;
-  severity: Severity;
-  success: boolean;
+interface AuditEvent {
+  readonly timestamp: string;
+  readonly userId: string;
+  readonly action: string;
+  readonly resourceId?: string;
+  readonly metadata?: Record<string, unknown>;
+  readonly ipAddress: string;
+  readonly userAgent?: string;
+  readonly success: boolean;
 }
+
+const SENSITIVE_FIELDS = ['password', 'token', 'secret', 'apiKey', 'ssn', 'creditCard'] as const;
 
 class AuditLogger {
-  private queue: AuditLogEntry[] = [];
-  private flushInterval: NodeJS.Timeout | null = null;
-  private readonly BATCH_SIZE = 50;
-  private readonly FLUSH_INTERVAL = 5000; // 5 seconds
+  private readonly redis: RedisClient;
+  private readonly batchSize: number;
+  private readonly flushInterval: number;
+  private batch: AuditEvent[] = [];
+  private flushTimer?: NodeJS.Timeout;
 
-  constructor() {
-    this.startBatchProcessor();
+  constructor(redis: RedisClient, batchSize: number = 100, flushInterval: number = 5000) {
+    this.redis = redis;
+    this.batchSize = batchSize;
+    this.flushInterval = flushInterval;
+    this.startFlushTimer();
   }
 
-  private startBatchProcessor() {
-    this.flushInterval = setInterval(() => {
-      this.flush();
-    }, this.FLUSH_INTERVAL);
-  }
-
-  private async flush() {
-    if (this.queue.length === 0) return;
-
-    const batch = this.queue.splice(0, this.BATCH_SIZE);
-    
-    try {
-      const { error } = await supabase
-        .from('audit_logs')
-        .insert(batch);
-
-      if (error) {
-        console.error('Failed to write audit logs:', error);
-        // Re-queue failed logs
-        this.queue.unshift(...batch);
-      }
-    } catch (error) {
-      console.error('Audit log flush error:', error);
-    }
-  }
-
-  private log(entry: Omit<AuditLogEntry, 'timestamp'>) {
-    this.queue.push({
-      ...entry,
+  public logAccess(userId: string, action: string, resourceId?: string, metadata?: Record<string, unknown>): void {
+    const event: AuditEvent = {
       timestamp: new Date().toISOString(),
-    });
-
-    // Flush immediately for critical events
-    if (entry.severity === 'critical') {
-      this.flush();
-    }
-  }
-
-  // Public logging methods
-  logAccess(
-    userId: string,
-    resource: string,
-    resourceId?: string,
-    metadata?: Record<string, any>
-  ) {
-    this.log({
-      user_id: userId,
-      action: 'access',
-      resource,
-      resource_id: resourceId,
-      metadata,
-      severity: 'low',
+      userId,
+      action,
+      resourceId,
+      metadata: this.sanitizeMetadata(metadata),
+      ipAddress: (metadata?.ip as string) ?? 'unknown',
+      userAgent: metadata?.userAgent as string,
       success: true,
-    });
+    };
+
+    this.addToBatch(event);
   }
 
-  logModification(
-    userId: string,
-    resource: string,
-    resourceId: string,
-    changes: Record<string, any>
-  ) {
-    this.log({
-      user_id: userId,
-      action: 'modify',
-      resource,
-      resource_id: resourceId,
-      metadata: { changes },
-      severity: 'medium',
-      success: true,
-    });
-  }
-
-  logDeletion(
-    userId: string,
-    resource: string,
-    resourceId: string,
-    metadata?: Record<string, any>
-  ) {
-    this.log({
-      user_id: userId,
-      action: 'delete',
-      resource,
-      resource_id: resourceId,
-      metadata,
-      severity: 'high',
-      success: true,
-    });
-  }
-
-  logLogin(userId: string, ipAddress?: string, userAgent?: string, success = true) {
-    this.log({
-      user_id: userId,
-      action: 'login',
-      resource: 'auth',
-      ip_address: ipAddress,
-      user_agent: userAgent,
-      severity: success ? 'low' : 'medium',
-      success,
-    });
-  }
-
-  logFailedAccess(
-    userId: string,
-    resource: string,
-    reason: string,
-    ipAddress?: string
-  ) {
-    this.log({
-      user_id: userId,
-      action: 'access_denied',
-      resource,
+  public logFailedAccess(userId: string, action: string, reason: string, ipAddress: string): void {
+    const event: AuditEvent = {
+      timestamp: new Date().toISOString(),
+      userId,
+      action,
       metadata: { reason },
-      ip_address: ipAddress,
-      severity: 'high',
+      ipAddress,
       success: false,
-    });
+    };
+
+    this.addToBatch(event);
   }
 
-  logSecurityEvent(
-    userId: string,
-    eventType: string,
-    details: Record<string, any>
-  ) {
-    this.log({
-      user_id: userId,
-      action: eventType,
-      resource: 'security',
-      metadata: details,
-      severity: 'critical',
-      success: true,
-    });
+  public logLogin(userId: string, ipAddress: string, userAgent: string, success: boolean): void {
+    const event: AuditEvent = {
+      timestamp: new Date().toISOString(),
+      userId,
+      action: 'login',
+      ipAddress,
+      userAgent,
+      success,
+    };
+
+    this.addToBatch(event);
   }
 
-  // Query audit trail
-  async getAuditTrail(
-    userId: string,
-    options?: {
-      startDate?: string;
-      endDate?: string;
-      actions?: string[];
-      severity?: Severity[];
+  private sanitizeMetadata(metadata?: Record<string, unknown>): Record<string, unknown> | undefined {
+    if (!metadata) return undefined;
+
+    const sanitized: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(metadata)) {
+      if (SENSITIVE_FIELDS.some(field => key.toLowerCase().includes(field))) {
+        sanitized[key] = '***REDACTED***';
+      } else {
+        sanitized[key] = value;
+      }
     }
-  ) {
-    let query = supabase
-      .from('audit_logs')
-      .select('*')
-      .eq('user_id', userId)
-      .order('timestamp', { ascending: false });
-
-    if (options?.startDate) {
-      query = query.gte('timestamp', options.startDate);
-    }
-
-    if (options?.endDate) {
-      query = query.lte('timestamp', options.endDate);
-    }
-
-    if (options?.actions && options.actions.length > 0) {
-      query = query.in('action', options.actions);
-    }
-
-    if (options?.severity && options.severity.length > 0) {
-      query = query.in('severity', options.severity);
-    }
-
-    const { data, error } = await query.limit(1000);
-
-    if (error) {
-      throw new Error(`Failed to retrieve audit trail: ${error.message}`);
-    }
-
-    return data || [];
+    return sanitized;
   }
 
-  // Cleanup
-  stop() {
-    if (this.flushInterval) {
-      clearInterval(this.flushInterval);
-      this.flush(); // Final flush
+  private addToBatch(event: AuditEvent): void {
+    this.batch.push(event);
+    if (this.batch.length >= this.batchSize) {
+      void this.flush();
     }
+  }
+
+  private async flush(): Promise<void> {
+    if (this.batch.length === 0) return;
+
+    const eventsToFlush = [...this.batch];
+    this.batch = [];
+
+    try {
+      const key = `audit:${new Date().toISOString().split('T')[0]}`;
+      await this.redis.lpush(key, ...eventsToFlush.map(e => JSON.stringify(e)));
+      await this.redis.expire(key, 2592000);
+    } catch (error) {
+      console.error('Failed to flush audit log:', error);
+      this.batch.unshift(...eventsToFlush);
+    }
+  }
+
+  private startFlushTimer(): void {
+    this.flushTimer = setInterval(() => {
+      void this.flush();
+    }, this.flushInterval);
+  }
+
+  public async shutdown(): Promise<void> {
+    if (this.flushTimer) clearInterval(this.flushTimer);
+    await this.flush();
   }
 }
 
-// Singleton instance
-export const auditLogger = new AuditLogger();
-
-// Express middleware
-export const auditMiddleware = (req: any, res: any, next: any) => {
-  const userId = req.user?.id || 'anonymous';
-  const resource = req.baseUrl + req.path;
-  
-  auditLogger.logAccess(userId, resource, req.params.id, {
-    method: req.method,
-    ip: req.ip,
-    userAgent: req.headers['user-agent'],
-  });
-  
-  next();
-};
-
-export default auditLogger;
+export { AuditLogger, AuditEvent };
