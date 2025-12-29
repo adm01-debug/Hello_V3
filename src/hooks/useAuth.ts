@@ -1,118 +1,175 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import type { User, Session } from '@supabase/supabase-js';
+import { useEffect, useState, useCallback, useMemo } from 'react';
+import { User, Session } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 
-export type UserRole = 'agent' | 'supervisor' | 'admin';
-
-export interface UserProfile {
-  id: string;
-  email: string;
-  full_name: string | null;
-  role: UserRole;
-  agent_id: string | null;
-  created_at: string;
-  updated_at: string;
+interface AuthState {
+  user: User | null;
+  session: Session | null;
+  loading: boolean;
+  error: Error | null;
 }
 
 export function useAuth() {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [authState, setAuthState] = useState<AuthState>({
+    user: null,
+    session: null,
+    loading: true,
+    error: null,
+  });
 
-  useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchProfile(session.user.id);
-      } else {
-        setLoading(false);
+  // Memoize session getter para evitar re-renders desnecessários
+  const getSession = useCallback(async () => {
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        setAuthState(prev => ({ ...prev, error, loading: false }));
+        return;
       }
-    });
 
-    // Listen for auth changes
+      setAuthState({
+        user: session?.user ?? null,
+        session: session ?? null,
+        loading: false,
+        error: null,
+      });
+    } catch (error) {
+      setAuthState(prev => ({
+        ...prev,
+        error: error instanceof Error ? error : new Error('Unknown error'),
+        loading: false,
+      }));
+    }
+  }, []);
+
+  // Effect para carregar sessão inicial
+  useEffect(() => {
+    getSession();
+  }, [getSession]);
+
+  // Effect para subscription - COM CLEANUP
+  useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          await fetchProfile(session.user.id);
-        } else {
-          setProfile(null);
-          setLoading(false);
-        }
+      async (event, session) => {
+        console.log('Auth state changed:', event);
+        
+        setAuthState({
+          user: session?.user ?? null,
+          session: session ?? null,
+          loading: false,
+          error: null,
+        });
       }
     );
 
-    return () => subscription.unsubscribe();
+    // CLEANUP para evitar memory leak
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
-  const fetchProfile = async (userId: string) => {
+  // Memoize login function
+  const login = useCallback(async (email: string, password: string) => {
     try {
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
+      setAuthState(prev => ({ ...prev, loading: true, error: null }));
+      
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
       if (error) {
-        console.error('Error fetching profile:', error);
-      } else {
-        setProfile(data as UserProfile);
+        setAuthState(prev => ({ ...prev, error, loading: false }));
+        throw error;
       }
-    } catch (err) {
-      console.error('Error:', err);
-    } finally {
-      setLoading(false);
+
+      setAuthState({
+        user: data.user,
+        session: data.session,
+        loading: false,
+        error: null,
+      });
+
+      return data;
+    } catch (error) {
+      const authError = error instanceof Error ? error : new Error('Login failed');
+      setAuthState(prev => ({ ...prev, error: authError, loading: false }));
+      throw authError;
     }
-  };
+  }, []);
 
-  const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { data, error };
-  };
+  // Memoize signup function
+  const signup = useCallback(async (email: string, password: string, metadata?: Record<string, any>) => {
+    try {
+      setAuthState(prev => ({ ...prev, loading: true, error: null }));
 
-  const signUp = async (email: string, password: string, fullName?: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: metadata,
         },
-      },
-    });
-    return { data, error };
-  };
+      });
 
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    return { error };
-  };
+      if (error) {
+        setAuthState(prev => ({ ...prev, error, loading: false }));
+        throw error;
+      }
 
-  const hasRole = (roles: UserRole | UserRole[]) => {
-    if (!profile) return false;
-    const roleArray = Array.isArray(roles) ? roles : [roles];
-    return roleArray.includes(profile.role);
-  };
+      setAuthState({
+        user: data.user,
+        session: data.session,
+        loading: false,
+        error: null,
+      });
 
-  return {
-    user,
-    session,
-    profile,
-    loading,
-    signIn,
-    signUp,
-    signOut,
-    hasRole,
-    isAuthenticated: !!user,
-    isAgent: profile?.role === 'agent',
-    isSupervisor: profile?.role === 'supervisor',
-    isAdmin: profile?.role === 'admin',
-  };
+      return data;
+    } catch (error) {
+      const authError = error instanceof Error ? error : new Error('Signup failed');
+      setAuthState(prev => ({ ...prev, error: authError, loading: false }));
+      throw authError;
+    }
+  }, []);
+
+  // Memoize logout function
+  const logout = useCallback(async () => {
+    try {
+      setAuthState(prev => ({ ...prev, loading: true, error: null }));
+
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        setAuthState(prev => ({ ...prev, error, loading: false }));
+        throw error;
+      }
+
+      setAuthState({
+        user: null,
+        session: null,
+        loading: false,
+        error: null,
+      });
+    } catch (error) {
+      const authError = error instanceof Error ? error : new Error('Logout failed');
+      setAuthState(prev => ({ ...prev, error: authError, loading: false }));
+      throw authError;
+    }
+  }, []);
+
+  // Memoize return object para evitar re-renders
+  return useMemo(
+    () => ({
+      user: authState.user,
+      session: authState.session,
+      loading: authState.loading,
+      error: authState.error,
+      isAuthenticated: !!authState.user,
+      login,
+      signup,
+      logout,
+    }),
+    [authState, login, signup, logout]
+  );
 }
+
+export default useAuth;
