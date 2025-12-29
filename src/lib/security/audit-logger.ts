@@ -1,155 +1,234 @@
 import { createClient } from '@supabase/supabase-js';
 
-export interface AuditLog {
-  timestamp: Date;
-  userId: string;
+const supabase = createClient(
+  process.env.VITE_SUPABASE_URL!,
+  process.env.VITE_SUPABASE_SERVICE_KEY!
+);
+
+type Severity = 'low' | 'medium' | 'high' | 'critical';
+
+interface AuditLogEntry {
+  user_id: string;
   action: string;
   resource: string;
-  resourceId?: string;
-  ip: string;
-  userAgent: string;
-  success: boolean;
-  errorMessage?: string;
+  resource_id?: string;
+  timestamp: string;
+  ip_address?: string;
+  user_agent?: string;
   metadata?: Record<string, any>;
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  severity: Severity;
+  success: boolean;
 }
 
-export class AuditLogger {
-  private supabase: any;
+class AuditLogger {
+  private queue: AuditLogEntry[] = [];
+  private flushInterval: NodeJS.Timeout | null = null;
+  private readonly BATCH_SIZE = 50;
+  private readonly FLUSH_INTERVAL = 5000; // 5 seconds
 
   constructor() {
-    this.supabase = createClient(
-      process.env.VITE_SUPABASE_URL!,
-      process.env.VITE_SUPABASE_SERVICE_KEY!
-    );
+    this.startBatchProcessor();
   }
 
-  async log(entry: AuditLog): Promise<void> {
-    try {
-      // Log to database
-      await this.supabase.from('audit_logs').insert({
-        timestamp: entry.timestamp.toISOString(),
-        user_id: entry.userId,
-        action: entry.action,
-        resource: entry.resource,
-        resource_id: entry.resourceId,
-        ip_address: entry.ip,
-        user_agent: entry.userAgent,
-        success: entry.success,
-        error_message: entry.errorMessage,
-        metadata: entry.metadata,
-        severity: entry.severity,
-      });
+  private startBatchProcessor() {
+    this.flushInterval = setInterval(() => {
+      this.flush();
+    }, this.FLUSH_INTERVAL);
+  }
 
-      // Log critical events to external service
-      if (entry.severity === 'critical') {
-        console.error('[CRITICAL AUDIT]', JSON.stringify(entry));
-        // Send to external service (e.g., Datadog, Splunk)
+  private async flush() {
+    if (this.queue.length === 0) return;
+
+    const batch = this.queue.splice(0, this.BATCH_SIZE);
+    
+    try {
+      const { error } = await supabase
+        .from('audit_logs')
+        .insert(batch);
+
+      if (error) {
+        console.error('Failed to write audit logs:', error);
+        // Re-queue failed logs
+        this.queue.unshift(...batch);
       }
     } catch (error) {
-      console.error('Failed to write audit log:', error);
+      console.error('Audit log flush error:', error);
     }
   }
 
-  async logAccess(userId: string, resource: string, ip: string) {
-    await this.log({
-      timestamp: new Date(),
-      userId,
-      action: 'ACCESS',
+  private log(entry: Omit<AuditLogEntry, 'timestamp'>) {
+    this.queue.push({
+      ...entry,
+      timestamp: new Date().toISOString(),
+    });
+
+    // Flush immediately for critical events
+    if (entry.severity === 'critical') {
+      this.flush();
+    }
+  }
+
+  // Public logging methods
+  logAccess(
+    userId: string,
+    resource: string,
+    resourceId?: string,
+    metadata?: Record<string, any>
+  ) {
+    this.log({
+      user_id: userId,
+      action: 'access',
       resource,
-      ip,
-      userAgent: 'N/A',
-      success: true,
+      resource_id: resourceId,
+      metadata,
       severity: 'low',
+      success: true,
     });
   }
 
-  async logModification(
+  logModification(
     userId: string,
     resource: string,
     resourceId: string,
-    changes: any
+    changes: Record<string, any>
   ) {
-    await this.log({
-      timestamp: new Date(),
-      userId,
-      action: 'MODIFY',
+    this.log({
+      user_id: userId,
+      action: 'modify',
       resource,
-      resourceId,
-      ip: 'N/A',
-      userAgent: 'N/A',
-      success: true,
+      resource_id: resourceId,
       metadata: { changes },
       severity: 'medium',
+      success: true,
     });
   }
 
-  async logDeletion(
+  logDeletion(
     userId: string,
     resource: string,
-    resourceId: string
+    resourceId: string,
+    metadata?: Record<string, any>
   ) {
-    await this.log({
-      timestamp: new Date(),
-      userId,
-      action: 'DELETE',
+    this.log({
+      user_id: userId,
+      action: 'delete',
       resource,
-      resourceId,
-      ip: 'N/A',
-      userAgent: 'N/A',
-      success: true,
+      resource_id: resourceId,
+      metadata,
       severity: 'high',
+      success: true,
     });
   }
 
-  async logLogin(userId: string, ip: string, userAgent: string, success: boolean) {
-    await this.log({
-      timestamp: new Date(),
-      userId,
-      action: 'LOGIN',
+  logLogin(userId: string, ipAddress?: string, userAgent?: string, success = true) {
+    this.log({
+      user_id: userId,
+      action: 'login',
       resource: 'auth',
-      ip,
-      userAgent,
+      ip_address: ipAddress,
+      user_agent: userAgent,
+      severity: success ? 'low' : 'medium',
       success,
-      severity: success ? 'low' : 'high',
     });
   }
 
-  async logFailedAccess(
+  logFailedAccess(
     userId: string,
     resource: string,
     reason: string,
-    ip: string
+    ipAddress?: string
   ) {
-    await this.log({
-      timestamp: new Date(),
-      userId,
-      action: 'ACCESS_DENIED',
+    this.log({
+      user_id: userId,
+      action: 'access_denied',
       resource,
-      ip,
-      userAgent: 'N/A',
+      metadata: { reason },
+      ip_address: ipAddress,
+      severity: 'high',
       success: false,
-      errorMessage: reason,
-      severity: 'critical',
     });
   }
 
+  logSecurityEvent(
+    userId: string,
+    eventType: string,
+    details: Record<string, any>
+  ) {
+    this.log({
+      user_id: userId,
+      action: eventType,
+      resource: 'security',
+      metadata: details,
+      severity: 'critical',
+      success: true,
+    });
+  }
+
+  // Query audit trail
   async getAuditTrail(
     userId: string,
-    startDate: Date,
-    endDate: Date
-  ): Promise<AuditLog[]> {
-    const { data, error } = await this.supabase
+    options?: {
+      startDate?: string;
+      endDate?: string;
+      actions?: string[];
+      severity?: Severity[];
+    }
+  ) {
+    let query = supabase
       .from('audit_logs')
       .select('*')
       .eq('user_id', userId)
-      .gte('timestamp', startDate.toISOString())
-      .lte('timestamp', endDate.toISOString())
       .order('timestamp', { ascending: false });
 
-    if (error) throw error;
-    return data;
+    if (options?.startDate) {
+      query = query.gte('timestamp', options.startDate);
+    }
+
+    if (options?.endDate) {
+      query = query.lte('timestamp', options.endDate);
+    }
+
+    if (options?.actions && options.actions.length > 0) {
+      query = query.in('action', options.actions);
+    }
+
+    if (options?.severity && options.severity.length > 0) {
+      query = query.in('severity', options.severity);
+    }
+
+    const { data, error } = await query.limit(1000);
+
+    if (error) {
+      throw new Error(`Failed to retrieve audit trail: ${error.message}`);
+    }
+
+    return data || [];
+  }
+
+  // Cleanup
+  stop() {
+    if (this.flushInterval) {
+      clearInterval(this.flushInterval);
+      this.flush(); // Final flush
+    }
   }
 }
 
+// Singleton instance
 export const auditLogger = new AuditLogger();
+
+// Express middleware
+export const auditMiddleware = (req: any, res: any, next: any) => {
+  const userId = req.user?.id || 'anonymous';
+  const resource = req.baseUrl + req.path;
+  
+  auditLogger.logAccess(userId, resource, req.params.id, {
+    method: req.method,
+    ip: req.ip,
+    userAgent: req.headers['user-agent'],
+  });
+  
+  next();
+};
+
+export default auditLogger;
