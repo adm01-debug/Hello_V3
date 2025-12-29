@@ -1,135 +1,147 @@
-import React, { useCallback, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Mic, MicOff, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useVoiceCommand } from '@/hooks/useVoiceCommand';
-import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
-interface VoiceCommand {
-  action: 'call' | 'transfer' | 'hold' | 'hangup' | 'mute' | 'unmute' | 'unknown';
-  target?: string;
-  confidence: number;
-}
-
 interface VoiceCommandButtonProps {
-  onCommand?: (command: VoiceCommand) => void;
+  onVoiceCommand: (command: string) => void;
+  disabled?: boolean;
   className?: string;
 }
 
-const actionLabels: Record<string, string> = {
-  call: 'Ligar para',
-  transfer: 'Transferir para',
-  hold: 'Colocar em espera',
-  hangup: 'Encerrar chamada',
-  mute: 'Silenciar',
-  unmute: 'Ativar áudio',
-};
+export function VoiceCommandButton({ 
+  onVoiceCommand, 
+  disabled = false,
+  className 
+}: VoiceCommandButtonProps) {
+  const [isListening, setIsListening] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-export function VoiceCommandButton({ onCommand, className }: VoiceCommandButtonProps) {
-  const handleCommand = useCallback((command: VoiceCommand) => {
-    const label = actionLabels[command.action] || 'Comando';
-    const description = command.target 
-      ? `${label} ${command.target}` 
-      : label;
+  // Helper: Check if browser supports speech recognition
+  const speechRecognitionSupported = useMemo(() => {
+    return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+  }, []);
 
-    toast({
-      title: '🎤 Comando reconhecido',
-      description,
-    });
+  // Helper: Get SpeechRecognition constructor
+  const getSpeechRecognition = useCallback(() => {
+    const SpeechRecognition = 
+      (window as any).SpeechRecognition || 
+      (window as any).webkitSpeechRecognition;
+    return SpeechRecognition;
+  }, []);
 
-    onCommand?.(command);
-  }, [onCommand]);
-
-  const {
-    isRecording,
-    isProcessing,
-    transcript,
-    startRecording,
-    stopRecording,
-  } = useVoiceCommand(handleCommand);
-
-  const handleMouseDown = useCallback(() => {
-    if (!isProcessing) {
-      startRecording();
+  // Helper: Handle voice recognition
+  const handleVoiceRecognition = useCallback(async () => {
+    if (!speechRecognitionSupported) {
+      setError('Speech recognition not supported in this browser');
+      return;
     }
-  }, [isProcessing, startRecording]);
 
-  const handleMouseUp = useCallback(() => {
-    if (isRecording) {
-      stopRecording();
+    setError(null);
+    setIsListening(true);
+
+    try {
+      const SpeechRecognition = getSpeechRecognition();
+      const recognition = new SpeechRecognition();
+      
+      recognition.lang = 'en-US';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onresult = (event: any) => {
+        const command = event.results[0][0].transcript;
+        setIsListening(false);
+        setIsProcessing(true);
+        
+        onVoiceCommand(command);
+        
+        setTimeout(() => setIsProcessing(false), 1000);
+      };
+
+      recognition.onerror = (event: any) => {
+        setError(`Voice recognition error: ${event.error}`);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognition.start();
+    } catch (err) {
+      setError('Failed to start voice recognition');
+      setIsListening(false);
     }
-  }, [isRecording, stopRecording]);
+  }, [speechRecognitionSupported, getSpeechRecognition, onVoiceCommand]);
 
-  // Handle keyboard shortcut (Space)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === 'Space' && e.ctrlKey && !isProcessing && !isRecording) {
-        e.preventDefault();
-        startRecording();
-      }
-    };
+  // Helper: Get button label for accessibility
+  const getAriaLabel = useCallback(() => {
+    if (isProcessing) return 'Processing voice command';
+    if (isListening) return 'Listening to voice command, speak now';
+    return 'Activate voice command';
+  }, [isProcessing, isListening]);
 
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.code === 'Space' && isRecording) {
-        e.preventDefault();
-        stopRecording();
-      }
-    };
+  // Helper: Get button icon
+  const ButtonIcon = useMemo(() => {
+    if (isProcessing) return Loader2;
+    if (isListening) return MicOff;
+    return Mic;
+  }, [isProcessing, isListening]);
 
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
+  // Helper: Get button variant
+  const buttonVariant = useMemo(() => {
+    if (isListening) return 'destructive' as const;
+    return 'default' as const;
+  }, [isListening]);
 
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
-    };
-  }, [isRecording, isProcessing, startRecording, stopRecording]);
+  // Helper: Check if button should be disabled
+  const isButtonDisabled = useMemo(() => {
+    return disabled || !speechRecognitionSupported || isProcessing;
+  }, [disabled, speechRecognitionSupported, isProcessing]);
+
+  // Helper: Get status text
+  const statusText = useMemo(() => {
+    if (isProcessing) return 'Processing...';
+    if (isListening) return 'Listening...';
+    if (error) return error;
+    if (!speechRecognitionSupported) return 'Not supported';
+    return 'Ready';
+  }, [isProcessing, isListening, error, speechRecognitionSupported]);
 
   return (
     <div className={cn('flex flex-col items-center gap-2', className)}>
       <Button
-        variant={isRecording ? 'destructive' : 'default'}
+        onClick={handleVoiceRecognition}
+        disabled={isButtonDisabled}
+        variant={buttonVariant}
         size="lg"
-        className={cn(
-          'relative h-16 w-16 rounded-full transition-all duration-200',
-          isRecording && 'animate-pulse ring-4 ring-destructive/50',
-          isProcessing && 'opacity-50 cursor-wait'
-        )}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onTouchStart={handleMouseDown}
-        onTouchEnd={handleMouseUp}
-        disabled={isProcessing}
+        className="relative"
+        aria-label={getAriaLabel()}
+        aria-live="polite"
+        aria-busy={isProcessing || isListening}
       >
-        {isProcessing ? (
-          <Loader2 className="h-6 w-6 animate-spin" />
-        ) : isRecording ? (
-          <MicOff className="h-6 w-6" />
-        ) : (
-          <Mic className="h-6 w-6" />
-        )}
+        <ButtonIcon 
+          className={cn(
+            'h-5 w-5',
+            isProcessing && 'animate-spin'
+          )} 
+          aria-hidden="true"
+        />
+        <span className="ml-2">{statusText}</span>
       </Button>
 
-      <span className="text-sm text-muted-foreground">
-        {isProcessing ? (
-          'Processando...'
-        ) : isRecording ? (
-          'Solte para enviar'
-        ) : (
-          'Segure para falar'
-        )}
-      </span>
-
-      {transcript && !isRecording && !isProcessing && (
-        <p className="max-w-xs text-center text-sm text-muted-foreground italic">
-          "{transcript}"
+      {error && (
+        <p 
+          className="text-sm text-destructive" 
+          role="alert"
+          aria-live="assertive"
+        >
+          {error}
         </p>
       )}
-
-      <span className="text-xs text-muted-foreground/60">
-        Atalho: Ctrl + Espaço
-      </span>
     </div>
   );
 }
+
+export default VoiceCommandButton;
