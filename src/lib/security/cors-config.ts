@@ -1,14 +1,6 @@
-export interface CORSConfig {
-  origin: string[] | string;
-  credentials: boolean;
-  methods: string[];
-  allowedHeaders: string[];
-  exposedHeaders: string[];
-  maxAge: number;
-  preflightContinue?: boolean;
-}
+import { CorsOptions } from 'cors';
 
-const ALLOWED_ORIGINS = {
+const ALLOWED_ORIGINS: Record<string, string[]> = {
   production: [
     'https://hello.app',
     'https://www.hello.app',
@@ -16,7 +8,7 @@ const ALLOWED_ORIGINS = {
   ],
   staging: [
     'https://staging.hello.app',
-    'https://staging-api.hello.app',
+    'https://api-staging.hello.app',
   ],
   development: [
     'http://localhost:3000',
@@ -25,77 +17,52 @@ const ALLOWED_ORIGINS = {
   ],
 };
 
-export const CORS_CONFIG: CORSConfig = {
+export const corsConfig: CorsOptions = {
   origin: (origin, callback) => {
     const env = process.env.NODE_ENV || 'development';
-    const allowedOrigins = [
-      ...ALLOWED_ORIGINS.production,
-      ...(env === 'staging' ? ALLOWED_ORIGINS.staging : []),
-      ...(env === 'development' ? ALLOWED_ORIGINS.development : []),
-    ];
-
-    if (!origin || allowedOrigins.includes(origin)) {
+    const allowedOrigins = ALLOWED_ORIGINS[env] || ALLOWED_ORIGINS.development;
+    
+    // Allow requests with no origin (mobile apps, curl, etc)
+    if (!origin) {
+      return callback(null, true);
+    }
+    
+    // Validate origin
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error(`Origin ${origin} not allowed by CORS`));
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
     'Content-Type',
     'Authorization',
     'X-Requested-With',
     'X-API-Key',
-    'X-CSRF-Token',
-    'Accept',
-    'Accept-Version',
-    'Content-Length',
-    'Content-MD5',
-    'Date',
-    'X-Api-Version',
   ],
-  exposedHeaders: [
-    'X-Total-Count',
-    'X-Page-Number',
-    'X-Page-Size',
-    'X-RateLimit-Limit',
-    'X-RateLimit-Remaining',
-    'X-RateLimit-Reset',
-  ],
+  exposedHeaders: ['X-Total-Count', 'X-Page-Count'],
   maxAge: 86400, // 24 hours
   preflightContinue: false,
+  optionsSuccessStatus: 204,
 };
 
-export function validateOrigin(origin: string): boolean {
-  const env = process.env.NODE_ENV || 'development';
-  const allowedOrigins = [
-    ...ALLOWED_ORIGINS.production,
-    ...(env === 'staging' ? ALLOWED_ORIGINS.staging : []),
-    ...(env === 'development' ? ALLOWED_ORIGINS.development : []),
-  ];
-  
-  return allowedOrigins.includes(origin);
-}
+// Route-specific CORS for API endpoints
+export const apiCorsConfig: CorsOptions = {
+  ...corsConfig,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
 
-export function configureCORS(app: any) {
-  const cors = require('cors');
-  
-  // Global CORS
-  app.use(cors(CORS_CONFIG));
-  
-  // Preflight requests
-  app.options('*', cors(CORS_CONFIG));
-  
-  // Custom CORS for specific routes
-  app.use('/api/public', cors({
-    ...CORS_CONFIG,
-    credentials: false, // Public API doesn't need credentials
-  }));
-  
-  // Strict CORS for admin routes
-  app.use('/api/admin', cors({
-    ...CORS_CONFIG,
-    origin: ALLOWED_ORIGINS.production,
-  }));
-}
+// Strict CORS for admin endpoints
+export const adminCorsConfig: CorsOptions = {
+  ...corsConfig,
+  origin: (origin, callback) => {
+    const adminOrigins = ['https://admin.hello.app'];
+    if (origin && adminOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Admin origin not allowed'));
+    }
+  },
+};
