@@ -1,143 +1,197 @@
 #!/bin/bash
-# Security Incident Response Automation
 
-set -e
+set -euo pipefail
 
-INCIDENT_TYPE=$1
-SEVERITY=$2
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-LOG_DIR="/var/log/incidents"
-INCIDENT_ID="INC-${TIMESTAMP}"
+# Configuration
+LOG_FILE="/var/log/incident-response.log"
+ALERT_WEBHOOK="${SLACK_WEBHOOK_URL:-}"
+EMAIL_RECIPIENTS="${ALERT_EMAIL:-security@hello.app}"
 
-mkdir -p "$LOG_DIR"
-
+# Logging function
 log() {
-    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_DIR/$INCIDENT_ID.log"
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
 }
 
-notify_team() {
-    local message=$1
-    # Send to Slack
-    curl -X POST "$SLACK_WEBHOOK_URL" \
-        -H 'Content-Type: application/json' \
-        -d "{\"text\":\"🚨 Security Incident: $message\"}"
+# Alert function
+alert() {
+    local message="$1"
+    log "ALERT: $message"
+    
+    # Send to Slack if webhook configured
+    if [ -n "$ALERT_WEBHOOK" ]; then
+        curl -X POST "$ALERT_WEBHOOK" \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\": \"🚨 INCIDENT: $message\"}" \
+            2>/dev/null || log "Failed to send Slack alert"
+    fi
     
     # Send email
-    echo "$message" | mail -s "Security Incident: $INCIDENT_ID" security@hello.app
+    echo "$message" | mail -s "Security Incident Alert" "$EMAIL_RECIPIENTS" 2>/dev/null || \
+        log "Failed to send email alert"
 }
 
-log "🚨 Security Incident Response: $INCIDENT_TYPE ($SEVERITY)"
-log "Incident ID: $INCIDENT_ID"
+# Incident handlers
+handle_data_breach() {
+    log "Handling data breach incident"
+    
+    # 1. Notify security team
+    alert "Data breach detected! Initiating response protocol."
+    
+    # 2. Revoke all API keys
+    log "Revoking all API keys..."
+    psql "$DATABASE_URL" -c "UPDATE api_keys SET revoked = true WHERE revoked = false;" || \
+        log "ERROR: Failed to revoke API keys"
+    
+    # 3. Force password reset for all users
+    log "Forcing password reset for all users..."
+    psql "$DATABASE_URL" -c "UPDATE users SET password_reset_required = true;" || \
+        log "ERROR: Failed to force password resets"
+    
+    # 4. Create database snapshot
+    log "Creating database snapshot..."
+    pg_dump "$DATABASE_URL" > "/backups/breach-$(date +%Y%m%d-%H%M%S).sql" || \
+        log "ERROR: Failed to create database snapshot"
+    
+    # 5. Enable enhanced logging
+    log "Enabling enhanced audit logging..."
+    kubectl set env deployment/hello AUDIT_LEVEL=verbose || \
+        log "ERROR: Failed to enable enhanced logging"
+    
+    log "Data breach response completed"
+}
 
-case $INCIDENT_TYPE in
-    "data_breach")
-        log "📧 Notifying security team..."
-        notify_team "Data Breach Detected - $INCIDENT_ID"
-        
-        log "🔒 Revoking all API keys..."
-        kubectl exec -it deploy/hello -- npm run revoke-all-keys
-        
-        log "📊 Generating forensic report..."
-        kubectl logs deploy/hello --since=24h > "$LOG_DIR/${INCIDENT_ID}_logs.txt"
-        
-        log "🔐 Forcing password reset for all users..."
-        kubectl exec -it deploy/hello -- npm run force-password-reset
-        
-        log "💾 Creating database snapshot..."
-        pg_dump "$DATABASE_URL" > "$LOG_DIR/${INCIDENT_ID}_db_snapshot.sql"
-        
-        log "🚫 Enabling maintenance mode..."
-        kubectl scale deployment hello --replicas=0
-        ;;
-        
-    "ddos_attack")
-        log "🛡️ Activating DDoS protection..."
-        aws wafv2 update-web-acl --id "$WAF_ACL_ID" --rules file://waf-strict-rules.json
-        
-        log "📊 Collecting attack metrics..."
-        kubectl top nodes > "$LOG_DIR/${INCIDENT_ID}_nodes.txt"
-        kubectl top pods > "$LOG_DIR/${INCIDENT_ID}_pods.txt"
-        
-        log "🔄 Scaling up infrastructure..."
-        kubectl scale deployment hello --replicas=10
-        
-        log "📈 Enabling rate limiting..."
-        kubectl apply -f k8s/rate-limit-strict.yaml
-        
-        notify_team "DDoS Attack Mitigated - $INCIDENT_ID"
-        ;;
-        
-    "unauthorized_access")
-        log "🔐 Forcing password reset for affected users..."
-        # Implement user-specific password reset
-        
-        log "📝 Enabling verbose logging..."
-        kubectl set env deployment/hello LOG_LEVEL=debug
-        
-        log "🔍 Analyzing access logs..."
-        kubectl logs deploy/hello | grep -i "unauthorized" > "$LOG_DIR/${INCIDENT_ID}_unauthorized.txt"
-        
-        log "🚫 Blocking suspicious IPs..."
-        # Extract and block IPs
-        
-        notify_team "Unauthorized Access Detected - $INCIDENT_ID"
-        ;;
-        
-    "malware_detected")
-        log "🦠 Isolating affected containers..."
-        kubectl cordon $(kubectl get nodes -o name)
-        
-        log "🔍 Running security scan..."
-        trivy image hello:latest > "$LOG_DIR/${INCIDENT_ID}_scan.txt"
-        
-        log "🔄 Rolling back to last known good version..."
-        kubectl rollout undo deployment/hello
-        
-        notify_team "Malware Detected and Isolated - $INCIDENT_ID"
-        ;;
-        
-    "suspicious_activity")
-        log "📊 Collecting evidence..."
-        kubectl logs deploy/hello --tail=10000 > "$LOG_DIR/${INCIDENT_ID}_activity.txt"
-        
-        log "🔍 Analyzing patterns..."
-        # Run anomaly detection
-        
-        notify_team "Suspicious Activity Detected - $INCIDENT_ID"
-        ;;
-        
-    *)
-        log "❓ Unknown incident type: $INCIDENT_TYPE"
-        notify_team "Unknown Incident Type - $INCIDENT_ID"
+handle_ddos_attack() {
+    log "Handling DDoS attack"
+    
+    alert "DDoS attack detected! Scaling infrastructure."
+    
+    # 1. Scale up infrastructure
+    log "Scaling up replicas..."
+    kubectl scale deployment/hello --replicas=10 || \
+        log "ERROR: Failed to scale deployment"
+    
+    # 2. Enable aggressive rate limiting
+    log "Enabling aggressive rate limiting..."
+    kubectl apply -f /config/rate-limit-strict.yaml || \
+        log "ERROR: Failed to apply rate limits"
+    
+    # 3. Activate DDoS mitigation
+    log "Activating DDoS mitigation..."
+    aws shield describe-protection --resource-arn "$RESOURCE_ARN" || \
+        log "ERROR: Shield protection check failed"
+    
+    log "DDoS response completed"
+}
+
+handle_unauthorized_access() {
+    log "Handling unauthorized access attempt"
+    
+    local user_id="${1:-unknown}"
+    local ip_address="${2:-unknown}"
+    
+    alert "Unauthorized access from IP: $ip_address, User: $user_id"
+    
+    # 1. Block IP address
+    log "Blocking IP address: $ip_address"
+    kubectl exec -it deployment/nginx -- \
+        bash -c "echo 'deny $ip_address;' >> /etc/nginx/blocked-ips.conf && nginx -s reload" || \
+        log "ERROR: Failed to block IP"
+    
+    # 2. Suspend user account
+    if [ "$user_id" != "unknown" ]; then
+        log "Suspending user account: $user_id"
+        psql "$DATABASE_URL" -c "UPDATE users SET suspended = true WHERE id = '$user_id';" || \
+            log "ERROR: Failed to suspend user"
+    fi
+    
+    # 3. Increase monitoring
+    log "Increasing monitoring sensitivity..."
+    
+    log "Unauthorized access response completed"
+}
+
+handle_malware_detected() {
+    log "Handling malware detection"
+    
+    alert "Malware detected! Initiating isolation protocol."
+    
+    # 1. Isolate affected container
+    log "Isolating affected container..."
+    kubectl cordon "$(kubectl get nodes -o name | head -1)" || \
+        log "ERROR: Failed to cordon node"
+    
+    # 2. Create forensic snapshot
+    log "Creating forensic snapshot..."
+    docker commit "$CONTAINER_ID" "forensics-$(date +%Y%m%d-%H%M%S)" || \
+        log "ERROR: Failed to create forensic snapshot"
+    
+    # 3. Scan all containers
+    log "Scanning all containers..."
+    trivy image --severity HIGH,CRITICAL hello:latest || \
+        log "ERROR: Trivy scan failed"
+    
+    log "Malware response completed"
+}
+
+handle_suspicious_activity() {
+    log "Handling suspicious activity"
+    
+    local activity_type="${1:-unknown}"
+    
+    alert "Suspicious activity detected: $activity_type"
+    
+    # 1. Increase audit logging
+    log "Increasing audit logging..."
+    kubectl set env deployment/hello LOG_LEVEL=debug || \
+        log "ERROR: Failed to increase logging"
+    
+    # 2. Capture network traffic
+    log "Capturing network traffic sample..."
+    timeout 60 tcpdump -i any -w "/captures/suspicious-$(date +%Y%m%d-%H%M%S).pcap" || \
+        log "ERROR: Failed to capture traffic"
+    
+    log "Suspicious activity response completed"
+}
+
+# Main incident response dispatcher
+main() {
+    local incident_type="${1:-}"
+    
+    if [ -z "$incident_type" ]; then
+        echo "Usage: $0 <incident_type> [additional_args...]"
+        echo "Incident types: data_breach, ddos_attack, unauthorized_access, malware_detected, suspicious_activity"
         exit 1
-        ;;
-esac
+    fi
+    
+    log "Incident response triggered: $incident_type"
+    
+    case "$incident_type" in
+        data_breach)
+            handle_data_breach
+            ;;
+        ddos_attack)
+            handle_ddos_attack
+            ;;
+        unauthorized_access)
+            handle_unauthorized_access "${2:-}" "${3:-}"
+            ;;
+        malware_detected)
+            handle_malware_detected
+            ;;
+        suspicious_activity)
+            handle_suspicious_activity "${2:-}"
+            ;;
+        *)
+            log "ERROR: Unknown incident type: $incident_type"
+            exit 1
+            ;;
+    esac
+    
+    log "Incident response completed for: $incident_type"
+}
 
-log "✅ Incident response completed"
-log "📁 Logs saved to: $LOG_DIR/$INCIDENT_ID.log"
+# Trap errors
+trap 'log "ERROR: Script failed at line $LINENO"' ERR
 
-# Generate incident report
-cat > "$LOG_DIR/${INCIDENT_ID}_report.md" <<EOF
-# Security Incident Report
-
-**Incident ID:** $INCIDENT_ID
-**Type:** $INCIDENT_TYPE
-**Severity:** $SEVERITY
-**Timestamp:** $(date)
-
-## Actions Taken
-- See log file: $INCIDENT_ID.log
-
-## Next Steps
-1. Review logs and forensic data
-2. Conduct post-incident analysis
-3. Update security policies
-4. Train team on incident response
-
-## Evidence
-- Logs: ${INCIDENT_ID}_logs.txt
-- Database snapshot: ${INCIDENT_ID}_db_snapshot.sql
-- Analysis: ${INCIDENT_ID}_analysis.txt
-EOF
-
-log "📄 Report generated: ${INCIDENT_ID}_report.md"
+# Execute
+main "$@"
