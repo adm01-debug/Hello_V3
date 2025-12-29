@@ -1,28 +1,29 @@
 import helmet from 'helmet';
 
-export const HELMET_CONFIG = helmet({
+export const helmetConfig = helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: [
         "'self'",
-        "'unsafe-inline'",
-        "'unsafe-eval'",
-        'cdn.hello.app',
-        'https://cdn.jsdelivr.net',
-        'https://unpkg.com',
+        "'unsafe-inline'", // Remove in production with nonce
+        'https://cdn.hello.app',
+        'https://www.googletagmanager.com',
       ],
       styleSrc: [
         "'self'",
-        "'unsafe-inline'",
+        "'unsafe-inline'", // Required for styled-components
         'https://fonts.googleapis.com',
+      ],
+      fontSrc: [
+        "'self'",
+        'https://fonts.gstatic.com',
       ],
       imgSrc: [
         "'self'",
         'data:',
-        'blob:',
         'https:',
-        'https://*.hello.app',
+        'blob:',
       ],
       connectSrc: [
         "'self'",
@@ -30,16 +31,11 @@ export const HELMET_CONFIG = helmet({
         'https://*.supabase.co',
         'wss://*.supabase.co',
       ],
-      fontSrc: [
-        "'self'",
-        'data:',
-        'https://fonts.gstatic.com',
-      ],
+      frameSrc: ["'none'"],
       objectSrc: ["'none'"],
-      mediaSrc: ["'self'", 'https://*.hello.app'],
-      frameSrc: ["'self'", 'https://www.youtube.com'],
+      mediaSrc: ["'self'"],
       workerSrc: ["'self'", 'blob:'],
-      childSrc: ["'self'", 'blob:'],
+      childSrc: ["'self'"],
       formAction: ["'self'"],
       frameAncestors: ["'none'"],
       baseUri: ["'self'"],
@@ -47,17 +43,11 @@ export const HELMET_CONFIG = helmet({
       upgradeInsecureRequests: [],
     },
   },
-  crossOriginEmbedderPolicy: false,
+  crossOriginEmbedderPolicy: { policy: 'require-corp' },
   crossOriginOpenerPolicy: { policy: 'same-origin' },
-  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  crossOriginResourcePolicy: { policy: 'same-origin' },
   dnsPrefetchControl: { allow: false },
-  expectCt: {
-    maxAge: 86400,
-    enforce: true,
-  },
-  frameguard: {
-    action: 'deny',
-  },
+  frameguard: { action: 'deny' },
   hidePoweredBy: true,
   hsts: {
     maxAge: 31536000,
@@ -67,24 +57,26 @@ export const HELMET_CONFIG = helmet({
   ieNoOpen: true,
   noSniff: true,
   originAgentCluster: true,
-  permittedCrossDomainPolicies: {
-    permittedPolicies: 'none',
-  },
-  referrerPolicy: {
-    policy: 'strict-origin-when-cross-origin',
-  },
+  permittedCrossDomainPolicies: { permittedPolicies: 'none' },
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
   xssFilter: true,
 });
 
-export function configureHelmet(app: any) {
-  app.use(HELMET_CONFIG);
-  
-  // Additional security headers
-  app.use((req: any, res: any, next: any) => {
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
-    res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
-    next();
-  });
-}
+// Development-friendly helmet (less restrictive CSP)
+export const helmetDevConfig = helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:', 'https:', 'http:'],
+      connectSrc: ["'self'", 'ws:', 'wss:', 'http:', 'https:'],
+    },
+  },
+  hsts: false,
+});
+
+// Export appropriate config based on environment
+export default process.env.NODE_ENV === 'production' 
+  ? helmetConfig 
+  : helmetDevConfig;
