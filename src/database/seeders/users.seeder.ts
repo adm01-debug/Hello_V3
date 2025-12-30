@@ -19,6 +19,6 @@ export class UsersSeeder {
       },
     ]);
 
-    console.log('✅ Users seeded');
+    console.log('✅ Users seeded (2 users)');
   }
 }
