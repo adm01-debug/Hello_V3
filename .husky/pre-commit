@@ -1,12 +1,6 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-echo "🔍 Running pre-commit hooks..."
-
-# Run linter
-npm run lint-staged
-
-# Run type check
+npm run lint
 npm run type-check
-
-echo "✅ Pre-commit checks passed!"
+npm run test:unit
