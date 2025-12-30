@@ -2,6 +2,14 @@ import { Router, Request, Response, NextFunction } from 'express';
 import v1Router from './v1/routes';
 import v2Router from './v2/routes';
 
+declare global {
+  namespace Express {
+    interface Request {
+      apiVersion?: string;
+    }
+  }
+}
+
 export class VersionRouter {
   private router: Router;
 
@@ -34,6 +42,8 @@ export class VersionRouter {
     if (req.path.startsWith('/v1')) return 'v1';
     const headerVersion = req.headers['api-version'] as string;
     if (headerVersion) return headerVersion;
+    const queryVersion = req.query.version as string;
+    if (queryVersion) return queryVersion;
     return 'v1';
   }
 
