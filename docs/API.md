@@ -22,7 +22,7 @@ All API requests require authentication using JWT tokens.
 }
 ```
 
-**Response:**
+**Response (200):**
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -34,11 +34,16 @@ All API requests require authentication using JWT tokens.
 }
 ```
 
-**Headers:**
+**Headers Required:**
 ```
 Authorization: Bearer {token}
 Content-Type: application/json
 ```
+
+**Error Responses:**
+- `401` - Invalid credentials
+- `400` - Validation error
+- `429` - Rate limit exceeded
 
 ---
 
@@ -67,6 +72,11 @@ Content-Type: application/json
 }
 ```
 
+**Validation Rules:**
+- Email must be valid format
+- Password minimum 8 characters
+- Role must be: user, admin, moderator
+
 **Errors:**
 - `400` - Validation error
 - `409` - Email already exists
@@ -84,7 +94,8 @@ Content-Type: application/json
   "id": "550e8400-e29b-41d4-a716-446655440000",
   "email": "user@example.com",
   "role": "user",
-  "createdAt": "2025-12-30T10:00:00Z"
+  "createdAt": "2025-12-30T10:00:00Z",
+  "updatedAt": "2025-12-30T11:00:00Z"
 }
 ```
 
@@ -115,6 +126,10 @@ Content-Type: application/json
 }
 ```
 
+**Permissions:**
+- Users can update their own profile
+- Admins can update any user
+
 ---
 
 ### Delete User
@@ -123,66 +138,45 @@ Content-Type: application/json
 
 **Response (204):** No content
 
+**Permissions:**
+- Only admins can delete users
+- Cannot delete own account
+- Cannot delete last admin
+
 **Errors:**
 - `404` - User not found
 - `403` - Forbidden
 
 ---
 
-## 📞 Calls API
+### List Users
 
-### Create Call
+**Endpoint:** `GET /api/users`
 
-**Endpoint:** `POST /api/calls`
+**Query Parameters:**
+- `page` (default: 1)
+- `limit` (default: 10, max: 100)
+- `role` (filter by role)
+- `search` (search by email)
 
-**Request:**
+**Example:** `GET /api/users?page=1&limit=20&role=admin`
+
+**Response (200):**
 ```json
 {
-  "contactId": "123e4567-e89b-12d3-a456-426614174000",
-  "duration": 180,
-  "type": "outbound",
-  "notes": "Follow-up call"
+  "data": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "email": "user@example.com",
+      "role": "user",
+      "createdAt": "2025-12-30T10:00:00Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 150,
+    "pages": 8
+  }
 }
 ```
-
-**Response (201):**
-```json
-{
-  "id": "987fcdeb-51a2-43f1-98ab-123456789abc",
-  "contactId": "123e4567-e89b-12d3-a456-426614174000",
-  "duration": 180,
-  "type": "outbound",
-  "notes": "Follow-up call",
-  "createdAt": "2025-12-30T12:00:00Z"
-}
-```
-
----
-
-## 🚀 Rate Limiting
-
-**Limits:**
-- Authenticated: 100 requests/15 min
-- Unauthenticated: 20 requests/15 min
-
-**Headers:**
-```
-X-RateLimit-Limit: 100
-X-RateLimit-Remaining: 95
-X-RateLimit-Reset: 1735565400
-```
-
----
-
-## ❌ Error Codes
-
-| Code | Description |
-|------|-------------|
-| 200 | Success |
-| 201 | Created |
-| 400 | Bad Request |
-| 401 | Unauthorized |
-| 403 | Forbidden |
-| 404 | Not Found |
-| 429 | Rate Limit |
-| 500 | Server Error |
