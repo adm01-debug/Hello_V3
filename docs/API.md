@@ -180,3 +180,175 @@ Content-Type: application/json
   }
 }
 ```
+
+---
+
+## 📞 Calls API
+
+### Create Call
+
+**Endpoint:** `POST /api/calls`
+
+**Request:**
+```json
+{
+  "contactId": "123e4567-e89b-12d3-a456-426614174000",
+  "duration": 180,
+  "type": "outbound",
+  "notes": "Follow-up call about proposal"
+}
+```
+
+**Response (201):**
+```json
+{
+  "id": "987fcdeb-51a2-43f1-98ab-123456789abc",
+  "contactId": "123e4567-e89b-12d3-a456-426614174000",
+  "duration": 180,
+  "type": "outbound",
+  "notes": "Follow-up call about proposal",
+  "createdAt": "2025-12-30T12:00:00Z"
+}
+```
+
+**Call Types:**
+- `outbound` - Outgoing call
+- `inbound` - Incoming call
+
+---
+
+### List Calls
+
+**Endpoint:** `GET /api/calls`
+
+**Query Parameters:**
+- `page` (default: 1)
+- `limit` (default: 10, max: 100)
+- `type` (outbound, inbound)
+- `contactId` (filter by contact)
+- `startDate` (ISO 8601)
+- `endDate` (ISO 8601)
+
+**Example:** `GET /api/calls?type=outbound&startDate=2025-12-01`
+
+**Response (200):**
+```json
+{
+  "data": [
+    {
+      "id": "987fcdeb-51a2-43f1-98ab-123456789abc",
+      "contactId": "123e4567-e89b-12d3-a456-426614174000",
+      "duration": 180,
+      "type": "outbound",
+      "createdAt": "2025-12-30T12:00:00Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 250,
+    "pages": 25
+  }
+}
+```
+
+---
+
+## 📇 Contacts API
+
+### Create Contact
+
+**Endpoint:** `POST /api/contacts`
+
+**Request:**
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "+1-555-0123",
+  "company": "Acme Inc"
+}
+```
+
+**Response (201):**
+```json
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "+1-555-0123",
+  "company": "Acme Inc",
+  "createdAt": "2025-12-30T13:00:00Z"
+}
+```
+
+---
+
+### Get Contact
+
+**Endpoint:** `GET /api/contacts/:id`
+
+**Response (200):**
+```json
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "+1-555-0123",
+  "company": "Acme Inc",
+  "createdAt": "2025-12-30T13:00:00Z",
+  "callsCount": 15
+}
+```
+
+---
+
+## 🚀 Rate Limiting
+
+**Limits:**
+- Authenticated: 100 requests/15 minutes
+- Unauthenticated: 20 requests/15 minutes
+
+**Headers:**
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1735565400
+```
+
+**Error (429):**
+```json
+{
+  "error": "Rate limit exceeded",
+  "retryAfter": 300
+}
+```
+
+---
+
+## ❌ Error Codes
+
+| Code | Description |
+|------|-------------|
+| 200 | Success |
+| 201 | Created |
+| 204 | No Content |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 409 | Conflict |
+| 429 | Too Many Requests |
+| 500 | Internal Server Error |
+
+**Error Format:**
+```json
+{
+  "error": "Error message",
+  "code": "ERROR_CODE",
+  "details": {
+    "field": "email",
+    "message": "Email already exists"
+  }
+}
+```
