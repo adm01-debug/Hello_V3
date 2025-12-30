@@ -4,8 +4,8 @@ import { HealthController } from './health-controller';
 const router = Router();
 const controller = new HealthController();
 
-router.get('/health', controller.healthCheck.bind(controller));
-router.get('/health/readiness', controller.readiness.bind(controller));
-router.get('/health/liveness', controller.liveness.bind(controller));
+router.get('/health', (req, res) => controller.healthCheck(req, res));
+router.get('/health/readiness', (req, res) => controller.readiness(req, res));
+router.get('/health/liveness', (req, res) => controller.liveness(req, res));
 
 export default router;
