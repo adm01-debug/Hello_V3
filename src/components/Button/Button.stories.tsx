@@ -1,5 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
+
+interface ButtonProps {
+  variant?: 'primary' | 'secondary' | 'danger';
+  children: React.ReactNode;
+  onClick?: () => void;
+}
+
+const Button = ({ variant = 'primary', children, onClick }: ButtonProps) => {
+  const styles = {
+    primary: 'bg-blue-500 text-white',
+    secondary: 'bg-gray-500 text-white',
+    danger: 'bg-red-500 text-white',
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-2 rounded ${styles[variant]}`}
+    >
+      {children}
+    </button>
+  );
+};
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
