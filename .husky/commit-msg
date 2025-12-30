@@ -1,17 +1,4 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-MESSAGE_FILE=$1
-MESSAGE=$(cat "$MESSAGE_FILE")
-
-# Conventional Commits format
-PATTERN="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .{1,50}"
-
-if ! echo "$MESSAGE" | grep -qE "$PATTERN"; then
-    echo "❌ Invalid commit message format"
-    echo "Format: <type>(<scope>): <subject>"
-    echo "Example: feat(auth): add login functionality"
-    exit 1
-fi
-
-echo "✅ Commit message valid"
+npx --no -- commitlint --edit ${1}
