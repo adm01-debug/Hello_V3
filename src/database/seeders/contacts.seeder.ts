@@ -10,10 +10,19 @@ export class ContactsSeeder {
         name: 'John Doe',
         email: 'john@example.com',
         phone: '+1-555-0123',
+        company: 'Acme Inc',
+        created_at: new Date(),
+      },
+      {
+        id: '123e4567-e89b-12d3-a456-426614174001',
+        name: 'Jane Smith',
+        email: 'jane@example.com',
+        phone: '+1-555-0124',
+        company: 'Tech Corp',
         created_at: new Date(),
       },
     ]);
 
-    console.log('✅ Contacts seeded');
+    console.log('✅ Contacts seeded (2 contacts)');
   }
 }
