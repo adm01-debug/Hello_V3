@@ -246,15 +246,23 @@ export default function Login() {
                   'Entrar'
                 )}
               </Button>
-              <p className="text-center text-sm text-muted-foreground">
-                Não tem uma conta?{' '}
+              <div className="space-y-2 text-center text-sm">
                 <Link 
-                  to="/register" 
-                  className="text-primary hover:underline font-medium"
+                  to="/forgot-password" 
+                  className="text-muted-foreground hover:text-primary block"
                 >
-                  Registre-se
+                  Esqueceu sua senha?
                 </Link>
-              </p>
+                <p className="text-muted-foreground">
+                  Não tem uma conta?{' '}
+                  <Link 
+                    to="/register" 
+                    className="text-primary hover:underline font-medium"
+                  >
+                    Registre-se
+                  </Link>
+                </p>
+              </div>
             </CardFooter>
           </form>
         </Card>

@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      active_sessions: {
+        Row: {
+          created_at: string | null
+          device_info: Json | null
+          expires_at: string | null
+          id: string
+          ip_address: string | null
+          is_active: boolean | null
+          last_activity_at: string | null
+          location: Json | null
+          session_token: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          device_info?: Json | null
+          expires_at?: string | null
+          id?: string
+          ip_address?: string | null
+          is_active?: boolean | null
+          last_activity_at?: string | null
+          location?: Json | null
+          session_token: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          device_info?: Json | null
+          expires_at?: string | null
+          id?: string
+          ip_address?: string | null
+          is_active?: boolean | null
+          last_activity_at?: string | null
+          location?: Json | null
+          session_token?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       agent_badges: {
         Row: {
           agent_id: string
@@ -991,6 +1033,36 @@ export type Database = {
           },
         ]
       }
+      email_verification_tokens: {
+        Row: {
+          created_at: string | null
+          email: string
+          expires_at: string
+          id: string
+          token: string
+          user_id: string
+          verified_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          expires_at: string
+          id?: string
+          token: string
+          user_id: string
+          verified_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          expires_at?: string
+          id?: string
+          token?: string
+          user_id?: string
+          verified_at?: string | null
+        }
+        Relationships: []
+      }
       goal_violations: {
         Row: {
           actual_value: number
@@ -1133,6 +1205,63 @@ export type Database = {
         }
         Relationships: []
       }
+      password_reset_tokens: {
+        Row: {
+          created_at: string | null
+          expires_at: string
+          id: string
+          ip_address: string | null
+          token: string
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at: string
+          id?: string
+          ip_address?: string | null
+          token: string
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string
+          id?: string
+          ip_address?: string | null
+          token?: string
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      permissions: {
+        Row: {
+          action: string
+          created_at: string | null
+          description: string | null
+          id: string
+          module: string
+          name: string
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          module: string
+          name: string
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          module?: string
+          name?: string
+        }
+        Relationships: []
+      }
       queue_metrics_settings: {
         Row: {
           abandonment_rate_critical: number
@@ -1174,6 +1303,149 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      rate_limit_alerts: {
+        Row: {
+          created_at: string | null
+          endpoint: string
+          id: string
+          ip_address: string
+          is_resolved: boolean | null
+          request_count: number
+          resolved_at: string | null
+          resolved_by: string | null
+          severity: string | null
+          threshold: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          endpoint: string
+          id?: string
+          ip_address: string
+          is_resolved?: boolean | null
+          request_count: number
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: string | null
+          threshold: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          endpoint?: string
+          id?: string
+          ip_address?: string
+          is_resolved?: boolean | null
+          request_count?: number
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: string | null
+          threshold?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      rate_limit_logs: {
+        Row: {
+          block_reason: string | null
+          created_at: string | null
+          endpoint: string
+          id: string
+          ip_address: string
+          is_blocked: boolean | null
+          request_count: number | null
+          user_id: string | null
+          window_end: string | null
+          window_start: string | null
+        }
+        Insert: {
+          block_reason?: string | null
+          created_at?: string | null
+          endpoint: string
+          id?: string
+          ip_address: string
+          is_blocked?: boolean | null
+          request_count?: number | null
+          user_id?: string | null
+          window_end?: string | null
+          window_start?: string | null
+        }
+        Update: {
+          block_reason?: string | null
+          created_at?: string | null
+          endpoint?: string
+          id?: string
+          ip_address?: string
+          is_blocked?: boolean | null
+          request_count?: number | null
+          user_id?: string | null
+          window_end?: string | null
+          window_start?: string | null
+        }
+        Relationships: []
+      }
+      rate_limit_settings: {
+        Row: {
+          block_duration_seconds: number | null
+          created_at: string | null
+          endpoint_pattern: string
+          id: string
+          is_enabled: boolean | null
+          max_requests: number | null
+          updated_at: string | null
+          window_seconds: number | null
+        }
+        Insert: {
+          block_duration_seconds?: number | null
+          created_at?: string | null
+          endpoint_pattern: string
+          id?: string
+          is_enabled?: boolean | null
+          max_requests?: number | null
+          updated_at?: string | null
+          window_seconds?: number | null
+        }
+        Update: {
+          block_duration_seconds?: number | null
+          created_at?: string | null
+          endpoint_pattern?: string
+          id?: string
+          is_enabled?: boolean | null
+          max_requests?: number | null
+          updated_at?: string | null
+          window_seconds?: number | null
+        }
+        Relationships: []
+      }
+      role_permissions: {
+        Row: {
+          created_at: string | null
+          id: string
+          permission_id: string
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          permission_id: string
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          permission_id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "role_permissions_permission_id_fkey"
+            columns: ["permission_id"]
+            isOneToOne: false
+            referencedRelation: "permissions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       scheduled_callbacks: {
         Row: {
@@ -1327,6 +1599,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_mfa_settings: {
+        Row: {
+          backup_codes: string[] | null
+          created_at: string | null
+          id: string
+          last_verified_at: string | null
+          mfa_enabled: boolean | null
+          mfa_method: string | null
+          recovery_email: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          backup_codes?: string[] | null
+          created_at?: string | null
+          id?: string
+          last_verified_at?: string | null
+          mfa_enabled?: boolean | null
+          mfa_method?: string | null
+          recovery_email?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          backup_codes?: string[] | null
+          created_at?: string | null
+          id?: string
+          last_verified_at?: string | null
+          mfa_enabled?: boolean | null
+          mfa_method?: string | null
+          recovery_email?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_profiles: {
         Row: {
           agent_id: string | null
@@ -1364,6 +1672,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          granted_at: string | null
+          granted_by: string | null
+          id: string
+          is_active: boolean | null
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          granted_at?: string | null
+          granted_by?: string | null
+          id?: string
+          is_active?: boolean | null
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          granted_at?: string | null
+          granted_by?: string | null
+          id?: string
+          is_active?: boolean | null
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       whisper_messages: {
         Row: {
@@ -1420,9 +1764,28 @@ export type Database = {
         Args: { p_cidr: string; p_ip: string }
         Returns: boolean
       }
+      check_rate_limit: {
+        Args: { _endpoint: string; _ip_address: string; _user_id?: string }
+        Returns: Json
+      }
       get_user_agent_id: { Args: never; Returns: string }
       get_user_agent_name: { Args: never; Returns: string }
       get_user_role: { Args: never; Returns: string }
+      get_user_roles: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"][]
+      }
+      has_permission: {
+        Args: { _permission_name: string; _user_id: string }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       is_admin_or_supervisor: { Args: never; Returns: boolean }
       log_audit_event: {
         Args: {
@@ -1436,7 +1799,7 @@ export type Database = {
       validate_audit_insert: { Args: never; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "supervisor" | "agent" | "viewer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1563,6 +1926,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "supervisor", "agent", "viewer"],
+    },
   },
 } as const
