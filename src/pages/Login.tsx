@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useIPValidation } from '@/hooks/useIPValidation';
+import { useLoginLockout } from '@/hooks/useLoginLockout';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
-import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin, Fingerprint, Eye, EyeOff } from 'lucide-react';
+import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin, Eye, EyeOff, Lock, Clock } from 'lucide-react';
 import { PasskeyLogin } from '@/components/auth/PasskeyLogin';
 import { isWebAuthnSupported } from '@/lib/webauthn/webauthn-utils';
 
@@ -27,12 +28,41 @@ export default function Login() {
     countryCode: string;
   } | null>(null);
   const [ipLoading, setIpLoading] = useState(true);
+  const [countdown, setCountdown] = useState(0);
   const { signIn, signOut } = useAuthContext();
   const { validateIP } = useIPValidation();
+  const { 
+    lockoutStatus, 
+    checkLockout, 
+    recordFailedAttempt, 
+    recordSuccessfulLogin,
+    formatRemainingTime 
+  } = useLoginLockout();
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/';
+
+  // Countdown timer for lockout
+  useEffect(() => {
+    if (lockoutStatus?.locked && lockoutStatus.remainingSeconds) {
+      setCountdown(lockoutStatus.remainingSeconds);
+      const interval = setInterval(() => {
+        setCountdown(prev => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            // Recheck lockout status
+            if (email) {
+              checkLockout(email);
+            }
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [lockoutStatus?.locked, lockoutStatus?.remainingSeconds, email, checkLockout]);
 
   // Fetch user's IP address and geolocation on component mount
   useEffect(() => {
@@ -75,8 +105,28 @@ export default function Login() {
     fetchIPInfo();
   }, []);
 
+  // Check lockout when email changes
+  useEffect(() => {
+    if (email && email.includes('@')) {
+      const timeoutId = setTimeout(() => {
+        checkLockout(email);
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [email, checkLockout]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check if account is locked
+    const currentLockout = await checkLockout(email);
+    if (currentLockout.locked) {
+      toast.error('Conta temporariamente bloqueada', {
+        description: `Tente novamente em ${formatRemainingTime(currentLockout.remainingSeconds || 60)}`,
+      });
+      return;
+    }
+
     setIsLoading(true);
     setIpBlocked(false);
 
@@ -84,11 +134,22 @@ export default function Login() {
       const { data, error } = await signIn(email, password);
       
       if (error) {
-        toast.error('Erro ao fazer login', {
-          description: error.message === 'Invalid login credentials' 
-            ? 'Email ou senha incorretos'
-            : 'Verifique suas credenciais e tente novamente',
-        });
+        // Record failed attempt
+        const lockResult = await recordFailedAttempt(email, ipInfo?.ip);
+        
+        if (lockResult.locked) {
+          toast.error('Conta bloqueada', {
+            description: `Muitas tentativas falhas. Tente novamente em ${formatRemainingTime(lockResult.remainingSeconds || 60)}`,
+            duration: 10000,
+          });
+        } else {
+          const remainingAttempts = lockResult.remainingAttempts || (5 - lockResult.attempts);
+          toast.error('Erro ao fazer login', {
+            description: remainingAttempts > 0
+              ? `Email ou senha incorretos. ${remainingAttempts} tentativa${remainingAttempts > 1 ? 's' : ''} restante${remainingAttempts > 1 ? 's' : ''}.`
+              : 'Email ou senha incorretos.',
+          });
+        }
         return;
       }
 
@@ -124,6 +185,9 @@ export default function Login() {
           });
           return;
         }
+
+        // Record successful login
+        await recordSuccessfulLogin(email, ipInfo?.ip);
       }
 
       toast.success('Login realizado com sucesso');
@@ -134,6 +198,8 @@ export default function Login() {
       setIsLoading(false);
     }
   };
+
+  const isLocked = lockoutStatus?.locked || countdown > 0;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
@@ -147,6 +213,29 @@ export default function Login() {
             Sistema de gerenciamento de call center
           </p>
         </div>
+
+        {/* Account Lockout Alert */}
+        {isLocked && (
+          <Alert className="border-destructive bg-destructive/10">
+            <div className="flex items-center gap-3">
+              <Lock className="h-5 w-5 text-destructive" />
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-destructive">Conta Temporariamente Bloqueada</span>
+                </div>
+                <AlertDescription className="text-xs mt-1 text-destructive">
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-3 w-3" />
+                    <span>
+                      Muitas tentativas de login falhas. Tente novamente em{' '}
+                      <strong>{formatRemainingTime(countdown)}</strong>
+                    </span>
+                  </div>
+                </AlertDescription>
+              </div>
+            </div>
+          </Alert>
+        )}
 
         {/* IP Detection Alert */}
         <Alert className={`${ipBlocked ? 'border-destructive bg-destructive/10' : 'border-primary/30 bg-primary/5'}`}>
@@ -250,7 +339,7 @@ export default function Login() {
               <Button 
                 type="submit" 
                 className="w-full" 
-                disabled={isLoading}
+                disabled={isLoading || isLocked}
               >
                 {isLoading ? (
                   <>
