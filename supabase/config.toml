@@ -62,3 +62,6 @@ verify_jwt = false
 
 [functions.webauthn-authenticate]
 verify_jwt = false
+
+[functions.validate-geo]
+verify_jwt = false

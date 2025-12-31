@@ -50,6 +50,7 @@ import Permissions from "./pages/Permissions";
 import RateLimitDashboard from "./pages/RateLimitDashboard";
 import SessionManagement from "./pages/SessionManagement";
 import SecurityDashboard from "./pages/SecurityDashboard";
+import GeoBlocking from "./pages/GeoBlocking";
 
 const queryClient = new QueryClient();
 
@@ -158,6 +159,11 @@ const App = () => (
                         <Route path="/rate-limit" element={
                           <ProtectedRoute requiredRoles={['admin']}>
                             <RateLimitDashboard />
+                          </ProtectedRoute>
+                        } />
+                        <Route path="/geo-blocking" element={
+                          <ProtectedRoute requiredRoles={['admin']}>
+                            <GeoBlocking />
                           </ProtectedRoute>
                         } />
                         <Route path="*" element={<NotFound />} />
