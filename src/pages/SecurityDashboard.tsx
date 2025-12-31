@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useSessionManager } from '@/hooks/useSessionManager';
 import { useMFA } from '@/hooks/useMFA';
+import { useSecurityNotifications } from '@/hooks/useSecurityNotifications';
 import { supabase } from '@/integrations/supabase/client';
+import { NotificationPermissionBanner } from '@/components/security/NotificationPermissionBanner';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -36,6 +38,7 @@ import {
   Eye,
   TrendingUp,
   Loader2,
+  Bell,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -227,6 +230,9 @@ export default function SecurityDashboard() {
 
   return (
     <div className="container max-w-7xl py-8 space-y-8">
+      {/* Notification Permission Banner */}
+      <NotificationPermissionBanner />
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
