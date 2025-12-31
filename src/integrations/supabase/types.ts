@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      account_lockouts: {
+        Row: {
+          created_at: string
+          email: string
+          failed_attempts: number
+          id: string
+          last_failed_at: string | null
+          locked_until: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          failed_attempts?: number
+          id?: string
+          last_failed_at?: string | null
+          locked_until?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          failed_attempts?: number
+          id?: string
+          last_failed_at?: string | null
+          locked_until?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       active_sessions: {
         Row: {
           created_at: string | null
@@ -1313,6 +1343,33 @@ export type Database = {
         }
         Relationships: []
       }
+      login_attempts: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          ip_address: string | null
+          success: boolean
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          ip_address?: string | null
+          success?: boolean
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          ip_address?: string | null
+          success?: boolean
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       password_reset_requests: {
         Row: {
           created_at: string
@@ -1989,6 +2046,7 @@ export type Database = {
         Args: { p_cidr: string; p_ip: string }
         Returns: boolean
       }
+      check_login_lockout: { Args: { p_email: string }; Returns: Json }
       check_rate_limit: {
         Args: { _endpoint: string; _ip_address: string; _user_id?: string }
         Returns: Json
@@ -2021,6 +2079,14 @@ export type Database = {
           p_resource_type: string
         }
         Returns: string
+      }
+      record_failed_login: {
+        Args: { p_email: string; p_ip_address?: string; p_user_agent?: string }
+        Returns: Json
+      }
+      record_successful_login: {
+        Args: { p_email: string; p_ip_address?: string; p_user_agent?: string }
+        Returns: undefined
       }
       validate_audit_insert: { Args: never; Returns: boolean }
     }
