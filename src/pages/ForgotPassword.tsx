@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
-import { Loader2, Mail, ArrowLeft, CheckCircle, Phone } from 'lucide-react';
+import { Loader2, Mail, ArrowLeft, CheckCircle, Phone, ShieldCheck } from 'lucide-react';
 import { z } from 'zod';
 
 const emailSchema = z.string().email('Email inválido').max(255, 'Email muito longo');
@@ -15,7 +15,7 @@ const emailSchema = z.string().email('Email inválido').max(255, 'Email muito lo
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
+  const [requestSent, setRequestSent] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,19 +32,20 @@ export default function ForgotPassword() {
     setIsLoading(true);
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+      // Use the approval-based reset flow
+      const { data, error: fnError } = await supabase.functions.invoke('request-password-reset', {
+        body: { email: email.trim().toLowerCase() }
       });
 
-      if (error) {
-        // Não revelar se o email existe ou não por segurança
-        console.error('Password reset error:', error);
+      if (fnError) {
+        console.error('Password reset request error:', fnError);
+        toast.error('Erro ao solicitar redefinição');
+        return;
       }
 
-      // Sempre mostrar sucesso para não revelar se o email existe
-      setEmailSent(true);
-      toast.success('Email enviado', {
-        description: 'Se o email existir, você receberá instruções para redefinir sua senha.',
+      setRequestSent(true);
+      toast.success('Solicitação enviada', {
+        description: data.message,
       });
     } catch (err) {
       console.error('Unexpected error:', err);
@@ -56,7 +57,7 @@ export default function ForgotPassword() {
     }
   };
 
-  if (emailSent) {
+  if (requestSent) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background p-4">
         <div className="w-full max-w-md space-y-8">
@@ -64,27 +65,32 @@ export default function ForgotPassword() {
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-green-500/10 mb-4">
               <CheckCircle className="h-8 w-8 text-green-500" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight">Email Enviado!</h1>
+            <h1 className="text-2xl font-bold tracking-tight">Solicitação Enviada!</h1>
             <p className="text-muted-foreground mt-2 max-w-sm">
-              Se uma conta existir com o email <strong>{email}</strong>, você receberá instruções para redefinir sua senha.
+              Sua solicitação de redefinição de senha foi enviada para aprovação.
             </p>
           </div>
 
           <Card className="border-border/50">
             <CardContent className="pt-6 space-y-4">
               <Alert className="border-primary/30 bg-primary/5">
-                <Mail className="h-4 w-4" />
+                <ShieldCheck className="h-4 w-4" />
                 <AlertDescription>
-                  Verifique sua caixa de entrada e pasta de spam. O link expira em 1 hora.
+                  Um administrador irá revisar sua solicitação. Após a aprovação, você receberá um email com instruções para redefinir sua senha.
                 </AlertDescription>
               </Alert>
+              
+              <div className="p-4 bg-muted/50 rounded-lg text-sm text-muted-foreground">
+                <p className="font-medium text-foreground mb-2">Por que precisa de aprovação?</p>
+                <p>Para sua segurança, todas as solicitações de redefinição de senha são revisadas manualmente por um administrador antes de serem processadas.</p>
+              </div>
               
               <div className="space-y-2">
                 <Button 
                   variant="outline" 
                   className="w-full"
                   onClick={() => {
-                    setEmailSent(false);
+                    setRequestSent(false);
                     setEmail('');
                   }}
                 >
@@ -114,7 +120,7 @@ export default function ForgotPassword() {
           </div>
           <h1 className="text-2xl font-bold tracking-tight">Esqueci Minha Senha</h1>
           <p className="text-muted-foreground mt-2">
-            Digite seu email para receber instruções de recuperação
+            Solicite a redefinição da sua senha
           </p>
         </div>
 
@@ -122,7 +128,7 @@ export default function ForgotPassword() {
           <CardHeader className="space-y-1">
             <CardTitle className="text-xl">Recuperar Senha</CardTitle>
             <CardDescription>
-              Enviaremos um link para redefinir sua senha
+              Sua solicitação será enviada para aprovação de um administrador
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
@@ -132,6 +138,13 @@ export default function ForgotPassword() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
+              
+              <Alert className="border-yellow-500/30 bg-yellow-500/5">
+                <ShieldCheck className="h-4 w-4 text-yellow-500" />
+                <AlertDescription className="text-yellow-200">
+                  Por segurança, redefinições de senha requerem aprovação de um administrador.
+                </AlertDescription>
+              </Alert>
               
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
@@ -161,7 +174,7 @@ export default function ForgotPassword() {
                 ) : (
                   <>
                     <Mail className="mr-2 h-4 w-4" />
-                    Enviar Email de Recuperação
+                    Solicitar Redefinição
                   </>
                 )}
               </Button>
