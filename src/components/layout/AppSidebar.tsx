@@ -25,6 +25,7 @@ import {
   Key,
   Monitor,
   Lock,
+  Fingerprint,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -73,6 +74,7 @@ const securityNavItems = [
   { title: 'Central de Segurança', url: '/security', icon: ShieldCheck },
   { title: 'Sessões Ativas', url: '/sessions', icon: Monitor },
   { title: 'Autenticação 2FA', url: '/two-factor-auth', icon: Key },
+  { title: 'Passkeys', url: '/passkeys', icon: Fingerprint },
   { title: 'Whitelist IPs', url: '/ip-whitelist', icon: Lock },
   { title: 'Acessos Bloqueados', url: '/blocked-access-logs', icon: Shield },
   { title: 'Rate Limit', url: '/rate-limit', icon: Activity },
