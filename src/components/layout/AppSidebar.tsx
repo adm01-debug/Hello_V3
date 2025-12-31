@@ -20,7 +20,11 @@ import {
   Calendar,
   Activity,
   History,
-  Shield
+  Shield,
+  ShieldCheck,
+  Key,
+  Monitor,
+  Lock,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -65,13 +69,22 @@ const toolsNavItems = [
   { title: 'Relatórios', url: '/reports', icon: BarChart3 },
 ];
 
+const securityNavItems = [
+  { title: 'Central de Segurança', url: '/security', icon: ShieldCheck },
+  { title: 'Sessões Ativas', url: '/sessions', icon: Monitor },
+  { title: 'Autenticação 2FA', url: '/two-factor-auth', icon: Key },
+  { title: 'Whitelist IPs', url: '/ip-whitelist', icon: Lock },
+  { title: 'Acessos Bloqueados', url: '/blocked-access-logs', icon: Shield },
+  { title: 'Rate Limit', url: '/rate-limit', icon: Activity },
+];
+
 const settingsNavItems = [
   { title: 'Alertas de Hold', url: '/hold-settings', icon: AlertTriangle },
   { title: 'Alertas de Fila', url: '/queue-metrics-settings', icon: Activity },
   { title: 'Logs de Auditoria', url: '/audit-logs', icon: Shield },
   { title: 'Monitoramento', url: '/security-monitoring', icon: Activity },
-  { title: 'Whitelist IPs', url: '/ip-whitelist', icon: Shield },
   { title: 'Relatório Segurança', url: '/security-report', icon: Shield },
+  { title: 'Roles & Permissões', url: '/roles', icon: Users },
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];
 
@@ -143,6 +156,21 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
               {toolsNavItems.map((item) => (
+                <NavItem key={item.url} item={item} />
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup className="mt-6">
+          {!collapsed && (
+            <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/50">
+              Segurança
+            </SidebarGroupLabel>
+          )}
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {securityNavItems.map((item) => (
                 <NavItem key={item.url} item={item} />
               ))}
             </SidebarMenu>
