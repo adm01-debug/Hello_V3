@@ -308,7 +308,7 @@ export class JobQueueManager {
     queue.process(concurrency, async (job: Job) => {
       try {
         // Decrypt sensitive data
-        const decrypted Data = job.data.encrypted
+        const decryptedData = job.data.encrypted
           ? encryption.decrypt(job.data.encrypted)
           : job.data;
 

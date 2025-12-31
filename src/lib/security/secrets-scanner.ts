@@ -70,8 +70,7 @@ export class SecretsScanner {
 
   scanText(text: string, filename: string = 'unknown'): SecretMatch[] {
     const matches: SecretMatch[] = [];
-    const lines = text.split('
-');
+    const lines = text.split('\n');
 
     for (let lineNum = 0; lineNum < lines.length; lineNum++) {
       const line = lines[lineNum];
@@ -111,18 +110,12 @@ export class SecretsScanner {
       return 'No secrets detected.';
     }
 
-    let report = `Found ${matches.length} potential secrets:
-
-`;
+    let report = `Found ${matches.length} potential secrets:\n\n`;
     
     for (const match of matches) {
-      report += `[${match.severity.toUpperCase()}] ${match.pattern}
-`;
-      report += `  File: ${match.file}:${match.line}:${match.column}
-`;
-      report += `  Match: ${match.match.substring(0, 20)}...
-
-`;
+      report += `[${match.severity.toUpperCase()}] ${match.pattern}\n`;
+      report += `  File: ${match.file}:${match.line}:${match.column}\n`;
+      report += `  Match: ${match.match.substring(0, 20)}...\n\n`;
     }
 
     return report;

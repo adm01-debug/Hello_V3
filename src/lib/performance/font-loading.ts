@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface FontLoadingStrategy {
   fonts: FontConfig[];
   display: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
@@ -56,8 +58,7 @@ export function generateFontFaceCSS(config: FontConfig): string {
     }
   }
 
-  return fontFaces.join('
-');
+  return fontFaces.join('\n');
 }
 
 // Generate preload links
@@ -84,8 +85,7 @@ export function generateFontPreloads(strategy: FontLoadingStrategy): string {
     }
   }
 
-  return preloads.join('
-');
+  return preloads.join('\n');
 }
 
 // Font loading with Font Loading API

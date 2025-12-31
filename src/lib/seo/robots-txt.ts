@@ -16,11 +16,8 @@ export function generateRobotsTxt(configs: RobotsTxtConfig[]): string {
       lines.push(`Sitemap: ${config.sitemap}`);
     }
     
-    return lines.join('
-');
-  }).join('
-
-');
+    return lines.join('\n');
+  }).join('\n\n');
 }
 
 export const DEFAULT_ROBOTS: RobotsTxtConfig[] = [

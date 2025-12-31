@@ -6,18 +6,16 @@ export interface SitemapURL {
 }
 
 export function generateSitemap(urls: SitemapURL[]): string {
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(url => `  <url>
-    <loc>${url.loc}</loc>
-    ${url.lastmod ? `<lastmod>${url.lastmod}</lastmod>` : ''}
-    ${url.changefreq ? `<changefreq>${url.changefreq}</changefreq>` : ''}
-    ${url.priority ? `<priority>${url.priority}</priority>` : ''}
-  </url>`).join('
-')}
-</urlset>`;
+  const urlElements = urls.map(url => {
+    let element = `  <url>\n    <loc>${url.loc}</loc>`;
+    if (url.lastmod) element += `\n    <lastmod>${url.lastmod}</lastmod>`;
+    if (url.changefreq) element += `\n    <changefreq>${url.changefreq}</changefreq>`;
+    if (url.priority) element += `\n    <priority>${url.priority}</priority>`;
+    element += '\n  </url>';
+    return element;
+  }).join('\n');
 
-  return xml;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlElements}\n</urlset>`;
 }
 
 export const DEFAULT_URLS: SitemapURL[] = [
