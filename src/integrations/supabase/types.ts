@@ -1063,6 +1063,114 @@ export type Database = {
         }
         Relationships: []
       }
+      geo_access_logs: {
+        Row: {
+          action: string
+          city: string | null
+          country_code: string | null
+          country_name: string | null
+          created_at: string
+          id: string
+          ip_address: string
+          reason: string | null
+          region: string | null
+          user_agent: string | null
+          user_email: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          city?: string | null
+          country_code?: string | null
+          country_name?: string | null
+          created_at?: string
+          id?: string
+          ip_address: string
+          reason?: string | null
+          region?: string | null
+          user_agent?: string | null
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          city?: string | null
+          country_code?: string | null
+          country_name?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: string
+          reason?: string | null
+          region?: string | null
+          user_agent?: string | null
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      geo_restrictions: {
+        Row: {
+          country_code: string
+          country_name: string
+          created_at: string
+          created_by: string | null
+          id: string
+          reason: string | null
+          restriction_type: string
+          updated_at: string
+        }
+        Insert: {
+          country_code: string
+          country_name: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          reason?: string | null
+          restriction_type: string
+          updated_at?: string
+        }
+        Update: {
+          country_code?: string
+          country_name?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          reason?: string | null
+          restriction_type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      geo_settings: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          id: string
+          log_blocked_attempts: boolean
+          mode: string
+          notify_on_block: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          log_blocked_attempts?: boolean
+          mode?: string
+          notify_on_block?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          log_blocked_attempts?: boolean
+          mode?: string
+          notify_on_block?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       goal_violations: {
         Row: {
           actual_value: number
