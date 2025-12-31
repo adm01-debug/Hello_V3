@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 import { toast } from 'sonner';
 
 const SESSION_DURATION_HOURS = 24;
@@ -30,9 +31,11 @@ interface ActiveSession {
 
 export function useSessionManager() {
   const { user, session } = useAuthContext();
+  const { checkAndNotifyNewDevice, getDeviceInfo: detectDeviceInfo, getLocationInfo } = useDeviceDetection();
   const [sessions, setSessions] = useState<ActiveSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+  const [hasCheckedDevice, setHasCheckedDevice] = useState(false);
 
   const getDeviceInfo = useCallback(() => {
     const ua = navigator.userAgent;
@@ -188,6 +191,18 @@ export function useSessionManager() {
       }
     }
   }, [session]);
+
+  // Check for new device on login
+  useEffect(() => {
+    if (user && session && !hasCheckedDevice) {
+      setHasCheckedDevice(true);
+      checkAndNotifyNewDevice(
+        user.id, 
+        user.email || '', 
+        user.user_metadata?.full_name
+      );
+    }
+  }, [user, session, hasCheckedDevice, checkAndNotifyNewDevice]);
 
   // Initialize session on mount
   useEffect(() => {

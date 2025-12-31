@@ -64,7 +64,7 @@ export default function SessionManagement() {
   } = useSessionManager();
   const { requestReauth, isRequired, cancelReauth } = useReauth();
   
-  const [pendingAction, setPendingAction] = useState<{\
+  const [pendingAction, setPendingAction] = useState<{
     type: 'revoke' | 'revoke_all';
     sessionId?: string;
   } | null>(null);
@@ -207,9 +207,8 @@ export default function SessionManagement() {
             </CardTitle>
             <CardDescription>
               {otherSessions.length > 0 
-              {otherSessions.length > 0 
-                ? `${otherSessions.length} sessoes ativas em outros dispositivos`
-                : 'Nenhuma outra sessao ativa'
+                ? `${otherSessions.length} sessões ativas em outros dispositivos`
+                : 'Nenhuma outra sessão ativa'
               }
             </CardDescription>
           </div>
