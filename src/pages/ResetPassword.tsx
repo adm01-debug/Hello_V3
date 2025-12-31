@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
 import { Loader2, Lock, CheckCircle, Phone, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { z } from 'zod';
+import { PasswordStrength } from '@/components/auth/PasswordStrength';
 
 const passwordSchema = z.object({
   password: z.string()
@@ -53,20 +54,6 @@ export default function ResetPassword() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const getPasswordStrength = (pass: string): { score: number; label: string; color: string } => {
-    let score = 0;
-    if (pass.length >= 8) score++;
-    if (pass.length >= 12) score++;
-    if (/[A-Z]/.test(pass)) score++;
-    if (/[a-z]/.test(pass)) score++;
-    if (/[0-9]/.test(pass)) score++;
-    if (/[^A-Za-z0-9]/.test(pass)) score++;
-
-    if (score <= 2) return { score: 25, label: 'Fraca', color: 'bg-destructive' };
-    if (score <= 4) return { score: 50, label: 'Média', color: 'bg-yellow-500' };
-    if (score <= 5) return { score: 75, label: 'Forte', color: 'bg-primary' };
-    return { score: 100, label: 'Muito Forte', color: 'bg-green-500' };
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -172,8 +159,6 @@ export default function ResetPassword() {
     );
   }
 
-  const strength = getPasswordStrength(password);
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <div className="w-full max-w-md space-y-8">
@@ -227,22 +212,7 @@ export default function ResetPassword() {
                   <p className="text-sm text-destructive">{errors.password}</p>
                 )}
                 
-                {password && (
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-muted-foreground">Força da senha</span>
-                      <span className={`font-medium ${strength.color.replace('bg-', 'text-')}`}>
-                        {strength.label}
-                      </span>
-                    </div>
-                    <div className="h-2 bg-muted rounded-full overflow-hidden">
-                      <div 
-                        className={`h-full transition-all duration-300 ${strength.color}`}
-                        style={{ width: `${strength.score}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
+                <PasswordStrength password={password} />
               </div>
 
               <div className="space-y-2">
