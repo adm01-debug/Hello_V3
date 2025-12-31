@@ -65,3 +65,9 @@ verify_jwt = false
 
 [functions.validate-geo]
 verify_jwt = false
+
+[functions.request-password-reset]
+verify_jwt = false
+
+[functions.approve-password-reset]
+verify_jwt = true

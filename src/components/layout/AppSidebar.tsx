@@ -78,6 +78,7 @@ const securityNavItems = [
   { title: 'Passkeys', url: '/passkeys', icon: Fingerprint },
   { title: 'Whitelist IPs', url: '/ip-whitelist', icon: Lock },
   { title: 'Bloqueio Geográfico', url: '/geo-blocking', icon: Globe },
+  { title: 'Reset de Senha', url: '/password-reset-approval', icon: Key },
   { title: 'Acessos Bloqueados', url: '/blocked-access-logs', icon: Shield },
   { title: 'Rate Limit', url: '/rate-limit', icon: Activity },
 ];
