@@ -56,3 +56,6 @@ verify_jwt = true
 
 [functions.notify-blocked-ip]
 verify_jwt = false
+
+[functions.notify-new-device]
+verify_jwt = false
