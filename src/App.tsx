@@ -47,6 +47,8 @@ import TwoFactorAuth from "./pages/TwoFactorAuth";
 import Roles from "./pages/Roles";
 import Permissions from "./pages/Permissions";
 import RateLimitDashboard from "./pages/RateLimitDashboard";
+import SessionManagement from "./pages/SessionManagement";
+import SecurityDashboard from "./pages/SecurityDashboard";
 
 const queryClient = new QueryClient();
 
@@ -114,6 +116,8 @@ const App = () => (
                         <Route path="/coaching" element={<Coaching />} />
                         <Route path="/settings" element={<Settings />} />
                         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
+                        <Route path="/sessions" element={<SessionManagement />} />
+                        <Route path="/security" element={<SecurityDashboard />} />
                         <Route path="/audit-logs" element={
                           <ProtectedRoute requiredRoles={['admin']}>
                             <AuditLogs />
