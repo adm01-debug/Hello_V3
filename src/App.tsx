@@ -40,6 +40,13 @@ import SecurityReport from "./pages/SecurityReport";
 import SecurityMonitoring from "./pages/SecurityMonitoring";
 import IPWhitelist from "./pages/IPWhitelist";
 import BlockedAccessLogs from "./pages/BlockedAccessLogs";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
+import TwoFactorAuth from "./pages/TwoFactorAuth";
+import Roles from "./pages/Roles";
+import Permissions from "./pages/Permissions";
+import RateLimitDashboard from "./pages/RateLimitDashboard";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +62,9 @@ const App = () => (
               {/* Public routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
               <Route path="/unauthorized" element={<Unauthorized />} />
               
               {/* Protected routes */}
@@ -103,6 +113,7 @@ const App = () => (
                         } />
                         <Route path="/coaching" element={<Coaching />} />
                         <Route path="/settings" element={<Settings />} />
+                        <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
                         <Route path="/audit-logs" element={
                           <ProtectedRoute requiredRoles={['admin']}>
                             <AuditLogs />
@@ -126,6 +137,21 @@ const App = () => (
                         <Route path="/blocked-access-logs" element={
                           <ProtectedRoute requiredRoles={['admin']}>
                             <BlockedAccessLogs />
+                          </ProtectedRoute>
+                        } />
+                        <Route path="/roles" element={
+                          <ProtectedRoute requiredRoles={['admin']}>
+                            <Roles />
+                          </ProtectedRoute>
+                        } />
+                        <Route path="/permissions" element={
+                          <ProtectedRoute requiredRoles={['admin']}>
+                            <Permissions />
+                          </ProtectedRoute>
+                        } />
+                        <Route path="/rate-limit" element={
+                          <ProtectedRoute requiredRoles={['admin']}>
+                            <RateLimitDashboard />
                           </ProtectedRoute>
                         } />
                         <Route path="*" element={<NotFound />} />
