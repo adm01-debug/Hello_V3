@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { useMFA } from '@/hooks/useMFA';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -13,135 +14,107 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { 
   Loader2, Shield, ShieldCheck, Smartphone, Key, Copy, 
-  RefreshCw, CheckCircle, AlertTriangle, QrCode 
+  CheckCircle, AlertTriangle, QrCode, Phone as PhoneIcon,
+  MessageSquare
 } from 'lucide-react';
-
-interface MFAFactor {
-  id: string;
-  type: string;
-  status: string;
-  friendly_name?: string;
-}
 
 export default function TwoFactorAuth() {
   const { user } = useAuthContext();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-  const [enrolling, setEnrolling] = useState(false);
-  const [verifying, setVerifying] = useState(false);
-  const [factors, setFactors] = useState<MFAFactor[]>([]);
-  const [qrCode, setQrCode] = useState<string | null>(null);
-  const [secret, setSecret] = useState<string | null>(null);
-  const [factorId, setFactorId] = useState<string | null>(null);
+  const {
+    factors,
+    settings,
+    isLoading,
+    enrolling,
+    hasActiveMFA,
+    hasTOTP,
+    hasPhone,
+    enrollTOTP,
+    enrollPhone,
+    verifyFactor,
+    unenrollFactor,
+    generateBackupCodes,
+    saveSettings,
+  } = useMFA();
+
+  const [enrollmentData, setEnrollmentData] = useState<{
+    type: 'totp' | 'phone';
+    factorId?: string;
+    qrCode?: string;
+    secret?: string;
+  } | null>(null);
   const [verificationCode, setVerificationCode] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [backupCodes, setBackupCodes] = useState<string[]>([]);
   const [showBackupCodes, setShowBackupCodes] = useState(false);
+  const [verifying, setVerifying] = useState(false);
 
-  useEffect(() => {
-    loadMFAFactors();
-  }, []);
-
-  const loadMFAFactors = async () => {
-    try {
-      const { data, error } = await supabase.auth.mfa.listFactors();
-      if (error) throw error;
-      setFactors(data.totp || []);
-    } catch (error) {
-      console.error('Error loading MFA factors:', error);
-    } finally {
-      setIsLoading(false);
+  const startTOTPEnrollment = async () => {
+    const result = await enrollTOTP('CallCenter Pro Authenticator');
+    if (result) {
+      setEnrollmentData({
+        type: 'totp',
+        factorId: result.factorId,
+        qrCode: result.qrCode,
+        secret: result.secret,
+      });
+      const codes = generateBackupCodes();
+      setBackupCodes(codes);
     }
   };
 
-  const startEnrollment = async () => {
-    setEnrolling(true);
-    try {
-      const { data, error } = await supabase.auth.mfa.enroll({
-        factorType: 'totp',
-        friendlyName: 'CallCenter Pro Authenticator',
+  const startPhoneEnrollment = async () => {
+    if (!phoneNumber || phoneNumber.length < 10) {
+      toast.error('Número de telefone inválido');
+      return;
+    }
+    const result = await enrollPhone(phoneNumber);
+    if (result) {
+      setEnrollmentData({
+        type: 'phone',
+        factorId: result.factorId,
       });
-
-      if (error) throw error;
-
-      setQrCode(data.totp.qr_code);
-      setSecret(data.totp.secret);
-      setFactorId(data.id);
-      
-      // Gerar códigos de backup
-      const codes = Array.from({ length: 10 }, () => 
-        Math.random().toString(36).substring(2, 8).toUpperCase()
-      );
-      setBackupCodes(codes);
-      
-    } catch (error: any) {
-      toast.error('Erro ao iniciar configuração', {
-        description: error.message,
-      });
-    } finally {
-      setEnrolling(false);
     }
   };
 
   const verifyAndEnable = async () => {
-    if (!factorId || verificationCode.length !== 6) return;
+    if (!enrollmentData?.factorId || verificationCode.length !== 6) return;
     
     setVerifying(true);
-    try {
-      const { data: challengeData, error: challengeError } = await supabase.auth.mfa.challenge({
-        factorId,
-      });
-
-      if (challengeError) throw challengeError;
-
-      const { error: verifyError } = await supabase.auth.mfa.verify({
-        factorId,
-        challengeId: challengeData.id,
-        code: verificationCode,
-      });
-
-      if (verifyError) throw verifyError;
-
-      // Salvar códigos de backup no banco
-      await supabase.from('user_mfa_settings').upsert({
-        user_id: user?.id,
+    const success = await verifyFactor(enrollmentData.factorId, verificationCode);
+    
+    if (success) {
+      await saveSettings({
         mfa_enabled: true,
-        mfa_method: 'totp',
-        backup_codes: backupCodes,
+        mfa_method: enrollmentData.type === 'totp' && hasPhone ? 'both' : 
+                    enrollmentData.type === 'phone' && hasTOTP ? 'both' : 
+                    enrollmentData.type,
+        backup_codes: backupCodes.length > 0 ? backupCodes : settings?.backup_codes || [],
         last_verified_at: new Date().toISOString(),
       });
-
+      
       toast.success('MFA ativado com sucesso!');
       setShowBackupCodes(true);
-      setQrCode(null);
-      await loadMFAFactors();
-      
-    } catch (error: any) {
-      toast.error('Código inválido', {
-        description: 'Verifique o código e tente novamente.',
-      });
-    } finally {
-      setVerifying(false);
+      setEnrollmentData(null);
+      setVerificationCode('');
     }
+    setVerifying(false);
   };
 
-  const disableMFA = async (factor: MFAFactor) => {
-    try {
-      const { error } = await supabase.auth.mfa.unenroll({
-        factorId: factor.id,
-      });
-
-      if (error) throw error;
-
-      await supabase.from('user_mfa_settings')
-        .update({ mfa_enabled: false })
-        .eq('user_id', user?.id);
-
-      toast.success('MFA desativado');
-      await loadMFAFactors();
-    } catch (error: any) {
-      toast.error('Erro ao desativar MFA', {
-        description: error.message,
-      });
+  const handleDisableFactor = async (factorId: string) => {
+    const success = await unenrollFactor(factorId);
+    if (success) {
+      const remainingFactors = factors.filter(f => f.id !== factorId && f.status === 'verified');
+      if (remainingFactors.length === 0) {
+        await saveSettings({ mfa_enabled: false, mfa_method: null });
+      } else {
+        const hasRemainingTOTP = remainingFactors.some(f => f.type === 'totp');
+        const hasRemainingPhone = remainingFactors.some(f => f.type === 'phone');
+        await saveSettings({
+          mfa_method: hasRemainingTOTP && hasRemainingPhone ? 'both' : 
+                      hasRemainingTOTP ? 'totp' : 'phone',
+        });
+      }
     }
   };
 
@@ -149,8 +122,6 @@ export default function TwoFactorAuth() {
     navigator.clipboard.writeText(text);
     toast.success('Copiado!');
   };
-
-  const hasActiveMFA = factors.some(f => f.status === 'verified');
 
   if (isLoading) {
     return (
@@ -169,22 +140,29 @@ export default function TwoFactorAuth() {
             Autenticação de Dois Fatores (2FA)
           </h1>
           <p className="text-muted-foreground mt-1">
-            Adicione uma camada extra de segurança à sua conta
+            Configure múltiplos métodos de autenticação para máxima segurança
           </p>
         </div>
-        <Badge variant={hasActiveMFA ? 'default' : 'secondary'}>
-          {hasActiveMFA ? (
-            <>
-              <ShieldCheck className="h-3 w-3 mr-1" />
-              Ativo
-            </>
-          ) : (
-            <>
+        <div className="flex gap-2">
+          {hasTOTP && (
+            <Badge variant="default" className="bg-blue-500">
+              <Smartphone className="h-3 w-3 mr-1" />
+              TOTP
+            </Badge>
+          )}
+          {hasPhone && (
+            <Badge variant="default" className="bg-green-500">
+              <MessageSquare className="h-3 w-3 mr-1" />
+              SMS
+            </Badge>
+          )}
+          {!hasActiveMFA && (
+            <Badge variant="secondary">
               <AlertTriangle className="h-3 w-3 mr-1" />
               Inativo
-            </>
+            </Badge>
           )}
-        </Badge>
+        </div>
       </div>
 
       <Tabs defaultValue="setup" className="space-y-4">
@@ -195,123 +173,143 @@ export default function TwoFactorAuth() {
         </TabsList>
 
         <TabsContent value="setup" className="space-y-4">
-          {hasActiveMFA ? (
-            <Card className="border-green-500/30 bg-green-500/5">
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10">
-                    <ShieldCheck className="h-6 w-6 text-green-500" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold">2FA Ativo</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Sua conta está protegida com autenticação de dois fatores
-                    </p>
-                  </div>
-                  <Button 
-                    variant="destructive" 
-                    size="sm"
-                    onClick={() => factors[0] && disableMFA(factors[0])}
-                  >
-                    Desativar
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ) : qrCode ? (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <QrCode className="h-5 w-5" />
-                  Configurar Autenticador
-                </CardTitle>
-                <CardDescription>
-                  Escaneie o QR Code com seu aplicativo autenticador
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex flex-col items-center gap-4 p-4 bg-white rounded-lg">
-                  <img 
-                    src={qrCode} 
-                    alt="QR Code para configuração do 2FA"
-                    className="w-48 h-48"
-                  />
-                </div>
-
-                <Alert>
-                  <Key className="h-4 w-4" />
-                  <AlertDescription className="flex items-center justify-between">
-                    <span className="font-mono text-sm">{secret}</span>
-                    <Button 
-                      variant="ghost" 
-                      size="icon"
-                      onClick={() => secret && copyToClipboard(secret)}
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                  </AlertDescription>
-                </Alert>
-
-                <div className="space-y-2">
-                  <Label htmlFor="code">Código de Verificação</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      id="code"
-                      type="text"
-                      placeholder="000000"
-                      maxLength={6}
-                      value={verificationCode}
-                      onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
-                      className="text-center text-2xl font-mono tracking-widest"
+          {/* TOTP Setup Card */}
+          <Card className={hasTOTP ? 'border-blue-500/30 bg-blue-500/5' : ''}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Smartphone className="h-5 w-5" />
+                Aplicativo Autenticador (TOTP)
+                {hasTOTP && <ShieldCheck className="h-4 w-4 text-blue-500 ml-auto" />}
+              </CardTitle>
+              <CardDescription>
+                Use um aplicativo como Google Authenticator ou Authy
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {enrollmentData?.type === 'totp' ? (
+                <div className="space-y-6">
+                  <div className="flex flex-col items-center gap-4 p-4 bg-white rounded-lg">
+                    <img 
+                      src={enrollmentData.qrCode} 
+                      alt="QR Code"
+                      className="w-48 h-48"
                     />
-                    <Button 
-                      onClick={verifyAndEnable}
-                      disabled={verificationCode.length !== 6 || verifying}
-                    >
-                      {verifying ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <CheckCircle className="h-4 w-4" />
-                      )}
-                    </Button>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    Digite o código de 6 dígitos do seu aplicativo autenticador
-                  </p>
+                  <Alert>
+                    <Key className="h-4 w-4" />
+                    <AlertDescription className="flex items-center justify-between">
+                      <span className="font-mono text-sm">{enrollmentData.secret}</span>
+                      <Button 
+                        variant="ghost" 
+                        size="icon"
+                        onClick={() => enrollmentData.secret && copyToClipboard(enrollmentData.secret)}
+                      >
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </AlertDescription>
+                  </Alert>
+                  <div className="space-y-2">
+                    <Label>Código de Verificação</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        placeholder="000000"
+                        maxLength={6}
+                        value={verificationCode}
+                        onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                        className="text-center text-2xl font-mono tracking-widest"
+                      />
+                      <Button 
+                        onClick={verifyAndEnable}
+                        disabled={verificationCode.length !== 6 || verifying}
+                      >
+                        {verifying ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle className="h-4 w-4" />}
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex flex-col items-center text-center gap-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                    <Smartphone className="h-8 w-8 text-primary" />
+              ) : hasTOTP ? (
+                <div className="flex items-center gap-4">
+                  <ShieldCheck className="h-6 w-6 text-blue-500" />
+                  <div className="flex-1">
+                    <p className="font-medium">TOTP Ativo</p>
+                    <p className="text-sm text-muted-foreground">Autenticador configurado</p>
                   </div>
-                  <div>
-                    <h3 className="font-semibold">Ativar 2FA</h3>
-                    <p className="text-sm text-muted-foreground max-w-md">
-                      Use um aplicativo autenticador como Google Authenticator, 
-                      Authy ou Microsoft Authenticator para gerar códigos de acesso.
-                    </p>
+                </div>
+              ) : (
+                <Button onClick={startTOTPEnrollment} disabled={enrolling} className="w-full">
+                  {enrolling ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <QrCode className="mr-2 h-4 w-4" />}
+                  Configurar Autenticador
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* SMS Setup Card */}
+          <Card className={hasPhone ? 'border-green-500/30 bg-green-500/5' : ''}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5" />
+                SMS (Código por Mensagem)
+                {hasPhone && <ShieldCheck className="h-4 w-4 text-green-500 ml-auto" />}
+              </CardTitle>
+              <CardDescription>
+                Receba códigos de verificação por SMS
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {enrollmentData?.type === 'phone' ? (
+                <div className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Um código foi enviado para {phoneNumber}
+                  </p>
+                  <div className="space-y-2">
+                    <Label>Código de Verificação</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        placeholder="000000"
+                        maxLength={6}
+                        value={verificationCode}
+                        onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                        className="text-center text-2xl font-mono tracking-widest"
+                      />
+                      <Button 
+                        onClick={verifyAndEnable}
+                        disabled={verificationCode.length !== 6 || verifying}
+                      >
+                        {verifying ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle className="h-4 w-4" />}
+                      </Button>
+                    </div>
                   </div>
-                  <Button onClick={startEnrollment} disabled={enrolling}>
-                    {enrolling ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Configurando...
-                      </>
-                    ) : (
-                      <>
-                        <Shield className="mr-2 h-4 w-4" />
-                        Configurar Autenticador
-                      </>
-                    )}
+                </div>
+              ) : hasPhone ? (
+                <div className="flex items-center gap-4">
+                  <ShieldCheck className="h-6 w-6 text-green-500" />
+                  <div className="flex-1">
+                    <p className="font-medium">SMS Ativo</p>
+                    <p className="text-sm text-muted-foreground">Verificação por SMS configurada</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Número de Telefone</Label>
+                    <Input
+                      type="tel"
+                      placeholder="+55 11 99999-9999"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                    />
+                  </div>
+                  <Button onClick={startPhoneEnrollment} disabled={enrolling} className="w-full">
+                    {enrolling ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <PhoneIcon className="mr-2 h-4 w-4" />}
+                    Configurar SMS
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              )}
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="backup" className="space-y-4">
@@ -322,20 +320,20 @@ export default function TwoFactorAuth() {
                 Códigos de Backup
               </CardTitle>
               <CardDescription>
-                Use estes códigos para acessar sua conta caso perca acesso ao autenticador
+                Use estes códigos caso perca acesso aos seus dispositivos
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {showBackupCodes || backupCodes.length > 0 ? (
+              {showBackupCodes || backupCodes.length > 0 || (settings?.backup_codes?.length || 0) > 0 ? (
                 <div className="space-y-4">
                   <Alert variant="destructive">
                     <AlertTriangle className="h-4 w-4" />
                     <AlertDescription>
-                      Guarde estes códigos em um local seguro. Cada código só pode ser usado uma vez.
+                      Guarde estes códigos em local seguro. Cada código só pode ser usado uma vez.
                     </AlertDescription>
                   </Alert>
                   <div className="grid grid-cols-2 gap-2 p-4 bg-muted rounded-lg font-mono text-sm">
-                    {backupCodes.map((code, index) => (
+                    {(backupCodes.length > 0 ? backupCodes : settings?.backup_codes || []).map((code, index) => (
                       <div key={index} className="flex items-center justify-between p-2 bg-background rounded">
                         <span>{code}</span>
                       </div>
@@ -343,7 +341,7 @@ export default function TwoFactorAuth() {
                   </div>
                   <Button 
                     variant="outline" 
-                    onClick={() => copyToClipboard(backupCodes.join('\n'))}
+                    onClick={() => copyToClipboard((backupCodes.length > 0 ? backupCodes : settings?.backup_codes || []).join('\n'))}
                     className="w-full"
                   >
                     <Copy className="mr-2 h-4 w-4" />
@@ -365,11 +363,8 @@ export default function TwoFactorAuth() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Smartphone className="h-5 w-5" />
-                Dispositivos Autenticadores
+                Fatores de Autenticação Configurados
               </CardTitle>
-              <CardDescription>
-                Gerencie os dispositivos configurados para 2FA
-              </CardDescription>
             </CardHeader>
             <CardContent>
               {factors.length > 0 ? (
@@ -380,20 +375,24 @@ export default function TwoFactorAuth() {
                       className="flex items-center justify-between p-4 border rounded-lg"
                     >
                       <div className="flex items-center gap-3">
-                        <Smartphone className="h-5 w-5 text-muted-foreground" />
+                        {factor.type === 'totp' ? (
+                          <Smartphone className="h-5 w-5 text-blue-500" />
+                        ) : (
+                          <MessageSquare className="h-5 w-5 text-green-500" />
+                        )}
                         <div>
                           <p className="font-medium">
-                            {factor.friendly_name || 'Autenticador'}
+                            {factor.friendly_name || (factor.type === 'totp' ? 'Autenticador' : 'SMS')}
                           </p>
                           <p className="text-sm text-muted-foreground">
-                            {factor.type.toUpperCase()} • {factor.status}
+                            {factor.type.toUpperCase()} • {factor.status === 'verified' ? 'Verificado' : 'Pendente'}
                           </p>
                         </div>
                       </div>
                       <Button 
                         variant="ghost" 
                         size="sm"
-                        onClick={() => disableMFA(factor)}
+                        onClick={() => handleDisableFactor(factor.id)}
                       >
                         Remover
                       </Button>
@@ -402,8 +401,8 @@ export default function TwoFactorAuth() {
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
-                  <Smartphone className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Nenhum dispositivo configurado</p>
+                  <Shield className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <p>Nenhum fator de autenticação configurado</p>
                 </div>
               )}
             </CardContent>
