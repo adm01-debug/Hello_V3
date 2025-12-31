@@ -8,8 +8,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
-import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin } from 'lucide-react';
+import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin, Fingerprint } from 'lucide-react';
+import { PasskeyLogin } from '@/components/auth/PasskeyLogin';
+import { isWebAuthnSupported } from '@/lib/webauthn/webauthn-utils';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -246,6 +249,27 @@ export default function Login() {
                   'Entrar'
                 )}
               </Button>
+
+              {/* Passkey Login Section */}
+              {isWebAuthnSupported() && (
+                <>
+                  <div className="relative w-full">
+                    <div className="absolute inset-0 flex items-center">
+                      <Separator className="w-full" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-card px-2 text-muted-foreground">
+                        ou
+                      </span>
+                    </div>
+                  </div>
+                  <PasskeyLogin 
+                    onSuccess={() => navigate(from, { replace: true })}
+                    showEmailField={false}
+                  />
+                </>
+              )}
+
               <div className="space-y-2 text-center text-sm">
                 <Link 
                   to="/forgot-password" 

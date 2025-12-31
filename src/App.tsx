@@ -44,6 +44,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
 import TwoFactorAuth from "./pages/TwoFactorAuth";
+import Passkeys from "./pages/Passkeys";
 import Roles from "./pages/Roles";
 import Permissions from "./pages/Permissions";
 import RateLimitDashboard from "./pages/RateLimitDashboard";
@@ -116,6 +117,7 @@ const App = () => (
                         <Route path="/coaching" element={<Coaching />} />
                         <Route path="/settings" element={<Settings />} />
                         <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
+                        <Route path="/passkeys" element={<Passkeys />} />
                         <Route path="/sessions" element={<SessionManagement />} />
                         <Route path="/security" element={<SecurityDashboard />} />
                         <Route path="/audit-logs" element={
