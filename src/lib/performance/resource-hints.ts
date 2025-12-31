@@ -72,25 +72,7 @@ export function generateResourceHints(hints: ResourceHint[]): string {
 
       return `<link ${attrs.join(' ')}>`;
     })
-    .join('
-');
-}
-
-// React component for resource hints
-export function ResourceHints({ hints = RESOURCE_HINTS }: { hints?: ResourceHint[] }) {
-  return (
-    <>
-      {hints.map((hint, index) => (
-        <link
-          key={index}
-          rel={hint.type}
-          href={hint.url}
-          {...(hint.as && { as: hint.as })}
-          {...(hint.crossorigin && { crossOrigin: '' })}
-        />
-      ))}
-    </>
-  );
+    .join('\n');
 }
 
 // Programmatically add resource hints
@@ -161,27 +143,4 @@ export class IntelligentPrefetcher {
   }
 }
 
-// React hook for intelligent prefetching
-export function usePrefetching() {
-  const prefetcher = React.useRef<IntelligentPrefetcher | null>(null);
-
-  React.useEffect(() => {
-    prefetcher.current = new IntelligentPrefetcher();
-
-    return () => {
-      prefetcher.current?.disconnect();
-    };
-  }, []);
-
-  const prefetchLink = React.useCallback((url: string) => {
-    prefetcher.current?.prefetchUrl(url);
-  }, []);
-
-  const observeRef = React.useCallback((element: HTMLElement | null) => {
-    if (element) {
-      prefetcher.current?.observeLink(element);
-    }
-  }, []);
-
-  return { prefetchLink, observeRef };
-}
+export const intelligentPrefetcher = new IntelligentPrefetcher();

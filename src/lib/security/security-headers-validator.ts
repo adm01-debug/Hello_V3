@@ -65,7 +65,7 @@ export class SecurityHeadersValidator {
   }
 
   middleware() {
-    return (req: Request, res: Response, next: Function) => {
+    return (req: Request, res: any, next: Function) => {
       for (const [header, value] of Object.entries(RECOMMENDED_HEADERS)) {
         res.setHeader(header, value);
       }
@@ -74,30 +74,21 @@ export class SecurityHeadersValidator {
   }
 
   generateReport(results: HeaderValidationResult[]): string {
-    let report = 'Security Headers Report
-';
-    report += '======================
-
-';
+    let report = 'Security Headers Report\n';
+    report += '======================\n\n';
 
     const errors = results.filter(r => r.severity === 'error');
     const warnings = results.filter(r => r.severity === 'warning');
     const ok = results.filter(r => r.severity === 'ok');
 
-    report += `✅ OK: ${ok.length}
-`;
-    report += `⚠️  Warnings: ${warnings.length}
-`;
-    report += `❌ Errors: ${errors.length}
-
-`;
+    report += `✅ OK: ${ok.length}\n`;
+    report += `⚠️  Warnings: ${warnings.length}\n`;
+    report += `❌ Errors: ${errors.length}\n\n`;
 
     if (errors.length > 0) {
-      report += 'Missing Headers:
-';
+      report += 'Missing Headers:\n';
       for (const error of errors) {
-        report += `  - ${error.header}: ${error.recommendation}
-`;
+        report += `  - ${error.header}: ${error.recommendation}\n`;
       }
     }
 
