@@ -52,6 +52,7 @@ import SessionManagement from "./pages/SessionManagement";
 import SecurityDashboard from "./pages/SecurityDashboard";
 import GeoBlocking from "./pages/GeoBlocking";
 import PasswordResetApproval from "./pages/PasswordResetApproval";
+import Compliance from "./pages/Compliance";
 
 const queryClient = new QueryClient();
 
@@ -170,6 +171,11 @@ const App = () => (
                         <Route path="/password-reset-approval" element={
                           <ProtectedRoute requiredRoles={['admin']}>
                             <PasswordResetApproval />
+                          </ProtectedRoute>
+                        } />
+                        <Route path="/compliance" element={
+                          <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
+                            <Compliance />
                           </ProtectedRoute>
                         } />
                         <Route path="*" element={<NotFound />} />
