@@ -666,6 +666,60 @@ export type Database = {
           },
         ]
       }
+      calling_hours_config: {
+        Row: {
+          created_at: string
+          holidays_allowed: boolean
+          id: string
+          is_active: boolean
+          region_code: string
+          region_name: string
+          saturday_end: string | null
+          saturday_start: string | null
+          sunday_allowed: boolean
+          sunday_end: string | null
+          sunday_start: string | null
+          timezone: string
+          updated_at: string
+          weekday_end: string
+          weekday_start: string
+        }
+        Insert: {
+          created_at?: string
+          holidays_allowed?: boolean
+          id?: string
+          is_active?: boolean
+          region_code: string
+          region_name: string
+          saturday_end?: string | null
+          saturday_start?: string | null
+          sunday_allowed?: boolean
+          sunday_end?: string | null
+          sunday_start?: string | null
+          timezone?: string
+          updated_at?: string
+          weekday_end?: string
+          weekday_start?: string
+        }
+        Update: {
+          created_at?: string
+          holidays_allowed?: boolean
+          id?: string
+          is_active?: boolean
+          region_code?: string
+          region_name?: string
+          saturday_end?: string | null
+          saturday_start?: string | null
+          sunday_allowed?: boolean
+          sunday_end?: string | null
+          sunday_start?: string | null
+          timezone?: string
+          updated_at?: string
+          weekday_end?: string
+          weekday_start?: string
+        }
+        Relationships: []
+      }
       coaching_recommendations: {
         Row: {
           action_items: string[] | null
@@ -715,6 +769,95 @@ export type Database = {
             columns: ["agent_id"]
             isOneToOne: false
             referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      compliance_settings: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          setting_key: string
+          setting_value: Json
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          setting_key: string
+          setting_value: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          setting_key?: string
+          setting_value?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      consent_history: {
+        Row: {
+          consent_given: boolean
+          consent_method: string
+          consent_text: string | null
+          consent_type: string
+          contact_id: string | null
+          created_at: string
+          expires_at: string | null
+          id: string
+          ip_address: string | null
+          phone: string
+          recorded_at: string
+          recorded_by: string | null
+          revoked_at: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          consent_given: boolean
+          consent_method: string
+          consent_text?: string | null
+          consent_type: string
+          contact_id?: string | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          ip_address?: string | null
+          phone: string
+          recorded_at?: string
+          recorded_by?: string | null
+          revoked_at?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          consent_given?: boolean
+          consent_method?: string
+          consent_text?: string | null
+          consent_type?: string
+          contact_id?: string | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          ip_address?: string | null
+          phone?: string
+          recorded_at?: string
+          recorded_by?: string | null
+          revoked_at?: string | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consent_history_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
             referencedColumns: ["id"]
           },
         ]
@@ -1063,6 +1206,93 @@ export type Database = {
           },
         ]
       }
+      dnc_import_logs: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          duplicate_records: number
+          error_details: Json | null
+          failed_records: number
+          file_name: string
+          id: string
+          imported_by: string | null
+          imported_records: number
+          started_at: string
+          status: string
+          total_records: number
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          duplicate_records?: number
+          error_details?: Json | null
+          failed_records?: number
+          file_name: string
+          id?: string
+          imported_by?: string | null
+          imported_records?: number
+          started_at?: string
+          status?: string
+          total_records?: number
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          duplicate_records?: number
+          error_details?: Json | null
+          failed_records?: number
+          file_name?: string
+          id?: string
+          imported_by?: string | null
+          imported_records?: number
+          started_at?: string
+          status?: string
+          total_records?: number
+        }
+        Relationships: []
+      }
+      dnc_list: {
+        Row: {
+          added_by: string | null
+          created_at: string
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          notes: string | null
+          phone: string
+          phone_normalized: string
+          reason: string
+          source: string
+          updated_at: string
+        }
+        Insert: {
+          added_by?: string | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          notes?: string | null
+          phone: string
+          phone_normalized: string
+          reason?: string
+          source?: string
+          updated_at?: string
+        }
+        Update: {
+          added_by?: string | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          notes?: string | null
+          phone?: string
+          phone_normalized?: string
+          reason?: string
+          source?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       email_verification_tokens: {
         Row: {
           created_at: string | null
@@ -1315,6 +1545,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      holidays: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          is_national: boolean
+          name: string
+          recurring: boolean
+          region_code: string | null
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          is_national?: boolean
+          name: string
+          recurring?: boolean
+          region_code?: string | null
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          is_national?: boolean
+          name?: string
+          recurring?: boolean
+          region_code?: string | null
+        }
+        Relationships: []
       }
       ip_whitelist: {
         Row: {
@@ -2034,10 +2294,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_to_dnc: {
+        Args: {
+          p_expires_at?: string
+          p_notes?: string
+          p_phone: string
+          p_reason?: string
+          p_source?: string
+        }
+        Returns: string
+      }
       can_access_agent_data: {
         Args: { target_agent_name: string }
         Returns: boolean
       }
+      check_calling_hours: { Args: { p_region_code?: string }; Returns: Json }
+      check_dnc: { Args: { p_phone: string }; Returns: boolean }
       check_ip_allowed: {
         Args: { p_ip_address: string; p_user_id: string }
         Returns: boolean
