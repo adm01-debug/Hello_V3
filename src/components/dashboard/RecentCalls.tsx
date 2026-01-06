@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { EmptyCallsState } from '@/components/ui/empty-state';
 import { mockCallHistory, formatDuration } from '@/data/mockData';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
@@ -42,59 +43,76 @@ export function RecentCalls() {
         </Button>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          {recentCalls.map((call) => {
-            const Icon = getCallIcon(call.type, call.status);
-            
-            return (
-              <div
-                key={call.id}
-                className="flex items-center justify-between rounded-lg border border-border bg-card p-3 transition-colors hover:bg-accent/50"
-              >
-                <div className="flex items-center gap-3">
-                  <div className={cn(
-                    'flex h-10 w-10 items-center justify-center rounded-full',
-                    getCallColor(call.status)
-                  )}>
-                    <Icon className="h-4 w-4" />
-                  </div>
-                  
-                  <div>
-                    <p className="font-medium">{call.contactName}</p>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <span>{call.contactPhone}</span>
-                      <span>•</span>
-                      <span>
-                        {formatDistanceToNow(call.timestamp, { 
-                          addSuffix: true, 
-                          locale: ptBR 
-                        })}
-                      </span>
+        {recentCalls.length === 0 ? (
+          <EmptyCallsState 
+            description="Nenhuma chamada registrada ainda. Quando houver chamadas, elas aparecerão aqui."
+            size="sm"
+          />
+        ) : (
+          <div className="space-y-4">
+            {recentCalls.map((call) => {
+              const Icon = getCallIcon(call.type, call.status);
+              
+              return (
+                <div
+                  key={call.id}
+                  className="flex items-center justify-between rounded-lg border border-border bg-card p-3 transition-colors hover:bg-accent/50"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      'flex h-10 w-10 items-center justify-center rounded-full',
+                      getCallColor(call.status)
+                    )}>
+                      <Icon className="h-4 w-4" aria-hidden="true" />
+                    </div>
+                    
+                    <div>
+                      <p className="font-medium">{call.contactName}</p>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>{call.contactPhone}</span>
+                        <span>•</span>
+                        <span>
+                          {formatDistanceToNow(call.timestamp, { 
+                            addSuffix: true, 
+                            locale: ptBR 
+                          })}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-3">
-                  {call.duration > 0 && (
-                    <span className="font-mono text-sm text-muted-foreground">
-                      {formatDuration(call.duration)}
-                    </span>
-                  )}
-                  
-                  {call.recording && (
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <Play className="h-4 w-4" />
+                  <div className="flex items-center gap-3">
+                    {call.duration > 0 && (
+                      <span className="font-mono text-sm text-muted-foreground">
+                        {formatDuration(call.duration)}
+                      </span>
+                    )}
+                    
+                    {call.recording && (
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8"
+                        aria-label="Reproduzir gravação"
+                      >
+                        <Play className="h-4 w-4" aria-hidden="true" />
+                      </Button>
+                    )}
+                    
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-8 w-8"
+                      aria-label="Mais opções"
+                    >
+                      <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
                     </Button>
-                  )}
-                  
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
