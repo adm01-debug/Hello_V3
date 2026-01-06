@@ -8,6 +8,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { EmptyNotificationsState } from '@/components/ui/empty-state';
 import { useRealtimeHoldAlerts } from '@/hooks/useRealtimeHoldAlerts';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -42,19 +43,21 @@ export function NotificationBell() {
           variant="ghost" 
           size="icon" 
           className="relative"
+          aria-label={`Notificações${unreadCount > 0 ? ` - ${unreadCount} não lidas` : ''}`}
         >
           {isEnabled ? (
             unreadCount > 0 ? (
-              <BellRing className="h-5 w-5 animate-pulse text-primary" />
+              <BellRing className="h-5 w-5 animate-pulse text-primary" aria-hidden="true" />
             ) : (
-              <Bell className="h-5 w-5" />
+              <Bell className="h-5 w-5" aria-hidden="true" />
             )
           ) : (
-            <BellOff className="h-5 w-5 text-muted-foreground" />
+            <BellOff className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
           )}
           {unreadCount > 0 && (
             <Badge 
               className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-destructive"
+              aria-label={`${unreadCount} notificações não lidas`}
             >
               {unreadCount > 99 ? '99+' : unreadCount}
             </Badge>
@@ -107,9 +110,7 @@ export function NotificationBell() {
             </p>
             <ScrollArea className="h-[200px]">
               {recentAlerts.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-4">
-                  Nenhum alerta recente
-                </p>
+                <EmptyNotificationsState />
               ) : (
                 <div className="space-y-2">
                   {recentAlerts.slice(0, 10).map((alert) => (

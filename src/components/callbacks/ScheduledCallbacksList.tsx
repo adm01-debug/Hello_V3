@@ -10,12 +10,14 @@ import {
   Bell,
   AlertTriangle,
   ChevronRight,
-  MoreHorizontal
+  MoreHorizontal,
+  Plus
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { EmptyState } from '@/components/ui/empty-state';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -204,11 +206,13 @@ export function ScheduledCallbacksList() {
                   Carregando...
                 </div>
               ) : callbacks.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
-                  <Calendar className="h-12 w-12 mb-4 opacity-50" />
-                  <p className="text-sm">Nenhum callback encontrado</p>
-                  <p className="text-xs mt-1">Agende um novo callback usando o botão acima</p>
-                </div>
+                <EmptyState 
+                  iconType="calendar"
+                  title="Nenhum callback encontrado"
+                  description="Agende um novo callback usando o botão acima para começar."
+                  size="sm"
+                  variant="minimal"
+                />
               ) : (
                 <div className="space-y-3">
                   {callbacks.map((callback) => (
