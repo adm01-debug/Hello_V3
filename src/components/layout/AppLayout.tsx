@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input';
 import { AlertsDropdown } from '@/components/alerts/AlertsDropdown';
 import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdown';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
+import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
+import { SkipLink } from '@/components/ui/keyboard-navigation';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -15,6 +17,9 @@ interface AppLayoutProps {
 export function AppLayout({ children }: AppLayoutProps) {
   return (
     <SidebarProvider defaultOpen={true}>
+      {/* Skip Link for A11Y */}
+      <SkipLink href="#main-content" />
+      
       <div className="flex min-h-screen w-full bg-background">
         <AppSidebar />
         
@@ -24,11 +29,18 @@ export function AppLayout({ children }: AppLayoutProps) {
             <div className="flex items-center gap-4">
               <SidebarTrigger className="-ml-2" />
               
-              <div className="relative hidden md:block">
+              {/* Breadcrumb - Hidden on mobile */}
+              <div className="hidden lg:block">
+                <BreadcrumbNav />
+              </div>
+              
+              {/* Search - Hidden on mobile, shown after breadcrumb on desktop */}
+              <div className="relative hidden md:block lg:ml-4">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input 
                   placeholder="Buscar contatos, chamadas..." 
-                  className="w-80 pl-9"
+                  className="w-64 lg:w-80 pl-9"
+                  aria-label="Buscar no sistema"
                 />
               </div>
             </div>
@@ -44,7 +56,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           <ActiveCallBar />
 
           {/* Main Content */}
-          <main className="flex-1 overflow-auto">
+          <main id="main-content" className="flex-1 overflow-auto scrollbar-thin" tabIndex={-1}>
             <div className="container max-w-7xl py-6">
               {children}
             </div>
