@@ -13,8 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:unit": "vitest run --testPathPattern='\.test\.ts$'",
-    "test:integration": "vitest run --testPathPattern='\.integration\.ts$'",
+    "test:unit": "vitest run
+    "test:integration": "vitest run
     "test:e2e": "playwright test",
     "db:migrate": "knex migrate:latest",
     "db:migrate:rollback": "knex migrate:rollback",
