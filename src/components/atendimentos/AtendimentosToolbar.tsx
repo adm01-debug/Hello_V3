@@ -23,26 +23,28 @@ interface AtendimentosToolbarProps {
   data?: unknown[];
 }
 
-export const AtendimentosToolbar = memo(function AtendimentosToolbar({ onSearch, onFiltersChange, onRefresh, onNewClick, selectedCount, onClearSelection, onBulkFinalizar, onBulkTransferir, currentFilters, data = [] }: AtendimentosToolbarProps) {
-  const [filterValues, setFilterValues] = useState<FilterValue[]>([]);
+export const AtendimentosToolbar = memo(function AtendimentosToolbar({ onSearch, onNewClick, onRefresh }: any) {
+  // const [filterValues, setFilterValues] = useState<FilterValue[]>([]);
 
-  const handleExport = () => {
-    if (data.length === 0) { toast.warning('Nenhum dado'); return; }
-    exportToExcel(data as Record<string, unknown>[], [
-      { key: 'protocolo' as const, label: 'Protocolo' },
-      { key: 'cliente_nome' as const, label: 'Cliente' },
-      { key: 'canal' as const, label: 'Canal' },
-      { key: 'tipo' as const, label: 'Tipo' },
-      { key: 'status' as const, label: 'Status' },
-      { key: 'atendente_nome' as const, label: 'Atendente' },
-    ], 'atendimentos', 'Atendimentos');
-    toast.success('Exportado!');
-  };
+  // const handleExport = () => {
+  //   if (data.length === 0) { toast.warning('Nenhum dado'); return; }
+  //   exportToExcel(data as Record<string, unknown>[], [
+  //     { key: 'protocolo' as const, label: 'Protocolo' },
+  //     { key: 'cliente_nome' as const, label: 'Cliente' },
+  //     { key: 'canal' as const, label: 'Canal' },
+  //     { key: 'tipo' as const, label: 'Tipo' },
+  //     { key: 'status' as const, label: 'Status' },
+  //     { key: 'atendente_nome' as const, label: 'Atendente' },
+  //   ], 'atendimentos', 'Atendimentos');
+  //   toast.success('Exportado!');
+  // };
 
-  const bulkActions = [
-    { key: 'transferir', label: 'Transferir', icon: <UserPlus className="h-4 w-4" />, onClick: onBulkTransferir },
-    { key: 'finalizar', label: 'Finalizar', icon: <PhoneOff className="h-4 w-4" />, onClick: onBulkFinalizar },
-  ];
+  // const bulkActions = [
+  //   { key: 'transferir', label: 'Transferir', icon: <UserPlus className="h-4 w-4" />, onClick: onBulkTransferir },
+  //   { key: 'finalizar', label: 'Finalizar', icon: <PhoneOff className="h-4 w-4" />, onClick: onBulkFinalizar },
+  // ];
+
+  const handleExport = () => toast.info('Exportação não implementada');
 
   return (
     <div className="space-y-3">
