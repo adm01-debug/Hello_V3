@@ -13,7 +13,7 @@ import ContactInsights from "./pages/ContactInsights";
 import History from "./pages/History";
 import Calls from "./pages/Calls";
 import AIAssistant from "./pages/AIAssistant";
-import Voice from "./pages/Voice";
+
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import CallHistory from "./pages/CallHistory";
@@ -100,7 +100,7 @@ const App = () => (
                           </ProtectedRoute>
                         } />
                         <Route path="/ai" element={<AIAssistant />} />
-                        <Route path="/voice" element={<Voice />} />
+                        
                         <Route path="/reports" element={<Reports />} />
                         <Route path="/recordings" element={<Recordings />} />
                         <Route path="/hold-metrics" element={<HoldMetrics />} />
