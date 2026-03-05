@@ -100,7 +100,7 @@ const App = () => (
                           </ProtectedRoute>
                         } />
                         <Route path="/ai" element={<AIAssistant />} />
-                        <Route path="/voice" element={<Voice />} />
+                        
                         <Route path="/reports" element={<Reports />} />
                         <Route path="/recordings" element={<Recordings />} />
                         <Route path="/hold-metrics" element={<HoldMetrics />} />
