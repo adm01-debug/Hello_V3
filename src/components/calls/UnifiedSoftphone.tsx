@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useState, useCallback, useEffect } from 'react';
-import { useConversation } from '@elevenlabs/react';
+import { useConversation } from '@/lib/elevenlabs-stub';
 import { 
   Phone, 
   PhoneOff, 
