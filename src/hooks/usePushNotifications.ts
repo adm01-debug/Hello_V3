@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 /**
  * Hook para Push Notifications
  * 
