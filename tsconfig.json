@@ -44,6 +44,12 @@
     "src/lib/monitoring",
     "src/lib/password",
     "src/lib/performance",
+    "src/lib/queue",
+    "src/lib/security",
+    "src/lib/state",
+    "src/lib/tracing",
+    "src/lib/websocket",
+    "src/lib/workflow",
     "src/config/database.config.ts",
     "node_modules"
   ]
