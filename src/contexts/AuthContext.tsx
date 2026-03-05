@@ -1,20 +1,25 @@
 import { createContext, useContext, ReactNode } from 'react';
-import { useAuth, UserProfile, UserRole } from '@/hooks/useAuth';
-import type { User, Session } from '@supabase/supabase-js';
+import { useAuth } from '@/hooks/useAuth';
+
+export type UserRole = 'admin' | 'supervisor' | 'agent' | 'viewer';
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  full_name: string | null;
+  role: UserRole;
+  agent_id: string | null;
+}
 
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
-  profile: UserProfile | null;
+  user: any;
+  session: any;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ data: any; error: any }>;
-  signUp: (email: string, password: string, fullName?: string) => Promise<{ data: any; error: any }>;
-  signOut: () => Promise<{ error: any }>;
-  hasRole: (roles: UserRole | UserRole[]) => boolean;
+  error: Error | null;
   isAuthenticated: boolean;
-  isAgent: boolean;
-  isSupervisor: boolean;
-  isAdmin: boolean;
+  login: (email: string, password: string) => Promise<any>;
+  signup: (email: string, password: string, metadata?: Record<string, any>) => Promise<any>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,7 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const auth = useAuth();
 
   return (
-    <AuthContext.Provider value={auth}>
+    <AuthContext.Provider value={auth as any}>
       {children}
     </AuthContext.Provider>
   );
