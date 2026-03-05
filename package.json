@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit",
@@ -15,11 +15,7 @@
     "test:coverage": "vitest run --coverage",
     "test:unit": "vitest run --dir src/__tests__/unit",
     "test:integration": "vitest run --dir src/__tests__/integration",
-    "test:e2e": "playwright test",
-    "db:migrate": "knex migrate:latest",
-    "db:migrate:rollback": "knex migrate:rollback",
-    "db:seed": "knex seed:run",
-    "db:reset": "knex migrate:rollback --all && knex migrate:latest && knex seed:run"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@types/node": "^20.11.5",
