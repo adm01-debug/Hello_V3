@@ -48,7 +48,7 @@ export function QueueTrendChart() {
                 style={{ height: `${(point.active / maxValue) * 100}px` }}
               />
               <div
-                className="w-full bg-amber-500 rounded-t-sm"
+                className="w-full bg-warning rounded-t-sm"
                 style={{ height: `${(point.waiting / maxValue) * 60}px` }}
               />
             </div>
