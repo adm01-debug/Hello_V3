@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { KeyRound, Check, X, Clock, AlertTriangle, Shield } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 interface ResetRequest {
   id: string;
@@ -28,7 +28,7 @@ interface ResetRequest {
 
 export default function PasswordResetApproval() {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const { user } = useAuthContext();
   const [rejectDialogOpen, setRejectDialogOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState<ResetRequest | null>(null);
   const [rejectionReason, setRejectionReason] = useState('');
