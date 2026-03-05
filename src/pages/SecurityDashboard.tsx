@@ -106,7 +106,15 @@ export default function SecurityDashboard() {
         .order('created_at', { ascending: false })
         .limit(5);
       
-      setRecentAlerts(alerts as SecurityAlert[] || []);
+      setRecentAlerts((alerts || []).map((a: any) => ({
+        id: a.id,
+        type: a.alert_type,
+        severity: a.severity as 'info' | 'warning' | 'critical',
+        title: a.title,
+        description: a.description,
+        created_at: a.created_at,
+        is_resolved: a.is_resolved,
+      })));
 
       // Load blocked access count
       const { count } = await supabase
