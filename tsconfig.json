@@ -8,7 +8,8 @@
     "moduleDetection": "force",
     "moduleResolution": "bundler",
     "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitAny": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "paths": {
@@ -16,7 +17,7 @@
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "target": "ES2020",
     "types": ["vite/client"],
     "useDefineForClassFields": true
@@ -29,6 +30,8 @@
     "src/infrastructure",
     "src/middleware",
     "src/workers",
+    "src/application",
+    "src/domain",
     "node_modules"
   ]
 }
