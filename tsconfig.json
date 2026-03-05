@@ -32,6 +32,19 @@
     "src/workers",
     "src/application",
     "src/domain",
+    "src/lib/analytics",
+    "src/lib/api",
+    "src/lib/cache",
+    "src/lib/crud",
+    "src/lib/database",
+    "src/lib/graphql",
+    "src/lib/i18n",
+    "src/lib/logging",
+    "src/lib/mfa",
+    "src/lib/monitoring",
+    "src/lib/password",
+    "src/lib/performance",
+    "src/config/database.config.ts",
     "node_modules"
   ]
 }
