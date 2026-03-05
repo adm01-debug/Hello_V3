@@ -132,7 +132,7 @@ export function useBulkActions<T extends { id: string }>(
           const { error } = await supabase
             .from(tableName)
             .delete()
-            .in('id', ids);
+            .in('id', ids as any);
           
           if (error) throw error;
           toast.success(`${ids.length} item(s) excluído(s)`);
