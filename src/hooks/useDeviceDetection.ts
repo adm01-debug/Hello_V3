@@ -97,7 +97,7 @@ export function useDeviceDetection() {
       const existingIPs = new Set(existingSessions?.map(s => s.ip_address) || []);
       const existingFingerprints = new Set(
         existingSessions?.map(s => {
-          const info = s.device_info as DeviceInfo | null;
+          const info = s.device_info as unknown as DeviceInfo | null;
           if (info) {
             return generateDeviceFingerprint(info);
           }

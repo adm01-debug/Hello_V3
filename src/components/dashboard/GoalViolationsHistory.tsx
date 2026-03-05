@@ -316,7 +316,7 @@ export const GoalViolationsHistory = () => {
                     cx="50%"
                     cy="50%"
                     outerRadius={100}
-                    label={({ label, percent }) => `${label} (${(percent * 100).toFixed(0)}%)`}
+                    label={({ label, percent }: any) => `${label} (${(percent * 100).toFixed(0)}%)`}
                     labelLine={false}
                   >
                     {metricBreakdown.map((_, index) => (

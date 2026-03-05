@@ -271,7 +271,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
       if (!user) throw new Error('Usuário não autenticado');
 
       const { error } = await supabase
-        .from('push_subscriptions')
+        .from('push_subscriptions' as any)
         .update({ is_active: false })
         .eq('user_id', user.id);
 

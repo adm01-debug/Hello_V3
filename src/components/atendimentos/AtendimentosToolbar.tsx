@@ -48,12 +48,12 @@ export const AtendimentosToolbar = memo(function AtendimentosToolbar({ onSearch,
 
   return (
     <div className="space-y-3">
-      {selectedCount > 0 && <BulkActionsBar selectedCount={selectedCount} onClearSelection={onClearSelection} actions={bulkActions} />}
+      {/* {selectedCount > 0 && <BulkActionsBar selectedCount={selectedCount} onClearSelection={onClearSelection} actions={bulkActions} />} */}
       <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
         <div className="flex flex-wrap gap-2 items-center">
           <SearchInput onSearch={onSearch} placeholder="Buscar atendimento..." className="w-64" />
-          <AdvancedFilters filters={helloFilterConfigs.atendimentos as FilterConfig[]} values={filterValues} onChange={(v) => { setFilterValues(v); onFiltersChange(v); }} />
-          <SavedFiltersDropdown entityType="atendimentos" currentFilters={currentFilters} onApplyFilter={(f) => { const values = Object.entries(f).map(([k,v]) => ({ key: k, operator: 'eq' as const, value: v })); setFilterValues(values); onFiltersChange(values); }} />
+          {/* <AdvancedFilters filters={helloFilterConfigs.atendimentos as FilterConfig[]} values={filterValues} onChange={(v) => { setFilterValues(v); onFiltersChange(v); }} />
+          <SavedFiltersDropdown entityType="atendimentos" currentFilters={currentFilters} onApplyFilter={(f) => { const values = Object.entries(f).map(([k,v]) => ({ key: k, operator: 'eq' as const, value: v })); setFilterValues(values); onFiltersChange(values); }} /> */}
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={onRefresh}><RefreshCw className="h-4 w-4" /></Button>

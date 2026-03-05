@@ -147,7 +147,7 @@ export function useBulkActions<T extends { id: string }>(
           const { error } = await supabase
             .from(tableName)
             .update({ status: 'archived', updated_at: new Date().toISOString() })
-            .in('id', ids);
+            .in('id', ids as any);
           
           if (error) throw error;
           toast.success(`${ids.length} item(s) arquivado(s)`);

@@ -105,7 +105,7 @@ export default function Roles() {
         .from('user_roles')
         .insert({
           user_id: profile.id,
-          role: selectedRole,
+          role: selectedRole as any,
           granted_by: user?.id,
           is_active: true,
         });

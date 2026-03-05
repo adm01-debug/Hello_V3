@@ -224,6 +224,7 @@ export function useSecurityNotifications() {
           showNotification('⚡ Rate Limit Excedido', {
             body: `IP: ${alert.ip_address}\nEndpoint: ${alert.endpoint}\nRequests: ${alert.request_count}`,
             tag: `rate-limit-${alert.id}`,
+            // @ts-ignore
             vibrate: [200, 100, 200],
           });
 

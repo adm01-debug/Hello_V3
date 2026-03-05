@@ -116,7 +116,7 @@ export default function Permissions() {
 
       // Adicionar novas permissões
       if (toAdd.length > 0) {
-        const { error } = await supabase.from('role_permissions').insert(toAdd);
+        const { error } = await supabase.from('role_permissions').insert(toAdd as any);
         if (error) throw error;
       }
 

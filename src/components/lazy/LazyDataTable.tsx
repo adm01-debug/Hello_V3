@@ -1,3 +1,3 @@
 
 import { lazy } from 'react'
-export const LazyDataTable = lazy(() => import('../DataTable'))
+export const LazyDataTable = lazy(() => import('@/components/DataTable'))

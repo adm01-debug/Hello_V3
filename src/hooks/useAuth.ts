@@ -1,10 +1,21 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
+
+export type UserRole = 'admin' | 'supervisor' | 'agent' | 'viewer';
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  full_name: string | null;
+  role: UserRole;
+  agent_id: string | null;
+}
 
 interface AuthState {
   user: User | null;
   session: Session | null;
+  profile: UserProfile | null;
   loading: boolean;
   error: Error | null;
 }
@@ -13,11 +24,27 @@ export function useAuth() {
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
     session: null,
+    profile: null,
     loading: true,
     error: null,
   });
 
-  // Memoize session getter para evitar re-renders desnecessários
+  const getProfile = useCallback(async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (error) throw error;
+      return data as UserProfile;
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      return null;
+    }
+  }, []);
+
   const getSession = useCallback(async () => {
     try {
       const { data: { session }, error } = await supabase.auth.getSession();
@@ -27,9 +54,15 @@ export function useAuth() {
         return;
       }
 
+      let profile = null;
+      if (session?.user) {
+        profile = await getProfile(session.user.id);
+      }
+
       setAuthState({
         user: session?.user ?? null,
         session: session ?? null,
+        profile,
         loading: false,
         error: null,
       });
@@ -40,36 +73,38 @@ export function useAuth() {
         loading: false,
       }));
     }
-  }, []);
+  }, [getProfile]);
 
-  // Effect para carregar sessão inicial
   useEffect(() => {
     getSession();
   }, [getSession]);
 
-  // Effect para subscription - COM CLEANUP
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('Auth state changed:', event);
         
+        let profile = null;
+        if (session?.user) {
+          profile = await getProfile(session.user.id);
+        }
+        
         setAuthState({
           user: session?.user ?? null,
           session: session ?? null,
+          profile,
           loading: false,
           error: null,
         });
       }
     );
 
-    // CLEANUP para evitar memory leak
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [getProfile]);
 
-  // Memoize login function
-  const login = useCallback(async (email: string, password: string) => {
+  const signIn = useCallback(async (email: string, password: string) => {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
       
@@ -80,26 +115,28 @@ export function useAuth() {
 
       if (error) {
         setAuthState(prev => ({ ...prev, error, loading: false }));
-        throw error;
+        return { data: { user: null, session: null }, error };
       }
+
+      const profile = await getProfile(data.user.id);
 
       setAuthState({
         user: data.user,
         session: data.session,
+        profile,
         loading: false,
         error: null,
       });
 
-      return data;
+      return { data, error: null };
     } catch (error) {
       const authError = error instanceof Error ? error : new Error('Login failed');
       setAuthState(prev => ({ ...prev, error: authError, loading: false }));
-      throw authError;
+      return { data: { user: null, session: null }, error: authError };
     }
-  }, []);
+  }, [getProfile]);
 
-  // Memoize signup function
-  const signup = useCallback(async (email: string, password: string, metadata?: Record<string, any>) => {
+  const signUp = useCallback(async (email: string, password: string, fullName?: string) => {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
 
@@ -107,32 +144,27 @@ export function useAuth() {
         email,
         password,
         options: {
-          data: metadata,
+          data: {
+            full_name: fullName,
+          },
         },
       });
 
       if (error) {
         setAuthState(prev => ({ ...prev, error, loading: false }));
-        throw error;
+        return { data: { user: null, session: null }, error };
       }
 
-      setAuthState({
-        user: data.user,
-        session: data.session,
-        loading: false,
-        error: null,
-      });
-
-      return data;
+      setAuthState(prev => ({ ...prev, loading: false }));
+      return { data, error: null };
     } catch (error) {
       const authError = error instanceof Error ? error : new Error('Signup failed');
       setAuthState(prev => ({ ...prev, error: authError, loading: false }));
-      throw authError;
+      return { data: { user: null, session: null }, error: authError };
     }
   }, []);
 
-  // Memoize logout function
-  const logout = useCallback(async () => {
+  const signOut = useCallback(async () => {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
 
@@ -140,35 +172,44 @@ export function useAuth() {
 
       if (error) {
         setAuthState(prev => ({ ...prev, error, loading: false }));
-        throw error;
+        return { error };
       }
 
       setAuthState({
         user: null,
         session: null,
+        profile: null,
         loading: false,
         error: null,
       });
+      
+      return { error: null };
     } catch (error) {
       const authError = error instanceof Error ? error : new Error('Logout failed');
       setAuthState(prev => ({ ...prev, error: authError, loading: false }));
-      throw authError;
+      return { error: authError };
     }
   }, []);
 
-  // Memoize return object para evitar re-renders
+  const hasRole = useCallback((roles: UserRole[]) => {
+    if (!authState.profile) return false;
+    return roles.includes(authState.profile.role);
+  }, [authState.profile]);
+
   return useMemo(
     () => ({
       user: authState.user,
       session: authState.session,
+      profile: authState.profile,
       loading: authState.loading,
       error: authState.error,
       isAuthenticated: !!authState.user,
-      login,
-      signup,
-      logout,
+      signIn,
+      signUp,
+      signOut,
+      hasRole,
     }),
-    [authState, login, signup, logout]
+    [authState, signIn, signUp, signOut, hasRole]
   );
 }
 
