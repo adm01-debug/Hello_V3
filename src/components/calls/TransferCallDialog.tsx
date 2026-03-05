@@ -10,21 +10,23 @@ import { PhoneForwarded } from 'lucide-react';
 interface TransferCallDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onTransfer: (target: TransferTarget) => void;
+  callId: string;
+  callerName?: string;
+  onTransfer: (callId: string, target: TransferTarget, transferType: TransferType) => void;
 }
 
-export function TransferCallDialog({ open, onOpenChange, onTransfer }: TransferCallDialogProps) {
+export function TransferCallDialog({ open, onOpenChange, callId, callerName, onTransfer }: TransferCallDialogProps) {
   const [transferType, setTransferType] = useState<TransferType>('blind');
   const [targetNumber, setTargetNumber] = useState('');
   const [targetName, setTargetName] = useState('');
 
   const handleTransfer = () => {
     if (!targetNumber) return;
-    onTransfer({
-      type: transferType,
+    onTransfer(callId, {
+      type: transferType === 'blind' ? 'external' : 'agent',
       targetNumber,
       targetName: targetName || undefined,
-    });
+    }, transferType);
     setTargetNumber('');
     setTargetName('');
     onOpenChange(false);
@@ -37,6 +39,7 @@ export function TransferCallDialog({ open, onOpenChange, onTransfer }: TransferC
           <DialogTitle className="flex items-center gap-2">
             <PhoneForwarded className="h-5 w-5" />
             Transferir Chamada
+            {callerName && <span className="text-sm font-normal text-muted-foreground">• {callerName}</span>}
           </DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
@@ -49,7 +52,6 @@ export function TransferCallDialog({ open, onOpenChange, onTransfer }: TransferC
               <SelectContent>
                 <SelectItem value="blind">Cega</SelectItem>
                 <SelectItem value="attended">Assistida</SelectItem>
-                <SelectItem value="warm">Quente</SelectItem>
               </SelectContent>
             </Select>
           </div>

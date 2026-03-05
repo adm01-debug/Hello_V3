@@ -19,6 +19,7 @@ interface Interaction {
 interface CustomerJourneyTimelineProps {
   contactId: string;
   interactions: Interaction[];
+  contactCreatedAt?: string;
 }
 
 const typeIcons: Record<string, any> = {
