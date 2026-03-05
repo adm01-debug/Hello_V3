@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Plus, Download, RefreshCw, Phone, PhoneOff, UserPlus } from 'lucide-react';
 import { SearchInput } from '@/components/SearchInput';
 import { SavedFiltersDropdown } from '@/components/SavedFiltersDropdown';
-import { AdvancedFilters, FilterValue, FilterConfig } from '@/components/AdvancedFilters';
-import { BulkActionsBar } from '@/components/BulkActionsBar';
-import { helloFilterConfigs } from '@/lib/helloSchemas';
-import { exportToExcel } from '@/lib/excelImporter';
+// import { AdvancedFilters, FilterValue, FilterConfig } from '@/components/AdvancedFilters';
+// import { BulkActionsBar } from '@/components/BulkActionsBar';
+// import { helloFilterConfigs } from '@/lib/helloSchemas';
+// import { exportToExcel } from '@/lib/excelImporter';
 import { toast } from 'sonner';
 
 interface AtendimentosToolbarProps {
