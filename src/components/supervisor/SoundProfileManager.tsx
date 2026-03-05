@@ -9,9 +9,9 @@ interface SoundProfile {
 }
 
 const PROFILES: SoundProfile[] = [
-  { name: 'Silencioso', config: { enabled: false, volume: 0 } },
-  { name: 'Normal', config: { enabled: true, volume: 0.5 } },
-  { name: 'Alto', config: { enabled: true, volume: 1.0 } },
+  { name: 'Silencioso', config: { warningVolume: 0, criticalVolume: 0 } },
+  { name: 'Normal', config: { warningVolume: 0.2, criticalVolume: 0.3 } },
+  { name: 'Alto', config: { warningVolume: 0.5, criticalVolume: 0.7 } },
 ];
 
 interface SoundProfileManagerProps {
