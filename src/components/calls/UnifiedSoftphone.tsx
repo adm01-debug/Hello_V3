@@ -1,4 +1,5 @@
 // @ts-nocheck
+// UnifiedSoftphone component
 import { useState, useCallback, useEffect } from 'react';
 import { useConversation } from '@/lib/elevenlabs-stub';
 import { 
