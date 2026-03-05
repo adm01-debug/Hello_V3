@@ -13,8 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:unit": "vitest run
-    "test:integration": "vitest run
+    "test:unit": "vitest run --dir src/__tests__/unit",
+    "test:integration": "vitest run --dir src/__tests__/integration",
     "test:e2e": "playwright test",
     "db:migrate": "knex migrate:latest",
     "db:migrate:rollback": "knex migrate:rollback",
