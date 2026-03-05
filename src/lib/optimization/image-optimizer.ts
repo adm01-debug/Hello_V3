@@ -1,2 +1,0 @@
-export interface ImageOptimizerOptions{quality?:number;format?:'webp'|'jpeg'|'png';maxWidth?:number;maxHeight?:number}
-export class ImageOptimizer{async optimize(file:File,options:ImageOptimizerOptions={}):Promise<Blob>{const{quality=80,format='webp',maxWidth=1920,maxHeight=1080}=options;return new Blob([await file.arrayBuffer()],{type:`image/${format}`})}async optimizeMultiple(files:File[],options:ImageOptimizerOptions={}):Promise<Blob[]>{return Promise.all(files.map(f=>this.optimize(f,options)))}}export const imageOptimizer=new ImageOptimizer()
