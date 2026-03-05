@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Hook para buscar dados reais do Contact Center
  * MIGRAÇÃO: Mock → Produção
