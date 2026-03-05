@@ -28,4 +28,5 @@ const CONFIG: DatabaseConfig = DatabaseConfigSchema.parse({
   connectionTimeoutMs: parseInt(process.env.DB_CONNECTION_TIMEOUT ?? '5000', 10),
 });
 
-export { CONFIG as DATABASE_CONFIG, DatabaseConfig };
+export { CONFIG as DATABASE_CONFIG };
+export type { DatabaseConfig };

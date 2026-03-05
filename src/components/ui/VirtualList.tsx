@@ -1,3 +1,4 @@
+import React from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 export function VirtualList({ items, renderItem }: any) {
