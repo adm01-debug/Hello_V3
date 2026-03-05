@@ -24,8 +24,8 @@ export function TransferCallDialog({ open, onOpenChange, callId, callerName, onT
     if (!targetNumber) return;
     onTransfer(callId, {
       type: transferType === 'blind' ? 'external' : 'agent',
-      targetNumber,
-      targetName: targetName || undefined,
+      phoneNumber: targetNumber,
+      name: targetName || undefined,
     }, transferType);
     setTargetNumber('');
     setTargetName('');
