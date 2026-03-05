@@ -121,7 +121,7 @@ export function VoiceCommandPanel() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col items-center py-8">
-          <VoiceCommandButton onCommand={handleCommand} />
+          <VoiceCommandButton onVoiceCommand={handleCommand} />
 
           {/* Current Call Status */}
           {currentCall && (
