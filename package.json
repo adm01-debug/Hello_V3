@@ -4,22 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:unit": "vitest run
-    "test:integration": "vitest run
-    "test:e2e": "playwright test",
-    "db:migrate": "knex migrate:latest",
-    "db:migrate:rollback": "knex migrate:rollback",
-    "db:seed": "knex seed:run",
-    "db:reset": "knex migrate:rollback --all && knex migrate:latest && knex seed:run"
+    "test:unit": "vitest run --dir src/__tests__/unit",
+    "test:integration": "vitest run --dir src/__tests__/integration",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@types/node": "^20.11.5",
@@ -37,12 +33,14 @@
     "ioredis": "^5.3.2",
     "isomorphic-dompurify": "^2.10.0",
     "jsonwebtoken": "^9.0.2",
+    "lovable-tagger": "^1.1.13",
     "next": "^14.1.0",
     "postcss": "^8.4.33",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
+    "vite": "^7.3.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
