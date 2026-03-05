@@ -65,7 +65,7 @@ export default function SecurityDashboard() {
   const navigate = useNavigate();
   const { user } = useAuthContext();
   const { sessions, currentSessionId, sessionDurationHours } = useSessionManager();
-  const { mfaSettings, isLoading: mfaLoading } = useMFA();
+  const { settings: mfaSettings, isLoading: mfaLoading } = useMFA();
   
   const [securityScore, setSecurityScore] = useState<SecurityScore>({
     total: 0,
