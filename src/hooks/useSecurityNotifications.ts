@@ -182,6 +182,7 @@ export function useSecurityNotifications() {
           showNotification('🚫 Acesso Bloqueado', {
             body: `IP: ${log.ip_address}\nLocalização: ${location}\nMotivo: ${log.reason}`,
             tag: `blocked-access-${log.id}`,
+            // @ts-ignore
             vibrate: [200, 100, 200, 100, 200],
           });
 
