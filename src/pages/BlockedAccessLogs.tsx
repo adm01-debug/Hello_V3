@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -291,7 +291,7 @@ const BlockedAccessLogs = () => {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ country, percent }) => `${country} (${(percent * 100).toFixed(0)}%)`}
+                    label={({ country, percent }: any) => `${country} (${(percent * 100).toFixed(0)}%)`}
                     outerRadius={100}
                     fill="#8884d8"
                     dataKey="count"

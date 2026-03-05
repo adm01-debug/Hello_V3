@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import { useEffect, useCallback, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -182,6 +182,7 @@ export function useSecurityNotifications() {
           showNotification('🚫 Acesso Bloqueado', {
             body: `IP: ${log.ip_address}\nLocalização: ${location}\nMotivo: ${log.reason}`,
             tag: `blocked-access-${log.id}`,
+            // @ts-ignore
             vibrate: [200, 100, 200, 100, 200],
           });
 
@@ -223,6 +224,7 @@ export function useSecurityNotifications() {
           showNotification('⚡ Rate Limit Excedido', {
             body: `IP: ${alert.ip_address}\nEndpoint: ${alert.endpoint}\nRequests: ${alert.request_count}`,
             tag: `rate-limit-${alert.id}`,
+            // @ts-ignore
             vibrate: [200, 100, 200],
           });
 

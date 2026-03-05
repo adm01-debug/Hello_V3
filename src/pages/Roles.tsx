@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -105,7 +105,7 @@ export default function Roles() {
         .from('user_roles')
         .insert({
           user_id: profile.id,
-          role: selectedRole,
+          role: selectedRole as any,
           granted_by: user?.id,
           is_active: true,
         });

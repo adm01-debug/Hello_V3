@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 /**
  * Hook para Push Notifications
  * 
@@ -206,7 +206,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
       // 3. Criar subscription
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY) as any,
       });
 
       // 4. Converter subscription para JSON
@@ -229,7 +229,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
       if (!user) throw new Error('Usuário não autenticado');
 
       const { error } = await supabase
-        .from('push_subscriptions')
+        .from('push_subscriptions' as any)
         .upsert({
           user_id: user.id,
           subscription: pushData,
@@ -271,7 +271,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
       if (!user) throw new Error('Usuário não autenticado');
 
       const { error } = await supabase
-        .from('push_subscriptions')
+        .from('push_subscriptions' as any)
         .update({ is_active: false })
         .eq('user_id', user.id);
 

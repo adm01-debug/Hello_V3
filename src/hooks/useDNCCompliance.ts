@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import { useState, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -116,7 +116,7 @@ export function useDNCCompliance() {
     try {
       const { data, error } = await supabase.rpc('check_calling_hours', { p_region_code: regionCode });
       if (error) throw error;
-      return data as CallingHoursCheck;
+      return data as unknown as CallingHoursCheck;
     } catch (error) {
       console.error('Error checking calling hours:', error);
       return { can_call: true, reason: 'Error checking hours' };
