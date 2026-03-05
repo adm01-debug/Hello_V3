@@ -27,10 +27,10 @@ export function useLoginLockout() {
       }
 
       const status: LockoutStatus = {
-        locked: data?.locked || false,
-        attempts: data?.attempts || 0,
-        remainingSeconds: data?.remaining_seconds,
-        lockedUntil: data?.locked_until,
+        locked: (data as any)?.locked || false,
+        attempts: (data as any)?.attempts || 0,
+        remainingSeconds: (data as any)?.remaining_seconds,
+        lockedUntil: (data as any)?.locked_until,
       };
 
       setLockoutStatus(status);
