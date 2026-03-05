@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { UserRole } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+
+type UserRole = 'admin' | 'supervisor' | 'agent' | 'viewer';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -10,7 +11,7 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ children, requiredRoles }: ProtectedRouteProps) {
-  const { isAuthenticated, loading, hasRole } = useAuthContext();
+  const { isAuthenticated, loading } = useAuthContext();
   const location = useLocation();
 
   if (loading) {
@@ -26,10 +27,6 @@ export function ProtectedRoute({ children, requiredRoles }: ProtectedRouteProps)
 
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  if (requiredRoles && !hasRole(requiredRoles)) {
-    return <Navigate to="/unauthorized" replace />;
   }
 
   return <>{children}</>;

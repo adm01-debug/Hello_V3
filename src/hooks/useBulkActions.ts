@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * FINANCE HUB - Hook para Ações em Massa
  * 

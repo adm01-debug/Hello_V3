@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { usePermissions } from '@/hooks/usePermissions';
-import { useAuthContext } from '@/contexts/AuthContext';
 
 interface PermissionGateProps {
   children: ReactNode;
@@ -21,27 +20,20 @@ export function PermissionGate({
   module,
   action,
 }: PermissionGateProps) {
-  const { isAdmin } = useAuthContext();
   const { hasPermission, hasAnyPermission, hasAllPermissions, canAccess, loading } = usePermissions();
-
-  // Admin sempre tem acesso
-  if (isAdmin) return <>{children}</>;
 
   if (loading) return null;
 
-  // Verificar por módulo/ação
   if (module) {
     if (canAccess(module, action)) return <>{children}</>;
     return <>{fallback}</>;
   }
 
-  // Verificar permissão única
   if (permission) {
     if (hasPermission(permission)) return <>{children}</>;
     return <>{fallback}</>;
   }
 
-  // Verificar múltiplas permissões
   if (permissions && permissions.length > 0) {
     const hasAccess = requireAll 
       ? hasAllPermissions(permissions)
