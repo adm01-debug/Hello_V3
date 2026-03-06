@@ -18,8 +18,8 @@ interface Recording {
 export function useCallRecording() {
   const [isRecording, setIsRecording] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const mediaRecorderRef = { current: null as MediaRecorder | null };
-  const chunksRef = { current: [] as Blob[] };
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
 
   const startRecording = useCallback(async (): Promise<boolean> => {
     try {
