@@ -9,6 +9,7 @@ import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdo
 import { NotificationBell } from '@/components/notifications/NotificationBell';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { SkipLink } from '@/components/ui/keyboard-navigation';
+import { ThemeToggle } from './ThemeToggle';
 
 interface AppLayoutProps {
   children: ReactNode;
