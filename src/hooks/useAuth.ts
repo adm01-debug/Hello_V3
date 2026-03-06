@@ -47,9 +47,16 @@ export function useAuth() {
 
   const getSession = useCallback(async () => {
     try {
-      const { data: { session }, error } = await supabase.auth.getSession();
+      // Add timeout to prevent infinite loading
+      const timeoutPromise = new Promise<never>((_, reject) => 
+        setTimeout(() => reject(new Error('Session check timed out')), 10000)
+      );
+      
+      const sessionPromise = supabase.auth.getSession();
+      const { data: { session }, error } = await Promise.race([sessionPromise, timeoutPromise]) as Awaited<typeof sessionPromise>;
       
       if (error) {
+        console.warn('Auth session error:', error.message);
         setAuthState(prev => ({ ...prev, error, loading: false }));
         return;
       }
@@ -67,6 +74,7 @@ export function useAuth() {
         error: null,
       });
     } catch (error) {
+      console.warn('Auth initialization error:', error);
       setAuthState(prev => ({
         ...prev,
         error: error instanceof Error ? error : new Error('Unknown error'),
