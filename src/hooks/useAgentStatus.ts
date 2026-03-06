@@ -169,11 +169,23 @@ export function useAgentStatus() {
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (currentAgentId) {
-        // Use sendBeacon for reliability during page unload
+        // Use sendBeacon with proper auth headers for reliability during page unload
         const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/agents?id=eq.${currentAgentId}`;
-        const data = JSON.stringify({ status: 'offline' });
+        const headers = {
+          'Content-Type': 'application/json',
+          'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          'Prefer': 'return=minimal',
+        };
+        const body = JSON.stringify({ status: 'offline' });
         
-        navigator.sendBeacon(url, new Blob([data], { type: 'application/json' }));
+        // sendBeacon doesn't support custom headers, use fetch with keepalive instead
+        fetch(url, {
+          method: 'PATCH',
+          headers,
+          body,
+          keepalive: true,
+        }).catch(() => {});
       }
     };
 

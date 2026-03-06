@@ -43,6 +43,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
@@ -58,7 +59,7 @@ const mainNavItems = [
 const toolsNavItems = [
   { title: 'Assistente IA', url: '/ai', icon: Bot },
   { title: 'Coaching IA', url: '/coaching', icon: Brain },
-  { title: 'Comando de Voz', url: '/voice', icon: Mic },
+  
   { title: 'Callbacks', url: '/callbacks', icon: Calendar },
   { title: 'Transcrições', url: '/call-history', icon: FileText },
   { title: 'Gravações', url: '/recordings', icon: Disc },
@@ -84,6 +85,7 @@ const securityNavItems = [
 ];
 
 const settingsNavItems = [
+  { title: 'Compliance', url: '/compliance', icon: ShieldCheck },
   { title: 'Alertas de Hold', url: '/hold-settings', icon: AlertTriangle },
   { title: 'Alertas de Fila', url: '/queue-metrics-settings', icon: Activity },
   { title: 'Logs de Auditoria', url: '/audit-logs', icon: Shield },
@@ -97,6 +99,7 @@ export function AppSidebar() {
   const location = useLocation();
   const { state } = useSidebar();
   const collapsed = state === 'collapsed';
+  const { profile } = useAuthContext();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -205,14 +208,18 @@ export function AppSidebar() {
         )}>
           <div className="relative">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-sidebar-accent text-sm font-medium text-sidebar-accent-foreground">
-              LF
+              {profile?.full_name
+                ? profile.full_name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
+                : profile?.email?.slice(0, 2).toUpperCase() || '??'}
             </div>
             <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-sidebar-background bg-success" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-sidebar-foreground">Lucas Ferreira</span>
-              <span className="text-xs text-sidebar-foreground/60">Disponível</span>
+              <span className="text-sm font-medium text-sidebar-foreground">
+                {profile?.full_name || profile?.email || 'Usuário'}
+              </span>
+              <span className="text-xs text-sidebar-foreground/60 capitalize">{profile?.role || 'agent'}</span>
             </div>
           )}
         </div>
