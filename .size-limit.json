@@ -1,7 +1,0 @@
-{
-  "name": "hello",
-  "path": "dist/main.js",
-  "limit": "500 KB",
-  "webpack": false,
-  "running": false
-}
