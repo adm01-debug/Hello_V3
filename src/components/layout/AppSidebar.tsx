@@ -84,6 +84,7 @@ const securityNavItems = [
 ];
 
 const settingsNavItems = [
+  { title: 'Compliance', url: '/compliance', icon: ShieldCheck },
   { title: 'Alertas de Hold', url: '/hold-settings', icon: AlertTriangle },
   { title: 'Alertas de Fila', url: '/queue-metrics-settings', icon: Activity },
   { title: 'Logs de Auditoria', url: '/audit-logs', icon: Shield },
