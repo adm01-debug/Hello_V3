@@ -57,10 +57,10 @@ export function useSessionManager() {
       // Get IP and location
       let ipInfo = { ip: 'unknown', city: '', country: '', countryCode: '' };
       try {
-        const response = await fetch('http://ip-api.com/json/?fields=status,country,countryCode,city,query');
-        const data = await response.json();
-        if (data.status === 'success') {
-          ipInfo = { ip: data.query, city: data.city, country: data.country, countryCode: data.countryCode };
+        const response = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(5000) });
+        if (response.ok) {
+          const data = await response.json();
+          ipInfo = { ip: data.ip || 'unknown', city: data.city || '', country: data.country_name || '', countryCode: data.country_code || '' };
         }
       } catch {
         // Silently fail IP detection
