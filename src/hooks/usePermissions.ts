@@ -13,36 +13,59 @@ export function usePermissions() {
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user?.id) {
-      loadPermissions();
-    } else {
+  const loadPermissions = useCallback(async () => {
+    if (!user?.id) {
       setPermissions([]);
       setLoading(false);
+      return;
     }
-  }, [user?.id]);
 
-  const loadPermissions = async () => {
     try {
-      const { data, error } = await supabase
+      // Step 1: Get user's active roles
+      const { data: userRoles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .eq('is_active', true);
+
+      if (rolesError) throw rolesError;
+
+      if (!userRoles || userRoles.length === 0) {
+        setPermissions([]);
+        setLoading(false);
+        return;
+      }
+
+      const roles = userRoles.map(ur => ur.role);
+
+      // Step 2: Get permissions for those roles
+      const { data: rolePerms, error: permsError } = await supabase
         .from('role_permissions')
-        .select(`
-          permissions (name, module, action),
-          user_roles!inner (user_id, is_active)
-        `)
-        .eq('user_roles.user_id', user?.id)
-        .eq('user_roles.is_active', true);
+        .select('permissions (name, module, action)')
+        .in('role', roles);
 
-      if (error) throw error;
+      if (permsError) throw permsError;
 
-      const perms = data?.map((rp: any) => rp.permissions).filter(Boolean) || [];
-      setPermissions(perms);
+      const perms: Permission[] = (rolePerms || [])
+        .map((rp: any) => rp.permissions)
+        .filter(Boolean);
+
+      // Deduplicate by name
+      const uniquePerms = Array.from(
+        new Map(perms.map(p => [p.name, p])).values()
+      );
+
+      setPermissions(uniquePerms);
     } catch (error) {
       console.error('Error loading permissions:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.id]);
+
+  useEffect(() => {
+    loadPermissions();
+  }, [loadPermissions]);
 
   const hasPermission = useCallback((permissionName: string): boolean => {
     return permissions.some(p => p.name === permissionName);
