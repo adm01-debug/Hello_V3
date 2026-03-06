@@ -58,7 +58,7 @@ const mainNavItems = [
 const toolsNavItems = [
   { title: 'Assistente IA', url: '/ai', icon: Bot },
   { title: 'Coaching IA', url: '/coaching', icon: Brain },
-  { title: 'Comando de Voz', url: '/voice', icon: Mic },
+  
   { title: 'Callbacks', url: '/callbacks', icon: Calendar },
   { title: 'Transcrições', url: '/call-history', icon: FileText },
   { title: 'Gravações', url: '/recordings', icon: Disc },
