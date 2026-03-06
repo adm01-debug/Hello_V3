@@ -1,5 +1,0 @@
-groups:
-  - name: hello
-    rules:
-      - alert: HighErrorRate
-        expr: rate(errors[5m]) > 0.05
