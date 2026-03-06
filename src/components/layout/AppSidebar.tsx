@@ -99,6 +99,7 @@ export function AppSidebar() {
   const location = useLocation();
   const { state } = useSidebar();
   const collapsed = state === 'collapsed';
+  const { profile } = useAuthContext();
 
   const isActive = (path: string) => location.pathname === path;
 
