@@ -208,14 +208,18 @@ export function AppSidebar() {
         )}>
           <div className="relative">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-sidebar-accent text-sm font-medium text-sidebar-accent-foreground">
-              LF
+              {profile?.full_name
+                ? profile.full_name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
+                : profile?.email?.slice(0, 2).toUpperCase() || '??'}
             </div>
             <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-sidebar-background bg-success" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-sidebar-foreground">Lucas Ferreira</span>
-              <span className="text-xs text-sidebar-foreground/60">Disponível</span>
+              <span className="text-sm font-medium text-sidebar-foreground">
+                {profile?.full_name || profile?.email || 'Usuário'}
+              </span>
+              <span className="text-xs text-sidebar-foreground/60 capitalize">{profile?.role || 'agent'}</span>
             </div>
           )}
         </div>

@@ -210,9 +210,6 @@ export function useMultiChannelCall() {
       setCallHistory(prev => [finalCall, ...prev].slice(0, 50));
     }
     
-    setActiveCalls(prev => prev.filter(c => c.id !== targetCallId));
-    
-    // Switch to another active call if available
     setActiveCalls(prev => {
       const remaining = prev.filter(c => c.id !== targetCallId);
       if (remaining.length > 0 && activeCallId === targetCallId) {

@@ -73,15 +73,15 @@ export default function Login() {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         
-        if (data.status === 'success') {
+        if (data && data.ip) {
           setIpInfo({
-            ip: data.query,
-            country: data.country,
-            city: data.city,
-            countryCode: data.countryCode,
+            ip: data.ip,
+            country: data.country_name || 'Desconhecido',
+            city: data.city || 'Desconhecido',
+            countryCode: data.country_code || '',
           });
         } else {
-          // Fallback to ipify if ip-api fails
+          // Fallback to ipify if primary API fails
           const fallbackResponse = await fetch('https://api.ipify.org?format=json');
           const fallbackData = await fallbackResponse.json();
           setIpInfo({
