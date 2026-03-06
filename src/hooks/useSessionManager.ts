@@ -57,7 +57,7 @@ export function useSessionManager() {
       // Get IP and location
       let ipInfo = { ip: 'unknown', city: '', country: '', countryCode: '' };
       try {
-        const response = await fetch('http://ip-api.com/json/?fields=status,country,countryCode,city,query');
+        const response = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(5000) });
         const data = await response.json();
         if (data.status === 'success') {
           ipInfo = { ip: data.query, city: data.city, country: data.country, countryCode: data.countryCode };
