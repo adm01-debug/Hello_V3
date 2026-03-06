@@ -70,7 +70,7 @@ export default function Login() {
     const fetchIPInfo = async () => {
       try {
         // Using ip-api.com for geolocation (free, no API key required)
-        const response = await fetch('http://ip-api.com/json/?fields=status,country,countryCode,city,query');
+        const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         
         if (data.status === 'success') {
