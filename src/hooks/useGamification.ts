@@ -58,8 +58,7 @@ export function useGamification(agentId?: string) {
     const now = new Date();
     const dayOfWeek = now.getDay();
     const diff = now.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
-    const monday = new Date(now.setDate(diff));
-    monday.setHours(0, 0, 0, 0);
+    const monday = new Date(now.getFullYear(), now.getMonth(), diff, 0, 0, 0, 0);
     return monday.toISOString().split('T')[0];
   };
 
