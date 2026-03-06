@@ -3,7 +3,6 @@ import {
   Phone, 
   Users, 
   Clock, 
-  Mic, 
   Settings,
   Headphones,
   BarChart3,
@@ -27,6 +26,15 @@ import {
   Lock,
   Fingerprint,
   Globe,
+  PhoneOutgoing,
+  MessageCircle,
+  Siren,
+  ListChecks,
+  ScrollText,
+  Eye,
+  FileBarChart,
+  UserCog,
+  ChevronDown,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -44,13 +52,15 @@ import {
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useState } from 'react';
 
 const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
   { title: 'Executivo', url: '/executive', icon: Gauge },
   { title: 'Métricas Fila', url: '/queue-dashboard', icon: Activity },
   { title: 'Chamadas', url: '/calls', icon: Phone },
-  { title: 'Discador', url: '/dialer', icon: Phone },
+  { title: 'Discador', url: '/dialer', icon: PhoneOutgoing },
   { title: 'Contatos', url: '/contacts', icon: Users },
   { title: 'Insights', url: '/contacts/insights', icon: Brain },
   { title: 'Histórico', url: '/history', icon: Clock },
@@ -58,13 +68,12 @@ const mainNavItems = [
 
 const toolsNavItems = [
   { title: 'Assistente IA', url: '/ai', icon: Bot },
-  { title: 'Coaching IA', url: '/coaching', icon: Brain },
-  
+  { title: 'Coaching IA', url: '/coaching', icon: MessageCircle },
   { title: 'Callbacks', url: '/callbacks', icon: Calendar },
   { title: 'Transcrições', url: '/call-history', icon: FileText },
   { title: 'Gravações', url: '/recordings', icon: Disc },
   { title: 'Métricas de Espera', url: '/hold-metrics', icon: Timer },
-  { title: 'Alertas de Espera', url: '/hold-alerts', icon: AlertTriangle },
+  { title: 'Alertas de Espera', url: '/hold-alerts', icon: Siren },
   { title: 'Analytics', url: '/analytics', icon: PieChart },
   { title: 'Alertas', url: '/alerts', icon: Bell },
   { title: 'Histórico Alertas', url: '/alert-history', icon: History },
@@ -79,49 +88,99 @@ const securityNavItems = [
   { title: 'Passkeys', url: '/passkeys', icon: Fingerprint },
   { title: 'Whitelist IPs', url: '/ip-whitelist', icon: Lock },
   { title: 'Bloqueio Geográfico', url: '/geo-blocking', icon: Globe },
-  { title: 'Reset de Senha', url: '/password-reset-approval', icon: Key },
+  { title: 'Reset de Senha', url: '/password-reset-approval', icon: ScrollText },
   { title: 'Acessos Bloqueados', url: '/blocked-access-logs', icon: Shield },
-  { title: 'Rate Limit', url: '/rate-limit', icon: Activity },
+  { title: 'Rate Limit', url: '/rate-limit', icon: AlertTriangle },
 ];
 
 const settingsNavItems = [
-  { title: 'Compliance', url: '/compliance', icon: ShieldCheck },
-  { title: 'Alertas de Hold', url: '/hold-settings', icon: AlertTriangle },
+  { title: 'Compliance', url: '/compliance', icon: ListChecks },
+  { title: 'Alertas de Hold', url: '/hold-settings', icon: Timer },
   { title: 'Alertas de Fila', url: '/queue-metrics-settings', icon: Activity },
-  { title: 'Logs de Auditoria', url: '/audit-logs', icon: Shield },
-  { title: 'Monitoramento', url: '/security-monitoring', icon: Activity },
-  { title: 'Relatório Segurança', url: '/security-report', icon: Shield },
-  { title: 'Roles & Permissões', url: '/roles', icon: Users },
+  { title: 'Logs de Auditoria', url: '/audit-logs', icon: Eye },
+  { title: 'Monitoramento', url: '/security-monitoring', icon: Monitor },
+  { title: 'Relatório Segurança', url: '/security-report', icon: FileBarChart },
+  { title: 'Roles & Permissões', url: '/roles', icon: UserCog },
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];
 
-export function AppSidebar() {
+interface NavGroupProps {
+  label: string;
+  items: { title: string; url: string; icon: React.ElementType }[];
+  collapsed: boolean;
+  defaultOpen?: boolean;
+}
+
+function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProps) {
   const location = useLocation();
+  const hasActive = items.some(item => location.pathname === item.url);
+  const [open, setOpen] = useState(defaultOpen || hasActive);
+
+  if (collapsed) {
+    return (
+      <SidebarGroup>
+        <SidebarGroupContent>
+          <SidebarMenu className="space-y-1">
+            {items.map((item) => (
+              <NavItem key={item.url} item={item} collapsed={collapsed} />
+            ))}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    );
+  }
+
+  return (
+    <Collapsible open={open} onOpenChange={setOpen}>
+      <SidebarGroup>
+        <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/50 hover:text-sidebar-foreground/80 transition-colors">
+          {label}
+          <ChevronDown className={cn(
+            "h-3.5 w-3.5 transition-transform duration-200",
+            open && "rotate-180"
+          )} />
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1 mt-1">
+              {items.map((item) => (
+                <NavItem key={item.url} item={item} collapsed={collapsed} />
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </CollapsibleContent>
+      </SidebarGroup>
+    </Collapsible>
+  );
+}
+
+function NavItem({ item, collapsed }: { item: { title: string; url: string; icon: React.ElementType }; collapsed: boolean }) {
+  const location = useLocation();
+  const Icon = item.icon;
+  const active = location.pathname === item.url;
+
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild>
+        <NavLink
+          to={item.url}
+          className={cn(
+            'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground transition-all hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+            active && 'bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground'
+          )}
+        >
+          <Icon className="h-5 w-5 shrink-0" />
+          {!collapsed && <span className="font-medium">{item.title}</span>}
+        </NavLink>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
+}
+
+export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === 'collapsed';
   const { profile } = useAuthContext();
-
-  const isActive = (path: string) => location.pathname === path;
-
-  const NavItem = ({ item }: { item: { title: string; url: string; icon: React.ElementType } }) => {
-    const Icon = item.icon;
-    return (
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild>
-          <NavLink
-            to={item.url}
-            className={cn(
-              'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground transition-all hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-              isActive(item.url) && 'bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground'
-            )}
-          >
-            <Icon className="h-5 w-5 shrink-0" />
-            {!collapsed && <span className="font-medium">{item.title}</span>}
-          </NavLink>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-    );
-  };
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
@@ -139,66 +198,11 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-3 py-4">
-        <SidebarGroup>
-          {!collapsed && (
-            <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/50">
-              Principal
-            </SidebarGroupLabel>
-          )}
-          <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
-              {mainNavItems.map((item) => (
-                <NavItem key={item.url} item={item} />
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup className="mt-6">
-          {!collapsed && (
-            <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/50">
-              Ferramentas
-            </SidebarGroupLabel>
-          )}
-          <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
-              {toolsNavItems.map((item) => (
-                <NavItem key={item.url} item={item} />
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup className="mt-6">
-          {!collapsed && (
-            <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/50">
-              Segurança
-            </SidebarGroupLabel>
-          )}
-          <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
-              {securityNavItems.map((item) => (
-                <NavItem key={item.url} item={item} />
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup className="mt-6">
-          {!collapsed && (
-            <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/50">
-              Sistema
-            </SidebarGroupLabel>
-          )}
-          <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
-              {settingsNavItems.map((item) => (
-                <NavItem key={item.url} item={item} />
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+      <SidebarContent className="px-3 py-4 scrollbar-thin">
+        <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen />
+        <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} />
+        <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} />
+        <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} />
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border p-4">

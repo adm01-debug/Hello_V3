@@ -9,6 +9,7 @@ import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdo
 import { NotificationBell } from '@/components/notifications/NotificationBell';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { SkipLink } from '@/components/ui/keyboard-navigation';
+import { ThemeToggle } from './ThemeToggle';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -46,6 +47,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             </div>
 
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               <NotificationBell />
               <ContactAlertsDropdown />
               <AlertsDropdown />
