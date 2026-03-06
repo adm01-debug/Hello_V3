@@ -159,10 +159,11 @@ export const usePredictiveDialer = () => {
 
       // Update campaign total
       const campaignId = items[0].campaign_id;
+      const currentTotal = campaigns.find(c => c.id === campaignId)?.total_contacts || 0;
       await supabase
         .from('dialer_campaigns')
         .update({ 
-          total_contacts: campaigns.find(c => c.id === campaignId)?.total_contacts || 0 + items.length 
+          total_contacts: currentTotal + items.length 
         })
         .eq('id', campaignId);
 
