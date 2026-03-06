@@ -47,6 +47,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             </div>
 
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               <NotificationBell />
               <ContactAlertsDropdown />
               <AlertsDropdown />
