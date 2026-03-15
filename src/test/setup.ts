@@ -73,10 +73,17 @@ Object.defineProperty(globalThis, 'crypto', {
   value: {
     subtle: {
       digest: vi.fn().mockResolvedValue(new ArrayBuffer(20)),
+      generateKey: vi.fn().mockResolvedValue({}),
+      encrypt: vi.fn().mockResolvedValue(new ArrayBuffer(0)),
+      decrypt: vi.fn().mockResolvedValue(new ArrayBuffer(0)),
     },
     getRandomValues: (arr: Uint8Array) => {
       for (let i = 0; i < arr.length; i++) arr[i] = Math.floor(Math.random() * 256);
       return arr;
+    },
+    randomUUID: () => {
+      const hex = Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+      return `${hex.slice(0,8)}-${hex.slice(8,12)}-${hex.slice(12,16)}-${hex.slice(16,20)}-${hex.slice(20)}`;
     },
   },
 });
