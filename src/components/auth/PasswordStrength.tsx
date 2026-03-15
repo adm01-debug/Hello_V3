@@ -156,10 +156,10 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
           </span>
           <span className={cn(
             "text-xs font-medium",
-            analysis.strength === 'weak' && 'text-red-500',
-            analysis.strength === 'fair' && 'text-orange-500',
-            analysis.strength === 'good' && 'text-yellow-500',
-            analysis.strength === 'strong' && 'text-green-500',
+            analysis.strength === 'weak' && 'text-destructive',
+            analysis.strength === 'fair' && 'text-warning',
+            analysis.strength === 'good' && 'text-call-hold',
+            analysis.strength === 'strong' && 'text-success',
           )}>
             {analysis.label}
           </span>
