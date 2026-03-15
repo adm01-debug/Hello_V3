@@ -222,9 +222,9 @@ export const ActiveCallsRealtime = () => {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-500/10 border border-green-500/20 cursor-default">
-                        <Phone className="h-3 w-3 text-green-500" />
-                        <span className="font-medium text-green-600 dark:text-green-400">{statusCounts.inCall}</span>
+                      <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-success/10 border border-success/20 cursor-default">
+                        <Phone className="h-3 w-3 text-success" />
+                        <span className="font-medium text-success">{statusCounts.inCall}</span>
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
