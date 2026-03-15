@@ -148,7 +148,7 @@ describe('Contact Alerts System', () => {
     });
 
     it('defaults actioned_by to "Usuário"', () => {
-      const actionedBy = undefined || 'Usuário';
+      const actionedBy = (undefined as string | undefined) || 'Usuário';
       expect(actionedBy).toBe('Usuário');
     });
   });
