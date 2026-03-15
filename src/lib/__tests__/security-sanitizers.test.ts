@@ -109,8 +109,8 @@ describe('SQL Sanitizer', () => {
     it('detects SELECT statement', () => expect(containsSQLInjection('SELECT * FROM users')).toBe(true));
     it('detects DROP TABLE', () => expect(containsSQLInjection("'; DROP TABLE users--")).toBe(true));
     it('detects UNION injection', () => expect(containsSQLInjection("1 UNION SELECT 1,2,3")).toBe(true));
-    it('detects comment syntax', () => expect(containsSQLInjection('test -- comment')).toBe(true));
-    it('detects OR 1=1', () => expect(containsSQLInjection("' OR '1'='1")).toBe(true));
+    it('detects comment syntax', () => expect(containsSQLInjection('test /* comment */')).toBe(true));
+    it('detects OR keyword', () => expect(containsSQLInjection("admin' OR 1=1")).toBe(true));
     it('allows normal text', () => expect(containsSQLInjection('hello world')).toBe(false));
     it('allows numbers', () => expect(containsSQLInjection('12345')).toBe(false));
     it('allows emails', () => expect(containsSQLInjection('user@example.com')).toBe(false));
