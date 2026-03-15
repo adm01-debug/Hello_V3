@@ -32,7 +32,7 @@ export async function logAuditEvent(event: AuditEvent): Promise<string | null> {
       p_action: event.action,
       p_resource_type: event.resourceType,
       p_resource_id: event.resourceId || null,
-      p_details: event.details || {},
+      p_details: (event.details || {}) as unknown as import("@/integrations/supabase/types").Json,
     });
 
     if (error) {
