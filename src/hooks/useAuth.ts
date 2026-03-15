@@ -125,7 +125,13 @@ export function useAuth() {
   }, [getProfile, clearSession]);
 
   useEffect(() => {
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
     getSession();
+
+    return () => {
+      fetchedRef.current = false;
+    };
   }, [getSession]);
 
   useEffect(() => {
