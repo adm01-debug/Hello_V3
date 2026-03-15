@@ -50,7 +50,15 @@ import { useMultiChannelCall, CallChannel, CallSession } from '@/hooks/useMultiC
 import { useWavoipCall } from '@/hooks/useWavoipCall';
 import { useConferenceRecording } from '@/hooks/useConferenceRecording';
 import { useAgentStatus } from '@/hooks/useAgentStatus';
-import { mockContacts, getInitials, formatDuration } from '@/data/mockData';
+const formatDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
+const getInitials = (name: string): string => {
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+};
 import { ActiveCallsIndicator } from './ActiveCallsIndicator';
 const dialPadButtons = [
   { digit: '1', letters: '' },
@@ -320,7 +328,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     toast.info(currentCall?.isRecording ? 'Gravação parada' : 'Gravação iniciada');
   }, [toggleRecording, currentCall]);
 
-  const quickContacts = mockContacts.filter(c => c.favorite).slice(0, 6);
+  const quickContacts: { id: string; name: string; phone: string; favorite: boolean }[] = [];
   const enabledChannels = channels.filter(ch => ch.enabled);
   const ChannelIcon = channelIcons[activeChannel];
   const isSpeaking = conversation.isSpeaking;

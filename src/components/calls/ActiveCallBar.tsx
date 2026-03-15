@@ -14,7 +14,6 @@ import {
   Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { formatDuration, mockActiveCall } from '@/data/mockData';
 import { cn } from '@/lib/utils';
 import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
 import { LiveTranscription } from '@/components/calls/LiveTranscription';
@@ -22,6 +21,23 @@ import { useCallSession } from '@/hooks/useCallSession';
 import { useContacts } from '@/hooks/useContacts';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+
+const formatDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
+interface ActiveCall {
+  id: string;
+  contactName: string;
+  contactPhone: string;
+  type: 'incoming' | 'outgoing';
+  status: 'ringing' | 'connected' | 'hold' | 'transferring';
+  startTime: Date;
+  duration: number;
+  muted: boolean;
+}
 
 interface TranscriptEntry {
   id: string;
@@ -45,7 +61,7 @@ interface AnalysisEntry {
 }
 
 export function ActiveCallBar() {
-  const [call, setCall] = useState(mockActiveCall);
+  const [call, setCall] = useState<ActiveCall | null>(null);
   const [duration, setDuration] = useState(0);
   const [muted, setMuted] = useState(false);
   const [onHold, setOnHold] = useState(false);
