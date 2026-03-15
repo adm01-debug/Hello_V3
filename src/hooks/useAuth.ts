@@ -124,7 +124,11 @@ export function useAuth() {
 
       if (session?.user) {
         // Validate the session with the server
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
+          const { data: { user }, error: userError } = await withTimeout(
+            supabase.auth.getUser(),
+            4000,
+            'User validation timed out'
+          );
         if (userError || !user) {
           console.warn('Invalid session detected, clearing...', userError?.message);
           await clearSession();
