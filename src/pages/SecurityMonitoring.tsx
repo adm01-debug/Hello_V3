@@ -312,7 +312,7 @@ const SecurityMonitoring = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Visualizações</CardTitle>
-            <Eye className="h-4 w-4 text-blue-500" />
+            <Eye className="h-4 w-4 text-info" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.viewEvents}</div>
@@ -321,7 +321,7 @@ const SecurityMonitoring = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Exportações</CardTitle>
-            <Download className="h-4 w-4 text-yellow-500" />
+            <Download className="h-4 w-4 text-warning" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.exportEvents}</div>
@@ -330,7 +330,7 @@ const SecurityMonitoring = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Downloads</CardTitle>
-            <Download className="h-4 w-4 text-green-500" />
+            <Download className="h-4 w-4 text-success" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.downloadEvents}</div>
