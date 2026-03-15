@@ -86,11 +86,7 @@ export function CallingHoursConfig() {
       .eq('id', editingRegion.id);
 
     if (error) {
-      toast({
-        title: 'Erro ao salvar',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro ao salvar', { description: error.message });
     } else {
       toast({
         title: 'Salvo',
