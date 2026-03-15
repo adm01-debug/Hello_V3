@@ -319,8 +319,8 @@ export default function Alerts() {
   const getSeverityIcon = (severity: string) => {
     switch (severity) {
       case 'critical': return <AlertCircle className="h-5 w-5 text-destructive" />;
-      case 'warning': return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
-      default: return <Info className="h-5 w-5 text-blue-500" />;
+      case 'warning': return <AlertTriangle className="h-5 w-5 text-warning" />;
+      default: return <Info className="h-5 w-5 text-info" />;
     }
   };
 
