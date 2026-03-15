@@ -1019,7 +1019,7 @@ export default function ExecutiveDashboard() {
                         )}
                       </div>
                       {allAchieved ? (
-                        <Badge className="bg-green-500">
+                        <Badge className="bg-success">
                           <CheckCircle2 className="h-3 w-3 mr-1" />
                           Todas as metas atingidas
                         </Badge>
