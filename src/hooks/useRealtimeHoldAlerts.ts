@@ -197,7 +197,7 @@ export function useRealtimeHoldAlerts() {
           event: 'INSERT',
           schema: 'public',
           table: 'call_alerts',
-          filter: 'alert_type=eq.hold_time'
+          filter: 'alert_type=eq.hold_time_exceeded'
         },
         (payload) => {
           console.log('Realtime alert payload:', payload);
@@ -221,7 +221,7 @@ export function useRealtimeHoldAlerts() {
       const { count } = await supabase
         .from('call_alerts')
         .select('*', { count: 'exact', head: true })
-        .eq('alert_type', 'hold_time')
+        .eq('alert_type', 'hold_time_exceeded')
         .eq('is_read', false);
       
       if (count !== null) {
@@ -265,7 +265,7 @@ export function useRealtimeHoldAlerts() {
     const { error } = await supabase
       .from('call_alerts')
       .update({ is_read: true })
-      .eq('alert_type', 'hold_time')
+      .eq('alert_type', 'hold_time_exceeded')
       .eq('is_read', false);
     
     if (!error) {
