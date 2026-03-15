@@ -14,7 +14,7 @@ export function useVoiceCommand() {
   const [isProcessing, setIsProcessing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
-  const { toast } = useToast();
+  
 
   const startListening = useCallback(async () => {
     try {

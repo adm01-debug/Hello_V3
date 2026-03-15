@@ -58,7 +58,7 @@ async function checkPasswordLeaked(password: string): Promise<boolean> {
 export function PasswordStrength({ password, showRequirements = true, checkLeaked = true }: PasswordStrengthProps) {
   const [isLeaked, setIsLeaked] = useState(false);
   const [isCheckingLeak, setIsCheckingLeak] = useState(false);
-  const { toast } = useToast();
+  
 
   // Debounce para verificar senhas vazadas
   useEffect(() => {

@@ -50,7 +50,7 @@ interface CallingHoursCheck {
 }
 
 export function useDNCCompliance() {
-  const { toast } = useToast();
+  
   const queryClient = useQueryClient();
   const [isChecking, setIsChecking] = useState(false);
 

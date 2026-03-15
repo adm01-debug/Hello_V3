@@ -13,7 +13,7 @@ interface BadgeNotification {
 export function useAchievementNotifications(agentId?: string) {
   const [notifications, setNotifications] = useState<BadgeNotification[]>([]);
   const [latestAchievement, setLatestAchievement] = useState<BadgeNotification | null>(null);
-  const { toast } = useToast();
+  
 
   const showAchievementToast = useCallback((badge: Badge, agentName: string) => {
     toast({

@@ -21,7 +21,7 @@ export function useCoaching(agentId?: string) {
   const [recommendations, setRecommendations] = useState<CoachingRecommendation[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const { toast } = useToast();
+  
 
   const fetchRecommendations = useCallback(async () => {
     if (!agentId) return;

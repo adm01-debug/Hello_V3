@@ -37,7 +37,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 export function CallingHoursConfig() {
   const { callingHours, isLoadingHours, checkCallingHours } = useDNCCompliance();
-  const { toast } = useToast();
+  
   const queryClient = useQueryClient();
   
   const [currentStatus, setCurrentStatus] = useState<{

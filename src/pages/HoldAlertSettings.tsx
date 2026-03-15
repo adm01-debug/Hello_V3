@@ -19,7 +19,7 @@ interface HoldAlertSettings {
 }
 
 export default function HoldAlertSettings() {
-  const { toast } = useToast();
+  
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [settings, setSettings] = useState<HoldAlertSettings | null>(null);

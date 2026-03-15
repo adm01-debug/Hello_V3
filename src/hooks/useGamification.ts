@@ -52,7 +52,7 @@ export function useGamification(agentId?: string) {
   const [weeklyStats, setWeeklyStats] = useState<AgentWeeklyStats | null>(null);
   const [rankings, setRankings] = useState<RankingEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { toast } = useToast();
+  
 
   const getWeekStart = () => {
     const now = new Date();
