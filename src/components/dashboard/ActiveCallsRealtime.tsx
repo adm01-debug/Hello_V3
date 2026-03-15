@@ -257,7 +257,7 @@ export const ActiveCallsRealtime = () => {
                           statusCounts.maxSeverity === 'critical'
                             ? 'text-destructive'
                             : statusCounts.maxSeverity === 'warning'
-                            ? 'text-orange-500'
+                            ? 'text-call-hold'
                             : statusCounts.onHold > 0 
                             ? 'text-destructive' 
                             : 'text-muted-foreground'
