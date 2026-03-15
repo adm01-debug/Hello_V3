@@ -505,9 +505,9 @@ Relatório gerado automaticamente pelo sistema de segurança.
       </Card>
 
       {/* Recommendations */}
-      <Card className="border-yellow-500/30 bg-yellow-500/5">
+      <Card className="border-warning/30 bg-warning/5">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-yellow-500">
+          <CardTitle className="flex items-center gap-2 text-warning">
             <ShieldAlert className="h-5 w-5" />
             Recomendações Pendentes
           </CardTitle>
