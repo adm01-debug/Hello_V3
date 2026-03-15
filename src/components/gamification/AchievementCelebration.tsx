@@ -135,9 +135,9 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
         {/* Title */}
         <div className="text-center space-y-2">
           <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
-            <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+            <Star className="h-5 w-5 text-warning fill-warning" />
             Nova Conquista!
-            <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+            <Star className="h-5 w-5 text-warning fill-warning" />
           </h2>
           
           <p className="text-lg text-muted-foreground">
