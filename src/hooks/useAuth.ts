@@ -75,26 +75,36 @@ export function useAuth() {
   }, []);
 
   const clearSession = useCallback(async () => {
-    if (isCleaningUp.current) return;
-    isCleaningUp.current = true;
-    
-    try {
-      await supabase.auth.signOut({ scope: 'local' });
-    } catch {
-      // signOut may fail with bad JWT - force clear storage
+    if (isCleaningUp.current) {
+      setAuthState(prev => (prev.loading ? { ...prev, loading: false } : prev));
+      return;
     }
-    clearAuthStorage();
-    
-    setAuthState({
-      user: null,
-      session: null,
-      profile: null,
-      loading: false,
-      error: null,
-    });
-    
-    // Allow new cleanup after a delay to prevent loops
-    setTimeout(() => { isCleaningUp.current = false; }, 2000);
+
+    isCleaningUp.current = true;
+
+    try {
+      await withTimeout(
+        supabase.auth.signOut({ scope: 'local' }),
+        1500,
+        'Sign out timed out'
+      );
+    } catch {
+      // signOut may fail or hang with corrupted session - fallback cleanup below
+    } finally {
+      clearAuthStorage();
+
+      setAuthState({
+        user: null,
+        session: null,
+        profile: null,
+        loading: false,
+        error: null,
+      });
+
+      setTimeout(() => {
+        isCleaningUp.current = false;
+      }, 300);
+    }
   }, []);
 
   const getSession = useCallback(async () => {
