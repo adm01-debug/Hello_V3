@@ -180,7 +180,7 @@ describe('Hold Reminder System', () => {
     });
 
     it('does not notify on denied', () => {
-      const permission = 'denied';
+      const permission = 'denied' as string;
       const canNotify = permission === 'granted';
       expect(canNotify).toBe(false);
     });
