@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -40,6 +41,8 @@ const fallbackLabels: Record<string, string> = {
 
 const MultiDeviceRing = () => {
   const queryClient = useQueryClient();
+  const { profile } = useAuthContext();
+  const agentName = profile?.full_name || profile?.email || 'agent';
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [newDevice, setNewDevice] = useState({
     device_name: '',
@@ -81,7 +84,7 @@ const MultiDeviceRing = () => {
     mutationFn: async (device: typeof newDevice) => {
       const { error } = await supabase.from('agent_devices').insert({
         ...device,
-        agent_name: 'current_user',
+        agent_name: agentName,
         ring_order: devices.length,
       });
       if (error) throw error;
@@ -122,7 +125,7 @@ const MultiDeviceRing = () => {
         if (error) throw error;
       } else {
         const { error } = await supabase.from('agent_ring_settings').insert({
-          agent_name: 'current_user',
+          agent_name: agentName,
           ...settings,
         });
         if (error) throw error;
