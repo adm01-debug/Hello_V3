@@ -175,7 +175,7 @@ describe('Gamification System', () => {
     });
 
     it('does not ignore other errors', () => {
-      const errorCode = '42501';
+      const errorCode = '42501' as string;
       const shouldIgnore = errorCode === '23505';
       expect(shouldIgnore).toBe(false);
     });
