@@ -389,7 +389,7 @@ export default function SecurityDashboard() {
                 <p className="text-sm text-muted-foreground">Acessos Bloqueados</p>
                 <p className="text-3xl font-bold">{blockedAccess}</p>
               </div>
-              <ShieldAlert className="h-10 w-10 text-red-500 opacity-50" />
+              <ShieldAlert className="h-10 w-10 text-destructive opacity-50" />
             </div>
           </CardContent>
         </Card>
