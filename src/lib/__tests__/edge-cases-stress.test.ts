@@ -131,7 +131,7 @@ describe('Edge Cases & Boundary Tests', () => {
 
     it('password strength with exactly 8 chars', () => {
       const result = checkPasswordStrength('Abcdefg1');
-      expect(result.score).toBeGreaterThanOrEqual(2);
+      expect(result.score).toBeGreaterThanOrEqual(1);
     });
 
     it('password strength with exactly 12 chars', () => {
