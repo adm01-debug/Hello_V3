@@ -111,7 +111,7 @@ function FlowCanvas({ flow, onUpdate }: { flow: CallFlow; onUpdate: (data: { nod
   const handleConnect = (nodeId: string) => {
     if (!connectingFrom) {
       setConnectingFrom(nodeId);
-      toast({ title: 'Selecione o nó destino', description: 'Clique em outro nó para conectar' });
+      toast('Selecione o nó destino', { description: 'Clique em outro nó para conectar' });
     } else if (connectingFrom !== nodeId) {
       const newEdge: FlowEdge = {
         id: `edge-${Date.now()}`,
