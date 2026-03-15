@@ -366,7 +366,7 @@ export const ActiveCallsRealtime = () => {
                           holdSeverity === 'critical'
                             ? 'bg-destructive/20'
                             : holdSeverity === 'warning'
-                            ? 'bg-orange-500/20'
+                            ? 'bg-call-hold/20'
                             : onHold
                             ? 'bg-destructive/10'
                             : 'bg-primary/10'
