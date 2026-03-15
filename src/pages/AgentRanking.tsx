@@ -761,18 +761,18 @@ export default function AgentRanking() {
 
               {/* 3rd Place */}
               <div className="flex flex-col items-center">
-                <Avatar className="h-14 w-14 mb-2 border-4 border-amber-600">
-                  <AvatarFallback className="text-base bg-amber-600/20">
+                <Avatar className="h-14 w-14 mb-2 border-4 border-warning">
+                  <AvatarFallback className="text-base bg-warning/20">
                     {getInitials(topAgents[2]?.name || '')}
                   </AvatarFallback>
                 </Avatar>
-                <Medal className="h-7 w-7 text-amber-600 mb-1" />
+                <Medal className="h-7 w-7 text-warning mb-1" />
                 <span className="font-semibold text-center">{topAgents[2]?.name}</span>
                 <span className="text-sm text-muted-foreground">
                   {topAgents[2]?.score.toFixed(1)} pts
                 </span>
-                <div className="h-14 w-20 bg-amber-600/20 rounded-t-lg mt-2 flex items-center justify-center">
-                  <span className="text-xl font-bold text-amber-600">3º</span>
+                <div className="h-14 w-20 bg-warning/20 rounded-t-lg mt-2 flex items-center justify-center">
+                  <span className="text-xl font-bold text-warning">3º</span>
                 </div>
               </div>
             </div>
