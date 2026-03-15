@@ -38,7 +38,7 @@ export default function VideoConference() {
   });
 
   const statusColors: Record<string, string> = {
-    scheduled: 'bg-blue-500/10 text-blue-500',
+    scheduled: 'bg-info/10 text-info',
     active: 'bg-success/10 text-success',
     ended: 'bg-muted text-muted-foreground',
   };
