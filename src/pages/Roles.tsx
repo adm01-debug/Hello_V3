@@ -91,7 +91,7 @@ export default function Roles() {
         .from('user_profiles')
         .select('id')
         .eq('email', newUserEmail)
-        .single();
+        .maybeSingle();
 
       if (profileError || !profile) {
         toast.error('Usuário não encontrado', {

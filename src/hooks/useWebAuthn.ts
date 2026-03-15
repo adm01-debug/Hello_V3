@@ -174,7 +174,7 @@ export function useWebAuthn() {
           .from('user_profiles')
           .select('id')
           .eq('email', email)
-          .single();
+          .maybeSingle();
 
         if (profile) {
           const { data: userPasskeys } = await supabase
