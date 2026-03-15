@@ -216,8 +216,9 @@ describe('Edge Function: log-audit-event', () => {
     });
 
     it('details defaults to empty jsonb', () => {
-      const details = undefined || {};
-      expect(Object.keys(details)).toHaveLength(0);
+      let details: Record<string, any> | undefined;
+      const resolved = details || {};
+      expect(Object.keys(resolved)).toHaveLength(0);
     });
   });
 });

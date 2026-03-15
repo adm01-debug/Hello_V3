@@ -43,7 +43,7 @@ describe('Wavoip Call System', () => {
     });
 
     it('true when active', () => {
-      const status = 'active';
+      const status = 'active' as string;
       const isInCall = status === 'calling' || status === 'active';
       expect(isInCall).toBe(true);
     });
