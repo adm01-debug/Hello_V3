@@ -1630,6 +1630,117 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_preferences: {
+        Row: {
+          categories: Json
+          created_at: string
+          digest_enabled: boolean
+          digest_frequency: string
+          email_enabled: boolean
+          id: string
+          push_enabled: boolean
+          quiet_hours_enabled: boolean
+          quiet_hours_end: string | null
+          quiet_hours_start: string | null
+          sound_enabled: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          categories?: Json
+          created_at?: string
+          digest_enabled?: boolean
+          digest_frequency?: string
+          email_enabled?: boolean
+          id?: string
+          push_enabled?: boolean
+          quiet_hours_enabled?: boolean
+          quiet_hours_end?: string | null
+          quiet_hours_start?: string | null
+          sound_enabled?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          categories?: Json
+          created_at?: string
+          digest_enabled?: boolean
+          digest_frequency?: string
+          email_enabled?: boolean
+          id?: string
+          push_enabled?: boolean
+          quiet_hours_enabled?: boolean
+          quiet_hours_end?: string | null
+          quiet_hours_start?: string | null
+          sound_enabled?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          action_label: string | null
+          action_url: string | null
+          category: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          is_archived: boolean
+          is_read: boolean
+          message: string
+          metadata: Json | null
+          read_at: string | null
+          severity: string
+          source_id: string | null
+          source_type: string | null
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          action_label?: string | null
+          action_url?: string | null
+          category?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_archived?: boolean
+          is_read?: boolean
+          message: string
+          metadata?: Json | null
+          read_at?: string | null
+          severity?: string
+          source_id?: string | null
+          source_type?: string | null
+          title: string
+          type?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          action_label?: string | null
+          action_url?: string | null
+          category?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_archived?: boolean
+          is_read?: boolean
+          message?: string
+          metadata?: Json | null
+          read_at?: string | null
+          severity?: string
+          source_id?: string | null
+          source_type?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       password_reset_requests: {
         Row: {
           created_at: string
