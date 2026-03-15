@@ -47,7 +47,7 @@ export function useAuth() {
 
   // Prevent re-entrant session checks and signOut loops
   const isCleaningUp = useRef(false);
-  const initialized = useRef(false);
+  const fetchedRef = useRef(false);
 
   const getProfile = useCallback(async (userId: string) => {
     try {
