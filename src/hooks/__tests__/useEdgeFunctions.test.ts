@@ -213,11 +213,11 @@ describe('Contact Alert Edge Function Logic', () => {
 describe('Goal Violations Check Logic', () => {
   const checkGoal = (
     metricValue: number,
-    targetValue: number,
+    _targetValue: number,
     warningThreshold: number,
     criticalThreshold: number,
     operator: string
-  ) => {
+  ): string => {
     if (operator === 'lte') {
       if (metricValue >= criticalThreshold) return 'critical';
       if (metricValue >= warningThreshold) return 'warning';

@@ -8,10 +8,10 @@ const mockRemoveChannel = vi.fn();
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
-    from: (...args: any[]) => mockFrom(...args),
-    rpc: (...args: any[]) => mockRpc(...args),
-    channel: (...args: any[]) => mockChannel(...args),
-    removeChannel: (...args: any[]) => mockRemoveChannel(...args),
+    from: vi.fn((..._args: any[]) => mockFrom()),
+    rpc: vi.fn((..._args: any[]) => mockRpc()),
+    channel: vi.fn((..._args: any[]) => mockChannel()),
+    removeChannel: vi.fn((..._args: any[]) => mockRemoveChannel()),
     auth: {
       getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'user-1' } }, error: null }),
       mfa: {
