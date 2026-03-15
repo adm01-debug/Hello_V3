@@ -82,11 +82,7 @@ export function useRealtimeHoldAlerts() {
       if (granted) {
         toast.success("Notificações ativadas", { description: "Você receberá alertas críticos de espera em tempo real." });
       } else {
-        toast({
-          title: "Permissão negada",
-          description: "Você não receberá notificações nativas do navegador.",
-          variant: "destructive",
-        });
+        toast.error("Permissão negada", { description: "Você não receberá notificações nativas do navegador." });
       }
       
       return granted;
