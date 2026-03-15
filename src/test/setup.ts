@@ -1,4 +1,5 @@
-import "@testing-library/jest-dom/vitest";
+// @ts-ignore - jest-dom types
+import "@testing-library/jest-dom";
 import { vi } from 'vitest';
 
 // Mock matchMedia
