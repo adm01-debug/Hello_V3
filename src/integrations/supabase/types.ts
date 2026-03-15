@@ -122,6 +122,48 @@ export type Database = {
           },
         ]
       }
+      agent_devices: {
+        Row: {
+          agent_name: string
+          created_at: string
+          device_name: string
+          device_type: string
+          extension: string | null
+          id: string
+          is_enabled: boolean
+          ring_delay_seconds: number
+          ring_order: number
+          sip_uri: string | null
+          updated_at: string
+        }
+        Insert: {
+          agent_name: string
+          created_at?: string
+          device_name: string
+          device_type?: string
+          extension?: string | null
+          id?: string
+          is_enabled?: boolean
+          ring_delay_seconds?: number
+          ring_order?: number
+          sip_uri?: string | null
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string
+          created_at?: string
+          device_name?: string
+          device_type?: string
+          extension?: string | null
+          id?: string
+          is_enabled?: boolean
+          ring_delay_seconds?: number
+          ring_order?: number
+          sip_uri?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       agent_goals: {
         Row: {
           agent_name: string
@@ -148,6 +190,42 @@ export type Database = {
           id?: string
           performance_target?: number
           satisfaction_target?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      agent_ring_settings: {
+        Row: {
+          agent_name: string
+          created_at: string
+          dnd_enabled: boolean
+          dnd_schedule: Json | null
+          fallback_action: string
+          id: string
+          ring_strategy: string
+          ring_timeout_seconds: number
+          updated_at: string
+        }
+        Insert: {
+          agent_name: string
+          created_at?: string
+          dnd_enabled?: boolean
+          dnd_schedule?: Json | null
+          fallback_action?: string
+          id?: string
+          ring_strategy?: string
+          ring_timeout_seconds?: number
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string
+          created_at?: string
+          dnd_enabled?: boolean
+          dnd_schedule?: Json | null
+          fallback_action?: string
+          id?: string
+          ring_strategy?: string
+          ring_timeout_seconds?: number
           updated_at?: string
         }
         Relationships: []

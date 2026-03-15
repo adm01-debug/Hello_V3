@@ -81,6 +81,7 @@ const toolsNavItems = [
   { title: 'Correio de Voz', url: '/voicemail', icon: Voicemail },
   { title: 'Detecção de Temas', url: '/topic-detection', icon: Tag },
   { title: 'Videoconferência', url: '/video-conference', icon: Video },
+  { title: 'Multi-device Ring', url: '/multi-device-ring', icon: PhoneCall },
   { title: 'Hot Desking', url: '/hot-desking', icon: MonitorIcon },
   { title: 'Callbacks', url: '/callbacks', icon: Calendar },
   { title: 'Transcrições', url: '/call-history', icon: FileText },

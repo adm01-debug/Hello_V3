@@ -66,6 +66,7 @@ const HotDesking = lazy(() => import("./pages/HotDesking"));
 const VirtualFax = lazy(() => import("./pages/VirtualFax"));
 const NumberPorting = lazy(() => import("./pages/NumberPorting"));
 const TollFreeNumbers = lazy(() => import("./pages/TollFreeNumbers"));
+const MultiDeviceRing = lazy(() => import("./pages/MultiDeviceRing"));
 
 const queryClient = new QueryClient();
 
@@ -220,6 +221,7 @@ const App = () => (
                               <TollFreeNumbers />
                             </ProtectedRoute>
                           } />
+                          <Route path="/multi-device-ring" element={<MultiDeviceRing />} />
                           <Route path="*" element={<NotFound />} />
                         </Routes>
                       </Suspense>
