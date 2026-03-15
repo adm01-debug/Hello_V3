@@ -62,11 +62,7 @@ export function CallingHoursConfig() {
       .eq('id', id);
 
     if (error) {
-      toast({
-        title: 'Erro',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro', { description: error.message });
     } else {
       queryClient.invalidateQueries({ queryKey: ['calling-hours-config'] });
     }
