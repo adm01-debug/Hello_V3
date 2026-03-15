@@ -65,7 +65,7 @@ describe('Contacts System', () => {
 
   describe('Contact default values', () => {
     it('source defaults to manual', () => {
-      const source = undefined || 'manual';
+      const source = (undefined as string | undefined) || 'manual';
       expect(source).toBe('manual');
     });
 
