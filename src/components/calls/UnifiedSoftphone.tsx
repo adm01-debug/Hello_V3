@@ -803,7 +803,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                 <Button
                   className={cn(
                     "w-full h-14 gap-2 text-lg",
-                    activeChannel === 'wavoip' && wavoip.isConfigured && "bg-green-600 hover:bg-green-700"
+                    activeChannel === 'wavoip' && wavoip.isConfigured && "bg-success hover:bg-success/90"
                   )}
                   onClick={handleStartCall}
                   disabled={
