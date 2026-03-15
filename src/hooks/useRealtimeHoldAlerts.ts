@@ -197,7 +197,7 @@ export function useRealtimeHoldAlerts() {
           event: 'INSERT',
           schema: 'public',
           table: 'call_alerts',
-          filter: 'alert_type=eq.hold_time'
+          filter: 'alert_type=eq.hold_time_exceeded'
         },
         (payload) => {
           console.log('Realtime alert payload:', payload);
