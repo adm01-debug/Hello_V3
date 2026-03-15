@@ -47,6 +47,10 @@ const DEFAULT_PREFERENCES: NotificationPreferences = {
   categories: { system: true, call: true, security: true, coaching: true, gamification: true },
 };
 
+// Helper to get typed table reference for new tables not yet in generated types
+const notificationsTable = () => (supabase.from as any)('notifications');
+const preferencesTable = () => (supabase.from as any)('notification_preferences');
+
 export function useNotifications() {
   const { user } = useAuth();
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -55,12 +59,10 @@ export function useNotifications() {
   const [loading, setLoading] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Fetch notifications
   const fetchNotifications = useCallback(async () => {
     if (!user) return;
     
-    const { data, error } = await supabase
-      .from('notifications')
+    const { data, error } = await notificationsTable()
       .select('*')
       .eq('user_id', user.id)
       .eq('is_archived', false)
@@ -68,18 +70,16 @@ export function useNotifications() {
       .limit(50);
 
     if (!error && data) {
-      setNotifications(data as unknown as Notification[]);
-      setUnreadCount(data.filter((n: { is_read: boolean }) => !n.is_read).length);
+      setNotifications(data as Notification[]);
+      setUnreadCount((data as Notification[]).filter(n => !n.is_read).length);
     }
     setLoading(false);
   }, [user]);
 
-  // Fetch preferences
   const fetchPreferences = useCallback(async () => {
     if (!user) return;
     
-    const { data } = await supabase
-      .from('notification_preferences')
+    const { data } = await preferencesTable()
       .select('*')
       .eq('user_id', user.id)
       .maybeSingle();
@@ -99,10 +99,8 @@ export function useNotifications() {
     }
   }, [user]);
 
-  // Mark as read
   const markAsRead = useCallback(async (notificationId: string) => {
-    await supabase
-      .from('notifications')
+    await notificationsTable()
       .update({ is_read: true, read_at: new Date().toISOString() })
       .eq('id', notificationId);
     
@@ -112,12 +110,10 @@ export function useNotifications() {
     setUnreadCount(prev => Math.max(0, prev - 1));
   }, []);
 
-  // Mark all as read
   const markAllAsRead = useCallback(async () => {
     if (!user) return;
     
-    await supabase
-      .from('notifications')
+    await notificationsTable()
       .update({ is_read: true, read_at: new Date().toISOString() })
       .eq('user_id', user.id)
       .eq('is_read', false);
@@ -126,10 +122,8 @@ export function useNotifications() {
     setUnreadCount(0);
   }, [user]);
 
-  // Archive notification
   const archiveNotification = useCallback(async (notificationId: string) => {
-    await supabase
-      .from('notifications')
+    await notificationsTable()
       .update({ is_archived: true })
       .eq('id', notificationId);
     
@@ -140,32 +134,27 @@ export function useNotifications() {
     });
   }, [notifications]);
 
-  // Delete notification
   const deleteNotification = useCallback(async (notificationId: string) => {
-    await supabase
-      .from('notifications')
+    await notificationsTable()
       .delete()
       .eq('id', notificationId);
     
     setNotifications(prev => prev.filter(n => n.id !== notificationId));
   }, []);
 
-  // Update preferences
   const updatePreferences = useCallback(async (newPrefs: Partial<NotificationPreferences>) => {
     if (!user) return;
     
     const merged = { ...preferences, ...newPrefs };
     setPreferences(merged);
 
-    await supabase
-      .from('notification_preferences')
+    await preferencesTable()
       .upsert({
         user_id: user.id,
         ...merged,
       }, { onConflict: 'user_id' });
   }, [user, preferences]);
 
-  // Play notification sound
   const playSound = useCallback(() => {
     if (!preferences.sound_enabled) return;
     try {
@@ -178,7 +167,6 @@ export function useNotifications() {
     }
   }, [preferences.sound_enabled]);
 
-  // Subscribe to realtime notifications
   useEffect(() => {
     if (!user) return;
 
@@ -201,7 +189,6 @@ export function useNotifications() {
           setUnreadCount(prev => prev + 1);
           playSound();
 
-          // Browser notification
           if (preferences.push_enabled && 'Notification' in window && Notification.permission === 'granted') {
             new Notification(newNotif.title, {
               body: newNotif.message,

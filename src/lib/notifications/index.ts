@@ -45,7 +45,7 @@ export async function sendNotification(params: SendNotificationParams): Promise<
     }
 
     return { success: true, ...data };
-  } catch (err) {
+  } catch {
     return { success: false, error: 'Falha ao enviar notificação' };
   }
 }
@@ -68,9 +68,7 @@ export async function sendLocalNotification(params: SendNotificationParams): Pro
     source_id: params.sourceId,
     expires_at: params.expiresAt,
   };
-  const { error } = await (supabase
-    .from('notifications') as any)
-    .insert(payload);
+  const { error } = await (supabase.from as any)('notifications').insert(payload);
 
   return !error;
 }
