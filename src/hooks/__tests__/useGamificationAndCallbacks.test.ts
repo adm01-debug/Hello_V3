@@ -204,7 +204,7 @@ describe('Scheduled Callbacks System', () => {
     });
 
     it('pending → cancelled does not set completed_at', () => {
-      const status = 'cancelled';
+      const status = 'cancelled' as string;
       const completed_at = status === 'completed' ? new Date().toISOString() : null;
       expect(completed_at).toBeNull();
     });
