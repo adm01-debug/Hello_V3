@@ -299,18 +299,21 @@ describe('Edge Function Logic - Send Notification', () => {
     expect(body.expires_at).toBe('2025-01-01');
   });
 
-  it('defaults type to info', () => {
-    const type = undefined || 'info';
+  it('defaults type to info when undefined', () => {
+    const input: string | undefined = undefined;
+    const type = input || 'info';
     expect(type).toBe('info');
   });
 
-  it('defaults category to system', () => {
-    const category = undefined || 'system';
+  it('defaults category to system when undefined', () => {
+    const input: string | undefined = undefined;
+    const category = input || 'system';
     expect(category).toBe('system');
   });
 
-  it('defaults severity to info', () => {
-    const severity = undefined || 'info';
+  it('defaults severity to info when undefined', () => {
+    const input: string | undefined = undefined;
+    const severity = input || 'info';
     expect(severity).toBe('info');
   });
 });
