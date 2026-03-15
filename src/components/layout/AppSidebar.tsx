@@ -100,8 +100,8 @@ const toolsNavItems = [
   { title: 'Números 0800', url: '/toll-free-numbers', icon: PhoneCall },
   { title: 'QR Provisioning', url: '/qr-provisioning', icon: QrCode },
   { title: 'LDAP Sync', url: '/ldap-sync', icon: FolderSync },
+];
 
-const securityNavItems = [
   { title: 'Central de Segurança', url: '/security', icon: ShieldCheck },
   { title: 'Sessões Ativas', url: '/sessions', icon: Monitor },
   { title: 'Autenticação 2FA', url: '/two-factor-auth', icon: Key },
