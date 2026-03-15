@@ -123,20 +123,8 @@ export function useAuth() {
       }
 
       if (session?.user) {
-        // Validate the session with the server
-          const { data: { user }, error: userError } = await withTimeout(
-            supabase.auth.getUser(),
-            4000,
-            'User validation timed out'
-          );
-        if (userError || !user) {
-          console.warn('Invalid session detected, clearing...', userError?.message);
-          await clearSession();
-          return;
-        }
-        
-        const profile = await getProfile(user.id);
-        setAuthState({ user, session, profile, loading: false, error: null });
+        const profile = await getProfile(session.user.id);
+        setAuthState({ user: session.user, session, profile, loading: false, error: null });
       } else {
         setAuthState({ user: null, session: null, profile: null, loading: false, error: null });
       }
