@@ -22,10 +22,10 @@ describe('Device Detection', () => {
   describe('OS detection', () => {
     const detectOS = (ua: string): string => {
       if (ua.includes('Windows')) return 'Windows';
-      if (ua.includes('Mac')) return 'macOS';
-      if (ua.includes('Linux')) return 'Linux';
       if (ua.includes('Android')) return 'Android';
       if (ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
+      if (ua.includes('Mac')) return 'macOS';
+      if (ua.includes('Linux')) return 'Linux';
       return 'Unknown';
     };
 
