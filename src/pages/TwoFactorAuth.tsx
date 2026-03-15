@@ -285,7 +285,7 @@ export default function TwoFactorAuth() {
                 </div>
               ) : hasPhone ? (
                 <div className="flex items-center gap-4">
-                  <ShieldCheck className="h-6 w-6 text-green-500" />
+                  <ShieldCheck className="h-6 w-6 text-success" />
                   <div className="flex-1">
                     <p className="font-medium">SMS Ativo</p>
                     <p className="text-sm text-muted-foreground">Verificação por SMS configurada</p>
