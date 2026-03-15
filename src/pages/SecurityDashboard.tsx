@@ -95,7 +95,7 @@ export default function SecurityDashboard() {
         .from('user_ip_restrictions')
         .select('enabled')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
       
       setIpRestrictionEnabled(ipRestriction?.enabled || false);
 

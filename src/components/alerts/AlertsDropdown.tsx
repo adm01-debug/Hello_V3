@@ -109,7 +109,7 @@ export function AlertsDropdown() {
       .from('call_sessions')
       .select('id')
       .limit(1)
-      .single();
+      .maybeSingle();
 
     if (existingSession) {
       sessionId = existingSession.id;
