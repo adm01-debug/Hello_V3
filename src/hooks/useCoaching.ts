@@ -81,11 +81,7 @@ export function useCoaching(agentId?: string) {
 
     if (error) {
       console.error('Error updating recommendation:', error);
-      toast({
-        title: 'Erro',
-        description: 'Não foi possível atualizar o status.',
-        variant: 'destructive',
-      });
+      toast.error('Erro', { description: 'Não foi possível atualizar o status.' });
     } else {
       await fetchRecommendations();
       
