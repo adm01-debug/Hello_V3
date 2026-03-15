@@ -403,7 +403,7 @@ export const ActiveCallsRealtime = () => {
                             holdSeverity === 'critical'
                               ? 'bg-destructive animate-pulse'
                               : holdSeverity === 'warning'
-                              ? 'bg-orange-500 hover:bg-orange-600'
+                              ? 'bg-call-hold hover:bg-call-hold/90'
                               : 'animate-pulse'
                           }`}
                         >
