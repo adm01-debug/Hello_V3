@@ -36,6 +36,15 @@ function clearAuthStorage() {
   }
 }
 
+function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => {
+      setTimeout(() => reject(new Error(message)), ms);
+    }),
+  ]);
+}
+
 export function useAuth() {
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
@@ -66,37 +75,46 @@ export function useAuth() {
   }, []);
 
   const clearSession = useCallback(async () => {
-    if (isCleaningUp.current) return;
-    isCleaningUp.current = true;
-    
-    try {
-      await supabase.auth.signOut({ scope: 'local' });
-    } catch {
-      // signOut may fail with bad JWT - force clear storage
+    if (isCleaningUp.current) {
+      setAuthState(prev => (prev.loading ? { ...prev, loading: false } : prev));
+      return;
     }
-    clearAuthStorage();
-    
-    setAuthState({
-      user: null,
-      session: null,
-      profile: null,
-      loading: false,
-      error: null,
-    });
-    
-    // Allow new cleanup after a delay to prevent loops
-    setTimeout(() => { isCleaningUp.current = false; }, 2000);
+
+    isCleaningUp.current = true;
+
+    try {
+      await withTimeout(
+        supabase.auth.signOut({ scope: 'local' }),
+        1500,
+        'Sign out timed out'
+      );
+    } catch {
+      // signOut may fail or hang with corrupted session - fallback cleanup below
+    } finally {
+      clearAuthStorage();
+
+      setAuthState({
+        user: null,
+        session: null,
+        profile: null,
+        loading: false,
+        error: null,
+      });
+
+      setTimeout(() => {
+        isCleaningUp.current = false;
+      }, 300);
+    }
   }, []);
 
   const getSession = useCallback(async () => {
 
     try {
-      const timeoutPromise = new Promise<never>((_, reject) => 
-        setTimeout(() => reject(new Error('Session check timed out')), 10000)
+      const { data: { session }, error } = await withTimeout(
+        supabase.auth.getSession(),
+        4000,
+        'Session check timed out'
       );
-      
-      const sessionPromise = supabase.auth.getSession();
-      const { data: { session }, error } = await Promise.race([sessionPromise, timeoutPromise]) as Awaited<typeof sessionPromise>;
       
       if (error) {
         console.warn('Auth session error:', error.message);
@@ -105,16 +123,8 @@ export function useAuth() {
       }
 
       if (session?.user) {
-        // Validate the session with the server
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
-        if (userError || !user) {
-          console.warn('Invalid session detected, clearing...', userError?.message);
-          await clearSession();
-          return;
-        }
-        
-        const profile = await getProfile(user.id);
-        setAuthState({ user, session, profile, loading: false, error: null });
+        const profile = await getProfile(session.user.id);
+        setAuthState({ user: session.user, session, profile, loading: false, error: null });
       } else {
         setAuthState({ user: null, session: null, profile: null, loading: false, error: null });
       }
@@ -157,27 +167,22 @@ export function useAuth() {
         // For INITIAL_SESSION, skip - handled by getSession
         if (event === 'INITIAL_SESSION') return;
 
-        // For TOKEN_REFRESHED or SIGNED_IN, validate the token
+        // For INITIAL_SESSION/SIGNED_IN/TOKEN_REFRESHED, hydrate user state
         if (session?.user) {
-          try {
-            const { data: { user }, error: userError } = await supabase.auth.getUser();
-            if (userError || !user) {
-              console.warn('Auth state change: invalid token, clearing session');
+          void (async () => {
+            try {
+              const profile = await getProfile(session.user.id);
+              setAuthState({
+                user: session.user,
+                session,
+                profile,
+                loading: false,
+                error: null,
+              });
+            } catch {
               await clearSession();
-              return;
             }
-            
-            const profile = await getProfile(user.id);
-            setAuthState({
-              user,
-              session,
-              profile,
-              loading: false,
-              error: null,
-            });
-          } catch {
-            await clearSession();
-          }
+          })();
         }
       }
     );
@@ -191,10 +196,14 @@ export function useAuth() {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
       
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data, error } = await withTimeout(
+        supabase.auth.signInWithPassword({
+          email,
+          password,
+        }),
+        8000,
+        'Login request timed out'
+      );
 
       if (error) {
         setAuthState(prev => ({ ...prev, error, loading: false }));
@@ -223,15 +232,19 @@ export function useAuth() {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
 
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
+      const { data, error } = await withTimeout(
+        supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: fullName,
+            },
           },
-        },
-      });
+        }),
+        8000,
+        'Signup request timed out'
+      );
 
       if (error) {
         setAuthState(prev => ({ ...prev, error, loading: false }));
