@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -8,11 +7,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
-import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin, Eye, EyeOff, Lock, Clock } from 'lucide-react';
+import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin, Eye, EyeOff, Lock, Clock, Headphones, BarChart3, Users } from 'lucide-react';
 import { PasskeyLogin } from '@/components/auth/PasskeyLogin';
 import { isWebAuthnSupported } from '@/lib/webauthn/webauthn-utils';
 
@@ -52,7 +50,6 @@ export default function Login() {
         setCountdown(prev => {
           if (prev <= 1) {
             clearInterval(interval);
-            // Recheck lockout status
             if (email) {
               checkLockout(email);
             }
@@ -65,14 +62,12 @@ export default function Login() {
     }
   }, [lockoutStatus?.locked, lockoutStatus?.remainingSeconds, email, checkLockout]);
 
-  // Fetch user's IP address and geolocation on component mount
+  // Fetch user's IP address and geolocation
   useEffect(() => {
     const fetchIPInfo = async () => {
       try {
-        // Using ip-api.com for geolocation (free, no API key required)
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-        
         if (data && data.ip) {
           setIpInfo({
             ip: data.ip,
@@ -81,24 +76,12 @@ export default function Login() {
             countryCode: data.country_code || '',
           });
         } else {
-          // Fallback to ipify if primary API fails
           const fallbackResponse = await fetch('https://api.ipify.org?format=json');
           const fallbackData = await fallbackResponse.json();
-          setIpInfo({
-            ip: fallbackData.ip,
-            country: 'Desconhecido',
-            city: 'Desconhecido',
-            countryCode: '',
-          });
+          setIpInfo({ ip: fallbackData.ip, country: 'Desconhecido', city: 'Desconhecido', countryCode: '' });
         }
-      } catch (error) {
-        console.error('Failed to fetch IP info:', error);
-        setIpInfo({
-          ip: 'Não detectado',
-          country: 'Desconhecido',
-          city: 'Desconhecido',
-          countryCode: '',
-        });
+      } catch {
+        setIpInfo({ ip: 'Não detectado', country: 'Desconhecido', city: 'Desconhecido', countryCode: '' });
       } finally {
         setIpLoading(false);
       }
@@ -109,17 +92,13 @@ export default function Login() {
   // Check lockout when email changes
   useEffect(() => {
     if (email && email.includes('@')) {
-      const timeoutId = setTimeout(() => {
-        checkLockout(email);
-      }, 500);
+      const timeoutId = setTimeout(() => { checkLockout(email); }, 500);
       return () => clearTimeout(timeoutId);
     }
   }, [email, checkLockout]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Check if account is locked
     const currentLockout = await checkLockout(email);
     if (currentLockout.locked) {
       toast.error('Conta temporariamente bloqueada', {
@@ -133,11 +112,8 @@ export default function Login() {
 
     try {
       const { data, error } = await signIn(email, password);
-      
       if (error) {
-        // Record failed attempt
         const lockResult = await recordFailedAttempt(email, ipInfo?.ip);
-        
         if (lockResult.locked) {
           toast.error('Conta bloqueada', {
             description: `Muitas tentativas falhas. Tente novamente em ${formatRemainingTime(lockResult.remainingSeconds || 60)}`,
@@ -154,46 +130,28 @@ export default function Login() {
         return;
       }
 
-      // Validate IP after successful authentication
       if (data?.user) {
         const ipResult = await validateIP(data.user.id, email);
-        
         if (!ipResult.allowed) {
-          // IP not authorized - sign out and block access
           await signOut();
           setIpBlocked(true);
-          
-          // Send notification to admin about blocked IP
           try {
             await supabase.functions.invoke('notify-blocked-ip', {
-              body: {
-                ip: ipInfo?.ip || 'Não detectado',
-                email: email,
-                country: ipInfo?.country,
-                city: ipInfo?.city,
-                userAgent: navigator.userAgent,
-                timestamp: new Date().toISOString(),
-              },
+              body: { ip: ipInfo?.ip || 'Não detectado', email, country: ipInfo?.country, city: ipInfo?.city, userAgent: navigator.userAgent, timestamp: new Date().toISOString() },
             });
-            console.log('[LOGIN] Notificação de IP bloqueado enviada');
-          } catch (notifyError) {
-            console.error('[LOGIN] Erro ao enviar notificação:', notifyError);
-          }
-          
+          } catch {}
           toast.error('Acesso bloqueado', {
-            description: 'Seu IP não está autorizado para acessar o sistema. Entre em contato com o administrador.',
+            description: 'Seu IP não está autorizado para acessar o sistema.',
             duration: 10000,
           });
           return;
         }
-
-        // Record successful login
         await recordSuccessfulLogin(email, ipInfo?.ip);
       }
 
       toast.success('Login realizado com sucesso');
       navigate(from, { replace: true });
-    } catch (err) {
+    } catch {
       toast.error('Erro inesperado');
     } finally {
       setIsLoading(false);
@@ -203,199 +161,225 @@ export default function Login() {
   const isLocked = lockoutStatus?.locked || countdown > 0;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md space-y-8">
-        <div className="flex flex-col items-center text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 mb-4">
-            <Phone className="h-8 w-8 text-primary" />
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight">CallCenter Pro</h1>
-          <p className="text-muted-foreground mt-2">
-            Sistema de gerenciamento de call center
-          </p>
-        </div>
-
-        {/* Account Lockout Alert */}
-        {isLocked && (
-          <Alert className="border-destructive bg-destructive/10">
-            <div className="flex items-center gap-3">
-              <Lock className="h-5 w-5 text-destructive" />
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-destructive">Conta Temporariamente Bloqueada</span>
-                </div>
-                <AlertDescription className="text-xs mt-1 text-destructive">
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-3 w-3" />
-                    <span>
-                      Muitas tentativas de login falhas. Tente novamente em{' '}
-                      <strong>{formatRemainingTime(countdown)}</strong>
-                    </span>
-                  </div>
-                </AlertDescription>
-              </div>
-            </div>
-          </Alert>
-        )}
-
-        {/* IP Detection Alert */}
-        <Alert className={`${ipBlocked ? 'border-destructive bg-destructive/10' : 'border-primary/30 bg-primary/5'}`}>
+    <div className="flex min-h-screen bg-background">
+      {/* Left Panel - Branding */}
+      <div className="hidden lg:flex lg:w-[55%] relative overflow-hidden">
+        <div className="absolute inset-0 gradient-primary" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
+        
+        <div className="relative z-10 flex flex-col justify-between w-full p-12">
+          {/* Logo */}
           <div className="flex items-center gap-3">
-            {ipBlocked ? (
-              <ShieldX className="h-5 w-5 text-destructive" />
-            ) : (
-              <Globe className="h-5 w-5 text-primary" />
-            )}
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">
-                  {ipBlocked ? 'IP Bloqueado' : 'IP Detectado'}
-                </span>
-                {!ipLoading && (
-                  <span className="flex items-center gap-1">
-                    <Wifi className={`h-3 w-3 ${ipBlocked ? 'text-destructive' : 'text-primary'}`} />
-                    <span className={`text-xs ${ipBlocked ? 'text-destructive' : 'text-primary'}`}>
-                      {ipBlocked ? 'Não autorizado' : 'Conectado'}
-                    </span>
-                  </span>
-                )}
-              </div>
-              <AlertDescription className="text-xs mt-1 space-y-1">
-                {ipLoading ? (
-                  <span className="flex items-center gap-2">
-                    <Loader2 className="h-3 w-3 animate-spin" />
-                    Detectando localização...
-                  </span>
-                ) : ipBlocked ? (
-                  <span className="text-destructive">
-                    Seu IP ({ipInfo?.ip}) não está na lista de IPs autorizados. Entre em contato com o administrador.
-                  </span>
-                ) : (
-                  <div className="space-y-1">
-                    <div className="font-mono">{ipInfo?.ip}</div>
-                    <div className="flex items-center gap-1 text-muted-foreground">
-                      <MapPin className="h-3 w-3" />
-                      <span>
-                        {ipInfo?.city && ipInfo?.city !== 'Desconhecido' 
-                          ? `${ipInfo.city}, ${ipInfo.country}` 
-                          : ipInfo?.country || 'Localização desconhecida'}
-                        {ipInfo?.countryCode && (
-                          <span className="ml-1 text-xs opacity-70">({ipInfo.countryCode})</span>
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </AlertDescription>
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm">
+              <Phone className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">CallCenter Pro</h2>
+              <p className="text-sm text-white/60">Enterprise Suite</p>
             </div>
           </div>
-        </Alert>
 
-        <Card className="border-border/50">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-xl">Entrar</CardTitle>
-            <CardDescription>
-              Digite suas credenciais para acessar o sistema
-            </CardDescription>
-          </CardHeader>
-          <form onSubmit={handleSubmit}>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  autoComplete="email"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Senha</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    autoComplete="current-password"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </Button>
+          {/* Center Content */}
+          <div className="space-y-8 max-w-lg">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold text-white leading-tight tracking-tight">
+                Gerencie seu call center com{' '}
+                <span className="text-white/80">inteligência</span>
+              </h1>
+              <p className="text-lg text-white/70 leading-relaxed">
+                Monitore chamadas em tempo real, otimize a performance dos agentes e tome decisões baseadas em dados.
+              </p>
+            </div>
+
+            {/* Feature highlights */}
+            <div className="grid grid-cols-1 gap-4">
+              {[
+                { icon: Headphones, label: 'Monitoramento em tempo real', desc: 'Acompanhe todas as chamadas ativas' },
+                { icon: BarChart3, label: 'Analytics avançados', desc: 'Relatórios e métricas detalhadas' },
+                { icon: Users, label: 'Gestão de equipe', desc: 'Coaching e gamificação de agentes' },
+              ].map(({ icon: Icon, label, desc }) => (
+                <div key={label} className="flex items-start gap-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/15">
+                    <Icon className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-white text-sm">{label}</p>
+                    <p className="text-xs text-white/60 mt-0.5">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="flex items-center gap-2 text-xs text-white/40">
+            <Shield className="h-3 w-3" />
+            <span>Criptografia end-to-end · SOC 2 Compliant</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Panel - Login Form */}
+      <div className="flex flex-1 items-center justify-center p-6 sm:p-8 lg:p-12">
+        <div className="w-full max-w-md space-y-6">
+          {/* Mobile Logo */}
+          <div className="flex flex-col items-center text-center lg:hidden mb-2">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl gradient-primary mb-3">
+              <Phone className="h-7 w-7 text-primary-foreground" />
+            </div>
+            <h1 className="text-2xl font-bold tracking-tight">CallCenter Pro</h1>
+            <p className="text-sm text-muted-foreground mt-1">Sistema de gerenciamento</p>
+          </div>
+
+          {/* Heading - Desktop */}
+          <div className="hidden lg:block space-y-1">
+            <h2 className="text-2xl font-bold tracking-tight">Bem-vindo de volta</h2>
+            <p className="text-muted-foreground text-sm">Entre com suas credenciais para continuar</p>
+          </div>
+
+          {/* Lockout Alert */}
+          {isLocked && (
+            <Alert className="border-destructive/50 bg-destructive/5">
+              <div className="flex items-center gap-3">
+                <Lock className="h-4 w-4 text-destructive shrink-0" />
+                <div className="flex-1">
+                  <span className="text-sm font-medium text-destructive">Conta Bloqueada</span>
+                  <AlertDescription className="text-xs mt-0.5 text-destructive/80">
+                    <div className="flex items-center gap-1.5">
+                      <Clock className="h-3 w-3" />
+                      <span>Tente novamente em <strong>{formatRemainingTime(countdown)}</strong></span>
+                    </div>
+                  </AlertDescription>
                 </div>
               </div>
-            </CardContent>
-            <CardFooter className="flex flex-col gap-4">
-              <Button 
-                type="submit" 
-                className="w-full" 
-                disabled={isLoading || isLocked}
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Entrando...
-                  </>
-                ) : (
-                  'Entrar'
-                )}
-              </Button>
+            </Alert>
+          )}
 
-              {/* Passkey Login Section */}
-              {isWebAuthnSupported() && (
-                <>
-                  <div className="relative w-full">
-                    <div className="absolute inset-0 flex items-center">
-                      <Separator className="w-full" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-card px-2 text-muted-foreground">
-                        ou
-                      </span>
-                    </div>
-                  </div>
-                  <PasskeyLogin 
-                    onSuccess={() => navigate(from, { replace: true })}
-                    showEmailField={false}
-                  />
-                </>
+          {/* IP Info - Compact */}
+          <div className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-sm ${
+            ipBlocked 
+              ? 'border-destructive/30 bg-destructive/5' 
+              : 'border-border bg-muted/30'
+          }`}>
+            {ipBlocked ? (
+              <ShieldX className="h-4 w-4 text-destructive shrink-0" />
+            ) : (
+              <Globe className="h-4 w-4 text-muted-foreground shrink-0" />
+            )}
+            <div className="flex-1 min-w-0">
+              {ipLoading ? (
+                <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                  Detectando localização...
+                </span>
+              ) : ipBlocked ? (
+                <span className="text-xs text-destructive">IP não autorizado ({ipInfo?.ip})</span>
+              ) : (
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className="font-mono">{ipInfo?.ip}</span>
+                  <span className="text-muted-foreground/50">·</span>
+                  <span className="flex items-center gap-1">
+                    <MapPin className="h-3 w-3" />
+                    {ipInfo?.city !== 'Desconhecido' ? `${ipInfo?.city}, ${ipInfo?.countryCode}` : ipInfo?.country}
+                  </span>
+                  <Wifi className="h-3 w-3 text-success ml-auto shrink-0" />
+                </div>
               )}
+            </div>
+          </div>
 
-              <div className="space-y-2 text-center text-sm">
-                <Link 
-                  to="/forgot-password" 
-                  className="text-muted-foreground hover:text-primary block"
-                >
-                  Esqueceu sua senha?
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="seu@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete="email"
+                className="h-11"
+              />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password" className="text-sm font-medium">Senha</Label>
+                <Link to="/forgot-password" className="text-xs text-primary hover:text-primary-hover transition-colors">
+                  Esqueceu a senha?
                 </Link>
-                <p className="text-muted-foreground">
-                  Não tem uma conta?{' '}
-                  <Link 
-                    to="/register" 
-                    className="text-primary hover:underline font-medium"
-                  >
-                    Registre-se
-                  </Link>
-                </p>
               </div>
-            </CardFooter>
-          </form>
-        </Card>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoComplete="current-password"
+                  className="h-11 pr-10"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </Button>
+              </div>
+            </div>
 
-        <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-          <Shield className="h-3 w-3" />
-          <span>Conexão segura</span>
+            <Button 
+              type="submit" 
+              className="w-full h-11 font-medium"
+              disabled={isLoading || isLocked}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Entrando...
+                </>
+              ) : (
+                'Entrar'
+              )}
+            </Button>
+          </form>
+
+          {/* Passkey */}
+          {isWebAuthnSupported() && (
+            <>
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <Separator className="w-full" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-3 text-muted-foreground">ou</span>
+                </div>
+              </div>
+              <PasskeyLogin 
+                onSuccess={() => navigate(from, { replace: true })}
+                showEmailField={false}
+              />
+            </>
+          )}
+
+          {/* Register link */}
+          <p className="text-center text-sm text-muted-foreground">
+            Não tem uma conta?{' '}
+            <Link to="/register" className="text-primary hover:text-primary-hover font-medium transition-colors">
+              Registre-se
+            </Link>
+          </p>
+
+          {/* Security footer */}
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/60 pt-2">
+            <Shield className="h-3 w-3" />
+            <span>Conexão segura · Dados criptografados</span>
+          </div>
         </div>
       </div>
     </div>
