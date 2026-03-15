@@ -246,12 +246,12 @@ export default function TwoFactorAuth() {
           </Card>
 
           {/* SMS Setup Card */}
-          <Card className={hasPhone ? 'border-green-500/30 bg-green-500/5' : ''}>
+          <Card className={hasPhone ? 'border-success/30 bg-success/5' : ''}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MessageSquare className="h-5 w-5" />
                 SMS (Código por Mensagem)
-                {hasPhone && <ShieldCheck className="h-4 w-4 text-green-500 ml-auto" />}
+                {hasPhone && <ShieldCheck className="h-4 w-4 text-success ml-auto" />}
               </CardTitle>
               <CardDescription>
                 Receba códigos de verificação por SMS

@@ -977,7 +977,7 @@ export default function AgentRanking() {
                     <TableCell className="text-center">
                       <Badge 
                         variant={index === 0 ? 'default' : 'outline'}
-                        className={index === 0 ? 'bg-yellow-500 hover:bg-yellow-600' : ''}
+                        className={index === 0 ? 'bg-warning hover:bg-warning/90' : ''}
                       >
                         {agent.score.toFixed(1)}
                       </Badge>
