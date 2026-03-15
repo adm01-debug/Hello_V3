@@ -54,10 +54,7 @@ export function useCoaching(agentId?: string) {
         throw error;
       }
 
-      toast({
-        title: '🎯 Recomendações Geradas',
-        description: `${data.recommendations?.length || 0} novas recomendações de coaching foram criadas.`,
-      });
+      toast.success('🎯 Recomendações Geradas', { description: `${data.recommendations?.length || 0} novas recomendações de coaching foram criadas.` });
 
       await fetchRecommendations();
     } catch (error: any) {
