@@ -70,11 +70,7 @@ export function useRealtimeHoldAlerts() {
   // Request browser notification permission
   const requestBrowserNotifications = useCallback(async () => {
     if (!('Notification' in window)) {
-      toast({
-        title: "Notificações não suportadas",
-        description: "Seu navegador não suporta notificações nativas.",
-        variant: "destructive",
-      });
+      toast.error("Notificações não suportadas", { description: "Seu navegador não suporta notificações nativas." });
       return false;
     }
 
