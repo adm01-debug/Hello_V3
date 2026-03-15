@@ -818,8 +818,8 @@ export default function AgentRanking() {
                         <div className="flex items-center gap-1">
                           {allAchieved ? (
                             <>
-                              <CheckCircle2 className="h-3 w-3 text-green-500" />
-                              <span className="text-xs text-green-500">Todas as metas atingidas</span>
+                             <CheckCircle2 className="h-3 w-3 text-success" />
+                              <span className="text-xs text-success">Todas as metas atingidas</span>
                             </>
                           ) : (
                             <>
