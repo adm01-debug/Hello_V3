@@ -110,12 +110,11 @@ export function useAuth() {
   const getSession = useCallback(async () => {
 
     try {
-      const timeoutPromise = new Promise<never>((_, reject) => 
-        setTimeout(() => reject(new Error('Session check timed out')), 10000)
+      const { data: { session }, error } = await withTimeout(
+        supabase.auth.getSession(),
+        4000,
+        'Session check timed out'
       );
-      
-      const sessionPromise = supabase.auth.getSession();
-      const { data: { session }, error } = await Promise.race([sessionPromise, timeoutPromise]) as Awaited<typeof sessionPromise>;
       
       if (error) {
         console.warn('Auth session error:', error.message);
