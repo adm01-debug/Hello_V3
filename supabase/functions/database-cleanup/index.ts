@@ -12,16 +12,53 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // Verify JWT authentication
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, serviceRoleKey);
+    const supabaseAnon = Deno.env.get("SUPABASE_ANON_KEY")!;
 
-    console.log("Starting database cleanup...");
+    // Verify user is admin
+    const userClient = createClient(supabaseUrl, supabaseAnon, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const { data: { user }, error: authError } = await userClient.auth.getUser();
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Check admin role
+    const supabase = createClient(supabaseUrl, serviceRoleKey);
+    const { data: roleData } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .eq("is_active", true)
+      .maybeSingle();
+
+    if (!roleData) {
+      return new Response(
+        JSON.stringify({ error: "Admin access required" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const results: Record<string, string> = {};
 
     // 1. Clean expired WebAuthn challenges
     const { error: challengeErr } = await supabase.rpc("cleanup_expired_challenges");
-    if (challengeErr) console.error("Challenge cleanup error:", challengeErr);
-    else console.log("Expired WebAuthn challenges cleaned");
+    results.webauthn_challenges = challengeErr ? `error: ${challengeErr.message}` : "cleaned";
 
     // 2. Clean old rate limit logs (older than 7 days)
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
@@ -29,8 +66,7 @@ Deno.serve(async (req) => {
       .from("rate_limit_logs")
       .delete()
       .lt("created_at", sevenDaysAgo);
-    if (rateErr) console.error("Rate limit cleanup error:", rateErr);
-    else console.log("Old rate limit logs cleaned");
+    results.rate_limit_logs = rateErr ? `error: ${rateErr.message}` : "cleaned";
 
     // 3. Clean resolved rate limit alerts (older than 30 days)
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
@@ -39,8 +75,7 @@ Deno.serve(async (req) => {
       .delete()
       .eq("is_resolved", true)
       .lt("created_at", thirtyDaysAgo);
-    if (alertErr) console.error("Alert cleanup error:", alertErr);
-    else console.log("Old resolved alerts cleaned");
+    results.rate_limit_alerts = alertErr ? `error: ${alertErr.message}` : "cleaned";
 
     // 4. Clean old login attempts (older than 90 days)
     const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString();
@@ -48,8 +83,7 @@ Deno.serve(async (req) => {
       .from("login_attempts")
       .delete()
       .lt("created_at", ninetyDaysAgo);
-    if (loginErr) console.error("Login attempts cleanup error:", loginErr);
-    else console.log("Old login attempts cleaned");
+    results.login_attempts = loginErr ? `error: ${loginErr.message}` : "cleaned";
 
     // 5. Clean expired account lockouts
     const { error: lockoutErr } = await supabase
@@ -57,13 +91,19 @@ Deno.serve(async (req) => {
       .delete()
       .lt("locked_until", new Date().toISOString())
       .not("locked_until", "is", null);
-    if (lockoutErr) console.error("Lockout cleanup error:", lockoutErr);
-    else console.log("Expired lockouts cleaned");
+    results.account_lockouts = lockoutErr ? `error: ${lockoutErr.message}` : "cleaned";
 
-    console.log("Database cleanup completed successfully");
+    // Log cleanup event
+    await supabase.from("audit_logs").insert({
+      user_id: user.id,
+      user_email: user.email,
+      action: "database_cleanup",
+      resource_type: "system",
+      details: results,
+    });
 
     return new Response(
-      JSON.stringify({ success: true, message: "Database cleanup completed" }),
+      JSON.stringify({ success: true, message: "Database cleanup completed", results }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {

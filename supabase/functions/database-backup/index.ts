@@ -12,13 +12,48 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // Verify JWT authentication
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseAnon = Deno.env.get("SUPABASE_ANON_KEY")!;
+
+    // Verify user is admin
+    const userClient = createClient(supabaseUrl, supabaseAnon, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const { data: { user }, error: authError } = await userClient.auth.getUser();
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Check admin role
     const supabase = createClient(supabaseUrl, serviceRoleKey);
+    const { data: roleData } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .eq("is_active", true)
+      .maybeSingle();
 
-    console.log("Starting database backup metadata collection...");
+    if (!roleData) {
+      return new Response(
+        JSON.stringify({ error: "Admin access required" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
-    // Collect table counts for backup verification
     const tables = [
       "agents", "contacts", "call_sessions", "call_recordings",
       "call_transcriptions", "call_summaries", "call_analyses",
@@ -45,17 +80,16 @@ Deno.serve(async (req) => {
       tables: counts,
       totalRecords: Object.values(counts).reduce((sum, c) => sum + c, 0),
       status: "completed",
+      triggered_by: user.email,
     };
 
-    // Log the backup event
     await supabase.from("audit_logs").insert({
+      user_id: user.id,
+      user_email: user.email,
       action: "database_backup",
       resource_type: "system",
       details: backupMetadata,
-      user_email: "system",
     });
-
-    console.log("Database backup metadata collected:", JSON.stringify(backupMetadata));
 
     return new Response(
       JSON.stringify({ success: true, backup: backupMetadata }),
