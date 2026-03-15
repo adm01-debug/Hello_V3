@@ -41,6 +41,8 @@ const fallbackLabels: Record<string, string> = {
 
 const MultiDeviceRing = () => {
   const queryClient = useQueryClient();
+  const { profile } = useAuthContext();
+  const agentName = profile?.full_name || profile?.email || 'agent';
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [newDevice, setNewDevice] = useState({
     device_name: '',
