@@ -171,11 +171,7 @@ export function useDNCCompliance() {
       toast.success('Número removido', { description: 'O número foi removido da lista DNC.' });
     },
     onError: (error: Error) => {
-      toast({
-        title: 'Erro ao remover',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro ao remover', { description: error.message });
     },
   });
 

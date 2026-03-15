@@ -99,7 +99,7 @@ export function useAchievementNotifications(agentId?: string) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [toast]);
+  }, []);
 
   const clearLatestAchievement = useCallback(() => {
     setLatestAchievement(null);

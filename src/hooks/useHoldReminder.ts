@@ -269,12 +269,11 @@ export function useHoldReminder(activeCalls: CallSession[]) {
   const showThresholdAlert = useCallback((alert: HoldAlert) => {
     const isCritical = alert.severity === 'critical';
     
-    toast({
-      title: isCritical ? "🚨 Alerta Crítico de Espera" : "⚠️ Alerta de Tempo em Espera",
-      description: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)}${isCritical ? ' - Atenção urgente necessária!' : ''}`,
-      variant: isCritical ? "destructive" : "default",
-      duration: isCritical ? 10000 : 7000,
-    });
+    if (isCritical) {
+      toast.error("🚨 Alerta Crítico de Espera", { description: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)} - Atenção urgente necessária!`, duration: 10000 });
+    } else {
+      toast.warning("⚠️ Alerta de Tempo em Espera", { description: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)}`, duration: 7000 });
+    }
   }, []);
 
   // Check for hold time threshold alerts
