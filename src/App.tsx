@@ -224,6 +224,16 @@ const App = () => (
                             </ProtectedRoute>
                           } />
                           <Route path="/multi-device-ring" element={<MultiDeviceRing />} />
+                          <Route path="/qr-provisioning" element={
+                            <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
+                              <QRProvisioning />
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/ldap-sync" element={
+                            <ProtectedRoute requiredRoles={['admin']}>
+                              <LDAPSync />
+                            </ProtectedRoute>
+                          } />
                           <Route path="*" element={<NotFound />} />
                         </Routes>
                       </Suspense>
