@@ -22,6 +22,23 @@ import { useContacts } from '@/hooks/useContacts';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
+const formatDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
+interface ActiveCall {
+  id: string;
+  contactName: string;
+  contactPhone: string;
+  type: 'incoming' | 'outgoing';
+  status: 'ringing' | 'connected' | 'hold' | 'transferring';
+  startTime: Date;
+  duration: number;
+  muted: boolean;
+}
+
 interface TranscriptEntry {
   id: string;
   text: string;
