@@ -10,10 +10,17 @@ import { SupervisorPanel } from '@/components/supervisor/SupervisorPanel';
 import { WhisperNotification } from '@/components/agent/WhisperNotification';
 import { BargeInNotification } from '@/components/agent/BargeInNotification';
 import { ScheduledCallbacksList } from '@/components/callbacks/ScheduledCallbacksList';
-import { mockDashboardStats, formatDuration } from '@/data/mockData';
+import { useDashboardStats } from '@/hooks/useDashboardData';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const formatDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
 
 const Index = () => {
-  const stats = mockDashboardStats;
+  const { data: stats, isLoading } = useDashboardStats();
 
   return (
     <div className="space-y-6">
@@ -31,32 +38,42 @@ const Index = () => {
 
       {/* Stats Cards */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-        <StatsCard
-          title="Chamadas Hoje"
-          value={stats.totalCallsToday}
-          change={stats.totalCallsChange}
-          changeLabel="vs ontem"
-          icon={<Phone className="h-5 w-5" />}
-        />
-        <StatsCard
-          title="Duração Média"
-          value={formatDuration(stats.avgCallDuration)}
-          change={stats.durationChange}
-          changeLabel="vs ontem"
-          icon={<Clock className="h-5 w-5" />}
-        />
-        <StatsCard
-          title="Taxa Atendimento"
-          value={`${stats.answeredRate}%`}
-          change={stats.rateChange}
-          changeLabel="vs ontem"
-          icon={<CheckCircle className="h-5 w-5" />}
-        />
-        <StatsCard
-          title="Agentes Ativos"
-          value={`${stats.activeAgents}/${stats.totalAgents}`}
-          icon={<Users className="h-5 w-5" />}
-        />
+        {isLoading ? (
+          <>
+            {[1, 2, 3, 4].map(i => (
+              <Skeleton key={i} className="h-[120px] rounded-lg" />
+            ))}
+          </>
+        ) : stats ? (
+          <>
+            <StatsCard
+              title="Chamadas Hoje"
+              value={stats.totalCallsToday}
+              change={stats.totalCallsChange}
+              changeLabel="vs ontem"
+              icon={<Phone className="h-5 w-5" />}
+            />
+            <StatsCard
+              title="Duração Média"
+              value={formatDuration(stats.avgCallDuration)}
+              change={stats.durationChange}
+              changeLabel="vs ontem"
+              icon={<Clock className="h-5 w-5" />}
+            />
+            <StatsCard
+              title="Taxa Atendimento"
+              value={`${stats.answeredRate}%`}
+              change={stats.rateChange}
+              changeLabel="vs ontem"
+              icon={<CheckCircle className="h-5 w-5" />}
+            />
+            <StatsCard
+              title="Agentes Ativos"
+              value={`${stats.activeAgents}/${stats.totalAgents}`}
+              icon={<Users className="h-5 w-5" />}
+            />
+          </>
+        ) : null}
       </div>
 
       {/* Active Calls & Hold Trend */}
