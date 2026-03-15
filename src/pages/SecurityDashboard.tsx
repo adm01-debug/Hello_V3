@@ -409,14 +409,14 @@ export default function SecurityDashboard() {
           </CardHeader>
           <CardContent className="space-y-3">
             {!mfaSettings?.mfa_enabled && (
-              <Alert className="border-yellow-500/30 bg-yellow-500/5">
-                <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                <AlertTitle className="text-yellow-500">Ativar Autenticação de Dois Fatores</AlertTitle>
+              <Alert className="border-warning/30 bg-warning/5">
+                <AlertTriangle className="h-4 w-4 text-warning" />
+                <AlertTitle className="text-warning">Ativar Autenticação de Dois Fatores</AlertTitle>
                 <AlertDescription className="text-muted-foreground">
                   Adicione uma camada extra de segurança ativando o MFA.
                   <Button 
                     variant="link" 
-                    className="px-0 h-auto text-yellow-500"
+                    className="px-0 h-auto text-warning"
                     onClick={() => navigate('/two-factor-auth')}
                   >
                     Configurar agora →
@@ -426,14 +426,14 @@ export default function SecurityDashboard() {
             )}
             
             {!ipRestrictionEnabled && (
-              <Alert className="border-blue-500/30 bg-blue-500/5">
-                <Globe className="h-4 w-4 text-blue-500" />
-                <AlertTitle className="text-blue-500">Habilitar Restrição de IP</AlertTitle>
+              <Alert className="border-primary/30 bg-primary/5">
+                <Globe className="h-4 w-4 text-primary" />
+                <AlertTitle className="text-primary">Habilitar Restrição de IP</AlertTitle>
                 <AlertDescription className="text-muted-foreground">
                   Limite o acesso à sua conta apenas a IPs conhecidos.
                   <Button 
                     variant="link" 
-                    className="px-0 h-auto text-blue-500"
+                    className="px-0 h-auto text-primary"
                     onClick={() => navigate('/security')}
                   >
                     Configurar agora →
@@ -443,14 +443,14 @@ export default function SecurityDashboard() {
             )}
 
             {sessions.length > 3 && (
-              <Alert className="border-orange-500/30 bg-orange-500/5">
-                <Monitor className="h-4 w-4 text-orange-500" />
-                <AlertTitle className="text-orange-500">Muitas Sessões Ativas</AlertTitle>
+              <Alert className="border-warning/30 bg-warning/5">
+                <Monitor className="h-4 w-4 text-warning" />
+                <AlertTitle className="text-warning">Muitas Sessões Ativas</AlertTitle>
                 <AlertDescription className="text-muted-foreground">
                   Você tem {sessions.length} sessões ativas. Considere encerrar as que não reconhece.
                   <Button 
                     variant="link" 
-                    className="px-0 h-auto text-orange-500"
+                    className="px-0 h-auto text-warning"
                     onClick={() => navigate('/sessions')}
                   >
                     Gerenciar sessões →
@@ -460,9 +460,9 @@ export default function SecurityDashboard() {
             )}
 
             {securityScore.total >= 80 && (
-              <Alert className="border-green-500/30 bg-green-500/5">
-                <CheckCircle2 className="h-4 w-4 text-green-500" />
-                <AlertTitle className="text-green-500">Excelente!</AlertTitle>
+              <Alert className="border-success/30 bg-success/5">
+                <CheckCircle2 className="h-4 w-4 text-success" />
+                <AlertTitle className="text-success">Excelente!</AlertTitle>
                 <AlertDescription className="text-muted-foreground">
                   Sua conta está bem protegida. Continue assim!
                 </AlertDescription>
