@@ -191,7 +191,7 @@ describe('Scheduled Callbacks System', () => {
     });
 
     it('priority defaults to normal', () => {
-      const priority = undefined || 'normal';
+      const priority = (undefined as string | undefined) || 'normal';
       expect(priority).toBe('normal');
     });
   });
