@@ -805,7 +805,7 @@ export default function AgentRanking() {
                 return (
                   <div
                     key={agent.name}
-                    className={`p-4 rounded-lg border ${allAchieved ? 'border-green-500/30 bg-green-500/5' : 'border-border'}`}
+                    className={`p-4 rounded-lg border ${allAchieved ? 'border-success/30 bg-success/5' : 'border-border'}`}
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <Avatar className="h-10 w-10">
