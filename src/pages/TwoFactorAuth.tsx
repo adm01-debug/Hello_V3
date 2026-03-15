@@ -145,13 +145,13 @@ export default function TwoFactorAuth() {
         </div>
         <div className="flex gap-2">
           {hasTOTP && (
-            <Badge variant="default" className="bg-blue-500">
+            <Badge variant="default" className="bg-info">
               <Smartphone className="h-3 w-3 mr-1" />
               TOTP
             </Badge>
           )}
           {hasPhone && (
-            <Badge variant="default" className="bg-green-500">
+            <Badge variant="default" className="bg-success">
               <MessageSquare className="h-3 w-3 mr-1" />
               SMS
             </Badge>
@@ -285,7 +285,7 @@ export default function TwoFactorAuth() {
                 </div>
               ) : hasPhone ? (
                 <div className="flex items-center gap-4">
-                  <ShieldCheck className="h-6 w-6 text-green-500" />
+                  <ShieldCheck className="h-6 w-6 text-success" />
                   <div className="flex-1">
                     <p className="font-medium">SMS Ativo</p>
                     <p className="text-sm text-muted-foreground">Verificação por SMS configurada</p>
@@ -376,9 +376,9 @@ export default function TwoFactorAuth() {
                     >
                       <div className="flex items-center gap-3">
                         {factor.type === 'totp' ? (
-                          <Smartphone className="h-5 w-5 text-blue-500" />
+                          <Smartphone className="h-5 w-5 text-info" />
                         ) : (
-                          <MessageSquare className="h-5 w-5 text-green-500" />
+                          <MessageSquare className="h-5 w-5 text-success" />
                         )}
                         <div>
                           <p className="font-medium">

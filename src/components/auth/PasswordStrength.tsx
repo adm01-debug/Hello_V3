@@ -201,7 +201,7 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
             <div 
               className={cn(
                 "flex items-center gap-1.5 text-xs col-span-2",
-                isCheckingLeak ? 'text-muted-foreground' : isLeaked ? 'text-red-400' : password.length >= 8 ? 'text-green-500' : 'text-muted-foreground'
+                isCheckingLeak ? 'text-muted-foreground' : isLeaked ? 'text-destructive' : password.length >= 8 ? 'text-success' : 'text-muted-foreground'
               )}
             >
               {isCheckingLeak ? (

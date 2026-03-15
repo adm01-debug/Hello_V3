@@ -82,9 +82,9 @@ const channelIcons: Record<CallChannel, React.ComponentType<{ className?: string
 };
 
 const channelColors: Record<CallChannel, string> = {
-  webrtc: 'text-blue-500',
-  wavoip: 'text-green-500',
-  sip: 'text-purple-500'
+  webrtc: 'text-info',
+  wavoip: 'text-success',
+  sip: 'text-pending'
 };
 
 interface UnifiedSoftphoneProps {
@@ -749,23 +749,23 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                 <div className={cn(
                   "p-4 rounded-lg border text-center",
                   wavoip.isConfigured 
-                    ? "border-green-500/30 bg-green-500/5" 
-                    : "border-dashed border-yellow-500/50 bg-yellow-500/5"
+                    ? "border-success/30 bg-success/5" 
+                    : "border-dashed border-warning/50 bg-warning/5"
                 )}>
                   <div className="flex items-center justify-center gap-2 mb-2">
                     <MessageCircle className={cn(
                       "h-8 w-8",
-                      wavoip.isConfigured ? "text-green-500" : "text-yellow-500"
+                      wavoip.isConfigured ? "text-success" : "text-warning"
                     )} />
                     {wavoip.isConfigured ? (
-                      <CheckCircle2 className="h-5 w-5 text-green-500" />
+                      <CheckCircle2 className="h-5 w-5 text-success" />
                     ) : (
-                      <XCircle className="h-5 w-5 text-yellow-500" />
+                      <XCircle className="h-5 w-5 text-warning" />
                     )}
                   </div>
                   <p className={cn(
                     "font-medium",
-                    wavoip.isConfigured ? "text-green-700" : "text-yellow-700"
+                    wavoip.isConfigured ? "text-success" : "text-warning"
                   )}>
                     {wavoip.isConfigured ? 'WhatsApp Conectado' : 'WhatsApp Calls'}
                   </p>
@@ -777,8 +777,8 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                   </p>
                   {wavoip.isConfigured && (
                     <div className="flex items-center justify-center gap-1 mt-2">
-                      <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                      <span className="text-xs text-green-600">Online</span>
+                      <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
+                      <span className="text-xs text-success">Online</span>
                     </div>
                   )}
                   {wavoip.error && !wavoip.isConfigured && (
@@ -803,7 +803,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                 <Button
                   className={cn(
                     "w-full h-14 gap-2 text-lg",
-                    activeChannel === 'wavoip' && wavoip.isConfigured && "bg-green-600 hover:bg-green-700"
+                    activeChannel === 'wavoip' && wavoip.isConfigured && "bg-success hover:bg-success/90"
                   )}
                   onClick={handleStartCall}
                   disabled={
@@ -888,12 +888,12 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                         >
                           <div className={cn(
                             "h-9 w-9 rounded-full flex items-center justify-center",
-                            call.direction === 'inbound' ? "bg-blue-500/10" : "bg-green-500/10"
+                            call.direction === 'inbound' ? "bg-info/10" : "bg-success/10"
                           )}>
                             {call.direction === 'inbound' ? (
-                              <PhoneIncoming className="h-4 w-4 text-blue-500" />
+                              <PhoneIncoming className="h-4 w-4 text-info" />
                             ) : (
-                              <PhoneOutgoing className="h-4 w-4 text-green-500" />
+                              <PhoneOutgoing className="h-4 w-4 text-success" />
                             )}
                           </div>
                           <div className="flex-1 min-w-0">

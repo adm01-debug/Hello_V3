@@ -30,7 +30,7 @@ export function NotificationBell() {
       case 'error':
         return 'bg-destructive text-destructive-foreground';
       case 'warning':
-        return 'bg-yellow-500/20 text-yellow-500';
+        return 'bg-warning/20 text-warning';
       default:
         return 'bg-muted text-muted-foreground';
     }

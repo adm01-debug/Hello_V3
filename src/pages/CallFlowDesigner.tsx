@@ -45,12 +45,12 @@ interface CallFlow {
 const NODE_TYPES = [
   { type: 'start', label: 'Início', icon: Play, color: 'bg-success/20 text-success border-success/30' },
   { type: 'menu', label: 'Menu IVR', icon: GitBranch, color: 'bg-primary/20 text-primary border-primary/30' },
-  { type: 'queue', label: 'Fila', icon: Users, color: 'bg-blue-500/20 text-blue-500 border-blue-500/30' },
-  { type: 'voicemail', label: 'Correio de Voz', icon: Voicemail, color: 'bg-amber-500/20 text-amber-500 border-amber-500/30' },
-  { type: 'transfer', label: 'Transferir', icon: PhoneForwarded, color: 'bg-purple-500/20 text-purple-500 border-purple-500/30' },
-  { type: 'ring_group', label: 'Grupo de Toque', icon: Phone, color: 'bg-teal-500/20 text-teal-500 border-teal-500/30' },
-  { type: 'time_check', label: 'Horário', icon: Clock, color: 'bg-orange-500/20 text-orange-500 border-orange-500/30' },
-  { type: 'announcement', label: 'Anúncio', icon: Music, color: 'bg-pink-500/20 text-pink-500 border-pink-500/30' },
+  { type: 'queue', label: 'Fila', icon: Users, color: 'bg-info/20 text-info border-info/30' },
+  { type: 'voicemail', label: 'Correio de Voz', icon: Voicemail, color: 'bg-warning/20 text-warning border-warning/30' },
+  { type: 'transfer', label: 'Transferir', icon: PhoneForwarded, color: 'bg-pending/20 text-pending border-pending/30' },
+  { type: 'ring_group', label: 'Grupo de Toque', icon: Phone, color: 'bg-primary/20 text-primary border-primary/30' },
+  { type: 'time_check', label: 'Horário', icon: Clock, color: 'bg-call-hold/20 text-call-hold border-call-hold/30' },
+  { type: 'announcement', label: 'Anúncio', icon: Music, color: 'bg-accent text-accent-foreground border-accent' },
   { type: 'hangup', label: 'Desligar', icon: PhoneOff, color: 'bg-destructive/20 text-destructive border-destructive/30' },
 ] as const;
 

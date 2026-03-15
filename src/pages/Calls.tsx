@@ -116,8 +116,8 @@ const Calls = () => {
 
               {/* SIP */}
               <div className="flex items-center gap-3 p-3 rounded-lg border">
-                <div className="p-2 rounded-lg bg-purple-500/10">
-                  <Headphones className="h-5 w-5 text-purple-500" />
+                <div className="p-2 rounded-lg bg-pending/10">
+                  <Headphones className="h-5 w-5 text-pending" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">

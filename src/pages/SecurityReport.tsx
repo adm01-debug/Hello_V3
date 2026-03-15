@@ -177,11 +177,11 @@ const SecurityReport = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "implemented":
-        return <CheckCircle2 className="h-5 w-5 text-green-500" />;
+        return <CheckCircle2 className="h-5 w-5 text-success" />;
       case "partial":
-        return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
+        return <AlertTriangle className="h-5 w-5 text-warning" />;
       case "pending":
-        return <Info className="h-5 w-5 text-blue-500" />;
+        return <Info className="h-5 w-5 text-info" />;
       default:
         return null;
     }

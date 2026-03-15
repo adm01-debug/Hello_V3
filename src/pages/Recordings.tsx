@@ -747,9 +747,9 @@ export default function Recordings() {
                             <div className="flex items-center justify-between mb-2">
                               <span className="text-sm font-medium">Score de Sentimento</span>
                               {currentTranscription.sentiment.sentiment_score > 0 ? (
-                                <TrendingUp className="h-4 w-4 text-green-500" />
+                                <TrendingUp className="h-4 w-4 text-success" />
                               ) : currentTranscription.sentiment.sentiment_score < 0 ? (
-                                <TrendingDown className="h-4 w-4 text-red-500" />
+                                <TrendingDown className="h-4 w-4 text-destructive" />
                               ) : (
                                 <Minus className="h-4 w-4 text-muted-foreground" />
                               )}
@@ -766,7 +766,7 @@ export default function Recordings() {
                           <div className="p-4 rounded-lg border">
                             <div className="flex items-center justify-between mb-2">
                               <span className="text-sm font-medium">Satisfação Estimada</span>
-                              <Heart className="h-4 w-4 text-red-500" />
+                              <Heart className="h-4 w-4 text-destructive" />
                             </div>
                             <div className="text-2xl font-bold">
                               {currentTranscription.sentiment.customer_satisfaction_estimate}/10
@@ -781,16 +781,16 @@ export default function Recordings() {
                         {/* Emotions */}
                         <div className="p-4 rounded-lg border">
                           <h4 className="font-medium mb-4 flex items-center gap-2">
-                            <Zap className="h-4 w-4 text-yellow-500" />
+                            <Zap className="h-4 w-4 text-warning" />
                             Emoções Detectadas
                           </h4>
                           <div className="space-y-3">
                             {[
-                              { key: 'joy', label: 'Alegria', icon: '😊', color: 'bg-green-500' },
-                              { key: 'sadness', label: 'Tristeza', icon: '😢', color: 'bg-blue-500' },
-                              { key: 'anger', label: 'Raiva', icon: '😠', color: 'bg-red-500' },
-                              { key: 'fear', label: 'Medo', icon: '😨', color: 'bg-purple-500' },
-                              { key: 'surprise', label: 'Surpresa', icon: '😮', color: 'bg-yellow-500' },
+                              { key: 'joy', label: 'Alegria', icon: '😊', color: 'bg-success' },
+                              { key: 'sadness', label: 'Tristeza', icon: '😢', color: 'bg-info' },
+                              { key: 'anger', label: 'Raiva', icon: '😠', color: 'bg-destructive' },
+                              { key: 'fear', label: 'Medo', icon: '😨', color: 'bg-pending' },
+                              { key: 'surprise', label: 'Surpresa', icon: '😮', color: 'bg-warning' },
                             ].map(({ key, label, icon, color }) => (
                               <div key={key} className="flex items-center gap-3">
                                 <span className="text-lg">{icon}</span>
@@ -813,7 +813,7 @@ export default function Recordings() {
                         {currentTranscription.sentiment.key_moments.length > 0 && (
                           <div className="p-4 rounded-lg border">
                             <h4 className="font-medium mb-4 flex items-center gap-2">
-                              <AlertTriangle className="h-4 w-4 text-orange-500" />
+                              <AlertTriangle className="h-4 w-4 text-call-hold" />
                               Momentos-Chave
                             </h4>
                             <div className="space-y-3">

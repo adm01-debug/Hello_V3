@@ -163,8 +163,8 @@ export function CoachingPanel() {
                 <p className="text-sm text-muted-foreground">Pendentes</p>
                 <p className="text-2xl font-bold">{pendingCount}</p>
               </div>
-              <div className="p-2 rounded-full bg-yellow-500/20">
-                <Lightbulb className="h-5 w-5 text-yellow-500" />
+              <div className="p-2 rounded-full bg-warning/20">
+                <Lightbulb className="h-5 w-5 text-warning" />
               </div>
             </div>
           </CardContent>
@@ -177,8 +177,8 @@ export function CoachingPanel() {
                 <p className="text-sm text-muted-foreground">Em Progresso</p>
                 <p className="text-2xl font-bold">{inProgressCount}</p>
               </div>
-              <div className="p-2 rounded-full bg-blue-500/20">
-                <PlayCircle className="h-5 w-5 text-blue-500" />
+              <div className="p-2 rounded-full bg-info/20">
+                <PlayCircle className="h-5 w-5 text-info" />
               </div>
             </div>
           </CardContent>
@@ -191,8 +191,8 @@ export function CoachingPanel() {
                 <p className="text-sm text-muted-foreground">Concluídas</p>
                 <p className="text-2xl font-bold">{completedCount}</p>
               </div>
-              <div className="p-2 rounded-full bg-green-500/20">
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
+              <div className="p-2 rounded-full bg-success/20">
+                <CheckCircle2 className="h-5 w-5 text-success" />
               </div>
             </div>
           </CardContent>

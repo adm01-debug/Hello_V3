@@ -562,11 +562,11 @@ export const SupervisorPanel = () => {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className={`p-1.5 rounded-full ${isCallInBargeIn(call.id) ? 'bg-destructive/10' : 'bg-green-500/10'}`}>
+                        <div className={`p-1.5 rounded-full ${isCallInBargeIn(call.id) ? 'bg-destructive/10' : 'bg-success/10'}`}>
                           {isCallInBargeIn(call.id) ? (
                             <Users className="h-3 w-3 text-destructive" />
                           ) : (
-                            <Phone className="h-3 w-3 text-green-500" />
+                            <Phone className="h-3 w-3 text-success" />
                           )}
                         </div>
                         <div>
@@ -643,7 +643,7 @@ export const SupervisorPanel = () => {
                       <div key={wh.id} className={`p-2 rounded text-xs border ${wh.is_read ? 'bg-muted/50' : 'bg-primary/5 border-primary/20'}`}>
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-muted-foreground">{formatTime(wh.created_at)}</span>
-                          {wh.is_read && <Check className="h-3 w-3 text-green-500" />}
+                          {wh.is_read && <Check className="h-3 w-3 text-success" />}
                         </div>
                         <p>{wh.message}</p>
                       </div>

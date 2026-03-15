@@ -141,7 +141,7 @@ export default function AuditLogs() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <Activity className="h-8 w-8 text-blue-500" />
+              <Activity className="h-8 w-8 text-info" />
               <div>
                 <p className="text-2xl font-bold">{stats.total}</p>
                 <p className="text-sm text-muted-foreground">Total de Logs</p>
@@ -152,7 +152,7 @@ export default function AuditLogs() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <Calendar className="h-8 w-8 text-green-500" />
+              <Calendar className="h-8 w-8 text-success" />
               <div>
                 <p className="text-2xl font-bold">{stats.today}</p>
                 <p className="text-sm text-muted-foreground">Hoje</p>
@@ -163,7 +163,7 @@ export default function AuditLogs() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <User className="h-8 w-8 text-purple-500" />
+              <User className="h-8 w-8 text-pending" />
               <div>
                 <p className="text-2xl font-bold">{stats.uniqueUsers}</p>
                 <p className="text-sm text-muted-foreground">Usuários Únicos</p>
@@ -174,7 +174,7 @@ export default function AuditLogs() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <Shield className="h-8 w-8 text-red-500" />
+              <Shield className="h-8 w-8 text-destructive" />
               <div>
                 <p className="text-2xl font-bold">{stats.sensitiveAccess}</p>
                 <p className="text-sm text-muted-foreground">Acessos Sensíveis</p>
