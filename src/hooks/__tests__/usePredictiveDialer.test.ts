@@ -96,7 +96,7 @@ describe('Predictive Dialer Logic', () => {
     it('does not increment successful on no_answer', () => {
       let successful = 3;
       const result = 'no_answer';
-      if (result === 'answered') successful += 1;
+      if ((result as string) === 'answered') successful += 1;
       expect(successful).toBe(3);
     });
 

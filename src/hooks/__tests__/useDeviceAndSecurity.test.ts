@@ -284,7 +284,7 @@ describe('Hold Sound Alert System', () => {
 
     it('respects saved false', () => {
       const saved = 'false';
-      const enabled = saved !== null ? saved === 'true' : true;
+      const enabled = saved !== null ? (saved as string) === 'true' : true;
       expect(enabled).toBe(false);
     });
 

@@ -86,8 +86,8 @@ describe('MFA System', () => {
     it('pending status sets no timestamps', () => {
       const status = 'pending';
       const updates: Record<string, any> = { status };
-      if (status === 'in_progress') updates.reviewed_at = new Date().toISOString();
-      else if (status === 'completed') updates.completed_at = new Date().toISOString();
+      if ((status as string) === 'in_progress') updates.reviewed_at = new Date().toISOString();
+      else if ((status as string) === 'completed') updates.completed_at = new Date().toISOString();
       expect(updates.reviewed_at).toBeUndefined();
       expect(updates.completed_at).toBeUndefined();
     });
