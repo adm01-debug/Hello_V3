@@ -141,7 +141,7 @@ export default function ForgotPassword() {
               
               <Alert className="border-yellow-500/30 bg-yellow-500/5">
                 <ShieldCheck className="h-4 w-4 text-yellow-500" />
-                <AlertDescription className="text-yellow-200">
+                <AlertDescription className="text-warning-foreground">
                   Por segurança, redefinições de senha requerem aprovação de um administrador.
                 </AlertDescription>
               </Alert>

@@ -83,7 +83,7 @@ export function useHoldSoundAlert(activeHolds: Array<{ id: string; call_session_
         .from('hold_alert_settings')
         .select('*')
         .limit(1)
-        .single();
+        .maybeSingle();
 
       if (!error && data) {
         setSettings(data);
