@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 export interface VoiceCommandResult {
   command: string;
@@ -14,7 +14,7 @@ export function useVoiceCommand() {
   const [isProcessing, setIsProcessing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
-  const { toast } = useToast();
+  
 
   const startListening = useCallback(async () => {
     try {
@@ -39,11 +39,7 @@ export function useVoiceCommand() {
       setIsListening(true);
     } catch (err) {
       console.error("Failed to start voice listening:", err);
-      toast({
-        title: "Erro",
-        description: "Não foi possível acessar o microfone.",
-        variant: "destructive",
-      });
+      toast.error("Erro", { description: "Não foi possível acessar o microfone." });
     }
   }, [toast]);
 
@@ -84,11 +80,7 @@ export function useVoiceCommand() {
         return result;
       } catch (err) {
         console.error("Voice command processing failed:", err);
-        toast({
-          title: "Erro",
-          description: "Falha ao processar comando de voz.",
-          variant: "destructive",
-        });
+        toast.error("Erro", { description: "Falha ao processar comando de voz." });
         return null;
       } finally {
         setIsProcessing(false);

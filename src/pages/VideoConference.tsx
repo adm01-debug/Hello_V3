@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { Video, Plus, Users, Clock, Calendar, Play, Square, Link2 } from 'lucide-react';
 
 export default function VideoConference() {
@@ -33,7 +33,7 @@ export default function VideoConference() {
       queryClient.invalidateQueries({ queryKey: ['video-conferences'] });
       setTitle('');
       setDialogOpen(false);
-      toast({ title: 'Conferência criada!' });
+      toast.success('Conferência criada!');
     },
   });
 

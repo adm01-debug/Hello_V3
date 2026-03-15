@@ -105,7 +105,7 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
 
         {/* Sparkles decoration */}
         <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-          <Sparkles className="h-8 w-8 text-yellow-400 animate-pulse" />
+          <Sparkles className="h-8 w-8 text-warning animate-pulse" />
         </div>
 
         {/* Badge icon */}
@@ -122,10 +122,10 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
             <div 
               className={cn(
                 'absolute inset-0 rounded-full border-4 border-dashed animate-spin',
-                badge.tier === 'bronze' && 'border-amber-400/50',
-                badge.tier === 'silver' && 'border-slate-300/50',
-                badge.tier === 'gold' && 'border-yellow-300/50',
-                badge.tier === 'platinum' && 'border-purple-300/50'
+                badge.tier === 'bronze' && 'border-warning/50',
+                badge.tier === 'silver' && 'border-muted-foreground/50',
+                badge.tier === 'gold' && 'border-warning/50',
+                badge.tier === 'platinum' && 'border-pending/50'
               )}
               style={{ animationDuration: '3s' }}
             />
@@ -135,9 +135,9 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
         {/* Title */}
         <div className="text-center space-y-2">
           <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
-            <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+            <Star className="h-5 w-5 text-warning fill-warning" />
             Nova Conquista!
-            <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+            <Star className="h-5 w-5 text-warning fill-warning" />
           </h2>
           
           <p className="text-lg text-muted-foreground">
@@ -162,10 +162,10 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
           {/* Tier badge */}
           <p className={cn(
             'text-sm font-medium capitalize mt-2',
-            badge.tier === 'bronze' && 'text-amber-600',
-            badge.tier === 'silver' && 'text-slate-400',
-            badge.tier === 'gold' && 'text-yellow-500',
-            badge.tier === 'platinum' && 'text-purple-500'
+            badge.tier === 'bronze' && 'text-warning',
+            badge.tier === 'silver' && 'text-muted-foreground',
+            badge.tier === 'gold' && 'text-warning',
+            badge.tier === 'platinum' && 'text-pending'
           )}>
             Badge {badge.tier}
           </p>

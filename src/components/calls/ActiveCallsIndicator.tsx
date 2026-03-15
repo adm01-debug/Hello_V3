@@ -277,7 +277,7 @@ export function ActiveCallsIndicator({
               <div className="flex items-center justify-between pt-2 border-t border-warning/20">
                 <span className="text-xs text-muted-foreground">Notificações do navegador:</span>
                 {browserNotificationsEnabled ? (
-                  <Badge variant="outline" className="text-xs bg-green-500/10 text-green-600 border-green-500/30">
+                  <Badge variant="outline" className="text-xs bg-success/10 text-success border-success/30">
                     Ativadas
                   </Badge>
                 ) : (

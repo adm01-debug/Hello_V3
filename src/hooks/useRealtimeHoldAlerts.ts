@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface RealtimeHoldAlert {
   id: string;
@@ -70,11 +70,7 @@ export function useRealtimeHoldAlerts() {
   // Request browser notification permission
   const requestBrowserNotifications = useCallback(async () => {
     if (!('Notification' in window)) {
-      toast({
-        title: "Notificações não suportadas",
-        description: "Seu navegador não suporta notificações nativas.",
-        variant: "destructive",
-      });
+      toast.error("Notificações não suportadas", { description: "Seu navegador não suporta notificações nativas." });
       return false;
     }
 
@@ -84,16 +80,9 @@ export function useRealtimeHoldAlerts() {
       setBrowserNotificationsGranted(granted);
       
       if (granted) {
-        toast({
-          title: "Notificações ativadas",
-          description: "Você receberá alertas críticos de espera em tempo real.",
-        });
+        toast.success("Notificações ativadas", { description: "Você receberá alertas críticos de espera em tempo real." });
       } else {
-        toast({
-          title: "Permissão negada",
-          description: "Você não receberá notificações nativas do navegador.",
-          variant: "destructive",
-        });
+        toast.error("Permissão negada", { description: "Você não receberá notificações nativas do navegador." });
       }
       
       return granted;
@@ -137,12 +126,11 @@ export function useRealtimeHoldAlerts() {
   const showToastNotification = useCallback((alert: RealtimeHoldAlert) => {
     const isCritical = alert.severity === 'critical' || alert.severity === 'error';
     
-    toast({
-      title: isCritical ? "🚨 Alerta Crítico de Espera" : "⚠️ Alerta de Tempo em Espera",
-      description: alert.message,
-      variant: isCritical ? "destructive" : "default",
-      duration: isCritical ? 10000 : 7000,
-    });
+    if (isCritical) {
+      toast.error(isCritical ? "🚨 Alerta Crítico de Espera" : "⚠️ Alerta de Tempo em Espera", { description: alert.message, duration: isCritical ? 10000 : 7000 });
+    } else {
+      toast.warning("⚠️ Alerta de Tempo em Espera", { description: alert.message, duration: 7000 });
+    }
   }, []);
 
   // Initialize audio
@@ -242,15 +230,9 @@ export function useRealtimeHoldAlerts() {
       }
       
       if (newValue) {
-        toast({
-          title: "Notificações ativadas",
-          description: "Você receberá alertas de espera em tempo real.",
-        });
+        toast.success("Notificações ativadas", { description: "Você receberá alertas de espera em tempo real." });
       } else {
-        toast({
-          title: "Notificações desativadas",
-          description: "Você não receberá mais alertas em tempo real.",
-        });
+        toast("Notificações desativadas", { description: "Você não receberá mais alertas em tempo real." });
       }
       
       return newValue;

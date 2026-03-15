@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UnifiedSoftphone } from '@/components/calls/UnifiedSoftphone';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 const Calls = () => {
   const [callStats] = useState({
@@ -34,16 +34,10 @@ const Calls = () => {
         <div>
           <UnifiedSoftphone 
             onCallStart={(call) => {
-              toast({
-                title: '📞 Chamada iniciada',
-                description: `Canal: ${call.channel.toUpperCase()}`,
-              });
+              toast.success('📞 Chamada iniciada', { description: `Canal: ${call.channel.toUpperCase()}` });
             }}
             onCallEnd={(call) => {
-              toast({
-                title: '📴 Chamada encerrada',
-                description: `Duração: ${Math.floor(call.duration / 60)}:${String(call.duration % 60).padStart(2, '0')}`,
-              });
+              toast('📴 Chamada encerrada', { description: `Duração: ${Math.floor(call.duration / 60)}:${String(call.duration % 60).padStart(2, '0')}` });
             }}
           />
         </div>
@@ -86,8 +80,8 @@ const Calls = () => {
             <CardContent className="space-y-3">
               {/* WebRTC */}
               <div className="flex items-center gap-3 p-3 rounded-lg border bg-success/5 border-success/20">
-                <div className="p-2 rounded-lg bg-blue-500/10">
-                  <Radio className="h-5 w-5 text-blue-500" />
+                <div className="p-2 rounded-lg bg-info/10">
+                  <Radio className="h-5 w-5 text-info" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
@@ -102,8 +96,8 @@ const Calls = () => {
 
               {/* Wavoip */}
               <div className="flex items-center gap-3 p-3 rounded-lg border">
-                <div className="p-2 rounded-lg bg-green-500/10">
-                  <MessageCircle className="h-5 w-5 text-green-500" />
+                <div className="p-2 rounded-lg bg-success/10">
+                  <MessageCircle className="h-5 w-5 text-success" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">

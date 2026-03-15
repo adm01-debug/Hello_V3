@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { Settings, Clock, AlertTriangle, Bell, Save, RefreshCw } from 'lucide-react';
 
@@ -19,7 +19,7 @@ interface HoldAlertSettings {
 }
 
 export default function HoldAlertSettings() {
-  const { toast } = useToast();
+  
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [settings, setSettings] = useState<HoldAlertSettings | null>(null);
@@ -44,11 +44,7 @@ export default function HoldAlertSettings() {
       }
     } catch (error) {
       console.error('Error fetching settings:', error);
-      toast({
-        title: 'Erro ao carregar configurações',
-        description: 'Não foi possível carregar as configurações de alertas.',
-        variant: 'destructive',
-      });
+      toast.error('Erro ao carregar configurações', { description: 'Não foi possível carregar as configurações de alertas.' });
     } finally {
       setLoading(false);
     }
@@ -72,17 +68,10 @@ export default function HoldAlertSettings() {
 
       if (error) throw error;
 
-      toast({
-        title: 'Configurações salvas',
-        description: 'Os limites de alerta foram atualizados com sucesso.',
-      });
+      toast.success('Configurações salvas', { description: 'Os limites de alerta foram atualizados com sucesso.' });
     } catch (error) {
       console.error('Error saving settings:', error);
-      toast({
-        title: 'Erro ao salvar',
-        description: 'Não foi possível salvar as configurações.',
-        variant: 'destructive',
-      });
+      toast.error('Erro ao salvar', { description: 'Não foi possível salvar as configurações.' });
     } finally {
       setSaving(false);
     }

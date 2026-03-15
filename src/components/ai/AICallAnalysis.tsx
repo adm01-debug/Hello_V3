@@ -22,7 +22,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface AnalysisResult {
   summary: string;
@@ -81,11 +81,7 @@ export function AICallAnalysis() {
 
   const handleAnalyze = async () => {
     if (!transcript.trim()) {
-      toast({
-        variant: 'destructive',
-        title: 'Transcrição vazia',
-        description: 'Cole ou digite a transcrição da chamada para analisar.',
-      });
+      toast.error('Transcrição vazia', { description: 'Cole ou digite a transcrição da chamada para analisar.' });
       return;
     }
 
@@ -120,17 +116,10 @@ export function AICallAnalysis() {
       const result: AnalysisResult = await response.json();
       setAnalysis(result);
 
-      toast({
-        title: '✨ Análise concluída',
-        description: 'A chamada foi analisada com sucesso.',
-      });
+      toast.success('✨ Análise concluída', { description: 'A chamada foi analisada com sucesso.' });
     } catch (error) {
       console.error('Analysis error:', error);
-      toast({
-        variant: 'destructive',
-        title: 'Erro na análise',
-        description: error instanceof Error ? error.message : 'Erro desconhecido',
-      });
+      toast.error('Erro na análise', { description: error instanceof Error ? error.message : 'Erro desconhecido' });
     } finally {
       setIsAnalyzing(false);
     }

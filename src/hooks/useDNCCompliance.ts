@@ -2,7 +2,7 @@
 import { useState, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface DNCEntry {
   id: string;
@@ -50,7 +50,7 @@ interface CallingHoursCheck {
 }
 
 export function useDNCCompliance() {
-  const { toast } = useToast();
+  
   const queryClient = useQueryClient();
   const [isChecking, setIsChecking] = useState(false);
 
@@ -150,17 +150,10 @@ export function useDNCCompliance() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dnc-list'] });
-      toast({
-        title: 'Número adicionado',
-        description: 'O número foi adicionado à lista DNC com sucesso.',
-      });
+      toast.success('Número adicionado', { description: 'O número foi adicionado à lista DNC com sucesso.' });
     },
     onError: (error: Error) => {
-      toast({
-        title: 'Erro ao adicionar',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro ao adicionar', { description: error.message });
     },
   });
 
@@ -175,17 +168,10 @@ export function useDNCCompliance() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dnc-list'] });
-      toast({
-        title: 'Número removido',
-        description: 'O número foi removido da lista DNC.',
-      });
+      toast.success('Número removido', { description: 'O número foi removido da lista DNC.' });
     },
     onError: (error: Error) => {
-      toast({
-        title: 'Erro ao remover',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro ao remover', { description: error.message });
     },
   });
 
@@ -203,17 +189,10 @@ export function useDNCCompliance() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['compliance-settings'] });
-      toast({
-        title: 'Configuração atualizada',
-        description: 'A configuração de compliance foi salva.',
-      });
+      toast.success('Configuração atualizada', { description: 'A configuração de compliance foi salva.' });
     },
     onError: (error: Error) => {
-      toast({
-        title: 'Erro ao salvar',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro ao salvar', { description: error.message });
     },
   });
 

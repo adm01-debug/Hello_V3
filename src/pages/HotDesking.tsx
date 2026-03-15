@@ -4,7 +4,7 @@ import { useAuthContext } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { Monitor, MapPin, Phone, User, LogIn, LogOut, CheckCircle2 } from 'lucide-react';
 
 export default function HotDesking() {
@@ -31,7 +31,7 @@ export default function HotDesking() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['hot-desking'] });
-      toast({ title: 'Check-in realizado!' });
+      toast.success('Check-in realizado!');
     },
   });
 
@@ -46,7 +46,7 @@ export default function HotDesking() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['hot-desking'] });
-      toast({ title: 'Check-out realizado!' });
+      toast.success('Check-out realizado!');
     },
   });
 

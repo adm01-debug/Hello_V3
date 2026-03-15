@@ -250,10 +250,10 @@ export default function HoldMetrics() {
       {/* Performance Highlights */}
       <div className="grid gap-4 md:grid-cols-2">
         {bestPerformer && (
-          <Card className="border-green-500/30 bg-green-500/5">
+          <Card className="border-success/30 bg-success/5">
             <CardHeader className="flex flex-row items-center gap-3 pb-2">
-              <div className="rounded-full bg-green-500/20 p-2">
-                <TrendingDown className="h-5 w-5 text-green-500" />
+              <div className="rounded-full bg-success/20 p-2">
+                <TrendingDown className="h-5 w-5 text-success" />
               </div>
               <div>
                 <CardTitle className="text-sm font-medium">Menor Tempo Médio</CardTitle>
@@ -263,7 +263,7 @@ export default function HoldMetrics() {
             <CardContent>
               <div className="flex items-center justify-between">
                 <span className="text-lg font-semibold">{bestPerformer.agentName}</span>
-                <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/30">
+                <Badge variant="outline" className="bg-success/10 text-success border-success/30">
                   {formatDuration(bestPerformer.avgHoldTime)} média
                 </Badge>
               </div>
@@ -272,10 +272,10 @@ export default function HoldMetrics() {
         )}
 
         {worstPerformer && worstPerformer !== bestPerformer && (
-          <Card className="border-orange-500/30 bg-orange-500/5">
+          <Card className="border-warning/30 bg-warning/5">
             <CardHeader className="flex flex-row items-center gap-3 pb-2">
-              <div className="rounded-full bg-orange-500/20 p-2">
-                <AlertTriangle className="h-5 w-5 text-orange-500" />
+              <div className="rounded-full bg-warning/20 p-2">
+                <AlertTriangle className="h-5 w-5 text-warning" />
               </div>
               <div>
                 <CardTitle className="text-sm font-medium">Maior Tempo Médio</CardTitle>
@@ -285,7 +285,7 @@ export default function HoldMetrics() {
             <CardContent>
               <div className="flex items-center justify-between">
                 <span className="text-lg font-semibold">{worstPerformer.agentName}</span>
-                <Badge variant="outline" className="bg-orange-500/10 text-orange-500 border-orange-500/30">
+                <Badge variant="outline" className="bg-warning/10 text-warning border-warning/30">
                   {formatDuration(worstPerformer.avgHoldTime)} média
                 </Badge>
               </div>

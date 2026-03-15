@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { Check, X, AlertTriangle, Loader2 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface PasswordStrengthProps {
   password: string;
@@ -58,7 +58,7 @@ async function checkPasswordLeaked(password: string): Promise<boolean> {
 export function PasswordStrength({ password, showRequirements = true, checkLeaked = true }: PasswordStrengthProps) {
   const [isLeaked, setIsLeaked] = useState(false);
   const [isCheckingLeak, setIsCheckingLeak] = useState(false);
-  const { toast } = useToast();
+  
 
   // Debounce para verificar senhas vazadas
   useEffect(() => {
@@ -74,11 +74,7 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
       setIsCheckingLeak(false);
       
       if (leaked) {
-        toast({
-          title: "Senha comprometida detectada",
-          description: "Esta senha foi encontrada em vazamentos de dados. Escolha uma senha diferente.",
-          variant: "destructive",
-        });
+        toast.error("Senha comprometida detectada", { description: "Esta senha foi encontrada em vazamentos de dados. Escolha uma senha diferente." });
       }
     }, 500);
 

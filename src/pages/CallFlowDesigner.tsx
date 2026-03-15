@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { 
   Plus, Phone, Voicemail, Users, Clock, ArrowRight, 
   MessageSquare, GitBranch, Trash2, Save, Play, Pause,
@@ -111,7 +111,7 @@ function FlowCanvas({ flow, onUpdate }: { flow: CallFlow; onUpdate: (data: { nod
   const handleConnect = (nodeId: string) => {
     if (!connectingFrom) {
       setConnectingFrom(nodeId);
-      toast({ title: 'Selecione o nó destino', description: 'Clique em outro nó para conectar' });
+      toast('Selecione o nó destino', { description: 'Clique em outro nó para conectar' });
     } else if (connectingFrom !== nodeId) {
       const newEdge: FlowEdge = {
         id: `edge-${Date.now()}`,
@@ -120,7 +120,7 @@ function FlowCanvas({ flow, onUpdate }: { flow: CallFlow; onUpdate: (data: { nod
       };
       onUpdate({ nodes, edges: [...edges, newEdge] });
       setConnectingFrom(null);
-      toast({ title: 'Conexão criada!' });
+      toast.success('Conexão criada!');
     } else {
       setConnectingFrom(null);
     }
@@ -207,7 +207,7 @@ export default function CallFlowDesigner() {
       setNewFlowName('');
       setNewFlowDesc('');
       setDialogOpen(false);
-      toast({ title: 'Fluxo criado com sucesso!' });
+      toast.success('Fluxo criado com sucesso!');
     },
   });
 
@@ -222,7 +222,7 @@ export default function CallFlowDesigner() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['call-flows'] });
-      toast({ title: 'Fluxo salvo!' });
+      toast.success('Fluxo salvo!');
     },
   });
 
@@ -234,7 +234,7 @@ export default function CallFlowDesigner() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['call-flows'] });
       setSelectedFlow(null);
-      toast({ title: 'Fluxo removido' });
+      toast.success('Fluxo removido');
     },
   });
 

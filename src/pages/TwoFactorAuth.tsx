@@ -174,12 +174,12 @@ export default function TwoFactorAuth() {
 
         <TabsContent value="setup" className="space-y-4">
           {/* TOTP Setup Card */}
-          <Card className={hasTOTP ? 'border-blue-500/30 bg-blue-500/5' : ''}>
+          <Card className={hasTOTP ? 'border-info/30 bg-info/5' : ''}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Smartphone className="h-5 w-5" />
                 Aplicativo Autenticador (TOTP)
-                {hasTOTP && <ShieldCheck className="h-4 w-4 text-blue-500 ml-auto" />}
+                {hasTOTP && <ShieldCheck className="h-4 w-4 text-info ml-auto" />}
               </CardTitle>
               <CardDescription>
                 Use um aplicativo como Google Authenticator ou Authy
@@ -230,7 +230,7 @@ export default function TwoFactorAuth() {
                 </div>
               ) : hasTOTP ? (
                 <div className="flex items-center gap-4">
-                  <ShieldCheck className="h-6 w-6 text-blue-500" />
+                  <ShieldCheck className="h-6 w-6 text-info" />
                   <div className="flex-1">
                     <p className="font-medium">TOTP Ativo</p>
                     <p className="text-sm text-muted-foreground">Autenticador configurado</p>
@@ -246,12 +246,12 @@ export default function TwoFactorAuth() {
           </Card>
 
           {/* SMS Setup Card */}
-          <Card className={hasPhone ? 'border-green-500/30 bg-green-500/5' : ''}>
+          <Card className={hasPhone ? 'border-success/30 bg-success/5' : ''}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MessageSquare className="h-5 w-5" />
                 SMS (Código por Mensagem)
-                {hasPhone && <ShieldCheck className="h-4 w-4 text-green-500 ml-auto" />}
+                {hasPhone && <ShieldCheck className="h-4 w-4 text-success ml-auto" />}
               </CardTitle>
               <CardDescription>
                 Receba códigos de verificação por SMS

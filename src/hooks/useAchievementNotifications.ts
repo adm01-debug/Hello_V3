@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { Badge } from '@/hooks/useGamification';
 
 interface BadgeNotification {
@@ -13,14 +13,10 @@ interface BadgeNotification {
 export function useAchievementNotifications(agentId?: string) {
   const [notifications, setNotifications] = useState<BadgeNotification[]>([]);
   const [latestAchievement, setLatestAchievement] = useState<BadgeNotification | null>(null);
-  const { toast } = useToast();
+  
 
   const showAchievementToast = useCallback((badge: Badge, agentName: string) => {
-    toast({
-      title: '🏆 Nova Conquista!',
-      description: `${agentName} ganhou a badge "${badge.name}"! (+${badge.points} pts)`,
-      duration: 5000,
-    });
+    toast.success('🏆 Nova Conquista!', { description: `${agentName} ganhou a badge "${badge.name}"! (+${badge.points} pts)`, duration: 5000 });
   }, [toast]);
 
   useEffect(() => {
@@ -94,11 +90,7 @@ export function useAchievementNotifications(agentId?: string) {
           console.log('Goal achieved:', payload);
           const alert = payload.new as { title: string; message: string };
           
-          toast({
-            title: '🎯 Meta Atingida!',
-            description: alert.title,
-            duration: 6000,
-          });
+          toast.success('🎯 Meta Atingida!', { description: alert.title, duration: 6000 });
         }
       )
       .subscribe();
@@ -106,7 +98,7 @@ export function useAchievementNotifications(agentId?: string) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [toast]);
+  }, []);
 
   const clearLatestAchievement = useCallback(() => {
     setLatestAchievement(null);

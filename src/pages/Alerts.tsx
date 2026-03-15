@@ -319,15 +319,15 @@ export default function Alerts() {
   const getSeverityIcon = (severity: string) => {
     switch (severity) {
       case 'critical': return <AlertCircle className="h-5 w-5 text-destructive" />;
-      case 'warning': return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
-      default: return <Info className="h-5 w-5 text-blue-500" />;
+      case 'warning': return <AlertTriangle className="h-5 w-5 text-warning" />;
+      default: return <Info className="h-5 w-5 text-info" />;
     }
   };
 
   const getSeverityBadge = (severity: string) => {
     switch (severity) {
       case 'critical': return <Badge variant="destructive">Crítico</Badge>;
-      case 'warning': return <Badge className="bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30">Aviso</Badge>;
+      case 'warning': return <Badge className="bg-warning/20 text-warning hover:bg-warning/30">Aviso</Badge>;
       default: return <Badge variant="secondary">Info</Badge>;
     }
   };
@@ -397,20 +397,20 @@ export default function Alerts() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Contatos Pendentes</CardTitle>
-            <Users className="h-4 w-4 text-yellow-500" />
+            <Users className="h-4 w-4 text-warning" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-yellow-500">{contactPendingCount}</div>
+            <div className="text-2xl font-bold text-warning">{contactPendingCount}</div>
             <p className="text-xs text-muted-foreground">Aguardando ação</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Chamadas Não Lidas</CardTitle>
-            <Phone className="h-4 w-4 text-blue-500" />
+            <Phone className="h-4 w-4 text-info" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-500">{callUnreadCount}</div>
+            <div className="text-2xl font-bold text-info">{callUnreadCount}</div>
             <p className="text-xs text-muted-foreground">Alertas de chamadas</p>
           </CardContent>
         </Card>
@@ -574,7 +574,7 @@ export default function Alerts() {
                                 <h4 className="font-semibold">{alert.title}</h4>
                                 {!alert.is_read && <span className="h-2 w-2 bg-primary rounded-full" />}
                                 {alert.is_actioned && (
-                                  <Badge variant="outline" className="text-green-500 border-green-500/30">
+                                  <Badge variant="outline" className="text-success border-success/30">
                                     <CheckCircle2 className="h-3 w-3 mr-1" />
                                     Resolvido
                                   </Badge>
@@ -606,7 +606,7 @@ export default function Alerts() {
                               )}
                               {!alert.is_actioned && (
                                 <Button variant="ghost" size="sm" onClick={() => markContactAlertAsActioned(alert.id)} title="Marcar como resolvido">
-                                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                                  <CheckCircle2 className="h-4 w-4 text-success" />
                                 </Button>
                               )}
                               <Button variant="ghost" size="sm" onClick={() => deleteContactAlert(alert.id)} title="Excluir">

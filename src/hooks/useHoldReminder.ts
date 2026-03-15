@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { CallSession } from './useMultiChannelCall';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 export type ReminderInterval = 15 | 30 | 60;
 export type HoldAlertThreshold = 30 | 60 | 120 | 180 | 300;
@@ -181,11 +181,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
   // Request browser notification permission
   const requestBrowserNotifications = useCallback(async () => {
     if (!('Notification' in window)) {
-      toast({
-        title: "Notificações não suportadas",
-        description: "Seu navegador não suporta notificações nativas.",
-        variant: "destructive",
-      });
+      toast.error("Notificações não suportadas", { description: "Seu navegador não suporta notificações nativas." });
       return false;
     }
 
@@ -195,16 +191,9 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       setBrowserNotificationsEnabled(granted);
       
       if (granted) {
-        toast({
-          title: "Notificações ativadas",
-          description: "Você receberá alertas críticos de espera no navegador.",
-        });
+        toast.success("Notificações ativadas", { description: "Você receberá alertas críticos de espera no navegador." });
       } else {
-        toast({
-          title: "Permissão negada",
-          description: "Você não receberá notificações nativas do navegador.",
-          variant: "destructive",
-        });
+        toast.error("Permissão negada", { description: "Você não receberá notificações nativas do navegador." });
       }
       
       return granted;
@@ -269,12 +258,10 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       .map(call => call.contactName || call.phoneNumber || 'Chamada')
       .join(', ');
     
-    toast({
-      title: "📞 Chamada em espera",
+    toast("📞 Chamada em espera", {
       description: callsOnHold.length === 1 
         ? `${callNames} aguardando atenção`
         : `${callsOnHold.length} chamadas aguardando: ${callNames}`,
-      variant: "default",
       duration: 5000,
     });
   }, []);
@@ -282,12 +269,11 @@ export function useHoldReminder(activeCalls: CallSession[]) {
   const showThresholdAlert = useCallback((alert: HoldAlert) => {
     const isCritical = alert.severity === 'critical';
     
-    toast({
-      title: isCritical ? "🚨 Alerta Crítico de Espera" : "⚠️ Alerta de Tempo em Espera",
-      description: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)}${isCritical ? ' - Atenção urgente necessária!' : ''}`,
-      variant: isCritical ? "destructive" : "default",
-      duration: isCritical ? 10000 : 7000,
-    });
+    if (isCritical) {
+      toast.error("🚨 Alerta Crítico de Espera", { description: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)} - Atenção urgente necessária!`, duration: 10000 });
+    } else {
+      toast.warning("⚠️ Alerta de Tempo em Espera", { description: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)}`, duration: 7000 });
+    }
   }, []);
 
   // Check for hold time threshold alerts

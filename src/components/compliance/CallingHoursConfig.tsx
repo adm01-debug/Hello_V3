@@ -32,12 +32,12 @@ import {
 } from 'lucide-react';
 import { useDNCCompliance } from '@/hooks/useDNCCompliance';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 
 export function CallingHoursConfig() {
   const { callingHours, isLoadingHours, checkCallingHours } = useDNCCompliance();
-  const { toast } = useToast();
+  
   const queryClient = useQueryClient();
   
   const [currentStatus, setCurrentStatus] = useState<{
@@ -62,11 +62,7 @@ export function CallingHoursConfig() {
       .eq('id', id);
 
     if (error) {
-      toast({
-        title: 'Erro',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro', { description: error.message });
     } else {
       queryClient.invalidateQueries({ queryKey: ['calling-hours-config'] });
     }
@@ -90,16 +86,9 @@ export function CallingHoursConfig() {
       .eq('id', editingRegion.id);
 
     if (error) {
-      toast({
-        title: 'Erro ao salvar',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro ao salvar', { description: error.message });
     } else {
-      toast({
-        title: 'Salvo',
-        description: 'Configuração de horário atualizada.',
-      });
+      toast.success('Salvo', { description: 'Configuração de horário atualizada.' });
       queryClient.invalidateQueries({ queryKey: ['calling-hours-config'] });
       setIsEditDialogOpen(false);
       setEditingRegion(null);
@@ -139,17 +128,17 @@ export function CallingHoursConfig() {
           <CardContent>
             <div className={`flex items-center gap-3 p-4 rounded-lg ${
               currentStatus.can_call 
-                ? 'bg-green-500/10 border border-green-500/20' 
+                ? 'bg-success/10 border border-success/20' 
                 : 'bg-destructive/10 border border-destructive/20'
             }`}>
               {currentStatus.can_call ? (
-                <Check className="h-6 w-6 text-green-500" />
+                <Check className="h-6 w-6 text-success" />
               ) : (
                 <X className="h-6 w-6 text-destructive" />
               )}
               <div>
-                <p className={`font-medium ${
-                  currentStatus.can_call ? 'text-green-500' : 'text-destructive'
+               <p className={`font-medium ${
+                  currentStatus.can_call ? 'text-success' : 'text-destructive'
                 }`}>
                   {currentStatus.can_call ? 'Permitido Discar' : 'Fora do Horário'}
                 </p>

@@ -719,7 +719,7 @@ export default function AgentRanking() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-yellow-500" />
+              <Trophy className="h-5 w-5 text-warning" />
               Pódio
             </CardTitle>
           </CardHeader>
@@ -727,52 +727,52 @@ export default function AgentRanking() {
             <div className="flex items-end justify-center gap-4 py-6">
               {/* 2nd Place */}
               <div className="flex flex-col items-center">
-                <Avatar className="h-16 w-16 mb-2 border-4 border-gray-400">
-                  <AvatarFallback className="text-lg bg-gray-400/20">
+                <Avatar className="h-16 w-16 mb-2 border-4 border-muted-foreground/40">
+                  <AvatarFallback className="text-lg bg-muted-foreground/20">
                     {getInitials(topAgents[1]?.name || '')}
                   </AvatarFallback>
                 </Avatar>
-                <Medal className="h-8 w-8 text-gray-400 mb-1" />
+                <Medal className="h-8 w-8 text-muted-foreground mb-1" />
                 <span className="font-semibold text-center">{topAgents[1]?.name}</span>
                 <span className="text-sm text-muted-foreground">
                   {topAgents[1]?.score.toFixed(1)} pts
                 </span>
-                <div className="h-20 w-24 bg-gray-400/20 rounded-t-lg mt-2 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-gray-400">2º</span>
+                <div className="h-20 w-24 bg-muted-foreground/20 rounded-t-lg mt-2 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-muted-foreground">2º</span>
                 </div>
               </div>
 
               {/* 1st Place */}
               <div className="flex flex-col items-center">
-                <Avatar className="h-20 w-20 mb-2 border-4 border-yellow-500">
-                  <AvatarFallback className="text-xl bg-yellow-500/20">
+                <Avatar className="h-20 w-20 mb-2 border-4 border-warning">
+                  <AvatarFallback className="text-xl bg-warning/20">
                     {getInitials(topAgents[0]?.name || '')}
                   </AvatarFallback>
                 </Avatar>
-                <Trophy className="h-10 w-10 text-yellow-500 mb-1" />
+                <Trophy className="h-10 w-10 text-warning mb-1" />
                 <span className="font-bold text-lg text-center">{topAgents[0]?.name}</span>
                 <span className="text-sm text-muted-foreground">
                   {topAgents[0]?.score.toFixed(1)} pts
                 </span>
-                <div className="h-28 w-28 bg-yellow-500/20 rounded-t-lg mt-2 flex items-center justify-center">
-                  <span className="text-3xl font-bold text-yellow-500">1º</span>
+                <div className="h-28 w-28 bg-warning/20 rounded-t-lg mt-2 flex items-center justify-center">
+                  <span className="text-3xl font-bold text-warning">1º</span>
                 </div>
               </div>
 
               {/* 3rd Place */}
               <div className="flex flex-col items-center">
-                <Avatar className="h-14 w-14 mb-2 border-4 border-amber-600">
-                  <AvatarFallback className="text-base bg-amber-600/20">
+                <Avatar className="h-14 w-14 mb-2 border-4 border-warning">
+                  <AvatarFallback className="text-base bg-warning/20">
                     {getInitials(topAgents[2]?.name || '')}
                   </AvatarFallback>
                 </Avatar>
-                <Medal className="h-7 w-7 text-amber-600 mb-1" />
+                <Medal className="h-7 w-7 text-warning mb-1" />
                 <span className="font-semibold text-center">{topAgents[2]?.name}</span>
                 <span className="text-sm text-muted-foreground">
                   {topAgents[2]?.score.toFixed(1)} pts
                 </span>
-                <div className="h-14 w-20 bg-amber-600/20 rounded-t-lg mt-2 flex items-center justify-center">
-                  <span className="text-xl font-bold text-amber-600">3º</span>
+                <div className="h-14 w-20 bg-warning/20 rounded-t-lg mt-2 flex items-center justify-center">
+                  <span className="text-xl font-bold text-warning">3º</span>
                 </div>
               </div>
             </div>
@@ -805,7 +805,7 @@ export default function AgentRanking() {
                 return (
                   <div
                     key={agent.name}
-                    className={`p-4 rounded-lg border ${allAchieved ? 'border-green-500/30 bg-green-500/5' : 'border-border'}`}
+                    className={`p-4 rounded-lg border ${allAchieved ? 'border-success/30 bg-success/5' : 'border-border'}`}
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <Avatar className="h-10 w-10">
@@ -818,8 +818,8 @@ export default function AgentRanking() {
                         <div className="flex items-center gap-1">
                           {allAchieved ? (
                             <>
-                              <CheckCircle2 className="h-3 w-3 text-green-500" />
-                              <span className="text-xs text-green-500">Todas as metas atingidas</span>
+                             <CheckCircle2 className="h-3 w-3 text-success" />
+                              <span className="text-xs text-success">Todas as metas atingidas</span>
                             </>
                           ) : (
                             <>
@@ -847,14 +847,14 @@ export default function AgentRanking() {
                       <div>
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-muted-foreground">Chamadas</span>
-                          <span className={callsAchieved ? 'text-green-500 font-medium' : ''}>
+                          <span className={callsAchieved ? 'text-success font-medium' : ''}>
                             {agent.totalCalls}/{goals.calls_target}
                           </span>
                         </div>
                         <div className="relative">
                           <Progress value={callsProgress} className="h-2" />
                           {callsAchieved && (
-                            <CheckCircle2 className="h-3 w-3 text-green-500 absolute -right-1 -top-0.5" />
+                             <CheckCircle2 className="h-3 w-3 text-success absolute -right-1 -top-0.5" />
                           )}
                         </div>
                       </div>
@@ -863,14 +863,14 @@ export default function AgentRanking() {
                       <div>
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-muted-foreground">Satisfação</span>
-                          <span className={satisfactionAchieved ? 'text-green-500 font-medium' : ''}>
+                          <span className={satisfactionAchieved ? 'text-success font-medium' : ''}>
                             {agent.avgSatisfaction.toFixed(1)}/{goals.satisfaction_target}
                           </span>
                         </div>
                         <div className="relative">
                           <Progress value={satisfactionProgress} className="h-2" />
                           {satisfactionAchieved && (
-                            <CheckCircle2 className="h-3 w-3 text-green-500 absolute -right-1 -top-0.5" />
+                             <CheckCircle2 className="h-3 w-3 text-success absolute -right-1 -top-0.5" />
                           )}
                         </div>
                       </div>
@@ -879,14 +879,14 @@ export default function AgentRanking() {
                       <div>
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-muted-foreground">Performance</span>
-                          <span className={performanceAchieved ? 'text-green-500 font-medium' : ''}>
+                          <span className={performanceAchieved ? 'text-success font-medium' : ''}>
                             {agent.avgPerformance.toFixed(1)}/{goals.performance_target}
                           </span>
                         </div>
                         <div className="relative">
                           <Progress value={performanceProgress} className="h-2" />
                           {performanceAchieved && (
-                            <CheckCircle2 className="h-3 w-3 text-green-500 absolute -right-1 -top-0.5" />
+                            <CheckCircle2 className="h-3 w-3 text-success absolute -right-1 -top-0.5" />
                           )}
                         </div>
                       </div>
@@ -977,7 +977,7 @@ export default function AgentRanking() {
                     <TableCell className="text-center">
                       <Badge 
                         variant={index === 0 ? 'default' : 'outline'}
-                        className={index === 0 ? 'bg-yellow-500 hover:bg-yellow-600' : ''}
+                        className={index === 0 ? 'bg-warning hover:bg-warning/90' : ''}
                       >
                         {agent.score.toFixed(1)}
                       </Badge>

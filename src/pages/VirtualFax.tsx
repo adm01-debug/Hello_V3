@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { Printer, Send, Inbox, Plus, FileText, Clock, CheckCircle2, XCircle } from 'lucide-react';
 
 export default function VirtualFax() {
@@ -35,7 +35,7 @@ export default function VirtualFax() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['virtual-fax'] });
       setTo(''); setSubject(''); setDialogOpen(false);
-      toast({ title: 'Fax enviado para fila!' });
+      toast.success('Fax enviado para fila!');
     },
   });
 
@@ -75,11 +75,11 @@ export default function VirtualFax() {
           <div><p className="text-2xl font-bold">{faxes.filter((f: any) => f.direction === 'outbound').length}</p><p className="text-xs text-muted-foreground">Enviados</p></div>
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
-          <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center"><Inbox className="h-5 w-5 text-blue-500" /></div>
+          <div className="h-10 w-10 rounded-lg bg-info/10 flex items-center justify-center"><Inbox className="h-5 w-5 text-info" /></div>
           <div><p className="text-2xl font-bold">{faxes.filter((f: any) => f.direction === 'inbound').length}</p><p className="text-xs text-muted-foreground">Recebidos</p></div>
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
-          <div className="h-10 w-10 rounded-lg bg-amber-500/10 flex items-center justify-center"><Clock className="h-5 w-5 text-amber-500" /></div>
+          <div className="h-10 w-10 rounded-lg bg-warning/10 flex items-center justify-center"><Clock className="h-5 w-5 text-warning" /></div>
           <div><p className="text-2xl font-bold">{faxes.filter((f: any) => f.status === 'pending').length}</p><p className="text-xs text-muted-foreground">Pendentes</p></div>
         </CardContent></Card>
       </div>

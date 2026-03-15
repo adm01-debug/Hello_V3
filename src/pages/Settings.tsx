@@ -20,7 +20,7 @@ import {
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { useBitrix } from '@/hooks/useBitrix';
 
 const Settings = () => {
@@ -38,10 +38,7 @@ const Settings = () => {
   }, [checkConfiguration]);
 
   const handleSave = () => {
-    toast({
-      title: '✓ Configurações salvas',
-      description: 'Suas preferências foram atualizadas',
-    });
+    toast.success('✓ Configurações salvas', { description: 'Suas preferências foram atualizadas' });
   };
 
   return (

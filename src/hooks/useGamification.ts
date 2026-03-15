@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 export interface Badge {
   id: string;
@@ -52,7 +52,7 @@ export function useGamification(agentId?: string) {
   const [weeklyStats, setWeeklyStats] = useState<AgentWeeklyStats | null>(null);
   const [rankings, setRankings] = useState<RankingEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { toast } = useToast();
+  
 
   const getWeekStart = () => {
     const now = new Date();
@@ -185,10 +185,7 @@ export function useGamification(agentId?: string) {
     }
 
     const badge = (data as any).badge as Badge;
-    toast({
-      title: '🏆 Nova Conquista!',
-      description: `Você ganhou a badge "${badge.name}"!`,
-    });
+    toast.success('🏆 Nova Conquista!', { description: `Você ganhou a badge "${badge.name}"!` });
 
     fetchAgentBadges();
     updateWeeklyStats({ badges_earned: 1, points_earned: badge.points });

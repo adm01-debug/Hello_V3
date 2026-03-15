@@ -58,7 +58,7 @@ export function AgentGoalsProgress() {
           <div key={goal.agent_name} className="space-y-3 p-4 border rounded-lg">
             <div className="flex items-center justify-between">
               <h4 className="font-medium">{goal.agent_name}</h4>
-              {callProgress >= 100 && <CheckCircle className="h-4 w-4 text-green-500" />}
+              {callProgress >= 100 && <CheckCircle className="h-4 w-4 text-success" />}
             </div>
 
             <div className="space-y-2">

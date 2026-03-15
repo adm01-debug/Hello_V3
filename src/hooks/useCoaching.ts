@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 export interface CoachingRecommendation {
   id: string;
@@ -21,7 +21,7 @@ export function useCoaching(agentId?: string) {
   const [recommendations, setRecommendations] = useState<CoachingRecommendation[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const { toast } = useToast();
+  
 
   const fetchRecommendations = useCallback(async () => {
     if (!agentId) return;
@@ -54,19 +54,12 @@ export function useCoaching(agentId?: string) {
         throw error;
       }
 
-      toast({
-        title: '🎯 Recomendações Geradas',
-        description: `${data.recommendations?.length || 0} novas recomendações de coaching foram criadas.`,
-      });
+      toast.success('🎯 Recomendações Geradas', { description: `${data.recommendations?.length || 0} novas recomendações de coaching foram criadas.` });
 
       await fetchRecommendations();
     } catch (error: any) {
       console.error('Error generating recommendations:', error);
-      toast({
-        title: 'Erro',
-        description: 'Não foi possível gerar as recomendações.',
-        variant: 'destructive',
-      });
+      toast.error('Erro', { description: 'Não foi possível gerar as recomendações.' });
     } finally {
       setIsGenerating(false);
     }
@@ -88,19 +81,12 @@ export function useCoaching(agentId?: string) {
 
     if (error) {
       console.error('Error updating recommendation:', error);
-      toast({
-        title: 'Erro',
-        description: 'Não foi possível atualizar o status.',
-        variant: 'destructive',
-      });
+      toast.error('Erro', { description: 'Não foi possível atualizar o status.' });
     } else {
       await fetchRecommendations();
       
       if (status === 'completed') {
-        toast({
-          title: '✅ Recomendação Concluída',
-          description: 'A recomendação foi marcada como concluída.',
-        });
+        toast.success('✅ Recomendação Concluída', { description: 'A recomendação foi marcada como concluída.' });
       }
     }
   };

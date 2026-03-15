@@ -154,7 +154,7 @@ const QueueMetricsAlertSettings = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {settings.enabled ? (
-                <CheckCircle className="h-5 w-5 text-green-500" />
+                <CheckCircle className="h-5 w-5 text-success" />
               ) : (
                 <AlertTriangle className="h-5 w-5 text-muted-foreground" />
               )}
@@ -326,7 +326,7 @@ const QueueMetricsAlertSettings = () => {
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            <Activity className="h-5 w-5 text-green-500" />
+            <Activity className="h-5 w-5 text-success" />
             Nível de Serviço
           </CardTitle>
           <CardDescription>
