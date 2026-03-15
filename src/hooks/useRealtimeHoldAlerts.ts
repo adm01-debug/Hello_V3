@@ -221,7 +221,7 @@ export function useRealtimeHoldAlerts() {
       const { count } = await supabase
         .from('call_alerts')
         .select('*', { count: 'exact', head: true })
-        .eq('alert_type', 'hold_time')
+        .eq('alert_type', 'hold_time_exceeded')
         .eq('is_read', false);
       
       if (count !== null) {
