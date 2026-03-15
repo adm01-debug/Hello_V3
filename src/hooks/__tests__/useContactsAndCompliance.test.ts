@@ -222,7 +222,7 @@ describe('DNC Compliance System', () => {
     });
 
     it('respects disabled DNC check', () => {
-      const dncEnabled = false;
+      const dncEnabled = false as boolean;
       const reasons: string[] = [];
       if (dncEnabled) {
         reasons.push('DNC check would run');
