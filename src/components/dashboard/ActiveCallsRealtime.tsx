@@ -411,7 +411,7 @@ export const ActiveCallsRealtime = () => {
                           Em Espera {formatDuration(holdDuration)}
                         </Badge>
                       ) : (
-                        <Badge variant="default" className="bg-green-500 hover:bg-green-600">
+                        <Badge variant="default" className="bg-success hover:bg-success/90">
                           <Phone className="h-3 w-3 mr-1" />
                           Em Chamada
                         </Badge>

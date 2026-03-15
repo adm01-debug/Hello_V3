@@ -519,11 +519,11 @@ Relatório gerado automaticamente pelo sistema de segurança.
               <span>Ativar Leaked Password Protection no painel do Cloud</span>
             </li>
             <li className="flex items-start gap-2">
-              <Info className="h-4 w-4 text-blue-500 mt-0.5" />
+              <Info className="h-4 w-4 text-info mt-0.5" />
               <span>Configurar alertas automáticos para padrões suspeitos de acesso</span>
             </li>
             <li className="flex items-start gap-2">
-              <Info className="h-4 w-4 text-blue-500 mt-0.5" />
+              <Info className="h-4 w-4 text-info mt-0.5" />
               <span>Implementar expiração temporal de acesso para ex-funcionários</span>
             </li>
           </ul>

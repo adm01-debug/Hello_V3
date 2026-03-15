@@ -141,13 +141,13 @@ const Settings = () => {
                       />
                       Bitrix24
                       {bitrixConfigured === true && (
-                        <Badge variant="default" className="bg-green-500/10 text-green-500 border-green-500/20">
+                        <Badge variant="default" className="bg-success/10 text-success border-success/20">
                           <CheckCircle2 className="h-3 w-3 mr-1" />
                           Conectado
                         </Badge>
                       )}
                       {bitrixConfigured === false && (
-                        <Badge variant="secondary" className="bg-yellow-500/10 text-yellow-500 border-yellow-500/20">
+                        <Badge variant="secondary" className="bg-warning/10 text-warning border-warning/20">
                           <AlertCircle className="h-3 w-3 mr-1" />
                           Não configurado
                         </Badge>

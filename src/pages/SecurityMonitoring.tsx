@@ -474,8 +474,8 @@ const SecurityMonitoring = () => {
                           alert.is_resolved 
                             ? 'bg-muted/50 opacity-60' 
                             : alert.severity === 'critical' 
-                              ? 'border-red-500/50 bg-red-500/5' 
-                              : 'border-yellow-500/50 bg-yellow-500/5'
+                              ? 'border-destructive/50 bg-destructive/5' 
+                              : 'border-warning/50 bg-warning/5'
                         }`}
                       >
                         <div className="flex items-start justify-between">

@@ -1034,9 +1034,9 @@ export default function ExecutiveDashboard() {
                     </div>
                     
                     {hasCriticalMetric && (
-                      <div className="flex items-start gap-2 p-3 rounded-md bg-red-500/10 border border-red-500/30">
-                        <AlertTriangle className="h-4 w-4 text-red-500 mt-0.5 shrink-0" />
-                        <div className="text-sm text-red-500">
+                      <div className="flex items-start gap-2 p-3 rounded-md bg-destructive/10 border border-destructive/30">
+                        <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
+                        <div className="text-sm text-destructive">
                           <span className="font-medium">Atenção:</span> Este agente está significativamente abaixo das metas em{' '}
                           {[
                             callsCritical && 'chamadas',

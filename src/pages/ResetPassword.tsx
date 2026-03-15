@@ -138,8 +138,8 @@ export default function ResetPassword() {
       <div className="flex min-h-screen items-center justify-center bg-background p-4">
         <div className="w-full max-w-md space-y-8">
           <div className="flex flex-col items-center text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-green-500/10 mb-4">
-              <CheckCircle className="h-8 w-8 text-green-500" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-success/10 mb-4">
+              <CheckCircle className="h-8 w-8 text-success" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight">Senha Redefinida!</h1>
             <p className="text-muted-foreground mt-2">

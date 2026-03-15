@@ -276,10 +276,10 @@ export default function HoldAlertSettings() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4">
+            <div className="rounded-lg border border-warning/30 bg-warning/10 p-4">
               <div className="flex items-center gap-2 mb-2">
-                <div className="h-2 w-2 rounded-full bg-yellow-500 animate-pulse" />
-                <span className="font-semibold text-yellow-500">⚠️ Tempo de Espera Elevado</span>
+                <div className="h-2 w-2 rounded-full bg-warning animate-pulse" />
+                <span className="font-semibold text-warning">⚠️ Tempo de Espera Elevado</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Cliente está em espera há {formatDuration(settings.warning_threshold_seconds)} (limite: {formatDuration(settings.warning_threshold_seconds)}). 

@@ -183,7 +183,7 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
               key={index}
               className={cn(
                 "flex items-center gap-1.5 text-xs",
-                req.met ? 'text-green-500' : req.critical ? 'text-red-400' : 'text-muted-foreground'
+                req.met ? 'text-success' : req.critical ? 'text-destructive' : 'text-muted-foreground'
               )}
             >
               {req.met ? (

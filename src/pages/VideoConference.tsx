@@ -78,7 +78,7 @@ export default function VideoConference() {
           <div><p className="text-2xl font-bold">{conferences.filter((c: any) => c.status === 'active').length}</p><p className="text-xs text-muted-foreground">Ativas</p></div>
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
-          <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center"><Calendar className="h-5 w-5 text-blue-500" /></div>
+          <div className="h-10 w-10 rounded-lg bg-info/10 flex items-center justify-center"><Calendar className="h-5 w-5 text-info" /></div>
           <div><p className="text-2xl font-bold">{conferences.filter((c: any) => c.status === 'scheduled').length}</p><p className="text-xs text-muted-foreground">Agendadas</p></div>
         </CardContent></Card>
       </div>

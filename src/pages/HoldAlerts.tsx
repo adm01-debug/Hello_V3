@@ -60,19 +60,19 @@ const severityConfig = {
   info: {
     label: 'Informativo',
     icon: Info,
-    color: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+    color: 'bg-info/10 text-info border-info/20',
     badgeVariant: 'secondary' as const,
   },
   warning: {
     label: 'Aviso',
     icon: AlertTriangle,
-    color: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20',
+    color: 'bg-warning/10 text-warning border-warning/20',
     badgeVariant: 'outline' as const,
   },
   critical: {
     label: 'Crítico',
     icon: AlertCircle,
-    color: 'bg-red-500/10 text-red-500 border-red-500/20',
+    color: 'bg-destructive/10 text-destructive border-destructive/20',
     badgeVariant: 'destructive' as const,
   },
 };
