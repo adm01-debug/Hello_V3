@@ -70,7 +70,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Sistema de Segurança <security@resend.dev>",
+        from: `Sistema de Segurança <${Deno.env.get("FROM_EMAIL") || "security@resend.dev"}>`,
         to: [ADMIN_EMAIL],
         subject: "🚨 Alerta: Tentativa de Acesso Bloqueado por IP",
         html: `

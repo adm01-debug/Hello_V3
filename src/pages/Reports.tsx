@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { mockHourlyCallVolume, mockAgents, mockDashboardStats, formatDuration } from '@/data/mockData';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useDashboardStats, useCallVolumeData, useAgentsListData } from '@/hooks/useDashboardData';
 import { 
   AreaChart, 
   Area, 
@@ -19,22 +20,38 @@ import {
 import { Download, Calendar, TrendingUp, Phone, Clock, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useMemo } from 'react';
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--success))', 'hsl(var(--warning))', 'hsl(var(--destructive))'];
 
-const callTypeData = [
-  { name: 'Atendidas', value: 142, color: 'hsl(var(--success))' },
-  { name: 'Perdidas', value: 14, color: 'hsl(var(--destructive))' },
-  { name: 'Caixa Postal', value: 8, color: 'hsl(var(--warning))' },
-];
-
-const agentPerformance = mockAgents.map(agent => ({
-  name: agent.name.split(' ')[0],
-  chamadas: agent.callsToday,
-  duracao: agent.avgCallDuration,
-}));
+const formatDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
 
 const Reports = () => {
+  const { data: stats, isLoading: statsLoading } = useDashboardStats();
+  const { data: volumeData, isLoading: volumeLoading } = useCallVolumeData();
+  const { data: agents, isLoading: agentsLoading } = useAgentsListData();
+
+  const agentPerformance = useMemo(() => {
+    return (agents || []).map(agent => ({
+      name: agent.name.split(' ')[0],
+      chamadas: 0, // Will be populated with real data when available
+    }));
+  }, [agents]);
+
+  const callTypeData = useMemo(() => {
+    if (!stats) return [];
+    const completed = stats.totalCallsToday * (stats.answeredRate / 100);
+    const missed = stats.totalCallsToday - completed;
+    return [
+      { name: 'Atendidas', value: Math.round(completed), color: 'hsl(var(--success))' },
+      { name: 'Perdidas', value: Math.round(missed), color: 'hsl(var(--destructive))' },
+    ];
+  }, [stats]);
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
@@ -66,61 +83,67 @@ const Reports = () => {
 
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-4">
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                <Phone className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Total Chamadas</p>
-                <p className="text-2xl font-bold">{mockDashboardStats.totalCallsToday}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-success/10">
-                <TrendingUp className="h-5 w-5 text-success" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Taxa Atendimento</p>
-                <p className="text-2xl font-bold">{mockDashboardStats.answeredRate}%</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-warning/10">
-                <Clock className="h-5 w-5 text-warning" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Duração Média</p>
-                <p className="text-2xl font-bold">{formatDuration(mockDashboardStats.avgCallDuration)}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
-                <Users className="h-5 w-5 text-accent-foreground" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Agentes Ativos</p>
-                <p className="text-2xl font-bold">{mockDashboardStats.activeAgents}/{mockDashboardStats.totalAgents}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {statsLoading ? (
+          [1, 2, 3, 4].map(i => <Skeleton key={i} className="h-20 rounded-lg" />)
+        ) : stats ? (
+          <>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                    <Phone className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Total Chamadas</p>
+                    <p className="text-2xl font-bold">{stats.totalCallsToday}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-success/10">
+                    <TrendingUp className="h-5 w-5 text-success" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Taxa Atendimento</p>
+                    <p className="text-2xl font-bold">{stats.answeredRate}%</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-warning/10">
+                    <Clock className="h-5 w-5 text-warning" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Duração Média</p>
+                    <p className="text-2xl font-bold">{formatDuration(stats.avgCallDuration)}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
+                    <Users className="h-5 w-5 text-accent-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Agentes Ativos</p>
+                    <p className="text-2xl font-bold">{stats.activeAgents}/{stats.totalAgents}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </>
+        ) : null}
       </div>
 
       {/* Charts */}
@@ -137,34 +160,38 @@ const Reports = () => {
               <CardTitle>Volume de Chamadas por Hora</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="h-[400px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={mockHourlyCallVolume} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                    <defs>
-                      <linearGradient id="colorIn" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
-                      </linearGradient>
-                      <linearGradient id="colorOut" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--success))" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="hsl(var(--success))" stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
-                    <XAxis dataKey="hour" axisLine={false} tickLine={false} className="text-muted-foreground" />
-                    <YAxis axisLine={false} tickLine={false} className="text-muted-foreground" />
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'hsl(var(--card))', 
-                        borderColor: 'hsl(var(--border))',
-                        borderRadius: '8px'
-                      }} 
-                    />
-                    <Area type="monotone" dataKey="incoming" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorIn)" name="Recebidas" />
-                    <Area type="monotone" dataKey="outgoing" stroke="hsl(var(--success))" fillOpacity={1} fill="url(#colorOut)" name="Realizadas" />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
+              {volumeLoading ? (
+                <Skeleton className="h-[400px] rounded-lg" />
+              ) : (
+                <div className="h-[400px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={volumeData || []} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="colorIn" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                          <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                        </linearGradient>
+                        <linearGradient id="colorOut" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="hsl(var(--success))" stopOpacity={0.3} />
+                          <stop offset="95%" stopColor="hsl(var(--success))" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
+                      <XAxis dataKey="hour" axisLine={false} tickLine={false} className="text-muted-foreground" />
+                      <YAxis axisLine={false} tickLine={false} className="text-muted-foreground" />
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: 'hsl(var(--card))', 
+                          borderColor: 'hsl(var(--border))',
+                          borderRadius: '8px'
+                        }} 
+                      />
+                      <Area type="monotone" dataKey="incoming" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorIn)" name="Recebidas" />
+                      <Area type="monotone" dataKey="outgoing" stroke="hsl(var(--success))" fillOpacity={1} fill="url(#colorOut)" name="Realizadas" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -175,23 +202,27 @@ const Reports = () => {
               <CardTitle>Performance por Agente</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="h-[400px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={agentPerformance} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} className="text-muted-foreground" />
-                    <YAxis axisLine={false} tickLine={false} className="text-muted-foreground" />
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'hsl(var(--card))', 
-                        borderColor: 'hsl(var(--border))',
-                        borderRadius: '8px'
-                      }} 
-                    />
-                    <Bar dataKey="chamadas" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} name="Chamadas" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+              {agentsLoading ? (
+                <Skeleton className="h-[400px] rounded-lg" />
+              ) : (
+                <div className="h-[400px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={agentPerformance} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
+                      <XAxis dataKey="name" axisLine={false} tickLine={false} className="text-muted-foreground" />
+                      <YAxis axisLine={false} tickLine={false} className="text-muted-foreground" />
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: 'hsl(var(--card))', 
+                          borderColor: 'hsl(var(--border))',
+                          borderRadius: '8px'
+                        }} 
+                      />
+                      <Bar dataKey="chamadas" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} name="Chamadas" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -215,7 +246,7 @@ const Reports = () => {
                       dataKey="value"
                       label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                     >
-                      {callTypeData.map((entry, index) => (
+                      {callTypeData.map((_entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>

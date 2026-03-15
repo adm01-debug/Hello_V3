@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { 
   PhoneIncoming, 
   PhoneOutgoing, 
   PhoneMissed,
-  Play,
   Download,
-  Filter,
   Calendar,
   Search,
   MoreHorizontal
@@ -15,60 +13,73 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { mockCallHistory, formatDuration } from '@/data/mockData';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useCallHistoryData } from '@/hooks/useDashboardData';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
+const formatDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
 const History = () => {
   const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const { data: callHistory, isLoading } = useCallHistoryData();
 
-  const filteredCalls = mockCallHistory.filter(call => {
-    const matchesSearch = call.contactName.toLowerCase().includes(search.toLowerCase()) ||
-                          call.contactPhone.includes(search);
-    const matchesType = typeFilter === 'all' || call.type === typeFilter;
-    const matchesStatus = statusFilter === 'all' || call.status === statusFilter;
-    return matchesSearch && matchesType && matchesStatus;
-  });
+  const filteredCalls = useMemo(() => {
+    if (!callHistory) return [];
+    return callHistory.filter(call => {
+      const matchesSearch = !search || 
+        (call.caller_name || '').toLowerCase().includes(search.toLowerCase()) ||
+        (call.caller_phone || '').includes(search);
+      const matchesStatus = statusFilter === 'all' || call.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  }, [callHistory, search, statusFilter]);
 
-  const getCallIcon = (type: string, status: string) => {
-    if (status === 'missed') return PhoneMissed;
-    return type === 'incoming' ? PhoneIncoming : PhoneOutgoing;
+  const getCallIcon = (status: string | null) => {
+    if (status === 'missed' || status === 'abandoned') return PhoneMissed;
+    return PhoneIncoming;
   };
 
-  const getCallColor = (status: string) => {
+  const getCallColor = (status: string | null) => {
     switch (status) {
       case 'missed':
+      case 'abandoned':
         return 'text-destructive bg-destructive/10';
       case 'completed':
         return 'text-success bg-success/10';
-      case 'voicemail':
-        return 'text-warning bg-warning/10';
       default:
         return 'text-muted-foreground bg-muted';
     }
   };
 
-  const getStatusLabel = (status: string) => {
+  const getStatusLabel = (status: string | null) => {
     switch (status) {
       case 'completed': return 'Atendida';
       case 'missed': return 'Perdida';
-      case 'voicemail': return 'Caixa postal';
-      default: return status;
+      case 'abandoned': return 'Abandonada';
+      case 'active': return 'Ativa';
+      default: return status || '—';
     }
   };
 
-  const stats = {
-    total: mockCallHistory.length,
-    completed: mockCallHistory.filter(c => c.status === 'completed').length,
-    missed: mockCallHistory.filter(c => c.status === 'missed').length,
-    avgDuration: Math.round(
-      mockCallHistory.filter(c => c.duration > 0).reduce((acc, c) => acc + c.duration, 0) / 
-      mockCallHistory.filter(c => c.duration > 0).length
-    ),
-  };
+  const stats = useMemo(() => {
+    const calls = callHistory || [];
+    const withDuration = calls.filter(c => c.duration_seconds && c.duration_seconds > 0);
+    return {
+      total: calls.length,
+      completed: calls.filter(c => c.status === 'completed').length,
+      missed: calls.filter(c => c.status === 'missed' || c.status === 'abandoned').length,
+      avgDuration: withDuration.length > 0
+        ? Math.round(withDuration.reduce((acc, c) => acc + (c.duration_seconds || 0), 0) / withDuration.length)
+        : 0,
+    };
+  }, [callHistory]);
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -86,30 +97,36 @@ const History = () => {
 
       {/* Stats */}
       <div className="grid gap-4 md:grid-cols-4">
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Total de Chamadas</p>
-            <p className="text-2xl font-bold">{stats.total}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Atendidas</p>
-            <p className="text-2xl font-bold text-success">{stats.completed}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Perdidas</p>
-            <p className="text-2xl font-bold text-destructive">{stats.missed}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Duração Média</p>
-            <p className="text-2xl font-bold">{formatDuration(stats.avgDuration)}</p>
-          </CardContent>
-        </Card>
+        {isLoading ? (
+          [1, 2, 3, 4].map(i => <Skeleton key={i} className="h-20 rounded-lg" />)
+        ) : (
+          <>
+            <Card>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">Total de Chamadas</p>
+                <p className="text-2xl font-bold">{stats.total}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">Atendidas</p>
+                <p className="text-2xl font-bold text-success">{stats.completed}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">Perdidas</p>
+                <p className="text-2xl font-bold text-destructive">{stats.missed}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">Duração Média</p>
+                <p className="text-2xl font-bold">{formatDuration(stats.avgDuration)}</p>
+              </CardContent>
+            </Card>
+          </>
+        )}
       </div>
 
       {/* Filters */}
@@ -123,17 +140,6 @@ const History = () => {
             className="pl-9"
           />
         </div>
-        
-        <Select value={typeFilter} onValueChange={setTypeFilter}>
-          <SelectTrigger className="w-[150px]">
-            <SelectValue placeholder="Tipo" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todos os tipos</SelectItem>
-            <SelectItem value="incoming">Recebidas</SelectItem>
-            <SelectItem value="outgoing">Realizadas</SelectItem>
-          </SelectContent>
-        </Select>
 
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-[150px]">
@@ -143,14 +149,9 @@ const History = () => {
             <SelectItem value="all">Todos os status</SelectItem>
             <SelectItem value="completed">Atendidas</SelectItem>
             <SelectItem value="missed">Perdidas</SelectItem>
-            <SelectItem value="voicemail">Caixa postal</SelectItem>
+            <SelectItem value="abandoned">Abandonadas</SelectItem>
           </SelectContent>
         </Select>
-
-        <Button variant="outline" className="gap-2">
-          <Calendar className="h-4 w-4" />
-          Data
-        </Button>
       </div>
 
       {/* Call List */}
@@ -161,70 +162,69 @@ const History = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            {filteredCalls.map((call) => {
-              const Icon = getCallIcon(call.type, call.status);
-              
-              return (
-                <div
-                  key={call.id}
-                  className="flex items-center justify-between rounded-lg border border-border bg-card p-4 transition-colors hover:bg-accent/50"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={cn(
-                      'flex h-10 w-10 items-center justify-center rounded-full',
-                      getCallColor(call.status)
-                    )}>
-                      <Icon className="h-4 w-4" />
-                    </div>
-                    
-                    <div>
-                      <p className="font-medium">{call.contactName}</p>
-                      <p className="text-sm text-muted-foreground">{call.contactPhone}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-6">
-                    <div className="text-right">
-                      <p className="text-sm">
-                        {format(call.timestamp, "dd/MM/yyyy", { locale: ptBR })}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {format(call.timestamp, "HH:mm", { locale: ptBR })}
-                      </p>
+          {isLoading ? (
+            <div className="space-y-2">
+              {[1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="h-16 rounded-lg" />)}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {filteredCalls.map((call) => {
+                const Icon = getCallIcon(call.status);
+                
+                return (
+                  <div
+                    key={call.id}
+                    className="flex items-center justify-between rounded-lg border border-border bg-card p-4 transition-colors hover:bg-accent/50"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={cn(
+                        'flex h-10 w-10 items-center justify-center rounded-full',
+                        getCallColor(call.status)
+                      )}>
+                        <Icon className="h-4 w-4" />
+                      </div>
+                      
+                      <div>
+                        <p className="font-medium">{call.caller_name || 'Desconhecido'}</p>
+                        <p className="text-sm text-muted-foreground">{call.caller_phone || '—'}</p>
+                      </div>
                     </div>
 
-                    <Badge variant={call.status === 'missed' ? 'destructive' : 'secondary'}>
-                      {getStatusLabel(call.status)}
-                    </Badge>
+                    <div className="flex items-center gap-6">
+                      <div className="text-right">
+                        <p className="text-sm">
+                          {format(new Date(call.started_at), "dd/MM/yyyy", { locale: ptBR })}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {format(new Date(call.started_at), "HH:mm", { locale: ptBR })}
+                        </p>
+                      </div>
 
-                    {call.duration > 0 && (
-                      <span className="w-16 text-right font-mono text-sm text-muted-foreground">
-                        {formatDuration(call.duration)}
-                      </span>
-                    )}
+                      <Badge variant={call.status === 'missed' || call.status === 'abandoned' ? 'destructive' : 'secondary'}>
+                        {getStatusLabel(call.status)}
+                      </Badge>
 
-                    <div className="flex items-center gap-1">
-                      {call.recording && (
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <Play className="h-4 w-4" />
-                        </Button>
+                      {call.duration_seconds && call.duration_seconds > 0 && (
+                        <span className="w-16 text-right font-mono text-sm text-muted-foreground">
+                          {formatDuration(call.duration_seconds)}
+                        </span>
                       )}
+
                       <Button variant="ghost" size="icon" className="h-8 w-8">
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
 
-            {filteredCalls.length === 0 && (
-              <div className="py-12 text-center text-muted-foreground">
-                Nenhuma chamada encontrada
-              </div>
-            )}
-          </div>
+              {filteredCalls.length === 0 && (
+                <div className="py-12 text-center text-muted-foreground">
+                  Nenhuma chamada encontrada
+                </div>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

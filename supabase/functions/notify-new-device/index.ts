@@ -68,7 +68,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Sistema de Segurança <security@resend.dev>",
+        from: `Sistema de Segurança <${Deno.env.get("FROM_EMAIL") || "security@resend.dev"}>`,
         to: [data.email],
         subject: "🔔 Novo login detectado na sua conta",
         html: `
