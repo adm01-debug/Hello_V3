@@ -12,8 +12,31 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // Verify JWT authentication
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseAnon = Deno.env.get("SUPABASE_ANON_KEY")!;
+
+    // Verify the calling user is authenticated
+    const userClient = createClient(supabaseUrl, supabaseAnon, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const { data: { user }, error: authError } = await userClient.auth.getUser();
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // Get all users with digest enabled
@@ -29,11 +52,9 @@ Deno.serve(async (req) => {
     const results = [];
 
     for (const userPref of digestUsers || []) {
-      // Calculate time window based on frequency
-      const hoursBack = userPref.digest_frequency === "daily" ? 24 : 168; // daily or weekly
+      const hoursBack = userPref.digest_frequency === "daily" ? 24 : 168;
       const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
 
-      // Get unread notifications in the window
       const { data: notifications, error: notifError } = await supabase
         .from("notifications")
         .select("id, title, message, category, severity, created_at")
@@ -52,7 +73,6 @@ Deno.serve(async (req) => {
         continue;
       }
 
-      // Group by category
       const grouped: Record<string, typeof notifications> = {};
       for (const n of notifications) {
         const cat = n.category || "system";
@@ -60,7 +80,6 @@ Deno.serve(async (req) => {
         grouped[cat].push(n);
       }
 
-      // Create a digest notification
       const summary = Object.entries(grouped)
         .map(([cat, items]) => `${cat}: ${items.length} notificação(ões)`)
         .join(", ");

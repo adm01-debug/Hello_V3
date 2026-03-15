@@ -33,7 +33,14 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-    const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "admin@example.com";
+    const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL");
+    if (!ADMIN_EMAIL) {
+      console.log("[BLOCKED-IP] ADMIN_EMAIL não configurado. Email não enviado.");
+      return new Response(
+        JSON.stringify({ success: true, message: "ADMIN_EMAIL not configured", logged: true, emailSent: false }),
+        { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
 
     if (!RESEND_API_KEY) {
       console.log("[BLOCKED-IP] RESEND_API_KEY não configurada. Email não enviado, mas evento registrado.");
@@ -63,7 +70,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Sistema de Segurança <security@resend.dev>",
+        from: `Sistema de Segurança <${Deno.env.get("FROM_EMAIL") || "security@resend.dev"}>`,
         to: [ADMIN_EMAIL],
         subject: "🚨 Alerta: Tentativa de Acesso Bloqueado por IP",
         html: `
