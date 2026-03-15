@@ -120,7 +120,7 @@ function FlowCanvas({ flow, onUpdate }: { flow: CallFlow; onUpdate: (data: { nod
       };
       onUpdate({ nodes, edges: [...edges, newEdge] });
       setConnectingFrom(null);
-      toast({ title: 'Conexão criada!' });
+      toast.success('Conexão criada!');
     } else {
       setConnectingFrom(null);
     }
