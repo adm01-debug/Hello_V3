@@ -35,6 +35,14 @@ import {
   FileBarChart,
   UserCog,
   ChevronDown,
+  GitBranch,
+  Voicemail,
+  Video,
+  Monitor as MonitorIcon,
+  Printer,
+  ArrowLeftRight,
+  PhoneCall,
+  Tag,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -69,6 +77,11 @@ const mainNavItems = [
 const toolsNavItems = [
   { title: 'Assistente IA', url: '/ai', icon: Bot },
   { title: 'Coaching IA', url: '/coaching', icon: MessageCircle },
+  { title: 'Call Flow Designer', url: '/call-flow-designer', icon: GitBranch },
+  { title: 'Correio de Voz', url: '/voicemail', icon: Voicemail },
+  { title: 'Detecção de Temas', url: '/topic-detection', icon: Tag },
+  { title: 'Videoconferência', url: '/video-conference', icon: Video },
+  { title: 'Hot Desking', url: '/hot-desking', icon: MonitorIcon },
   { title: 'Callbacks', url: '/callbacks', icon: Calendar },
   { title: 'Transcrições', url: '/call-history', icon: FileText },
   { title: 'Gravações', url: '/recordings', icon: Disc },
@@ -79,6 +92,9 @@ const toolsNavItems = [
   { title: 'Histórico Alertas', url: '/alert-history', icon: History },
   { title: 'Gamificação', url: '/ranking', icon: Trophy },
   { title: 'Relatórios', url: '/reports', icon: BarChart3 },
+  { title: 'Fax Virtual', url: '/virtual-fax', icon: Printer },
+  { title: 'Portabilidade', url: '/number-porting', icon: ArrowLeftRight },
+  { title: 'Números 0800', url: '/toll-free-numbers', icon: PhoneCall },
 ];
 
 const securityNavItems = [

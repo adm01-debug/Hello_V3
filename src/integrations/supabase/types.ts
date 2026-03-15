@@ -487,6 +487,42 @@ export type Database = {
           },
         ]
       }
+      call_flows: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          flow_data: Json
+          id: string
+          is_active: boolean
+          is_default: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          flow_data?: Json
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          flow_data?: Json
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       call_recordings: {
         Row: {
           call_session_id: string | null
@@ -1576,6 +1612,48 @@ export type Database = {
         }
         Relationships: []
       }
+      hot_desking_stations: {
+        Row: {
+          auto_logout_at: string | null
+          checked_in_at: string | null
+          created_at: string
+          current_user_name: string | null
+          equipment: Json
+          extension: string | null
+          id: string
+          is_available: boolean
+          location: string | null
+          station_name: string
+          updated_at: string
+        }
+        Insert: {
+          auto_logout_at?: string | null
+          checked_in_at?: string | null
+          created_at?: string
+          current_user_name?: string | null
+          equipment?: Json
+          extension?: string | null
+          id?: string
+          is_available?: boolean
+          location?: string | null
+          station_name: string
+          updated_at?: string
+        }
+        Update: {
+          auto_logout_at?: string | null
+          checked_in_at?: string | null
+          created_at?: string
+          current_user_name?: string | null
+          equipment?: Json
+          extension?: string | null
+          id?: string
+          is_available?: boolean
+          location?: string | null
+          station_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       ip_whitelist: {
         Row: {
           created_at: string
@@ -1629,6 +1707,56 @@ export type Database = {
           user_agent?: string | null
         }
         Relationships: []
+      }
+      manager_alerts: {
+        Row: {
+          agent_name: string | null
+          alert_type: string
+          call_session_id: string | null
+          created_at: string
+          id: string
+          is_resolved: boolean
+          resolved_at: string | null
+          resolved_by: string | null
+          sentiment_score: number | null
+          severity: string
+          trigger_reason: string
+        }
+        Insert: {
+          agent_name?: string | null
+          alert_type?: string
+          call_session_id?: string | null
+          created_at?: string
+          id?: string
+          is_resolved?: boolean
+          resolved_at?: string | null
+          resolved_by?: string | null
+          sentiment_score?: number | null
+          severity?: string
+          trigger_reason: string
+        }
+        Update: {
+          agent_name?: string | null
+          alert_type?: string
+          call_session_id?: string | null
+          created_at?: string
+          id?: string
+          is_resolved?: boolean
+          resolved_at?: string | null
+          resolved_by?: string | null
+          sentiment_score?: number | null
+          severity?: string
+          trigger_reason?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manager_alerts_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       notification_preferences: {
         Row: {
@@ -1738,6 +1866,57 @@ export type Database = {
           type?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      number_porting_requests: {
+        Row: {
+          account_number: string | null
+          authorized_name: string
+          completed_at: string | null
+          created_at: string
+          created_by: string | null
+          current_provider: string
+          estimated_completion: string | null
+          id: string
+          notes: string | null
+          phone_number: string
+          rejection_reason: string | null
+          status: string
+          submitted_at: string
+          updated_at: string
+        }
+        Insert: {
+          account_number?: string | null
+          authorized_name: string
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_provider: string
+          estimated_completion?: string | null
+          id?: string
+          notes?: string | null
+          phone_number: string
+          rejection_reason?: string | null
+          status?: string
+          submitted_at?: string
+          updated_at?: string
+        }
+        Update: {
+          account_number?: string | null
+          authorized_name?: string
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_provider?: string
+          estimated_completion?: string | null
+          id?: string
+          notes?: string | null
+          phone_number?: string
+          rejection_reason?: string | null
+          status?: string
+          submitted_at?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -2132,6 +2311,130 @@ export type Database = {
         }
         Relationships: []
       }
+      toll_free_numbers: {
+        Row: {
+          assigned_to: string | null
+          call_flow_id: string | null
+          created_at: string
+          friendly_name: string | null
+          id: string
+          monthly_cost: number | null
+          number: string
+          provisioned_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          call_flow_id?: string | null
+          created_at?: string
+          friendly_name?: string | null
+          id?: string
+          monthly_cost?: number | null
+          number: string
+          provisioned_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          call_flow_id?: string | null
+          created_at?: string
+          friendly_name?: string | null
+          id?: string
+          monthly_cost?: number | null
+          number?: string
+          provisioned_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "toll_free_numbers_call_flow_id_fkey"
+            columns: ["call_flow_id"]
+            isOneToOne: false
+            referencedRelation: "call_flows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      topic_detections: {
+        Row: {
+          call_session_id: string | null
+          confidence: number
+          created_at: string
+          first_detected_at: string
+          id: string
+          last_detected_at: string
+          occurrence_count: number
+          topic: string
+        }
+        Insert: {
+          call_session_id?: string | null
+          confidence?: number
+          created_at?: string
+          first_detected_at?: string
+          id?: string
+          last_detected_at?: string
+          occurrence_count?: number
+          topic: string
+        }
+        Update: {
+          call_session_id?: string | null
+          confidence?: number
+          created_at?: string
+          first_detected_at?: string
+          id?: string
+          last_detected_at?: string
+          occurrence_count?: number
+          topic?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "topic_detections_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      topic_trends: {
+        Row: {
+          avg_sentiment: number | null
+          calls_affected: number
+          created_at: string
+          id: string
+          period_end: string
+          period_start: string
+          topic: string
+          total_occurrences: number
+          trend_direction: string | null
+        }
+        Insert: {
+          avg_sentiment?: number | null
+          calls_affected?: number
+          created_at?: string
+          id?: string
+          period_end: string
+          period_start: string
+          topic: string
+          total_occurrences?: number
+          trend_direction?: string | null
+        }
+        Update: {
+          avg_sentiment?: number | null
+          calls_affected?: number
+          created_at?: string
+          id?: string
+          period_end?: string
+          period_start?: string
+          topic?: string
+          total_occurrences?: number
+          trend_direction?: string | null
+        }
+        Relationships: []
+      }
       user_allowed_ips: {
         Row: {
           created_at: string
@@ -2332,6 +2635,147 @@ export type Database = {
           role?: Database["public"]["Enums"]["app_role"]
           updated_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      video_conferences: {
+        Row: {
+          created_at: string
+          duration_seconds: number | null
+          ended_at: string | null
+          host_name: string | null
+          id: string
+          max_participants: number
+          meeting_url: string | null
+          participants: Json
+          recording_path: string | null
+          scheduled_at: string | null
+          started_at: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          duration_seconds?: number | null
+          ended_at?: string | null
+          host_name?: string | null
+          id?: string
+          max_participants?: number
+          meeting_url?: string | null
+          participants?: Json
+          recording_path?: string | null
+          scheduled_at?: string | null
+          started_at?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          duration_seconds?: number | null
+          ended_at?: string | null
+          host_name?: string | null
+          id?: string
+          max_participants?: number
+          meeting_url?: string | null
+          participants?: Json
+          recording_path?: string | null
+          scheduled_at?: string | null
+          started_at?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      virtual_fax: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          direction: string
+          error_message: string | null
+          file_path: string | null
+          from_number: string | null
+          id: string
+          page_count: number
+          received_at: string | null
+          sent_at: string | null
+          status: string
+          subject: string | null
+          to_number: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          direction?: string
+          error_message?: string | null
+          file_path?: string | null
+          from_number?: string | null
+          id?: string
+          page_count?: number
+          received_at?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string | null
+          to_number: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          direction?: string
+          error_message?: string | null
+          file_path?: string | null
+          from_number?: string | null
+          id?: string
+          page_count?: number
+          received_at?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string | null
+          to_number?: string
+        }
+        Relationships: []
+      }
+      voicemail_messages: {
+        Row: {
+          agent_name: string | null
+          audio_file_path: string | null
+          caller_name: string | null
+          caller_phone: string
+          created_at: string
+          duration_seconds: number | null
+          id: string
+          is_read: boolean
+          is_urgent: boolean
+          read_at: string | null
+          transcription: string | null
+        }
+        Insert: {
+          agent_name?: string | null
+          audio_file_path?: string | null
+          caller_name?: string | null
+          caller_phone: string
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          is_read?: boolean
+          is_urgent?: boolean
+          read_at?: string | null
+          transcription?: string | null
+        }
+        Update: {
+          agent_name?: string | null
+          audio_file_path?: string | null
+          caller_name?: string | null
+          caller_phone?: string
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          is_read?: boolean
+          is_urgent?: boolean
+          read_at?: string | null
+          transcription?: string | null
         }
         Relationships: []
       }

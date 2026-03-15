@@ -58,6 +58,14 @@ const SecurityDashboard = lazy(() => import("./pages/SecurityDashboard"));
 const GeoBlocking = lazy(() => import("./pages/GeoBlocking"));
 const PasswordResetApproval = lazy(() => import("./pages/PasswordResetApproval"));
 const Compliance = lazy(() => import("./pages/Compliance"));
+const CallFlowDesigner = lazy(() => import("./pages/CallFlowDesigner"));
+const Voicemail = lazy(() => import("./pages/Voicemail"));
+const TopicDetection = lazy(() => import("./pages/TopicDetection"));
+const VideoConference = lazy(() => import("./pages/VideoConference"));
+const HotDesking = lazy(() => import("./pages/HotDesking"));
+const VirtualFax = lazy(() => import("./pages/VirtualFax"));
+const NumberPorting = lazy(() => import("./pages/NumberPorting"));
+const TollFreeNumbers = lazy(() => import("./pages/TollFreeNumbers"));
 
 const queryClient = new QueryClient();
 
@@ -186,6 +194,30 @@ const App = () => (
                           <Route path="/compliance" element={
                             <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
                               <Compliance />
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/call-flow-designer" element={
+                            <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
+                              <CallFlowDesigner />
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/voicemail" element={<Voicemail />} />
+                          <Route path="/topic-detection" element={
+                            <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
+                              <TopicDetection />
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/video-conference" element={<VideoConference />} />
+                          <Route path="/hot-desking" element={<HotDesking />} />
+                          <Route path="/virtual-fax" element={<VirtualFax />} />
+                          <Route path="/number-porting" element={
+                            <ProtectedRoute requiredRoles={['admin']}>
+                              <NumberPorting />
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/toll-free-numbers" element={
+                            <ProtectedRoute requiredRoles={['admin']}>
+                              <TollFreeNumbers />
                             </ProtectedRoute>
                           } />
                           <Route path="*" element={<NotFound />} />
