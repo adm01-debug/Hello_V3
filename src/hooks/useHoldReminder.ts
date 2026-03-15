@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { CallSession } from './useMultiChannelCall';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 export type ReminderInterval = 15 | 30 | 60;
 export type HoldAlertThreshold = 30 | 60 | 120 | 180 | 300;

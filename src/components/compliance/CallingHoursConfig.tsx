@@ -32,7 +32,7 @@ import {
 } from 'lucide-react';
 import { useDNCCompliance } from '@/hooks/useDNCCompliance';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 
 export function CallingHoursConfig() {

@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { ArrowLeftRight, Plus, Phone, Building, Clock, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 
 export default function NumberPorting() {

@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UnifiedSoftphone } from '@/components/calls/UnifiedSoftphone';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 const Calls = () => {
   const [callStats] = useState({
