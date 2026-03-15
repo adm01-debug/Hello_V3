@@ -230,7 +230,7 @@ export default function TwoFactorAuth() {
                 </div>
               ) : hasTOTP ? (
                 <div className="flex items-center gap-4">
-                  <ShieldCheck className="h-6 w-6 text-blue-500" />
+                  <ShieldCheck className="h-6 w-6 text-info" />
                   <div className="flex-1">
                     <p className="font-medium">TOTP Ativo</p>
                     <p className="text-sm text-muted-foreground">Autenticador configurado</p>
