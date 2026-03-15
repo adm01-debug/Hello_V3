@@ -481,11 +481,11 @@ const SecurityMonitoring = () => {
                         <div className="flex items-start justify-between">
                           <div className="flex items-start gap-3">
                             {alert.is_resolved ? (
-                              <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
+                              <CheckCircle2 className="h-5 w-5 text-success mt-0.5" />
                             ) : alert.severity === 'critical' ? (
-                              <XCircle className="h-5 w-5 text-red-500 mt-0.5" />
+                              <XCircle className="h-5 w-5 text-destructive mt-0.5" />
                             ) : (
-                              <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5" />
+                              <AlertTriangle className="h-5 w-5 text-warning mt-0.5" />
                             )}
                             <div>
                               <div className="flex items-center gap-2">

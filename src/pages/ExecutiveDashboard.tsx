@@ -677,35 +677,35 @@ export default function ExecutiveDashboard() {
 
       {/* Hold Metrics Row */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="border-orange-500/30 bg-orange-500/5">
+        <Card className="border-call-hold/30 bg-call-hold/5">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Tempo Total em Espera</CardTitle>
-            <Pause className="h-4 w-4 text-orange-500" />
+            <Pause className="h-4 w-4 text-call-hold" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-orange-500">{formatDuration(metrics.totalHoldTime)}</div>
+            <div className="text-3xl font-bold text-call-hold">{formatDuration(metrics.totalHoldTime)}</div>
             <p className="text-xs text-muted-foreground mt-1">{metrics.holdCount} eventos de hold</p>
           </CardContent>
         </Card>
 
-        <Card className="border-orange-500/30 bg-orange-500/5">
+        <Card className="border-call-hold/30 bg-call-hold/5">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Média por Hold</CardTitle>
-            <Timer className="h-4 w-4 text-orange-500" />
+            <Timer className="h-4 w-4 text-call-hold" />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">{formatDuration(metrics.avgHoldTime)}</div>
             <Progress 
               value={Math.min((metrics.avgHoldTime / 120) * 100, 100)} 
-              className={`h-2 mt-2 ${metrics.avgHoldTime > 60 ? '[&>div]:bg-red-500' : metrics.avgHoldTime > 30 ? '[&>div]:bg-yellow-500' : '[&>div]:bg-green-500'}`}
+              className={`h-2 mt-2 ${metrics.avgHoldTime > 60 ? '[&>div]:bg-destructive' : metrics.avgHoldTime > 30 ? '[&>div]:bg-warning' : '[&>div]:bg-success'}`}
             />
           </CardContent>
         </Card>
 
-        <Card className="border-orange-500/30 bg-orange-500/5">
+        <Card className="border-call-hold/30 bg-call-hold/5">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Taxa de Hold</CardTitle>
-            <Clock className="h-4 w-4 text-orange-500" />
+            <Clock className="h-4 w-4 text-call-hold" />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">{metrics.holdRate.toFixed(1)}%</div>
@@ -713,10 +713,10 @@ export default function ExecutiveDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="border-orange-500/30 bg-orange-500/5">
+        <Card className="border-call-hold/30 bg-call-hold/5">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Alertas de Espera</CardTitle>
-            <AlertTriangle className="h-4 w-4 text-orange-500" />
+            <AlertTriangle className="h-4 w-4 text-call-hold" />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">{metrics.holdAlerts}</div>
