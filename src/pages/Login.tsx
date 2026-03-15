@@ -164,18 +164,19 @@ export default function Login() {
     <div className="flex min-h-screen bg-background">
       {/* Left Panel - Branding */}
       <div className="hidden lg:flex lg:w-[55%] relative overflow-hidden">
-        <div className="absolute inset-0 gradient-primary" />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
+        <div className="absolute inset-0 bg-[hsl(222,28%,8%)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[hsl(160,84%,39%,0.15)] via-transparent to-[hsl(210,100%,50%,0.08)]" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         
         <div className="relative z-10 flex flex-col justify-between w-full p-12">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm">
-              <Phone className="h-6 w-6 text-white" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[hsl(160,84%,39%,0.15)] border border-[hsl(160,84%,39%,0.25)]">
+              <Phone className="h-6 w-6 text-[hsl(160,84%,55%)]" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-white">CallCenter Pro</h2>
-              <p className="text-sm text-white/60">Enterprise Suite</p>
+              <p className="text-sm text-[hsl(220,14%,55%)]">Enterprise Suite</p>
             </div>
           </div>
 
@@ -184,27 +185,27 @@ export default function Login() {
             <div className="space-y-4">
               <h1 className="text-4xl font-bold text-white leading-tight tracking-tight">
                 Gerencie seu call center com{' '}
-                <span className="text-white/80">inteligência</span>
+                <span className="text-[hsl(160,84%,55%)]">inteligência</span>
               </h1>
-              <p className="text-lg text-white/70 leading-relaxed">
+              <p className="text-lg text-[hsl(220,14%,65%)] leading-relaxed">
                 Monitore chamadas em tempo real, otimize a performance dos agentes e tome decisões baseadas em dados.
               </p>
             </div>
 
             {/* Feature highlights */}
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-3">
               {[
                 { icon: Headphones, label: 'Monitoramento em tempo real', desc: 'Acompanhe todas as chamadas ativas' },
                 { icon: BarChart3, label: 'Analytics avançados', desc: 'Relatórios e métricas detalhadas' },
                 { icon: Users, label: 'Gestão de equipe', desc: 'Coaching e gamificação de agentes' },
               ].map(({ icon: Icon, label, desc }) => (
-                <div key={label} className="flex items-start gap-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/15">
-                    <Icon className="h-5 w-5 text-white" />
+                <div key={label} className="flex items-start gap-4 p-4 rounded-xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] hover:bg-white/[0.07] transition-colors">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[hsl(160,84%,39%,0.12)] border border-[hsl(160,84%,39%,0.2)]">
+                    <Icon className="h-5 w-5 text-[hsl(160,84%,55%)]" />
                   </div>
                   <div>
                     <p className="font-medium text-white text-sm">{label}</p>
-                    <p className="text-xs text-white/60 mt-0.5">{desc}</p>
+                    <p className="text-xs text-[hsl(220,14%,50%)] mt-0.5">{desc}</p>
                   </div>
                 </div>
               ))}
@@ -212,7 +213,7 @@ export default function Login() {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center gap-2 text-xs text-white/40">
+          <div className="flex items-center gap-2 text-xs text-[hsl(220,14%,40%)]">
             <Shield className="h-3 w-3" />
             <span>Criptografia end-to-end · SOC 2 Compliant</span>
           </div>
