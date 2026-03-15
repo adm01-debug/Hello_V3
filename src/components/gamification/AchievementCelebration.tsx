@@ -122,10 +122,10 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
             <div 
               className={cn(
                 'absolute inset-0 rounded-full border-4 border-dashed animate-spin',
-                badge.tier === 'bronze' && 'border-amber-400/50',
-                badge.tier === 'silver' && 'border-slate-300/50',
-                badge.tier === 'gold' && 'border-yellow-300/50',
-                badge.tier === 'platinum' && 'border-purple-300/50'
+                badge.tier === 'bronze' && 'border-warning/50',
+                badge.tier === 'silver' && 'border-muted-foreground/50',
+                badge.tier === 'gold' && 'border-warning/50',
+                badge.tier === 'platinum' && 'border-pending/50'
               )}
               style={{ animationDuration: '3s' }}
             />
