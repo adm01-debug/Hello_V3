@@ -39,11 +39,7 @@ export function useVoiceCommand() {
       setIsListening(true);
     } catch (err) {
       console.error("Failed to start voice listening:", err);
-      toast({
-        title: "Erro",
-        description: "Não foi possível acessar o microfone.",
-        variant: "destructive",
-      });
+      toast.error("Erro", { description: "Não foi possível acessar o microfone." });
     }
   }, [toast]);
 
