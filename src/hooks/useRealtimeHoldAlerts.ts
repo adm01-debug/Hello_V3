@@ -80,10 +80,7 @@ export function useRealtimeHoldAlerts() {
       setBrowserNotificationsGranted(granted);
       
       if (granted) {
-        toast({
-          title: "Notificações ativadas",
-          description: "Você receberá alertas críticos de espera em tempo real.",
-        });
+        toast.success("Notificações ativadas", { description: "Você receberá alertas críticos de espera em tempo real." });
       } else {
         toast({
           title: "Permissão negada",
