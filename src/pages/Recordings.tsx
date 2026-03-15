@@ -781,16 +781,16 @@ export default function Recordings() {
                         {/* Emotions */}
                         <div className="p-4 rounded-lg border">
                           <h4 className="font-medium mb-4 flex items-center gap-2">
-                            <Zap className="h-4 w-4 text-yellow-500" />
+                            <Zap className="h-4 w-4 text-warning" />
                             Emoções Detectadas
                           </h4>
                           <div className="space-y-3">
                             {[
-                              { key: 'joy', label: 'Alegria', icon: '😊', color: 'bg-green-500' },
-                              { key: 'sadness', label: 'Tristeza', icon: '😢', color: 'bg-blue-500' },
-                              { key: 'anger', label: 'Raiva', icon: '😠', color: 'bg-red-500' },
-                              { key: 'fear', label: 'Medo', icon: '😨', color: 'bg-purple-500' },
-                              { key: 'surprise', label: 'Surpresa', icon: '😮', color: 'bg-yellow-500' },
+                              { key: 'joy', label: 'Alegria', icon: '😊', color: 'bg-success' },
+                              { key: 'sadness', label: 'Tristeza', icon: '😢', color: 'bg-info' },
+                              { key: 'anger', label: 'Raiva', icon: '😠', color: 'bg-destructive' },
+                              { key: 'fear', label: 'Medo', icon: '😨', color: 'bg-pending' },
+                              { key: 'surprise', label: 'Surpresa', icon: '😮', color: 'bg-warning' },
                             ].map(({ key, label, icon, color }) => (
                               <div key={key} className="flex items-center gap-3">
                                 <span className="text-lg">{icon}</span>
