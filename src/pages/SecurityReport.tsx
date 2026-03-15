@@ -515,7 +515,7 @@ Relatório gerado automaticamente pelo sistema de segurança.
         <CardContent>
           <ul className="space-y-2">
             <li className="flex items-start gap-2">
-              <AlertTriangle className="h-4 w-4 text-yellow-500 mt-0.5" />
+              <AlertTriangle className="h-4 w-4 text-warning mt-0.5" />
               <span>Ativar Leaked Password Protection no painel do Cloud</span>
             </li>
             <li className="flex items-start gap-2">
