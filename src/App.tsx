@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-// Force rebuild - clean stale cache
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
