@@ -1005,9 +1005,9 @@ export default function ExecutiveDashboard() {
                     key={agent.name} 
                     className={`border rounded-lg p-4 space-y-4 ${
                       hasCriticalMetric 
-                        ? 'border-red-500/50 bg-red-500/5' 
+                        ? 'border-destructive/50 bg-destructive/5' 
                         : allAchieved 
-                          ? 'border-green-500/50 bg-green-500/5' 
+                          ? 'border-success/50 bg-success/5' 
                           : ''
                     }`}
                   >
