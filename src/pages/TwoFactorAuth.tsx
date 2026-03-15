@@ -174,12 +174,12 @@ export default function TwoFactorAuth() {
 
         <TabsContent value="setup" className="space-y-4">
           {/* TOTP Setup Card */}
-          <Card className={hasTOTP ? 'border-blue-500/30 bg-blue-500/5' : ''}>
+          <Card className={hasTOTP ? 'border-info/30 bg-info/5' : ''}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Smartphone className="h-5 w-5" />
                 Aplicativo Autenticador (TOTP)
-                {hasTOTP && <ShieldCheck className="h-4 w-4 text-blue-500 ml-auto" />}
+                {hasTOTP && <ShieldCheck className="h-4 w-4 text-info ml-auto" />}
               </CardTitle>
               <CardDescription>
                 Use um aplicativo como Google Authenticator ou Authy
