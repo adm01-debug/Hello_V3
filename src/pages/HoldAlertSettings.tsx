@@ -44,11 +44,7 @@ export default function HoldAlertSettings() {
       }
     } catch (error) {
       console.error('Error fetching settings:', error);
-      toast({
-        title: 'Erro ao carregar configurações',
-        description: 'Não foi possível carregar as configurações de alertas.',
-        variant: 'destructive',
-      });
+      toast.error('Erro ao carregar configurações', { description: 'Não foi possível carregar as configurações de alertas.' });
     } finally {
       setLoading(false);
     }
