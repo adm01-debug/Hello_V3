@@ -122,7 +122,7 @@ export const HoldTrendChart = () => {
             {trend !== 0 && (
               <Badge 
                 variant="outline" 
-                className={trend > 0 ? 'text-destructive' : 'text-green-600'}
+                className={trend > 0 ? 'text-destructive' : 'text-success'}
               >
                 {trend > 0 ? `+${trend}` : trend}
               </Badge>

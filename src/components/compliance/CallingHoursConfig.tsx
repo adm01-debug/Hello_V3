@@ -137,8 +137,8 @@ export function CallingHoursConfig() {
                 <X className="h-6 w-6 text-destructive" />
               )}
               <div>
-                <p className={`font-medium ${
-                  currentStatus.can_call ? 'text-green-500' : 'text-destructive'
+               <p className={`font-medium ${
+                  currentStatus.can_call ? 'text-success' : 'text-destructive'
                 }`}>
                   {currentStatus.can_call ? 'Permitido Discar' : 'Fora do Horário'}
                 </p>

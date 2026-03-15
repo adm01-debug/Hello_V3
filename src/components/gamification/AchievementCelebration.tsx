@@ -162,10 +162,10 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
           {/* Tier badge */}
           <p className={cn(
             'text-sm font-medium capitalize mt-2',
-            badge.tier === 'bronze' && 'text-amber-600',
-            badge.tier === 'silver' && 'text-slate-400',
-            badge.tier === 'gold' && 'text-yellow-500',
-            badge.tier === 'platinum' && 'text-purple-500'
+            badge.tier === 'bronze' && 'text-warning',
+            badge.tier === 'silver' && 'text-muted-foreground',
+            badge.tier === 'gold' && 'text-warning',
+            badge.tier === 'platinum' && 'text-pending'
           )}>
             Badge {badge.tier}
           </p>

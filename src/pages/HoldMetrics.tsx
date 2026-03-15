@@ -272,10 +272,10 @@ export default function HoldMetrics() {
         )}
 
         {worstPerformer && worstPerformer !== bestPerformer && (
-          <Card className="border-orange-500/30 bg-orange-500/5">
+          <Card className="border-warning/30 bg-warning/5">
             <CardHeader className="flex flex-row items-center gap-3 pb-2">
-              <div className="rounded-full bg-orange-500/20 p-2">
-                <AlertTriangle className="h-5 w-5 text-orange-500" />
+              <div className="rounded-full bg-warning/20 p-2">
+                <AlertTriangle className="h-5 w-5 text-warning" />
               </div>
               <div>
                 <CardTitle className="text-sm font-medium">Maior Tempo Médio</CardTitle>
@@ -285,7 +285,7 @@ export default function HoldMetrics() {
             <CardContent>
               <div className="flex items-center justify-between">
                 <span className="text-lg font-semibold">{worstPerformer.agentName}</span>
-                <Badge variant="outline" className="bg-orange-500/10 text-orange-500 border-orange-500/30">
+                <Badge variant="outline" className="bg-warning/10 text-warning border-warning/30">
                   {formatDuration(worstPerformer.avgHoldTime)} média
                 </Badge>
               </div>

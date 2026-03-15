@@ -70,7 +70,7 @@ export function WeeklyRanking() {
         <div
           key={agent.agent_id}
           className={`flex items-center gap-4 p-3 rounded-lg border ${
-            index === 0 ? "bg-yellow-50 dark:bg-yellow-950/20 border-yellow-200 dark:border-yellow-800" : "bg-card"
+            index === 0 ? "bg-warning/5 dark:bg-warning/10 border-warning/20 dark:border-warning/30" : "bg-card"
           }`}
         >
           <div className="w-8 flex justify-center">{getRankIcon(index)}</div>
