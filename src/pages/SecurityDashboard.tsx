@@ -499,7 +499,7 @@ export default function SecurityDashboard() {
                         <div className="flex items-center gap-2">
                           <span className="text-xs opacity-70">{formatTimeAgo(alert.created_at)}</span>
                           {alert.is_resolved ? (
-                            <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            <CheckCircle2 className="h-4 w-4 text-success" />
                           ) : (
                             <Clock className="h-4 w-4" />
                           )}
