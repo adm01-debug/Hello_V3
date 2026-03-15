@@ -91,7 +91,6 @@ export function useAchievementNotifications(agentId?: string) {
           const alert = payload.new as { title: string; message: string };
           
           toast.success('🎯 Meta Atingida!', { description: alert.title, duration: 6000 });
-          });
         }
       )
       .subscribe();

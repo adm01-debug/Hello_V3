@@ -38,7 +38,7 @@ export default function NumberPorting() {
       queryClient.invalidateQueries({ queryKey: ['porting-requests'] });
       setForm({ phone: '', provider: '', account: '', name: '' });
       setDialogOpen(false);
-      toast({ title: 'Solicitação de portabilidade criada!' });
+      toast.success('Solicitação de portabilidade criada!');
     },
   });
 

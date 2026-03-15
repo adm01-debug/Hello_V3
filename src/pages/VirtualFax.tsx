@@ -35,7 +35,7 @@ export default function VirtualFax() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['virtual-fax'] });
       setTo(''); setSubject(''); setDialogOpen(false);
-      toast({ title: 'Fax enviado para fila!' });
+      toast.success('Fax enviado para fila!');
     },
   });
 

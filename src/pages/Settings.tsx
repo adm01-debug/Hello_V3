@@ -38,10 +38,7 @@ const Settings = () => {
   }, [checkConfiguration]);
 
   const handleSave = () => {
-    toast({
-      title: '✓ Configurações salvas',
-      description: 'Suas preferências foram atualizadas',
-    });
+    toast.success('✓ Configurações salvas', { description: 'Suas preferências foram atualizadas' });
   };
 
   return (

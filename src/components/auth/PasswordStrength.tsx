@@ -74,11 +74,7 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
       setIsCheckingLeak(false);
       
       if (leaked) {
-        toast({
-          title: "Senha comprometida detectada",
-          description: "Esta senha foi encontrada em vazamentos de dados. Escolha uma senha diferente.",
-          variant: "destructive",
-        });
+        toast.error("Senha comprometida detectada", { description: "Esta senha foi encontrada em vazamentos de dados. Escolha uma senha diferente." });
       }
     }, 500);
 

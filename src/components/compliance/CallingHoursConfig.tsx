@@ -88,10 +88,7 @@ export function CallingHoursConfig() {
     if (error) {
       toast.error('Erro ao salvar', { description: error.message });
     } else {
-      toast({
-        title: 'Salvo',
-        description: 'Configuração de horário atualizada.',
-      });
+      toast.success('Salvo', { description: 'Configuração de horário atualizada.' });
       queryClient.invalidateQueries({ queryKey: ['calling-hours-config'] });
       setIsEditDialogOpen(false);
       setEditingRegion(null);

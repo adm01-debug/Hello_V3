@@ -33,7 +33,7 @@ export default function VideoConference() {
       queryClient.invalidateQueries({ queryKey: ['video-conferences'] });
       setTitle('');
       setDialogOpen(false);
-      toast({ title: 'Conferência criada!' });
+      toast.success('Conferência criada!');
     },
   });
 

@@ -234,7 +234,7 @@ export default function CallFlowDesigner() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['call-flows'] });
       setSelectedFlow(null);
-      toast({ title: 'Fluxo removido' });
+      toast.success('Fluxo removido');
     },
   });
 

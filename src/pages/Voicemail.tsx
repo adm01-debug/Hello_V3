@@ -57,7 +57,7 @@ export default function VoicemailPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['voicemail'] });
-      toast({ title: 'Mensagem removida' });
+      toast.success('Mensagem removida');
     },
   });
 
