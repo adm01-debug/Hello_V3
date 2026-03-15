@@ -61,7 +61,7 @@ interface AnalysisEntry {
 }
 
 export function ActiveCallBar() {
-  const [call, setCall] = useState(mockActiveCall);
+  const [call, setCall] = useState<ActiveCall | null>(null);
   const [duration, setDuration] = useState(0);
   const [muted, setMuted] = useState(false);
   const [onHold, setOnHold] = useState(false);

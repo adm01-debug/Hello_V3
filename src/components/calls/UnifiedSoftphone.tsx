@@ -328,7 +328,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     toast.info(currentCall?.isRecording ? 'Gravação parada' : 'Gravação iniciada');
   }, [toggleRecording, currentCall]);
 
-  const quickContacts = mockContacts.filter(c => c.favorite).slice(0, 6);
+  const quickContacts: { id: string; name: string; phone: string; favorite: boolean }[] = [];
   const enabledChannels = channels.filter(ch => ch.enabled);
   const ChannelIcon = channelIcons[activeChannel];
   const isSpeaking = conversation.isSpeaking;
