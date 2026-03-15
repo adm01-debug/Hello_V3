@@ -9,6 +9,7 @@ import { Monitor, MapPin, Phone, User, LogIn, LogOut, CheckCircle2 } from 'lucid
 
 export default function HotDesking() {
   const queryClient = useQueryClient();
+  const { profile } = useAuthContext();
 
   const { data: stations = [], isLoading } = useQuery({
     queryKey: ['hot-desking'],
