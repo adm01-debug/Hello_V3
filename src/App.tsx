@@ -58,6 +58,14 @@ const SecurityDashboard = lazy(() => import("./pages/SecurityDashboard"));
 const GeoBlocking = lazy(() => import("./pages/GeoBlocking"));
 const PasswordResetApproval = lazy(() => import("./pages/PasswordResetApproval"));
 const Compliance = lazy(() => import("./pages/Compliance"));
+const CallFlowDesigner = lazy(() => import("./pages/CallFlowDesigner"));
+const Voicemail = lazy(() => import("./pages/Voicemail"));
+const TopicDetection = lazy(() => import("./pages/TopicDetection"));
+const VideoConference = lazy(() => import("./pages/VideoConference"));
+const HotDesking = lazy(() => import("./pages/HotDesking"));
+const VirtualFax = lazy(() => import("./pages/VirtualFax"));
+const NumberPorting = lazy(() => import("./pages/NumberPorting"));
+const TollFreeNumbers = lazy(() => import("./pages/TollFreeNumbers"));
 
 const queryClient = new QueryClient();
 

@@ -35,6 +35,14 @@ import {
   FileBarChart,
   UserCog,
   ChevronDown,
+  GitBranch,
+  Voicemail,
+  Video,
+  Monitor as MonitorIcon,
+  Printer,
+  ArrowLeftRight,
+  PhoneCall,
+  Tag,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
