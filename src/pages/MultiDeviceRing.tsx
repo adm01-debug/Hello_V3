@@ -125,7 +125,7 @@ const MultiDeviceRing = () => {
         if (error) throw error;
       } else {
         const { error } = await supabase.from('agent_ring_settings').insert({
-          agent_name: 'current_user',
+          agent_name: agentName,
           ...settings,
         });
         if (error) throw error;
