@@ -168,7 +168,7 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
           <div 
             className={cn(
               "h-full transition-all duration-300 rounded-full",
-              isLeaked ? 'bg-red-500' : analysis.color
+              isLeaked ? 'bg-destructive' : analysis.color
             )}
             style={{ width: `${isLeaked ? 25 : analysis.percentage}%` }}
           />
