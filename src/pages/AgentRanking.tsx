@@ -870,7 +870,7 @@ export default function AgentRanking() {
                         <div className="relative">
                           <Progress value={satisfactionProgress} className="h-2" />
                           {satisfactionAchieved && (
-                            <CheckCircle2 className="h-3 w-3 text-green-500 absolute -right-1 -top-0.5" />
+                             <CheckCircle2 className="h-3 w-3 text-success absolute -right-1 -top-0.5" />
                           )}
                         </div>
                       </div>
