@@ -67,6 +67,8 @@ const VirtualFax = lazy(() => import("./pages/VirtualFax"));
 const NumberPorting = lazy(() => import("./pages/NumberPorting"));
 const TollFreeNumbers = lazy(() => import("./pages/TollFreeNumbers"));
 const MultiDeviceRing = lazy(() => import("./pages/MultiDeviceRing"));
+const QRProvisioning = lazy(() => import("./pages/QRProvisioning"));
+const LDAPSync = lazy(() => import("./pages/LDAPSync"));
 
 const queryClient = new QueryClient();
 
@@ -222,6 +224,16 @@ const App = () => (
                             </ProtectedRoute>
                           } />
                           <Route path="/multi-device-ring" element={<MultiDeviceRing />} />
+                          <Route path="/qr-provisioning" element={
+                            <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
+                              <QRProvisioning />
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/ldap-sync" element={
+                            <ProtectedRoute requiredRoles={['admin']}>
+                              <LDAPSync />
+                            </ProtectedRoute>
+                          } />
                           <Route path="*" element={<NotFound />} />
                         </Routes>
                       </Suspense>
