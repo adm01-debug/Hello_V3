@@ -1015,7 +1015,7 @@ export default function ExecutiveDashboard() {
                       <div className="flex items-center gap-2">
                         <h4 className="font-semibold text-lg">{agent.name}</h4>
                         {hasCriticalMetric && (
-                          <AlertTriangle className="h-5 w-5 text-red-500 animate-pulse" />
+                          <AlertTriangle className="h-5 w-5 text-destructive animate-pulse" />
                         )}
                       </div>
                       {allAchieved ? (
