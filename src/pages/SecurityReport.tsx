@@ -190,11 +190,11 @@ const SecurityReport = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "implemented":
-        return <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Implementado</Badge>;
+        return <Badge className="bg-success/10 text-success border-success/20">Implementado</Badge>;
       case "partial":
-        return <Badge className="bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Parcial</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">Parcial</Badge>;
       case "pending":
-        return <Badge className="bg-blue-500/10 text-blue-500 border-blue-500/20">Pendente</Badge>;
+        return <Badge className="bg-info/10 text-info border-info/20">Pendente</Badge>;
       default:
         return null;
     }
@@ -203,11 +203,11 @@ const SecurityReport = () => {
   const getRiskBadge = (risk: string) => {
     switch (risk) {
       case "low":
-        return <Badge variant="outline" className="text-green-500 border-green-500/30">Baixo</Badge>;
+        return <Badge variant="outline" className="text-success border-success/30">Baixo</Badge>;
       case "medium":
-        return <Badge variant="outline" className="text-yellow-500 border-yellow-500/30">Médio</Badge>;
+        return <Badge variant="outline" className="text-warning border-warning/30">Médio</Badge>;
       case "high":
-        return <Badge variant="outline" className="text-red-500 border-red-500/30">Alto</Badge>;
+        return <Badge variant="outline" className="text-destructive border-destructive/30">Alto</Badge>;
       default:
         return null;
     }
