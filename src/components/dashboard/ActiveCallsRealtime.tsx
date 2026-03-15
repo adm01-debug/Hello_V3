@@ -353,7 +353,7 @@ export const ActiveCallsRealtime = () => {
                     holdSeverity === 'critical'
                       ? 'border-destructive bg-destructive/10 animate-pulse'
                       : holdSeverity === 'warning'
-                      ? 'border-orange-500/50 bg-orange-500/5'
+                      ? 'border-call-hold/50 bg-call-hold/5'
                       : onHold
                       ? 'border-destructive/50 bg-destructive/5 animate-pulse'
                       : 'border-border bg-card'
