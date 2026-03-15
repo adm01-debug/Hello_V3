@@ -264,7 +264,7 @@ describe('Data Integrity Checks', () => {
 
   describe('ISO date validation', () => {
     it('valid ISO string', () => {
-      const date = '2026-03-15T12:00:00Z';
+      const date = '2026-03-15T12:00:00.000Z';
       const parsed = new Date(date);
       expect(parsed.toISOString()).toBe(date);
     });
