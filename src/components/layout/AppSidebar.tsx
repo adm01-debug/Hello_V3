@@ -43,6 +43,8 @@ import {
   ArrowLeftRight,
   PhoneCall,
   Tag,
+  QrCode,
+  FolderSync,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
