@@ -154,7 +154,7 @@ describe('Security Notification System', () => {
 
     it('non-critical do not require interaction', () => {
       const severity = 'warning';
-      const requireInteraction = severity === 'critical';
+      const requireInteraction = (severity as string) === 'critical';
       expect(requireInteraction).toBe(false);
     });
   });
