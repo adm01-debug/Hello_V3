@@ -69,7 +69,7 @@ export async function sendLocalNotification(params: SendNotificationParams): Pro
       source_type: params.sourceType,
       source_id: params.sourceId,
       expires_at: params.expiresAt,
-    });
+    } as Record<string, unknown>);
 
   return !error;
 }
