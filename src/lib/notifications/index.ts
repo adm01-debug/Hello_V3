@@ -54,22 +54,23 @@ export async function sendNotification(params: SendNotificationParams): Promise<
  * Send a notification directly via database insert (for local/quick notifications)
  */
 export async function sendLocalNotification(params: SendNotificationParams): Promise<boolean> {
-  const { error } = await supabase
-    .from('notifications')
-    .insert({
-      user_id: params.userId,
-      title: params.title,
-      message: params.message,
-      type: params.type || 'info',
-      category: params.category || 'system',
-      severity: params.severity || 'info',
-      action_url: params.actionUrl,
-      action_label: params.actionLabel,
-      metadata: params.metadata || {},
-      source_type: params.sourceType,
-      source_id: params.sourceId,
-      expires_at: params.expiresAt,
-    } as Record<string, unknown>);
+  const payload = {
+    user_id: params.userId,
+    title: params.title,
+    message: params.message,
+    type: params.type || 'info',
+    category: params.category || 'system',
+    severity: params.severity || 'info',
+    action_url: params.actionUrl,
+    action_label: params.actionLabel,
+    metadata: params.metadata || {},
+    source_type: params.sourceType,
+    source_id: params.sourceId,
+    expires_at: params.expiresAt,
+  };
+  const { error } = await (supabase
+    .from('notifications') as any)
+    .insert(payload);
 
   return !error;
 }
