@@ -189,10 +189,7 @@ export function useDNCCompliance() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['compliance-settings'] });
-      toast({
-        title: 'Configuração atualizada',
-        description: 'A configuração de compliance foi salva.',
-      });
+      toast.success('Configuração atualizada', { description: 'A configuração de compliance foi salva.' });
     },
     onError: (error: Error) => {
       toast({
