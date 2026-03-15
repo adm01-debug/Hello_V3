@@ -239,7 +239,7 @@ export const ActiveCallsRealtime = () => {
                         statusCounts.maxSeverity === 'critical'
                           ? 'bg-destructive/20 border border-destructive/40 animate-pulse'
                           : statusCounts.maxSeverity === 'warning'
-                          ? 'bg-orange-500/20 border border-orange-500/40 animate-pulse'
+                          ? 'bg-call-hold/20 border border-call-hold/40 animate-pulse'
                           : statusCounts.onHold > 0 
                           ? 'bg-destructive/10 border border-destructive/20' 
                           : 'bg-muted border border-border'
