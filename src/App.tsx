@@ -221,6 +221,7 @@ const App = () => (
                               <TollFreeNumbers />
                             </ProtectedRoute>
                           } />
+                          <Route path="/multi-device-ring" element={<MultiDeviceRing />} />
                           <Route path="*" element={<NotFound />} />
                         </Routes>
                       </Suspense>
