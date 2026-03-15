@@ -402,8 +402,9 @@ describe('Audit Log System', () => {
     });
 
     it('null details default to empty object', () => {
-      const details = (undefined as Record<string, any> | undefined) || {};
-      expect(Object.keys(details)).toHaveLength(0);
+      let details: Record<string, any> | undefined;
+      const resolved = details || {};
+      expect(Object.keys(resolved)).toHaveLength(0);
     });
 
     it('null resourceId is allowed', () => {
