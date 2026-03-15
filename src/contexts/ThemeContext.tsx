@@ -1,19 +1,27 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
-type Theme = 'light' | 'dark';
+export type ThemeMode = 'light' | 'dark';
+export type ThemeSkin = 'default' | 'midnight' | 'ocean' | 'sunset' | 'forest';
 
 interface ThemeContextType {
-  theme: Theme;
+  theme: ThemeMode;
+  skin: ThemeSkin;
   toggleTheme: () => void;
-  setTheme: (theme: Theme) => void;
+  setTheme: (theme: ThemeMode) => void;
+  setSkin: (skin: ThemeSkin) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => {
+  const [theme, setThemeState] = useState<ThemeMode>(() => {
     const stored = localStorage.getItem('voip-theme');
     return (stored === 'light' || stored === 'dark') ? stored : 'dark';
+  });
+
+  const [skin, setSkinState] = useState<ThemeSkin>(() => {
+    const stored = localStorage.getItem('voip-skin');
+    return (['default', 'midnight', 'ocean', 'sunset', 'forest'].includes(stored || '') ? stored : 'default') as ThemeSkin;
   });
 
   useEffect(() => {
@@ -26,11 +34,22 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, [theme]);
 
+  useEffect(() => {
+    localStorage.setItem('voip-skin', skin);
+    const root = document.documentElement;
+    // Remove all skin classes
+    root.classList.remove('skin-default', 'skin-midnight', 'skin-ocean', 'skin-sunset', 'skin-forest');
+    if (skin !== 'default') {
+      root.classList.add(`skin-${skin}`);
+    }
+  }, [skin]);
+
   const toggleTheme = () => setThemeState(prev => prev === 'dark' ? 'light' : 'dark');
-  const setTheme = (t: Theme) => setThemeState(t);
+  const setTheme = (t: ThemeMode) => setThemeState(t);
+  const setSkin = (s: ThemeSkin) => setSkinState(s);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, skin, toggleTheme, setTheme, setSkin }}>
       {children}
     </ThemeContext.Provider>
   );
