@@ -47,7 +47,7 @@ export function useAuth() {
 
   // Prevent re-entrant session checks and signOut loops
   const isCleaningUp = useRef(false);
-  const initialized = useRef(false);
+  const fetchedRef = useRef(false);
 
   const getProfile = useCallback(async (userId: string) => {
     try {
@@ -89,8 +89,6 @@ export function useAuth() {
   }, []);
 
   const getSession = useCallback(async () => {
-    if (initialized.current) return;
-    initialized.current = true;
 
     try {
       const timeoutPromise = new Promise<never>((_, reject) => 
@@ -127,7 +125,13 @@ export function useAuth() {
   }, [getProfile, clearSession]);
 
   useEffect(() => {
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
     getSession();
+
+    return () => {
+      fetchedRef.current = false;
+    };
   }, [getSession]);
 
   useEffect(() => {
