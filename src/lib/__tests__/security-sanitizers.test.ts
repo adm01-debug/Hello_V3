@@ -90,8 +90,7 @@ describe('Input Sanitizer', () => {
       const long = 'a'.repeat(300);
       expect(sanitizeSearchQuery(long).length).toBe(200);
     });
-    it('trims whitespace', () => expect(sanitizeSearchQuery('  test  ')).toBe('test');
-    );
+    it('trims whitespace', () => expect(sanitizeSearchQuery('  test  ')).toBe('test'));
   });
 
   describe('isValidURL', () => {
