@@ -114,7 +114,7 @@ export const HoldTrendChart = () => {
               className={`$
                 {currentOnHold > 0 
                   ? 'border-destructive/50 text-destructive' 
-                  : 'border-green-500/50 text-green-600'
+                  : 'border-success/50 text-success'
               }`}
             >
               {currentOnHold} em espera
