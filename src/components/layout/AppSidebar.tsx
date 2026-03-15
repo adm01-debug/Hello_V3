@@ -98,7 +98,8 @@ const toolsNavItems = [
   { title: 'Fax Virtual', url: '/virtual-fax', icon: Printer },
   { title: 'Portabilidade', url: '/number-porting', icon: ArrowLeftRight },
   { title: 'Números 0800', url: '/toll-free-numbers', icon: PhoneCall },
-];
+  { title: 'QR Provisioning', url: '/qr-provisioning', icon: QrCode },
+  { title: 'LDAP Sync', url: '/ldap-sync', icon: FolderSync },
 
 const securityNavItems = [
   { title: 'Central de Segurança', url: '/security', icon: ShieldCheck },
