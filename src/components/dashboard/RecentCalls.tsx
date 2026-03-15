@@ -2,37 +2,60 @@ import {
   PhoneIncoming, 
   PhoneOutgoing, 
   PhoneMissed,
-  Play,
   MoreHorizontal 
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EmptyCallsState } from '@/components/ui/empty-state';
-import { mockCallHistory, formatDuration } from '@/data/mockData';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useRecentCallsData } from '@/hooks/useDashboardData';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-export function RecentCalls() {
-  const recentCalls = mockCallHistory.slice(0, 5);
+const formatDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
 
-  const getCallIcon = (type: string, status: string) => {
-    if (status === 'missed') return PhoneMissed;
-    return type === 'incoming' ? PhoneIncoming : PhoneOutgoing;
+export function RecentCalls() {
+  const { data: recentCalls, isLoading } = useRecentCallsData();
+
+  const getCallIcon = (status: string | null) => {
+    if (status === 'missed' || status === 'abandoned') return PhoneMissed;
+    return PhoneIncoming;
   };
 
-  const getCallColor = (status: string) => {
+  const getCallColor = (status: string | null) => {
     switch (status) {
       case 'missed':
+      case 'abandoned':
         return 'text-destructive bg-destructive/10';
       case 'completed':
         return 'text-success bg-success/10';
-      case 'voicemail':
+      case 'active':
+      case 'ringing':
         return 'text-warning bg-warning/10';
       default:
         return 'text-muted-foreground bg-muted';
     }
   };
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold">Chamadas Recentes</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {[1, 2, 3].map(i => <Skeleton key={i} className="h-16 rounded-lg" />)}
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const calls = (recentCalls || []).slice(0, 5);
 
   return (
     <Card>
@@ -43,15 +66,15 @@ export function RecentCalls() {
         </Button>
       </CardHeader>
       <CardContent>
-        {recentCalls.length === 0 ? (
+        {calls.length === 0 ? (
           <EmptyCallsState 
             description="Nenhuma chamada registrada ainda. Quando houver chamadas, elas aparecerão aqui."
             size="sm"
           />
         ) : (
           <div className="space-y-4">
-            {recentCalls.map((call) => {
-              const Icon = getCallIcon(call.type, call.status);
+            {calls.map((call) => {
+              const Icon = getCallIcon(call.status);
               
               return (
                 <div
@@ -67,12 +90,12 @@ export function RecentCalls() {
                     </div>
                     
                     <div>
-                      <p className="font-medium">{call.contactName}</p>
+                      <p className="font-medium">{call.caller_name || 'Desconhecido'}</p>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>{call.contactPhone}</span>
+                        <span>{call.caller_phone || '—'}</span>
                         <span>•</span>
                         <span>
-                          {formatDistanceToNow(call.timestamp, { 
+                          {formatDistanceToNow(new Date(call.started_at), { 
                             addSuffix: true, 
                             locale: ptBR 
                           })}
@@ -82,21 +105,10 @@ export function RecentCalls() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    {call.duration > 0 && (
+                    {call.duration_seconds && call.duration_seconds > 0 && (
                       <span className="font-mono text-sm text-muted-foreground">
-                        {formatDuration(call.duration)}
+                        {formatDuration(call.duration_seconds)}
                       </span>
-                    )}
-                    
-                    {call.recording && (
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="h-8 w-8"
-                        aria-label="Reproduzir gravação"
-                      >
-                        <Play className="h-4 w-4" aria-hidden="true" />
-                      </Button>
                     )}
                     
                     <Button 

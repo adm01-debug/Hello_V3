@@ -1,23 +1,48 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EmptyState } from '@/components/ui/empty-state';
-import { mockAgents, formatDuration, getInitials } from '@/data/mockData';
+import { useAgentsListData } from '@/hooks/useDashboardData';
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 
-const statusConfig = {
+const statusConfig: Record<string, { label: string; color: string }> = {
   available: { label: 'Disponível', color: 'bg-success' },
   busy: { label: 'Em chamada', color: 'bg-warning' },
   away: { label: 'Ausente', color: 'bg-muted-foreground' },
   offline: { label: 'Offline', color: 'bg-destructive' },
 };
 
+const getInitials = (name: string): string => {
+  return name
+    .split(' ')
+    .map(n => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+};
+
 export function AgentsList() {
+  const { data: agents, isLoading } = useAgentsListData();
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold">Agentes</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {[1, 2, 3].map(i => <Skeleton key={i} className="h-16 rounded-lg" />)}
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-lg font-semibold">Agentes</CardTitle>
       </CardHeader>
       <CardContent>
-        {mockAgents.length === 0 ? (
+        {!agents || agents.length === 0 ? (
           <EmptyState 
             iconType="contacts"
             title="Nenhum agente disponível"
@@ -26,8 +51,8 @@ export function AgentsList() {
           />
         ) : (
           <div className="space-y-3">
-            {mockAgents.map((agent) => {
-              const status = statusConfig[agent.status];
+            {agents.map((agent) => {
+              const status = statusConfig[agent.status] || statusConfig.offline;
               
               return (
                 <div
@@ -51,20 +76,9 @@ export function AgentsList() {
                     <div>
                       <p className="font-medium">{agent.name}</p>
                       <p className="text-sm text-muted-foreground">
-                        {agent.currentCall ? (
-                          <span className="text-warning">→ {agent.currentCall}</span>
-                        ) : (
-                          status.label
-                        )}
+                        {status.label} • Ramal {agent.extension}
                       </p>
                     </div>
-                  </div>
-
-                  <div className="text-right">
-                    <p className="text-sm font-medium">{agent.callsToday} chamadas</p>
-                    <p className="text-xs text-muted-foreground">
-                      Média: {formatDuration(agent.avgCallDuration)}
-                    </p>
                   </div>
                 </div>
               );

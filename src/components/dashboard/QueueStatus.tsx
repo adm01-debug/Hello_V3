@@ -1,10 +1,30 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockQueueStats, formatDuration } from '@/data/mockData';
+import { useQueueStatsData } from '@/hooks/useDashboardData';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Progress } from '@/components/ui/progress';
 import { Users, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 
+const formatDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
 export function QueueStatus() {
-  const stats = mockQueueStats;
+  const { data: stats, isLoading } = useQueueStatsData();
+
+  if (isLoading || !stats) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold">Fila de Atendimento</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {[1, 2, 3].map(i => <Skeleton key={i} className="h-16 rounded-lg" />)}
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>
