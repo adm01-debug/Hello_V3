@@ -405,7 +405,7 @@ describe('Audit Log System', () => {
     });
 
     it('null resourceId is allowed', () => {
-      const resourceId = undefined || null;
+      const resourceId = (undefined as string | undefined) || null;
       expect(resourceId).toBeNull();
     });
   });
