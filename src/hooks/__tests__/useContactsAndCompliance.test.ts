@@ -231,7 +231,7 @@ describe('DNC Compliance System', () => {
     });
 
     it('respects disabled calling hours check', () => {
-      const hoursEnabled = false;
+      const hoursEnabled = false as boolean;
       const reasons: string[] = [];
       if (hoursEnabled) {
         reasons.push('Hours check would run');
