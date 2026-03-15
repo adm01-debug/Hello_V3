@@ -879,7 +879,7 @@ export default function AgentRanking() {
                       <div>
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-muted-foreground">Performance</span>
-                          <span className={performanceAchieved ? 'text-green-500 font-medium' : ''}>
+                          <span className={performanceAchieved ? 'text-success font-medium' : ''}>
                             {agent.avgPerformance.toFixed(1)}/{goals.performance_target}
                           </span>
                         </div>
