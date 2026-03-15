@@ -65,8 +65,9 @@ describe('Contacts System', () => {
 
   describe('Contact default values', () => {
     it('source defaults to manual', () => {
-      const source = (undefined as string | undefined) || 'manual';
-      expect(source).toBe('manual');
+      let source: string | undefined;
+      const resolved = source || 'manual';
+      expect(resolved).toBe('manual');
     });
 
     it('tags default to empty array', () => {
