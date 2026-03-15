@@ -146,7 +146,7 @@ describe('Hold Alert Edge Function Logic', () => {
   it('triggers critical at threshold', () => {
     const holdDuration = 200;
     const criticalThreshold = 180;
-    const lastSeverity = 'warning';
+    const lastSeverity: string = 'warning';
 
     let severity: string | null = null;
     if (holdDuration >= criticalThreshold && lastSeverity !== 'critical') {
