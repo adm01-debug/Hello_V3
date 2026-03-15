@@ -4,7 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { CallSession, CallChannel, ConferenceCall, TransferTarget, TransferType } from '@/hooks/useMultiChannelCall';
-import { formatDuration } from '@/data/mockData';
+
+const formatDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
 import { useHoldReminder, REMINDER_INTERVALS, ALERT_THRESHOLDS, ReminderInterval, HoldAlertThreshold } from '@/hooks/useHoldReminder';
 import { TransferCallDialog } from './TransferCallDialog';
 import {
