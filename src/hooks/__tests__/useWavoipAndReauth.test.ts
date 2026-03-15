@@ -23,7 +23,7 @@ describe('Wavoip Call System', () => {
     });
 
     it('calling → active starts duration timer', () => {
-      let status = 'calling' as string;
+      let status: string = 'calling';
       const shouldStartTimer = status === 'calling';
       if (shouldStartTimer) status = 'active';
       expect(status).toBe('active');

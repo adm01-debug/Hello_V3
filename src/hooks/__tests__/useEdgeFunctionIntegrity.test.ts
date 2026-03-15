@@ -211,7 +211,7 @@ describe('Edge Function: log-audit-event', () => {
     });
 
     it('resource_id is optional', () => {
-      const params = { action: 'view', resource_type: 'contact', resource_id: undefined };
+      const params: Record<string, string | undefined> = { action: 'view', resource_type: 'contact', resource_id: undefined };
       expect(params.resource_id).toBeUndefined();
     });
 

@@ -124,7 +124,7 @@ describe('Call Recording System', () => {
     });
 
     it('recording state allows stop', () => {
-      const recorderState = 'recording';
+      const recorderState = 'recording' as string;
       const canStop = recorderState !== 'inactive';
       expect(canStop).toBe(true);
     });
