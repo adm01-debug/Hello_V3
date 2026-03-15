@@ -4,8 +4,11 @@ import { BadgesShowcase } from "./BadgesShowcase";
 import { WeeklyRanking } from "./WeeklyRanking";
 import { AgentGoalsProgress } from "./AgentGoalsProgress";
 import { Trophy, Target, Medal } from "lucide-react";
+import { useGamification } from "@/hooks/useGamification";
 
 export function GamificationDashboard() {
+  const { badges, agentBadges } = useGamification();
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
@@ -41,7 +44,7 @@ export function GamificationDashboard() {
         </TabsContent>
 
         <TabsContent value="badges">
-          <BadgesShowcase />
+          <BadgesShowcase badges={badges} agentBadges={agentBadges} />
         </TabsContent>
 
         <TabsContent value="goals">
