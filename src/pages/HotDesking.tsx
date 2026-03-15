@@ -24,7 +24,7 @@ export default function HotDesking() {
     mutationFn: async (id: string) => {
       const { error } = await supabase.from('hot_desking_stations').update({
         is_available: false,
-        current_user_name: 'Agente Atual',
+        current_user_name: profile?.full_name || profile?.email || 'Agente',
         checked_in_at: new Date().toISOString(),
       }).eq('id', id);
       if (error) throw error;
