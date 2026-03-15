@@ -188,6 +188,30 @@ const App = () => (
                               <Compliance />
                             </ProtectedRoute>
                           } />
+                          <Route path="/call-flow-designer" element={
+                            <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
+                              <CallFlowDesigner />
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/voicemail" element={<Voicemail />} />
+                          <Route path="/topic-detection" element={
+                            <ProtectedRoute requiredRoles={['supervisor', 'admin']}>
+                              <TopicDetection />
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/video-conference" element={<VideoConference />} />
+                          <Route path="/hot-desking" element={<HotDesking />} />
+                          <Route path="/virtual-fax" element={<VirtualFax />} />
+                          <Route path="/number-porting" element={
+                            <ProtectedRoute requiredRoles={['admin']}>
+                              <NumberPorting />
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/toll-free-numbers" element={
+                            <ProtectedRoute requiredRoles={['admin']}>
+                              <TollFreeNumbers />
+                            </ProtectedRoute>
+                          } />
                           <Route path="*" element={<NotFound />} />
                         </Routes>
                       </Suspense>
