@@ -749,23 +749,23 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                 <div className={cn(
                   "p-4 rounded-lg border text-center",
                   wavoip.isConfigured 
-                    ? "border-green-500/30 bg-green-500/5" 
-                    : "border-dashed border-yellow-500/50 bg-yellow-500/5"
+                    ? "border-success/30 bg-success/5" 
+                    : "border-dashed border-warning/50 bg-warning/5"
                 )}>
                   <div className="flex items-center justify-center gap-2 mb-2">
                     <MessageCircle className={cn(
                       "h-8 w-8",
-                      wavoip.isConfigured ? "text-green-500" : "text-yellow-500"
+                      wavoip.isConfigured ? "text-success" : "text-warning"
                     )} />
                     {wavoip.isConfigured ? (
-                      <CheckCircle2 className="h-5 w-5 text-green-500" />
+                      <CheckCircle2 className="h-5 w-5 text-success" />
                     ) : (
-                      <XCircle className="h-5 w-5 text-yellow-500" />
+                      <XCircle className="h-5 w-5 text-warning" />
                     )}
                   </div>
                   <p className={cn(
                     "font-medium",
-                    wavoip.isConfigured ? "text-green-700" : "text-yellow-700"
+                    wavoip.isConfigured ? "text-success" : "text-warning"
                   )}>
                     {wavoip.isConfigured ? 'WhatsApp Conectado' : 'WhatsApp Calls'}
                   </p>
