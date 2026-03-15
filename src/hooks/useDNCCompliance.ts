@@ -192,11 +192,7 @@ export function useDNCCompliance() {
       toast.success('Configuração atualizada', { description: 'A configuração de compliance foi salva.' });
     },
     onError: (error: Error) => {
-      toast({
-        title: 'Erro ao salvar',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro ao salvar', { description: error.message });
     },
   });
 

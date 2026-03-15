@@ -71,11 +71,7 @@ export default function HoldAlertSettings() {
       toast.success('Configurações salvas', { description: 'Os limites de alerta foram atualizados com sucesso.' });
     } catch (error) {
       console.error('Error saving settings:', error);
-      toast({
-        title: 'Erro ao salvar',
-        description: 'Não foi possível salvar as configurações.',
-        variant: 'destructive',
-      });
+      toast.error('Erro ao salvar', { description: 'Não foi possível salvar as configurações.' });
     } finally {
       setSaving(false);
     }

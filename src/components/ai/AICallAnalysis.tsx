@@ -119,11 +119,7 @@ export function AICallAnalysis() {
       toast.success('✨ Análise concluída', { description: 'A chamada foi analisada com sucesso.' });
     } catch (error) {
       console.error('Analysis error:', error);
-      toast({
-        variant: 'destructive',
-        title: 'Erro na análise',
-        description: error instanceof Error ? error.message : 'Erro desconhecido',
-      });
+      toast.error('Erro na análise', { description: error instanceof Error ? error.message : 'Erro desconhecido' });
     } finally {
       setIsAnalyzing(false);
     }
