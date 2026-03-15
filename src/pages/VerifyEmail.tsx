@@ -129,8 +129,8 @@ export default function VerifyEmail() {
       case 'expired':
         return (
           <div className="flex flex-col items-center text-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-500/10">
-              <Mail className="h-8 w-8 text-yellow-500" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-warning/10">
+              <Mail className="h-8 w-8 text-warning" />
             </div>
             <div>
               <h2 className="text-xl font-semibold">Link Expirado</h2>

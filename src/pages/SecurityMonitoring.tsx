@@ -462,7 +462,7 @@ const SecurityMonitoring = () => {
                 <div className="space-y-3">
                   {alerts.length === 0 ? (
                     <div className="text-center py-8 text-muted-foreground">
-                      <CheckCircle2 className="h-12 w-12 mx-auto mb-2 text-green-500/50" />
+                      <CheckCircle2 className="h-12 w-12 mx-auto mb-2 text-success/50" />
                       <p>Nenhum alerta de segurança</p>
                       <p className="text-sm">Sistema operando normalmente</p>
                     </div>

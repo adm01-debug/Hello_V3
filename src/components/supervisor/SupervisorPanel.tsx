@@ -643,7 +643,7 @@ export const SupervisorPanel = () => {
                       <div key={wh.id} className={`p-2 rounded text-xs border ${wh.is_read ? 'bg-muted/50' : 'bg-primary/5 border-primary/20'}`}>
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-muted-foreground">{formatTime(wh.created_at)}</span>
-                          {wh.is_read && <Check className="h-3 w-3 text-green-500" />}
+                          {wh.is_read && <Check className="h-3 w-3 text-success" />}
                         </div>
                         <p>{wh.message}</p>
                       </div>

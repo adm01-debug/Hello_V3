@@ -813,7 +813,7 @@ export default function Recordings() {
                         {currentTranscription.sentiment.key_moments.length > 0 && (
                           <div className="p-4 rounded-lg border">
                             <h4 className="font-medium mb-4 flex items-center gap-2">
-                              <AlertTriangle className="h-4 w-4 text-orange-500" />
+                              <AlertTriangle className="h-4 w-4 text-call-hold" />
                               Momentos-Chave
                             </h4>
                             <div className="space-y-3">

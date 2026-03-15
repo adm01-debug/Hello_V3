@@ -190,19 +190,19 @@ export function ComplianceSettings() {
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="p-4 rounded-lg bg-muted/50 text-center">
-              <p className="text-2xl font-bold text-green-500">✓</p>
+              <p className="text-2xl font-bold text-success">✓</p>
               <p className="text-sm text-muted-foreground">DNC Ativo</p>
             </div>
             <div className="p-4 rounded-lg bg-muted/50 text-center">
-              <p className="text-2xl font-bold text-green-500">✓</p>
+              <p className="text-2xl font-bold text-success">✓</p>
               <p className="text-sm text-muted-foreground">Horários Configurados</p>
             </div>
             <div className="p-4 rounded-lg bg-muted/50 text-center">
-              <p className="text-2xl font-bold text-green-500">✓</p>
+              <p className="text-2xl font-bold text-success">✓</p>
               <p className="text-sm text-muted-foreground">LGPD Habilitado</p>
             </div>
             <div className="p-4 rounded-lg bg-muted/50 text-center">
-              <p className="text-2xl font-bold text-green-500">✓</p>
+              <p className="text-2xl font-bold text-success">✓</p>
               <p className="text-sm text-muted-foreground">Rate Limit Ativo</p>
             </div>
           </div>

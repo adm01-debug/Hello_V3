@@ -376,9 +376,9 @@ export default function TwoFactorAuth() {
                     >
                       <div className="flex items-center gap-3">
                         {factor.type === 'totp' ? (
-                          <Smartphone className="h-5 w-5 text-blue-500" />
+                          <Smartphone className="h-5 w-5 text-info" />
                         ) : (
-                          <MessageSquare className="h-5 w-5 text-green-500" />
+                          <MessageSquare className="h-5 w-5 text-success" />
                         )}
                         <div>
                           <p className="font-medium">

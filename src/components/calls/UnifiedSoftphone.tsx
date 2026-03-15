@@ -82,9 +82,9 @@ const channelIcons: Record<CallChannel, React.ComponentType<{ className?: string
 };
 
 const channelColors: Record<CallChannel, string> = {
-  webrtc: 'text-blue-500',
-  wavoip: 'text-green-500',
-  sip: 'text-purple-500'
+  webrtc: 'text-info',
+  wavoip: 'text-success',
+  sip: 'text-pending'
 };
 
 interface UnifiedSoftphoneProps {
