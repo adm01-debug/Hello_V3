@@ -31,7 +31,7 @@ export default function HotDesking() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['hot-desking'] });
-      toast({ title: 'Check-in realizado!' });
+      toast.success('Check-in realizado!');
     },
   });
 
