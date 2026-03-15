@@ -62,8 +62,8 @@ export default function ForgotPassword() {
       <div className="flex min-h-screen items-center justify-center bg-background p-4">
         <div className="w-full max-w-md space-y-8">
           <div className="flex flex-col items-center text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-green-500/10 mb-4">
-              <CheckCircle className="h-8 w-8 text-green-500" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-success/10 mb-4">
+              <CheckCircle className="h-8 w-8 text-success" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight">Solicitação Enviada!</h1>
             <p className="text-muted-foreground mt-2 max-w-sm">
@@ -139,9 +139,9 @@ export default function ForgotPassword() {
                 </Alert>
               )}
               
-              <Alert className="border-yellow-500/30 bg-yellow-500/5">
-                <ShieldCheck className="h-4 w-4 text-yellow-500" />
-                <AlertDescription className="text-yellow-200">
+              <Alert className="border-warning/30 bg-warning/5">
+                <ShieldCheck className="h-4 w-4 text-warning" />
+                <AlertDescription className="text-warning-foreground">
                   Por segurança, redefinições de senha requerem aprovação de um administrador.
                 </AlertDescription>
               </Alert>
