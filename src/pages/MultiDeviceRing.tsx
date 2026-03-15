@@ -84,7 +84,7 @@ const MultiDeviceRing = () => {
     mutationFn: async (device: typeof newDevice) => {
       const { error } = await supabase.from('agent_devices').insert({
         ...device,
-        agent_name: 'current_user',
+        agent_name: agentName,
         ring_order: devices.length,
       });
       if (error) throw error;
