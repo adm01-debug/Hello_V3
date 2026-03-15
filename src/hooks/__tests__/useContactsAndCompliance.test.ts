@@ -359,7 +359,7 @@ describe('Permissions System', () => {
 
   describe('Empty permissions', () => {
     it('no user returns empty permissions', () => {
-      const userId = null;
+      const userId = null as string | null;
       const perms = userId ? ['some_perm'] : [];
       expect(perms).toHaveLength(0);
     });

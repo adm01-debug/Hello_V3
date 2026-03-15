@@ -192,7 +192,7 @@ describe('Hold Reminder System', () => {
     });
 
     it('warning auto-closes after 10s', () => {
-      const severity = 'warning';
+      const severity = 'warning' as string;
       const autoCloseMs = severity !== 'critical' ? 10000 : null;
       expect(autoCloseMs).toBe(10000);
     });

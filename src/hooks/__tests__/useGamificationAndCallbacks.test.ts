@@ -279,8 +279,8 @@ describe('Achievement Notifications', () => {
     });
 
     it('does not show for different agent when filtered', () => {
-      const agentId = 'agent-1';
-      const newBadgeAgentId = 'agent-2';
+      const agentId = 'agent-1' as string;
+      const newBadgeAgentId = 'agent-2' as string;
       const shouldShow = !agentId || newBadgeAgentId === agentId;
       expect(shouldShow).toBe(false);
     });
