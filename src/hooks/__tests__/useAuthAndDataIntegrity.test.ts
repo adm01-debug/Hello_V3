@@ -171,7 +171,7 @@ describe('Realtime Hold Alerts', () => {
     });
 
     it('error severity is also critical', () => {
-      const severity = 'error';
+      const severity = 'error' as string;
       const isCritical = severity === 'critical' || severity === 'error';
       expect(isCritical).toBe(true);
     });

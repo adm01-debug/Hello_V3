@@ -237,7 +237,7 @@ describe('WebAuthn / Passkey System', () => {
     });
 
     it('rejects when not supported', () => {
-      const isSupported = false;
+      const isSupported = false as boolean;
       expect(isSupported).toBe(false);
     });
   });
