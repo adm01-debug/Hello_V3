@@ -153,11 +153,7 @@ export function useDNCCompliance() {
       toast.success('Número adicionado', { description: 'O número foi adicionado à lista DNC com sucesso.' });
     },
     onError: (error: Error) => {
-      toast({
-        title: 'Erro ao adicionar',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error('Erro ao adicionar', { description: error.message });
     },
   });
 
