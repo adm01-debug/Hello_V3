@@ -185,10 +185,10 @@ export default function SecurityDashboard() {
   }, [mfaSettings, sessions, ipRestrictionEnabled, recentAlerts, mfaLoading]);
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-500';
-    if (score >= 60) return 'text-yellow-500';
-    if (score >= 40) return 'text-orange-500';
-    return 'text-red-500';
+    if (score >= 80) return 'text-success';
+    if (score >= 60) return 'text-warning';
+    if (score >= 40) return 'text-warning';
+    return 'text-destructive';
   };
 
   const getScoreLabel = (score: number) => {
@@ -207,9 +207,9 @@ export default function SecurityDashboard() {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'bg-red-500/10 text-red-500 border-red-500/20';
-      case 'warning': return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
-      default: return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+      case 'critical': return 'bg-destructive/10 text-destructive border-destructive/20';
+      case 'warning': return 'bg-warning/10 text-warning border-warning/20';
+      default: return 'bg-primary/10 text-primary border-primary/20';
     }
   };
 
