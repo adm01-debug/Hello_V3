@@ -81,11 +81,7 @@ export function AICallAnalysis() {
 
   const handleAnalyze = async () => {
     if (!transcript.trim()) {
-      toast({
-        variant: 'destructive',
-        title: 'Transcrição vazia',
-        description: 'Cole ou digite a transcrição da chamada para analisar.',
-      });
+      toast.error('Transcrição vazia', { description: 'Cole ou digite a transcrição da chamada para analisar.' });
       return;
     }
 
