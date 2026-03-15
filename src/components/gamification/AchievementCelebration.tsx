@@ -105,7 +105,7 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
 
         {/* Sparkles decoration */}
         <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-          <Sparkles className="h-8 w-8 text-yellow-400 animate-pulse" />
+          <Sparkles className="h-8 w-8 text-warning animate-pulse" />
         </div>
 
         {/* Badge icon */}
