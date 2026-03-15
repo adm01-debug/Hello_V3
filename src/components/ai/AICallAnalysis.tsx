@@ -116,10 +116,7 @@ export function AICallAnalysis() {
       const result: AnalysisResult = await response.json();
       setAnalysis(result);
 
-      toast({
-        title: '✨ Análise concluída',
-        description: 'A chamada foi analisada com sucesso.',
-      });
+      toast.success('✨ Análise concluída', { description: 'A chamada foi analisada com sucesso.' });
     } catch (error) {
       console.error('Analysis error:', error);
       toast({
