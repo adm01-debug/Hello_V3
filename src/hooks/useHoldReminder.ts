@@ -258,12 +258,10 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       .map(call => call.contactName || call.phoneNumber || 'Chamada')
       .join(', ');
     
-    toast({
-      title: "📞 Chamada em espera",
+    toast("📞 Chamada em espera", {
       description: callsOnHold.length === 1 
         ? `${callNames} aguardando atenção`
         : `${callsOnHold.length} chamadas aguardando: ${callNames}`,
-      variant: "default",
       duration: 5000,
     });
   }, []);
