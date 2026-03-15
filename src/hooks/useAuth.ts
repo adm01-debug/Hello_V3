@@ -182,7 +182,11 @@ export function useAuth() {
         // For TOKEN_REFRESHED or SIGNED_IN, validate the token
         if (session?.user) {
           try {
-            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            const { data: { user }, error: userError } = await withTimeout(
+              supabase.auth.getUser(),
+              4000,
+              'User validation timed out'
+            );
             if (userError || !user) {
               console.warn('Auth state change: invalid token, clearing session');
               await clearSession();
