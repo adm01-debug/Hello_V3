@@ -847,7 +847,7 @@ export default function AgentRanking() {
                       <div>
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-muted-foreground">Chamadas</span>
-                          <span className={callsAchieved ? 'text-green-500 font-medium' : ''}>
+                          <span className={callsAchieved ? 'text-success font-medium' : ''}>
                             {agent.totalCalls}/{goals.calls_target}
                           </span>
                         </div>
