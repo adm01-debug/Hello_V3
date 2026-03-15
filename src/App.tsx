@@ -67,6 +67,8 @@ const VirtualFax = lazy(() => import("./pages/VirtualFax"));
 const NumberPorting = lazy(() => import("./pages/NumberPorting"));
 const TollFreeNumbers = lazy(() => import("./pages/TollFreeNumbers"));
 const MultiDeviceRing = lazy(() => import("./pages/MultiDeviceRing"));
+const QRProvisioning = lazy(() => import("./pages/QRProvisioning"));
+const LDAPSync = lazy(() => import("./pages/LDAPSync"));
 
 const queryClient = new QueryClient();
 
