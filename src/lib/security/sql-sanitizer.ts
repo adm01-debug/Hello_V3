@@ -3,11 +3,11 @@
  * NOTE: Always prefer parameterized queries via Supabase SDK.
  */
 
-const SQL_INJECTION_PATTERNS = [
-  /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|CREATE|EXEC|UNION|TRUNCATE)\b)/gi,
-  /(-{2}|\/\*|\*\/)/g,
-  /(;\s*(DROP|DELETE|ALTER|TRUNCATE))/gi,
-  /('\s*(OR|AND)\s*'?\s*\d+\s*=\s*\d+)/gi,
+const SQL_INJECTION_PATTERNS: RegExp[] = [
+  /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|CREATE|EXEC|UNION|TRUNCATE)\b)/i,
+  /(-{2}|\/\*|\*\/)/,
+  /(;\s*(DROP|DELETE|ALTER|TRUNCATE))/i,
+  /('\s*(OR|AND)\s*'?\s*\d+\s*=\s*\d+)/i,
 ];
 
 export function containsSQLInjection(input: string): boolean {
