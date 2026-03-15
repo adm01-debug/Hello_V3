@@ -253,8 +253,8 @@ export default function Login() {
                 </span>
                 {!ipLoading && (
                   <span className="flex items-center gap-1">
-                    <Wifi className={`h-3 w-3 ${ipBlocked ? 'text-destructive' : 'text-green-500'}`} />
-                    <span className={`text-xs ${ipBlocked ? 'text-destructive' : 'text-green-600'}`}>
+                    <Wifi className={`h-3 w-3 ${ipBlocked ? 'text-destructive' : 'text-primary'}`} />
+                    <span className={`text-xs ${ipBlocked ? 'text-destructive' : 'text-primary'}`}>
                       {ipBlocked ? 'Não autorizado' : 'Conectado'}
                     </span>
                   </span>
