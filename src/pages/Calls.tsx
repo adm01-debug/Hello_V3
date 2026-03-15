@@ -80,8 +80,8 @@ const Calls = () => {
             <CardContent className="space-y-3">
               {/* WebRTC */}
               <div className="flex items-center gap-3 p-3 rounded-lg border bg-success/5 border-success/20">
-                <div className="p-2 rounded-lg bg-blue-500/10">
-                  <Radio className="h-5 w-5 text-blue-500" />
+                <div className="p-2 rounded-lg bg-info/10">
+                  <Radio className="h-5 w-5 text-info" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
