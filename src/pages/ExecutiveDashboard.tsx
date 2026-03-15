@@ -870,10 +870,10 @@ export default function ExecutiveDashboard() {
 
         {/* Hold by Agent Chart */}
         {holdByAgent.length > 0 && (
-          <Card className="border-orange-500/30">
+          <Card className="border-call-hold/30">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Pause className="h-5 w-5 text-orange-500" />
+                <Pause className="h-5 w-5 text-call-hold" />
                 Tempo em Espera por Agente
               </CardTitle>
             </CardHeader>
