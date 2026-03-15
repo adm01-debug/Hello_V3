@@ -408,8 +408,9 @@ describe('Audit Log System', () => {
     });
 
     it('null resourceId is allowed', () => {
-      const resourceId = (undefined as string | undefined) || null;
-      expect(resourceId).toBeNull();
+      let resourceId: string | undefined;
+      const resolved = resourceId || null;
+      expect(resolved).toBeNull();
     });
   });
 
