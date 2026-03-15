@@ -171,9 +171,9 @@ export function AlertsDropdown() {
       case 'critical':
         return <AlertCircle className="h-4 w-4 text-destructive" />;
       case 'warning':
-        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+        return <AlertTriangle className="h-4 w-4 text-warning" />;
       default:
-        return <Info className="h-4 w-4 text-blue-500" />;
+        return <Info className="h-4 w-4 text-primary" />;
     }
   };
 
@@ -182,9 +182,9 @@ export function AlertsDropdown() {
       case 'critical':
         return 'bg-destructive/10 border-destructive/20';
       case 'warning':
-        return 'bg-yellow-500/10 border-yellow-500/20';
+        return 'bg-warning/10 border-warning/20';
       default:
-        return 'bg-blue-500/10 border-blue-500/20';
+        return 'bg-primary/10 border-primary/20';
     }
   };
 

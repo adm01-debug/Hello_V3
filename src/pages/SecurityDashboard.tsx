@@ -342,13 +342,13 @@ export default function SecurityDashboard() {
                 <p className="text-3xl font-bold flex items-center gap-2">
                   {mfaSettings?.mfa_enabled ? (
                     <>
-                      <CheckCircle2 className="h-6 w-6 text-green-500" />
-                      <span className="text-green-500">Ativo</span>
+                      <CheckCircle2 className="h-6 w-6 text-success" />
+                      <span className="text-success">Ativo</span>
                     </>
                   ) : (
                     <>
-                      <XCircle className="h-6 w-6 text-red-500" />
-                      <span className="text-red-500">Inativo</span>
+                      <XCircle className="h-6 w-6 text-destructive" />
+                      <span className="text-destructive">Inativo</span>
                     </>
                   )}
                 </p>
