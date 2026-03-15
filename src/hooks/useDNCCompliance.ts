@@ -168,10 +168,7 @@ export function useDNCCompliance() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dnc-list'] });
-      toast({
-        title: 'Número removido',
-        description: 'O número foi removido da lista DNC.',
-      });
+      toast.success('Número removido', { description: 'O número foi removido da lista DNC.' });
     },
     onError: (error: Error) => {
       toast({
