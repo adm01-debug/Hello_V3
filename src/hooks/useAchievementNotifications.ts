@@ -90,10 +90,7 @@ export function useAchievementNotifications(agentId?: string) {
           console.log('Goal achieved:', payload);
           const alert = payload.new as { title: string; message: string };
           
-          toast({
-            title: '🎯 Meta Atingida!',
-            description: alert.title,
-            duration: 6000,
+          toast.success('🎯 Meta Atingida!', { description: alert.title, duration: 6000 });
           });
         }
       )

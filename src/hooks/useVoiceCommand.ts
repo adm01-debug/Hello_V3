@@ -80,11 +80,7 @@ export function useVoiceCommand() {
         return result;
       } catch (err) {
         console.error("Voice command processing failed:", err);
-        toast({
-          title: "Erro",
-          description: "Falha ao processar comando de voz.",
-          variant: "destructive",
-        });
+        toast.error("Erro", { description: "Falha ao processar comando de voz." });
         return null;
       } finally {
         setIsProcessing(false);

@@ -232,10 +232,7 @@ export function useRealtimeHoldAlerts() {
       if (newValue) {
         toast.success("Notificações ativadas", { description: "Você receberá alertas de espera em tempo real." });
       } else {
-        toast({
-          title: "Notificações desativadas",
-          description: "Você não receberá mais alertas em tempo real.",
-        });
+        toast("Notificações desativadas", { description: "Você não receberá mais alertas em tempo real." });
       }
       
       return newValue;

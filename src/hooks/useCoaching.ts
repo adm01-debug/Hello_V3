@@ -86,10 +86,7 @@ export function useCoaching(agentId?: string) {
       await fetchRecommendations();
       
       if (status === 'completed') {
-        toast({
-          title: '✅ Recomendação Concluída',
-          description: 'A recomendação foi marcada como concluída.',
-        });
+        toast.success('✅ Recomendação Concluída', { description: 'A recomendação foi marcada como concluída.' });
       }
     }
   };
