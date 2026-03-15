@@ -137,9 +137,9 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
     <div className="space-y-3">
       {/* Leaked Password Warning */}
       {isLeaked && (
-        <div className="flex items-center gap-2 p-2 rounded-md bg-red-500/10 border border-red-500/30">
-          <AlertTriangle className="h-4 w-4 text-red-500 flex-shrink-0" />
-          <span className="text-xs text-red-500 font-medium">
+        <div className="flex items-center gap-2 p-2 rounded-md bg-destructive/10 border border-destructive/30">
+          <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0" />
+          <span className="text-xs text-destructive font-medium">
             Senha encontrada em vazamentos! Use outra senha.
           </span>
         </div>
