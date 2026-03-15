@@ -366,13 +366,13 @@ export default function SecurityDashboard() {
                 <p className="text-3xl font-bold flex items-center gap-2">
                   {ipRestrictionEnabled ? (
                     <>
-                      <Lock className="h-6 w-6 text-green-500" />
-                      <span className="text-green-500">Ativo</span>
+                      <Lock className="h-6 w-6 text-success" />
+                      <span className="text-success">Ativo</span>
                     </>
                   ) : (
                     <>
-                      <Unlock className="h-6 w-6 text-yellow-500" />
-                      <span className="text-yellow-500">Inativo</span>
+                      <Unlock className="h-6 w-6 text-warning" />
+                      <span className="text-warning">Inativo</span>
                     </>
                   )}
                 </p>
