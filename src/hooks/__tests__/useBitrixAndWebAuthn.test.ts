@@ -32,7 +32,7 @@ describe('Bitrix CRM Integration', () => {
     });
 
     it('2 = inbound', () => {
-      const type = 2;
+      const type = 2 as number;
       const label = type === 1 ? 'outbound' : 'inbound';
       expect(label).toBe('inbound');
     });
