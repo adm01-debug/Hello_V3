@@ -102,6 +102,7 @@ const toolsNavItems = [
   { title: 'LDAP Sync', url: '/ldap-sync', icon: FolderSync },
 ];
 
+const securityNavItems = [
   { title: 'Central de Segurança', url: '/security', icon: ShieldCheck },
   { title: 'Sessões Ativas', url: '/sessions', icon: Monitor },
   { title: 'Autenticação 2FA', url: '/two-factor-auth', icon: Key },
