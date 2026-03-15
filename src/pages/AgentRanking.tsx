@@ -535,7 +535,7 @@ export default function AgentRanking() {
   const getRankIcon = (index: number) => {
     switch (index) {
       case 0:
-        return <Trophy className="h-6 w-6 text-yellow-500" />;
+        return <Trophy className="h-6 w-6 text-warning" />;
       case 1:
         return <Medal className="h-6 w-6 text-gray-400" />;
       case 2:
