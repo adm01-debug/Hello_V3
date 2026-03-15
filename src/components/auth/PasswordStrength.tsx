@@ -107,22 +107,22 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
     } else if (criticalMet < criticalTotal || metCount <= 2) {
       strength = 'weak';
       label = 'Fraca';
-      color = 'bg-red-500';
+      color = 'bg-destructive';
       percentage = 25;
     } else if (metCount === 3) {
       strength = 'fair';
       label = 'Razoável';
-      color = 'bg-orange-500';
+      color = 'bg-warning';
       percentage = 50;
     } else if (metCount === 4) {
       strength = 'good';
       label = 'Boa';
-      color = 'bg-yellow-500';
+      color = 'bg-call-hold';
       percentage = 75;
     } else {
       strength = 'strong';
       label = 'Forte';
-      color = 'bg-green-500';
+      color = 'bg-success';
       percentage = 100;
     }
 
