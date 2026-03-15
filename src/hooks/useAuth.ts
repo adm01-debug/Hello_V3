@@ -167,31 +167,22 @@ export function useAuth() {
         // For INITIAL_SESSION, skip - handled by getSession
         if (event === 'INITIAL_SESSION') return;
 
-        // For TOKEN_REFRESHED or SIGNED_IN, validate the token
+        // For INITIAL_SESSION/SIGNED_IN/TOKEN_REFRESHED, hydrate user state
         if (session?.user) {
-          try {
-            const { data: { user }, error: userError } = await withTimeout(
-              supabase.auth.getUser(),
-              4000,
-              'User validation timed out'
-            );
-            if (userError || !user) {
-              console.warn('Auth state change: invalid token, clearing session');
+          void (async () => {
+            try {
+              const profile = await getProfile(session.user.id);
+              setAuthState({
+                user: session.user,
+                session,
+                profile,
+                loading: false,
+                error: null,
+              });
+            } catch {
               await clearSession();
-              return;
             }
-            
-            const profile = await getProfile(user.id);
-            setAuthState({
-              user,
-              session,
-              profile,
-              loading: false,
-              error: null,
-            });
-          } catch {
-            await clearSession();
-          }
+          })();
         }
       }
     );
