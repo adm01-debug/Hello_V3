@@ -59,11 +59,7 @@ export function useCoaching(agentId?: string) {
       await fetchRecommendations();
     } catch (error: any) {
       console.error('Error generating recommendations:', error);
-      toast({
-        title: 'Erro',
-        description: 'Não foi possível gerar as recomendações.',
-        variant: 'destructive',
-      });
+      toast.error('Erro', { description: 'Não foi possível gerar as recomendações.' });
     } finally {
       setIsGenerating(false);
     }
