@@ -34,10 +34,7 @@ const Calls = () => {
         <div>
           <UnifiedSoftphone 
             onCallStart={(call) => {
-              toast({
-                title: '📞 Chamada iniciada',
-                description: `Canal: ${call.channel.toUpperCase()}`,
-              });
+              toast.success('📞 Chamada iniciada', { description: `Canal: ${call.channel.toUpperCase()}` });
             }}
             onCallEnd={(call) => {
               toast({
