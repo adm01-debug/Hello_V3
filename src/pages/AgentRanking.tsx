@@ -727,18 +727,18 @@ export default function AgentRanking() {
             <div className="flex items-end justify-center gap-4 py-6">
               {/* 2nd Place */}
               <div className="flex flex-col items-center">
-                <Avatar className="h-16 w-16 mb-2 border-4 border-gray-400">
-                  <AvatarFallback className="text-lg bg-gray-400/20">
+                <Avatar className="h-16 w-16 mb-2 border-4 border-muted-foreground/40">
+                  <AvatarFallback className="text-lg bg-muted-foreground/20">
                     {getInitials(topAgents[1]?.name || '')}
                   </AvatarFallback>
                 </Avatar>
-                <Medal className="h-8 w-8 text-gray-400 mb-1" />
+                <Medal className="h-8 w-8 text-muted-foreground mb-1" />
                 <span className="font-semibold text-center">{topAgents[1]?.name}</span>
                 <span className="text-sm text-muted-foreground">
                   {topAgents[1]?.score.toFixed(1)} pts
                 </span>
-                <div className="h-20 w-24 bg-gray-400/20 rounded-t-lg mt-2 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-gray-400">2º</span>
+                <div className="h-20 w-24 bg-muted-foreground/20 rounded-t-lg mt-2 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-muted-foreground">2º</span>
                 </div>
               </div>
 
