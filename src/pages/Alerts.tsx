@@ -407,10 +407,10 @@ export default function Alerts() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Chamadas Não Lidas</CardTitle>
-            <Phone className="h-4 w-4 text-blue-500" />
+            <Phone className="h-4 w-4 text-info" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-500">{callUnreadCount}</div>
+            <div className="text-2xl font-bold text-info">{callUnreadCount}</div>
             <p className="text-xs text-muted-foreground">Alertas de chamadas</p>
           </CardContent>
         </Card>
