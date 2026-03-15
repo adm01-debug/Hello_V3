@@ -207,7 +207,7 @@ export default function CallFlowDesigner() {
       setNewFlowName('');
       setNewFlowDesc('');
       setDialogOpen(false);
-      toast({ title: 'Fluxo criado com sucesso!' });
+      toast.success('Fluxo criado com sucesso!');
     },
   });
 
