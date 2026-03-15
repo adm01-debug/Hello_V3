@@ -38,7 +38,7 @@ describe('Contacts System', () => {
 
     it('empty search returns all', () => {
       const search = '';
-      const shouldFilter = !!search;
+      const shouldFilter = search.length > 0;
       expect(shouldFilter).toBe(false);
     });
   });
