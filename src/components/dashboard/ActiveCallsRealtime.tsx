@@ -377,7 +377,7 @@ export const ActiveCallsRealtime = () => {
                             holdSeverity === 'critical'
                               ? 'text-destructive'
                               : holdSeverity === 'warning'
-                              ? 'text-orange-500'
+                              ? 'text-call-hold'
                               : 'text-destructive'
                           }`} />
                         ) : (
