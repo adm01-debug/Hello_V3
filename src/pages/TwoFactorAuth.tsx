@@ -145,13 +145,13 @@ export default function TwoFactorAuth() {
         </div>
         <div className="flex gap-2">
           {hasTOTP && (
-            <Badge variant="default" className="bg-blue-500">
+            <Badge variant="default" className="bg-info">
               <Smartphone className="h-3 w-3 mr-1" />
               TOTP
             </Badge>
           )}
           {hasPhone && (
-            <Badge variant="default" className="bg-green-500">
+            <Badge variant="default" className="bg-success">
               <MessageSquare className="h-3 w-3 mr-1" />
               SMS
             </Badge>

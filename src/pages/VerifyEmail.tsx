@@ -106,8 +106,8 @@ export default function VerifyEmail() {
       case 'success':
         return (
           <div className="flex flex-col items-center text-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-green-500/10">
-              <CheckCircle className="h-8 w-8 text-green-500" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-success/10">
+              <CheckCircle className="h-8 w-8 text-success" />
             </div>
             <div>
               <h2 className="text-xl font-semibold">Email Verificado!</h2>

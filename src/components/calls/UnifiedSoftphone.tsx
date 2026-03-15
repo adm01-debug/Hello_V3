@@ -888,12 +888,12 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                         >
                           <div className={cn(
                             "h-9 w-9 rounded-full flex items-center justify-center",
-                            call.direction === 'inbound' ? "bg-blue-500/10" : "bg-green-500/10"
+                            call.direction === 'inbound' ? "bg-info/10" : "bg-success/10"
                           )}>
                             {call.direction === 'inbound' ? (
-                              <PhoneIncoming className="h-4 w-4 text-blue-500" />
+                              <PhoneIncoming className="h-4 w-4 text-info" />
                             ) : (
-                              <PhoneOutgoing className="h-4 w-4 text-green-500" />
+                              <PhoneOutgoing className="h-4 w-4 text-success" />
                             )}
                           </div>
                           <div className="flex-1 min-w-0">

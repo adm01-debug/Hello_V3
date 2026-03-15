@@ -570,7 +570,7 @@ const ContactInsights = () => {
                   <div className="space-y-3">
                     {metrics.vipContacts.map((contact) => (
                       <div key={contact.id} className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/10 text-purple-500 font-semibold">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pending/10 text-pending font-semibold">
                           {getInitials(contact.name)}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -579,7 +579,7 @@ const ContactInsights = () => {
                             {contact.company || contact.phone}
                           </p>
                         </div>
-                        <Badge className="bg-purple-500/10 text-purple-500">VIP</Badge>
+                        <Badge className="bg-pending/10 text-pending">VIP</Badge>
                       </div>
                     ))}
                   </div>

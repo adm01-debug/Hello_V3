@@ -218,7 +218,7 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
                         className="h-5 w-5"
                         onClick={() => markAsRead(whisper.id)}
                       >
-                        <Check className="h-3 w-3 text-green-500" />
+                        <Check className="h-3 w-3 text-success" />
                       </Button>
                     </div>
                     <p className="text-xs">{whisper.message}</p>

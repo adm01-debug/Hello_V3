@@ -196,10 +196,10 @@ export default function HoldAlertSettings() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <Label className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-yellow-500" />
+                  <div className="h-3 w-3 rounded-full bg-warning" />
                   Limite Warning
                 </Label>
-                <span className="text-lg font-semibold text-yellow-500">
+                <span className="text-lg font-semibold text-warning">
                   {formatDuration(settings.warning_threshold_seconds)}
                 </span>
               </div>

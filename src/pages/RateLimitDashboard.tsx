@@ -261,7 +261,7 @@ export default function RateLimitDashboard() {
                 <p className="text-sm text-muted-foreground">Alertas Ativos</p>
                 <p className="text-2xl font-bold">{stats.activeAlerts}</p>
               </div>
-              <AlertTriangle className="h-8 w-8 text-yellow-500 opacity-50" />
+              <AlertTriangle className="h-8 w-8 text-warning opacity-50" />
             </div>
           </CardContent>
         </Card>
@@ -273,7 +273,7 @@ export default function RateLimitDashboard() {
                 <p className="text-sm text-muted-foreground">Requests (24h)</p>
                 <p className="text-2xl font-bold">{stats.requestsLast24h.toLocaleString()}</p>
               </div>
-              <TrendingUp className="h-8 w-8 text-green-500 opacity-50" />
+              <TrendingUp className="h-8 w-8 text-success opacity-50" />
             </div>
           </CardContent>
         </Card>
