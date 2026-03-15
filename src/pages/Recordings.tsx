@@ -766,7 +766,7 @@ export default function Recordings() {
                           <div className="p-4 rounded-lg border">
                             <div className="flex items-center justify-between mb-2">
                               <span className="text-sm font-medium">Satisfação Estimada</span>
-                              <Heart className="h-4 w-4 text-red-500" />
+                              <Heart className="h-4 w-4 text-destructive" />
                             </div>
                             <div className="text-2xl font-bold">
                               {currentTranscription.sentiment.customer_satisfaction_estimate}/10
