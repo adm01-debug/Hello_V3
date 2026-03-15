@@ -89,8 +89,6 @@ export function useAuth() {
   }, []);
 
   const getSession = useCallback(async () => {
-    if (initialized.current) return;
-    initialized.current = true;
 
     try {
       const timeoutPromise = new Promise<never>((_, reject) => 
