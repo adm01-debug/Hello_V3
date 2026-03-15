@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +9,7 @@ import { Monitor, MapPin, Phone, User, LogIn, LogOut, CheckCircle2 } from 'lucid
 
 export default function HotDesking() {
   const queryClient = useQueryClient();
+  const { profile } = useAuthContext();
 
   const { data: stations = [], isLoading } = useQuery({
     queryKey: ['hot-desking'],
@@ -22,7 +24,7 @@ export default function HotDesking() {
     mutationFn: async (id: string) => {
       const { error } = await supabase.from('hot_desking_stations').update({
         is_available: false,
-        current_user_name: 'Agente Atual',
+        current_user_name: profile?.full_name || profile?.email || 'Agente',
         checked_in_at: new Date().toISOString(),
       }).eq('id', id);
       if (error) throw error;
@@ -71,7 +73,7 @@ export default function HotDesking() {
           <div><p className="text-2xl font-bold">{available}</p><p className="text-xs text-muted-foreground">Disponíveis</p></div>
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
-          <div className="h-10 w-10 rounded-lg bg-amber-500/10 flex items-center justify-center"><User className="h-5 w-5 text-amber-500" /></div>
+          <div className="h-10 w-10 rounded-lg bg-warning/10 flex items-center justify-center"><User className="h-5 w-5 text-warning" /></div>
           <div><p className="text-2xl font-bold">{stations.length - available}</p><p className="text-xs text-muted-foreground">Em Uso</p></div>
         </CardContent></Card>
       </div>
