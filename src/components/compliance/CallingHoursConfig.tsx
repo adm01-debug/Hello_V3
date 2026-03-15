@@ -128,11 +128,11 @@ export function CallingHoursConfig() {
           <CardContent>
             <div className={`flex items-center gap-3 p-4 rounded-lg ${
               currentStatus.can_call 
-                ? 'bg-green-500/10 border border-green-500/20' 
+                ? 'bg-success/10 border border-success/20' 
                 : 'bg-destructive/10 border border-destructive/20'
             }`}>
               {currentStatus.can_call ? (
-                <Check className="h-6 w-6 text-green-500" />
+                <Check className="h-6 w-6 text-success" />
               ) : (
                 <X className="h-6 w-6 text-destructive" />
               )}
