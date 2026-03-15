@@ -665,9 +665,9 @@ export default function ExecutiveDashboard() {
           <CardContent>
             <div className="text-3xl font-bold">
               {metrics.avgSatisfaction >= 8 && metrics.avgPerformance >= 8 ? (
-                <span className="text-green-500">Atingida</span>
+                <span className="text-success">Atingida</span>
               ) : (
-                <span className="text-yellow-500">Em progresso</span>
+                <span className="text-warning">Em progresso</span>
               )}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Satisfação &amp; Performance ≥ 8</p>
