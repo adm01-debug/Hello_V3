@@ -150,10 +150,7 @@ export function useDNCCompliance() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dnc-list'] });
-      toast({
-        title: 'Número adicionado',
-        description: 'O número foi adicionado à lista DNC com sucesso.',
-      });
+      toast.success('Número adicionado', { description: 'O número foi adicionado à lista DNC com sucesso.' });
     },
     onError: (error: Error) => {
       toast({
