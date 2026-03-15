@@ -221,17 +221,17 @@ const SecurityMonitoring = () => {
   const getActionIcon = (action: string) => {
     switch (action) {
       case 'view':
-        return <Eye className="h-4 w-4 text-blue-500" />;
+        return <Eye className="h-4 w-4 text-info" />;
       case 'export':
-        return <Download className="h-4 w-4 text-yellow-500" />;
+        return <Download className="h-4 w-4 text-warning" />;
       case 'download':
-        return <Download className="h-4 w-4 text-green-500" />;
+        return <Download className="h-4 w-4 text-success" />;
       case 'create':
-        return <FileText className="h-4 w-4 text-green-500" />;
+        return <FileText className="h-4 w-4 text-success" />;
       case 'update':
-        return <FileText className="h-4 w-4 text-blue-500" />;
+        return <FileText className="h-4 w-4 text-info" />;
       case 'delete':
-        return <XCircle className="h-4 w-4 text-red-500" />;
+        return <XCircle className="h-4 w-4 text-destructive" />;
       default:
         return <Activity className="h-4 w-4 text-muted-foreground" />;
     }
