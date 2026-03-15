@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -20,6 +20,22 @@ interface AuthState {
   error: Error | null;
 }
 
+// Force-clear all Supabase auth tokens from localStorage
+function clearAuthStorage() {
+  try {
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && (key.startsWith('sb-') || key.includes('supabase'))) {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach(key => localStorage.removeItem(key));
+  } catch {
+    // localStorage may be unavailable
+  }
+}
+
 export function useAuth() {
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
@@ -28,6 +44,10 @@ export function useAuth() {
     loading: true,
     error: null,
   });
+
+  // Prevent re-entrant session checks and signOut loops
+  const isCleaningUp = useRef(false);
+  const initialized = useRef(false);
 
   const getProfile = useCallback(async (userId: string) => {
     try {
@@ -45,7 +65,33 @@ export function useAuth() {
     }
   }, []);
 
+  const clearSession = useCallback(async () => {
+    if (isCleaningUp.current) return;
+    isCleaningUp.current = true;
+    
+    try {
+      await supabase.auth.signOut({ scope: 'local' });
+    } catch {
+      // signOut may fail with bad JWT - force clear storage
+    }
+    clearAuthStorage();
+    
+    setAuthState({
+      user: null,
+      session: null,
+      profile: null,
+      loading: false,
+      error: null,
+    });
+    
+    // Allow new cleanup after a delay to prevent loops
+    setTimeout(() => { isCleaningUp.current = false; }, 2000);
+  }, []);
+
   const getSession = useCallback(async () => {
+    if (initialized.current) return;
+    initialized.current = true;
+
     try {
       const timeoutPromise = new Promise<never>((_, reject) => 
         setTimeout(() => reject(new Error('Session check timed out')), 10000)
@@ -56,19 +102,16 @@ export function useAuth() {
       
       if (error) {
         console.warn('Auth session error:', error.message);
-        // Clear corrupted session
-        await supabase.auth.signOut();
-        setAuthState(prev => ({ ...prev, user: null, session: null, profile: null, error: null, loading: false }));
+        await clearSession();
         return;
       }
 
       if (session?.user) {
-        // Validate the session is actually valid by checking the user
+        // Validate the session with the server
         const { data: { user }, error: userError } = await supabase.auth.getUser();
         if (userError || !user) {
           console.warn('Invalid session detected, clearing...', userError?.message);
-          await supabase.auth.signOut();
-          setAuthState({ user: null, session: null, profile: null, loading: false, error: null });
+          await clearSession();
           return;
         }
         
@@ -79,15 +122,9 @@ export function useAuth() {
       }
     } catch (error) {
       console.warn('Auth initialization error:', error);
-      // On any error, clear state and let user re-login
-      try { await supabase.auth.signOut(); } catch {}
-      setAuthState({
-        user: null, session: null, profile: null,
-        error: null,
-        loading: false,
-      });
+      await clearSession();
     }
-  }, [getProfile]);
+  }, [getProfile, clearSession]);
 
   useEffect(() => {
     getSession();
@@ -98,25 +135,53 @@ export function useAuth() {
       async (event, session) => {
         console.log('Auth state changed:', event);
         
-        let profile = null;
-        if (session?.user) {
-          profile = await getProfile(session.user.id);
+        // If we're cleaning up, ignore all events
+        if (isCleaningUp.current) return;
+
+        // On SIGNED_OUT or TOKEN_REFRESHED with null session, clear state
+        if (event === 'SIGNED_OUT' || !session) {
+          setAuthState({
+            user: null,
+            session: null,
+            profile: null,
+            loading: false,
+            error: null,
+          });
+          return;
         }
-        
-        setAuthState({
-          user: session?.user ?? null,
-          session: session ?? null,
-          profile,
-          loading: false,
-          error: null,
-        });
+
+        // For INITIAL_SESSION, skip - handled by getSession
+        if (event === 'INITIAL_SESSION') return;
+
+        // For TOKEN_REFRESHED or SIGNED_IN, validate the token
+        if (session?.user) {
+          try {
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            if (userError || !user) {
+              console.warn('Auth state change: invalid token, clearing session');
+              await clearSession();
+              return;
+            }
+            
+            const profile = await getProfile(user.id);
+            setAuthState({
+              user,
+              session,
+              profile,
+              loading: false,
+              error: null,
+            });
+          } catch {
+            await clearSession();
+          }
+        }
       }
     );
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [getProfile]);
+  }, [getProfile, clearSession]);
 
   const signIn = useCallback(async (email: string, password: string) => {
     try {
@@ -181,29 +246,14 @@ export function useAuth() {
   const signOut = useCallback(async () => {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
-
-      const { error } = await supabase.auth.signOut();
-
-      if (error) {
-        setAuthState(prev => ({ ...prev, error, loading: false }));
-        return { error };
-      }
-
-      setAuthState({
-        user: null,
-        session: null,
-        profile: null,
-        loading: false,
-        error: null,
-      });
-      
+      await clearSession();
       return { error: null };
     } catch (error) {
       const authError = error instanceof Error ? error : new Error('Logout failed');
       setAuthState(prev => ({ ...prev, error: authError, loading: false }));
       return { error: authError };
     }
-  }, []);
+  }, [clearSession]);
 
   const hasRole = useCallback((roles: UserRole[]) => {
     if (!authState.profile) return false;
