@@ -327,7 +327,7 @@ export default function Alerts() {
   const getSeverityBadge = (severity: string) => {
     switch (severity) {
       case 'critical': return <Badge variant="destructive">Crítico</Badge>;
-      case 'warning': return <Badge className="bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30">Aviso</Badge>;
+      case 'warning': return <Badge className="bg-warning/20 text-warning hover:bg-warning/30">Aviso</Badge>;
       default: return <Badge variant="secondary">Info</Badge>;
     }
   };
