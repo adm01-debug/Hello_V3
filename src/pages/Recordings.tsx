@@ -747,9 +747,9 @@ export default function Recordings() {
                             <div className="flex items-center justify-between mb-2">
                               <span className="text-sm font-medium">Score de Sentimento</span>
                               {currentTranscription.sentiment.sentiment_score > 0 ? (
-                                <TrendingUp className="h-4 w-4 text-green-500" />
+                                <TrendingUp className="h-4 w-4 text-success" />
                               ) : currentTranscription.sentiment.sentiment_score < 0 ? (
-                                <TrendingDown className="h-4 w-4 text-red-500" />
+                                <TrendingDown className="h-4 w-4 text-destructive" />
                               ) : (
                                 <Minus className="h-4 w-4 text-muted-foreground" />
                               )}
