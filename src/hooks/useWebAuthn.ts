@@ -218,7 +218,7 @@ export function useWebAuthn() {
         .from('user_profiles')
         .select('email')
         .eq('id', passkey.user_id)
-        .single();
+        .maybeSingle();
 
       if (!userProfile?.email) {
         throw new Error('Usuário não encontrado');

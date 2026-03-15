@@ -110,9 +110,9 @@ export function useGamification(agentId?: string) {
       .select('*')
       .eq('agent_id', agentId)
       .eq('week_start', weekStart)
-      .single();
+      .maybeSingle();
 
-    if (error && error.code !== 'PGRST116') {
+    if (error) {
       console.error('Error fetching weekly stats:', error);
       return;
     }
