@@ -345,13 +345,13 @@ const SecurityMonitoring = () => {
             <div className="text-2xl font-bold">{stats.uniqueUsers}</div>
           </CardContent>
         </Card>
-        <Card className={stats.criticalAlerts > 0 ? 'border-red-500/50 bg-red-500/5' : ''}>
+        <Card className={stats.criticalAlerts > 0 ? 'border-destructive/50 bg-destructive/5' : ''}>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Alertas Críticos</CardTitle>
-            <ShieldAlert className={`h-4 w-4 ${stats.criticalAlerts > 0 ? 'text-red-500' : 'text-muted-foreground'}`} />
+            <ShieldAlert className={`h-4 w-4 ${stats.criticalAlerts > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
           </CardHeader>
           <CardContent>
-            <div className={`text-2xl font-bold ${stats.criticalAlerts > 0 ? 'text-red-500' : ''}`}>
+            <div className={`text-2xl font-bold ${stats.criticalAlerts > 0 ? 'text-destructive' : ''}`}>
               {stats.criticalAlerts}
             </div>
           </CardContent>
