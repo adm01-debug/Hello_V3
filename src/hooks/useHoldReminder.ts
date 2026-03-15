@@ -191,10 +191,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       setBrowserNotificationsEnabled(granted);
       
       if (granted) {
-        toast({
-          title: "Notificações ativadas",
-          description: "Você receberá alertas críticos de espera no navegador.",
-        });
+        toast.success("Notificações ativadas", { description: "Você receberá alertas críticos de espera no navegador." });
       } else {
         toast({
           title: "Permissão negada",
