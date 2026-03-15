@@ -220,7 +220,8 @@ describe('Export Utilities - Column Logic', () => {
 
   it('ExportColumn default formatting handles null', () => {
     const col: ExportColumn = { key: 'name', label: 'Nome' };
-    const formatted = col.format ? col.format(null) : String(undefined ?? '');
+    const value: unknown = null;
+    const formatted = col.format ? col.format(value) : String(value || '');
     expect(formatted).toBe('');
   });
 
