@@ -101,8 +101,9 @@ describe('Bitrix CRM Integration', () => {
 
   describe('Finish call status codes', () => {
     it('defaults to 200', () => {
-      const statusCode = undefined || '200';
-      expect(statusCode).toBe('200');
+      let statusCode: string | undefined;
+      const resolved = statusCode || '200';
+      expect(resolved).toBe('200');
     });
 
     it('accepts custom status', () => {
