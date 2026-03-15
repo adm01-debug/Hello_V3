@@ -79,7 +79,7 @@ export default function VirtualFax() {
           <div><p className="text-2xl font-bold">{faxes.filter((f: any) => f.direction === 'inbound').length}</p><p className="text-xs text-muted-foreground">Recebidos</p></div>
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
-          <div className="h-10 w-10 rounded-lg bg-amber-500/10 flex items-center justify-center"><Clock className="h-5 w-5 text-amber-500" /></div>
+          <div className="h-10 w-10 rounded-lg bg-warning/10 flex items-center justify-center"><Clock className="h-5 w-5 text-warning" /></div>
           <div><p className="text-2xl font-bold">{faxes.filter((f: any) => f.status === 'pending').length}</p><p className="text-xs text-muted-foreground">Pendentes</p></div>
         </CardContent></Card>
       </div>

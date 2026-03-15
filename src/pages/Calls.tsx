@@ -96,8 +96,8 @@ const Calls = () => {
 
               {/* Wavoip */}
               <div className="flex items-center gap-3 p-3 rounded-lg border">
-                <div className="p-2 rounded-lg bg-green-500/10">
-                  <MessageCircle className="h-5 w-5 text-green-500" />
+                <div className="p-2 rounded-lg bg-success/10">
+                  <MessageCircle className="h-5 w-5 text-success" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">

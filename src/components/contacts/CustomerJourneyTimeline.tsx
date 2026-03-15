@@ -29,9 +29,9 @@ const typeIcons: Record<string, any> = {
 };
 
 const sentimentColors: Record<string, string> = {
-  positive: 'bg-green-500/10 text-green-500 border-green-500/20',
-  neutral: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20',
-  negative: 'bg-red-500/10 text-red-500 border-red-500/20',
+  positive: 'bg-success/10 text-success border-success/20',
+  neutral: 'bg-warning/10 text-warning border-warning/20',
+  negative: 'bg-destructive/10 text-destructive border-destructive/20',
 };
 
 export function CustomerJourneyTimeline({ contactId, interactions }: CustomerJourneyTimelineProps) {

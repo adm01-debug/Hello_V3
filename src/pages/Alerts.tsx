@@ -606,7 +606,7 @@ export default function Alerts() {
                               )}
                               {!alert.is_actioned && (
                                 <Button variant="ghost" size="sm" onClick={() => markContactAlertAsActioned(alert.id)} title="Marcar como resolvido">
-                                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                                  <CheckCircle2 className="h-4 w-4 text-success" />
                                 </Button>
                               )}
                               <Button variant="ghost" size="sm" onClick={() => deleteContactAlert(alert.id)} title="Excluir">
