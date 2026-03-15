@@ -400,8 +400,8 @@ Relatório gerado automaticamente pelo sistema de segurança.
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="border rounded-lg p-4 bg-red-500/5 border-red-500/20">
-              <h4 className="font-medium flex items-center gap-2 text-red-500">
+            <div className="border rounded-lg p-4 bg-destructive/5 border-destructive/20">
+              <h4 className="font-medium flex items-center gap-2 text-destructive">
                 <Shield className="h-4 w-4" />
                 Admin
               </h4>
@@ -413,8 +413,8 @@ Relatório gerado automaticamente pelo sistema de segurança.
                 <li>• Relatórios de segurança</li>
               </ul>
             </div>
-            <div className="border rounded-lg p-4 bg-yellow-500/5 border-yellow-500/20">
-              <h4 className="font-medium flex items-center gap-2 text-yellow-500">
+            <div className="border rounded-lg p-4 bg-warning/5 border-warning/20">
+              <h4 className="font-medium flex items-center gap-2 text-warning">
                 <Eye className="h-4 w-4" />
                 Supervisor
               </h4>
@@ -426,8 +426,8 @@ Relatório gerado automaticamente pelo sistema de segurança.
                 <li>• Relatórios de desempenho</li>
               </ul>
             </div>
-            <div className="border rounded-lg p-4 bg-green-500/5 border-green-500/20">
-              <h4 className="font-medium flex items-center gap-2 text-green-500">
+            <div className="border rounded-lg p-4 bg-success/5 border-success/20">
+              <h4 className="font-medium flex items-center gap-2 text-success">
                 <Users className="h-4 w-4" />
                 Agent
               </h4>
