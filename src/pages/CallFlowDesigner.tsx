@@ -222,7 +222,7 @@ export default function CallFlowDesigner() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['call-flows'] });
-      toast({ title: 'Fluxo salvo!' });
+      toast.success('Fluxo salvo!');
     },
   });
 
