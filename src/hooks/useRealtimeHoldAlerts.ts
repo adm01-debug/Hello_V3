@@ -126,12 +126,11 @@ export function useRealtimeHoldAlerts() {
   const showToastNotification = useCallback((alert: RealtimeHoldAlert) => {
     const isCritical = alert.severity === 'critical' || alert.severity === 'error';
     
-    toast({
-      title: isCritical ? "🚨 Alerta Crítico de Espera" : "⚠️ Alerta de Tempo em Espera",
-      description: alert.message,
-      variant: isCritical ? "destructive" : "default",
-      duration: isCritical ? 10000 : 7000,
-    });
+    if (isCritical) {
+      toast.error(isCritical ? "🚨 Alerta Crítico de Espera" : "⚠️ Alerta de Tempo em Espera", { description: alert.message, duration: isCritical ? 10000 : 7000 });
+    } else {
+      toast.warning("⚠️ Alerta de Tempo em Espera", { description: alert.message, duration: 7000 });
+    }
   }, []);
 
   // Initialize audio
