@@ -217,10 +217,14 @@ export function useAuth() {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
       
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data, error } = await withTimeout(
+        supabase.auth.signInWithPassword({
+          email,
+          password,
+        }),
+        8000,
+        'Login request timed out'
+      );
 
       if (error) {
         setAuthState(prev => ({ ...prev, error, loading: false }));
