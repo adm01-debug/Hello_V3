@@ -95,7 +95,7 @@ export default function SecurityDashboard() {
         .from('user_ip_restrictions')
         .select('enabled')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
       
       setIpRestrictionEnabled(ipRestriction?.enabled || false);
 
@@ -185,10 +185,10 @@ export default function SecurityDashboard() {
   }, [mfaSettings, sessions, ipRestrictionEnabled, recentAlerts, mfaLoading]);
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-500';
-    if (score >= 60) return 'text-yellow-500';
-    if (score >= 40) return 'text-orange-500';
-    return 'text-red-500';
+    if (score >= 80) return 'text-success';
+    if (score >= 60) return 'text-warning';
+    if (score >= 40) return 'text-warning';
+    return 'text-destructive';
   };
 
   const getScoreLabel = (score: number) => {
@@ -207,9 +207,9 @@ export default function SecurityDashboard() {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'bg-red-500/10 text-red-500 border-red-500/20';
-      case 'warning': return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
-      default: return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+      case 'critical': return 'bg-destructive/10 text-destructive border-destructive/20';
+      case 'warning': return 'bg-warning/10 text-warning border-warning/20';
+      default: return 'bg-primary/10 text-primary border-primary/20';
     }
   };
 
@@ -342,13 +342,13 @@ export default function SecurityDashboard() {
                 <p className="text-3xl font-bold flex items-center gap-2">
                   {mfaSettings?.mfa_enabled ? (
                     <>
-                      <CheckCircle2 className="h-6 w-6 text-green-500" />
-                      <span className="text-green-500">Ativo</span>
+                      <CheckCircle2 className="h-6 w-6 text-success" />
+                      <span className="text-success">Ativo</span>
                     </>
                   ) : (
                     <>
-                      <XCircle className="h-6 w-6 text-red-500" />
-                      <span className="text-red-500">Inativo</span>
+                      <XCircle className="h-6 w-6 text-destructive" />
+                      <span className="text-destructive">Inativo</span>
                     </>
                   )}
                 </p>
@@ -366,13 +366,13 @@ export default function SecurityDashboard() {
                 <p className="text-3xl font-bold flex items-center gap-2">
                   {ipRestrictionEnabled ? (
                     <>
-                      <Lock className="h-6 w-6 text-green-500" />
-                      <span className="text-green-500">Ativo</span>
+                      <Lock className="h-6 w-6 text-success" />
+                      <span className="text-success">Ativo</span>
                     </>
                   ) : (
                     <>
-                      <Unlock className="h-6 w-6 text-yellow-500" />
-                      <span className="text-yellow-500">Inativo</span>
+                      <Unlock className="h-6 w-6 text-warning" />
+                      <span className="text-warning">Inativo</span>
                     </>
                   )}
                 </p>
@@ -389,7 +389,7 @@ export default function SecurityDashboard() {
                 <p className="text-sm text-muted-foreground">Acessos Bloqueados</p>
                 <p className="text-3xl font-bold">{blockedAccess}</p>
               </div>
-              <ShieldAlert className="h-10 w-10 text-red-500 opacity-50" />
+              <ShieldAlert className="h-10 w-10 text-destructive opacity-50" />
             </div>
           </CardContent>
         </Card>
@@ -409,14 +409,14 @@ export default function SecurityDashboard() {
           </CardHeader>
           <CardContent className="space-y-3">
             {!mfaSettings?.mfa_enabled && (
-              <Alert className="border-yellow-500/30 bg-yellow-500/5">
-                <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                <AlertTitle className="text-yellow-500">Ativar Autenticação de Dois Fatores</AlertTitle>
+              <Alert className="border-warning/30 bg-warning/5">
+                <AlertTriangle className="h-4 w-4 text-warning" />
+                <AlertTitle className="text-warning">Ativar Autenticação de Dois Fatores</AlertTitle>
                 <AlertDescription className="text-muted-foreground">
                   Adicione uma camada extra de segurança ativando o MFA.
                   <Button 
                     variant="link" 
-                    className="px-0 h-auto text-yellow-500"
+                    className="px-0 h-auto text-warning"
                     onClick={() => navigate('/two-factor-auth')}
                   >
                     Configurar agora →
@@ -426,14 +426,14 @@ export default function SecurityDashboard() {
             )}
             
             {!ipRestrictionEnabled && (
-              <Alert className="border-blue-500/30 bg-blue-500/5">
-                <Globe className="h-4 w-4 text-blue-500" />
-                <AlertTitle className="text-blue-500">Habilitar Restrição de IP</AlertTitle>
+              <Alert className="border-primary/30 bg-primary/5">
+                <Globe className="h-4 w-4 text-primary" />
+                <AlertTitle className="text-primary">Habilitar Restrição de IP</AlertTitle>
                 <AlertDescription className="text-muted-foreground">
                   Limite o acesso à sua conta apenas a IPs conhecidos.
                   <Button 
                     variant="link" 
-                    className="px-0 h-auto text-blue-500"
+                    className="px-0 h-auto text-primary"
                     onClick={() => navigate('/security')}
                   >
                     Configurar agora →
@@ -443,14 +443,14 @@ export default function SecurityDashboard() {
             )}
 
             {sessions.length > 3 && (
-              <Alert className="border-orange-500/30 bg-orange-500/5">
-                <Monitor className="h-4 w-4 text-orange-500" />
-                <AlertTitle className="text-orange-500">Muitas Sessões Ativas</AlertTitle>
+              <Alert className="border-warning/30 bg-warning/5">
+                <Monitor className="h-4 w-4 text-warning" />
+                <AlertTitle className="text-warning">Muitas Sessões Ativas</AlertTitle>
                 <AlertDescription className="text-muted-foreground">
                   Você tem {sessions.length} sessões ativas. Considere encerrar as que não reconhece.
                   <Button 
                     variant="link" 
-                    className="px-0 h-auto text-orange-500"
+                    className="px-0 h-auto text-warning"
                     onClick={() => navigate('/sessions')}
                   >
                     Gerenciar sessões →
@@ -460,9 +460,9 @@ export default function SecurityDashboard() {
             )}
 
             {securityScore.total >= 80 && (
-              <Alert className="border-green-500/30 bg-green-500/5">
-                <CheckCircle2 className="h-4 w-4 text-green-500" />
-                <AlertTitle className="text-green-500">Excelente!</AlertTitle>
+              <Alert className="border-success/30 bg-success/5">
+                <CheckCircle2 className="h-4 w-4 text-success" />
+                <AlertTitle className="text-success">Excelente!</AlertTitle>
                 <AlertDescription className="text-muted-foreground">
                   Sua conta está bem protegida. Continue assim!
                 </AlertDescription>
@@ -499,7 +499,7 @@ export default function SecurityDashboard() {
                         <div className="flex items-center gap-2">
                           <span className="text-xs opacity-70">{formatTimeAgo(alert.created_at)}</span>
                           {alert.is_resolved ? (
-                            <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            <CheckCircle2 className="h-4 w-4 text-success" />
                           ) : (
                             <Clock className="h-4 w-4" />
                           )}
