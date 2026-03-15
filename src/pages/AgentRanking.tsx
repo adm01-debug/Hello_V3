@@ -863,7 +863,7 @@ export default function AgentRanking() {
                       <div>
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-muted-foreground">Satisfação</span>
-                          <span className={satisfactionAchieved ? 'text-green-500 font-medium' : ''}>
+                          <span className={satisfactionAchieved ? 'text-success font-medium' : ''}>
                             {agent.avgSatisfaction.toFixed(1)}/{goals.satisfaction_target}
                           </span>
                         </div>
