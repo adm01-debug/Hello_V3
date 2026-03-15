@@ -47,7 +47,6 @@ export function useAuth() {
 
   const getSession = useCallback(async () => {
     try {
-      // Add timeout to prevent infinite loading
       const timeoutPromise = new Promise<never>((_, reject) => 
         setTimeout(() => reject(new Error('Session check timed out')), 10000)
       );
@@ -57,29 +56,36 @@ export function useAuth() {
       
       if (error) {
         console.warn('Auth session error:', error.message);
-        setAuthState(prev => ({ ...prev, error, loading: false }));
+        // Clear corrupted session
+        await supabase.auth.signOut();
+        setAuthState(prev => ({ ...prev, user: null, session: null, profile: null, error: null, loading: false }));
         return;
       }
 
-      let profile = null;
       if (session?.user) {
-        profile = await getProfile(session.user.id);
+        // Validate the session is actually valid by checking the user
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) {
+          console.warn('Invalid session detected, clearing...', userError?.message);
+          await supabase.auth.signOut();
+          setAuthState({ user: null, session: null, profile: null, loading: false, error: null });
+          return;
+        }
+        
+        const profile = await getProfile(user.id);
+        setAuthState({ user, session, profile, loading: false, error: null });
+      } else {
+        setAuthState({ user: null, session: null, profile: null, loading: false, error: null });
       }
-
-      setAuthState({
-        user: session?.user ?? null,
-        session: session ?? null,
-        profile,
-        loading: false,
-        error: null,
-      });
     } catch (error) {
       console.warn('Auth initialization error:', error);
-      setAuthState(prev => ({
-        ...prev,
-        error: error instanceof Error ? error : new Error('Unknown error'),
+      // On any error, clear state and let user re-login
+      try { await supabase.auth.signOut(); } catch {}
+      setAuthState({
+        user: null, session: null, profile: null,
+        error: null,
         loading: false,
-      }));
+      });
     }
   }, [getProfile]);
 
