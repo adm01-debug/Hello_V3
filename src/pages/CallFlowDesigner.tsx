@@ -189,7 +189,7 @@ export default function CallFlowDesigner() {
         .select('*')
         .order('created_at', { ascending: false });
       if (error) throw error;
-      return (data || []) as CallFlow[];
+      return (data || []) as unknown as CallFlow[];
     },
   });
 
