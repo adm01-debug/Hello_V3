@@ -29,10 +29,10 @@ function getDeviceInfo(): DeviceInfo {
   // Detect OS
   let os = 'Unknown';
   if (ua.includes('Windows')) os = 'Windows';
-  else if (ua.includes('Mac')) os = 'macOS';
-  else if (ua.includes('Linux')) os = 'Linux';
   else if (ua.includes('Android')) os = 'Android';
   else if (ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS';
+  else if (ua.includes('Mac')) os = 'macOS';
+  else if (ua.includes('Linux')) os = 'Linux';
   
   // Detect device type
   let device = 'Desktop';
