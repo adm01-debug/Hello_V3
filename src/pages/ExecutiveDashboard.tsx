@@ -989,15 +989,15 @@ export default function ExecutiveDashboard() {
                 const hasCriticalMetric = callsCritical || satisfactionCritical || performanceCritical;
 
                 const getProgressClass = (achieved: boolean, critical: boolean) => {
-                  if (achieved) return '[&>div]:bg-green-500';
-                  if (critical) return '[&>div]:bg-red-500';
-                  return '[&>div]:bg-amber-500';
+                  if (achieved) return '[&>div]:bg-success';
+                  if (critical) return '[&>div]:bg-destructive';
+                  return '[&>div]:bg-warning';
                 };
 
                 const getTextClass = (achieved: boolean, critical: boolean) => {
-                  if (achieved) return 'text-green-500 font-medium';
-                  if (critical) return 'text-red-500 font-medium';
-                  return 'text-amber-500 font-medium';
+                  if (achieved) return 'text-success font-medium';
+                  if (critical) return 'text-destructive font-medium';
+                  return 'text-warning font-medium';
                 };
 
                 return (
