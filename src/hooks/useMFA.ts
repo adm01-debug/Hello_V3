@@ -54,9 +54,9 @@ export function useMFA() {
         .from('user_mfa_settings')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
       
-      if (error && error.code !== 'PGRST116') throw error;
+      if (error) throw error;
       
       setSettings(data ? {
         mfa_enabled: data.mfa_enabled || false,

@@ -211,7 +211,7 @@ export function useGamification(agentId?: string) {
       .select('*')
       .eq('agent_id', agentId)
       .eq('week_start', weekStart)
-      .single();
+      .maybeSingle();
 
     if (existing) {
       const newValues: any = {};
