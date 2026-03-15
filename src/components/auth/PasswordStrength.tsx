@@ -107,22 +107,22 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
     } else if (criticalMet < criticalTotal || metCount <= 2) {
       strength = 'weak';
       label = 'Fraca';
-      color = 'bg-red-500';
+      color = 'bg-destructive';
       percentage = 25;
     } else if (metCount === 3) {
       strength = 'fair';
       label = 'Razoável';
-      color = 'bg-orange-500';
+      color = 'bg-warning';
       percentage = 50;
     } else if (metCount === 4) {
       strength = 'good';
       label = 'Boa';
-      color = 'bg-yellow-500';
+      color = 'bg-call-hold';
       percentage = 75;
     } else {
       strength = 'strong';
       label = 'Forte';
-      color = 'bg-green-500';
+      color = 'bg-success';
       percentage = 100;
     }
 
@@ -137,9 +137,9 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
     <div className="space-y-3">
       {/* Leaked Password Warning */}
       {isLeaked && (
-        <div className="flex items-center gap-2 p-2 rounded-md bg-red-500/10 border border-red-500/30">
-          <AlertTriangle className="h-4 w-4 text-red-500 flex-shrink-0" />
-          <span className="text-xs text-red-500 font-medium">
+        <div className="flex items-center gap-2 p-2 rounded-md bg-destructive/10 border border-destructive/30">
+          <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0" />
+          <span className="text-xs text-destructive font-medium">
             Senha encontrada em vazamentos! Use outra senha.
           </span>
         </div>
@@ -156,10 +156,10 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
           </span>
           <span className={cn(
             "text-xs font-medium",
-            analysis.strength === 'weak' && 'text-red-500',
-            analysis.strength === 'fair' && 'text-orange-500',
-            analysis.strength === 'good' && 'text-yellow-500',
-            analysis.strength === 'strong' && 'text-green-500',
+            analysis.strength === 'weak' && 'text-destructive',
+            analysis.strength === 'fair' && 'text-warning',
+            analysis.strength === 'good' && 'text-call-hold',
+            analysis.strength === 'strong' && 'text-success',
           )}>
             {analysis.label}
           </span>
@@ -168,7 +168,7 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
           <div 
             className={cn(
               "h-full transition-all duration-300 rounded-full",
-              isLeaked ? 'bg-red-500' : analysis.color
+              isLeaked ? 'bg-destructive' : analysis.color
             )}
             style={{ width: `${isLeaked ? 25 : analysis.percentage}%` }}
           />
@@ -183,7 +183,7 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
               key={index}
               className={cn(
                 "flex items-center gap-1.5 text-xs",
-                req.met ? 'text-green-500' : req.critical ? 'text-red-400' : 'text-muted-foreground'
+                req.met ? 'text-success' : req.critical ? 'text-destructive' : 'text-muted-foreground'
               )}
             >
               {req.met ? (

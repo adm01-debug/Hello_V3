@@ -240,11 +240,11 @@ const SecurityMonitoring = () => {
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case 'critical':
-        return 'bg-red-500/10 text-red-500 border-red-500/20';
+        return 'bg-destructive/10 text-destructive border-destructive/20';
       case 'warning':
-        return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
+        return 'bg-warning/10 text-warning border-warning/20';
       case 'info':
-        return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+        return 'bg-info/10 text-info border-info/20';
       default:
         return 'bg-muted text-muted-foreground';
     }
@@ -279,8 +279,8 @@ const SecurityMonitoring = () => {
             {isLive ? (
               <>
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
                 </span>
                 Ao Vivo
               </>
@@ -345,13 +345,13 @@ const SecurityMonitoring = () => {
             <div className="text-2xl font-bold">{stats.uniqueUsers}</div>
           </CardContent>
         </Card>
-        <Card className={stats.criticalAlerts > 0 ? 'border-red-500/50 bg-red-500/5' : ''}>
+        <Card className={stats.criticalAlerts > 0 ? 'border-destructive/50 bg-destructive/5' : ''}>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Alertas Críticos</CardTitle>
-            <ShieldAlert className={`h-4 w-4 ${stats.criticalAlerts > 0 ? 'text-red-500' : 'text-muted-foreground'}`} />
+            <ShieldAlert className={`h-4 w-4 ${stats.criticalAlerts > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
           </CardHeader>
           <CardContent>
-            <div className={`text-2xl font-bold ${stats.criticalAlerts > 0 ? 'text-red-500' : ''}`}>
+            <div className={`text-2xl font-bold ${stats.criticalAlerts > 0 ? 'text-destructive' : ''}`}>
               {stats.criticalAlerts}
             </div>
           </CardContent>
@@ -383,8 +383,8 @@ const SecurityMonitoring = () => {
                 Eventos Recentes
                 {isLive && (
                   <span className="relative flex h-2 w-2 ml-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
                   </span>
                 )}
               </CardTitle>
@@ -474,18 +474,18 @@ const SecurityMonitoring = () => {
                           alert.is_resolved 
                             ? 'bg-muted/50 opacity-60' 
                             : alert.severity === 'critical' 
-                              ? 'border-red-500/50 bg-red-500/5' 
-                              : 'border-yellow-500/50 bg-yellow-500/5'
+                              ? 'border-destructive/50 bg-destructive/5' 
+                              : 'border-warning/50 bg-warning/5'
                         }`}
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex items-start gap-3">
                             {alert.is_resolved ? (
-                              <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
+                              <CheckCircle2 className="h-5 w-5 text-success mt-0.5" />
                             ) : alert.severity === 'critical' ? (
-                              <XCircle className="h-5 w-5 text-red-500 mt-0.5" />
+                              <XCircle className="h-5 w-5 text-destructive mt-0.5" />
                             ) : (
-                              <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5" />
+                              <AlertTriangle className="h-5 w-5 text-warning mt-0.5" />
                             )}
                             <div>
                               <div className="flex items-center gap-2">

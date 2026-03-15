@@ -176,8 +176,8 @@ export function DNCListManager() {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-green-500/10">
-                <CheckCircle className="h-6 w-6 text-green-500" />
+              <div className="p-3 rounded-full bg-success/10">
+                <CheckCircle className="h-6 w-6 text-success" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Ativos</p>
@@ -190,8 +190,8 @@ export function DNCListManager() {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-amber-500/10">
-                <AlertTriangle className="h-6 w-6 text-amber-500" />
+              <div className="p-3 rounded-full bg-warning/10">
+                <AlertTriangle className="h-6 w-6 text-warning" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Reclamações</p>

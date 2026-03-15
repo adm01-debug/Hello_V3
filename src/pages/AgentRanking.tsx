@@ -535,7 +535,7 @@ export default function AgentRanking() {
   const getRankIcon = (index: number) => {
     switch (index) {
       case 0:
-        return <Trophy className="h-6 w-6 text-yellow-500" />;
+        return <Trophy className="h-6 w-6 text-warning" />;
       case 1:
         return <Medal className="h-6 w-6 text-gray-400" />;
       case 2:
@@ -643,7 +643,7 @@ export default function AgentRanking() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Melhor Agente</CardTitle>
-            <Trophy className="h-4 w-4 text-yellow-500" />
+            <Trophy className="h-4 w-4 text-warning" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold truncate">

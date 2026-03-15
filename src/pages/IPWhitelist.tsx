@@ -476,7 +476,7 @@ export default function IPWhitelist() {
                         </TableCell>
                         <TableCell>
                           {restriction?.enabled ? (
-                            <Badge variant="default" className="bg-green-600">
+                            <Badge variant="default" className="bg-success">
                               <Shield className="h-3 w-3 mr-1" />
                               Protegido
                             </Badge>

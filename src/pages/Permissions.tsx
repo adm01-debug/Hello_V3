@@ -41,10 +41,10 @@ const MODULE_ICONS: Record<string, any> = {
 };
 
 const ROLE_COLORS: Record<string, string> = {
-  admin: 'bg-red-500',
-  supervisor: 'bg-blue-500',
-  agent: 'bg-green-500',
-  viewer: 'bg-gray-500',
+  admin: 'bg-destructive',
+  supervisor: 'bg-info',
+  agent: 'bg-success',
+  viewer: 'bg-muted-foreground',
 };
 
 export default function Permissions() {

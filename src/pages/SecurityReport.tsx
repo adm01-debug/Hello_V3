@@ -190,11 +190,11 @@ const SecurityReport = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "implemented":
-        return <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Implementado</Badge>;
+        return <Badge className="bg-success/10 text-success border-success/20">Implementado</Badge>;
       case "partial":
-        return <Badge className="bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Parcial</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">Parcial</Badge>;
       case "pending":
-        return <Badge className="bg-blue-500/10 text-blue-500 border-blue-500/20">Pendente</Badge>;
+        return <Badge className="bg-info/10 text-info border-info/20">Pendente</Badge>;
       default:
         return null;
     }
@@ -203,11 +203,11 @@ const SecurityReport = () => {
   const getRiskBadge = (risk: string) => {
     switch (risk) {
       case "low":
-        return <Badge variant="outline" className="text-green-500 border-green-500/30">Baixo</Badge>;
+        return <Badge variant="outline" className="text-success border-success/30">Baixo</Badge>;
       case "medium":
-        return <Badge variant="outline" className="text-yellow-500 border-yellow-500/30">Médio</Badge>;
+        return <Badge variant="outline" className="text-warning border-warning/30">Médio</Badge>;
       case "high":
-        return <Badge variant="outline" className="text-red-500 border-red-500/30">Alto</Badge>;
+        return <Badge variant="outline" className="text-destructive border-destructive/30">Alto</Badge>;
       default:
         return null;
     }
@@ -400,8 +400,8 @@ Relatório gerado automaticamente pelo sistema de segurança.
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="border rounded-lg p-4 bg-red-500/5 border-red-500/20">
-              <h4 className="font-medium flex items-center gap-2 text-red-500">
+            <div className="border rounded-lg p-4 bg-destructive/5 border-destructive/20">
+              <h4 className="font-medium flex items-center gap-2 text-destructive">
                 <Shield className="h-4 w-4" />
                 Admin
               </h4>
@@ -413,8 +413,8 @@ Relatório gerado automaticamente pelo sistema de segurança.
                 <li>• Relatórios de segurança</li>
               </ul>
             </div>
-            <div className="border rounded-lg p-4 bg-yellow-500/5 border-yellow-500/20">
-              <h4 className="font-medium flex items-center gap-2 text-yellow-500">
+            <div className="border rounded-lg p-4 bg-warning/5 border-warning/20">
+              <h4 className="font-medium flex items-center gap-2 text-warning">
                 <Eye className="h-4 w-4" />
                 Supervisor
               </h4>
@@ -426,8 +426,8 @@ Relatório gerado automaticamente pelo sistema de segurança.
                 <li>• Relatórios de desempenho</li>
               </ul>
             </div>
-            <div className="border rounded-lg p-4 bg-green-500/5 border-green-500/20">
-              <h4 className="font-medium flex items-center gap-2 text-green-500">
+            <div className="border rounded-lg p-4 bg-success/5 border-success/20">
+              <h4 className="font-medium flex items-center gap-2 text-success">
                 <Users className="h-4 w-4" />
                 Agent
               </h4>
@@ -505,9 +505,9 @@ Relatório gerado automaticamente pelo sistema de segurança.
       </Card>
 
       {/* Recommendations */}
-      <Card className="border-yellow-500/30 bg-yellow-500/5">
+      <Card className="border-warning/30 bg-warning/5">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-yellow-500">
+          <CardTitle className="flex items-center gap-2 text-warning">
             <ShieldAlert className="h-5 w-5" />
             Recomendações Pendentes
           </CardTitle>
@@ -515,15 +515,15 @@ Relatório gerado automaticamente pelo sistema de segurança.
         <CardContent>
           <ul className="space-y-2">
             <li className="flex items-start gap-2">
-              <AlertTriangle className="h-4 w-4 text-yellow-500 mt-0.5" />
+              <AlertTriangle className="h-4 w-4 text-warning mt-0.5" />
               <span>Ativar Leaked Password Protection no painel do Cloud</span>
             </li>
             <li className="flex items-start gap-2">
-              <Info className="h-4 w-4 text-blue-500 mt-0.5" />
+              <Info className="h-4 w-4 text-info mt-0.5" />
               <span>Configurar alertas automáticos para padrões suspeitos de acesso</span>
             </li>
             <li className="flex items-start gap-2">
-              <Info className="h-4 w-4 text-blue-500 mt-0.5" />
+              <Info className="h-4 w-4 text-info mt-0.5" />
               <span>Implementar expiração temporal de acesso para ex-funcionários</span>
             </li>
           </ul>

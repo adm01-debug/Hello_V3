@@ -222,9 +222,9 @@ export const ActiveCallsRealtime = () => {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-500/10 border border-green-500/20 cursor-default">
-                        <Phone className="h-3 w-3 text-green-500" />
-                        <span className="font-medium text-green-600 dark:text-green-400">{statusCounts.inCall}</span>
+                      <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-success/10 border border-success/20 cursor-default">
+                        <Phone className="h-3 w-3 text-success" />
+                        <span className="font-medium text-success">{statusCounts.inCall}</span>
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -239,7 +239,7 @@ export const ActiveCallsRealtime = () => {
                         statusCounts.maxSeverity === 'critical'
                           ? 'bg-destructive/20 border border-destructive/40 animate-pulse'
                           : statusCounts.maxSeverity === 'warning'
-                          ? 'bg-orange-500/20 border border-orange-500/40 animate-pulse'
+                          ? 'bg-call-hold/20 border border-call-hold/40 animate-pulse'
                           : statusCounts.onHold > 0 
                           ? 'bg-destructive/10 border border-destructive/20' 
                           : 'bg-muted border border-border'
@@ -248,7 +248,7 @@ export const ActiveCallsRealtime = () => {
                           statusCounts.maxSeverity === 'critical'
                             ? 'text-destructive'
                             : statusCounts.maxSeverity === 'warning'
-                            ? 'text-orange-500'
+                            ? 'text-call-hold'
                             : statusCounts.onHold > 0 
                             ? 'text-destructive' 
                             : 'text-muted-foreground'
@@ -257,7 +257,7 @@ export const ActiveCallsRealtime = () => {
                           statusCounts.maxSeverity === 'critical'
                             ? 'text-destructive'
                             : statusCounts.maxSeverity === 'warning'
-                            ? 'text-orange-500'
+                            ? 'text-call-hold'
                             : statusCounts.onHold > 0 
                             ? 'text-destructive' 
                             : 'text-muted-foreground'
@@ -353,7 +353,7 @@ export const ActiveCallsRealtime = () => {
                     holdSeverity === 'critical'
                       ? 'border-destructive bg-destructive/10 animate-pulse'
                       : holdSeverity === 'warning'
-                      ? 'border-orange-500/50 bg-orange-500/5'
+                      ? 'border-call-hold/50 bg-call-hold/5'
                       : onHold
                       ? 'border-destructive/50 bg-destructive/5 animate-pulse'
                       : 'border-border bg-card'
@@ -366,7 +366,7 @@ export const ActiveCallsRealtime = () => {
                           holdSeverity === 'critical'
                             ? 'bg-destructive/20'
                             : holdSeverity === 'warning'
-                            ? 'bg-orange-500/20'
+                            ? 'bg-call-hold/20'
                             : onHold
                             ? 'bg-destructive/10'
                             : 'bg-primary/10'
@@ -377,7 +377,7 @@ export const ActiveCallsRealtime = () => {
                             holdSeverity === 'critical'
                               ? 'text-destructive'
                               : holdSeverity === 'warning'
-                              ? 'text-orange-500'
+                              ? 'text-call-hold'
                               : 'text-destructive'
                           }`} />
                         ) : (
@@ -403,7 +403,7 @@ export const ActiveCallsRealtime = () => {
                             holdSeverity === 'critical'
                               ? 'bg-destructive animate-pulse'
                               : holdSeverity === 'warning'
-                              ? 'bg-orange-500 hover:bg-orange-600'
+                              ? 'bg-call-hold hover:bg-call-hold/90'
                               : 'animate-pulse'
                           }`}
                         >
@@ -411,7 +411,7 @@ export const ActiveCallsRealtime = () => {
                           Em Espera {formatDuration(holdDuration)}
                         </Badge>
                       ) : (
-                        <Badge variant="default" className="bg-green-500 hover:bg-green-600">
+                        <Badge variant="default" className="bg-success hover:bg-success/90">
                           <Phone className="h-3 w-3 mr-1" />
                           Em Chamada
                         </Badge>

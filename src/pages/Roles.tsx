@@ -26,10 +26,10 @@ interface UserRole {
 }
 
 const ROLE_LABELS: Record<string, { label: string; icon: any; color: string }> = {
-  admin: { label: 'Administrador', icon: Crown, color: 'bg-red-500' },
-  supervisor: { label: 'Supervisor', icon: Shield, color: 'bg-blue-500' },
-  agent: { label: 'Agente', icon: User, color: 'bg-green-500' },
-  viewer: { label: 'Visualizador', icon: Eye, color: 'bg-gray-500' },
+  admin: { label: 'Administrador', icon: Crown, color: 'bg-destructive' },
+  supervisor: { label: 'Supervisor', icon: Shield, color: 'bg-info' },
+  agent: { label: 'Agente', icon: User, color: 'bg-success' },
+  viewer: { label: 'Visualizador', icon: Eye, color: 'bg-muted-foreground' },
 };
 
 export default function Roles() {

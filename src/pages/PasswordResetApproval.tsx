@@ -97,15 +97,15 @@ export default function PasswordResetApproval() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'pending':
-        return <Badge variant="secondary" className="bg-yellow-500/20 text-yellow-400"><Clock className="h-3 w-3 mr-1" /> Pendente</Badge>;
+        return <Badge variant="secondary" className="bg-warning/20 text-warning"><Clock className="h-3 w-3 mr-1" /> Pendente</Badge>;
       case 'approved':
-        return <Badge variant="secondary" className="bg-green-500/20 text-green-400"><Check className="h-3 w-3 mr-1" /> Aprovado</Badge>;
+        return <Badge variant="secondary" className="bg-success/20 text-success"><Check className="h-3 w-3 mr-1" /> Aprovado</Badge>;
       case 'rejected':
-        return <Badge variant="secondary" className="bg-red-500/20 text-red-400"><X className="h-3 w-3 mr-1" /> Rejeitado</Badge>;
+        return <Badge variant="secondary" className="bg-destructive/20 text-destructive"><X className="h-3 w-3 mr-1" /> Rejeitado</Badge>;
       case 'completed':
-        return <Badge variant="secondary" className="bg-blue-500/20 text-blue-400"><Check className="h-3 w-3 mr-1" /> Concluído</Badge>;
+        return <Badge variant="secondary" className="bg-info/20 text-info"><Check className="h-3 w-3 mr-1" /> Concluído</Badge>;
       case 'expired':
-        return <Badge variant="secondary" className="bg-gray-500/20 text-gray-400"><AlertTriangle className="h-3 w-3 mr-1" /> Expirado</Badge>;
+        return <Badge variant="secondary" className="bg-muted text-muted-foreground"><AlertTriangle className="h-3 w-3 mr-1" /> Expirado</Badge>;
       default:
         return <Badge variant="secondary">{status}</Badge>;
     }
