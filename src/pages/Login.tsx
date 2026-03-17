@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin, Eye, EyeOff, Lock, Clock, Headphones, BarChart3, Users } from 'lucide-react';
 import { PasskeyLogin } from '@/components/auth/PasskeyLogin';
 import { isWebAuthnSupported } from '@/lib/webauthn/webauthn-utils';
+import { lovable } from '@/integrations/lovable/index';
 
 export default function Login() {
   const [email, setEmail] = useState('');
