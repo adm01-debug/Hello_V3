@@ -724,6 +724,7 @@ export default function Alerts() {
           </Card>
         </TabsContent>
       </Tabs>
+      </div>
     </div>
   );
 }
