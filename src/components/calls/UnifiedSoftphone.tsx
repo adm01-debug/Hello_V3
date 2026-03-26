@@ -49,6 +49,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useMultiChannelCall, CallChannel, CallSession } from '@/hooks/useMultiChannelCall';
 import { useWavoipCall } from '@/hooks/useWavoipCall';
 import { useConferenceRecording } from '@/hooks/useConferenceRecording';
+import { useSipCall } from '@/hooks/useSipCall';
 import { useAgentStatus } from '@/hooks/useAgentStatus';
 const formatDuration = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -128,6 +129,9 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
 
   // Wavoip hook
   const wavoip = useWavoipCall();
+
+  // SIP hook  
+  const sipCall = useSipCall();
 
   // Agent status hook
   const { 
@@ -264,8 +268,8 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       } else {
         endCall(call.id);
       }
-    } else {
-      // SIP call - placeholder
+    } else if (activeChannel === 'sip') {
+      // Real SIP call via JsSIP
       if (!phoneNumber) {
         toast.error('Digite um número para ligar');
         return;
@@ -278,9 +282,39 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       }
       onCallStart?.(call);
       
-      // Simulate connection
-      setTimeout(() => updateCallStatus('ringing', call.id), 500);
-      setTimeout(() => updateCallStatus('active', call.id), 2000);
+      // Connect to SIP server if not already connected
+      if (!sipCall.isRegistered) {
+        updateCallStatus('connecting', call.id);
+        const connected = await sipCall.connect();
+        if (!connected) {
+          toast.error('Falha ao conectar ao servidor SIP');
+          endCall(call.id);
+          if (activeCalls.length === 0) setStatusAvailable();
+          return;
+        }
+        // Wait for registration
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      }
+
+      // Make the actual SIP call
+      const success = await sipCall.startCall(phoneNumber);
+      if (success) {
+        updateCallStatus('ringing', call.id);
+        // The SIP hook will fire events, we listen for active status
+        const checkActive = setInterval(() => {
+          if (sipCall.status === 'active') {
+            updateCallStatus('active', call.id);
+            clearInterval(checkActive);
+          } else if (sipCall.status === 'registered' || sipCall.status === 'disconnected' || sipCall.status === 'error') {
+            clearInterval(checkActive);
+          }
+        }, 500);
+        // Timeout after 30s
+        setTimeout(() => clearInterval(checkActive), 30000);
+      } else {
+        endCall(call.id);
+        if (activeCalls.length === 0) setStatusAvailable();
+      }
     }
   }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart, canAddCall, activeCalls.length, setStatusBusy, setStatusAvailable]);
 
