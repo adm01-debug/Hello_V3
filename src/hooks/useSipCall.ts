@@ -97,6 +97,7 @@ export function useSipCall() {
       }
 
       const { server, username, password } = data;
+      serverRef.current = server;
 
       // Build WebSocket URL - try wss:// on port 8089 (common for Asterisk/FreePBX/Bitrix)
       const wsServer = `wss://${server}:8089/ws`;
@@ -241,7 +242,7 @@ export function useSipCall() {
         },
       };
 
-      const sipUri = `sip:${cleanNumber}@${server}`;
+      const sipUri = `sip:${cleanNumber}@${serverRef.current}`;
       const session = ua.call(sipUri, callOptions);
       sessionRef.current = session;
 
