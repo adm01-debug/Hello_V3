@@ -49,6 +49,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useMultiChannelCall, CallChannel, CallSession } from '@/hooks/useMultiChannelCall';
 import { useWavoipCall } from '@/hooks/useWavoipCall';
 import { useConferenceRecording } from '@/hooks/useConferenceRecording';
+import { useSipCall } from '@/hooks/useSipCall';
 import { useAgentStatus } from '@/hooks/useAgentStatus';
 const formatDuration = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -129,6 +130,9 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   // Wavoip hook
   const wavoip = useWavoipCall();
 
+  // SIP hook  
+  const sipCall = useSipCall();
+
   // Agent status hook
   const { 
     currentAgent, 
@@ -159,6 +163,13 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       configureChannel('wavoip', { enabled: true, configured: true });
     }
   }, [wavoip.isConfigured, configureChannel]);
+
+  // Auto-connect SIP when channel is selected
+  useEffect(() => {
+    if (activeChannel === 'sip' && !sipCall.isRegistered && sipCall.status === 'disconnected') {
+      sipCall.connect();
+    }
+  }, [activeChannel, sipCall.isRegistered, sipCall.status]);
 
   // ElevenLabs conversation hook for WebRTC
   const conversation = useConversation({
@@ -192,9 +203,9 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
 
   const handleDigitPress = (digit: string) => {
     setPhoneNumber(prev => prev + digit);
-    // Play DTMF tone simulation
-    if (isInCall && currentCall?.channel !== 'webrtc') {
-      // TODO: Send DTMF through appropriate channel
+    // Send DTMF through appropriate channel
+    if (isInCall && currentCall?.channel === 'sip') {
+      sipCall.sendDTMF(digit);
     }
   };
 
@@ -264,8 +275,8 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       } else {
         endCall(call.id);
       }
-    } else {
-      // SIP call - placeholder
+    } else if (activeChannel === 'sip') {
+      // Real SIP call via JsSIP
       if (!phoneNumber) {
         toast.error('Digite um número para ligar');
         return;
@@ -278,17 +289,49 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       }
       onCallStart?.(call);
       
-      // Simulate connection
-      setTimeout(() => updateCallStatus('ringing', call.id), 500);
-      setTimeout(() => updateCallStatus('active', call.id), 2000);
+      // Connect to SIP server if not already connected
+      if (!sipCall.isRegistered) {
+        updateCallStatus('connecting', call.id);
+        const connected = await sipCall.connect();
+        if (!connected) {
+          toast.error('Falha ao conectar ao servidor SIP');
+          endCall(call.id);
+          if (activeCalls.length === 0) setStatusAvailable();
+          return;
+        }
+        // Wait for registration
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      }
+
+      // Make the actual SIP call
+      const success = await sipCall.startCall(phoneNumber);
+      if (success) {
+        updateCallStatus('ringing', call.id);
+        // The SIP hook will fire events, we listen for active status
+        const checkActive = setInterval(() => {
+          if (sipCall.status === 'active') {
+            updateCallStatus('active', call.id);
+            clearInterval(checkActive);
+          } else if (sipCall.status === 'registered' || sipCall.status === 'disconnected' || sipCall.status === 'error') {
+            clearInterval(checkActive);
+          }
+        }, 500);
+        // Timeout after 30s
+        setTimeout(() => clearInterval(checkActive), 30000);
+      } else {
+        endCall(call.id);
+        if (activeCalls.length === 0) setStatusAvailable();
+      }
     }
-  }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart, canAddCall, activeCalls.length, setStatusBusy, setStatusAvailable]);
+  }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart, canAddCall, activeCalls.length, setStatusBusy, setStatusAvailable, sipCall]);
 
   const handleEndCall = useCallback(async () => {
     if (currentCall?.channel === 'webrtc') {
       conversation.endSession();
     } else if (currentCall?.channel === 'wavoip') {
       await wavoip.endCall();
+    } else if (currentCall?.channel === 'sip') {
+      sipCall.endCall();
     }
     
     if (currentCall) {
@@ -302,7 +345,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     if (activeCalls.length <= 1) {
       setStatusAvailable();
     }
-  }, [currentCall, conversation, wavoip, endCall, onCallEnd, activeCalls.length, setStatusAvailable]);
+  }, [currentCall, conversation, wavoip, sipCall, endCall, onCallEnd, activeCalls.length, setStatusAvailable]);
 
   const handleToggleVolume = useCallback(async () => {
     const newVolume = volume > 0 ? 0 : 1;
@@ -315,13 +358,20 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
 
   const handleMuteToggle = useCallback(() => {
     toggleMute();
+    if (currentCall?.channel === 'sip') {
+      sipCall.toggleMute(!currentCall.isMuted);
+    }
     toast.info(currentCall?.isMuted ? 'Microfone ativado' : 'Microfone desativado');
-  }, [toggleMute, currentCall]);
+  }, [toggleMute, currentCall, sipCall]);
 
   const handleHoldToggle = useCallback(() => {
     toggleHold();
+    if (currentCall?.channel === 'sip') {
+      sipCall.toggleHold(!currentCall.isOnHold);
+    }
     toast.info(currentCall?.isOnHold ? 'Chamada retomada' : 'Chamada em espera');
-  }, [toggleHold, currentCall]);
+  }, [toggleHold, currentCall, sipCall]);
+
 
   const handleRecordToggle = useCallback(() => {
     toggleRecording();
