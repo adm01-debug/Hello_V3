@@ -196,9 +196,9 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
 
   const handleDigitPress = (digit: string) => {
     setPhoneNumber(prev => prev + digit);
-    // Play DTMF tone simulation
-    if (isInCall && currentCall?.channel !== 'webrtc') {
-      // TODO: Send DTMF through appropriate channel
+    // Send DTMF through appropriate channel
+    if (isInCall && currentCall?.channel === 'sip') {
+      sipCall.sendDTMF(digit);
     }
   };
 
