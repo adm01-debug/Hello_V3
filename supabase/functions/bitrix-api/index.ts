@@ -40,16 +40,6 @@ serve(async (req) => {
       });
     }
 
-    const webhookUrl = Deno.env.get('BITRIX_WEBHOOK_URL');
-    
-    if (!webhookUrl) {
-      console.error('BITRIX_WEBHOOK_URL not configured');
-      return new Response(
-        JSON.stringify({ error: 'Serviço não configurado' }),
-        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
     const body = await req.json() as BitrixRequest;
     
     if (!body.action || typeof body.action !== 'string') {
@@ -60,6 +50,24 @@ serve(async (req) => {
     }
 
     const { action, params } = body;
+
+    const webhookUrl = Deno.env.get('BITRIX_WEBHOOK_URL');
+    if (!webhookUrl) {
+      console.error('BITRIX_WEBHOOK_URL not configured');
+
+      if (action === 'get_user') {
+        return new Response(
+          JSON.stringify({ success: true, configured: false, message: 'Serviço não configurado' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      return new Response(
+        JSON.stringify({ error: 'Serviço não configurado', configured: false }),
+        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     console.log(`Bitrix API action: ${action} by user: ${user.id}`);
 
     let endpoint = '';
