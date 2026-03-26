@@ -365,10 +365,6 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     toast.info(currentCall?.isOnHold ? 'Chamada retomada' : 'Chamada em espera');
   }, [toggleHold, currentCall, sipCall]);
 
-  const handleHoldToggle = useCallback(() => {
-    toggleHold();
-    toast.info(currentCall?.isOnHold ? 'Chamada retomada' : 'Chamada em espera');
-  }, [toggleHold, currentCall]);
 
   const handleRecordToggle = useCallback(() => {
     toggleRecording();
