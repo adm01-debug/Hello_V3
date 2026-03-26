@@ -46,11 +46,16 @@ serve(async (req) => {
     }
 
     const body = await req.json();
-    const { agentId } = body;
+    const { agentId, useDefaultAgent } = body;
 
-    if (!agentId || typeof agentId !== 'string') {
+    // Allow either explicit agentId or useDefaultAgent flag
+    const ELEVENLABS_AGENT_ID = Deno.env.get("ELEVENLABS_AGENT_ID");
+    const resolvedAgentId = agentId || (useDefaultAgent ? ELEVENLABS_AGENT_ID : null);
+
+    if (!resolvedAgentId || typeof resolvedAgentId !== 'string') {
+      console.error("No agent ID provided and no default configured");
       return new Response(
-        JSON.stringify({ error: "Dados inválidos" }),
+        JSON.stringify({ error: "Agent ID não configurado. Configure ELEVENLABS_AGENT_ID ou forneça um agentId." }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
