@@ -1,12 +1,7 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { corsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
-};
-
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -14,6 +9,7 @@ serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabaseAnon = Deno.env.get('SUPABASE_ANON_KEY')!;
     
     // Get the authorization header to identify the admin
     const authHeader = req.headers.get('Authorization');
@@ -24,8 +20,8 @@ serve(async (req) => {
       );
     }
 
-    // Create client with user's token to verify they're an admin
-    const userClient = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
+    // SEC-002 FIX: Use user client for auth AND admin check (not service role)
+    const userClient = createClient(supabaseUrl, supabaseAnon, {
       global: { headers: { Authorization: authHeader } }
     });
 
@@ -40,9 +36,14 @@ serve(async (req) => {
     // Create service client for admin operations
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check if user is admin
-    const { data: isAdmin } = await supabase.rpc('is_admin_or_supervisor');
-    if (!isAdmin) {
+    // SEC-002 FIX: Check admin role via direct query instead of RPC that needs auth.uid()
+    const { data: adminRole } = await supabase
+      .from('user_profiles')
+      .select('role')
+      .eq('id', adminUser.id)
+      .single();
+
+    if (!adminRole || !['admin', 'supervisor'].includes(adminRole.role)) {
       return new Response(
         JSON.stringify({ error: 'Admin privileges required' }),
         { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -67,14 +68,12 @@ serve(async (req) => {
       .single();
 
     if (fetchError || !resetRequest) {
-      console.error('Request not found:', fetchError);
       return new Response(
         JSON.stringify({ error: 'Reset request not found' }),
         { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Check if request is still pending
     if (resetRequest.status !== 'pending') {
       return new Response(
         JSON.stringify({ error: 'Request already processed' }),
@@ -82,7 +81,6 @@ serve(async (req) => {
       );
     }
 
-    // Check if expired
     if (new Date(resetRequest.expires_at) < new Date()) {
       await supabase
         .from('password_reset_requests')
@@ -95,7 +93,7 @@ serve(async (req) => {
       );
     }
 
-    // Generate password reset link using Supabase Auth Admin API
+    // Generate password reset link
     const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
       type: 'recovery',
       email: resetRequest.user_email,

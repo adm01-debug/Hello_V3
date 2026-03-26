@@ -1,9 +1,4 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+import { corsHeaders } from "../_shared/cors.ts";
 
 interface BlockedIPNotification {
   ip: string;
@@ -14,28 +9,34 @@ interface BlockedIPNotification {
   timestamp: string;
 }
 
-const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
+Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { ip, email, country, city, userAgent, timestamp }: BlockedIPNotification = await req.json();
+    const data: BlockedIPNotification = await req.json();
+    
+    // Input validation
+    if (!data.ip || !data.email || !data.timestamp) {
+      return new Response(
+        JSON.stringify({ error: "Missing required fields: ip, email, timestamp" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
 
     console.log("[BLOCKED-IP] Tentativa de acesso bloqueado:", {
-      ip,
-      email,
-      country,
-      city,
-      userAgent,
-      timestamp,
+      ip: data.ip,
+      email: data.email,
+      country: data.country,
+      city: data.city,
+      timestamp: data.timestamp,
     });
 
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL");
+    
     if (!ADMIN_EMAIL) {
-      console.log("[BLOCKED-IP] ADMIN_EMAIL não configurado. Email não enviado.");
       return new Response(
         JSON.stringify({ success: true, message: "ADMIN_EMAIL not configured", logged: true, emailSent: false }),
         { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
@@ -43,26 +44,16 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     if (!RESEND_API_KEY) {
-      console.log("[BLOCKED-IP] RESEND_API_KEY não configurada. Email não enviado, mas evento registrado.");
       return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: "Evento registrado. Email não enviado (API key não configurada).",
-          logged: true,
-          emailSent: false 
-        }),
-        {
-          status: 200,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        JSON.stringify({ success: true, message: "RESEND_API_KEY not configured", logged: true, emailSent: false }),
+        { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
-    const locationInfo = country && city 
-      ? `${city}, ${country}` 
-      : country || "Localização desconhecida";
+    const locationInfo = data.country && data.city 
+      ? `${data.city}, ${data.country}` 
+      : data.country || "Localização desconhecida";
 
-    // Send email using Resend API directly via fetch
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -74,61 +65,22 @@ const handler = async (req: Request): Promise<Response> => {
         to: [ADMIN_EMAIL],
         subject: "🚨 Alerta: Tentativa de Acesso Bloqueado por IP",
         html: `
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <style>
-              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-              .header { background: linear-gradient(135deg, #dc2626, #991b1b); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-              .content { background: #f9fafb; padding: 20px; border: 1px solid #e5e7eb; }
-              .footer { background: #1f2937; color: #9ca3af; padding: 15px; border-radius: 0 0 8px 8px; font-size: 12px; }
-              .info-row { display: flex; padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
-              .label { font-weight: bold; width: 120px; color: #6b7280; }
-              .value { color: #111827; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <div class="header">
-                <h1 style="margin: 0;">🚨 Acesso Bloqueado</h1>
-                <p style="margin: 5px 0 0 0; opacity: 0.9;">Uma tentativa de login foi bloqueada por IP não autorizado</p>
-              </div>
-              <div class="content">
-                <div class="info-row">
-                  <span class="label">Email:</span>
-                  <span class="value">${email}</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">Endereço IP:</span>
-                  <span class="value" style="font-family: monospace; background: #fee2e2; padding: 2px 8px; border-radius: 4px;">${ip}</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">Localização:</span>
-                  <span class="value">📍 ${locationInfo}</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">Data/Hora:</span>
-                  <span class="value">${new Date(timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
-                </div>
-                <div class="info-row" style="border-bottom: none;">
-                  <span class="label">User Agent:</span>
-                  <span class="value" style="font-size: 11px; word-break: break-all;">${userAgent || 'Não disponível'}</span>
-                </div>
-                <div style="margin-top: 20px; padding: 15px; background: #fef3c7; border-radius: 8px; border-left: 4px solid #f59e0b;">
-                  <strong>⚠️ Ação Recomendada:</strong>
-                  <p style="margin: 5px 0 0 0; font-size: 14px;">
-                    Verifique se este acesso é legítimo. Se for um usuário autorizado, adicione o IP à lista de permissões.
-                  </p>
-                </div>
-              </div>
-              <div class="footer">
-                <p style="margin: 0;">Este é um email automático do sistema de segurança.</p>
-                <p style="margin: 5px 0 0 0;">Não responda a este email.</p>
-              </div>
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #dc2626, #991b1b); color: white; padding: 20px; border-radius: 8px 8px 0 0;">
+              <h1 style="margin: 0;">🚨 Acesso Bloqueado</h1>
+              <p style="margin: 5px 0 0 0; opacity: 0.9;">Tentativa de login bloqueada por IP não autorizado</p>
             </div>
-          </body>
-          </html>
+            <div style="background: #f9fafb; padding: 20px; border: 1px solid #e5e7eb;">
+              <p><strong>Email:</strong> ${data.email}</p>
+              <p><strong>IP:</strong> <code>${data.ip}</code></p>
+              <p><strong>Localização:</strong> 📍 ${locationInfo}</p>
+              <p><strong>Data/Hora:</strong> ${new Date(data.timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</p>
+              <p><strong>User Agent:</strong> <small>${data.userAgent || 'N/A'}</small></p>
+            </div>
+            <div style="background: #1f2937; color: #9ca3af; padding: 15px; border-radius: 0 0 8px 8px; font-size: 12px;">
+              <p style="margin: 0;">Email automático do sistema de segurança.</p>
+            </div>
+          </div>
         `,
       }),
     });
@@ -138,49 +90,21 @@ const handler = async (req: Request): Promise<Response> => {
     if (!emailResponse.ok) {
       console.error("[BLOCKED-IP] Erro ao enviar email:", emailResult);
       return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: emailResult.message || "Erro ao enviar email",
-          logged: true,
-          emailSent: false 
-        }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        JSON.stringify({ success: false, error: emailResult.message, logged: true, emailSent: false }),
+        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
-    console.log("[BLOCKED-IP] Email enviado com sucesso:", emailResult);
-
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: "Notificação enviada com sucesso",
-        logged: true,
-        emailSent: true,
-        emailId: emailResult.id 
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      JSON.stringify({ success: true, logged: true, emailSent: true, emailId: emailResult.id }),
+      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
-  } catch (error: any) {
-    console.error("[BLOCKED-IP] Erro ao processar notificação:", error);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error("[BLOCKED-IP] Erro:", errorMessage);
     return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error.message,
-        logged: true,
-        emailSent: false 
-      }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      JSON.stringify({ success: false, error: errorMessage, logged: true, emailSent: false }),
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
-};
-
-serve(handler);
+});

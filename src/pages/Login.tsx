@@ -132,7 +132,7 @@ export default function Login() {
       }
 
       if (data?.user) {
-        const ipResult = await validateIP(data.user.id, email);
+        const ipResult = await validateIP();
         if (!ipResult.allowed) {
           await signOut();
           setIpBlocked(true);
