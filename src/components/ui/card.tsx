@@ -19,6 +19,10 @@ const cardVariants = cva(
         warning: "border-warning/30 bg-warning/5",
         destructive: "border-destructive/30 bg-destructive/5",
         info: "border-info/30 bg-info/5",
+        // Neon variants
+        neon: "bg-card/60 backdrop-blur-xl border-primary/20 shadow-[0_0_30px_-5px_hsl(var(--primary)/0.2)]",
+        "neon-interactive": "bg-card/60 backdrop-blur-xl border-border/30 shadow-sm hover:border-primary/30 hover:shadow-[0_0_25px_-5px_hsl(var(--primary)/0.25)] transition-all duration-300 cursor-pointer hover:-translate-y-1",
+        "glass-neon": "bg-card/40 backdrop-blur-2xl border-primary/15 shadow-[0_0_40px_-5px_hsl(var(--primary)/0.15),inset_0_1px_0_0_rgb(255_255_255/0.05)]",
       },
       padding: {
         default: "",

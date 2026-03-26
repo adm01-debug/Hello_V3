@@ -358,14 +358,16 @@ export default function Alerts() {
   const callAlertTypes = ['negative_sentiment', 'low_satisfaction', 'high_urgency'];
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
+    <div className="container mx-auto p-6 space-y-6 relative">
+      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
+      <div className="relative space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Central de Alertas</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gradient">Central de Alertas</h1>
           <p className="text-muted-foreground">Gerencie todos os alertas de chamadas e contatos</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={checkForNewAlerts} disabled={isCheckingAlerts}>
+          <Button variant="neon" onClick={checkForNewAlerts} disabled={isCheckingAlerts}>
             <RefreshCw className={`h-4 w-4 mr-2 ${isCheckingAlerts ? 'animate-spin' : ''}`} />
             Verificar Alertas
           </Button>
@@ -722,6 +724,7 @@ export default function Alerts() {
           </Card>
         </TabsContent>
       </Tabs>
+      </div>
     </div>
   );
 }

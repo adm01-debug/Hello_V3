@@ -82,14 +82,16 @@ const History = () => {
   }, [callHistory]);
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 relative">
+      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
+      <div className="relative space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Histórico de Chamadas</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Histórico de Chamadas</h1>
           <p className="text-muted-foreground">Visualize e exporte seu histórico completo</p>
         </div>
         
-        <Button variant="outline" className="gap-2">
+        <Button variant="neon" className="gap-2">
           <Download className="h-4 w-4" />
           Exportar CSV
         </Button>
@@ -101,28 +103,28 @@ const History = () => {
           [1, 2, 3, 4].map(i => <Skeleton key={i} className="h-20 rounded-lg" />)
         ) : (
           <>
-            <Card>
+            <Card variant="neon-interactive">
               <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">Total de Chamadas</p>
-                <p className="text-2xl font-bold">{stats.total}</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Total de Chamadas</p>
+                <p className="text-2xl font-bold metric-value">{stats.total}</p>
               </CardContent>
             </Card>
-            <Card>
+            <Card variant="neon-interactive">
               <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">Atendidas</p>
-                <p className="text-2xl font-bold text-success">{stats.completed}</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Atendidas</p>
+                <p className="text-2xl font-bold text-success metric-value">{stats.completed}</p>
               </CardContent>
             </Card>
-            <Card>
+            <Card variant="neon-interactive">
               <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">Perdidas</p>
-                <p className="text-2xl font-bold text-destructive">{stats.missed}</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Perdidas</p>
+                <p className="text-2xl font-bold text-destructive metric-value">{stats.missed}</p>
               </CardContent>
             </Card>
-            <Card>
+            <Card variant="neon-interactive">
               <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">Duração Média</p>
-                <p className="text-2xl font-bold">{formatDuration(stats.avgDuration)}</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Duração Média</p>
+                <p className="text-2xl font-bold metric-value">{formatDuration(stats.avgDuration)}</p>
               </CardContent>
             </Card>
           </>
@@ -155,7 +157,7 @@ const History = () => {
       </div>
 
       {/* Call List */}
-      <Card>
+      <Card variant="glass-neon">
         <CardHeader>
           <CardTitle className="text-lg">
             Chamadas ({filteredCalls.length})
@@ -174,7 +176,7 @@ const History = () => {
                 return (
                   <div
                     key={call.id}
-                    className="flex items-center justify-between rounded-lg border border-border bg-card p-4 transition-colors hover:bg-accent/50"
+                    className="flex items-center justify-between rounded-xl border border-border/20 bg-card/40 backdrop-blur-sm p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-[0_0_15px_hsl(var(--primary)/0.08)]"
                   >
                     <div className="flex items-center gap-4">
                       <div className={cn(
@@ -227,6 +229,7 @@ const History = () => {
           )}
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };

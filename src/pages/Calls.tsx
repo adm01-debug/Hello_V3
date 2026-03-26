@@ -23,9 +23,11 @@ const Calls = () => {
   });
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 relative">
+      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
+      <div className="relative space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Central de Chamadas</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Central de Chamadas</h1>
         <p className="text-muted-foreground">Softphone multi-canal unificado</p>
       </div>
 
@@ -167,6 +169,7 @@ const Calls = () => {
             </CardContent>
           </Card>
         </div>
+      </div>
       </div>
     </div>
   );
