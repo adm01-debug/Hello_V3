@@ -1,4 +1,4 @@
-import { Phone, Clock, CheckCircle, Users, Activity } from 'lucide-react';
+import { Phone, Clock, CheckCircle, Users, Activity, Zap } from 'lucide-react';
 import { StatsCard } from '@/components/dashboard/StatsCard';
 import { CallVolumeChart } from '@/components/dashboard/CallVolumeChart';
 import { RecentCalls } from '@/components/dashboard/RecentCalls';
@@ -23,25 +23,28 @@ const Index = () => {
   const { data: stats, isLoading } = useDashboardStats();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      {/* Ambient neon mesh background */}
+      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-40" />
+
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="relative flex items-start justify-between">
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gradient">Dashboard</h1>
           <p className="text-sm text-muted-foreground">Visão geral do seu centro de atendimento</p>
         </div>
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/20">
-          <Activity className="h-3.5 w-3.5 text-success animate-pulse" />
-          <span className="text-xs font-medium text-success">Sistema ativo</span>
+        <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full glass-neon">
+          <Zap className="h-3.5 w-3.5 text-primary animate-glow-pulse" />
+          <span className="text-xs font-semibold text-primary">Sistema ativo</span>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+      <div className="relative grid gap-4 grid-cols-2 lg:grid-cols-4">
         {isLoading ? (
           <>
             {[1, 2, 3, 4].map(i => (
-              <Skeleton key={i} className="h-[120px] rounded-lg" />
+              <Skeleton key={i} className="h-[130px] rounded-xl" />
             ))}
           </>
         ) : stats ? (
@@ -52,6 +55,7 @@ const Index = () => {
               change={stats.totalCallsChange}
               changeLabel="vs ontem"
               icon={<Phone className="h-5 w-5" />}
+              glowColor="primary"
             />
             <StatsCard
               title="Duração Média"
@@ -59,6 +63,7 @@ const Index = () => {
               change={stats.durationChange}
               changeLabel="vs ontem"
               icon={<Clock className="h-5 w-5" />}
+              glowColor="info"
             />
             <StatsCard
               title="Taxa Atendimento"
@@ -66,24 +71,26 @@ const Index = () => {
               change={stats.rateChange}
               changeLabel="vs ontem"
               icon={<CheckCircle className="h-5 w-5" />}
+              glowColor="success"
             />
             <StatsCard
               title="Agentes Ativos"
               value={`${stats.activeAgents}/${stats.totalAgents}`}
               icon={<Users className="h-5 w-5" />}
+              glowColor="warning"
             />
           </>
         ) : null}
       </div>
 
       {/* Active Calls & Hold Trend */}
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="relative grid gap-4 lg:grid-cols-2">
         <ActiveCallsRealtime />
         <HoldTrendChart />
       </div>
 
       {/* Charts and Queue */}
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="relative grid gap-4 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <CallVolumeChart />
         </div>
@@ -91,13 +98,13 @@ const Index = () => {
       </div>
 
       {/* Callbacks & Supervisor */}
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="relative grid gap-4 lg:grid-cols-2">
         <ScheduledCallbacksList />
         <SupervisorPanel />
       </div>
 
       {/* Recent & Agents */}
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="relative grid gap-4 lg:grid-cols-2">
         <RecentCalls />
         <AgentsList />
       </div>

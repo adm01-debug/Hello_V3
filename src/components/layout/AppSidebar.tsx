@@ -1,64 +1,9 @@
 import { 
-  LayoutDashboard, 
-  Phone, 
-  Users, 
-  Clock, 
-  Settings,
-  Headphones,
-  BarChart3,
-  Bot,
-  FileText,
-  PieChart,
-  Bell,
-  Trophy,
-  Gauge,
-  Brain,
-  Disc,
-  Timer,
-  AlertTriangle,
-  Calendar,
-  Activity,
-  History,
-  Shield,
-  ShieldCheck,
-  Key,
-  Monitor,
-  Lock,
-  Fingerprint,
-  Globe,
-  PhoneOutgoing,
-  MessageCircle,
-  Siren,
-  ListChecks,
-  ScrollText,
-  Eye,
-  FileBarChart,
-  UserCog,
-  ChevronDown,
-  GitBranch,
-  Voicemail,
-  Video,
-  Monitor as MonitorIcon,
-  Printer,
-  ArrowLeftRight,
-  PhoneCall,
-  Tag,
-  QrCode,
-  FolderSync,
+  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarHeader,
-  SidebarFooter,
-  useSidebar,
+  Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar,
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -141,7 +86,7 @@ function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProp
     return (
       <SidebarGroup>
         <SidebarGroupContent>
-          <SidebarMenu className="space-y-1">
+          <SidebarMenu className="space-y-0.5">
             {items.map((item) => (
               <NavItem key={item.url} item={item} collapsed={collapsed} />
             ))}
@@ -154,16 +99,16 @@ function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProp
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <SidebarGroup>
-        <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/50 hover:text-sidebar-foreground/80 transition-colors">
+        <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-sidebar-foreground/40 hover:text-sidebar-primary transition-colors">
           {label}
           <ChevronDown className={cn(
-            "h-3.5 w-3.5 transition-transform duration-200",
+            "h-3 w-3 transition-transform duration-300",
             open && "rotate-180"
           )} />
         </CollapsibleTrigger>
         <CollapsibleContent>
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-1 mt-1">
+            <SidebarMenu className="space-y-0.5 mt-1">
               {items.map((item) => (
                 <NavItem key={item.url} item={item} collapsed={collapsed} />
               ))}
@@ -186,12 +131,25 @@ function NavItem({ item, collapsed }: { item: { title: string; url: string; icon
         <NavLink
           to={item.url}
           className={cn(
-            'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground transition-all hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-            active && 'bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground'
+            'flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-all duration-200',
+            'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+            active && [
+              'bg-sidebar-primary/15 text-sidebar-primary',
+              'shadow-[inset_0_0_20px_hsl(var(--sidebar-primary)/0.08),0_0_15px_hsl(var(--sidebar-primary)/0.1)]',
+              'border border-sidebar-primary/20',
+              'hover:bg-sidebar-primary/20 hover:text-sidebar-primary',
+            ]
           )}
         >
-          <Icon className="h-5 w-5 shrink-0" />
-          {!collapsed && <span className="font-medium">{item.title}</span>}
+          <Icon className={cn(
+            "h-4 w-4 shrink-0 transition-all duration-200",
+            active && "drop-shadow-[0_0_6px_hsl(var(--sidebar-primary)/0.6)]"
+          )} />
+          {!collapsed && (
+            <span className={cn("font-medium", active && "font-semibold")}>
+              {item.title}
+            </span>
+          )}
         </NavLink>
       </SidebarMenuButton>
     </SidebarMenuItem>
@@ -204,47 +162,53 @@ export function AppSidebar() {
   const { profile } = useAuthContext();
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-sidebar-border">
-      <SidebarHeader className="border-b border-sidebar-border p-4">
+    <Sidebar collapsible="icon" className="border-r border-sidebar-border/50">
+      <SidebarHeader className="border-b border-sidebar-border/50 p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sidebar-primary">
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-sidebar-primary shadow-[0_0_20px_hsl(var(--sidebar-primary)/0.4)]">
             <Headphones className="h-5 w-5 text-sidebar-primary-foreground" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-lg font-bold text-sidebar-foreground">VoIP Panel</span>
-              <span className="text-xs text-sidebar-foreground/60">Central de Atendimento</span>
+              <span className="text-base font-bold text-sidebar-foreground text-display tracking-wider">
+                VoIP Panel
+              </span>
+              <span className="text-[10px] uppercase tracking-widest text-sidebar-primary/60">
+                Central de Atendimento
+              </span>
             </div>
           )}
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-3 py-4 scrollbar-thin">
+      <SidebarContent className="px-2 py-3 scrollbar-thin">
         <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen />
         <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} />
         <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} />
         <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} />
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border p-4">
+      <SidebarFooter className="border-t border-sidebar-border/50 p-4">
         <div className={cn(
           'flex items-center gap-3',
           collapsed && 'justify-center'
         )}>
           <div className="relative">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-sidebar-accent text-sm font-medium text-sidebar-accent-foreground">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-sidebar-primary/15 text-sm font-bold text-sidebar-primary border border-sidebar-primary/25 shadow-[0_0_12px_hsl(var(--sidebar-primary)/0.2)]">
               {profile?.full_name
                 ? profile.full_name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
                 : profile?.email?.slice(0, 2).toUpperCase() || '??'}
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-sidebar-background bg-success" />
+            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-sidebar-background status-dot-online" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
               <span className="text-sm font-medium text-sidebar-foreground">
                 {profile?.full_name || profile?.email || 'Usuário'}
               </span>
-              <span className="text-xs text-sidebar-foreground/60 capitalize">{profile?.role || 'agent'}</span>
+              <span className="text-[10px] uppercase tracking-wider text-sidebar-primary/60">
+                {profile?.role || 'agent'}
+              </span>
             </div>
           )}
         </div>
