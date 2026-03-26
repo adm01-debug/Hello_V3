@@ -164,6 +164,13 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     }
   }, [wavoip.isConfigured, configureChannel]);
 
+  // Auto-connect SIP when channel is selected
+  useEffect(() => {
+    if (activeChannel === 'sip' && !sipCall.isRegistered && sipCall.status === 'disconnected') {
+      sipCall.connect();
+    }
+  }, [activeChannel, sipCall.isRegistered, sipCall.status]);
+
   // ElevenLabs conversation hook for WebRTC
   const conversation = useConversation({
     onConnect: () => {
