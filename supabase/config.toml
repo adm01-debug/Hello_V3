@@ -71,3 +71,18 @@ verify_jwt = false
 
 [functions.approve-password-reset]
 verify_jwt = true
+
+[functions.send-notification]
+verify_jwt = true
+
+[functions.process-digest]
+verify_jwt = true
+
+[functions.database-backup]
+verify_jwt = true
+
+[functions.database-cleanup]
+verify_jwt = true
+
+[functions.sip-config]
+verify_jwt = true
