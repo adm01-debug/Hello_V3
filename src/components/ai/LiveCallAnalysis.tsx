@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef, forwardRef } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   Bot, 
   TrendingUp, 
