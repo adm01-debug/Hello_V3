@@ -29,7 +29,7 @@ export function useSipCall() {
   });
 
   const uaRef = useRef<JsSIP.UA | null>(null);
-  const sessionRef = useRef<JsSIP.RTCSession | null>(null);
+  const sessionRef = useRef<RTCSession | null>(null);
   const durationRef = useRef<number | null>(null);
   const remoteAudioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -67,7 +67,7 @@ export function useSipCall() {
   }, [stopDurationTimer]);
 
   // Handle incoming remote stream
-  const attachRemoteStream = useCallback((session: JsSIP.RTCSession) => {
+  const attachRemoteStream = useCallback((session: RTCSession) => {
     const pc = session.connection;
     if (!pc || !remoteAudioRef.current) return;
 
@@ -104,7 +104,7 @@ export function useSipCall() {
 
       // Configure JsSIP
       const socket = new JsSIP.WebSocketInterface(wsServer);
-      const configuration: JsSIP.UAConfiguration = {
+      const configuration: UAConfiguration = {
         sockets: [socket],
         uri: `sip:${username}@${server}`,
         password: password,
@@ -167,7 +167,7 @@ export function useSipCall() {
 
       // Handle incoming calls
       ua.on('newRTCSession', (e: any) => {
-        const session = e.session as JsSIP.RTCSession;
+        const session = e.session as RTCSession;
         
         if (session.direction === 'incoming') {
           console.log('[SIP] Incoming call from:', session.remote_identity?.uri?.toString());
@@ -227,7 +227,7 @@ export function useSipCall() {
 
       console.log(`[SIP] Calling ${cleanNumber}`);
 
-      const callOptions: JsSIP.CallOptions = {
+      const callOptions: CallOptions = {
         mediaConstraints: { audio: true, video: false },
         pcConfig: {
           iceServers: [
@@ -240,7 +240,8 @@ export function useSipCall() {
         },
       };
 
-      const session = ua.call(`sip:${cleanNumber}@${ua.configuration.uri?.host}`, callOptions);
+      const sipUri = `sip:${cleanNumber}@${server}`;
+      const session = ua.call(sipUri, callOptions);
       sessionRef.current = session;
 
       session.on('progress', () => {
