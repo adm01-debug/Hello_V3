@@ -16,7 +16,7 @@ export default {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
-        display: ["Space Grotesk", "system-ui", "sans-serif"],
+        display: ["Orbitron", "Space Grotesk", "system-ui", "sans-serif"],
       },
       fontSize: {
         "2xs": ["0.625rem", { lineHeight: "0.875rem" }],
@@ -41,6 +41,7 @@ export default {
           foreground: "hsl(var(--primary-foreground))",
           hover: "hsl(var(--primary-hover))",
           muted: "hsl(var(--primary-muted))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -122,10 +123,12 @@ export default {
         "soft-md": "var(--shadow-md)",
         "soft-lg": "var(--shadow-lg)",
         "soft-xl": "var(--shadow-xl)",
-        "glow-primary": "0 0 20px hsl(var(--primary) / 0.3)",
-        "glow-success": "0 0 20px hsl(var(--success) / 0.4)",
-        "glow-warning": "0 0 20px hsl(var(--warning) / 0.4)",
-        "glow-destructive": "0 0 20px hsl(var(--destructive) / 0.4)",
+        "glow-primary": "0 0 25px hsl(var(--primary) / 0.35)",
+        "glow-success": "0 0 25px hsl(var(--success) / 0.4)",
+        "glow-warning": "0 0 25px hsl(var(--warning) / 0.4)",
+        "glow-destructive": "0 0 25px hsl(var(--destructive) / 0.4)",
+        "neon": "var(--shadow-neon)",
+        "neon-purple": "var(--shadow-neon-purple)",
       },
       keyframes: {
         "accordion-down": {
