@@ -157,7 +157,7 @@ const History = () => {
       </div>
 
       {/* Call List */}
-      <Card>
+      <Card variant="glass-neon">
         <CardHeader>
           <CardTitle className="text-lg">
             Chamadas ({filteredCalls.length})
@@ -176,7 +176,7 @@ const History = () => {
                 return (
                   <div
                     key={call.id}
-                    className="flex items-center justify-between rounded-lg border border-border bg-card p-4 transition-colors hover:bg-accent/50"
+                    className="flex items-center justify-between rounded-xl border border-border/20 bg-card/40 backdrop-blur-sm p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-[0_0_15px_hsl(var(--primary)/0.08)]"
                   >
                     <div className="flex items-center gap-4">
                       <div className={cn(
