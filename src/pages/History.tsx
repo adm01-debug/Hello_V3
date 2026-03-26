@@ -229,6 +229,7 @@ const History = () => {
           )}
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
