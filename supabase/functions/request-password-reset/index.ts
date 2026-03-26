@@ -1,12 +1,7 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { corsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-forwarded-for, x-real-ip, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
-};
-
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -19,12 +14,15 @@ serve(async (req) => {
     const body = await req.json();
     const { email } = body;
 
-    if (!email) {
+    if (!email || typeof email !== 'string' || email.length > 255) {
       return new Response(
-        JSON.stringify({ error: 'Email is required' }),
+        JSON.stringify({ error: 'Valid email is required' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    // Sanitize email
+    const sanitizedEmail = email.trim().toLowerCase();
 
     // Get IP address
     const forwardedFor = req.headers.get('x-forwarded-for');
@@ -36,7 +34,6 @@ serve(async (req) => {
     
     if (userError) {
       console.error('Error listing users:', userError);
-      // Don't reveal if user exists
       return new Response(
         JSON.stringify({ 
           success: true, 
@@ -46,11 +43,10 @@ serve(async (req) => {
       );
     }
 
-    const user = users.users.find(u => u.email?.toLowerCase() === email.toLowerCase());
+    const user = users.users.find(u => u.email?.toLowerCase() === sanitizedEmail);
     
     if (!user) {
-      // Don't reveal if user exists
-      console.log(`Password reset requested for non-existent email: ${email}`);
+      console.log(`Password reset requested for non-existent email`);
       return new Response(
         JSON.stringify({ 
           success: true, 
@@ -64,7 +60,7 @@ serve(async (req) => {
     const { data: existingRequest } = await supabase
       .from('password_reset_requests')
       .select('*')
-      .eq('user_email', email.toLowerCase())
+      .eq('user_email', sanitizedEmail)
       .eq('status', 'pending')
       .gt('expires_at', new Date().toISOString())
       .maybeSingle();
@@ -84,11 +80,11 @@ serve(async (req) => {
       .from('password_reset_requests')
       .insert({
         user_id: user.id,
-        user_email: email.toLowerCase(),
+        user_email: sanitizedEmail,
         status: 'pending',
         ip_address: clientIp,
         user_agent: req.headers.get('user-agent'),
-        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 hours
+        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
       });
 
     if (insertError) {
@@ -104,16 +100,14 @@ serve(async (req) => {
       alert_type: 'password_reset_request',
       severity: 'info',
       title: 'Nova Solicitação de Reset de Senha',
-      description: `O usuário ${email} solicitou redefinição de senha. Aguardando aprovação.`,
-      source_user_email: email,
+      description: `Solicitação de redefinição de senha recebida. Aguardando aprovação.`,
+      source_user_email: sanitizedEmail,
       source_user_id: user.id,
       trigger_data: {
         ip_address: clientIp,
         user_agent: req.headers.get('user-agent')
       }
     });
-
-    console.log(`Password reset request created for ${email}`);
 
     return new Response(
       JSON.stringify({ 

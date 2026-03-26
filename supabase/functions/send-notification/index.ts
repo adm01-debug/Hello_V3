@@ -1,10 +1,5 @@
+import { corsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
 
 interface NotificationPayload {
   user_id: string;
@@ -37,9 +32,10 @@ Deno.serve(async (req) => {
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseAnon = Deno.env.get("SUPABASE_ANON_KEY")!;
     
     // Verify caller
-    const supabaseAuth = createClient(supabaseUrl, Deno.env.get("SUPABASE_ANON_KEY")!, {
+    const supabaseAuth = createClient(supabaseUrl, supabaseAnon, {
       global: { headers: { Authorization: authHeader } },
     });
     const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
@@ -60,10 +56,17 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Use service role to insert notification for any user
+    // Input length validation
+    if (payload.title.length > 500 || payload.message.length > 5000) {
+      return new Response(
+        JSON.stringify({ error: "Title or message exceeds max length" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check user preferences (quiet hours, category enabled)
+    // Check user preferences
     const { data: prefs } = await supabaseAdmin
       .from("notification_preferences")
       .select("*")
@@ -71,7 +74,6 @@ Deno.serve(async (req) => {
       .maybeSingle();
 
     if (prefs) {
-      // Check category preference
       const categories = prefs.categories as Record<string, boolean>;
       const category = payload.category || "system";
       if (categories && categories[category] === false) {
@@ -81,7 +83,6 @@ Deno.serve(async (req) => {
         );
       }
 
-      // Check quiet hours
       if (prefs.quiet_hours_enabled && prefs.quiet_hours_start && prefs.quiet_hours_end) {
         const now = new Date();
         const currentTime = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
@@ -101,7 +102,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Insert notification with retry logic
+    // Insert notification with retry
     let retries = 3;
     let lastError: unknown = null;
     

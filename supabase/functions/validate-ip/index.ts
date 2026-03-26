@@ -1,13 +1,7 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { corsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-forwarded-for, x-real-ip, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
-};
-
-serve(async (req) => {
-  // Handle CORS preflight
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -15,26 +9,39 @@ serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
+    const supabaseAnon = Deno.env.get('SUPABASE_ANON_KEY')!;
+
+    // SEC-001 FIX: Extract userId from JWT, not from request body
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Authorization required' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const userClient = createClient(supabaseUrl, supabaseAnon, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const { data: { user }, error: authError } = await userClient.auth.getUser();
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid user session' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const userId = user.id;
+    const userEmail = user.email || '';
+
     // Get IP from various headers (proxy support)
     const forwardedFor = req.headers.get('x-forwarded-for');
     const realIp = req.headers.get('x-real-ip');
     const cfConnectingIp = req.headers.get('cf-connecting-ip');
     
-    let clientIp = cfConnectingIp || realIp || (forwardedFor ? forwardedFor.split(',')[0].trim() : null);
-    
-    // Parse body for user info
-    const body = await req.json();
-    const { userId, userEmail } = body;
-    
-    if (!userId) {
-      return new Response(
-        JSON.stringify({ error: 'User ID required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+    const clientIp = cfConnectingIp || realIp || (forwardedFor ? forwardedFor.split(',')[0].trim() : null);
 
-    // Create service client
+    // Create service client for admin queries
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     
     // Check if user has IP restriction enabled
@@ -63,7 +70,6 @@ serve(async (req) => {
     if (globalWhitelist && clientIp) {
       for (const entry of globalWhitelist) {
         if (entry.is_cidr) {
-          // Check CIDR using PostgreSQL
           const { data: cidrCheck } = await supabase.rpc('check_ip_in_cidr', {
             p_ip: clientIp,
             p_cidr: entry.ip_address
