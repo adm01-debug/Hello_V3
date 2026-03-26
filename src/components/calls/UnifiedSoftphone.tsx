@@ -316,13 +316,15 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
         if (activeCalls.length === 0) setStatusAvailable();
       }
     }
-  }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart, canAddCall, activeCalls.length, setStatusBusy, setStatusAvailable]);
+  }, [activeChannel, phoneNumber, initiateCall, updateCallStatus, conversation, endCall, onCallStart, canAddCall, activeCalls.length, setStatusBusy, setStatusAvailable, sipCall]);
 
   const handleEndCall = useCallback(async () => {
     if (currentCall?.channel === 'webrtc') {
       conversation.endSession();
     } else if (currentCall?.channel === 'wavoip') {
       await wavoip.endCall();
+    } else if (currentCall?.channel === 'sip') {
+      sipCall.endCall();
     }
     
     if (currentCall) {
