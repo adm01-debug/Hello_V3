@@ -1,16 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { 
-  Search, 
-  Star, 
-  Phone, 
-  Mail, 
-  Building2, 
-  MoreHorizontal,
-  Plus,
-  Filter,
-  RefreshCw,
-  CloudDownload,
-  Loader2
+  Search, Star, Phone, Mail, Building2, MoreHorizontal, Plus, Filter, RefreshCw, CloudDownload, Loader2, Users, Zap
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -23,6 +13,7 @@ import { useContacts, Contact } from '@/hooks/useContacts';
 import { useBitrix } from '@/hooks/useBitrix';
 import { ContactDetailSheet } from '@/components/contacts/ContactDetailSheet';
 import { CreateContactDialog } from '@/components/contacts/CreateContactDialog';
+import { motion } from 'framer-motion';
 
 const getInitials = (name: string) => {
   return name
@@ -31,6 +22,22 @@ const getInitials = (name: string) => {
     .join('')
     .toUpperCase()
     .slice(0, 2);
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15, scale: 0.97 },
+  show: { 
+    opacity: 1, y: 0, scale: 1,
+    transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] }
+  }
 };
 
 const Contacts = () => {
@@ -45,7 +52,6 @@ const Contacts = () => {
   const { contacts, isLoading, fetchContacts, deleteContact, createContact } = useContacts();
   const { isConfigured, getContacts: getBitrixContacts, isLoading: bitrixLoading } = useBitrix();
 
-  // Filter contacts
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(search.toLowerCase()) ||
     contact.phone?.includes(search) ||
@@ -82,7 +88,6 @@ const Contacts = () => {
     }
   };
 
-  // Sync with Bitrix24
   const syncWithBitrix = useCallback(async () => {
     if (!isConfigured) {
       toast.error('Bitrix24 não configurado', {
@@ -105,7 +110,6 @@ const Contacts = () => {
         const phone = bc.PHONE?.[0]?.VALUE;
         const email = bc.EMAIL?.[0]?.VALUE;
         
-        // Check if contact already exists by external_id
         const exists = contacts.find(c => c.external_id === bc.ID);
         if (!exists) {
           await createContact({
@@ -132,113 +136,136 @@ const Contacts = () => {
   }, [isConfigured, getBitrixContacts, contacts, createContact, fetchContacts]);
 
   const ContactCard = ({ contact }: { contact: Contact }) => (
-    <Card 
-      className="group cursor-pointer transition-all hover:border-primary/50 hover:shadow-md"
-      onClick={() => handleContactClick(contact)}
-    >
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-lg font-semibold text-primary">
-                {getInitials(contact.name)}
-              </div>
-              {contact.source === 'bitrix24' && (
-                <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-orange-500 flex items-center justify-center">
-                  <span className="text-[8px] text-white font-bold">B</span>
-                </div>
-              )}
-            </div>
-            
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-semibold">{contact.name}</h3>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleFavorite(contact.id);
-                  }}
-                >
-                  <Star className={cn(
-                    'h-4 w-4',
-                    favorites.includes(contact.id) 
-                      ? 'fill-warning text-warning' 
-                      : 'text-muted-foreground'
-                  )} />
-                </Button>
-              </div>
-              
-              {contact.company && (
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Building2 className="h-3 w-3" />
-                  <span>{contact.company}</span>
-                </div>
-              )}
-            </div>
+    <motion.div variants={itemVariants}>
+      <Card 
+        className="group cursor-pointer transition-all duration-300 border-border/40 hover:border-primary/30 hover:shadow-[0_0_25px_hsl(var(--primary)/0.12)]"
+        onClick={() => handleContactClick(contact)}
+      >
+        <CardContent className="p-4 relative overflow-hidden">
+          {/* Hover glow effect */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+            <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-primary/5 blur-2xl" />
           </div>
 
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="h-8 w-8"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </div>
+          <div className="relative flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-lg font-bold text-primary border border-primary/20 group-hover:shadow-[0_0_12px_hsl(var(--primary)/0.25)] transition-shadow duration-300">
+                  {getInitials(contact.name)}
+                </div>
+                {contact.source === 'bitrix24' && (
+                  <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-warning flex items-center justify-center shadow-[0_0_8px_hsl(var(--warning)/0.5)]">
+                    <span className="text-[8px] text-warning-foreground font-bold">B</span>
+                  </div>
+                )}
+              </div>
+              
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-semibold">{contact.name}</h3>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(contact.id);
+                    }}
+                  >
+                    <Star className={cn(
+                      'h-4 w-4 transition-all',
+                      favorites.includes(contact.id) 
+                        ? 'fill-warning text-warning drop-shadow-[0_0_4px_hsl(var(--warning)/0.5)]' 
+                        : 'text-muted-foreground'
+                    )} />
+                  </Button>
+                </div>
+                
+                {contact.company && (
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <Building2 className="h-3 w-3" />
+                    <span>{contact.company}</span>
+                  </div>
+                )}
+              </div>
+            </div>
 
-        <div className="mt-4 flex items-center gap-2">
-          {contact.phone && (
-            <Badge variant="secondary" className="font-mono text-xs">
-              {contact.phone}
-            </Badge>
-          )}
-          {contact.email && (
-            <Badge variant="outline" className="text-xs">
-              <Mail className="mr-1 h-3 w-3" />
-              Email
-            </Badge>
-          )}
-          {contact.tags && contact.tags.length > 0 && (
-            <Badge variant="outline" className="text-xs">
-              +{contact.tags.length} tags
-            </Badge>
-          )}
-        </div>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </div>
 
-        <div className="mt-4 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-          <Button 
-            size="sm" 
-            className="flex-1 gap-2"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleCall(contact);
-            }}
-          >
-            <Phone className="h-4 w-4" />
-            Ligar
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="gap-2"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Mail className="h-4 w-4" />
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+          <div className="mt-4 flex items-center gap-2 flex-wrap">
+            {contact.phone && (
+              <Badge variant="secondary" className="font-mono text-xs bg-primary/5 text-primary border border-primary/15">
+                {contact.phone}
+              </Badge>
+            )}
+            {contact.email && (
+              <Badge variant="outline" className="text-xs border-border/50">
+                <Mail className="mr-1 h-3 w-3" />
+                Email
+              </Badge>
+            )}
+            {contact.tags && contact.tags.length > 0 && (
+              <Badge variant="outline" className="text-xs border-border/50">
+                +{contact.tags.length} tags
+              </Badge>
+            )}
+          </div>
+
+          <div className="mt-4 flex gap-2 opacity-0 transition-all duration-300 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0">
+            <Button 
+              size="sm" 
+              className="flex-1 gap-2 shadow-[0_0_12px_hsl(var(--primary)/0.2)]"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCall(contact);
+              }}
+            >
+              <Phone className="h-4 w-4" />
+              Ligar
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="gap-2 border-border/50 hover:border-primary/30"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Mail className="h-4 w-4" />
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+
+  const renderContactGrid = (contactList: Contact[]) => (
+    <motion.div 
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+      className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+    >
+      {contactList.map(contact => (
+        <ContactCard key={contact.id} contact={contact} />
+      ))}
+    </motion.div>
   );
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 relative">
+      {/* Ambient background */}
+      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
+
+      <div className="relative flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Contatos</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-gradient">Contatos</h1>
           <p className="text-muted-foreground">
             Gerencie seus contatos e histórico de interações
           </p>
@@ -247,7 +274,7 @@ const Contacts = () => {
         <div className="flex gap-2">
           <Button
             variant="outline"
-            className="gap-2"
+            className="gap-2 border-border/50 hover:border-primary/30 hover:shadow-[0_0_12px_hsl(var(--primary)/0.1)]"
             onClick={syncWithBitrix}
             disabled={isSyncing || bitrixLoading}
           >
@@ -261,12 +288,13 @@ const Contacts = () => {
           <Button
             variant="outline"
             size="icon"
+            className="border-border/50 hover:border-primary/30"
             onClick={() => fetchContacts()}
             disabled={isLoading}
           >
             <RefreshCw className={cn('h-4 w-4', isLoading && 'animate-spin')} />
           </Button>
-          <Button className="gap-2" onClick={() => setShowCreateDialog(true)}>
+          <Button className="gap-2 shadow-[0_0_15px_hsl(var(--primary)/0.2)]" onClick={() => setShowCreateDialog(true)}>
             <Plus className="h-4 w-4" />
             Novo Contato
           </Button>
@@ -274,37 +302,37 @@ const Contacts = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex items-center gap-4">
+      <div className="relative flex items-center gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Buscar por nome, telefone ou empresa..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="pl-9 bg-muted/30 border-border/50 focus:border-primary/40 focus:shadow-[0_0_15px_hsl(var(--primary)/0.12)] transition-shadow"
           />
         </div>
-        <Button variant="outline" className="gap-2">
+        <Button variant="outline" className="gap-2 border-border/50 hover:border-primary/30">
           <Filter className="h-4 w-4" />
           Filtros
         </Button>
       </div>
 
       {/* Tabs */}
-      <Tabs defaultValue="all">
-        <TabsList>
-          <TabsTrigger value="all" className="gap-2">
+      <Tabs defaultValue="all" className="relative">
+        <TabsList className="bg-muted/50 border border-border/30">
+          <TabsTrigger value="all" className="gap-2 data-[state=active]:shadow-[0_0_10px_hsl(var(--primary)/0.15)]">
             Todos
-            <Badge variant="secondary" className="ml-1">{allContacts.length}</Badge>
+            <Badge variant="secondary" className="ml-1 bg-primary/10 text-primary text-[10px]">{allContacts.length}</Badge>
           </TabsTrigger>
-          <TabsTrigger value="favorites" className="gap-2">
+          <TabsTrigger value="favorites" className="gap-2 data-[state=active]:shadow-[0_0_10px_hsl(var(--primary)/0.15)]">
             <Star className="h-4 w-4" />
             Favoritos
-            <Badge variant="secondary" className="ml-1">{favoriteContacts.length}</Badge>
+            <Badge variant="secondary" className="ml-1 bg-primary/10 text-primary text-[10px]">{favoriteContacts.length}</Badge>
           </TabsTrigger>
-          <TabsTrigger value="bitrix" className="gap-2">
+          <TabsTrigger value="bitrix" className="gap-2 data-[state=active]:shadow-[0_0_10px_hsl(var(--primary)/0.15)]">
             Bitrix24
-            <Badge variant="secondary" className="ml-1">
+            <Badge variant="secondary" className="ml-1 bg-primary/10 text-primary text-[10px]">
               {contacts.filter(c => c.source === 'bitrix24').length}
             </Badge>
           </TabsTrigger>
@@ -313,19 +341,16 @@ const Contacts = () => {
         <TabsContent value="all" className="mt-6">
           {isLoading ? (
             <div className="py-12 text-center">
-              <Loader2 className="mx-auto h-8 w-8 animate-spin text-muted-foreground" />
+              <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
               <p className="mt-2 text-muted-foreground">Carregando contatos...</p>
             </div>
           ) : (
             <>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {allContacts.map(contact => (
-                  <ContactCard key={contact.id} contact={contact} />
-                ))}
-              </div>
+              {renderContactGrid(allContacts)}
               {allContacts.length === 0 && (
-                <div className="py-12 text-center text-muted-foreground">
-                  Nenhum contato encontrado
+                <div className="py-16 text-center">
+                  <Users className="mx-auto h-12 w-12 text-muted-foreground/30 mb-3" />
+                  <p className="text-muted-foreground">Nenhum contato encontrado</p>
                 </div>
               )}
             </>
@@ -333,34 +358,24 @@ const Contacts = () => {
         </TabsContent>
 
         <TabsContent value="favorites" className="mt-6">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {favoriteContacts.map(contact => (
-              <ContactCard key={contact.id} contact={contact} />
-            ))}
-          </div>
+          {renderContactGrid(favoriteContacts)}
           {favoriteContacts.length === 0 && (
-            <div className="py-12 text-center text-muted-foreground">
-              Nenhum favorito encontrado
+            <div className="py-16 text-center">
+              <Star className="mx-auto h-12 w-12 text-muted-foreground/30 mb-3" />
+              <p className="text-muted-foreground">Nenhum favorito encontrado</p>
             </div>
           )}
         </TabsContent>
 
         <TabsContent value="bitrix" className="mt-6">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredContacts
-              .filter(c => c.source === 'bitrix24')
-              .map(contact => (
-                <ContactCard key={contact.id} contact={contact} />
-              ))
-            }
-          </div>
+          {renderContactGrid(filteredContacts.filter(c => c.source === 'bitrix24'))}
           {contacts.filter(c => c.source === 'bitrix24').length === 0 && (
-            <div className="py-12 text-center text-muted-foreground">
-              <CloudDownload className="mx-auto mb-2 h-8 w-8 opacity-50" />
-              <p>Nenhum contato do Bitrix24</p>
+            <div className="py-16 text-center">
+              <CloudDownload className="mx-auto mb-3 h-12 w-12 text-muted-foreground/30" />
+              <p className="text-muted-foreground">Nenhum contato do Bitrix24</p>
               <Button
                 variant="link"
-                className="mt-2"
+                className="mt-2 text-primary"
                 onClick={syncWithBitrix}
               >
                 Sincronizar agora
