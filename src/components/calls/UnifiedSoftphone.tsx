@@ -338,7 +338,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     if (activeCalls.length <= 1) {
       setStatusAvailable();
     }
-  }, [currentCall, conversation, wavoip, endCall, onCallEnd, activeCalls.length, setStatusAvailable]);
+  }, [currentCall, conversation, wavoip, sipCall, endCall, onCallEnd, activeCalls.length, setStatusAvailable]);
 
   const handleToggleVolume = useCallback(async () => {
     const newVolume = volume > 0 ? 0 : 1;
@@ -351,8 +351,19 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
 
   const handleMuteToggle = useCallback(() => {
     toggleMute();
+    if (currentCall?.channel === 'sip') {
+      sipCall.toggleMute(!currentCall.isMuted);
+    }
     toast.info(currentCall?.isMuted ? 'Microfone ativado' : 'Microfone desativado');
-  }, [toggleMute, currentCall]);
+  }, [toggleMute, currentCall, sipCall]);
+
+  const handleHoldToggle = useCallback(() => {
+    toggleHold();
+    if (currentCall?.channel === 'sip') {
+      sipCall.toggleHold(!currentCall.isOnHold);
+    }
+    toast.info(currentCall?.isOnHold ? 'Chamada retomada' : 'Chamada em espera');
+  }, [toggleHold, currentCall, sipCall]);
 
   const handleHoldToggle = useCallback(() => {
     toggleHold();
