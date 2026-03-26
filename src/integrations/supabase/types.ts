@@ -2957,6 +2957,7 @@ export type Database = {
         Returns: Json
       }
       cleanup_expired_challenges: { Args: never; Returns: undefined }
+      get_profile_role: { Args: { _user_id: string }; Returns: string }
       get_user_agent_id: { Args: never; Returns: string }
       get_user_agent_name: { Args: never; Returns: string }
       get_user_role: { Args: never; Returns: string }
@@ -2976,6 +2977,7 @@ export type Database = {
         Returns: boolean
       }
       is_admin_or_supervisor: { Args: never; Returns: boolean }
+      is_admin_user: { Args: { _user_id: string }; Returns: boolean }
       log_audit_event: {
         Args: {
           p_action: string
