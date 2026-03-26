@@ -77,10 +77,10 @@ const AVAILABLE_CHANNELS: ChannelConfig[] = [
   {
     id: 'sip',
     name: 'SIP Genérico',
-    enabled: false,
-    configured: false,
+    enabled: true,
+    configured: true,
     icon: 'Headphones',
-    description: 'Servidor SIP próprio'
+    description: 'Servidor SIP próprio (Bitrix)'
   }
 ];
 
