@@ -458,6 +458,7 @@ export default function CallAnalytics() {
           </CardContent>
         </Card>
       </div>
+      </div>
     </div>
   );
 }
