@@ -2,6 +2,8 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import JsSIP from 'jssip';
+import type { RTCSession } from 'jssip/lib/RTCSession';
+import type { UAConfiguration, CallOptions } from 'jssip/lib/UA';
 
 export type SipStatus = 'disconnected' | 'connecting' | 'registered' | 'calling' | 'ringing' | 'active' | 'error';
 
