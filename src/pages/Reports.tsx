@@ -53,10 +53,12 @@ const Reports = () => {
   }, [stats]);
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 relative">
+      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
+      <div className="relative space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Relatórios</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Relatórios</h1>
           <p className="text-muted-foreground">Análise detalhada do seu atendimento</p>
         </div>
         
