@@ -60,10 +60,10 @@ serve(async (req) => {
       );
     }
 
-    console.log("Requesting conversation token for user:", user.id);
+    console.log("Requesting conversation token for user:", user.id, "agent:", resolvedAgentId);
 
     const response = await fetch(
-      `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(agentId)}`,
+      `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(resolvedAgentId)}`,
       {
         headers: { "xi-api-key": ELEVENLABS_API_KEY },
       }
