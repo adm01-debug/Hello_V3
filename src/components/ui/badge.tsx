@@ -36,6 +36,9 @@ const badgeVariants = cva(
         // Neon special
         "neon": "border-primary/30 bg-primary/10 text-primary shadow-[0_0_10px_hsl(var(--primary)/0.2)]",
         
+        // Glass
+        "glass": "border-border/20 bg-card/40 backdrop-blur-sm text-foreground",
+        
         // Special
         "dot": "pl-1.5 gap-1",
       },
@@ -70,18 +73,21 @@ const dotColorClasses = {
   muted: "bg-muted-foreground",
 };
 
-function Badge({ className, variant, size, dot, dotColor = "primary", children, ...props }: BadgeProps) {
-  return (
-    <div className={cn(badgeVariants({ variant: dot ? "dot" : variant, size }), className)} {...props}>
-      {dot && (
-        <span 
-          className={cn("h-1.5 w-1.5 rounded-full", dotColorClasses[dotColor])} 
-          aria-hidden="true" 
-        />
-      )}
-      {children}
-    </div>
-  );
-}
+const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+  ({ className, variant, size, dot, dotColor = "primary", children, ...props }, ref) => {
+    return (
+      <div ref={ref} className={cn(badgeVariants({ variant: dot ? "dot" : variant, size }), className)} {...props}>
+        {dot && (
+          <span 
+            className={cn("h-1.5 w-1.5 rounded-full", dotColorClasses[dotColor])} 
+            aria-hidden="true" 
+          />
+        )}
+        {children}
+      </div>
+    );
+  }
+);
+Badge.displayName = "Badge";
 
 export { Badge, badgeVariants };
