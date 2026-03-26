@@ -53,9 +53,37 @@ export const useBitrix = () => {
       });
 
       if (error) {
+        let isNotConfigured = false;
+        let description = error.message;
+
+        const responseContext = (error as { context?: Response }).context;
+        if (responseContext instanceof Response) {
+          try {
+            const payload = await responseContext.clone().json() as {
+              configured?: boolean;
+              error?: string;
+              message?: string;
+            };
+
+            const configMessage = payload?.error || payload?.message;
+            isNotConfigured = payload?.configured === false || configMessage === 'Serviço não configurado';
+
+            if (configMessage) {
+              description = configMessage;
+            }
+          } catch {
+            // Ignore parse errors and fallback to default error handling
+          }
+        }
+
+        if (isNotConfigured) {
+          setIsConfigured(false);
+          return { success: false, configured: false };
+        }
+
         console.error('Bitrix API error:', error);
         toast.error('Erro ao comunicar com Bitrix', {
-          description: error.message
+          description
         });
         return null;
       }
