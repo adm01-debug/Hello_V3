@@ -170,6 +170,7 @@ const Calls = () => {
           </Card>
         </div>
       </div>
+      </div>
     </div>
   );
 };

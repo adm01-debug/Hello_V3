@@ -434,6 +434,7 @@ const Settings = () => {
           </Card>
         </TabsContent>
       </Tabs>
+      </div>
     </div>
   );
 };
