@@ -42,9 +42,11 @@ const Settings = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 relative">
+      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
+      <div className="relative space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Configurações</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Configurações</h1>
         <p className="text-muted-foreground">Gerencie suas preferências do sistema</p>
       </div>
 
