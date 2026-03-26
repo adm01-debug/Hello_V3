@@ -32,6 +32,7 @@ export function useSipCall() {
   const sessionRef = useRef<RTCSession | null>(null);
   const durationRef = useRef<number | null>(null);
   const remoteAudioRef = useRef<HTMLAudioElement | null>(null);
+  const serverRef = useRef<string>('');
 
   // Create audio element for remote audio
   useEffect(() => {
