@@ -165,30 +165,30 @@ export default function Login() {
     <div className="flex min-h-screen bg-background">
       {/* Left Panel - Branding */}
       <div className="hidden lg:flex lg:w-[55%] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[hsl(222,28%,8%)]" />
-        <div className="absolute inset-0 bg-gradient-to-br from-[hsl(160,84%,39%,0.15)] via-transparent to-[hsl(210,100%,50%,0.08)]" />
+        <div className="absolute inset-0 bg-foreground/95" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-info/8" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         
         <div className="relative z-10 flex flex-col justify-between w-full p-12">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[hsl(160,84%,39%,0.15)] border border-[hsl(160,84%,39%,0.25)]">
-              <Phone className="h-6 w-6 text-[hsl(160,84%,55%)]" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 border border-primary/25">
+              <Phone className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">CallCenter Pro</h2>
-              <p className="text-sm text-[hsl(220,14%,55%)]">Enterprise Suite</p>
+              <h2 className="text-xl font-bold text-primary-foreground">CallCenter Pro</h2>
+              <p className="text-sm text-muted-foreground">Enterprise Suite</p>
             </div>
           </div>
 
           {/* Center Content */}
           <div className="space-y-8 max-w-lg">
             <div className="space-y-4">
-              <h1 className="text-4xl font-bold text-white leading-tight tracking-tight">
+            <h1 className="text-4xl font-bold text-primary-foreground leading-tight tracking-tight">
                 Gerencie seu call center com{' '}
-                <span className="text-[hsl(160,84%,55%)]">inteligência</span>
+                <span className="text-primary">inteligência</span>
               </h1>
-              <p className="text-lg text-[hsl(220,14%,65%)] leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed">
                 Monitore chamadas em tempo real, otimize a performance dos agentes e tome decisões baseadas em dados.
               </p>
             </div>
@@ -200,13 +200,13 @@ export default function Login() {
                 { icon: BarChart3, label: 'Analytics avançados', desc: 'Relatórios e métricas detalhadas' },
                 { icon: Users, label: 'Gestão de equipe', desc: 'Coaching e gamificação de agentes' },
               ].map(({ icon: Icon, label, desc }) => (
-                <div key={label} className="flex items-start gap-4 p-4 rounded-xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] hover:bg-white/[0.07] transition-colors">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[hsl(160,84%,39%,0.12)] border border-[hsl(160,84%,39%,0.2)]">
-                    <Icon className="h-5 w-5 text-[hsl(160,84%,55%)]" />
+                <div key={label} className="flex items-start gap-4 p-4 rounded-xl bg-primary-foreground/[0.04] backdrop-blur-sm border border-primary-foreground/[0.06] hover:bg-primary-foreground/[0.07] transition-colors">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/12 border border-primary/20">
+                    <Icon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-medium text-white text-sm">{label}</p>
-                    <p className="text-xs text-[hsl(220,14%,50%)] mt-0.5">{desc}</p>
+                    <p className="font-medium text-primary-foreground text-sm">{label}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{desc}</p>
                   </div>
                 </div>
               ))}
@@ -214,7 +214,7 @@ export default function Login() {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center gap-2 text-xs text-[hsl(220,14%,40%)]">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
             <Shield className="h-3 w-3" />
             <span>Criptografia end-to-end · SOC 2 Compliant</span>
           </div>
@@ -327,6 +327,7 @@ export default function Login() {
                   type="button"
                   variant="ghost"
                   size="icon"
+                  aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                   className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground hover:text-foreground"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -365,6 +366,7 @@ export default function Login() {
           <Button
             type="button"
             variant="outline"
+            aria-label="Entrar com conta Google"
             className="w-full h-11 font-medium"
             disabled={isLoading}
             onClick={async () => {
