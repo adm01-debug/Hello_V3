@@ -4,34 +4,37 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
       variant: {
-        // Core variants
-        default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+        // Core variants — neon enhanced
+        default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80 shadow-[0_0_8px_hsl(var(--primary)/0.2)]",
         secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "text-foreground",
+        destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80 shadow-[0_0_8px_hsl(var(--destructive)/0.2)]",
+        outline: "text-foreground border-border/50",
         
         // Semantic variants
-        success: "border-transparent bg-success text-success-foreground hover:bg-success/80",
-        warning: "border-transparent bg-warning text-warning-foreground hover:bg-warning/80",
-        info: "border-transparent bg-info text-info-foreground hover:bg-info/80",
-        pending: "border-transparent bg-pending text-pending-foreground hover:bg-pending/80",
+        success: "border-transparent bg-success text-success-foreground hover:bg-success/80 shadow-[0_0_8px_hsl(var(--success)/0.2)]",
+        warning: "border-transparent bg-warning text-warning-foreground hover:bg-warning/80 shadow-[0_0_8px_hsl(var(--warning)/0.2)]",
+        info: "border-transparent bg-info text-info-foreground hover:bg-info/80 shadow-[0_0_8px_hsl(var(--info)/0.2)]",
+        pending: "border-transparent bg-pending text-pending-foreground hover:bg-pending/80 shadow-[0_0_8px_hsl(var(--pending)/0.2)]",
         
-        // Subtle/muted variants
-        "subtle": "border-transparent bg-primary/10 text-primary",
-        "subtle-destructive": "border-transparent bg-destructive/10 text-destructive",
-        "subtle-success": "border-transparent bg-success/10 text-success",
-        "subtle-warning": "border-transparent bg-warning/10 text-warning",
-        "subtle-info": "border-transparent bg-info/10 text-info",
+        // Subtle/muted variants — neon glow on hover
+        "subtle": "border-transparent bg-primary/10 text-primary hover:bg-primary/15 hover:shadow-[0_0_8px_hsl(var(--primary)/0.15)]",
+        "subtle-destructive": "border-transparent bg-destructive/10 text-destructive hover:bg-destructive/15",
+        "subtle-success": "border-transparent bg-success/10 text-success hover:bg-success/15",
+        "subtle-warning": "border-transparent bg-warning/10 text-warning hover:bg-warning/15",
+        "subtle-info": "border-transparent bg-info/10 text-info hover:bg-info/15",
         
-        // Outline colored
-        "outline-success": "border-success/50 text-success bg-success/5",
-        "outline-warning": "border-warning/50 text-warning bg-warning/5",
-        "outline-destructive": "border-destructive/50 text-destructive bg-destructive/5",
-        "outline-info": "border-info/50 text-info bg-info/5",
+        // Outline colored — neon borders
+        "outline-success": "border-success/40 text-success bg-success/5 hover:shadow-[0_0_8px_hsl(var(--success)/0.15)]",
+        "outline-warning": "border-warning/40 text-warning bg-warning/5 hover:shadow-[0_0_8px_hsl(var(--warning)/0.15)]",
+        "outline-destructive": "border-destructive/40 text-destructive bg-destructive/5 hover:shadow-[0_0_8px_hsl(var(--destructive)/0.15)]",
+        "outline-info": "border-info/40 text-info bg-info/5 hover:shadow-[0_0_8px_hsl(var(--info)/0.15)]",
+        
+        // Neon special
+        "neon": "border-primary/30 bg-primary/10 text-primary shadow-[0_0_10px_hsl(var(--primary)/0.2)]",
         
         // Special
         "dot": "pl-1.5 gap-1",
@@ -59,11 +62,11 @@ export interface BadgeProps
 }
 
 const dotColorClasses = {
-  success: "bg-success",
-  warning: "bg-warning", 
-  destructive: "bg-destructive",
-  info: "bg-info",
-  primary: "bg-primary",
+  success: "bg-success shadow-[0_0_6px_hsl(var(--success)/0.5)]",
+  warning: "bg-warning shadow-[0_0_6px_hsl(var(--warning)/0.5)]", 
+  destructive: "bg-destructive shadow-[0_0_6px_hsl(var(--destructive)/0.5)]",
+  info: "bg-info shadow-[0_0_6px_hsl(var(--info)/0.5)]",
+  primary: "bg-primary shadow-[0_0_6px_hsl(var(--primary)/0.5)]",
   muted: "bg-muted-foreground",
 };
 

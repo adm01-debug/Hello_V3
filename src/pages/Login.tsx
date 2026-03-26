@@ -10,10 +10,11 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
-import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin, Eye, EyeOff, Lock, Clock, Headphones, BarChart3, Users } from 'lucide-react';
+import { Loader2, Phone, Shield, ShieldX, Globe, Wifi, MapPin, Eye, EyeOff, Lock, Clock, Headphones, BarChart3, Users, Zap } from 'lucide-react';
 import { PasskeyLogin } from '@/components/auth/PasskeyLogin';
 import { isWebAuthnSupported } from '@/lib/webauthn/webauthn-utils';
 import { lovable } from '@/integrations/lovable/index';
+import { motion } from 'framer-motion';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -162,33 +163,49 @@ export default function Login() {
   const isLocked = lockoutStatus?.locked || countdown > 0;
 
   return (
-    <div className="flex min-h-screen bg-background">
-      {/* Left Panel - Branding */}
+    <div className="flex min-h-screen bg-background relative overflow-hidden">
+      {/* Global neon ambient */}
+      <div className="absolute inset-0 gradient-mesh-intense opacity-30 pointer-events-none" />
+
+      {/* Left Panel - Cyberpunk Branding */}
       <div className="hidden lg:flex lg:w-[55%] relative overflow-hidden">
-        <div className="absolute inset-0 bg-foreground/95" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-info/8" />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
+        <div className="absolute inset-0 bg-[hsl(232,35%,5%)]" />
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-96 h-96 rounded-full bg-primary/15 blur-[120px]" />
+          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-[hsl(280,80%,60%)]/10 blur-[100px]" />
+          <div className="absolute top-1/2 left-1/3 w-64 h-64 rounded-full bg-[hsl(350,90%,55%)]/5 blur-[80px]" />
+        </div>
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `linear-gradient(hsl(185 100% 50% / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(185 100% 50% / 0.3) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px',
+        }} />
         
-        <div className="relative z-10 flex flex-col justify-between w-full p-12">
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="relative z-10 flex flex-col justify-between w-full p-12"
+        >
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 border border-primary/25">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 border border-primary/30 shadow-[0_0_25px_hsl(185_100%_50%/0.2)]">
               <Phone className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-primary-foreground">CallCenter Pro</h2>
-              <p className="text-sm text-muted-foreground">Enterprise Suite</p>
+              <h2 className="text-xl font-bold text-white text-display tracking-wider">CallCenter Pro</h2>
+              <p className="text-xs uppercase tracking-[0.2em] text-primary/60">Enterprise Suite</p>
             </div>
           </div>
 
           {/* Center Content */}
           <div className="space-y-8 max-w-lg">
             <div className="space-y-4">
-            <h1 className="text-4xl font-bold text-primary-foreground leading-tight tracking-tight">
+              <h1 className="text-4xl font-bold text-white leading-tight text-display">
                 Gerencie seu call center com{' '}
-                <span className="text-primary">inteligência</span>
+                <span className="text-gradient">inteligência</span>
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-white/50 leading-relaxed">
                 Monitore chamadas em tempo real, otimize a performance dos agentes e tome decisões baseadas em dados.
               </p>
             </div>
@@ -196,52 +213,63 @@ export default function Login() {
             {/* Feature highlights */}
             <div className="grid grid-cols-1 gap-3">
               {[
-                { icon: Headphones, label: 'Monitoramento em tempo real', desc: 'Acompanhe todas as chamadas ativas' },
-                { icon: BarChart3, label: 'Analytics avançados', desc: 'Relatórios e métricas detalhadas' },
-                { icon: Users, label: 'Gestão de equipe', desc: 'Coaching e gamificação de agentes' },
-              ].map(({ icon: Icon, label, desc }) => (
-                <div key={label} className="flex items-start gap-4 p-4 rounded-xl bg-primary-foreground/[0.04] backdrop-blur-sm border border-primary-foreground/[0.06] hover:bg-primary-foreground/[0.07] transition-colors">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/12 border border-primary/20">
+                { icon: Headphones, label: 'Monitoramento em tempo real', desc: 'Acompanhe todas as chamadas ativas', delay: 0.2 },
+                { icon: BarChart3, label: 'Analytics avançados', desc: 'Relatórios e métricas detalhadas', delay: 0.3 },
+                { icon: Users, label: 'Gestão de equipe', desc: 'Coaching e gamificação de agentes', delay: 0.4 },
+              ].map(({ icon: Icon, label, desc, delay }) => (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay, ease: [0.25, 0.1, 0.25, 1] }}
+                  className="flex items-start gap-4 p-4 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-primary/20 hover:bg-white/[0.05] transition-all duration-300 group"
+                >
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 border border-primary/20 group-hover:shadow-[0_0_15px_hsl(185_100%_50%/0.2)] transition-shadow duration-300">
                     <Icon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-medium text-primary-foreground text-sm">{label}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{desc}</p>
+                    <p className="font-medium text-white text-sm">{label}</p>
+                    <p className="text-xs text-white/40 mt-0.5">{desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
 
           {/* Footer */}
-          <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
+          <div className="flex items-center gap-2 text-xs text-white/30">
             <Shield className="h-3 w-3" />
             <span>Criptografia end-to-end · SOC 2 Compliant</span>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Right Panel - Login Form */}
-      <div className="flex flex-1 items-center justify-center p-6 sm:p-8 lg:p-12">
-        <div className="w-full max-w-md space-y-6">
+      <div className="flex flex-1 items-center justify-center p-6 sm:p-8 lg:p-12 relative">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+          className="w-full max-w-md space-y-6"
+        >
           {/* Mobile Logo */}
           <div className="flex flex-col items-center text-center lg:hidden mb-2">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl gradient-primary mb-3">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl gradient-primary shadow-[0_0_30px_hsl(var(--primary)/0.3)] mb-3">
               <Phone className="h-7 w-7 text-primary-foreground" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight">CallCenter Pro</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-display">CallCenter Pro</h1>
             <p className="text-sm text-muted-foreground mt-1">Sistema de gerenciamento</p>
           </div>
 
           {/* Heading - Desktop */}
           <div className="hidden lg:block space-y-1">
-            <h2 className="text-2xl font-bold tracking-tight">Bem-vindo de volta</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-display">Bem-vindo de volta</h2>
             <p className="text-muted-foreground text-sm">Entre com suas credenciais para continuar</p>
           </div>
 
           {/* Lockout Alert */}
           {isLocked && (
-            <Alert className="border-destructive/50 bg-destructive/5">
+            <Alert className="border-destructive/30 bg-destructive/5 shadow-[0_0_20px_hsl(var(--destructive)/0.1)]">
               <div className="flex items-center gap-3">
                 <Lock className="h-4 w-4 text-destructive shrink-0" />
                 <div className="flex-1">
@@ -257,11 +285,11 @@ export default function Login() {
             </Alert>
           )}
 
-          {/* IP Info - Compact */}
-          <div className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-sm ${
+          {/* IP Info - Neon styled */}
+          <div className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-sm transition-all duration-300 ${
             ipBlocked 
-              ? 'border-destructive/30 bg-destructive/5' 
-              : 'border-border bg-muted/30'
+              ? 'border-destructive/30 bg-destructive/5 shadow-[0_0_15px_hsl(var(--destructive)/0.1)]' 
+              : 'border-border/50 bg-muted/20 hover:border-primary/20'
           }`}>
             {ipBlocked ? (
               <ShieldX className="h-4 w-4 text-destructive shrink-0" />
@@ -278,8 +306,8 @@ export default function Login() {
                 <span className="text-xs text-destructive">IP não autorizado ({ipInfo?.ip})</span>
               ) : (
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="font-mono">{ipInfo?.ip}</span>
-                  <span className="text-muted-foreground/50">·</span>
+                  <span className="font-mono text-primary/80">{ipInfo?.ip}</span>
+                  <span className="text-muted-foreground/30">·</span>
                   <span className="flex items-center gap-1">
                     <MapPin className="h-3 w-3" />
                     {ipInfo?.city !== 'Desconhecido' ? `${ipInfo?.city}, ${ipInfo?.countryCode}` : ipInfo?.country}
@@ -302,7 +330,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
-                className="h-11"
+                className="h-11 bg-muted/30 border-border/50 focus:border-primary/40 focus:shadow-[0_0_15px_hsl(var(--primary)/0.15)] transition-shadow"
               />
             </div>
             <div className="space-y-2">
@@ -321,7 +349,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
-                  className="h-11 pr-10"
+                  className="h-11 pr-10 bg-muted/30 border-border/50 focus:border-primary/40 focus:shadow-[0_0_15px_hsl(var(--primary)/0.15)] transition-shadow"
                 />
                 <Button
                   type="button"
@@ -338,7 +366,7 @@ export default function Login() {
 
             <Button 
               type="submit" 
-              className="w-full h-11 font-medium"
+              className="w-full h-11 font-semibold shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_30px_hsl(var(--primary)/0.35)] transition-shadow"
               disabled={isLoading || isLocked}
             >
               {isLoading ? (
@@ -347,7 +375,10 @@ export default function Login() {
                   Entrando...
                 </>
               ) : (
-                'Entrar'
+                <>
+                  <Zap className="mr-1 h-4 w-4" />
+                  Entrar
+                </>
               )}
             </Button>
           </form>
@@ -358,7 +389,7 @@ export default function Login() {
               <Separator className="w-full" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-3 text-muted-foreground">ou</span>
+              <span className="bg-background px-3 text-muted-foreground tracking-wider">ou</span>
             </div>
           </div>
 
@@ -367,7 +398,7 @@ export default function Login() {
             type="button"
             variant="outline"
             aria-label="Entrar com conta Google"
-            className="w-full h-11 font-medium"
+            className="w-full h-11 font-medium border-border/50 hover:border-primary/30 hover:shadow-[0_0_15px_hsl(var(--primary)/0.1)] transition-all"
             disabled={isLoading}
             onClick={async () => {
               const { error } = await lovable.auth.signInWithOAuth("google", {
@@ -398,17 +429,17 @@ export default function Login() {
           {/* Register link */}
           <p className="text-center text-sm text-muted-foreground">
             Não tem uma conta?{' '}
-            <Link to="/register" className="text-primary hover:text-primary-hover font-medium transition-colors">
+            <Link to="/register" className="text-primary hover:text-primary-hover font-semibold transition-colors">
               Registre-se
             </Link>
           </p>
 
           {/* Security footer */}
-          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/60 pt-2">
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/50 pt-2">
             <Shield className="h-3 w-3" />
             <span>Conexão segura · Dados criptografados</span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
