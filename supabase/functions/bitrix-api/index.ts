@@ -11,6 +11,20 @@ interface BitrixRequest {
   params?: Record<string, unknown>;
 }
 
+function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
+  const value = rawWebhookUrl?.trim();
+  if (!value) return null;
+
+  const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  const withTrailingSlash = withProtocol.endsWith('/') ? withProtocol : `${withProtocol}/`;
+
+  try {
+    return new URL(withTrailingSlash);
+  } catch {
+    return null;
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -51,8 +65,8 @@ serve(async (req) => {
 
     const { action, params } = body;
 
-    const webhookUrl = Deno.env.get('BITRIX_WEBHOOK_URL');
-    if (!webhookUrl) {
+    const webhookBaseUrl = buildWebhookBaseUrl(Deno.env.get('BITRIX_WEBHOOK_URL'));
+    if (!webhookBaseUrl) {
       console.error('BITRIX_WEBHOOK_URL not configured');
 
       if (action === 'get_user') {
@@ -105,7 +119,7 @@ serve(async (req) => {
         );
     }
 
-    const url = `${webhookUrl}${endpoint}`;
+    const url = new URL(endpoint, webhookBaseUrl).toString();
 
     const response = await fetch(url, {
       method: 'POST',
@@ -113,7 +127,26 @@ serve(async (req) => {
       body: JSON.stringify(params || {}),
     });
 
-    const data = await response.json();
+    const responseText = await response.text();
+    let data: Record<string, unknown>;
+
+    try {
+      data = JSON.parse(responseText) as Record<string, unknown>;
+    } catch {
+      console.error('Bitrix API returned non-JSON response');
+      return new Response(
+        JSON.stringify({ error: 'Configuração inválida do webhook', configured: false }),
+        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!response.ok) {
+      console.error('Bitrix HTTP error:', response.status, data);
+      return new Response(
+        JSON.stringify({ error: 'Erro na integração', configured: true }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     if (data.error) {
       console.error('Bitrix API error:', data.error);
