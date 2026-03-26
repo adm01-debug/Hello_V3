@@ -202,7 +202,7 @@ export const HoldTrendChart = () => {
         )}
         <div className="flex items-center justify-center gap-6 mt-3 text-xs">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-green-500" />
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(142, 76%, 36%)' }} />
             <span className="text-muted-foreground">Em Chamada</span>
           </div>
           <div className="flex items-center gap-2">
