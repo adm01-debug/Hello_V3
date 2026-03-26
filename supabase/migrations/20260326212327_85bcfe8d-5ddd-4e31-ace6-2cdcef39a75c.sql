@@ -1,0 +1,1 @@
+UPDATE public.user_profiles SET role = 'admin' WHERE email = 'adm01@promobrindes.com.br';
