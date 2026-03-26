@@ -121,11 +121,43 @@ serve(async (req) => {
 
     const url = new URL(endpoint, webhookBaseUrl).toString();
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params || {}),
-    });
+    const controller = new AbortController();
+    const timeoutMs = 12000;
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    let response: Response;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params || {}),
+        signal: controller.signal,
+      });
+    } catch (fetchError) {
+      const isTimeout = fetchError instanceof DOMException && fetchError.name === 'AbortError';
+      const message = isTimeout
+        ? 'Tempo limite de conexão com Bitrix excedido'
+        : 'Não foi possível conectar ao Bitrix';
+
+      console.error('Bitrix request error:', message, fetchError);
+
+      if (action === 'get_user') {
+        return new Response(
+          JSON.stringify({ success: true, configured: false, message }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      return new Response(
+        JSON.stringify({ error: message, configured: true }),
+        {
+          status: isTimeout ? 504 : 502,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     const responseText = await response.text();
     let data: Record<string, unknown>;
