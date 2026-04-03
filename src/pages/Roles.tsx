@@ -19,10 +19,12 @@ interface UserRole {
   user_id: string;
   role: string;
   is_active: boolean;
-  granted_at: string;
+  granted_at: string | null;
   expires_at: string | null;
+  granted_by?: string | null;
   user_email?: string;
-  user_name?: string;
+  user_name?: string | null;
+  [key: string]: unknown;
 }
 
 const ROLE_LABELS: Record<string, { label: string; icon: any; color: string }> = {
@@ -72,7 +74,7 @@ export default function Roles() {
         user_name: profileMap.get(role.user_id)?.full_name,
       })) || [];
 
-      setUserRoles(enrichedRoles);
+      setUserRoles(enrichedRoles as UserRole[]);
     } catch (error) {
       console.error('Error loading roles:', error);
       toast.error('Erro ao carregar roles');
@@ -354,7 +356,7 @@ export default function Roles() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {new Date(role.granted_at).toLocaleDateString('pt-BR')}
+                        {new Date(role.granted_at ?? 0).toLocaleDateString('pt-BR')}
                       </TableCell>
                       <TableCell>
                         {role.expires_at 

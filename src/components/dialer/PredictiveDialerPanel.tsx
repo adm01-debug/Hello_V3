@@ -70,7 +70,7 @@ export function PredictiveDialerPanel() {
 
   // Timer for current call
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
+    let interval: ReturnType<typeof setInterval> | null = null;
     
     if (currentCall) {
       interval = setInterval(() => {

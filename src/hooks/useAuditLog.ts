@@ -38,7 +38,7 @@ export function useAuditLog() {
       const { error } = await supabase.rpc('log_audit_event', {
         p_action: action,
         p_resource_type: resourceType,
-        p_resource_id: resourceId || null,
+        p_resource_id: resourceId ?? undefined,
         p_details: (details || {}) as Json
       });
 

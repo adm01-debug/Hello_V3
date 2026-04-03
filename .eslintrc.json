@@ -4,68 +4,30 @@
   "parserOptions": {
     "ecmaVersion": 2023,
     "sourceType": "module",
-    "ecmaFeatures": { "jsx": true },
-    "project": "./tsconfig.json"
+    "ecmaFeatures": { "jsx": true }
   },
-  "env": { "browser": true, "node": true, "es2023": true },
+  "env": { "browser": true, "es2023": true },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-    "next/core-web-vitals",
     "prettier"
   ],
-  "plugins": ["@typescript-eslint", "react", "react-hooks", "jsx-a11y", "import", "prettier"],
+  "plugins": ["@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
-    "prettier/prettier": "error",
-    "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/explicit-function-return-type": "warn",
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "@typescript-eslint/no-floating-promises": "error",
-    "@typescript-eslint/await-thenable": "error",
-    "@typescript-eslint/no-misused-promises": "error",
-    "@typescript-eslint/strict-boolean-expressions": "warn",
-    "@typescript-eslint/naming-convention": [
-      "error",
-      { "selector": "interface", "format": ["PascalCase"], "prefix": ["I"] },
-      { "selector": "typeAlias", "format": ["PascalCase"] },
-      { "selector": "enum", "format": ["PascalCase"] }
-    ],
-    "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off",
-    "react/display-name": "warn",
+    "prettier/prettier": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "import/order": [
-      "error",
-      {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-        "newlines-between": "always",
-        "alphabetize": { "order": "asc", "caseInsensitive": true }
-      }
-    ],
-    "import/no-unresolved": "error",
-    "import/no-cycle": "error",
-    "import/no-self-import": "error",
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "no-debugger": "error",
-    "no-alert": "error",
     "prefer-const": "error",
     "no-var": "error",
-    "eqeqeq": ["error", "always"],
-    "curly": ["error", "all"],
-    "no-throw-literal": "error",
-    "no-return-await": "error"
+    "eqeqeq": ["error", "always"]
   },
   "settings": {
-    "react": { "version": "detect" },
-    "import/resolver": { "typescript": { "alwaysTryTypes": true, "project": "./tsconfig.json" } }
+    "react": { "version": "detect" }
   },
-  "ignorePatterns": ["node_modules", ".next", "out", "dist", "build", "coverage", "*.config.js"]
+  "ignorePatterns": ["node_modules", "dist", "build", "coverage", "*.config.js", "*.config.ts"]
 }

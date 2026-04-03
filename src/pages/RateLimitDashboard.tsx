@@ -19,10 +19,10 @@ interface RateLimitLog {
   user_id: string | null;
   ip_address: string;
   endpoint: string;
-  request_count: number;
-  is_blocked: boolean;
+  request_count: number | null;
+  is_blocked: boolean | null;
   block_reason: string | null;
-  created_at: string;
+  created_at: string | null;
 }
 
 interface RateLimitAlert {
@@ -32,18 +32,18 @@ interface RateLimitAlert {
   endpoint: string;
   request_count: number;
   threshold: number;
-  severity: string;
-  is_resolved: boolean;
-  created_at: string;
+  severity: string | null;
+  is_resolved: boolean | null;
+  created_at: string | null;
 }
 
 interface RateLimitSetting {
   id: string;
   endpoint_pattern: string;
-  max_requests: number;
-  window_seconds: number;
-  block_duration_seconds: number;
-  is_enabled: boolean;
+  max_requests: number | null;
+  window_seconds: number | null;
+  block_duration_seconds: number | null;
+  is_enabled: boolean | null;
 }
 
 export default function RateLimitDashboard() {
@@ -172,12 +172,12 @@ export default function RateLimitDashboard() {
 
   // Stats
   const stats = {
-    totalRequests: logs.reduce((acc, log) => acc + log.request_count, 0),
+    totalRequests: logs.reduce((acc, log) => acc + (log.request_count ?? 0), 0),
     blockedIPs: new Set(logs.filter(l => l.is_blocked).map(l => l.ip_address)).size,
     activeAlerts: alerts.filter(a => !a.is_resolved).length,
     requestsLast24h: logs.filter(l => 
-      new Date(l.created_at) > new Date(Date.now() - 24 * 60 * 60 * 1000)
-    ).reduce((acc, log) => acc + log.request_count, 0),
+      new Date(l.created_at ?? 0) > new Date(Date.now() - 24 * 60 * 60 * 1000)
+    ).reduce((acc, log) => acc + (log.request_count ?? 0), 0),
   };
 
   // Chart data
@@ -185,8 +185,8 @@ export default function RateLimitDashboard() {
     .slice(0, 24)
     .reverse()
     .map(log => ({
-      time: new Date(log.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-      requests: log.request_count,
+      time: new Date(log.created_at ?? 0).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      requests: log.request_count ?? 0,
       blocked: log.is_blocked ? 1 : 0,
     }));
 
@@ -376,7 +376,7 @@ export default function RateLimitDashboard() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {new Date(log.created_at).toLocaleString('pt-BR')}
+                        {new Date(log.created_at ?? 0).toLocaleString('pt-BR')}
                       </TableCell>
                       <TableCell className="text-right">
                         {log.is_blocked && (

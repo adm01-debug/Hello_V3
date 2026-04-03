@@ -23,7 +23,7 @@ interface IPEntry {
   description: string | null;
   is_cidr: boolean;
   created_at: string;
-  created_by?: string;
+  created_by?: string | null;
 }
 
 interface UserRestriction {
@@ -31,7 +31,7 @@ interface UserRestriction {
   user_id: string;
   enabled: boolean;
   user_email?: string;
-  user_name?: string;
+  user_name?: string | null;
 }
 
 interface BlockedLog {

@@ -304,7 +304,7 @@ export function useMultiChannelCall() {
         const { data: recentEvent, error: fetchError } = await supabase
           .from('hold_events')
           .select('id')
-          .eq('call_session_id', callSessionId)
+          .eq('call_session_id', callSessionId ?? '')
           .is('ended_at', null)
           .order('started_at', { ascending: false })
           .limit(1)

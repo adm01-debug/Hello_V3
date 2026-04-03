@@ -15,7 +15,7 @@ interface DataPoint {
 export const HoldTrendChart = () => {
   const [data, setData] = useState<DataPoint[]>([]);
   const maxDataPoints = 30; // Keep last 30 data points (5 minutes at 10s intervals)
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const fetchCurrentStatus = async () => {
     const [callsResult, holdsResult] = await Promise.all([

@@ -53,7 +53,7 @@ export function LiveTranscription({ isActive, onTranscript }: LiveTranscriptionP
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new transcripts arrive

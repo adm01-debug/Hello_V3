@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
+import { ReactNode } from 'react';
 
 export const fadeIn = {
   initial: { opacity: 0 },
@@ -18,11 +19,16 @@ export const scale = {
   exit: { scale: 0.9, opacity: 0 },
 };
 
-export function AnimatedDiv({ children, variant = 'fadeIn', ...props }: any) {
-  const variants = { fadeIn, slideUp, scale };
-  
+const variantsMap = { fadeIn, slideUp, scale } as const;
+
+interface AnimatedDivProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
+  children: ReactNode;
+  variant?: keyof typeof variantsMap;
+}
+
+export function AnimatedDiv({ children, variant = 'fadeIn', ...props }: AnimatedDivProps) {
   return (
-    <motion.div {...variants[variant]} {...props}>
+    <motion.div {...variantsMap[variant]} {...props}>
       {children}
     </motion.div>
   );

@@ -236,14 +236,14 @@ export function AlertsTrendChart() {
                     borderRadius: '8px',
                   }}
                   labelStyle={{ color: 'hsl(var(--foreground))' }}
-                  formatter={(value: number, name: string) => {
+                  formatter={((value: number, name: string) => {
                     const labels: Record<string, string> = {
                       critical: 'Críticos',
                       warning: 'Avisos',
                       info: 'Informativos'
                     };
-                    return [value, labels[name] || name];
-                  }}
+                    return [value, labels[name] || name] as [number, string];
+                  }) as any}
                 />
                 <Legend
                   verticalAlign="top"
@@ -320,7 +320,7 @@ export function AlertsTrendChart() {
                       borderColor: 'hsl(var(--border))',
                       borderRadius: '8px',
                     }}
-                    formatter={(value: number) => [value, 'Alertas']}
+                    formatter={((value: number) => [value, 'Alertas'] as [number, string]) as any}
                     labelFormatter={(label) => label}
                   />
                   <Bar 

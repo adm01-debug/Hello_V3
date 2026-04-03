@@ -21,8 +21,8 @@ describe('Auth System', () => {
     });
 
     it('hasRole returns false without profile', () => {
-      const profile: { role: string } | null = null;
-      const result = profile ? ['admin'].includes(profile.role) : false;
+      const profile = null as { role: string } | null;
+      const result = profile != null ? ['admin'].includes(profile.role) : false;
       expect(result).toBe(false);
     });
   });

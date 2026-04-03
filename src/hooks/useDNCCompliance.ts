@@ -142,8 +142,8 @@ export function useDNCCompliance() {
         p_phone: phone,
         p_reason: reason,
         p_source: source,
-        p_notes: notes,
-        p_expires_at: expiresAt,
+        p_notes: notes ?? undefined,
+        p_expires_at: expiresAt ?? undefined,
       });
       if (error) throw error;
       return data;
@@ -210,8 +210,8 @@ export function useDNCCompliance() {
           p_phone: phone,
           p_reason: reason,
           p_source: source,
-          p_notes: null,
-          p_expires_at: null,
+          p_notes: undefined,
+          p_expires_at: undefined,
         });
         results.success++;
       } catch (error: any) {

@@ -42,8 +42,8 @@ export function CallSimulation() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [callDuration, setCallDuration] = useState(0);
   const [showAnalysis, setShowAnalysis] = useState(true);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const addNextMessage = useCallback(() => {
     if (currentIndex >= simulatedConversation.length) {

@@ -331,7 +331,7 @@ export default function HoldMetrics() {
                         border: '1px solid hsl(var(--border))',
                         borderRadius: '8px'
                       }}
-                      formatter={(value: number) => [formatDuration(value), '']}
+                      formatter={((value: number) => [formatDuration(value), ''] as [string, string]) as any}
                     />
                     <Bar dataKey="totalHoldTime" name="Tempo Total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="avgHoldTime" name="Tempo Médio" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
@@ -402,10 +402,10 @@ export default function HoldMetrics() {
                       border: '1px solid hsl(var(--border))',
                       borderRadius: '8px'
                     }}
-                    formatter={(value: number, name: string) => [
+                    formatter={((value: number, name: string) => [
                       name === 'holdCount' ? value : formatDuration(value), 
                       name === 'holdCount' ? 'Quantidade' : name === 'avgHoldTime' ? 'Tempo Médio' : 'Tempo Total'
-                    ]}
+                    ] as [string | number, string]) as any}
                   />
                   <Line 
                     type="monotone" 
@@ -452,7 +452,7 @@ export default function HoldMetrics() {
                         outerRadius={100}
                         paddingAngle={5}
                         dataKey="value"
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        label={((props: any) => `${props.name ?? ''}: ${((props.percent ?? 0) * 100).toFixed(0)}%`) as any}
                         labelLine={false}
                       >
                         {pieData.map((_, index) => (
@@ -465,7 +465,7 @@ export default function HoldMetrics() {
                           border: '1px solid hsl(var(--border))',
                           borderRadius: '8px'
                         }}
-                        formatter={(value: number) => [formatDuration(value), 'Tempo']}
+                        formatter={((value: number) => [formatDuration(value), 'Tempo'] as [string, string]) as any}
                       />
                     </PieChart>
                   </ResponsiveContainer>
