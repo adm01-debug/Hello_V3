@@ -376,7 +376,7 @@ export default function RateLimitDashboard() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {new Date(log.created_at).toLocaleString('pt-BR')}
+                        {new Date(log.created_at ?? 0).toLocaleString('pt-BR')}
                       </TableCell>
                       <TableCell className="text-right">
                         {log.is_blocked && (

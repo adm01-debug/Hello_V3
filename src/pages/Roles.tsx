@@ -356,7 +356,7 @@ export default function Roles() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {new Date(role.granted_at).toLocaleDateString('pt-BR')}
+                        {new Date(role.granted_at ?? 0).toLocaleDateString('pt-BR')}
                       </TableCell>
                       <TableCell>
                         {role.expires_at 
