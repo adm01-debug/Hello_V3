@@ -1,3 +1,4 @@
+import { logger } from '@/lib/logger';
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -150,7 +151,7 @@ export const useBitrix = () => {
   const registerCall = useCallback(async (callData: BitrixCallData) => {
     const result = await callBitrixApi('register_call', callData as unknown as Record<string, unknown>);
     if (result?.success) {
-      console.log('Call registered in Bitrix:', result.data);
+      logger.create('Bitrix').debug('Call registered:', result.data);
       return result.data;
     }
     return null;
@@ -163,7 +164,7 @@ export const useBitrix = () => {
       STATUS_CODE: statusCode
     });
     if (result?.success) {
-      console.log('Call finished in Bitrix:', result.data);
+      logger.create('Bitrix').debug('Call finished:', result.data);
       return result.data;
     }
     return null;

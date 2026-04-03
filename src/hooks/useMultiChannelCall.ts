@@ -1,5 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
+
+const log = logger.create('MultiChannelCall');
 export type CallChannel = 'webrtc' | 'wavoip' | 'sip';
 export type CallStatus = 'idle' | 'connecting' | 'ringing' | 'active' | 'on-hold' | 'ended' | 'conference' | 'transferring';
 export type CallDirection = 'inbound' | 'outbound';
@@ -292,9 +295,9 @@ export function useMultiChannelCall() {
           });
         
         if (error) {
-          console.error('Error persisting hold start event:', error);
+          log.error('Error persisting hold start event:', error);
         } else {
-          console.log(`[Hold Event] Started for call ${callId}`);
+          log.info(`Hold Event: Started for call ${callId}`);
         }
       } else {
         // Update the most recent hold event for this call with end time and duration
@@ -308,7 +311,7 @@ export function useMultiChannelCall() {
           .maybeSingle();
 
         if (fetchError) {
-          console.error('Error fetching hold event:', fetchError);
+          log.error('Error fetching hold event:', fetchError);
           return;
         }
 
@@ -322,14 +325,14 @@ export function useMultiChannelCall() {
             .eq('id', recentEvent.id);
 
           if (updateError) {
-            console.error('Error updating hold event:', updateError);
+            log.error('Error updating hold event:', updateError);
           } else {
-            console.log(`[Hold Event] Ended for call ${callId}, duration: ${durationSeconds}s`);
+            log.info(`Hold Event: Ended for call ${callId}, duration: ${durationSeconds}s`);
           }
         }
       }
     } catch (error) {
-      console.error('Error persisting hold event:', error);
+      log.error('Error persisting hold event:', error);
     }
   }, []);
 
@@ -459,7 +462,7 @@ export function useMultiChannelCall() {
       setConference(prev => prev ? { ...prev, duration: prev.duration + 1 } : null);
     }, 1000);
 
-    console.log(`[Conference] Started with auto-recording: ${conferenceId}`);
+    log.info('Conference started with auto-recording', { conferenceId });
     return newConference;
   }, []);
 
@@ -486,7 +489,7 @@ export function useMultiChannelCall() {
       participantIds: [...prev.participantIds, callId]
     } : null);
     
-    console.log(`[Conference] Added call ${callId} with recording: ${conference.isRecording}`);
+    log.info('Added call to conference', { callId, recording: conference.isRecording });
   }, [conference]);
 
   // Remove call from conference
@@ -541,7 +544,7 @@ export function useMultiChannelCall() {
       recordingStartedAt: newRecordingState ? new Date() : undefined
     } : null);
     
-    console.log(`[Conference] Recording ${newRecordingState ? 'started' : 'stopped'}`);
+    log.info(`Conference recording ${newRecordingState ? 'started' : 'stopped'}`);
   }, [conference]);
 
   // End conference call
@@ -554,7 +557,7 @@ export function useMultiChannelCall() {
       conferenceDurationRef.current = null;
     }
 
-    console.log(`[Conference] Ended. Recording was: ${conference.isRecording}`);
+    log.info('Conference ended', { wasRecording: conference.isRecording });
 
     // Update all participating calls back to active, stop recording
     setActiveCalls(prev => prev.map(call => {

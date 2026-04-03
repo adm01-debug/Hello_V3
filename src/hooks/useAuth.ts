@@ -1,3 +1,4 @@
+import { logger } from '@/lib/logger';
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -147,7 +148,7 @@ export function useAuth() {
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event);
+        logger.create('Auth').debug('Auth state changed:', event);
         
         // If we're cleaning up, ignore all events
         if (isCleaningUp.current) return;

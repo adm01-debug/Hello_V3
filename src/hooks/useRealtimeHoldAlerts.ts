@@ -1,6 +1,9 @@
 import { useEffect, useCallback, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
+
+const log = logger.create('RealtimeHoldAlerts');
 
 interface RealtimeHoldAlert {
   id: string;
@@ -21,8 +24,8 @@ const loadSavedEnabled = (): boolean => {
     if (saved !== null) {
       return saved === 'true';
     }
-  } catch (e) {
-    console.log('Failed to load notifications enabled state from localStorage');
+  } catch {
+    log.warn('Failed to load notifications enabled state from localStorage');
   }
   return true;
 };
@@ -60,14 +63,12 @@ export function useRealtimeHoldAlerts() {
   const [unreadCount, setUnreadCount] = useState(0);
   const [playSoundRef] = useState<{ current: (() => void) | null }>({ current: null });
 
-  // Check browser notification permission on mount
   useEffect(() => {
     if ('Notification' in window) {
       setBrowserNotificationsGranted(Notification.permission === 'granted');
     }
   }, []);
 
-  // Request browser notification permission
   const requestBrowserNotifications = useCallback(async () => {
     if (!('Notification' in window)) {
       toast.error("Notificações não suportadas", { description: "Seu navegador não suporta notificações nativas." });
@@ -87,12 +88,11 @@ export function useRealtimeHoldAlerts() {
       
       return granted;
     } catch (error) {
-      console.log('Failed to request notification permission:', error);
+      log.warn('Failed to request notification permission', error);
       return false;
     }
   }, []);
 
-  // Send browser push notification
   const sendBrowserNotification = useCallback((alert: RealtimeHoldAlert) => {
     if (!browserNotificationsGranted || Notification.permission !== 'granted') return;
 
@@ -118,11 +118,10 @@ export function useRealtimeHoldAlerts() {
         setTimeout(() => notification.close(), 10000);
       }
     } catch (error) {
-      console.log('Failed to send browser notification:', error);
+      log.warn('Failed to send browser notification', error);
     }
   }, [browserNotificationsGranted]);
 
-  // Show toast notification
   const showToastNotification = useCallback((alert: RealtimeHoldAlert) => {
     const isCritical = alert.severity === 'critical' || alert.severity === 'error';
     
@@ -133,49 +132,41 @@ export function useRealtimeHoldAlerts() {
     }
   }, []);
 
-  // Initialize audio
   const initAudio = useCallback(() => {
     if (!playSoundRef.current) {
       playSoundRef.current = createUrgentSound();
     }
   }, [playSoundRef]);
 
-  // Handle new alert
   const handleNewAlert = useCallback((alert: RealtimeHoldAlert) => {
     if (!isEnabled) return;
 
-    console.log('New hold alert received:', alert);
+    log.info('New hold alert received', { id: alert.id, severity: alert.severity });
 
-    // Add to recent alerts
     setRecentAlerts(prev => [alert, ...prev].slice(0, 50));
     setUnreadCount(prev => prev + 1);
 
     const isCritical = alert.severity === 'critical' || alert.severity === 'error';
 
-    // Play sound for critical alerts
     if (isCritical) {
       initAudio();
       if (playSoundRef.current) {
         try {
           playSoundRef.current();
         } catch (error) {
-          console.log('Audio playback failed:', error);
+          log.warn('Audio playback failed', error);
         }
       }
     }
 
-    // Show toast notification
     showToastNotification(alert);
-
-    // Send browser push notification
     sendBrowserNotification(alert);
   }, [isEnabled, initAudio, playSoundRef, showToastNotification, sendBrowserNotification]);
 
-  // Subscribe to realtime alerts
   useEffect(() => {
     if (!isEnabled) return;
 
-    console.log('Subscribing to realtime hold alerts...');
+    log.debug('Subscribing to realtime hold alerts');
 
     const channel = supabase
       .channel('hold-alerts-realtime')
@@ -188,22 +179,21 @@ export function useRealtimeHoldAlerts() {
           filter: 'alert_type=eq.hold_time_exceeded'
         },
         (payload) => {
-          console.log('Realtime alert payload:', payload);
+          log.debug('Realtime alert payload received');
           const alert = payload.new as RealtimeHoldAlert;
           handleNewAlert(alert);
         }
       )
       .subscribe((status) => {
-        console.log('Realtime subscription status:', status);
+        log.debug('Realtime subscription status', { status });
       });
 
     return () => {
-      console.log('Unsubscribing from realtime hold alerts...');
+      log.debug('Unsubscribing from realtime hold alerts');
       supabase.removeChannel(channel);
     };
   }, [isEnabled, handleNewAlert]);
 
-  // Fetch initial unread count
   useEffect(() => {
     const fetchUnreadCount = async () => {
       const { count } = await supabase
@@ -225,8 +215,8 @@ export function useRealtimeHoldAlerts() {
       const newValue = !prev;
       try {
         localStorage.setItem(STORAGE_KEY_NOTIFICATIONS_ENABLED, String(newValue));
-      } catch (e) {
-        console.log('Failed to save notifications enabled state to localStorage');
+      } catch {
+        log.warn('Failed to save notifications enabled state to localStorage');
       }
       
       if (newValue) {
