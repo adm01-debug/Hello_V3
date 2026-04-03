@@ -331,7 +331,7 @@ export default function HoldMetrics() {
                         border: '1px solid hsl(var(--border))',
                         borderRadius: '8px'
                       }}
-                      formatter={(value: number) => [formatDuration(value), '']}
+                      formatter={(value: unknown) => [formatDuration(Number(value)), '']}
                     />
                     <Bar dataKey="totalHoldTime" name="Tempo Total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="avgHoldTime" name="Tempo Médio" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
