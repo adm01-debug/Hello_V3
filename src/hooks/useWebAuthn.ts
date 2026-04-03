@@ -258,7 +258,7 @@ export function useWebAuthn() {
         .from('user_passkeys')
         .delete()
         .eq('id', passkeyId)
-        .eq('user_id', user?.id);
+        .eq('user_id', user?.id ?? '');
 
       if (error) throw error;
 
