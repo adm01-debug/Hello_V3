@@ -185,8 +185,8 @@ export default function RateLimitDashboard() {
     .slice(0, 24)
     .reverse()
     .map(log => ({
-      time: new Date(log.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-      requests: log.request_count,
+      time: new Date(log.created_at ?? 0).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      requests: log.request_count ?? 0,
       blocked: log.is_blocked ? 1 : 0,
     }));
 
