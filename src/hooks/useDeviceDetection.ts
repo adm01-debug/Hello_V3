@@ -1,3 +1,4 @@
+import { logger } from '@/lib/logger';
 
 import { useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
@@ -109,7 +110,7 @@ export function useDeviceDetection() {
       const isNewBrowser = !existingFingerprints.has(fingerprint);
       const isNewDevice = isNewIP || isNewBrowser;
       
-      console.log('[DeviceDetection] Verificação:', {
+      logger.create('DeviceDetection').debug(' Verificação:', {
         isNewIP,
         isNewBrowser,
         isNewDevice,
@@ -139,7 +140,7 @@ export function useDeviceDetection() {
           if (notifyError) {
             console.error('[DeviceDetection] Erro ao enviar notificação:', notifyError);
           } else {
-            console.log('[DeviceDetection] Notificação enviada com sucesso');
+            logger.create('DeviceDetection').debug(' Notificação enviada com sucesso');
           }
         } catch (invokeError) {
           console.error('[DeviceDetection] Erro ao invocar função:', invokeError);

@@ -1,3 +1,4 @@
+import { logger } from '@/lib/logger';
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -31,7 +32,7 @@ export function useAchievementNotifications(agentId?: string) {
           table: 'agent_badges',
         },
         async (payload) => {
-          console.log('New badge awarded:', payload);
+          logger.create('Achievements').debug('New badge awarded:', payload);
           
           const newBadge = payload.new as { id: string; agent_id: string; badge_id: string; earned_at: string };
           
@@ -87,7 +88,7 @@ export function useAchievementNotifications(agentId?: string) {
           filter: 'alert_type=eq.goals_achieved',
         },
         (payload) => {
-          console.log('Goal achieved:', payload);
+          logger.create('Achievements').debug('Goal achieved:', payload);
           const alert = payload.new as { title: string; message: string };
           
           toast.success('🎯 Meta Atingida!', { description: alert.title, duration: 6000 });
