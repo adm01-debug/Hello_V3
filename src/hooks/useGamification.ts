@@ -150,7 +150,7 @@ export function useGamification(agentId?: string) {
       return {
         agent_id: stat.agent_id,
         agent_name: agent?.name || 'Agente',
-        avatar_url: agent?.avatar_url,
+        avatar_url: agent?.avatar_url ?? null,
         total_calls: stat.total_calls,
         total_duration_seconds: stat.total_duration_seconds,
         avg_satisfaction: stat.avg_satisfaction,

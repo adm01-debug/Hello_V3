@@ -49,8 +49,8 @@ export function useCallSession() {
       if (error) throw error;
 
       const session: CallSession = {
-        id: data.id, callerName: data.caller_name, callerPhone: data.caller_phone,
-        agentName: data.agent_name, startedAt: new Date(data.started_at),
+        id: data.id, callerName: data.caller_name ?? '', callerPhone: data.caller_phone ?? '',
+        agentName: data.agent_name ?? undefined, startedAt: new Date(data.started_at),
       };
       setCurrentSession(session);
       log.info('Call session started', { sessionId: session.id });

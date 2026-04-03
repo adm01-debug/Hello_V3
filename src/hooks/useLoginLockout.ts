@@ -82,7 +82,7 @@ export function useLoginLockout() {
     try {
       await supabase.rpc('record_successful_login', {
         p_email: email.toLowerCase(),
-        p_ip_address: ipAddress || null,
+        p_ip_address: ipAddress ?? undefined,
         p_user_agent: navigator.userAgent
       });
 

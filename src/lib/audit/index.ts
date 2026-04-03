@@ -31,7 +31,7 @@ export async function logAuditEvent(event: AuditEvent): Promise<string | null> {
     const { data, error } = await supabase.rpc("log_audit_event", {
       p_action: event.action,
       p_resource_type: event.resourceType,
-      p_resource_id: event.resourceId || null,
+      p_resource_id: event.resourceId ?? undefined,
       p_details: (event.details || {}) as unknown as import("@/integrations/supabase/types").Json,
     });
 
