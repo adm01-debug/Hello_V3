@@ -69,7 +69,7 @@ export const usePredictiveDialer = () => {
   const [isDialing, setIsDialing] = useState(false);
   const [currentCall, setCurrentCall] = useState<DialerQueueItem | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const dialerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const dialerIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Fetch all campaigns
   const fetchCampaigns = useCallback(async () => {
