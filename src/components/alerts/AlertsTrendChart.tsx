@@ -236,7 +236,7 @@ export function AlertsTrendChart() {
                     borderRadius: '8px',
                   }}
                   labelStyle={{ color: 'hsl(var(--foreground))' }}
-                  formatter={(value: number, name: string) => {
+                  formatter={(value: unknown, name: string) => {
                     const labels: Record<string, string> = {
                       critical: 'Críticos',
                       warning: 'Avisos',
