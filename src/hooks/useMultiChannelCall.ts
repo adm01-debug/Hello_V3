@@ -462,7 +462,7 @@ export function useMultiChannelCall() {
       setConference(prev => prev ? { ...prev, duration: prev.duration + 1 } : null);
     }, 1000);
 
-    console.log(`[Conference] Started with auto-recording: ${conferenceId}`);
+    log.info('Conference started with auto-recording', { conferenceId });
     return newConference;
   }, []);
 
