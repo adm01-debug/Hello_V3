@@ -19,10 +19,10 @@ interface RateLimitLog {
   user_id: string | null;
   ip_address: string;
   endpoint: string;
-  request_count: number;
-  is_blocked: boolean;
+  request_count: number | null;
+  is_blocked: boolean | null;
   block_reason: string | null;
-  created_at: string;
+  created_at: string | null;
 }
 
 interface RateLimitAlert {

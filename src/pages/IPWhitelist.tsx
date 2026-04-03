@@ -31,7 +31,7 @@ interface UserRestriction {
   user_id: string;
   enabled: boolean;
   user_email?: string;
-  user_name?: string;
+  user_name?: string | null;
 }
 
 interface BlockedLog {

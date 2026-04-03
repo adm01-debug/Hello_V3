@@ -19,10 +19,10 @@ interface UserRole {
   user_id: string;
   role: string;
   is_active: boolean;
-  granted_at: string;
+  granted_at: string | null;
   expires_at: string | null;
   user_email?: string;
-  user_name?: string;
+  user_name?: string | null;
 }
 
 const ROLE_LABELS: Record<string, { label: string; icon: any; color: string }> = {
