@@ -295,9 +295,9 @@ export function useMultiChannelCall() {
           });
         
         if (error) {
-          console.error('Error persisting hold start event:', error);
+          log.error('Error persisting hold start event:', error);
         } else {
-          console.log(`[Hold Event] Started for call ${callId}`);
+          log.info(`Hold Event: Started for call ${callId}`);
         }
       } else {
         // Update the most recent hold event for this call with end time and duration
@@ -311,7 +311,7 @@ export function useMultiChannelCall() {
           .maybeSingle();
 
         if (fetchError) {
-          console.error('Error fetching hold event:', fetchError);
+          log.error('Error fetching hold event:', fetchError);
           return;
         }
 
@@ -325,14 +325,14 @@ export function useMultiChannelCall() {
             .eq('id', recentEvent.id);
 
           if (updateError) {
-            console.error('Error updating hold event:', updateError);
+            log.error('Error updating hold event:', updateError);
           } else {
-            console.log(`[Hold Event] Ended for call ${callId}, duration: ${durationSeconds}s`);
+            log.info(`Hold Event: Ended for call ${callId}, duration: ${durationSeconds}s`);
           }
         }
       }
     } catch (error) {
-      console.error('Error persisting hold event:', error);
+      log.error('Error persisting hold event:', error);
     }
   }, []);
 

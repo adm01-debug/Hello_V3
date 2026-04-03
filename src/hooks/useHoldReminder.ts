@@ -1,3 +1,5 @@
+import { logger } from '@/lib/logger';
+const log = logger.create('HoldReminder');
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { CallSession } from './useMultiChannelCall';
 import { toast } from 'sonner';
@@ -44,7 +46,7 @@ const loadSavedInterval = (): ReminderInterval => {
       }
     }
   } catch (e) {
-    console.log('Failed to load interval from localStorage');
+    log.warn('Failed to load interval from localStorage');
   }
   return 30;
 };
@@ -56,7 +58,7 @@ const loadSavedEnabled = (): boolean => {
       return saved === 'true';
     }
   } catch (e) {
-    console.log('Failed to load enabled state from localStorage');
+    log.warn('Failed to load enabled state from localStorage');
   }
   return true;
 };
@@ -71,7 +73,7 @@ const loadSavedAlertThreshold = (): HoldAlertThreshold => {
       }
     }
   } catch (e) {
-    console.log('Failed to load alert threshold from localStorage');
+    log.warn('Failed to load alert threshold from localStorage');
   }
   return 60;
 };
@@ -83,7 +85,7 @@ const loadSavedAlertsEnabled = (): boolean => {
       return saved === 'true';
     }
   } catch (e) {
-    console.log('Failed to load alerts enabled state from localStorage');
+    log.warn('Failed to load alerts enabled state from localStorage');
   }
   return true;
 };
@@ -198,7 +200,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       
       return granted;
     } catch (error) {
-      console.log('Failed to request notification permission:', error);
+      log.warn('Failed to request notification permission:', error);
       return false;
     }
   }, []);
@@ -230,7 +232,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
         setTimeout(() => notification.close(), 10000);
       }
     } catch (error) {
-      console.log('Failed to send browser notification:', error);
+      log.warn('Failed to send browser notification:', error);
     }
   }, [browserNotificationsEnabled]);
 
@@ -309,7 +311,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
           try {
             playUrgentSoundRef.current();
           } catch (error) {
-            console.log('Urgent audio playback failed:', error);
+            log.warn('Urgent audio playback failed:', error);
           }
         }
         
@@ -335,7 +337,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
           try {
             playSoundRef.current();
           } catch (error) {
-            console.log('Audio playback failed:', error);
+            log.warn('Audio playback failed:', error);
           }
         }
         
@@ -378,7 +380,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
         try {
           playSoundRef.current();
         } catch (error) {
-          console.log('Audio playback failed:', error);
+          log.warn('Audio playback failed:', error);
         }
       }
       
@@ -440,7 +442,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       try {
         localStorage.setItem(STORAGE_KEY_ENABLED, String(newValue));
       } catch (e) {
-        console.log('Failed to save enabled state to localStorage');
+        log.warn('Failed to save enabled state to localStorage');
       }
       return newValue;
     });
@@ -452,7 +454,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       try {
         localStorage.setItem(STORAGE_KEY_ALERTS_ENABLED, String(newValue));
       } catch (e) {
-        console.log('Failed to save alerts enabled state to localStorage');
+        log.warn('Failed to save alerts enabled state to localStorage');
       }
       return newValue;
     });
@@ -463,7 +465,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     try {
       localStorage.setItem(STORAGE_KEY_INTERVAL, String(newInterval));
     } catch (e) {
-      console.log('Failed to save interval to localStorage');
+      log.warn('Failed to save interval to localStorage');
     }
     // Reset reminder times so the new interval takes effect immediately
     setLastReminderTime({});
@@ -474,7 +476,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     try {
       localStorage.setItem(STORAGE_KEY_ALERT_THRESHOLD, String(newThreshold));
     } catch (e) {
-      console.log('Failed to save alert threshold to localStorage');
+      log.warn('Failed to save alert threshold to localStorage');
     }
     // Reset alerted calls so new threshold takes effect
     setAlertedCalls({});
