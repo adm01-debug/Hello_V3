@@ -391,7 +391,7 @@ const ContactInsights = () => {
                           outerRadius={80}
                           paddingAngle={5}
                           dataKey="value"
-                          label={({ name, percent }: { name: string; percent?: number }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                          label={((props: any) => `${props.name ?? ''} ${((props.percent ?? 0) * 100).toFixed(0)}%`) as any}
                         >
                           {metrics.sentimentDistribution.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />

@@ -895,14 +895,14 @@ export default function ExecutiveDashboard() {
                         border: '1px solid hsl(var(--border))',
                         borderRadius: '8px',
                       }}
-                      formatter={(value: unknown, name: string) => {
+                      formatter={((value: number, name: string) => {
                         if (name === 'Tempo Total' || name === 'Média') {
                           const mins = Math.floor(value / 60);
                           const secs = Math.round(value % 60);
-                          return [`${mins}m ${secs}s`, name];
+                          return [`${mins}m ${secs}s`, name] as [string, string];
                         }
-                        return [value, name];
-                      }}
+                        return [value, name] as [number, string];
+                      }) as any}
                     />
                     <Legend />
                     <Bar dataKey="holdTime" name="Tempo Total" fill="hsl(24, 100%, 50%)" />
