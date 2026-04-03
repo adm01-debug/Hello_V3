@@ -489,7 +489,7 @@ export function useMultiChannelCall() {
       participantIds: [...prev.participantIds, callId]
     } : null);
     
-    console.log(`[Conference] Added call ${callId} with recording: ${conference.isRecording}`);
+    log.info('Added call to conference', { callId, recording: conference.isRecording });
   }, [conference]);
 
   // Remove call from conference
