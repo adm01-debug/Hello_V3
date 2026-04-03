@@ -544,7 +544,7 @@ export function useMultiChannelCall() {
       recordingStartedAt: newRecordingState ? new Date() : undefined
     } : null);
     
-    console.log(`[Conference] Recording ${newRecordingState ? 'started' : 'stopped'}`);
+    log.info(`Conference recording ${newRecordingState ? 'started' : 'stopped'}`);
   }, [conference]);
 
   // End conference call
