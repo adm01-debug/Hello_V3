@@ -142,8 +142,8 @@ export function useDNCCompliance() {
         p_phone: phone,
         p_reason: reason,
         p_source: source,
-        p_notes: notes,
-        p_expires_at: expiresAt,
+        p_notes: notes ?? undefined,
+        p_expires_at: expiresAt ?? undefined,
       });
       if (error) throw error;
       return data;
