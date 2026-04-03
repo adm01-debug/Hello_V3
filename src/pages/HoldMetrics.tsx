@@ -465,7 +465,7 @@ export default function HoldMetrics() {
                           border: '1px solid hsl(var(--border))',
                           borderRadius: '8px'
                         }}
-                        formatter={(value: number) => [formatDuration(value), 'Tempo']}
+                        formatter={(value: unknown) => [formatDuration(Number(value)), 'Tempo']}
                       />
                     </PieChart>
                   </ResponsiveContainer>

@@ -320,7 +320,7 @@ export function AlertsTrendChart() {
                       borderColor: 'hsl(var(--border))',
                       borderRadius: '8px',
                     }}
-                    formatter={(value: number) => [value, 'Alertas']}
+                    formatter={(value: unknown) => [value, 'Alertas']}
                     labelFormatter={(label) => label}
                   />
                   <Bar 

@@ -895,7 +895,7 @@ export default function ExecutiveDashboard() {
                         border: '1px solid hsl(var(--border))',
                         borderRadius: '8px',
                       }}
-                      formatter={(value: number, name: string) => {
+                      formatter={(value: unknown, name: string) => {
                         if (name === 'Tempo Total' || name === 'Média') {
                           const mins = Math.floor(value / 60);
                           const secs = Math.round(value % 60);
