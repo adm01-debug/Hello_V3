@@ -172,12 +172,12 @@ export default function RateLimitDashboard() {
 
   // Stats
   const stats = {
-    totalRequests: logs.reduce((acc, log) => acc + log.request_count, 0),
+    totalRequests: logs.reduce((acc, log) => acc + (log.request_count ?? 0), 0),
     blockedIPs: new Set(logs.filter(l => l.is_blocked).map(l => l.ip_address)).size,
     activeAlerts: alerts.filter(a => !a.is_resolved).length,
     requestsLast24h: logs.filter(l => 
-      new Date(l.created_at) > new Date(Date.now() - 24 * 60 * 60 * 1000)
-    ).reduce((acc, log) => acc + log.request_count, 0),
+      new Date(l.created_at ?? 0) > new Date(Date.now() - 24 * 60 * 60 * 1000)
+    ).reduce((acc, log) => acc + (log.request_count ?? 0), 0),
   };
 
   // Chart data
