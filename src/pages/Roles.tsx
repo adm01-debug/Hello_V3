@@ -21,8 +21,10 @@ interface UserRole {
   is_active: boolean;
   granted_at: string | null;
   expires_at: string | null;
+  granted_by?: string | null;
   user_email?: string;
   user_name?: string | null;
+  [key: string]: unknown;
 }
 
 const ROLE_LABELS: Record<string, { label: string; icon: any; color: string }> = {
