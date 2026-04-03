@@ -244,7 +244,6 @@ export function AlertsTrendChart() {
                     };
                     return [value, labels[name] || name] as [number, string];
                   }) as any}
-                  }}
                 />
                 <Legend
                   verticalAlign="top"
