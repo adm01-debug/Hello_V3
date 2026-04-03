@@ -23,7 +23,7 @@ interface IPEntry {
   description: string | null;
   is_cidr: boolean;
   created_at: string;
-  created_by?: string;
+  created_by?: string | null;
 }
 
 interface UserRestriction {

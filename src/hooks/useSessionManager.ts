@@ -113,9 +113,11 @@ export function useSessionManager() {
         device_info: s.device_info as ActiveSession['device_info'],
         location: s.location as ActiveSession['location'],
         is_current: s.id === currentSessionId,
+        created_at: s.created_at ?? '',
+        expires_at: s.expires_at ?? '',
       }));
 
-      setSessions(sessionsWithCurrent);
+      setSessions(sessionsWithCurrent as ActiveSession[]);
     } catch (error) {
       console.error('Error loading sessions:', error);
     } finally {
