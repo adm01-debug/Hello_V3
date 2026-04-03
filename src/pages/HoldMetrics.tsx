@@ -402,8 +402,8 @@ export default function HoldMetrics() {
                       border: '1px solid hsl(var(--border))',
                       borderRadius: '8px'
                     }}
-                    formatter={(value: number, name: string) => [
-                      name === 'holdCount' ? value : formatDuration(value), 
+                    formatter={(value: unknown, name: string) => [
+                      name === 'holdCount' ? value : formatDuration(Number(value)), 
                       name === 'holdCount' ? 'Quantidade' : name === 'avgHoldTime' ? 'Tempo Médio' : 'Tempo Total'
                     ]}
                   />
