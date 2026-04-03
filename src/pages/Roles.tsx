@@ -74,7 +74,7 @@ export default function Roles() {
         user_name: profileMap.get(role.user_id)?.full_name,
       })) || [];
 
-      setUserRoles(enrichedRoles);
+      setUserRoles(enrichedRoles as UserRole[]);
     } catch (error) {
       console.error('Error loading roles:', error);
       toast.error('Erro ao carregar roles');
