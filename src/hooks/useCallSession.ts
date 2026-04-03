@@ -38,7 +38,7 @@ export function useCallSession() {
   const [isSaving, setIsSaving] = useState(false);
   const pendingTranscriptsRef = useRef<TranscriptEntry[]>([]);
   const pendingAnalysesRef = useRef<AnalysisEntry[]>([]);
-  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startSession = useCallback(async (callerName: string, callerPhone: string, agentName?: string) => {
     try {
