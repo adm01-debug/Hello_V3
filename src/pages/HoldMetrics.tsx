@@ -402,10 +402,10 @@ export default function HoldMetrics() {
                       border: '1px solid hsl(var(--border))',
                       borderRadius: '8px'
                     }}
-                    formatter={(value: unknown, name: string) => [
-                      name === 'holdCount' ? value : formatDuration(Number(value)), 
+                    formatter={((value: number, name: string) => [
+                      name === 'holdCount' ? value : formatDuration(value), 
                       name === 'holdCount' ? 'Quantidade' : name === 'avgHoldTime' ? 'Tempo Médio' : 'Tempo Total'
-                    ]}
+                    ] as [string | number, string]) as any}
                   />
                   <Line 
                     type="monotone" 
