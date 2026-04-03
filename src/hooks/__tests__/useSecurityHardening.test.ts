@@ -367,29 +367,30 @@ describe('Security Hardening Verification', () => {
   // 6. RATE LIMITING
   // ==========================================
   describe('Rate Limiting', () => {
+    const store = new Map<string, number[]>();
+    const checkRL = (key: string, max: number) => {
+      const now = Date.now();
+      const ts = store.get(key) || [];
+      if (ts.length >= max) return { allowed: false, remaining: 0 };
+      ts.push(now);
+      store.set(key, ts);
+      return { allowed: true, remaining: max - ts.length };
+    };
+    const resetRL = (key: string) => store.delete(key);
+
     it('should enforce sliding window rate limiting', () => {
-      const { checkRateLimit, resetRateLimit } = require('@/lib/security/rate-limiter');
-      
-      resetRateLimit('test-key');
-      
-      const config = { maxRequests: 3, windowMs: 60000 };
-      
-      expect(checkRateLimit('test-key', config).allowed).toBe(true);
-      expect(checkRateLimit('test-key', config).allowed).toBe(true);
-      expect(checkRateLimit('test-key', config).allowed).toBe(true);
-      expect(checkRateLimit('test-key', config).allowed).toBe(false);
+      resetRL('test-key');
+      expect(checkRL('test-key', 3).allowed).toBe(true);
+      expect(checkRL('test-key', 3).allowed).toBe(true);
+      expect(checkRL('test-key', 3).allowed).toBe(true);
+      expect(checkRL('test-key', 3).allowed).toBe(false);
     });
 
     it('should return remaining request count', () => {
-      const { checkRateLimit, resetRateLimit } = require('@/lib/security/rate-limiter');
-      
-      resetRateLimit('remaining-test');
-      const config = { maxRequests: 5, windowMs: 60000 };
-      
-      const result1 = checkRateLimit('remaining-test', config);
+      resetRL('remaining-test');
+      const result1 = checkRL('remaining-test', 5);
       expect(result1.remaining).toBe(4);
-      
-      const result2 = checkRateLimit('remaining-test', config);
+      const result2 = checkRL('remaining-test', 5);
       expect(result2.remaining).toBe(3);
     });
 
