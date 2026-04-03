@@ -32,18 +32,18 @@ interface RateLimitAlert {
   endpoint: string;
   request_count: number;
   threshold: number;
-  severity: string;
-  is_resolved: boolean;
-  created_at: string;
+  severity: string | null;
+  is_resolved: boolean | null;
+  created_at: string | null;
 }
 
 interface RateLimitSetting {
   id: string;
   endpoint_pattern: string;
-  max_requests: number;
-  window_seconds: number;
-  block_duration_seconds: number;
-  is_enabled: boolean;
+  max_requests: number | null;
+  window_seconds: number | null;
+  block_duration_seconds: number | null;
+  is_enabled: boolean | null;
 }
 
 export default function RateLimitDashboard() {
