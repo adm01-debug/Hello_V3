@@ -1,3 +1,4 @@
+import { logger } from '@/lib/logger';
 // @ts-nocheck
 // UnifiedSoftphone component
 import { useState, useCallback, useEffect } from 'react';
@@ -148,11 +149,11 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   const { isRecording: isConferenceRecording, isSaving: isSavingRecording } = useConferenceRecording({
     conference,
     onRecordingStarted: () => {
-      console.log('[UnifiedSoftphone] Conference recording started');
+      logger.create('Softphone').debug(' Conference recording started');
       toast.info('Gravação da conferência iniciada');
     },
     onRecordingSaved: (filePath) => {
-      console.log('[UnifiedSoftphone] Conference recording saved:', filePath);
+      logger.create('Softphone').debug(' Conference recording saved:', filePath);
       toast.success('Gravação da conferência salva');
     }
   });
@@ -174,12 +175,12 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   // ElevenLabs conversation hook for WebRTC
   const conversation = useConversation({
     onConnect: () => {
-      console.log('WebRTC connected');
+      logger.create('Softphone').debug('WebRTC connected');
       updateCallStatus('active');
       toast.success('Conectado');
     },
     onDisconnect: () => {
-      console.log('WebRTC disconnected');
+      logger.create('Softphone').debug('WebRTC disconnected');
       handleEndCall();
     },
     onMessage: (message) => {
