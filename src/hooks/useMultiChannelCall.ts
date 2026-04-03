@@ -557,7 +557,7 @@ export function useMultiChannelCall() {
       conferenceDurationRef.current = null;
     }
 
-    console.log(`[Conference] Ended. Recording was: ${conference.isRecording}`);
+    log.info('Conference ended', { wasRecording: conference.isRecording });
 
     // Update all participating calls back to active, stop recording
     setActiveCalls(prev => prev.map(call => {
