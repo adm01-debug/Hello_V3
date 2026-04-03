@@ -906,7 +906,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                       </div>
                       <span className="text-xs font-medium truncate w-full">{contact.name}</span>
                       <span className="text-[10px] text-muted-foreground truncate w-full">
-                        {contact.company}
+                        {(contact as { company?: string }).company ?? ''}
                       </span>
                     </Button>
                   ))}
