@@ -94,10 +94,10 @@ export function useGamification(agentId?: string) {
       return;
     }
 
-    setAgentBadges(data.map((ab: Record<string, unknown>) => ({
+    setAgentBadges(data.map((ab) => ({
       ...ab,
-      badge: ab.badge as Badge
-    })));
+      badge: (ab as unknown as { badge: Badge }).badge
+    })) as AgentBadge[]);
   };
 
   const fetchWeeklyStats = async () => {
