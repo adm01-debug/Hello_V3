@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest';
-// @ts-expect-error - testing-library types
+
 import { render, screen, fireEvent } from '@testing-library/react';
 import React, { ReactNode } from 'react';
 import { ErrorBoundary, SectionBoundary } from '@/components/error-boundary/ErrorBoundary';

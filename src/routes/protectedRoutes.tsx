@@ -114,6 +114,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/number-porting", element: NumberPorting, roles: ["admin"] },
   { path: "/toll-free-numbers", element: TollFreeNumbers, roles: ["admin"] },
   { path: "/ldap-sync", element: LDAPSync, roles: ["admin"] },
+  { path: "/observability", element: ObservabilityDashboard, roles: ["admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },
