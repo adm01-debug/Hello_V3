@@ -156,10 +156,20 @@ export function useWebAuthn() {
       const challenge = generateChallenge();
       const rpId = getRpId();
 
+      // Get current user for challenge binding
+      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      const challengeUserId = currentUser?.id;
+
+      if (!challengeUserId) {
+        toast.error('Você precisa estar autenticado para usar passkeys');
+        return { success: false };
+      }
+
       // Store challenge in database
       const { error: challengeError } = await supabase
         .from('webauthn_challenges')
         .insert({
+          user_id: challengeUserId,
           challenge,
           type: 'authentication',
           expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
