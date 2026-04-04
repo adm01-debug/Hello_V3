@@ -1,8 +1,7 @@
-export type { UserRole, UserProfile, AuthState } from './auth/useAuthState';
-export { useAuth } from './useAuth';
-export default useAuth;
+export type { UserRole, UserProfile, AuthState } from './useAuthState';
+export { useAuth } from '../useAuth';
 
 // Re-export sub-modules for direct usage if needed
-export { useAuthProfile } from './auth/useAuthProfile';
-export { useAuthSession, withTimeout } from './auth/useAuthSession';
-export { useAuthActions } from './auth/useAuthActions';
+export { useAuthProfile } from './useAuthProfile';
+export { useAuthSession, withTimeout } from './useAuthSession';
+export { useAuthActions } from './useAuthActions';
