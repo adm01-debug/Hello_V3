@@ -191,6 +191,7 @@ describe('Accessibility: General patterns across components', () => {
     const content = readSrc('src/pages/Index.tsx');
     expect(content).toMatch(/<main/);
     expect(content).toMatch(/<section/);
-    expect(content).toMatch(/<h1/);
+    // h1 is rendered via NeonPageHeader component
+    expect(content).toContain('NeonPageHeader');
   });
 });
