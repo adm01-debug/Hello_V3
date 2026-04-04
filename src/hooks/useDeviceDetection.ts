@@ -90,7 +90,7 @@ export function useDeviceDetection() {
         .eq('user_id', userId);
       
       if (error) {
-        console.error('[DeviceDetection] Erro ao verificar sessões:', error);
+        logger.create('DeviceDetection').error('Erro ao verificar sessões', error);
         return { isNewDevice: false, deviceInfo, locationInfo };
       }
       
