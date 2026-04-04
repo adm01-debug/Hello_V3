@@ -107,7 +107,7 @@ export default function SecurityDashboard() {
         .order('created_at', { ascending: false })
         .limit(5);
       
-      setRecentAlerts((alerts || []).map((a: Record<string, unknown>) => ({
+      setRecentAlerts((alerts || []).map((a) => ({
         id: a.id,
         type: a.alert_type,
         severity: a.severity as 'info' | 'warning' | 'critical',

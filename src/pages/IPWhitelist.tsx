@@ -162,7 +162,7 @@ export default function IPWhitelist() {
       setAddIPDialogOpen(false);
       fetchData();
     } catch (error: unknown) {
-      if (error.code === '23505') {
+      if (error instanceof Object && 'code' in error && error.code === '23505') {
         toast.error('Este IP já está na whitelist');
       } else {
         toast.error('Erro ao adicionar IP');

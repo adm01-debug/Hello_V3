@@ -235,7 +235,7 @@ export function useDNCCompliance() {
     const setting = settings.find(s => s.setting_key === key);
     if (!setting) return defaultValue;
     try {
-      return JSON.parse(setting.setting_value);
+      return JSON.parse(String(setting.setting_value));
     } catch {
       return setting.setting_value;
     }
