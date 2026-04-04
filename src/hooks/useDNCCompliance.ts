@@ -1,3 +1,4 @@
+import type { Json } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
 const log = logger.create('DNCCompliance');
 
@@ -39,7 +40,7 @@ interface CallingHoursConfig {
 interface ComplianceSetting {
   id: string;
   setting_key: string;
-  setting_value: Record<string, unknown> | string | number | boolean | null;
+  setting_value: Json;
   description: string | null;
 }
 
@@ -179,7 +180,7 @@ export function useDNCCompliance() {
 
   // Update compliance setting
   const updateSettingMutation = useMutation({
-    mutationFn: async ({ key, value }: { key: string; value: Record<string, unknown> | string | number | boolean | null }) => {
+    mutationFn: async ({ key, value }: { key: string; value: Json }) => {
       const { error } = await supabase
         .from('compliance_settings')
         .update({ 

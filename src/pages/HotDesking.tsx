@@ -50,7 +50,7 @@ export default function HotDesking() {
     },
   });
 
-  const available = stations.filter((s: { is_available?: boolean }) => s.is_available).length;
+  const available = stations.filter((s) => s.is_available).length;
 
   return (
     <div className="space-y-6 p-6">
@@ -84,7 +84,7 @@ export default function HotDesking() {
             <Monitor className="h-12 w-12 mx-auto mb-4 text-muted-foreground/30" />
             <p className="text-lg font-medium text-muted-foreground">Nenhuma estação configurada</p>
           </Card>
-        ) : stations.map((station: { id: string; name: string; location: string; is_available: boolean; current_agent?: string; last_checkin?: string }) => (
+        ) : stations.map((station) => (
           <Card key={station.id} className={`transition-all hover:shadow-md ${station.is_available ? 'border-success/30' : 'border-amber-500/30'}`}>
             <CardContent className="p-4 space-y-3">
               <div className="flex items-center justify-between">
