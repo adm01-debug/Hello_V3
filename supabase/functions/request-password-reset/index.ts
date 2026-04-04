@@ -1,9 +1,9 @@
-import { corsHeaders } from "../_shared/cors.ts";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: buildCorsHeaders(req) });
   }
 
   try {
@@ -17,7 +17,7 @@ Deno.serve(async (req) => {
     if (!email || typeof email !== 'string' || email.length > 255) {
       return new Response(
         JSON.stringify({ error: 'Valid email is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -39,7 +39,7 @@ Deno.serve(async (req) => {
           success: true, 
           message: 'Se o email existir, uma solicitação será enviada para aprovação.'
         }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
           success: true, 
           message: 'Se o email existir, uma solicitação será enviada para aprovação.'
         }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -71,7 +71,7 @@ Deno.serve(async (req) => {
           success: true, 
           message: 'Já existe uma solicitação pendente. Aguarde a aprovação de um administrador.'
         }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -91,7 +91,7 @@ Deno.serve(async (req) => {
       console.error('Error creating reset request:', insertError);
       return new Response(
         JSON.stringify({ error: 'Failed to create reset request' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -114,7 +114,7 @@ Deno.serve(async (req) => {
         success: true, 
         message: 'Solicitação enviada. Um administrador irá revisar e aprovar seu pedido.'
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
 
   } catch (error: unknown) {
@@ -122,7 +122,7 @@ Deno.serve(async (req) => {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
       JSON.stringify({ error: errorMessage }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
   }
 });

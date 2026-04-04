@@ -1,4 +1,4 @@
-import { corsHeaders } from "../_shared/cors.ts";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 
 interface NewDeviceNotification {
   email: string;
@@ -16,7 +16,7 @@ interface NewDeviceNotification {
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: buildCorsHeaders(req) });
   }
 
   try {
@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
     if (!data.email || !data.ip || !data.timestamp) {
       return new Response(
         JSON.stringify({ error: "Missing required fields: email, ip, timestamp" }),
-        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+        { status: 400, headers: { "Content-Type": "application/json", ...buildCorsHeaders(req) } }
       );
     }
 
@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
     if (!RESEND_API_KEY) {
       return new Response(
         JSON.stringify({ success: true, message: "RESEND_API_KEY not configured", logged: true, emailSent: false }),
-        { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+        { status: 200, headers: { "Content-Type": "application/json", ...buildCorsHeaders(req) } }
       );
     }
 
@@ -109,20 +109,20 @@ Deno.serve(async (req) => {
       console.error("[NEW-DEVICE] Erro ao enviar email:", emailResult);
       return new Response(
         JSON.stringify({ success: false, error: emailResult.message, logged: true, emailSent: false }),
-        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+        { status: 500, headers: { "Content-Type": "application/json", ...buildCorsHeaders(req) } }
       );
     }
 
     return new Response(
       JSON.stringify({ success: true, logged: true, emailSent: true, emailId: emailResult.id }),
-      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      { status: 200, headers: { "Content-Type": "application/json", ...buildCorsHeaders(req) } }
     );
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error("[NEW-DEVICE] Erro:", errorMessage);
     return new Response(
       JSON.stringify({ success: false, error: errorMessage, logged: true, emailSent: false }),
-      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      { status: 500, headers: { "Content-Type": "application/json", ...buildCorsHeaders(req) } }
     );
   }
 });
