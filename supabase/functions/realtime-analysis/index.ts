@@ -1,57 +1,53 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
-
+import { validate, string, optional } from "../_shared/validate.ts";
+import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: buildCorsHeaders(req) });
-  }
+  const cors = buildCorsHeaders(req);
+  if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
   try {
-    // Verify authentication
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
-        status: 401,
-        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+    const supabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
       global: { headers: { Authorization: authHeader } }
     });
 
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
-      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
-        status: 401,
-        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
+    }
+
+    const rl = await checkRateLimitDB(getClientIp(req), 'realtime-analysis', user.id);
+    if (!rl.allowed) {
+      return new Response(JSON.stringify({ error: 'Limite excedido' }), { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
-      console.error('LOVABLE_API_KEY not configured');
-      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
-        status: 503,
-        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const body = await req.json();
-    const { latestMessage, conversationContext, speakerRole } = body;
+    const parsed = validate(body, {
+      latestMessage: string({ min: 1, max: 5000 }),
+      conversationContext: optional(string({ max: 10000 })),
+      speakerRole: optional(string({ max: 20 })),
+    });
 
-    if (!latestMessage || typeof latestMessage !== 'string') {
-      return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
-        status: 400,
-        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+    if (!parsed.ok) {
+      return new Response(JSON.stringify({ error: 'Dados inválidos', details: parsed.errors }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    console.log('Real-time analysis for user:', user.id);
+    const latestMessage = parsed.data.latestMessage as string;
+    const conversationContext = (parsed.data.conversationContext as string) || 'Início da chamada';
+    const speakerRole = (parsed.data.speakerRole as string) === 'agent' ? 'Agente' : 'Cliente';
 
     const systemPrompt = `Você é um assistente de análise em tempo real para agentes de call center.
 Analise a última mensagem no contexto da conversa e forneça feedback instantâneo.
@@ -67,78 +63,35 @@ Responda APENAS com um JSON válido:
   "riskReason": "motivo do alerta se houver"
 }`;
 
-    const safeContext = String(conversationContext || 'Início da chamada').slice(0, 2000);
-    const safeMessage = latestMessage.slice(0, 1000);
-    const safeSpeaker = speakerRole === 'agent' ? 'Agente' : 'Cliente';
-
-    const userPrompt = `Contexto da conversa:
-${safeContext}
-
-Última mensagem (${safeSpeaker}):
-"${safeMessage}"
-
-Analise e forneça feedback instantâneo.`;
-
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Authorization': `Bearer ${LOVABLE_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash-lite',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: 'user', content: `Contexto:\n${conversationContext.slice(0, 2000)}\n\nÚltima mensagem (${speakerRole}):\n"${latestMessage.slice(0, 1000)}"` }
         ],
       }),
     });
 
     if (!response.ok) {
-      console.error('AI Gateway error:', response.status);
-      if (response.status === 429) {
-        return new Response(JSON.stringify({ error: 'Limite excedido' }), {
-          status: 429,
-          headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-        });
-      }
-      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
-        status: 503,
-        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      if (response.status === 429) return new Response(JSON.stringify({ error: 'Limite excedido' }), { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const aiResponse = await response.json();
     const content = aiResponse.choices?.[0]?.message?.content;
-
     let analysis;
     try {
       const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        analysis = JSON.parse(jsonMatch[0]);
-      } else {
-        throw new Error('No JSON found');
-      }
+      analysis = jsonMatch ? JSON.parse(jsonMatch[0]) : {};
     } catch {
-      analysis = {
-        sentiment: 'neutral',
-        urgency: 'low',
-        emotion: 'calmo',
-        suggestion: '',
-        keywords: [],
-        riskAlert: false,
-        riskReason: ''
-      };
+      analysis = { sentiment: 'neutral', urgency: 'low', emotion: 'calmo', suggestion: '', keywords: [], riskAlert: false, riskReason: '' };
     }
 
-    return new Response(JSON.stringify(analysis), {
-      headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-    });
-  } catch (error) {
-    console.error('Real-time analysis error:', error);
-    return new Response(JSON.stringify({ error: 'Erro interno' }), {
-      status: 500,
-      headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-    });
+    return new Response(JSON.stringify(analysis), { headers: { ...cors, 'Content-Type': 'application/json' } });
+  } catch {
+    return new Response(JSON.stringify({ error: 'Erro interno' }), { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
   }
 });
