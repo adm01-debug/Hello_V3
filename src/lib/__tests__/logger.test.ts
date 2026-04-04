@@ -148,10 +148,10 @@ describe('Logger Module', () => {
       expect(msg).toMatch(/\d{4}-\d{2}-\d{2}T/);
     });
 
-    it('no data produces empty string as second arg', () => {
+    it('no data produces single arg (no second argument)', () => {
       const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       logger.warn('no data');
-      expect(spy.mock.calls[0][1]).toBe('');
+      expect(spy.mock.calls[0]).toHaveLength(1);
     });
   });
 });
