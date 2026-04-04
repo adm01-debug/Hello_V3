@@ -24,8 +24,8 @@ import {
   BarChart3,
   RefreshCw
 } from 'lucide-react';
-import { 
 import { logger } from '@/lib/logger';
+import { 
   BarChart, 
   Bar, 
   XAxis, 

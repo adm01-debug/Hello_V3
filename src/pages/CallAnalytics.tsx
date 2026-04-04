@@ -26,8 +26,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { format, subDays, subWeeks, subMonths, isAfter } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import {
 import { logger } from '@/lib/logger';
+import {
   BarChart,
   Bar,
   XAxis,
