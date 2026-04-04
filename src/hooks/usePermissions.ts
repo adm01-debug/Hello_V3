@@ -48,7 +48,7 @@ export function usePermissions() {
       if (permsError) throw permsError;
 
       const perms: Permission[] = (rolePerms || [])
-        .map((rp: any) => rp.permissions)
+        .map((rp: { permissions: Permission }) => rp.permissions)
         .filter(Boolean);
 
       // Deduplicate by name

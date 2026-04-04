@@ -129,14 +129,14 @@ export function useWebAuthn() {
       toast.success('Passkey registrada com sucesso!');
       await loadPasskeys();
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       log.error('Registration error', error);
-      if (error.name === 'NotAllowedError') {
+      if ((error instanceof Error ? error.name : "Error") === 'NotAllowedError') {
         toast.error('Registro cancelado pelo usuário');
-      } else if (error.name === 'InvalidStateError') {
+      } else if ((error instanceof Error ? error.name : "Error") === 'InvalidStateError') {
         toast.error('Esta passkey já está registrada');
       } else {
-        toast.error('Erro ao registrar passkey', { description: error.message });
+        toast.error('Erro ao registrar passkey', { description: (error instanceof Error ? error.message : String(error)) });
       }
       return false;
     } finally {
@@ -156,10 +156,20 @@ export function useWebAuthn() {
       const challenge = generateChallenge();
       const rpId = getRpId();
 
+      // Get current user for challenge binding
+      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      const challengeUserId = currentUser?.id;
+
+      if (!challengeUserId) {
+        toast.error('Você precisa estar autenticado para usar passkeys');
+        return { success: false };
+      }
+
       // Store challenge in database
       const { error: challengeError } = await supabase
         .from('webauthn_challenges')
         .insert({
+          user_id: challengeUserId,
           challenge,
           type: 'authentication',
           expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
@@ -241,12 +251,12 @@ export function useWebAuthn() {
 
       toast.success('Login realizado com sucesso!');
       return { success: true, userId: passkey.user_id };
-    } catch (error: any) {
+    } catch (error: unknown) {
       log.error('Authentication error', error);
-      if (error.name === 'NotAllowedError') {
+      if ((error instanceof Error ? error.name : "Error") === 'NotAllowedError') {
         toast.error('Autenticação cancelada pelo usuário');
       } else {
-        toast.error('Erro na autenticação', { description: error.message });
+        toast.error('Erro na autenticação', { description: (error instanceof Error ? error.message : String(error)) });
       }
       return { success: false };
     } finally {
@@ -267,8 +277,8 @@ export function useWebAuthn() {
       toast.success('Passkey removida com sucesso');
       await loadPasskeys();
       return true;
-    } catch (error: any) {
-      toast.error('Erro ao remover passkey', { description: error.message });
+    } catch (error: unknown) {
+      toast.error('Erro ao remover passkey', { description: (error instanceof Error ? error.message : String(error)) });
       return false;
     }
   };
@@ -286,8 +296,8 @@ export function useWebAuthn() {
       toast.success('Passkey renomeada');
       await loadPasskeys();
       return true;
-    } catch (error: any) {
-      toast.error('Erro ao renomear passkey', { description: error.message });
+    } catch (error: unknown) {
+      toast.error('Erro ao renomear passkey', { description: (error instanceof Error ? error.message : String(error)) });
       return false;
     }
   };

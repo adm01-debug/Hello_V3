@@ -133,9 +133,9 @@ export default function Permissions() {
       toast.success('Permissões salvas com sucesso!');
       setChanges(new Map());
       await loadData();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao salvar permissões', {
-        description: error.message,
+        description: (error instanceof Error ? error.message : String(error)),
       });
     } finally {
       setSaving(false);

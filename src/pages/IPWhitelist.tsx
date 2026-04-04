@@ -161,8 +161,8 @@ export default function IPWhitelist() {
       setIsCIDR(false);
       setAddIPDialogOpen(false);
       fetchData();
-    } catch (error: any) {
-      if (error.code === '23505') {
+    } catch (error: unknown) {
+      if (error instanceof Object && 'code' in error && (error as { code: string }).code === '23505') {
         toast.error('Este IP já está na whitelist');
       } else {
         toast.error('Erro ao adicionar IP');
@@ -248,8 +248,8 @@ export default function IPWhitelist() {
       setIsCIDR(false);
       setAddUserIPDialogOpen(false);
       fetchUserIPs(selectedUserId);
-    } catch (error: any) {
-      if (error.code === '23505') {
+    } catch (error: unknown) {
+      if (error instanceof Object && 'code' in error && (error as { code: string }).code === '23505') {
         toast.error('Este IP já está configurado para este usuário');
       } else {
         toast.error('Erro ao adicionar IP');

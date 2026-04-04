@@ -292,7 +292,7 @@ const BlockedAccessLogs = () => {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ country, percent }: any) => `${country} (${(percent * 100).toFixed(0)}%)`}
+                    label={({ country, percent }: { country?: string; percent?: number }) => `${country} (${(percent * 100).toFixed(0)}%)`}
                     outerRadius={100}
                     fill="#8884d8"
                     dataKey="count"

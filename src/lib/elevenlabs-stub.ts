@@ -5,13 +5,13 @@ import { logger } from '@/lib/logger';
 export function useConversation(options?: {
   onConnect?: () => void;
   onDisconnect?: () => void;
-  onMessage?: (message: any) => void;
-  onError?: (error: any) => void;
+  onMessage?: (message: Record<string, unknown>) => void;
+  onError?: (error: unknown) => void;
 }) {
   return {
     status: 'disconnected' as const,
     isSpeaking: false,
-    startSession: async (_opts?: any) => {
+    startSession: async (_opts?: Record<string, unknown>) => {
       logger.warn('ElevenLabs not configured. Install @elevenlabs/react for WebRTC support.');
       options?.onConnect?.();
     },

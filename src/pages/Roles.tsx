@@ -28,7 +28,7 @@ interface UserRole {
   [key: string]: unknown;
 }
 
-const ROLE_LABELS: Record<string, { label: string; icon: any; color: string }> = {
+const ROLE_LABELS: Record<string, { label: string; icon: React.ComponentType<{ className?: string }>; color: string }> = {
   admin: { label: 'Administrador', icon: Crown, color: 'bg-destructive' },
   supervisor: { label: 'Supervisor', icon: Shield, color: 'bg-info' },
   agent: { label: 'Agente', icon: User, color: 'bg-success' },
@@ -129,9 +129,9 @@ export default function Roles() {
       setNewUserEmail('');
       setSelectedRole('agent');
       await loadUserRoles();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao adicionar role', {
-        description: error.message,
+        description: (error instanceof Error ? error.message : String(error)),
       });
     } finally {
       setAdding(false);
@@ -149,9 +149,9 @@ export default function Roles() {
 
       toast.success('Role removida');
       await loadUserRoles();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao remover role', {
-        description: error.message,
+        description: (error instanceof Error ? error.message : String(error)),
       });
     }
   };
@@ -167,7 +167,7 @@ export default function Roles() {
 
       toast.success(currentStatus ? 'Role desativada' : 'Role ativada');
       await loadUserRoles();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao atualizar role');
     }
   };

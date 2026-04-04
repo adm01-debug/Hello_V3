@@ -452,7 +452,7 @@ export default function HoldMetrics() {
                         outerRadius={100}
                         paddingAngle={5}
                         dataKey="value"
-                        label={((props: any) => `${props.name ?? ''}: ${((props.percent ?? 0) * 100).toFixed(0)}%`) as any}
+                        label={((props: { name?: string; percent?: number }) => `${props.name ?? ''}: ${((props.percent ?? 0) * 100).toFixed(0)}%`) as unknown as boolean}
                         labelLine={false}
                       >
                         {pieData.map((_, index) => (

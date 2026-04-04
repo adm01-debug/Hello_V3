@@ -72,15 +72,15 @@ export default function VirtualFax() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card><CardContent className="p-4 flex items-center gap-4">
           <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center"><Send className="h-5 w-5 text-primary" /></div>
-          <div><p className="text-2xl font-bold">{faxes.filter((f: any) => f.direction === 'outbound').length}</p><p className="text-xs text-muted-foreground">Enviados</p></div>
+          <div><p className="text-2xl font-bold">{faxes.filter((f) => f.direction === 'outbound').length}</p><p className="text-xs text-muted-foreground">Enviados</p></div>
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
           <div className="h-10 w-10 rounded-lg bg-info/10 flex items-center justify-center"><Inbox className="h-5 w-5 text-info" /></div>
-          <div><p className="text-2xl font-bold">{faxes.filter((f: any) => f.direction === 'inbound').length}</p><p className="text-xs text-muted-foreground">Recebidos</p></div>
+          <div><p className="text-2xl font-bold">{faxes.filter((f) => f.direction === 'inbound').length}</p><p className="text-xs text-muted-foreground">Recebidos</p></div>
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
           <div className="h-10 w-10 rounded-lg bg-warning/10 flex items-center justify-center"><Clock className="h-5 w-5 text-warning" /></div>
-          <div><p className="text-2xl font-bold">{faxes.filter((f: any) => f.status === 'pending').length}</p><p className="text-xs text-muted-foreground">Pendentes</p></div>
+          <div><p className="text-2xl font-bold">{faxes.filter((f) => f.status === 'pending').length}</p><p className="text-xs text-muted-foreground">Pendentes</p></div>
         </CardContent></Card>
       </div>
 
@@ -90,7 +90,7 @@ export default function VirtualFax() {
             <Printer className="h-12 w-12 mx-auto mb-4 text-muted-foreground/30" />
             <p className="text-lg font-medium text-muted-foreground">Nenhum fax registrado</p>
           </Card>
-        ) : faxes.map((fax: any) => (
+        ) : faxes.map((fax) => (
           <Card key={fax.id} className="hover:shadow-md transition-all">
             <CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-4">

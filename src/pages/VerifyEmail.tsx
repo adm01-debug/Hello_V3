@@ -78,9 +78,9 @@ export default function VerifyEmail() {
       toast.success('Email reenviado!', {
         description: 'Verifique sua caixa de entrada.',
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao reenviar email', {
-        description: error.message,
+        description: (error instanceof Error ? error.message : String(error)),
       });
     } finally {
       setResending(false);

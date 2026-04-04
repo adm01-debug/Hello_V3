@@ -32,11 +32,11 @@ export default function TollFreeNumbers() {
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
           <div className="h-10 w-10 rounded-lg bg-success/10 flex items-center justify-center"><PhoneCall className="h-5 w-5 text-success" /></div>
-          <div><p className="text-2xl font-bold">{numbers.filter((n: any) => n.status === 'active').length}</p><p className="text-xs text-muted-foreground">Ativos</p></div>
+          <div><p className="text-2xl font-bold">{numbers.filter((n) => n.status === 'active').length}</p><p className="text-xs text-muted-foreground">Ativos</p></div>
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
           <div className="h-10 w-10 rounded-lg bg-warning/10 flex items-center justify-center"><DollarSign className="h-5 w-5 text-warning" /></div>
-          <div><p className="text-2xl font-bold">R$ {numbers.reduce((acc: number, n: any) => acc + (n.monthly_cost || 0), 0).toFixed(2)}</p><p className="text-xs text-muted-foreground">Custo Mensal</p></div>
+          <div><p className="text-2xl font-bold">R$ {numbers.reduce((acc: number, n) => acc + (n.monthly_cost || 0), 0).toFixed(2)}</p><p className="text-xs text-muted-foreground">Custo Mensal</p></div>
         </CardContent></Card>
       </div>
 
@@ -47,7 +47,7 @@ export default function TollFreeNumbers() {
             <p className="text-lg font-medium text-muted-foreground">Nenhum número 0800 provisionado</p>
             <p className="text-sm text-muted-foreground/60">Configure a integração com sua operadora para provisionar números</p>
           </Card>
-        ) : numbers.map((num: any) => (
+        ) : numbers.map((num) => (
           <Card key={num.id} className="hover:shadow-md transition-all">
             <CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-4">

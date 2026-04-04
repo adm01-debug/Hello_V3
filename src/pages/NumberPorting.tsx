@@ -42,7 +42,7 @@ export default function NumberPorting() {
     },
   });
 
-  const statusConfig: Record<string, { icon: any; color: string }> = {
+  const statusConfig: Record<string, { icon: React.ComponentType<{ className?: string }>; color: string }> = {
     pending: { icon: Clock, color: 'text-amber-500' },
     processing: { icon: Loader2, color: 'text-blue-500' },
     completed: { icon: CheckCircle2, color: 'text-success' },
@@ -81,7 +81,7 @@ export default function NumberPorting() {
             <ArrowLeftRight className="h-12 w-12 mx-auto mb-4 text-muted-foreground/30" />
             <p className="text-lg font-medium text-muted-foreground">Nenhuma solicitação de portabilidade</p>
           </Card>
-        ) : requests.map((req: any) => {
+        ) : requests.map((req) => {
           const cfg = statusConfig[req.status] || statusConfig.pending;
           const StatusIcon = cfg.icon;
           return (

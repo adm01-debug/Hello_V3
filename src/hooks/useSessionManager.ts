@@ -155,8 +155,8 @@ export function useSessionManager() {
         toast.success('Sessão revogada');
         await loadSessions();
       }
-    } catch (error: any) {
-      toast.error('Erro ao revogar sessão', { description: error.message });
+    } catch (error: unknown) {
+      toast.error('Erro ao revogar sessão', { description: (error instanceof Error ? error.message : String(error)) });
     }
   }, [currentSessionId, loadSessions]);
 
@@ -174,8 +174,8 @@ export function useSessionManager() {
 
       toast.success('Todas as outras sessões foram encerradas');
       await loadSessions();
-    } catch (error: any) {
-      toast.error('Erro ao revogar sessões', { description: error.message });
+    } catch (error: unknown) {
+      toast.error('Erro ao revogar sessões', { description: (error instanceof Error ? error.message : String(error)) });
     }
   }, [user, currentSessionId, loadSessions]);
 

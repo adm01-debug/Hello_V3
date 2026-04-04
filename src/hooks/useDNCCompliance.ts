@@ -1,3 +1,4 @@
+import type { Json } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
 const log = logger.create('DNCCompliance');
 
@@ -39,7 +40,7 @@ interface CallingHoursConfig {
 interface ComplianceSetting {
   id: string;
   setting_key: string;
-  setting_value: any;
+  setting_value: Json;
   description: string | null;
 }
 
@@ -155,7 +156,7 @@ export function useDNCCompliance() {
       toast.success('Número adicionado', { description: 'O número foi adicionado à lista DNC com sucesso.' });
     },
     onError: (error: Error) => {
-      toast.error('Erro ao adicionar', { description: error.message });
+      toast.error('Erro ao adicionar', { description: (error instanceof Error ? error.message : String(error)) });
     },
   });
 
@@ -173,13 +174,13 @@ export function useDNCCompliance() {
       toast.success('Número removido', { description: 'O número foi removido da lista DNC.' });
     },
     onError: (error: Error) => {
-      toast.error('Erro ao remover', { description: error.message });
+      toast.error('Erro ao remover', { description: (error instanceof Error ? error.message : String(error)) });
     },
   });
 
   // Update compliance setting
   const updateSettingMutation = useMutation({
-    mutationFn: async ({ key, value }: { key: string; value: any }) => {
+    mutationFn: async ({ key, value }: { key: string; value: Json }) => {
       const { error } = await supabase
         .from('compliance_settings')
         .update({ 
@@ -194,7 +195,7 @@ export function useDNCCompliance() {
       toast.success('Configuração atualizada', { description: 'A configuração de compliance foi salva.' });
     },
     onError: (error: Error) => {
-      toast.error('Erro ao salvar', { description: error.message });
+      toast.error('Erro ao salvar', { description: (error instanceof Error ? error.message : String(error)) });
     },
   });
 
@@ -216,8 +217,8 @@ export function useDNCCompliance() {
           p_expires_at: undefined,
         });
         results.success++;
-      } catch (error: any) {
-        if (error.message?.includes('duplicate')) {
+      } catch (error: unknown) {
+        if ((error instanceof Error ? error.message : String(error))?.includes('duplicate')) {
           results.duplicates++;
         } else {
           results.failed++;
@@ -230,11 +231,11 @@ export function useDNCCompliance() {
   }, [queryClient]);
 
   // Get setting value helper
-  const getSettingValue = useCallback((key: string, defaultValue: any = null) => {
+  const getSettingValue = useCallback((key: string, defaultValue: unknown = null) => {
     const setting = settings.find(s => s.setting_key === key);
     if (!setting) return defaultValue;
     try {
-      return JSON.parse(setting.setting_value);
+      return JSON.parse(String(setting.setting_value));
     } catch {
       return setting.setting_value;
     }
