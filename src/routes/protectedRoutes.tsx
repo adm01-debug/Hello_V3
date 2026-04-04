@@ -50,6 +50,7 @@ const TollFreeNumbers = lazy(() => import("@/pages/TollFreeNumbers"));
 const MultiDeviceRing = lazy(() => import("@/pages/MultiDeviceRing"));
 const QRProvisioning = lazy(() => import("@/pages/QRProvisioning"));
 const LDAPSync = lazy(() => import("@/pages/LDAPSync"));
+const ObservabilityDashboard = lazy(() => import("@/pages/ObservabilityDashboard"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 export interface RouteConfig {
@@ -113,6 +114,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/number-porting", element: NumberPorting, roles: ["admin"] },
   { path: "/toll-free-numbers", element: TollFreeNumbers, roles: ["admin"] },
   { path: "/ldap-sync", element: LDAPSync, roles: ["admin"] },
+  { path: "/observability", element: ObservabilityDashboard, roles: ["admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },

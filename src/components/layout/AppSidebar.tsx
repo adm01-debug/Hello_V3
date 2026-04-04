@@ -57,6 +57,7 @@ const securityNavItems = [
   { title: 'Reset de Senha', url: '/password-reset-approval', icon: ScrollText },
   { title: 'Acessos Bloqueados', url: '/blocked-access-logs', icon: Shield },
   { title: 'Rate Limit', url: '/rate-limit', icon: AlertTriangle },
+  { title: 'Observabilidade', url: '/observability', icon: Activity },
 ];
 
 const settingsNavItems = [
