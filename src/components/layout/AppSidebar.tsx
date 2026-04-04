@@ -72,14 +72,18 @@ const settingsNavItems = [
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];
 
+type NavItemType = { title: string; url: string; icon: React.ElementType };
+
 interface NavGroupProps {
   label: string;
-  items: { title: string; url: string; icon: React.ElementType }[];
+  items: NavItemType[];
   collapsed: boolean;
   defaultOpen?: boolean;
+  favorites: string[];
+  onToggleFavorite: (url: string) => void;
 }
 
-function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProps) {
+function NavGroup({ label, items, collapsed, defaultOpen = false, favorites, onToggleFavorite }: NavGroupProps) {
   const location = useLocation();
   const hasActive = items.some(item => location.pathname === item.url);
   const [open, setOpen] = useState(defaultOpen || hasActive);
@@ -90,7 +94,7 @@ function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProp
         <SidebarGroupContent>
           <SidebarMenu className="space-y-0.5">
             {items.map((item) => (
-              <NavItem key={item.url} item={item} collapsed={collapsed} />
+              <NavItem key={item.url} item={item} collapsed={collapsed} isFavorite={favorites.includes(item.url)} onToggleFavorite={onToggleFavorite} />
             ))}
           </SidebarMenu>
         </SidebarGroupContent>
@@ -112,7 +116,7 @@ function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProp
           <SidebarGroupContent>
             <SidebarMenu className="space-y-0.5 mt-1">
               {items.map((item) => (
-                <NavItem key={item.url} item={item} collapsed={collapsed} />
+                <NavItem key={item.url} item={item} collapsed={collapsed} isFavorite={favorites.includes(item.url)} onToggleFavorite={onToggleFavorite} />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -122,7 +126,7 @@ function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProp
   );
 }
 
-function NavItem({ item, collapsed }: { item: { title: string; url: string; icon: React.ElementType }; collapsed: boolean }) {
+function NavItem({ item, collapsed, isFavorite, onToggleFavorite }: { item: NavItemType; collapsed: boolean; isFavorite: boolean; onToggleFavorite: (url: string) => void }) {
   const location = useLocation();
   const Icon = item.icon;
   const active = location.pathname === item.url;
@@ -133,7 +137,7 @@ function NavItem({ item, collapsed }: { item: { title: string; url: string; icon
         <NavLink
           to={item.url}
           className={cn(
-            'flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-all duration-200',
+            'flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-all duration-200 group/nav',
             'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
             active && [
               'bg-sidebar-primary/15 text-sidebar-primary',
@@ -148,9 +152,25 @@ function NavItem({ item, collapsed }: { item: { title: string; url: string; icon
             active && "drop-shadow-[0_0_6px_hsl(var(--sidebar-primary)/0.6)]"
           )} />
           {!collapsed && (
-            <span className={cn("font-medium", active && "font-semibold")}>
-              {item.title}
-            </span>
+            <>
+              <span className={cn("font-medium flex-1", active && "font-semibold")}>
+                {item.title}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onToggleFavorite(item.url);
+                }}
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-opacity",
+                  isFavorite ? "opacity-100 text-warning" : "opacity-0 group-hover/nav:opacity-50 hover:!opacity-100 text-muted-foreground"
+                )}
+                aria-label={isFavorite ? `Remover ${item.title} dos favoritos` : `Adicionar ${item.title} aos favoritos`}
+              >
+                {isFavorite ? <Star className="h-3.5 w-3.5 fill-current" /> : <Star className="h-3.5 w-3.5" />}
+              </button>
+            </>
           )}
         </NavLink>
       </SidebarMenuButton>
