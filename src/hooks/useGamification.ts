@@ -184,7 +184,7 @@ export function useGamification(agentId?: string) {
       return;
     }
 
-    const badge = (data as any).badge as Badge;
+    const badge = (data as Record<string, unknown>).badge as Badge;
     toast.success('🏆 Nova Conquista!', { description: `Você ganhou a badge "${badge.name}"!` });
 
     fetchAgentBadges();
