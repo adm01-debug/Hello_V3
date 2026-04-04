@@ -73,13 +73,15 @@ const App = () => (
                                   key={path}
                                   path={path}
                                   element={
-                                    roles ? (
-                                      <ProtectedRoute requiredRoles={roles}>
+                                    <ErrorBoundary section={path} compact={false}>
+                                      {roles ? (
+                                        <ProtectedRoute requiredRoles={roles}>
+                                          <Element />
+                                        </ProtectedRoute>
+                                      ) : (
                                         <Element />
-                                      </ProtectedRoute>
-                                    ) : (
-                                      <Element />
-                                    )
+                                      )}
+                                    </ErrorBoundary>
                                   }
                                 />
                               ))}
