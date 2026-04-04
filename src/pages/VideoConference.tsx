@@ -75,11 +75,11 @@ export default function VideoConference() {
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
           <div className="h-10 w-10 rounded-lg bg-success/10 flex items-center justify-center"><Play className="h-5 w-5 text-success" /></div>
-          <div><p className="text-2xl font-bold">{conferences.filter((c: Record<string, unknown>) => c.status === 'active').length}</p><p className="text-xs text-muted-foreground">Ativas</p></div>
+          <div><p className="text-2xl font-bold">{conferences.filter((c) => c.status === 'active').length}</p><p className="text-xs text-muted-foreground">Ativas</p></div>
         </CardContent></Card>
         <Card><CardContent className="p-4 flex items-center gap-4">
           <div className="h-10 w-10 rounded-lg bg-info/10 flex items-center justify-center"><Calendar className="h-5 w-5 text-info" /></div>
-          <div><p className="text-2xl font-bold">{conferences.filter((c: Record<string, unknown>) => c.status === 'scheduled').length}</p><p className="text-xs text-muted-foreground">Agendadas</p></div>
+          <div><p className="text-2xl font-bold">{conferences.filter((c) => c.status === 'scheduled').length}</p><p className="text-xs text-muted-foreground">Agendadas</p></div>
         </CardContent></Card>
       </div>
 
@@ -89,7 +89,7 @@ export default function VideoConference() {
             <Video className="h-12 w-12 mx-auto mb-4 text-muted-foreground/30" />
             <p className="text-lg font-medium text-muted-foreground">Nenhuma conferência</p>
           </Card>
-        ) : conferences.map((conf: Record<string, unknown>) => (
+        ) : conferences.map((conf) => (
           <Card key={conf.id} className="hover:shadow-md transition-all">
             <CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
