@@ -211,18 +211,18 @@ export function useGamification(agentId?: string) {
       .maybeSingle();
 
     if (existing) {
-      const newValues: any = {};
-      if (updates.total_calls) newValues.total_calls = (existing as any).total_calls + updates.total_calls;
-      if (updates.total_duration_seconds) newValues.total_duration_seconds = (existing as any).total_duration_seconds + updates.total_duration_seconds;
-      if (updates.badges_earned) newValues.badges_earned = (existing as any).badges_earned + updates.badges_earned;
-      if (updates.points_earned) newValues.points_earned = (existing as any).points_earned + updates.points_earned;
+      const newValues: Record<string, number> = {};
+      if (updates.total_calls) newValues.total_calls = existing.total_calls + updates.total_calls;
+      if (updates.total_duration_seconds) newValues.total_duration_seconds = existing.total_duration_seconds + updates.total_duration_seconds;
+      if (updates.badges_earned) newValues.badges_earned = existing.badges_earned + updates.badges_earned;
+      if (updates.points_earned) newValues.points_earned = existing.points_earned + updates.points_earned;
       if (updates.avg_satisfaction) newValues.avg_satisfaction = updates.avg_satisfaction;
       if (updates.avg_performance) newValues.avg_performance = updates.avg_performance;
 
       await supabase
         .from('agent_weekly_stats')
         .update(newValues)
-        .eq('id', (existing as any).id);
+        .eq('id', existing.id);
     } else {
       await supabase
         .from('agent_weekly_stats')

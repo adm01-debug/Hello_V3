@@ -66,7 +66,7 @@ export function useCoaching(agentId?: string) {
   };
 
   const updateStatus = async (id: string, status: CoachingRecommendation['status']) => {
-    const updates: any = { status };
+    const updates: Record<string, string> = { status };
     
     if (status === 'in_progress') {
       updates.reviewed_at = new Date().toISOString();
