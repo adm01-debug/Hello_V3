@@ -23,9 +23,9 @@ const vitalConfig: Record<string, { label: string; unit: string; icon: React.Rea
 };
 
 const ratingColors: Record<string, string> = {
-  good: 'bg-green-500/10 text-green-600 border-green-500/20',
-  'needs-improvement': 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
-  poor: 'bg-red-500/10 text-red-600 border-red-500/20',
+  good: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 dark:text-emerald-400',
+  'needs-improvement': 'bg-amber-500/10 text-amber-600 border-amber-500/20 dark:text-amber-400',
+  poor: 'bg-destructive/10 text-destructive border-destructive/20',
 };
 
 const statusIcons: Record<string, React.ReactNode> = {
