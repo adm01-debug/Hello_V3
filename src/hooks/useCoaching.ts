@@ -57,7 +57,7 @@ export function useCoaching(agentId?: string) {
       toast.success('🎯 Recomendações Geradas', { description: `${data.recommendations?.length || 0} novas recomendações de coaching foram criadas.` });
 
       await fetchRecommendations();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error generating recommendations:', error);
       toast.error('Erro', { description: 'Não foi possível gerar as recomendações.' });
     } finally {
