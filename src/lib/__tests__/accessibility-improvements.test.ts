@@ -77,7 +77,7 @@ describe('Accessibility: StatsCard component', () => {
   });
 
   it('card has dynamic aria-label with title and value', () => {
-    expect(content).toContain('aria-label={`${title}: ${value}`}');
+    expect(content).toContain('aria-label={`${title}: ${displayValue}`}');
   });
 
   it('icon container has aria-hidden="true"', () => {
