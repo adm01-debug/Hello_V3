@@ -95,13 +95,13 @@ export function useSipCall() {
       ua.on('disconnected', () => { log.debug('WebSocket disconnected'); setState(prev => ({ ...prev, status: 'disconnected', isRegistered: false })); });
       ua.on('registered', () => { log.info('Registered successfully'); setState(prev => ({ ...prev, status: 'registered', isRegistered: true, isConfigured: true, error: null })); toast.success('SIP conectado e registrado'); });
       ua.on('unregistered', () => { log.debug('Unregistered'); setState(prev => ({ ...prev, isRegistered: false, status: 'disconnected' })); });
-      ua.on('registrationFailed', (e: any) => {
+      ua.on('registrationFailed', (e: { cause?: string }) => {
         log.error('Registration failed', { cause: e?.cause });
         const cause = e?.cause || 'Falha no registro SIP';
         setState(prev => ({ ...prev, status: 'error', isRegistered: false, error: `Registro falhou: ${cause}` }));
         toast.error(`Registro SIP falhou: ${cause}`);
       });
-      ua.on('newRTCSession', (e: any) => {
+      ua.on('newRTCSession', (e: { session: RTCSession }) => {
         const session = e.session as RTCSession;
         if (session.direction === 'incoming') {
           log.info('Incoming call', { from: session.remote_identity?.uri?.toString() });
@@ -149,8 +149,8 @@ export function useSipCall() {
       session.on('progress', () => { log.debug('Call in progress (ringing)'); setState(prev => ({ ...prev, status: 'ringing' })); });
       session.on('accepted', () => { log.debug('Call accepted'); setState(prev => ({ ...prev, status: 'active', callId: `sip-${Date.now()}` })); startDurationTimer(); attachRemoteStream(session); });
       session.on('confirmed', () => { log.debug('Call confirmed'); attachRemoteStream(session); });
-      session.on('ended', (e: any) => { log.debug('Call ended', { cause: e?.cause }); stopDurationTimer(); sessionRef.current = null; setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null })); });
-      session.on('failed', (e: any) => {
+      session.on('ended', (e: { cause?: string }) => { log.debug('Call ended', { cause: e?.cause }); stopDurationTimer(); sessionRef.current = null; setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null })); });
+      session.on('failed', (e: { cause?: string }) => {
         log.error('Call failed', { cause: e?.cause });
         stopDurationTimer(); sessionRef.current = null;
         const cause = e?.cause || 'Chamada falhou';

@@ -32,7 +32,7 @@ export function WeeklyRanking() {
 
         if (stats) {
           setRanking(
-            stats.map((s: any) => ({
+            stats.map((s: Record<string, unknown>) => ({
               agent_id: s.agent_id,
               agent_name: s.agents?.name || "Agente",
               total_calls: s.total_calls,

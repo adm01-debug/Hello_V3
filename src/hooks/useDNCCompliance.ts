@@ -39,7 +39,7 @@ interface CallingHoursConfig {
 interface ComplianceSetting {
   id: string;
   setting_key: string;
-  setting_value: any;
+  setting_value: Record<string, unknown> | string | number | boolean | null;
   description: string | null;
 }
 
@@ -179,7 +179,7 @@ export function useDNCCompliance() {
 
   // Update compliance setting
   const updateSettingMutation = useMutation({
-    mutationFn: async ({ key, value }: { key: string; value: any }) => {
+    mutationFn: async ({ key, value }: { key: string; value: Record<string, unknown> | string | number | boolean | null }) => {
       const { error } = await supabase
         .from('compliance_settings')
         .update({ 
@@ -230,7 +230,7 @@ export function useDNCCompliance() {
   }, [queryClient]);
 
   // Get setting value helper
-  const getSettingValue = useCallback((key: string, defaultValue: any = null) => {
+  const getSettingValue = useCallback((key: string, defaultValue: unknown = null) => {
     const setting = settings.find(s => s.setting_key === key);
     if (!setting) return defaultValue;
     try {

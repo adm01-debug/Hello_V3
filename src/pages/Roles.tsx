@@ -28,7 +28,7 @@ interface UserRole {
   [key: string]: unknown;
 }
 
-const ROLE_LABELS: Record<string, { label: string; icon: any; color: string }> = {
+const ROLE_LABELS: Record<string, { label: string; icon: React.ComponentType<{ className?: string }>; color: string }> = {
   admin: { label: 'Administrador', icon: Crown, color: 'bg-destructive' },
   supervisor: { label: 'Supervisor', icon: Shield, color: 'bg-info' },
   agent: { label: 'Agente', icon: User, color: 'bg-success' },
