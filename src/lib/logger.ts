@@ -69,7 +69,7 @@ function log(level: LogLevel, message: string, context?: string, data?: unknown)
     message,
     timestamp: new Date().toISOString(),
     context,
-    data: data ? maskSensitive(data) : undefined,
+    data: data !== undefined ? maskSensitive(data) : undefined,
   };
 
   const formatted = formatEntry(entry);
