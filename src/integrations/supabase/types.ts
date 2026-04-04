@@ -2864,7 +2864,7 @@ export type Database = {
           expires_at: string
           id: string
           type: string
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           challenge: string
@@ -2872,7 +2872,7 @@ export type Database = {
           expires_at: string
           id?: string
           type: string
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           challenge?: string
@@ -2880,7 +2880,7 @@ export type Database = {
           expires_at?: string
           id?: string
           type?: string
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: []
       }
