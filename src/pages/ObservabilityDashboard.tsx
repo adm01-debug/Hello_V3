@@ -29,9 +29,9 @@ const ratingColors: Record<string, string> = {
 };
 
 const statusIcons: Record<string, React.ReactNode> = {
-  healthy: <CheckCircle className="h-5 w-5 text-green-500" />,
-  degraded: <AlertTriangle className="h-5 w-5 text-yellow-500" />,
-  down: <XCircle className="h-5 w-5 text-red-500" />,
+  healthy: <CheckCircle className="h-5 w-5 text-emerald-500" />,
+  degraded: <AlertTriangle className="h-5 w-5 text-amber-500" />,
+  down: <XCircle className="h-5 w-5 text-destructive" />,
   checking: <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />,
 };
 
