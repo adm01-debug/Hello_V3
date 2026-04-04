@@ -3,6 +3,7 @@
  * - In development: logs to console with structured prefix.
  * - In production: suppresses debug/info, only logs warn/error.
  * - Masks PII and sensitive data automatically.
+ * - Supports request ID correlation for cross-service tracing.
  * - Provides consistent log format across the entire codebase.
  */
 
@@ -13,6 +14,7 @@ interface LogEntry {
   message: string;
   timestamp: string;
   context?: string;
+  requestId?: string;
   data?: unknown;
 }
 
@@ -56,9 +58,52 @@ function shouldLog(level: LogLevel): boolean {
   return LOG_LEVELS[level] >= LOG_LEVELS[MIN_LEVEL];
 }
 
+// ─── Request ID Correlation ────────────────────────────────────────────────
+
+let _currentRequestId: string | undefined;
+
+/** Generate a short unique request ID (12 chars hex) */
+export function generateRequestId(): string {
+  const array = new Uint8Array(6);
+  crypto.getRandomValues(array);
+  return Array.from(array, (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+/** Set the current request ID for log correlation */
+export function setRequestId(id: string): void {
+  _currentRequestId = id;
+}
+
+/** Get the current request ID */
+export function getRequestId(): string | undefined {
+  return _currentRequestId;
+}
+
+/** Clear the current request ID */
+export function clearRequestId(): void {
+  _currentRequestId = undefined;
+}
+
+/**
+ * Execute a function within a request ID scope.
+ * Automatically generates and clears the request ID.
+ */
+export function withRequestId<T>(fn: () => T, id?: string): T {
+  const requestId = id ?? generateRequestId();
+  setRequestId(requestId);
+  try {
+    return fn();
+  } finally {
+    clearRequestId();
+  }
+}
+
+// ─── Core Logging ──────────────────────────────────────────────────────────
+
 function formatEntry(entry: LogEntry): string {
   const ctx = entry.context ? `[${entry.context}]` : '';
-  return `${entry.timestamp} [${entry.level.toUpperCase()}]${ctx} ${entry.message}`;
+  const rid = entry.requestId ? `[rid:${entry.requestId}]` : '';
+  return `${entry.timestamp} [${entry.level.toUpperCase()}]${ctx}${rid} ${entry.message}`;
 }
 
 function log(level: LogLevel, message: string, context?: string, data?: unknown): void {
@@ -69,6 +114,7 @@ function log(level: LogLevel, message: string, context?: string, data?: unknown)
     message,
     timestamp: new Date().toISOString(),
     context,
+    requestId: _currentRequestId,
     data: data !== undefined ? maskSensitive(data) : undefined,
   };
 
