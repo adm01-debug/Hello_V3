@@ -1,10 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
-};
 
 interface BitrixRequest {
   action: 'get_contacts' | 'get_leads' | 'create_lead' | 'update_lead' | 'get_deals' | 'create_call' | 'register_call' | 'finish_call' | 'get_user';
@@ -27,7 +24,7 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: buildCorsHeaders(req) });
   }
 
   try {
@@ -36,7 +33,7 @@ serve(async (req) => {
     if (!authHeader) {
       return new Response(JSON.stringify({ error: 'Não autorizado' }), {
         status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
@@ -50,7 +47,7 @@ serve(async (req) => {
     if (authError || !user) {
       return new Response(JSON.stringify({ error: 'Não autorizado' }), {
         status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
@@ -59,7 +56,7 @@ serve(async (req) => {
     if (!body.action || typeof body.action !== 'string') {
       return new Response(
         JSON.stringify({ error: 'Dados inválidos' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -72,13 +69,13 @@ serve(async (req) => {
       if (action === 'get_user') {
         return new Response(
           JSON.stringify({ success: true, configured: false, message: 'Serviço não configurado' }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
         );
       }
 
       return new Response(
         JSON.stringify({ error: 'Serviço não configurado', configured: false }),
-        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 503, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -115,7 +112,7 @@ serve(async (req) => {
       default:
         return new Response(
           JSON.stringify({ error: 'Ação não suportada' }),
-          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
         );
     }
 
@@ -144,7 +141,7 @@ serve(async (req) => {
       if (action === 'get_user') {
         return new Response(
           JSON.stringify({ success: true, configured: false, message }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
         );
       }
 
@@ -152,7 +149,7 @@ serve(async (req) => {
         JSON.stringify({ error: message, configured: true }),
         {
           status: isTimeout ? 504 : 502,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
         }
       );
     } finally {
@@ -168,7 +165,7 @@ serve(async (req) => {
       console.error('Bitrix API returned non-JSON response');
       return new Response(
         JSON.stringify({ error: 'Configuração inválida do webhook', configured: false }),
-        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 503, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -176,7 +173,7 @@ serve(async (req) => {
       console.error('Bitrix HTTP error:', response.status, data);
       return new Response(
         JSON.stringify({ error: 'Erro na integração', configured: true }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -184,20 +181,20 @@ serve(async (req) => {
       console.error('Bitrix API error:', data.error);
       return new Response(
         JSON.stringify({ error: 'Erro na integração' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
     return new Response(
       JSON.stringify({ success: true, data: data.result, total: data.total }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Error in bitrix-api function:', error);
     return new Response(
       JSON.stringify({ error: 'Erro interno' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
   }
 });
