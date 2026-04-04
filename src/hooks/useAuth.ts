@@ -1,140 +1,20 @@
 import { logger } from '@/lib/logger';
-import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
-import { User, Session } from '@supabase/supabase-js';
+import { useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuthState } from './auth/useAuthState';
+import { useAuthProfile } from './auth/useAuthProfile';
+import { useAuthSession } from './auth/useAuthSession';
+import { useAuthActions } from './auth/useAuthActions';
 
-export type UserRole = 'admin' | 'supervisor' | 'agent' | 'viewer';
-
-export interface UserProfile {
-  id: string;
-  email: string;
-  full_name: string | null;
-  role: UserRole;
-  agent_id: string | null;
-}
-
-interface AuthState {
-  user: User | null;
-  session: Session | null;
-  profile: UserProfile | null;
-  loading: boolean;
-  error: Error | null;
-}
-
-// Force-clear all Supabase auth tokens from localStorage
-function clearAuthStorage() {
-  try {
-    const keysToRemove: string[] = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key && (key.startsWith('sb-') || key.includes('supabase'))) {
-        keysToRemove.push(key);
-      }
-    }
-    keysToRemove.forEach(key => localStorage.removeItem(key));
-  } catch {
-    // localStorage may be unavailable
-  }
-}
-
-function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
-  return Promise.race([
-    promise,
-    new Promise<T>((_, reject) => {
-      setTimeout(() => reject(new Error(message)), ms);
-    }),
-  ]);
-}
+export type { UserRole, UserProfile } from './auth/useAuthState';
 
 export function useAuth() {
-  const [authState, setAuthState] = useState<AuthState>({
-    user: null,
-    session: null,
-    profile: null,
-    loading: true,
-    error: null,
-  });
+  const { authState, setAuthState } = useAuthState();
+  const { getProfile } = useAuthProfile();
+  const { clearSession, getSession, isCleaningUp, fetchedRef } = useAuthSession(setAuthState, getProfile);
+  const { signIn, signUp, signOut } = useAuthActions(setAuthState, getProfile, clearSession);
 
-  // Prevent re-entrant session checks and signOut loops
-  const isCleaningUp = useRef(false);
-  const fetchedRef = useRef(false);
-
-  const getProfile = useCallback(async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('id', userId)
-        .maybeSingle();
-
-      if (error) throw error;
-      return data as UserProfile;
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-      return null;
-    }
-  }, []);
-
-  const clearSession = useCallback(async () => {
-    if (isCleaningUp.current) {
-      setAuthState(prev => (prev.loading ? { ...prev, loading: false } : prev));
-      return;
-    }
-
-    isCleaningUp.current = true;
-
-    try {
-      await withTimeout(
-        supabase.auth.signOut({ scope: 'local' }),
-        1500,
-        'Sign out timed out'
-      );
-    } catch {
-      // signOut may fail or hang with corrupted session - fallback cleanup below
-    } finally {
-      clearAuthStorage();
-
-      setAuthState({
-        user: null,
-        session: null,
-        profile: null,
-        loading: false,
-        error: null,
-      });
-
-      setTimeout(() => {
-        isCleaningUp.current = false;
-      }, 300);
-    }
-  }, []);
-
-  const getSession = useCallback(async () => {
-
-    try {
-      const { data: { session }, error } = await withTimeout(
-        supabase.auth.getSession(),
-        4000,
-        'Session check timed out'
-      );
-      
-      if (error) {
-        console.warn('Auth session error:', error.message);
-        await clearSession();
-        return;
-      }
-
-      if (session?.user) {
-        const profile = await getProfile(session.user.id);
-        setAuthState({ user: session.user, session, profile, loading: false, error: null });
-      } else {
-        setAuthState({ user: null, session: null, profile: null, loading: false, error: null });
-      }
-    } catch (error) {
-      console.warn('Auth initialization error:', error);
-      await clearSession();
-    }
-  }, [getProfile, clearSession]);
-
+  // Initial session fetch
   useEffect(() => {
     if (fetchedRef.current) return;
     fetchedRef.current = true;
@@ -145,15 +25,14 @@ export function useAuth() {
     };
   }, [getSession]);
 
+  // Auth state change listener
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         logger.create('Auth').debug('Auth state changed:', event);
-        
-        // If we're cleaning up, ignore all events
+
         if (isCleaningUp.current) return;
 
-        // On SIGNED_OUT or TOKEN_REFRESHED with null session, clear state
         if (event === 'SIGNED_OUT' || !session) {
           setAuthState({
             user: null,
@@ -165,10 +44,8 @@ export function useAuth() {
           return;
         }
 
-        // For INITIAL_SESSION, skip - handled by getSession
         if (event === 'INITIAL_SESSION') return;
 
-        // For INITIAL_SESSION/SIGNED_IN/TOKEN_REFRESHED, hydrate user state
         if (session?.user) {
           void (async () => {
             try {
@@ -185,95 +62,15 @@ export function useAuth() {
             }
           })();
         }
-      }
+      },
     );
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [getProfile, clearSession]);
+  }, [getProfile, clearSession, setAuthState, isCleaningUp]);
 
-  const signIn = useCallback(async (email: string, password: string) => {
-    try {
-      setAuthState(prev => ({ ...prev, loading: true, error: null }));
-      
-      const { data, error } = await withTimeout(
-        supabase.auth.signInWithPassword({
-          email,
-          password,
-        }),
-        8000,
-        'Login request timed out'
-      );
-
-      if (error) {
-        setAuthState(prev => ({ ...prev, error, loading: false }));
-        return { data: { user: null, session: null }, error };
-      }
-
-      const profile = await getProfile(data.user.id);
-
-      setAuthState({
-        user: data.user,
-        session: data.session,
-        profile,
-        loading: false,
-        error: null,
-      });
-
-      return { data, error: null };
-    } catch (error) {
-      const authError = error instanceof Error ? error : new Error('Login failed');
-      setAuthState(prev => ({ ...prev, error: authError, loading: false }));
-      return { data: { user: null, session: null }, error: authError };
-    }
-  }, [getProfile]);
-
-  const signUp = useCallback(async (email: string, password: string, fullName?: string) => {
-    try {
-      setAuthState(prev => ({ ...prev, loading: true, error: null }));
-
-      const { data, error } = await withTimeout(
-        supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              full_name: fullName,
-            },
-          },
-        }),
-        8000,
-        'Signup request timed out'
-      );
-
-      if (error) {
-        setAuthState(prev => ({ ...prev, error, loading: false }));
-        return { data: { user: null, session: null }, error };
-      }
-
-      setAuthState(prev => ({ ...prev, loading: false }));
-      return { data, error: null };
-    } catch (error) {
-      const authError = error instanceof Error ? error : new Error('Signup failed');
-      setAuthState(prev => ({ ...prev, error: authError, loading: false }));
-      return { data: { user: null, session: null }, error: authError };
-    }
-  }, []);
-
-  const signOut = useCallback(async () => {
-    try {
-      setAuthState(prev => ({ ...prev, loading: true, error: null }));
-      await clearSession();
-      return { error: null };
-    } catch (error) {
-      const authError = error instanceof Error ? error : new Error('Logout failed');
-      setAuthState(prev => ({ ...prev, error: authError, loading: false }));
-      return { error: authError };
-    }
-  }, [clearSession]);
-
-  const hasRole = useCallback((roles: UserRole[]) => {
+  const hasRole = useCallback((roles: import('./auth/useAuthState').UserRole[]) => {
     if (!authState.profile) return false;
     return roles.includes(authState.profile.role);
   }, [authState.profile]);
@@ -291,7 +88,7 @@ export function useAuth() {
       signOut,
       hasRole,
     }),
-    [authState, signIn, signUp, signOut, hasRole]
+    [authState, signIn, signUp, signOut, hasRole],
   );
 }
 

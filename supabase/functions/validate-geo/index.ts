@@ -1,9 +1,9 @@
-import { corsHeaders } from "../_shared/cors.ts";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: buildCorsHeaders(req) });
   }
 
   try {
@@ -47,7 +47,7 @@ Deno.serve(async (req) => {
     if (!settings || !settings.enabled) {
       return new Response(
         JSON.stringify({ allowed: true, reason: 'Geo blocking disabled' }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -77,7 +77,7 @@ Deno.serve(async (req) => {
     if (!countryCode) {
       return new Response(
         JSON.stringify({ allowed: true, reason: 'Country unknown' }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -92,7 +92,7 @@ Deno.serve(async (req) => {
     if (!allowedCountries || allowedCountries.length === 0) {
       return new Response(
         JSON.stringify({ allowed: true, reason: 'Allowlist not configured' }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -114,7 +114,7 @@ Deno.serve(async (req) => {
 
       return new Response(
         JSON.stringify({ allowed: true, country: countryCode, countryName }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -161,7 +161,7 @@ Deno.serve(async (req) => {
         country: countryCode,
         countryName
       }),
-      { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 403, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
 
   } catch (error: unknown) {
@@ -169,7 +169,7 @@ Deno.serve(async (req) => {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
       JSON.stringify({ allowed: true, error: errorMessage }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
   }
 });

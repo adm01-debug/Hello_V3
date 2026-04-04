@@ -1,9 +1,9 @@
-import { corsHeaders } from "../_shared/cors.ts";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: buildCorsHeaders(req) });
   }
 
   try {
@@ -16,7 +16,7 @@ Deno.serve(async (req) => {
     if (!authHeader) {
       return new Response(
         JSON.stringify({ error: 'Authorization required' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 401, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -29,7 +29,7 @@ Deno.serve(async (req) => {
     if (userError || !adminUser) {
       return new Response(
         JSON.stringify({ error: 'Invalid user session' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 401, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -46,7 +46,7 @@ Deno.serve(async (req) => {
     if (!adminRole || !['admin', 'supervisor'].includes(adminRole.role)) {
       return new Response(
         JSON.stringify({ error: 'Admin privileges required' }),
-        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 403, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
     if (!requestId || action !== 'approve') {
       return new Response(
         JSON.stringify({ error: 'Invalid request' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -70,14 +70,14 @@ Deno.serve(async (req) => {
     if (fetchError || !resetRequest) {
       return new Response(
         JSON.stringify({ error: 'Reset request not found' }),
-        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 404, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
     if (resetRequest.status !== 'pending') {
       return new Response(
         JSON.stringify({ error: 'Request already processed' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
 
       return new Response(
         JSON.stringify({ error: 'Request has expired' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -106,7 +106,7 @@ Deno.serve(async (req) => {
       console.error('Error generating reset link:', linkError);
       return new Response(
         JSON.stringify({ error: 'Failed to generate reset link' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -141,7 +141,7 @@ Deno.serve(async (req) => {
         success: true, 
         message: 'Password reset approved and email sent'
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
 
   } catch (error: unknown) {
@@ -149,7 +149,7 @@ Deno.serve(async (req) => {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
       JSON.stringify({ error: errorMessage }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
   }
 });

@@ -1,21 +1,18 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
-};
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: buildCorsHeaders(req) });
   }
 
   try {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       return new Response(JSON.stringify({ error: 'Não autorizado' }), {
-        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 401, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
@@ -28,21 +25,21 @@ serve(async (req) => {
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
       return new Response(JSON.stringify({ error: 'Não autorizado' }), {
-        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 401, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
     const { contactId } = await req.json();
     if (!contactId || typeof contactId !== 'string') {
       return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
-        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
       return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
-        status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 503, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
@@ -54,7 +51,7 @@ serve(async (req) => {
 
     if (contactError || !contact) {
       return new Response(JSON.stringify({ error: 'Contato não encontrado' }), {
-        status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 404, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
@@ -65,7 +62,7 @@ serve(async (req) => {
 
     if (!interactions || interactions.length === 0) {
       return new Response(JSON.stringify({ error: 'Sem histórico suficiente' }), {
-        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
@@ -87,7 +84,7 @@ serve(async (req) => {
 
     if (!response.ok) {
       return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
-        status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 503, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
@@ -101,12 +98,12 @@ serve(async (req) => {
     await supabaseAdmin.from('contacts').update({ personality_insights: profile }).eq('id', contactId);
 
     return new Response(JSON.stringify({ success: true, profile, interactions_analyzed: interactions.length }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Error:', error);
     return new Response(JSON.stringify({ error: 'Erro interno' }), {
-      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
     });
   }
 });

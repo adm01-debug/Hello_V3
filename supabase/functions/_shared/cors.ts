@@ -16,10 +16,8 @@ export function getCorsOrigin(req?: Request): string {
   return ALLOWED_ORIGINS[0];
 }
 
-export const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
-};
+/** @deprecated Use buildCorsHeaders(req) instead for proper origin validation */
+export const corsHeaders = buildCorsHeaders();
 
 export function buildCorsHeaders(req?: Request): Record<string, string> {
   return {

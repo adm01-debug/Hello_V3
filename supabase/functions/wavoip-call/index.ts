@@ -1,10 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
-};
 
 interface WavoipCallRequest {
   action: 'start' | 'end' | 'status' | 'connect';
@@ -14,7 +11,7 @@ interface WavoipCallRequest {
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: buildCorsHeaders(req) });
   }
 
   try {
@@ -23,7 +20,7 @@ serve(async (req) => {
     if (!authHeader) {
       return new Response(JSON.stringify({ error: 'Não autorizado' }), {
         status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
@@ -37,7 +34,7 @@ serve(async (req) => {
     if (authError || !user) {
       return new Response(JSON.stringify({ error: 'Não autorizado' }), {
         status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
 
@@ -47,7 +44,7 @@ serve(async (req) => {
       console.error('WAVOIP_TOKEN not configured');
       return new Response(
         JSON.stringify({ success: false, error: 'Serviço não configurado' }),
-        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 503, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -56,7 +53,7 @@ serve(async (req) => {
     if (!body.action || typeof body.action !== 'string') {
       return new Response(
         JSON.stringify({ success: false, error: 'Dados inválidos' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
@@ -74,7 +71,7 @@ serve(async (req) => {
         if (!whatsappId || typeof whatsappId !== 'string') {
           return new Response(
             JSON.stringify({ success: false, error: 'Número WhatsApp é obrigatório' }),
-            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
           );
         }
         const formattedPhone = whatsappId.replace(/\D/g, '').slice(0, 20);
@@ -90,7 +87,7 @@ serve(async (req) => {
         if (!callId || typeof callId !== 'string') {
           return new Response(
             JSON.stringify({ success: false, error: 'Call ID é obrigatório' }),
-            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
           );
         }
         response = { success: true, callId, status: 'ended', message: 'Chamada encerrada' };
@@ -103,19 +100,19 @@ serve(async (req) => {
       default:
         return new Response(
           JSON.stringify({ success: false, error: 'Ação inválida' }),
-          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
         );
     }
 
     return new Response(JSON.stringify(response), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' }
     });
 
   } catch (error) {
     console.error('Wavoip error:', error);
     return new Response(
       JSON.stringify({ success: false, error: 'Erro interno' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
   }
 });
