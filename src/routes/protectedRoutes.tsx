@@ -50,6 +50,7 @@ const TollFreeNumbers = lazy(() => import("@/pages/TollFreeNumbers"));
 const MultiDeviceRing = lazy(() => import("@/pages/MultiDeviceRing"));
 const QRProvisioning = lazy(() => import("@/pages/QRProvisioning"));
 const LDAPSync = lazy(() => import("@/pages/LDAPSync"));
+const ObservabilityDashboard = lazy(() => import("@/pages/ObservabilityDashboard"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 export interface RouteConfig {
