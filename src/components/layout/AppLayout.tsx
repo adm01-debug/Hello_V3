@@ -3,7 +3,6 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from './AppSidebar';
 import { ActiveCallBar } from '@/components/calls/ActiveCallBar';
 import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { AlertsDropdown } from '@/components/alerts/AlertsDropdown';
 import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdown';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
@@ -14,6 +13,7 @@ import { ThemeToggle } from './ThemeToggle';
 import { BackButton } from '@/components/navigation/BackButton';
 import { PageTransition } from '@/components/navigation/PageTransition';
 import { NavigationProgress } from '@/components/navigation/NavigationProgress';
+import { CommandPalette } from './CommandPalette';
 
 interface AppLayoutProps {
   children: ReactNode;
