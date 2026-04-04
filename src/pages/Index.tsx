@@ -1,4 +1,4 @@
-import { Phone, Clock, CheckCircle, Users, Zap } from 'lucide-react';
+import { Phone, Clock, CheckCircle, Users, Zap, LayoutDashboard } from 'lucide-react';
 import { StatsCard } from '@/components/dashboard/StatsCard';
 import { CallVolumeChart } from '@/components/dashboard/CallVolumeChart';
 import { RecentCalls } from '@/components/dashboard/RecentCalls';
@@ -13,6 +13,7 @@ import { ScheduledCallbacksList } from '@/components/callbacks/ScheduledCallback
 import { SectionBoundary } from '@/components/error-boundary/ErrorBoundary';
 import { useDashboardStats } from '@/hooks/useDashboardData';
 import { Skeleton } from '@/components/ui/skeleton';
+import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 
 const formatDuration = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -29,16 +30,17 @@ const Index = () => {
       <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-40" aria-hidden="true" />
 
       {/* Header */}
-      <div className="relative flex items-start justify-between">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight text-gradient">Dashboard</h1>
-          <p className="text-sm text-muted-foreground">Visão geral do seu centro de atendimento</p>
-        </div>
-        <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full glass-neon" aria-label="Status do sistema: ativo">
-          <Zap className="h-3.5 w-3.5 text-primary animate-glow-pulse" aria-hidden="true" />
-          <span className="text-xs font-semibold text-primary">Sistema ativo</span>
-        </div>
-      </div>
+      <NeonPageHeader
+        title="Dashboard"
+        description="Visão geral do seu centro de atendimento"
+        icon={<LayoutDashboard className="h-5 w-5" />}
+        badge={
+          <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full glass-neon" aria-label="Status do sistema: ativo">
+            <Zap className="h-3.5 w-3.5 text-primary animate-glow-pulse" aria-hidden="true" />
+            <span className="text-xs font-semibold text-primary">Sistema ativo</span>
+          </div>
+        }
+      />
 
       {/* Stats Cards */}
       <SectionBoundary section="Estatísticas">
