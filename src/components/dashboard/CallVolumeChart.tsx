@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCallVolumeData } from '@/hooks/useDashboardData';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
-export function CallVolumeChart() {
+export const CallVolumeChart = memo(function CallVolumeChart() {
   const { data: volumeData, isLoading } = useCallVolumeData();
 
   return (
@@ -15,7 +16,7 @@ export function CallVolumeChart() {
         {isLoading ? (
           <Skeleton className="h-[300px] rounded-lg" />
         ) : (
-          <div className="h-[300px]">
+          <div className="h-[300px]" role="img" aria-label="Gráfico de volume de chamadas por hora">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={volumeData || []}
@@ -85,4 +86,4 @@ export function CallVolumeChart() {
       </CardContent>
     </Card>
   );
-}
+});

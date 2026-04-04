@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { TrendingUp, TrendingDown } from 'lucide-react';
@@ -13,7 +13,7 @@ interface StatsCardProps {
   glowColor?: 'primary' | 'success' | 'warning' | 'info';
 }
 
-export function StatsCard({ 
+export const StatsCard = memo(function StatsCard({ 
   title, 
   value, 
   change, 
@@ -44,10 +44,10 @@ export function StatsCard({
       'hover:border-primary/25 hover:-translate-y-1',
       glowMap[glowColor],
       className
-    )}>
+    )} role="article" aria-label={`${title}: ${value}`}>
       <CardContent className="p-5 relative">
         {/* Subtle neon mesh background */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true">
           <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-primary/5 blur-2xl" />
         </div>
 
@@ -63,11 +63,11 @@ export function StatsCard({
                   isPositive 
                     ? 'text-success bg-success/10' 
                     : 'text-destructive bg-destructive/10'
-                )}>
+                )} aria-label={`${isPositive ? 'Aumento' : 'Redução'} de ${Math.abs(change)}%`}>
                   {isPositive ? (
-                    <TrendingUp className="h-3 w-3" />
+                    <TrendingUp className="h-3 w-3" aria-hidden="true" />
                   ) : (
-                    <TrendingDown className="h-3 w-3" />
+                    <TrendingDown className="h-3 w-3" aria-hidden="true" />
                   )}
                   {Math.abs(change)}%
                 </span>
@@ -83,11 +83,11 @@ export function StatsCard({
           <div className={cn(
             'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-all duration-300',
             iconBgMap[glowColor],
-          )}>
+          )} aria-hidden="true">
             {icon}
           </div>
         </div>
       </CardContent>
     </Card>
   );
-}
+});
