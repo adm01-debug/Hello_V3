@@ -94,7 +94,7 @@ export function useGamification(agentId?: string) {
       return;
     }
 
-    setAgentBadges(data.map((ab: any) => ({
+    setAgentBadges(data.map((ab: Record<string, unknown>) => ({
       ...ab,
       badge: ab.badge as Badge
     })));
