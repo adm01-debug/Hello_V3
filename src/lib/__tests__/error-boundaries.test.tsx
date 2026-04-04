@@ -34,7 +34,7 @@ function ThrowingComponent({ shouldThrow }: { shouldThrow: boolean }) {
 }
 
 // Component that always throws
-function AlwaysThrows() {
+function AlwaysThrows(): ReactNode {
   throw new Error('Always fails');
 }
 
