@@ -22,6 +22,9 @@ interface AppLayoutProps {
 export function AppLayout({ children }: AppLayoutProps) {
   return (
     <SidebarProvider defaultOpen={true}>
+      {/* Command Palette */}
+      <CommandPalette />
+      
       {/* Navigation progress bar */}
       <NavigationProgress />
       
