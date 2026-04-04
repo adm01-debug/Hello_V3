@@ -129,7 +129,7 @@ export default function Roles() {
       setNewUserEmail('');
       setSelectedRole('agent');
       await loadUserRoles();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao adicionar role', {
         description: error.message,
       });
@@ -149,7 +149,7 @@ export default function Roles() {
 
       toast.success('Role removida');
       await loadUserRoles();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao remover role', {
         description: error.message,
       });
@@ -167,7 +167,7 @@ export default function Roles() {
 
       toast.success(currentStatus ? 'Role desativada' : 'Role ativada');
       await loadUserRoles();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao atualizar role');
     }
   };

@@ -93,7 +93,7 @@ export function useMFA() {
         qrCode: data.totp.qr_code,
         secret: data.totp.secret,
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao configurar TOTP', { description: error.message });
       return null;
     } finally {
@@ -112,7 +112,7 @@ export function useMFA() {
       if (error) throw error;
 
       return { factorId: data.id };
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao configurar SMS', { description: error.message });
       return null;
     } finally {
@@ -138,7 +138,7 @@ export function useMFA() {
 
       await loadFactors();
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Código inválido', { description: error.message });
       return false;
     }
@@ -152,7 +152,7 @@ export function useMFA() {
       await loadFactors();
       toast.success('Fator removido com sucesso');
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao remover fator', { description: error.message });
       return false;
     }
@@ -178,7 +178,7 @@ export function useMFA() {
       
       await loadSettings();
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao salvar configurações', { description: error.message });
       return false;
     }

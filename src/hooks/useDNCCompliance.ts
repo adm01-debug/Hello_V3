@@ -216,7 +216,7 @@ export function useDNCCompliance() {
           p_expires_at: undefined,
         });
         results.success++;
-      } catch (error: any) {
+      } catch (error: unknown) {
         if (error.message?.includes('duplicate')) {
           results.duplicates++;
         } else {

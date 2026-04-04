@@ -129,7 +129,7 @@ export function useWebAuthn() {
       toast.success('Passkey registrada com sucesso!');
       await loadPasskeys();
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       log.error('Registration error', error);
       if (error.name === 'NotAllowedError') {
         toast.error('Registro cancelado pelo usuário');
@@ -251,7 +251,7 @@ export function useWebAuthn() {
 
       toast.success('Login realizado com sucesso!');
       return { success: true, userId: passkey.user_id };
-    } catch (error: any) {
+    } catch (error: unknown) {
       log.error('Authentication error', error);
       if (error.name === 'NotAllowedError') {
         toast.error('Autenticação cancelada pelo usuário');
@@ -277,7 +277,7 @@ export function useWebAuthn() {
       toast.success('Passkey removida com sucesso');
       await loadPasskeys();
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao remover passkey', { description: error.message });
       return false;
     }
@@ -296,7 +296,7 @@ export function useWebAuthn() {
       toast.success('Passkey renomeada');
       await loadPasskeys();
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Erro ao renomear passkey', { description: error.message });
       return false;
     }

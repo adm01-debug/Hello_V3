@@ -6,7 +6,7 @@ export function useConversation(options?: {
   onConnect?: () => void;
   onDisconnect?: () => void;
   onMessage?: (message: any) => void;
-  onError?: (error: any) => void;
+  onError?: (error: unknown) => void;
 }) {
   return {
     status: 'disconnected' as const,
