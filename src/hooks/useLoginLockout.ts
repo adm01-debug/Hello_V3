@@ -26,11 +26,12 @@ export function useLoginLockout() {
         return { locked: false, attempts: 0 };
       }
 
+      const parsed = data as Record<string, unknown> | null;
       const status: LockoutStatus = {
-        locked: (data as any)?.locked || false,
-        attempts: (data as any)?.attempts || 0,
-        remainingSeconds: (data as any)?.remaining_seconds,
-        lockedUntil: (data as any)?.locked_until,
+        locked: (parsed?.locked as boolean) || false,
+        attempts: (parsed?.attempts as number) || 0,
+        remainingSeconds: parsed?.remaining_seconds as number | undefined,
+        lockedUntil: parsed?.locked_until as string | undefined,
       };
 
       setLockoutStatus(status);
