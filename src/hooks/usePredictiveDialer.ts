@@ -1,3 +1,5 @@
+import { logger } from '@/lib/logger';
+const log = logger.create('PredictiveDialer');
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -83,7 +85,7 @@ export const usePredictiveDialer = () => {
       if (error) throw error;
       setCampaigns((data || []) as DialerCampaign[]);
     } catch (err) {
-      console.error('Error fetching campaigns:', err);
+      log.error('Error fetching campaigns:', err);
       toast.error('Erro ao carregar campanhas');
     } finally {
       setIsLoading(false);
@@ -104,7 +106,7 @@ export const usePredictiveDialer = () => {
       setQueue((data || []) as DialerQueueItem[]);
       return data as DialerQueueItem[];
     } catch (err) {
-      console.error('Error fetching queue:', err);
+      log.error('Error fetching queue:', err);
       return [];
     }
   }, []);
@@ -135,7 +137,7 @@ export const usePredictiveDialer = () => {
       await fetchCampaigns();
       return data as DialerCampaign;
     } catch (err) {
-      console.error('Error creating campaign:', err);
+      log.error('Error creating campaign:', err);
       toast.error('Erro ao criar campanha');
       return null;
     }
@@ -171,7 +173,7 @@ export const usePredictiveDialer = () => {
       await fetchQueue(campaignId);
       return true;
     } catch (err) {
-      console.error('Error adding to queue:', err);
+      log.error('Error adding to queue:', err);
       toast.error('Erro ao adicionar à fila');
       return false;
     }
@@ -194,7 +196,7 @@ export const usePredictiveDialer = () => {
       toast.success('Campanha iniciada');
       await fetchCampaigns();
     } catch (err) {
-      console.error('Error starting campaign:', err);
+      log.error('Error starting campaign:', err);
       toast.error('Erro ao iniciar campanha');
     }
   }, [fetchCampaigns]);
@@ -214,7 +216,7 @@ export const usePredictiveDialer = () => {
       toast.info('Campanha pausada');
       await fetchCampaigns();
     } catch (err) {
-      console.error('Error pausing campaign:', err);
+      log.error('Error pausing campaign:', err);
       toast.error('Erro ao pausar campanha');
     }
   }, [fetchCampaigns]);
@@ -238,7 +240,7 @@ export const usePredictiveDialer = () => {
       if (error) throw error;
       return data as DialerQueueItem | null;
     } catch (err) {
-      console.error('Error getting next contact:', err);
+      log.error('Error getting next contact:', err);
       return null;
     }
   }, []);
@@ -264,7 +266,7 @@ export const usePredictiveDialer = () => {
       });
 
     } catch (err) {
-      console.error('Error dialing contact:', err);
+      log.error('Error dialing contact:', err);
     }
   }, []);
 
@@ -325,7 +327,7 @@ export const usePredictiveDialer = () => {
         await fetchQueue(activeCampaign.id);
       }
     } catch (err) {
-      console.error('Error completing call:', err);
+      log.error('Error completing call:', err);
     }
   }, [queue, activeCampaign, campaigns, fetchQueue]);
 
@@ -343,7 +345,7 @@ export const usePredictiveDialer = () => {
       await fetchCampaigns();
       return true;
     } catch (err) {
-      console.error('Error deleting campaign:', err);
+      log.error('Error deleting campaign:', err);
       toast.error('Erro ao remover campanha');
       return false;
     }
@@ -362,7 +364,7 @@ export const usePredictiveDialer = () => {
       setQueue(prev => prev.filter(q => q.id !== queueItemId));
       return true;
     } catch (err) {
-      console.error('Error removing from queue:', err);
+      log.error('Error removing from queue:', err);
       return false;
     }
   }, []);

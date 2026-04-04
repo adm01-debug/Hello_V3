@@ -1,3 +1,5 @@
+import { logger } from '@/lib/logger';
+const log = logger.create('AuditLog');
 import { useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { Json } from '@/integrations/supabase/types';
@@ -43,10 +45,10 @@ export function useAuditLog() {
       });
 
       if (error) {
-        console.error('Failed to log audit event:', error);
+        log.error('Failed to log audit event:', error);
       }
     } catch (err) {
-      console.error('Error logging audit event:', err);
+      log.error('Error logging audit event:', err);
     }
   }, []);
 

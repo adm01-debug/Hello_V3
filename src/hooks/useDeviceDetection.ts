@@ -58,7 +58,7 @@ async function getLocationInfo(): Promise<LocationInfo> {
       };
     }
   } catch (error) {
-    console.warn('[DeviceDetection] Erro ao obter localização:', error);
+    logger.create('DeviceDetection').warn('Erro ao obter localização', error);
   }
   
   return { ip: 'Unknown' };
@@ -90,7 +90,7 @@ export function useDeviceDetection() {
         .eq('user_id', userId);
       
       if (error) {
-        console.error('[DeviceDetection] Erro ao verificar sessões:', error);
+        logger.create('DeviceDetection').error('Erro ao verificar sessões', error);
         return { isNewDevice: false, deviceInfo, locationInfo };
       }
       
@@ -138,18 +138,18 @@ export function useDeviceDetection() {
           });
           
           if (notifyError) {
-            console.error('[DeviceDetection] Erro ao enviar notificação:', notifyError);
+            logger.create('DeviceDetection').error('Erro ao enviar notificação', notifyError);
           } else {
             logger.create('DeviceDetection').debug(' Notificação enviada com sucesso');
           }
         } catch (invokeError) {
-          console.error('[DeviceDetection] Erro ao invocar função:', invokeError);
+          logger.create('DeviceDetection').error('Erro ao invocar função', invokeError);
         }
       }
       
       return { isNewDevice, deviceInfo, locationInfo, fingerprint };
     } catch (error) {
-      console.error('[DeviceDetection] Erro geral:', error);
+      logger.create('DeviceDetection').error('Erro geral', error);
       return { isNewDevice: false };
     }
   }, []);

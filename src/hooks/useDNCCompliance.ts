@@ -1,3 +1,5 @@
+import { logger } from '@/lib/logger';
+const log = logger.create('DNCCompliance');
 
 import { useState, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -104,7 +106,7 @@ export function useDNCCompliance() {
       if (error) throw error;
       return data as boolean;
     } catch (error) {
-      console.error('Error checking DNC:', error);
+      log.error('Error checking DNC:', error);
       return false;
     } finally {
       setIsChecking(false);
@@ -118,7 +120,7 @@ export function useDNCCompliance() {
       if (error) throw error;
       return data as unknown as CallingHoursCheck;
     } catch (error) {
-      console.error('Error checking calling hours:', error);
+      log.error('Error checking calling hours:', error);
       return { can_call: true, reason: 'Error checking hours' };
     }
   }, []);

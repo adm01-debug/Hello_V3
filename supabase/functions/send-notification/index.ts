@@ -1,69 +1,54 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { validate, string, uuid, optional, oneOf } from "../_shared/validate.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-interface NotificationPayload {
-  user_id: string;
-  title: string;
-  message: string;
-  type?: string;
-  category?: string;
-  severity?: string;
-  action_url?: string;
-  action_label?: string;
-  metadata?: Record<string, unknown>;
-  source_type?: string;
-  source_id?: string;
-  expires_at?: string;
-}
+const notificationSchema = {
+  user_id: uuid(),
+  title: string({ min: 1, max: 500 }),
+  message: string({ min: 1, max: 5000 }),
+  type: optional(oneOf('info', 'warning', 'error', 'success')),
+  category: optional(string({ max: 100 })),
+  severity: optional(oneOf('info', 'warning', 'critical')),
+  action_url: optional(string({ max: 2000 })),
+  action_label: optional(string({ max: 200 })),
+  source_type: optional(string({ max: 100 })),
+  source_id: optional(string({ max: 100 })),
+  expires_at: optional(string({ max: 50 })),
+};
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: buildCorsHeaders(req) });
   }
 
+  const headers = { ...buildCorsHeaders(req), "Content-Type": "application/json" };
+
   try {
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: "Não autorizado" }),
-        { status: 401, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ error: "Não autorizado" }), { status: 401, headers });
     }
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabaseAnon = Deno.env.get("SUPABASE_ANON_KEY")!;
-    
-    // Verify caller
+
     const supabaseAuth = createClient(supabaseUrl, supabaseAnon, {
       global: { headers: { Authorization: authHeader } },
     });
     const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
     if (authError || !user) {
-      return new Response(
-        JSON.stringify({ error: "Não autorizado" }),
-        { status: 401, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ error: "Não autorizado" }), { status: 401, headers });
     }
 
-    const payload: NotificationPayload = await req.json();
-
-    // Validate required fields
-    if (!payload.user_id || !payload.title || !payload.message) {
-      return new Response(
-        JSON.stringify({ error: "Campos obrigatórios: user_id, title, message" }),
-        { status: 400, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
-      );
+    // Validate input with schema
+    const body = await req.json();
+    const parsed = validate(body, notificationSchema);
+    if (!parsed.ok) {
+      return new Response(JSON.stringify({ error: "Dados inválidos", details: parsed.errors }), { status: 400, headers });
     }
 
-    // Input length validation
-    if (payload.title.length > 500 || payload.message.length > 5000) {
-      return new Response(
-        JSON.stringify({ error: "Title or message exceeds max length" }),
-        { status: 400, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
-      );
-    }
-
+    const payload = parsed.data;
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
     // Check user preferences
@@ -79,7 +64,7 @@ Deno.serve(async (req) => {
       if (categories && categories[category] === false) {
         return new Response(
           JSON.stringify({ skipped: true, reason: "Categoria desativada pelo usuário" }),
-          { headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
+          { headers }
         );
       }
 
@@ -88,15 +73,15 @@ Deno.serve(async (req) => {
         const currentTime = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
         const start = prefs.quiet_hours_start;
         const end = prefs.quiet_hours_end;
-        
+
         const inQuietHours = start <= end
           ? currentTime >= start && currentTime <= end
           : currentTime >= start || currentTime <= end;
-        
+
         if (inQuietHours && payload.severity !== "critical") {
           return new Response(
             JSON.stringify({ skipped: true, reason: "Horário silencioso ativo" }),
-            { headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
+            { headers }
           );
         }
       }
@@ -105,7 +90,7 @@ Deno.serve(async (req) => {
     // Insert notification with retry
     let retries = 3;
     let lastError: unknown = null;
-    
+
     while (retries > 0) {
       const { data, error } = await supabaseAdmin
         .from("notifications")
@@ -118,7 +103,7 @@ Deno.serve(async (req) => {
           severity: payload.severity || "info",
           action_url: payload.action_url,
           action_label: payload.action_label,
-          metadata: payload.metadata || {},
+          metadata: {},
           source_type: payload.source_type,
           source_id: payload.source_id,
           expires_at: payload.expires_at,
@@ -127,29 +112,18 @@ Deno.serve(async (req) => {
         .single();
 
       if (!error) {
-        return new Response(
-          JSON.stringify({ success: true, notification: data }),
-          { headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
-        );
+        return new Response(JSON.stringify({ success: true, notification: data }), { headers });
       }
 
       lastError = error;
       retries--;
-      if (retries > 0) {
-        await new Promise((r) => setTimeout(r, 500));
-      }
+      if (retries > 0) await new Promise((r) => setTimeout(r, 500));
     }
 
     console.error("Failed to send notification after retries:", lastError);
-    return new Response(
-      JSON.stringify({ error: "Falha ao enviar notificação" }),
-      { status: 500, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ error: "Falha ao enviar notificação" }), { status: 500, headers });
   } catch (err) {
     console.error("send-notification error:", err);
-    return new Response(
-      JSON.stringify({ error: "Erro interno do servidor" }),
-      { status: 500, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ error: "Erro interno do servidor" }), { status: 500, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } });
   }
 });
