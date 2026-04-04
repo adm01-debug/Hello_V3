@@ -14,6 +14,7 @@ import { BackButton } from '@/components/navigation/BackButton';
 import { PageTransition } from '@/components/navigation/PageTransition';
 import { NavigationProgress } from '@/components/navigation/NavigationProgress';
 import { CommandPalette } from './CommandPalette';
+import { MobileBottomNav } from './MobileBottomNav';
 
 interface AppLayoutProps {
   children: ReactNode;
