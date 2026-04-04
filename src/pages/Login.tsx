@@ -30,7 +30,7 @@ export default function Login() {
   } | null>(null);
   const [ipLoading, setIpLoading] = useState(true);
   const [countdown, setCountdown] = useState(0);
-  const { signIn, signOut } = useAuthContext();
+  const { signIn, signOut, isAuthenticated, loading: authLoading } = useAuthContext();
   const { validateIP } = useIPValidation();
   const { 
     lockoutStatus, 
@@ -43,6 +43,11 @@ export default function Login() {
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/';
+
+  useEffect(() => {
+    if (authLoading || !isAuthenticated) return;
+    navigate(from, { replace: true });
+  }, [authLoading, isAuthenticated, navigate, from]);
 
   // Countdown timer for lockout
   useEffect(() => {
@@ -401,11 +406,24 @@ export default function Login() {
             className="w-full h-11 font-medium border-border/50 hover:border-primary/30 hover:shadow-[0_0_15px_hsl(var(--primary)/0.1)] transition-all"
             disabled={isLoading}
             onClick={async () => {
-              const { error } = await lovable.auth.signInWithOAuth("google", {
-                redirect_uri: window.location.origin,
-              });
-              if (error) {
+              setIsLoading(true);
+              try {
+                const result = await lovable.auth.signInWithOAuth("google", {
+                  redirect_uri: window.location.origin,
+                });
+
+                if (result.redirected) return;
+
+                if (result.error) {
+                  toast.error('Erro ao entrar com Google');
+                  return;
+                }
+
+                toast.success('Login com Google realizado com sucesso');
+              } catch {
                 toast.error('Erro ao entrar com Google');
+              } finally {
+                setIsLoading(false);
               }
             }}
           >
