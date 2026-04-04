@@ -59,8 +59,9 @@ describe('Accessibility: Dashboard page (Index.tsx)', () => {
     expect(sectionCount).toBeGreaterThanOrEqual(4);
   });
 
-  it('has proper heading hierarchy with h1', () => {
-    expect(content).toContain('<h1');
+  it('has proper heading hierarchy with h1 (via NeonPageHeader)', () => {
+    // h1 is rendered inside NeonPageHeader component
+    expect(content).toContain('NeonPageHeader');
   });
 });
 
