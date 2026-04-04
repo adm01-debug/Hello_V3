@@ -58,7 +58,7 @@ async function getLocationInfo(): Promise<LocationInfo> {
       };
     }
   } catch (error) {
-    console.warn('[DeviceDetection] Erro ao obter localização:', error);
+    logger.create('DeviceDetection').warn('Erro ao obter localização', error);
   }
   
   return { ip: 'Unknown' };
