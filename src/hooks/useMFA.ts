@@ -94,7 +94,7 @@ export function useMFA() {
         secret: data.totp.secret,
       };
     } catch (error: unknown) {
-      toast.error('Erro ao configurar TOTP', { description: error.message });
+      toast.error('Erro ao configurar TOTP', { description: (error instanceof Error ? error.message : String(error)) });
       return null;
     } finally {
       setEnrolling(false);
@@ -113,7 +113,7 @@ export function useMFA() {
 
       return { factorId: data.id };
     } catch (error: unknown) {
-      toast.error('Erro ao configurar SMS', { description: error.message });
+      toast.error('Erro ao configurar SMS', { description: (error instanceof Error ? error.message : String(error)) });
       return null;
     } finally {
       setEnrolling(false);
@@ -139,7 +139,7 @@ export function useMFA() {
       await loadFactors();
       return true;
     } catch (error: unknown) {
-      toast.error('Código inválido', { description: error.message });
+      toast.error('Código inválido', { description: (error instanceof Error ? error.message : String(error)) });
       return false;
     }
   };
@@ -153,7 +153,7 @@ export function useMFA() {
       toast.success('Fator removido com sucesso');
       return true;
     } catch (error: unknown) {
-      toast.error('Erro ao remover fator', { description: error.message });
+      toast.error('Erro ao remover fator', { description: (error instanceof Error ? error.message : String(error)) });
       return false;
     }
   };
@@ -179,7 +179,7 @@ export function useMFA() {
       await loadSettings();
       return true;
     } catch (error: unknown) {
-      toast.error('Erro ao salvar configurações', { description: error.message });
+      toast.error('Erro ao salvar configurações', { description: (error instanceof Error ? error.message : String(error)) });
       return false;
     }
   };

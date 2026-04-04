@@ -131,12 +131,12 @@ export function useWebAuthn() {
       return true;
     } catch (error: unknown) {
       log.error('Registration error', error);
-      if (error.name === 'NotAllowedError') {
+      if ((error instanceof Error ? error.name : "Error") === 'NotAllowedError') {
         toast.error('Registro cancelado pelo usuário');
-      } else if (error.name === 'InvalidStateError') {
+      } else if ((error instanceof Error ? error.name : "Error") === 'InvalidStateError') {
         toast.error('Esta passkey já está registrada');
       } else {
-        toast.error('Erro ao registrar passkey', { description: error.message });
+        toast.error('Erro ao registrar passkey', { description: (error instanceof Error ? error.message : String(error)) });
       }
       return false;
     } finally {
@@ -253,10 +253,10 @@ export function useWebAuthn() {
       return { success: true, userId: passkey.user_id };
     } catch (error: unknown) {
       log.error('Authentication error', error);
-      if (error.name === 'NotAllowedError') {
+      if ((error instanceof Error ? error.name : "Error") === 'NotAllowedError') {
         toast.error('Autenticação cancelada pelo usuário');
       } else {
-        toast.error('Erro na autenticação', { description: error.message });
+        toast.error('Erro na autenticação', { description: (error instanceof Error ? error.message : String(error)) });
       }
       return { success: false };
     } finally {
@@ -278,7 +278,7 @@ export function useWebAuthn() {
       await loadPasskeys();
       return true;
     } catch (error: unknown) {
-      toast.error('Erro ao remover passkey', { description: error.message });
+      toast.error('Erro ao remover passkey', { description: (error instanceof Error ? error.message : String(error)) });
       return false;
     }
   };
@@ -297,7 +297,7 @@ export function useWebAuthn() {
       await loadPasskeys();
       return true;
     } catch (error: unknown) {
-      toast.error('Erro ao renomear passkey', { description: error.message });
+      toast.error('Erro ao renomear passkey', { description: (error instanceof Error ? error.message : String(error)) });
       return false;
     }
   };

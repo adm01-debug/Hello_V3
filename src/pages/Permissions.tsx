@@ -135,7 +135,7 @@ export default function Permissions() {
       await loadData();
     } catch (error: unknown) {
       toast.error('Erro ao salvar permissões', {
-        description: error.message,
+        description: (error instanceof Error ? error.message : String(error)),
       });
     } finally {
       setSaving(false);

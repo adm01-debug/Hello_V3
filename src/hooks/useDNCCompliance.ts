@@ -155,7 +155,7 @@ export function useDNCCompliance() {
       toast.success('Número adicionado', { description: 'O número foi adicionado à lista DNC com sucesso.' });
     },
     onError: (error: Error) => {
-      toast.error('Erro ao adicionar', { description: error.message });
+      toast.error('Erro ao adicionar', { description: (error instanceof Error ? error.message : String(error)) });
     },
   });
 
@@ -173,7 +173,7 @@ export function useDNCCompliance() {
       toast.success('Número removido', { description: 'O número foi removido da lista DNC.' });
     },
     onError: (error: Error) => {
-      toast.error('Erro ao remover', { description: error.message });
+      toast.error('Erro ao remover', { description: (error instanceof Error ? error.message : String(error)) });
     },
   });
 
@@ -194,7 +194,7 @@ export function useDNCCompliance() {
       toast.success('Configuração atualizada', { description: 'A configuração de compliance foi salva.' });
     },
     onError: (error: Error) => {
-      toast.error('Erro ao salvar', { description: error.message });
+      toast.error('Erro ao salvar', { description: (error instanceof Error ? error.message : String(error)) });
     },
   });
 
@@ -217,7 +217,7 @@ export function useDNCCompliance() {
         });
         results.success++;
       } catch (error: unknown) {
-        if (error.message?.includes('duplicate')) {
+        if ((error instanceof Error ? error.message : String(error))?.includes('duplicate')) {
           results.duplicates++;
         } else {
           results.failed++;
@@ -230,7 +230,7 @@ export function useDNCCompliance() {
   }, [queryClient]);
 
   // Get setting value helper
-  const getSettingValue = useCallback((key: string, defaultValue: unknown = null) => {
+  const getSettingValue = useCallback((key: string, defaultValue: Record<string, unknown> | string | number | boolean | null = null) => {
     const setting = settings.find(s => s.setting_key === key);
     if (!setting) return defaultValue;
     try {

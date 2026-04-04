@@ -80,7 +80,7 @@ export default function VerifyEmail() {
       });
     } catch (error: unknown) {
       toast.error('Erro ao reenviar email', {
-        description: error.message,
+        description: (error instanceof Error ? error.message : String(error)),
       });
     } finally {
       setResending(false);

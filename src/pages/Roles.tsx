@@ -131,7 +131,7 @@ export default function Roles() {
       await loadUserRoles();
     } catch (error: unknown) {
       toast.error('Erro ao adicionar role', {
-        description: error.message,
+        description: (error instanceof Error ? error.message : String(error)),
       });
     } finally {
       setAdding(false);
@@ -151,7 +151,7 @@ export default function Roles() {
       await loadUserRoles();
     } catch (error: unknown) {
       toast.error('Erro ao remover role', {
-        description: error.message,
+        description: (error instanceof Error ? error.message : String(error)),
       });
     }
   };
