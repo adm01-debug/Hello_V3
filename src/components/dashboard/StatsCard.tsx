@@ -69,11 +69,11 @@ export const StatsCard = memo(function StatsCard({
 
   return (
     <Card className={cn(
-      'overflow-hidden group transition-all duration-300 border-border/50',
+      'overflow-hidden group transition-all duration-300 border-border/50 card-shine',
       'hover:border-primary/25 hover:-translate-y-1',
       glowMap[glowColor],
       className
-    )} role="article" aria-label={`${title}: ${value}`}>
+    )} role="article" aria-label={`${title}: ${displayValue}`}>
       <CardContent className="p-5 relative">
         {/* Subtle neon mesh background */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true">

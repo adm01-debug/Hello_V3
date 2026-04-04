@@ -25,7 +25,7 @@ const Index = () => {
   const { data: stats, isLoading } = useDashboardStats();
 
   return (
-    <main className="space-y-6 relative" aria-label="Dashboard principal">
+    <main className="space-y-6 relative stagger-section" aria-label="Dashboard principal">
       {/* Ambient neon mesh background */}
       <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-40" aria-hidden="true" />
 
