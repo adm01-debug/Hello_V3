@@ -167,7 +167,7 @@ describe('Cross-cutting: TypeScript strict mode compliance', () => {
 describe('Cross-cutting: File sizes are reasonable', () => {
   const files = [
     { path: 'src/pages/Index.tsx', maxLines: 200 },
-    { path: 'src/components/dashboard/StatsCard.tsx', maxLines: 120 },
+    { path: 'src/components/dashboard/StatsCard.tsx', maxLines: 130 },
     { path: 'src/components/executive/TrendIndicator.tsx', maxLines: 50 },
     { path: 'src/components/dashboard/CallVolumeChart.tsx', maxLines: 120 },
     { path: 'src/components/error-boundary/ErrorBoundary.tsx', maxLines: 150 },

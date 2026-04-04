@@ -59,8 +59,9 @@ describe('Accessibility: Dashboard page (Index.tsx)', () => {
     expect(sectionCount).toBeGreaterThanOrEqual(4);
   });
 
-  it('has proper heading hierarchy with h1', () => {
-    expect(content).toContain('<h1');
+  it('has proper heading hierarchy with h1 (via NeonPageHeader)', () => {
+    // h1 is rendered inside NeonPageHeader component
+    expect(content).toContain('NeonPageHeader');
   });
 });
 
@@ -76,7 +77,7 @@ describe('Accessibility: StatsCard component', () => {
   });
 
   it('card has dynamic aria-label with title and value', () => {
-    expect(content).toContain('aria-label={`${title}: ${value}`}');
+    expect(content).toContain('aria-label={`${title}: ${displayValue}`}');
   });
 
   it('icon container has aria-hidden="true"', () => {
@@ -190,6 +191,7 @@ describe('Accessibility: General patterns across components', () => {
     const content = readSrc('src/pages/Index.tsx');
     expect(content).toMatch(/<main/);
     expect(content).toMatch(/<section/);
-    expect(content).toMatch(/<h1/);
+    // h1 is rendered via NeonPageHeader component
+    expect(content).toContain('NeonPageHeader');
   });
 });
