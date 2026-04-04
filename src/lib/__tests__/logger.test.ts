@@ -127,11 +127,10 @@ describe('Logger Module', () => {
       expect(loggedData).toBeDefined();
     });
 
-    it('handles null data gracefully (masking returns null but logger outputs empty string fallback)', () => {
+    it('handles null data - preserves null through masking', () => {
       const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       logger.warn('null test', null);
-      // null passes through maskSensitive, but `entry.data ?? ''` converts null to ''
-      expect(spy.mock.calls[0][1]).toBe('');
+      expect(spy.mock.calls[0][1]).toBeNull();
     });
 
     it('handles primitive data types', () => {
