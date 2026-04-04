@@ -83,7 +83,7 @@ export const StatsCard = memo(function StatsCard({
         <div className="relative flex items-start justify-between gap-3">
           <div className="space-y-2 min-w-0">
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{title}</p>
-            <p className="text-2xl font-bold tracking-tight tabular-nums text-display">{value}</p>
+            <p className="text-2xl font-bold tracking-tight tabular-nums text-display">{displayValue}</p>
             
             {change !== undefined && (
               <div className="flex items-center gap-1.5 pt-0.5">
