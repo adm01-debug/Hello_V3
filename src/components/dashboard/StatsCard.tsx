@@ -1,7 +1,8 @@
-import { ReactNode, memo } from 'react';
+import { ReactNode, memo, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+import { useAnimatedCounter } from '@/hooks/useAnimatedCounter';
 
 interface StatsCardProps {
   title: string;
