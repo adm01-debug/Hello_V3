@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { Loader2, Lock, CheckCircle, Phone, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { z } from 'zod';
 import { PasswordStrength } from '@/components/auth/PasswordStrength';
+import { logger } from '@/lib/logger';
 
 const passwordSchema = z.object({
   password: z.string()
@@ -93,7 +94,7 @@ export default function ResetPassword() {
         navigate('/login');
       }, 3000);
     } catch (err) {
-      console.error('Unexpected error:', err);
+      logger.error('Unexpected error:', err);
       toast.error('Erro inesperado', {
         description: 'Tente novamente mais tarde.',
       });

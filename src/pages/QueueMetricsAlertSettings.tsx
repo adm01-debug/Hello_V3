@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 interface QueueMetricsSettings {
   id: string;
@@ -47,7 +48,7 @@ const QueueMetricsAlertSettings = () => {
       .maybeSingle();
 
     if (error) {
-      console.error('Error fetching settings:', error);
+      logger.error('Error fetching settings:', error);
       toast.error('Erro ao carregar configurações');
     } else if (data) {
       setSettings(data as QueueMetricsSettings);
@@ -78,7 +79,7 @@ const QueueMetricsAlertSettings = () => {
       .eq('id', settings.id);
 
     if (error) {
-      console.error('Error saving settings:', error);
+      logger.error('Error saving settings:', error);
       toast.error('Erro ao salvar configurações');
     } else {
       toast.success('Configurações salvas com sucesso');

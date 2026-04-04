@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { Check, X, AlertTriangle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 interface PasswordStrengthProps {
   password: string;
@@ -50,7 +51,7 @@ async function checkPasswordLeaked(password: string): Promise<boolean> {
     
     return false;
   } catch (error) {
-    console.error('Erro ao verificar senha vazada:', error);
+    logger.error('Erro ao verificar senha vazada:', error);
     return false;
   }
 }

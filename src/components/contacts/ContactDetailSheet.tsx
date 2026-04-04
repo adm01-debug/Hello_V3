@@ -40,6 +40,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { CustomerJourneyTimeline } from './CustomerJourneyTimeline';
 import { useAuditLog } from '@/hooks/useAuditLog';
+import { logger } from '@/lib/logger';
 
 interface PersonalityProfile {
   personality_traits: string[];
@@ -122,7 +123,7 @@ export function ContactDetailSheet({
       // Refresh contacts to update the cache
       fetchContacts();
     } catch (err) {
-      console.error('Error analyzing profile:', err);
+      logger.error('Error analyzing profile:', err);
       toast.error('Erro ao analisar perfil');
     } finally {
       setIsAnalyzing(false);

@@ -25,6 +25,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { 
+import { logger } from '@/lib/logger';
   BarChart, 
   Bar, 
   XAxis, 
@@ -134,7 +135,7 @@ const AlertHistory = () => {
 
       setDailyStats(dailyData);
     } catch (error) {
-      console.error('Error fetching alerts:', error);
+      logger.error('Error fetching alerts:', error);
     } finally {
       setLoading(false);
     }

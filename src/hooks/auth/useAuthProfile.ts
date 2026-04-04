@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { UserProfile } from './useAuthState';
+import { logger } from '@/lib/logger';
 
 export function useAuthProfile() {
   const getProfile = useCallback(async (userId: string): Promise<UserProfile | null> => {
@@ -14,7 +15,7 @@ export function useAuthProfile() {
       if (error) throw error;
       return data as UserProfile;
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      logger.error('Error fetching profile:', error);
       return null;
     }
   }, []);

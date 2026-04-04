@@ -3,6 +3,7 @@
  * Single source of truth for data shapes across frontend boundaries.
  */
 import { z } from 'zod';
+import { logger } from '@/lib/logger';
 
 // ─── Primitives ─────────────────────────────────────────────────────────
 export const uuidSchema = z.string().uuid();
@@ -192,7 +193,7 @@ export type RegisterFormInput = z.infer<typeof registerFormSchema>;
 export function safeParse<T>(schema: z.ZodSchema<T>, data: unknown, label?: string): T | null {
   const result = schema.safeParse(data);
   if (!result.success) {
-    console.warn(`[Validation] ${label ?? 'unknown'} failed:`, result.error.flatten());
+    logger.warn(`[Validation] ${label ?? 'unknown'} failed:`, result.error.flatten());
     return null;
   }
   return result.data;

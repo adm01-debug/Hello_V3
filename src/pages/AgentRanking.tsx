@@ -47,6 +47,7 @@ import { ptBR } from 'date-fns/locale';
 import { BadgesShowcase } from '@/components/gamification/BadgesShowcase';
 import { useGamification } from '@/hooks/useGamification';
 import { useAgentStatus } from '@/hooks/useAgentStatus';
+import { logger } from '@/lib/logger';
 
 interface AgentStats {
   name: string;
@@ -167,7 +168,7 @@ export default function AgentRanking() {
       .select('*');
 
     if (error) {
-      console.error('Error fetching goals:', error);
+      logger.error('Error fetching goals:', error);
       return;
     }
 
@@ -199,7 +200,7 @@ export default function AgentRanking() {
 
     if (error) {
       toast.error('Erro ao salvar metas');
-      console.error('Error saving goals:', error);
+      logger.error('Error saving goals:', error);
       return;
     }
 
@@ -241,7 +242,7 @@ export default function AgentRanking() {
     const { data: sessions, error: sessionsError } = await sessionsQuery;
 
     if (sessionsError) {
-      console.error('Error fetching sessions:', sessionsError);
+      logger.error('Error fetching sessions:', sessionsError);
       toast.error('Erro ao carregar dados dos agentes');
       setIsLoading(false);
       return;
@@ -252,7 +253,7 @@ export default function AgentRanking() {
       .select('call_session_id, customer_satisfaction, agent_performance_score');
 
     if (summariesError) {
-      console.error('Error fetching summaries:', summariesError);
+      logger.error('Error fetching summaries:', summariesError);
     }
 
     // Get session IDs for mapping summaries
@@ -371,7 +372,7 @@ export default function AgentRanking() {
       .order('created_at', { ascending: true });
 
     if (sessionsError) {
-      console.error('Error fetching performance history:', sessionsError);
+      logger.error('Error fetching performance history:', sessionsError);
       return;
     }
 
@@ -380,7 +381,7 @@ export default function AgentRanking() {
       .select('call_session_id, agent_performance_score');
 
     if (summariesError) {
-      console.error('Error fetching summaries:', summariesError);
+      logger.error('Error fetching summaries:', summariesError);
       return;
     }
 
@@ -492,7 +493,7 @@ export default function AgentRanking() {
             .single();
 
           if (sessionError) {
-            console.error('Error creating session:', sessionError);
+            logger.error('Error creating session:', sessionError);
             continue;
           }
 
@@ -527,7 +528,7 @@ export default function AgentRanking() {
       toast.success('Dados de teste criados com sucesso!');
       fetchAgentStats();
     } catch (error) {
-      console.error('Error creating test data:', error);
+      logger.error('Error creating test data:', error);
       toast.error('Erro ao criar dados de teste');
     }
   };

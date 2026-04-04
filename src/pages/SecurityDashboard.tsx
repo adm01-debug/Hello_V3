@@ -42,6 +42,7 @@ import {
   Bell,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 interface SecurityScore {
   total: number;
@@ -127,7 +128,7 @@ export default function SecurityDashboard() {
       // Calculate security score
       calculateSecurityScore(ipRestriction?.enabled || false);
     } catch (error) {
-      console.error('Error loading security data:', error);
+      logger.error('Error loading security data:', error);
     } finally {
       setIsLoading(false);
     }

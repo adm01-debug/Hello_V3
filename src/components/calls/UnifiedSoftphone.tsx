@@ -60,7 +60,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       if (m.user_transcription_event?.user_transcript) { const t = m.user_transcription_event.user_transcript; addTranscript('user', t); onTranscript?.(t, 'user'); }
       else if (m.agent_response_event?.agent_response) { const t = m.agent_response_event.agent_response; addTranscript('agent', t); onTranscript?.(t, 'agent'); }
     },
-    onError: (error) => { console.error('Conversation error:', error); toast.error('Erro na conexão'); handleEndCall(); },
+    onError: (error) => { logger.error('Conversation error:', error); toast.error('Erro na conexão'); handleEndCall(); },
   });
 
   const handleDigitPress = (digit: string) => {
@@ -81,7 +81,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
         const { data, error } = await supabase.functions.invoke('elevenlabs-conversation-token', { body: { useDefaultAgent: true } });
         if (error || !data?.signed_url) throw new Error(data?.error || 'Falha ao obter token');
         await conversation.startSession({ signedUrl: data.signed_url });
-      } catch (error) { console.error('Failed to start WebRTC call:', error); toast.error(error instanceof Error ? error.message : 'Falha ao iniciar chamada'); endCall(); }
+      } catch (error) { logger.error('Failed to start WebRTC call:', error); toast.error(error instanceof Error ? error.message : 'Falha ao iniciar chamada'); endCall(); }
     } else if (activeChannel === 'wavoip') {
       if (!phoneNumber) { toast.error('Digite um número WhatsApp para ligar'); return; }
       const call = initiateCall('wavoip', phoneNumber, `WhatsApp ${phoneNumber}`);

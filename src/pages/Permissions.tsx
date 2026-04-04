@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { 
+import { logger } from '@/lib/logger';
   Loader2, Shield, Key, Users, Phone, FileText, Settings, 
   Lock, Eye, Edit, Trash2, Plus, Save 
 } from 'lucide-react';
@@ -72,7 +73,7 @@ export default function Permissions() {
       setPermissions(permissionsRes.data || []);
       setRolePermissions(rolePermissionsRes.data || []);
     } catch (error) {
-      console.error('Error loading permissions:', error);
+      logger.error('Error loading permissions:', error);
       toast.error('Erro ao carregar permissões');
     } finally {
       setIsLoading(false);

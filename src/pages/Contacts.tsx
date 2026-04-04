@@ -14,6 +14,7 @@ import { useBitrix } from '@/hooks/useBitrix';
 import { ContactDetailSheet } from '@/components/contacts/ContactDetailSheet';
 import { CreateContactDialog } from '@/components/contacts/CreateContactDialog';
 import { motion } from 'framer-motion';
+import { logger } from '@/lib/logger';
 
 const getInitials = (name: string) => {
   return name
@@ -128,7 +129,7 @@ const Contacts = () => {
         description: `${imported} novos contatos importados do Bitrix24`
       });
     } catch (error) {
-      console.error('Sync error:', error);
+      logger.error('Sync error:', error);
       toast.error('Erro ao sincronizar com Bitrix24');
     } finally {
       setIsSyncing(false);

@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Phone, PhoneOff, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
+import { logger } from '@/lib/logger';
 
 interface WebRTCCallProps {
   targetNumber?: string;
@@ -57,7 +58,7 @@ export function WebRTCCall({ targetNumber, onCallStarted, onCallEnded }: WebRTCC
       peerConnectionRef.current = pc;
       setStatus("ringing");
     } catch (err) {
-      console.error("Failed to start WebRTC call:", err);
+      logger.error("Failed to start WebRTC call:", err);
       setStatus("idle");
     }
   }, [onCallStarted]);

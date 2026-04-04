@@ -39,6 +39,7 @@ import {
 import { format } from 'date-fns';
 import { DashboardGoalsSettings, DashboardGoal } from '@/components/dashboard/DashboardGoalsSettings';
 import { GoalViolationsHistory } from '@/components/dashboard/GoalViolationsHistory';
+import { logger } from '@/lib/logger';
 
 interface QueueMetrics {
   activeCalls: number;
@@ -240,7 +241,7 @@ const QueueMetricsDashboard = () => {
       });
 
     } catch (error) {
-      console.error('Error fetching metrics:', error);
+      logger.error('Error fetching metrics:', error);
     } finally {
       setLoading(false);
     }
@@ -331,7 +332,7 @@ const QueueMetricsDashboard = () => {
       const { data, error } = await supabase.functions.invoke('check-goals');
       
       if (error) {
-        console.error('Error checking goals:', error);
+        logger.error('Error checking goals:', error);
         toast.error('Erro ao verificar metas');
       } else {
         toast.success(`Verificação concluída: ${data.alertsCreated} alertas criados`);
@@ -340,7 +341,7 @@ const QueueMetricsDashboard = () => {
         fetchGoals();
       }
     } catch (error) {
-      console.error('Error invoking check-goals:', error);
+      logger.error('Error invoking check-goals:', error);
       toast.error('Erro ao verificar metas');
     } finally {
       setCheckingGoals(false);

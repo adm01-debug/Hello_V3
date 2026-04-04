@@ -18,6 +18,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { formatDistanceToNow, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 interface CallAlert {
   id: string;
@@ -148,7 +149,7 @@ export default function Alerts() {
         toast.info('Nenhum novo alerta detectado');
       }
     } catch (err) {
-      console.error('Error checking alerts:', err);
+      logger.error('Error checking alerts:', err);
       toast.error('Erro ao verificar alertas');
     } finally {
       setIsCheckingAlerts(false);

@@ -26,6 +26,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { logger } from '@/lib/logger';
 
 interface RealtimeInsight {
   sentiment: 'positive' | 'neutral' | 'negative';
@@ -91,7 +92,7 @@ export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps
       const accessToken = sessionData?.session?.access_token;
 
       if (!accessToken) {
-        console.warn('No active session for realtime analysis');
+        logger.warn('No active session for realtime analysis');
         setIsAnalyzing(false);
         return;
       }
@@ -137,7 +138,7 @@ export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps
         });
       }
     } catch (error) {
-      console.error('Analysis error:', error);
+      logger.error('Analysis error:', error);
     } finally {
       setIsAnalyzing(false);
     }

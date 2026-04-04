@@ -82,7 +82,7 @@ export const useBitrix = () => {
           return { success: false, configured: false };
         }
 
-        console.error('Bitrix API error:', error);
+        logger.error('Bitrix API error:', error);
         toast.error('Erro ao comunicar com Bitrix', {
           description
         });
@@ -97,7 +97,7 @@ export const useBitrix = () => {
       setIsConfigured(true);
       return data;
     } catch (err) {
-      console.error('Bitrix call error:', err);
+      logger.error('Bitrix call error:', err);
       toast.error('Erro na integração Bitrix');
       return null;
     } finally {

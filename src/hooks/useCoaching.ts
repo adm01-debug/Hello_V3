@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 export interface CoachingRecommendation {
   id: string;
@@ -34,7 +35,7 @@ export function useCoaching(agentId?: string) {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Error fetching recommendations:', error);
+      logger.error('Error fetching recommendations:', error);
     } else {
       setRecommendations(data as CoachingRecommendation[]);
     }
@@ -58,7 +59,7 @@ export function useCoaching(agentId?: string) {
 
       await fetchRecommendations();
     } catch (error: unknown) {
-      console.error('Error generating recommendations:', error);
+      logger.error('Error generating recommendations:', error);
       toast.error('Erro', { description: 'Não foi possível gerar as recomendações.' });
     } finally {
       setIsGenerating(false);
@@ -80,7 +81,7 @@ export function useCoaching(agentId?: string) {
       .eq('id', id);
 
     if (error) {
-      console.error('Error updating recommendation:', error);
+      logger.error('Error updating recommendation:', error);
       toast.error('Erro', { description: 'Não foi possível atualizar o status.' });
     } else {
       await fetchRecommendations();
@@ -98,7 +99,7 @@ export function useCoaching(agentId?: string) {
       .eq('id', id);
 
     if (error) {
-      console.error('Error deleting recommendation:', error);
+      logger.error('Error deleting recommendation:', error);
     } else {
       await fetchRecommendations();
     }
