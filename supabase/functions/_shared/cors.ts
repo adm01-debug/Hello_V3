@@ -1,11 +1,14 @@
 // Centralized CORS configuration for all Edge Functions
-// Restrict to known origins in production; fallback to wildcard only for local dev
+// Restrict to known origins in production; fallback to first allowed origin
 const ALLOWED_ORIGINS = [
   'https://id-preview--e326811c-e59a-4850-bf9e-cfc9d6748662.lovable.app',
   'https://lovable.dev',
   'http://localhost:8080',
   'http://localhost:5173',
 ];
+
+const ALLOWED_HEADERS =
+  'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version';
 
 export function getCorsOrigin(req?: Request): string {
   if (!req) return ALLOWED_ORIGINS[0];
@@ -16,14 +19,14 @@ export function getCorsOrigin(req?: Request): string {
   return ALLOWED_ORIGINS[0];
 }
 
-/** @deprecated Use buildCorsHeaders(req) instead for proper origin validation */
-export const corsHeaders = buildCorsHeaders();
-
 export function buildCorsHeaders(req?: Request): Record<string, string> {
   return {
     'Access-Control-Allow-Origin': getCorsOrigin(req),
-    'Access-Control-Allow-Headers': corsHeaders['Access-Control-Allow-Headers'],
+    'Access-Control-Allow-Headers': ALLOWED_HEADERS,
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Max-Age': '86400',
   };
 }
+
+/** @deprecated Use buildCorsHeaders(req) instead for proper origin validation */
+export const corsHeaders = buildCorsHeaders();
