@@ -62,7 +62,7 @@ describe('Security: Logger PII masking (comprehensive)', () => {
     logger.warn('test', {
       user: {
         name: 'Alice',
-        credentials: {
+        auth: {
           password: 'secret',
           token: 'abc123',
         },
@@ -70,8 +70,8 @@ describe('Security: Logger PII masking (comprehensive)', () => {
     });
     const data = spy.mock.calls[0][1] as any;
     expect(data.user.name).toBe('Alice');
-    expect(data.user.credentials.password).toBe('[REDACTED]');
-    expect(data.user.credentials.token).toBe('[REDACTED]');
+    expect(data.user.auth.password).toBe('[REDACTED]');
+    expect(data.user.auth.token).toBe('[REDACTED]');
   });
 
   it('handles arrays with sensitive objects', () => {

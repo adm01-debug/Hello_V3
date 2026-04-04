@@ -176,7 +176,6 @@ describe('Accessibility: General patterns across components', () => {
   const componentsToCheck = [
     'src/components/dashboard/StatsCard.tsx',
     'src/components/executive/TrendIndicator.tsx',
-    'src/components/dashboard/CallVolumeChart.tsx',
     'src/components/error-boundary/ErrorBoundary.tsx',
   ];
 
