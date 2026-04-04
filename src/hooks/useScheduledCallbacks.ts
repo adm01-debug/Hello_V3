@@ -1,3 +1,5 @@
+import { logger } from '@/lib/logger';
+const log = logger.create('ScheduledCallbacks');
 import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -52,7 +54,7 @@ export const useScheduledCallbacks = () => {
       setCallbacks((data || []) as ScheduledCallback[]);
       return data as ScheduledCallback[];
     } catch (err) {
-      console.error('Error fetching callbacks:', err);
+      log.error('Error fetching callbacks:', err);
       toast.error('Erro ao carregar callbacks');
       return [];
     } finally {
@@ -76,7 +78,7 @@ export const useScheduledCallbacks = () => {
         setUpcomingCount(count);
       }
     } catch (err) {
-      console.error('Error fetching upcoming count:', err);
+      log.error('Error fetching upcoming count:', err);
     }
   }, []);
 
@@ -104,7 +106,7 @@ export const useScheduledCallbacks = () => {
       await fetchCallbacks('pending');
       return data as ScheduledCallback;
     } catch (err) {
-      console.error('Error creating callback:', err);
+      log.error('Error creating callback:', err);
       toast.error('Erro ao agendar callback');
       return null;
     }
@@ -128,7 +130,7 @@ export const useScheduledCallbacks = () => {
       await fetchCallbacks('pending');
       return data as ScheduledCallback;
     } catch (err) {
-      console.error('Error updating callback:', err);
+      log.error('Error updating callback:', err);
       toast.error('Erro ao atualizar callback');
       return null;
     }
@@ -150,7 +152,7 @@ export const useScheduledCallbacks = () => {
       await fetchCallbacks('pending');
       return true;
     } catch (err) {
-      console.error('Error completing callback:', err);
+      log.error('Error completing callback:', err);
       toast.error('Erro ao concluir callback');
       return false;
     }
@@ -169,7 +171,7 @@ export const useScheduledCallbacks = () => {
       await fetchCallbacks('pending');
       return true;
     } catch (err) {
-      console.error('Error cancelling callback:', err);
+      log.error('Error cancelling callback:', err);
       toast.error('Erro ao cancelar callback');
       return false;
     }
@@ -188,7 +190,7 @@ export const useScheduledCallbacks = () => {
       await fetchCallbacks('pending');
       return true;
     } catch (err) {
-      console.error('Error deleting callback:', err);
+      log.error('Error deleting callback:', err);
       toast.error('Erro ao remover callback');
       return false;
     }

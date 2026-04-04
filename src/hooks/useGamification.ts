@@ -1,3 +1,5 @@
+import { logger } from '@/lib/logger';
+const log = logger.create('Gamification');
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -70,7 +72,7 @@ export function useGamification(agentId?: string) {
       .order('points', { ascending: true });
 
     if (error) {
-      console.error('Error fetching badges:', error);
+      log.error('Error fetching badges:', error);
       return;
     }
 
@@ -90,7 +92,7 @@ export function useGamification(agentId?: string) {
       .order('earned_at', { ascending: false });
 
     if (error) {
-      console.error('Error fetching agent badges:', error);
+      log.error('Error fetching agent badges:', error);
       return;
     }
 
@@ -113,7 +115,7 @@ export function useGamification(agentId?: string) {
       .maybeSingle();
 
     if (error) {
-      console.error('Error fetching weekly stats:', error);
+      log.error('Error fetching weekly stats:', error);
       return;
     }
 
@@ -130,7 +132,7 @@ export function useGamification(agentId?: string) {
       .order('points_earned', { ascending: false });
 
     if (statsError) {
-      console.error('Error fetching rankings:', statsError);
+      log.error('Error fetching rankings:', statsError);
       return;
     }
 
@@ -139,7 +141,7 @@ export function useGamification(agentId?: string) {
       .select('id, name, avatar_url');
 
     if (agentsError) {
-      console.error('Error fetching agents:', agentsError);
+      log.error('Error fetching agents:', agentsError);
       return;
     }
 
@@ -180,7 +182,7 @@ export function useGamification(agentId?: string) {
 
     if (error) {
       if (error.code === '23505') return; // Already has badge
-      console.error('Error awarding badge:', error);
+      log.error('Error awarding badge:', error);
       return;
     }
 
