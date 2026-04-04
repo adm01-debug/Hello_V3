@@ -138,7 +138,7 @@ export function useDeviceDetection() {
           });
           
           if (notifyError) {
-            console.error('[DeviceDetection] Erro ao enviar notificação:', notifyError);
+            logger.create('DeviceDetection').error('Erro ao enviar notificação', notifyError);
           } else {
             logger.create('DeviceDetection').debug(' Notificação enviada com sucesso');
           }
