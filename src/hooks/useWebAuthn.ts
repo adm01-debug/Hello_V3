@@ -1,3 +1,5 @@
+import { logger } from '@/lib/logger';
+const log = logger.create('WebAuthn');
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -52,7 +54,7 @@ export function useWebAuthn() {
       if (error) throw error;
       setPasskeys(data || []);
     } catch (error) {
-      console.error('Error loading passkeys:', error);
+      log.error('Error loading passkeys',, error);
     } finally {
       setIsLoading(false);
     }
@@ -128,7 +130,7 @@ export function useWebAuthn() {
       await loadPasskeys();
       return true;
     } catch (error: any) {
-      console.error('Registration error:', error);
+      log.error('Registration error',, error);
       if (error.name === 'NotAllowedError') {
         toast.error('Registro cancelado pelo usuário');
       } else if (error.name === 'InvalidStateError') {
@@ -240,7 +242,7 @@ export function useWebAuthn() {
       toast.success('Login realizado com sucesso!');
       return { success: true, userId: passkey.user_id };
     } catch (error: any) {
-      console.error('Authentication error:', error);
+      log.error('Authentication error',, error);
       if (error.name === 'NotAllowedError') {
         toast.error('Autenticação cancelada pelo usuário');
       } else {
