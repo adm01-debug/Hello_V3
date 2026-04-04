@@ -74,18 +74,21 @@ function log(level: LogLevel, message: string, context?: string, data?: unknown)
 
   const formatted = formatEntry(entry);
 
+  const args: unknown[] = [formatted];
+  if (entry.data !== undefined) args.push(entry.data);
+
   switch (level) {
     case 'debug':
-      console.debug(formatted, entry.data ?? '');
+      console.debug(...args);
       break;
     case 'info':
-      console.info(formatted, entry.data ?? '');
+      console.info(...args);
       break;
     case 'warn':
-      console.warn(formatted, entry.data ?? '');
+      console.warn(...args);
       break;
     case 'error':
-      console.error(formatted, entry.data ?? '');
+      console.error(...args);
       break;
   }
 }
