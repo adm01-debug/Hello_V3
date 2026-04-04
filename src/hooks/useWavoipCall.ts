@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 export type WavoipStatus = 'disconnected' | 'connecting' | 'connected' | 'calling' | 'active' | 'error';
 
@@ -52,7 +53,7 @@ export function useWavoipCall() {
       });
 
       if (error) {
-        console.error('Wavoip config check error:', error);
+        logger.error('Wavoip config check error:', error);
         setState(prev => ({ 
           ...prev, 
           isConfigured: false, 
@@ -71,7 +72,7 @@ export function useWavoipCall() {
       
       return isConfigured;
     } catch (error) {
-      console.error('Wavoip check error:', error);
+      logger.error('Wavoip check error:', error);
       setState(prev => ({ 
         ...prev, 
         isConfigured: false, 
@@ -135,7 +136,7 @@ export function useWavoipCall() {
       toast.success('Chamada WhatsApp iniciada');
       return true;
     } catch (error) {
-      console.error('Wavoip start call error:', error);
+      logger.error('Wavoip start call error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Erro desconhecido';
       setState(prev => ({ 
         ...prev, 
@@ -171,7 +172,7 @@ export function useWavoipCall() {
       stopDurationTimer();
 
       if (error || !data?.success) {
-        console.warn('Wavoip end call warning:', data?.error);
+        logger.warn('Wavoip end call warning:', data?.error);
       }
 
       setState(prev => ({ 
@@ -185,7 +186,7 @@ export function useWavoipCall() {
       toast.info('Chamada WhatsApp encerrada');
       return true;
     } catch (error) {
-      console.error('Wavoip end call error:', error);
+      logger.error('Wavoip end call error:', error);
       stopDurationTimer();
       setState(prev => ({ 
         ...prev, 

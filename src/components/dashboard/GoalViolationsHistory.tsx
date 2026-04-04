@@ -31,6 +31,7 @@ import {
 } from 'recharts';
 import { format, subDays, startOfDay, endOfDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { logger } from '@/lib/logger';
 
 interface GoalViolation {
   id: string;
@@ -96,7 +97,7 @@ export const GoalViolationsHistory = () => {
       setViolations(data || []);
       processChartData(data || [], days);
     } catch (error) {
-      console.error('Error fetching violations:', error);
+      logger.error('Error fetching violations:', error);
       toast.error('Erro ao carregar histórico de violações');
     } finally {
       setLoading(false);

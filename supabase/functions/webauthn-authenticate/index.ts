@@ -16,9 +16,6 @@ Deno.serve(async (req) => {
 
   try {
     const { credentialId, userId, email } = await req.json() as AuthRequest;
-
-    console.log('WebAuthn authentication request:', { credentialId, userId, email });
-
     if (!credentialId || !userId || !email) {
       throw new Error('Missing required fields');
     }
@@ -73,9 +70,6 @@ Deno.serve(async (req) => {
         method: 'passkey',
       },
     });
-
-    console.log('WebAuthn authentication successful for user:', userId);
-
     return new Response(
       JSON.stringify({
         success: true,

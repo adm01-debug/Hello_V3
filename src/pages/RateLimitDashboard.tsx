@@ -13,6 +13,7 @@ import {
   Ban, Activity, TrendingUp, RefreshCw, Search, Trash2 
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { logger } from '@/lib/logger';
 
 interface RateLimitLog {
   id: string;
@@ -104,7 +105,7 @@ export default function RateLimitDashboard() {
       setAlerts(alertsRes.data || []);
       setSettings(settingsRes.data || []);
     } catch (error) {
-      console.error('Error loading rate limit data:', error);
+      logger.error('Error loading rate limit data:', error);
       toast.error('Erro ao carregar dados');
     } finally {
       setIsLoading(false);

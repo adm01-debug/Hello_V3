@@ -48,6 +48,7 @@ import { cn } from '@/lib/utils';
 import { format, isWithinInterval, startOfDay, endOfDay, subDays, subWeeks, subMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useAuditLog } from '@/hooks/useAuditLog';
+import { logger } from '@/lib/logger';
 
 interface CallSession {
   id: string;
@@ -173,7 +174,7 @@ export default function CallHistory() {
 
       setSessions(sessionsWithSummary);
     } catch (error) {
-      console.error('Error fetching sessions:', error);
+      logger.error('Error fetching sessions:', error);
     } finally {
       setIsLoading(false);
     }
@@ -208,7 +209,7 @@ export default function CallHistory() {
       setSessionAnalyses(analysesRes.data || []);
       setSessionSummary(summaryRes.data);
     } catch (error) {
-      console.error('Error fetching session details:', error);
+      logger.error('Error fetching session details:', error);
     } finally {
       setIsLoadingDetails(false);
     }

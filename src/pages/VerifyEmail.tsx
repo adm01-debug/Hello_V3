@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { Loader2, CheckCircle, XCircle, Mail, RefreshCw, Phone } from 'lucide-react';
+import { logger } from '@/lib/logger';
 
 type VerificationStatus = 'loading' | 'success' | 'error' | 'expired';
 
@@ -22,7 +23,7 @@ export default function VerifyEmail() {
       const { data: { session }, error } = await supabase.auth.getSession();
 
       if (error) {
-        console.error('Verification error:', error);
+        logger.error('Verification error:', error);
         setStatus('error');
         return;
       }

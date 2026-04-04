@@ -8,6 +8,7 @@ import { Slider } from '@/components/ui/slider';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { Settings, Clock, AlertTriangle, Bell, Save, RefreshCw } from 'lucide-react';
+import { logger } from '@/lib/logger';
 
 interface HoldAlertSettings {
   id: string;
@@ -43,7 +44,7 @@ export default function HoldAlertSettings() {
         setSettings(data);
       }
     } catch (error) {
-      console.error('Error fetching settings:', error);
+      logger.error('Error fetching settings:', error);
       toast.error('Erro ao carregar configurações', { description: 'Não foi possível carregar as configurações de alertas.' });
     } finally {
       setLoading(false);
@@ -70,7 +71,7 @@ export default function HoldAlertSettings() {
 
       toast.success('Configurações salvas', { description: 'Os limites de alerta foram atualizados com sucesso.' });
     } catch (error) {
-      console.error('Error saving settings:', error);
+      logger.error('Error saving settings:', error);
       toast.error('Erro ao salvar', { description: 'Não foi possível salvar as configurações.' });
     } finally {
       setSaving(false);

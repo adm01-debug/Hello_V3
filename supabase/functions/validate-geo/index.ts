@@ -119,8 +119,6 @@ Deno.serve(async (req) => {
     }
 
     // Country not in allowlist - block
-    console.log(`Geo validation: BLOCKED - Country ${countryCode} not in allowlist`);
-
     if (settings.log_blocked_attempts) {
       await supabase.from('geo_access_logs').insert({
         action: 'blocked',

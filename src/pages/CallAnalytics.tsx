@@ -26,6 +26,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { format, subDays, subWeeks, subMonths, isAfter } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { logger } from '@/lib/logger';
 import {
   BarChart,
   Bar,
@@ -87,7 +88,7 @@ export default function CallAnalytics() {
       setSessions(sessionsRes.data || []);
       setSummaries(summariesRes.data || []);
     } catch (error) {
-      console.error('Error fetching analytics data:', error);
+      logger.error('Error fetching analytics data:', error);
     } finally {
       setIsLoading(false);
     }

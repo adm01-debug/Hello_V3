@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 const SESSION_DURATION_HOURS = 24;
 const REFRESH_THRESHOLD_MINUTES = 30;
@@ -89,7 +90,7 @@ export function useSessionManager() {
       setCurrentSessionId(data.id);
       return data;
     } catch (error) {
-      console.error('Error creating session:', error);
+      logger.error('Error creating session:', error);
       return null;
     }
   }, [user, session, getDeviceInfo]);
@@ -119,7 +120,7 @@ export function useSessionManager() {
 
       setSessions(sessionsWithCurrent as ActiveSession[]);
     } catch (error) {
-      console.error('Error loading sessions:', error);
+      logger.error('Error loading sessions:', error);
     } finally {
       setIsLoading(false);
     }
@@ -134,7 +135,7 @@ export function useSessionManager() {
         .update({ last_activity_at: new Date().toISOString() })
         .eq('id', currentSessionId);
     } catch (error) {
-      console.error('Error updating activity:', error);
+      logger.error('Error updating activity:', error);
     }
   }, [currentSessionId]);
 
@@ -188,7 +189,7 @@ export function useSessionManager() {
     if (minutesUntilExpiry <= REFRESH_THRESHOLD_MINUTES) {
       const { error } = await supabase.auth.refreshSession();
       if (error) {
-        console.error('Error refreshing session:', error);
+        logger.error('Error refreshing session:', error);
         toast.error('Sua sessão expirou. Faça login novamente.');
       }
     }

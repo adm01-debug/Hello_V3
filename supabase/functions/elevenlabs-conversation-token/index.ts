@@ -56,9 +56,6 @@ serve(async (req) => {
         { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
-
-    console.log("Requesting conversation token for user:", user.id, "agent:", resolvedAgentId);
-
     const response = await fetch(
       `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(resolvedAgentId)}`,
       {

@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
 import { Loader2, Mail, ArrowLeft, CheckCircle, Phone, ShieldCheck } from 'lucide-react';
 import { z } from 'zod';
+import { logger } from '@/lib/logger';
 
 const emailSchema = z.string().email('Email inválido').max(255, 'Email muito longo');
 
@@ -38,7 +39,7 @@ export default function ForgotPassword() {
       });
 
       if (fnError) {
-        console.error('Password reset request error:', fnError);
+        logger.error('Password reset request error:', fnError);
         toast.error('Erro ao solicitar redefinição');
         return;
       }
@@ -48,7 +49,7 @@ export default function ForgotPassword() {
         description: data.message,
       });
     } catch (err) {
-      console.error('Unexpected error:', err);
+      logger.error('Unexpected error:', err);
       toast.error('Erro inesperado', {
         description: 'Tente novamente mais tarde.',
       });

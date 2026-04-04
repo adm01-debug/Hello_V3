@@ -78,9 +78,6 @@ serve(async (req) => {
         { status: 503, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
-
-    console.log(`Bitrix API action: ${action} by user: ${user.id}`);
-
     let endpoint = '';
 
     switch (action) {

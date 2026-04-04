@@ -23,6 +23,7 @@ import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 interface AnalysisResult {
   summary: string;
@@ -118,7 +119,7 @@ export function AICallAnalysis() {
 
       toast.success('✨ Análise concluída', { description: 'A chamada foi analisada com sucesso.' });
     } catch (error) {
-      console.error('Analysis error:', error);
+      logger.error('Analysis error:', error);
       toast.error('Erro na análise', { description: error instanceof Error ? error.message : 'Erro desconhecido' });
     } finally {
       setIsAnalyzing(false);

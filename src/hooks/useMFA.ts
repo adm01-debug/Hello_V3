@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 export type MFAMethod = 'totp' | 'phone' | 'both';
 
@@ -42,7 +43,7 @@ export function useMFA() {
       
       setFactors(allFactors);
     } catch (error) {
-      console.error('Error loading MFA factors:', error);
+      logger.error('Error loading MFA factors:', error);
     }
   }, [user]);
 
@@ -66,7 +67,7 @@ export function useMFA() {
         recovery_email: data.recovery_email,
       } : null);
     } catch (error) {
-      console.error('Error loading MFA settings:', error);
+      logger.error('Error loading MFA settings:', error);
     } finally {
       setIsLoading(false);
     }

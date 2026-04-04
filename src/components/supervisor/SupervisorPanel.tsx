@@ -36,6 +36,7 @@ import { QueueTrendChart } from './QueueTrendChart';
 import { useCriticalAlertNotifications, AlertSoundConfig } from '@/hooks/useCriticalAlertNotifications';
 import { AlertSoundSettings } from './AlertSoundSettings';
 import { SoundProfileManager } from './SoundProfileManager';
+import { logger } from '@/lib/logger';
 
 interface ActiveCall {
   id: string;
@@ -314,7 +315,7 @@ export const SupervisorPanel = () => {
     });
 
     if (error) {
-      console.error('Error starting barge-in:', error);
+      logger.error('Error starting barge-in:', error);
       toast.error('Erro ao iniciar barge-in');
     } else {
       toast.success(`Você entrou na chamada com ${selectedCall.agent_name}`);

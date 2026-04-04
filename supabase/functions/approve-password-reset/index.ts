@@ -133,9 +133,6 @@ Deno.serve(async (req) => {
         target_user_id: resetRequest.user_id
       }
     });
-
-    console.log(`Password reset approved for ${resetRequest.user_email} by ${adminUser.email}`);
-
     return new Response(
       JSON.stringify({ 
         success: true, 

@@ -16,6 +16,7 @@ import { toast } from 'sonner';
 import { Shield, Plus, Trash2, Globe, User, AlertTriangle, Clock, Network } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { logger } from '@/lib/logger';
 
 interface IPEntry {
   id: string;
@@ -112,7 +113,7 @@ export default function IPWhitelist() {
       setBlockedLogs(logs || []);
 
     } catch (error) {
-      console.error('Error fetching data:', error);
+      logger.error('Error fetching data:', error);
       toast.error('Erro ao carregar dados');
     } finally {
       setLoading(false);

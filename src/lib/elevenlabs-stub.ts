@@ -1,4 +1,5 @@
 // Stub for @elevenlabs/react - provides a mock useConversation hook
+import { logger } from '@/lib/logger';
 // Install @elevenlabs/react for real WebRTC functionality
 
 export function useConversation(options?: {
@@ -11,7 +12,7 @@ export function useConversation(options?: {
     status: 'disconnected' as const,
     isSpeaking: false,
     startSession: async (_opts?: any) => {
-      console.warn('ElevenLabs not configured. Install @elevenlabs/react for WebRTC support.');
+      logger.warn('ElevenLabs not configured. Install @elevenlabs/react for WebRTC support.');
       options?.onConnect?.();
     },
     endSession: async () => {

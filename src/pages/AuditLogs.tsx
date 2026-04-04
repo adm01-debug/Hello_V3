@@ -15,6 +15,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import type { Tables } from '@/integrations/supabase/types';
+import { logger } from '@/lib/logger';
 
 type AuditLog = Tables<'audit_logs'>;
 
@@ -86,7 +87,7 @@ export default function AuditLogs() {
       if (error) throw error;
       setLogs(data || []);
     } catch (err) {
-      console.error('Error fetching audit logs:', err);
+      logger.error('Error fetching audit logs:', err);
       toast.error('Erro ao carregar logs de auditoria');
     } finally {
       setLoading(false);

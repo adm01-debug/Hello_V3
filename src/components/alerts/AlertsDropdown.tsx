@@ -15,6 +15,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 interface Alert {
   id: string;
@@ -67,7 +68,7 @@ export function AlertsDropdown() {
       .limit(50);
 
     if (error) {
-      console.error('Error fetching alerts:', error);
+      logger.error('Error fetching alerts:', error);
       return;
     }
 
@@ -160,7 +161,7 @@ export function AlertsDropdown() {
 
     if (error) {
       toast.error('Erro ao criar alertas de teste');
-      console.error('Error creating test alerts:', error);
+      logger.error('Error creating test alerts:', error);
     } else {
       toast.success('3 alertas de teste criados!');
     }

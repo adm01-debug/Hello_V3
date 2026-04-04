@@ -29,15 +29,6 @@ Deno.serve(async (req) => {
         { status: 400, headers: { "Content-Type": "application/json", ...buildCorsHeaders(req) } }
       );
     }
-
-    console.log("[NEW-DEVICE] Novo login detectado:", {
-      email: data.email,
-      ip: data.ip,
-      browser: data.browser,
-      isNewIP: data.isNewIP,
-      isNewBrowser: data.isNewBrowser,
-    });
-
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     
     if (!RESEND_API_KEY) {

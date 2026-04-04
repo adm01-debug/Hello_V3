@@ -21,6 +21,7 @@ import { useCallSession } from '@/hooks/useCallSession';
 import { useContacts } from '@/hooks/useContacts';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 const formatDuration = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -125,7 +126,7 @@ export function ActiveCallBar() {
           });
 
           if (error) {
-            console.error('Error generating summary:', error);
+            logger.error('Error generating summary:', error);
             toast.error('Erro ao gerar resumo, salvando sem resumo');
           } else if (data && !data.error) {
             summary = {
@@ -161,7 +162,7 @@ export function ActiveCallBar() {
 
         toast.success('Chamada salva com resumo no histórico');
       } catch (error) {
-        console.error('Error ending call:', error);
+        logger.error('Error ending call:', error);
         await endSession(duration);
         toast.success('Chamada salva no histórico');
       } finally {

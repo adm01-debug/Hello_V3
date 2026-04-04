@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 import { 
   Target, 
   Plus, 
@@ -94,7 +95,7 @@ export const DashboardGoalsSettings = ({ onGoalsChange }: DashboardGoalsSettings
       .order('created_at', { ascending: true });
 
     if (error) {
-      console.error('Error fetching goals:', error);
+      logger.error('Error fetching goals:', error);
       toast.error('Erro ao carregar metas');
     } else {
       setGoals(data || []);
@@ -163,7 +164,7 @@ export const DashboardGoalsSettings = ({ onGoalsChange }: DashboardGoalsSettings
     }
 
     if (error) {
-      console.error('Error saving goal:', error);
+      logger.error('Error saving goal:', error);
       toast.error('Erro ao salvar meta');
     } else {
       toast.success(editingGoal ? 'Meta atualizada' : 'Meta criada');
@@ -182,7 +183,7 @@ export const DashboardGoalsSettings = ({ onGoalsChange }: DashboardGoalsSettings
       .eq('id', id);
 
     if (error) {
-      console.error('Error deleting goal:', error);
+      logger.error('Error deleting goal:', error);
       toast.error('Erro ao excluir meta');
     } else {
       toast.success('Meta excluída');

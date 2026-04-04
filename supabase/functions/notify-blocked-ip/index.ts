@@ -24,15 +24,6 @@ Deno.serve(async (req) => {
         { status: 400, headers: { "Content-Type": "application/json", ...buildCorsHeaders(req) } }
       );
     }
-
-    console.log("[BLOCKED-IP] Tentativa de acesso bloqueado:", {
-      ip: data.ip,
-      email: data.email,
-      country: data.country,
-      city: data.city,
-      timestamp: data.timestamp,
-    });
-
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL");
     

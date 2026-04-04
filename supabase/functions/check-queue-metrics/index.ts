@@ -42,9 +42,6 @@ serve(async (req) => {
         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
-
-    console.log('Starting queue metrics check...');
-
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
     // Fetch settings from database
@@ -56,7 +53,6 @@ serve(async (req) => {
 
     // Check if alerts are enabled
     if (settingsData && !settingsData.enabled) {
-      console.log('Queue metrics alerts are disabled');
       return new Response(JSON.stringify({ 
         success: true, 
         message: 'Alertas de métricas de fila estão desabilitados' 
@@ -74,9 +70,6 @@ serve(async (req) => {
       serviceLevelWarning: settingsData?.service_level_warning || DEFAULT_THRESHOLDS.serviceLevelWarning,
       serviceLevelCritical: settingsData?.service_level_critical || DEFAULT_THRESHOLDS.serviceLevelCritical,
     };
-
-    console.log('Using thresholds:', thresholds);
-
     // Get today's date at midnight
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -110,19 +103,12 @@ serve(async (req) => {
     const completed = completedCalls || [];
     const abandoned = abandonedCalls || [];
     const total = completed.length + abandoned.length;
-
-    console.log(`Completed calls in last hour: ${completed.length}`);
-    console.log(`Abandoned calls in last hour: ${abandoned.length}`);
-
     // Calculate metrics
     const totalHoldTime = completed.reduce((sum, call) => sum + (call.hold_time_seconds || 0), 0);
     const avgWaitTime = completed.length > 0 ? Math.round(totalHoldTime / completed.length) : 0;
     const abandonmentRate = total > 0 ? Math.round((abandoned.length / total) * 100) : 0;
     const answeredQuickly = completed.filter(call => (call.hold_time_seconds || 0) <= 30).length;
     const serviceLevelPercent = completed.length > 0 ? Math.round((answeredQuickly / completed.length) * 100) : 100;
-
-    console.log(`Metrics - AvgWait: ${avgWaitTime}s, Abandonment: ${abandonmentRate}%, ServiceLevel: ${serviceLevelPercent}%`);
-
     // Check if we need to create alerts
     const alerts: any[] = [];
     const now = new Date();
@@ -138,7 +124,6 @@ serve(async (req) => {
       .maybeSingle();
 
     if (!recentCall) {
-      console.log('No calls found to attach alerts to');
       return new Response(JSON.stringify({ 
         success: true, 
         message: 'No calls to analyze',
@@ -220,16 +205,12 @@ serve(async (req) => {
 
     // Insert alerts
     if (alerts.length > 0) {
-      console.log(`Creating ${alerts.length} queue metric alerts`);
       const { error: insertError } = await supabaseAdmin.from('call_alerts').insert(alerts);
       if (insertError) {
         console.error('Error inserting alerts:', insertError);
         throw insertError;
       }
     }
-
-    console.log('Queue metrics check completed successfully');
-
     return new Response(JSON.stringify({ 
       success: true, 
       metrics: {

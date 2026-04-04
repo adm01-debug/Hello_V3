@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { logger } from '@/lib/logger';
 
 interface TranscriptSegment {
   speaker: string;
@@ -130,7 +131,7 @@ export function LiveTranscription({ isActive, onTranscript }: LiveTranscriptionP
         onTranscript?.(newEntry);
       }
     } catch (err) {
-      console.error('Processing error:', err);
+      logger.error('Processing error:', err);
       setError(err instanceof Error ? err.message : 'Erro ao processar áudio');
     } finally {
       setIsProcessing(false);
@@ -220,7 +221,7 @@ export function LiveTranscription({ isActive, onTranscript }: LiveTranscriptionP
       }, 8000);
 
     } catch (err) {
-      console.error('Recording error:', err);
+      logger.error('Recording error:', err);
       setError('Erro ao acessar microfone. Verifique as permissões.');
     }
   }, [processAudioChunk]);

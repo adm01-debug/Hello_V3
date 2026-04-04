@@ -3,6 +3,7 @@
  */
 
 import { supabase } from "@/integrations/supabase/client";
+import { logger } from '@/lib/logger';
 
 export type AuditAction =
   | "create"
@@ -36,13 +37,13 @@ export async function logAuditEvent(event: AuditEvent): Promise<string | null> {
     });
 
     if (error) {
-      console.error("Audit log error:", error);
+      logger.error("Audit log error:", error);
       return null;
     }
 
     return data as string;
   } catch (err) {
-    console.error("Failed to log audit event:", err);
+    logger.error("Failed to log audit event:", err);
     return null;
   }
 }

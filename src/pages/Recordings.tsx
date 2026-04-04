@@ -54,6 +54,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { useAuditLog } from '@/hooks/useAuditLog';
+import { logger } from '@/lib/logger';
 
 interface Recording {
   id: string;
@@ -136,7 +137,7 @@ export default function Recordings() {
       if (error) throw error;
       setRecordings(data || []);
     } catch (error) {
-      console.error('Error fetching recordings:', error);
+      logger.error('Error fetching recordings:', error);
       toast.error('Erro ao carregar gravações');
     } finally {
       setLoading(false);
@@ -149,7 +150,7 @@ export default function Recordings() {
       .createSignedUrl(filePath, 3600);
 
     if (error) {
-      console.error('Error getting signed URL:', error);
+      logger.error('Error getting signed URL:', error);
       return null;
     }
     return data.signedUrl;
@@ -265,7 +266,7 @@ export default function Recordings() {
 
       toast.success('Gravação excluída');
     } catch (error) {
-      console.error('Error deleting recording:', error);
+      logger.error('Error deleting recording:', error);
       toast.error('Erro ao excluir gravação');
     }
   };
@@ -332,7 +333,7 @@ export default function Recordings() {
         throw new Error(data.error || 'Erro desconhecido');
       }
     } catch (error) {
-      console.error('Transcription error:', error);
+      logger.error('Transcription error:', error);
       toast.error('Erro ao transcrever gravação');
     } finally {
       setTranscribing(null);
@@ -373,7 +374,7 @@ export default function Recordings() {
         throw new Error(data.error || 'Erro desconhecido');
       }
     } catch (error) {
-      console.error('Sentiment analysis error:', error);
+      logger.error('Sentiment analysis error:', error);
       toast.error('Erro ao analisar sentimento');
     } finally {
       setAnalyzingSentiment(false);

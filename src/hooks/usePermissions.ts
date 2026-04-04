@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { logger } from '@/lib/logger';
 
 interface Permission {
   name: string;
@@ -57,7 +58,7 @@ export function usePermissions() {
 
       setPermissions(uniquePerms);
     } catch (error) {
-      console.error('Error loading permissions:', error);
+      logger.error('Error loading permissions:', error);
     } finally {
       setLoading(false);
     }

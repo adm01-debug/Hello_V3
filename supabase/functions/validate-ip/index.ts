@@ -53,7 +53,6 @@ Deno.serve(async (req) => {
     
     // If no restriction config or disabled, allow access
     if (!restriction || !restriction.enabled) {
-      console.log(`IP validation: No restriction for user ${userId}, allowing access`);
       return new Response(
         JSON.stringify({ allowed: true, reason: 'No IP restriction configured' }),
         { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
@@ -113,8 +112,6 @@ Deno.serve(async (req) => {
     
     // Log blocked access
     if (!isAllowed) {
-      console.log(`IP validation: BLOCKED - User ${userId} from IP ${clientIp}`);
-      
       await supabase
         .from('blocked_access_logs')
         .insert({
@@ -134,9 +131,6 @@ Deno.serve(async (req) => {
         { status: 403, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
-    
-    console.log(`IP validation: ALLOWED - User ${userId} from IP ${clientIp}`);
-    
     return new Response(
       JSON.stringify({ allowed: true, ip: clientIp }),
       { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }

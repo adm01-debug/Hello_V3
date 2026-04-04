@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 export interface ContactAlert {
   id: string;
@@ -44,7 +45,7 @@ export const useContactAlerts = () => {
       setUnreadCount(typedData.filter(a => !a.is_read).length);
       return typedData;
     } catch (err) {
-      console.error('Error fetching contact alerts:', err);
+      logger.error('Error fetching contact alerts:', err);
       return [];
     } finally {
       setIsLoading(false);
@@ -65,7 +66,7 @@ export const useContactAlerts = () => {
       ));
       setUnreadCount(prev => Math.max(0, prev - 1));
     } catch (err) {
-      console.error('Error marking alert as read:', err);
+      logger.error('Error marking alert as read:', err);
     }
   }, []);
 
@@ -82,7 +83,7 @@ export const useContactAlerts = () => {
       setUnreadCount(0);
       toast.success('Todos os alertas marcados como lidos');
     } catch (err) {
-      console.error('Error marking all as read:', err);
+      logger.error('Error marking all as read:', err);
     }
   }, []);
 
@@ -104,7 +105,7 @@ export const useContactAlerts = () => {
       ));
       toast.success('Alerta marcado como resolvido');
     } catch (err) {
-      console.error('Error marking alert as actioned:', err);
+      logger.error('Error marking alert as actioned:', err);
     }
   }, []);
 
@@ -120,7 +121,7 @@ export const useContactAlerts = () => {
       setAlerts(prev => prev.filter(a => a.id !== alertId));
       toast.success('Alerta removido');
     } catch (err) {
-      console.error('Error deleting alert:', err);
+      logger.error('Error deleting alert:', err);
     }
   }, []);
 
@@ -137,7 +138,7 @@ export const useContactAlerts = () => {
       
       return data;
     } catch (err) {
-      console.error('Error checking for new alerts:', err);
+      logger.error('Error checking for new alerts:', err);
       return null;
     }
   }, [fetchAlerts]);

@@ -59,9 +59,6 @@ serve(async (req) => {
         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
-
-    console.log('Generating coaching for agent:', agentId, 'by user:', user.id);
-
     // Fetch agent info
     const { data: agent, error: agentError } = await supabaseAdmin
       .from('agents')

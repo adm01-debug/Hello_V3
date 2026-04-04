@@ -12,6 +12,7 @@ import { ptBR } from "date-fns/locale";
 import { Search, RefreshCw, ShieldX, Globe, MapPin, TrendingUp, Filter, X } from "lucide-react";
 import { toast } from "sonner";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
+import { logger } from '@/lib/logger';
 
 interface BlockedLog {
   id: string;
@@ -74,7 +75,7 @@ const BlockedAccessLogs = () => {
       setLogs(data || []);
       processStats(data || [], startDate);
     } catch (error) {
-      console.error("Error fetching blocked logs:", error);
+      logger.error("Error fetching blocked logs:", error);
       toast.error("Erro ao carregar histórico de bloqueios");
     } finally {
       setLoading(false);

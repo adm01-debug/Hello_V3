@@ -1,58 +1,54 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
-
+import { validate, uuid } from "../_shared/validate.ts";
+import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: buildCorsHeaders(req) });
-  }
+  const cors = buildCorsHeaders(req);
+  if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
   try {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
-        status: 401, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+    const supabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
       global: { headers: { Authorization: authHeader } }
     });
 
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
-      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
-        status: 401, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    const { contactId } = await req.json();
-    if (!contactId || typeof contactId !== 'string') {
-      return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
-        status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+    const rl = await checkRateLimitDB(getClientIp(req), 'analyze-contact-profile', user.id);
+    if (!rl.allowed) {
+      return new Response(JSON.stringify({ error: 'Limite excedido' }), { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
+
+    const body = await req.json();
+    const parsed = validate(body, { contactId: uuid() });
+    if (!parsed.ok) {
+      return new Response(JSON.stringify({ error: 'Dados inválidos', details: parsed.errors }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
+    }
+
+    const contactId = parsed.data.contactId as string;
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
-      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
-        status: 503, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+    const supabaseAdmin = createClient(supabaseUrl, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
 
     const { data: contact, error: contactError } = await supabaseAdmin
       .from('contacts').select('id, name, company, position, notes').eq('id', contactId).single();
 
     if (contactError || !contact) {
-      return new Response(JSON.stringify({ error: 'Contato não encontrado' }), {
-        status: 404, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ error: 'Contato não encontrado' }), { status: 404, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const { data: interactions } = await supabaseAdmin
@@ -61,12 +57,10 @@ serve(async (req) => {
       .eq('contact_id', contactId).order('created_at', { ascending: true }).limit(50);
 
     if (!interactions || interactions.length === 0) {
-      return new Response(JSON.stringify({ error: 'Sem histórico suficiente' }), {
-        status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ error: 'Sem histórico suficiente' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    const interactionsSummary = interactions.map((i, idx) => 
+    const interactionsSummary = interactions.map((i, idx) =>
       `${idx + 1}. ${i.interaction_type} - ${i.sentiment || 'neutro'} - ${i.summary || 'sem resumo'}`
     ).join('\n').slice(0, 4000);
 
@@ -83,9 +77,7 @@ serve(async (req) => {
     });
 
     if (!response.ok) {
-      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
-        status: 503, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const aiData = await response.json();
@@ -98,12 +90,9 @@ serve(async (req) => {
     await supabaseAdmin.from('contacts').update({ personality_insights: profile }).eq('id', contactId);
 
     return new Response(JSON.stringify({ success: true, profile, interactions_analyzed: interactions.length }), {
-      headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+      headers: { ...cors, 'Content-Type': 'application/json' }
     });
-  } catch (error) {
-    console.error('Error:', error);
-    return new Response(JSON.stringify({ error: 'Erro interno' }), {
-      status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-    });
+  } catch {
+    return new Response(JSON.stringify({ error: 'Erro interno' }), { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
   }
 });

@@ -45,6 +45,7 @@ import {
 import { useContacts, Contact, ContactInteraction } from '@/hooks/useContacts';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { logger } from '@/lib/logger';
 
 interface PersonalityProfile {
   personality_traits: string[];
@@ -108,7 +109,7 @@ const ContactInsights = () => {
         if (error) throw error;
         setAllInteractions((data || []) as ContactInteraction[]);
       } catch (err) {
-        console.error('Error fetching interactions:', err);
+        logger.error('Error fetching interactions:', err);
       } finally {
         setLoadingInteractions(false);
       }

@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { AuthState } from './useAuthState';
+import { logger } from '@/lib/logger';
 
 /** Force-clear all Supabase auth tokens from localStorage */
 function clearAuthStorage() {
@@ -76,7 +77,7 @@ export function useAuthSession(
       );
 
       if (error) {
-        console.warn('Auth session error:', error.message);
+        logger.warn('Auth session error:', error.message);
         await clearSession();
         return;
       }
@@ -88,7 +89,7 @@ export function useAuthSession(
         setAuthState(EMPTY_STATE);
       }
     } catch (error) {
-      console.warn('Auth initialization error:', error);
+      logger.warn('Auth initialization error:', error);
       await clearSession();
     }
   }, [getProfile, clearSession, setAuthState]);

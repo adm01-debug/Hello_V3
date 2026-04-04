@@ -46,7 +46,6 @@ Deno.serve(async (req) => {
     const user = users.users.find(u => u.email?.toLowerCase() === sanitizedEmail);
     
     if (!user) {
-      console.log(`Password reset requested for non-existent email`);
       return new Response(
         JSON.stringify({ 
           success: true, 

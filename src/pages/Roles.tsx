@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Loader2, Users, Shield, UserPlus, Trash2, Search, Crown, User, Eye } from 'lucide-react';
+import { logger } from '@/lib/logger';
 
 interface UserRole {
   id: string;
@@ -76,7 +77,7 @@ export default function Roles() {
 
       setUserRoles(enrichedRoles as UserRole[]);
     } catch (error) {
-      console.error('Error loading roles:', error);
+      logger.error('Error loading roles:', error);
       toast.error('Erro ao carregar roles');
     } finally {
       setIsLoading(false);
