@@ -145,7 +145,7 @@ export function useGamification(agentId?: string) {
 
     const agentsMap = new Map(agents.map(a => [a.id, a]));
 
-    const rankingData: RankingEntry[] = (stats || []).map((stat: any, index: number) => {
+    const rankingData: RankingEntry[] = (stats || []).map((stat, index) => {
       const agent = agentsMap.get(stat.agent_id);
       return {
         agent_id: stat.agent_id,
