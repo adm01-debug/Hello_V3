@@ -143,7 +143,7 @@ export function useDeviceDetection() {
             logger.create('DeviceDetection').debug(' Notificação enviada com sucesso');
           }
         } catch (invokeError) {
-          console.error('[DeviceDetection] Erro ao invocar função:', invokeError);
+          logger.create('DeviceDetection').error('Erro ao invocar função', invokeError);
         }
       }
       
