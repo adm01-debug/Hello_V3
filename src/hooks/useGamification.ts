@@ -94,10 +94,10 @@ export function useGamification(agentId?: string) {
       return;
     }
 
-    setAgentBadges(data.map((ab: any) => ({
+    setAgentBadges(data.map((ab) => ({
       ...ab,
-      badge: ab.badge as Badge
-    })));
+      badge: (ab as unknown as { badge: Badge }).badge
+    })) as AgentBadge[]);
   };
 
   const fetchWeeklyStats = async () => {
@@ -145,7 +145,7 @@ export function useGamification(agentId?: string) {
 
     const agentsMap = new Map(agents.map(a => [a.id, a]));
 
-    const rankingData: RankingEntry[] = (stats || []).map((stat: any, index: number) => {
+    const rankingData: RankingEntry[] = (stats || []).map((stat, index) => {
       const agent = agentsMap.get(stat.agent_id);
       return {
         agent_id: stat.agent_id,
@@ -184,7 +184,7 @@ export function useGamification(agentId?: string) {
       return;
     }
 
-    const badge = (data as any).badge as Badge;
+    const badge = (data as Record<string, unknown>).badge as Badge;
     toast.success('🏆 Nova Conquista!', { description: `Você ganhou a badge "${badge.name}"!` });
 
     fetchAgentBadges();
@@ -211,18 +211,18 @@ export function useGamification(agentId?: string) {
       .maybeSingle();
 
     if (existing) {
-      const newValues: any = {};
-      if (updates.total_calls) newValues.total_calls = (existing as any).total_calls + updates.total_calls;
-      if (updates.total_duration_seconds) newValues.total_duration_seconds = (existing as any).total_duration_seconds + updates.total_duration_seconds;
-      if (updates.badges_earned) newValues.badges_earned = (existing as any).badges_earned + updates.badges_earned;
-      if (updates.points_earned) newValues.points_earned = (existing as any).points_earned + updates.points_earned;
+      const newValues: Record<string, number> = {};
+      if (updates.total_calls) newValues.total_calls = existing.total_calls + updates.total_calls;
+      if (updates.total_duration_seconds) newValues.total_duration_seconds = existing.total_duration_seconds + updates.total_duration_seconds;
+      if (updates.badges_earned) newValues.badges_earned = existing.badges_earned + updates.badges_earned;
+      if (updates.points_earned) newValues.points_earned = existing.points_earned + updates.points_earned;
       if (updates.avg_satisfaction) newValues.avg_satisfaction = updates.avg_satisfaction;
       if (updates.avg_performance) newValues.avg_performance = updates.avg_performance;
 
       await supabase
         .from('agent_weekly_stats')
         .update(newValues)
-        .eq('id', (existing as any).id);
+        .eq('id', existing.id);
     } else {
       await supabase
         .from('agent_weekly_stats')

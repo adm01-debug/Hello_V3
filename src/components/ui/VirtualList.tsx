@@ -1,7 +1,12 @@
 import React from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
-export function VirtualList({ items, renderItem }: any) {
+interface VirtualListProps<T> {
+  items: T[];
+  renderItem: (item: T) => React.ReactNode;
+}
+
+export function VirtualList<T>({ items, renderItem }: VirtualListProps<T>) {
   const parentRef = React.useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({
