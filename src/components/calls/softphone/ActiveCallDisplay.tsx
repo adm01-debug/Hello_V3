@@ -1,0 +1,155 @@
+import {
+  PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play,
+  Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
+import type { CallSession, CallChannel } from '@/hooks/useMultiChannelCall';
+import { channelIcons, formatCallDuration } from './constants';
+
+interface ActiveCallDisplayProps {
+  currentCall: CallSession;
+  activeChannel: CallChannel;
+  channelName: string;
+  isSpeaking: boolean;
+  volume: number;
+  onMuteToggle: () => void;
+  onHoldToggle: () => void;
+  onVolumeToggle: () => void;
+  onRecordToggle: () => void;
+  onEndCall: () => void;
+}
+
+export function ActiveCallDisplay({
+  currentCall, activeChannel, channelName, isSpeaking, volume,
+  onMuteToggle, onHoldToggle, onVolumeToggle, onRecordToggle, onEndCall,
+}: ActiveCallDisplayProps) {
+  const ChannelIcon = channelIcons[activeChannel];
+
+  return (
+    <div className={cn(
+      "p-4 border-b transition-colors",
+      currentCall.status === 'active'
+        ? isSpeaking ? "bg-primary/10" : "bg-success/10"
+        : currentCall.status === 'on-hold' ? "bg-warning/10" : "bg-muted/50"
+    )}>
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <div className={cn(
+            "h-10 w-10 rounded-full flex items-center justify-center",
+            currentCall.status === 'active' ? "bg-success" : "bg-muted"
+          )}>
+            {currentCall.direction === 'inbound'
+              ? <PhoneIncoming className="h-5 w-5 text-white" />
+              : <PhoneOutgoing className="h-5 w-5 text-white" />}
+          </div>
+          <div>
+            <p className="font-medium">
+              {currentCall.contactName || currentCall.phoneNumber || 'Chamada Ativa'}
+            </p>
+            <p className="text-xs text-muted-foreground flex items-center gap-1">
+              <ChannelIcon className="h-3 w-3" />
+              {channelName}
+            </p>
+          </div>
+        </div>
+        <div className="text-right">
+          <p className="text-2xl font-mono font-bold">{formatCallDuration(currentCall.duration)}</p>
+          <Badge
+            variant={currentCall.status === 'active' ? 'default' : currentCall.status === 'on-hold' ? 'secondary' : 'outline'}
+            className="text-xs"
+          >
+            {currentCall.status === 'connecting' && 'Conectando'}
+            {currentCall.status === 'ringing' && 'Chamando'}
+            {currentCall.status === 'active' && (isSpeaking ? 'Agente falando' : 'Ativo')}
+            {currentCall.status === 'on-hold' && 'Em espera'}
+          </Badge>
+        </div>
+      </div>
+
+      {currentCall.isRecording && (
+        <div className="flex items-center gap-2 text-xs text-destructive mb-2">
+          <Circle className="h-2 w-2 fill-current animate-pulse" />
+          Gravando
+        </div>
+      )}
+
+      {currentCall.transcripts.length > 0 && (
+        <ScrollArea className="h-24 rounded border bg-background/50 p-2">
+          {currentCall.transcripts.slice(-5).map((t, i) => (
+            <p key={i} className={cn("text-xs mb-1", t.role === 'user' ? "text-primary" : "text-muted-foreground")}>
+              <span className="font-medium">{t.role === 'user' ? 'Você: ' : 'Agente: '}</span>
+              {t.text}
+            </p>
+          ))}
+        </ScrollArea>
+      )}
+
+      <div className="flex justify-center gap-2 mt-3">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon"
+              className={cn("h-11 w-11 rounded-full", currentCall.isMuted && "bg-destructive/10 text-destructive border-destructive/30")}
+              onClick={onMuteToggle}
+            >
+              {currentCall.isMuted ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Mudo</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon"
+              className={cn("h-11 w-11 rounded-full", currentCall.isOnHold && "bg-warning/10 text-warning border-warning/30")}
+              onClick={onHoldToggle}
+            >
+              {currentCall.isOnHold ? <Play className="h-5 w-5" /> : <Pause className="h-5 w-5" />}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Espera</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon"
+              className={cn("h-11 w-11 rounded-full", volume === 0 && "bg-muted")}
+              onClick={onVolumeToggle}
+            >
+              {volume > 0 ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Volume</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon"
+              className={cn("h-11 w-11 rounded-full", currentCall.isRecording && "bg-destructive/10 text-destructive border-destructive/30")}
+              onClick={onRecordToggle}
+            >
+              <Circle className={cn("h-5 w-5", currentCall.isRecording && "fill-current")} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Gravar</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon" className="h-11 w-11 rounded-full">
+              <PhoneForwarded className="h-5 w-5" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Transferir</TooltipContent>
+        </Tooltip>
+
+        <Button variant="destructive" size="icon" className="h-11 w-11 rounded-full" onClick={onEndCall}>
+          <PhoneOff className="h-5 w-5" />
+        </Button>
+      </div>
+    </div>
+  );
+}
