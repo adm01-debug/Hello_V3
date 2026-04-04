@@ -178,10 +178,38 @@ function NavItem({ item, collapsed, isFavorite, onToggleFavorite }: { item: NavI
   );
 }
 
+const FAVORITES_KEY = 'voip-sidebar-favorites';
+
+function useFavorites() {
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+    } catch { return []; }
+  });
+
+  const toggle = useCallback((url: string) => {
+    setFavorites(prev => {
+      const next = prev.includes(url) ? prev.filter(u => u !== url) : [...prev, url];
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
+  return { favorites, toggle };
+}
+
+const allItems = [...mainNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems];
+
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === 'collapsed';
   const { profile } = useAuthContext();
+  const { favorites, toggle } = useFavorites();
+
+  const favoriteItems = useMemo(
+    () => allItems.filter(item => favorites.includes(item.url)),
+    [favorites]
+  );
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border/50">
@@ -204,10 +232,29 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="px-2 py-3 scrollbar-thin">
-        <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen />
-        <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} />
-        <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} />
-        <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} />
+        {/* Favorites section */}
+        {favoriteItems.length > 0 && (
+          <SidebarGroup>
+            {!collapsed && (
+              <SidebarGroupLabel className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-warning/70 flex items-center gap-1.5">
+                <Star className="h-3 w-3 fill-current" />
+                Favoritos
+              </SidebarGroupLabel>
+            )}
+            <SidebarGroupContent>
+              <SidebarMenu className="space-y-0.5">
+                {favoriteItems.map((item) => (
+                  <NavItem key={`fav-${item.url}`} item={item} collapsed={collapsed} isFavorite onToggleFavorite={toggle} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border/50 p-4">
