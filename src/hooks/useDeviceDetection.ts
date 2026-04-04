@@ -149,7 +149,7 @@ export function useDeviceDetection() {
       
       return { isNewDevice, deviceInfo, locationInfo, fingerprint };
     } catch (error) {
-      console.error('[DeviceDetection] Erro geral:', error);
+      logger.create('DeviceDetection').error('Erro geral', error);
       return { isNewDevice: false };
     }
   }, []);
