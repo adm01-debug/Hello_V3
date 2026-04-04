@@ -55,9 +55,6 @@ serve(async (req) => {
     }
 
     const { callSessionId, sentiment, satisfaction, urgency, callerName } = body;
-    
-    console.log('Checking alerts for call:', callSessionId, 'by user:', user.id);
-
     const alerts: Array<{
       call_session_id: string;
       alert_type: string;
@@ -104,7 +101,6 @@ serve(async (req) => {
         console.error('Error inserting alerts:', error);
         throw error;
       }
-      console.log(`Created ${alerts.length} alerts for call ${callSessionId}`);
     }
 
     return new Response(

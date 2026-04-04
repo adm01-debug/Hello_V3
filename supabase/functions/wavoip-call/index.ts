@@ -58,8 +58,6 @@ serve(async (req) => {
     }
 
     const { action, whatsappId, callId } = body;
-    console.log(`Wavoip action: ${action} by user: ${user.id}`);
-
     let response;
 
     switch (action) {

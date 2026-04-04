@@ -55,9 +55,6 @@ serve(async (req) => {
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-    console.log('Starting goals check...');
-
     // Fetch active goals
     const { data: goals, error: goalsError } = await supabase
       .from('dashboard_goals')
@@ -70,15 +67,11 @@ serve(async (req) => {
     }
 
     if (!goals || goals.length === 0) {
-      console.log('No active goals found');
       return new Response(
         JSON.stringify({ message: 'No active goals to check', alertsCreated: 0 }),
         { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
-
-    console.log(`Found ${goals.length} active goals`);
-
     // Calculate current metrics
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
 
@@ -133,9 +126,6 @@ serve(async (req) => {
       avgWaitTime: Math.round(avgWaitTime),
       avgHandleTime: Math.round(avgHandleTime),
     };
-
-    console.log('Current metrics:', metrics);
-
     // Check each goal and create alerts
     let alertsCreated = 0;
     const now = new Date().toISOString();
@@ -175,9 +165,6 @@ serve(async (req) => {
           status = 'warning';
         }
       }
-
-      console.log(`Goal "${goal.name}": current=${currentValue}, status=${status}`);
-
       // Create alert and record violation if needed
       if (status !== 'ok') {
         // Calculate deviation percentage
@@ -204,7 +191,6 @@ serve(async (req) => {
         if (violationError) {
           console.error('Error recording violation:', violationError);
         } else {
-          console.log(`Violation recorded for goal "${goal.name}"`);
         }
 
         const shouldNotify = 
@@ -277,18 +263,13 @@ serve(async (req) => {
             if (insertError) {
               console.error('Error creating alert:', insertError);
             } else {
-              console.log(`Alert created for goal "${goal.name}"`);
               alertsCreated++;
             }
           } else {
-            console.log(`Skipping alert for "${goal.name}" - recent alert already exists`);
           }
         }
       }
     }
-
-    console.log(`Goals check completed. Alerts created: ${alertsCreated}`);
-
     return new Response(
       JSON.stringify({ 
         message: 'Goals check completed',

@@ -41,9 +41,6 @@ serve(async (req) => {
         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
-
-    console.log(`Transcribing recording for user: ${user.id}`);
-
     const ELEVENLABS_API_KEY = Deno.env.get('ELEVENLABS_API_KEY');
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 

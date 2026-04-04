@@ -50,9 +50,6 @@ serve(async (req) => {
         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }
-
-    console.log('Transcribing audio for user:', user.id, 'size:', audioFile.size);
-
     const audioBuffer = await audioFile.arrayBuffer();
     const audioBlob = new Blob([audioBuffer], { type: 'audio/webm' });
 
