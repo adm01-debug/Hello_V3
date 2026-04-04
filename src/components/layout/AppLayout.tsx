@@ -3,7 +3,6 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from './AppSidebar';
 import { ActiveCallBar } from '@/components/calls/ActiveCallBar';
 import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { AlertsDropdown } from '@/components/alerts/AlertsDropdown';
 import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdown';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
@@ -14,6 +13,8 @@ import { ThemeToggle } from './ThemeToggle';
 import { BackButton } from '@/components/navigation/BackButton';
 import { PageTransition } from '@/components/navigation/PageTransition';
 import { NavigationProgress } from '@/components/navigation/NavigationProgress';
+import { CommandPalette } from './CommandPalette';
+import { MobileBottomNav } from './MobileBottomNav';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -22,6 +23,9 @@ interface AppLayoutProps {
 export function AppLayout({ children }: AppLayoutProps) {
   return (
     <SidebarProvider defaultOpen={true}>
+      {/* Command Palette */}
+      <CommandPalette />
+      
       {/* Navigation progress bar */}
       <NavigationProgress />
       
@@ -50,15 +54,18 @@ export function AppLayout({ children }: AppLayoutProps) {
                 <BreadcrumbNav />
               </div>
               
-              {/* Search — neon focus */}
-              <div className="relative hidden md:block lg:ml-4">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input 
-                  placeholder="Buscar contatos, chamadas..." 
-                  className="w-64 lg:w-80 pl-9 bg-muted/50 border-border/50 focus:border-primary/40 focus:shadow-[0_0_15px_hsl(var(--primary)/0.15)] transition-shadow"
-                  aria-label="Buscar no sistema"
-                />
-              </div>
+              {/* Search trigger — opens Command Palette */}
+              <button
+                onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+                className="hidden md:flex items-center gap-2 lg:ml-4 w-64 lg:w-80 pl-3 pr-3 h-9 rounded-md bg-muted/50 border border-border/50 text-sm text-muted-foreground hover:border-primary/40 hover:shadow-[0_0_15px_hsl(var(--primary)/0.15)] transition-all cursor-pointer"
+                aria-label="Buscar no sistema (Ctrl+K)"
+              >
+                <Search className="h-4 w-4" />
+                <span className="flex-1 text-left">Buscar...</span>
+                <kbd className="pointer-events-none hidden lg:inline-flex h-5 select-none items-center gap-1 rounded border border-border/60 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground/70">
+                  <span className="text-xs">⌘</span>K
+                </kbd>
+              </button>
             </div>
 
             <div className="flex items-center gap-2 md:gap-3">
@@ -73,7 +80,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           <ActiveCallBar />
 
           {/* Main Content with page transition */}
-          <main id="main-content" className="flex-1 overflow-auto scrollbar-thin" tabIndex={-1}>
+          <main id="main-content" className="flex-1 overflow-auto scrollbar-thin pb-16 md:pb-0" tabIndex={-1}>
             <PageTransition>
               <div className="container max-w-7xl py-6">
                 {children}
@@ -82,6 +89,9 @@ export function AppLayout({ children }: AppLayoutProps) {
           </main>
         </div>
       </div>
+
+      {/* Mobile bottom navigation */}
+      <MobileBottomNav />
     </SidebarProvider>
   );
 }

@@ -1,5 +1,5 @@
 import { 
-  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync,
+  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -8,7 +8,8 @@ import {
 import { cn } from '@/lib/utils';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
@@ -71,14 +72,18 @@ const settingsNavItems = [
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];
 
+type NavItemType = { title: string; url: string; icon: React.ElementType };
+
 interface NavGroupProps {
   label: string;
-  items: { title: string; url: string; icon: React.ElementType }[];
+  items: NavItemType[];
   collapsed: boolean;
   defaultOpen?: boolean;
+  favorites: string[];
+  onToggleFavorite: (url: string) => void;
 }
 
-function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProps) {
+function NavGroup({ label, items, collapsed, defaultOpen = false, favorites, onToggleFavorite }: NavGroupProps) {
   const location = useLocation();
   const hasActive = items.some(item => location.pathname === item.url);
   const [open, setOpen] = useState(defaultOpen || hasActive);
@@ -89,7 +94,7 @@ function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProp
         <SidebarGroupContent>
           <SidebarMenu className="space-y-0.5">
             {items.map((item) => (
-              <NavItem key={item.url} item={item} collapsed={collapsed} />
+              <NavItem key={item.url} item={item} collapsed={collapsed} isFavorite={favorites.includes(item.url)} onToggleFavorite={onToggleFavorite} />
             ))}
           </SidebarMenu>
         </SidebarGroupContent>
@@ -111,7 +116,7 @@ function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProp
           <SidebarGroupContent>
             <SidebarMenu className="space-y-0.5 mt-1">
               {items.map((item) => (
-                <NavItem key={item.url} item={item} collapsed={collapsed} />
+                <NavItem key={item.url} item={item} collapsed={collapsed} isFavorite={favorites.includes(item.url)} onToggleFavorite={onToggleFavorite} />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -121,7 +126,7 @@ function NavGroup({ label, items, collapsed, defaultOpen = false }: NavGroupProp
   );
 }
 
-function NavItem({ item, collapsed }: { item: { title: string; url: string; icon: React.ElementType }; collapsed: boolean }) {
+function NavItem({ item, collapsed, isFavorite, onToggleFavorite }: { item: NavItemType; collapsed: boolean; isFavorite: boolean; onToggleFavorite: (url: string) => void }) {
   const location = useLocation();
   const Icon = item.icon;
   const active = location.pathname === item.url;
@@ -132,7 +137,7 @@ function NavItem({ item, collapsed }: { item: { title: string; url: string; icon
         <NavLink
           to={item.url}
           className={cn(
-            'flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-all duration-200',
+            'flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-all duration-200 group/nav',
             'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
             active && [
               'bg-sidebar-primary/15 text-sidebar-primary',
@@ -147,9 +152,25 @@ function NavItem({ item, collapsed }: { item: { title: string; url: string; icon
             active && "drop-shadow-[0_0_6px_hsl(var(--sidebar-primary)/0.6)]"
           )} />
           {!collapsed && (
-            <span className={cn("font-medium", active && "font-semibold")}>
-              {item.title}
-            </span>
+            <>
+              <span className={cn("font-medium flex-1", active && "font-semibold")}>
+                {item.title}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onToggleFavorite(item.url);
+                }}
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-opacity",
+                  isFavorite ? "opacity-100 text-warning" : "opacity-0 group-hover/nav:opacity-50 hover:!opacity-100 text-muted-foreground"
+                )}
+                aria-label={isFavorite ? `Remover ${item.title} dos favoritos` : `Adicionar ${item.title} aos favoritos`}
+              >
+                {isFavorite ? <Star className="h-3.5 w-3.5 fill-current" /> : <Star className="h-3.5 w-3.5" />}
+              </button>
+            </>
           )}
         </NavLink>
       </SidebarMenuButton>
@@ -157,10 +178,38 @@ function NavItem({ item, collapsed }: { item: { title: string; url: string; icon
   );
 }
 
+const FAVORITES_KEY = 'voip-sidebar-favorites';
+
+function useFavorites() {
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+    } catch { return []; }
+  });
+
+  const toggle = useCallback((url: string) => {
+    setFavorites(prev => {
+      const next = prev.includes(url) ? prev.filter(u => u !== url) : [...prev, url];
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
+  return { favorites, toggle };
+}
+
+const allItems = [...mainNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems];
+
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === 'collapsed';
   const { profile } = useAuthContext();
+  const { favorites, toggle } = useFavorites();
+
+  const favoriteItems = useMemo(
+    () => allItems.filter(item => favorites.includes(item.url)),
+    [favorites]
+  );
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border/50">
@@ -183,10 +232,29 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="px-2 py-3 scrollbar-thin">
-        <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen />
-        <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} />
-        <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} />
-        <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} />
+        {/* Favorites section */}
+        {favoriteItems.length > 0 && (
+          <SidebarGroup>
+            {!collapsed && (
+              <SidebarGroupLabel className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-warning/70 flex items-center gap-1.5">
+                <Star className="h-3 w-3 fill-current" />
+                Favoritos
+              </SidebarGroupLabel>
+            )}
+            <SidebarGroupContent>
+              <SidebarMenu className="space-y-0.5">
+                {favoriteItems.map((item) => (
+                  <NavItem key={`fav-${item.url}`} item={item} collapsed={collapsed} isFavorite onToggleFavorite={toggle} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border/50 p-4">
