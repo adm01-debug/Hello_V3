@@ -80,7 +80,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           <ActiveCallBar />
 
           {/* Main Content with page transition */}
-          <main id="main-content" className="flex-1 overflow-auto scrollbar-thin" tabIndex={-1}>
+          <main id="main-content" className="flex-1 overflow-auto scrollbar-thin pb-16 md:pb-0" tabIndex={-1}>
             <PageTransition>
               <div className="container max-w-7xl py-6">
                 {children}
@@ -89,6 +89,9 @@ export function AppLayout({ children }: AppLayoutProps) {
           </main>
         </div>
       </div>
+
+      {/* Mobile bottom navigation */}
+      <MobileBottomNav />
     </SidebarProvider>
   );
 }
