@@ -3,7 +3,7 @@ import * as ResizablePrimitive from "react-resizable-panels";
 
 import { cn } from "@/lib/utils";
 
-const ResizablePanelGroup = ({ className, ...props }: React.ComponentProps<typeof ResizablePrimitive.PanelGroup> & { className?: string }) => (
+const ResizablePanelGroup = ({ className, ...props }: { className?: string; direction?: 'horizontal' | 'vertical'; children: React.ReactNode; [key: string]: unknown }) => (
   <ResizablePrimitive.Panel
     className={cn("flex h-full w-full data-[panel-group-direction=vertical]:flex-col", className)}
     {...props}

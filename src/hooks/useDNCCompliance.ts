@@ -230,7 +230,7 @@ export function useDNCCompliance() {
   }, [queryClient]);
 
   // Get setting value helper
-  const getSettingValue = useCallback((key: string, defaultValue: Record<string, unknown> | string | number | boolean | null = null) => {
+  const getSettingValue = useCallback((key: string, defaultValue: unknown = null) => {
     const setting = settings.find(s => s.setting_key === key);
     if (!setting) return defaultValue;
     try {

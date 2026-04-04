@@ -246,7 +246,7 @@ const Reports = () => {
                       outerRadius={140}
                       paddingAngle={5}
                       dataKey="value"
-                      label={((props: { name?: string; percent?: number }) => `${props.name ?? ''} ${((props.percent ?? 0) * 100).toFixed(0)}%`) as React.SVGProps<SVGTextElement>['children']}
+                      label={((props: { name?: string; percent?: number }) => `${props.name ?? ''} ${((props.percent ?? 0) * 100).toFixed(0)}%`) as unknown as boolean}
                     >
                       {callTypeData.map((_entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
