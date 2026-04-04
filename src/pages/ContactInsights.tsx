@@ -392,7 +392,7 @@ const ContactInsights = () => {
                           outerRadius={80}
                           paddingAngle={5}
                           dataKey="value"
-                          label={((props: any) => `${props.name ?? ''} ${((props.percent ?? 0) * 100).toFixed(0)}%`) as any}
+                          label={((props: { name?: string; percent?: number }) => `${props.name ?? ''} ${((props.percent ?? 0) * 100).toFixed(0)}%`) as React.SVGProps<SVGTextElement>['children']}
                         >
                           {metrics.sentimentDistribution.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
