@@ -76,7 +76,7 @@ export const useContacts = () => {
       setContacts((data || []) as Contact[]);
       return data as Contact[];
     } catch (err) {
-      log.error('Error fetching contacts',, err);
+      log.error('Error fetching contacts', err);
       setError('Erro ao carregar contatos');
       return [];
     } finally {
@@ -96,7 +96,7 @@ export const useContacts = () => {
       if (error) throw error;
       return data as Contact | null;
     } catch (err) {
-      log.error('Error finding contact by phone',, err);
+      log.error('Error finding contact by phone', err);
       return null;
     }
   }, []);
@@ -125,7 +125,7 @@ export const useContacts = () => {
       await fetchContacts();
       return data as Contact;
     } catch (err) {
-      log.error('Error creating contact',, err);
+      log.error('Error creating contact', err);
       toast.error('Erro ao criar contato');
       return null;
     }
@@ -146,7 +146,7 @@ export const useContacts = () => {
       await fetchContacts();
       return data as Contact;
     } catch (err) {
-      log.error('Error updating contact',, err);
+      log.error('Error updating contact', err);
       toast.error('Erro ao atualizar contato');
       return null;
     }
@@ -165,7 +165,7 @@ export const useContacts = () => {
       await fetchContacts();
       return true;
     } catch (err) {
-      log.error('Error deleting contact',, err);
+      log.error('Error deleting contact', err);
       toast.error('Erro ao remover contato');
       return false;
     }
@@ -183,7 +183,7 @@ export const useContacts = () => {
       if (error) throw error;
       return (data || []) as ContactInteraction[];
     } catch (err) {
-      log.error('Error fetching interactions',, err);
+      log.error('Error fetching interactions', err);
       return [];
     }
   }, []);
@@ -228,7 +228,7 @@ export const useContacts = () => {
       if (error) throw error;
       return data as ContactInteraction;
     } catch (err) {
-      log.error('Error adding interaction',, err);
+      log.error('Error adding interaction', err);
       return null;
     }
   }, []);
