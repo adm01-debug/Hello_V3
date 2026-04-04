@@ -25,6 +25,34 @@ export const StatsCard = memo(function StatsCard({
 }: StatsCardProps) {
   const isPositive = change !== undefined && change >= 0;
 
+  // Parse numeric value for animation
+  const numericValue = useMemo(() => {
+    if (typeof value === 'number') return value;
+    const parsed = parseFloat(String(value).replace(/[^0-9.-]/g, ''));
+    return isNaN(parsed) ? null : parsed;
+  }, [value]);
+
+  const decimals = useMemo(() => {
+    if (numericValue === null) return 0;
+    const str = String(numericValue);
+    const dot = str.indexOf('.');
+    return dot === -1 ? 0 : str.length - dot - 1;
+  }, [numericValue]);
+
+  const animatedValue = useAnimatedCounter(numericValue ?? 0, { decimals });
+
+  // Build display value preserving prefix/suffix
+  const displayValue = useMemo(() => {
+    if (numericValue === null || typeof value !== 'string') return value;
+    const str = String(value);
+    const numStr = String(numericValue);
+    const idx = str.indexOf(numStr);
+    if (idx === -1) return value;
+    const prefix = str.slice(0, idx);
+    const suffix = str.slice(idx + numStr.length);
+    return `${prefix}${animatedValue}${suffix}`;
+  }, [value, numericValue, animatedValue]);
+
   const glowMap = {
     primary: 'hover:shadow-[0_0_30px_-5px_hsl(var(--primary)/0.35)]',
     success: 'hover:shadow-[0_0_30px_-5px_hsl(var(--success)/0.35)]',
