@@ -201,6 +201,14 @@ export default function TopicDetection() {
         </Card>
       </div>
 
+      <Tabs defaultValue="trends" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="trends" className="gap-2"><BarChart3 className="h-4 w-4" />Tendências</TabsTrigger>
+          <TabsTrigger value="detections" className="gap-2"><Tag className="h-4 w-4" />Detecções por Chamada</TabsTrigger>
+          <TabsTrigger value="alerts-history" className="gap-2"><Bell className="h-4 w-4" />Alertas do Gerente</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="trends">
       {/* Topic trends */}
       <Card>
         <CardHeader>
@@ -253,7 +261,67 @@ export default function TopicDetection() {
           )}
         </CardContent>
       </Card>
+        </TabsContent>
 
+        <TabsContent value="detections">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2"><Tag className="h-5 w-5" />Detecções Individuais</CardTitle>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input placeholder="Filtrar por tema..." className="pl-9 w-48" value={detectionSearch} onChange={e => setDetectionSearch(e.target.value)} />
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {detections.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">Nenhuma detecção registrada</div>
+              ) : (
+                <ScrollArea className="h-[500px]">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Tema</TableHead>
+                        <TableHead>Confiança</TableHead>
+                        <TableHead>Ocorrências</TableHead>
+                        <TableHead>Primeira Detecção</TableHead>
+                        <TableHead>Última Detecção</TableHead>
+                        <TableHead>Chamada</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {detections
+                        .filter(d => !detectionSearch || d.topic.toLowerCase().includes(detectionSearch.toLowerCase()))
+                        .map(d => (
+                        <TableRow key={d.id}>
+                          <TableCell className="font-medium">{d.topic}</TableCell>
+                          <TableCell>
+                            <Badge variant={d.confidence >= 0.8 ? 'default' : d.confidence >= 0.5 ? 'secondary' : 'outline'}>
+                              {(d.confidence * 100).toFixed(0)}%
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="font-medium">{d.occurrence_count}x</TableCell>
+                          <TableCell className="text-sm text-muted-foreground">
+                            {formatDistanceToNow(new Date(d.first_detected_at), { addSuffix: true, locale: ptBR })}
+                          </TableCell>
+                          <TableCell className="text-sm text-muted-foreground">
+                            {formatDistanceToNow(new Date(d.last_detected_at), { addSuffix: true, locale: ptBR })}
+                          </TableCell>
+                          <TableCell className="font-mono text-xs text-muted-foreground">
+                            {d.call_session_id ? d.call_session_id.slice(0, 8) + '...' : '—'}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </ScrollArea>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="alerts-history">
       {/* All manager alerts history */}
       <Card>
         <CardHeader>
