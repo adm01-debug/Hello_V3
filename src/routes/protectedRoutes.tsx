@@ -52,6 +52,7 @@ const QRProvisioning = lazy(() => import("@/pages/QRProvisioning"));
 const LDAPSync = lazy(() => import("@/pages/LDAPSync"));
 const ObservabilityDashboard = lazy(() => import("@/pages/ObservabilityDashboard"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const NotificationCenter = lazy(() => import("@/pages/NotificationCenter"));
 
 export interface RouteConfig {
   path: string;
