@@ -52,6 +52,7 @@ const QRProvisioning = lazy(() => import("@/pages/QRProvisioning"));
 const LDAPSync = lazy(() => import("@/pages/LDAPSync"));
 const ObservabilityDashboard = lazy(() => import("@/pages/ObservabilityDashboard"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const NotificationCenter = lazy(() => import("@/pages/NotificationCenter"));
 
 export interface RouteConfig {
   path: string;
@@ -80,6 +81,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/callbacks", element: Callbacks },
   { path: "/coaching", element: Coaching },
   { path: "/settings", element: Settings },
+  { path: "/notifications", element: NotificationCenter },
   { path: "/two-factor-auth", element: TwoFactorAuth },
   { path: "/passkeys", element: Passkeys },
   { path: "/sessions", element: SessionManagement },

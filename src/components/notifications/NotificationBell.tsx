@@ -1,5 +1,6 @@
-import { Bell, BellOff, BellRing } from 'lucide-react';
+import { Bell, BellOff, BellRing, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 import {
   Popover,
   PopoverContent,
@@ -14,6 +15,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 export function NotificationBell() {
+  const navigate = useNavigate();
   const {
     isEnabled,
     toggleNotifications,
@@ -148,6 +150,17 @@ export function NotificationBell() {
                 </div>
               )}
             </ScrollArea>
+          </div>
+          <div className="border-t pt-2 mt-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full text-xs gap-1"
+              onClick={() => navigate('/notifications')}
+            >
+              <ExternalLink className="h-3 w-3" />
+              Ver todas as notificações
+            </Button>
           </div>
         </div>
       </PopoverContent>

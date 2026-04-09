@@ -47,9 +47,9 @@ const DEFAULT_PREFERENCES: NotificationPreferences = {
   categories: { system: true, call: true, security: true, coaching: true, gamification: true },
 };
 
-// Helper to get typed table reference for new tables not yet in generated types
-const notificationsTable = () => (supabase.from as any)('notifications');
-const preferencesTable = () => (supabase.from as any)('notification_preferences');
+// Use typed table references from generated types
+const notificationsTable = () => supabase.from('notifications');
+const preferencesTable = () => supabase.from('notification_preferences');
 
 export function useNotifications() {
   const { user } = useAuth();

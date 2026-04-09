@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useQuery } from "@tanstack/react-query";
 import { 
   Shield, 
   ShieldAlert, 
@@ -20,7 +22,8 @@ import {
   XCircle,
   RefreshCw,
   Bell,
-  Clock
+  Clock,
+  LogIn
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -373,6 +376,10 @@ const SecurityMonitoring = () => {
               </Badge>
             )}
           </TabsTrigger>
+          <TabsTrigger value="login-attempts" className="gap-2">
+            <LogIn className="h-4 w-4" />
+            Tentativas de Login
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="activity">
@@ -531,6 +538,9 @@ const SecurityMonitoring = () => {
             </CardContent>
           </Card>
         </TabsContent>
+        <TabsContent value="login-attempts">
+          <LoginAttemptsPanel />
+        </TabsContent>
       </Tabs>
 
       {/* Detection Rules Info */}
@@ -567,5 +577,77 @@ const SecurityMonitoring = () => {
     </div>
   );
 };
+
+function LoginAttemptsPanel() {
+  const { data: attempts = [], isLoading } = useQuery({
+    queryKey: ['login-attempts'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('login_attempts')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
+  if (isLoading) return <div className="text-center py-8 text-muted-foreground">Carregando...</div>;
+
+  const failedCount = attempts.filter(a => !a.success).length;
+  const successCount = attempts.filter(a => a.success).length;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <LogIn className="h-5 w-5" />
+          Tentativas de Login
+        </CardTitle>
+        <CardDescription>
+          Últimas 100 tentativas — {successCount} sucesso, {failedCount} falhas
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {attempts.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">Nenhuma tentativa registrada</div>
+        ) : (
+          <ScrollArea className="h-[500px]">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>E-mail</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>IP</TableHead>
+                  <TableHead>User Agent</TableHead>
+                  <TableHead>Data</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {attempts.map(a => (
+                  <TableRow key={a.id} className={!a.success ? 'bg-destructive/5' : ''}>
+                    <TableCell className="font-mono text-sm">{a.email}</TableCell>
+                    <TableCell>
+                      {a.success ? (
+                        <Badge className="bg-emerald-500/15 text-emerald-600 gap-1"><CheckCircle2 className="h-3 w-3" />Sucesso</Badge>
+                      ) : (
+                        <Badge variant="destructive" className="gap-1"><XCircle className="h-3 w-3" />Falha</Badge>
+                      )}
+                    </TableCell>
+                    <TableCell className="font-mono text-xs text-muted-foreground">{a.ip_address || '—'}</TableCell>
+                    <TableCell className="text-xs text-muted-foreground max-w-[200px] truncate">{a.user_agent || '—'}</TableCell>
+                    <TableCell className="text-sm text-muted-foreground">
+                      {format(new Date(a.created_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </ScrollArea>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
 
 export default SecurityMonitoring;
