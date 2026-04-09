@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface LDAPConfig {
   serverUrl: string;
@@ -137,6 +138,8 @@ export default function LDAPSync() {
   };
 
   const statusIcon = (status: SyncLog['status']) => {
+  usePageTitle('LDAP Sync');
+
     switch (status) {
       case 'success': return <CheckCircle2 className="h-4 w-4 text-success" />;
       case 'partial': return <AlertTriangle className="h-4 w-4 text-warning" />;

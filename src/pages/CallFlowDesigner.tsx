@@ -15,6 +15,7 @@ import {
   MessageSquare, GitBranch, Trash2, Save, Play, Pause,
   PhoneForwarded, PhoneOff, Music, MoveRight, GripVertical
 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface FlowNode {
   id: string;
@@ -90,6 +91,8 @@ function FlowCanvas({ flow, onUpdate }: { flow: CallFlow; onUpdate: (data: { nod
   const edges = flowData?.edges || [];
 
   const addNode = (type: string) => {
+  usePageTitle('Call Flow Designer');
+
     const nodeType = NODE_TYPES.find(t => t.type === type);
     const newNode: FlowNode = {
       id: `node-${Date.now()}`,

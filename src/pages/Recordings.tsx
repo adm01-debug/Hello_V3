@@ -55,6 +55,7 @@ import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { useAuditLog } from '@/hooks/useAuditLog';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface Recording {
   id: string;
@@ -206,6 +207,8 @@ export default function Recordings() {
   };
 
   const handleSeek = (value: number[]) => {
+  usePageTitle('Gravações');
+
     if (audioRef.current) {
       audioRef.current.currentTime = value[0];
       setCurrentTime(value[0]);

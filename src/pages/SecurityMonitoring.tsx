@@ -28,6 +28,7 @@ import {
 import { format, formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { toast } from "sonner";
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface AuditLog {
   id: string;
@@ -66,6 +67,8 @@ interface ActivityStats {
 }
 
 const SecurityMonitoring = () => {
+  usePageTitle('Monitoramento de Segurança');
+
   const { profile, loading } = useAuth();
   const navigate = useNavigate();
   const [recentLogs, setRecentLogs] = useState<AuditLog[]>([]);

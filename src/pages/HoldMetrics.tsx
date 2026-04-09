@@ -21,6 +21,7 @@ import {
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import { format, subDays, startOfDay, endOfDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface AgentHoldMetrics {
   agentName: string;
@@ -39,6 +40,8 @@ interface DailyMetrics {
 }
 
 const formatDuration = (seconds: number): string => {
+  usePageTitle('Métricas de Espera');
+
   if (seconds < 60) return `${seconds}s`;
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;

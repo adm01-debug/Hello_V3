@@ -13,6 +13,7 @@ import { Search, RefreshCw, ShieldX, Globe, MapPin, TrendingUp, Filter, X } from
 import { toast } from "sonner";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface BlockedLog {
   id: string;
@@ -44,6 +45,8 @@ interface CountryStats {
 const COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3))', 'hsl(var(--chart-4))', 'hsl(var(--chart-5))'];
 
 const BlockedAccessLogs = () => {
+  usePageTitle('Acessos Bloqueados');
+
   const [logs, setLogs] = useState<BlockedLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");

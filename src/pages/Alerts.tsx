@@ -19,6 +19,7 @@ import { formatDistanceToNow, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface CallAlert {
   id: string;
@@ -138,6 +139,8 @@ export default function Alerts() {
   };
 
   const checkForNewAlerts = async () => {
+  usePageTitle('Alertas');
+
     setIsCheckingAlerts(true);
     try {
       const { data, error } = await supabase.functions.invoke('check-contact-alerts');

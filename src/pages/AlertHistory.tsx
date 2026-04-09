@@ -39,6 +39,7 @@ import {
   LineChart,
   Line
 } from 'recharts';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface Alert {
   id: string;
@@ -66,6 +67,8 @@ const SEVERITY_COLORS = {
 };
 
 const AlertHistory = () => {
+  usePageTitle('Histórico de Alertas');
+
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');

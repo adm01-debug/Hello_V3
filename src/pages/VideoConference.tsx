@@ -9,8 +9,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Video, Plus, Users, Clock, Calendar, Play, Square, Link2 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function VideoConference() {
+  usePageTitle('Videoconferência');
+
   const queryClient = useQueryClient();
   const [title, setTitle] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);

@@ -30,6 +30,7 @@ import {
   LogOut,
   AlertTriangle,
 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 function getDeviceIcon(device?: string) {
   if (!device) return Monitor;
@@ -70,6 +71,8 @@ export default function SessionManagement() {
   } | null>(null);
 
   const handleRevokeSession = (sessionId: string) => {
+  usePageTitle('Sessões Ativas');
+
     if (sessionId === currentSessionId) {
       revokeSession(sessionId);
     } else {

@@ -40,6 +40,7 @@ import {
   Cell,
   Legend
 } from 'recharts';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface CallSession {
   id: string;
@@ -95,6 +96,8 @@ export default function CallAnalytics() {
   };
 
   const getDateRangeStart = (): Date | null => {
+  usePageTitle('Analytics de Chamadas');
+
     const now = new Date();
     switch (dateRange) {
       case 'week': return subWeeks(now, 1);

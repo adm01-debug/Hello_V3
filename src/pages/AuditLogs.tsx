@@ -16,6 +16,7 @@ import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import type { Tables } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 type AuditLog = Tables<'audit_logs'>;
 
@@ -58,6 +59,8 @@ const actionColors: Record<string, string> = {
 };
 
 export default function AuditLogs() {
+  usePageTitle('Logs de Auditoria');
+
   const navigate = useNavigate();
   const { hasRole } = useAuthContext();
   const [logs, setLogs] = useState<AuditLog[]>([]);

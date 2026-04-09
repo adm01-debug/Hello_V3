@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Printer, Send, Inbox, Plus, FileText, Clock, CheckCircle2, XCircle } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function VirtualFax() {
   const queryClient = useQueryClient();
@@ -40,6 +41,8 @@ export default function VirtualFax() {
   });
 
   const statusIcon = (status: string) => {
+  usePageTitle('Fax Virtual');
+
     if (status === 'sent') return <CheckCircle2 className="h-4 w-4 text-success" />;
     if (status === 'failed') return <XCircle className="h-4 w-4 text-destructive" />;
     return <Clock className="h-4 w-4 text-amber-500" />;

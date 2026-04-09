@@ -17,6 +17,7 @@ import {
   CheckCircle, AlertTriangle, QrCode, Phone as PhoneIcon,
   MessageSquare
 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function TwoFactorAuth() {
   const { user } = useAuthContext();
@@ -119,6 +120,8 @@ export default function TwoFactorAuth() {
   };
 
   const copyToClipboard = (text: string) => {
+  usePageTitle('Autenticação 2FA');
+
     navigator.clipboard.writeText(text);
     toast.success('Copiado!');
   };

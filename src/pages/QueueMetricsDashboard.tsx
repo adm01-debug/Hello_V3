@@ -40,6 +40,7 @@ import { format } from 'date-fns';
 import { DashboardGoalsSettings, DashboardGoal } from '@/components/dashboard/DashboardGoalsSettings';
 import { GoalViolationsHistory } from '@/components/dashboard/GoalViolationsHistory';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface QueueMetrics {
   activeCalls: number;
@@ -68,6 +69,8 @@ interface GoalStatus {
 }
 
 const QueueMetricsDashboard = () => {
+  usePageTitle('Métricas de Fila');
+
   const [metrics, setMetrics] = useState<QueueMetrics>({
     activeCalls: 0,
     waitingCalls: 0,

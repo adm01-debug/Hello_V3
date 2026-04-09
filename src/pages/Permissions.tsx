@@ -13,6 +13,7 @@ import {
   Loader2, Shield, Key, Users, Phone, FileText, Settings, 
   Lock, Eye, Edit, Trash2, Plus, Save 
 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface Permission {
   id: string;
@@ -81,6 +82,8 @@ export default function Permissions() {
   };
 
   const hasPermission = (role: string, permissionId: string): boolean => {
+  usePageTitle('Permissões');
+
     const key = `${role}-${permissionId}`;
     if (changes.has(key)) {
       return changes.get(key)!;

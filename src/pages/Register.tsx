@@ -9,8 +9,11 @@ import { toast } from 'sonner';
 import { Loader2, Phone, Shield, Eye, EyeOff, Zap } from 'lucide-react';
 import { PasswordStrength, usePasswordStrength } from '@/components/auth/PasswordStrength';
 import { motion } from 'framer-motion';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Register() {
+  usePageTitle('Cadastro');
+
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

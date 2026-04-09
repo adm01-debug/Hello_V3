@@ -21,6 +21,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface QueueMetricsSettings {
   id: string;
@@ -35,6 +36,8 @@ interface QueueMetricsSettings {
 }
 
 const QueueMetricsAlertSettings = () => {
+  usePageTitle('Config. Alertas de Fila');
+
   const [settings, setSettings] = useState<QueueMetricsSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);

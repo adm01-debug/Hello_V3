@@ -1,6 +1,9 @@
 import { ScheduledCallbacksList } from '@/components/callbacks/ScheduledCallbacksList';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const Callbacks = () => {
+  usePageTitle('Callbacks');
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div>

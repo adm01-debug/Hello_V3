@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { formatDistanceToNow, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 type NotificationRow = {
   id: string;
@@ -65,6 +66,7 @@ const severityColors: Record<string, string> = {
 };
 
 export default function NotificationCenter() {
+  usePageTitle('Notificações');
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
@@ -319,7 +321,8 @@ function PreferencesPanel({ preferences, onUpdate }: {
   const quietHoursEnabled = (preferences?.quiet_hours_enabled as boolean) ?? false;
   const quietHoursStart = (preferences?.quiet_hours_start as string) ?? '22:00';
   const quietHoursEnd = (preferences?.quiet_hours_end as string) ?? '08:00';
-  const categories = (preferences?.categories as Record<string, boolean>) ?? { system: true, call: true, security: true, coaching: true, gamification: true };
+  const categories = (preferences?.categories as Record<string, boolean>) ?? {
+    system: true, call: true, security: true, coaching: true, gamification: true };
 
   return (
     <div className="grid gap-6 md:grid-cols-2">

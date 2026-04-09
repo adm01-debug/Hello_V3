@@ -6,8 +6,11 @@ import { ConsentHistoryViewer } from '@/components/compliance/ConsentHistoryView
 import { DNCImportLogs } from '@/components/compliance/DNCImportLogs';
 import { HolidaysManager } from '@/components/compliance/HolidaysManager';
 import { Ban, Clock, Settings, Shield, FileText, Upload, Calendar } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function CompliancePage() {
+  usePageTitle('Compliance');
+
   return (
     <div className="container mx-auto py-6 space-y-6">
       <div className="flex items-center gap-3">

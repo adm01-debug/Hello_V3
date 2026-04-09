@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface TopicTrend {
   id: string;
@@ -95,6 +96,8 @@ export default function TopicDetection() {
   const unresolvedAlerts = alerts.filter(a => !a.is_resolved);
 
   const TrendIcon = ({ dir }: { dir: string }) => {
+  usePageTitle('Detecção de Temas');
+
     if (dir === 'up') return <TrendingUp className="h-4 w-4 text-destructive" />;
     if (dir === 'down') return <TrendingDown className="h-4 w-4 text-success" />;
     return <Minus className="h-4 w-4 text-muted-foreground" />;

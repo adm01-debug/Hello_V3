@@ -18,6 +18,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const deviceTypeIcons: Record<string, React.ElementType> = {
   desktop: Monitor,
@@ -40,6 +41,8 @@ const fallbackLabels: Record<string, string> = {
 };
 
 const MultiDeviceRing = () => {
+  usePageTitle('Multi-Device Ring');
+
   const queryClient = useQueryClient();
   const { profile } = useAuthContext();
   const agentName = profile?.full_name || profile?.email || 'agent';

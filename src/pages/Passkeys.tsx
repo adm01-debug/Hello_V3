@@ -4,8 +4,11 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Fingerprint, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Passkeys() {
+  usePageTitle('Passkeys');
+
   const { user } = useAuthContext();
 
   return (

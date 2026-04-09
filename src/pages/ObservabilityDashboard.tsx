@@ -12,6 +12,7 @@ import {
   RefreshCw, Gauge, Clock, Monitor, Zap, Loader2,
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const vitalConfig: Record<string, { label: string; unit: string; icon: React.ReactNode }> = {
   LCP: { label: 'Largest Contentful Paint', unit: 'ms', icon: <Monitor className="h-4 w-4" /> },
@@ -36,6 +37,8 @@ const statusIcons: Record<string, React.ReactNode> = {
 };
 
 export default function ObservabilityDashboard() {
+  usePageTitle('Observabilidade');
+
   const { vitals, history, refresh: refreshVitals } = useWebVitals();
   const { services, overallStatus, isChecking, runChecks } = useHealthCheck();
   const errors = getErrorReports();

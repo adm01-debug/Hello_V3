@@ -38,6 +38,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { toast } from 'sonner';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface HoldAlert {
   id: string;
@@ -78,6 +79,8 @@ const severityConfig = {
 };
 
 const formatDuration = (seconds: number | null): string => {
+  usePageTitle('Alertas de Espera');
+
   if (!seconds) return '-';
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;

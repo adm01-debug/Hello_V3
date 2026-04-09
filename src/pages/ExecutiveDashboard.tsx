@@ -12,8 +12,11 @@ import {
   HoldByAgentChart, TopAgentsChart,
 } from '@/components/executive/DashboardCharts';
 import { GoalsComparisonSection } from '@/components/executive/GoalsComparisonSection';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function ExecutiveDashboard() {
+  usePageTitle('Dashboard Executivo');
+
   const [period, setPeriod] = useState<PeriodType>('week');
   const {
     metrics, callsByDay, satisfactionTrend, sentimentData,

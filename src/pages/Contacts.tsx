@@ -15,8 +15,11 @@ import { ContactDetailSheet } from '@/components/contacts/ContactDetailSheet';
 import { CreateContactDialog } from '@/components/contacts/CreateContactDialog';
 import { motion } from 'framer-motion';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const getInitials = (name: string) => {
+  usePageTitle('Contatos');
+
   return name
     .split(' ')
     .map(word => word[0])
