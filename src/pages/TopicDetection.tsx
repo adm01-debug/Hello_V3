@@ -41,6 +41,7 @@ interface ManagerAlert {
 
 export default function TopicDetection() {
   const queryClient = useQueryClient();
+  const [detectionSearch, setDetectionSearch] = useState('');
 
   const { data: trends = [] } = useQuery({
     queryKey: ['topic-trends'],
