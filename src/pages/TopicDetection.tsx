@@ -69,6 +69,19 @@ export default function TopicDetection() {
     },
   });
 
+  const { data: detections = [] } = useQuery({
+    queryKey: ['topic-detections'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('topic_detections')
+        .select('*')
+        .order('last_detected_at', { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
   const resolveAlert = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase.from('manager_alerts')
