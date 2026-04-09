@@ -469,6 +469,42 @@ export default function GeoBlocking() {
         </CardContent>
       </Card>
 
+      {/* Test IP Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2"><Search className="h-5 w-5" />Testar Validação de IP</CardTitle>
+          <CardDescription>Verifique se um endereço IP seria permitido ou bloqueado pelas regras atuais</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-2">
+            <Input
+              placeholder="Ex: 203.0.113.1"
+              value={testIp}
+              onChange={e => setTestIp(e.target.value)}
+              className="max-w-xs font-mono"
+            />
+            <Button onClick={() => testGeoValidation.mutate(testIp)} disabled={!testIp || testGeoValidation.isPending}>
+              {testGeoValidation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Search className="h-4 w-4 mr-2" />}
+              Testar
+            </Button>
+          </div>
+          {testResult && (
+            <div className="mt-4 p-3 rounded-lg border bg-muted/30 text-sm space-y-1">
+              <p><strong>IP:</strong> <span className="font-mono">{String(testResult.ip_address ?? testIp)}</span></p>
+              <p><strong>País:</strong> {String(testResult.country_name ?? 'Desconhecido')} ({String(testResult.country_code ?? '?')})</p>
+              <p><strong>Resultado:</strong>{' '}
+                {testResult.allowed ? (
+                  <Badge className="bg-emerald-500/15 text-emerald-600 gap-1"><Check className="h-3 w-3" />Permitido</Badge>
+                ) : (
+                  <Badge variant="destructive" className="gap-1"><AlertTriangle className="h-3 w-3" />Bloqueado</Badge>
+                )}
+              </p>
+              {testResult.reason && <p><strong>Motivo:</strong> {String(testResult.reason)}</p>}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Blocked Access Logs */}
       {blockedLogs.length > 0 && (
         <Card>
