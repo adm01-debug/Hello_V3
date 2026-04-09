@@ -29,6 +29,7 @@ export function ActiveCallDisplay({
   onMuteToggle, onHoldToggle, onVolumeToggle, onRecordToggle, onEndCall,
 }: ActiveCallDisplayProps) {
   const ChannelIcon = channelIcons[activeChannel];
+  const { isListening, isProcessing, lastCommand, startListening, stopListening } = useVoiceCommand();
 
   return (
     <div className={cn(
