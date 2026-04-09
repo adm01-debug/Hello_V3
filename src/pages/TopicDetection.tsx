@@ -5,8 +5,15 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
   Tag, TrendingUp, TrendingDown, Minus, AlertTriangle, 
-  CheckCircle2, BarChart3, MessageSquare, Bell
+  CheckCircle2, BarChart3, MessageSquare, Bell, Search
 } from 'lucide-react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
+import { useState } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 interface TopicTrend {
   id: string;
