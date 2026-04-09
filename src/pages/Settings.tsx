@@ -83,6 +83,10 @@ const Settings = () => {
             <Volume2 className="h-4 w-4" />
             Áudio
           </TabsTrigger>
+          <TabsTrigger value="system" className="gap-2">
+            <Wrench className="h-4 w-4" />
+            Sistema
+          </TabsTrigger>
         </TabsList>
 
         {/* Profile Tab */}
