@@ -321,8 +321,7 @@ function PreferencesPanel({ preferences, onUpdate }: {
   const quietHoursStart = (preferences?.quiet_hours_start as string) ?? '22:00';
   const quietHoursEnd = (preferences?.quiet_hours_end as string) ?? '08:00';
   const categories = (preferences?.categories as Record<string, boolean>) ?? {
-  usePageTitle('Notificações');
- system: true, call: true, security: true, coaching: true, gamification: true };
+    system: true, call: true, security: true, coaching: true, gamification: true };
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
