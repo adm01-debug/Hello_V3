@@ -151,6 +151,17 @@ export function NotificationBell() {
               )}
             </ScrollArea>
           </div>
+          <div className="border-t pt-2 mt-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full text-xs gap-1"
+              onClick={() => navigate('/notifications')}
+            >
+              <ExternalLink className="h-3 w-3" />
+              Ver todas as notificações
+            </Button>
+          </div>
         </div>
       </PopoverContent>
     </Popover>
