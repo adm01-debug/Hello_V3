@@ -151,6 +151,8 @@ export function ActiveCallDisplay({
           </TooltipTrigger>
           <TooltipContent>{isListening ? 'Parar comando de voz' : isProcessing ? 'Processando...' : 'Comando de voz'}</TooltipContent>
         </Tooltip>
+
+        <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="outline" size="icon" className="h-11 w-11 rounded-full">
               <PhoneForwarded className="h-5 w-5" />
