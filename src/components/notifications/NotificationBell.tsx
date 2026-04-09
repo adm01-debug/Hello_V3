@@ -1,5 +1,6 @@
-import { Bell, BellOff, BellRing } from 'lucide-react';
+import { Bell, BellOff, BellRing, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 import {
   Popover,
   PopoverContent,
