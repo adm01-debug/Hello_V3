@@ -448,6 +448,11 @@ const Settings = () => {
             </CardContent>
           </Card>
         </TabsContent>
+
+        {/* System Tab */}
+        <TabsContent value="system">
+          <SystemMaintenancePanel />
+        </TabsContent>
       </Tabs>
       </div>
     </div>
