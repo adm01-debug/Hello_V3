@@ -66,6 +66,7 @@ const severityColors: Record<string, string> = {
 };
 
 export default function NotificationCenter() {
+  usePageTitle('Notificações');
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
