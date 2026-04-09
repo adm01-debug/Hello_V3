@@ -99,6 +99,8 @@ export default function GeoBlocking() {
   const queryClient = useQueryClient();
   const [selectedCountry, setSelectedCountry] = useState<string>('');
   const [reason, setReason] = useState('');
+  const [testIp, setTestIp] = useState('');
+  const [testResult, setTestResult] = useState<Record<string, unknown> | null>(null);
 
   // Fetch settings
   const { data: settings, isLoading: settingsLoading } = useQuery({
