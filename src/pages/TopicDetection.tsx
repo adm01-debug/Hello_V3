@@ -359,6 +359,8 @@ export default function TopicDetection() {
           )}
         </CardContent>
       </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
