@@ -376,6 +376,10 @@ const SecurityMonitoring = () => {
               </Badge>
             )}
           </TabsTrigger>
+          <TabsTrigger value="login-attempts" className="gap-2">
+            <LogIn className="h-4 w-4" />
+            Tentativas de Login
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="activity">
