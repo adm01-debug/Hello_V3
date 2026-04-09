@@ -19,6 +19,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import {
+import { usePageTitle } from '@/hooks/usePageTitle';
   Loader2,
   Monitor,
   Smartphone,
@@ -70,6 +71,8 @@ export default function SessionManagement() {
   } | null>(null);
 
   const handleRevokeSession = (sessionId: string) => {
+  usePageTitle('Sessões Ativas');
+
     if (sessionId === currentSessionId) {
       revokeSession(sessionId);
     } else {

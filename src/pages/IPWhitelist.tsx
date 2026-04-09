@@ -17,6 +17,7 @@ import { Shield, Plus, Trash2, Globe, User, AlertTriangle, Clock, Network } from
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface IPEntry {
   id: string;
@@ -95,6 +96,8 @@ export default function IPWhitelist() {
       
       // Map user info to restrictions
       const mappedRestrictions = (restrictions || []).map(r => {
+  usePageTitle('Whitelist de IPs');
+
         const user = userProfiles?.find(u => u.id === r.user_id);
         return {
           ...r,

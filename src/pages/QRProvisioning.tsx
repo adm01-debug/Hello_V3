@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { QrCode, Download, Copy, Smartphone, Monitor, Phone, Shield, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface SIPConfig {
   displayName: string;
@@ -61,6 +62,8 @@ export default function QRProvisioning() {
   const isValid = config.displayName && config.username && config.password && config.domain;
 
   const handleGenerate = () => {
+  usePageTitle('QR Provisioning');
+
     if (!isValid) {
       toast.error('Preencha todos os campos obrigatórios');
       return;

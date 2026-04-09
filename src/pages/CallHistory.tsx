@@ -49,6 +49,7 @@ import { format, isWithinInterval, startOfDay, endOfDay, subDays, subWeeks, subM
 import { ptBR } from 'date-fns/locale';
 import { useAuditLog } from '@/hooks/useAuditLog';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface CallSession {
   id: string;
@@ -224,6 +225,8 @@ export default function CallHistory() {
   };
 
   const formatDuration = (seconds: number | null) => {
+  usePageTitle('Histórico de Chamadas');
+
     if (!seconds) return '0:00';
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;

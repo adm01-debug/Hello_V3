@@ -2,8 +2,11 @@ import { AICallAnalysis } from '@/components/ai/AICallAnalysis';
 import { CallSimulation } from '@/components/ai/CallSimulation';
 import { Bot, Sparkles, Zap, Shield, PlayCircle } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const AIAssistant = () => {
+  usePageTitle('Assistente IA');
+
   return (
     <div className="space-y-6 relative">
       <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />

@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { KeyRound, Check, X, Clock, AlertTriangle, Shield } from 'lucide-react';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface ResetRequest {
   id: string;
@@ -95,6 +96,8 @@ export default function PasswordResetApproval() {
   });
 
   const getStatusBadge = (status: string) => {
+  usePageTitle('Aprovação de Reset de Senha');
+
     switch (status) {
       case 'pending':
         return <Badge variant="secondary" className="bg-warning/20 text-warning"><Clock className="h-3 w-3 mr-1" /> Pendente</Badge>;

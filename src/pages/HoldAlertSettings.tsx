@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { Settings, Clock, AlertTriangle, Bell, Save, RefreshCw } from 'lucide-react';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface HoldAlertSettings {
   id: string;
@@ -79,6 +80,8 @@ export default function HoldAlertSettings() {
   };
 
   const formatDuration = (seconds: number) => {
+  usePageTitle('Config. Alertas de Espera');
+
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
     if (minutes === 0) return `${secs}s`;

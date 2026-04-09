@@ -11,6 +11,7 @@ import { Loader2, Lock, CheckCircle, Phone, Eye, EyeOff, ShieldCheck } from 'luc
 import { z } from 'zod';
 import { PasswordStrength } from '@/components/auth/PasswordStrength';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const passwordSchema = z.object({
   password: z.string()
@@ -27,6 +28,8 @@ const passwordSchema = z.object({
 });
 
 export default function ResetPassword() {
+  usePageTitle('Redefinir Senha');
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);

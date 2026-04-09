@@ -13,6 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { 
+import { usePageTitle } from '@/hooks/usePageTitle';
   Loader2, Shield, ShieldCheck, Smartphone, Key, Copy, 
   CheckCircle, AlertTriangle, QrCode, Phone as PhoneIcon,
   MessageSquare
@@ -119,6 +120,8 @@ export default function TwoFactorAuth() {
   };
 
   const copyToClipboard = (text: string) => {
+  usePageTitle('Autenticação 2FA');
+
     navigator.clipboard.writeText(text);
     toast.success('Copiado!');
   };

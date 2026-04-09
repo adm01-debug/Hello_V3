@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface SecurityFeature {
   name: string;
@@ -39,6 +40,8 @@ interface SecurityDecision {
 }
 
 const SecurityReport = () => {
+  usePageTitle('Relatório de Segurança');
+
   const { profile, loading } = useAuth();
   const navigate = useNavigate();
   const [reportDate] = useState(new Date());

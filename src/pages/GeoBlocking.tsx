@@ -11,6 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { toast } from 'sonner';
 import { Globe, Shield, Plus, Trash2, MapPin, AlertTriangle, Check, Search, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 // Lista de países com códigos ISO
 const COUNTRIES = [
@@ -96,6 +97,8 @@ interface GeoRestriction {
 }
 
 export default function GeoBlocking() {
+  usePageTitle('Bloqueio Geográfico');
+
   const queryClient = useQueryClient();
   const [selectedCountry, setSelectedCountry] = useState<string>('');
   const [reason, setReason] = useState('');

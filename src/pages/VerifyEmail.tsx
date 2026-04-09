@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { toast } from 'sonner';
 import { Loader2, CheckCircle, XCircle, Mail, RefreshCw, Phone } from 'lucide-react';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 type VerificationStatus = 'loading' | 'success' | 'error' | 'expired';
 
@@ -88,6 +89,8 @@ export default function VerifyEmail() {
   };
 
   const renderContent = () => {
+  usePageTitle('Verificar E-mail');
+
     switch (status) {
       case 'loading':
         return (

@@ -10,10 +10,13 @@ import { toast } from 'sonner';
 import { Loader2, Mail, ArrowLeft, CheckCircle, Phone, ShieldCheck } from 'lucide-react';
 import { z } from 'zod';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const emailSchema = z.string().email('Email inválido').max(255, 'Email muito longo');
 
 export default function ForgotPassword() {
+  usePageTitle('Recuperar Senha');
+
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [requestSent, setRequestSent] = useState(false);

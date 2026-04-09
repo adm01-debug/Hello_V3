@@ -18,8 +18,11 @@ import { useCallHistoryData } from '@/hooks/useDashboardData';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const formatDuration = (seconds: number): string => {
+  usePageTitle('Histórico');
+
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
   return `${mins}:${secs.toString().padStart(2, '0')}`;

@@ -3,8 +3,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { PhoneCall, DollarSign, User, GitBranch, Phone } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function TollFreeNumbers() {
+  usePageTitle('Números 0800');
+
   const { data: numbers = [] } = useQuery({
     queryKey: ['toll-free-numbers'],
     queryFn: async () => {

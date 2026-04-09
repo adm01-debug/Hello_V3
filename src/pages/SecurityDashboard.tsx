@@ -43,6 +43,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface SecurityScore {
   total: number;
@@ -135,6 +136,8 @@ export default function SecurityDashboard() {
   };
 
   const calculateSecurityScore = (ipEnabled: boolean) => {
+  usePageTitle('Central de Segurança');
+
     let score = {
       total: 0,
       mfa: 0,

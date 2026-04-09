@@ -46,6 +46,7 @@ import { useContacts, Contact, ContactInteraction } from '@/hooks/useContacts';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface PersonalityProfile {
   personality_traits: string[];
@@ -92,6 +93,8 @@ const COLORS = {
 };
 
 const ContactInsights = () => {
+  usePageTitle('Insights de Contatos');
+
   const { contacts, isLoading: loadingContacts, fetchContacts } = useContacts();
   const [allInteractions, setAllInteractions] = useState<ContactInteraction[]>([]);
   const [loadingInteractions, setLoadingInteractions] = useState(true);

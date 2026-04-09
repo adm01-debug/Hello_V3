@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
 import { 
+import { usePageTitle } from '@/hooks/usePageTitle';
   Plus, Phone, Voicemail, Users, Clock, ArrowRight, 
   MessageSquare, GitBranch, Trash2, Save, Play, Pause,
   PhoneForwarded, PhoneOff, Music, MoveRight, GripVertical
@@ -90,6 +91,8 @@ function FlowCanvas({ flow, onUpdate }: { flow: CallFlow; onUpdate: (data: { nod
   const edges = flowData?.edges || [];
 
   const addNode = (type: string) => {
+  usePageTitle('Call Flow Designer');
+
     const nodeType = NODE_TYPES.find(t => t.type === type);
     const newNode: FlowNode = {
       id: `node-${Date.now()}`,

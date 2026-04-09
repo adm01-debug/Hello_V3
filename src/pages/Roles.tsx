@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Loader2, Users, Shield, UserPlus, Trash2, Search, Crown, User, Eye } from 'lucide-react';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface UserRole {
   id: string;
@@ -36,6 +37,8 @@ const ROLE_LABELS: Record<string, { label: string; icon: React.ComponentType<{ c
 };
 
 export default function Roles() {
+  usePageTitle('Roles & Permissões');
+
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);

@@ -28,6 +28,7 @@ import { format, subDays, subWeeks, subMonths, isAfter } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { logger } from '@/lib/logger';
 import {
+import { usePageTitle } from '@/hooks/usePageTitle';
   BarChart,
   Bar,
   XAxis,
@@ -95,6 +96,8 @@ export default function CallAnalytics() {
   };
 
   const getDateRangeStart = (): Date | null => {
+  usePageTitle('Analytics de Chamadas');
+
     const now = new Date();
     switch (dateRange) {
       case 'week': return subWeeks(now, 1);

@@ -48,6 +48,7 @@ import { BadgesShowcase } from '@/components/gamification/BadgesShowcase';
 import { useGamification } from '@/hooks/useGamification';
 import { useAgentStatus } from '@/hooks/useAgentStatus';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface AgentStats {
   name: string;
@@ -180,6 +181,8 @@ export default function AgentRanking() {
   };
 
   const getGoalsForAgent = (agentName: string) => {
+  usePageTitle('Ranking de Agentes');
+
     return agentGoals.get(agentName) || {
       agent_name: agentName,
       ...DEFAULT_GOALS,

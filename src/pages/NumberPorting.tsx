@@ -9,8 +9,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { ArrowLeftRight, Plus, Phone, Building, Clock, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function NumberPorting() {
+  usePageTitle('Portabilidade Numérica');
+
   const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [form, setForm] = useState({ phone: '', provider: '', account: '', name: '' });

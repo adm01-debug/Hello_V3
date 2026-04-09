@@ -6,8 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { Monitor, MapPin, Phone, User, LogIn, LogOut, CheckCircle2 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function HotDesking() {
+  usePageTitle('Hot Desking');
+
   const queryClient = useQueryClient();
   const { profile } = useAuthContext();
 

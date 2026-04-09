@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { Voicemail, Play, Check, Clock, Phone, AlertTriangle, Search, Trash2, MailOpen, Mail } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface VoicemailMessage {
   id: string;
@@ -70,6 +71,8 @@ export default function VoicemailPage() {
   const unreadCount = messages.filter(m => !m.is_read).length;
 
   const formatDuration = (seconds: number | null) => {
+  usePageTitle('Correio de Voz');
+
     if (!seconds) return '--';
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;

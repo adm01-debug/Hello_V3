@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { logger } from '@/lib/logger';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface RateLimitLog {
   id: string;
@@ -48,6 +49,8 @@ interface RateLimitSetting {
 }
 
 export default function RateLimitDashboard() {
+  usePageTitle('Rate Limit');
+
   const [isLoading, setIsLoading] = useState(true);
   const [logs, setLogs] = useState<RateLimitLog[]>([]);
   const [alerts, setAlerts] = useState<RateLimitAlert[]>([]);

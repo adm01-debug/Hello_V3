@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ShieldX, Home } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Unauthorized() {
+  usePageTitle('Não Autorizado');
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="text-center space-y-6">

@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { logger } from '@/lib/logger';
 import { 
+import { usePageTitle } from '@/hooks/usePageTitle';
   BarChart, 
   Bar, 
   XAxis, 
@@ -66,6 +67,8 @@ const SEVERITY_COLORS = {
 };
 
 const AlertHistory = () => {
+  usePageTitle('Histórico de Alertas');
+
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');

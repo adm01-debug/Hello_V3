@@ -15,8 +15,11 @@ import { PasskeyLogin } from '@/components/auth/PasskeyLogin';
 import { isWebAuthnSupported } from '@/lib/webauthn/webauthn-utils';
 import { lovable } from '@/integrations/lovable/index';
 import { motion } from 'framer-motion';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Login() {
+  usePageTitle('Login');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);

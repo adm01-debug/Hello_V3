@@ -33,8 +33,11 @@ import { toast } from 'sonner';
 import { useBitrix } from '@/hooks/useBitrix';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation } from '@tanstack/react-query';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const Settings = () => {
+  usePageTitle('Configurações');
+
   const [notifications, setNotifications] = useState({
     incomingCalls: true,
     missedCalls: true,
