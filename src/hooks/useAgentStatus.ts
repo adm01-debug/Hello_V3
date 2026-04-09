@@ -110,13 +110,16 @@ export function useAgentStatus() {
   }, [currentAgentId]);
 
   useEffect(() => {
-    const handleBeforeUnload = () => {
+    const handleBeforeUnload = async () => {
       if (currentAgentId) {
+        // Use session JWT for RLS compliance instead of anon key
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
         const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/agents?id=eq.${currentAgentId}`;
         const headers = {
           'Content-Type': 'application/json',
           'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          'Authorization': `Bearer ${token}`,
           'Prefer': 'return=minimal',
         };
         fetch(url, { method: 'PATCH', headers, body: JSON.stringify({ status: 'offline' }), keepalive: true }).catch(() => {});
