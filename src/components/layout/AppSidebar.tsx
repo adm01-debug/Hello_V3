@@ -62,6 +62,7 @@ const securityNavItems = [
 ];
 
 const settingsNavItems = [
+  { title: 'Notificações', url: '/notifications', icon: BellRing },
   { title: 'Compliance', url: '/compliance', icon: ListChecks },
   { title: 'Alertas de Hold', url: '/hold-settings', icon: Timer },
   { title: 'Alertas de Fila', url: '/queue-metrics-settings', icon: Activity },
