@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { toast } from 'sonner';
-import { Globe, Shield, Plus, Trash2, MapPin, AlertTriangle, Check } from 'lucide-react';
+import { Globe, Shield, Plus, Trash2, MapPin, AlertTriangle, Check, Search, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 // Lista de países com códigos ISO
@@ -99,6 +99,8 @@ export default function GeoBlocking() {
   const queryClient = useQueryClient();
   const [selectedCountry, setSelectedCountry] = useState<string>('');
   const [reason, setReason] = useState('');
+  const [testIp, setTestIp] = useState('');
+  const [testResult, setTestResult] = useState<Record<string, unknown> | null>(null);
 
   // Fetch settings
   const { data: settings, isLoading: settingsLoading } = useQuery({
@@ -236,6 +238,25 @@ export default function GeoBlocking() {
     onError: () => {
       toast.error('Erro ao remover país');
     }
+  });
+
+  const testGeoValidation = useMutation({
+    mutationFn: async (ip: string) => {
+      const { data, error } = await supabase.functions.invoke('validate-geo', {
+        body: { ip_address: ip },
+      });
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (data) => {
+      setTestResult(data as Record<string, unknown>);
+      if (data?.allowed) {
+        toast.success('IP permitido', { description: `País: ${data.country_name || 'Desconhecido'}` });
+      } else {
+        toast.error('IP bloqueado', { description: `País: ${data.country_name || 'Desconhecido'} — ${data.reason || 'Não autorizado'}` });
+      }
+    },
+    onError: () => toast.error('Erro ao validar IP'),
   });
 
   // Initialize settings on first load
@@ -444,6 +465,42 @@ export default function GeoBlocking() {
                 ))}
               </TableBody>
             </Table>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Test IP Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2"><Search className="h-5 w-5" />Testar Validação de IP</CardTitle>
+          <CardDescription>Verifique se um endereço IP seria permitido ou bloqueado pelas regras atuais</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-2">
+            <Input
+              placeholder="Ex: 203.0.113.1"
+              value={testIp}
+              onChange={e => setTestIp(e.target.value)}
+              className="max-w-xs font-mono"
+            />
+            <Button onClick={() => testGeoValidation.mutate(testIp)} disabled={!testIp || testGeoValidation.isPending}>
+              {testGeoValidation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Search className="h-4 w-4 mr-2" />}
+              Testar
+            </Button>
+          </div>
+          {testResult && (
+            <div className="mt-4 p-3 rounded-lg border bg-muted/30 text-sm space-y-1">
+              <p><strong>IP:</strong> <span className="font-mono">{String(testResult.ip_address ?? testIp)}</span></p>
+              <p><strong>País:</strong> {String(testResult.country_name ?? 'Desconhecido')} ({String(testResult.country_code ?? '?')})</p>
+              <p><strong>Resultado:</strong>{' '}
+                {testResult.allowed ? (
+                  <Badge className="bg-emerald-500/15 text-emerald-600 gap-1"><Check className="h-3 w-3" />Permitido</Badge>
+                ) : (
+                  <Badge variant="destructive" className="gap-1"><AlertTriangle className="h-3 w-3" />Bloqueado</Badge>
+                )}
+              </p>
+              {testResult.reason && <p><strong>Motivo:</strong> {String(testResult.reason)}</p>}
+            </div>
           )}
         </CardContent>
       </Card>

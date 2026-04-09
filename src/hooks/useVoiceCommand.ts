@@ -27,9 +27,21 @@ export function useVoiceCommand() {
       });
       reader.readAsDataURL(audioBlob);
       const audioBase64 = await base64Promise;
-      const { data, error } = await supabase.functions.invoke("voice-transcribe", { body: { audio: audioBase64 } });
-      if (error) throw error;
-      const result: VoiceCommandResult = { command: data?.text || "", confidence: data?.confidence || 0, action: data?.action };
+      const { data: transcribeData, error: transcribeError } = await supabase.functions.invoke("voice-transcribe", { body: { audio: audioBase64 } });
+      if (transcribeError) throw transcribeError;
+      const transcribedText = transcribeData?.text || "";
+
+      // Process the transcribed text with voice-command AI to extract action
+      const { data: commandData, error: commandError } = await supabase.functions.invoke("voice-command", { body: { audio: transcribedText } });
+      if (commandError) {
+        log.warn("Voice command processing failed, using transcription only", commandError);
+      }
+
+      const result: VoiceCommandResult = {
+        command: transcribedText,
+        confidence: commandData?.confidence || transcribeData?.confidence || 0,
+        action: commandData?.action || transcribeData?.action,
+      };
       setLastCommand(result);
       return result;
     } catch (err) {

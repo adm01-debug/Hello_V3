@@ -1,7 +1,8 @@
 import {
   PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play,
-  Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle,
+  Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines,
 } from 'lucide-react';
+import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -28,6 +29,7 @@ export function ActiveCallDisplay({
   onMuteToggle, onHoldToggle, onVolumeToggle, onRecordToggle, onEndCall,
 }: ActiveCallDisplayProps) {
   const ChannelIcon = channelIcons[activeChannel];
+  const { isListening, isProcessing, lastCommand, startListening, stopListening } = useVoiceCommand();
 
   return (
     <div className={cn(
@@ -135,6 +137,19 @@ export function ActiveCallDisplay({
             </Button>
           </TooltipTrigger>
           <TooltipContent>Gravar</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon"
+              className={cn("h-11 w-11 rounded-full", (isListening || isProcessing) && "bg-primary/10 text-primary border-primary/30")}
+              onClick={isListening ? stopListening : startListening}
+              disabled={isProcessing}
+            >
+              <AudioLines className={cn("h-5 w-5", isListening && "animate-pulse")} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{isListening ? 'Parar comando de voz' : isProcessing ? 'Processando...' : 'Comando de voz'}</TooltipContent>
         </Tooltip>
 
         <Tooltip>
