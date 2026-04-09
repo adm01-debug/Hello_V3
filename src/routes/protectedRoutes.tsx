@@ -81,6 +81,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/callbacks", element: Callbacks },
   { path: "/coaching", element: Coaching },
   { path: "/settings", element: Settings },
+  { path: "/notifications", element: NotificationCenter },
   { path: "/two-factor-auth", element: TwoFactorAuth },
   { path: "/passkeys", element: Passkeys },
   { path: "/sessions", element: SessionManagement },
