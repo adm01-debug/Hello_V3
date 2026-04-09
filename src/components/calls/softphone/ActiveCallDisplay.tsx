@@ -141,6 +141,17 @@ export function ActiveCallDisplay({
 
         <Tooltip>
           <TooltipTrigger asChild>
+            <Button variant="outline" size="icon"
+              className={cn("h-11 w-11 rounded-full", (isListening || isProcessing) && "bg-primary/10 text-primary border-primary/30")}
+              onClick={isListening ? stopListening : startListening}
+              disabled={isProcessing}
+            >
+              <AudioLines className={cn("h-5 w-5", isListening && "animate-pulse")} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{isListening ? 'Parar comando de voz' : isProcessing ? 'Processando...' : 'Comando de voz'}</TooltipContent>
+        </Tooltip>
+          <TooltipTrigger asChild>
             <Button variant="outline" size="icon" className="h-11 w-11 rounded-full">
               <PhoneForwarded className="h-5 w-5" />
             </Button>
