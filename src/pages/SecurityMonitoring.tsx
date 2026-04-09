@@ -538,6 +538,9 @@ const SecurityMonitoring = () => {
             </CardContent>
           </Card>
         </TabsContent>
+        <TabsContent value="login-attempts">
+          <LoginAttemptsPanel />
+        </TabsContent>
       </Tabs>
 
       {/* Detection Rules Info */}
