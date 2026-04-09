@@ -13,11 +13,11 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { 
-import { usePageTitle } from '@/hooks/usePageTitle';
   Loader2, Shield, ShieldCheck, Smartphone, Key, Copy, 
   CheckCircle, AlertTriangle, QrCode, Phone as PhoneIcon,
   MessageSquare
 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function TwoFactorAuth() {
   const { user } = useAuthContext();

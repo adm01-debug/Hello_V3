@@ -28,7 +28,6 @@ import { format, subDays, subWeeks, subMonths, isAfter } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { logger } from '@/lib/logger';
 import {
-import { usePageTitle } from '@/hooks/usePageTitle';
   BarChart,
   Bar,
   XAxis,
@@ -41,6 +40,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
   Cell,
   Legend
 } from 'recharts';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface CallSession {
   id: string;

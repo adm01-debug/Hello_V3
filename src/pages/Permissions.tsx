@@ -10,10 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { 
-import { usePageTitle } from '@/hooks/usePageTitle';
   Loader2, Shield, Key, Users, Phone, FileText, Settings, 
   Lock, Eye, Edit, Trash2, Plus, Save 
 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface Permission {
   id: string;

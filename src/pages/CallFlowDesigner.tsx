@@ -11,11 +11,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
 import { 
-import { usePageTitle } from '@/hooks/usePageTitle';
   Plus, Phone, Voicemail, Users, Clock, ArrowRight, 
   MessageSquare, GitBranch, Trash2, Save, Play, Pause,
   PhoneForwarded, PhoneOff, Music, MoveRight, GripVertical
 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface FlowNode {
   id: string;

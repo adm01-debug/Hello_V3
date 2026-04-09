@@ -26,7 +26,6 @@ import {
 } from 'lucide-react';
 import { logger } from '@/lib/logger';
 import { 
-import { usePageTitle } from '@/hooks/usePageTitle';
   BarChart, 
   Bar, 
   XAxis, 
@@ -40,6 +39,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
   LineChart,
   Line
 } from 'recharts';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface Alert {
   id: string;

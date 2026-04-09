@@ -19,7 +19,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import {
-import { usePageTitle } from '@/hooks/usePageTitle';
   Loader2,
   Monitor,
   Smartphone,
@@ -31,6 +30,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
   LogOut,
   AlertTriangle,
 } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 function getDeviceIcon(device?: string) {
   if (!device) return Monitor;
