@@ -240,6 +240,25 @@ export default function GeoBlocking() {
     }
   });
 
+  const testGeoValidation = useMutation({
+    mutationFn: async (ip: string) => {
+      const { data, error } = await supabase.functions.invoke('validate-geo', {
+        body: { ip_address: ip },
+      });
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (data) => {
+      setTestResult(data as Record<string, unknown>);
+      if (data?.allowed) {
+        toast.success('IP permitido', { description: `País: ${data.country_name || 'Desconhecido'}` });
+      } else {
+        toast.error('IP bloqueado', { description: `País: ${data.country_name || 'Desconhecido'} — ${data.reason || 'Não autorizado'}` });
+      }
+    },
+    onError: () => toast.error('Erro ao validar IP'),
+  });
+
   // Initialize settings on first load
   useEffect(() => {
     if (!settingsLoading && !settings) {
