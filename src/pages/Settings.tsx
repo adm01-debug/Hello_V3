@@ -18,10 +18,21 @@ import {
   Link,
   ExternalLink,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Wrench,
+  Database,
+  Trash2,
+  Mail,
+  ShieldAlert,
+  Timer,
+  BarChart3,
+  Loader2,
+  Play,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useBitrix } from '@/hooks/useBitrix';
+import { supabase } from '@/integrations/supabase/client';
+import { useMutation } from '@tanstack/react-query';
 
 const Settings = () => {
   const [notifications, setNotifications] = useState({
