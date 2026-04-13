@@ -3,28 +3,16 @@ const log = logger.create('HoldReminder');
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { CallSession } from './useMultiChannelCall';
 import { toast } from 'sonner';
+import {
+  createNotificationSound, createUrgentSound, formatHoldTime,
+  loadSavedInterval, loadSavedEnabled, loadSavedAlertThreshold, loadSavedAlertsEnabled,
+  saveToStorage, STORAGE_KEY_INTERVAL, STORAGE_KEY_ENABLED, STORAGE_KEY_ALERT_THRESHOLD, STORAGE_KEY_ALERTS_ENABLED,
+  type ReminderInterval, type HoldAlertThreshold,
+} from '@/lib/holdReminderSounds';
 
-export type ReminderInterval = 15 | 30 | 60;
-export type HoldAlertThreshold = 30 | 60 | 120 | 180 | 300;
-
-const STORAGE_KEY_INTERVAL = 'holdReminder_interval';
-const STORAGE_KEY_ENABLED = 'holdReminder_enabled';
-const STORAGE_KEY_ALERT_THRESHOLD = 'holdReminder_alertThreshold';
-const STORAGE_KEY_ALERTS_ENABLED = 'holdReminder_alertsEnabled';
-
-export const REMINDER_INTERVALS: { value: ReminderInterval; label: string }[] = [
-  { value: 15, label: '15s' },
-  { value: 30, label: '30s' },
-  { value: 60, label: '60s' },
-];
-
-export const ALERT_THRESHOLDS: { value: HoldAlertThreshold; label: string }[] = [
-  { value: 30, label: '30s' },
-  { value: 60, label: '1min' },
-  { value: 120, label: '2min' },
-  { value: 180, label: '3min' },
-  { value: 300, label: '5min' },
-];
+// Re-export for consumers
+export type { ReminderInterval, HoldAlertThreshold };
+export { REMINDER_INTERVALS, ALERT_THRESHOLDS } from '@/lib/holdReminderSounds';
 
 export interface HoldAlert {
   callId: string;
@@ -35,128 +23,6 @@ export interface HoldAlert {
   severity: 'warning' | 'critical';
 }
 
-// Load saved preferences from localStorage
-const loadSavedInterval = (): ReminderInterval => {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY_INTERVAL);
-    if (saved) {
-      const parsed = parseInt(saved, 10);
-      if (parsed === 15 || parsed === 30 || parsed === 60) {
-        return parsed;
-      }
-    }
-  } catch (e) {
-    log.warn('Failed to load interval from localStorage');
-  }
-  return 30;
-};
-
-const loadSavedEnabled = (): boolean => {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY_ENABLED);
-    if (saved !== null) {
-      return saved === 'true';
-    }
-  } catch (e) {
-    log.warn('Failed to load enabled state from localStorage');
-  }
-  return true;
-};
-
-const loadSavedAlertThreshold = (): HoldAlertThreshold => {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY_ALERT_THRESHOLD);
-    if (saved) {
-      const parsed = parseInt(saved, 10);
-      if ([30, 60, 120, 180, 300].includes(parsed)) {
-        return parsed as HoldAlertThreshold;
-      }
-    }
-  } catch (e) {
-    log.warn('Failed to load alert threshold from localStorage');
-  }
-  return 60;
-};
-
-const loadSavedAlertsEnabled = (): boolean => {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY_ALERTS_ENABLED);
-    if (saved !== null) {
-      return saved === 'true';
-    }
-  } catch (e) {
-    log.warn('Failed to load alerts enabled state from localStorage');
-  }
-  return true;
-};
-
-// Create notification sound using Web Audio API
-const createNotificationSound = () => {
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-  
-  return () => {
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.value = 440;
-    oscillator.type = 'sine';
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.5);
-    
-    // Second beep
-    setTimeout(() => {
-      const oscillator2 = audioContext.createOscillator();
-      const gainNode2 = audioContext.createGain();
-      
-      oscillator2.connect(gainNode2);
-      gainNode2.connect(audioContext.destination);
-      
-      oscillator2.frequency.value = 523.25; // C5
-      oscillator2.type = 'sine';
-      
-      gainNode2.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-      
-      oscillator2.start(audioContext.currentTime);
-      oscillator2.stop(audioContext.currentTime + 0.5);
-    }, 200);
-  };
-};
-
-// Create urgent alert sound
-const createUrgentSound = () => {
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-  
-  return () => {
-    // Three rapid beeps for urgent alert
-    for (let i = 0; i < 3; i++) {
-      setTimeout(() => {
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.value = 880; // Higher pitch for urgency
-        oscillator.type = 'square';
-        
-        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.15);
-      }, i * 200);
-    }
-  };
-};
-
 export function useHoldReminder(activeCalls: CallSession[]) {
   const [isEnabled, setIsEnabled] = useState(loadSavedEnabled);
   const [interval, setInterval] = useState<ReminderInterval>(loadSavedInterval);
@@ -166,123 +32,65 @@ export function useHoldReminder(activeCalls: CallSession[]) {
   const [lastReminderTime, setLastReminderTime] = useState<Record<string, number>>({});
   const [alertedCalls, setAlertedCalls] = useState<Record<string, { warning: boolean; critical: boolean }>>({});
   const [browserNotificationsEnabled, setBrowserNotificationsEnabled] = useState(false);
-  
+
   const intervalRef = useRef<number | null>(null);
   const playSoundRef = useRef<(() => void) | null>(null);
   const playUrgentSoundRef = useRef<(() => void) | null>(null);
-  
   const intervalMs = interval * 1000;
 
-  // Check browser notification permission on mount
   useEffect(() => {
-    if ('Notification' in window) {
-      setBrowserNotificationsEnabled(Notification.permission === 'granted');
-    }
+    if ('Notification' in window) setBrowserNotificationsEnabled(Notification.permission === 'granted');
   }, []);
 
-  // Request browser notification permission
   const requestBrowserNotifications = useCallback(async () => {
-    if (!('Notification' in window)) {
-      toast.error("Notificações não suportadas", { description: "Seu navegador não suporta notificações nativas." });
-      return false;
-    }
-
+    if (!('Notification' in window)) { toast.error("Notificações não suportadas"); return false; }
     try {
       const permission = await Notification.requestPermission();
       const granted = permission === 'granted';
       setBrowserNotificationsEnabled(granted);
-      
-      if (granted) {
-        toast.success("Notificações ativadas", { description: "Você receberá alertas críticos de espera no navegador." });
-      } else {
-        toast.error("Permissão negada", { description: "Você não receberá notificações nativas do navegador." });
-      }
-      
+      granted ? toast.success("Notificações ativadas") : toast.error("Permissão negada");
       return granted;
-    } catch (error) {
-      log.warn('Failed to request notification permission:', error);
-      return false;
-    }
+    } catch { return false; }
   }, []);
 
-  // Send browser notification for critical alerts
   const sendBrowserNotification = useCallback((alert: HoldAlert) => {
     if (!browserNotificationsEnabled || Notification.permission !== 'granted') return;
-
     try {
-      const notification = new Notification(
-        alert.severity === 'critical' 
-          ? '🚨 Alerta Crítico de Espera' 
-          : '⚠️ Alerta de Tempo em Espera',
+      const n = new Notification(
+        alert.severity === 'critical' ? '🚨 Alerta Crítico de Espera' : '⚠️ Alerta de Tempo em Espera',
         {
-          body: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)}${alert.severity === 'critical' ? ' - Atenção urgente necessária!' : ''}`,
-          icon: '/favicon.ico',
-          tag: `hold-alert-${alert.callId}`,
+          body: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)}`,
+          icon: '/favicon.ico', tag: `hold-alert-${alert.callId}`,
           requireInteraction: alert.severity === 'critical',
         }
       );
-
-      notification.onclick = () => {
-        window.focus();
-        notification.close();
-      };
-
-      // Auto close non-critical after 10s
-      if (alert.severity !== 'critical') {
-        setTimeout(() => notification.close(), 10000);
-      }
-    } catch (error) {
-      log.warn('Failed to send browser notification:', error);
-    }
+      n.onclick = () => { window.focus(); n.close(); };
+      if (alert.severity !== 'critical') setTimeout(() => n.close(), 10000);
+    } catch (e) { log.warn('Failed to send browser notification:', e); }
   }, [browserNotificationsEnabled]);
 
-  // Initialize audio on first user interaction
   const initAudio = useCallback(() => {
-    if (!playSoundRef.current) {
-      playSoundRef.current = createNotificationSound();
-    }
-    if (!playUrgentSoundRef.current) {
-      playUrgentSoundRef.current = createUrgentSound();
-    }
+    if (!playSoundRef.current) playSoundRef.current = createNotificationSound();
+    if (!playUrgentSoundRef.current) playUrgentSoundRef.current = createUrgentSound();
   }, []);
 
-  const formatHoldTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    if (mins > 0) {
-      return `${mins}m ${secs}s`;
-    }
-    return `${secs}s`;
-  };
-
   const showVisualNotification = useCallback((callsOnHold: CallSession[]) => {
-    const callNames = callsOnHold
-      .map(call => call.contactName || call.phoneNumber || 'Chamada')
-      .join(', ');
-    
+    const names = callsOnHold.map(c => c.contactName || c.phoneNumber || 'Chamada').join(', ');
     toast("📞 Chamada em espera", {
-      description: callsOnHold.length === 1 
-        ? `${callNames} aguardando atenção`
-        : `${callsOnHold.length} chamadas aguardando: ${callNames}`,
+      description: callsOnHold.length === 1 ? `${names} aguardando atenção` : `${callsOnHold.length} chamadas aguardando: ${names}`,
       duration: 5000,
     });
   }, []);
 
   const showThresholdAlert = useCallback((alert: HoldAlert) => {
     const isCritical = alert.severity === 'critical';
-    
-    if (isCritical) {
-      toast.error("🚨 Alerta Crítico de Espera", { description: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)} - Atenção urgente necessária!`, duration: 10000 });
-    } else {
-      toast.warning("⚠️ Alerta de Tempo em Espera", { description: `${alert.callName} está em espera há ${formatHoldTime(alert.holdTime)}`, duration: 7000 });
-    }
+    if (isCritical) toast.error("🚨 Alerta Crítico de Espera", { description: `${alert.callName} em espera há ${formatHoldTime(alert.holdTime)}`, duration: 10000 });
+    else toast.warning("⚠️ Alerta de Tempo em Espera", { description: `${alert.callName} em espera há ${formatHoldTime(alert.holdTime)}`, duration: 7000 });
   }, []);
 
-  // Check for hold time threshold alerts
   const checkHoldAlerts = useCallback(() => {
     if (!alertsEnabled) return;
-
-    const callsOnHold = activeCalls.filter(call => call.isOnHold);
+    const callsOnHold = activeCalls.filter(c => c.isOnHold);
     const newAlerts: HoldAlert[] = [];
     const newAlertedCalls = { ...alertedCalls };
 
@@ -290,220 +98,60 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       const holdTime = call.totalHoldTime;
       const callName = call.contactName || call.phoneNumber || 'Chamada';
       const callAlerts = newAlertedCalls[call.id] || { warning: false, critical: false };
-      
-      // Critical alert: 2x the threshold
       const criticalThreshold = alertThreshold * 2;
-      
+
       if (holdTime >= criticalThreshold && !callAlerts.critical) {
-        const alert: HoldAlert = {
-          callId: call.id,
-          callName,
-          holdTime,
-          threshold: criticalThreshold,
-          triggeredAt: new Date(),
-          severity: 'critical'
-        };
-        newAlerts.push(alert);
-        newAlertedCalls[call.id] = { ...callAlerts, critical: true };
-        
-        // Play urgent sound
-        if (playUrgentSoundRef.current) {
-          try {
-            playUrgentSoundRef.current();
-          } catch (error) {
-            log.warn('Urgent audio playback failed:', error);
-          }
-        }
-        
-        // Send browser notification for critical alerts
-        sendBrowserNotification(alert);
-        
-        showThresholdAlert(alert);
+        const a: HoldAlert = { callId: call.id, callName, holdTime, threshold: criticalThreshold, triggeredAt: new Date(), severity: 'critical' };
+        newAlerts.push(a); newAlertedCalls[call.id] = { ...callAlerts, critical: true };
+        try { playUrgentSoundRef.current?.(); } catch {}
+        sendBrowserNotification(a); showThresholdAlert(a);
       } else if (holdTime >= alertThreshold && !callAlerts.warning) {
-        // Warning alert: at the threshold
-        const alert: HoldAlert = {
-          callId: call.id,
-          callName,
-          holdTime,
-          threshold: alertThreshold,
-          triggeredAt: new Date(),
-          severity: 'warning'
-        };
-        newAlerts.push(alert);
-        newAlertedCalls[call.id] = { ...callAlerts, warning: true };
-        
-        // Play regular sound
-        if (playSoundRef.current) {
-          try {
-            playSoundRef.current();
-          } catch (error) {
-            log.warn('Audio playback failed:', error);
-          }
-        }
-        
-        showThresholdAlert(alert);
+        const a: HoldAlert = { callId: call.id, callName, holdTime, threshold: alertThreshold, triggeredAt: new Date(), severity: 'warning' };
+        newAlerts.push(a); newAlertedCalls[call.id] = { ...callAlerts, warning: true };
+        try { playSoundRef.current?.(); } catch {}
+        showThresholdAlert(a);
       }
     });
 
-    if (newAlerts.length > 0) {
-      setActiveAlerts(prev => [...prev, ...newAlerts].slice(-20)); // Keep last 20 alerts
-    }
-    
+    if (newAlerts.length > 0) setActiveAlerts(prev => [...prev, ...newAlerts].slice(-20));
     setAlertedCalls(newAlertedCalls);
   }, [activeCalls, alertsEnabled, alertThreshold, alertedCalls, showThresholdAlert, sendBrowserNotification]);
 
   const playHoldReminder = useCallback(() => {
     if (!isEnabled) return;
-    
-    // Initialize audio if needed
     initAudio();
-    
-    const callsOnHold = activeCalls.filter(call => call.isOnHold);
-    
+    const callsOnHold = activeCalls.filter(c => c.isOnHold);
     if (callsOnHold.length === 0) return;
-    
     const now = Date.now();
-    const newLastReminderTime = { ...lastReminderTime };
+    const newLRT = { ...lastReminderTime };
     let shouldNotify = false;
-    
-    callsOnHold.forEach(call => {
-      const lastReminder = lastReminderTime[call.id] || 0;
-      if (now - lastReminder >= intervalMs) {
-        shouldNotify = true;
-        newLastReminderTime[call.id] = now;
-      }
-    });
-    
-    if (shouldNotify) {
-      // Play sound
-      if (playSoundRef.current) {
-        try {
-          playSoundRef.current();
-        } catch (error) {
-          log.warn('Audio playback failed:', error);
-        }
-      }
-      
-      // Show visual notification
-      showVisualNotification(callsOnHold);
-    }
-    
-    setLastReminderTime(newLastReminderTime);
+    callsOnHold.forEach(c => { if (now - (lastReminderTime[c.id] || 0) >= intervalMs) { shouldNotify = true; newLRT[c.id] = now; } });
+    if (shouldNotify) { try { playSoundRef.current?.(); } catch {} showVisualNotification(callsOnHold); }
+    setLastReminderTime(newLRT);
   }, [activeCalls, isEnabled, lastReminderTime, initAudio, intervalMs, showVisualNotification]);
 
-  // Check for calls on hold every second
   useEffect(() => {
-    intervalRef.current = window.setInterval(() => {
-      playHoldReminder();
-      checkHoldAlerts();
-    }, 1000);
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
+    intervalRef.current = window.setInterval(() => { playHoldReminder(); checkHoldAlerts(); }, 1000);
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [playHoldReminder, checkHoldAlerts]);
 
-  // Clean up reminder times and alerted calls for ended calls
   useEffect(() => {
-    const activeCallIds = new Set(activeCalls.map(c => c.id));
-    
-    setLastReminderTime(prev => {
-      const cleaned: Record<string, number> = {};
-      Object.entries(prev).forEach(([id, time]) => {
-        if (activeCallIds.has(id)) {
-          cleaned[id] = time;
-        }
-      });
-      return cleaned;
-    });
-
-    setAlertedCalls(prev => {
-      const cleaned: Record<string, { warning: boolean; critical: boolean }> = {};
-      Object.entries(prev).forEach(([id, alerts]) => {
-        if (activeCallIds.has(id)) {
-          cleaned[id] = alerts;
-        }
-      });
-      return cleaned;
-    });
-
-    // Reset alerts for calls that are no longer on hold
-    setActiveAlerts(prev => prev.filter(alert => {
-      const call = activeCalls.find(c => c.id === alert.callId);
-      return call && call.isOnHold;
-    }));
+    const ids = new Set(activeCalls.map(c => c.id));
+    setLastReminderTime(prev => { const c: Record<string, number> = {}; Object.entries(prev).forEach(([k, v]) => { if (ids.has(k)) c[k] = v; }); return c; });
+    setAlertedCalls(prev => { const c: Record<string, { warning: boolean; critical: boolean }> = {}; Object.entries(prev).forEach(([k, v]) => { if (ids.has(k)) c[k] = v; }); return c; });
+    setActiveAlerts(prev => prev.filter(a => { const c = activeCalls.find(x => x.id === a.callId); return c && c.isOnHold; }));
   }, [activeCalls]);
 
-  const toggleReminder = useCallback(() => {
-    setIsEnabled(prev => {
-      const newValue = !prev;
-      try {
-        localStorage.setItem(STORAGE_KEY_ENABLED, String(newValue));
-      } catch (e) {
-        log.warn('Failed to save enabled state to localStorage');
-      }
-      return newValue;
-    });
-  }, []);
-
-  const toggleAlerts = useCallback(() => {
-    setAlertsEnabled(prev => {
-      const newValue = !prev;
-      try {
-        localStorage.setItem(STORAGE_KEY_ALERTS_ENABLED, String(newValue));
-      } catch (e) {
-        log.warn('Failed to save alerts enabled state to localStorage');
-      }
-      return newValue;
-    });
-  }, []);
-
-  const changeInterval = useCallback((newInterval: ReminderInterval) => {
-    setInterval(newInterval);
-    try {
-      localStorage.setItem(STORAGE_KEY_INTERVAL, String(newInterval));
-    } catch (e) {
-      log.warn('Failed to save interval to localStorage');
-    }
-    // Reset reminder times so the new interval takes effect immediately
-    setLastReminderTime({});
-  }, []);
-
-  const changeAlertThreshold = useCallback((newThreshold: HoldAlertThreshold) => {
-    setAlertThreshold(newThreshold);
-    try {
-      localStorage.setItem(STORAGE_KEY_ALERT_THRESHOLD, String(newThreshold));
-    } catch (e) {
-      log.warn('Failed to save alert threshold to localStorage');
-    }
-    // Reset alerted calls so new threshold takes effect
-    setAlertedCalls({});
-  }, []);
-
-  const clearAlerts = useCallback(() => {
-    setActiveAlerts([]);
-  }, []);
-
-  const getCallsOnHold = useCallback(() => {
-    return activeCalls.filter(call => call.isOnHold);
-  }, [activeCalls]);
+  const toggleReminder = useCallback(() => { setIsEnabled(prev => { const v = !prev; saveToStorage(STORAGE_KEY_ENABLED, String(v)); return v; }); }, []);
+  const toggleAlerts = useCallback(() => { setAlertsEnabled(prev => { const v = !prev; saveToStorage(STORAGE_KEY_ALERTS_ENABLED, String(v)); return v; }); }, []);
+  const changeInterval = useCallback((ni: ReminderInterval) => { setInterval(ni); saveToStorage(STORAGE_KEY_INTERVAL, String(ni)); setLastReminderTime({}); }, []);
+  const changeAlertThreshold = useCallback((nt: HoldAlertThreshold) => { setAlertThreshold(nt); saveToStorage(STORAGE_KEY_ALERT_THRESHOLD, String(nt)); setAlertedCalls({}); }, []);
+  const clearAlerts = useCallback(() => setActiveAlerts([]), []);
+  const getCallsOnHold = useCallback(() => activeCalls.filter(c => c.isOnHold), [activeCalls]);
 
   return {
-    isEnabled,
-    interval,
-    alertThreshold,
-    alertsEnabled,
-    activeAlerts,
-    browserNotificationsEnabled,
-    toggleReminder,
-    toggleAlerts,
-    changeInterval,
-    changeAlertThreshold,
-    clearAlerts,
-    requestBrowserNotifications,
-    callsOnHold: getCallsOnHold(),
-    initAudio
+    isEnabled, interval, alertThreshold, alertsEnabled, activeAlerts, browserNotificationsEnabled,
+    toggleReminder, toggleAlerts, changeInterval, changeAlertThreshold, clearAlerts,
+    requestBrowserNotifications, callsOnHold: getCallsOnHold(), initAudio,
   };
 }
