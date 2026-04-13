@@ -107,7 +107,7 @@ export function useMultiChannelCallConference({
     const call = activeCalls.find(c => c.id === callId);
     if (!call) return;
     stopDurationTimer(callId);
-    setCallHistory(prev => [{ ...call, status: 'ended' }, ...prev].slice(0, 50));
+    setCallHistory(prev => [{ ...call, status: 'ended' as CallStatus }, ...prev].slice(0, 50));
     setActiveCalls(prev => prev.filter(c => c.id !== callId));
     const remaining = activeCalls.filter(c => c.id !== callId);
     if (remaining.length > 0 && activeCallId === callId) { setActiveCallId(remaining[0].id); setActiveChannel(remaining[0].channel); }
