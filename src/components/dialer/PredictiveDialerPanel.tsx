@@ -96,7 +96,7 @@ export function PredictiveDialerPanel() {
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
-    if (currentCall) { interval = window.setInterval(() => setCallTimer(p => p + 1), 1000); } else { setCallTimer(0); }
+    if (currentCall) { interval = setInterval(() => setCallTimer(p => p + 1), 1000); } else { setCallTimer(0); }
     return () => { if (interval) clearInterval(interval); };
   }, [currentCall]);
 

@@ -116,7 +116,7 @@ export function useMultiChannelCall() {
     if (!targetId) return;
     stopDurationTimer(targetId);
     const ended = activeCalls.find(c => c.id === targetId);
-    if (ended) setCallHistory(prev => [{ ...ended, status: 'ended' }, ...prev].slice(0, 50));
+    if (ended) setCallHistory(prev => [{ ...ended, status: 'ended' as CallStatus }, ...prev].slice(0, 50));
     setActiveCalls(prev => {
       const remaining = prev.filter(c => c.id !== targetId);
       if (remaining.length > 0 && activeCallId === targetId) { setActiveCallId(remaining[0].id); setActiveChannel(remaining[0].channel); }
@@ -127,7 +127,7 @@ export function useMultiChannelCall() {
 
   const endAllCalls = useCallback(() => {
     stopAllTimers();
-    activeCalls.forEach(call => setCallHistory(prev => [{ ...call, status: 'ended' }, ...prev].slice(0, 50)));
+    activeCalls.forEach(call => setCallHistory(prev => [{ ...call, status: 'ended' as CallStatus }, ...prev].slice(0, 50)));
     setActiveCalls([]); setActiveCallId(null);
   }, [activeCalls, stopAllTimers]);
 
