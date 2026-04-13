@@ -79,8 +79,6 @@ const severityConfig = {
 };
 
 const formatDuration = (seconds: number | null): string => {
-  usePageTitle('Alertas de Espera');
-
   if (!seconds) return '-';
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
@@ -89,6 +87,7 @@ const formatDuration = (seconds: number | null): string => {
 };
 
 export default function HoldAlerts() {
+  usePageTitle('Alertas de Espera');
   const [dateRange, setDateRange] = useState<{ from: Date; to: Date }>({
     from: subDays(new Date(), 7),
     to: new Date(),

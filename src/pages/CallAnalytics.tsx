@@ -95,9 +95,9 @@ export default function CallAnalytics() {
     }
   };
 
-  const getDateRangeStart = (): Date | null => {
   usePageTitle('Analytics de Chamadas');
 
+  const getDateRangeStart = (): Date | null => {
     const now = new Date();
     switch (dateRange) {
       case 'week': return subWeeks(now, 1);
