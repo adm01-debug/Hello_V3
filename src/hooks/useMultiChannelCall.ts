@@ -1,6 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { useCallTimers } from './useCallTimers';
+import { useCallTransfer } from './useCallTransfer';
 
 const log = logger.create('MultiChannelCall');
 export type CallChannel = 'webrtc' | 'wavoip' | 'sip';
@@ -23,9 +25,9 @@ export interface CallSession {
   contactName?: string;
   startedAt?: Date;
   duration: number;
-  totalHoldTime: number; // Total time spent on hold in seconds
-  holdStartedAt?: Date; // When current hold started
-  holdCount: number; // Number of times put on hold
+  totalHoldTime: number;
+  holdStartedAt?: Date;
+  holdCount: number;
   isMuted: boolean;
   isOnHold: boolean;
   isRecording: boolean;
@@ -34,9 +36,8 @@ export interface CallSession {
   isTransferring?: boolean;
   transferTarget?: TransferTarget;
   transcripts: Array<{ role: 'user' | 'agent' | 'system'; text: string; timestamp: Date }>;
-  // Database tracking fields
-  dbSessionId?: string; // ID from call_sessions table
-  agentName?: string; // Name of the agent handling the call
+  dbSessionId?: string;
+  agentName?: string;
 }
 
 export interface ConferenceCall {
@@ -61,30 +62,9 @@ export interface ChannelConfig {
 const MAX_SIMULTANEOUS_CALLS = 3;
 
 const AVAILABLE_CHANNELS: ChannelConfig[] = [
-  {
-    id: 'webrtc',
-    name: 'WebRTC',
-    enabled: true,
-    configured: true,
-    icon: 'Radio',
-    description: 'Chamadas via navegador com IA'
-  },
-  {
-    id: 'wavoip',
-    name: 'Wavoip',
-    enabled: false,
-    configured: false,
-    icon: 'MessageCircle',
-    description: 'Chamadas via WhatsApp'
-  },
-  {
-    id: 'sip',
-    name: 'SIP Genérico',
-    enabled: true,
-    configured: true,
-    icon: 'Headphones',
-    description: 'Servidor SIP próprio (Bitrix)'
-  }
+  { id: 'webrtc', name: 'WebRTC', enabled: true, configured: true, icon: 'Radio', description: 'Chamadas via navegador com IA' },
+  { id: 'wavoip', name: 'Wavoip', enabled: false, configured: false, icon: 'MessageCircle', description: 'Chamadas via WhatsApp' },
+  { id: 'sip', name: 'SIP Genérico', enabled: true, configured: true, icon: 'Headphones', description: 'Servidor SIP próprio (Bitrix)' },
 ];
 
 export function useMultiChannelCall() {
@@ -94,623 +74,170 @@ export function useMultiChannelCall() {
   const [callHistory, setCallHistory] = useState<CallSession[]>([]);
   const [channels, setChannels] = useState<ChannelConfig[]>(AVAILABLE_CHANNELS);
   const [conference, setConference] = useState<ConferenceCall | null>(null);
-  
-  const durationIntervalsRef = useRef<Map<string, number>>(new Map());
-  const holdTimeIntervalsRef = useRef<Map<string, number>>(new Map());
   const conferenceDurationRef = useRef<number | null>(null);
 
-  // Get current active call
+  const { startDurationTimer, stopDurationTimer, startHoldTimer, stopHoldTimer, stopAllTimers } = useCallTimers(setActiveCalls);
+  const { transferCall, completeTransfer, cancelTransfer } = useCallTransfer(
+    activeCalls, activeCallId, setActiveCalls, setActiveCallId, setActiveChannel, stopDurationTimer, setCallHistory
+  );
+
   const currentCall = activeCalls.find(c => c.id === activeCallId) || null;
 
-  // Start duration timer for a specific call
-  const startDurationTimer = useCallback((callId: string) => {
-    // Clear existing timer if any
-    const existingTimer = durationIntervalsRef.current.get(callId);
-    if (existingTimer) {
-      clearInterval(existingTimer);
-    }
-    
-    const timer = window.setInterval(() => {
-      setActiveCalls(prev => prev.map(call => 
-        call.id === callId ? { ...call, duration: call.duration + 1 } : call
-      ));
-    }, 1000);
-    
-    durationIntervalsRef.current.set(callId, timer);
-  }, []);
-
-  // Stop duration timer for a specific call
-  const stopDurationTimer = useCallback((callId: string) => {
-    const timer = durationIntervalsRef.current.get(callId);
-    if (timer) {
-      clearInterval(timer);
-      durationIntervalsRef.current.delete(callId);
-    }
-  }, []);
-
-  // Stop all duration timers
-  const stopAllTimers = useCallback(() => {
-    durationIntervalsRef.current.forEach((timer) => clearInterval(timer));
-    durationIntervalsRef.current.clear();
-    holdTimeIntervalsRef.current.forEach((timer) => clearInterval(timer));
-    holdTimeIntervalsRef.current.clear();
-  }, []);
-
-  // Initialize a new call
-  const initiateCall = useCallback((
-    channel: CallChannel,
-    phoneNumber?: string,
-    contactName?: string
-  ): CallSession | null => {
-    // Check if max calls reached
-    if (activeCalls.length >= MAX_SIMULTANEOUS_CALLS) {
-      return null;
-    }
-
+  const initiateCall = useCallback((channel: CallChannel, phoneNumber?: string, contactName?: string): CallSession | null => {
+    if (activeCalls.length >= MAX_SIMULTANEOUS_CALLS) return null;
     const newCall: CallSession = {
-      id: `call-${Date.now()}`,
-      channel,
-      status: 'connecting',
-      direction: 'outbound',
-      phoneNumber,
-      contactName,
-      startedAt: new Date(),
-      duration: 0,
-      totalHoldTime: 0,
-      holdCount: 0,
-      isMuted: false,
-      isOnHold: false,
-      isRecording: false,
-      isInConference: false,
-      transcripts: []
+      id: `call-${Date.now()}`, channel, status: 'connecting', direction: 'outbound',
+      phoneNumber, contactName, startedAt: new Date(), duration: 0, totalHoldTime: 0,
+      holdCount: 0, isMuted: false, isOnHold: false, isRecording: false, isInConference: false, transcripts: [],
     };
-    
     setActiveCalls(prev => [...prev, newCall]);
     setActiveCallId(newCall.id);
     setActiveChannel(channel);
-    
     return newCall;
   }, [activeCalls.length]);
 
-  // Switch to a different active call
   const switchToCall = useCallback((callId: string) => {
     const call = activeCalls.find(c => c.id === callId);
-    if (call) {
-      setActiveCallId(callId);
-      setActiveChannel(call.channel);
-    }
+    if (call) { setActiveCallId(callId); setActiveChannel(call.channel); }
   }, [activeCalls]);
 
-  // Update call status for a specific call
   const updateCallStatus = useCallback((status: CallStatus, callId?: string) => {
-    const targetCallId = callId || activeCallId;
-    if (!targetCallId) return;
-
+    const targetId = callId || activeCallId;
+    if (!targetId) return;
     setActiveCalls(prev => prev.map(call => {
-      if (call.id !== targetCallId) return call;
-      
-      if (status === 'active' && call.status !== 'active') {
-        startDurationTimer(targetCallId);
-      }
-      
+      if (call.id !== targetId) return call;
+      if (status === 'active' && call.status !== 'active') startDurationTimer(targetId);
       return { ...call, status };
     }));
   }, [activeCallId, startDurationTimer]);
 
-  // End a specific call
   const endCall = useCallback((callId?: string) => {
-    const targetCallId = callId || activeCallId;
-    if (!targetCallId) return;
-
-    stopDurationTimer(targetCallId);
-    
-    const endedCall = activeCalls.find(c => c.id === targetCallId);
-    if (endedCall) {
-      const finalCall: CallSession = {
-        ...endedCall,
-        status: 'ended'
-      };
-      setCallHistory(prev => [finalCall, ...prev].slice(0, 50));
-    }
-    
+    const targetId = callId || activeCallId;
+    if (!targetId) return;
+    stopDurationTimer(targetId);
+    const ended = activeCalls.find(c => c.id === targetId);
+    if (ended) setCallHistory(prev => [{ ...ended, status: 'ended' as CallStatus }, ...prev].slice(0, 50));
     setActiveCalls(prev => {
-      const remaining = prev.filter(c => c.id !== targetCallId);
-      if (remaining.length > 0 && activeCallId === targetCallId) {
-        setActiveCallId(remaining[0].id);
-        setActiveChannel(remaining[0].channel);
-      } else if (remaining.length === 0) {
-        setActiveCallId(null);
-      }
+      const remaining = prev.filter(c => c.id !== targetId);
+      if (remaining.length > 0 && activeCallId === targetId) { setActiveCallId(remaining[0].id); setActiveChannel(remaining[0].channel); }
+      else if (remaining.length === 0) setActiveCallId(null);
       return remaining;
     });
   }, [activeCallId, activeCalls, stopDurationTimer]);
 
-  // End all calls
   const endAllCalls = useCallback(() => {
     stopAllTimers();
-    
-    activeCalls.forEach(call => {
-      const finalCall: CallSession = { ...call, status: 'ended' };
-      setCallHistory(prev => [finalCall, ...prev].slice(0, 50));
-    });
-    
-    setActiveCalls([]);
-    setActiveCallId(null);
+    activeCalls.forEach(call => setCallHistory(prev => [{ ...call, status: 'ended' as CallStatus }, ...prev].slice(0, 50)));
+    setActiveCalls([]); setActiveCallId(null);
   }, [activeCalls, stopAllTimers]);
 
-  // Toggle mute for current call
   const toggleMute = useCallback((callId?: string) => {
-    const targetCallId = callId || activeCallId;
-    if (!targetCallId) return;
-
-    setActiveCalls(prev => prev.map(call => 
-      call.id === targetCallId ? { ...call, isMuted: !call.isMuted } : call
-    ));
+    const id = callId || activeCallId; if (!id) return;
+    setActiveCalls(prev => prev.map(c => c.id === id ? { ...c, isMuted: !c.isMuted } : c));
   }, [activeCallId]);
-
-  // Start hold time timer for a specific call
-  const startHoldTimer = useCallback((callId: string) => {
-    const existingTimer = holdTimeIntervalsRef.current.get(callId);
-    if (existingTimer) {
-      clearInterval(existingTimer);
-    }
-    
-    const timer = window.setInterval(() => {
-      setActiveCalls(prev => prev.map(call => 
-        call.id === callId && call.isOnHold 
-          ? { ...call, totalHoldTime: call.totalHoldTime + 1 } 
-          : call
-      ));
-    }, 1000);
-    
-    holdTimeIntervalsRef.current.set(callId, timer);
-  }, []);
-
-  // Stop hold time timer for a specific call
-  const stopHoldTimer = useCallback((callId: string) => {
-    const timer = holdTimeIntervalsRef.current.get(callId);
-    if (timer) {
-      clearInterval(timer);
-      holdTimeIntervalsRef.current.delete(callId);
-    }
-  }, []);
 
   // Persist hold event to database
-  const persistHoldEvent = useCallback(async (
-    callId: string,
-    callSessionId: string | undefined,
-    agentName: string | undefined,
-    action: 'start' | 'end',
-    durationSeconds?: number
-  ) => {
+  const persistHoldEvent = useCallback(async (callId: string, callSessionId: string | undefined, agentName: string | undefined, action: 'start' | 'end', durationSeconds?: number) => {
     try {
       if (action === 'start') {
-        // Create a new hold event
-        const { error } = await supabase
-          .from('hold_events')
-          .insert({
-            call_session_id: callSessionId || null,
-            agent_name: agentName || null,
-            started_at: new Date().toISOString(),
-          });
-        
-        if (error) {
-          log.error('Error persisting hold start event:', error);
-        } else {
-          log.info(`Hold Event: Started for call ${callId}`);
-        }
+        await supabase.from('hold_events').insert({ call_session_id: callSessionId || null, agent_name: agentName || null, started_at: new Date().toISOString() });
       } else {
-        // Update the most recent hold event for this call with end time and duration
-        const { data: recentEvent, error: fetchError } = await supabase
-          .from('hold_events')
-          .select('id')
-          .eq('call_session_id', callSessionId ?? '')
-          .is('ended_at', null)
-          .order('started_at', { ascending: false })
-          .limit(1)
-          .maybeSingle();
-
-        if (fetchError) {
-          log.error('Error fetching hold event:', fetchError);
-          return;
-        }
-
-        if (recentEvent) {
-          const { error: updateError } = await supabase
-            .from('hold_events')
-            .update({
-              ended_at: new Date().toISOString(),
-              duration_seconds: durationSeconds || 0,
-            })
-            .eq('id', recentEvent.id);
-
-          if (updateError) {
-            log.error('Error updating hold event:', updateError);
-          } else {
-            log.info(`Hold Event: Ended for call ${callId}, duration: ${durationSeconds}s`);
-          }
-        }
+        const { data: ev } = await supabase.from('hold_events').select('id').eq('call_session_id', callSessionId ?? '').is('ended_at', null).order('started_at', { ascending: false }).limit(1).maybeSingle();
+        if (ev) await supabase.from('hold_events').update({ ended_at: new Date().toISOString(), duration_seconds: durationSeconds || 0 }).eq('id', ev.id);
       }
-    } catch (error) {
-      log.error('Error persisting hold event:', error);
-    }
+    } catch (error) { log.error('Error persisting hold event:', error); }
   }, []);
 
-  // Toggle hold for current call with hold time tracking
   const toggleHold = useCallback((callId?: string) => {
-    const targetCallId = callId || activeCallId;
-    if (!targetCallId) return;
-
-    // Find the call to get its metadata for persistence
-    const targetCall = activeCalls.find(c => c.id === targetCallId);
-
+    const id = callId || activeCallId; if (!id) return;
     setActiveCalls(prev => prev.map(call => {
-      if (call.id !== targetCallId) return call;
-      const newIsOnHold = !call.isOnHold;
-      
-      if (newIsOnHold) {
-        // Starting hold - start timer and persist
-        startHoldTimer(targetCallId);
-        persistHoldEvent(targetCallId, call.dbSessionId, call.agentName, 'start');
-        return { 
-          ...call, 
-          isOnHold: true,
-          holdStartedAt: new Date(),
-          holdCount: call.holdCount + 1,
-          status: 'on-hold' as CallStatus
-        };
+      if (call.id !== id) return call;
+      const newHold = !call.isOnHold;
+      if (newHold) {
+        startHoldTimer(id);
+        persistHoldEvent(id, call.dbSessionId, call.agentName, 'start');
+        return { ...call, isOnHold: true, holdStartedAt: new Date(), holdCount: call.holdCount + 1, status: 'on-hold' as CallStatus };
       } else {
-        // Ending hold - stop timer and persist
-        stopHoldTimer(targetCallId);
-        // Calculate duration since hold started
-        const holdDuration = call.holdStartedAt 
-          ? Math.floor((Date.now() - call.holdStartedAt.getTime()) / 1000)
-          : 0;
-        persistHoldEvent(targetCallId, call.dbSessionId, call.agentName, 'end', holdDuration);
-        return { 
-          ...call, 
-          isOnHold: false,
-          holdStartedAt: undefined,
-          status: 'active' as CallStatus
-        };
+        stopHoldTimer(id);
+        const dur = call.holdStartedAt ? Math.floor((Date.now() - call.holdStartedAt.getTime()) / 1000) : 0;
+        persistHoldEvent(id, call.dbSessionId, call.agentName, 'end', dur);
+        return { ...call, isOnHold: false, holdStartedAt: undefined, status: 'active' as CallStatus };
       }
     }));
-  }, [activeCallId, activeCalls, startHoldTimer, stopHoldTimer, persistHoldEvent]);
+  }, [activeCallId, startHoldTimer, stopHoldTimer, persistHoldEvent]);
 
-  // Set database session ID for a call
   const setCallDbSession = useCallback((callId: string, dbSessionId: string, agentName?: string) => {
-    setActiveCalls(prev => prev.map(call => 
-      call.id === callId ? { ...call, dbSessionId, agentName } : call
-    ));
+    setActiveCalls(prev => prev.map(c => c.id === callId ? { ...c, dbSessionId, agentName } : c));
   }, []);
 
-  // Toggle recording for current call
   const toggleRecording = useCallback((callId?: string) => {
-    const targetCallId = callId || activeCallId;
-    if (!targetCallId) return;
-
-    setActiveCalls(prev => prev.map(call => 
-      call.id === targetCallId ? { ...call, isRecording: !call.isRecording } : call
-    ));
+    const id = callId || activeCallId; if (!id) return;
+    setActiveCalls(prev => prev.map(c => c.id === id ? { ...c, isRecording: !c.isRecording } : c));
   }, [activeCallId]);
 
-  // Add transcript to current call
   const addTranscript = useCallback((role: 'user' | 'agent' | 'system', text: string, callId?: string) => {
-    const targetCallId = callId || activeCallId;
-    if (!targetCallId) return;
-
-    setActiveCalls(prev => prev.map(call => {
-      if (call.id !== targetCallId) return call;
-      return {
-        ...call,
-        transcripts: [
-          ...call.transcripts,
-          { role, text, timestamp: new Date() }
-        ]
-      };
-    }));
+    const id = callId || activeCallId; if (!id) return;
+    setActiveCalls(prev => prev.map(c => c.id === id ? { ...c, transcripts: [...c.transcripts, { role, text, timestamp: new Date() }] } : c));
   }, [activeCallId]);
 
-  // Configure channel
   const configureChannel = useCallback((channelId: CallChannel, config: Partial<ChannelConfig>) => {
-    setChannels(prev => prev.map(ch => 
-      ch.id === channelId ? { ...ch, ...config } : ch
-    ));
+    setChannels(prev => prev.map(ch => ch.id === channelId ? { ...ch, ...config } : ch));
   }, []);
 
-  // Get call by ID
-  const getCallById = useCallback((callId: string) => {
-    return activeCalls.find(c => c.id === callId) || null;
-  }, [activeCalls]);
+  const getCallById = useCallback((callId: string) => activeCalls.find(c => c.id === callId) || null, [activeCalls]);
 
-  // Start conference call - merge multiple calls with automatic recording
+  // Conference operations
   const startConference = useCallback((callIds: string[]) => {
     if (callIds.length < 2) return null;
-
     const conferenceId = `conf-${Date.now()}`;
     const now = new Date();
-    
-    // Update all participating calls - enable recording automatically
-    setActiveCalls(prev => prev.map(call => {
-      if (callIds.includes(call.id)) {
-        return {
-          ...call,
-          isInConference: true,
-          isOnHold: false,
-          isRecording: true, // Auto-enable recording for conference
-          status: 'conference' as CallStatus,
-          conferenceId
-        };
-      }
-      return call;
-    }));
-
-    const newConference: ConferenceCall = {
-      id: conferenceId,
-      participantIds: callIds,
-      startedAt: now,
-      duration: 0,
-      isActive: true,
-      isRecording: true, // Conference recording enabled by default
-      recordingStartedAt: now
-    };
-
-    setConference(newConference);
-
-    // Start conference duration timer
-    conferenceDurationRef.current = window.setInterval(() => {
-      setConference(prev => prev ? { ...prev, duration: prev.duration + 1 } : null);
-    }, 1000);
-
-    log.info('Conference started with auto-recording', { conferenceId });
-    return newConference;
+    setActiveCalls(prev => prev.map(call => callIds.includes(call.id) ? { ...call, isInConference: true, isOnHold: false, isRecording: true, status: 'conference' as CallStatus, conferenceId } : call));
+    const nc: ConferenceCall = { id: conferenceId, participantIds: callIds, startedAt: now, duration: 0, isActive: true, isRecording: true, recordingStartedAt: now };
+    setConference(nc);
+    conferenceDurationRef.current = window.setInterval(() => { setConference(p => p ? { ...p, duration: p.duration + 1 } : null); }, 1000);
+    return nc;
   }, []);
 
-  // Add call to existing conference - inherit recording state
   const addToConference = useCallback((callId: string) => {
     if (!conference) return;
-
-    setActiveCalls(prev => prev.map(call => {
-      if (call.id === callId) {
-        return {
-          ...call,
-          isInConference: true,
-          isOnHold: false,
-          isRecording: conference.isRecording, // Inherit conference recording state
-          status: 'conference' as CallStatus,
-          conferenceId: conference.id
-        };
-      }
-      return call;
-    }));
-
-    setConference(prev => prev ? {
-      ...prev,
-      participantIds: [...prev.participantIds, callId]
-    } : null);
-    
-    log.info('Added call to conference', { callId, recording: conference.isRecording });
+    setActiveCalls(prev => prev.map(c => c.id === callId ? { ...c, isInConference: true, isOnHold: false, isRecording: conference.isRecording, status: 'conference' as CallStatus, conferenceId: conference.id } : c));
+    setConference(p => p ? { ...p, participantIds: [...p.participantIds, callId] } : null);
   }, [conference]);
 
-  // Remove call from conference
-  const removeFromConference = useCallback((callId: string) => {
-    if (!conference) return;
-
-    setActiveCalls(prev => prev.map(call => {
-      if (call.id === callId) {
-        return {
-          ...call,
-          isInConference: false,
-          status: 'active' as CallStatus,
-          conferenceId: undefined
-        };
-      }
-      return call;
-    }));
-
-    const newParticipantIds = conference.participantIds.filter(id => id !== callId);
-    
-    // If only one participant left, end conference
-    if (newParticipantIds.length < 2) {
-      endConference();
-    } else {
-      setConference(prev => prev ? {
-        ...prev,
-        participantIds: newParticipantIds
-      } : null);
-    }
-  }, [conference]);
-
-  // Toggle conference recording
-  const toggleConferenceRecording = useCallback(() => {
-    if (!conference) return;
-
-    const newRecordingState = !conference.isRecording;
-    
-    // Update all participating calls
-    setActiveCalls(prev => prev.map(call => {
-      if (call.conferenceId === conference.id) {
-        return {
-          ...call,
-          isRecording: newRecordingState
-        };
-      }
-      return call;
-    }));
-
-    setConference(prev => prev ? {
-      ...prev,
-      isRecording: newRecordingState,
-      recordingStartedAt: newRecordingState ? new Date() : undefined
-    } : null);
-    
-    log.info(`Conference recording ${newRecordingState ? 'started' : 'stopped'}`);
-  }, [conference]);
-
-  // End conference call
   const endConference = useCallback(() => {
     if (!conference) return;
-
-    // Stop conference timer
-    if (conferenceDurationRef.current) {
-      clearInterval(conferenceDurationRef.current);
-      conferenceDurationRef.current = null;
-    }
-
-    log.info('Conference ended', { wasRecording: conference.isRecording });
-
-    // Update all participating calls back to active, stop recording
-    setActiveCalls(prev => prev.map(call => {
-      if (call.conferenceId === conference.id) {
-        return {
-          ...call,
-          isInConference: false,
-          isRecording: false, // Stop recording when conference ends
-          status: 'active' as CallStatus,
-          conferenceId: undefined
-        };
-      }
-      return call;
-    }));
-
+    if (conferenceDurationRef.current) { clearInterval(conferenceDurationRef.current); conferenceDurationRef.current = null; }
+    setActiveCalls(prev => prev.map(c => c.conferenceId === conference.id ? { ...c, isInConference: false, isRecording: false, status: 'active' as CallStatus, conferenceId: undefined } : c));
     setConference(null);
   }, [conference]);
 
-  // Get calls available for conference (not already in conference)
-  const getCallsAvailableForConference = useCallback(() => {
-    return activeCalls.filter(call => 
-      !call.isInConference && 
-      (call.status === 'active' || call.status === 'on-hold')
-    );
-  }, [activeCalls]);
+  const removeFromConference = useCallback((callId: string) => {
+    if (!conference) return;
+    setActiveCalls(prev => prev.map(c => c.id === callId ? { ...c, isInConference: false, status: 'active' as CallStatus, conferenceId: undefined } : c));
+    const newIds = conference.participantIds.filter(id => id !== callId);
+    if (newIds.length < 2) endConference();
+    else setConference(p => p ? { ...p, participantIds: newIds } : null);
+  }, [conference, endConference]);
 
-  // Transfer call to agent or external number
-  const transferCall = useCallback((
-    callId: string, 
-    target: TransferTarget, 
-    transferType: TransferType
-  ) => {
-    setActiveCalls(prev => prev.map(call => {
-      if (call.id !== callId) return call;
-      
-      if (transferType === 'blind') {
-        // Blind transfer - immediately mark as transferring then end
-        return {
-          ...call,
-          status: 'transferring' as CallStatus,
-          isTransferring: true,
-          transferTarget: target
-        };
-      } else {
-        // Attended transfer - put on hold and start consultation
-        return {
-          ...call,
-          isOnHold: true,
-          status: 'on-hold' as CallStatus,
-          isTransferring: true,
-          transferTarget: target
-        };
-      }
-    }));
+  const toggleConferenceRecording = useCallback(() => {
+    if (!conference) return;
+    const nr = !conference.isRecording;
+    setActiveCalls(prev => prev.map(c => c.conferenceId === conference.id ? { ...c, isRecording: nr } : c));
+    setConference(p => p ? { ...p, isRecording: nr, recordingStartedAt: nr ? new Date() : undefined } : null);
+  }, [conference]);
 
-    // For blind transfer, simulate completion after a short delay
-    if (transferType === 'blind') {
-      setTimeout(() => {
-        completeTransfer(callId);
-      }, 2000);
-    }
-  }, []);
+  const getCallsAvailableForConference = useCallback(() => activeCalls.filter(c => !c.isInConference && (c.status === 'active' || c.status === 'on-hold')), [activeCalls]);
 
-  // Complete the transfer
-  const completeTransfer = useCallback((callId: string) => {
-    const call = activeCalls.find(c => c.id === callId);
-    if (!call) return;
-
-    stopDurationTimer(callId);
-    
-    const transferredCall: CallSession = {
-      ...call,
-      status: 'ended'
-    };
-    setCallHistory(prev => [transferredCall, ...prev].slice(0, 50));
-    
-    setActiveCalls(prev => prev.filter(c => c.id !== callId));
-    
-    // Switch to another active call if available
-    const remaining = activeCalls.filter(c => c.id !== callId);
-    if (remaining.length > 0 && activeCallId === callId) {
-      setActiveCallId(remaining[0].id);
-      setActiveChannel(remaining[0].channel);
-    } else if (remaining.length === 0) {
-      setActiveCallId(null);
-    }
-  }, [activeCalls, activeCallId, stopDurationTimer]);
-
-  // Cancel ongoing transfer
-  const cancelTransfer = useCallback((callId: string) => {
-    setActiveCalls(prev => prev.map(call => {
-      if (call.id !== callId) return call;
-      return {
-        ...call,
-        isOnHold: false,
-        status: 'active' as CallStatus,
-        isTransferring: false,
-        transferTarget: undefined
-      };
-    }));
-  }, []);
-
-  // Cleanup on unmount
   useEffect(() => {
-    return () => {
-      stopAllTimers();
-      if (conferenceDurationRef.current) {
-        clearInterval(conferenceDurationRef.current);
-      }
-    };
+    return () => { stopAllTimers(); if (conferenceDurationRef.current) clearInterval(conferenceDurationRef.current); };
   }, [stopAllTimers]);
 
   return {
-    // State
-    activeChannel,
-    currentCall,
-    activeCalls,
-    activeCallId,
-    callHistory,
-    channels,
-    conference,
-    isInCall: activeCalls.length > 0,
-    canAddCall: activeCalls.length < MAX_SIMULTANEOUS_CALLS,
-    maxCalls: MAX_SIMULTANEOUS_CALLS,
-    
-    // Actions
-    setActiveChannel,
-    initiateCall,
-    switchToCall,
-    updateCallStatus,
-    endCall,
-    endAllCalls,
-    toggleMute,
-    toggleHold,
-    toggleRecording,
-    addTranscript,
-    configureChannel,
-    getCallById,
-    
-    // Conference actions
-    startConference,
-    addToConference,
-    removeFromConference,
-    endConference,
-    getCallsAvailableForConference,
-    toggleConferenceRecording,
-    
-    // Transfer actions
-    transferCall,
-    completeTransfer,
-    cancelTransfer,
-    
-    // Database session tracking
-    setCallDbSession
+    activeChannel, currentCall, activeCalls, activeCallId, callHistory, channels, conference,
+    isInCall: activeCalls.length > 0, canAddCall: activeCalls.length < MAX_SIMULTANEOUS_CALLS, maxCalls: MAX_SIMULTANEOUS_CALLS,
+    setActiveChannel, initiateCall, switchToCall, updateCallStatus, endCall, endAllCalls,
+    toggleMute, toggleHold, toggleRecording, addTranscript, configureChannel, getCallById,
+    startConference, addToConference, removeFromConference, endConference, getCallsAvailableForConference, toggleConferenceRecording,
+    transferCall, completeTransfer, cancelTransfer, setCallDbSession,
   };
 }
