@@ -40,8 +40,6 @@ interface DailyMetrics {
 }
 
 const formatDuration = (seconds: number): string => {
-  usePageTitle('Métricas de Espera');
-
   if (seconds < 60) return `${seconds}s`;
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
@@ -54,6 +52,7 @@ const formatDuration = (seconds: number): string => {
 const CHART_COLORS = ['hsl(var(--primary))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3))', 'hsl(var(--chart-4))', 'hsl(var(--chart-5))'];
 
 export default function HoldMetrics() {
+  usePageTitle('Métricas de Espera');
   const [dateRange, setDateRange] = useState<'7d' | '30d' | '90d'>('7d');
   
   const daysBack = dateRange === '7d' ? 7 : dateRange === '30d' ? 30 : 90;
