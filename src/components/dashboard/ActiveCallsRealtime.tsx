@@ -1,206 +1,26 @@
-import { useEffect, useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Phone, Pause, Clock, User, Filter, Volume2, VolumeX } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { useHoldSoundAlert } from '@/hooks/useHoldSoundAlert';
+import { useActiveCallsRealtime } from '@/hooks/useActiveCallsRealtime';
 
-interface ActiveCall {
-  id: string;
-  caller_name: string | null;
-  caller_phone: string | null;
-  agent_name: string | null;
-  started_at: string;
-  status: string | null;
-  hold_time_seconds: number | null;
-  hold_count: number | null;
-}
-
-interface ActiveHoldEvent {
-  id: string;
-  call_session_id: string | null;
-  started_at: string;
-  ended_at: string | null;
-  duration_seconds: number | null;
-}
+const formatDuration = (seconds: number) => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
 
 export const ActiveCallsRealtime = () => {
-  const [activeCalls, setActiveCalls] = useState<ActiveCall[]>([]);
-  const [activeHolds, setActiveHolds] = useState<ActiveHoldEvent[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedAgent, setSelectedAgent] = useState<string>('all');
-  const [selectedHoldStatus, setSelectedHoldStatus] = useState<string>('all');
-
-  // Sound alert hook
-  const { soundEnabled, toggleSound, settings } = useHoldSoundAlert(activeHolds);
-
-  const fetchActiveCalls = async () => {
-    const { data, error } = await supabase
-      .from('call_sessions')
-      .select('*')
-      .eq('status', 'active')
-      .order('started_at', { ascending: false });
-
-    if (!error && data) {
-      setActiveCalls(data);
-    }
-  };
-
-  const fetchActiveHolds = async () => {
-    const { data, error } = await supabase
-      .from('hold_events')
-      .select('*')
-      .is('ended_at', null)
-      .order('started_at', { ascending: false });
-
-    if (!error && data) {
-      setActiveHolds(data);
-    }
-  };
-
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      await Promise.all([fetchActiveCalls(), fetchActiveHolds()]);
-      setLoading(false);
-    };
-
-    loadData();
-
-    // Subscribe to real-time updates
-    const callsChannel = supabase
-      .channel('active-calls-realtime')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'call_sessions'
-        },
-        () => {
-          fetchActiveCalls();
-        }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'hold_events'
-        },
-        () => {
-          fetchActiveHolds();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(callsChannel);
-    };
-  }, []);
-
-  const isCallOnHold = (callId: string) => {
-    return activeHolds.some(hold => hold.call_session_id === callId);
-  };
-
-  const getHoldDuration = (callId: string) => {
-    const hold = activeHolds.find(h => h.call_session_id === callId);
-    if (!hold) return 0;
-    
-    const startTime = new Date(hold.started_at).getTime();
-    const now = Date.now();
-    return Math.floor((now - startTime) / 1000);
-  };
-
-  // Get hold severity based on duration and settings
-  const getHoldSeverity = (holdDuration: number): 'normal' | 'warning' | 'critical' => {
-    if (holdDuration >= settings.critical_threshold_seconds) return 'critical';
-    if (holdDuration >= settings.warning_threshold_seconds) return 'warning';
-    return 'normal';
-  };
-
-  const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  // Auto-update hold durations
-  const [, setTick] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTick(t => t + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Get unique agents from active calls
-  const agents = useMemo(() => {
-    const agentNames = activeCalls
-      .map(call => call.agent_name)
-      .filter((name): name is string => !!name);
-    return [...new Set(agentNames)].sort();
-  }, [activeCalls]);
-
-  // Count calls by status and check for critical/warning holds
-  const statusCounts = useMemo(() => {
-    const callsOnHold = activeCalls.filter(call => isCallOnHold(call.id));
-    const onHoldCount = callsOnHold.length;
-    const inCallCount = activeCalls.length - onHoldCount;
-    
-    // Check severity of holds
-    let hasCritical = false;
-    let hasWarning = false;
-    callsOnHold.forEach(call => {
-      const holdDuration = getHoldDuration(call.id);
-      const severity = getHoldSeverity(holdDuration);
-      if (severity === 'critical') hasCritical = true;
-      if (severity === 'warning') hasWarning = true;
-    });
-    
-    const maxSeverity = hasCritical ? 'critical' : hasWarning ? 'warning' : 'normal';
-    
-    return { onHold: onHoldCount, inCall: inCallCount, total: activeCalls.length, maxSeverity };
-  }, [activeCalls, activeHolds]);
-
-  // Filter calls by selected agent and hold status
-  const filteredCalls = useMemo(() => {
-    let filtered = activeCalls;
-    
-    // Filter by agent
-    if (selectedAgent !== 'all') {
-      filtered = filtered.filter(call => call.agent_name === selectedAgent);
-    }
-    
-    // Filter by hold status
-    if (selectedHoldStatus === 'on_hold') {
-      filtered = filtered.filter(call => isCallOnHold(call.id));
-    } else if (selectedHoldStatus === 'in_call') {
-      filtered = filtered.filter(call => !isCallOnHold(call.id));
-    }
-    
-    return filtered;
-  }, [activeCalls, selectedAgent, selectedHoldStatus, activeHolds]);
+  const {
+    loading, filteredCalls, agents, statusCounts,
+    selectedAgent, setSelectedAgent, selectedHoldStatus, setSelectedHoldStatus,
+    soundEnabled, toggleSound, isCallOnHold, getHoldDuration, getHoldSeverity,
+  } = useActiveCallsRealtime();
 
   if (loading) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Phone className="h-5 w-5 text-primary" />
-            Chamadas Ativas
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-center py-8">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary" />
-          </div>
-        </CardContent>
-      </Card>
-    );
+    return (<Card><CardHeader><CardTitle className="flex items-center gap-2"><Phone className="h-5 w-5 text-primary" />Chamadas Ativas</CardTitle></CardHeader><CardContent><div className="flex items-center justify-center py-8"><div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary" /></div></CardContent></Card>);
   }
 
   return (
@@ -208,239 +28,55 @@ export const ActiveCallsRealtime = () => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-2">
-            <CardTitle className="flex items-center gap-2">
-              <Phone className="h-5 w-5 text-primary" />
-              Chamadas Ativas
-              {filteredCalls.length > 0 && (
-                <Badge variant="secondary" className="ml-2">
-                  {filteredCalls.length}
-                </Badge>
-              )}
-            </CardTitle>
+            <CardTitle className="flex items-center gap-2"><Phone className="h-5 w-5 text-primary" />Chamadas Ativas{filteredCalls.length > 0 && <Badge variant="secondary" className="ml-2">{filteredCalls.length}</Badge>}</CardTitle>
             {statusCounts.total > 0 && (
               <div className="flex items-center gap-3 text-sm">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-success/10 border border-success/20 cursor-default">
-                        <Phone className="h-3 w-3 text-success" />
-                        <span className="font-medium text-success">{statusCounts.inCall}</span>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{statusCounts.inCall} chamada{statusCounts.inCall !== 1 ? 's' : ''} em andamento</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md cursor-default transition-all ${
-                        statusCounts.maxSeverity === 'critical'
-                          ? 'bg-destructive/20 border border-destructive/40 animate-pulse'
-                          : statusCounts.maxSeverity === 'warning'
-                          ? 'bg-call-hold/20 border border-call-hold/40 animate-pulse'
-                          : statusCounts.onHold > 0 
-                          ? 'bg-destructive/10 border border-destructive/20' 
-                          : 'bg-muted border border-border'
-                      }`}>
-                        <Pause className={`h-3 w-3 ${
-                          statusCounts.maxSeverity === 'critical'
-                            ? 'text-destructive'
-                            : statusCounts.maxSeverity === 'warning'
-                            ? 'text-call-hold'
-                            : statusCounts.onHold > 0 
-                            ? 'text-destructive' 
-                            : 'text-muted-foreground'
-                        }`} />
-                        <span className={`font-medium ${
-                          statusCounts.maxSeverity === 'critical'
-                            ? 'text-destructive'
-                            : statusCounts.maxSeverity === 'warning'
-                            ? 'text-call-hold'
-                            : statusCounts.onHold > 0 
-                            ? 'text-destructive' 
-                            : 'text-muted-foreground'
-                        }`}>
-                          {statusCounts.onHold}
-                        </span>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>
-                        {statusCounts.onHold} chamada{statusCounts.onHold !== 1 ? 's' : ''} em espera
-                        {statusCounts.maxSeverity === 'critical' && ' (crítico!)'}
-                        {statusCounts.maxSeverity === 'warning' && ' (atenção)'}
-                      </p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <TooltipProvider><Tooltip><TooltipTrigger asChild><div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-success/10 border border-success/20 cursor-default"><Phone className="h-3 w-3 text-success" /><span className="font-medium text-success">{statusCounts.inCall}</span></div></TooltipTrigger><TooltipContent><p>{statusCounts.inCall} chamada{statusCounts.inCall !== 1 ? 's' : ''} em andamento</p></TooltipContent></Tooltip></TooltipProvider>
+                <TooltipProvider><Tooltip><TooltipTrigger asChild>
+                  <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md cursor-default transition-all ${statusCounts.maxSeverity === 'critical' ? 'bg-destructive/20 border border-destructive/40 animate-pulse' : statusCounts.maxSeverity === 'warning' ? 'bg-call-hold/20 border border-call-hold/40 animate-pulse' : statusCounts.onHold > 0 ? 'bg-destructive/10 border border-destructive/20' : 'bg-muted border border-border'}`}>
+                    <Pause className={`h-3 w-3 ${statusCounts.maxSeverity === 'critical' ? 'text-destructive' : statusCounts.maxSeverity === 'warning' ? 'text-call-hold' : statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
+                    <span className={`font-medium ${statusCounts.maxSeverity === 'critical' ? 'text-destructive' : statusCounts.maxSeverity === 'warning' ? 'text-call-hold' : statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`}>{statusCounts.onHold}</span>
+                  </div>
+                </TooltipTrigger><TooltipContent><p>{statusCounts.onHold} chamada{statusCounts.onHold !== 1 ? 's' : ''} em espera{statusCounts.maxSeverity === 'critical' ? ' (crítico!)' : statusCounts.maxSeverity === 'warning' ? ' (atenção)' : ''}</p></TooltipContent></Tooltip></TooltipProvider>
               </div>
             )}
           </div>
           <div className="flex items-center gap-2">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={toggleSound}
-                    className={soundEnabled ? 'text-primary' : 'text-muted-foreground'}
-                  >
-                    {soundEnabled ? (
-                      <Volume2 className="h-4 w-4" />
-                    ) : (
-                      <VolumeX className="h-4 w-4" />
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{soundEnabled ? 'Desativar som de alerta' : 'Ativar som de alerta'}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <Select value={selectedHoldStatus} onValueChange={setSelectedHoldStatus}>
-              <SelectTrigger className="w-[140px]">
-                <Pause className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todos</SelectItem>
-                <SelectItem value="on_hold">Em Espera</SelectItem>
-                <SelectItem value="in_call">Em Chamada</SelectItem>
-              </SelectContent>
-            </Select>
-            {agents.length > 0 && (
-              <Select value={selectedAgent} onValueChange={setSelectedAgent}>
-                <SelectTrigger className="w-[180px]">
-                  <Filter className="h-4 w-4 mr-2" />
-                  <SelectValue placeholder="Filtrar por agente" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Todos os agentes</SelectItem>
-                  {agents.map(agent => (
-                    <SelectItem key={agent} value={agent}>
-                      {agent}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
+            <TooltipProvider><Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" onClick={toggleSound} className={soundEnabled ? 'text-primary' : 'text-muted-foreground'}>{soundEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}</Button></TooltipTrigger><TooltipContent><p>{soundEnabled ? 'Desativar som' : 'Ativar som'}</p></TooltipContent></Tooltip></TooltipProvider>
+            <Select value={selectedHoldStatus} onValueChange={setSelectedHoldStatus}><SelectTrigger className="w-[140px]"><Pause className="h-4 w-4 mr-2" /><SelectValue placeholder="Status" /></SelectTrigger><SelectContent><SelectItem value="all">Todos</SelectItem><SelectItem value="on_hold">Em Espera</SelectItem><SelectItem value="in_call">Em Chamada</SelectItem></SelectContent></Select>
+            {agents.length > 0 && (<Select value={selectedAgent} onValueChange={setSelectedAgent}><SelectTrigger className="w-[180px]"><Filter className="h-4 w-4 mr-2" /><SelectValue placeholder="Filtrar por agente" /></SelectTrigger><SelectContent><SelectItem value="all">Todos os agentes</SelectItem>{agents.map(a => <SelectItem key={a} value={a}>{a}</SelectItem>)}</SelectContent></Select>)}
           </div>
         </div>
       </CardHeader>
       <CardContent>
         {filteredCalls.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
-            <Phone className="h-12 w-12 mx-auto mb-3 opacity-20" />
-            <p>{selectedAgent === 'all' ? 'Nenhuma chamada ativa no momento' : `Nenhuma chamada ativa para ${selectedAgent}`}</p>
-          </div>
+          <div className="text-center py-8 text-muted-foreground"><Phone className="h-12 w-12 mx-auto mb-3 opacity-20" /><p>{selectedAgent === 'all' ? 'Nenhuma chamada ativa' : `Nenhuma chamada para ${selectedAgent}`}</p></div>
         ) : (
           <div className="space-y-3">
             {filteredCalls.map(call => {
               const onHold = isCallOnHold(call.id);
               const holdDuration = getHoldDuration(call.id);
               const holdSeverity = onHold ? getHoldSeverity(holdDuration) : 'normal';
-              const callDuration = Math.floor(
-                (Date.now() - new Date(call.started_at).getTime()) / 1000
-              );
-
+              const callDuration = Math.floor((Date.now() - new Date(call.started_at).getTime()) / 1000);
               return (
-                <div
-                  key={call.id}
-                  className={`p-4 rounded-lg border transition-colors ${
-                    holdSeverity === 'critical'
-                      ? 'border-destructive bg-destructive/10 animate-pulse'
-                      : holdSeverity === 'warning'
-                      ? 'border-call-hold/50 bg-call-hold/5'
-                      : onHold
-                      ? 'border-destructive/50 bg-destructive/5 animate-pulse'
-                      : 'border-border bg-card'
-                  }`}
-                >
+                <div key={call.id} className={`p-4 rounded-lg border transition-colors ${holdSeverity === 'critical' ? 'border-destructive bg-destructive/10 animate-pulse' : holdSeverity === 'warning' ? 'border-call-hold/50 bg-call-hold/5' : onHold ? 'border-destructive/50 bg-destructive/5 animate-pulse' : 'border-border bg-card'}`}>
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div
-                        className={`p-2 rounded-full ${
-                          holdSeverity === 'critical'
-                            ? 'bg-destructive/20'
-                            : holdSeverity === 'warning'
-                            ? 'bg-call-hold/20'
-                            : onHold
-                            ? 'bg-destructive/10'
-                            : 'bg-primary/10'
-                        }`}
-                      >
-                        {onHold ? (
-                          <Pause className={`h-4 w-4 ${
-                            holdSeverity === 'critical'
-                              ? 'text-destructive'
-                              : holdSeverity === 'warning'
-                              ? 'text-call-hold'
-                              : 'text-destructive'
-                          }`} />
-                        ) : (
-                          <Phone className="h-4 w-4 text-primary" />
-                        )}
+                      <div className={`p-2 rounded-full ${holdSeverity === 'critical' ? 'bg-destructive/20' : holdSeverity === 'warning' ? 'bg-call-hold/20' : onHold ? 'bg-destructive/10' : 'bg-primary/10'}`}>
+                        {onHold ? <Pause className={`h-4 w-4 ${holdSeverity === 'critical' ? 'text-destructive' : holdSeverity === 'warning' ? 'text-call-hold' : 'text-destructive'}`} /> : <Phone className="h-4 w-4 text-primary" />}
                       </div>
-                      <div>
-                        <p className="font-medium">
-                          {call.caller_name || call.caller_phone || 'Desconhecido'}
-                        </p>
-                        {call.caller_phone && call.caller_name && (
-                          <p className="text-sm text-muted-foreground">
-                            {call.caller_phone}
-                          </p>
-                        )}
-                      </div>
+                      <div><p className="font-medium">{call.caller_name || call.caller_phone || 'Desconhecido'}</p>{call.caller_phone && call.caller_name && <p className="text-sm text-muted-foreground">{call.caller_phone}</p>}</div>
                     </div>
                     <div className="flex flex-col items-end gap-1">
-                      {onHold ? (
-                        <Badge 
-                          variant="destructive" 
-                          className={`${
-                            holdSeverity === 'critical'
-                              ? 'bg-destructive animate-pulse'
-                              : holdSeverity === 'warning'
-                              ? 'bg-call-hold hover:bg-call-hold/90'
-                              : 'animate-pulse'
-                          }`}
-                        >
-                          <Pause className="h-3 w-3 mr-1" />
-                          Em Espera {formatDuration(holdDuration)}
-                        </Badge>
-                      ) : (
-                        <Badge variant="default" className="bg-success hover:bg-success/90">
-                          <Phone className="h-3 w-3 mr-1" />
-                          Em Chamada
-                        </Badge>
-                      )}
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {formatDuration(callDuration)}
-                      </span>
+                      {onHold ? <Badge variant="destructive" className={holdSeverity === 'critical' ? 'bg-destructive animate-pulse' : holdSeverity === 'warning' ? 'bg-call-hold hover:bg-call-hold/90' : 'animate-pulse'}><Pause className="h-3 w-3 mr-1" />Em Espera {formatDuration(holdDuration)}</Badge>
+                        : <Badge variant="default" className="bg-success hover:bg-success/90"><Phone className="h-3 w-3 mr-1" />Em Chamada</Badge>}
+                      <span className="text-xs text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />{formatDuration(callDuration)}</span>
                     </div>
                   </div>
-
                   <div className="mt-3 flex items-center gap-4 text-sm text-muted-foreground">
-                    {call.agent_name && (
-                      <span className="flex items-center gap-1">
-                        <User className="h-3 w-3" />
-                        {call.agent_name}
-                      </span>
-                    )}
-                    {(call.hold_count ?? 0) > 0 && (
-                      <span className="flex items-center gap-1">
-                        <Pause className="h-3 w-3" />
-                        {call.hold_count}x em espera
-                      </span>
-                    )}
-                    {(call.hold_time_seconds ?? 0) > 0 && (
-                      <span>
-                        Total espera: {formatDuration(call.hold_time_seconds ?? 0)}
-                      </span>
-                    )}
+                    {call.agent_name && <span className="flex items-center gap-1"><User className="h-3 w-3" />{call.agent_name}</span>}
+                    {(call.hold_count ?? 0) > 0 && <span className="flex items-center gap-1"><Pause className="h-3 w-3" />{call.hold_count}x em espera</span>}
+                    {(call.hold_time_seconds ?? 0) > 0 && <span>Total espera: {formatDuration(call.hold_time_seconds ?? 0)}</span>}
                   </div>
                 </div>
               );
