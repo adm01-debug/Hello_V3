@@ -1,6 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { format, formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 export interface AuditLog {
   id: string;
@@ -14,7 +16,7 @@ export interface AuditLog {
   created_at: string;
 }
 
-export interface SecurityAlert {
+export interface SecurityAlertItem {
   id: string;
   alert_type: string;
   severity: string;
@@ -38,13 +40,10 @@ export interface ActivityStats {
   criticalAlerts: number;
 }
 
-export function useSecurityMonitoring(profileEmail?: string) {
+export function useSecurityMonitoringData(profileEmail: string | undefined) {
   const [recentLogs, setRecentLogs] = useState<AuditLog[]>([]);
-  const [alerts, setAlerts] = useState<SecurityAlert[]>([]);
-  const [stats, setStats] = useState<ActivityStats>({
-    totalEvents: 0, viewEvents: 0, exportEvents: 0,
-    downloadEvents: 0, uniqueUsers: 0, criticalAlerts: 0,
-  });
+  const [alerts, setAlerts] = useState<SecurityAlertItem[]>([]);
+  const [stats, setStats] = useState<ActivityStats>({ totalEvents: 0, viewEvents: 0, exportEvents: 0, downloadEvents: 0, uniqueUsers: 0, criticalAlerts: 0 });
   const [isLive, setIsLive] = useState(true);
 
   const fetchData = useCallback(async () => {
@@ -65,8 +64,8 @@ export function useSecurityMonitoring(profileEmail?: string) {
     }
     const { data: alertsData } = await supabase.from('security_alerts').select('*').order('created_at', { ascending: false }).limit(20);
     if (alertsData) {
-      setAlerts(alertsData as SecurityAlert[]);
-      setStats(prev => ({ ...prev, criticalAlerts: (alertsData as SecurityAlert[]).filter(a => !a.is_resolved && a.severity === 'critical').length }));
+      setAlerts(alertsData as SecurityAlertItem[]);
+      setStats(prev => ({ ...prev, criticalAlerts: (alertsData as SecurityAlertItem[]).filter(a => !a.is_resolved && a.severity === 'critical').length }));
     }
   }, []);
 
@@ -74,25 +73,20 @@ export function useSecurityMonitoring(profileEmail?: string) {
 
   useEffect(() => {
     if (!isLive) return;
-    const logsChannel = supabase.channel('audit-logs-realtime')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'audit_logs' }, (payload) => {
-        const newLog = payload.new as AuditLog;
-        setRecentLogs(prev => [newLog, ...prev.slice(0, 49)]);
-        setStats(prev => ({
-          ...prev, totalEvents: prev.totalEvents + 1,
-          viewEvents: newLog.action === 'view' ? prev.viewEvents + 1 : prev.viewEvents,
-          exportEvents: newLog.action === 'export' ? prev.exportEvents + 1 : prev.exportEvents,
-          downloadEvents: newLog.action === 'download' ? prev.downloadEvents + 1 : prev.downloadEvents,
-        }));
-        toast.info(`Novo evento: ${newLog.action} em ${newLog.resource_type}`, { description: newLog.user_email || 'Sistema' });
-      }).subscribe();
-    const alertsChannel = supabase.channel('security-alerts-realtime')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'security_alerts' }, (payload) => {
-        const newAlert = payload.new as SecurityAlert;
-        setAlerts(prev => [newAlert, ...prev.slice(0, 19)]);
-        if (newAlert.severity === 'critical') setStats(prev => ({ ...prev, criticalAlerts: prev.criticalAlerts + 1 }));
-        toast.error(`Alerta de Segurança: ${newAlert.title}`, { description: newAlert.description, duration: 10000 });
-      }).subscribe();
+    const logsChannel = supabase.channel('audit-logs-realtime').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'audit_logs' }, (payload) => {
+      const newLog = payload.new as AuditLog;
+      setRecentLogs(prev => [newLog, ...prev.slice(0, 49)]);
+      setStats(prev => ({ ...prev, totalEvents: prev.totalEvents + 1, viewEvents: newLog.action === 'view' ? prev.viewEvents + 1 : prev.viewEvents, exportEvents: newLog.action === 'export' ? prev.exportEvents + 1 : prev.exportEvents, downloadEvents: newLog.action === 'download' ? prev.downloadEvents + 1 : prev.downloadEvents }));
+      toast.info(`Novo evento: ${newLog.action} em ${newLog.resource_type}`, { description: newLog.user_email || 'Sistema' });
+    }).subscribe();
+
+    const alertsChannel = supabase.channel('security-alerts-realtime').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'security_alerts' }, (payload) => {
+      const newAlert = payload.new as SecurityAlertItem;
+      setAlerts(prev => [newAlert, ...prev.slice(0, 19)]);
+      if (newAlert.severity === 'critical') setStats(prev => ({ ...prev, criticalAlerts: prev.criticalAlerts + 1 }));
+      toast.error(`Alerta de Segurança: ${newAlert.title}`, { description: newAlert.description, duration: 10000 });
+    }).subscribe();
+
     return () => { supabase.removeChannel(logsChannel); supabase.removeChannel(alertsChannel); };
   }, [isLive]);
 
