@@ -20,6 +20,7 @@ import {
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function TwoFactorAuth() {
+  usePageTitle('Autenticação 2FA');
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const {
@@ -120,8 +121,6 @@ export default function TwoFactorAuth() {
   };
 
   const copyToClipboard = (text: string) => {
-  usePageTitle('Autenticação 2FA');
-
     navigator.clipboard.writeText(text);
     toast.success('Copiado!');
   };

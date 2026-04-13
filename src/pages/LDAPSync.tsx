@@ -137,9 +137,9 @@ export default function LDAPSync() {
     toast.success('Sincronização concluída! 245 contatos atualizados.');
   };
 
-  const statusIcon = (status: SyncLog['status']) => {
   usePageTitle('LDAP Sync');
 
+  const statusIcon = (status: SyncLog['status']) => {
     switch (status) {
       case 'success': return <CheckCircle2 className="h-4 w-4 text-success" />;
       case 'partial': return <AlertTriangle className="h-4 w-4 text-warning" />;

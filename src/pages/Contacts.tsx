@@ -18,8 +18,6 @@ import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 const getInitials = (name: string) => {
-  usePageTitle('Contatos');
-
   return name
     .split(' ')
     .map(word => word[0])
@@ -45,6 +43,7 @@ const itemVariants = {
 };
 
 const Contacts = () => {
+  usePageTitle('Contatos');
   const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
