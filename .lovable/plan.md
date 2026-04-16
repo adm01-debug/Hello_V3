@@ -1,107 +1,56 @@
 
-## Plano: Conversation Intelligence (estilo Gong/Chorus)
+A suíte de Conversation Intelligence já foi implementada na iteração anterior (migrations, edge functions, hooks, componentes e páginas). O que resta para fechar o loop end-to-end são integrações e ativação real durante chamadas ao vivo.
 
-O sistema já possui boa parte da infraestrutura (gravação, transcrição com diarização ElevenLabs, análise de chamadas, coaching IA). Vou completar os gaps para entregar uma suíte completa de Conversation Intelligence.
+## Plano: Finalizar integração Conversation Intelligence
 
-### Status atual (já existe)
-- ✅ Gravação automática (`useCallRecording` + bucket `call-recordings`)
-- ✅ Transcrição com diarização (`voice-transcribe` com `diarize=true`)
-- ✅ Análise de sentimento em tempo real (`realtime-analysis`)
-- ✅ Coaching IA (`generate-coaching`, `CoachingPanel`)
-- ✅ Análise pós-chamada (`analyze-call`)
+### Status (já entregue)
+- ✅ Tabelas + RLS + tsvector PT-BR
+- ✅ Edge functions: `analyze-talk-ratio`, `detect-key-moments`, `search-calls`, `teams-fetch-recordings`
+- ✅ Hooks: `useTalkRatio`, `useKeyMoments`, `useBattleCardDetection`, `useCallSearch`, `useLiveSentiment`
+- ✅ Componentes: `TalkRatioChart`, `KeyMomentsTimeline`, `BattleCardAlert`, `LiveSentimentGraph`, `CoachingTimeline`, `CallPlayerWithTranscript`
+- ✅ Páginas: `CallLibrary`, `BattleCards`, `ExternalRecordingsImport`
+- ✅ Sidebar + rotas
 
-### Gaps a implementar
+### Gaps a fechar
 
-**1. Talk Ratio Analysis** (vendedor vs cliente)
-- Nova edge function `analyze-talk-ratio` que processa segmentos diarizados e calcula: % fala agente, % fala cliente, % silêncio, longest monologue, interrupções.
-- Componente `TalkRatioChart.tsx` (donut + barras com benchmarks: ideal 40-60% agente).
+**1. Ativar Battle Cards e LiveSentiment durante chamada ao vivo**
+- Integrar `useBattleCardDetection` em `LiveTranscription.tsx`: a cada novo segmento transcrito, chamar `checkText()` e renderizar `<BattleCardAlert />` quando dispara.
+- Integrar `LiveSentimentGraph` no `ActiveCallDisplay.tsx` (aba ou drawer "Inteligência").
+- Persistir snapshots via `useLiveSentiment.recordSnapshot()` quando `realtime-analysis` retornar novo sentimento.
 
-**2. Detecção de Momentos-Chave**
-- Nova edge function `detect-key-moments` (Lovable AI / gemini-2.5-flash) que identifica em transcrições: menção de preço, concorrente, objeção, próximo passo, compromisso, risco de churn — retorna array `{type, timestamp, quote, confidence}`.
-- Tabela `call_key_moments` (call_session_id, type, timestamp_seconds, quote, confidence, metadata).
-- Componente `KeyMomentsTimeline.tsx` — timeline visual clicável que pula para o ponto na gravação.
+**2. Pós-chamada automatizado**
+- No `useCallSession` ao finalizar chamada com transcrição salva: disparar em background `analyze-talk-ratio` (passando segmentos diarizados) e `detect-key-moments` (passando texto completo).
+- Popular `call_transcripts_searchable` com `full_text` + `tsvector` (trigger já existe).
 
-**3. Battle Cards Automáticos**
-- Tabela `battle_cards` (id, competitor_name, our_strengths, their_weaknesses, talking_points, objection_responses).
-- Tabela `battle_card_triggers` (card_id, keywords[]).
-- Componente `BattleCardAlert.tsx` — popup tipo toast quando concorrente é detectado durante chamada ativa, exibe pontos de batalha.
-- Página `BattleCards.tsx` (admin) — CRUD de battle cards.
-- Hook `useBattleCardDetection` integrado ao `LiveTranscription` que monitora keywords e dispara o card.
+**3. Coaching com timestamps**
+- Estender `generate-coaching` para retornar `timestamped_feedback[]` e gravar em `coaching_timestamps`.
+- Renderizar `CoachingTimeline` dentro de `CallDetailDialog` sincronizado com player.
 
-**4. Biblioteca de Calls (Searchable)**
-- Tabela `call_transcripts_searchable` com coluna `tsvector` + índice GIN para full-text search PT-BR.
-- Trigger que popula `tsvector` quando transcrição é salva.
-- Edge function (ou query direta) `search-calls` aceitando palavra-chave, filtros (data, agente, sentimento, momento-chave).
-- Página `CallLibrary.tsx` — busca, filtros laterais, lista de chamadas com snippet destacado, player + transcrição sincronizada.
+**4. Detalhe de chamada unificado**
+- Atualizar `CallDetailDialog` para exibir abas: Player+Transcrição, Talk Ratio, Momentos-chave, Coaching, Sentimento — reutilizando os componentes já criados.
 
-**5. Coaching com Timestamps**
-- Estender `generate-coaching` para retornar `timestamped_feedback: [{timestamp, type, message, severity}]`.
-- Tabela `coaching_timestamps` para persistência.
-- Componente `CoachingTimeline.tsx` — overlay sobre player de áudio com marcadores de coaching.
+**5. Conector Microsoft Teams**
+- Solicitar conexão via `standard_connectors--connect` (connector_id `microsoft_teams`).
+- Refatorar `teams-fetch-recordings` para usar gateway `https://connector-gateway.lovable.dev/microsoft_teams` com headers `Authorization: Bearer ${LOVABLE_API_KEY}` + `X-Connection-Api-Key: ${TEAMS_API_KEY}`.
+- Endpoint: `/me/onlineMeetings/{id}/recordings` para listar e baixar para `call-recordings` bucket.
 
-**6. Sentiment em Tempo Real (aprimorar)**
-- Já existe `realtime-analysis`. Adicionar persistência: tabela `live_sentiment_snapshots` (call_session_id, timestamp, sentiment, score, urgency).
-- Componente `LiveSentimentGraph.tsx` — gráfico de linha em tempo real durante a chamada.
+**6. CommandPalette + páginas**
+- Adicionar entradas "Biblioteca de Calls", "Battle Cards", "Importar Gravações Teams" no `CommandPalette.tsx`.
 
-**7. Gravação automática de plataformas externas (Zoom/Meet/Teams)**
-- Esta é uma integração externa complexa que exige OAuth + webhooks de cada plataforma. Como o sistema já tem o Microsoft Teams disponível como connector, vou implementar **somente Microsoft Teams** nesta fase:
-  - Edge function `teams-fetch-recordings` que busca gravações do Teams via Graph API e importa para `call-recordings` bucket, criando registro em `call_recordings` com flag `source='teams'`.
-  - Página `ExternalRecordingsImport.tsx` para disparar import manual ou via cron.
-- Zoom/Meet ficarão documentados como roadmap (exigem connectors não disponíveis).
-
-### Banco de dados (migration)
-
-```text
-- call_key_moments
-- battle_cards
-- battle_card_triggers
-- call_transcripts_searchable (tsvector + GIN)
-- coaching_timestamps
-- live_sentiment_snapshots
-- ALTER call_recordings ADD source TEXT DEFAULT 'internal'
-```
-
-Todas com RLS: agente vê suas próprias; supervisor/admin vê tudo.
-
-### Edge Functions a criar
-1. `analyze-talk-ratio` (verify_jwt=true)
-2. `detect-key-moments` (verify_jwt=true)
-3. `search-calls` (verify_jwt=true)
-4. `teams-fetch-recordings` (verify_jwt=true) — usa connector Microsoft Teams
-
-### Frontend — novas páginas/componentes
-- Página `CallLibrary.tsx` (rota `/call-library`)
-- Página `BattleCards.tsx` (rota `/battle-cards`, admin/supervisor)
-- Componentes em `src/components/conversation-intelligence/`:
-  - `TalkRatioChart.tsx`
-  - `KeyMomentsTimeline.tsx`
-  - `BattleCardAlert.tsx`
-  - `LiveSentimentGraph.tsx`
-  - `CoachingTimeline.tsx`
-  - `CallPlayerWithTranscript.tsx` (player + transcrição sincronizada)
-- Hooks: `useTalkRatio`, `useKeyMoments`, `useBattleCardDetection`, `useCallSearch`, `useLiveSentiment`
-- Integrar `BattleCardAlert` e `LiveSentimentGraph` em `ActiveCallDisplay` / `LiveTranscription`
-- Adicionar entradas no `AppSidebar` e `CommandPalette`
-
-### Conector necessário
-- **Microsoft Teams** (já listado como standard connector). Vou solicitar conexão antes de implementar `teams-fetch-recordings`.
-
-### Considerações técnicas
-- Limite 400 linhas por arquivo — todos os componentes serão modulares
-- Logger centralizado (`src/lib/logger.ts`)
-- Sonner para notificações (battle card alerts, imports concluídos)
-- PT-BR em toda UI/mensagens
-- Estética cyberpunk neon mantida (glassmorphism, glow nos alertas)
-- Validação Zod + edge functions com `_shared/validate.ts`
-- Rate limiting via `check_rate_limit` RPC
+**7. Testes**
+- Vitest para `useBattleCardDetection.checkText` (match exact/contains/starts_with).
+- Vitest para cálculo de talk ratio (helper extraído da edge function).
 
 ### Ordem de execução
-1. Migration (todas as tabelas + RLS + tsvector trigger)
-2. Edge functions (talk-ratio, key-moments, search-calls)
-3. Hooks de dados
-4. Componentes visuais
-5. Páginas Library + BattleCards
-6. Integração no fluxo de chamada ativa (alerts em tempo real)
-7. Conexão Teams + função de import
-8. Atualização de sidebar/rotas/command palette
-9. Memórias atualizadas no índice
+1. Integrar Battle Cards + LiveSentiment em `LiveTranscription` / `ActiveCallDisplay`
+2. Disparar análises pós-chamada em `useCallSession`
+3. Estender `generate-coaching` + persistência
+4. Unificar `CallDetailDialog` com abas
+5. Conectar Microsoft Teams + refatorar edge function via gateway
+6. Adicionar entradas no CommandPalette
+7. Testes unitários
+8. Atualizar memória do projeto
+
+### Considerações
+- ≤400 linhas/arquivo, PT-BR, logger central, sonner para alertas, estética cyberpunk
+- Conector Teams será solicitado durante execução; sem ele, página de import mostra estado "não conectado"
