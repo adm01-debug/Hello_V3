@@ -10,7 +10,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import {
-  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones,
+  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud,
 } from 'lucide-react';
 
 const allRoutes = [
@@ -33,6 +33,9 @@ const allRoutes = [
   { title: 'Callbacks', url: '/callbacks', icon: Calendar, group: 'Ferramentas' },
   { title: 'Transcrições', url: '/call-history', icon: FileText, group: 'Ferramentas' },
   { title: 'Gravações', url: '/recordings', icon: Disc, group: 'Ferramentas' },
+  { title: 'Biblioteca de Calls', url: '/call-library', icon: Library, group: 'Ferramentas' },
+  { title: 'Battle Cards', url: '/battle-cards', icon: Swords, group: 'Ferramentas' },
+  { title: 'Importar Gravações Teams', url: '/external-recordings-import', icon: DownloadCloud, group: 'Ferramentas' },
   { title: 'Métricas de Espera', url: '/hold-metrics', icon: Timer, group: 'Ferramentas' },
   { title: 'Alertas de Espera', url: '/hold-alerts', icon: Siren, group: 'Ferramentas' },
   { title: 'Analytics', url: '/analytics', icon: PieChart, group: 'Ferramentas' },
