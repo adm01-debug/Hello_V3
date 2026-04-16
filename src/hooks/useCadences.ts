@@ -55,7 +55,7 @@ export function useCadences() {
   const createCadence = useCallback(async (name: string, description?: string) => {
     const { data, error } = await supabase.from("cadences")
       .insert({ name, description }).select().single();
-    if (error) { toast.error("Erro ao criar cadência"); logger.error(error); return null; }
+    if (error) { toast.error("Erro ao criar cadência"); logger.error("createCadence", error); return null; }
     toast.success("Cadência criada");
     refresh();
     return data;
@@ -92,7 +92,7 @@ export function useCadenceEnrollments(agentName?: string) {
     let q = supabase.from("cadence_enrollments").select("*").order("next_action_at", { ascending: true });
     if (agentName) q = q.eq("agent_name", agentName);
     q.then(({ data, error }) => {
-      if (error) logger.error(error);
+      if (error) logger.error("useCadenceEnrollments", error);
       else setEnrollments((data ?? []) as CadenceEnrollment[]);
       setLoading(false);
     });

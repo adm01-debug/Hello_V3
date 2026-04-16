@@ -31,7 +31,7 @@ export function useCallPlaylists() {
     setLoading(true);
     const { data, error } = await supabase
       .from("call_playlists").select("*").order("created_at", { ascending: false });
-    if (error) logger.error(error);
+    if (error) logger.error("useCallPlaylists", error);
     else setPlaylists((data ?? []) as CallPlaylist[]);
     setLoading(false);
   }, []);
@@ -66,7 +66,7 @@ export function usePlaylistItems(playlistId?: string) {
     if (!playlistId) { setItems([]); setLoading(false); return; }
     supabase.from("playlist_items").select("*").eq("playlist_id", playlistId).order("display_order")
       .then(({ data, error }) => {
-        if (error) logger.error(error);
+        if (error) logger.error("usePlaylistItems", error);
         else setItems((data ?? []) as PlaylistItem[]);
         setLoading(false);
       });

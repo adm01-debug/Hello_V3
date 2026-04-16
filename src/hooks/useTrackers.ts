@@ -32,7 +32,7 @@ export function useTrackers() {
   const refresh = useCallback(async () => {
     setLoading(true);
     const { data, error } = await supabase.from("trackers").select("*").order("name");
-    if (error) logger.error(error);
+    if (error) logger.error("useTrackers", error);
     else setTrackers((data ?? []) as Tracker[]);
     setLoading(false);
   }, []);
@@ -68,7 +68,7 @@ export function useTrackerMatches(filters?: { trackerId?: string; agentName?: st
       q = q.gte("created_at", since);
     }
     q.then(({ data, error }) => {
-      if (error) logger.error(error);
+      if (error) logger.error("useTrackerMatches", error);
       else setMatches((data ?? []) as TrackerMatch[]);
       setLoading(false);
     });

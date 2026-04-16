@@ -59,14 +59,14 @@ export function useDeals() {
 
   const createDeal = useCallback(async (payload: Partial<Deal>) => {
     const { error } = await supabase.from("deals").insert(payload as never);
-    if (error) { toast.error("Erro ao criar oportunidade"); logger.error(error); return false; }
+    if (error) { toast.error("Erro ao criar oportunidade"); logger.error("createDeal", error); return false; }
     toast.success("Oportunidade criada");
     return true;
   }, []);
 
   const updateDeal = useCallback(async (id: string, patch: Partial<Deal>) => {
     const { error } = await supabase.from("deals").update(patch as never).eq("id", id);
-    if (error) { toast.error("Erro ao atualizar"); logger.error(error); return false; }
+    if (error) { toast.error("Erro ao atualizar"); logger.error("updateDeal", error); return false; }
     return true;
   }, []);
 
@@ -76,7 +76,7 @@ export function useDeals() {
 
   const computeHealth = useCallback(async (dealId: string) => {
     const { data, error } = await supabase.functions.invoke("compute-deal-health", { body: { dealId } });
-    if (error) { toast.error("Erro ao calcular health"); logger.error(error); return null; }
+    if (error) { toast.error("Erro ao calcular health"); logger.error("computeHealth", error); return null; }
     toast.success(`Health score atualizado: ${data?.healthScore ?? "?"}`);
     return data;
   }, []);
