@@ -33,7 +33,7 @@ export default function ExternalRecordingsImport() {
   return (
     <NeonPageLayout>
       <NeonPageHeader
-        icon={Cloud}
+        icon={<Cloud className="h-5 w-5" />}
         title="Importar Gravações Externas"
         description="Importe gravações de reuniões de plataformas externas para a biblioteca interna"
       />

@@ -114,7 +114,7 @@ export default function BattleCards() {
   return (
     <NeonPageLayout>
       <NeonPageHeader
-        icon={Swords}
+        icon={<Swords className="h-5 w-5" />}
         title="Battle Cards"
         description="Cartões competitivos disparados em tempo real durante a chamada"
         actions={

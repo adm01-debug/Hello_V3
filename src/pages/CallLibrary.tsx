@@ -25,7 +25,7 @@ export default function CallLibrary() {
   return (
     <NeonPageLayout>
       <NeonPageHeader
-        icon={Library}
+        icon={<Library className="h-5 w-5" />}
         title="Biblioteca de Calls"
         description="Busque conversas por palavra-chave em toda a base"
       />

@@ -53,6 +53,9 @@ const LDAPSync = lazy(() => import("@/pages/LDAPSync"));
 const ObservabilityDashboard = lazy(() => import("@/pages/ObservabilityDashboard"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const NotificationCenter = lazy(() => import("@/pages/NotificationCenter"));
+const CallLibrary = lazy(() => import("@/pages/CallLibrary"));
+const BattleCards = lazy(() => import("@/pages/BattleCards"));
+const ExternalRecordingsImport = lazy(() => import("@/pages/ExternalRecordingsImport"));
 
 export interface RouteConfig {
   path: string;
@@ -91,6 +94,9 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/hot-desking", element: HotDesking },
   { path: "/virtual-fax", element: VirtualFax },
   { path: "/multi-device-ring", element: MultiDeviceRing },
+  { path: "/call-library", element: CallLibrary },
+  { path: "/battle-cards", element: BattleCards, roles: ["supervisor", "admin"] },
+  { path: "/external-recordings-import", element: ExternalRecordingsImport, roles: ["supervisor", "admin"] },
 
   // Supervisor + Admin
   { path: "/queue-dashboard", element: QueueMetricsDashboard, roles: ["supervisor", "admin"] },
