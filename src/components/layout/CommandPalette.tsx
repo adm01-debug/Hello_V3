@@ -35,7 +35,7 @@ const allRoutes = [
   { title: 'Gravações', url: '/recordings', icon: Disc, group: 'Ferramentas' },
   { title: 'Biblioteca de Calls', url: '/call-library', icon: Library, group: 'Ferramentas' },
   { title: 'Battle Cards', url: '/battle-cards', icon: Swords, group: 'Ferramentas' },
-  { title: 'Importar Gravações Teams', url: '/external-recordings', icon: DownloadCloud, group: 'Ferramentas' },
+  { title: 'Importar Gravações Teams', url: '/external-recordings-import', icon: DownloadCloud, group: 'Ferramentas' },
   { title: 'Métricas de Espera', url: '/hold-metrics', icon: Timer, group: 'Ferramentas' },
   { title: 'Alertas de Espera', url: '/hold-alerts', icon: Siren, group: 'Ferramentas' },
   { title: 'Analytics', url: '/analytics', icon: PieChart, group: 'Ferramentas' },
