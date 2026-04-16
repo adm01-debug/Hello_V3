@@ -53,6 +53,8 @@ interface LiveCallAnalysisProps {
   onClose: () => void;
   transcripts?: TranscriptEntry[];
   inline?: boolean;
+  callSessionId?: string;
+  callStartedAt?: Date;
   onAnalysis?: (analysis: {
     sentiment: string;
     urgency: string;
@@ -76,13 +78,14 @@ const emotionIcons: Record<string, React.ReactNode> = {
 };
 
 export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps>(
-  function LiveCallAnalysis({ isActive, contactName, onClose, transcripts = [], inline = false, onAnalysis }, ref) {
+  function LiveCallAnalysis({ isActive, contactName, onClose, transcripts = [], inline = false, callSessionId, callStartedAt, onAnalysis }, ref) {
   const [insights, setInsights] = useState<RealtimeInsight[]>([]);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [overallSentiment, setOverallSentiment] = useState(50);
   const [isConnectedToTranscription, setIsConnectedToTranscription] = useState(false);
   const lastAnalyzedIndexRef = useRef(0);
+  const lastSnapshotAtRef = useRef<number>(0);
 
   const analyzeTranscript = useCallback(async (text: string, speaker: string, context: string) => {
     setIsAnalyzing(true);
@@ -125,6 +128,22 @@ export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps
                               insight.sentiment === 'negative' ? 25 : 50;
         setOverallSentiment(prev => Math.round((prev * 0.7) + (sentimentValue * 0.3)));
 
+        // Persist sentiment snapshot (throttled to 5s) for live trend graph
+        const now = Date.now();
+        if (callSessionId && now - lastSnapshotAtRef.current >= 5000) {
+          lastSnapshotAtRef.current = now;
+          const elapsed = callStartedAt ? Math.max(0, Math.floor((now - callStartedAt.getTime()) / 1000)) : 0;
+          const score = insight.sentiment === 'positive' ? 0.7 : insight.sentiment === 'negative' ? -0.7 : 0;
+          (supabase.from('live_sentiment_snapshots') as any).insert({
+            call_session_id: callSessionId,
+            timestamp_seconds: elapsed,
+            sentiment: insight.sentiment,
+            score,
+            urgency: insight.urgency,
+            emotion: insight.emotion,
+          }).then(({ error }: { error: unknown }) => { if (error) logger.warn('Sentiment snapshot insert failed', error); });
+        }
+
         // Send analysis to parent for saving
         onAnalysis?.({
           sentiment: insight.sentiment,
@@ -142,7 +161,7 @@ export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps
     } finally {
       setIsAnalyzing(false);
     }
-  }, [onAnalysis]);
+  }, [onAnalysis, callSessionId, callStartedAt]);
 
   // Analyze new transcripts when they arrive
   useEffect(() => {

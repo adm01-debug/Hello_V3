@@ -26,6 +26,8 @@ interface TranscriptEntry {
 interface LiveTranscriptionProps {
   isActive: boolean;
   onTranscript?: (transcript: TranscriptEntry) => void;
+  callSessionId?: string;
+  agentName?: string;
 }
 
 // Map speaker IDs to roles based on order (first speaker = agent, second = customer)
@@ -46,7 +48,7 @@ function resetSpeakerMapping() {
   speakerOrder = 0;
 }
 
-export function LiveTranscription({ isActive, onTranscript }: LiveTranscriptionProps) {
+export function LiveTranscription({ isActive, onTranscript, callSessionId, agentName }: LiveTranscriptionProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [transcripts, setTranscripts] = useState<TranscriptEntry[]>([]);
@@ -387,7 +389,7 @@ export function LiveTranscription({ isActive, onTranscript }: LiveTranscriptionP
         </div>
       )}
 
-      <BattleCardAlert card={activeCard} onDismiss={dismiss} />
+      <BattleCardAlert card={activeCard} onDismiss={dismiss} callSessionId={callSessionId} agentName={agentName} />
     </div>
   );
 }
