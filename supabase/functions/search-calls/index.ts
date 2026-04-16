@@ -11,6 +11,11 @@ Deno.serve(async (req) => {
       query: string({ min: 1, max: 200 }),
       agentName: optional(string({ max: 100 })),
       limit: optional(number({ min: 1, max: 100 })),
+      offset: optional(number({ min: 0, max: 10000 })),
+      dateFrom: optional(string({ max: 40 })),
+      dateTo: optional(string({ max: 40 })),
+      minDurationSeconds: optional(number({ min: 0, max: 36000 })),
+      momentType: optional(string({ max: 50 })),
     });
 
     if (!parsed.ok) {
@@ -27,15 +32,15 @@ Deno.serve(async (req) => {
       global: { headers: { Authorization: authHeader || '' } },
     });
 
-    const { query, agentName } = parsed.data;
+    const { query, agentName, dateFrom, dateTo, minDurationSeconds, momentType } = parsed.data;
     const limit = parsed.data.limit ?? 20;
+    const offset = parsed.data.offset ?? 0;
 
-    // Sanitize query into tsquery — split words, escape, join with &
     const tsQuery = query
       .split(/\s+/)
-      .map(w => w.replace(/[^\p{L}\p{N}]/gu, ''))
-      .filter(w => w.length > 1)
-      .map(w => `${w}:*`)
+      .map((w: string) => w.replace(/[^\p{L}\p{N}]/gu, ''))
+      .filter((w: string) => w.length > 1)
+      .map((w: string) => `${w}:*`)
       .join(' & ');
 
     if (!tsQuery) {
@@ -44,27 +49,53 @@ Deno.serve(async (req) => {
       });
     }
 
+    let sessionIdsFromMoments: string[] | null = null;
+    if (momentType) {
+      const { data: km } = await supabase
+        .from('call_key_moments')
+        .select('call_session_id')
+        .eq('moment_type', momentType);
+      sessionIdsFromMoments = Array.from(new Set((km || []).map((m: { call_session_id: string }) => m.call_session_id)));
+      if (sessionIdsFromMoments.length === 0) {
+        return new Response(JSON.stringify({ results: [], count: 0 }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200,
+        });
+      }
+    }
+
     let q = supabase
       .from('call_transcripts_searchable')
-      .select('id, call_session_id, full_text, agent_name, duration_seconds, created_at')
+      .select('id, call_session_id, full_text, agent_name, duration_seconds, created_at', { count: 'exact' })
       .textSearch('search_vector', tsQuery, { config: 'portuguese' })
-      .limit(limit);
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1);
 
     if (agentName) q = q.eq('agent_name', agentName);
+    if (dateFrom) q = q.gte('created_at', dateFrom);
+    if (dateTo) q = q.lte('created_at', dateTo);
+    if (minDurationSeconds) q = q.gte('duration_seconds', minDurationSeconds);
+    if (sessionIdsFromMoments) q = q.in('call_session_id', sessionIdsFromMoments);
 
-    const { data, error } = await q;
+    const { data, error, count } = await q;
     if (error) {
       return new Response(JSON.stringify({ error: error.message }), {
         status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // Build snippets
-    const results = (data || []).map((row) => {
+    const queryWords = query
+      .split(/\s+/)
+      .map((w: string) => w.toLowerCase().replace(/[^\p{L}\p{N}]/gu, ''))
+      .filter((w: string) => w.length > 1);
+
+    const results = (data || []).map((row: { id: string; call_session_id: string; full_text: string; agent_name: string | null; duration_seconds: number | null; created_at: string }) => {
       const text = row.full_text || '';
       const lower = text.toLowerCase();
-      const firstWord = query.split(/\s+/)[0]?.toLowerCase() || '';
-      const idx = firstWord ? lower.indexOf(firstWord) : -1;
+      let idx = -1;
+      for (const w of queryWords) {
+        const found = lower.indexOf(w);
+        if (found >= 0) { idx = found; break; }
+      }
       const start = Math.max(0, idx - 80);
       const end = Math.min(text.length, (idx >= 0 ? idx : 0) + 200);
       const snippet = (start > 0 ? '…' : '') + text.slice(start, end) + (end < text.length ? '…' : '');
@@ -75,10 +106,11 @@ Deno.serve(async (req) => {
         duration_seconds: row.duration_seconds,
         created_at: row.created_at,
         snippet,
+        highlight_terms: queryWords,
       };
     });
 
-    return new Response(JSON.stringify({ results, count: results.length }), {
+    return new Response(JSON.stringify({ results, count: count ?? results.length, offset, limit }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200,
     });
   } catch (err) {
