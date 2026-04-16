@@ -38,6 +38,7 @@ export function useCallSession() {
   const [isSaving, setIsSaving] = useState(false);
   const pendingTranscriptsRef = useRef<TranscriptEntry[]>([]);
   const pendingAnalysesRef = useRef<AnalysisEntry[]>([]);
+  const allTranscriptsRef = useRef<TranscriptEntry[]>([]);
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startSession = useCallback(async (callerName: string, callerPhone: string, agentName?: string) => {
@@ -53,6 +54,7 @@ export function useCallSession() {
         agentName: data.agent_name ?? undefined, startedAt: new Date(data.started_at),
       };
       setCurrentSession(session);
+      allTranscriptsRef.current = [];
       log.info('Call session started', { sessionId: session.id });
       return session;
     } catch (error) {
@@ -73,6 +75,7 @@ export function useCallSession() {
         }))
       );
       if (error) throw error;
+      allTranscriptsRef.current.push(...transcriptsToSave);
       log.info(`Saved ${transcriptsToSave.length} transcripts`);
     } catch (error) {
       log.error('Error saving transcripts', error);
@@ -119,6 +122,41 @@ export function useCallSession() {
     scheduleSave();
   }, [currentSession, scheduleSave]);
 
+  const runPostCallIntelligence = useCallback(async (sessionId: string, agentName: string | undefined, durationSeconds: number) => {
+    const transcripts = allTranscriptsRef.current;
+    if (transcripts.length === 0) return;
+
+    const fullText = transcripts.map((t) => `[${t.speaker}] ${t.text}`).join('\n');
+
+    // Populate searchable transcripts (trigger keeps tsvector updated).
+    try {
+      await (supabase.from('call_transcripts_searchable') as any).upsert({
+        call_session_id: sessionId,
+        full_text: fullText,
+        agent_name: agentName ?? null,
+        duration_seconds: durationSeconds,
+      }, { onConflict: 'call_session_id' });
+    } catch (e) {
+      log.error('Failed to populate searchable transcripts', e);
+    }
+
+    // Build segments for talk ratio (uses startTime/endTime when available, falls back to sequential window).
+    const segments = transcripts.map((t, idx) => ({
+      speaker: t.speaker,
+      start: typeof t.startTime === 'number' ? t.startTime : idx * 5,
+      end: typeof t.endTime === 'number' ? t.endTime : idx * 5 + 5,
+    }));
+
+    // Fire-and-forget background analyses.
+    void supabase.functions.invoke('analyze-talk-ratio', {
+      body: { callSessionId: sessionId, segments, totalDuration: durationSeconds },
+    }).catch((e) => log.error('analyze-talk-ratio failed', e));
+
+    void supabase.functions.invoke('detect-key-moments', {
+      body: { callSessionId: sessionId, transcript: fullText },
+    }).catch((e) => log.error('detect-key-moments failed', e));
+  }, []);
+
   const endSession = useCallback(async (durationSeconds: number, summary?: {
     summary: string; mainTopics: string[]; overallSentiment: string;
     customerSatisfaction: number; agentPerformance: number; nextSteps: string[];
@@ -140,15 +178,20 @@ export function useCallSession() {
         });
         if (summaryError) throw summaryError;
       }
+
+      // Trigger background intelligence (talk ratio, key moments, searchable index).
+      await runPostCallIntelligence(currentSession.id, currentSession.agentName, durationSeconds);
+
       log.info('Call session ended', { sessionId: currentSession.id });
     } catch (error) {
       log.error('Error ending call session', error);
     } finally {
       setIsSaving(false);
       setCurrentSession(null);
+      allTranscriptsRef.current = [];
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
     }
-  }, [currentSession, saveTranscripts, saveAnalyses]);
+  }, [currentSession, saveTranscripts, saveAnalyses, runPostCallIntelligence]);
 
   return { currentSession, isSaving, startSession, endSession, addTranscript, addAnalysis };
 }

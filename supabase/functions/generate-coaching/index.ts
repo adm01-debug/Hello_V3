@@ -123,6 +123,21 @@ serve(async (req) => {
       });
     }
     
+    // Optional: pull most recent transcript to enable timestamped feedback.
+    const recentSessionId = sessions?.[0]?.id;
+    let timestampedTranscript = '';
+    if (recentSessionId) {
+      const { data: trans } = await supabaseAdmin
+        .from('call_transcriptions')
+        .select('speaker, text, start_time')
+        .eq('call_session_id', recentSessionId)
+        .order('start_time', { ascending: true })
+        .limit(80);
+      timestampedTranscript = (trans || [])
+        .map((t: any) => `[${Math.round(t.start_time ?? 0)}s][${t.speaker}] ${t.text}`)
+        .join('\n');
+    }
+
     const prompt = `Você é um coach de call center especializado. Analise as métricas deste agente e gere recomendações de coaching personalizadas em português.
 
 AGENTE: ${agent.name}
@@ -141,18 +156,29 @@ METAS:
 - Meta de satisfação: ${metrics.goals.satisfaction_target}
 - Meta de performance: ${metrics.goals.performance_target}
 
-Gere exatamente 3 recomendações de coaching no formato JSON:
+${timestampedTranscript ? `TRANSCRIÇÃO RECENTE (com timestamps em segundos):\n${timestampedTranscript}\n` : ''}
+Gere recomendações de coaching no formato JSON:
 {
   "recommendations": [
     {
       "category": "communication|efficiency|satisfaction|skills|goals",
       "priority": "high|medium|low",
-      "title": "título curto e objetivo",
-      "description": "explicação detalhada da recomendação",
+      "title": "título curto",
+      "description": "explicação detalhada",
       "action_items": ["ação 1", "ação 2", "ação 3"]
     }
+  ],
+  "timestamped_feedback": [
+    {
+      "timestamp_seconds": 42,
+      "feedback_type": "positive|improvement|warning|tip",
+      "severity": "low|medium|high",
+      "category": "tom|empatia|escuta|ritmo|fechamento",
+      "message": "feedback curto em PT-BR"
+    }
   ]
-}`;
+}
+Gere 3 recomendações e até 6 feedbacks com timestamp (apenas se houver transcrição). Caso não haja transcrição, retorne timestamped_feedback como [].`;
 
     const aiResponse = await fetch('https://api.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -177,9 +203,12 @@ Gere exatamente 3 recomendações de coaching no formato JSON:
 
     const aiData = await aiResponse.json();
     let recommendations;
+    let timestampedFeedback: Array<{ timestamp_seconds: number; feedback_type: string; severity: string; category: string; message: string }> = [];
     try {
       const content = aiData.choices[0].message.content;
-      recommendations = JSON.parse(content).recommendations;
+      const parsed = JSON.parse(content);
+      recommendations = parsed.recommendations;
+      if (Array.isArray(parsed.timestamped_feedback)) timestampedFeedback = parsed.timestamped_feedback;
     } catch {
       recommendations = [{
         category: 'efficiency',
@@ -188,6 +217,25 @@ Gere exatamente 3 recomendações de coaching no formato JSON:
         description: 'Há oportunidade de melhorar a eficiência no atendimento.',
         action_items: ['Revisar scripts', 'Praticar resoluções rápidas', 'Usar templates']
       }];
+    }
+
+    // Persist timestamped coaching feedback against most recent session.
+    if (recentSessionId && timestampedFeedback.length > 0) {
+      const rows = timestampedFeedback
+        .filter((f) => typeof f.timestamp_seconds === 'number' && typeof f.message === 'string')
+        .map((f) => ({
+          call_session_id: recentSessionId,
+          agent_name: agent.name,
+          timestamp_seconds: Math.max(0, Math.floor(f.timestamp_seconds)),
+          feedback_type: ['positive', 'improvement', 'warning', 'tip'].includes(f.feedback_type) ? f.feedback_type : 'tip',
+          severity: ['low', 'medium', 'high'].includes(f.severity) ? f.severity : 'low',
+          category: f.category ?? null,
+          message: f.message,
+        }));
+      if (rows.length > 0) {
+        const { error: ctErr } = await supabaseAdmin.from('coaching_timestamps').insert(rows);
+        if (ctErr) console.error('Failed to insert coaching_timestamps', ctErr);
+      }
     }
 
     // Save recommendations
@@ -213,10 +261,11 @@ Gere exatamente 3 recomendações de coaching no formato JSON:
       }
     }
 
-    return new Response(JSON.stringify({ 
-      success: true, 
+    return new Response(JSON.stringify({
+      success: true,
       recommendations: savedRecommendations,
-      metrics 
+      timestamped_feedback: timestampedFeedback,
+      metrics
     }), {
       headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
     });

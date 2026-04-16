@@ -1,4 +1,5 @@
-import { Phone, MessageSquare, Brain, Download, Loader2, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { Phone, MessageSquare, Brain, Download, Loader2, TrendingUp, TrendingDown, Minus, BarChart3, Sparkles, Lightbulb, Activity } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,7 +9,14 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { SessionWithSummary, Transcription, Analysis, CallSummary } from '@/hooks/useCallHistory';
+import type { SessionWithSummary, Transcription, Analysis, CallSummary } from '@/hooks/useCallHistory';
+import { TalkRatioChart } from '@/components/conversation-intelligence/TalkRatioChart';
+import { KeyMomentsTimeline } from '@/components/conversation-intelligence/KeyMomentsTimeline';
+import { CoachingTimeline } from '@/components/conversation-intelligence/CoachingTimeline';
+import { LiveSentimentGraph } from '@/components/conversation-intelligence/LiveSentimentGraph';
+import { useTalkRatio } from '@/hooks/useTalkRatio';
+import { useKeyMoments } from '@/hooks/useKeyMoments';
+import { useLiveSentiment } from '@/hooks/useLiveSentiment';
 
 interface Props {
   selectedSession: SessionWithSummary | null;
@@ -36,9 +44,27 @@ const getSentimentBadge = (sentiment: string | null | undefined) => {
 };
 
 export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, sessionTranscripts, sessionAnalyses, sessionSummary, onExportTranscript }: Props) {
+  const sessionId = selectedSession?.id;
+  const { data: talkData, analyze, loading: talkLoading } = useTalkRatio();
+  const { moments } = useKeyMoments(sessionId);
+  const { snapshots } = useLiveSentiment(sessionId);
+
+  const segments = useMemo(() => sessionTranscripts.map((t, idx) => ({
+    speaker: t.speaker,
+    start: typeof t.start_time === 'number' ? t.start_time : idx * 5,
+    end: typeof t.end_time === 'number' ? t.end_time : idx * 5 + 5,
+  })), [sessionTranscripts]);
+
+  const [analyzed, setAnalyzed] = useState<string | null>(null);
+  useEffect(() => {
+    if (!sessionId || segments.length === 0 || analyzed === sessionId) return;
+    setAnalyzed(sessionId);
+    void analyze(sessionId, segments, selectedSession?.duration_seconds ?? undefined);
+  }, [sessionId, segments, analyze, selectedSession?.duration_seconds, analyzed]);
+
   return (
     <Dialog open={!!selectedSession} onOpenChange={() => onClose()}>
-      <DialogContent className="max-w-4xl max-h-[85vh]">
+      <DialogContent className="max-w-5xl max-h-[88vh]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2"><Phone className="h-5 w-5" /> Detalhes da Chamada</DialogTitle>
           <DialogDescription>
@@ -52,8 +78,12 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
           <Tabs defaultValue="transcription" className="mt-4">
             <div className="flex items-center justify-between mb-4">
               <TabsList>
-                <TabsTrigger value="transcription" className="gap-2"><MessageSquare className="h-4 w-4" /> Transcrição ({sessionTranscripts.length})</TabsTrigger>
-                <TabsTrigger value="analysis" className="gap-2"><Brain className="h-4 w-4" /> Análises ({sessionAnalyses.length})</TabsTrigger>
+                <TabsTrigger value="transcription" className="gap-2"><MessageSquare className="h-4 w-4" /> Transcrição</TabsTrigger>
+                <TabsTrigger value="analysis" className="gap-2"><Brain className="h-4 w-4" /> Análises</TabsTrigger>
+                <TabsTrigger value="talk-ratio" className="gap-2"><BarChart3 className="h-4 w-4" /> Talk Ratio</TabsTrigger>
+                <TabsTrigger value="key-moments" className="gap-2"><Sparkles className="h-4 w-4" /> Momentos</TabsTrigger>
+                <TabsTrigger value="coaching" className="gap-2"><Lightbulb className="h-4 w-4" /> Coaching</TabsTrigger>
+                <TabsTrigger value="sentiment" className="gap-2"><Activity className="h-4 w-4" /> Sentimento</TabsTrigger>
               </TabsList>
               {sessionTranscripts.length > 0 && (
                 <Button variant="outline" size="sm" className="gap-2" onClick={onExportTranscript}><Download className="h-4 w-4" /> Exportar</Button>
@@ -131,6 +161,22 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
                   </div>
                 )}
               </ScrollArea>
+            </TabsContent>
+
+            <TabsContent value="talk-ratio">
+              <TalkRatioChart data={talkData} loading={talkLoading} />
+            </TabsContent>
+
+            <TabsContent value="key-moments">
+              <KeyMomentsTimeline moments={moments} />
+            </TabsContent>
+
+            <TabsContent value="coaching">
+              {sessionId && <CoachingTimeline callSessionId={sessionId} />}
+            </TabsContent>
+
+            <TabsContent value="sentiment">
+              <LiveSentimentGraph snapshots={snapshots} />
             </TabsContent>
           </Tabs>
         )}

@@ -5,6 +5,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { logger } from '@/lib/logger';
+import { useBattleCardDetection } from '@/hooks/useBattleCardDetection';
+import { BattleCardAlert } from '@/components/conversation-intelligence/BattleCardAlert';
 
 interface TranscriptSegment {
   speaker: string;
@@ -50,7 +52,8 @@ export function LiveTranscription({ isActive, onTranscript }: LiveTranscriptionP
   const [transcripts, setTranscripts] = useState<TranscriptEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [speakerStats, setSpeakerStats] = useState<{ agent: number; customer: number }>({ agent: 0, customer: 0 });
-  
+  const { activeCard, checkText, dismiss } = useBattleCardDetection(isActive);
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
@@ -116,7 +119,10 @@ export function LiveTranscription({ isActive, onTranscript }: LiveTranscriptionP
           return newStats;
         });
         
-        newEntries.forEach(entry => onTranscript?.(entry));
+        newEntries.forEach(entry => {
+          onTranscript?.(entry);
+          checkText(entry.text);
+        });
       } else if (data.text && data.text.trim()) {
         // Fallback if no segments but text exists
         const newEntry: TranscriptEntry = {
@@ -129,6 +135,7 @@ export function LiveTranscription({ isActive, onTranscript }: LiveTranscriptionP
         
         setTranscripts(prev => [...prev, newEntry]);
         onTranscript?.(newEntry);
+        checkText(newEntry.text);
       }
     } catch (err) {
       logger.error('Processing error:', err);
@@ -379,6 +386,8 @@ export function LiveTranscription({ isActive, onTranscript }: LiveTranscriptionP
           {error}
         </div>
       )}
+
+      <BattleCardAlert card={activeCard} onDismiss={dismiss} />
     </div>
   );
 }
