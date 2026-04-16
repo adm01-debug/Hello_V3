@@ -1,62 +1,64 @@
 
-A suíte Conversation Intelligence foi finalizada em 10/10 na iteração anterior. Para continuar a jornada rumo à perfeição, identifico os próximos gaps competitivos do roadmap original (além do #1 Conversation Intelligence já entregue) e proponho atacar o próximo bloco crítico.
+Conversation Intelligence ✅ 10/10 e Sales Enablement ✅ 10/10 entregues. Próximo gap competitivo identificado: **Customer Success & Retention Intelligence** — domínio onde plataformas como Gainsight, ChurnZero e Totango operam.
 
-## Plano: Próxima onda de excelência — Sales Enablement & Revenue Intelligence
-
-### Contexto
-Conversation Intelligence (Gong/Chorus) ✅ entregue. Próximos gaps competitivos típicos de plataformas líderes (Gong, Chorus, Outreach, Salesloft):
+## Plano: Customer Success & Retention Intelligence Suite
 
 ### Melhorias sequenciais (1 por vez)
 
-**1. Deal Intelligence — vinculação chamada↔oportunidade**
-- Tabela `deals` (valor, estágio, probabilidade, contato, owner)
-- Vincular `call_sessions.deal_id`
-- Página `/deals` com pipeline kanban + health score por IA (baseado em sentimento, momentos-chave, recência)
+**1. Account Health Score 360°**
+- Tabela `accounts` (cliente pós-venda, separado de `deals` ganhos)
+- Edge function `compute-account-health`: agrega frequência de contato, sentimento médio, NPS, tickets abertos, uso (se disponível)
+- Score 0-100 com fatores explicáveis
 
-**2. Forecast assistido por IA**
-- Edge function `forecast-deals` agrega deals + sinais de CI (objeções, próximos passos, sentimento)
-- Card no Executive Dashboard com previsão semanal/mensal e confiança
+**2. Churn Risk Detection**
+- Edge function `detect-churn-risk` analisa sinais: queda de contato, sentimento negativo, menções de concorrente, objeções recorrentes
+- Tabela `churn_risk_signals` persiste alertas
+- Notificação automática para CSM quando risco > 70
 
-**3. Sequências de cadência (multi-touch)**
-- Tabela `cadences` + `cadence_steps` (call/whatsapp/task)
-- Engine que cria tarefas automáticas conforme passo
-- Página `/cadences` para criar/editar e atribuir contatos
+**3. Renewal & Expansion Pipeline**
+- Tabela `renewals` (data, valor MRR/ARR, status, probabilidade)
+- Página `/renewals` com timeline 30/60/90 dias
+- Card no Executive Dashboard
 
-**4. Scorecards de chamada (avaliação estruturada)**
-- Tabela `call_scorecards` + `scorecard_criteria` (rubrica configurável)
-- IA preenche rascunho, supervisor revisa
-- Visível em `CallDetailDialog` nova aba "Avaliação"
+**4. Customer Journey Stages**
+- Tabela `customer_journey_stages` configurável (onboarding/adoção/expansão/renovação)
+- Movimentação automática baseada em eventos + manual
+- Visualização funil no dashboard
 
-**5. Trackers customizáveis de palavras/temas**
-- Generalização de battle cards: trackers temáticos (compliance, descoberta, fechamento)
-- Dashboard de uso por agente
+**5. NPS & CSAT Surveys integrado**
+- Tabela `surveys` + `survey_responses`
+- Edge function envia survey pós-chamada (in-app/WhatsApp via Wavoip)
+- Agregação automática em account health
 
-**6. Smart playlists de chamadas para coaching**
-- Playlists curadas (auto: "objeções de preço esta semana") e manuais
-- Compartilhamento entre supervisor↔agente
+**6. Success Plans (planos de sucesso por cliente)**
+- Tabela `success_plans` + `success_plan_milestones`
+- CSM define metas, prazos e marcos por conta
+- Acompanhamento visual com progresso
 
-**7. Integração CRM bidirecional aprofundada (Bitrix)**
-- Sync de deals Bitrix↔sistema, log automático de chamadas como atividades
-- Webhook reverso para criar deal a partir de chamada
+**7. Página Accounts + integração com Contacts**
+- `/accounts` com listagem, filtros por health/risco/segmento
+- Detalhe da conta agrega: contatos, deals, chamadas, tickets, surveys
+- Reuso do `NeonPageLayout`
 
-**8. ADR + memória + testes**
-- ADR 009 — Sales Enablement Suite
-- `mem://features/sales-enablement`
-- Testes unitários para cada hook novo
+**8. ADR 010 + memória + testes**
+- `docs/adr/010-customer-success-suite.md`
+- `mem://features/customer-success.md`
+- Testes para hooks novos (useAccounts, useChurnRisk, useRenewals)
 
 ### Considerações técnicas
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner
 - Estética cyberpunk neon mantida
-- Reutilizar tabelas/edge functions já existentes onde possível
-- RLS rigoroso (admin/supervisor full, agent só seus deals)
-- Lovable AI (gemini-2.5-flash) para health score e forecast
-- Sem novas dependências externas; sem connector obrigatório
+- RLS: admin/supervisor full; CSM (role agent) só suas contas
+- Reuso de `call_sessions`, `call_summaries`, `live_sentiment_snapshots` para sinais
+- Lovable AI (gemini-2.5-flash) só onde agrega valor (detecção de risco)
+- Heurísticas determinísticas para health/renewal (auditável, sem custo recorrente)
+- Sem novas dependências externas
 
 ### Ordem de execução
-1. Migration deals + scorecards + cadences + trackers + playlists (todas as tabelas + RLS)
-2. Edge functions: `forecast-deals`, `score-call`, `compute-deal-health`
-3. Hooks de dados
-4. Páginas Deals, Cadences, novo aba Avaliação
-5. Card Forecast no Executive Dashboard
-6. Sync Bitrix bidirecional
+1. Migration: accounts, churn_risk_signals, renewals, customer_journey_stages, surveys, success_plans (+ RLS)
+2. Edge functions: compute-account-health, detect-churn-risk, send-survey
+3. Hooks: useAccounts, useChurnRisk, useRenewals, useSuccessPlans, useSurveys
+4. Páginas: Accounts, Renewals, SuccessPlans
+5. Cards no Executive Dashboard (Renewal pipeline + Churn risk)
+6. Rotas + CommandPalette
 7. Testes + ADR + memória
