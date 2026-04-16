@@ -86,3 +86,15 @@ verify_jwt = true
 
 [functions.sip-config]
 verify_jwt = true
+
+[functions.analyze-talk-ratio]
+verify_jwt = true
+
+[functions.detect-key-moments]
+verify_jwt = true
+
+[functions.search-calls]
+verify_jwt = true
+
+[functions.teams-fetch-recordings]
+verify_jwt = true
