@@ -1,60 +1,32 @@
 
-A suíte Conversation Intelligence está implementada e integrada. Resta apenas elevar a qualidade ao nível 10/10 com melhorias incrementais focadas em UX, robustez e cobertura.
+Plano já aprovado anteriormente. Restam 4 itens (7-10). Apresentando plano focado nas melhorias finais para alcançar 10/10.
 
-## Plano: Excelência 10/10 — Conversation Intelligence
+## Plano: Finalizar Conversation Intelligence (itens 7-10)
 
-### Melhorias sequenciais (1 por vez)
-
-**1. Battle Cards seed + UX da página**
-- Migration de seed com 3 battle cards exemplo (concorrentes brasileiros típicos: RD Station, HubSpot, Pipedrive) e triggers de keywords
-- Adicionar empty state cyberpunk com CTA "Criar primeiro battle card" em `BattleCards.tsx`
-- Adicionar busca/filtro por concorrente
-
-**2. Aprimorar BattleCardAlert (toast → painel lateral persistente)**
-- Trocar toast efêmero por sheet/drawer lateral com glassmorphism neon
-- Botão "Marcar como usado" que registra em `coaching_timestamps` para análise posterior
-- Auto-dismiss configurável (30s padrão)
-
-**3. CallLibrary — destaque de snippet + filtros avançados**
-- Highlight de palavras-chave no snippet (`<mark>` com glow neon)
-- Filtros laterais: data range, agente, sentimento, duração mínima, presença de momento-chave (preço/concorrente/objeção)
-- Paginação server-side via tsvector ranking
-
-**4. Persistência ativa de LiveSentiment durante chamada**
-- Integrar `useLiveSentiment.recordSnapshot()` no `LiveCallAnalysis` quando `realtime-analysis` retornar resultado
-- Throttle de 5s entre snapshots para não sobrecarregar DB
-
-**5. CallDetailDialog — player sincronizado com transcrição e momentos**
-- Conectar `CallPlayerWithTranscript` ao audio_url da gravação (storage signed URL)
-- Click em momento-chave ou linha de transcrição pula para timestamp no player
-- Marcadores visuais na barra de progresso (key moments + coaching timestamps)
-
-**6. Busca por momento-chave em CallLibrary**
-- Tab adicional "Por Momento-Chave" listando chamadas agrupadas por tipo (preço, concorrente, objeção, próximo passo)
-- Card com quote destacada e link direto para o momento
-
-**7. Métricas agregadas no Dashboard Executivo**
-- Card novo "Conversation Intelligence" com:
-  - Talk ratio médio dos agentes (vs benchmark 40-60%)
-  - Top 3 concorrentes mencionados
-  - % chamadas com objeção detectada
+### 7. Card "Conversation Intelligence" no Dashboard Executivo
+- Novo componente `src/components/executive/ConversationIntelligenceCard.tsx` consultando:
+  - Talk ratio médio agregado de `call_summaries` + `call_sessions`
+  - Top 3 concorrentes mencionados via agregação de `call_key_moments` (type='competitor')
+  - % chamadas com objeção (type='objection') sobre total
   - Total de momentos-chave da semana
+- Integrar em `ExecutiveDashboard.tsx` após `HoldKPICards`
+- Estética cyberpunk: glassmorphism + glow primary, ícone Brain
 
-**8. Testes adicionais**
-- `useCallSearch` (filtros + paginação)
-- `useTalkRatio` (estados loading/error)
-- Edge function `detect-key-moments` (validação de input via teste de schema)
+### 8. Testes unitários adicionais
+- `src/hooks/__tests__/useCallSearch.test.ts` — mock supabase.functions.invoke, validar filtros, paginação, estados loading/error/empty query
+- `src/hooks/__tests__/useTalkRatio.test.ts` — estados loading/success/error e retorno do data
+- `supabase/functions/detect-key-moments/__tests__/schema.test.ts` (ou inline em src) — validar schema Zod de input/output
 
-**9. Documentação ADR**
-- `docs/adr/008-conversation-intelligence.md` documentando decisões: Lovable AI para detecção, tsvector PT-BR para busca, integração Teams adiada, persistência via background functions
+### 9. ADR — `docs/adr/008-conversation-intelligence.md`
+- Contexto: necessidade de paridade com Gong/Chorus
+- Decisões: Lovable AI (gemini-2.5-flash) para detecção de momentos; tsvector PT-BR + GIN para busca; persistência via background invoke; Teams adiado por falta de connector aprovado
+- Consequências: custo de IA controlado, busca rápida full-text, dependência de qualidade de transcrição, importação externa pendente
 
-**10. Atualização de memória**
-- Refresh de `mem://features/conversation-intelligence` com estado final (10/10)
-- Atualizar `mem://index.md` core com referência à suíte completa
+### 10. Atualização de memória
+- Atualizar `mem://features/conversation-intelligence.md` com estado final 10/10, listando todos os componentes/hooks/edge functions/páginas
+- Atualizar `mem://index.md` com a referência completa
 
-### Considerações técnicas
-- ≤400 linhas/arquivo, PT-BR, logger central, sonner para toasts pontuais
-- Estética cyberpunk neon mantida (glassmorphism, glow em alerts e marcadores)
-- Sem novas dependências externas
-- Sem necessidade de connector Teams (continua opcional)
-- Cada melhoria é commitada/entregue como bloco coeso antes da próxima
+### Considerações
+- ≤400 linhas/arquivo, PT-BR, logger central, sonner, estética neon mantida
+- Sem novas dependências, sem novas tabelas
+- Execução sequencial sem pausas conforme solicitado
