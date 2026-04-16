@@ -438,6 +438,83 @@ export type Database = {
           },
         ]
       }
+      battle_card_triggers: {
+        Row: {
+          battle_card_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          keyword: string
+          match_type: string
+        }
+        Insert: {
+          battle_card_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          keyword: string
+          match_type?: string
+        }
+        Update: {
+          battle_card_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          keyword?: string
+          match_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "battle_card_triggers_battle_card_id_fkey"
+            columns: ["battle_card_id"]
+            isOneToOne: false
+            referencedRelation: "battle_cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      battle_cards: {
+        Row: {
+          competitor_name: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          objection_responses: Json | null
+          our_strengths: string[] | null
+          talking_points: string[] | null
+          their_weaknesses: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          competitor_name: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          objection_responses?: Json | null
+          our_strengths?: string[] | null
+          talking_points?: string[] | null
+          their_weaknesses?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          competitor_name?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          objection_responses?: Json | null
+          our_strengths?: string[] | null
+          talking_points?: string[] | null
+          their_weaknesses?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blocked_access_logs: {
         Row: {
           city: string | null
@@ -601,6 +678,50 @@ export type Database = {
         }
         Relationships: []
       }
+      call_key_moments: {
+        Row: {
+          call_session_id: string
+          confidence: number | null
+          created_at: string
+          id: string
+          metadata: Json | null
+          moment_type: string
+          quote: string
+          speaker: string | null
+          timestamp_seconds: number
+        }
+        Insert: {
+          call_session_id: string
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          moment_type: string
+          quote: string
+          speaker?: string | null
+          timestamp_seconds?: number
+        }
+        Update: {
+          call_session_id?: string
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          moment_type?: string
+          quote?: string
+          speaker?: string | null
+          timestamp_seconds?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_key_moments_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       call_recordings: {
         Row: {
           call_session_id: string | null
@@ -612,6 +733,7 @@ export type Database = {
           id: string
           participant_count: number | null
           recorded_at: string
+          source: string
         }
         Insert: {
           call_session_id?: string | null
@@ -623,6 +745,7 @@ export type Database = {
           id?: string
           participant_count?: number | null
           recorded_at?: string
+          source?: string
         }
         Update: {
           call_session_id?: string | null
@@ -634,6 +757,7 @@ export type Database = {
           id?: string
           participant_count?: number | null
           recorded_at?: string
+          source?: string
         }
         Relationships: [
           {
@@ -780,6 +904,47 @@ export type Database = {
           },
         ]
       }
+      call_transcripts_searchable: {
+        Row: {
+          agent_name: string | null
+          call_session_id: string
+          created_at: string
+          duration_seconds: number | null
+          full_text: string
+          id: string
+          search_vector: unknown
+          updated_at: string
+        }
+        Insert: {
+          agent_name?: string | null
+          call_session_id: string
+          created_at?: string
+          duration_seconds?: number | null
+          full_text: string
+          id?: string
+          search_vector?: unknown
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string | null
+          call_session_id?: string
+          created_at?: string
+          duration_seconds?: number | null
+          full_text?: string
+          id?: string
+          search_vector?: unknown
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_transcripts_searchable_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: true
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       calling_hours_config: {
         Row: {
           created_at: string
@@ -883,6 +1048,50 @@ export type Database = {
             columns: ["agent_id"]
             isOneToOne: false
             referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coaching_timestamps: {
+        Row: {
+          agent_name: string | null
+          call_session_id: string
+          category: string | null
+          created_at: string
+          feedback_type: string
+          id: string
+          message: string
+          severity: string
+          timestamp_seconds: number
+        }
+        Insert: {
+          agent_name?: string | null
+          call_session_id: string
+          category?: string | null
+          created_at?: string
+          feedback_type: string
+          id?: string
+          message: string
+          severity?: string
+          timestamp_seconds?: number
+        }
+        Update: {
+          agent_name?: string | null
+          call_session_id?: string
+          category?: string | null
+          created_at?: string
+          feedback_type?: string
+          id?: string
+          message?: string
+          severity?: string
+          timestamp_seconds?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coaching_timestamps_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
             referencedColumns: ["id"]
           },
         ]
@@ -1758,6 +1967,50 @@ export type Database = {
           is_cidr?: boolean
         }
         Relationships: []
+      }
+      live_sentiment_snapshots: {
+        Row: {
+          call_session_id: string
+          created_at: string
+          emotion: string | null
+          id: string
+          metadata: Json | null
+          score: number | null
+          sentiment: string
+          timestamp_seconds: number
+          urgency: string | null
+        }
+        Insert: {
+          call_session_id: string
+          created_at?: string
+          emotion?: string | null
+          id?: string
+          metadata?: Json | null
+          score?: number | null
+          sentiment: string
+          timestamp_seconds?: number
+          urgency?: string | null
+        }
+        Update: {
+          call_session_id?: string
+          created_at?: string
+          emotion?: string | null
+          id?: string
+          metadata?: Json | null
+          score?: number | null
+          sentiment?: string
+          timestamp_seconds?: number
+          urgency?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "live_sentiment_snapshots_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       login_attempts: {
         Row: {
