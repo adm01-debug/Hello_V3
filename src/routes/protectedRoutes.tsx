@@ -56,6 +56,9 @@ const NotificationCenter = lazy(() => import("@/pages/NotificationCenter"));
 const CallLibrary = lazy(() => import("@/pages/CallLibrary"));
 const BattleCards = lazy(() => import("@/pages/BattleCards"));
 const ExternalRecordingsImport = lazy(() => import("@/pages/ExternalRecordingsImport"));
+const Deals = lazy(() => import("@/pages/Deals"));
+const Cadences = lazy(() => import("@/pages/Cadences"));
+const Trackers = lazy(() => import("@/pages/Trackers"));
 
 export interface RouteConfig {
   path: string;
@@ -97,6 +100,9 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/call-library", element: CallLibrary },
   { path: "/battle-cards", element: BattleCards, roles: ["supervisor", "admin"] },
   { path: "/external-recordings-import", element: ExternalRecordingsImport, roles: ["supervisor", "admin"] },
+  { path: "/deals", element: Deals },
+  { path: "/cadences", element: Cadences, roles: ["supervisor", "admin"] },
+  { path: "/trackers", element: Trackers, roles: ["supervisor", "admin"] },
 
   // Supervisor + Admin
   { path: "/queue-dashboard", element: QueueMetricsDashboard, roles: ["supervisor", "admin"] },

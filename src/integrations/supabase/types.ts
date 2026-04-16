@@ -554,6 +554,150 @@ export type Database = {
         }
         Relationships: []
       }
+      cadence_enrollments: {
+        Row: {
+          agent_name: string | null
+          cadence_id: string
+          completed_at: string | null
+          contact_id: string | null
+          created_at: string
+          current_step: number
+          deal_id: string | null
+          id: string
+          next_action_at: string | null
+          paused_reason: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          agent_name?: string | null
+          cadence_id: string
+          completed_at?: string | null
+          contact_id?: string | null
+          created_at?: string
+          current_step?: number
+          deal_id?: string | null
+          id?: string
+          next_action_at?: string | null
+          paused_reason?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string | null
+          cadence_id?: string
+          completed_at?: string | null
+          contact_id?: string | null
+          created_at?: string
+          current_step?: number
+          deal_id?: string | null
+          id?: string
+          next_action_at?: string | null
+          paused_reason?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cadence_enrollments_cadence_id_fkey"
+            columns: ["cadence_id"]
+            isOneToOne: false
+            referencedRelation: "cadences"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cadence_enrollments_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cadence_enrollments_deal_id_fkey"
+            columns: ["deal_id"]
+            isOneToOne: false
+            referencedRelation: "deals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cadence_steps: {
+        Row: {
+          body: string | null
+          cadence_id: string
+          created_at: string
+          delay_days: number
+          delay_hours: number
+          id: string
+          metadata: Json | null
+          step_order: number
+          step_type: string
+          subject: string | null
+        }
+        Insert: {
+          body?: string | null
+          cadence_id: string
+          created_at?: string
+          delay_days?: number
+          delay_hours?: number
+          id?: string
+          metadata?: Json | null
+          step_order: number
+          step_type: string
+          subject?: string | null
+        }
+        Update: {
+          body?: string | null
+          cadence_id?: string
+          created_at?: string
+          delay_days?: number
+          delay_hours?: number
+          id?: string
+          metadata?: Json | null
+          step_order?: number
+          step_type?: string
+          subject?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cadence_steps_cadence_id_fkey"
+            columns: ["cadence_id"]
+            isOneToOne: false
+            referencedRelation: "cadences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cadences: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       call_alerts: {
         Row: {
           alert_type: string
@@ -722,6 +866,48 @@ export type Database = {
           },
         ]
       }
+      call_playlists: {
+        Row: {
+          auto_query: Json | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_shared: boolean
+          name: string
+          owner_agent_name: string | null
+          playlist_type: string
+          shared_with: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          auto_query?: Json | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_shared?: boolean
+          name: string
+          owner_agent_name?: string | null
+          playlist_type?: string
+          shared_with?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          auto_query?: Json | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_shared?: boolean
+          name?: string
+          owner_agent_name?: string | null
+          playlist_type?: string
+          shared_with?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       call_recordings: {
         Row: {
           call_session_id: string | null
@@ -769,6 +955,69 @@ export type Database = {
           },
         ]
       }
+      call_scorecards: {
+        Row: {
+          agent_name: string | null
+          ai_generated: boolean
+          call_session_id: string
+          created_at: string
+          feedback: string | null
+          id: string
+          max_total: number | null
+          reviewer_email: string | null
+          reviewer_id: string | null
+          status: string
+          template_id: string
+          total_score: number | null
+          updated_at: string
+        }
+        Insert: {
+          agent_name?: string | null
+          ai_generated?: boolean
+          call_session_id: string
+          created_at?: string
+          feedback?: string | null
+          id?: string
+          max_total?: number | null
+          reviewer_email?: string | null
+          reviewer_id?: string | null
+          status?: string
+          template_id: string
+          total_score?: number | null
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string | null
+          ai_generated?: boolean
+          call_session_id?: string
+          created_at?: string
+          feedback?: string | null
+          id?: string
+          max_total?: number | null
+          reviewer_email?: string | null
+          reviewer_id?: string | null
+          status?: string
+          template_id?: string
+          total_score?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_scorecards_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "call_scorecards_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "scorecard_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       call_sessions: {
         Row: {
           agent_name: string | null
@@ -776,6 +1025,7 @@ export type Database = {
           caller_phone: string | null
           contact_id: string | null
           created_at: string
+          deal_id: string | null
           duration_seconds: number | null
           ended_at: string | null
           hold_count: number | null
@@ -790,6 +1040,7 @@ export type Database = {
           caller_phone?: string | null
           contact_id?: string | null
           created_at?: string
+          deal_id?: string | null
           duration_seconds?: number | null
           ended_at?: string | null
           hold_count?: number | null
@@ -804,6 +1055,7 @@ export type Database = {
           caller_phone?: string | null
           contact_id?: string | null
           created_at?: string
+          deal_id?: string | null
           duration_seconds?: number | null
           ended_at?: string | null
           hold_count?: number | null
@@ -818,6 +1070,13 @@ export type Database = {
             columns: ["contact_id"]
             isOneToOne: false
             referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "call_sessions_deal_id_fkey"
+            columns: ["deal_id"]
+            isOneToOne: false
+            referencedRelation: "deals"
             referencedColumns: ["id"]
           },
         ]
@@ -1396,6 +1655,80 @@ export type Database = {
           warning_threshold?: number
         }
         Relationships: []
+      }
+      deals: {
+        Row: {
+          contact_id: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          expected_close_date: string | null
+          external_id: string | null
+          health_factors: Json | null
+          health_score: number | null
+          health_updated_at: string | null
+          id: string
+          name: string
+          notes: string | null
+          owner_agent_name: string | null
+          probability: number
+          source: string | null
+          stage: string
+          status: string
+          updated_at: string
+          value_cents: number
+        }
+        Insert: {
+          contact_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          expected_close_date?: string | null
+          external_id?: string | null
+          health_factors?: Json | null
+          health_score?: number | null
+          health_updated_at?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          owner_agent_name?: string | null
+          probability?: number
+          source?: string | null
+          stage?: string
+          status?: string
+          updated_at?: string
+          value_cents?: number
+        }
+        Update: {
+          contact_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          expected_close_date?: string | null
+          external_id?: string | null
+          health_factors?: Json | null
+          health_score?: number | null
+          health_updated_at?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          owner_agent_name?: string | null
+          probability?: number
+          source?: string | null
+          stage?: string
+          status?: string
+          updated_at?: string
+          value_cents?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deals_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       dialer_campaigns: {
         Row: {
@@ -2356,6 +2689,51 @@ export type Database = {
         }
         Relationships: []
       }
+      playlist_items: {
+        Row: {
+          added_by: string | null
+          call_session_id: string
+          created_at: string
+          display_order: number
+          id: string
+          notes: string | null
+          playlist_id: string
+        }
+        Insert: {
+          added_by?: string | null
+          call_session_id: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          notes?: string | null
+          playlist_id: string
+        }
+        Update: {
+          added_by?: string | null
+          call_session_id?: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          notes?: string | null
+          playlist_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "playlist_items_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "playlist_items_playlist_id_fkey"
+            columns: ["playlist_id"]
+            isOneToOne: false
+            referencedRelation: "call_playlists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       queue_metrics_settings: {
         Row: {
           abandonment_rate_critical: number
@@ -2597,6 +2975,119 @@ export type Database = {
           },
         ]
       }
+      scorecard_criteria: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          label: string
+          max_score: number
+          template_id: string
+          weight: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          label: string
+          max_score?: number
+          template_id: string
+          weight?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          label?: string
+          max_score?: number
+          template_id?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scorecard_criteria_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "scorecard_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scorecard_responses: {
+        Row: {
+          comment: string | null
+          created_at: string
+          criterion_id: string
+          id: string
+          score: number
+          scorecard_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          criterion_id: string
+          id?: string
+          score: number
+          scorecard_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          criterion_id?: string
+          id?: string
+          score?: number
+          scorecard_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scorecard_responses_criterion_id_fkey"
+            columns: ["criterion_id"]
+            isOneToOne: false
+            referencedRelation: "scorecard_criteria"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scorecard_responses_scorecard_id_fkey"
+            columns: ["scorecard_id"]
+            isOneToOne: false
+            referencedRelation: "call_scorecards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scorecard_templates: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       security_alerts: {
         Row: {
           alert_type: string
@@ -2763,6 +3254,96 @@ export type Database = {
           topic?: string
           total_occurrences?: number
           trend_direction?: string | null
+        }
+        Relationships: []
+      }
+      tracker_matches: {
+        Row: {
+          agent_name: string | null
+          call_session_id: string
+          created_at: string
+          id: string
+          matched_keyword: string | null
+          quote: string | null
+          timestamp_seconds: number | null
+          tracker_id: string
+        }
+        Insert: {
+          agent_name?: string | null
+          call_session_id: string
+          created_at?: string
+          id?: string
+          matched_keyword?: string | null
+          quote?: string | null
+          timestamp_seconds?: number | null
+          tracker_id: string
+        }
+        Update: {
+          agent_name?: string | null
+          call_session_id?: string
+          created_at?: string
+          id?: string
+          matched_keyword?: string | null
+          quote?: string | null
+          timestamp_seconds?: number | null
+          tracker_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tracker_matches_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tracker_matches_tracker_id_fkey"
+            columns: ["tracker_id"]
+            isOneToOne: false
+            referencedRelation: "trackers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trackers: {
+        Row: {
+          category: string
+          color: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          keywords: string[]
+          match_type: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          color?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          keywords?: string[]
+          match_type?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          color?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          keywords?: string[]
+          match_type?: string
+          name?: string
+          updated_at?: string
         }
         Relationships: []
       }

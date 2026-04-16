@@ -13,6 +13,7 @@ import {
 } from '@/components/executive/DashboardCharts';
 import { GoalsComparisonSection } from '@/components/executive/GoalsComparisonSection';
 import { ConversationIntelligenceCard } from '@/components/executive/ConversationIntelligenceCard';
+import { ForecastCard } from '@/components/executive/ForecastCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function ExecutiveDashboard() {
@@ -67,6 +68,7 @@ export default function ExecutiveDashboard() {
       <HoldKPICards metrics={metrics} />
 
       <ConversationIntelligenceCard />
+      <ForecastCard />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <CallsVolumeChart data={callsByDay} />
