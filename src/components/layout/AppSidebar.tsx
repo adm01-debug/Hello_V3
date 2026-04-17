@@ -1,5 +1,5 @@
 import { 
-  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff, BellRing, Library, Swords, Cloud,
+  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -49,6 +49,9 @@ const toolsNavItems = [
   { title: 'Biblioteca de Calls', url: '/call-library', icon: Library },
   { title: 'Battle Cards', url: '/battle-cards', icon: Swords },
   { title: 'Importar Gravações', url: '/external-recordings-import', icon: Cloud },
+  { title: 'Escala & Turnos', url: '/scheduling', icon: CalendarDays },
+  { title: 'Habilidades', url: '/skills', icon: Award },
+  { title: 'Aprendizagem', url: '/learning', icon: GraduationCap },
 ];
 
 const securityNavItems = [
