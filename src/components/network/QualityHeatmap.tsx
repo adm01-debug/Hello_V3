@@ -37,7 +37,6 @@ export function QualityHeatmap() {
     setLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('voip-quality-heatmap', {
-        body: null,
         method: 'GET',
       });
       if (error) throw error;
