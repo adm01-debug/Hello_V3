@@ -1,43 +1,46 @@
 
-Status: Ondas 1-9 entregues. Sistema 10/10 com monitoramento de rede e qualidade VoIP completos (hooks `useNetworkMonitor`, `useVoipQualityMonitor`, badge no header de `/calls`, indicador de chamada, persistência em `call_quality_metrics`).
+Status: Ondas 1-10 entregues. Sistema 10/10 com monitoramento completo de rede e VoIP, página `/network-diagnostics`, integração automática do `useVoipQualityMonitor` no `useSipCall`, badges no header de `/calls`.
 
-Pendência identificada da Onda 9: a página dedicada `/network-diagnostics` (item 9.4 do plano original) ainda não foi criada. Proponho a Onda 10 para fechar esse loop e adicionar histórico auditável.
+Não restam itens dos roadmaps aprovados. Para manter excelência sem refactor especulativo, proponho **Onda 11 — Inteligência Preditiva de Qualidade VoIP**: alertas proativos baseados em tendências e dashboard executivo de SLA de rede.
 
-## Onda 10 — Diagnóstico de Rede & VoIP (fechamento da Onda 9)
+## Onda 11 — Inteligência Preditiva de Qualidade VoIP
 
-### 10.1 Página `/network-diagnostics`
-`src/pages/NetworkDiagnostics.tsx` (admin/supervisor):
-- Gauge de latência atual + status de internet (`useNetworkMonitor`)
-- Card de status SIP (registrado/desconectado, servidor, uptime)
-- Histórico das últimas 20 chamadas com MOS, jitter, packet loss, RTT (query a `call_quality_metrics`)
-- Gráfico Recharts de MOS médio nas últimas 24h
-- Botão "Testar conexão agora" (ping + STUN test via `stun.l.google.com`)
-- Estética cyberpunk neon (Orbitron, glassmorphism, ≤400 linhas)
+### 11.1 Detecção de degradação progressiva
+Hook `src/hooks/useQualityTrendAnalyzer.ts`:
+- Analisa últimas 5 amostras de MOS em chamada ativa
+- Detecta tendência descendente (regressão linear simples)
+- Emite evento `quality:degrading` antes de atingir nível "poor"
+- Toast preventivo via sonner: "Qualidade da chamada degradando — verifique sua rede"
 
-### 10.2 Rota + navegação
-- Adicionar rota em `src/App.tsx` protegida por `RoleGuard` (admin/supervisor)
-- Entrada no menu lateral em `src/components/layout/AppSidebar.tsx` (ícone `Activity`)
-- `usePageTitle('Diagnóstico de Rede')`
+### 11.2 Edge function de agregação SLA
+`supabase/functions/voip-sla-report/index.ts`:
+- Agrega `call_quality_metrics` por dia/semana/mês
+- Retorna SLA % (chamadas com MOS ≥ 4.0), MOS médio, p95 de jitter/RTT
+- JWT verificado, CORS centralizado, validação Zod, tracing `x-request-id`
+- 6 testes Deno em `__tests__/index.test.ts`
 
-### 10.3 Integração do `useVoipQualityMonitor` no `useSipCall`
-Hoje o monitor existe mas não é plugado automaticamente. Conectar a `RTCPeerConnection` da sessão JsSIP ativa em `useSipCall.ts` para popular `call_quality_metrics` durante chamadas reais.
+### 11.3 Card SLA no `/network-diagnostics`
+Adicionar à página existente:
+- Card "SLA dos últimos 7 dias" (gauge circular + %)
+- Card "p95 jitter / p95 RTT" (valores + comparação com semana anterior)
+- Botão "Exportar relatório SLA (CSV)"
 
-### 10.4 Componente `SipConnectionStatus`
-`src/components/calls/SipConnectionStatus.tsx` — badge compacto no header de `/calls` mostrando estado SIP (registrado/conectando/erro), complementando o `NetworkStatusBadge` já existente.
+### 11.4 Migration: índice de performance
+- Índice `call_quality_metrics(created_at DESC, mos_avg)` para acelerar agregações SLA
 
-### 10.5 Documentação
-- ADR-025 (`docs/adr/025-onda-10-diagnostico-rede.md`)
-- Atualizar `mem/features/network-quality-monitoring.md` com a nova página
-- Atualizar `mem/index.md` e `docs/audit/scorecard-final.md`
+### 11.5 Documentação
+- ADR-026 (`docs/adr/026-onda-11-inteligencia-preditiva-voip.md`)
+- `mem/features/voip-predictive-quality.md` + atualização do `mem/index.md`
+- Atualizar `docs/audit/scorecard-final.md`
 
 ### Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Reuso total dos hooks já existentes; sem novas dependências
-- Zero breakage; RLS de `call_quality_metrics` já garante isolamento
+- Reuso total da tabela `call_quality_metrics`; sem novas dependências
+- Zero breakage; RLS já garante isolamento por papel
 
 ### Ordem
-1. 10.3 Plugar `useVoipQualityMonitor` no `useSipCall`
-2. 10.4 `SipConnectionStatus` + integração no header
-3. 10.1 Página `NetworkDiagnostics.tsx`
-4. 10.2 Rota + sidebar + RoleGuard
-5. 10.5 ADR-025 + memórias + scorecard
+1. 11.4 Migration de índice
+2. 11.2 Edge function `voip-sla-report` + testes
+3. 11.1 Hook `useQualityTrendAnalyzer` + integração no `useSipCall`
+4. 11.3 Cards SLA no `/network-diagnostics` + export CSV
+5. 11.5 ADR-026 + memórias + scorecard
