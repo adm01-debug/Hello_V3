@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { traceHeaders, withTrace } from '@/lib/tracing';
 
 const log = logger.create('useBestTimeToContact');
 
@@ -52,9 +53,12 @@ export function useBestTimeToContact(contactId?: string) {
 
   const recomputeMutation = useMutation({
     mutationFn: async (targetId?: string) => {
-      const { data, error } = await supabase.functions.invoke('compute-best-time', {
-        body: targetId ? { contact_id: targetId } : {},
-      });
+      const { data, error } = await withTrace('best-time.compute', () =>
+        supabase.functions.invoke('compute-best-time', {
+          body: targetId ? { contact_id: targetId } : {},
+          headers: traceHeaders(),
+        }),
+      );
       if (error) throw error;
       return data;
     },
