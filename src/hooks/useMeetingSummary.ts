@@ -97,7 +97,7 @@ export function useMeetingSummary(callSessionId?: string) {
   }, [callSessionId, queryClient]);
 
   const generate = useMutation({
-    mutationFn: async (force = false) => {
+    mutationFn: async (force: boolean = false) => {
       if (!callSessionId) throw new Error('callSessionId ausente');
       const { data, error } = await supabase.functions.invoke('generate-meeting-summary', {
         body: { callSessionId, force },
