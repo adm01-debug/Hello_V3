@@ -3351,6 +3351,95 @@ export type Database = {
           },
         ]
       }
+      meeting_summaries: {
+        Row: {
+          action_items: Json | null
+          ai_confidence: number | null
+          ai_model: string | null
+          call_session_id: string
+          created_at: string
+          decisions: Json | null
+          edited: boolean | null
+          edited_at: string | null
+          edited_by: string | null
+          edited_content: Json | null
+          error_message: string | null
+          follow_up_reason: string | null
+          follow_up_required: boolean | null
+          generated_at: string | null
+          generated_by: string | null
+          id: string
+          key_points: Json | null
+          next_steps: Json | null
+          participants_sentiment: Json | null
+          shared_with: string[] | null
+          status: string
+          summary: string | null
+          topics_discussed: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          action_items?: Json | null
+          ai_confidence?: number | null
+          ai_model?: string | null
+          call_session_id: string
+          created_at?: string
+          decisions?: Json | null
+          edited?: boolean | null
+          edited_at?: string | null
+          edited_by?: string | null
+          edited_content?: Json | null
+          error_message?: string | null
+          follow_up_reason?: string | null
+          follow_up_required?: boolean | null
+          generated_at?: string | null
+          generated_by?: string | null
+          id?: string
+          key_points?: Json | null
+          next_steps?: Json | null
+          participants_sentiment?: Json | null
+          shared_with?: string[] | null
+          status?: string
+          summary?: string | null
+          topics_discussed?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          action_items?: Json | null
+          ai_confidence?: number | null
+          ai_model?: string | null
+          call_session_id?: string
+          created_at?: string
+          decisions?: Json | null
+          edited?: boolean | null
+          edited_at?: string | null
+          edited_by?: string | null
+          edited_content?: Json | null
+          error_message?: string | null
+          follow_up_reason?: string | null
+          follow_up_required?: boolean | null
+          generated_at?: string | null
+          generated_by?: string | null
+          id?: string
+          key_points?: Json | null
+          next_steps?: Json | null
+          participants_sentiment?: Json | null
+          shared_with?: string[] | null
+          status?: string
+          summary?: string | null
+          topics_discussed?: string[] | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meeting_summaries_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notification_preferences: {
         Row: {
           categories: Json
