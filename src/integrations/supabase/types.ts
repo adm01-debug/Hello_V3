@@ -2779,6 +2779,65 @@ export type Database = {
         }
         Relationships: []
       }
+      fraud_signals: {
+        Row: {
+          agent_name: string | null
+          call_session_id: string
+          created_at: string
+          description: string | null
+          evidence: Json
+          id: string
+          resolution_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          risk_score: number
+          severity: string
+          signal_type: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          agent_name?: string | null
+          call_session_id: string
+          created_at?: string
+          description?: string | null
+          evidence?: Json
+          id?: string
+          resolution_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          risk_score?: number
+          severity?: string
+          signal_type: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string | null
+          call_session_id?: string
+          created_at?: string
+          description?: string | null
+          evidence?: Json
+          id?: string
+          resolution_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          risk_score?: number
+          severity?: string
+          signal_type?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fraud_signals_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       geo_access_logs: {
         Row: {
           action: string
@@ -4173,6 +4232,53 @@ export type Database = {
         }
         Relationships: []
       }
+      redaction_log: {
+        Row: {
+          call_session_id: string | null
+          created_at: string
+          error_message: string | null
+          id: string
+          match_count: number
+          pattern_type: string
+          recording_path: string | null
+          redacted_path: string | null
+          segments: Json
+          status: string
+        }
+        Insert: {
+          call_session_id?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          match_count?: number
+          pattern_type: string
+          recording_path?: string | null
+          redacted_path?: string | null
+          segments?: Json
+          status?: string
+        }
+        Update: {
+          call_session_id?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          match_count?: number
+          pattern_type?: string
+          recording_path?: string | null
+          redacted_path?: string | null
+          segments?: Json
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "redaction_log_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       renewals: {
         Row: {
           account_id: string
@@ -5438,6 +5544,51 @@ export type Database = {
           status?: string
           subject?: string | null
           to_number?: string
+        }
+        Relationships: []
+      }
+      voice_prints: {
+        Row: {
+          confidence_baseline: number
+          created_at: string
+          embedding: Json
+          enrolled_at: string
+          feature_summary: Json | null
+          id: string
+          is_active: boolean
+          label: string
+          last_verified_at: string | null
+          sample_count: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          confidence_baseline?: number
+          created_at?: string
+          embedding: Json
+          enrolled_at?: string
+          feature_summary?: Json | null
+          id?: string
+          is_active?: boolean
+          label?: string
+          last_verified_at?: string | null
+          sample_count?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          confidence_baseline?: number
+          created_at?: string
+          embedding?: Json
+          enrolled_at?: string
+          feature_summary?: Json | null
+          id?: string
+          is_active?: boolean
+          label?: string
+          last_verified_at?: string | null
+          sample_count?: number
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
