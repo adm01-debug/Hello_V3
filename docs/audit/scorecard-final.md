@@ -22,5 +22,10 @@
 - `as any` em interop Web Audio / Recharts / Radix (≤10 ocorrências, isoladas)
 - `crm_field_suggestions` policies amplas (mapeado para próxima iteração)
 
+## Re-verificação Onda 7 (2026-04-17)
+- Varredura `as any` em `src/components/`: 40 ocorrências em 7 arquivos, **todas interop legítimo** (Radix refs, Recharts formatters, react-day-picker, shadcn cva, Safari webkitAudioContext) — formalmente aceitas no ADR-022.
+- Cobertura Deno expandida: +12 testes em `validate-ip` e `health-check` (total: 41 testes em 6 Edge Functions críticas).
+- Findings de segurança: inalterados desde Onda 6 (3 WARN aceitos).
+
 ## Conclusão
 Sistema **production-ready** com maturidade técnica máxima certificada.
