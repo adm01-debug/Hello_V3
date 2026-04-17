@@ -49,5 +49,13 @@
 - ADR-027 publicado; zero novas dependências; arquivos ≤400 linhas.
 - Findings de segurança: inalterados (3 WARN pré-existentes aceitos).
 
+## Re-verificação Onda 13 (2026-04-17)
+- Inteligência executiva: `QualityHeatmap` (7×24 buckets, MOS por hora/dia) + `AgentQualityRanking` (drill-down 24h ordenável com badge crítico).
+- Edge function `voip-quality-heatmap` (4 testes Deno) — total: **73 testes em 12 Edge Functions**.
+- Bridge automático via trigger PostgreSQL `bridge_voip_alert_to_notification` espelha alertas `poor`/`offline` em `notifications` (degrading fica só no toast/dashboard) — central única de alertas com realtime herdado.
+- Reuso total: zero schema novo, zero dependência nova, zero novas RLS.
+- ADR-028 publicado; arquivos ≤400 linhas.
+- Findings de segurança: inalterados (3 WARN pré-existentes aceitos).
+
 ## Conclusão
 Sistema **production-ready** com maturidade técnica máxima certificada.
