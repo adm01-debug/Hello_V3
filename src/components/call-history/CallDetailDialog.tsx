@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Phone, MessageSquare, Brain, Download, Loader2, TrendingUp, TrendingDown, Minus, BarChart3, Sparkles, Lightbulb, Activity, PlayCircle } from 'lucide-react';
+import { Phone, MessageSquare, Brain, Download, Loader2, TrendingUp, TrendingDown, Minus, BarChart3, Sparkles, Lightbulb, Activity, PlayCircle, FileText } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
@@ -20,6 +20,7 @@ import { CallPlayerWithTranscript, type PlayerMarker } from '@/components/conver
 import { useTalkRatio } from '@/hooks/useTalkRatio';
 import { useKeyMoments } from '@/hooks/useKeyMoments';
 import { useLiveSentiment } from '@/hooks/useLiveSentiment';
+import { MeetingSummaryCard } from '@/components/calls/MeetingSummaryCard';
 
 const log = logger.create('CallDetailDialog');
 
@@ -130,6 +131,7 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
             <div className="flex items-center justify-between mb-4">
               <TabsList>
                 <TabsTrigger value="player" className="gap-2"><PlayCircle className="h-4 w-4" /> Player</TabsTrigger>
+                <TabsTrigger value="ai-summary" className="gap-2"><FileText className="h-4 w-4" /> Resumo IA</TabsTrigger>
                 <TabsTrigger value="transcription" className="gap-2"><MessageSquare className="h-4 w-4" /> Transcrição</TabsTrigger>
                 <TabsTrigger value="analysis" className="gap-2"><Brain className="h-4 w-4" /> Análises</TabsTrigger>
                 <TabsTrigger value="talk-ratio" className="gap-2"><BarChart3 className="h-4 w-4" /> Talk Ratio</TabsTrigger>
@@ -167,6 +169,10 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
 
             <TabsContent value="player">
               <CallPlayerWithTranscript audioUrl={audioUrl} segments={segments} seekTo={seekTo} markers={playerMarkers} />
+            </TabsContent>
+
+            <TabsContent value="ai-summary">
+              {sessionId && <MeetingSummaryCard callSessionId={sessionId} />}
             </TabsContent>
 
             <TabsContent value="transcription">
