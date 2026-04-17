@@ -59,6 +59,7 @@ const allRoutes = [
   { title: 'Rate Limit', url: '/rate-limit', icon: AlertTriangle, group: 'Segurança' },
   { title: 'Observabilidade', url: '/observability', icon: Activity, group: 'Segurança' },
   { title: 'Compliance', url: '/compliance', icon: ListChecks, group: 'Sistema' },
+  { title: 'Outbound Compliance & Score', url: '/outbound-compliance', icon: ShieldCheck, group: 'Sistema' },
   { title: 'Logs de Auditoria', url: '/audit-logs', icon: Eye, group: 'Sistema' },
   { title: 'Monitoramento', url: '/security-monitoring', icon: Monitor, group: 'Sistema' },
   { title: 'Relatório Segurança', url: '/security-report', icon: FileBarChart, group: 'Sistema' },
