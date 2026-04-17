@@ -74,9 +74,12 @@ export function ActiveCallBar() {
   const [showTranscription, setShowTranscription] = useState(false);
   const [transcripts, setTranscripts] = useState<TranscriptEntry[]>([]);
   const [isEnding, setIsEnding] = useState(false);
+  const [endedSessionId, setEndedSessionId] = useState<string | null>(null);
+  const [endedContactId, setEndedContactId] = useState<string | null>(null);
   
   const { currentSession, isSaving, startSession, endSession, addTranscript, addAnalysis } = useCallSession();
   const { findOrCreateContact, addContactInteraction } = useContacts();
+  const { analyze: analyzeLive } = useLiveAssist(currentSession?.id);
 
   // Start session when call connects
   useEffect(() => {
@@ -96,9 +99,21 @@ export function ActiveCallBar() {
   }, [call]);
 
   const handleTranscript = useCallback((entry: TranscriptEntry) => {
-    setTranscripts(prev => [...prev, entry]);
+    setTranscripts(prev => {
+      const next = [...prev, entry];
+      if (currentSession?.id) {
+        void analyzeLive({
+          latestUtterance: entry.text,
+          recentContext: buildRecentContext(next.map((t) => ({ speaker: t.speaker, text: t.text })), 8),
+          speaker: entry.speaker,
+          agentName: currentSession.agentName,
+          timestampSeconds: Math.floor((entry.timestamp.getTime() - currentSession.startedAt.getTime()) / 1000),
+        });
+      }
+      return next;
+    });
     addTranscript(entry);
-  }, [addTranscript]);
+  }, [addTranscript, analyzeLive, currentSession]);
 
   const handleAnalysis = useCallback((analysis: AnalysisEntry) => {
     addAnalysis(analysis);
