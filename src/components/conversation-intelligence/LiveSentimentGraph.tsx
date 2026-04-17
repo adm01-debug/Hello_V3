@@ -37,8 +37,8 @@ export function LiveSentimentGraph({ snapshots }: Props) {
             <YAxis domain={[-1, 1]} tick={{ fontSize: 10 }} stroke="hsl(var(--muted-foreground))" />
             <Tooltip
               contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: 8, fontSize: 12 }}
-              formatter={(v: number) => [v.toFixed(2), 'Score']}
-              labelFormatter={(l: number) => `${l}s`}
+              formatter={(v) => [Number(v ?? 0).toFixed(2), 'Score']}
+              labelFormatter={(l) => `${l ?? 0}s`}
             />
             <ReferenceLine y={0} stroke="hsl(var(--border))" strokeDasharray="3 3" />
             <Line

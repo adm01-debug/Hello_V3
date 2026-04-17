@@ -242,7 +242,7 @@ export default function NotificationCenter() {
           <NotificationList notifications={filtered} isLoading={isLoading} onMarkRead={id => markAsRead.mutate(id)} onArchive={id => archiveNotification.mutate(id)} onDelete={id => deleteNotification.mutate(id)} />
         </TabsContent>
         <TabsContent value="preferences" className="mt-4">
-          <PreferencesPanel preferences={preferences} onUpdate={prefs => updatePreferences.mutate(prefs)} />
+          <PreferencesPanel preferences={preferences ?? null} onUpdate={prefs => updatePreferences.mutate(prefs)} />
         </TabsContent>
       </Tabs>
     </div>
