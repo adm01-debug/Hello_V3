@@ -27,5 +27,11 @@
 - Cobertura Deno expandida: +12 testes em `validate-ip` e `health-check` (total: 41 testes em 6 Edge Functions críticas).
 - Findings de segurança: inalterados desde Onda 6 (3 WARN aceitos).
 
+## Re-verificação Onda 8 (2026-04-17)
+- Cobertura Deno expandida: +18 testes em `check-dnc`, `check-calling-hours`, `check-queue-metrics` (total: **59 testes em 9 Edge Functions** críticas).
+- Runbook operacional formalizado em `docs/runbooks/incident-response.md` com 5 cenários P1-P3.
+- ADR-023 publicado; sem alteração de código produtivo.
+- Findings de segurança: inalterados (3 WARN aceitos).
+
 ## Conclusão
 Sistema **production-ready** com maturidade técnica máxima certificada.
