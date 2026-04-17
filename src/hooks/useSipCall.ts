@@ -5,6 +5,7 @@ import JsSIP from 'jssip';
 import type { RTCSession } from 'jssip/lib/RTCSession';
 import type { UAConfiguration, CallOptions } from 'jssip/lib/UA';
 import { logger } from '@/lib/logger';
+import { useVoipQualityMonitor } from './useVoipQualityMonitor';
 
 const log = logger.create('SIP');
 
@@ -31,6 +32,15 @@ export function useSipCall() {
   const durationRef = useRef<number | null>(null);
   const remoteAudioRef = useRef<HTMLAudioElement | null>(null);
   const serverRef = useRef<string>('');
+  const [activePc, setActivePc] = useState<RTCPeerConnection | null>(null);
+
+  // Monitora qualidade VoIP em tempo real e persiste em call_quality_metrics ao final da chamada
+  const quality = useVoipQualityMonitor(activePc, {
+    callSessionId: state.callId,
+    agentName: null,
+    channel: 'sip',
+    persistOnEnd: true,
+  });
 
   useEffect(() => {
     if (!remoteAudioRef.current) {
@@ -147,12 +157,18 @@ export function useSipCall() {
       sessionRef.current = session;
 
       session.on('progress', () => { log.debug('Call in progress (ringing)'); setState(prev => ({ ...prev, status: 'ringing' })); });
-      session.on('accepted', () => { log.debug('Call accepted'); setState(prev => ({ ...prev, status: 'active', callId: `sip-${Date.now()}` })); startDurationTimer(); attachRemoteStream(session); });
-      session.on('confirmed', () => { log.debug('Call confirmed'); attachRemoteStream(session); });
-      session.on('ended', (e: { cause?: string }) => { log.debug('Call ended', { cause: e?.cause }); stopDurationTimer(); sessionRef.current = null; setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null })); });
+      session.on('accepted', () => {
+        log.debug('Call accepted');
+        setState(prev => ({ ...prev, status: 'active', callId: `sip-${Date.now()}` }));
+        startDurationTimer();
+        attachRemoteStream(session);
+        if (session.connection) setActivePc(session.connection);
+      });
+      session.on('confirmed', () => { log.debug('Call confirmed'); attachRemoteStream(session); if (session.connection) setActivePc(session.connection); });
+      session.on('ended', (e: { cause?: string }) => { log.debug('Call ended', { cause: e?.cause }); stopDurationTimer(); sessionRef.current = null; setActivePc(null); setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null })); });
       session.on('failed', (e: { cause?: string }) => {
         log.error('Call failed', { cause: e?.cause });
-        stopDurationTimer(); sessionRef.current = null;
+        stopDurationTimer(); sessionRef.current = null; setActivePc(null);
         const cause = e?.cause || 'Chamada falhou';
         setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null, error: cause }));
         toast.error(`Chamada falhou: ${cause}`);
@@ -195,6 +211,7 @@ export function useSipCall() {
   return {
     ...state,
     isInCall: state.status === 'calling' || state.status === 'ringing' || state.status === 'active',
+    quality,
     connect, disconnect, startCall, endCall, toggleMute, toggleHold, sendDTMF,
   };
 }
