@@ -13,6 +13,8 @@ import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
 import { SlaReportCards } from '@/components/network/SlaReportCards';
 import { QualityAlertsCard } from '@/components/network/QualityAlertsCard';
+import { QualityHeatmap } from '@/components/network/QualityHeatmap';
+import { AgentQualityRanking } from '@/components/network/AgentQualityRanking';
 
 const log = logger.create('NetworkDiagnostics');
 
@@ -189,6 +191,12 @@ const NetworkDiagnostics = () => {
 
         {/* Onda 11 — SLA report cards */}
         <SlaReportCards period="week" />
+
+        {/* Onda 13 — Heatmap de qualidade 7d */}
+        <QualityHeatmap />
+
+        {/* Onda 13 — Ranking por agente */}
+        <AgentQualityRanking />
 
         {/* Onda 12 — Alertas persistentes de qualidade */}
         <QualityAlertsCard />
