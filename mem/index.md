@@ -21,3 +21,4 @@ Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer S
 - [Customer Success](mem://features/customer-success) — Accounts com health 360°, churn risk detection, renewals 30/60/90, success plans, NPS
 - [Sales Enablement](mem://features/sales-enablement) — Deals com health IA, forecast, cadências, scorecards, trackers, playlists
 - [Conversation Intelligence](mem://features/conversation-intelligence) — Talk ratio, key moments, battle cards, biblioteca searchable, coaching timeline
+- [Onda 3 Quality 10/10](mem://features/onda-3-quality-10-10) — HoldAlerts refatorado em src/components/hold-alerts/, suite RLS declarativa, traceHeaders() ativo, edge functions usam getUser() (ADR-018)
