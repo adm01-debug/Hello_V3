@@ -1,13 +1,14 @@
-name: Project Memory
+# Project Memory
 
 ## Core
 PT-BR em toda UI/comunicação. Estética cyberpunk neon (glassmorphism, glow). Tokens semânticos sempre, nunca cores hardcoded.
 Lovable Cloud (Supabase) backend; auth obrigatória; RLS rigorosa em todas as tabelas.
 Logger central (`src/lib/logger`) — nunca console.log em produção. Sonner para toasts.
 Edge functions: usar `_shared/cors.ts` e validar JWT em código. ≤400 linhas/arquivo.
-Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, Meeting Summary AI, Real-Time Agent Assist (ADR-013), Voice Biometrics (ADR-014), **Outbound Compliance & Predictive Engagement (ADR-015)**.
+Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, Meeting Summary AI, Real-Time Agent Assist (ADR-013), Voice Biometrics (ADR-014), Outbound Compliance & Predictive Engagement (ADR-015), **Multilingual Real-Time Translation (ADR-016)**.
 
 ## Memories
+- [Multilingual Real-Time Translation](mem://features/multilingual-translation) — Tradução ao vivo 8 idiomas, dicas culturais, resumos traduzidos, centro de tradução (ADR-016)
 - [Outbound Compliance & Predictive Engagement](mem://features/outbound-compliance) — Consent TCPA/LGPD, melhor janela de contato, score preditivo determinístico para Predictive Dialer (ADR-015)
 - [Voice Security & Biometrics](mem://features/voice-security) — Enrollment, verify, fraud signals, PCI redaction (ADR-014)
 - [Real-Time Agent Assist](mem://features/agent-assist) — Copiloto in-call estilo Cresta/Balto: signals ao vivo, objection library, compliance guardrails, auto-fill CRM (ADR-013)

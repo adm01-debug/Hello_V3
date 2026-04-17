@@ -1352,6 +1352,7 @@ export type Database = {
           next_steps: string[] | null
           overall_sentiment: string | null
           summary: string | null
+          translated_summary: Json | null
         }
         Insert: {
           agent_performance_score?: number | null
@@ -1363,6 +1364,7 @@ export type Database = {
           next_steps?: string[] | null
           overall_sentiment?: string | null
           summary?: string | null
+          translated_summary?: Json | null
         }
         Update: {
           agent_performance_score?: number | null
@@ -1374,6 +1376,7 @@ export type Database = {
           next_steps?: string[] | null
           overall_sentiment?: string | null
           summary?: string | null
+          translated_summary?: Json | null
         }
         Relationships: [
           {
@@ -1459,6 +1462,62 @@ export type Database = {
             foreignKeyName: "call_transcripts_searchable_call_session_id_fkey"
             columns: ["call_session_id"]
             isOneToOne: true
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      call_translations: {
+        Row: {
+          call_session_id: string
+          confidence: number | null
+          created_at: string
+          detected_lang: string | null
+          id: string
+          latency_ms: number | null
+          model_used: string | null
+          original_text: string
+          segment_id: string | null
+          source_lang: string
+          speaker: string
+          target_lang: string
+          translated_text: string
+        }
+        Insert: {
+          call_session_id: string
+          confidence?: number | null
+          created_at?: string
+          detected_lang?: string | null
+          id?: string
+          latency_ms?: number | null
+          model_used?: string | null
+          original_text: string
+          segment_id?: string | null
+          source_lang: string
+          speaker: string
+          target_lang: string
+          translated_text: string
+        }
+        Update: {
+          call_session_id?: string
+          confidence?: number | null
+          created_at?: string
+          detected_lang?: string | null
+          id?: string
+          latency_ms?: number | null
+          model_used?: string | null
+          original_text?: string
+          segment_id?: string | null
+          source_lang?: string
+          speaker?: string
+          target_lang?: string
+          translated_text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_translations_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
             referencedRelation: "call_sessions"
             referencedColumns: ["id"]
           },
@@ -2436,6 +2495,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      cultural_hints: {
+        Row: {
+          context_type: string
+          created_at: string
+          hint_text: string
+          id: string
+          is_active: boolean
+          locale: string
+          severity: string
+          updated_at: string
+        }
+        Insert: {
+          context_type: string
+          created_at?: string
+          hint_text: string
+          id?: string
+          is_active?: boolean
+          locale: string
+          severity?: string
+          updated_at?: string
+        }
+        Update: {
+          context_type?: string
+          created_at?: string
+          hint_text?: string
+          id?: string
+          is_active?: boolean
+          locale?: string
+          severity?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       customer_journey_stages: {
         Row: {
