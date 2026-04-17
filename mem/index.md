@@ -2,12 +2,15 @@
 
 ## Core
 PT-BR em toda UI/comunicação. Estética cyberpunk neon (glassmorphism, glow). Tokens semânticos sempre, nunca cores hardcoded.
-Lovable Cloud (Supabase) backend; auth obrigatória; RLS rigorosa em todas as tabelas.
-Logger central (`src/lib/logger`) — nunca console.log em produção. Sonner para toasts.
+Lovable Cloud (Supabase) backend; auth obrigatória; RLS rigorosa em todas as tabelas. HIBP habilitado.
+Logger central (`src/lib/logger`) + tracing (`src/lib/tracing`) com `x-request-id`. Sonner para toasts.
 Edge functions: usar `_shared/cors.ts` e validar JWT em código. ≤400 linhas/arquivo.
-Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, Meeting Summary AI, Real-Time Agent Assist (ADR-013), Voice Biometrics (ADR-014), Outbound Compliance & Predictive Engagement (ADR-015), Multilingual Real-Time Translation (ADR-016), **Omnichannel Suite (ADR-012)**.
+CI obrigatório (`.github/workflows/ci.yml`): lint + type-check + vitest + build em todo PR.
+tsconfig raiz e app ambos strict (noImplicitAny, strictNullChecks).
+Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, Meeting Summary AI, Real-Time Agent Assist (ADR-013), Voice Biometrics (ADR-014), Outbound Compliance & Predictive Engagement (ADR-015), Multilingual Real-Time Translation (ADR-016), Omnichannel Suite (ADR-012), **Security Hardening + Roadmap 10/10 (ADR-017)**.
 
 ## Memories
+- [Security Hardening 10/10](mem://features/security-hardening-10-10) — Onda 1 RLS (meeting_summaries, call_playlists, call-recordings storage) + HIBP + CI + tracing + tsconfig strict (ADR-017)
 - [Omnichannel Suite](mem://features/omnichannel-suite) — Inbox unificado WhatsApp/email/chat/SMS/voz, KB FTS PT-BR, routing rules, SLA policies + enforcement, chatbot triagem (ADR-012)
 - [Multilingual Real-Time Translation](mem://features/multilingual-translation) — Tradução ao vivo 8 idiomas, dicas culturais, resumos traduzidos, centro de tradução (ADR-016)
 - [Outbound Compliance & Predictive Engagement](mem://features/outbound-compliance) — Consent TCPA/LGPD, melhor janela de contato, score preditivo determinístico para Predictive Dialer (ADR-015)
