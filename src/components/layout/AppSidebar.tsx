@@ -1,5 +1,5 @@
 import { 
-  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap, Sparkles, Languages,
+  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Clock as ClockIcon,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -56,6 +56,13 @@ const toolsNavItems = [
   { title: 'Agent Assist', url: '/agent-assist', icon: Brain },
   { title: 'Voice Security', url: '/voice-security', icon: Fingerprint },
   { title: 'Tradução Multilíngue', url: '/translation-center', icon: Languages },
+];
+
+const omnichannelNavItems = [
+  { title: 'Caixa de Entrada', url: '/inbox', icon: InboxIcon },
+  { title: 'Base de Conhecimento', url: '/knowledge', icon: BookOpen },
+  { title: 'Regras de Roteamento', url: '/routing-rules', icon: GitBranch },
+  { title: 'Políticas SLA', url: '/sla-policies', icon: ClockIcon },
 ];
 
 const securityNavItems = [
@@ -210,7 +217,7 @@ function useFavorites() {
   return { favorites, toggle };
 }
 
-const allItems = [...mainNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems];
+const allItems = [...mainNavItems, ...omnichannelNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems];
 
 export function AppSidebar() {
   const { state } = useSidebar();
@@ -264,6 +271,7 @@ export function AppSidebar() {
         )}
 
         <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="Atendimento" items={omnichannelNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />

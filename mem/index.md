@@ -5,9 +5,10 @@ PT-BR em toda UI/comunicação. Estética cyberpunk neon (glassmorphism, glow). 
 Lovable Cloud (Supabase) backend; auth obrigatória; RLS rigorosa em todas as tabelas.
 Logger central (`src/lib/logger`) — nunca console.log em produção. Sonner para toasts.
 Edge functions: usar `_shared/cors.ts` e validar JWT em código. ≤400 linhas/arquivo.
-Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, Meeting Summary AI, Real-Time Agent Assist (ADR-013), Voice Biometrics (ADR-014), Outbound Compliance & Predictive Engagement (ADR-015), **Multilingual Real-Time Translation (ADR-016)**.
+Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, Meeting Summary AI, Real-Time Agent Assist (ADR-013), Voice Biometrics (ADR-014), Outbound Compliance & Predictive Engagement (ADR-015), Multilingual Real-Time Translation (ADR-016), **Omnichannel Suite (ADR-012)**.
 
 ## Memories
+- [Omnichannel Suite](mem://features/omnichannel-suite) — Inbox unificado WhatsApp/email/chat/SMS/voz, KB FTS PT-BR, routing rules, SLA policies + enforcement, chatbot triagem (ADR-012)
 - [Multilingual Real-Time Translation](mem://features/multilingual-translation) — Tradução ao vivo 8 idiomas, dicas culturais, resumos traduzidos, centro de tradução (ADR-016)
 - [Outbound Compliance & Predictive Engagement](mem://features/outbound-compliance) — Consent TCPA/LGPD, melhor janela de contato, score preditivo determinístico para Predictive Dialer (ADR-015)
 - [Voice Security & Biometrics](mem://features/voice-security) — Enrollment, verify, fraud signals, PCI redaction (ADR-014)
