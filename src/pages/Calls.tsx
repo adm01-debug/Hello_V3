@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UnifiedSoftphone } from '@/components/calls/UnifiedSoftphone';
+import { NetworkStatusBadge } from '@/components/calls/NetworkStatusBadge';
 import { toast } from 'sonner';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
@@ -29,9 +30,12 @@ const Calls = () => {
     <div className="space-y-6 relative">
       <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
       <div className="relative space-y-6">
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Central de Chamadas</h1>
-        <p className="text-muted-foreground">Softphone multi-canal unificado</p>
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Central de Chamadas</h1>
+          <p className="text-muted-foreground">Softphone multi-canal unificado</p>
+        </div>
+        <NetworkStatusBadge />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
