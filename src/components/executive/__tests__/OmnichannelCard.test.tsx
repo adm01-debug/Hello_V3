@@ -40,7 +40,7 @@ describe('OmnichannelCard', () => {
 
   it('exibe badge de SLA quando há violações', () => {
     render(wrap(<OmnichannelCard />));
-    expect(screen.getByText(/SLA/)).toBeInTheDocument();
+    expect(screen.getByText(/1 SLA/)).toBeInTheDocument();
   });
 
   it('lista todos os canais com contagem', () => {
