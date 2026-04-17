@@ -38,7 +38,10 @@ const Calls = () => {
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Central de Chamadas</h1>
           <p className="text-muted-foreground">Softphone multi-canal unificado</p>
         </div>
-        <NetworkStatusBadge />
+        <div className="flex items-center gap-2 flex-wrap">
+          <SipConnectionStatus status={sip.status} isRegistered={sip.isRegistered} error={sip.error} />
+          <NetworkStatusBadge />
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
