@@ -72,6 +72,7 @@ export default function ExecutiveDashboard() {
       <ConversationIntelligenceCard />
       <ForecastCard />
       <CustomerSuccessCard />
+      <VolumeForecastCard />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <CallsVolumeChart data={callsByDay} />
