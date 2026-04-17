@@ -124,6 +124,7 @@ export function ActiveCallBar() {
   const handleHangup = async () => {
     if (currentSession) {
       setIsEnding(true);
+      const sessionIdSnapshot = currentSession.id;
       
       try {
         // Generate AI summary if we have transcripts
@@ -161,10 +162,12 @@ export function ActiveCallBar() {
         
         await endSession(duration, summary);
 
-        // Save interaction to contact
+        // Save interaction to contact + dispara extração CRM em background
+        let contactIdSnapshot: string | null = null;
         if (call?.contactPhone) {
           const contact = await findOrCreateContact(call.contactPhone, call.contactName);
           if (contact) {
+            contactIdSnapshot = contact.id;
             await addContactInteraction(contact.id, {
               interaction_type: 'call',
               direction: call.type === 'incoming' ? 'inbound' : 'outbound',
@@ -174,10 +177,26 @@ export function ActiveCallBar() {
               topics: summary?.mainTopics,
               duration_seconds: duration,
               agent_name: 'Agente Demo',
-              call_session_id: currentSession.id
+              call_session_id: sessionIdSnapshot
             });
           }
         }
+
+        // Auto-trigger extração de campos CRM (≥60s + transcrição)
+        if (duration >= 60 && transcripts.length > 0) {
+          const fullTranscript = transcripts.map((t) => `[${t.speaker}] ${t.text}`).join('\n');
+          void supabase.functions.invoke('extract-crm-fields', {
+            body: {
+              callSessionId: sessionIdSnapshot,
+              transcript: fullTranscript,
+              contactId: contactIdSnapshot,
+            },
+          }).catch((e) => logger.error('extract-crm-fields failed', e));
+        }
+
+        // Mantém referências para mostrar CrmSuggestionsCard pós-call
+        setEndedSessionId(sessionIdSnapshot);
+        setEndedContactId(contactIdSnapshot);
 
         toast.success('Chamada salva com resumo no histórico');
       } catch (error) {
