@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { traceHeaders, withTrace } from '@/lib/tracing';
 
 interface ServiceStatus {
   name: string;
@@ -63,10 +64,13 @@ export function useHealthCheck(): HealthCheckResult {
         if (error) throw error;
       }),
       checkService('Edge Functions', async () => {
-        const { error } = await supabase.functions.invoke('health-check', {
-          method: 'GET',
+        await withTrace('health.check', async () => {
+          const { error } = await supabase.functions.invoke('health-check', {
+            method: 'GET',
+            headers: traceHeaders(),
+          });
+          if (error) throw error;
         });
-        if (error) throw error;
       }),
       checkService('Storage', async () => {
         const { error } = await supabase.storage.listBuckets();

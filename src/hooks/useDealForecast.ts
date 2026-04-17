@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
+import { traceHeaders, withTrace } from "@/lib/tracing";
 
 export interface ForecastData {
   period: "week" | "month" | "quarter";
@@ -20,9 +21,14 @@ export function useDealForecast(period: "week" | "month" | "quarter" = "month") 
 
   const refresh = useCallback(async () => {
     setLoading(true);
-    const { data: resp, error } = await supabase.functions.invoke("forecast-deals", { body: { period } });
-    if (error) { logger.error("forecast-deals", error); }
-    else setData(resp as ForecastData);
+    await withTrace("deal.forecast", async () => {
+      const { data: resp, error } = await supabase.functions.invoke("forecast-deals", {
+        body: { period },
+        headers: traceHeaders(),
+      });
+      if (error) { logger.error("forecast-deals", error); }
+      else setData(resp as ForecastData);
+    });
     setLoading(false);
   }, [period]);
 

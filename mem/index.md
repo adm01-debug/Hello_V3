@@ -10,6 +10,7 @@ tsconfig raiz e app ambos strict (noImplicitAny, strictNullChecks).
 Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, Meeting Summary AI, Real-Time Agent Assist (ADR-013), Voice Biometrics (ADR-014), Outbound Compliance & Predictive Engagement (ADR-015), Multilingual Real-Time Translation (ADR-016), Omnichannel Suite (ADR-012), **Security Hardening + Roadmap 10/10 (ADR-017)**.
 
 ## Memories
+- [Onda 5 Polimento](mem://features/onda-5-polimento) — Tracing 100% dos invokes (deals/forecast/volume/IP/health/keymoments), zero `as any` em hooks, +3 testes RLS (deals/contacts/learning), ADR-020
 - [Onda 4 Quality 10/10](mem://features/onda-4-quality-10-10) — Tracing em todos hooks críticos (meeting/best-time/voice/SLA), 3 novos testes RLS (audit/storage/rate-limit), ADR-019 — auditoria certificada **10/10**
 - [Security Hardening 10/10](mem://features/security-hardening-10-10) — Onda 1 RLS (meeting_summaries, call_playlists, call-recordings storage) + HIBP + CI + tracing + tsconfig strict (ADR-017)
 - [Omnichannel Suite](mem://features/omnichannel-suite) — Inbox unificado WhatsApp/email/chat/SMS/voz, KB FTS PT-BR, routing rules, SLA policies + enforcement, chatbot triagem (ADR-012)
