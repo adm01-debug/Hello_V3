@@ -1926,6 +1926,71 @@ export type Database = {
           },
         ]
       }
+      consent_records: {
+        Row: {
+          channel: string
+          consent_type: string
+          contact_id: string | null
+          created_at: string
+          evidence: Json | null
+          granted: boolean
+          granted_at: string
+          id: string
+          ip_address: string | null
+          notes: string | null
+          phone: string | null
+          recorded_by: string | null
+          revoked_at: string | null
+          source: string
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          channel: string
+          consent_type: string
+          contact_id?: string | null
+          created_at?: string
+          evidence?: Json | null
+          granted?: boolean
+          granted_at?: string
+          id?: string
+          ip_address?: string | null
+          notes?: string | null
+          phone?: string | null
+          recorded_by?: string | null
+          revoked_at?: string | null
+          source?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          channel?: string
+          consent_type?: string
+          contact_id?: string | null
+          created_at?: string
+          evidence?: Json | null
+          granted?: boolean
+          granted_at?: string
+          id?: string
+          ip_address?: string | null
+          notes?: string | null
+          phone?: string | null
+          recorded_by?: string | null
+          revoked_at?: string | null
+          source?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consent_records_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_alerts: {
         Row: {
           actioned_at: string | null
@@ -1974,6 +2039,68 @@ export type Database = {
             foreignKeyName: "contact_alerts_contact_id_fkey"
             columns: ["contact_id"]
             isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contact_engagement_patterns: {
+        Row: {
+          answer_rate: number | null
+          avg_call_duration_seconds: number | null
+          best_day_of_week: number | null
+          best_hour: number | null
+          computed_at: string
+          contact_id: string
+          created_at: string
+          daily_distribution: Json | null
+          hourly_distribution: Json | null
+          id: string
+          last_answered_at: string | null
+          last_attempt_at: string | null
+          total_answered: number
+          total_attempts: number
+          updated_at: string
+        }
+        Insert: {
+          answer_rate?: number | null
+          avg_call_duration_seconds?: number | null
+          best_day_of_week?: number | null
+          best_hour?: number | null
+          computed_at?: string
+          contact_id: string
+          created_at?: string
+          daily_distribution?: Json | null
+          hourly_distribution?: Json | null
+          id?: string
+          last_answered_at?: string | null
+          last_attempt_at?: string | null
+          total_answered?: number
+          total_attempts?: number
+          updated_at?: string
+        }
+        Update: {
+          answer_rate?: number | null
+          avg_call_duration_seconds?: number | null
+          best_day_of_week?: number | null
+          best_hour?: number | null
+          computed_at?: string
+          contact_id?: string
+          created_at?: string
+          daily_distribution?: Json | null
+          hourly_distribution?: Json | null
+          id?: string
+          last_answered_at?: string | null
+          last_attempt_at?: string | null
+          total_answered?: number
+          total_attempts?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_engagement_patterns_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: true
             referencedRelation: "contacts"
             referencedColumns: ["id"]
           },
