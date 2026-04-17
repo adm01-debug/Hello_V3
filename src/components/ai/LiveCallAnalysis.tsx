@@ -134,14 +134,14 @@ export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps
           lastSnapshotAtRef.current = now;
           const elapsed = callStartedAt ? Math.max(0, Math.floor((now - callStartedAt.getTime()) / 1000)) : 0;
           const score = insight.sentiment === 'positive' ? 0.7 : insight.sentiment === 'negative' ? -0.7 : 0;
-          (supabase.from('live_sentiment_snapshots') as any).insert({
+          supabase.from('live_sentiment_snapshots').insert({
             call_session_id: callSessionId,
             timestamp_seconds: elapsed,
             sentiment: insight.sentiment,
             score,
             urgency: insight.urgency,
             emotion: insight.emotion,
-          }).then(({ error }: { error: unknown }) => { if (error) logger.warn('Sentiment snapshot insert failed', error); });
+          }).then(({ error }) => { if (error) logger.warn('Sentiment snapshot insert failed', error); });
         }
 
         // Send analysis to parent for saving

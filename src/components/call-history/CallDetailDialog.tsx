@@ -78,11 +78,11 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
           const { data: signed } = await supabase.storage.from('call-recordings').createSignedUrl(rec.file_path, 3600);
           if (!cancelled) setAudioUrl(signed?.signedUrl);
         }
-        const { data: cts } = await (supabase.from('coaching_timestamps') as any)
+        const { data: cts } = await supabase.from('coaching_timestamps')
           .select('id, timestamp_seconds, message, severity')
           .eq('call_session_id', sessionId)
           .order('timestamp_seconds', { ascending: true });
-        if (!cancelled) setCoachingTs((cts || []) as CoachingTs[]);
+        if (!cancelled) setCoachingTs((cts ?? []) as unknown as CoachingTs[]);
       } catch (e) {
         log.warn('Falha ao carregar mídia/coaching', e);
       }
