@@ -80,6 +80,7 @@ export default function ExecutiveDashboard() {
       <MeetingSummaryDashboardCard />
       <AgentAssistDashboardCard />
       <OutboundComplianceCard />
+      <MultilingualDashboardCard />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <CallsVolumeChart data={callsByDay} />
