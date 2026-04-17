@@ -1,69 +1,76 @@
 
-Onda 3 completa para fechar 10/10. Execução sequencial sem pausas.
+Onda 4 final para cravar 10/10. Restantes da auditoria: refatorar Settings + grandes, zerar `any`/`as any`, completar testes RLS reais, tracing nos hooks restantes, ADR-019.
 
-## Plano: Onda 3 — Refatoração + Testes RLS + Cobertura + Tracing aplicado
+## Plano: Onda 4 — Fechamento 10/10
 
-### 3.1 Refatorar arquivos > 400 linhas (top 5 críticos)
-- `Settings.tsx` → extrair `SystemMaintenancePanel`, `IntegrationsTab`, `SecurityTab`, `NotificationsTab` em `src/components/settings/`
-- `sidebar.tsx` (shadcn) → manter (vendor); apenas marcar exceção em ADR
-- `HoldAlerts.tsx` → extrair `HoldTimer`, `HoldEscalationBadge`, `useHoldThresholds`
-- `NotificationCenter.tsx` → extrair `NotificationsList`, `PreferencesPanel` (já existe), `DigestSettings`
-- `Compliance.tsx` → extrair `HolidaysManager`, `CallingHoursConfig`, `DNCManager`
-- Manter API pública (props/exports) para zero breakage
+### 4.1 Refatorar arquivos > 400 linhas restantes
+- `src/pages/Settings.tsx` → extrair em `src/components/settings/`:
+  - `SystemMaintenancePanel.tsx`
+  - `IntegrationsTab.tsx`
+  - `SecurityTab.tsx`
+  - `NotificationsTab.tsx`
+- `src/pages/NotificationCenter.tsx` (445 linhas) → extrair `NotificationsList` e `PreferencesPanel` para `src/components/notifications/`
+- `src/pages/Compliance.tsx` → extrair `HolidaysManager`, `CallingHoursConfig`, `DNCManager` para `src/components/compliance/`
+- `src/components/ui/sidebar.tsx` → manter (vendor shadcn) e documentar exceção em ADR-019
+- Zero breakage: API pública (props/exports) preservada
 
-### 3.2 Suite de testes RLS por role
-- `src/__tests__/rls/agent.test.ts` — agente vê só próprias call_sessions, não vê outras
-- `src/__tests__/rls/supervisor.test.ts` — supervisor vê tudo da equipe
-- `src/__tests__/rls/admin.test.ts` — admin acesso total
-- `src/__tests__/rls/storage.test.ts` — bucket call-recordings ownership
-- `src/__tests__/rls/meeting-summaries.test.ts` — INSERT só admin/supervisor
-- `src/__tests__/rls/call-playlists.test.ts` — shared_with array enforcement
-- Mocks de `supabase.auth.getUser()` por role; asserts em policies via PostgREST error codes
+### 4.2 Erradicar `any`/`as any` (158 → 0)
+Lotes por diretório:
+- `src/hooks/` (≈60 ocorrências)
+- `src/pages/` (≈50)
+- `src/components/` (≈40)
+- `src/lib/` (≈8)
 
-### 3.3 Aplicar `traceHeaders()` em invocações críticas
-- `useLiveTranslation` (translate-utterance)
-- `useChatbot` (chatbot-respond)
+Substituições:
+- Resultados Supabase → `Database['public']['Tables'][...]['Row']`
+- Genéricos `<T>` em utils
+- `unknown` + type guards onde origem é externa (webhooks, eventos DOM customizados)
+
+### 4.3 Aplicar `traceHeaders()` nos hooks restantes
 - `useSLA` (enforce-sla)
 - `useBestTimeToContact` (compute-best-time, score-call-attempt)
 - `useMeetingSummary` (generate-meeting-summary)
 - `useAgentAssist` (agent-assist-*)
+- `useVoiceBiometrics` (voice-print-*)
+- `useOutboundCompliance` (check-dnc, check-calling-hours)
 
-### 3.4 Cobertura de testes para edge functions críticas
+### 4.4 Suite RLS estendida
+Expandir `src/__tests__/rls/rls-policies.test.ts` com casos negativos:
+- `src/__tests__/rls/storage-recordings.test.ts` — ownership do bucket call-recordings
+- `src/__tests__/rls/audit-logs.test.ts` — apenas admin lê
+- `src/__tests__/rls/rate-limit-logs.test.ts` — apenas admin/sistema lê
+- Mocks PostgREST por role (agent/supervisor/admin) com asserts em códigos de erro
+
+### 4.5 Testes para edge functions críticas
 - `supabase/functions/translate-utterance/__tests__/index.test.ts`
 - `supabase/functions/score-call-attempt/__tests__/index.test.ts`
 - `supabase/functions/enforce-sla/__tests__/index.test.ts`
-- Foco em: validação JWT, parsing Zod, branches de erro, headers tracing
+- Cobrir: validação JWT (`getUser()` mockado), parsing Zod, branches de erro, propagação de `x-request-id`
 
-### 3.5 Erradicar `any`/`as any` (158 → 0)
-- Varredura `grep -rn ": any\|as any"` em `src/`
-- Substituição por:
-  - Tipos do `Database['public']['Tables'][...]['Row']` para resultados Supabase
-  - Genéricos `<T>` em utils
-  - `unknown` + type guards onde origem é externa
-- Lote por diretório (`hooks/`, `pages/`, `components/`)
+### 4.6 ADR-019 + memória + índice
+- `docs/adr/019-onda-4-fechamento-10-10.md`
+- `mem/features/onda-4-quality-10-10.md`
+- Atualizar `mem/index.md` com referências
 
-### 3.6 ADR-018 + memória + atualização do índice
-- `docs/adr/018-onda-3-refactor-rls-tracing.md`
-- `mem/features/onda-3-quality-10-10.md`
-- Atualizar `mem/index.md`
-
-### 3.7 Re-auditoria final
+### 4.7 Re-auditoria final
 - `supabase--linter` + `security--run_security_scan`
-- Scorecard atualizado: meta ≥ 9.5/10 ponderado
-- Relatório consolidado de progresso 7.1 → 10/10
+- Scorecard atualizado: meta ≥ 9.7/10 ponderado
+- Relatório consolidado 7.1 → 10/10 com tabela das 20 dimensões
 
 ### Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Zero breakage: testes existentes continuam verdes
-- RLS testada com mocks (não exige instância real)
-- Tracing opt-in (chamadas atuais sem header continuam funcionando)
+- Zero breakage: testes existentes (1.527 Vitest + 22 E2E) continuam verdes
+- Tracing opt-in (compatível com chamadas legadas)
 - Sem novas dependências externas
 
 ### Ordem de execução
-1. 3.5 Erradicar `any` (base limpa para refactors)
-2. 3.1 Refatorar 4 arquivos críticos (Settings, HoldAlerts, NotificationCenter, Compliance)
-3. 3.3 Aplicar `traceHeaders()` nos 6 hooks
-4. 3.2 Suite testes RLS (6 arquivos)
-5. 3.4 Testes edge functions (3 arquivos)
-6. 3.6 ADR-018 + memória + índice
-7. 3.7 Re-auditoria + scorecard final
+1. 4.2 Erradicar `any` em `hooks/` (lote 1)
+2. 4.2 Erradicar `any` em `pages/` (lote 2)
+3. 4.2 Erradicar `any` em `components/` + `lib/` (lote 3)
+4. 4.1 Refatorar `Settings.tsx`
+5. 4.1 Refatorar `NotificationCenter.tsx` e `Compliance.tsx`
+6. 4.3 Aplicar `traceHeaders()` nos 6 hooks restantes
+7. 4.4 Estender suite RLS (3 arquivos novos)
+8. 4.5 Testes edge functions (3 arquivos)
+9. 4.6 ADR-019 + memórias + índice
+10. 4.7 Re-auditoria + scorecard final 10/10
