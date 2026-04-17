@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
+import { traceHeaders, withTrace } from "@/lib/tracing";
 import { toast } from "sonner";
+import type { Database } from "@/integrations/supabase/types";
+
+type DealRow = Database["public"]["Tables"]["deals"]["Row"];
+type DealInsert = Database["public"]["Tables"]["deals"]["Insert"];
+type DealUpdate = Database["public"]["Tables"]["deals"]["Update"];
 
 export interface Deal {
   id: string;
@@ -43,7 +49,7 @@ export function useDeals() {
       logger.error("fetchDeals", error);
       toast.error("Erro ao carregar oportunidades");
     } else {
-      setDeals((data ?? []) as Deal[]);
+      setDeals(((data as DealRow[] | null) ?? []) as unknown as Deal[]);
     }
     setLoading(false);
   }, []);
@@ -58,14 +64,14 @@ export function useDeals() {
   }, [fetchDeals]);
 
   const createDeal = useCallback(async (payload: Partial<Deal>) => {
-    const { error } = await supabase.from("deals").insert(payload as never);
+    const { error } = await supabase.from("deals").insert(payload as DealInsert);
     if (error) { toast.error("Erro ao criar oportunidade"); logger.error("createDeal", error); return false; }
     toast.success("Oportunidade criada");
     return true;
   }, []);
 
   const updateDeal = useCallback(async (id: string, patch: Partial<Deal>) => {
-    const { error } = await supabase.from("deals").update(patch as never).eq("id", id);
+    const { error } = await supabase.from("deals").update(patch as DealUpdate).eq("id", id);
     if (error) { toast.error("Erro ao atualizar"); logger.error("updateDeal", error); return false; }
     return true;
   }, []);
@@ -75,10 +81,15 @@ export function useDeals() {
   }, [updateDeal]);
 
   const computeHealth = useCallback(async (dealId: string) => {
-    const { data, error } = await supabase.functions.invoke("compute-deal-health", { body: { dealId } });
-    if (error) { toast.error("Erro ao calcular health"); logger.error("computeHealth", error); return null; }
-    toast.success(`Health score atualizado: ${data?.healthScore ?? "?"}`);
-    return data;
+    return await withTrace("deal.health.compute", async () => {
+      const { data, error } = await supabase.functions.invoke("compute-deal-health", {
+        body: { dealId },
+        headers: traceHeaders(),
+      });
+      if (error) { toast.error("Erro ao calcular health"); logger.error("computeHealth", error); return null; }
+      toast.success(`Health score atualizado: ${data?.healthScore ?? "?"}`);
+      return data;
+    });
   }, []);
 
   return { deals, loading, refresh: fetchDeals, createDeal, updateDeal, updateStage, computeHealth };

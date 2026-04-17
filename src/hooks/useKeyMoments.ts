@@ -1,8 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { traceHeaders, withTrace } from '@/lib/tracing';
+import type { Database } from '@/integrations/supabase/types';
 
 const log = logger.create('KeyMoments');
+
+type KeyMomentRow = Database['public']['Tables']['call_key_moments']['Row'];
 
 export interface KeyMoment {
   id: string;
@@ -23,10 +27,13 @@ export function useKeyMoments(callSessionId?: string) {
 
   const fetchMoments = useCallback(async (id: string) => {
     setLoading(true);
-    const { data, error } = await (supabase.from('call_key_moments') as any)
-      .select('*').eq('call_session_id', id).order('timestamp_seconds', { ascending: true });
+    const { data, error } = await supabase
+      .from('call_key_moments')
+      .select('*')
+      .eq('call_session_id', id)
+      .order('timestamp_seconds', { ascending: true });
     if (error) log.error('fetch error', error);
-    setMoments((data || []) as KeyMoment[]);
+    setMoments(((data as KeyMomentRow[] | null) ?? []) as unknown as KeyMoment[]);
     setLoading(false);
   }, []);
 
@@ -37,12 +44,15 @@ export function useKeyMoments(callSessionId?: string) {
   const detect = useCallback(async (id: string, transcript: string) => {
     setDetecting(true);
     try {
-      const { data, error } = await supabase.functions.invoke('detect-key-moments', {
-        body: { callSessionId: id, transcript },
+      return await withTrace('keymoments.detect', async () => {
+        const { data, error } = await supabase.functions.invoke('detect-key-moments', {
+          body: { callSessionId: id, transcript },
+          headers: traceHeaders(),
+        });
+        if (error) throw error;
+        await fetchMoments(id);
+        return data;
       });
-      if (error) throw error;
-      await fetchMoments(id);
-      return data;
     } catch (e) {
       log.error('detect error', e);
       return null;

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { traceHeaders, withTrace } from '@/lib/tracing';
 
 export interface VolumeForecastSlot {
   day_of_week: number;
@@ -19,9 +20,13 @@ export function useForecastVolume() {
   return useQuery({
     queryKey: ['forecast_call_volume'],
     queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('forecast-call-volume');
-      if (error) throw error;
-      return data as { forecast: VolumeForecastSlot[]; summary: VolumeForecastSummary };
+      return await withTrace('volume.forecast', async () => {
+        const { data, error } = await supabase.functions.invoke('forecast-call-volume', {
+          headers: traceHeaders(),
+        });
+        if (error) throw error;
+        return data as { forecast: VolumeForecastSlot[]; summary: VolumeForecastSummary };
+      });
     },
     staleTime: 1000 * 60 * 30,
   });
