@@ -1,62 +1,63 @@
 
-Três suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success. Próximo gap competitivo: **Workforce Management & Operational Excellence** — domínio de plataformas como NICE, Verint, Calabrio, Five9.
+Quatro suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management. Próximo gap competitivo: **Omnichannel Engagement & Digital Self-Service** — domínio de plataformas como Genesys Cloud, Talkdesk, Zendesk e Kustomer.
 
-## Plano: Workforce Management & Operational Excellence Suite
+## Plano: Omnichannel Engagement & Self-Service Suite
 
 ### Melhorias sequenciais (1 por vez)
 
-**1. Forecasting de volume de chamadas (IA)**
-- Edge function `forecast-call-volume` analisa histórico de `call_sessions` por hora/dia
-- Previsão semanal com sazonalidade (Erlang C simplificado)
-- Card no Executive Dashboard
+**1. Inbox unificada multi-canal**
+- Tabela `conversations` (channel: voice/whatsapp/email/chat/sms) + `conversation_messages`
+- Página `/inbox` com lista à esquerda + thread à direita (estilo Front/Intercom)
+- Filtros por canal, status, agente, tags
 
-**2. Scheduling & Shifts**
-- Tabelas `agent_shifts`, `shift_templates`, `time_off_requests`
-- Página `/scheduling` com grade semanal drag-friendly
-- Aprovação de folgas por supervisor
+**2. WhatsApp Business inbound (texto)**
+- Webhook receiver via edge function `whatsapp-inbound`
+- Roteamento automático para fila/agente disponível
+- Reply direto da inbox (reuso Wavoip token)
 
-**3. Adherence em tempo real**
-- Edge function `compute-adherence` compara `agent_status_history` vs shift programado
-- % aderência por agente/dia + alertas para desvios > 15min
-- Widget no `SupervisorPanel`
+**3. Email-to-ticket**
+- Tabela `email_tickets` + edge function `email-inbound` (parser básico)
+- Threading por subject/in-reply-to
+- Assignment automático por regras
 
-**4. Skill-based routing**
-- Tabelas `skills`, `agent_skills` (proficiência 1-5), `queue_skill_requirements`
-- Seleção de agente por melhor match na distribuição
-- Página `/skills` para CRUD
+**4. Chat widget embarcável**
+- Edge function `chat-widget-session` para autenticação anônima
+- Tabela `chat_sessions` + integração com inbox unificada
+- Snippet JS para clientes embarcarem em sites externos
 
-**5. Quality Management Workflow**
-- Estende scorecards com `qm_review_workflow` (rascunho→revisão→calibração→assinada)
-- Calibração: múltiplos avaliadores na mesma chamada + variância
-- Dashboard de QM no `/coaching`
+**5. Knowledge Base interna**
+- Tabelas `kb_articles`, `kb_categories`, `kb_article_views`
+- Página `/knowledge` com busca full-text (PT-BR, tsvector)
+- Sugestão automática de artigos no contexto da conversa
 
-**6. Coaching Assignments com SLA**
-- Tabela `coaching_assignments` (chamada + agente + supervisor + prazo)
-- Notificação automática + tracking de conclusão
-- Visível no `CoachingPanel`
+**6. Chatbot/IVR self-service com IA**
+- Edge function `chatbot-respond` (Lovable AI gemini-2.5-flash) com KB como contexto
+- Handoff para humano quando confiança < 70% ou cliente solicita
+- Tabela `bot_conversations` para auditoria
 
-**7. Learning Library (microlearning)**
-- Tabelas `learning_modules`, `learning_completions`
-- Vincular módulos a coaching assignments e badges
-- Página `/learning`
+**7. SLA & Routing Rules**
+- Tabela `routing_rules` (condições + ações: assign, tag, prioritize)
+- Tabela `sla_policies` (first_response, resolution por canal/prioridade)
+- Edge function `enforce-sla` rodando periodicamente + alertas
 
-**8. ADR 011 + memória + testes**
-- `docs/adr/011-workforce-management-suite.md`
-- `mem://features/workforce-management.md`
-- Testes para `useShifts`, `useAdherence`, `useSkills`
+**8. ADR 012 + memória + testes**
+- `docs/adr/012-omnichannel-engagement-suite.md`
+- `mem://features/omnichannel-engagement.md`
+- Testes para `useConversations`, `useKnowledgeBase`, `useRoutingRules`
 
 ### Considerações técnicas
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, estética cyberpunk neon
-- RLS rigoroso: admin/supervisor full, agent só seus próprios shifts/adherence/assignments
-- Reuso de `agent_status_history`, `call_sessions`, `call_scorecards`, `agents`
-- Heurísticas determinísticas para forecast/adherence (auditáveis); IA só onde agrega
-- Sem novas dependências externas
+- RLS rigoroso: admin/supervisor full; agent vê apenas conversas atribuídas
+- Reuso de `contacts`, `agents`, `agent_status_history` (presença), `accounts`
+- Lovable AI (gemini-2.5-flash) para chatbot e sugestão de KB
+- Heurísticas determinísticas para SLA/routing (auditável)
+- Sem novas dependências externas; webhook WhatsApp/email expostos via edge functions públicas com validação de assinatura
 
 ### Ordem de execução
-1. Migration: shifts, time_off, skills, qm_workflow, coaching_assignments, learning (+ RLS)
-2. Edge functions: forecast-call-volume, compute-adherence
-3. Hooks: useShifts, useTimeOff, useAdherence, useSkills, useQMWorkflow, useCoachingAssignments, useLearning
-4. Páginas: Scheduling, Skills, Learning + widgets em SupervisorPanel/CoachingPanel
-5. Card Forecast volume + Adherence no Executive Dashboard
-6. Rotas + CommandPalette
+1. Migration: conversations, messages, email_tickets, chat_sessions, kb_*, bot_conversations, routing_rules, sla_policies (+ RLS + tsvector)
+2. Edge functions: whatsapp-inbound, email-inbound, chat-widget-session, chatbot-respond, enforce-sla
+3. Hooks: useConversations, useKnowledgeBase, useRoutingRules, useSLA, useChatbot
+4. Páginas: Inbox, Knowledge, RoutingRules, SLAPolicies
+5. Card "Omnichannel" no Executive Dashboard (volume por canal + SLA compliance)
+6. Rotas + CommandPalette + AppSidebar (novo grupo "Atendimento")
 7. Testes + ADR + memória
