@@ -59,3 +59,12 @@
 
 ## Conclusão
 Sistema **production-ready** com maturidade técnica máxima certificada.
+
+## Re-verificação Onda 14 (2026-04-17)
+- Detecção preditiva: edge function `voip-anomaly-detector` aplica z-score por bucket (dow,hour) com baseline rolling de 7 dias; alerta warning (|z|≥2.5) e critical (|z|≥3.5) para MOS, jitter e volume.
+- Forecast operacional: edge function `voip-capacity-forecast` projeta 7 dias à frente via média ponderada por DOW; sinaliza `exceeds_capacity` quando peak previsto > `CONCURRENT_CAP=3`.
+- UI executiva: `AnomalyDetectionCard` (refresh 60s) e `CapacityForecastChart` (recharts com linha contínua + tracejada + ReferenceLine) em `/network-diagnostics`.
+- Testes: +8 Deno tests — total: **81 testes em 14 Edge Functions**.
+- Estatística inspecionável: funções `detectAnomalies`, `buildHistory`, `forecastNextDays` exportadas e cobertas.
+- ADR-029 publicado; zero novas dependências; zero novas tabelas; zero migrations; arquivos ≤400 linhas.
+- Findings de segurança: inalterados (3 WARN pré-existentes aceitos).
