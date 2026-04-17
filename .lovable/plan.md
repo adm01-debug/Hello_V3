@@ -1,79 +1,69 @@
 
-Auditoria entregou roadmap em 3 ondas. Vou executar TUDO sequencialmente, começando pelos findings críticos de segurança (Onda 1) e avançando até cobertura de testes e refatorações (Onda 3). Plano consolidado abaixo.
+Onda 3 completa para fechar 10/10. Execução sequencial sem pausas.
 
-## Plano de Execução: Auditoria → 10/10 (3 Ondas)
+## Plano: Onda 3 — Refatoração + Testes RLS + Cobertura + Tracing aplicado
 
-### 🔴 ONDA 1 — Quick Wins de Segurança (prioridade absoluta)
+### 3.1 Refatorar arquivos > 400 linhas (top 5 críticos)
+- `Settings.tsx` → extrair `SystemMaintenancePanel`, `IntegrationsTab`, `SecurityTab`, `NotificationsTab` em `src/components/settings/`
+- `sidebar.tsx` (shadcn) → manter (vendor); apenas marcar exceção em ADR
+- `HoldAlerts.tsx` → extrair `HoldTimer`, `HoldEscalationBadge`, `useHoldThresholds`
+- `NotificationCenter.tsx` → extrair `NotificationsList`, `PreferencesPanel` (já existe), `DigestSettings`
+- `Compliance.tsx` → extrair `HolidaysManager`, `CallingHoursConfig`, `DNCManager`
+- Manter API pública (props/exports) para zero breakage
 
-**1.1 Corrigir RLS exposta em `meeting_summaries`**
-- Revisar policies; restringir SELECT a participantes da chamada (agente/supervisor/admin)
-- Remover acesso amplo via Realtime
+### 3.2 Suite de testes RLS por role
+- `src/__tests__/rls/agent.test.ts` — agente vê só próprias call_sessions, não vê outras
+- `src/__tests__/rls/supervisor.test.ts` — supervisor vê tudo da equipe
+- `src/__tests__/rls/admin.test.ts` — admin acesso total
+- `src/__tests__/rls/storage.test.ts` — bucket call-recordings ownership
+- `src/__tests__/rls/meeting-summaries.test.ts` — INSERT só admin/supervisor
+- `src/__tests__/rls/call-playlists.test.ts` — shared_with array enforcement
+- Mocks de `supabase.auth.getUser()` por role; asserts em policies via PostgREST error codes
 
-**1.2 Corrigir 3 políticas "Always True"**
-- Localizar via `supabase--linter` + `pg_policies`
-- Substituir `USING (true)` por filtro de role/ownership
+### 3.3 Aplicar `traceHeaders()` em invocações críticas
+- `useLiveTranslation` (translate-utterance)
+- `useChatbot` (chatbot-respond)
+- `useSLA` (enforce-sla)
+- `useBestTimeToContact` (compute-best-time, score-call-attempt)
+- `useMeetingSummary` (generate-meeting-summary)
+- `useAgentAssist` (agent-assist-*)
 
-**1.3 Bucket `call-recordings` com validação de ownership**
-- Adicionar policies storage.objects: SELECT/INSERT/DELETE apenas para dono ou admin/supervisor
-- Path pattern: `{user_id}/...`
+### 3.4 Cobertura de testes para edge functions críticas
+- `supabase/functions/translate-utterance/__tests__/index.test.ts`
+- `supabase/functions/score-call-attempt/__tests__/index.test.ts`
+- `supabase/functions/enforce-sla/__tests__/index.test.ts`
+- Foco em: validação JWT, parsing Zod, branches de erro, headers tracing
 
-**1.4 Habilitar HIBP (Leaked Password Protection)**
-- `cloud--configure_auth` com `password_hibp_enabled: true`
+### 3.5 Erradicar `any`/`as any` (158 → 0)
+- Varredura `grep -rn ": any\|as any"` em `src/`
+- Substituição por:
+  - Tipos do `Database['public']['Tables'][...]['Row']` para resultados Supabase
+  - Genéricos `<T>` em utils
+  - `unknown` + type guards onde origem é externa
+- Lote por diretório (`hooks/`, `pages/`, `components/`)
 
-**1.5 Marcar findings como resolvidos**
-- `security--manage_security_finding` para cada item
+### 3.6 ADR-018 + memória + atualização do índice
+- `docs/adr/018-onda-3-refactor-rls-tracing.md`
+- `mem/features/onda-3-quality-10-10.md`
+- Atualizar `mem/index.md`
 
-### 🟠 ONDA 2 — Sprint 1: CI/CD + Tipagem + Hooks
-
-**2.1 GitHub Actions CI**
-- `.github/workflows/ci.yml`: lint + typecheck (`tsc --noEmit`) + vitest + build
-- Cache de `node_modules`/bun
-- Branch protection sugerida em README
-
-**2.2 Husky + lint-staged + commitlint**
-- `.husky/pre-commit` → lint-staged (eslint --fix + prettier)
-- `.husky/commit-msg` → commitlint (conventional commits)
-- `commitlint.config.cjs`
-
-**2.3 Unificar tsconfig strict**
-- Atualizar `tsconfig.json` raiz com `strict: true`, `noImplicitAny: true`
-- Garantir consistência com `tsconfig.app.json`
-
-**2.4 Erradicar `any`/`as any` (158 ocorrências)**
-- Varredura por arquivo, substituir por tipos do `Database` ou genéricos
-- Preservar comportamento; testes garantem regressão
-
-### 🟡 ONDA 3 — Sprint 2: Refatoração + Testes + Observabilidade
-
-**3.1 Refatorar 11 arquivos > 400 linhas**
-- `Settings.tsx`, `sidebar.tsx`, `HoldAlerts.tsx` e demais
-- Extrair subcomponentes/hooks mantendo API pública
-
-**3.2 Suite de testes RLS**
-- `src/__tests__/rls/*.test.ts` cobrindo cada role (agent/supervisor/admin)
-- Testes positivos e negativos por tabela sensível
-
-**3.3 Aumentar cobertura para 80% em lógica crítica**
-- Identificar gaps via vitest coverage
-- Adicionar testes para edge functions críticas (translate-utterance, score-call-attempt, enforce-sla)
-
-**3.4 Distributed tracing**
-- `src/lib/tracing.ts`: correlation ID propagado de UI → edge function
-- Header `x-request-id` em todas as invocações
-- Logger central já loga; estender com traceId
-
-**3.5 ADR-017 — Auditoria & Roadmap 10/10**
-- Documentar todas as mudanças desta jornada
-- Atualizar `mem://index.md`
+### 3.7 Re-auditoria final
+- `supabase--linter` + `security--run_security_scan`
+- Scorecard atualizado: meta ≥ 9.5/10 ponderado
+- Relatório consolidado de progresso 7.1 → 10/10
 
 ### Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Cada mudança validada por build + console limpo
-- Sem novas dependências externas pesadas (apenas husky, lint-staged, commitlint — dev deps)
-- RLS sempre testada antes de marcar finding como resolvido
+- Zero breakage: testes existentes continuam verdes
+- RLS testada com mocks (não exige instância real)
+- Tracing opt-in (chamadas atuais sem header continuam funcionando)
+- Sem novas dependências externas
 
 ### Ordem de execução
-1. Onda 1 completa (segurança) → marcar findings
-2. Onda 2 completa (CI/tipagem)
-3. Onda 3 completa (refactor/testes/tracing/ADR)
-4. Validação final + relatório de re-auditoria
+1. 3.5 Erradicar `any` (base limpa para refactors)
+2. 3.1 Refatorar 4 arquivos críticos (Settings, HoldAlerts, NotificationCenter, Compliance)
+3. 3.3 Aplicar `traceHeaders()` nos 6 hooks
+4. 3.2 Suite testes RLS (6 arquivos)
+5. 3.4 Testes edge functions (3 arquivos)
+6. 3.6 ADR-018 + memória + índice
+7. 3.7 Re-auditoria + scorecard final
