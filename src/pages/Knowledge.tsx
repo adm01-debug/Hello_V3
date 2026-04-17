@@ -61,7 +61,7 @@ export default function Knowledge() {
       <NeonPageHeader
         title="Knowledge Base"
         description="Base de conhecimento interna com busca semântica em português"
-        icon={BookOpen}
+        icon={<BookOpen />}
         actions={
           isEditor && (
             <Button onClick={() => setEditing({ status: 'draft' })} className="gap-2">
@@ -105,7 +105,7 @@ export default function Knowledge() {
           ))}
         </div>
       ) : articles.length === 0 ? (
-        <EmptyState icon={FileText} title="Nenhum artigo" description="Crie o primeiro artigo da sua base." />
+        <EmptyState icon={<FileText />} title="Nenhum artigo" description="Crie o primeiro artigo da sua base." />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {articles.map((a) => (

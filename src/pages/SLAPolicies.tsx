@@ -42,7 +42,7 @@ export default function SLAPolicies() {
       <NeonPageHeader
         title="Políticas SLA"
         description="Defina prazos de primeira resposta e resolução por canal e prioridade"
-        icon={Clock}
+        icon={<Clock />}
         actions={
           <Button onClick={() => setEditing({ is_active: true, channel: 'all', priority: 'normal' })} className="gap-2">
             <Plus className="h-4 w-4" /> Nova política
@@ -68,7 +68,7 @@ export default function SLAPolicies() {
       )}
 
       {policies.length === 0 ? (
-        <EmptyState icon={Clock} title="Sem políticas" description="Crie sua primeira política SLA." />
+        <EmptyState icon={<Clock />} title="Sem políticas" description="Crie sua primeira política SLA." />
       ) : (
         <div className="space-y-3">
           {policies.map((p) => (
