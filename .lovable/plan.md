@@ -1,63 +1,51 @@
 
-Meeting Summary AI fechado em 10/10 (ADR-012 + 13 testes). Próximo gap competitivo identificado: **Real-Time Agent Assist & Next-Best-Action** — domínio de plataformas como Cresta, Balto, Observe.AI e Cogito que oferecem coaching ao vivo durante a chamada.
+Faltam 2 itens do plano Real-Time Agent Assist para fechar 10/10: integração no `ActiveCallDisplay` + card no Executive Dashboard. Depois disso, seguirei para a próxima suíte competitiva.
 
-## Plano: Real-Time Agent Assist & Next-Best-Action Suite
+## Plano: Fechar Agent Assist 10/10 + próxima suíte (Voice Biometrics & Authentication)
 
-### Melhorias sequenciais (1 por vez)
+### Parte A — Fechar Agent Assist (3 ajustes)
 
-**1. Live Transcription Stream + Intent Detection**
-- Edge function `analyze-live-utterance` (Lovable AI gemini-2.5-flash-lite, baixa latência)
-- Detecta intents: objeção, pergunta técnica, pedido de desconto, sinal de compra, risco de churn
-- Tabela `live_assist_signals` (call_session_id, timestamp, intent, confidence, suggestion)
+**A1. Plugar `NextBestActionPanel` + `CrmSuggestionsCard` no `ActiveCallDisplay`**
+- Localizar `src/components/calls/ActiveCallDisplay.tsx`
+- Adicionar `<NextBestActionPanel callSessionId={...} agentName={...} />` no painel lateral
+- Conectar `useLiveAssist().analyze()` ao stream de transcrição existente (dispara quando há nova fala do customer/agent)
+- Adicionar `<CrmSuggestionsCard>` que aparece no end-of-call (status='ended')
 
-**2. Next-Best-Action Engine**
-- Componente `NextBestActionPanel.tsx` no `ActiveCallDisplay`
-- Sugestões contextuais em tempo real: snippets de resposta, links KB, battle cards relevantes
-- Reuso de `kb_articles` (Omnichannel) + `battle_cards` (Conversation Intelligence)
+**A2. Auto-trigger `extract-crm-fields` no `useCallSession.endSession`**
+- Replicar gate do meeting summary (≥60s + transcrição) para disparar extração CRM em background
 
-**3. Smart Objection Handler**
-- Tabela `objection_library` (objection_type, recommended_response, success_rate)
-- Pop-up discreto quando IA detecta objeção conhecida
-- Tracking de aceitação (agente usou? deal fechou?)
+**A3. Card `AgentAssistDashboardCard` no Executive Dashboard**
+- Componente novo `src/components/executive/AgentAssistDashboardCard.tsx`
+- Mostra: sinais (7d), taxa de aceitação, top intent, alertas de compliance
+- Plugar em `src/pages/ExecutiveDashboard.tsx`
 
-**4. Compliance Guardrails ao vivo**
-- Detecção de palavras proibidas, promessas indevidas, omissão de disclaimers
-- Tabela `compliance_rules` (pattern, severity, required_disclaimer)
-- Alerta visual + log para auditoria
+### Parte B — Próxima suíte: Voice Biometrics & Fraud Detection
 
-**5. Sentiment & Stress Indicator**
-- Análise contínua a cada 10s da janela recente de transcrição
-- Indicador visual (calmo / engajado / frustrado / risco)
-- Sugestão de pausa/desescalada quando frustrado por >30s
+Domínio de Pindrop, Nuance Gatekeeper, ID R&D. Gap competitivo importante para call centers financeiros/saúde.
 
-**6. Auto-fill CRM durante a call**
-- Edge function `extract-crm-fields` rola em background
-- Sugere atualização de campos do contato (cargo, empresa, dor mencionada, budget)
-- Confirmação 1-clique pós-call
+**B1. Voice Enrollment & Verification**
+- Tabela `voice_prints` (user_id, embedding jsonb, sample_count, confidence_baseline)
+- Edge function `enroll-voice` e `verify-voice` usando Lovable AI para extração de features e similaridade
 
-**7. Página `/agent-assist` + Dashboard widget**
-- Histórico de assistências por call, taxa de aceitação
-- Widget "Top objections this week" + "Best performing snippets"
+**B2. Fraud Risk Scoring em tempo real**
+- Tabela `fraud_signals` (call_session_id, signal_type, risk_score, evidence)
+- Detecta: voice mismatch, deepfake markers, social engineering patterns
 
-**8. ADR-013 + memória + testes**
-- `docs/adr/013-real-time-agent-assist.md`
-- `mem://features/agent-assist.md`
-- Testes para hooks principais e utils de detecção
+**B3. Compliance Recording & PCI Redaction**
+- Edge function `redact-sensitive-audio` que mascara CPF/cartão na gravação pós-call
+- Tabela `redaction_log`
 
-### Considerações técnicas
-- ≤400 linhas/arquivo, PT-BR, logger central, sonner, estética cyberpunk neon
-- gemini-2.5-flash-lite para latência (<1s); fallback gemini-2.5-flash para qualidade
-- Reuso pesado: `call_transcripts`, `kb_articles`, `battle_cards`, `meeting_summaries`
-- Throttle: análise a cada 5s ou 50 palavras novas (custo controlado)
-- RLS: agente vê apenas suas próprias assistências; supervisor/admin full
+**B4. Página `/voice-security` + ADR-014 + memória + testes**
+
+### Considerações
+- ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
+- Reuso pesado: `call_sessions`, `call_transcripts`, `call-recordings` bucket
+- RLS rigorosa: voice_prints só do próprio user; fraud_signals admin/supervisor
 - Sem novas dependências externas
 
 ### Ordem de execução
-1. Migration: live_assist_signals, objection_library, compliance_rules + RLS + índices
-2. Edge functions: analyze-live-utterance, extract-crm-fields
-3. Hooks: useLiveAssist, useObjectionLibrary, useComplianceRules, useAgentAssistHistory
-4. Componentes: NextBestActionPanel, ObjectionPopover, ComplianceAlert, SentimentIndicator
-5. Integração em ActiveCallDisplay + auto-fill pós-call
-6. Página /agent-assist + rota + sidebar + command palette
-7. Card no Executive Dashboard
-8. Testes + ADR-013 + memória
+1. A1 — integrar componentes no ActiveCallDisplay
+2. A2 — auto-trigger CRM no endSession
+3. A3 — card dashboard executivo
+4. Validar build + console
+5. B1-B4 sequencialmente
