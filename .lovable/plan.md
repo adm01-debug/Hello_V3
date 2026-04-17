@@ -1,40 +1,63 @@
 
-Meeting Summary AI base entregue. Para fechar 10/10, faltam: ADR, testes, validação E2E + pequenos ajustes de polimento.
+Meeting Summary AI fechado em 10/10 (ADR-012 + 13 testes). Próximo gap competitivo identificado: **Real-Time Agent Assist & Next-Best-Action** — domínio de plataformas como Cresta, Balto, Observe.AI e Cogito que oferecem coaching ao vivo durante a chamada.
 
-## Plano: Finalização Meeting Summary AI → 10/10
+## Plano: Real-Time Agent Assist & Next-Best-Action Suite
 
-### 1. ADR 012
-- `docs/adr/012-meeting-summary-ai.md` documentando: contexto, decisão (tool calling vs JSON parse), trigger automático ≥60s, idempotência por upsert, RLS por agente da chamada, integração com `useCallSession.endSession`
+### Melhorias sequenciais (1 por vez)
 
-### 2. Testes
-- `src/hooks/__tests__/useMeetingSummary.test.ts`:
-  - parse robusto de campos jsonb (arrays vazios, nulls)
-  - generate sucesso → invalida cache + toast
-  - generate erro → toast.error
-  - skipped → toast.info
-  - updateContent marca `edited=true` + `edited_at`
-- `src/lib/__tests__/meeting-summary-utils.test.ts`:
-  - validação do formato de `ActionItem` e `ParticipantSentiment`
-  - serialização "copiar tudo" (formato texto plano)
+**1. Live Transcription Stream + Intent Detection**
+- Edge function `analyze-live-utterance` (Lovable AI gemini-2.5-flash-lite, baixa latência)
+- Detecta intents: objeção, pergunta técnica, pedido de desconto, sinal de compra, risco de churn
+- Tabela `live_assist_signals` (call_session_id, timestamp, intent, confidence, suggestion)
 
-### 3. Polimento
-- Botão "Compartilhar" no `MeetingSummaryCard` (popover com seleção de usuários do `user_profiles`)
-- Badge "Resumo IA" na lista `CallSessionsList` quando existir summary (left join leve)
-- Empty state melhorado quando `transcripts.length === 0` (mensagem clara: "Sem transcrição — gere transcrição primeiro")
+**2. Next-Best-Action Engine**
+- Componente `NextBestActionPanel.tsx` no `ActiveCallDisplay`
+- Sugestões contextuais em tempo real: snippets de resposta, links KB, battle cards relevantes
+- Reuso de `kb_articles` (Omnichannel) + `battle_cards` (Conversation Intelligence)
 
-### 4. Validação E2E
-- Verificar build TypeScript (`tsc --noEmit`)
-- Inspecionar console/network do preview para erros
-- Confirmar realtime funciona (mudança de status `generating` → `completed`)
+**3. Smart Objection Handler**
+- Tabela `objection_library` (objection_type, recommended_response, success_rate)
+- Pop-up discreto quando IA detecta objeção conhecida
+- Tracking de aceitação (agente usou? deal fechou?)
+
+**4. Compliance Guardrails ao vivo**
+- Detecção de palavras proibidas, promessas indevidas, omissão de disclaimers
+- Tabela `compliance_rules` (pattern, severity, required_disclaimer)
+- Alerta visual + log para auditoria
+
+**5. Sentiment & Stress Indicator**
+- Análise contínua a cada 10s da janela recente de transcrição
+- Indicador visual (calmo / engajado / frustrado / risco)
+- Sugestão de pausa/desescalada quando frustrado por >30s
+
+**6. Auto-fill CRM durante a call**
+- Edge function `extract-crm-fields` rola em background
+- Sugere atualização de campos do contato (cargo, empresa, dor mencionada, budget)
+- Confirmação 1-clique pós-call
+
+**7. Página `/agent-assist` + Dashboard widget**
+- Histórico de assistências por call, taxa de aceitação
+- Widget "Top objections this week" + "Best performing snippets"
+
+**8. ADR-013 + memória + testes**
+- `docs/adr/013-real-time-agent-assist.md`
+- `mem://features/agent-assist.md`
+- Testes para hooks principais e utils de detecção
 
 ### Considerações técnicas
-- ≤400 linhas/arquivo, PT-BR, logger central, sonner
-- Sem novas dependências
-- Tests usando padrão já estabelecido em `__tests__` (vitest + mocks de supabase)
+- ≤400 linhas/arquivo, PT-BR, logger central, sonner, estética cyberpunk neon
+- gemini-2.5-flash-lite para latência (<1s); fallback gemini-2.5-flash para qualidade
+- Reuso pesado: `call_transcripts`, `kb_articles`, `battle_cards`, `meeting_summaries`
+- Throttle: análise a cada 5s ou 50 palavras novas (custo controlado)
+- RLS: agente vê apenas suas próprias assistências; supervisor/admin full
+- Sem novas dependências externas
 
 ### Ordem de execução
-1. ADR 012
-2. Testes (`useMeetingSummary.test.ts` + `meeting-summary-utils.test.ts`)
-3. Polimento (badge na lista + empty state transcrição + share popover)
-4. Build check + console/network do preview
-5. Atualizar `mem://index.md` com nota de conclusão
+1. Migration: live_assist_signals, objection_library, compliance_rules + RLS + índices
+2. Edge functions: analyze-live-utterance, extract-crm-fields
+3. Hooks: useLiveAssist, useObjectionLibrary, useComplianceRules, useAgentAssistHistory
+4. Componentes: NextBestActionPanel, ObjectionPopover, ComplianceAlert, SentimentIndicator
+5. Integração em ActiveCallDisplay + auto-fill pós-call
+6. Página /agent-assist + rota + sidebar + command palette
+7. Card no Executive Dashboard
+8. Testes + ADR-013 + memória
