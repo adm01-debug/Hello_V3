@@ -100,7 +100,7 @@ export default function GeoBlocking() {
               <p><strong>IP:</strong> <span className="font-mono">{String(testResult.ip_address ?? testIp)}</span></p>
               <p><strong>País:</strong> {String(testResult.country_name ?? 'Desconhecido')} ({String(testResult.country_code ?? '?')})</p>
               <p><strong>Resultado:</strong>{' '}{testResult.allowed ? <Badge className="bg-emerald-500/15 text-emerald-600 gap-1"><Check className="h-3 w-3" />Permitido</Badge> : <Badge variant="destructive" className="gap-1"><AlertTriangle className="h-3 w-3" />Bloqueado</Badge>}</p>
-              {testResult.reason && <p><strong>Motivo:</strong> {String(testResult.reason)}</p>}
+              {testResult.reason ? <p><strong>Motivo:</strong> {String(testResult.reason)}</p> : null}
             </div>
           )}
         </CardContent>

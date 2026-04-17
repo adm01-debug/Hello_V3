@@ -30,8 +30,8 @@ export interface AgentWeeklyStats {
   week_start: string;
   total_calls: number;
   total_duration_seconds: number;
-  avg_satisfaction: number;
-  avg_performance: number;
+  avg_satisfaction: number | null;
+  avg_performance: number | null;
   badges_earned: number;
   points_earned: number;
 }
@@ -42,7 +42,7 @@ export interface RankingEntry {
   avatar_url: string | null;
   total_calls: number;
   total_duration_seconds: number;
-  avg_satisfaction: number;
+  avg_satisfaction: number | null;
   points_earned: number;
   badges_earned: number;
   rank: number;

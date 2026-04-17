@@ -60,7 +60,7 @@ export default function TollFreeNumbers() {
                   <p className="text-xs text-muted-foreground flex items-center gap-3">
                     {num.friendly_name && <span>{num.friendly_name}</span>}
                     {num.assigned_to && <span className="flex items-center gap-1"><User className="h-3 w-3" /> {num.assigned_to}</span>}
-                    {num.monthly_cost > 0 && <span className="flex items-center gap-1"><DollarSign className="h-3 w-3" /> R$ {num.monthly_cost}/mês</span>}
+                    {(num.monthly_cost ?? 0) > 0 && <span className="flex items-center gap-1"><DollarSign className="h-3 w-3" /> R$ {num.monthly_cost}/mês</span>}
                   </p>
                 </div>
               </div>
