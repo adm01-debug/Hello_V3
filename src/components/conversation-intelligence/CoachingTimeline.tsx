@@ -39,10 +39,10 @@ export function CoachingTimeline({ callSessionId, onSeek }: Props) {
 
   useEffect(() => {
     (async () => {
-      const { data } = await (supabase.from('coaching_timestamps') as any)
+      const { data } = await supabase.from('coaching_timestamps')
         .select('*').eq('call_session_id', callSessionId)
         .order('timestamp_seconds', { ascending: true });
-      setItems((data || []) as CoachingTs[]);
+      setItems((data ?? []) as unknown as CoachingTs[]);
     })();
   }, [callSessionId]);
 

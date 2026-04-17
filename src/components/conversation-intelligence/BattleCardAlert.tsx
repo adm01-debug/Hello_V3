@@ -31,7 +31,7 @@ export function BattleCardAlert({ card, onDismiss, callSessionId, agentName, aut
   const markAsUsed = async () => {
     if (!card || !callSessionId) { setMarked(true); return; }
     try {
-      await (supabase.from('coaching_timestamps') as any).insert({
+      await supabase.from('coaching_timestamps').insert({
         call_session_id: callSessionId,
         agent_name: agentName || null,
         timestamp_seconds: 0,
