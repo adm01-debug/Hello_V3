@@ -15,6 +15,7 @@ import { GoalsComparisonSection } from '@/components/executive/GoalsComparisonSe
 import { ConversationIntelligenceCard } from '@/components/executive/ConversationIntelligenceCard';
 import { ForecastCard } from '@/components/executive/ForecastCard';
 import { CustomerSuccessCard } from '@/components/executive/CustomerSuccessCard';
+import { VolumeForecastCard } from '@/components/executive/VolumeForecastCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function ExecutiveDashboard() {
