@@ -1,51 +1,47 @@
 
-Faltam 2 itens do plano Real-Time Agent Assist para fechar 10/10: integração no `ActiveCallDisplay` + card no Executive Dashboard. Depois disso, seguirei para a próxima suíte competitiva.
+Voice Biometrics entregue. Próximo gap competitivo: **Outbound Compliance & Predictive Engagement Suite** — domínio de Five9, NICE CXone, Convoso. Foco em discagem inteligente compliant (TCPA/Lei do Marketing), gestão de consentimento e otimização de janelas de contato.
 
-## Plano: Fechar Agent Assist 10/10 + próxima suíte (Voice Biometrics & Authentication)
+## Plano: Outbound Compliance & Predictive Engagement Suite
 
-### Parte A — Fechar Agent Assist (3 ajustes)
+### 1. Consent Management
+- Tabela `consent_records` (contact_id, channel, consent_type, granted_at, revoked_at, source, evidence)
+- Edge function `record-consent` com audit trail
+- Hook `useConsent` + UI no perfil do contato
 
-**A1. Plugar `NextBestActionPanel` + `CrmSuggestionsCard` no `ActiveCallDisplay`**
-- Localizar `src/components/calls/ActiveCallDisplay.tsx`
-- Adicionar `<NextBestActionPanel callSessionId={...} agentName={...} />` no painel lateral
-- Conectar `useLiveAssist().analyze()` ao stream de transcrição existente (dispara quando há nova fala do customer/agent)
-- Adicionar `<CrmSuggestionsCard>` que aparece no end-of-call (status='ended')
+### 2. Smart Time-to-Contact Optimizer
+- Tabela `contact_engagement_patterns` (contact_id, best_hour, best_day, answer_rate, computed_at)
+- Edge function `compute-best-time` analisa histórico de `call_sessions` por contato
+- Hook `useBestTimeToContact` + badge no contact card
 
-**A2. Auto-trigger `extract-crm-fields` no `useCallSession.endSession`**
-- Replicar gate do meeting summary (≥60s + transcrição) para disparar extração CRM em background
+### 3. Predictive Answer Rate Scoring
+- Edge function `score-call-attempt` (Lovable AI gemini-2.5-flash-lite): retorna probabilidade de atendimento
+- Combina: hora atual × melhor janela × histórico × DNC × calling hours
+- Integrado ao Predictive Dialer existente para priorização
 
-**A3. Card `AgentAssistDashboardCard` no Executive Dashboard**
-- Componente novo `src/components/executive/AgentAssistDashboardCard.tsx`
-- Mostra: sinais (7d), taxa de aceitação, top intent, alertas de compliance
-- Plugar em `src/pages/ExecutiveDashboard.tsx`
+### 4. Campaign Compliance Dashboard
+- Componente `ComplianceDashboardCard` no Executive Dashboard
+- Métricas 7d: ligações bloqueadas (DNC/horário), violações de consent, taxa de answer por janela
 
-### Parte B — Próxima suíte: Voice Biometrics & Fraud Detection
+### 5. Página `/outbound-compliance`
+- Tabs: Consents, Best Times, Score Predictivo, Audit Trail
+- Reuso de `dnc_list`, `calling_hours_config`, `holidays`
 
-Domínio de Pindrop, Nuance Gatekeeper, ID R&D. Gap competitivo importante para call centers financeiros/saúde.
-
-**B1. Voice Enrollment & Verification**
-- Tabela `voice_prints` (user_id, embedding jsonb, sample_count, confidence_baseline)
-- Edge function `enroll-voice` e `verify-voice` usando Lovable AI para extração de features e similaridade
-
-**B2. Fraud Risk Scoring em tempo real**
-- Tabela `fraud_signals` (call_session_id, signal_type, risk_score, evidence)
-- Detecta: voice mismatch, deepfake markers, social engineering patterns
-
-**B3. Compliance Recording & PCI Redaction**
-- Edge function `redact-sensitive-audio` que mascara CPF/cartão na gravação pós-call
-- Tabela `redaction_log`
-
-**B4. Página `/voice-security` + ADR-014 + memória + testes**
+### 6. ADR-015 + memória + testes
+- `docs/adr/015-outbound-compliance-predictive.md`
+- `mem/features/outbound-compliance.md`
+- Testes para utils de scoring e best-time
 
 ### Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Reuso pesado: `call_sessions`, `call_transcripts`, `call-recordings` bucket
-- RLS rigorosa: voice_prints só do próprio user; fraud_signals admin/supervisor
+- Reuso pesado: `contacts`, `call_sessions`, `dnc_list`, `calling_hours_config`, `holidays`, `predictive_dialer`
+- RLS: consent records visíveis a admin/supervisor + dono do contato; patterns públicos para autenticados
 - Sem novas dependências externas
 
 ### Ordem de execução
-1. A1 — integrar componentes no ActiveCallDisplay
-2. A2 — auto-trigger CRM no endSession
-3. A3 — card dashboard executivo
-4. Validar build + console
-5. B1-B4 sequencialmente
+1. Migration: consent_records, contact_engagement_patterns + RLS + índices
+2. Edge functions: record-consent, compute-best-time, score-call-attempt
+3. Hooks + utils: useConsent, useBestTimeToContact, scoring-utils
+4. Página /outbound-compliance + rota + sidebar + command palette
+5. Card no Executive Dashboard + integração no Predictive Dialer
+6. ADR-015 + memória + testes
+7. Validar build + console
