@@ -11,6 +11,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNetworkMonitor } from '@/hooks/useNetworkMonitor';
 import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
+import { SlaReportCards } from '@/components/network/SlaReportCards';
 
 const log = logger.create('NetworkDiagnostics');
 
@@ -184,6 +185,9 @@ const NetworkDiagnostics = () => {
             </CardContent>
           </Card>
         </div>
+
+        {/* Onda 11 — SLA report cards */}
+        <SlaReportCards period="week" />
 
         {/* MOS chart */}
         <Card className="glass-card">

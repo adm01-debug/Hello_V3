@@ -6,6 +6,7 @@ import type { RTCSession } from 'jssip/lib/RTCSession';
 import type { UAConfiguration, CallOptions } from 'jssip/lib/UA';
 import { logger } from '@/lib/logger';
 import { useVoipQualityMonitor } from './useVoipQualityMonitor';
+import { useQualityTrendAnalyzer } from './useQualityTrendAnalyzer';
 
 const log = logger.create('SIP');
 
@@ -41,6 +42,9 @@ export function useSipCall() {
     channel: 'sip',
     persistOnEnd: true,
   });
+
+  // Análise preditiva: alerta antes de degradação atingir nível "poor"
+  useQualityTrendAnalyzer(quality.current?.mos ?? null, state.status === 'active');
 
   useEffect(() => {
     if (!remoteAudioRef.current) {
