@@ -1,56 +1,79 @@
 
-O usuário pediu uma auditoria técnica exaustiva (22 dimensões) seguindo um protocolo rigoroso. Isso é uma tarefa de análise/research extensa, não implementação. Vou apresentar um plano de execução da auditoria, e após aprovação executo a varredura completa em modo default (read-only é suficiente para auditar, mas o relatório final é extenso e merece confirmação).
+Auditoria entregou roadmap em 3 ondas. Vou executar TUDO sequencialmente, começando pelos findings críticos de segurança (Onda 1) e avançando até cobertura de testes e refatorações (Onda 3). Plano consolidado abaixo.
 
-Na verdade — auditoria é puro research/análise. Não exige plano. Mas o usuário enviou um protocolo formal pedindo execução estruturada. Vou apresentar plano enxuto de como vou conduzir, evidenciando o escopo real da varredura no codebase atual.
+## Plano de Execução: Auditoria → 10/10 (3 Ondas)
 
-## Plano: Auditoria Técnica Exaustiva 22 Dimensões
+### 🔴 ONDA 1 — Quick Wins de Segurança (prioridade absoluta)
 
-### Fase 0 — Inventário (já parcialmente conhecido)
-- Stack: React 18 + Vite + TS strict + Supabase (Lovable Cloud) + Tailwind + Vitest + Playwright
-- ~16 ADRs, 60+ memórias, 1.527 testes Vitest + 22 E2E
-- Edge functions: ~30+ (incluindo translate-utterance, score-call-attempt, enforce-sla, chatbot-respond)
-- Tabelas: ~80+ (call_sessions, conversations, kb_articles, voice_prints, consent_records, call_translations, etc.)
-- Suítes 10/10: Conversation Intelligence, Sales Enablement, Customer Success, WFM, Omnichannel, Meeting Summary AI, Agent Assist (013), Voice Biometrics (014), Outbound Compliance (015), Multilingual Translation (016), Omnichannel (012)
+**1.1 Corrigir RLS exposta em `meeting_summaries`**
+- Revisar policies; restringir SELECT a participantes da chamada (agente/supervisor/admin)
+- Remover acesso amplo via Realtime
 
-### Fase 1 — Varredura das 22 dimensões
-Para cada dimensão executo:
-1. Leitura dirigida de arquivos-chave (configs, hooks, edge functions, migrations, ADRs)
-2. Linter Supabase (RLS, segurança DB)
-3. Security scan (RLS coverage, exposições)
-4. Cross-check com memórias existentes
-5. Nota 0–10 com evidências (arquivo:linha) + gaps + ações concretas
+**1.2 Corrigir 3 políticas "Always True"**
+- Localizar via `supabase--linter` + `pg_policies`
+- Substituir `USING (true)` por filtro de role/ownership
 
-Dimensões agrupadas por bloco de leitura para eficiência:
-- **Bloco A — Arquitetura & Código**: estrutura `/src`, ADRs `docs/adr/`, eslint.config, tsconfig, CLAUDE.md
-- **Bloco B — Auth/Authz/Security**: `src/hooks/auth/*`, `src/lib/security/*`, RLS via `supabase--linter` + `security--run_security_scan`
-- **Bloco C — Banco & Data Integrity**: `supabase/migrations/*`, db functions já listadas, triggers, FKs
-- **Bloco D — Edge Functions**: `supabase/functions/*` (validação, JWT, CORS, rate limit)
-- **Bloco E — Observabilidade & Performance**: `src/lib/logger.ts`, `src/lib/web-vitals.ts`, `src/lib/error-tracking.ts`, React Query config
-- **Bloco F — Testes & CI**: `src/**/__tests__`, `e2e/`, `package.json` scripts, `vitest.config`, presença de GitHub Actions
-- **Bloco G — Validação & Tipagem**: `src/lib/validation/*` (Zod), `src/integrations/supabase/types.ts`, strict mode
-- **Bloco H — Docs & Operações**: `README.md`, `docs/adr/*`, `mem/*`, runbooks
+**1.3 Bucket `call-recordings` com validação de ownership**
+- Adicionar policies storage.objects: SELECT/INSERT/DELETE apenas para dono ou admin/supervisor
+- Path pattern: `{user_id}/...`
 
-### Fase 2 — Consolidação
-- Scorecard tabela (20 dimensões + nota geral ponderada)
-  - Pesos ×3: Segurança, Autenticação, Autorização, Data Integrity
-  - Pesos ×2: BD, Tipagem, Validação, Testes, Arquitetura
-  - Pesos ×1: demais
-- Top 10 ações por ROI (impacto ÷ esforço)
-- Roadmap 3 ondas: 🔴 Quick Wins (1-3d) / 🟠 Sprint 1 (1-2sem) / 🟡 Sprint 2 (2-4sem)
-- Parágrafo final de maturidade geral
+**1.4 Habilitar HIBP (Leaked Password Protection)**
+- `cloud--configure_auth` com `password_hibp_enabled: true`
+
+**1.5 Marcar findings como resolvidos**
+- `security--manage_security_finding` para cada item
+
+### 🟠 ONDA 2 — Sprint 1: CI/CD + Tipagem + Hooks
+
+**2.1 GitHub Actions CI**
+- `.github/workflows/ci.yml`: lint + typecheck (`tsc --noEmit`) + vitest + build
+- Cache de `node_modules`/bun
+- Branch protection sugerida em README
+
+**2.2 Husky + lint-staged + commitlint**
+- `.husky/pre-commit` → lint-staged (eslint --fix + prettier)
+- `.husky/commit-msg` → commitlint (conventional commits)
+- `commitlint.config.cjs`
+
+**2.3 Unificar tsconfig strict**
+- Atualizar `tsconfig.json` raiz com `strict: true`, `noImplicitAny: true`
+- Garantir consistência com `tsconfig.app.json`
+
+**2.4 Erradicar `any`/`as any` (158 ocorrências)**
+- Varredura por arquivo, substituir por tipos do `Database` ou genéricos
+- Preservar comportamento; testes garantem regressão
+
+### 🟡 ONDA 3 — Sprint 2: Refatoração + Testes + Observabilidade
+
+**3.1 Refatorar 11 arquivos > 400 linhas**
+- `Settings.tsx`, `sidebar.tsx`, `HoldAlerts.tsx` e demais
+- Extrair subcomponentes/hooks mantendo API pública
+
+**3.2 Suite de testes RLS**
+- `src/__tests__/rls/*.test.ts` cobrindo cada role (agent/supervisor/admin)
+- Testes positivos e negativos por tabela sensível
+
+**3.3 Aumentar cobertura para 80% em lógica crítica**
+- Identificar gaps via vitest coverage
+- Adicionar testes para edge functions críticas (translate-utterance, score-call-attempt, enforce-sla)
+
+**3.4 Distributed tracing**
+- `src/lib/tracing.ts`: correlation ID propagado de UI → edge function
+- Header `x-request-id` em todas as invocações
+- Logger central já loga; estender com traceId
+
+**3.5 ADR-017 — Auditoria & Roadmap 10/10**
+- Documentar todas as mudanças desta jornada
+- Atualizar `mem://index.md`
 
 ### Considerações
-- Nota 10/10 só com evidência concreta (zero otimismo)
-- Toda nota citará arquivo/linha ou ausência específica
-- Aspectos não auditáveis (ex: infra Lovable Cloud, backups internos Supabase) marcados como "NÃO AUDITÁVEL" com lista do que falta
-- Calibrado ao contexto: plataforma de contact center em produção, multi-suíte, estrita PT-BR
-- Output em PT-BR conforme preferência do usuário
-- Sem alterações de código nesta fase — apenas relatório
+- ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
+- Cada mudança validada por build + console limpo
+- Sem novas dependências externas pesadas (apenas husky, lint-staged, commitlint — dev deps)
+- RLS sempre testada antes de marcar finding como resolvido
 
-### Ordem de execução (após aprovação)
-1. Inventário detalhado (list_dir, contagem de arquivos/rotas/funções)
-2. Bloco A → B → C → D → E → F → G → H (leitura dirigida)
-3. `supabase--linter` + `security--run_security_scan` + `security--get_table_schema`
-4. Síntese das 20 dimensões com notas
-5. Scorecard + Top 10 + Roadmap + nota final
-6. Entrega em mensagem única estruturada
+### Ordem de execução
+1. Onda 1 completa (segurança) → marcar findings
+2. Onda 2 completa (CI/tipagem)
+3. Onda 3 completa (refactor/testes/tracing/ADR)
+4. Validação final + relatório de re-auditoria
