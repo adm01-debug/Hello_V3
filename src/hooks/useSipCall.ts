@@ -7,6 +7,7 @@ import type { UAConfiguration, CallOptions } from 'jssip/lib/UA';
 import { logger } from '@/lib/logger';
 import { useVoipQualityMonitor } from './useVoipQualityMonitor';
 import { useQualityTrendAnalyzer } from './useQualityTrendAnalyzer';
+import { useVoipAutoRemediation } from './useVoipAutoRemediation';
 
 const log = logger.create('SIP');
 
@@ -43,8 +44,33 @@ export function useSipCall() {
     persistOnEnd: true,
   });
 
+  // Auto-remediação: sugere reconexão quando degradação é severa (declarado antes do trend)
+  const remediation = useVoipAutoRemediation({
+    reconnect: async () => {
+      try { sessionRef.current?.terminate(); } catch { /* ignore */ }
+      try { uaRef.current?.stop(); } catch { /* ignore */ }
+      uaRef.current = null;
+      sessionRef.current = null;
+      setActivePc(null);
+      setState(prev => ({ ...prev, status: 'connecting', isRegistered: false }));
+    },
+    endCall: () => {
+      try { sessionRef.current?.terminate(); } catch { /* ignore */ }
+      sessionRef.current = null;
+    },
+  });
+
   // Análise preditiva: alerta antes de degradação atingir nível "poor"
-  useQualityTrendAnalyzer(quality.current?.mos ?? null, state.status === 'active');
+  useQualityTrendAnalyzer(
+    quality.current?.mos ?? null,
+    state.status === 'active',
+    {
+      callSessionId: state.callId,
+      jitterMs: quality.current?.jitterMs ?? null,
+      rttMs: quality.current?.rttMs ?? null,
+      onSevereDegradation: remediation.suggest,
+    },
+  );
 
   useEffect(() => {
     if (!remoteAudioRef.current) {
