@@ -20,6 +20,7 @@ import { MeetingSummaryDashboardCard } from '@/components/executive/MeetingSumma
 import { AgentAssistDashboardCard } from '@/components/executive/AgentAssistDashboardCard';
 import { OutboundComplianceCard } from '@/components/executive/OutboundComplianceCard';
 import { MultilingualDashboardCard } from '@/components/executive/MultilingualDashboardCard';
+import { OmnichannelCard } from '@/components/executive/OmnichannelCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function ExecutiveDashboard() {
@@ -81,6 +82,7 @@ export default function ExecutiveDashboard() {
       <AgentAssistDashboardCard />
       <OutboundComplianceCard />
       <MultilingualDashboardCard />
+      <OmnichannelCard />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <CallsVolumeChart data={callsByDay} />

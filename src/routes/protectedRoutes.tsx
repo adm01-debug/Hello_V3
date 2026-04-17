@@ -70,6 +70,10 @@ const AgentAssist = lazy(() => import("@/pages/AgentAssist"));
 const VoiceSecurity = lazy(() => import("@/pages/VoiceSecurity"));
 const OutboundCompliance = lazy(() => import("@/pages/OutboundCompliance"));
 const TranslationCenter = lazy(() => import("@/pages/TranslationCenter"));
+const Inbox = lazy(() => import("@/pages/Inbox"));
+const Knowledge = lazy(() => import("@/pages/Knowledge"));
+const RoutingRules = lazy(() => import("@/pages/RoutingRules"));
+const SLAPolicies = lazy(() => import("@/pages/SLAPolicies"));
 
 export interface RouteConfig {
   path: string;
@@ -124,6 +128,10 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/agent-assist", element: AgentAssist },
   { path: "/voice-security", element: VoiceSecurity },
   { path: "/translation-center", element: TranslationCenter },
+  { path: "/inbox", element: Inbox },
+  { path: "/knowledge", element: Knowledge },
+  { path: "/routing-rules", element: RoutingRules, roles: ["supervisor", "admin"] },
+  { path: "/sla-policies", element: SLAPolicies, roles: ["supervisor", "admin"] },
 
   // Supervisor + Admin
   { path: "/queue-dashboard", element: QueueMetricsDashboard, roles: ["supervisor", "admin"] },

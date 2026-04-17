@@ -58,6 +58,13 @@ const toolsNavItems = [
   { title: 'Tradução Multilíngue', url: '/translation-center', icon: Languages },
 ];
 
+const omnichannelNavItems = [
+  { title: 'Caixa de Entrada', url: '/inbox', icon: InboxIcon },
+  { title: 'Base de Conhecimento', url: '/knowledge', icon: BookOpen },
+  { title: 'Regras de Roteamento', url: '/routing-rules', icon: GitBranch },
+  { title: 'Políticas SLA', url: '/sla-policies', icon: ClockIcon },
+];
+
 const securityNavItems = [
   { title: 'Central de Segurança', url: '/security', icon: ShieldCheck },
   { title: 'Sessões Ativas', url: '/sessions', icon: Monitor },
@@ -210,7 +217,7 @@ function useFavorites() {
   return { favorites, toggle };
 }
 
-const allItems = [...mainNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems];
+const allItems = [...mainNavItems, ...omnichannelNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems];
 
 export function AppSidebar() {
   const { state } = useSidebar();
@@ -264,6 +271,7 @@ export function AppSidebar() {
         )}
 
         <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="Atendimento" items={omnichannelNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
