@@ -6,7 +6,9 @@ import { useMeetingSummary } from '../useMeetingSummary';
 
 const invokeMock = vi.fn();
 const fromMock = vi.fn();
-const channelObj = { on: vi.fn().mockReturnThis(), subscribe: vi.fn().mockReturnThis() };
+const channelObj: any = {};
+channelObj.on = vi.fn(() => channelObj);
+channelObj.subscribe = vi.fn(() => channelObj);
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
