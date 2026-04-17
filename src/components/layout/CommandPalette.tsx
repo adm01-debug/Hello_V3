@@ -36,6 +36,7 @@ const allRoutes = [
   { title: 'Biblioteca de Calls', url: '/call-library', icon: Library, group: 'Ferramentas' },
   { title: 'Battle Cards', url: '/battle-cards', icon: Swords, group: 'Ferramentas' },
   { title: 'Resumos IA de Reuniões', url: '/meeting-summaries', icon: Sparkles, group: 'Ferramentas' },
+  { title: 'Agent Assist (tempo real)', url: '/agent-assist', icon: Brain, group: 'Ferramentas' },
   { title: 'Importar Gravações Teams', url: '/external-recordings-import', icon: DownloadCloud, group: 'Ferramentas' },
   { title: 'Métricas de Espera', url: '/hold-metrics', icon: Timer, group: 'Ferramentas' },
   { title: 'Alertas de Espera', url: '/hold-alerts', icon: Siren, group: 'Ferramentas' },

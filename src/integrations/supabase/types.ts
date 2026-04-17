@@ -1789,6 +1789,54 @@ export type Database = {
           },
         ]
       }
+      compliance_rules: {
+        Row: {
+          applies_to: string
+          category: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          message: string
+          pattern: string
+          required_disclaimer: string | null
+          rule_name: string
+          rule_type: string
+          severity: string
+          updated_at: string
+        }
+        Insert: {
+          applies_to?: string
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          message: string
+          pattern: string
+          required_disclaimer?: string | null
+          rule_name: string
+          rule_type: string
+          severity?: string
+          updated_at?: string
+        }
+        Update: {
+          applies_to?: string
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          message?: string
+          pattern?: string
+          required_disclaimer?: string | null
+          rule_name?: string
+          rule_type?: string
+          severity?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       compliance_settings: {
         Row: {
           created_at: string
@@ -2189,6 +2237,72 @@ export type Database = {
           },
           {
             foreignKeyName: "conversations_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_field_suggestions: {
+        Row: {
+          applied_value: string | null
+          call_session_id: string
+          confidence: number | null
+          contact_id: string | null
+          created_at: string
+          current_value: string | null
+          field_name: string
+          id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          source_quote: string | null
+          status: string
+          suggested_value: string
+          updated_at: string
+        }
+        Insert: {
+          applied_value?: string | null
+          call_session_id: string
+          confidence?: number | null
+          contact_id?: string | null
+          created_at?: string
+          current_value?: string | null
+          field_name: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          source_quote?: string | null
+          status?: string
+          suggested_value: string
+          updated_at?: string
+        }
+        Update: {
+          applied_value?: string | null
+          call_session_id?: string
+          confidence?: number | null
+          contact_id?: string | null
+          created_at?: string
+          current_value?: string | null
+          field_name?: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          source_quote?: string | null
+          status?: string
+          suggested_value?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_field_suggestions_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_field_suggestions_contact_id_fkey"
             columns: ["contact_id"]
             isOneToOne: false
             referencedRelation: "contacts"
@@ -3230,6 +3344,65 @@ export type Database = {
         }
         Relationships: []
       }
+      live_assist_signals: {
+        Row: {
+          agent_name: string | null
+          call_session_id: string
+          confidence: number | null
+          created_at: string
+          id: string
+          intent: string
+          metadata: Json | null
+          source: string
+          speaker: string | null
+          suggestion: string | null
+          timestamp_seconds: number
+          trigger_text: string | null
+          used_at: string | null
+          was_used: boolean | null
+        }
+        Insert: {
+          agent_name?: string | null
+          call_session_id: string
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          intent: string
+          metadata?: Json | null
+          source?: string
+          speaker?: string | null
+          suggestion?: string | null
+          timestamp_seconds?: number
+          trigger_text?: string | null
+          used_at?: string | null
+          was_used?: boolean | null
+        }
+        Update: {
+          agent_name?: string | null
+          call_session_id?: string
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          intent?: string
+          metadata?: Json | null
+          source?: string
+          speaker?: string | null
+          suggestion?: string | null
+          timestamp_seconds?: number
+          trigger_text?: string | null
+          used_at?: string | null
+          was_used?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "live_assist_signals_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       live_sentiment_snapshots: {
         Row: {
           call_session_id: string
@@ -3598,6 +3771,63 @@ export type Database = {
           rejection_reason?: string | null
           status?: string
           submitted_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      objection_library: {
+        Row: {
+          category: string | null
+          created_at: string
+          created_by: string | null
+          difficulty: string | null
+          id: string
+          is_active: boolean
+          objection_example: string
+          objection_type: string
+          recommended_response: string
+          success_rate: number | null
+          talking_points: string[] | null
+          times_suggested: number | null
+          times_used: number | null
+          times_won: number | null
+          trigger_keywords: string[]
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          difficulty?: string | null
+          id?: string
+          is_active?: boolean
+          objection_example: string
+          objection_type: string
+          recommended_response: string
+          success_rate?: number | null
+          talking_points?: string[] | null
+          times_suggested?: number | null
+          times_used?: number | null
+          times_won?: number | null
+          trigger_keywords?: string[]
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          difficulty?: string | null
+          id?: string
+          is_active?: boolean
+          objection_example?: string
+          objection_type?: string
+          recommended_response?: string
+          success_rate?: number | null
+          talking_points?: string[] | null
+          times_suggested?: number | null
+          times_used?: number | null
+          times_won?: number | null
+          trigger_keywords?: string[]
           updated_at?: string
         }
         Relationships: []
