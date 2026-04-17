@@ -1,64 +1,62 @@
 
-Conversation Intelligence ✅ 10/10 e Sales Enablement ✅ 10/10 entregues. Próximo gap competitivo identificado: **Customer Success & Retention Intelligence** — domínio onde plataformas como Gainsight, ChurnZero e Totango operam.
+Três suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success. Próximo gap competitivo: **Workforce Management & Operational Excellence** — domínio de plataformas como NICE, Verint, Calabrio, Five9.
 
-## Plano: Customer Success & Retention Intelligence Suite
+## Plano: Workforce Management & Operational Excellence Suite
 
 ### Melhorias sequenciais (1 por vez)
 
-**1. Account Health Score 360°**
-- Tabela `accounts` (cliente pós-venda, separado de `deals` ganhos)
-- Edge function `compute-account-health`: agrega frequência de contato, sentimento médio, NPS, tickets abertos, uso (se disponível)
-- Score 0-100 com fatores explicáveis
-
-**2. Churn Risk Detection**
-- Edge function `detect-churn-risk` analisa sinais: queda de contato, sentimento negativo, menções de concorrente, objeções recorrentes
-- Tabela `churn_risk_signals` persiste alertas
-- Notificação automática para CSM quando risco > 70
-
-**3. Renewal & Expansion Pipeline**
-- Tabela `renewals` (data, valor MRR/ARR, status, probabilidade)
-- Página `/renewals` com timeline 30/60/90 dias
+**1. Forecasting de volume de chamadas (IA)**
+- Edge function `forecast-call-volume` analisa histórico de `call_sessions` por hora/dia
+- Previsão semanal com sazonalidade (Erlang C simplificado)
 - Card no Executive Dashboard
 
-**4. Customer Journey Stages**
-- Tabela `customer_journey_stages` configurável (onboarding/adoção/expansão/renovação)
-- Movimentação automática baseada em eventos + manual
-- Visualização funil no dashboard
+**2. Scheduling & Shifts**
+- Tabelas `agent_shifts`, `shift_templates`, `time_off_requests`
+- Página `/scheduling` com grade semanal drag-friendly
+- Aprovação de folgas por supervisor
 
-**5. NPS & CSAT Surveys integrado**
-- Tabela `surveys` + `survey_responses`
-- Edge function envia survey pós-chamada (in-app/WhatsApp via Wavoip)
-- Agregação automática em account health
+**3. Adherence em tempo real**
+- Edge function `compute-adherence` compara `agent_status_history` vs shift programado
+- % aderência por agente/dia + alertas para desvios > 15min
+- Widget no `SupervisorPanel`
 
-**6. Success Plans (planos de sucesso por cliente)**
-- Tabela `success_plans` + `success_plan_milestones`
-- CSM define metas, prazos e marcos por conta
-- Acompanhamento visual com progresso
+**4. Skill-based routing**
+- Tabelas `skills`, `agent_skills` (proficiência 1-5), `queue_skill_requirements`
+- Seleção de agente por melhor match na distribuição
+- Página `/skills` para CRUD
 
-**7. Página Accounts + integração com Contacts**
-- `/accounts` com listagem, filtros por health/risco/segmento
-- Detalhe da conta agrega: contatos, deals, chamadas, tickets, surveys
-- Reuso do `NeonPageLayout`
+**5. Quality Management Workflow**
+- Estende scorecards com `qm_review_workflow` (rascunho→revisão→calibração→assinada)
+- Calibração: múltiplos avaliadores na mesma chamada + variância
+- Dashboard de QM no `/coaching`
 
-**8. ADR 010 + memória + testes**
-- `docs/adr/010-customer-success-suite.md`
-- `mem://features/customer-success.md`
-- Testes para hooks novos (useAccounts, useChurnRisk, useRenewals)
+**6. Coaching Assignments com SLA**
+- Tabela `coaching_assignments` (chamada + agente + supervisor + prazo)
+- Notificação automática + tracking de conclusão
+- Visível no `CoachingPanel`
+
+**7. Learning Library (microlearning)**
+- Tabelas `learning_modules`, `learning_completions`
+- Vincular módulos a coaching assignments e badges
+- Página `/learning`
+
+**8. ADR 011 + memória + testes**
+- `docs/adr/011-workforce-management-suite.md`
+- `mem://features/workforce-management.md`
+- Testes para `useShifts`, `useAdherence`, `useSkills`
 
 ### Considerações técnicas
-- ≤400 linhas/arquivo, PT-BR, logger central, sonner
-- Estética cyberpunk neon mantida
-- RLS: admin/supervisor full; CSM (role agent) só suas contas
-- Reuso de `call_sessions`, `call_summaries`, `live_sentiment_snapshots` para sinais
-- Lovable AI (gemini-2.5-flash) só onde agrega valor (detecção de risco)
-- Heurísticas determinísticas para health/renewal (auditável, sem custo recorrente)
+- ≤400 linhas/arquivo, PT-BR, logger central, sonner, estética cyberpunk neon
+- RLS rigoroso: admin/supervisor full, agent só seus próprios shifts/adherence/assignments
+- Reuso de `agent_status_history`, `call_sessions`, `call_scorecards`, `agents`
+- Heurísticas determinísticas para forecast/adherence (auditáveis); IA só onde agrega
 - Sem novas dependências externas
 
 ### Ordem de execução
-1. Migration: accounts, churn_risk_signals, renewals, customer_journey_stages, surveys, success_plans (+ RLS)
-2. Edge functions: compute-account-health, detect-churn-risk, send-survey
-3. Hooks: useAccounts, useChurnRisk, useRenewals, useSuccessPlans, useSurveys
-4. Páginas: Accounts, Renewals, SuccessPlans
-5. Cards no Executive Dashboard (Renewal pipeline + Churn risk)
+1. Migration: shifts, time_off, skills, qm_workflow, coaching_assignments, learning (+ RLS)
+2. Edge functions: forecast-call-volume, compute-adherence
+3. Hooks: useShifts, useTimeOff, useAdherence, useSkills, useQMWorkflow, useCoachingAssignments, useLearning
+4. Páginas: Scheduling, Skills, Learning + widgets em SupervisorPanel/CoachingPanel
+5. Card Forecast volume + Adherence no Executive Dashboard
 6. Rotas + CommandPalette
 7. Testes + ADR + memória
