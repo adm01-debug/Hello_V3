@@ -53,6 +53,7 @@ const toolsNavItems = [
   { title: 'Habilidades', url: '/skills', icon: Award },
   { title: 'Aprendizagem', url: '/learning', icon: GraduationCap },
   { title: 'Resumos IA', url: '/meeting-summaries', icon: Sparkles },
+  { title: 'Agent Assist', url: '/agent-assist', icon: Brain },
 ];
 
 const securityNavItems = [

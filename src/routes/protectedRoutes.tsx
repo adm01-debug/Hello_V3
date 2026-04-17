@@ -66,6 +66,7 @@ const Scheduling = lazy(() => import("@/pages/Scheduling"));
 const Skills = lazy(() => import("@/pages/Skills"));
 const Learning = lazy(() => import("@/pages/Learning"));
 const MeetingSummaries = lazy(() => import("@/pages/MeetingSummaries"));
+const AgentAssist = lazy(() => import("@/pages/AgentAssist"));
 
 export interface RouteConfig {
   path: string;
@@ -117,6 +118,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/skills", element: Skills, roles: ["supervisor", "admin"] },
   { path: "/learning", element: Learning },
   { path: "/meeting-summaries", element: MeetingSummaries },
+  { path: "/agent-assist", element: AgentAssist },
 
   // Supervisor + Admin
   { path: "/queue-dashboard", element: QueueMetricsDashboard, roles: ["supervisor", "admin"] },

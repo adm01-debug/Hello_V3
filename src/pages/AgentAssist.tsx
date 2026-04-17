@@ -77,7 +77,7 @@ export default function AgentAssist() {
               {Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}
             </div>
           ) : history.length === 0 ? (
-            <EmptyState icon={Sparkles} title="Sem sinais ainda" description="Faça uma chamada com o copiloto ativo para ver sinais aqui." />
+            <EmptyState icon={<Sparkles />} title="Sem sinais ainda" description="Faça uma chamada com o copiloto ativo para ver sinais aqui." />
           ) : (
             <ScrollArea className="h-[480px] pr-2">
               <div className="space-y-2">
