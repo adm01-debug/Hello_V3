@@ -68,6 +68,7 @@ const Learning = lazy(() => import("@/pages/Learning"));
 const MeetingSummaries = lazy(() => import("@/pages/MeetingSummaries"));
 const AgentAssist = lazy(() => import("@/pages/AgentAssist"));
 const VoiceSecurity = lazy(() => import("@/pages/VoiceSecurity"));
+const OutboundCompliance = lazy(() => import("@/pages/OutboundCompliance"));
 
 export interface RouteConfig {
   path: string;
@@ -128,6 +129,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/queue-metrics-settings", element: QueueMetricsAlertSettings, roles: ["supervisor", "admin"] },
   { path: "/dialer", element: Dialer, roles: ["supervisor", "admin"] },
   { path: "/compliance", element: Compliance, roles: ["supervisor", "admin"] },
+  { path: "/outbound-compliance", element: OutboundCompliance, roles: ["supervisor", "admin"] },
   { path: "/call-flow-designer", element: CallFlowDesigner, roles: ["supervisor", "admin"] },
   { path: "/topic-detection", element: TopicDetection, roles: ["supervisor", "admin"] },
   { path: "/qr-provisioning", element: QRProvisioning, roles: ["supervisor", "admin"] },
