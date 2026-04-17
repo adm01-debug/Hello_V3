@@ -54,6 +54,7 @@ const toolsNavItems = [
   { title: 'Aprendizagem', url: '/learning', icon: GraduationCap },
   { title: 'Resumos IA', url: '/meeting-summaries', icon: Sparkles },
   { title: 'Agent Assist', url: '/agent-assist', icon: Brain },
+  { title: 'Voice Security', url: '/voice-security', icon: Fingerprint },
 ];
 
 const securityNavItems = [

@@ -17,6 +17,7 @@ import { ForecastCard } from '@/components/executive/ForecastCard';
 import { CustomerSuccessCard } from '@/components/executive/CustomerSuccessCard';
 import { VolumeForecastCard } from '@/components/executive/VolumeForecastCard';
 import { MeetingSummaryDashboardCard } from '@/components/executive/MeetingSummaryDashboardCard';
+import { AgentAssistDashboardCard } from '@/components/executive/AgentAssistDashboardCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function ExecutiveDashboard() {
@@ -75,6 +76,7 @@ export default function ExecutiveDashboard() {
       <CustomerSuccessCard />
       <VolumeForecastCard />
       <MeetingSummaryDashboardCard />
+      <AgentAssistDashboardCard />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <CallsVolumeChart data={callsByDay} />

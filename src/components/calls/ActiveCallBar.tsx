@@ -17,8 +17,12 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
 import { LiveTranscription } from '@/components/calls/LiveTranscription';
+import { NextBestActionPanel } from '@/components/calls/NextBestActionPanel';
+import { CrmSuggestionsCard } from '@/components/calls/CrmSuggestionsCard';
 import { useCallSession } from '@/hooks/useCallSession';
+import { useLiveAssist } from '@/hooks/useLiveAssist';
 import { useContacts } from '@/hooks/useContacts';
+import { buildRecentContext } from '@/lib/agent-assist-utils';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
@@ -70,9 +74,12 @@ export function ActiveCallBar() {
   const [showTranscription, setShowTranscription] = useState(false);
   const [transcripts, setTranscripts] = useState<TranscriptEntry[]>([]);
   const [isEnding, setIsEnding] = useState(false);
+  const [endedSessionId, setEndedSessionId] = useState<string | null>(null);
+  const [endedContactId, setEndedContactId] = useState<string | null>(null);
   
   const { currentSession, isSaving, startSession, endSession, addTranscript, addAnalysis } = useCallSession();
   const { findOrCreateContact, addContactInteraction } = useContacts();
+  const { analyze: analyzeLive } = useLiveAssist(currentSession?.id);
 
   // Start session when call connects
   useEffect(() => {
@@ -92,19 +99,41 @@ export function ActiveCallBar() {
   }, [call]);
 
   const handleTranscript = useCallback((entry: TranscriptEntry) => {
-    setTranscripts(prev => [...prev, entry]);
+    setTranscripts(prev => {
+      const next = [...prev, entry];
+      if (currentSession?.id) {
+        void analyzeLive({
+          latestUtterance: entry.text,
+          recentContext: buildRecentContext(next.map((t) => ({ speaker: t.speaker, text: t.text })), 8),
+          speaker: entry.speaker,
+          agentName: currentSession.agentName,
+          timestampSeconds: Math.floor((entry.timestamp.getTime() - currentSession.startedAt.getTime()) / 1000),
+        });
+      }
+      return next;
+    });
     addTranscript(entry);
-  }, [addTranscript]);
+  }, [addTranscript, analyzeLive, currentSession]);
 
   const handleAnalysis = useCallback((analysis: AnalysisEntry) => {
     addAnalysis(analysis);
   }, [addAnalysis]);
 
-  if (!call) return null;
+  if (!call) {
+    if (endedSessionId) {
+      return (
+        <div className="border-b border-border bg-card px-6 py-3">
+          <CrmSuggestionsCard callSessionId={endedSessionId} contactId={endedContactId} />
+        </div>
+      );
+    }
+    return null;
+  }
 
   const handleHangup = async () => {
     if (currentSession) {
       setIsEnding(true);
+      const sessionIdSnapshot = currentSession.id;
       
       try {
         // Generate AI summary if we have transcripts
@@ -142,10 +171,12 @@ export function ActiveCallBar() {
         
         await endSession(duration, summary);
 
-        // Save interaction to contact
+        // Save interaction to contact + dispara extração CRM em background
+        let contactIdSnapshot: string | null = null;
         if (call?.contactPhone) {
           const contact = await findOrCreateContact(call.contactPhone, call.contactName);
           if (contact) {
+            contactIdSnapshot = contact.id;
             await addContactInteraction(contact.id, {
               interaction_type: 'call',
               direction: call.type === 'incoming' ? 'inbound' : 'outbound',
@@ -155,10 +186,26 @@ export function ActiveCallBar() {
               topics: summary?.mainTopics,
               duration_seconds: duration,
               agent_name: 'Agente Demo',
-              call_session_id: currentSession.id
+              call_session_id: sessionIdSnapshot
             });
           }
         }
+
+        // Auto-trigger extração de campos CRM (≥60s + transcrição)
+        if (duration >= 60 && transcripts.length > 0) {
+          const fullTranscript = transcripts.map((t) => `[${t.speaker}] ${t.text}`).join('\n');
+          void supabase.functions.invoke('extract-crm-fields', {
+            body: {
+              callSessionId: sessionIdSnapshot,
+              transcript: fullTranscript,
+              contactId: contactIdSnapshot,
+            },
+          }).catch((e) => logger.error('extract-crm-fields failed', e));
+        }
+
+        // Mantém referências para mostrar CrmSuggestionsCard pós-call
+        setEndedSessionId(sessionIdSnapshot);
+        setEndedContactId(contactIdSnapshot);
 
         toast.success('Chamada salva com resumo no histórico');
       } catch (error) {
@@ -318,6 +365,7 @@ export function ActiveCallBar() {
       />
 
       {/* Live AI Analysis Panel - Now connected to transcripts */}
+      {/* Live AI Analysis Panel - Now connected to transcripts */}
       <LiveCallAnalysis
         isActive={showAIAnalysis && call.status === 'connected'}
         contactName={call.contactName}
@@ -325,6 +373,13 @@ export function ActiveCallBar() {
         transcripts={transcripts}
         onAnalysis={handleAnalysis}
       />
+
+      {/* Real-time Agent Assist (Next-Best-Action) */}
+      {currentSession?.id && call.status === 'connected' && (
+        <div className="border-b border-border bg-card/40 px-6 py-2">
+          <NextBestActionPanel callSessionId={currentSession.id} agentName={currentSession.agentName} />
+        </div>
+      )}
     </>
   );
 }
