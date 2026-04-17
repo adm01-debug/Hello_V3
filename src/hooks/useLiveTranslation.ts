@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { traceHeaders, withTrace } from '@/lib/tracing';
 import { detectLanguage, type SupportedLang } from '@/lib/language-detection';
 
 export interface TranslatedSegment {
@@ -47,15 +48,18 @@ export function useLiveTranslation({ callSessionId, targetLang, throttleMs = 150
 
     setIsTranslating(true);
     try {
-      const { data, error } = await supabase.functions.invoke('translate-utterance', {
-        body: {
-          callSessionId,
-          text: merged,
-          speaker,
-          sourceLang: detected.lang,
-          targetLang,
-        },
-      });
+      const { data, error } = await withTrace('translate-utterance', () =>
+        supabase.functions.invoke('translate-utterance', {
+          body: {
+            callSessionId,
+            text: merged,
+            speaker,
+            sourceLang: detected.lang,
+            targetLang,
+          },
+          headers: traceHeaders(),
+        }),
+      );
       if (error) throw error;
       if (data?.translated) {
         setSegments((prev) => [
