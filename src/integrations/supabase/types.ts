@@ -343,6 +343,100 @@ export type Database = {
         }
         Relationships: []
       }
+      agent_shifts: {
+        Row: {
+          agent_name: string
+          break_minutes: number
+          created_at: string
+          created_by: string | null
+          end_time: string
+          id: string
+          notes: string | null
+          shift_date: string
+          start_time: string
+          status: string
+          template_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          agent_name: string
+          break_minutes?: number
+          created_at?: string
+          created_by?: string | null
+          end_time: string
+          id?: string
+          notes?: string | null
+          shift_date: string
+          start_time: string
+          status?: string
+          template_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string
+          break_minutes?: number
+          created_at?: string
+          created_by?: string | null
+          end_time?: string
+          id?: string
+          notes?: string | null
+          shift_date?: string
+          start_time?: string
+          status?: string
+          template_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_shifts_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "shift_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agent_skills: {
+        Row: {
+          agent_name: string
+          certified_at: string | null
+          certified_by: string | null
+          created_at: string
+          id: string
+          proficiency: number
+          skill_id: string
+          updated_at: string
+        }
+        Insert: {
+          agent_name: string
+          certified_at?: string | null
+          certified_by?: string | null
+          created_at?: string
+          id?: string
+          proficiency?: number
+          skill_id: string
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string
+          certified_at?: string | null
+          certified_by?: string | null
+          created_at?: string
+          id?: string
+          proficiency?: number
+          skill_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_skills_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       agent_weekly_stats: {
         Row: {
           agent_id: string
@@ -1423,6 +1517,68 @@ export type Database = {
             columns: ["account_id"]
             isOneToOne: false
             referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coaching_assignments: {
+        Row: {
+          agent_name: string
+          agent_response: string | null
+          assigned_by: string | null
+          assigner_name: string | null
+          call_session_id: string | null
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          due_at: string | null
+          id: string
+          priority: string
+          scorecard_id: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          agent_name: string
+          agent_response?: string | null
+          assigned_by?: string | null
+          assigner_name?: string | null
+          call_session_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_at?: string | null
+          id?: string
+          priority?: string
+          scorecard_id?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string
+          agent_response?: string | null
+          assigned_by?: string | null
+          assigner_name?: string | null
+          call_session_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_at?: string | null
+          id?: string
+          priority?: string
+          scorecard_id?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coaching_assignments_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
             referencedColumns: ["id"]
           },
         ]
@@ -2523,6 +2679,92 @@ export type Database = {
         }
         Relationships: []
       }
+      learning_completions: {
+        Row: {
+          agent_name: string
+          completed_at: string
+          id: string
+          module_id: string
+          notes: string | null
+          score: number | null
+        }
+        Insert: {
+          agent_name: string
+          completed_at?: string
+          id?: string
+          module_id: string
+          notes?: string | null
+          score?: number | null
+        }
+        Update: {
+          agent_name?: string
+          completed_at?: string
+          id?: string
+          module_id?: string
+          notes?: string | null
+          score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_completions_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "learning_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      learning_modules: {
+        Row: {
+          category: string
+          content_body: string | null
+          content_type: string
+          content_url: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          difficulty: string
+          duration_minutes: number
+          id: string
+          is_active: boolean
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          content_body?: string | null
+          content_type?: string
+          content_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          difficulty?: string
+          duration_minutes?: number
+          id?: string
+          is_active?: boolean
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          content_body?: string | null
+          content_type?: string
+          content_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          difficulty?: string
+          duration_minutes?: number
+          id?: string
+          is_active?: boolean
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       live_sentiment_snapshots: {
         Row: {
           call_session_id: string
@@ -2998,6 +3240,41 @@ export type Database = {
         }
         Relationships: []
       }
+      queue_skill_requirements: {
+        Row: {
+          created_at: string
+          id: string
+          min_proficiency: number
+          queue_name: string
+          skill_id: string
+          weight: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          min_proficiency?: number
+          queue_name: string
+          skill_id: string
+          weight?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          min_proficiency?: number
+          queue_name?: string
+          skill_id?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "queue_skill_requirements_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       rate_limit_alerts: {
         Row: {
           created_at: string | null
@@ -3417,6 +3694,78 @@ export type Database = {
         }
         Relationships: []
       }
+      shift_templates: {
+        Row: {
+          break_minutes: number
+          color: string | null
+          created_at: string
+          created_by: string | null
+          days_of_week: number[]
+          end_time: string
+          id: string
+          is_active: boolean
+          name: string
+          start_time: string
+          updated_at: string
+        }
+        Insert: {
+          break_minutes?: number
+          color?: string | null
+          created_at?: string
+          created_by?: string | null
+          days_of_week?: number[]
+          end_time: string
+          id?: string
+          is_active?: boolean
+          name: string
+          start_time: string
+          updated_at?: string
+        }
+        Update: {
+          break_minutes?: number
+          color?: string | null
+          created_at?: string
+          created_by?: string | null
+          days_of_week?: number[]
+          end_time?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          start_time?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      skills: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       success_plan_milestones: {
         Row: {
           assigned_to: string | null
@@ -3647,6 +3996,54 @@ export type Database = {
           questions?: Json
           survey_type?: string
           trigger_event?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      time_off_requests: {
+        Row: {
+          agent_name: string
+          created_at: string
+          end_date: string
+          id: string
+          reason: string | null
+          request_type: string
+          requested_by: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          reviewer_notes: string | null
+          start_date: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          agent_name: string
+          created_at?: string
+          end_date: string
+          id?: string
+          reason?: string | null
+          request_type?: string
+          requested_by?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          reviewer_notes?: string | null
+          start_date: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string
+          created_at?: string
+          end_date?: string
+          id?: string
+          reason?: string | null
+          request_type?: string
+          requested_by?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          reviewer_notes?: string | null
+          start_date?: string
+          status?: string
           updated_at?: string
         }
         Relationships: []
