@@ -10,7 +10,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import {
-  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages,
+  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen,
 } from 'lucide-react';
 
 const allRoutes = [
