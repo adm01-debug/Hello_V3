@@ -155,6 +155,13 @@ export function useCallSession() {
     void supabase.functions.invoke('detect-key-moments', {
       body: { callSessionId: sessionId, transcript: fullText },
     }).catch((e) => log.error('detect-key-moments failed', e));
+
+    // Auto-gera resumo IA pós-call (≥60s + transcrição disponível)
+    if (durationSeconds >= 60 && transcripts.length > 0) {
+      void supabase.functions.invoke('generate-meeting-summary', {
+        body: { callSessionId: sessionId },
+      }).catch((e) => log.error('generate-meeting-summary failed', e));
+    }
   }, []);
 
   const endSession = useCallback(async (durationSeconds: number, summary?: {
