@@ -76,6 +76,7 @@ export default function ExecutiveDashboard() {
       <CustomerSuccessCard />
       <VolumeForecastCard />
       <MeetingSummaryDashboardCard />
+      <AgentAssistDashboardCard />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <CallsVolumeChart data={callsByDay} />
