@@ -12,6 +12,7 @@ import { useNetworkMonitor } from '@/hooks/useNetworkMonitor';
 import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
 import { SlaReportCards } from '@/components/network/SlaReportCards';
+import { QualityAlertsCard } from '@/components/network/QualityAlertsCard';
 
 const log = logger.create('NetworkDiagnostics');
 
@@ -188,6 +189,9 @@ const NetworkDiagnostics = () => {
 
         {/* Onda 11 — SLA report cards */}
         <SlaReportCards period="week" />
+
+        {/* Onda 12 — Alertas persistentes de qualidade */}
+        <QualityAlertsCard />
 
         {/* MOS chart */}
         <Card className="glass-card">

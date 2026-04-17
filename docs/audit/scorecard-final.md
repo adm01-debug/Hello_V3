@@ -41,5 +41,13 @@
 - ADR-026 publicado; zero novas dependências; arquivos ≤400 linhas.
 - Findings de segurança: inalterados (3 WARN pré-existentes aceitos).
 
+## Re-verificação Onda 12 (2026-04-17)
+- Auto-remediação: `useVoipAutoRemediation` sugere reconexão SIP via toast action (throttle 30s, nunca age sem consentimento).
+- Persistência: tabela `voip_quality_alerts` com RLS por agente; `useQualityTrendAnalyzer` grava alertas best-effort.
+- UI: `QualityAlertsCard` em `/network-diagnostics` com filtro por tipo, badge de não-reconhecidos e ack-all.
+- Edge function `voip-quality-alerts-summary` (+4 testes Deno) — total: **69 testes em 11 Edge Functions**.
+- ADR-027 publicado; zero novas dependências; arquivos ≤400 linhas.
+- Findings de segurança: inalterados (3 WARN pré-existentes aceitos).
+
 ## Conclusão
 Sistema **production-ready** com maturidade técnica máxima certificada.
