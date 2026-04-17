@@ -19,6 +19,7 @@ import { VolumeForecastCard } from '@/components/executive/VolumeForecastCard';
 import { MeetingSummaryDashboardCard } from '@/components/executive/MeetingSummaryDashboardCard';
 import { AgentAssistDashboardCard } from '@/components/executive/AgentAssistDashboardCard';
 import { OutboundComplianceCard } from '@/components/executive/OutboundComplianceCard';
+import { MultilingualDashboardCard } from '@/components/executive/MultilingualDashboardCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function ExecutiveDashboard() {

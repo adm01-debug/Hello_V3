@@ -10,7 +10,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import {
-  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles,
+  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages,
 } from 'lucide-react';
 
 const allRoutes = [
@@ -38,6 +38,7 @@ const allRoutes = [
   { title: 'Resumos IA de Reuniões', url: '/meeting-summaries', icon: Sparkles, group: 'Ferramentas' },
   { title: 'Agent Assist (tempo real)', url: '/agent-assist', icon: Brain, group: 'Ferramentas' },
   { title: 'Voice Security (biometria)', url: '/voice-security', icon: Brain, group: 'Ferramentas' },
+  { title: 'Tradução Multilíngue', url: '/translation-center', icon: Languages, group: 'Ferramentas' },
   { title: 'Importar Gravações Teams', url: '/external-recordings-import', icon: DownloadCloud, group: 'Ferramentas' },
   { title: 'Métricas de Espera', url: '/hold-metrics', icon: Timer, group: 'Ferramentas' },
   { title: 'Alertas de Espera', url: '/hold-alerts', icon: Siren, group: 'Ferramentas' },

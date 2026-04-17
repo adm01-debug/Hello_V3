@@ -69,6 +69,7 @@ const MeetingSummaries = lazy(() => import("@/pages/MeetingSummaries"));
 const AgentAssist = lazy(() => import("@/pages/AgentAssist"));
 const VoiceSecurity = lazy(() => import("@/pages/VoiceSecurity"));
 const OutboundCompliance = lazy(() => import("@/pages/OutboundCompliance"));
+const TranslationCenter = lazy(() => import("@/pages/TranslationCenter"));
 
 export interface RouteConfig {
   path: string;
@@ -122,6 +123,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/meeting-summaries", element: MeetingSummaries },
   { path: "/agent-assist", element: AgentAssist },
   { path: "/voice-security", element: VoiceSecurity },
+  { path: "/translation-center", element: TranslationCenter },
 
   // Supervisor + Admin
   { path: "/queue-dashboard", element: QueueMetricsDashboard, roles: ["supervisor", "admin"] },
