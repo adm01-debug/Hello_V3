@@ -8,8 +8,8 @@
     "moduleDetection": "force",
     "moduleResolution": "bundler",
     "noEmit": true,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "paths": {
@@ -17,13 +17,12 @@
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
+    "strictNullChecks": true,
     "target": "ES2020",
     "types": ["vite/client", "node"],
     "useDefineForClassFields": true
   },
   "include": ["src"],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
