@@ -13,11 +13,14 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UnifiedSoftphone } from '@/components/calls/UnifiedSoftphone';
 import { NetworkStatusBadge } from '@/components/calls/NetworkStatusBadge';
+import { SipConnectionStatus } from '@/components/calls/SipConnectionStatus';
+import { useSipCall } from '@/hooks/useSipCall';
 import { toast } from 'sonner';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 const Calls = () => {
   usePageTitle('Chamadas');
+  const sip = useSipCall();
 
   const [callStats] = useState({
     today: 12,
