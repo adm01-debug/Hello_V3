@@ -49,7 +49,7 @@ export default function RoutingRules() {
       <NeonPageHeader
         title="Regras de Roteamento"
         description="Direcione conversas automaticamente por canal, tags ou condições"
-        icon={GitBranch}
+        icon={<GitBranch />}
         actions={
           <Button onClick={() => setEditing({ priority: 100, is_active: true, channel: 'all' })} className="gap-2">
             <Plus className="h-4 w-4" /> Nova regra
@@ -58,7 +58,7 @@ export default function RoutingRules() {
       />
 
       {rules.length === 0 ? (
-        <EmptyState icon={GitBranch} title="Sem regras" description="Crie sua primeira regra de roteamento." />
+        <EmptyState icon={<GitBranch />} title="Sem regras" description="Crie sua primeira regra de roteamento." />
       ) : (
         <div className="space-y-3">
           {rules.map((r) => (

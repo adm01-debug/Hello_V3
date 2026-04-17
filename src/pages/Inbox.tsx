@@ -103,7 +103,7 @@ export default function Inbox() {
       <NeonPageHeader
         title="Inbox Omnichannel"
         description="Atendimento unificado em todos os canais"
-        icon={InboxIcon}
+        icon={<InboxIcon />}
       />
 
       <div className="grid grid-cols-12 gap-4 h-[calc(100vh-220px)]">
@@ -154,7 +154,7 @@ export default function Inbox() {
                 ))}
               </div>
             ) : filteredConversations.length === 0 ? (
-              <EmptyState icon={InboxIcon} title="Nenhuma conversa" description="Aguardando interações." />
+              <EmptyState icon={<InboxIcon />} title="Nenhuma conversa" description="Aguardando interações." />
             ) : (
               <div className="space-y-1.5">
                 {filteredConversations.map((c) => {
@@ -215,7 +215,7 @@ export default function Inbox() {
           {!selected ? (
             <div className="flex-1 flex items-center justify-center">
               <EmptyState
-                icon={MessageSquare}
+                icon={<MessageSquare />}
                 title="Selecione uma conversa"
                 description="Escolha uma conversa à esquerda para começar."
               />
