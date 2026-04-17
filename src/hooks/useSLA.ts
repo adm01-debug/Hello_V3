@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { traceHeaders, withTrace } from '@/lib/tracing';
 import { toast } from 'sonner';
 
 export interface SlaPolicy {
@@ -85,6 +86,28 @@ export function useUpsertSlaPolicy() {
     onError: (err) => {
       logger.error('useUpsertSlaPolicy.error', { err });
       toast.error('Falha ao salvar política');
+    },
+  });
+}
+
+/** Dispara enforcement do SLA (varredura de breaches). Tracing propagado. */
+export function useEnforceSla() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async () => {
+      const { data, error } = await withTrace('sla.enforce', () =>
+        supabase.functions.invoke('enforce-sla', { headers: traceHeaders() }),
+      );
+      if (error) throw error;
+      return data as { evaluated: number; breached: number };
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['sla-compliance'] });
+      toast.success(`SLA enforced: ${data?.evaluated ?? 0} avaliadas, ${data?.breached ?? 0} em breach`);
+    },
+    onError: (err) => {
+      logger.error('useEnforceSla.error', { err });
+      toast.error('Falha ao executar enforcement de SLA');
     },
   });
 }

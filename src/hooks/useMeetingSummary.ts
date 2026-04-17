@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { traceHeaders, withTrace } from '@/lib/tracing';
 
 const log = logger.create('MeetingSummary');
 
@@ -99,9 +100,12 @@ export function useMeetingSummary(callSessionId?: string) {
   const generate = useMutation({
     mutationFn: async (force: boolean = false) => {
       if (!callSessionId) throw new Error('callSessionId ausente');
-      const { data, error } = await supabase.functions.invoke('generate-meeting-summary', {
-        body: { callSessionId, force },
-      });
+      const { data, error } = await withTrace('meeting-summary.generate', () =>
+        supabase.functions.invoke('generate-meeting-summary', {
+          body: { callSessionId, force },
+          headers: traceHeaders(),
+        }),
+      );
       if (error) throw error;
       if ((data as any)?.error) throw new Error((data as any).error);
       return data;
@@ -226,9 +230,12 @@ export function useAutoMeetingSummary() {
       if (pending.has(callSessionId)) return;
       setPending((p) => new Set(p).add(callSessionId));
       try {
-        await supabase.functions.invoke('generate-meeting-summary', {
-          body: { callSessionId },
-        });
+        await withTrace('meeting-summary.auto', () =>
+          supabase.functions.invoke('generate-meeting-summary', {
+            body: { callSessionId },
+            headers: traceHeaders(),
+          }),
+        );
         queryClient.invalidateQueries({ queryKey: ['meeting-summary', callSessionId] });
       } catch (e) {
         log.error('auto summary failed', e);

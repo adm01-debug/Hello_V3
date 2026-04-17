@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { traceHeaders, withTrace } from '@/lib/tracing';
 import { captureVoiceSample, type ExtractedFeatures } from '@/lib/voice-biometrics';
 
 const log = logger.create('VoiceBiometrics');
@@ -54,13 +55,16 @@ export function useVoicePrints() {
           const features = await captureVoiceSample();
           collected.push(features);
         }
-        const { data, error } = await supabase.functions.invoke('enroll-voice', {
-          body: {
-            label,
-            embedding: collected.map((c) => c.embedding),
-            summary: collected[0].summary,
-          },
-        });
+        const { data, error } = await withTrace('voice.enroll', () =>
+          supabase.functions.invoke('enroll-voice', {
+            body: {
+              label,
+              embedding: collected.map((c) => c.embedding),
+              summary: collected[0].summary,
+            },
+            headers: traceHeaders(),
+          }),
+        );
         if (error) throw error;
         return data;
       } finally {
@@ -83,9 +87,12 @@ export function useVoicePrints() {
       try {
         toast.info('Capturando amostra para verificação...');
         const features = await captureVoiceSample();
-        const { data, error } = await supabase.functions.invoke('verify-voice', {
-          body: { label, callSessionId, embedding: features.embedding },
-        });
+        const { data, error } = await withTrace('voice.verify', () =>
+          supabase.functions.invoke('verify-voice', {
+            body: { label, callSessionId, embedding: features.embedding },
+            headers: traceHeaders(),
+          }),
+        );
         if (error) throw error;
         return data as VerifyResult;
       } finally {
@@ -155,9 +162,12 @@ export function useFraudSignals(filters?: { severity?: string; status?: string; 
 export function useRedactCall() {
   return useMutation({
     mutationFn: async (callSessionId: string) => {
-      const { data, error } = await supabase.functions.invoke('redact-sensitive-audio', {
-        body: { callSessionId },
-      });
+      const { data, error } = await withTrace('voice.redact', () =>
+        supabase.functions.invoke('redact-sensitive-audio', {
+          body: { callSessionId },
+          headers: traceHeaders(),
+        }),
+      );
       if (error) throw error;
       return data as { matches: number; patterns: Record<string, number>; segments_count: number };
     },
