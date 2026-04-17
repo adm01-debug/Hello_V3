@@ -59,6 +59,9 @@ const ExternalRecordingsImport = lazy(() => import("@/pages/ExternalRecordingsIm
 const Deals = lazy(() => import("@/pages/Deals"));
 const Cadences = lazy(() => import("@/pages/Cadences"));
 const Trackers = lazy(() => import("@/pages/Trackers"));
+const Accounts = lazy(() => import("@/pages/Accounts"));
+const Renewals = lazy(() => import("@/pages/Renewals"));
+const SuccessPlans = lazy(() => import("@/pages/SuccessPlans"));
 
 export interface RouteConfig {
   path: string;
@@ -103,6 +106,9 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/deals", element: Deals },
   { path: "/cadences", element: Cadences, roles: ["supervisor", "admin"] },
   { path: "/trackers", element: Trackers, roles: ["supervisor", "admin"] },
+  { path: "/accounts", element: Accounts },
+  { path: "/renewals", element: Renewals },
+  { path: "/success-plans", element: SuccessPlans },
 
   // Supervisor + Admin
   { path: "/queue-dashboard", element: QueueMetricsDashboard, roles: ["supervisor", "admin"] },

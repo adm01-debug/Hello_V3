@@ -14,6 +14,7 @@ import {
 import { GoalsComparisonSection } from '@/components/executive/GoalsComparisonSection';
 import { ConversationIntelligenceCard } from '@/components/executive/ConversationIntelligenceCard';
 import { ForecastCard } from '@/components/executive/ForecastCard';
+import { CustomerSuccessCard } from '@/components/executive/CustomerSuccessCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function ExecutiveDashboard() {
@@ -69,6 +70,7 @@ export default function ExecutiveDashboard() {
 
       <ConversationIntelligenceCard />
       <ForecastCard />
+      <CustomerSuccessCard />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <CallsVolumeChart data={callsByDay} />

@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      account_journey_history: {
+        Row: {
+          account_id: string
+          created_at: string
+          from_stage: string | null
+          id: string
+          metadata: Json | null
+          reason: string | null
+          to_stage: string
+          triggered_by: string | null
+        }
+        Insert: {
+          account_id: string
+          created_at?: string
+          from_stage?: string | null
+          id?: string
+          metadata?: Json | null
+          reason?: string | null
+          to_stage: string
+          triggered_by?: string | null
+        }
+        Update: {
+          account_id?: string
+          created_at?: string
+          from_stage?: string | null
+          id?: string
+          metadata?: Json | null
+          reason?: string | null
+          to_stage?: string
+          triggered_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "account_journey_history_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       account_lockouts: {
         Row: {
           created_at: string
@@ -40,6 +81,78 @@ export type Database = {
           id?: string
           last_failed_at?: string | null
           locked_until?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      accounts: {
+        Row: {
+          arr: number | null
+          churn_risk_score: number | null
+          contract_end_date: string | null
+          contract_start_date: string | null
+          created_at: string
+          csm_agent_name: string | null
+          current_stage: string | null
+          domain: string | null
+          health_factors: Json | null
+          health_score: number | null
+          id: string
+          last_contact_at: string | null
+          metadata: Json | null
+          mrr: number | null
+          name: string
+          next_review_at: string | null
+          notes: string | null
+          segment: string
+          status: string
+          tags: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          arr?: number | null
+          churn_risk_score?: number | null
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          created_at?: string
+          csm_agent_name?: string | null
+          current_stage?: string | null
+          domain?: string | null
+          health_factors?: Json | null
+          health_score?: number | null
+          id?: string
+          last_contact_at?: string | null
+          metadata?: Json | null
+          mrr?: number | null
+          name: string
+          next_review_at?: string | null
+          notes?: string | null
+          segment?: string
+          status?: string
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          arr?: number | null
+          churn_risk_score?: number | null
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          created_at?: string
+          csm_agent_name?: string | null
+          current_stage?: string | null
+          domain?: string | null
+          health_factors?: Json | null
+          health_score?: number | null
+          id?: string
+          last_contact_at?: string | null
+          metadata?: Json | null
+          mrr?: number | null
+          name?: string
+          next_review_at?: string | null
+          notes?: string | null
+          segment?: string
+          status?: string
+          tags?: string[] | null
           updated_at?: string
         }
         Relationships: []
@@ -1258,6 +1371,62 @@ export type Database = {
         }
         Relationships: []
       }
+      churn_risk_signals: {
+        Row: {
+          account_id: string
+          created_at: string
+          description: string
+          detected_at: string
+          evidence: Json | null
+          id: string
+          is_active: boolean
+          resolution_notes: string | null
+          resolved_at: string | null
+          resolved_by: string | null
+          score_delta: number
+          severity: string
+          signal_type: string
+        }
+        Insert: {
+          account_id: string
+          created_at?: string
+          description: string
+          detected_at?: string
+          evidence?: Json | null
+          id?: string
+          is_active?: boolean
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          score_delta?: number
+          severity?: string
+          signal_type: string
+        }
+        Update: {
+          account_id?: string
+          created_at?: string
+          description?: string
+          detected_at?: string
+          evidence?: Json | null
+          id?: string
+          is_active?: boolean
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          score_delta?: number
+          severity?: string
+          signal_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "churn_risk_signals_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       coaching_recommendations: {
         Row: {
           action_items: string[] | null
@@ -1562,6 +1731,7 @@ export type Database = {
       }
       contacts: {
         Row: {
+          account_id: string | null
           company: string | null
           created_at: string
           email: string | null
@@ -1578,6 +1748,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          account_id?: string | null
           company?: string | null
           created_at?: string
           email?: string | null
@@ -1594,6 +1765,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          account_id?: string | null
           company?: string | null
           created_at?: string
           email?: string | null
@@ -1607,6 +1779,56 @@ export type Database = {
           preferences?: Json | null
           source?: string | null
           tags?: string[] | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contacts_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      customer_journey_stages: {
+        Row: {
+          color: string | null
+          created_at: string
+          description: string | null
+          display_order: number
+          entry_criteria: Json | null
+          exit_criteria: Json | null
+          id: string
+          is_active: boolean
+          stage_key: string
+          stage_name: string
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          entry_criteria?: Json | null
+          exit_criteria?: Json | null
+          id?: string
+          is_active?: boolean
+          stage_key: string
+          stage_name: string
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          entry_criteria?: Json | null
+          exit_criteria?: Json | null
+          id?: string
+          is_active?: boolean
+          stage_key?: string
+          stage_name?: string
           updated_at?: string
         }
         Relationships: []
@@ -2890,6 +3112,68 @@ export type Database = {
         }
         Relationships: []
       }
+      renewals: {
+        Row: {
+          account_id: string
+          closed_at: string | null
+          created_at: string
+          current_value: number
+          due_date: string
+          id: string
+          loss_reason: string | null
+          metadata: Json | null
+          notes: string | null
+          owner_agent_name: string | null
+          probability: number
+          proposed_value: number
+          renewal_type: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          account_id: string
+          closed_at?: string | null
+          created_at?: string
+          current_value?: number
+          due_date: string
+          id?: string
+          loss_reason?: string | null
+          metadata?: Json | null
+          notes?: string | null
+          owner_agent_name?: string | null
+          probability?: number
+          proposed_value?: number
+          renewal_type?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          account_id?: string
+          closed_at?: string | null
+          created_at?: string
+          current_value?: number
+          due_date?: string
+          id?: string
+          loss_reason?: string | null
+          metadata?: Json | null
+          notes?: string | null
+          owner_agent_name?: string | null
+          probability?: number
+          proposed_value?: number
+          renewal_type?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "renewals_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       role_permissions: {
         Row: {
           created_at: string | null
@@ -3130,6 +3414,240 @@ export type Database = {
           source_user_id?: string | null
           title?: string
           trigger_data?: Json | null
+        }
+        Relationships: []
+      }
+      success_plan_milestones: {
+        Row: {
+          assigned_to: string | null
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          display_order: number
+          due_date: string | null
+          id: string
+          metadata: Json | null
+          status: string
+          success_plan_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          due_date?: string | null
+          id?: string
+          metadata?: Json | null
+          status?: string
+          success_plan_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          due_date?: string | null
+          id?: string
+          metadata?: Json | null
+          status?: string
+          success_plan_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "success_plan_milestones_success_plan_id_fkey"
+            columns: ["success_plan_id"]
+            isOneToOne: false
+            referencedRelation: "success_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      success_plans: {
+        Row: {
+          account_id: string
+          business_outcome: string | null
+          completed_at: string | null
+          created_at: string
+          id: string
+          metadata: Json | null
+          objective: string
+          owner_agent_name: string | null
+          progress_percent: number | null
+          stakeholders: Json | null
+          start_date: string
+          status: string
+          target_date: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          account_id: string
+          business_outcome?: string | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          objective: string
+          owner_agent_name?: string | null
+          progress_percent?: number | null
+          stakeholders?: Json | null
+          start_date?: string
+          status?: string
+          target_date: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          account_id?: string
+          business_outcome?: string | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          objective?: string
+          owner_agent_name?: string | null
+          progress_percent?: number | null
+          stakeholders?: Json | null
+          start_date?: string
+          status?: string
+          target_date?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "success_plans_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      survey_responses: {
+        Row: {
+          account_id: string | null
+          answers: Json
+          call_session_id: string | null
+          category: string | null
+          channel: string | null
+          contact_id: string | null
+          created_at: string
+          free_text_feedback: string | null
+          id: string
+          respondent_email: string | null
+          respondent_phone: string | null
+          score: number | null
+          submitted_at: string
+          survey_id: string
+        }
+        Insert: {
+          account_id?: string | null
+          answers?: Json
+          call_session_id?: string | null
+          category?: string | null
+          channel?: string | null
+          contact_id?: string | null
+          created_at?: string
+          free_text_feedback?: string | null
+          id?: string
+          respondent_email?: string | null
+          respondent_phone?: string | null
+          score?: number | null
+          submitted_at?: string
+          survey_id: string
+        }
+        Update: {
+          account_id?: string | null
+          answers?: Json
+          call_session_id?: string | null
+          category?: string | null
+          channel?: string | null
+          contact_id?: string | null
+          created_at?: string
+          free_text_feedback?: string | null
+          id?: string
+          respondent_email?: string | null
+          respondent_phone?: string | null
+          score?: number | null
+          submitted_at?: string
+          survey_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "survey_responses_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "survey_responses_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "survey_responses_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "survey_responses_survey_id_fkey"
+            columns: ["survey_id"]
+            isOneToOne: false
+            referencedRelation: "surveys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      surveys: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          questions: Json
+          survey_type: string
+          trigger_event: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          questions?: Json
+          survey_type?: string
+          trigger_event?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          questions?: Json
+          survey_type?: string
+          trigger_event?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
