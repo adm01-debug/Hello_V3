@@ -42,7 +42,7 @@ export interface RankingEntry {
   avatar_url: string | null;
   total_calls: number;
   total_duration_seconds: number;
-  avg_satisfaction: number;
+  avg_satisfaction: number | null;
   points_earned: number;
   badges_earned: number;
   rank: number;
