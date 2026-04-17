@@ -5,7 +5,7 @@ PT-BR em toda UI/comunicação. Estética cyberpunk neon (glassmorphism, glow). 
 Lovable Cloud (Supabase) backend; auth obrigatória; RLS rigorosa em todas as tabelas.
 Logger central (`src/lib/logger`) — nunca console.log em produção. Sonner para toasts.
 Edge functions: usar `_shared/cors.ts` e validar JWT em código. ≤400 linhas/arquivo.
-Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, Meeting Summary AI.
+Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, **Meeting Summary AI (ADR-012, testes ✅)**.
 
 ## Memories
 - [Meeting Summary AI](mem://features/meeting-summary-ai) — Notas executivas pós-call automáticas via Lovable AI com tool calling, ações/decisões/sentimento/follow-up
