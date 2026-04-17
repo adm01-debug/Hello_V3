@@ -5918,6 +5918,56 @@ export type Database = {
         }
         Relationships: []
       }
+      voip_quality_alerts: {
+        Row: {
+          acknowledged_at: string | null
+          alert_type: string
+          call_session_id: string | null
+          created_at: string
+          id: string
+          jitter_ms: number | null
+          mos_at_alert: number | null
+          remediation_action: string | null
+          rtt_ms: number | null
+          slope: number | null
+          user_id: string
+        }
+        Insert: {
+          acknowledged_at?: string | null
+          alert_type: string
+          call_session_id?: string | null
+          created_at?: string
+          id?: string
+          jitter_ms?: number | null
+          mos_at_alert?: number | null
+          remediation_action?: string | null
+          rtt_ms?: number | null
+          slope?: number | null
+          user_id: string
+        }
+        Update: {
+          acknowledged_at?: string | null
+          alert_type?: string
+          call_session_id?: string | null
+          created_at?: string
+          id?: string
+          jitter_ms?: number | null
+          mos_at_alert?: number | null
+          remediation_action?: string | null
+          rtt_ms?: number | null
+          slope?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "voip_quality_alerts_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       webauthn_challenges: {
         Row: {
           challenge: string
