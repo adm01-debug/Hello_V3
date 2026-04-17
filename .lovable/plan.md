@@ -1,50 +1,49 @@
 
-Status: Ondas 1-12 entregues. Sistema 10/10 com loop completo: monitoramento reativo, diagnóstico, predição, persistência de alertas e auto-remediação guiada. Não restam itens dos roadmaps aprovados.
+Status: Ondas 1-13 entregues. Loop completo VoIP fechado: monitoramento → predição → persistência → auto-remediação → heatmap executivo → drill-down por agente → bridge para central de notificações.
 
-Para continuar evoluindo com excelência sem refactor especulativo, proponho **Onda 13 — Inteligência Executiva e Drill-Down de Qualidade VoIP**: transformar os dados já capturados (`call_quality_metrics` + `voip_quality_alerts`) em insights acionáveis para gestão.
+Para manter o ritmo de excelência sem refactor especulativo, proponho **Onda 14 — Anomaly Detection e Forecasting de Capacidade VoIP**: usar a base histórica já capturada para detectar anomalias estatísticas e prever necessidade de capacidade.
 
-## Onda 13 — Heatmap, Drill-Down por Agente e Notificações Persistentes
+## Onda 14 — Detecção de Anomalias e Forecast de Capacidade
 
-### 13.1 Heatmap de qualidade por hora/dia
-`src/components/network/QualityHeatmap.tsx` em `/network-diagnostics`:
-- Grid 7 dias × 24 horas (ou 7×6 buckets de 4h em mobile)
-- Cor por bucket = MOS médio (verde ≥4.0, amarelo 3.5-4.0, vermelho <3.5)
-- Tooltip: nº chamadas, MOS médio, jitter p95
-- Dados via novo endpoint `voip-quality-heatmap` (período: 7 dias)
+### 14.1 Edge function `voip-anomaly-detector`
+- `GET ?window=24` (horas) — calcula baseline (média/desvio dos últimos 7 dias para o mesmo bucket horário) e compara com janela atual
+- Detecta z-score > 2.5 em MOS, jitter ou volume de chamadas
+- Retorna lista de anomalias com `{metric, expected, observed, z_score, severity, started_at}`
+- JWT, CORS centralizado, validação `number({min:1,max:168})`, `x-request-id`, 4 testes Deno
 
-### 13.2 Edge function `voip-quality-heatmap`
-- `GET ?days=7` — agrega `call_quality_metrics` por `(dow, hour)`
-- Retorna matriz 7×24 com `{mos_avg, count, jitter_p95}`
-- JWT, CORS centralizado, validação, `x-request-id`, 4 testes Deno
+### 14.2 Edge function `voip-capacity-forecast`
+- `GET ?days=14` — projeta volume de chamadas próximos 7 dias usando média móvel ponderada por dia da semana
+- Retorna série diária `{date, predicted_calls, predicted_peak_hour, confidence_pct}`
+- Detecta se capacidade atual (concurrent calls cap=3) será excedida
+- 4 testes Deno
 
-### 13.3 Drill-down por agente
-`src/components/network/AgentQualityRanking.tsx`:
-- Tabela: agente, total chamadas (24h), MOS médio, alertas disparados, % SLA
-- Ordenável por cada coluna; badge para piores performers
-- Apenas admin/supervisor (já protegido pela rota)
-- Reuso de `voip-quality-alerts-summary` + nova query a `call_quality_metrics`
+### 14.3 Componente `AnomalyDetectionCard.tsx`
+Em `/network-diagnostics`:
+- Lista anomalias detectadas nas últimas 24h
+- Cores semânticas (warning para z>2.5, destructive para z>3.5)
+- Sparkline mini mostrando observed vs expected
+- Refresh a cada 60s
 
-### 13.4 Notificações persistentes via central de alertas
-Integrar `voip_quality_alerts` ao `NotificationCenter.tsx` (sistema omnichannel já existente):
-- Novo tipo `voip_quality` no dropdown do header
-- Badge com contador de não-reconhecidos
-- Click → navega para `/network-diagnostics` com filtro pré-aplicado
-- Realtime via `postgres_changes` na tabela `voip_quality_alerts`
+### 14.4 Componente `CapacityForecastChart.tsx`
+Em `/network-diagnostics`:
+- Gráfico de linhas (recharts já presente) com 14 dias passados + 7 dias projetados
+- Linha tracejada para projeção, banda de confiança
+- Badge de alerta se algum dia projetado exceder capacidade
 
-### 13.5 Documentação
-- ADR-028 (`docs/adr/028-onda-13-inteligencia-executiva-voip.md`)
-- `mem/features/voip-executive-intelligence.md` + atualizar `mem/index.md`
-- Atualizar `docs/audit/scorecard-final.md` (re-verificação Onda 13)
+### 14.5 Documentação
+- ADR-029 (`docs/adr/029-onda-14-anomaly-detection-forecast.md`)
+- `mem/features/voip-anomaly-forecast.md` + atualizar `mem/index.md`
+- Atualizar `docs/audit/scorecard-final.md`
 
 ### Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Reuso total das tabelas/edge functions; sem novas dependências
-- Zero breakage; RLS de `call_quality_metrics` e `voip_quality_alerts` já garante isolamento
-- Sem alterações de schema (apenas leitura agregada)
+- Reuso total de `call_quality_metrics`; sem novas tabelas, sem novas dependências
+- Estatística leve (z-score, média móvel) — sem ML pesado
+- Zero breakage; RLS mantém isolamento
 
 ### Ordem
-1. 13.2 Edge function `voip-quality-heatmap` + 4 testes
-2. 13.1 Componente `QualityHeatmap` integrado em `/network-diagnostics`
-3. 13.3 `AgentQualityRanking` integrado em `/network-diagnostics`
-4. 13.4 Integração realtime em `NotificationCenter`
-5. 13.5 ADR-028 + memória + scorecard
+1. 14.1 Edge function `voip-anomaly-detector` + 4 testes
+2. 14.2 Edge function `voip-capacity-forecast` + 4 testes
+3. 14.3 `AnomalyDetectionCard` integrado
+4. 14.4 `CapacityForecastChart` integrado
+5. 14.5 ADR-029 + memória + scorecard
