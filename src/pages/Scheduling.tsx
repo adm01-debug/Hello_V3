@@ -56,7 +56,7 @@ export default function Scheduling() {
 
   return (
     <NeonPageLayout>
-      <NeonPageHeader title="Escala & Turnos" subtitle="Planejamento semanal de força de trabalho" icon={CalendarDays} />
+      <NeonPageHeader title="Escala & Turnos" description="Planejamento semanal de força de trabalho" icon={<CalendarDays className="h-5 w-5" />} />
 
       <Tabs defaultValue="grid" className="w-full">
         <TabsList>

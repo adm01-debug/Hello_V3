@@ -24,7 +24,7 @@ export default function Learning() {
 
   return (
     <NeonPageLayout>
-      <NeonPageHeader title="Biblioteca de Aprendizagem" subtitle="Microlearning para evolução contínua" icon={GraduationCap} />
+      <NeonPageHeader title="Biblioteca de Aprendizagem" description="Microlearning para evolução contínua" icon={<GraduationCap className="h-5 w-5" />} />
 
       {isLoading ? (
         <Card><CardContent className="py-12 text-center text-muted-foreground">Carregando...</CardContent></Card>

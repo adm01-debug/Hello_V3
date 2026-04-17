@@ -39,7 +39,7 @@ export default function Skills() {
 
   return (
     <NeonPageLayout>
-      <NeonPageHeader title="Habilidades" subtitle="Catálogo e proficiência por agente" icon={Award} />
+      <NeonPageHeader title="Habilidades" description="Catálogo e proficiência por agente" icon={<Award className="h-5 w-5" />} />
 
       <Tabs defaultValue="catalog">
         <TabsList>
