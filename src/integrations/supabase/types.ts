@@ -1168,6 +1168,71 @@ export type Database = {
         }
         Relationships: []
       }
+      call_quality_metrics: {
+        Row: {
+          agent_name: string | null
+          call_session_id: string | null
+          channel: string
+          created_at: string
+          id: string
+          jitter_avg_ms: number | null
+          jitter_max_ms: number | null
+          mos_avg: number | null
+          mos_min: number | null
+          packet_loss_pct: number | null
+          quality_label: string | null
+          raw_samples: Json | null
+          rtt_avg_ms: number | null
+          rtt_max_ms: number | null
+          samples_count: number
+          updated_at: string
+        }
+        Insert: {
+          agent_name?: string | null
+          call_session_id?: string | null
+          channel?: string
+          created_at?: string
+          id?: string
+          jitter_avg_ms?: number | null
+          jitter_max_ms?: number | null
+          mos_avg?: number | null
+          mos_min?: number | null
+          packet_loss_pct?: number | null
+          quality_label?: string | null
+          raw_samples?: Json | null
+          rtt_avg_ms?: number | null
+          rtt_max_ms?: number | null
+          samples_count?: number
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string | null
+          call_session_id?: string | null
+          channel?: string
+          created_at?: string
+          id?: string
+          jitter_avg_ms?: number | null
+          jitter_max_ms?: number | null
+          mos_avg?: number | null
+          mos_min?: number | null
+          packet_loss_pct?: number | null
+          quality_label?: string | null
+          raw_samples?: Json | null
+          rtt_avg_ms?: number | null
+          rtt_max_ms?: number | null
+          samples_count?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_quality_metrics_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       call_recordings: {
         Row: {
           call_session_id: string | null
