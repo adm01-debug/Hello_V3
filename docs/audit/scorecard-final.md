@@ -33,5 +33,13 @@
 - ADR-023 publicado; sem alteração de código produtivo.
 - Findings de segurança: inalterados (3 WARN aceitos).
 
+## Re-verificação Onda 11 (2026-04-17)
+- Inteligência preditiva: `useQualityTrendAnalyzer` detecta degradação de MOS via slope (regressão linear) e alerta antes da queda.
+- Edge function `voip-sla-report` agrega SLA/p95/MOS por período, com 6 testes Deno (total: **65 testes em 10 Edge Functions**).
+- UI executiva: `SlaReportCards` em `/network-diagnostics` com deltas vs período anterior e export CSV.
+- Performance: índice `idx_call_quality_metrics_created_mos` adicionado.
+- ADR-026 publicado; zero novas dependências; arquivos ≤400 linhas.
+- Findings de segurança: inalterados (3 WARN pré-existentes aceitos).
+
 ## Conclusão
 Sistema **production-ready** com maturidade técnica máxima certificada.
