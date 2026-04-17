@@ -365,6 +365,7 @@ export function ActiveCallBar() {
       />
 
       {/* Live AI Analysis Panel - Now connected to transcripts */}
+      {/* Live AI Analysis Panel - Now connected to transcripts */}
       <LiveCallAnalysis
         isActive={showAIAnalysis && call.status === 'connected'}
         contactName={call.contactName}
@@ -372,6 +373,13 @@ export function ActiveCallBar() {
         transcripts={transcripts}
         onAnalysis={handleAnalysis}
       />
+
+      {/* Real-time Agent Assist (Next-Best-Action) */}
+      {currentSession?.id && call.status === 'connected' && (
+        <div className="border-b border-border bg-card/40 px-6 py-2">
+          <NextBestActionPanel callSessionId={currentSession.id} agentName={currentSession.agentName} />
+        </div>
+      )}
     </>
   );
 }
