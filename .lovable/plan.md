@@ -1,48 +1,50 @@
 
-Status: Ondas 1-11 entregues. Sistema 10/10 com monitoramento reativo, diagnóstico completo e inteligência preditiva VoIP. Não restam itens dos roadmaps aprovados.
+Status: Ondas 1-12 entregues. Sistema 10/10 com loop completo: monitoramento reativo, diagnóstico, predição, persistência de alertas e auto-remediação guiada. Não restam itens dos roadmaps aprovados.
 
-Para manter excelência sem refactor especulativo, proponho **Onda 12 — Auto-Remediação e Notificações Persistentes de Qualidade**: fechar o ciclo entre detecção (já existente) e ação (atualmente só toast efêmero).
+Para continuar evoluindo com excelência sem refactor especulativo, proponho **Onda 13 — Inteligência Executiva e Drill-Down de Qualidade VoIP**: transformar os dados já capturados (`call_quality_metrics` + `voip_quality_alerts`) em insights acionáveis para gestão.
 
-## Onda 12 — Auto-Remediação e Alertas Persistentes VoIP
+## Onda 13 — Heatmap, Drill-Down por Agente e Notificações Persistentes
 
-### 12.1 Persistência de eventos de degradação
-Migration: tabela `voip_quality_alerts` (id, user_id, call_session_id, alert_type [`degrading`|`poor`|`offline`], mos_at_alert, slope, jitter_ms, rtt_ms, created_at, acknowledged_at). RLS: agente vê próprios; admin/supervisor vê todos. Índice em `(created_at DESC, user_id)`.
+### 13.1 Heatmap de qualidade por hora/dia
+`src/components/network/QualityHeatmap.tsx` em `/network-diagnostics`:
+- Grid 7 dias × 24 horas (ou 7×6 buckets de 4h em mobile)
+- Cor por bucket = MOS médio (verde ≥4.0, amarelo 3.5-4.0, vermelho <3.5)
+- Tooltip: nº chamadas, MOS médio, jitter p95
+- Dados via novo endpoint `voip-quality-heatmap` (período: 7 dias)
 
-### 12.2 Hook de persistência
-Estender `useQualityTrendAnalyzer` para gravar em `voip_quality_alerts` quando degradação detectada (não só toast). Reuso do `callSessionId` já fornecido por `useSipCall`.
+### 13.2 Edge function `voip-quality-heatmap`
+- `GET ?days=7` — agrega `call_quality_metrics` por `(dow, hour)`
+- Retorna matriz 7×24 com `{mos_avg, count, jitter_p95}`
+- JWT, CORS centralizado, validação, `x-request-id`, 4 testes Deno
 
-### 12.3 Auto-remediação leve
-Hook `src/hooks/useVoipAutoRemediation.ts`:
-- Ao detectar `slope ≤ -0.15` E `currentMos < 3.5`, sugerir ações concretas via toast com action button:
-  - "Reduzir qualidade do áudio" (renegociar codec via `session.renegotiate` com constraints reduzidos)
-  - "Reconectar SIP" (chama `useSipCall.disconnect()` + `connect()`)
-- Sem ação automática destrutiva — usuário sempre confirma.
+### 13.3 Drill-down por agente
+`src/components/network/AgentQualityRanking.tsx`:
+- Tabela: agente, total chamadas (24h), MOS médio, alertas disparados, % SLA
+- Ordenável por cada coluna; badge para piores performers
+- Apenas admin/supervisor (já protegido pela rota)
+- Reuso de `voip-quality-alerts-summary` + nova query a `call_quality_metrics`
 
-### 12.4 Card de alertas no `/network-diagnostics`
-`src/components/network/QualityAlertsCard.tsx`:
-- Lista últimos 20 alertas (tabela com timestamp, tipo, MOS, ação tomada)
-- Badge de "não reconhecidos" com botão "Marcar todos como lidos"
-- Filtro por tipo (degrading/poor/offline)
+### 13.4 Notificações persistentes via central de alertas
+Integrar `voip_quality_alerts` ao `NotificationCenter.tsx` (sistema omnichannel já existente):
+- Novo tipo `voip_quality` no dropdown do header
+- Badge com contador de não-reconhecidos
+- Click → navega para `/network-diagnostics` com filtro pré-aplicado
+- Realtime via `postgres_changes` na tabela `voip_quality_alerts`
 
-### 12.5 Edge function `voip-quality-alerts-summary`
-- `GET ?period=day|week`
-- Retorna contagem por tipo, top 5 usuários afetados, MOS médio nos momentos de alerta
-- JWT obrigatório, CORS centralizado, validação `oneOf`, `x-request-id`, 4 testes Deno
-
-### 12.6 Documentação
-- ADR-027 (`docs/adr/027-onda-12-auto-remediacao-voip.md`)
-- `mem/features/voip-auto-remediation.md` + atualizar `mem/index.md`
-- Atualizar `docs/audit/scorecard-final.md`
+### 13.5 Documentação
+- ADR-028 (`docs/adr/028-onda-13-inteligencia-executiva-voip.md`)
+- `mem/features/voip-executive-intelligence.md` + atualizar `mem/index.md`
+- Atualizar `docs/audit/scorecard-final.md` (re-verificação Onda 13)
 
 ### Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Reuso total dos hooks/tabelas existentes; sem novas dependências
-- Zero breakage; RLS isola por agente
+- Reuso total das tabelas/edge functions; sem novas dependências
+- Zero breakage; RLS de `call_quality_metrics` e `voip_quality_alerts` já garante isolamento
+- Sem alterações de schema (apenas leitura agregada)
 
 ### Ordem
-1. 12.1 Migration `voip_quality_alerts` + RLS + índice
-2. 12.2 Persistência no `useQualityTrendAnalyzer`
-3. 12.3 Hook `useVoipAutoRemediation` + integração no `useSipCall`
-4. 12.4 Card de alertas no `/network-diagnostics`
-5. 12.5 Edge function `voip-quality-alerts-summary` + testes
-6. 12.6 ADR-027 + memória + scorecard
+1. 13.2 Edge function `voip-quality-heatmap` + 4 testes
+2. 13.1 Componente `QualityHeatmap` integrado em `/network-diagnostics`
+3. 13.3 `AgentQualityRanking` integrado em `/network-diagnostics`
+4. 13.4 Integração realtime em `NotificationCenter`
+5. 13.5 ADR-028 + memória + scorecard
