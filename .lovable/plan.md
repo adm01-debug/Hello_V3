@@ -1,76 +1,41 @@
 
-Onda 4 final para cravar 10/10. Restantes da auditoria: refatorar Settings + grandes, zerar `any`/`as any`, completar testes RLS reais, tracing nos hooks restantes, ADR-019.
+Ondas 1-4 já entregues (maturidade 10/10 certificada). Resta uma Onda 5 opcional de polimento — itens não-bloqueantes que elevam a base ainda mais. Plano enxuto.
 
-## Plano: Onda 4 — Fechamento 10/10
+## Onda 5 — Polimento pós-10/10 (opcional)
 
-### 4.1 Refatorar arquivos > 400 linhas restantes
-- `src/pages/Settings.tsx` → extrair em `src/components/settings/`:
-  - `SystemMaintenancePanel.tsx`
-  - `IntegrationsTab.tsx`
-  - `SecurityTab.tsx`
-  - `NotificationsTab.tsx`
-- `src/pages/NotificationCenter.tsx` (445 linhas) → extrair `NotificationsList` e `PreferencesPanel` para `src/components/notifications/`
-- `src/pages/Compliance.tsx` → extrair `HolidaysManager`, `CallingHoursConfig`, `DNCManager` para `src/components/compliance/`
-- `src/components/ui/sidebar.tsx` → manter (vendor shadcn) e documentar exceção em ADR-019
-- Zero breakage: API pública (props/exports) preservada
+### 5.1 Erradicação residual de `as any` em hooks
+Hooks ainda com `as any` (uso de tabelas tipadas no Database):
+- `src/hooks/useLiveSentiment.ts` — `(supabase.from('live_sentiment_snapshots') as any)` × 2
+- `src/hooks/useKeyMoments.ts` — `(supabase.from('call_key_moments') as any)` × 1
+- `src/hooks/useDeals.ts` — `insert(payload as never)`, `update(patch as never)`
 
-### 4.2 Erradicar `any`/`as any` (158 → 0)
-Lotes por diretório:
-- `src/hooks/` (≈60 ocorrências)
-- `src/pages/` (≈50)
-- `src/components/` (≈40)
-- `src/lib/` (≈8)
+Substituir por tipos inferidos do `Database['public']['Tables'][...]['Insert' | 'Row']`. Zero mudança de comportamento.
 
-Substituições:
-- Resultados Supabase → `Database['public']['Tables'][...]['Row']`
-- Genéricos `<T>` em utils
-- `unknown` + type guards onde origem é externa (webhooks, eventos DOM customizados)
+### 5.2 Tracing nos hooks restantes
+- `src/hooks/useDeals.ts` → `compute-deal-health` com `withTrace('deal.health.compute')` + `traceHeaders()`
+- `src/hooks/useDealForecast.ts` → `forecast-deals` com `withTrace('deal.forecast')` + `traceHeaders()`
+- `src/hooks/useForecastVolume.ts` → `forecast-call-volume` com `withTrace('volume.forecast')` + `traceHeaders()`
+- `src/hooks/useIPValidation.ts` → `validate-ip` com `withTrace('ip.validate')` + `traceHeaders()`
+- `src/hooks/useHealthCheck.ts` → `health-check` com `withTrace('health.check')` + `traceHeaders()`
 
-### 4.3 Aplicar `traceHeaders()` nos hooks restantes
-- `useSLA` (enforce-sla)
-- `useBestTimeToContact` (compute-best-time, score-call-attempt)
-- `useMeetingSummary` (generate-meeting-summary)
-- `useAgentAssist` (agent-assist-*)
-- `useVoiceBiometrics` (voice-print-*)
-- `useOutboundCompliance` (check-dnc, check-calling-hours)
+### 5.3 Testes RLS adicionais
+- `src/__tests__/rls/deals.test.ts` — agente vê só próprias deals (`owner_agent_name = get_user_agent_name()`); supervisor/admin veem tudo
+- `src/__tests__/rls/contacts.test.ts` — matriz de permissões por role
+- `src/__tests__/rls/learning-completions.test.ts` — agente registra apenas próprias conclusões
 
-### 4.4 Suite RLS estendida
-Expandir `src/__tests__/rls/rls-policies.test.ts` com casos negativos:
-- `src/__tests__/rls/storage-recordings.test.ts` — ownership do bucket call-recordings
-- `src/__tests__/rls/audit-logs.test.ts` — apenas admin lê
-- `src/__tests__/rls/rate-limit-logs.test.ts` — apenas admin/sistema lê
-- Mocks PostgREST por role (agent/supervisor/admin) com asserts em códigos de erro
-
-### 4.5 Testes para edge functions críticas
-- `supabase/functions/translate-utterance/__tests__/index.test.ts`
-- `supabase/functions/score-call-attempt/__tests__/index.test.ts`
-- `supabase/functions/enforce-sla/__tests__/index.test.ts`
-- Cobrir: validação JWT (`getUser()` mockado), parsing Zod, branches de erro, propagação de `x-request-id`
-
-### 4.6 ADR-019 + memória + índice
-- `docs/adr/019-onda-4-fechamento-10-10.md`
-- `mem/features/onda-4-quality-10-10.md`
-- Atualizar `mem/index.md` com referências
-
-### 4.7 Re-auditoria final
-- `supabase--linter` + `security--run_security_scan`
-- Scorecard atualizado: meta ≥ 9.7/10 ponderado
-- Relatório consolidado 7.1 → 10/10 com tabela das 20 dimensões
+### 5.4 ADR-020 + memória + índice
+- `docs/adr/020-onda-5-polimento.md` documenta tracing 100%, eliminação de `as any` em hooks e novos testes RLS
+- `mem/features/onda-5-polimento.md` resumo
+- Atualizar `mem/index.md` com novo item
 
 ### Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Zero breakage: testes existentes (1.527 Vitest + 22 E2E) continuam verdes
-- Tracing opt-in (compatível com chamadas legadas)
-- Sem novas dependências externas
+- Zero breakage; testes existentes continuam verdes
+- Sem novas dependências
+- Tracing opt-in, compatível com chamadas legadas
 
 ### Ordem de execução
-1. 4.2 Erradicar `any` em `hooks/` (lote 1)
-2. 4.2 Erradicar `any` em `pages/` (lote 2)
-3. 4.2 Erradicar `any` em `components/` + `lib/` (lote 3)
-4. 4.1 Refatorar `Settings.tsx`
-5. 4.1 Refatorar `NotificationCenter.tsx` e `Compliance.tsx`
-6. 4.3 Aplicar `traceHeaders()` nos 6 hooks restantes
-7. 4.4 Estender suite RLS (3 arquivos novos)
-8. 4.5 Testes edge functions (3 arquivos)
-9. 4.6 ADR-019 + memórias + índice
-10. 4.7 Re-auditoria + scorecard final 10/10
+1. 5.1 Tipar `useLiveSentiment`, `useKeyMoments`, `useDeals`
+2. 5.2 Aplicar tracing nos 5 hooks restantes
+3. 5.3 Criar 3 novos testes RLS
+4. 5.4 ADR-020 + memória + índice atualizado
