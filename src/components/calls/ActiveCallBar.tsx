@@ -119,7 +119,16 @@ export function ActiveCallBar() {
     addAnalysis(analysis);
   }, [addAnalysis]);
 
-  if (!call) return null;
+  if (!call) {
+    if (endedSessionId) {
+      return (
+        <div className="border-b border-border bg-card px-6 py-3">
+          <CrmSuggestionsCard callSessionId={endedSessionId} contactId={endedContactId} />
+        </div>
+      );
+    }
+    return null;
+  }
 
   const handleHangup = async () => {
     if (currentSession) {
