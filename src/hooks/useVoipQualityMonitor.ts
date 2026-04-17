@@ -135,7 +135,7 @@ export function useVoipQualityMonitor(
     const lossPct = totalRecv > 0 ? (totalLost / (totalLost + totalRecv)) * 100 : 0;
 
     try {
-      await supabase.from('call_quality_metrics').insert({
+      const payload = {
         call_session_id: options.callSessionId ?? null,
         agent_name: options.agentName ?? null,
         channel: options.channel ?? 'webrtc',
@@ -149,7 +149,8 @@ export function useVoipQualityMonitor(
         samples_count: s.length,
         quality_label: labelFromMos(mosAvg),
         raw_samples: s.slice(-30) as unknown as Record<string, unknown>[],
-      });
+      };
+      await supabase.from('call_quality_metrics').insert(payload as never);
       log.info('Quality metrics persisted', { samples: s.length, mosAvg });
     } catch (err) {
       log.error('Failed to persist quality metrics', err);
