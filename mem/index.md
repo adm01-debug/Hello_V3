@@ -10,6 +10,7 @@ tsconfig raiz e app ambos strict (noImplicitAny, strictNullChecks).
 Suítes 10/10 entregues: Conversation Intelligence, Sales Enablement, Customer Success, Workforce Management, Omnichannel Engagement, Meeting Summary AI, Real-Time Agent Assist (ADR-013), Voice Biometrics (ADR-014), Outbound Compliance & Predictive Engagement (ADR-015), Multilingual Real-Time Translation (ADR-016), Omnichannel Suite (ADR-012), **Security Hardening + Roadmap 10/10 (ADR-017)**.
 
 ## Memories
+- [Onda 8 Resiliência Operacional](mem://features/onda-8-resiliencia) — +18 testes Deno em check-dnc/check-calling-hours/check-queue-metrics (total 59 em 9 funções), runbook de incidentes (5 cenários P1-P3), ADR-023, 10/10 mantido
 - [Onda 7 Manutenção Contínua](mem://features/onda-7-manutencao) — +12 testes Deno em validate-ip/health-check (total 41 em 6 funções), auditoria `as any` confirmou interop legítimo, ADR-022, 10/10 mantido
 - [Onda 6 Hardening Final](mem://features/onda-6-hardening) — Tipagem residual em components, 29 testes Deno em 4 edge functions, ADR-021, scorecard 10/10
 - [Onda 5 Polimento](mem://features/onda-5-polimento) — Tracing 100% dos invokes (deals/forecast/volume/IP/health/keymoments), zero `as any` em hooks, +3 testes RLS (deals/contacts/learning), ADR-020
