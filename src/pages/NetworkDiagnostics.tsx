@@ -15,6 +15,8 @@ import { SlaReportCards } from '@/components/network/SlaReportCards';
 import { QualityAlertsCard } from '@/components/network/QualityAlertsCard';
 import { QualityHeatmap } from '@/components/network/QualityHeatmap';
 import { AgentQualityRanking } from '@/components/network/AgentQualityRanking';
+import { AnomalyDetectionCard } from '@/components/network/AnomalyDetectionCard';
+import { CapacityForecastChart } from '@/components/network/CapacityForecastChart';
 
 const log = logger.create('NetworkDiagnostics');
 
@@ -197,6 +199,12 @@ const NetworkDiagnostics = () => {
 
         {/* Onda 13 — Ranking por agente */}
         <AgentQualityRanking />
+
+        {/* Onda 14 — Detecção de anomalias estatísticas */}
+        <AnomalyDetectionCard />
+
+        {/* Onda 14 — Forecast de capacidade */}
+        <CapacityForecastChart />
 
         {/* Onda 12 — Alertas persistentes de qualidade */}
         <QualityAlertsCard />
