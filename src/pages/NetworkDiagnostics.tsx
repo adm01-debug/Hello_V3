@@ -19,6 +19,7 @@ import { AnomalyDetectionCard } from '@/components/network/AnomalyDetectionCard'
 import { CapacityForecastChart } from '@/components/network/CapacityForecastChart';
 import { VoipHealthScoreCard } from '@/components/network/VoipHealthScoreCard';
 import { ExecutiveReportExport } from '@/components/network/ExecutiveReportExport';
+import { VoipRecommendationsPanel } from '@/components/network/VoipRecommendationsPanel';
 
 const log = logger.create('NetworkDiagnostics');
 
@@ -70,6 +71,14 @@ const NetworkDiagnostics = () => {
   };
 
   useEffect(() => { loadMetrics(); }, []);
+
+  // Bridge: recomendações podem disparar teste de conectividade via evento global
+  useEffect(() => {
+    const handler = () => { runConnectivityTest(); };
+    window.addEventListener('voip:run-connectivity-test', handler);
+    return () => window.removeEventListener('voip:run-connectivity-test', handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const chartData = useMemo(() => {
     return [...metrics]
@@ -150,6 +159,9 @@ const NetworkDiagnostics = () => {
 
         {/* Onda 15 — Cockpit Executivo VoIP (hero) */}
         <VoipHealthScoreCard period="week" />
+
+        {/* Onda 16 — Recomendações acionáveis priorizadas */}
+        <VoipRecommendationsPanel period="week" />
 
         {/* Status cards */}
         <div className="grid gap-4 md:grid-cols-3">
