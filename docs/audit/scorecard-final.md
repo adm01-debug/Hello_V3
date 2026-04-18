@@ -78,3 +78,12 @@ Sistema **production-ready** com maturidade técnica máxima certificada.
 - Single-call agregada (`Promise.all` sobre 3 queries) reduz round-trips do dashboard executivo.
 - ADR-030 publicado; zero novas dependências; zero schema change; arquivos ≤400 linhas.
 - Findings de segurança: inalterados (3 WARN pré-existentes aceitos).
+
+## Re-verificação Onda 16 (2026-04-18)
+- Recomendações acionáveis: edge function `voip-recommendations` (`?period=day|week`) agrega métricas + alertas + sessões em single-call e devolve top 5 ações priorizadas (score determinístico 0-100).
+- Categorias cobertas: `capacity` (saturação ≥ 80% do cap), `quality` (worst agent MOS < 3.6 ou SLA < 90%), `infra` (jitter > 30ms), `process` (≥ 3 alertas não-reconhecidos).
+- Apply 1-clique: `link` (navega + scroll para âncora), `function` (evento global `voip:run-connectivity-test` reutiliza teste STUN existente), `acknowledge`.
+- UX: `VoipRecommendationsPanel` cyberpunk neon abaixo do `VoipHealthScoreCard`; "Adiar 24h" persiste em `localStorage` com expiração automática.
+- Função pura `buildRecommendations(ctx)` exportada e coberta — +4 Deno tests, total: **93 testes em 17 Edge Functions**.
+- ADR-031 publicado; zero schema change; zero novas dependências; arquivos ≤400 linhas.
+- Findings de segurança: inalterados (3 WARN pré-existentes aceitos).

@@ -19,6 +19,7 @@ import { AnomalyDetectionCard } from '@/components/network/AnomalyDetectionCard'
 import { CapacityForecastChart } from '@/components/network/CapacityForecastChart';
 import { VoipHealthScoreCard } from '@/components/network/VoipHealthScoreCard';
 import { ExecutiveReportExport } from '@/components/network/ExecutiveReportExport';
+import { VoipRecommendationsPanel } from '@/components/network/VoipRecommendationsPanel';
 
 const log = logger.create('NetworkDiagnostics');
 
@@ -70,6 +71,14 @@ const NetworkDiagnostics = () => {
   };
 
   useEffect(() => { loadMetrics(); }, []);
+
+  // Bridge: recomendações podem disparar teste de conectividade via evento global
+  useEffect(() => {
+    const handler = () => { runConnectivityTest(); };
+    window.addEventListener('voip:run-connectivity-test', handler);
+    return () => window.removeEventListener('voip:run-connectivity-test', handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const chartData = useMemo(() => {
     return [...metrics]
@@ -151,6 +160,9 @@ const NetworkDiagnostics = () => {
         {/* Onda 15 — Cockpit Executivo VoIP (hero) */}
         <VoipHealthScoreCard period="week" />
 
+        {/* Onda 16 — Recomendações acionáveis priorizadas */}
+        <VoipRecommendationsPanel period="week" />
+
         {/* Status cards */}
         <div className="grid gap-4 md:grid-cols-3">
           <Card className="glass-card">
@@ -201,19 +213,19 @@ const NetworkDiagnostics = () => {
         <SlaReportCards period="week" />
 
         {/* Onda 13 — Heatmap de qualidade 7d */}
-        <QualityHeatmap />
+        <div id="quality-heatmap"><QualityHeatmap /></div>
 
         {/* Onda 13 — Ranking por agente */}
-        <AgentQualityRanking />
+        <div id="agent-ranking"><AgentQualityRanking /></div>
 
         {/* Onda 14 — Detecção de anomalias estatísticas */}
         <AnomalyDetectionCard />
 
         {/* Onda 14 — Forecast de capacidade */}
-        <CapacityForecastChart />
+        <div id="capacity-forecast"><CapacityForecastChart /></div>
 
         {/* Onda 12 — Alertas persistentes de qualidade */}
-        <QualityAlertsCard />
+        <div id="quality-alerts"><QualityAlertsCard /></div>
 
         {/* MOS chart */}
         <Card className="glass-card">
