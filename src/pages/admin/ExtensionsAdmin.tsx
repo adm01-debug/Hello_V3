@@ -22,6 +22,7 @@ import { exportToCSV } from '@/lib/export';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { logger } from '@/lib/logger';
+import { useExtensionAudit } from '@/hooks/useExtensionAudit';
 
 type HealthFilter = 'all' | 'healthy' | 'warning' | 'critical';
 
