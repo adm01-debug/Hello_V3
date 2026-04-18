@@ -24,6 +24,7 @@ export interface Deal {
   health_updated_at: string | null;
   status: string;
   notes: string | null;
+  version: number;
   created_at: string;
   updated_at: string;
 }
