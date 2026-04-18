@@ -6141,6 +6141,77 @@ export type Database = {
           },
         ]
       }
+      voip_trunk_usage_metrics: {
+        Row: {
+          agent_id: string | null
+          call_session_id: string | null
+          created_at: string
+          duration_seconds: number | null
+          ended_at: string | null
+          failover_reason: string | null
+          id: string
+          original_trunk_id: string | null
+          started_at: string
+          trunk_id: string
+          was_failover: boolean
+        }
+        Insert: {
+          agent_id?: string | null
+          call_session_id?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          ended_at?: string | null
+          failover_reason?: string | null
+          id?: string
+          original_trunk_id?: string | null
+          started_at?: string
+          trunk_id: string
+          was_failover?: boolean
+        }
+        Update: {
+          agent_id?: string | null
+          call_session_id?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          ended_at?: string | null
+          failover_reason?: string | null
+          id?: string
+          original_trunk_id?: string | null
+          started_at?: string
+          trunk_id?: string
+          was_failover?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "voip_trunk_usage_metrics_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "voip_trunk_usage_metrics_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "voip_trunk_usage_metrics_original_trunk_id_fkey"
+            columns: ["original_trunk_id"]
+            isOneToOne: false
+            referencedRelation: "voip_trunks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "voip_trunk_usage_metrics_trunk_id_fkey"
+            columns: ["trunk_id"]
+            isOneToOne: false
+            referencedRelation: "voip_trunks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       voip_trunks: {
         Row: {
           created_at: string
@@ -6345,6 +6416,18 @@ export type Database = {
       record_successful_login: {
         Args: { p_email: string; p_ip_address?: string; p_user_agent?: string }
         Returns: undefined
+      }
+      record_trunk_usage: {
+        Args: {
+          p_call_session_id: string
+          p_ended_at: string
+          p_failover_reason?: string
+          p_original_trunk_id?: string
+          p_started_at: string
+          p_trunk_id: string
+          p_was_failover?: boolean
+        }
+        Returns: string
       }
       validate_audit_insert: { Args: never; Returns: boolean }
     }

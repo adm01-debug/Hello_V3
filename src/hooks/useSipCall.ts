@@ -8,6 +8,7 @@ import { logger } from '@/lib/logger';
 import { useVoipQualityMonitor } from './useVoipQualityMonitor';
 import { useQualityTrendAnalyzer } from './useQualityTrendAnalyzer';
 import { useVoipAutoRemediation } from './useVoipAutoRemediation';
+import { useTrunkUsageReporter } from './useTrunkUsageReporter';
 
 const log = logger.create('SIP');
 
@@ -35,6 +36,7 @@ export function useSipCall() {
   const remoteAudioRef = useRef<HTMLAudioElement | null>(null);
   const serverRef = useRef<string>('');
   const [activePc, setActivePc] = useState<RTCPeerConnection | null>(null);
+  const usageReporter = useTrunkUsageReporter();
 
   // Monitora qualidade VoIP em tempo real e persiste em call_quality_metrics ao final da chamada
   const quality = useVoipQualityMonitor(activePc, {
@@ -116,6 +118,15 @@ export function useSipCall() {
         return false;
       }
 
+      // Captura contexto do trunk para métricas e exibe aviso de failover
+      usageReporter.startTracking(data);
+      if (data.failover) {
+        toast.warning('Linha primária offline — usando linha de backup', {
+          description: data.failover_reason ?? undefined,
+        });
+        log.warn('SIP failover ativo', { from: data.original_trunk_id, to: data.trunk_id });
+      }
+
       const { server, username, password } = data;
       serverRef.current = server;
       const wsServer = `wss://${server}:8089/ws`;
@@ -195,10 +206,10 @@ export function useSipCall() {
         if (session.connection) setActivePc(session.connection);
       });
       session.on('confirmed', () => { log.debug('Call confirmed'); attachRemoteStream(session); if (session.connection) setActivePc(session.connection); });
-      session.on('ended', (e: { cause?: string }) => { log.debug('Call ended', { cause: e?.cause }); stopDurationTimer(); sessionRef.current = null; setActivePc(null); setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null })); });
+      session.on('ended', (e: { cause?: string }) => { log.debug('Call ended', { cause: e?.cause }); stopDurationTimer(); void usageReporter.endTracking(state.callId); sessionRef.current = null; setActivePc(null); setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null })); });
       session.on('failed', (e: { cause?: string }) => {
         log.error('Call failed', { cause: e?.cause });
-        stopDurationTimer(); sessionRef.current = null; setActivePc(null);
+        stopDurationTimer(); void usageReporter.endTracking(state.callId); sessionRef.current = null; setActivePc(null);
         const cause = e?.cause || 'Chamada falhou';
         setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null, error: cause }));
         toast.error(`Chamada falhou: ${cause}`);

@@ -3,12 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Phone, Plus, Edit, Trash2, Zap, Loader2, Users, CheckCircle2, XCircle, Activity, RefreshCw } from 'lucide-react';
+import { Phone, Plus, Edit, Trash2, Zap, Loader2, Users, CheckCircle2, XCircle, Activity, RefreshCw, BarChart3 } from 'lucide-react';
 import { useVoipTrunks, useDeleteTrunk, useTestTrunk, type VoipTrunk } from '@/hooks/useVoipTrunks';
 import { useRunHealthCheck } from '@/hooks/useTrunkHealth';
 import { VoipTrunkFormDrawer } from '@/components/admin/voip/VoipTrunkFormDrawer';
 import { TrunkAssignmentsTab } from '@/components/admin/voip/TrunkAssignmentsTab';
 import { TrunkHealthHistoryDrawer } from '@/components/admin/voip/TrunkHealthHistoryDrawer';
+import { TrunkMetricsTab } from '@/components/admin/voip/TrunkMetricsTab';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface TrunkWithHealth extends VoipTrunk {
@@ -89,6 +90,7 @@ export default function VoipTrunksAdmin() {
           <TabsList>
             <TabsTrigger value="trunks" className="gap-2"><Phone className="h-4 w-4" /> Trunks</TabsTrigger>
             <TabsTrigger value="assignments" className="gap-2"><Users className="h-4 w-4" /> Atribuições</TabsTrigger>
+            <TabsTrigger value="metrics" className="gap-2"><BarChart3 className="h-4 w-4" /> Métricas</TabsTrigger>
           </TabsList>
 
           <TabsContent value="trunks" className="space-y-4">
@@ -160,6 +162,10 @@ export default function VoipTrunksAdmin() {
 
           <TabsContent value="assignments">
             <TrunkAssignmentsTab />
+          </TabsContent>
+
+          <TabsContent value="metrics">
+            <TrunkMetricsTab />
           </TabsContent>
         </Tabs>
       </div>
