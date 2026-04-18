@@ -1,48 +1,50 @@
 
-Onda 21 entregue. Proponho **Onda 22 — Forecasting Preditivo de Qualidade VoIP + Capacity Planning Inteligente** para fechar o ciclo com previsão proativa de degradações futuras.
+Vou conduzir auditoria técnica exaustiva (22 dimensões, padrão 10/10) usando ferramentas read-only: scan de segurança, linter Supabase, leitura de RLS, Edge Functions, scorecard, ADRs, testes e estrutura.
 
-## Onda 22 — Quality Forecasting + Capacity Planning
+## Plano de Execução da Auditoria
 
-### 1. Edge function `voip-quality-forecast`
-- `GET ?horizon=24|72|168` (horas)
-- Usa últimos 30d de `call_quality_metrics` agrupados por (dow, hour)
-- Forecast determinístico: média ponderada por bucket + tendência linear (regressão simples)
-- Retorna série temporal projetada de MOS/jitter/volume + intervalos de confiança (±1σ)
-- Sinaliza janelas de risco (MOS previsto < 3.5 ou volume previsto > P95 histórico)
-- JWT + CORS + 4 testes Deno (forecast, regressão, risco detectado, dados insuficientes)
+### Fase 0 — Inventário
+- Listar `src/`, `supabase/functions/`, `supabase/migrations/`, `docs/adr/`
+- Contar arquivos, edge functions, testes, ADRs
+- Validar stack: React 18 + Vite + TS strict + Supabase + Lovable Cloud + Lovable AI Gateway
 
-### 2. Edge function `voip-capacity-recommendations`
-- `GET` — combina forecast + agentes ativos + concorrência atual
-- Sugere ações de capacity: "Adicionar 2 agentes às 14h-16h quinta", "Pausar campanha X durante pico previsto"
-- Reusa whitelist de ações da Onda 21 + 4 novas ações de capacity
-- Retorna `{ recommendations[], confidence, requestId }`
-- 3 testes Deno
+### Fase 1 — Coleta de Evidências (paralela)
+1. **Segurança**: `security--run_security_scan` + `supabase--linter` + leitura de `src/lib/security/*`
+2. **RLS/Autorização**: `supabase--read_query` em `pg_policies` + leitura de migrations recentes
+3. **Auth**: leitura de `src/hooks/useAuth.ts`, `src/hooks/auth/*`, lockout policy, MFA presence
+4. **Edge Functions**: amostragem de 3-5 functions críticas (JWT, CORS, validação, error handling)
+5. **Tipagem**: `tsconfig.json` (já visto: strict + noImplicitAny ✓) + grep de `as any` residual
+6. **Testes**: contar suites Vitest + Deno + Playwright + cobertura RLS declarativa
+7. **Observabilidade**: `src/lib/logger.ts`, `src/lib/tracing.ts`, `src/lib/web-vitals.ts`, `src/lib/error-tracking.ts`
+8. **Performance**: React Query config, lazy loading, bundle hints
+9. **Validação**: `src/lib/validation/` (Zod schemas)
+10. **Documentação**: contar ADRs (esperado ~37), runbooks, scorecard, memórias
 
-### 3. Hooks
-- `useVoipQualityForecast(horizon)` — query staleTime 10min
-- `useVoipCapacityRecommendations` — query staleTime 15min
+### Fase 2 — Análise das 22 Dimensões
+Para cada dimensão: nota 0-10, evidências com paths, gaps para 10/10, ações corretivas concretas.
 
-### 4. Componente `QualityForecastCard`
-- Card glass-card em `/network-diagnostics` (acima de `AnomalyDetectionCard`)
-- Recharts AreaChart: série histórica (últimas 24h) + projeção (próximas 24-168h) + faixa de confiança
-- Toggle horizonte (24h / 72h / 7d)
-- Badges destacando janelas de risco previsto
-- Lista lateral de recomendações de capacity com botão "Aplicar"
+Áreas com risco conhecido (do scorecard atual):
+- 3 WARN linter Supabase (RLS true em SELECT públicos intencionais — aceito, mas verificar)
+- `as any` residuais em interop (Recharts/Radix/Web Audio — formalizado em ADR-022)
+- `crm_field_suggestions` policies amplas (mapeado para próxima iteração)
+- `leaked-password-protection` depende de toggle no Dashboard Supabase
 
-### 5. Documentação
-- ADR-037 em `docs/adr/037-onda-22-quality-forecasting.md`
-- `mem/features/voip-quality-forecasting.md` + atualizar `mem/index.md`
-- Atualizar scorecard (26 edge functions, ~127 testes Deno)
+### Fase 3 — Consolidação
+- Scorecard ASCII completo (20 dimensões + ponderada)
+- Top 10 ações por ROI
+- Roadmap 3 ondas (Quick Wins / Sprint 1 / Sprint 2)
+- Comentário final de maturidade
 
-## Considerações
-- ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Forecasting 100% determinístico (regressão linear + média por bucket), sem IA
-- Zero novas tabelas; reuso de `call_quality_metrics` + `voip_recommendation_actions`
-- Loop final 360°: prever → recomendar capacity → detectar anomalia real → remediar → coachear
+### Pesos (conforme prompt)
+- ×3: Segurança, Autenticação, Autorização, Data Integrity
+- ×2: Banco, Tipagem, Validação, Testes, Arquitetura
+- ×1: Demais
 
-## Ordem de execução
-1. Edge function `voip-quality-forecast` + 4 testes
-2. Edge function `voip-capacity-recommendations` + 3 testes
-3. Hooks `useVoipQualityForecast` + `useVoipCapacityRecommendations`
-4. `QualityForecastCard` integrado em `/network-diagnostics`
-5. ADR-037 + memória + scorecard
+### Entregável
+Relatório completo em PT-BR no chat (sem alterações de código — modo read-only). Após sua aprovação, no modo default posso executar as ações Quick Wins identificadas (ex.: ativar HIBP, refinar policies amplas, eliminar últimos `as any` evitáveis).
+
+Considerações:
+- Auditoria 100% baseada em evidências do codebase (sem achismo)
+- Notas conservadoras: 10/10 só com zero gaps demonstráveis
+- Calibrada ao contexto (web-only, Lovable Cloud, time pequeno)
+- Ações concretas com paths/migrations/configs
