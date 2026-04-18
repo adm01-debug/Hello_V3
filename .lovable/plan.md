@@ -1,50 +1,61 @@
 
-Sistema **10/10 sustentado** após Ondas 23–32. Onda 32 entregou health check periódico de trunks. Próxima evolução incremental:
+## Onda 34 — Painel Unificado de Gestão de Ramais
 
-## Onda 33 — Failover Automático + Métricas de Uso por Trunk
+Tela única consolidando todos os dados de ramais hoje espalhados em 5 áreas distintas.
 
-### 1. Failover automático em `sip-config`
-- Se trunk primário do agente está `offline` (last_health_status), retornar trunk secundário ativo (próximo por `priority` em `agent_trunk_assignments`)
-- Logger registra evento `trunk_failover` com motivo
-- Resposta inclui `failover: true` e `original_trunk_id` para o frontend exibir aviso
+### 1. Página `/admin/extensions`
+- Tabela master com todos os ramais cadastrados (`agents` + `user_profiles`)
+- Colunas: Ramal, Nome, Status (realtime), Dispositivos, Trunk Primário, Saúde do Trunk, Ações
+- Busca por nome/ramal + filtros (status, trunk, com/sem dispositivos)
+- Badges cyberpunk neon para status (available/busy/away/offline)
 
-### 2. Tabela `voip_trunk_usage_metrics`
-- Colunas: id, trunk_id (FK), agent_id, call_session_id, started_at, ended_at, duration_seconds, was_failover, failover_reason
-- RLS: SELECT admin/supervisor; INSERT via SECURITY DEFINER por `useUnifiedSoftphone` ao final da chamada
-- Índices: (trunk_id, started_at DESC), (agent_id, started_at DESC)
+### 2. Hook `useExtensionsOverview`
+- Query consolidada via React Query agregando:
+  - `agents` (id, name, extension, status)
+  - `agent_devices` count por agente
+  - `agent_trunk_assignments` + `voip_trunks` (trunk primário + saúde)
+  - `user_profiles` (full_name, role)
+- Realtime subscription em `agents.status`
 
-### 3. Hook `useTrunkUsageReporter`
-- Ao iniciar chamada SIP, captura trunk_id da resposta de `sip-config`
-- Ao finalizar, INSERT em `voip_trunk_usage_metrics` com duração
-- Integração não-invasiva no `useUnifiedSoftphone`
+### 3. Drawer `ExtensionDetailsDrawer`
+- Abas: **Visão Geral**, **Dispositivos**, **Trunk VoIP**, **Provisionamento**
+- Visão Geral: dados do agente + métricas rápidas (chamadas hoje, duração média)
+- Dispositivos: lista inline de `agent_devices` (reutiliza componentes existentes)
+- Trunk VoIP: trunk atribuído + botão "Trocar" → atalho para `/admin/voip-trunks`
+- Provisionamento: botão "Gerar QR" → atalho para `/qr-provisioning?ext={ext}`
 
-### 4. Aba "Métricas" no painel `/admin/voip-trunks`
-- `TrunkMetricsTab.tsx`: cards com total de chamadas, minutos consumidos, taxa de failover por trunk (últimos 7 dias)
-- Gráfico de barras (recharts) — chamadas/dia por trunk
-- Hook `useTrunkMetrics(trunkId, days)` (React Query, 2min staleTime)
-- Filtro por período (24h/7d/30d)
+### 4. Ações Rápidas (kebab menu por linha)
+- Editar agente → `/admin/users`
+- Configurar dispositivos → `/multi-device-ring?agent={id}`
+- Atribuir trunk → `/admin/voip-trunks?tab=assignments&agent={id}`
+- Gerar QR Code → `/qr-provisioning?ext={ext}`
+- Copiar credenciais SIP
 
-### 5. Banner de failover no Softphone
-- Componente `FailoverBanner.tsx` exibido brevemente (sonner toast) quando `sip-config` retorna `failover: true`
-- Mensagem: "Linha primária offline — usando linha de backup"
+### 5. Cards de resumo no topo
+- Total de ramais | Online agora | Sem trunk atribuído | Sem dispositivos extras
 
-### 6. ADR-047 + memória + índice
-- `docs/adr/047-onda-33-failover-trunks.md`
-- `mem/voip/trunks-failover-metrics.md`
+### 6. Integração de navegação
+- `AppSidebar`: novo item "Ramais" em Administração
+- `CommandPalette`: comando "ramais" / "extensions"
+- Settings.tsx: card link
+
+### 7. ADR-048 + memória + índice
+- `docs/adr/048-onda-34-painel-unificado-ramais.md`
+- `mem/voip/painel-ramais-unificado.md`
 - Atualizar `mem/index.md`
 
 ## Considerações
-- **Backward-compatible**: agentes sem trunk secundário mantêm comportamento atual
-- **Performance**: métricas registradas async, sem bloquear UI
-- **Segurança**: RLS estrita, agentes só veem suas próprias métricas
-- ≤400 linhas, PT-BR, sonner, logger central, cyberpunk
+- ≤400 linhas por componente, PT-BR, sonner, logger central, cyberpunk neon
+- Sem duplicação de lógica: drawer faz deep-link para páginas especializadas existentes
+- RLS: admin/supervisor only
+- Performance: query única consolidada, staleTime 1min
 
 ## Ordem de execução
-1. Migration: tabela `voip_trunk_usage_metrics` + RLS + índices
-2. Refactor `sip-config` (lógica de failover)
-3. Hook `useTrunkUsageReporter` + integração softphone
-4. `TrunkMetricsTab` + hook + integração no `VoipTrunksAdmin`
-5. ADR-047 + memória + índice
-6. Validação: linter Supabase + `tsc --noEmit`
+1. Hook `useExtensionsOverview` + tipos
+2. Página `ExtensionsAdmin.tsx` + tabela + filtros + cards resumo
+3. `ExtensionDetailsDrawer.tsx` + abas
+4. Rota `/admin/extensions` + AppSidebar + CommandPalette
+5. ADR-048 + memória + índice
+6. Validação: `tsc --noEmit`
 
-Resultado: **10/10 sustentado** com resiliência automática a quedas de operadora e visibilidade total do consumo por linha.
+Resultado: Admin tem **visão 360° de cada ramal** em uma única tela, com deep-links para ações especializadas — fim da fragmentação operacional.
