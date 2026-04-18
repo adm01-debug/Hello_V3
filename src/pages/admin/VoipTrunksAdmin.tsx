@@ -3,11 +3,39 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Phone, Plus, Edit, Trash2, Zap, Loader2, Users, CheckCircle2, XCircle } from 'lucide-react';
+import { Phone, Plus, Edit, Trash2, Zap, Loader2, Users, CheckCircle2, XCircle, Activity, RefreshCw } from 'lucide-react';
 import { useVoipTrunks, useDeleteTrunk, useTestTrunk, type VoipTrunk } from '@/hooks/useVoipTrunks';
+import { useRunHealthCheck } from '@/hooks/useTrunkHealth';
 import { VoipTrunkFormDrawer } from '@/components/admin/voip/VoipTrunkFormDrawer';
 import { TrunkAssignmentsTab } from '@/components/admin/voip/TrunkAssignmentsTab';
+import { TrunkHealthHistoryDrawer } from '@/components/admin/voip/TrunkHealthHistoryDrawer';
 import { usePageTitle } from '@/hooks/usePageTitle';
+
+interface TrunkWithHealth extends VoipTrunk {
+  last_health_status?: string | null;
+  last_health_latency_ms?: number | null;
+  last_health_checked_at?: string | null;
+}
+
+function HealthBadge({ trunk }: { trunk: TrunkWithHealth }) {
+  if (!trunk.last_health_status) {
+    return <Badge variant="secondary" className="gap-1"><Activity className="h-3 w-3" /> Aguardando</Badge>;
+  }
+  const map: Record<string, { cls: string; label: string }> = {
+    healthy: { cls: 'bg-success/10 text-success border-success/20', label: 'Saudável' },
+    degraded: { cls: 'bg-warning/10 text-warning border-warning/20', label: 'Lento' },
+    offline: { cls: 'bg-destructive/10 text-destructive border-destructive/20', label: 'Offline' },
+  };
+  const cfg = map[trunk.last_health_status] ?? map.offline;
+  return (
+    <Badge variant="outline" className={`gap-1 ${cfg.cls}`}>
+      <Activity className="h-3 w-3" /> {cfg.label}
+      {trunk.last_health_latency_ms != null && trunk.last_health_status !== 'offline' && (
+        <span className="opacity-70">· {trunk.last_health_latency_ms}ms</span>
+      )}
+    </Badge>
+  );
+}
 
 const PROVIDER_LABELS: Record<string, string> = {
   nvoip: 'Nvoip', directcall: 'Directcall', totalvoice: 'TotalVoice',
@@ -19,8 +47,11 @@ export default function VoipTrunksAdmin() {
   const { data: trunks = [], isLoading } = useVoipTrunks();
   const del = useDeleteTrunk();
   const test = useTestTrunk();
+  const runHealth = useRunHealthCheck();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editing, setEditing] = useState<VoipTrunk | null>(null);
+  const [healthOpen, setHealthOpen] = useState(false);
+  const [healthTrunk, setHealthTrunk] = useState<TrunkWithHealth | null>(null);
 
   const openNew = () => { setEditing(null); setDrawerOpen(true); };
   const openEdit = (t: VoipTrunk) => { setEditing(t); setDrawerOpen(true); };
@@ -43,9 +74,15 @@ export default function VoipTrunksAdmin() {
             </h1>
             <p className="text-muted-foreground">Gerencie operadoras e atribuições de agentes</p>
           </div>
-          <Button onClick={openNew} className="gap-2">
-            <Plus className="h-4 w-4" /> Nova Linha
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={() => runHealth.mutate()} disabled={runHealth.isPending} variant="outline" className="gap-2">
+              <RefreshCw className={`h-4 w-4 ${runHealth.isPending ? 'animate-spin' : ''}`} />
+              Verificar saúde
+            </Button>
+            <Button onClick={openNew} className="gap-2">
+              <Plus className="h-4 w-4" /> Nova Linha
+            </Button>
+          </div>
         </div>
 
         <Tabs defaultValue="trunks">
@@ -92,6 +129,7 @@ export default function VoipTrunksAdmin() {
                                   <XCircle className="h-3 w-3" /> Inativo
                                 </Badge>
                               )}
+                              <HealthBadge trunk={t as TrunkWithHealth} />
                             </div>
                             <p className="text-xs text-muted-foreground truncate">
                               {t.sip_server} • {t.transport.toUpperCase()} • {t.max_channels} canais • prioridade {t.priority}
@@ -99,6 +137,9 @@ export default function VoipTrunksAdmin() {
                           </div>
                         </div>
                         <div className="flex items-center gap-1 shrink-0">
+                          <Button variant="ghost" size="sm" onClick={() => { setHealthTrunk(t as TrunkWithHealth); setHealthOpen(true); }} className="gap-1">
+                            <Activity className="h-4 w-4" /> Histórico
+                          </Button>
                           <Button variant="ghost" size="sm" onClick={() => test.mutate(t.id)} disabled={test.isPending} className="gap-1">
                             <Zap className="h-4 w-4" /> Testar
                           </Button>
@@ -124,6 +165,12 @@ export default function VoipTrunksAdmin() {
       </div>
 
       <VoipTrunkFormDrawer open={drawerOpen} onOpenChange={setDrawerOpen} trunk={editing} />
+      <TrunkHealthHistoryDrawer
+        open={healthOpen}
+        onOpenChange={setHealthOpen}
+        trunkId={healthTrunk?.id ?? null}
+        trunkName={healthTrunk?.name}
+      />
     </div>
   );
 }
