@@ -30,6 +30,7 @@ export function useCrmFieldSuggestions(callSessionId?: string) {
     queryKey: ['crm-suggestions', callSessionId],
     enabled: !!callSessionId,
     queryFn: async () => {
+      if (!callSessionId) return [] as CrmFieldSuggestion[];
       const { data, error } = await supabase
         .from('crm_field_suggestions')
         .select('*')

@@ -64,6 +64,7 @@ export function useMeetingSummary(callSessionId?: string) {
     queryKey: ['meeting-summary', callSessionId],
     enabled: !!callSessionId,
     queryFn: async () => {
+      if (!callSessionId) return null;
       const { data, error } = await supabase
         .from('meeting_summaries')
         .select('*')
@@ -128,14 +129,14 @@ export function useMeetingSummary(callSessionId?: string) {
   const updateContent = useMutation({
     mutationFn: async (patch: Partial<MeetingSummary>) => {
       if (!query.data?.id) throw new Error('Resumo inexistente');
-      const { error } = await supabase
+      const { error } = await (supabase
         .from('meeting_summaries')
         .update({
           ...patch,
           edited: true,
           edited_at: new Date().toISOString(),
-        })
-        .eq('id', query.data.id);
+        } as never)
+        .eq('id', query.data.id));
       if (error) throw error;
     },
     onSuccess: () => {

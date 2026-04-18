@@ -44,6 +44,7 @@ export function useLiveAssist(callSessionId?: string) {
     queryKey: ['live-assist-signals', callSessionId],
     enabled: !!callSessionId,
     queryFn: async () => {
+      if (!callSessionId) return [] as LiveAssistSignal[];
       const { data, error } = await supabase
         .from('live_assist_signals')
         .select('*')
