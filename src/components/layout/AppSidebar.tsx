@@ -10,6 +10,8 @@ import { useAuthContext } from '@/contexts/AuthContext';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useState, useCallback, useMemo } from 'react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Badge } from '@/components/ui/badge';
+import { useUnreadConflicts } from '@/hooks/useUnreadConflicts';
 
 const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
@@ -151,6 +153,8 @@ function NavItem({ item, collapsed, isFavorite, onToggleFavorite }: { item: NavI
   const location = useLocation();
   const Icon = item.icon;
   const active = location.pathname === item.url;
+  const { data: conflictCount } = useUnreadConflicts();
+  const showConflictBadge = item.url === '/concurrency-conflicts' && (conflictCount ?? 0) > 0;
 
   return (
     <SidebarMenuItem>
@@ -177,6 +181,11 @@ function NavItem({ item, collapsed, isFavorite, onToggleFavorite }: { item: NavI
               <span className={cn("font-medium flex-1", active && "font-semibold")}>
                 {item.title}
               </span>
+              {showConflictBadge && (
+                <Badge variant="destructive" className="h-5 min-w-5 px-1.5 text-[10px] font-bold">
+                  {conflictCount! > 99 ? '99+' : conflictCount}
+                </Badge>
+              )}
               <button
                 onClick={(e) => {
                   e.preventDefault();
