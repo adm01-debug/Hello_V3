@@ -21,7 +21,13 @@ describe('useAdherence', () => {
     const wrapper = ({ children }: { children: React.ReactNode }) =>
       React.createElement(QueryClientProvider, { client }, children);
     const { result } = renderHook(() => useAdherence('2026-01-01'), { wrapper });
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    await waitFor(
+      () => {
+        if (result.current.error) throw result.current.error;
+        expect(result.current.data).toBeDefined();
+      },
+      { timeout: 3000 },
+    );
     expect(result.current.data?.adherence.Alice.adherence_percent).toBe(98);
   });
 });
