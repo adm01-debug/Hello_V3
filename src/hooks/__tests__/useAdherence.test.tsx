@@ -14,10 +14,10 @@ vi.mock('@/integrations/supabase/client', () => ({
   },
 }));
 
-const wrapper = ({ children }: { children: React.ReactNode }) => {
-  const c = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  return <QueryClientProvider client={c}>{children}</QueryClientProvider>;
-};
+const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <QueryClientProvider client={client}>{children}</QueryClientProvider>
+);
 
 describe('useAdherence', () => {
   it('retorna dados de aderência', async () => {

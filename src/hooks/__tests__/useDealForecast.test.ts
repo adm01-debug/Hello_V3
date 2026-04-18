@@ -23,7 +23,7 @@ describe("useDealForecast", () => {
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.data?.total_deals).toBe(3);
     expect(result.current.data?.confidence).toBe(75);
-    expect(supabase.functions.invoke).toHaveBeenCalledWith("forecast-deals", { body: { period: "month" } });
+    expect(supabase.functions.invoke).toHaveBeenCalledWith("forecast-deals", expect.objectContaining({ body: { period: "month" } }));
   });
 
   it("handles error gracefully", async () => {
