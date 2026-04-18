@@ -1,50 +1,48 @@
 
-Onda 20 entregue. Proponho **Onda 21 — Anomaly Detection Estatística + Auto-Remediação Confiável** para fechar o ciclo com detecção proativa não-supervisionada e ações automáticas seguras.
+Onda 21 entregue. Proponho **Onda 22 — Forecasting Preditivo de Qualidade VoIP + Capacity Planning Inteligente** para fechar o ciclo com previsão proativa de degradações futuras.
 
-## Onda 21 — Statistical Anomaly Detection + Trusted Auto-Remediation
+## Onda 22 — Quality Forecasting + Capacity Planning
 
-### 1. Edge function `voip-anomaly-detector`
-- `GET ?period=day|week` — analisa `call_quality_metrics` últimos 7-30d
-- Calcula baseline (média móvel + desvio padrão) por hora-do-dia para MOS, jitter, packet loss
-- Detecta anomalias via z-score (|z| > 2.5) e mudanças bruscas (>20% vs baseline)
-- Classifica: `spike` (pico isolado), `drift` (tendência sustentada), `outage` (queda crítica)
-- Retorna `{ anomalies[], baseline, requestId }`
-- JWT + CORS + 4 testes Deno
+### 1. Edge function `voip-quality-forecast`
+- `GET ?horizon=24|72|168` (horas)
+- Usa últimos 30d de `call_quality_metrics` agrupados por (dow, hour)
+- Forecast determinístico: média ponderada por bucket + tendência linear (regressão simples)
+- Retorna série temporal projetada de MOS/jitter/volume + intervalos de confiança (±1σ)
+- Sinaliza janelas de risco (MOS previsto < 3.5 ou volume previsto > P95 histórico)
+- JWT + CORS + 4 testes Deno (forecast, regressão, risco detectado, dados insuficientes)
 
-### 2. Edge function `voip-auto-remediation`
-- `POST { anomalyId, dryRun?: boolean }`
-- Mapeia anomalia → ação segura pré-aprovada (ex.: reduzir codec, pausar campanhas, alertar equipe)
-- **Whitelist rígida** de ações permitidas (sem ações destrutivas)
-- Registra em `voip_recommendation_actions` com `outcome: 'auto_applied'` e `notes` da anomalia
-- Idempotência via `anomalyId` (não re-executa em 1h)
-- 3 testes Deno (auth, dry-run, idempotência)
+### 2. Edge function `voip-capacity-recommendations`
+- `GET` — combina forecast + agentes ativos + concorrência atual
+- Sugere ações de capacity: "Adicionar 2 agentes às 14h-16h quinta", "Pausar campanha X durante pico previsto"
+- Reusa whitelist de ações da Onda 21 + 4 novas ações de capacity
+- Retorna `{ recommendations[], confidence, requestId }`
+- 3 testes Deno
 
 ### 3. Hooks
-- `useVoipAnomalies` (query, staleTime 2min)
-- `useVoipAutoRemediation` (mutation)
+- `useVoipQualityForecast(horizon)` — query staleTime 10min
+- `useVoipCapacityRecommendations` — query staleTime 15min
 
-### 4. Componente `AnomalyDetectionCard`
-- Card glass-card em `/network-diagnostics` (acima do `RecommendationInsightsCard`)
-- Lista anomalias ativas com badge severidade + tipo (spike/drift/outage)
-- Mini sparkline (recharts) mostrando série temporal + linha baseline + ponto anômalo destacado
-- Por anomalia: botão "Aplicar remediação" (com modal de confirmação) + "Dispensar"
-- Toggle "Auto-remediação ativa" (pref `localStorage`) — quando ativo, dispara remediação automática para anomalias `outage`
+### 4. Componente `QualityForecastCard`
+- Card glass-card em `/network-diagnostics` (acima de `AnomalyDetectionCard`)
+- Recharts AreaChart: série histórica (últimas 24h) + projeção (próximas 24-168h) + faixa de confiança
+- Toggle horizonte (24h / 72h / 7d)
+- Badges destacando janelas de risco previsto
+- Lista lateral de recomendações de capacity com botão "Aplicar"
 
 ### 5. Documentação
-- ADR-036 em `docs/adr/036-onda-21-anomaly-detection-auto-remediation.md`
-- `mem/features/voip-anomaly-detection.md` + atualizar `mem/index.md`
-- Atualizar `docs/audit/scorecard-final.md` (24 edge functions, ~123 testes Deno)
+- ADR-037 em `docs/adr/037-onda-22-quality-forecasting.md`
+- `mem/features/voip-quality-forecasting.md` + atualizar `mem/index.md`
+- Atualizar scorecard (26 edge functions, ~127 testes Deno)
 
 ## Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
+- Forecasting 100% determinístico (regressão linear + média por bucket), sem IA
 - Zero novas tabelas; reuso de `call_quality_metrics` + `voip_recommendation_actions`
-- Detecção 100% determinística (estatística pura, sem IA) → reproduzível e auditável
-- Auto-remediação com whitelist rígida + idempotência → zero risco de loop
-- Loop final: detectar (estatística) → classificar → remediar (whitelist) → registrar → coachear
+- Loop final 360°: prever → recomendar capacity → detectar anomalia real → remediar → coachear
 
 ## Ordem de execução
-1. Edge function `voip-anomaly-detector` + 4 testes
-2. Edge function `voip-auto-remediation` + 3 testes
-3. Hooks `useVoipAnomalies` + `useVoipAutoRemediation`
-4. `AnomalyDetectionCard` integrado em `/network-diagnostics`
-5. ADR-036 + memória + scorecard
+1. Edge function `voip-quality-forecast` + 4 testes
+2. Edge function `voip-capacity-recommendations` + 3 testes
+3. Hooks `useVoipQualityForecast` + `useVoipCapacityRecommendations`
+4. `QualityForecastCard` integrado em `/network-diagnostics`
+5. ADR-037 + memória + scorecard
