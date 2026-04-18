@@ -10,7 +10,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import {
-  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen,
+  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi,
 } from 'lucide-react';
 
 const allRoutes = [
@@ -70,6 +70,8 @@ const allRoutes = [
   { title: 'Monitoramento', url: '/security-monitoring', icon: Monitor, group: 'Sistema' },
   { title: 'Relatório Segurança', url: '/security-report', icon: FileBarChart, group: 'Sistema' },
   { title: 'Roles & Permissões', url: '/roles', icon: UserCog, group: 'Sistema' },
+  { title: 'Gestão de Ramais', url: '/admin/extensions', icon: Headphones, group: 'Sistema' },
+  { title: 'Linhas VoIP', url: '/admin/voip-trunks', icon: Phone, group: 'Sistema' },
   { title: 'Configurações', url: '/settings', icon: Settings, group: 'Sistema' },
 ];
 
