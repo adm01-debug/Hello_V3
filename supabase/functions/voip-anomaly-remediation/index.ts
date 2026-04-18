@@ -129,8 +129,8 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const parsed = validate(body, {
       anomalyId: string({ min: 4, max: 128 }),
-      metric: oneOf(['mos', 'jitter', 'volume'] as const),
-      kind: oneOf(['spike', 'drift', 'outage'] as const),
+      metric: oneOf('mos', 'jitter', 'volume'),
+      kind: oneOf('spike', 'drift', 'outage'),
       dryRun: optional(boolean()),
       notes: optional(string({ max: 500 })),
     });
