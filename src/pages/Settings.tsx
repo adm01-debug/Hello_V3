@@ -254,44 +254,24 @@ const Settings = () => {
               <CardDescription>Configure sua conexão com a operadora</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="rounded-lg border border-warning/20 bg-warning/5 p-4">
-                <p className="text-sm text-warning">
-                  ⚠️ Configuração de operadora VoIP em desenvolvimento. Entre em contato com o suporte para configuração.
-                </p>
+              <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 space-y-3">
+                <div className="flex items-start gap-3">
+                  <Phone className="h-5 w-5 text-primary mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-medium">Painel de Linhas VoIP</p>
+                    <p className="text-sm text-muted-foreground">
+                      Cadastre múltiplas operadoras (Nvoip, Directcall, TotalVoice, Wavoip, SIP genérico) e atribua linhas aos agentes.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  className="gap-2"
+                  onClick={() => window.location.assign('/admin/voip-trunks')}
+                >
+                  <Phone className="h-4 w-4" />
+                  Gerenciar Linhas VoIP
+                </Button>
               </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="provider">Operadora</Label>
-                  <Select defaultValue="nvoip">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="nvoip">Nvoip</SelectItem>
-                      <SelectItem value="directcall">Directcall</SelectItem>
-                      <SelectItem value="totalvoice">TotalVoice (Zenvia)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="sipServer">Servidor SIP</Label>
-                  <Input id="sipServer" placeholder="sip.operadora.com.br" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="sipUser">Usuário SIP</Label>
-                  <Input id="sipUser" placeholder="seu-usuario" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="sipPass">Senha SIP</Label>
-                  <Input id="sipPass" type="password" placeholder="••••••••" />
-                </div>
-              </div>
-
-              <Button className="gap-2" onClick={handleSave}>
-                <Save className="h-4 w-4" />
-                Salvar configurações
-              </Button>
             </CardContent>
           </Card>
         </TabsContent>
