@@ -83,16 +83,16 @@ export function VoipRecommendationsPanel({ period = 'week' }: Props) {
       const { data: userData } = await supabase.auth.getUser();
       const userId = userData?.user?.id;
       if (!userId) return;
-      await supabase.from('voip_recommendation_actions').insert({
+      await supabase.from('voip_recommendation_actions').insert([{
         user_id: userId,
         recommendation_id: rec.id,
         category: rec.category,
         severity: rec.severity,
         action_type: rec.action_type,
-        action_payload: rec.action_payload,
+        action_payload: rec.action_payload as never,
         outcome,
         notes: notes ?? null,
-      });
+      }]);
       queryClient.invalidateQueries({ queryKey: ['voip-recommendation-history'] });
     } catch (err) {
       log.warn('Falha ao registrar ação no histórico', err);
