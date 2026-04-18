@@ -440,6 +440,54 @@ export type Database = {
           },
         ]
       }
+      agent_trunk_assignments: {
+        Row: {
+          agent_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_primary: boolean
+          trunk_id: string
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_primary?: boolean
+          trunk_id: string
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_primary?: boolean
+          trunk_id?: string
+          updated_at?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_trunk_assignments_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_trunk_assignments_trunk_id_fkey"
+            columns: ["trunk_id"]
+            isOneToOne: false
+            referencedRelation: "voip_trunks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       agent_weekly_stats: {
         Row: {
           agent_id: string
@@ -6055,6 +6103,63 @@ export type Database = {
         }
         Relationships: []
       }
+      voip_trunks: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          max_channels: number
+          name: string
+          notes: string | null
+          priority: number
+          provider: Database["public"]["Enums"]["voip_provider"]
+          sip_password_encrypted: string
+          sip_realm: string | null
+          sip_server: string
+          sip_username: string
+          transport: string
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          max_channels?: number
+          name: string
+          notes?: string | null
+          priority?: number
+          provider?: Database["public"]["Enums"]["voip_provider"]
+          sip_password_encrypted: string
+          sip_realm?: string | null
+          sip_server: string
+          sip_username: string
+          transport?: string
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          max_channels?: number
+          name?: string
+          notes?: string | null
+          priority?: number
+          provider?: Database["public"]["Enums"]["voip_provider"]
+          sip_password_encrypted?: string
+          sip_realm?: string | null
+          sip_server?: string
+          sip_username?: string
+          transport?: string
+          updated_at?: string
+          version?: number
+        }
+        Relationships: []
+      }
       webauthn_challenges: {
         Row: {
           challenge: string
@@ -6198,6 +6303,12 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "supervisor" | "agent" | "viewer"
+      voip_provider:
+        | "nvoip"
+        | "directcall"
+        | "totalvoice"
+        | "generic"
+        | "wavoip"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -6326,6 +6437,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "supervisor", "agent", "viewer"],
+      voip_provider: ["nvoip", "directcall", "totalvoice", "generic", "wavoip"],
     },
   },
 } as const
