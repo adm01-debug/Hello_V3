@@ -1,52 +1,48 @@
 
-## Onda 35 — Bulk Operations + Health Score por Ramal
+## Onda 36 — Auditoria + Telemetria Operacional do Painel de Ramais
 
-Painel de ramais entregue. Próxima evolução: ações em massa e score de saúde individual.
+Próxima evolução do `/admin/extensions`: rastreabilidade total das ações administrativas e telemetria de uso por ramal.
 
-### 1. Coluna Health Score por ramal
-- Cálculo client-side em `useExtensionsOverview`: 0-100 baseado em
-  - Tem trunk ativo (+30) / trunk online (+20)
-  - Tem ≥1 dispositivo (+20)
-  - Status != offline (+15)
-  - Perfil completo (full_name + email) (+15)
-- Badge colorido na tabela (verde ≥80, amarelo 50-79, vermelho <50)
-- Tooltip detalha o que falta
+### 1. Auditoria de Bulk Operations
+- Toda ação em massa (atribuir trunk, forçar offline, export CSV) registrada via `log_audit_event` RPC
+- Payload com: `action`, `resource_type='extension_bulk'`, `details` (count, agent_ids, trunk_id, etc.)
+- Hook `useExtensionAudit` para invocar consistentemente
 
-### 2. Seleção múltipla + Bulk Actions
-- Checkbox por linha + "selecionar todos filtrados"
-- Barra flutuante quando ≥1 selecionado: contador + ações
-- Ações em massa:
-  - **Atribuir trunk** → modal com select de trunk → INSERT batch em `agent_trunk_assignments`
-  - **Forçar status offline** → UPDATE batch em `agents.status`
-  - **Exportar CSV** → download client-side (ramal, nome, status, trunk, dispositivos, score)
+### 2. Histórico de Ações por Ramal (drawer)
+- Nova aba "Histórico" no `ExtensionDetailsDrawer`
+- Lista últimas 20 entradas de `audit_logs` filtradas por `resource_id = agent_id` ou onde `details->>'agent_ids'` contém o id
+- Timeline cyberpunk com ícones por tipo de ação + timestamp relativo
 
-### 3. Modal `BulkAssignTrunkDialog`
-- Lista trunks ativos com saúde
-- Confirmação com contagem ("Atribuir Trunk X a 12 ramais?")
-- Toast de sucesso/erro via sonner + invalidate query
+### 3. Telemetria de Chamadas (overview)
+- Coluna nova "Chamadas 7d" na tabela master
+- Hook `useExtensionsOverview` agrega `call_sessions` agrupado por `agent_name` últimos 7 dias
+- Score de saúde ganha bônus: agente com chamadas recentes (+0 a +10 condicional)
 
-### 4. Filtro adicional "Health Score"
-- Select: Todos | Saudáveis (≥80) | Atenção (50-79) | Críticos (<50)
+### 4. Drill-down "Última Atividade"
+- Card na aba "Visão Geral" do drawer: última chamada, total 7d, duração média
+- Botão "Ver chamadas" → deep-link para `/calls?agent={name}`
 
-### 5. Card de resumo extra
-- Substituir "Sem Dispositivos" por "Score Médio" (com tendência)
+### 5. Export CSV expandido
+- Adicionar colunas: `chamadas_7d`, `ultima_chamada`
+- Manter retrocompatibilidade
 
-### 6. ADR-049 + memória
-- `docs/adr/049-onda-35-bulk-ops-health-score.md`
-- Atualizar `mem/voip/painel-ramais-unificado.md`
+### 6. ADR-050 + memória + índice
+- `docs/adr/050-onda-36-auditoria-telemetria-ramais.md`
+- Atualizar `mem/voip/painel-ramais-unificado.md` + `mem/index.md`
 
 ## Considerações
-- ≤400 linhas, PT-BR, cyberpunk neon, sonner, logger central
-- Bulk operations em transação client-side com rollback de UI on error
-- CSV gerado com BOM UTF-8 para Excel BR
-- RLS já cobre INSERT em `agent_trunk_assignments` (admin only)
+- ≤400 linhas, PT-BR, cyberpunk, sonner, logger central
+- Sem migrations — `audit_logs` e `call_sessions` já existem com RLS adequada
+- Performance: query de telemetria com agregação client-side simples (limite 7d)
+- Audit calls são fire-and-forget (não bloqueiam UI em caso de falha)
 
 ## Ordem de execução
-1. Adicionar `health_score` + `health_issues` ao tipo `ExtensionOverview` e cálculo no hook
-2. Componente `HealthScoreBadge.tsx`
-3. Refator `ExtensionsAdmin.tsx`: checkboxes + barra flutuante + filtro score + card médio
-4. `BulkAssignTrunkDialog.tsx` + função export CSV
-5. ADR-049 + memória + índice
-6. Validação `tsc --noEmit`
+1. Hook `useExtensionAudit` para log centralizado
+2. Estender `useExtensionsOverview` com `call_count_7d` + `last_call_at`
+3. Plugar audit nas 3 ações em massa de `ExtensionsAdmin.tsx`
+4. Adicionar coluna "Chamadas 7d" + atualizar export CSV
+5. Aba "Histórico" + card "Atividade" no `ExtensionDetailsDrawer`
+6. ADR-050 + memória + índice
+7. Validação `tsc --noEmit`
 
-Resultado: Admin gerencia **dezenas de ramais simultaneamente** com visão de saúde individual — fim do clique-a-clique repetitivo.
+Resultado: **rastreabilidade completa** do que foi feito por quem + visibilidade de **uso real** de cada ramal — base para SLA, billing por ramal e detecção de ramais ociosos.
