@@ -1,52 +1,48 @@
 
-Onda 17 — Auto-Apply Programado de Recomendações + Histórico Auditável.
+Onda 17 já entregue. Proponho **Onda 18 — Coaching Inteligente Pós-Ação + Insights Preditivos de Recomendações** para fechar o ciclo de aprendizado contínuo.
 
-## Escopo
+## Onda 18 — Coaching de Recomendações + Insights Preditivos
 
-### 1. Migration: `voip_recommendation_actions`
-- Colunas: `id uuid pk`, `user_id uuid not null`, `recommendation_id text`, `category text`, `severity text`, `action_type text`, `action_payload jsonb`, `outcome text check in (applied|snoozed|dismissed|auto_applied)`, `applied_at timestamptz default now()`, `notes text`
-- RLS: `select/insert` próprios via `auth.uid() = user_id`; admin/supervisor `select` tudo via `is_admin_or_supervisor()`
-- Índice `(user_id, applied_at desc)` e `(category, outcome)`
+### 1. Edge function `voip-recommendation-insights`
+- `GET ?period=week|month` — agrega `voip_recommendation_actions` + `call_quality_metrics` + `voip_quality_alerts`
+- Calcula:
+  - **Effectiveness score**: % de ações `applied/auto_applied` seguidas de melhoria de MOS nas próximas 2h
+  - **Top categorias problemáticas** (mais snoozed/dismissed sem resolução)
+  - **Padrões temporais**: heatmap dia/hora de incidência de recomendações
+  - **Recomendações recorrentes** (mesma categoria > 3x na janela)
+- JWT + CORS + validação `oneOf`
+- 4 testes Deno (auth, validação, agregação, padrão temporal)
 
-### 2. Edge function `voip-recommendation-history`
-- `GET ?period=day|week|month&limit=50`
-- JWT obrigatório, CORS via `_shared/cors`, validação `oneOf` via `_shared/validate`
-- Retorna `{ items[], aggregations: { byCategory, byOutcome, perDay[] }, requestId }`
-- 4 testes Deno (auth, validação, agregação, paginação)
+### 2. Hook `useVoipRecommendationInsights`
+- React Query, staleTime 5min, traceHeaders, retry skip 401/403/404
 
-### 3. Hook `useVoipRecommendationHistory`
-- React Query, staleTime 2min, traceHeaders, retry skip 401/403/404
+### 3. Componente `RecommendationInsightsCard`
+- Card glass-card em `/network-diagnostics` (acima do painel de recomendações)
+- 3 KPIs: effectiveness %, recorrências, ações pendentes (snoozed ativos)
+- Heatmap mini 7x24 (dia/hora) com recharts
+- Lista top 3 categorias críticas com badge de severidade
+- CTA "Ver histórico completo" → abre `RecommendationHistoryDrawer`
 
-### 4. Auto-apply em `VoipRecommendationsPanel`
-- Toggle "Auto-aplicar críticas seguras" (pref em `localStorage` chave `voip-rec-auto-apply`)
-- Aplica somente quando `severity=critical` + `action_type=function` (categoria infra)
-- Countdown visível 3s com botão "Cancelar" antes de disparar
-- Toda ação (apply/snooze/dismiss/auto) grava em `voip_recommendation_actions` via `supabase.from().insert()`
-- Toast informativo por evento
+### 4. Toast de coaching pós-ação
+- Após `applied`/`auto_applied`, agendar verificação de MOS em 2h via `setTimeout` + `localStorage` queue
+- No próximo load, validar se houve melhoria e mostrar toast "✓ Recomendação X melhorou MOS em Y%"
+- Sem dependência de cron; lógica leve client-side
 
-### 5. Componente `RecommendationHistoryDrawer`
-- `Sheet` lateral acionado por botão no header do painel
-- Lista paginada das últimas 50 ações
-- Filtros por categoria e outcome (`Select`)
-- Sparkline ações/dia últimos 14d (recharts já presente)
-- Export CSV reutilizando padrão UTF-8 BOM da Onda 15
-
-### 6. Documentação
-- ADR-032 em `docs/adr/032-onda-17-auto-apply-historico-recomendacoes.md`
-- `mem/features/voip-recommendation-history.md` + atualizar `mem/index.md`
-- Atualizar `docs/audit/scorecard-final.md` (18 edge functions, 97 testes Deno)
+### 5. Documentação
+- ADR-033 em `docs/adr/033-onda-18-coaching-insights-recomendacoes.md`
+- `mem/features/voip-recommendation-insights.md` + atualizar `mem/index.md`
+- Atualizar `docs/audit/scorecard-final.md` (19 edge functions, 101 testes Deno)
 
 ## Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Auto-apply opt-in explícito; nunca silencioso
-- Reuso total dos componentes/edge functions existentes
-- RLS isolado por usuário; admin/supervisor com visão agregada
-- Zero breakage; loop completo: detectar → recomendar → aplicar/auto → registrar → auditar
+- Zero novas tabelas; reuso total de `voip_recommendation_actions` + `call_quality_metrics`
+- Sem cron/jobs externos: validação de efetividade roda client-side com queue em localStorage
+- RLS isolado; admin/supervisor visualiza agregados de toda equipe
+- Loop de aprendizado: detectar → recomendar → aplicar → medir efetividade → coachear
 
 ## Ordem de execução
-1. Migration + RLS + índices
-2. Edge function `voip-recommendation-history` + 4 testes
-3. Hook `useVoipRecommendationHistory`
-4. Auto-apply + persistência no `VoipRecommendationsPanel`
-5. `RecommendationHistoryDrawer` integrado
-6. ADR-032 + memória + scorecard
+1. Edge function `voip-recommendation-insights` + 4 testes
+2. Hook `useVoipRecommendationInsights`
+3. Componente `RecommendationInsightsCard` integrado em `/network-diagnostics`
+4. Sistema de coaching toast pós-ação (queue localStorage + verificação)
+5. ADR-033 + memória + scorecard atualizados
