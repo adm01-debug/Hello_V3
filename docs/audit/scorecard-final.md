@@ -68,3 +68,13 @@ Sistema **production-ready** com maturidade técnica máxima certificada.
 - Estatística inspecionável: funções `detectAnomalies`, `buildHistory`, `forecastNextDays` exportadas e cobertas.
 - ADR-029 publicado; zero novas dependências; zero novas tabelas; zero migrations; arquivos ≤400 linhas.
 - Findings de segurança: inalterados (3 WARN pré-existentes aceitos).
+
+## Re-verificação Onda 15 (2026-04-18)
+- Cockpit executivo: edge function `voip-executive-summary` agrega em UMA chamada SLA (current vs previous), MOS, alertas (total + unack), capacidade (peak concurrent vs cap=3) e top 3 piores agentes (24h, mín. 3 chamadas).
+- Health Score 0-100 com fórmula auditável: `0.4·SLA + 0.3·MOS_norm + 0.2·Alertas_norm + 0.1·Capacidade_norm` (faixas: ≥80 saudável, 60-79 atenção, <60 crítico).
+- UI hero: `VoipHealthScoreCard` no topo de `/network-diagnostics` com score, sparkline, breakdown dos 4 pilares, deltas SLA e badges dos worst agents.
+- Exportação executiva: `ExecutiveReportExport` gera CSV `voip-executive-{period}-{YYYYMMDD}.csv` reutilizando `src/lib/export` (BOM UTF-8).
+- Testes: +8 Deno tests sobre funções puras (`computeHealthScore`, `normalizeMos`, `normalizeAlerts`, `normalizeCapacity`) — total: **89 testes em 16 Edge Functions**.
+- Single-call agregada (`Promise.all` sobre 3 queries) reduz round-trips do dashboard executivo.
+- ADR-030 publicado; zero novas dependências; zero schema change; arquivos ≤400 linhas.
+- Findings de segurança: inalterados (3 WARN pré-existentes aceitos).

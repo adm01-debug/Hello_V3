@@ -17,6 +17,8 @@ import { QualityHeatmap } from '@/components/network/QualityHeatmap';
 import { AgentQualityRanking } from '@/components/network/AgentQualityRanking';
 import { AnomalyDetectionCard } from '@/components/network/AnomalyDetectionCard';
 import { CapacityForecastChart } from '@/components/network/CapacityForecastChart';
+import { VoipHealthScoreCard } from '@/components/network/VoipHealthScoreCard';
+import { ExecutiveReportExport } from '@/components/network/ExecutiveReportExport';
 
 const log = logger.create('NetworkDiagnostics');
 
@@ -139,11 +141,15 @@ const NetworkDiagnostics = () => {
               <Activity className={cn('mr-2 h-4 w-4', testing && 'animate-pulse')} />
               {testing ? 'Testando...' : 'Testar conexão'}
             </Button>
+            <ExecutiveReportExport period="week" />
             <Button onClick={loadMetrics} variant="ghost" size="sm">
               <RefreshCw className="mr-2 h-4 w-4" /> Atualizar
             </Button>
           </div>
         </div>
+
+        {/* Onda 15 — Cockpit Executivo VoIP (hero) */}
+        <VoipHealthScoreCard period="week" />
 
         {/* Status cards */}
         <div className="grid gap-4 md:grid-cols-3">
