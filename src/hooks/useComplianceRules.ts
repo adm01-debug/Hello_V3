@@ -26,7 +26,7 @@ export function useComplianceRules() {
   const list = useQuery({
     queryKey: ['compliance-rules'],
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('compliance_rules')
         .select('*')
         .order('severity', { ascending: false });
@@ -37,7 +37,7 @@ export function useComplianceRules() {
 
   const upsert = useMutation({
     mutationFn: async (rule: Partial<ComplianceRule> & { rule_name: string; rule_type: string; pattern: string; message: string }) => {
-      const { error } = await (supabase as any).from('compliance_rules').upsert(rule);
+      const { error } = await supabase.from('compliance_rules').upsert(rule);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -52,7 +52,7 @@ export function useComplianceRules() {
 
   const toggleActive = useMutation({
     mutationFn: async ({ id, is_active }: { id: string; is_active: boolean }) => {
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('compliance_rules')
         .update({ is_active })
         .eq('id', id);
@@ -65,7 +65,7 @@ export function useComplianceRules() {
 
   const remove = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await (supabase as any).from('compliance_rules').delete().eq('id', id);
+      const { error } = await supabase.from('compliance_rules').delete().eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {

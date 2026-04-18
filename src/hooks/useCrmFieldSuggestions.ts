@@ -30,7 +30,7 @@ export function useCrmFieldSuggestions(callSessionId?: string) {
     queryKey: ['crm-suggestions', callSessionId],
     enabled: !!callSessionId,
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('crm_field_suggestions')
         .select('*')
         .eq('call_session_id', callSessionId)
@@ -66,14 +66,14 @@ export function useCrmFieldSuggestions(callSessionId?: string) {
       if (contactId) {
         const allowed = ['position', 'company', 'notes', 'name', 'email'];
         if (allowed.includes(field)) {
-          const { error: contactErr } = await (supabase as any)
+          const { error: contactErr } = await supabase
             .from('contacts')
             .update({ [field]: value })
             .eq('id', contactId);
           if (contactErr) throw contactErr;
         }
       }
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('crm_field_suggestions')
         .update({
           status: 'accepted',
@@ -96,7 +96,7 @@ export function useCrmFieldSuggestions(callSessionId?: string) {
 
   const reject = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('crm_field_suggestions')
         .update({ status: 'rejected', reviewed_at: new Date().toISOString() })
         .eq('id', id);

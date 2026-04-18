@@ -64,7 +64,7 @@ export function useMeetingSummary(callSessionId?: string) {
     queryKey: ['meeting-summary', callSessionId],
     enabled: !!callSessionId,
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('meeting_summaries')
         .select('*')
         .eq('call_session_id', callSessionId)
@@ -128,7 +128,7 @@ export function useMeetingSummary(callSessionId?: string) {
   const updateContent = useMutation({
     mutationFn: async (patch: Partial<MeetingSummary>) => {
       if (!query.data?.id) throw new Error('Resumo inexistente');
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('meeting_summaries')
         .update({
           ...patch,
@@ -148,7 +148,7 @@ export function useMeetingSummary(callSessionId?: string) {
   const share = useMutation({
     mutationFn: async (userIds: string[]) => {
       if (!query.data?.id) throw new Error('Resumo inexistente');
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('meeting_summaries')
         .update({ shared_with: userIds })
         .eq('id', query.data.id);
@@ -179,7 +179,7 @@ export function useMeetingSummariesList(filters?: {
   return useQuery({
     queryKey: ['meeting-summaries-list', filters],
     queryFn: async () => {
-      let q = (supabase as any)
+      let q = supabase
         .from('meeting_summaries')
         .select('*, call_sessions!inner(caller_name, caller_phone, agent_name, started_at, duration_seconds)')
         .eq('status', 'completed')
@@ -200,7 +200,7 @@ export function usePendingActionItems() {
   return useQuery({
     queryKey: ['pending-action-items'],
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('meeting_summaries')
         .select('id, call_session_id, action_items, generated_at')
         .eq('status', 'completed')

@@ -29,7 +29,7 @@ export function useObjectionLibrary() {
   const list = useQuery({
     queryKey: ['objection-library'],
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('objection_library')
         .select('*')
         .order('objection_type', { ascending: true });
@@ -40,7 +40,7 @@ export function useObjectionLibrary() {
 
   const upsert = useMutation({
     mutationFn: async (obj: Partial<Objection> & { objection_type: string; objection_example: string; recommended_response: string }) => {
-      const { error } = await (supabase as any).from('objection_library').upsert(obj);
+      const { error } = await supabase.from('objection_library').upsert(obj);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -55,7 +55,7 @@ export function useObjectionLibrary() {
 
   const remove = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await (supabase as any).from('objection_library').delete().eq('id', id);
+      const { error } = await supabase.from('objection_library').delete().eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -74,7 +74,7 @@ export function useObjectionLibrary() {
         times_won: current.times_won + (won ? 1 : 0),
         success_rate: Math.round(((current.times_won + (won ? 1 : 0)) / (current.times_used + 1)) * 10000) / 100,
       };
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('objection_library')
         .update(updates)
         .eq('id', id);
