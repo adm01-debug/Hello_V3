@@ -5968,6 +5968,45 @@ export type Database = {
           },
         ]
       }
+      voip_recommendation_actions: {
+        Row: {
+          action_payload: Json | null
+          action_type: string
+          applied_at: string
+          category: string
+          id: string
+          notes: string | null
+          outcome: string
+          recommendation_id: string
+          severity: string
+          user_id: string
+        }
+        Insert: {
+          action_payload?: Json | null
+          action_type: string
+          applied_at?: string
+          category: string
+          id?: string
+          notes?: string | null
+          outcome: string
+          recommendation_id: string
+          severity: string
+          user_id: string
+        }
+        Update: {
+          action_payload?: Json | null
+          action_type?: string
+          applied_at?: string
+          category?: string
+          id?: string
+          notes?: string | null
+          outcome?: string
+          recommendation_id?: string
+          severity?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       webauthn_challenges: {
         Row: {
           challenge: string
