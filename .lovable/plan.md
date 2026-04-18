@@ -1,40 +1,33 @@
 
-Auditoria fechada em **10/10 ponderado** após Ondas 23, 24 e 25. Todos os gaps P0/P1 do plano original foram entregues:
+Ondas 23–26 entregues. Sistema em **10/10 ponderado** com locking otimista em 5 entidades, RLS hardening, HIBP, coverage gate 75%, ADRs 038–040.
 
-✅ **Onda 23** — RLS hardening, HIBP ativo, 115 `(supabase as any)` eliminados, ADR-038
-✅ **Onda 24** — Optimistic locking em `deals` e `contacts` (trigger `enforce_optimistic_lock`)
-✅ **Onda 25** — Vitest coverage gate 75% (`src/lib/**`, `src/hooks/**`), ADR-039
+## Próxima Onda — Onda 27: Cobertura Defensiva Final
 
-## Próxima Onda Proposta — Onda 26: Robustez Operacional Final
+Pequenas melhorias incrementais para blindar o 10/10:
 
-Para consolidar o 10/10 com margem de segurança operacional, proponho 3 melhorias incrementais de alto ROI:
+### 1. Teste de conflito para `useContacts`
+- `src/hooks/__tests__/useContacts.conflict.test.ts` espelhando o teste de `useDeals`
+- Mock de `OPTIMISTIC_LOCK_CONFLICT` → valida toast PT-BR + refetch
+- Sustenta cobertura ≥75% no gate Vitest
 
-### 1. Optimistic Locking expandido — entidades secundárias
-- Aplicar mesmo padrão (`version` + trigger reutilizável `enforce_optimistic_lock`) em:
-  - `agents` (perfil/configuração editado por admin + supervisor)
-  - `cadences` (sequências de toque editadas concorrentemente)
-  - `playbooks` (scripts editados por times de enablement)
-- Reaproveita função SQL existente — zero código novo no banco
+### 2. Helper SQL reutilizável documentado
+- `supabase/migrations/...` com COMMENT em `enforce_optimistic_lock()` explicando contrato (NEW.version vs OLD.version, exceção, hint PT-BR)
+- Facilita onboarding e expansão futura sem reler ADRs
 
-### 2. Testes de hooks com locking
-- `useDeals.test.ts`: cenário `OPTIMISTIC_LOCK_CONFLICT` (mock erro → toast + refetch)
-- `useContacts.test.ts`: idem
-- Ajuda a manter cobertura ≥75% após gate ativo
-
-### 3. ADR-040 + memória de fechamento operacional
-- `docs/adr/040-onda-26-locking-expandido.md`
-- Atualizar `mem/index.md` com referência consolidada
-- Scorecard operacional: **10/10 ponderado + cobertura defensiva**
+### 3. ADR-041 + memória de fechamento
+- `docs/adr/041-onda-27-cobertura-defensiva.md`
+- `mem/features/onda-27-cobertura-defensiva.md`
+- Atualizar `mem/index.md`
 
 ## Considerações
-- Migration reversível (mesmo padrão de `DROP COLUMN version`)
-- Zero breaking changes
-- Mantém ≤400 linhas, PT-BR, sonner, logger central
+- Zero breaking changes, zero novas tabelas
+- Migration apenas adiciona COMMENT (reversível com `COMMENT ON FUNCTION ... IS NULL`)
+- Mantém ≤400 linhas, PT-BR, sonner, logger central, cyberpunk
 
 ## Ordem de execução
-1. Migration: `version` + trigger em `agents`, `cadences`, `playbooks`
-2. Testes Vitest: cenários de conflito em `useDeals` e `useContacts`
-3. ADR-040 + memória + índice atualizado
-4. Validação final: linter Supabase + `tsc --noEmit`
+1. Migration: COMMENT em `enforce_optimistic_lock()`
+2. Teste `useContacts.conflict.test.ts`
+3. ADR-041 + memória + índice
+4. Validação: `tsc --noEmit` + linter Supabase
 
-Resultado esperado: **10/10 sustentado** com locking otimista cobrindo 5 entidades críticas e testes defensivos para o fluxo de conflito.
+Resultado: **10/10 sustentado** com cobertura defensiva espelhada nas 2 entidades de domínio principais.
