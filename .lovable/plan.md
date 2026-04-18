@@ -1,57 +1,53 @@
 
-## Onda 31 — Painel Admin de Trunks VoIP (Multi-Linhas)
+Sistema em **10/10 sustentado** após Ondas 23–31. Onda 31 entregou painel admin de trunks VoIP. Próxima evolução incremental:
 
-Substitui o modelo atual de trunk único via secrets por gestão completa de múltiplas linhas VoIP no banco, com CRUD admin e seleção por agente.
+## Onda 32 — Refactor `sip-config` + Health Check Periódico de Trunks
 
-### 1. Migration — Tabela `voip_trunks` + `agent_trunk_assignments`
-- `voip_trunks`: id, name, provider (enum: nvoip/directcall/totalvoice/generic/wavoip), sip_server, sip_username, sip_password_encrypted, sip_realm, transport (wss/tcp/udp), max_channels, priority, is_active, version, created_by, timestamps
-- `agent_trunk_assignments`: agent_id, trunk_id, is_primary, version
-- Senha criptografada via `pgsodium` (vault) ou base64 + secret server-side
-- RLS: SELECT/INSERT/UPDATE/DELETE apenas `is_admin_user()`; agentes leem só seus assignments
-- Triggers: `update_updated_at_column`, `enforce_optimistic_lock` (mantém padrão Onda 28)
+### 1. Refactor `sip-config` edge function
+- Buscar trunk primário do agente em `agent_trunk_assignments` → `voip_trunks`
+- Se houver trunk ativo: decifrar senha e retornar credenciais do trunk
+- Fallback: secrets `SIP_*` legados (compat 100%)
+- Logger central + traceHeaders
 
-### 2. Edge function `voip-trunks-manage`
-- Actions: `list`, `create`, `update`, `delete`, `test-registration`, `decrypt-password` (apenas admin)
-- JWT obrigatório + `is_admin_user()` check
-- `test-registration`: tenta REGISTER SIP via WebSocket simulado e retorna status
-- Rate limiting via `check_rate_limit` (10 req/min)
+### 2. Tabela `voip_trunk_health_checks`
+- Colunas: id, trunk_id (FK), checked_at, reachable, latency_ms, error_message
+- RLS admin-only SELECT; INSERT via SECURITY DEFINER
+- Índice em (trunk_id, checked_at DESC) para queries rápidas
 
-### 3. Refatorar `sip-config` edge function
-- Buscar trunk ativo do agente em `agent_trunk_assignments` (primary) → `voip_trunks`
-- Fallback para secrets legados se nenhum trunk configurado (compat)
-- Retorna credenciais decifradas apenas para o agente dono do assignment
+### 3. Edge function `voip-trunks-healthcheck`
+- Itera trunks ativos, faz teste WSS/TCP, grava resultado
+- Atualiza coluna virtual `last_health_status` em `voip_trunks` (nova coluna)
+- Cron `pg_cron`: a cada 5 minutos
+- JWT obrigatório quando chamado manualmente; service role para cron
 
-### 4. UI Admin — `/admin/voip-trunks`
-- `src/pages/admin/VoipTrunksAdmin.tsx` (admin only via `is_admin_or_supervisor()`)
-- Tabela com lista de trunks (nome, provider, status, canais, prioridade, badge ativo/inativo)
-- Drawer de criação/edição (`VoipTrunkFormDrawer.tsx`) com Zod validation
-- Botão "Testar Registro" → invoca `test-registration`, mostra resultado em sonner
-- Aba "Atribuições" (`TrunkAssignmentsTab.tsx`) para mapear agentes ↔ trunks
-- Hook `useVoipTrunks` (React Query, staleTime 2min)
+### 4. UI — Coluna "Saúde" no painel `/admin/voip-trunks`
+- Badge verde/vermelho com latência e timestamp do último check
+- Botão "Histórico" abre drawer `TrunkHealthHistoryDrawer` com gráfico recharts (últimas 24h)
+- Hook `useTrunkHealth(trunkId)` (React Query, 30s staleTime)
 
-### 5. Integração Settings + Sidebar
-- Substituir aviso "em desenvolvimento" no Settings.tsx → CTA "Gerenciar Linhas VoIP" (admin) que navega para `/admin/voip-trunks`
-- Adicionar item no `AppSidebar.tsx` (seção Admin): "Linhas VoIP" com ícone `Phone`
-- Adicionar entrada no `CommandPalette.tsx`
+### 5. Alerta automático de trunk offline
+- Trigger `AFTER INSERT` em `voip_trunk_health_checks`
+- Se 3 checks consecutivos `reachable=false` → INSERT em `notifications` para admins
+- Severidade `critical`, link `/admin/voip-trunks`
+- Debounce 1h por trunk
 
-### 6. ADR-045 + memória + índice
-- `docs/adr/045-onda-31-painel-trunks-voip.md`
-- `mem/voip/admin-trunks-panel.md`
+### 6. ADR-046 + memória + índice
+- `docs/adr/046-onda-32-sip-config-healthcheck.md`
+- `mem/voip/trunks-healthcheck.md`
 - Atualizar `mem/index.md`
 
 ## Considerações
-- **Backward-compatible**: secrets `SIP_*` continuam funcionando como fallback
-- **Segurança**: senha nunca trafega no frontend; decifrada só em `sip-config` no momento da conexão SIP
-- **Audit trail**: todos CRUD logados via `log_audit_event`
-- **Locking**: `enforce_optimistic_lock` em `voip_trunks` e `agent_trunk_assignments` (entidades 8 e 9 do padrão)
-- **PT-BR, sonner, logger central, ≤400 linhas/arquivo, cyberpunk**
+- Backward-compatible (secrets legados como fallback)
+- Cron reversível (unschedule)
+- ≤400 linhas, PT-BR, sonner, logger central, cyberpunk
+- Decifragem de senha apenas server-side em `sip-config`
 
 ## Ordem de execução
-1. Migration: tabelas + RLS + triggers + enum provider
-2. Edge function `voip-trunks-manage` + refactor `sip-config`
-3. Hook + página `VoipTrunksAdmin` + drawer + aba assignments
-4. Atualizar Settings.tsx + AppSidebar + CommandPalette
-5. ADR-045 + memória + índice
+1. Migration: tabela `voip_trunk_health_checks` + coluna `last_health_status` em `voip_trunks` + trigger de alerta
+2. Edge function `voip-trunks-healthcheck` + refactor `sip-config`
+3. Hook `useTrunkHealth` + drawer + coluna saúde no painel
+4. Cron schedule (insert pg_cron)
+5. ADR-046 + memória + índice
 6. Validação: linter Supabase + `tsc --noEmit`
 
-Resultado: Admin gerencia múltiplas linhas VoIP via UI, agentes recebem trunk atribuído automaticamente, fim da dependência de secrets manuais para escalar operadoras.
+Resultado: **10/10 sustentado** com observabilidade ativa de saúde dos trunks, alerta proativo de quedas e migração transparente do `sip-config` para o novo modelo multi-linhas.
