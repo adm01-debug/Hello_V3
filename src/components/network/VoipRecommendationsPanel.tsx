@@ -14,6 +14,7 @@ import { logger } from '@/lib/logger';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { RecommendationHistoryDrawer } from './RecommendationHistoryDrawer';
+import { WhatIfSimulatorDialog } from './WhatIfSimulatorDialog';
 import { scheduleCoachingCheck, processCoachingQueue } from '@/lib/voipRecommendationCoaching';
 
 const log = logger.create('VoipRecommendationsPanel');
@@ -300,6 +301,14 @@ export function VoipRecommendationsPanel({ period = 'week' }: Props) {
                   {rec.action_type === 'acknowledge' && <Check className="h-3.5 w-3.5" />}
                   {rec.action_label}
                 </Button>
+                <WhatIfSimulatorDialog
+                  recommendation={rec}
+                  onApplyWithSimulation={(notes) => {
+                    executeAction(rec);
+                    void recordAction(rec, 'applied', notes);
+                    void scheduleCoachingCheck(rec.id, rec.title);
+                  }}
+                />
                 <Button size="sm" variant="ghost" onClick={() => handleSnooze(rec)} className="gap-1.5 text-xs">
                   <Clock className="h-3 w-3" /> Adiar 24h
                 </Button>
