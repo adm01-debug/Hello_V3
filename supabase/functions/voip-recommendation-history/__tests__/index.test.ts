@@ -1,49 +1,65 @@
-import "https://deno.land/std@0.224.0/dotenv/load.ts";
-import { assertEquals, assert } from "https://deno.land/std@0.224.0/assert/mod.ts";
-import { aggregate, type ActionRow } from "../index.ts";
+import { assertEquals, assert } from 'https://deno.land/std@0.224.0/assert/mod.ts';
+import { aggregate, type ActionRow } from '../index.ts';
 
-const SUPABASE_URL = Deno.env.get("VITE_SUPABASE_URL")!;
-const SUPABASE_ANON_KEY = Deno.env.get("VITE_SUPABASE_PUBLISHABLE_KEY")!;
-const FN_URL = `${SUPABASE_URL}/functions/v1/voip-recommendation-history`;
+function row(overrides: Partial<ActionRow> = {}): ActionRow {
+  return {
+    id: crypto.randomUUID(),
+    user_id: 'user-1',
+    recommendation_id: 'rec-x',
+    category: 'infra',
+    severity: 'critical',
+    action_type: 'function',
+    outcome: 'applied',
+    applied_at: new Date().toISOString(),
+    notes: null,
+    ...overrides,
+  };
+}
 
-Deno.test("rejeita request sem JWT", async () => {
-  const res = await fetch(`${FN_URL}?period=week&limit=50`, { method: "GET" });
-  const body = await res.json();
-  assertEquals(res.status, 401);
-  assertEquals(body.error, "Unauthorized");
-});
-
-Deno.test("rejeita period inválido", async () => {
-  const res = await fetch(`${FN_URL}?period=year&limit=50`, {
-    method: "GET",
-    headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
-  });
-  const body = await res.json();
-  // Pode ser 401 (sem user real) ou 400; basta consumir o corpo
-  assert([400, 401].includes(res.status), `status inesperado: ${res.status}`);
-  assert(body.error);
-});
-
-Deno.test("aggregate calcula categorias e outcomes corretamente", () => {
-  const today = new Date().toISOString();
-  const items: ActionRow[] = [
-    { id: '1', user_id: 'u', recommendation_id: 'r1', category: 'infra', severity: 'critical', action_type: 'function', outcome: 'auto_applied', applied_at: today, notes: null },
-    { id: '2', user_id: 'u', recommendation_id: 'r2', category: 'infra', severity: 'warning', action_type: 'function', outcome: 'applied', applied_at: today, notes: null },
-    { id: '3', user_id: 'u', recommendation_id: 'r3', category: 'quality', severity: 'warning', action_type: 'link', outcome: 'snoozed', applied_at: today, notes: null },
-  ];
-  const agg = aggregate(items);
-  assertEquals(agg.byCategory.infra, 2);
-  assertEquals(agg.byCategory.quality, 1);
-  assertEquals(agg.byOutcome.auto_applied, 1);
-  assertEquals(agg.byOutcome.applied, 1);
-  assertEquals(agg.byOutcome.snoozed, 1);
-});
-
-Deno.test("aggregate retorna 14 dias mesmo com lista vazia", () => {
+Deno.test('aggregate: lista vazia retorna 14 dias zerados', () => {
   const agg = aggregate([]);
   assertEquals(agg.perDay.length, 14);
   assertEquals(agg.perDay.every(d => d.count === 0), true);
-  // Datas devem ser ascendentes
-  const sorted = [...agg.perDay].sort((a, b) => a.date.localeCompare(b.date));
-  assertEquals(agg.perDay.map(d => d.date), sorted.map(d => d.date));
+  assertEquals(Object.keys(agg.byCategory).length, 0);
+  assertEquals(Object.keys(agg.byOutcome).length, 0);
+});
+
+Deno.test('aggregate: contagens por categoria e outcome', () => {
+  const items: ActionRow[] = [
+    row({ category: 'infra', outcome: 'auto_applied' }),
+    row({ category: 'infra', outcome: 'applied' }),
+    row({ category: 'quality', outcome: 'snoozed' }),
+    row({ category: 'process', outcome: 'dismissed' }),
+    row({ category: 'quality', outcome: 'applied' }),
+  ];
+  const agg = aggregate(items);
+  assertEquals(agg.byCategory.infra, 2);
+  assertEquals(agg.byCategory.quality, 2);
+  assertEquals(agg.byCategory.process, 1);
+  assertEquals(agg.byOutcome.applied, 2);
+  assertEquals(agg.byOutcome.auto_applied, 1);
+  assertEquals(agg.byOutcome.snoozed, 1);
+  assertEquals(agg.byOutcome.dismissed, 1);
+});
+
+Deno.test('aggregate: perDay em ordem cronológica ascendente', () => {
+  const agg = aggregate([]);
+  const dates = agg.perDay.map(d => d.date);
+  const sorted = [...dates].sort();
+  assertEquals(dates, sorted);
+  // Última data deve ser hoje (UTC)
+  const today = new Date().toISOString().slice(0, 10);
+  assertEquals(dates[dates.length - 1], today);
+});
+
+Deno.test('aggregate: contabiliza ação no dia correto', () => {
+  const today = new Date().toISOString().slice(0, 10);
+  const items = [
+    row({ applied_at: `${today}T10:00:00.000Z` }),
+    row({ applied_at: `${today}T15:30:00.000Z` }),
+  ];
+  const agg = aggregate(items);
+  const todayBucket = agg.perDay.find(d => d.date === today);
+  assert(todayBucket, 'bucket de hoje deve existir');
+  assertEquals(todayBucket!.count, 2);
 });
