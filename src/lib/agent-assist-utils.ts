@@ -49,20 +49,33 @@ export const INTENT_COLORS: Record<string, string> = {
   sentiment_alert: 'secondary',
 };
 
-/** Ordena sinais por (prioridade do intent × confiança) descendente. */
+/**
+ * Ordena sinais por prioridade do intent (peso dominante) × confiança (desempate).
+ * Garante que intents críticos (compliance, churn) sempre liderem, independente
+ * de uma confiança ligeiramente menor que sinais de menor severidade.
+ */
 export function rankSignals<T extends MinimalSignal>(signals: T[]): T[] {
   return [...signals].sort((a, b) => {
-    const ap = (INTENT_PRIORITY[a.intent] ?? 0) * (a.confidence || 0.5);
-    const bp = (INTENT_PRIORITY[b.intent] ?? 0) * (b.confidence || 0.5);
+    const ap = (INTENT_PRIORITY[a.intent] ?? 0) * 1000 + (a.confidence || 0.5);
+    const bp = (INTENT_PRIORITY[b.intent] ?? 0) * 1000 + (b.confidence || 0.5);
     return bp - ap;
   });
 }
 
-/** Match de keywords case-insensitive em texto livre. */
+/**
+ * Match flexível de keywords no texto. Para keywords compostas (várias palavras),
+ * exige que TODAS as palavras-chave apareçam no texto (ordem livre), evitando
+ * falsos negativos quando o texto reordena ou intercala termos.
+ */
 export function matchesKeywords(text: string, keywords: string[]): boolean {
   if (!text || !Array.isArray(keywords) || keywords.length === 0) return false;
   const lower = text.toLowerCase();
-  return keywords.some((kw) => kw && lower.includes(kw.toLowerCase()));
+  return keywords.some((kw) => {
+    if (!kw) return false;
+    const tokens = kw.toLowerCase().split(/\s+/).filter(Boolean);
+    if (tokens.length === 0) return false;
+    return tokens.every((t) => lower.includes(t));
+  });
 }
 
 /** Janela de contexto recente para envio à IA (últimas N falas). */
@@ -76,26 +89,29 @@ export function buildRecentContext(
     .join('\n');
 }
 
-/** Deduplica sinais por (intent + trigger_text similar) numa janela curta. */
+/**
+ * Deduplica sinais por (intent + trigger_text similar) dentro de uma janela curta.
+ * Sinais com mesma chave SEPARADOS por mais de `windowSeconds` são preservados
+ * — apenas duplicatas próximas no tempo (ruído da IA) são colapsadas.
+ */
 export function dedupeSignals<T extends { intent: string; trigger_text: string | null; created_at: string }>(
   signals: T[],
   windowSeconds: number = 30
 ): T[] {
-  const seen = new Map<string, T>();
+  const buckets = new Map<string, T[]>();
   for (const s of signals) {
     const key = `${s.intent}::${(s.trigger_text || '').slice(0, 50).toLowerCase()}`;
-    const existing = seen.get(key);
-    if (!existing) {
-      seen.set(key, s);
+    const list = buckets.get(key);
+    if (!list) {
+      buckets.set(key, [s]);
       continue;
     }
+    const last = list[list.length - 1];
     const dt =
-      Math.abs(new Date(s.created_at).getTime() - new Date(existing.created_at).getTime()) / 1000;
-    if (dt > windowSeconds) {
-      seen.set(key, s);
-    }
+      Math.abs(new Date(s.created_at).getTime() - new Date(last.created_at).getTime()) / 1000;
+    if (dt > windowSeconds) list.push(s);
   }
-  return Array.from(seen.values());
+  return Array.from(buckets.values()).flat();
 }
 
 /** Calcula taxa de aceitação de sinais (was_used / total). */

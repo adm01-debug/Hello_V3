@@ -1,10 +1,7 @@
 /**
  * Centralized structured logger.
- * - In development: logs to console with structured prefix.
- * - In production: suppresses debug/info, only logs warn/error.
- * - Masks PII and sensitive data automatically.
- * - Supports request ID correlation for cross-service tracing.
- * - Provides consistent log format across the entire codebase.
+ * - Dev: console com prefixo estruturado. Prod: apenas warn/error.
+ * - Mascara PII automaticamente. Suporta correlação por requestId.
  */
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
@@ -22,21 +19,11 @@ const SENSITIVE_KEYS = /password|token|secret|authorization|cookie|session|key|c
 
 function maskSensitive(obj: unknown, depth = 0): unknown {
   if (depth > 5) return '[deep object]';
-  if (obj === null || obj === undefined) return obj;
-  if (typeof obj === 'string') return obj;
-  if (typeof obj !== 'object') return obj;
-
-  if (Array.isArray(obj)) {
-    return obj.map((item) => maskSensitive(item, depth + 1));
-  }
-
+  if (obj === null || obj === undefined || typeof obj !== 'object') return obj;
+  if (Array.isArray(obj)) return obj.map((item) => maskSensitive(item, depth + 1));
   const masked: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
-    if (SENSITIVE_KEYS.test(key)) {
-      masked[key] = '[REDACTED]';
-    } else {
-      masked[key] = maskSensitive(value, depth + 1);
-    }
+    masked[key] = SENSITIVE_KEYS.test(key) ? '[REDACTED]' : maskSensitive(value, depth + 1);
   }
   return masked;
 }
@@ -45,101 +32,44 @@ const isDev = typeof window !== 'undefined'
   ? window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   : false;
 
-const LOG_LEVELS: Record<LogLevel, number> = {
-  debug: 0,
-  info: 1,
-  warn: 2,
-  error: 3,
-};
-
+const LOG_LEVELS: Record<LogLevel, number> = { debug: 0, info: 1, warn: 2, error: 3 };
 const MIN_LEVEL: LogLevel = isDev ? 'debug' : 'warn';
-
-function shouldLog(level: LogLevel): boolean {
-  return LOG_LEVELS[level] >= LOG_LEVELS[MIN_LEVEL];
-}
+const shouldLog = (level: LogLevel): boolean => LOG_LEVELS[level] >= LOG_LEVELS[MIN_LEVEL];
 
 // ─── Request ID Correlation ────────────────────────────────────────────────
-
 let _currentRequestId: string | undefined;
 
-/** Generate a short unique request ID (12 chars hex) */
 export function generateRequestId(): string {
   const array = new Uint8Array(6);
   crypto.getRandomValues(array);
   return Array.from(array, (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-/** Set the current request ID for log correlation */
-export function setRequestId(id: string): void {
-  _currentRequestId = id;
-}
+export const setRequestId = (id: string): void => { _currentRequestId = id; };
+export const getRequestId = (): string | undefined => _currentRequestId;
+export const clearRequestId = (): void => { _currentRequestId = undefined; };
 
-/** Get the current request ID */
-export function getRequestId(): string | undefined {
-  return _currentRequestId;
-}
-
-/** Clear the current request ID */
-export function clearRequestId(): void {
-  _currentRequestId = undefined;
-}
-
-/**
- * Execute a function within a request ID scope.
- * Automatically generates and clears the request ID.
- */
 export function withRequestId<T>(fn: () => T, id?: string): T {
-  const requestId = id ?? generateRequestId();
-  setRequestId(requestId);
-  try {
-    return fn();
-  } finally {
-    clearRequestId();
-  }
+  setRequestId(id ?? generateRequestId());
+  try { return fn(); } finally { clearRequestId(); }
 }
 
 // ─── Core Logging ──────────────────────────────────────────────────────────
-
-function formatEntry(entry: LogEntry): string {
-  const ctx = entry.context ? `[${entry.context}]` : '';
-  const rid = entry.requestId ? `[rid:${entry.requestId}]` : '';
-  return `${entry.timestamp} [${entry.level.toUpperCase()}]${ctx}${rid} ${entry.message}`;
-}
-
 function log(level: LogLevel, message: string, context?: string, data?: unknown): void {
   if (!shouldLog(level)) return;
-
   const entry: LogEntry = {
-    level,
-    message,
+    level, message, context,
     timestamp: new Date().toISOString(),
-    context,
     requestId: _currentRequestId,
     data: data !== undefined ? maskSensitive(data) : undefined,
   };
-
-  const formatted = formatEntry(entry);
-
-  const args: unknown[] = [formatted];
-  if (entry.data !== undefined) args.push(entry.data);
-
-  switch (level) {
-    case 'debug':
-      console.debug(...args);
-      break;
-    case 'info':
-      console.info(...args);
-      break;
-    case 'warn':
-      console.warn(...args);
-      break;
-    case 'error':
-      console.error(...args);
-      break;
-  }
+  const ctx = entry.context ? `[${entry.context}]` : '';
+  const rid = entry.requestId ? `[rid:${entry.requestId}]` : '';
+  const formatted = `${entry.timestamp} [${entry.level.toUpperCase()}]${ctx}${rid} ${entry.message}`;
+  const args: unknown[] = entry.data !== undefined ? [formatted, entry.data] : [formatted];
+  console[level](...args);
 }
 
-/** Create a scoped logger for a specific module/component */
 function createLogger(context: string) {
   return {
     debug: (msg: string, data?: unknown) => log('debug', msg, context, data),
