@@ -1,36 +1,43 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lightbulb, Clock, ExternalLink, Zap, Check, Sparkles } from 'lucide-react';
+import { Lightbulb, Clock, ExternalLink, Zap, Check, Sparkles, X, ShieldCheck } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useVoipRecommendations, type VoipRecommendation, type RecPeriod } from '@/hooks/useVoipRecommendations';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { supabase } from '@/integrations/supabase/client';
+import { useQueryClient } from '@tanstack/react-query';
+import { RecommendationHistoryDrawer } from './RecommendationHistoryDrawer';
 
 const log = logger.create('VoipRecommendationsPanel');
 const SNOOZE_KEY = 'voip-rec-snoozed';
+const AUTO_APPLY_KEY = 'voip-rec-auto-apply';
+const AUTO_APPLIED_KEY = 'voip-rec-auto-applied'; // ids já auto-aplicados nesta sessão
 const SNOOZE_HOURS = 24;
+const AUTO_APPLY_DELAY_MS = 3000;
 
 interface SnoozedMap { [id: string]: number }
 
-function loadSnoozed(): SnoozedMap {
+function loadJsonMap(key: string): SnoozedMap {
   try {
-    const raw = localStorage.getItem(SNOOZE_KEY);
+    const raw = localStorage.getItem(key);
     if (!raw) return {};
     const parsed = JSON.parse(raw) as SnoozedMap;
     const now = Date.now();
-    // limpa expirados
     return Object.fromEntries(Object.entries(parsed).filter(([, t]) => t > now));
   } catch {
     return {};
   }
 }
 
-function saveSnoozed(map: SnoozedMap) {
-  try { localStorage.setItem(SNOOZE_KEY, JSON.stringify(map)); } catch { /* noop */ }
+function saveJsonMap(key: string, map: SnoozedMap) {
+  try { localStorage.setItem(key, JSON.stringify(map)); } catch { /* noop */ }
 }
 
 const SEVERITY_STYLES: Record<VoipRecommendation['severity'], string> = {
@@ -53,46 +60,128 @@ interface Props {
 export function VoipRecommendationsPanel({ period = 'week' }: Props) {
   const { data, isLoading, error, refetch } = useVoipRecommendations(period);
   const navigate = useNavigate();
-  const [snoozed, setSnoozed] = useState<SnoozedMap>(() => loadSnoozed());
+  const queryClient = useQueryClient();
+  const [snoozed, setSnoozed] = useState<SnoozedMap>(() => loadJsonMap(SNOOZE_KEY));
+  const [autoApply, setAutoApply] = useState<boolean>(() => {
+    try { return localStorage.getItem(AUTO_APPLY_KEY) === '1'; } catch { return false; }
+  });
+  const [pendingAuto, setPendingAuto] = useState<{ id: string; secondsLeft: number } | null>(null);
+  const autoTimerRef = useRef<number | null>(null);
+  const autoAppliedRef = useRef<Set<string>>(new Set());
 
   const visible = useMemo(() => {
     const list = data?.recommendations ?? [];
     return list.filter(r => !snoozed[r.id]);
   }, [data, snoozed]);
 
-  const handleApply = useCallback((rec: VoipRecommendation) => {
-    log.info('Aplicando recomendação', { id: rec.id, type: rec.action_type });
+  const recordAction = useCallback(async (
+    rec: VoipRecommendation,
+    outcome: 'applied' | 'snoozed' | 'dismissed' | 'auto_applied',
+    notes?: string,
+  ) => {
+    try {
+      const { data: userData } = await supabase.auth.getUser();
+      const userId = userData?.user?.id;
+      if (!userId) return;
+      await supabase.from('voip_recommendation_actions').insert({
+        user_id: userId,
+        recommendation_id: rec.id,
+        category: rec.category,
+        severity: rec.severity,
+        action_type: rec.action_type,
+        action_payload: rec.action_payload,
+        outcome,
+        notes: notes ?? null,
+      });
+      queryClient.invalidateQueries({ queryKey: ['voip-recommendation-history'] });
+    } catch (err) {
+      log.warn('Falha ao registrar ação no histórico', err);
+    }
+  }, [queryClient]);
+
+  const executeAction = useCallback((rec: VoipRecommendation) => {
     if (rec.action_type === 'link') {
       const route = rec.action_payload.route as string | undefined;
       if (route) {
         const [path, hash] = route.split('#');
         navigate(path);
         if (hash) setTimeout(() => {
-          const el = document.getElementById(hash);
-          el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 200);
-        toast.success(`Navegando: ${rec.action_label}`);
       }
     } else if (rec.action_type === 'function') {
       const action = rec.action_payload.action as string | undefined;
       if (action === 'run_connectivity_test') {
-        // dispara evento global capturado pela página
         window.dispatchEvent(new CustomEvent('voip:run-connectivity-test'));
-        toast.info('Iniciando teste de conexão...');
-      } else {
-        toast.info('Ação registrada');
       }
-    } else {
-      toast.success('Recomendação reconhecida');
     }
   }, [navigate]);
+
+  const handleApply = useCallback((rec: VoipRecommendation) => {
+    log.info('Aplicando recomendação', { id: rec.id });
+    executeAction(rec);
+    toast.success(`Aplicado: ${rec.action_label}`);
+    void recordAction(rec, 'applied');
+  }, [executeAction, recordAction]);
 
   const handleSnooze = useCallback((rec: VoipRecommendation) => {
     const next = { ...snoozed, [rec.id]: Date.now() + SNOOZE_HOURS * 3_600_000 };
     setSnoozed(next);
-    saveSnoozed(next);
+    saveJsonMap(SNOOZE_KEY, next);
     toast.info(`Adiada por ${SNOOZE_HOURS}h`);
-  }, [snoozed]);
+    void recordAction(rec, 'snoozed', `${SNOOZE_HOURS}h`);
+  }, [snoozed, recordAction]);
+
+  const handleToggleAutoApply = useCallback((checked: boolean) => {
+    setAutoApply(checked);
+    try { localStorage.setItem(AUTO_APPLY_KEY, checked ? '1' : '0'); } catch { /* noop */ }
+    toast.info(checked ? 'Auto-aplicar críticas seguras: ON' : 'Auto-aplicar: OFF');
+  }, []);
+
+  const cancelAutoApply = useCallback(() => {
+    if (autoTimerRef.current) {
+      window.clearInterval(autoTimerRef.current);
+      autoTimerRef.current = null;
+    }
+    if (pendingAuto) {
+      const rec = visible.find(r => r.id === pendingAuto.id);
+      if (rec) void recordAction(rec, 'dismissed', 'Auto-apply cancelado pelo usuário');
+    }
+    setPendingAuto(null);
+  }, [pendingAuto, visible, recordAction]);
+
+  // Lógica de auto-apply: apenas critical + function (categoria infra implícita)
+  useEffect(() => {
+    if (!autoApply || pendingAuto) return;
+    const candidate = visible.find(r =>
+      r.severity === 'critical' &&
+      r.action_type === 'function' &&
+      !autoAppliedRef.current.has(r.id)
+    );
+    if (!candidate) return;
+
+    autoAppliedRef.current.add(candidate.id);
+    setPendingAuto({ id: candidate.id, secondsLeft: AUTO_APPLY_DELAY_MS / 1000 });
+
+    let remaining = AUTO_APPLY_DELAY_MS / 1000;
+    autoTimerRef.current = window.setInterval(() => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        if (autoTimerRef.current) window.clearInterval(autoTimerRef.current);
+        autoTimerRef.current = null;
+        executeAction(candidate);
+        toast.success(`Auto-aplicado: ${candidate.action_label}`);
+        void recordAction(candidate, 'auto_applied', 'Disparado automaticamente após countdown');
+        setPendingAuto(null);
+      } else {
+        setPendingAuto({ id: candidate.id, secondsLeft: remaining });
+      }
+    }, 1000);
+
+    return () => {
+      if (autoTimerRef.current) window.clearInterval(autoTimerRef.current);
+    };
+  }, [autoApply, visible, pendingAuto, executeAction, recordAction]);
 
   if (isLoading) {
     return (
@@ -124,8 +213,8 @@ export function VoipRecommendationsPanel({ period = 'week' }: Props) {
 
   return (
     <Card className="glass-card">
-      <CardHeader className="flex flex-row items-start justify-between gap-4">
-        <div>
+      <CardHeader className="flex flex-row items-start justify-between gap-4 flex-wrap">
+        <div className="flex-1 min-w-0">
           <CardTitle className="flex items-center gap-2">
             <Lightbulb className="h-5 w-5 text-primary" />
             Recomendações Acionáveis
@@ -136,13 +225,39 @@ export function VoipRecommendationsPanel({ period = 'week' }: Props) {
               : `${visible.length} ação(ões) priorizada(s) para ${period === 'day' ? '24h' : '7 dias'}`}
           </CardDescription>
         </div>
-        {visible.length === 0 && (
-          <Badge variant="outline" className="bg-success/10 text-success border-success/30 gap-1">
-            <Sparkles className="h-3 w-3" /> Tudo saudável
-          </Badge>
-        )}
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-2">
+            <Switch id="auto-apply" checked={autoApply} onCheckedChange={handleToggleAutoApply} />
+            <Label htmlFor="auto-apply" className="text-xs flex items-center gap-1 cursor-pointer">
+              <ShieldCheck className="h-3.5 w-3.5 text-success" /> Auto-aplicar críticas
+            </Label>
+          </div>
+          <RecommendationHistoryDrawer />
+          {visible.length === 0 && (
+            <Badge variant="outline" className="bg-success/10 text-success border-success/30 gap-1">
+              <Sparkles className="h-3 w-3" /> Tudo saudável
+            </Badge>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="space-y-3">
+        {pendingAuto && (() => {
+          const rec = visible.find(r => r.id === pendingAuto.id);
+          if (!rec) return null;
+          return (
+            <div className="rounded-lg border-2 border-success/50 bg-success/10 p-3 flex items-center justify-between gap-3 animate-pulse">
+              <div className="flex items-center gap-2 text-sm">
+                <ShieldCheck className="h-4 w-4 text-success" />
+                <span className="font-semibold">Auto-aplicando em {pendingAuto.secondsLeft}s:</span>
+                <span className="text-muted-foreground">{rec.title}</span>
+              </div>
+              <Button size="sm" variant="outline" onClick={cancelAutoApply} className="gap-1.5">
+                <X className="h-3.5 w-3.5" /> Cancelar
+              </Button>
+            </div>
+          );
+        })()}
+
         {visible.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Sparkles className="h-10 w-10 mx-auto mb-2 text-success/60" />
