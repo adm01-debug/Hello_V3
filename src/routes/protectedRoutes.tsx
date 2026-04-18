@@ -76,6 +76,7 @@ const Knowledge = lazy(() => import("@/pages/Knowledge"));
 const RoutingRules = lazy(() => import("@/pages/RoutingRules"));
 const SLAPolicies = lazy(() => import("@/pages/SLAPolicies"));
 const ConcurrencyConflicts = lazy(() => import("@/pages/ConcurrencyConflicts"));
+const VoipTrunksAdmin = lazy(() => import("@/pages/admin/VoipTrunksAdmin"));
 
 export interface RouteConfig {
   path: string;
@@ -163,6 +164,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/observability", element: ObservabilityDashboard, roles: ["admin"] },
   { path: "/network-diagnostics", element: NetworkDiagnostics, roles: ["supervisor", "admin"] },
   { path: "/concurrency-conflicts", element: ConcurrencyConflicts, roles: ["supervisor", "admin"] },
+  { path: "/admin/voip-trunks", element: VoipTrunksAdmin, roles: ["admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },
