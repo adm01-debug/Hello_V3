@@ -18,6 +18,7 @@ export interface Contact {
   preferences: Record<string, unknown>;
   personality_insights: Record<string, unknown>;
   source: string;
+  version: number;
   created_at: string;
   updated_at: string;
 }
