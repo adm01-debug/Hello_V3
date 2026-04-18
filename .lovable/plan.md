@@ -1,50 +1,63 @@
 
-Vou conduzir auditoria técnica exaustiva (22 dimensões, padrão 10/10) usando ferramentas read-only: scan de segurança, linter Supabase, leitura de RLS, Edge Functions, scorecard, ADRs, testes e estrutura.
+Auditoria identificou 2 ERRORs de segurança + gaps de tipagem/testes. Vou executar em 3 ondas sequenciais (uma melhoria por vez), começando pelos P0 críticos.
 
-## Plano de Execução da Auditoria
+## Onda 23 — Quick Wins de Segurança (P0)
 
-### Fase 0 — Inventário
-- Listar `src/`, `supabase/functions/`, `supabase/migrations/`, `docs/adr/`
-- Contar arquivos, edge functions, testes, ADRs
-- Validar stack: React 18 + Vite + TS strict + Supabase + Lovable Cloud + Lovable AI Gateway
+### Passo 1: Patch RLS `user_profiles` — bloquear privilege escalation
+- Migration: revogar `INSERT` direto de `authenticated`; manter apenas trigger `handle_new_user` (SECURITY DEFINER) como caminho válido
+- Reforçar trigger `prevent_role_escalation` no `BEFORE UPDATE` (já existe a função, garantir attach)
+- Policy de `UPDATE`: usuário só atualiza próprios campos não-críticos (`full_name`, `avatar_url`); `role`/`agent_id` apenas via admin
 
-### Fase 1 — Coleta de Evidências (paralela)
-1. **Segurança**: `security--run_security_scan` + `supabase--linter` + leitura de `src/lib/security/*`
-2. **RLS/Autorização**: `supabase--read_query` em `pg_policies` + leitura de migrations recentes
-3. **Auth**: leitura de `src/hooks/useAuth.ts`, `src/hooks/auth/*`, lockout policy, MFA presence
-4. **Edge Functions**: amostragem de 3-5 functions críticas (JWT, CORS, validação, error handling)
-5. **Tipagem**: `tsconfig.json` (já visto: strict + noImplicitAny ✓) + grep de `as any` residual
-6. **Testes**: contar suites Vitest + Deno + Playwright + cobertura RLS declarativa
-7. **Observabilidade**: `src/lib/logger.ts`, `src/lib/tracing.ts`, `src/lib/web-vitals.ts`, `src/lib/error-tracking.ts`
-8. **Performance**: React Query config, lazy loading, bundle hints
-9. **Validação**: `src/lib/validation/` (Zod schemas)
-10. **Documentação**: contar ADRs (esperado ~37), runbooks, scorecard, memórias
+### Passo 2: Proteger Realtime `meeting_summaries`
+- Migration: garantir RLS estrito na tabela base (ADR-017 cobriu INSERT, validar SELECT)
+- Remover da publicação `supabase_realtime` se exposto sem necessidade, OU reforçar policy SELECT exigindo participação na call
+- Documentar em ADR-038
 
-### Fase 2 — Análise das 22 Dimensões
-Para cada dimensão: nota 0-10, evidências com paths, gaps para 10/10, ações corretivas concretas.
+### Passo 3: Habilitar HIBP (leaked password protection)
+- `configure_auth({ password_hibp_enabled: true })`
 
-Áreas com risco conhecido (do scorecard atual):
-- 3 WARN linter Supabase (RLS true em SELECT públicos intencionais — aceito, mas verificar)
-- `as any` residuais em interop (Recharts/Radix/Web Audio — formalizado em ADR-022)
-- `crm_field_suggestions` policies amplas (mapeado para próxima iteração)
-- `leaked-password-protection` depende de toggle no Dashboard Supabase
+### Passo 4: Refinar policies "always true" (3 WARN linter)
+- Investigar `pg_policies` para identificar as 3 policies sinalizadas
+- Reescrever para `TO authenticated USING (auth.uid() IS NOT NULL)` quando possível
+- Documentar exceções legítimas (ex.: `kb_articles` público) com COMMENT na policy
 
-### Fase 3 — Consolidação
-- Scorecard ASCII completo (20 dimensões + ponderada)
-- Top 10 ações por ROI
-- Roadmap 3 ondas (Quick Wins / Sprint 1 / Sprint 2)
-- Comentário final de maturidade
+## Onda 24 — Tipagem & Type Safety
 
-### Pesos (conforme prompt)
-- ×3: Segurança, Autenticação, Autorização, Data Integrity
-- ×2: Banco, Tipagem, Validação, Testes, Arquitetura
-- ×1: Demais
+### Passo 5: Eliminar `(supabase as any)` em hooks de domínio
+- Alvos: ~20 hooks identificados (`useComplianceRules`, `useCallSession`, etc.)
+- Substituir por tipos derivados de `Database['public']['Tables'][...]['Row'|'Insert'|'Update']`
+- Manter `as any` apenas em interop documentado (Recharts/WebAudio/Radix refs) — ADR-022
 
-### Entregável
-Relatório completo em PT-BR no chat (sem alterações de código — modo read-only). Após sua aprovação, no modo default posso executar as ações Quick Wins identificadas (ex.: ativar HIBP, refinar policies amplas, eliminar últimos `as any` evitáveis).
+### Passo 6: ADR-039 + memória + scorecard atualizado
 
-Considerações:
-- Auditoria 100% baseada em evidências do codebase (sem achismo)
-- Notas conservadoras: 10/10 só com zero gaps demonstráveis
-- Calibrada ao contexto (web-only, Lovable Cloud, time pequeno)
-- Ações concretas com paths/migrations/configs
+## Onda 25 — Robustez & Testes
+
+### Passo 7: Optimistic locking em `deals` e `contacts`
+- Migration: adicionar coluna `version INTEGER NOT NULL DEFAULT 1`
+- Trigger `BEFORE UPDATE` incrementa `version` e rejeita se cliente envia versão desatualizada
+- Atualizar hooks `useDeals`/`useContacts` para enviar `version` em mutations
+
+### Passo 8: Gate de cobertura Vitest no CI
+- `.github/workflows/ci.yml`: adicionar `--coverage` + threshold 75% em `src/lib/`, `src/hooks/`
+- Script `bun run test:coverage` no `package.json`
+
+### Passo 9: Fechamento — ADR-040, scorecard final, memória `onda-23-25-fechamento.md`
+
+## Considerações
+- Cada passo: 1 commit lógico, validado via linter Supabase + security scan
+- ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon mantidos
+- Zero breaking changes em APIs públicas
+- Migrations reversíveis (down implícito via `DROP POLICY` / `ALTER TABLE DROP COLUMN`)
+
+## Ordem de execução
+1. Migration RLS user_profiles + trigger role escalation
+2. Migration Realtime meeting_summaries hardening
+3. configure_auth HIBP
+4. Migration refinar 3 policies "always true"
+5. Refator de tipagem em ~20 hooks (sem `as any`)
+6. ADR-038/039 + memórias intermediárias
+7. Migration optimistic locking deals + contacts
+8. CI coverage gate
+9. ADR-040 + scorecard 10/10 + memória de fechamento
+
+Resultado esperado: **8.4/10 → 10/10 ponderado**, com 0 ERRORs de linter, HIBP ativo, zero `as any` evitável, cobertura ≥75% e locking otimista em entidades críticas.
