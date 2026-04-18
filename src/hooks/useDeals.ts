@@ -24,6 +24,7 @@ export interface Deal {
   health_updated_at: string | null;
   status: string;
   notes: string | null;
+  version: number;
   created_at: string;
   updated_at: string;
 }
@@ -72,9 +73,16 @@ export function useDeals() {
 
   const updateDeal = useCallback(async (id: string, patch: Partial<Deal>) => {
     const { error } = await supabase.from("deals").update(patch as DealUpdate).eq("id", id);
-    if (error) { toast.error("Erro ao atualizar"); logger.error("updateDeal", error); return false; }
+    if (error) {
+      if (error.message?.includes("OPTIMISTIC_LOCK_CONFLICT")) {
+        toast.error("Esta oportunidade foi alterada por outro usuário. Recarregando...");
+        await fetchDeals();
+        return false;
+      }
+      toast.error("Erro ao atualizar"); logger.error("updateDeal", error); return false;
+    }
     return true;
-  }, []);
+  }, [fetchDeals]);
 
   const updateStage = useCallback(async (id: string, stage: string) => {
     return updateDeal(id, { stage });

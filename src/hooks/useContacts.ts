@@ -18,6 +18,7 @@ export interface Contact {
   preferences: Record<string, unknown>;
   personality_insights: Record<string, unknown>;
   source: string;
+  version: number;
   created_at: string;
   updated_at: string;
 }
@@ -131,7 +132,7 @@ export const useContacts = () => {
     }
   }, [fetchContacts]);
 
-  const updateContact = useCallback(async (id: string, updates: Partial<CreateContactInput>): Promise<Contact | null> => {
+  const updateContact = useCallback(async (id: string, updates: Partial<CreateContactInput> & { version?: number }): Promise<Contact | null> => {
     try {
       const { data, error } = await supabase
         .from('contacts')
@@ -140,7 +141,14 @@ export const useContacts = () => {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        if (error.message?.includes('OPTIMISTIC_LOCK_CONFLICT')) {
+          toast.error('Este contato foi alterado por outro usuário. Recarregando...');
+          await fetchContacts();
+          return null;
+        }
+        throw error;
+      }
       
       toast.success('Contato atualizado');
       await fetchContacts();
