@@ -11,17 +11,22 @@ vi.mock('@/integrations/supabase/client', () => {
     domain: null, contract_start_date: null, contract_end_date: null,
     last_contact_at: null, next_review_at: null, notes: null, tags: null,
   };
-  const builder = {
-    select: vi.fn().mockReturnThis(),
-    insert: vi.fn().mockReturnThis(),
-    update: vi.fn().mockReturnThis(),
-    eq: vi.fn().mockReturnThis(),
-    order: vi.fn().mockResolvedValue({ data: [account], error: null }),
-    single: vi.fn().mockResolvedValue({ data: account, error: null }),
+  const makeBuilder = () => {
+    const builder: Record<string, unknown> = {};
+    const result = { data: [account], error: null };
+    const singleResult = { data: account, error: null };
+    builder.select = vi.fn().mockReturnValue(builder);
+    builder.insert = vi.fn().mockReturnValue(builder);
+    builder.update = vi.fn().mockReturnValue(builder);
+    builder.eq = vi.fn().mockReturnValue(builder);
+    builder.order = vi.fn().mockReturnValue(builder);
+    builder.single = vi.fn().mockResolvedValue(singleResult);
+    builder.then = (resolve: (v: typeof result) => unknown) => Promise.resolve(result).then(resolve);
+    return builder;
   };
   return {
     supabase: {
-      from: vi.fn(() => builder),
+      from: vi.fn(() => makeBuilder()),
       functions: { invoke: vi.fn().mockResolvedValue({ data: { health_score: 80 }, error: null }) },
     },
   };

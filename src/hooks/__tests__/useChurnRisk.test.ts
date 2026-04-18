@@ -6,13 +6,17 @@ vi.mock('@/integrations/supabase/client', () => {
   const signals = [
     { id: 's1', account_id: 'a1', signal_type: 'contact_drop', severity: 'high', score_delta: 25, description: 'sem contato', evidence: {}, detected_at: '', resolved_at: null, resolved_by: null, resolution_notes: null, is_active: true },
   ];
-  const builder = {
-    select: vi.fn().mockReturnThis(),
-    update: vi.fn().mockReturnThis(),
-    eq: vi.fn().mockReturnThis(),
-    order: vi.fn().mockResolvedValue({ data: signals, error: null }),
+  const makeBuilder = () => {
+    const builder: Record<string, unknown> = {};
+    const result = { data: signals, error: null };
+    builder.select = vi.fn().mockReturnValue(builder);
+    builder.update = vi.fn().mockReturnValue(builder);
+    builder.eq = vi.fn().mockReturnValue(builder);
+    builder.order = vi.fn().mockReturnValue(builder);
+    builder.then = (resolve: (v: typeof result) => unknown) => Promise.resolve(result).then(resolve);
+    return builder;
   };
-  return { supabase: { from: vi.fn(() => builder) } };
+  return { supabase: { from: vi.fn(() => makeBuilder()) } };
 });
 
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }));

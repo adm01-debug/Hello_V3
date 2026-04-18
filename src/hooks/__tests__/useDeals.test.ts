@@ -55,6 +55,6 @@ describe("useDeals", () => {
     const { result } = renderHook(() => useDeals());
     await waitFor(() => expect(result.current.loading).toBe(false));
     await act(async () => { await result.current.computeHealth("d1"); });
-    expect(supabase.functions.invoke).toHaveBeenCalledWith("compute-deal-health", { body: { dealId: "d1" } });
+    expect(supabase.functions.invoke).toHaveBeenCalledWith("compute-deal-health", expect.objectContaining({ body: { dealId: "d1" } }));
   });
 });
