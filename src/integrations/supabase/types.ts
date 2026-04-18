@@ -498,6 +498,7 @@ export type Database = {
           name: string
           status: string
           updated_at: string
+          version: number
         }
         Insert: {
           avatar_url?: string | null
@@ -509,6 +510,7 @@ export type Database = {
           name: string
           status?: string
           updated_at?: string
+          version?: number
         }
         Update: {
           avatar_url?: string | null
@@ -520,6 +522,7 @@ export type Database = {
           name?: string
           status?: string
           updated_at?: string
+          version?: number
         }
         Relationships: []
       }
@@ -937,6 +940,7 @@ export type Database = {
           is_active: boolean
           name: string
           updated_at: string
+          version: number
         }
         Insert: {
           created_at?: string
@@ -946,6 +950,7 @@ export type Database = {
           is_active?: boolean
           name: string
           updated_at?: string
+          version?: number
         }
         Update: {
           created_at?: string
@@ -955,6 +960,7 @@ export type Database = {
           is_active?: boolean
           name?: string
           updated_at?: string
+          version?: number
         }
         Relationships: []
       }
