@@ -245,6 +245,7 @@ export default function ExtensionsAdmin() {
                     <TableHead className="text-center">Disp.</TableHead>
                     <TableHead>Trunk Primário</TableHead>
                     <TableHead>Saúde</TableHead>
+                    <TableHead className="text-center">Chamadas 7d</TableHead>
                     <TableHead className="text-center">Score</TableHead>
                     <TableHead className="w-12"></TableHead>
                   </TableRow>
@@ -291,6 +292,11 @@ export default function ExtensionsAdmin() {
                           )}
                         </TableCell>
                         <TableCell><TrunkHealthBadge health={ext.primary_trunk_health} /></TableCell>
+                        <TableCell className="text-center">
+                          <span className={ext.call_count_7d === 0 ? 'text-muted-foreground' : 'font-semibold text-primary'}>
+                            {ext.call_count_7d}
+                          </span>
+                        </TableCell>
                         <TableCell className="text-center">
                           <HealthScoreBadge score={ext.health_score} issues={ext.health_issues} />
                         </TableCell>
