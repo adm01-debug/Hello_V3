@@ -87,7 +87,7 @@ export function RecommendationHistoryDrawer() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button size="sm" variant="outline" className="gap-1.5">
+        <Button size="sm" variant="outline" className="gap-1.5" data-rec-history-trigger>
           <History className="h-3.5 w-3.5" /> Histórico
         </Button>
       </SheetTrigger>
