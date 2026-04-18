@@ -14,6 +14,7 @@ import { logger } from '@/lib/logger';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { RecommendationHistoryDrawer } from './RecommendationHistoryDrawer';
+import { scheduleCoachingCheck, processCoachingQueue } from '@/lib/voipRecommendationCoaching';
 
 const log = logger.create('VoipRecommendationsPanel');
 const SNOOZE_KEY = 'voip-rec-snoozed';
@@ -122,7 +123,13 @@ export function VoipRecommendationsPanel({ period = 'week' }: Props) {
     executeAction(rec);
     toast.success(`Aplicado: ${rec.action_label}`);
     void recordAction(rec, 'applied');
+    void scheduleCoachingCheck(rec.id, rec.title);
   }, [executeAction, recordAction]);
+
+  // Processa fila de coaching ao montar o painel (uma vez por sessão)
+  useEffect(() => {
+    void processCoachingQueue();
+  }, []);
 
   const handleSnooze = useCallback((rec: VoipRecommendation) => {
     const next = { ...snoozed, [rec.id]: Date.now() + SNOOZE_HOURS * 3_600_000 };
@@ -172,6 +179,7 @@ export function VoipRecommendationsPanel({ period = 'week' }: Props) {
         executeAction(candidate);
         toast.success(`Auto-aplicado: ${candidate.action_label}`);
         void recordAction(candidate, 'auto_applied', 'Disparado automaticamente após countdown');
+        void scheduleCoachingCheck(candidate.id, candidate.title);
         setPendingAuto(null);
       } else {
         setPendingAuto({ id: candidate.id, secondsLeft: remaining });
