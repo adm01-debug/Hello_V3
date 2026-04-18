@@ -63,6 +63,7 @@ const allRoutes = [
   { title: 'Bloqueio Geográfico', url: '/geo-blocking', icon: Globe, group: 'Segurança' },
   { title: 'Rate Limit', url: '/rate-limit', icon: AlertTriangle, group: 'Segurança' },
   { title: 'Observabilidade', url: '/observability', icon: Activity, group: 'Segurança' },
+  { title: 'Conflitos de Concorrência', url: '/concurrency-conflicts', icon: AlertTriangle, group: 'Segurança' },
   { title: 'Compliance', url: '/compliance', icon: ListChecks, group: 'Sistema' },
   { title: 'Outbound Compliance & Score', url: '/outbound-compliance', icon: ShieldCheck, group: 'Sistema' },
   { title: 'Logs de Auditoria', url: '/audit-logs', icon: Eye, group: 'Sistema' },
