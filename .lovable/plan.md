@@ -1,45 +1,37 @@
 
-Sistema está em **10/10 sustentado** após Ondas 23–27. Para continuar a evolução defensiva sem inflar a base, proponho a **Onda 28 — Blindagem de Concorrência Final**.
+Sistema em **10/10 sustentado** após Ondas 23–28. Cobertura total de locking (7 entidades), auditoria de conflitos, RLS hardening, HIBP, coverage gate. Próxima evolução defensiva incremental:
 
-## Onda 28 — Cobertura Total de Locking + Auditoria de Conflito
+## Onda 29 — Observabilidade de Conflitos + Retenção Automática
 
-### 1. Locking expandido para últimas 2 entidades de domínio mutável
-Aplicar o padrão consagrado (`version` + trigger `enforce_optimistic_lock`) em:
-- **`accounts`** (Customer Success — health 360°, editado por CSMs concorrentes)
-- **`success_plans`** (planos de sucesso — editados por CSM + cliente)
+### 1. Painel admin de conflitos de concorrência
+- `src/pages/ConcurrencyConflicts.tsx` (admin/supervisor only) lendo `optimistic_lock_conflicts`
+- KPIs: total 24h, top 5 tabelas, top 5 usuários, gráfico timeline 7d (recharts)
+- Filtros por `table_name` e período (24h/7d/30d)
+- Hook `useOptimisticLockConflicts` (React Query, staleTime 5min)
+- Rota `/concurrency-conflicts` protegida por `is_admin_or_supervisor()`
+- Link no menu admin
 
-Cobertura final: **7 entidades críticas** (deals, contacts, agents, cadences, playbooks, accounts, success_plans).
+### 2. Job de retenção automática (TTL 90d)
+- Edge function `cleanup-lock-conflicts` (cron-ready) — `DELETE FROM optimistic_lock_conflicts WHERE attempted_at < now() - interval '90 days'`
+- Validação JWT + `is_admin_user()` para invocação manual
+- Retorna `{ deleted_count, oldest_remaining }`
+- Teste Deno (1 cenário smoke)
 
-### 2. Auditoria automática de conflitos
-Nova tabela `optimistic_lock_conflicts` (append-only) para rastrear:
-- `table_name`, `record_id`, `user_id`, `attempted_at`
-- Trigger `enforce_optimistic_lock` passa a registrar o conflito antes de lançar a exceção (via `INSERT ... EXCEPTION WHEN OTHERS`)
-- RLS: leitura apenas para admin/supervisor
-
-Permite identificar hotspots de concorrência real em produção.
-
-### 3. Teste defensivo do trigger SQL
-- `supabase/functions/__tests__/optimistic-lock.test.ts` (Deno) — valida via SQL direto:
-  - Update sem `version` → incrementa normalmente
-  - Update com `version` correta → sucesso, version+1
-  - Update com `version` divergente → exceção `OPTIMISTIC_LOCK_CONFLICT`
-
-### 4. ADR-042 + memória de fechamento
-- `docs/adr/042-onda-28-blindagem-concorrencia.md`
-- `mem/features/onda-28-blindagem-concorrencia.md`
+### 3. ADR-043 + memória de fechamento
+- `docs/adr/043-onda-29-observabilidade-conflitos.md`
+- `mem/features/onda-29-observabilidade-conflitos.md`
 - Atualizar `mem/index.md`
 
 ## Considerações
-- Migration reversível (DROP COLUMN + DROP TRIGGER + DROP TABLE)
-- Zero breaking changes em hooks existentes
-- RLS rigorosa na nova tabela (só admin/supervisor lê)
-- Mantém PT-BR, sonner, logger central, ≤400 linhas
+- Zero novas tabelas — apenas leitura/cleanup da existente
+- Admin/supervisor only via RLS já vigente
+- ≤400 linhas, PT-BR, sonner, logger central, cyberpunk
+- Edge function reversível (DROP FUNCTION)
 
 ## Ordem de execução
-1. Migration: `version` + trigger em `accounts` e `success_plans`
-2. Migration: tabela `optimistic_lock_conflicts` + RLS + atualizar função `enforce_optimistic_lock` para registrar
-3. Teste Deno do trigger SQL
-4. ADR-042 + memória + índice
-5. Validação final: linter Supabase + `tsc --noEmit`
+1. Hook `useOptimisticLockConflicts` + página + rota + link menu
+2. Edge function `cleanup-lock-conflicts` + teste Deno
+3. ADR-043 + memória + índice
+4. Validação: `tsc --noEmit` + linter Supabase
 
-Resultado: **10/10 sustentado** com cobertura total (7 entidades), trilha de auditoria de conflitos e teste SQL defensivo do core do mecanismo.
+Resultado: **10/10 sustentado** com observabilidade visual de hotspots de concorrência e retenção controlada da trilha de auditoria.
