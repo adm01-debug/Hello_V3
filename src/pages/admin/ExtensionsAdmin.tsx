@@ -31,6 +31,7 @@ export default function ExtensionsAdmin() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const { data: extensions = [], isLoading } = useExtensionsOverview();
+  const { logBulk } = useExtensionAudit();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [trunkFilter, setTrunkFilter] = useState<string>('all');
@@ -104,6 +105,7 @@ export default function ExtensionsAdmin() {
       const { error } = await supabase.from('agents').update({ status: 'offline' }).in('id', ids);
       if (error) throw error;
       toast.success(`${ids.length} ${ids.length === 1 ? 'ramal' : 'ramais'} marcados como offline`);
+      logBulk({ action: 'bulk_force_offline', agentIds: ids });
       qc.invalidateQueries({ queryKey: ['extensions-overview'] });
       clearSelection();
     } catch (e) {
@@ -132,6 +134,8 @@ export default function ExtensionsAdmin() {
         provedor: e.primary_trunk_provider ?? '',
         saude_trunk: e.primary_trunk_health ?? '',
         score: e.health_score,
+        chamadas_7d: e.call_count_7d,
+        ultima_chamada: e.last_call_at ?? '',
         problemas: e.health_issues.join(' | '),
       })),
       [
@@ -144,10 +148,17 @@ export default function ExtensionsAdmin() {
         { key: 'provedor', label: 'Provedor' },
         { key: 'saude_trunk', label: 'Saúde Trunk' },
         { key: 'score', label: 'Score' },
+        { key: 'chamadas_7d', label: 'Chamadas 7d' },
+        { key: 'ultima_chamada', label: 'Última Chamada' },
         { key: 'problemas', label: 'Problemas' },
       ],
       `ramais-${new Date().toISOString().slice(0, 10)}`,
     );
+    logBulk({
+      action: 'bulk_export_csv',
+      agentIds: rows.map(r => r.agent_id),
+      details: { source: selectedIds.size > 0 ? 'selection' : 'filtered' },
+    });
     toast.success(`Exportados ${rows.length} ramais`);
   };
 
