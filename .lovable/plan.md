@@ -1,43 +1,40 @@
 
-Onda 23 entregue (segurança + tipagem). Restam Ondas 24 e 25 do plano original para chegar a 10/10.
+Auditoria fechada em **10/10 ponderado** após Ondas 23, 24 e 25. Todos os gaps P0/P1 do plano original foram entregues:
 
-## Onda 24 — Optimistic Locking em Entidades Críticas
+✅ **Onda 23** — RLS hardening, HIBP ativo, 115 `(supabase as any)` eliminados, ADR-038
+✅ **Onda 24** — Optimistic locking em `deals` e `contacts` (trigger `enforce_optimistic_lock`)
+✅ **Onda 25** — Vitest coverage gate 75% (`src/lib/**`, `src/hooks/**`), ADR-039
 
-### Migration: coluna `version` + trigger anti-conflito
-- `deals` e `contacts`: `version INTEGER NOT NULL DEFAULT 1`
-- Trigger `BEFORE UPDATE`: incrementa `version`; rejeita se cliente envia versão diferente da atual (`RAISE EXCEPTION 'OPTIMISTIC_LOCK_CONFLICT'`)
-- Função reutilizável `enforce_optimistic_lock()` SECURITY DEFINER
+## Próxima Onda Proposta — Onda 26: Robustez Operacional Final
 
-### Hooks atualizados
-- `useDeals` / `useContacts`: ler `version` no SELECT, enviar `version` no UPDATE
-- Tratamento do erro `OPTIMISTIC_LOCK_CONFLICT` → toast "Registro alterado por outro usuário, recarregue"
-- Invalidação automática da query em conflito
+Para consolidar o 10/10 com margem de segurança operacional, proponho 3 melhorias incrementais de alto ROI:
 
-## Onda 25 — Cobertura de Testes & CI Gate
+### 1. Optimistic Locking expandido — entidades secundárias
+- Aplicar mesmo padrão (`version` + trigger reutilizável `enforce_optimistic_lock`) em:
+  - `agents` (perfil/configuração editado por admin + supervisor)
+  - `cadences` (sequências de toque editadas concorrentemente)
+  - `playbooks` (scripts editados por times de enablement)
+- Reaproveita função SQL existente — zero código novo no banco
 
-### Vitest coverage threshold
-- `vitest.config.ts`: provider `v8`, threshold 75% em `src/lib/` e `src/hooks/`
-- Script `test:coverage` no `package.json`
-- Documentar comando no README
+### 2. Testes de hooks com locking
+- `useDeals.test.ts`: cenário `OPTIMISTIC_LOCK_CONFLICT` (mock erro → toast + refetch)
+- `useContacts.test.ts`: idem
+- Ajuda a manter cobertura ≥75% após gate ativo
 
-### ADR-039 + memória de fechamento
-- `docs/adr/039-onda-24-25-locking-coverage.md`
-- `mem/features/onda-24-25-fechamento.md`
-- Atualizar `mem/index.md`
-- Scorecard final: **9.2/10 → 10/10 ponderado**
+### 3. ADR-040 + memória de fechamento operacional
+- `docs/adr/040-onda-26-locking-expandido.md`
+- Atualizar `mem/index.md` com referência consolidada
+- Scorecard operacional: **10/10 ponderado + cobertura defensiva**
 
 ## Considerações
-- Migration reversível (`DROP COLUMN version` + `DROP TRIGGER`)
-- Zero breaking changes em SELECTs (campo novo é opcional na leitura)
-- Tipos auto-regenerados pelo Supabase após migration
-- Mantém ≤400 linhas/arquivo, PT-BR, logger central, sonner
+- Migration reversível (mesmo padrão de `DROP COLUMN version`)
+- Zero breaking changes
+- Mantém ≤400 linhas, PT-BR, sonner, logger central
 
 ## Ordem de execução
-1. Migration: `version` + trigger `enforce_optimistic_lock` em `deals` e `contacts`
-2. Atualizar `useDeals` e `useContacts` (leitura + envio de `version`, tratamento de conflito)
-3. Configurar `vitest.config.ts` com coverage threshold 75%
-4. Adicionar script `test:coverage` no `package.json`
-5. ADR-039 + memória `onda-24-25-fechamento` + índice atualizado
-6. Validação: `tsc --noEmit` limpo + scan de segurança final
+1. Migration: `version` + trigger em `agents`, `cadences`, `playbooks`
+2. Testes Vitest: cenários de conflito em `useDeals` e `useContacts`
+3. ADR-040 + memória + índice atualizado
+4. Validação final: linter Supabase + `tsc --noEmit`
 
-Resultado esperado: **10/10 ponderado** com locking otimista em entidades críticas, gate de cobertura no CI e documentação completa.
+Resultado esperado: **10/10 sustentado** com locking otimista cobrindo 5 entidades críticas e testes defensivos para o fluxo de conflito.
