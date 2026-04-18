@@ -93,6 +93,7 @@ const settingsNavItems = [
   { title: 'Relatório Segurança', url: '/security-report', icon: FileBarChart },
   { title: 'Roles & Permissões', url: '/roles', icon: UserCog },
   { title: 'Linhas VoIP', url: '/admin/voip-trunks', icon: Phone },
+  { title: 'Ramais', url: '/admin/extensions', icon: Headphones },
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];
 
