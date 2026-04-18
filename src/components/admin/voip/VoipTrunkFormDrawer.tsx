@@ -34,7 +34,7 @@ export function VoipTrunkFormDrawer({ open, onOpenChange, trunk }: Props) {
   const save = useSaveTrunk();
   const [form, setForm] = useState({
     name: '', provider: 'generic' as VoipProvider, sip_server: '', sip_username: '',
-    sip_password: '', sip_realm: '', transport: 'wss' as const, max_channels: 10,
+    sip_password: '', sip_realm: '', transport: 'wss' as 'wss' | 'tcp' | 'udp', max_channels: 10,
     priority: 100, is_active: true, notes: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
