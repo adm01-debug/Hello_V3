@@ -179,6 +179,9 @@ const NetworkDiagnostics = () => {
         {/* Onda 20 — Q&A conversacional sobre o diagnóstico */}
         <VoipVoiceQAPanel />
 
+        {/* Onda 21 — Anomalias estatísticas + auto-remediação confiável */}
+        <AnomalyDetectionCard />
+
         {/* Onda 18 — Insights preditivos sobre as recomendações */}
         <RecommendationInsightsCard period="week" />
 
@@ -239,9 +242,6 @@ const NetworkDiagnostics = () => {
 
         {/* Onda 13 — Ranking por agente */}
         <div id="agent-ranking"><AgentQualityRanking /></div>
-
-        {/* Onda 14 — Detecção de anomalias estatísticas */}
-        <AnomalyDetectionCard />
 
         {/* Onda 14 — Forecast de capacidade */}
         <div id="capacity-forecast"><CapacityForecastChart /></div>
