@@ -10,7 +10,12 @@ import {
 } from '@/lib/validation/schemas';
 
 const uuidArb = fc.uuid();
-const emailArb = fc.emailAddress();
+// Geramos emails canônicos (Zod email é mais estrito que RFC 5322)
+const emailArb = fc.tuple(
+  fc.stringMatching(/^[a-z][a-z0-9]{2,15}$/),
+  fc.stringMatching(/^[a-z][a-z0-9]{1,10}$/),
+  fc.constantFrom('com', 'br', 'io', 'net'),
+).map(([u, d, t]) => `${u}@${d}.${t}`);
 
 describe('Zod schemas — property-based (1000 runs cada)', () => {
   it('uuidSchema aceita UUIDs válidos', () => {
