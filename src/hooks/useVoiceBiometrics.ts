@@ -36,7 +36,7 @@ export function useVoicePrints() {
   const list = useQuery({
     queryKey: ['voice-prints'],
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('voice_prints')
         .select('*')
         .order('created_at', { ascending: false });
@@ -107,7 +107,7 @@ export function useVoicePrints() {
 
   const remove = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await (supabase as any).from('voice_prints').delete().eq('id', id);
+      const { error } = await supabase.from('voice_prints').delete().eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -145,7 +145,7 @@ export function useFraudSignals(filters?: { severity?: string; status?: string; 
   return useQuery({
     queryKey: ['fraud-signals', filters],
     queryFn: async () => {
-      let q = (supabase as any)
+      let q = supabase
         .from('fraud_signals')
         .select('*')
         .order('created_at', { ascending: false })

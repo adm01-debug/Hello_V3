@@ -44,7 +44,8 @@ export function useLiveAssist(callSessionId?: string) {
     queryKey: ['live-assist-signals', callSessionId],
     enabled: !!callSessionId,
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
+      if (!callSessionId) return [] as LiveAssistSignal[];
+      const { data, error } = await supabase
         .from('live_assist_signals')
         .select('*')
         .eq('call_session_id', callSessionId)
@@ -110,7 +111,7 @@ export function useLiveAssist(callSessionId?: string) {
   const markUsed = useCallback(
     async (signalId: string) => {
       try {
-        await (supabase as any)
+        await supabase
           .from('live_assist_signals')
           .update({ was_used: true, used_at: new Date().toISOString() })
           .eq('id', signalId);
@@ -140,7 +141,7 @@ export function useAgentAssistHistory(filters?: {
   return useQuery({
     queryKey: ['agent-assist-history', filters],
     queryFn: async () => {
-      let q = (supabase as any)
+      let q = supabase
         .from('live_assist_signals')
         .select('*, call_sessions!inner(caller_name, started_at, agent_name)')
         .order('created_at', { ascending: false })
