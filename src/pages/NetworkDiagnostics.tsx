@@ -21,6 +21,8 @@ import { VoipHealthScoreCard } from '@/components/network/VoipHealthScoreCard';
 import { ExecutiveReportExport } from '@/components/network/ExecutiveReportExport';
 import { VoipRecommendationsPanel } from '@/components/network/VoipRecommendationsPanel';
 import { RecommendationInsightsCard } from '@/components/network/RecommendationInsightsCard';
+import { VoipVoiceQAPanel } from '@/components/network/VoipVoiceQAPanel';
+import { ExecutiveSummaryDialog } from '@/components/network/ExecutiveSummaryDialog';
 import { useVoipRecommendations } from '@/hooks/useVoipRecommendations';
 import { shouldRunProactiveCheck, compareSnapshotAndNotify } from '@/lib/voipProactiveSnapshot';
 
@@ -164,6 +166,7 @@ const NetworkDiagnostics = () => {
               {testing ? 'Testando...' : 'Testar conexão'}
             </Button>
             <ExecutiveReportExport period="week" />
+            <ExecutiveSummaryDialog />
             <Button onClick={loadMetrics} variant="ghost" size="sm">
               <RefreshCw className="mr-2 h-4 w-4" /> Atualizar
             </Button>
@@ -172,6 +175,9 @@ const NetworkDiagnostics = () => {
 
         {/* Onda 15 — Cockpit Executivo VoIP (hero) */}
         <VoipHealthScoreCard period="week" />
+
+        {/* Onda 20 — Q&A conversacional sobre o diagnóstico */}
+        <VoipVoiceQAPanel />
 
         {/* Onda 18 — Insights preditivos sobre as recomendações */}
         <RecommendationInsightsCard period="week" />
