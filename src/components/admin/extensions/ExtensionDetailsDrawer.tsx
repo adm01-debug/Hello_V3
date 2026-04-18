@@ -165,6 +165,16 @@ export function ExtensionDetailsDrawer({ extension, open, onOpenChange }: Props)
               </Button>
             </CardContent></Card>
           </TabsContent>
+
+          <TabsContent value="history" className="space-y-3 mt-4">
+            <Card><CardContent className="pt-4">
+              <div className="flex items-center gap-2 mb-3">
+                <History className="h-4 w-4 text-primary" />
+                <p className="font-semibold text-sm">Últimas 20 ações registradas</p>
+              </div>
+              <ExtensionAuditTimeline agentId={extension.agent_id} />
+            </CardContent></Card>
+          </TabsContent>
         </Tabs>
       </SheetContent>
     </Sheet>
