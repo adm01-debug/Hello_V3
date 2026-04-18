@@ -1,10 +1,14 @@
-import { useMemo } from 'react';
-import { Brain, TrendingUp, AlertTriangle, RefreshCw, ArrowRight } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Brain, TrendingUp, AlertTriangle, RefreshCw, ArrowRight, Radar } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { useVoipRecommendationInsights, type InsightsPeriod } from '@/hooks/useVoipRecommendationInsights';
+import { isProactiveEnabled, setProactiveEnabled } from '@/lib/voipProactiveSnapshot';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 const CATEGORY_LABEL: Record<string, string> = {
   capacity: 'Capacidade',
@@ -27,6 +31,15 @@ interface Props {
 
 export function RecommendationInsightsCard({ period = 'week' }: Props) {
   const { data, isLoading, error } = useVoipRecommendationInsights(period);
+  const [proactive, setProactive] = useState<boolean>(() => isProactiveEnabled());
+
+  const handleToggleProactive = (checked: boolean) => {
+    setProactive(checked);
+    setProactiveEnabled(checked);
+    toast.info(checked
+      ? 'Checagem proativa diária: ON'
+      : 'Checagem proativa: OFF');
+  };
 
   const heatmapMax = useMemo(() => {
     if (!data?.heatmap?.length) return 0;
@@ -85,13 +98,21 @@ export function RecommendationInsightsCard({ period = 'week' }: Props) {
 
   return (
     <Card className="glass-card">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Brain className="h-5 w-5 text-primary" /> Insights de Recomendações
-        </CardTitle>
-        <CardDescription>
-          Aprendizado contínuo: efetividade, padrões temporais e recorrências ({period === 'week' ? '7 dias' : '30 dias'})
-        </CardDescription>
+      <CardHeader className="flex flex-row items-start justify-between gap-4 flex-wrap">
+        <div className="flex-1 min-w-0">
+          <CardTitle className="flex items-center gap-2">
+            <Brain className="h-5 w-5 text-primary" /> Insights de Recomendações
+          </CardTitle>
+          <CardDescription>
+            Aprendizado contínuo: efetividade, padrões temporais e recorrências ({period === 'week' ? '7 dias' : '30 dias'})
+          </CardDescription>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <Switch id="proactive-check" checked={proactive} onCheckedChange={handleToggleProactive} />
+          <Label htmlFor="proactive-check" className="text-xs flex items-center gap-1 cursor-pointer">
+            <Radar className="h-3.5 w-3.5 text-primary" /> Checagem proativa
+          </Label>
+        </div>
       </CardHeader>
       <CardContent className="space-y-5">
         {/* KPIs */}

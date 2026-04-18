@@ -21,6 +21,8 @@ import { VoipHealthScoreCard } from '@/components/network/VoipHealthScoreCard';
 import { ExecutiveReportExport } from '@/components/network/ExecutiveReportExport';
 import { VoipRecommendationsPanel } from '@/components/network/VoipRecommendationsPanel';
 import { RecommendationInsightsCard } from '@/components/network/RecommendationInsightsCard';
+import { useVoipRecommendations } from '@/hooks/useVoipRecommendations';
+import { shouldRunProactiveCheck, compareSnapshotAndNotify } from '@/lib/voipProactiveSnapshot';
 
 const log = logger.create('NetworkDiagnostics');
 
@@ -72,6 +74,16 @@ const NetworkDiagnostics = () => {
   };
 
   useEffect(() => { loadMetrics(); }, []);
+
+  // Onda 19 — checagem proativa de recomendações críticas (opt-in, 24h+)
+  const { data: recsData } = useVoipRecommendations('week');
+  useEffect(() => {
+    if (!recsData?.recommendations || !shouldRunProactiveCheck()) return;
+    const critical = recsData.recommendations
+      .filter(r => r.severity === 'critical')
+      .map(r => ({ id: r.id, title: r.title, severity: r.severity }));
+    compareSnapshotAndNotify(critical);
+  }, [recsData]);
 
   // Bridge: recomendações podem disparar teste de conectividade via evento global
   useEffect(() => {
