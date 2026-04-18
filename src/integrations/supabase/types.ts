@@ -6103,12 +6103,53 @@ export type Database = {
         }
         Relationships: []
       }
+      voip_trunk_health_checks: {
+        Row: {
+          checked_at: string
+          created_at: string
+          error_message: string | null
+          id: string
+          latency_ms: number | null
+          reachable: boolean
+          trunk_id: string
+        }
+        Insert: {
+          checked_at?: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          latency_ms?: number | null
+          reachable: boolean
+          trunk_id: string
+        }
+        Update: {
+          checked_at?: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          latency_ms?: number | null
+          reachable?: boolean
+          trunk_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "voip_trunk_health_checks_trunk_id_fkey"
+            columns: ["trunk_id"]
+            isOneToOne: false
+            referencedRelation: "voip_trunks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       voip_trunks: {
         Row: {
           created_at: string
           created_by: string | null
           id: string
           is_active: boolean
+          last_health_checked_at: string | null
+          last_health_latency_ms: number | null
+          last_health_status: string | null
           max_channels: number
           name: string
           notes: string | null
@@ -6127,6 +6168,9 @@ export type Database = {
           created_by?: string | null
           id?: string
           is_active?: boolean
+          last_health_checked_at?: string | null
+          last_health_latency_ms?: number | null
+          last_health_status?: string | null
           max_channels?: number
           name: string
           notes?: string | null
@@ -6145,6 +6189,9 @@ export type Database = {
           created_by?: string | null
           id?: string
           is_active?: boolean
+          last_health_checked_at?: string | null
+          last_health_latency_ms?: number | null
+          last_health_status?: string | null
           max_channels?: number
           name?: string
           notes?: string | null
