@@ -21,6 +21,8 @@ export interface ExtensionOverview {
   primary_trunk_name: string | null;
   primary_trunk_provider: string | null;
   primary_trunk_health: 'healthy' | 'degraded' | 'offline' | null;
+  health_score: number;
+  health_issues: string[];
 }
 
 interface AgentRow {
@@ -54,6 +56,23 @@ interface AssignmentRow {
 
 interface DeviceRow {
   agent_name: string;
+}
+
+function computeHealth(args: {
+  hasTrunk: boolean;
+  trunkOnline: boolean;
+  hasDevices: boolean;
+  online: boolean;
+  profileComplete: boolean;
+}): { score: number; issues: string[] } {
+  let score = 0;
+  const issues: string[] = [];
+  if (args.hasTrunk) score += 30; else issues.push('Sem trunk VoIP atribuído');
+  if (args.trunkOnline) score += 20; else if (args.hasTrunk) issues.push('Trunk degradado/offline');
+  if (args.hasDevices) score += 20; else issues.push('Sem dispositivos extras');
+  if (args.online) score += 15; else issues.push('Agente offline');
+  if (args.profileComplete) score += 15; else issues.push('Perfil incompleto');
+  return { score, issues };
 }
 
 export function useExtensionsOverview() {
@@ -130,6 +149,15 @@ export function useExtensionsOverview() {
         const assignment = primaryByAgent.get(a.id) ?? null;
         const trunk = assignment?.voip_trunks ?? null;
         const health = trunk?.last_health_status as ExtensionOverview['primary_trunk_health'];
+        const deviceCount = deviceCountByAgent.get(a.name) ?? 0;
+        const profileComplete = !!(profile?.full_name && a.email);
+        const { score, issues } = computeHealth({
+          hasTrunk: !!trunk,
+          trunkOnline: health === 'healthy',
+          hasDevices: deviceCount > 0,
+          online: a.status !== 'offline' && a.status !== 'inactive',
+          profileComplete,
+        });
         return {
           agent_id: a.id,
           name: a.name,
@@ -141,11 +169,13 @@ export function useExtensionsOverview() {
           user_id: profile?.id ?? null,
           user_full_name: profile?.full_name ?? null,
           user_role: profile?.role ?? null,
-          device_count: deviceCountByAgent.get(a.name) ?? 0,
+          device_count: deviceCount,
           primary_trunk_id: trunk?.id ?? null,
           primary_trunk_name: trunk?.name ?? null,
           primary_trunk_provider: trunk?.provider ?? null,
           primary_trunk_health: health ?? null,
+          health_score: score,
+          health_issues: issues,
         };
       });
     },
