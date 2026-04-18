@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { computeHealth } from '@/lib/health-score';
 
 export type AgentStatus = 'available' | 'busy' | 'away' | 'offline' | 'inactive';
 
@@ -73,24 +74,7 @@ interface CallStats {
   totalDuration: number;
 }
 
-function computeHealth(args: {
-  hasTrunk: boolean;
-  trunkOnline: boolean;
-  hasDevices: boolean;
-  online: boolean;
-  profileComplete: boolean;
-  hasRecentCalls: boolean;
-}): { score: number; issues: string[] } {
-  let score = 0;
-  const issues: string[] = [];
-  if (args.hasTrunk) score += 30; else issues.push('Sem trunk VoIP atribuído');
-  if (args.trunkOnline) score += 20; else if (args.hasTrunk) issues.push('Trunk degradado/offline');
-  if (args.hasDevices) score += 15; else issues.push('Sem dispositivos extras');
-  if (args.online) score += 10; else issues.push('Agente offline');
-  if (args.profileComplete) score += 15; else issues.push('Perfil incompleto');
-  if (args.hasRecentCalls) score += 10; else issues.push('Sem chamadas nos últimos 7 dias');
-  return { score, issues };
-}
+// computeHealth movido para src/lib/health-score.ts (testável property-based)
 
 export function useExtensionsOverview() {
   const qc = useQueryClient();
