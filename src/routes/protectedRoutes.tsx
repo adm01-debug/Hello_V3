@@ -75,6 +75,7 @@ const Inbox = lazy(() => import("@/pages/Inbox"));
 const Knowledge = lazy(() => import("@/pages/Knowledge"));
 const RoutingRules = lazy(() => import("@/pages/RoutingRules"));
 const SLAPolicies = lazy(() => import("@/pages/SLAPolicies"));
+const ConcurrencyConflicts = lazy(() => import("@/pages/ConcurrencyConflicts"));
 
 export interface RouteConfig {
   path: string;
@@ -161,6 +162,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/ldap-sync", element: LDAPSync, roles: ["admin"] },
   { path: "/observability", element: ObservabilityDashboard, roles: ["admin"] },
   { path: "/network-diagnostics", element: NetworkDiagnostics, roles: ["supervisor", "admin"] },
+  { path: "/concurrency-conflicts", element: ConcurrencyConflicts, roles: ["supervisor", "admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },

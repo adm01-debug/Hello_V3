@@ -77,6 +77,7 @@ const securityNavItems = [
   { title: 'Rate Limit', url: '/rate-limit', icon: AlertTriangle },
   { title: 'Observabilidade', url: '/observability', icon: Activity },
   { title: 'Diagnóstico de Rede', url: '/network-diagnostics', icon: Wifi },
+  { title: 'Conflitos de Concorrência', url: '/concurrency-conflicts', icon: AlertTriangle },
 ];
 
 const settingsNavItems = [
