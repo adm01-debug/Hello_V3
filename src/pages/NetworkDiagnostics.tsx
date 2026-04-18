@@ -20,6 +20,7 @@ import { CapacityForecastChart } from '@/components/network/CapacityForecastChar
 import { VoipHealthScoreCard } from '@/components/network/VoipHealthScoreCard';
 import { ExecutiveReportExport } from '@/components/network/ExecutiveReportExport';
 import { VoipRecommendationsPanel } from '@/components/network/VoipRecommendationsPanel';
+import { RecommendationInsightsCard } from '@/components/network/RecommendationInsightsCard';
 
 const log = logger.create('NetworkDiagnostics');
 
@@ -159,6 +160,9 @@ const NetworkDiagnostics = () => {
 
         {/* Onda 15 — Cockpit Executivo VoIP (hero) */}
         <VoipHealthScoreCard period="week" />
+
+        {/* Onda 18 — Insights preditivos sobre as recomendações */}
+        <RecommendationInsightsCard period="week" />
 
         {/* Onda 16 — Recomendações acionáveis priorizadas */}
         <VoipRecommendationsPanel period="week" />
