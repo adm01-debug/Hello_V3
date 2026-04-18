@@ -108,6 +108,7 @@ export type Database = {
           status: string
           tags: string[] | null
           updated_at: string
+          version: number
         }
         Insert: {
           arr?: number | null
@@ -131,6 +132,7 @@ export type Database = {
           status?: string
           tags?: string[] | null
           updated_at?: string
+          version?: number
         }
         Update: {
           arr?: number | null
@@ -154,6 +156,7 @@ export type Database = {
           status?: string
           tags?: string[] | null
           updated_at?: string
+          version?: number
         }
         Relationships: []
       }
@@ -4187,6 +4190,36 @@ export type Database = {
         }
         Relationships: []
       }
+      optimistic_lock_conflicts: {
+        Row: {
+          attempted_at: string
+          client_version: number | null
+          current_version: number | null
+          id: string
+          record_id: string
+          table_name: string
+          user_id: string | null
+        }
+        Insert: {
+          attempted_at?: string
+          client_version?: number | null
+          current_version?: number | null
+          id?: string
+          record_id: string
+          table_name: string
+          user_id?: string | null
+        }
+        Update: {
+          attempted_at?: string
+          client_version?: number | null
+          current_version?: number | null
+          id?: string
+          record_id?: string
+          table_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       password_reset_requests: {
         Row: {
           created_at: string
@@ -5115,6 +5148,7 @@ export type Database = {
           target_date: string
           title: string
           updated_at: string
+          version: number
         }
         Insert: {
           account_id: string
@@ -5132,6 +5166,7 @@ export type Database = {
           target_date: string
           title: string
           updated_at?: string
+          version?: number
         }
         Update: {
           account_id?: string
@@ -5149,6 +5184,7 @@ export type Database = {
           target_date?: string
           title?: string
           updated_at?: string
+          version?: number
         }
         Relationships: [
           {
