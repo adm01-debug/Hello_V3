@@ -1,55 +1,52 @@
 
-Status: Ondas 1-14 entregues. Sistema 10/10 com loop completo VoIP: monitoramento → predição → persistência → auto-remediação → heatmap → drill-down → bridge de notificações → detecção de anomalias → forecast de capacidade.
+Onda 17 — Auto-Apply Programado de Recomendações + Histórico Auditável.
 
-Para continuar evoluindo com excelência sem refactor especulativo, proponho **Onda 15 — Cockpit Executivo Unificado e Exportação de Insights VoIP**: consolidar todos os sinais já capturados (SLA, anomalias, forecast, heatmap, ranking, alertas) em uma visão executiva única e permitir exportação para gestão.
+## Escopo
 
-## Onda 15 — Cockpit Executivo + Export Consolidado
+### 1. Migration: `voip_recommendation_actions`
+- Colunas: `id uuid pk`, `user_id uuid not null`, `recommendation_id text`, `category text`, `severity text`, `action_type text`, `action_payload jsonb`, `outcome text check in (applied|snoozed|dismissed|auto_applied)`, `applied_at timestamptz default now()`, `notes text`
+- RLS: `select/insert` próprios via `auth.uid() = user_id`; admin/supervisor `select` tudo via `is_admin_or_supervisor()`
+- Índice `(user_id, applied_at desc)` e `(category, outcome)`
 
-### 15.1 Edge function `voip-executive-summary`
-- `GET ?period=week` (ou `day`/`month`) — agrega em UMA única chamada:
-  - SLA atual + delta vs período anterior
-  - Top 3 anomalias críticas das últimas 24h
-  - Forecast resumo (próximos 7d, dias com `exceeds_capacity`)
-  - Top 3 piores agentes (MOS médio últimas 24h)
-  - Total de alertas não-reconhecidos
-  - Health score consolidado (0-100, fórmula: 40% SLA + 30% MOS + 20% alertas + 10% capacidade)
-- Reuso interno das funções já existentes (chamadas internas via service role) ou cálculo direto
-- JWT, CORS, validação `oneOf('day','week','month')`, 4 testes Deno
+### 2. Edge function `voip-recommendation-history`
+- `GET ?period=day|week|month&limit=50`
+- JWT obrigatório, CORS via `_shared/cors`, validação `oneOf` via `_shared/validate`
+- Retorna `{ items[], aggregations: { byCategory, byOutcome, perDay[] }, requestId }`
+- 4 testes Deno (auth, validação, agregação, paginação)
 
-### 15.2 Componente `VoipHealthScoreCard.tsx`
-- Card hero no topo de `/network-diagnostics`
-- Score grande (0-100) com cor semântica (verde ≥80, amarelo 60-79, vermelho <60)
-- Breakdown dos 4 componentes (SLA/MOS/alertas/capacidade)
-- Sparkline de evolução do score (últimos 7 buckets do período)
-- Tooltip explicando a fórmula
+### 3. Hook `useVoipRecommendationHistory`
+- React Query, staleTime 2min, traceHeaders, retry skip 401/403/404
 
-### 15.3 Botão de export executivo
-`src/components/network/ExecutiveReportExport.tsx`:
-- Botão no header de `/network-diagnostics` ao lado de "Atualizar"
-- Gera CSV consolidado com: data/hora, health score, SLA%, MOS médio, anomalias, alertas, forecast 7d
-- Nome de arquivo `voip-executive-{period}-{YYYYMMDD}.csv`
-- Reuso do utilitário CSV já existente (caso haja) ou implementação inline
+### 4. Auto-apply em `VoipRecommendationsPanel`
+- Toggle "Auto-aplicar críticas seguras" (pref em `localStorage` chave `voip-rec-auto-apply`)
+- Aplica somente quando `severity=critical` + `action_type=function` (categoria infra)
+- Countdown visível 3s com botão "Cancelar" antes de disparar
+- Toda ação (apply/snooze/dismiss/auto) grava em `voip_recommendation_actions` via `supabase.from().insert()`
+- Toast informativo por evento
 
-### 15.4 Hook `useVoipExecutiveSummary`
-- React Query, staleTime 5min, retry skip 401/403/404
-- Trace headers via `traceHeaders()`
-- Tipagem rigorosa do retorno
+### 5. Componente `RecommendationHistoryDrawer`
+- `Sheet` lateral acionado por botão no header do painel
+- Lista paginada das últimas 50 ações
+- Filtros por categoria e outcome (`Select`)
+- Sparkline ações/dia últimos 14d (recharts já presente)
+- Export CSV reutilizando padrão UTF-8 BOM da Onda 15
 
-### 15.5 Documentação
-- ADR-030 (`docs/adr/030-onda-15-cockpit-executivo-voip.md`)
-- `mem/features/voip-executive-cockpit.md` + atualizar `mem/index.md`
-- Atualizar `docs/audit/scorecard-final.md`
+### 6. Documentação
+- ADR-032 em `docs/adr/032-onda-17-auto-apply-historico-recomendacoes.md`
+- `mem/features/voip-recommendation-history.md` + atualizar `mem/index.md`
+- Atualizar `docs/audit/scorecard-final.md` (18 edge functions, 97 testes Deno)
 
-### Considerações
+## Considerações
 - ≤400 linhas/arquivo, PT-BR, logger central, sonner, cyberpunk neon
-- Reuso total de tabelas/funções existentes; sem novas dependências
-- Single-call agregada reduz round-trips no dashboard executivo
-- Fórmula de health score documentada e testada
-- Zero breakage; RLS mantém isolamento
+- Auto-apply opt-in explícito; nunca silencioso
+- Reuso total dos componentes/edge functions existentes
+- RLS isolado por usuário; admin/supervisor com visão agregada
+- Zero breakage; loop completo: detectar → recomendar → aplicar/auto → registrar → auditar
 
-### Ordem
-1. 15.1 Edge function `voip-executive-summary` + 4 testes Deno
-2. 15.4 Hook `useVoipExecutiveSummary`
-3. 15.2 `VoipHealthScoreCard` no topo de `/network-diagnostics`
-4. 15.3 `ExecutiveReportExport` no header
-5. 15.5 ADR-030 + memória + scorecard
+## Ordem de execução
+1. Migration + RLS + índices
+2. Edge function `voip-recommendation-history` + 4 testes
+3. Hook `useVoipRecommendationHistory`
+4. Auto-apply + persistência no `VoipRecommendationsPanel`
+5. `RecommendationHistoryDrawer` integrado
+6. ADR-032 + memória + scorecard
