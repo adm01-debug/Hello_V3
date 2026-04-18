@@ -41,12 +41,12 @@ export function useTrunkUsageReporter() {
     try {
       const { error } = await supabase.rpc('record_trunk_usage', {
         p_trunk_id: ctx.trunk_id,
-        p_call_session_id: callSessionId ?? undefined,
+        p_call_session_id: (callSessionId ?? null) as unknown as string,
         p_started_at: ctx.started_at,
         p_ended_at: new Date().toISOString(),
         p_was_failover: ctx.was_failover,
-        p_failover_reason: ctx.failover_reason ?? undefined,
-        p_original_trunk_id: ctx.original_trunk_id ?? undefined,
+        p_failover_reason: (ctx.failover_reason ?? null) as unknown as string,
+        p_original_trunk_id: (ctx.original_trunk_id ?? null) as unknown as string,
       });
       if (error) throw error;
     } catch (err) {
