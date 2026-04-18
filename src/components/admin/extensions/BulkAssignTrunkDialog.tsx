@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { logger } from '@/lib/logger';
 import { TrunkHealthBadge } from './ExtensionStatusBadge';
+import { useExtensionAudit } from '@/hooks/useExtensionAudit';
 
 interface Trunk {
   id: string;
@@ -28,6 +29,7 @@ interface Props {
 
 export function BulkAssignTrunkDialog({ open, onOpenChange, agentIds, onSuccess }: Props) {
   const qc = useQueryClient();
+  const { logBulk } = useExtensionAudit();
   const [trunks, setTrunks] = useState<Trunk[]>([]);
   const [selected, setSelected] = useState<string>('');
   const [loading, setLoading] = useState(false);
@@ -74,6 +76,11 @@ export function BulkAssignTrunkDialog({ open, onOpenChange, agentIds, onSuccess 
       if (insErr) throw insErr;
 
       toast.success(`Trunk atribuído a ${agentIds.length} ${agentIds.length === 1 ? 'ramal' : 'ramais'}`);
+      logBulk({
+        action: 'bulk_assign_trunk',
+        agentIds,
+        details: { trunk_id: selected, trunk_name: trunks.find(t => t.id === selected)?.name },
+      });
       qc.invalidateQueries({ queryKey: ['extensions-overview'] });
       onSuccess();
       onOpenChange(false);
