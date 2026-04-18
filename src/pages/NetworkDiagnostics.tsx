@@ -213,19 +213,19 @@ const NetworkDiagnostics = () => {
         <SlaReportCards period="week" />
 
         {/* Onda 13 — Heatmap de qualidade 7d */}
-        <QualityHeatmap />
+        <div id="quality-heatmap"><QualityHeatmap /></div>
 
         {/* Onda 13 — Ranking por agente */}
-        <AgentQualityRanking />
+        <div id="agent-ranking"><AgentQualityRanking /></div>
 
         {/* Onda 14 — Detecção de anomalias estatísticas */}
         <AnomalyDetectionCard />
 
         {/* Onda 14 — Forecast de capacidade */}
-        <CapacityForecastChart />
+        <div id="capacity-forecast"><CapacityForecastChart /></div>
 
         {/* Onda 12 — Alertas persistentes de qualidade */}
-        <QualityAlertsCard />
+        <div id="quality-alerts"><QualityAlertsCard /></div>
 
         {/* MOS chart */}
         <Card className="glass-card">
