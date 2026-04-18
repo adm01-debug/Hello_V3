@@ -3,9 +3,12 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Phone, Smartphone, Network, QrCode, ExternalLink, Copy, UserCog } from 'lucide-react';
+import { Phone, Smartphone, Network, QrCode, ExternalLink, Copy, UserCog, PhoneCall, History } from 'lucide-react';
 import { toast } from 'sonner';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { ExtensionStatusBadge, TrunkHealthBadge } from './ExtensionStatusBadge';
+import { ExtensionAuditTimeline } from './ExtensionAuditTimeline';
 import type { ExtensionOverview } from '@/hooks/useExtensionsOverview';
 
 interface Props {
@@ -53,11 +56,12 @@ export function ExtensionDetailsDrawer({ extension, open, onOpenChange }: Props)
         </div>
 
         <Tabs defaultValue="overview" className="mt-6">
-          <TabsList className="grid grid-cols-4 w-full">
+          <TabsList className="grid grid-cols-5 w-full">
             <TabsTrigger value="overview">Geral</TabsTrigger>
             <TabsTrigger value="devices">Dispositivos</TabsTrigger>
             <TabsTrigger value="trunk">Trunk</TabsTrigger>
-            <TabsTrigger value="provisioning">Provisionar</TabsTrigger>
+            <TabsTrigger value="provisioning">QR</TabsTrigger>
+            <TabsTrigger value="history">Histórico</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-3 mt-4">
@@ -68,6 +72,38 @@ export function ExtensionDetailsDrawer({ extension, open, onOpenChange }: Props)
               <div className="flex justify-between"><span className="text-muted-foreground">Dispositivos extras</span><span className="font-bold">{extension.device_count}</span></div>
               <div className="flex justify-between"><span className="text-muted-foreground">Trunk primário</span><span>{extension.primary_trunk_name ?? '—'}</span></div>
             </CardContent></Card>
+
+            <Card className="border-primary/30">
+              <CardContent className="pt-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold flex items-center gap-2">
+                    <PhoneCall className="h-4 w-4 text-primary" /> Atividade (últimos 7 dias)
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  <div className="rounded-lg bg-muted/40 p-2">
+                    <p className="text-xl font-bold text-primary">{extension.call_count_7d}</p>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Chamadas</p>
+                  </div>
+                  <div className="rounded-lg bg-muted/40 p-2">
+                    <p className="text-xl font-bold">{Math.round(extension.avg_duration_seconds / 60)}min</p>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Duração média</p>
+                  </div>
+                  <div className="rounded-lg bg-muted/40 p-2">
+                    <p className="text-xs font-semibold pt-1">
+                      {extension.last_call_at
+                        ? formatDistanceToNow(new Date(extension.last_call_at), { addSuffix: true, locale: ptBR })
+                        : '—'}
+                    </p>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Última</p>
+                  </div>
+                </div>
+                <Button variant="outline" size="sm" className="w-full" onClick={() => navigate(`/calls?agent=${encodeURIComponent(extension.name)}`)}>
+                  <ExternalLink className="h-4 w-4 mr-2" /> Ver chamadas
+                </Button>
+              </CardContent>
+            </Card>
+
             <Button variant="outline" className="w-full" onClick={() => navigate('/admin/users')}>
               <UserCog className="h-4 w-4 mr-2" /> Editar perfil do agente
             </Button>
