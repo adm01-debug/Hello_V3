@@ -17,6 +17,7 @@ import { QualityHeatmap } from '@/components/network/QualityHeatmap';
 import { AgentQualityRanking } from '@/components/network/AgentQualityRanking';
 import { AnomalyDetectionCard } from '@/components/network/AnomalyDetectionCard';
 import { CapacityForecastChart } from '@/components/network/CapacityForecastChart';
+import { QualityForecastCard } from '@/components/network/QualityForecastCard';
 import { VoipHealthScoreCard } from '@/components/network/VoipHealthScoreCard';
 import { ExecutiveReportExport } from '@/components/network/ExecutiveReportExport';
 import { VoipRecommendationsPanel } from '@/components/network/VoipRecommendationsPanel';
@@ -178,6 +179,9 @@ const NetworkDiagnostics = () => {
 
         {/* Onda 20 — Q&A conversacional sobre o diagnóstico */}
         <VoipVoiceQAPanel />
+
+        {/* Onda 22 — Forecasting preditivo de qualidade + capacity planning */}
+        <QualityForecastCard />
 
         {/* Onda 21 — Anomalias estatísticas + auto-remediação confiável */}
         <AnomalyDetectionCard />
