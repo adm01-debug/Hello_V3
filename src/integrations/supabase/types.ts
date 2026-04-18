@@ -2310,6 +2310,7 @@ export type Database = {
           source: string | null
           tags: string[] | null
           updated_at: string
+          version: number
         }
         Insert: {
           account_id?: string | null
@@ -2327,6 +2328,7 @@ export type Database = {
           source?: string | null
           tags?: string[] | null
           updated_at?: string
+          version?: number
         }
         Update: {
           account_id?: string | null
@@ -2344,6 +2346,7 @@ export type Database = {
           source?: string | null
           tags?: string[] | null
           updated_at?: string
+          version?: number
         }
         Relationships: [
           {
@@ -2702,6 +2705,7 @@ export type Database = {
           status: string
           updated_at: string
           value_cents: number
+          version: number
         }
         Insert: {
           contact_id?: string | null
@@ -2723,6 +2727,7 @@ export type Database = {
           status?: string
           updated_at?: string
           value_cents?: number
+          version?: number
         }
         Update: {
           contact_id?: string | null
@@ -2744,6 +2749,7 @@ export type Database = {
           status?: string
           updated_at?: string
           value_cents?: number
+          version?: number
         }
         Relationships: [
           {
