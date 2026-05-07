@@ -58,7 +58,7 @@ export const ActiveCallsRealtime = () => {
               const holdSeverity = onHold ? getHoldSeverity(holdDuration) : 'normal';
               const callDuration = Math.floor((Date.now() - new Date(call.started_at).getTime()) / 1000);
               return (
-                <div key={call.id} className={`p-4 rounded-lg border transition-colors ${holdSeverity === 'critical' ? 'border-destructive bg-destructive/10 animate-pulse' : holdSeverity === 'warning' ? 'border-call-hold/50 bg-call-hold/5' : onHold ? 'border-destructive/50 bg-destructive/5 animate-pulse' : 'border-border bg-card'}`}>
+                <div key={call.id} className={`p-4 rounded-2xl border transition-all duration-300 ${holdSeverity === 'critical' ? 'border-destructive bg-destructive/10 animate-pulse' : holdSeverity === 'warning' ? 'border-call-hold/50 bg-call-hold/5' : onHold ? 'border-destructive/50 bg-destructive/5 animate-pulse' : 'border-white/[0.05] bg-muted/20 hover:bg-muted/40'}`}>
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-full ${holdSeverity === 'critical' ? 'bg-destructive/20' : holdSeverity === 'warning' ? 'bg-call-hold/20' : onHold ? 'bg-destructive/10' : 'bg-primary/10'}`}>
