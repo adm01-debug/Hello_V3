@@ -46,23 +46,41 @@ serve(async (req) => {
       });
     }
 
-    const { data: activeHolds } = await supabaseAdmin
+    const { data: activeHolds, error: holdsError } = await supabaseAdmin
       .from('hold_events')
       .select('id, call_session_id, started_at, agent_name, call_sessions(caller_name)')
       .is('ended_at', null);
+
+    if (holdsError) throw holdsError;
+
+    const callSessionIds = (activeHolds || []).map(h => h.call_session_id);
+    
+    // Optimized: Fetch all recent alerts for these sessions in one go
+    const { data: existingAlertsData } = callSessionIds.length > 0 
+      ? await supabaseAdmin
+          .from('call_alerts')
+          .select('call_session_id, severity, created_at')
+          .in('call_session_id', callSessionIds)
+          .eq('alert_type', 'hold_time_exceeded')
+          .order('created_at', { ascending: false })
+      : { data: [] };
+
+    // Group alerts by session ID to easily find the latest one
+    const latestAlertsMap = new Map();
+    (existingAlertsData || []).forEach(alert => {
+      if (!latestAlertsMap.has(alert.call_session_id)) {
+        latestAlertsMap.set(alert.call_session_id, alert.severity);
+      }
+    });
 
     const alerts: any[] = [];
     const now = new Date();
 
     for (const hold of activeHolds || []) {
       const holdDurationSeconds = Math.floor((now.getTime() - new Date(hold.started_at).getTime()) / 1000);
-      const { data: existingAlerts } = await supabaseAdmin
-        .from('call_alerts').select('severity').eq('call_session_id', hold.call_session_id)
-        .eq('alert_type', 'hold_time_exceeded').order('created_at', { ascending: false }).limit(1);
-
-      const lastSeverity = existingAlerts?.[0]?.severity;
+      const lastSeverity = latestAlertsMap.get(hold.call_session_id);
+      
       let severity: string | null = null;
-
       if (holdDurationSeconds >= config.criticalThresholdSeconds && lastSeverity !== 'critical') {
         severity = 'critical';
       } else if (holdDurationSeconds >= config.warningThresholdSeconds && !lastSeverity) {
@@ -71,7 +89,9 @@ serve(async (req) => {
 
       if (severity) {
         alerts.push({
-          call_session_id: hold.call_session_id, alert_type: 'hold_time_exceeded', severity,
+          call_session_id: hold.call_session_id,
+          alert_type: 'hold_time_exceeded',
+          severity,
           title: severity === 'critical' ? 'Tempo de Espera Crítico' : 'Tempo de Espera Elevado',
           message: `Cliente em espera há ${Math.floor(holdDurationSeconds / 60)}min. Agente: ${hold.agent_name || 'N/A'}`
         });
