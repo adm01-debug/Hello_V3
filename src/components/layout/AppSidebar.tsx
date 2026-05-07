@@ -235,7 +235,7 @@ const allItems = [...mainNavItems, ...omnichannelNavItems, ...toolsNavItems, ...
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === 'collapsed';
-  const { profile } = useAuthContext();
+   const { profile } = useAuthContext();
   const { favorites, toggle } = useFavorites();
 
   const favoriteItems = useMemo(
@@ -301,7 +301,10 @@ export function AppSidebar() {
                 ? profile.full_name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
                 : profile?.email?.slice(0, 2).toUpperCase() || '??'}
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-sidebar-background status-dot-online" />
+             <div className={cn(
+               "absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-sidebar-background",
+               profile?.role === 'admin' ? "bg-primary shadow-[0_0_8px_hsl(var(--primary)/0.6)]" : "status-dot-online"
+             )} />
           </div>
           {!collapsed && (
             <div className="flex flex-col">

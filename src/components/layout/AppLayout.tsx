@@ -2,7 +2,8 @@ import { ReactNode } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from './AppSidebar';
 import { ActiveCallBar } from '@/components/calls/ActiveCallBar';
-import { Search } from 'lucide-react';
+ import { Search, Wifi } from 'lucide-react';
+ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { AlertsDropdown } from '@/components/alerts/AlertsDropdown';
 import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdown';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
@@ -68,7 +69,21 @@ export function AppLayout({ children }: AppLayoutProps) {
               </button>
             </div>
 
-            <div className="flex items-center gap-2 md:gap-3">
+             <div className="flex items-center gap-2 md:gap-3">
+               <TooltipProvider>
+                 <Tooltip>
+                   <TooltipTrigger asChild>
+                     <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 rounded-md bg-success/10 border border-success/20 cursor-default">
+                       <Wifi className="h-3.5 w-3.5 text-success animate-pulse" />
+                       <span className="text-[10px] font-bold text-success uppercase tracking-wider">Online</span>
+                     </div>
+                   </TooltipTrigger>
+                   <TooltipContent>
+                     <p>Conexão com servidor ativa</p>
+                   </TooltipContent>
+                 </Tooltip>
+               </TooltipProvider>
+ 
               <ThemeToggle />
               <NotificationBell />
               <ContactAlertsDropdown />

@@ -8,15 +8,23 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { Video, Plus, Users, Clock, Calendar, Play, Square, Link2 } from 'lucide-react';
+ import { Video, Plus, Users, Clock, Calendar, Play, Square, Link2, Copy, Check } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function VideoConference() {
   usePageTitle('Videoconferência');
 
   const queryClient = useQueryClient();
-  const [title, setTitle] = useState('');
-  const [dialogOpen, setDialogOpen] = useState(false);
+   const [title, setTitle] = useState('');
+   const [dialogOpen, setDialogOpen] = useState(false);
+   const [copiedId, setCopiedId] = useState<string | null>(null);
+ 
+   const copyToClipboard = (text: string, id: string) => {
+     navigator.clipboard.writeText(text);
+     setCopiedId(id);
+     toast.success('Link copiado!');
+     setTimeout(() => setCopiedId(null), 2000);
+   };
 
   const { data: conferences = [], isLoading } = useQuery({
     queryKey: ['video-conferences'],
@@ -105,7 +113,29 @@ export default function VideoConference() {
                   </p>
                 </div>
               </div>
-              <Badge className={statusColors[conf.status] || ''}>{conf.status}</Badge>
+               <div className="flex items-center gap-2">
+                 <Badge className={statusColors[conf.status] || ''}>
+                   {conf.status === 'scheduled' ? 'Agendada' : conf.status === 'active' ? 'Ativa' : 'Encerrada'}
+                 </Badge>
+                 {conf.meeting_url && (
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-8 w-8" 
+                    onClick={() => copyToClipboard(conf.meeting_url || '', conf.id)}
+                  >
+                     {copiedId === conf.id ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
+                   </Button>
+                 )}
+                 <Button 
+                   variant={conf.status === 'active' ? 'default' : 'outline'} 
+                   size="sm"
+                   className={conf.status === 'active' ? 'animate-pulse' : ''}
+                   disabled={conf.status === 'ended'}
+                 >
+                   {conf.status === 'active' ? 'Entrar' : 'Iniciar'}
+                 </Button>
+               </div>
             </CardContent>
           </Card>
         ))}

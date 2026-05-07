@@ -8,16 +8,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EmptyCallsState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useRecentCallsData } from '@/hooks/useDashboardData';
-import { cn } from '@/lib/utils';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-
-const formatDuration = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
+ import { useRecentCallsData } from '@/hooks/useDashboardData';
+ import { cn, formatDuration } from '@/lib/utils';
+ import { formatDistanceToNow } from 'date-fns';
+ import { ptBR } from 'date-fns/locale';
 
 export function RecentCalls() {
   const { data: recentCalls, isLoading } = useRecentCallsData();

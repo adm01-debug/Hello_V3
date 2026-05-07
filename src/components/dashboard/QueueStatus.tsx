@@ -3,13 +3,7 @@ import { useQueueStatsData } from '@/hooks/useDashboardData';
 import { Skeleton } from '@/components/ui/skeleton';
  import { Progress } from '@/components/ui/progress';
  import { Users, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
- import { cn } from '@/lib/utils';
-
-const formatDuration = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
+ import { cn, formatDuration } from '@/lib/utils';
 
 export function QueueStatus() {
    const { data: stats, isLoading, isFetching } = useQueueStatsData();
