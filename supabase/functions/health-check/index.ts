@@ -37,7 +37,7 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
        status: dbHealthy ? 200 : 503,
        headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
      });
-   } catch (err) {
+   } catch (err: any) {
     return new Response(
       JSON.stringify({
         status: "error",
