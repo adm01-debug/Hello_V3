@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { Voicemail, Play, Check, Clock, Phone, AlertTriangle, Search, Trash2, MailOpen, Mail } from 'lucide-react';
+ import { Voicemail, Play, Check, Clock, Phone, AlertTriangle, Search, Trash2, MailOpen, Mail } from 'lucide-react';
+ import { formatDuration } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -70,14 +71,7 @@ export default function VoicemailPage() {
 
   const unreadCount = messages.filter(m => !m.is_read).length;
 
-  const formatDuration = (seconds: number | null) => {
-  usePageTitle('Correio de Voz');
-
-    if (!seconds) return '--';
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
+   usePageTitle('Correio de Voz');
 
   return (
     <div className="space-y-6 p-6">
