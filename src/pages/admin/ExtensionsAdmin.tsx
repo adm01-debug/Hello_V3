@@ -253,7 +253,7 @@ export default function ExtensionsAdmin() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex flex-col md:flex-row gap-3 flex-wrap">
-            <div className="relative flex-1 min-w-[200px]">
+                  <div className="relative flex-1 min-w-[200px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Buscar por nome, ramal ou e-mail..."
@@ -407,8 +407,35 @@ export default function ExtensionsAdmin() {
               </Table>
             </div>
           )}
-        </CardContent>
-      </Card>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="trunks">
+            <Card className="border-primary/10 bg-card/50 backdrop-blur-sm p-12 text-center">
+              <Network className="h-12 w-12 mx-auto text-muted-foreground mb-4 opacity-20" />
+              <h3 className="text-lg font-semibold mb-2">Redirecionando para Trunks...</h3>
+              <Button onClick={() => navigate('/admin/voip-trunks')}>Ir agora</Button>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="provisioning">
+            <Card className="border-primary/10 bg-card/50 backdrop-blur-sm p-12 text-center">
+              <QrCode className="h-12 w-12 mx-auto text-muted-foreground mb-4 opacity-20" />
+              <h3 className="text-lg font-semibold mb-2">Redirecionando para Provisionamento...</h3>
+              <Button onClick={() => navigate('/qr-provisioning')}>Ir agora</Button>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="devices">
+            <Card className="border-primary/10 bg-card/50 backdrop-blur-sm p-12 text-center">
+              <Smartphone className="h-12 w-12 mx-auto text-muted-foreground mb-4 opacity-20" />
+              <h3 className="text-lg font-semibold mb-2">Redirecionando para Dispositivos...</h3>
+              <Button onClick={() => navigate('/multi-device-ring')}>Ir agora</Button>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
 
       <ExtensionDetailsDrawer
         extension={selected}
