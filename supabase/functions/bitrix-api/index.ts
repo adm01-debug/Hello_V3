@@ -55,22 +55,17 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
      // Rate Limiting (Persistent DB-backed)
      const ip = getClientIp(req);
      const rateLimit = await checkRateLimitDB(ip, 'bitrix-api', user.id);
-     if (!rateLimit.allowed) {
-       return new Response(JSON.stringify({ 
-         error: 'Muitas requisições. Tente novamente em alguns minutos.', 
-         retryAfter: rateLimit.retryAfter 
-       }), {
-         status: 429,
-         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-       });
-     }
-      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
-        status: 401,
-        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
-    }
-
-    const body = await req.json() as BitrixRequest;
+      if (!rateLimit.allowed) {
+        return new Response(JSON.stringify({ 
+          error: 'Muitas requisições. Tente novamente em alguns minutos.', 
+          retryAfter: rateLimit.retryAfter 
+        }), {
+          status: 429,
+          headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+        });
+      }
+ 
+      const body = await req.json() as BitrixRequest;
     
     if (!body.action || typeof body.action !== 'string') {
       return new Response(
