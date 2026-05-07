@@ -21,7 +21,7 @@ const mainNavItems = [
   { title: 'Discador', url: '/dialer', icon: PhoneOutgoing },
   { title: 'Contatos', url: '/contacts', icon: Users },
   { title: 'Insights', url: '/contacts/insights', icon: Brain },
-  { title: 'Histórico', url: '/history', icon: Clock },
+   { title: 'Histórico Completo', url: '/history', icon: Clock },
 ];
 
 const toolsNavItems = [
@@ -33,9 +33,8 @@ const toolsNavItems = [
   { title: 'Videoconferência', url: '/video-conference', icon: Video },
   { title: 'Multi-device Ring', url: '/multi-device-ring', icon: PhoneCall },
   { title: 'Hot Desking', url: '/hot-desking', icon: MonitorIcon },
-  { title: 'Callbacks', url: '/callbacks', icon: Calendar },
-  { title: 'Transcrições', url: '/call-history', icon: FileText },
-  { title: 'Gravações', url: '/recordings', icon: Disc },
+   { title: 'Callbacks', url: '/callbacks', icon: Calendar },
+   { title: 'Gravações', url: '/recordings', icon: Disc },
   { title: 'Métricas de Espera', url: '/hold-metrics', icon: Timer },
   { title: 'Alertas de Espera', url: '/hold-alerts', icon: Siren },
   { title: 'Analytics', url: '/analytics', icon: PieChart },

@@ -12,8 +12,9 @@ export interface CallSession {
   started_at: string;
   ended_at: string | null;
   duration_seconds: number | null;
-  status: string | null;
-}
+   status: string | null;
+   direction?: string | null;
+ }
 
 export interface SessionWithSummary extends CallSession {
   summary?: {
@@ -58,9 +59,10 @@ export function useCallHistory() {
   const [showFilters, setShowFilters] = useState(false);
   const [dateRangePreset, setDateRangePreset] = useState<DateRangePreset>('all');
   const [customDateFrom, setCustomDateFrom] = useState<Date | undefined>();
-  const [customDateTo, setCustomDateTo] = useState<Date | undefined>();
-  const [sentimentFilter, setSentimentFilter] = useState<SentimentFilter>('all');
-  const [durationFilter, setDurationFilter] = useState<DurationFilter>('all');
+   const [customDateTo, setCustomDateTo] = useState<Date | undefined>();
+   const [statusFilter, setStatusFilter] = useState<string>('all');
+   const [sentimentFilter, setSentimentFilter] = useState<SentimentFilter>('all');
+   const [durationFilter, setDurationFilter] = useState<DurationFilter>('all');
   const [topicFilter, setTopicFilter] = useState<string>('');
 
   const allTopics = useMemo(() => {
@@ -69,28 +71,36 @@ export function useCallHistory() {
     return Array.from(topics).sort();
   }, [sessions]);
 
-  useEffect(() => { fetchSessions(); }, []);
+   useEffect(() => { fetchSessions(); }, [searchQuery, statusFilter, sentimentFilter]);
 
-  const fetchSessions = async () => {
-    setIsLoading(true);
-    try {
-      const { data: sessionsData, error: sessionsError } = await supabase
-        .from('call_sessions').select('*').order('started_at', { ascending: false }).limit(100);
-      if (sessionsError) throw sessionsError;
-
-      const sessionIds = sessionsData?.map(s => s.id) || [];
-      const { data: summariesData } = await supabase
-        .from('call_summaries').select('call_session_id, overall_sentiment, main_topics, customer_satisfaction')
-        .in('call_session_id', sessionIds);
-
-      const summariesMap = new Map(summariesData?.map(s => [s.call_session_id, {
-        overall_sentiment: s.overall_sentiment, main_topics: s.main_topics, customer_satisfaction: s.customer_satisfaction
-      }]));
-
-      setSessions((sessionsData || []).map(session => ({ ...session, summary: summariesMap.get(session.id) })));
-    } catch (error) { logger.error('Error fetching sessions:', error); }
-    finally { setIsLoading(false); }
-  };
+   const fetchSessions = async () => {
+     setIsLoading(true);
+     try {
+       const { data, error } = await supabase.rpc('get_call_history_with_summaries', {
+         p_limit: 100,
+         p_search: searchQuery,
+         p_status: statusFilter,
+         p_sentiment: sentimentFilter
+       });
+ 
+       if (error) throw error;
+ 
+       const mappedData = (data as any[]).map(item => ({
+         ...item,
+         summary: item.overall_sentiment ? {
+           overall_sentiment: item.overall_sentiment,
+           main_topics: item.main_topics,
+           customer_satisfaction: item.customer_satisfaction
+         } : undefined
+       }));
+ 
+       setSessions(mappedData);
+     } catch (error) {
+       logger.error('Error fetching sessions:', error);
+     } finally {
+       setIsLoading(false);
+     }
+   };
 
   const fetchSessionDetails = async (sessionId: string) => {
     setIsLoadingDetails(true);
@@ -152,11 +162,17 @@ export function useCallHistory() {
     });
   }, [sessions, searchQuery, dateRangePreset, customDateFrom, customDateTo, sentimentFilter, durationFilter, topicFilter]);
 
-  const activeFiltersCount = [dateRangePreset !== 'all', sentimentFilter !== 'all', durationFilter !== 'all', topicFilter !== ''].filter(Boolean).length;
+   const activeFiltersCount = [
+     dateRangePreset !== 'all',
+     statusFilter !== 'all',
+     sentimentFilter !== 'all',
+     durationFilter !== 'all',
+     topicFilter !== ''
+   ].filter(Boolean).length;
 
   const clearFilters = () => {
     setDateRangePreset('all'); setCustomDateFrom(undefined); setCustomDateTo(undefined);
-    setSentimentFilter('all'); setDurationFilter('all'); setTopicFilter('');
+     setStatusFilter('all'); setSentimentFilter('all'); setDurationFilter('all'); setTopicFilter('');
   };
 
   const exportTranscript = () => {
@@ -177,8 +193,9 @@ export function useCallHistory() {
     selectedSession, setSelectedSession, sessionTranscripts, sessionAnalyses, sessionSummary,
     isLoadingDetails, showFilters, setShowFilters, dateRangePreset, setDateRangePreset,
     customDateFrom, setCustomDateFrom, customDateTo, setCustomDateTo,
-    sentimentFilter, setSentimentFilter, durationFilter, setDurationFilter,
-    topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
+     statusFilter, setStatusFilter, sentimentFilter, setSentimentFilter,
+     durationFilter, setDurationFilter, topicFilter, setTopicFilter,
+     allTopics, activeFiltersCount, clearFilters,
     handleSessionClick, exportTranscript, fetchSessions,
   };
 }

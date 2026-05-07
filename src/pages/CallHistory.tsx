@@ -1,13 +1,14 @@
-import { Search, Filter, X, Calendar, Clock, Tag, TrendingUp, TrendingDown, Minus } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+ import { Search, Filter, X, Calendar, Clock, Tag, TrendingUp, TrendingDown, Minus, Download, Phone } from 'lucide-react';
+ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
-import { format } from 'date-fns';
-import { useCallHistory, DateRangePreset, SentimentFilter, DurationFilter } from '@/hooks/useCallHistory';
+ import { format } from 'date-fns';
+ import { useMemo } from 'react';
+ import { useCallHistory, DateRangePreset, SentimentFilter, DurationFilter } from '@/hooks/useCallHistory';
 import { CallSessionsList } from '@/components/call-history/CallSessionsList';
 import { CallDetailDialog } from '@/components/call-history/CallDetailDialog';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -15,25 +16,64 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 export default function CallHistory() {
   usePageTitle('Histórico de Chamadas');
 
-  const {
-    sessions, isLoading, searchQuery, setSearchQuery,
-    selectedSession, setSelectedSession, sessionTranscripts, sessionAnalyses, sessionSummary,
-    isLoadingDetails, showFilters, setShowFilters, dateRangePreset, setDateRangePreset,
-    customDateFrom, setCustomDateFrom, customDateTo, setCustomDateTo,
-    sentimentFilter, setSentimentFilter, durationFilter, setDurationFilter,
-    topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
-    handleSessionClick, exportTranscript, fetchSessions,
-  } = useCallHistory();
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Histórico de Chamadas</h1>
-          <p className="text-muted-foreground">Visualize transcrições e análises de chamadas anteriores</p>
-        </div>
-        <Button variant="outline" onClick={fetchSessions}>Atualizar</Button>
-      </div>
+   const {
+     sessions, isLoading, searchQuery, setSearchQuery,
+     selectedSession, setSelectedSession, sessionTranscripts, sessionAnalyses, sessionSummary,
+     isLoadingDetails, showFilters, setShowFilters, dateRangePreset, setDateRangePreset,
+     customDateFrom, setCustomDateFrom, customDateTo, setCustomDateTo,
+     sentimentFilter, setSentimentFilter, durationFilter, setDurationFilter,
+     statusFilter, setStatusFilter,
+     topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
+     handleSessionClick, exportTranscript, fetchSessions,
+   } = useCallHistory();
+ 
+   const stats = useMemo(() => {
+     const s = sessions || [];
+     return {
+       total: s.length,
+       completed: s.filter(c => c.status === 'completed').length,
+       missed: s.filter(c => c.status === 'missed' || c.status === 'abandoned').length,
+     };
+   }, [sessions]);
+ 
+   return (
+     <div className="space-y-6 relative">
+       <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
+       <div className="relative space-y-6">
+         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+           <div>
+             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Histórico de Chamadas</h1>
+             <p className="text-muted-foreground">Visualize transcrições e análises detalhadas</p>
+           </div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" onClick={fetchSessions}>Atualizar</Button>
+              <Button variant="neon" size="sm" className="gap-2">
+                <Download className="h-4 w-4" /> Exportar
+              </Button>
+            </div>
+         </div>
+ 
+         {/* KPI Cards */}
+         <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
+           <Card variant="neon-interactive">
+             <CardContent className="p-4">
+               <p className="text-xs uppercase tracking-wider text-muted-foreground">Total (filtros)</p>
+               <p className="text-2xl font-bold">{stats.total}</p>
+             </CardContent>
+           </Card>
+           <Card variant="neon-interactive">
+             <CardContent className="p-4">
+               <p className="text-xs uppercase tracking-wider text-muted-foreground">Atendidas</p>
+               <p className="text-2xl font-bold text-success">{stats.completed}</p>
+             </CardContent>
+           </Card>
+           <Card variant="neon-interactive">
+             <CardContent className="p-4">
+               <p className="text-xs uppercase tracking-wider text-muted-foreground">Perdidas/Abandonadas</p>
+               <p className="text-2xl font-bold text-destructive">{stats.missed}</p>
+             </CardContent>
+           </Card>
+         </div>
 
       <div className="space-y-4">
         <div className="flex gap-4">
@@ -88,8 +128,20 @@ export default function CallHistory() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium flex items-center gap-2"><Clock className="h-4 w-4" /> Duração</label>
+                 <div className="space-y-2">
+                   <label className="text-sm font-medium flex items-center gap-2"><Phone className="h-4 w-4" /> Status</label>
+                   <Select value={statusFilter} onValueChange={setStatusFilter}>
+                     <SelectTrigger><SelectValue placeholder="Status" /></SelectTrigger>
+                     <SelectContent>
+                       <SelectItem value="all">Todos</SelectItem>
+                       <SelectItem value="completed">Atendidas</SelectItem>
+                       <SelectItem value="missed">Perdidas</SelectItem>
+                       <SelectItem value="abandoned">Abandonadas</SelectItem>
+                     </SelectContent>
+                   </Select>
+                 </div>
+                 <div className="space-y-2">
+                   <label className="text-sm font-medium flex items-center gap-2"><Clock className="h-4 w-4" /> Duração</label>
                   <Select value={durationFilter} onValueChange={(v) => setDurationFilter(v as DurationFilter)}>
                     <SelectTrigger><SelectValue placeholder="Selecionar duração" /></SelectTrigger>
                     <SelectContent>
@@ -127,9 +179,10 @@ export default function CallHistory() {
 
       <CallSessionsList sessions={sessions} isLoading={isLoading} activeFiltersCount={activeFiltersCount} onSessionClick={handleSessionClick} onClearFilters={clearFilters} />
 
-      <CallDetailDialog selectedSession={selectedSession} onClose={() => setSelectedSession(null)}
-        isLoadingDetails={isLoadingDetails} sessionTranscripts={sessionTranscripts}
-        sessionAnalyses={sessionAnalyses} sessionSummary={sessionSummary} onExportTranscript={exportTranscript} />
-    </div>
-  );
-}
+       <CallDetailDialog selectedSession={selectedSession} onClose={() => setSelectedSession(null)}
+         isLoadingDetails={isLoadingDetails} sessionTranscripts={sessionTranscripts}
+         sessionAnalyses={sessionAnalyses} sessionSummary={sessionSummary} onExportTranscript={exportTranscript} />
+       </div>
+     </div>
+   );
+ }

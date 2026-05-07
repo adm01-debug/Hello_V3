@@ -1,7 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useDashboardStats, useCallVolumeData, useAgentsListData } from '@/hooks/useDashboardData';
+ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+ import { Skeleton } from '@/components/ui/skeleton';
+ import { useDashboardStats, useCallVolumeData } from '@/hooks/useDashboardData';
+ import { useQuery } from '@tanstack/react-query';
+ import { supabase } from '@/integrations/supabase/client';
 import { 
   AreaChart, 
   Area, 
@@ -31,17 +33,22 @@ import { usePageTitle } from '@/hooks/usePageTitle';
    usePageTitle('Relatórios');
    const { data: stats, isLoading: statsLoading } = useDashboardStats();
   const { data: volumeData, isLoading: volumeLoading } = useCallVolumeData();
-  const { data: agents, isLoading: agentsLoading } = useAgentsListData();
-
+   const { data: agentsPerf, isLoading: agentsLoading } = useQuery({
+     queryKey: ['agent-performance-stats'],
+     queryFn: async () => {
+       const { data, error } = await supabase.rpc('get_agent_performance');
+       if (error) throw error;
+       return data as any[];
+     },
+   });
+ 
    const agentPerformance = useMemo(() => {
-     // Simulation of real performance data until a dedicated RPC is ready
-     // For a 10/10 system, we'd fetch this via get_agent_performance()
-     return (agents || []).map((agent, i) => ({
+     return (agentsPerf || []).map((agent: any) => ({
        name: agent.name.split(' ')[0],
-       chamadas: Math.floor(Math.random() * 50) + 10 + i * 2,
-       media: Math.floor(Math.random() * 300) + 120
+       chamadas: agent.totalCalls,
+       media: agent.avgDuration
      }));
-   }, [agents]);
+   }, [agentsPerf]);
 
   const callTypeData = useMemo(() => {
     if (!stats) return [];
