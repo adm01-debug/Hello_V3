@@ -18,13 +18,8 @@ import { SectionBoundary } from '@/components/error-boundary/ErrorBoundary';
 import { useDashboardStats } from '@/hooks/useDashboardData';
 import { Skeleton } from '@/components/ui/skeleton';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
-import { usePageTitle } from '@/hooks/usePageTitle';
-
-const formatDuration = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
+ import { usePageTitle } from '@/hooks/usePageTitle';
+ import { formatDuration } from '@/lib/utils';
 
  const Index = () => {
    usePageTitle('Dashboard');
