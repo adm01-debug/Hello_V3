@@ -52,9 +52,10 @@ export interface CreateCampaignInput {
   retry_attempts?: number;
   retry_delay_minutes?: number;
   working_hours_start?: string;
-  working_hours_end?: string;
-  created_by?: string;
-}
+   working_hours_end?: string;
+   created_by?: string;
+   status?: string;
+ }
 
 export interface AddToQueueInput {
   campaign_id: string;
