@@ -98,7 +98,7 @@ export function useRecentCallsData() {
  
        const { data, error } = await supabase
          .from('call_sessions')
-         .select('started_at, direction')
+         .select('started_at, direction' as any)
          .gte('started_at', twentyFourHoursAgo.toISOString());
  
        if (error) throw error;
@@ -113,7 +113,7 @@ export function useRecentCallsData() {
          hourMap[key] = { incoming: 0, outgoing: 0 };
        }
  
-       for (const call of data || []) {
+       for (const call of (data as any) || []) {
          const date = new Date(call.started_at);
          const hour = date.getHours();
          const key = `${hour.toString().padStart(2, '0')}:00`;
@@ -126,7 +126,6 @@ export function useRecentCallsData() {
          }
        }
  
-       // Sort by actual time order (ascending)
        return Object.entries(hourMap)
          .map(([hour, counts]) => ({ hour, ...counts }))
          .sort((a, b) => a.hour.localeCompare(b.hour));
