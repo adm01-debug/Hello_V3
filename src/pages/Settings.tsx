@@ -18,10 +18,11 @@
    Mic,
    Save,
    Link,
-   Wrench,
-   LifeBuoy,
-   MessageSquare,
- } from 'lucide-react';
+    Wrench,
+    LifeBuoy,
+    MessageSquare,
+    Sparkles,
+  } from 'lucide-react';
  import { toast } from 'sonner';
  import { usePageTitle } from '@/hooks/usePageTitle';
  
