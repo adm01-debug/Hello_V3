@@ -2,8 +2,9 @@ import { Trophy, Medal, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+ import { formatDurationFriendly } from '@/lib/utils';
 import { AgentStats } from '@/hooks/useAgentRanking';
 
 interface Props {
@@ -13,12 +14,6 @@ interface Props {
 
 const getInitials = (name: string) =>
   name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2);
-
-const formatDuration = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.round(seconds % 60);
-  return `${mins}m ${secs}s`;
-};
 
 const getRankIcon = (index: number) => {
   switch (index) {
@@ -72,7 +67,7 @@ export function AgentRankingTable({ agents, isLoading }: Props) {
                     </div>
                   </TableCell>
                   <TableCell className="text-center"><Badge variant="secondary">{agent.totalCalls}</Badge></TableCell>
-                  <TableCell className="text-center text-muted-foreground">{formatDuration(agent.avgDuration)}</TableCell>
+                   <TableCell className="text-center text-muted-foreground">{formatDurationFriendly(agent.avgDuration)}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <Progress value={agent.avgSatisfaction * 10} className="h-2 w-16" />
