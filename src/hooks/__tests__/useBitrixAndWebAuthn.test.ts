@@ -78,11 +78,17 @@
  describe("useWebAuthn", () => {
    beforeEach(() => {
      vi.clearAllMocks();
-     (supabase.from as any).mockReturnValue({
+     const mockFrom = {
        select: vi.fn().mockReturnThis(),
        eq: vi.fn().mockReturnThis(),
-       order: vi.fn().mockResolvedValue({ data: [], error: null }),
-     });
+       order: vi.fn().mockReturnThis(),
+       insert: vi.fn().mockResolvedValue({ error: null }),
+       delete: vi.fn().mockReturnThis(),
+       update: vi.fn().mockReturnThis(),
+     };
+     (supabase.from as any).mockReturnValue(mockFrom);
+     // Default for order.mockResolvedValue is needed for initial load
+     mockFrom.order.mockResolvedValue({ data: [], error: null });
    });
  
    it("loads passkeys on mount", async () => {
