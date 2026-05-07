@@ -54,7 +54,8 @@ function formatRelativeTime(dateString: string) {
   return `${diffDays}d atrás`;
 }
 
-export default function SessionManagement() {
+ export default function SessionManagement() {
+   usePageTitle('Sessões Ativas');
   const {
     sessions,
     currentSessionId,
@@ -70,16 +71,14 @@ export default function SessionManagement() {
     sessionId?: string;
   } | null>(null);
 
-  const handleRevokeSession = (sessionId: string) => {
-  usePageTitle('Sessões Ativas');
-
-    if (sessionId === currentSessionId) {
-      revokeSession(sessionId);
-    } else {
-      setPendingAction({ type: 'revoke', sessionId });
-      requestReauth('revoke_sessions');
-    }
-  };
+   const handleRevokeSession = (sessionId: string) => {
+     if (sessionId === currentSessionId) {
+       revokeSession(sessionId);
+     } else {
+       setPendingAction({ type: 'revoke', sessionId });
+       requestReauth('revoke_sessions');
+     }
+   };
 
   const handleRevokeAll = () => {
     setPendingAction({ type: 'revoke_all' });
