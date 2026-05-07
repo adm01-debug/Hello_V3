@@ -37,7 +37,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         
         <div className="flex flex-1 flex-col">
           {/* Header — glass morphism */}
-          <header className="sticky top-0 z-40 flex h-20 items-center justify-between border-b border-border/20 px-6 md:px-10 glass-dark">
+          <header className="sticky top-0 z-40 flex h-20 items-center justify-between border-b border-white/[0.05] px-6 md:px-10 glass-dark">
             <div className="flex items-center gap-2 md:gap-4">
               <SidebarTrigger className="-ml-2 text-muted-foreground hover:text-primary transition-colors" />
               
