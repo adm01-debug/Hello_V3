@@ -71,7 +71,7 @@ export default function Knowledge() {
         }
       />
 
-      <Card className="p-4 bg-card/50 backdrop-blur border-primary/20 mb-4">
+       <Card variant="neon" className="p-4 mb-4">
         <div className="flex flex-col md:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -109,11 +109,12 @@ export default function Knowledge() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {articles.map((a) => (
-            <Card
-              key={a.id}
-              className="p-4 bg-card/50 backdrop-blur border-primary/20 hover:border-primary/40 transition-all cursor-pointer"
-              onClick={() => isEditor && setEditing(a)}
-            >
+             <Card
+               key={a.id}
+               variant="neon-interactive"
+               className="p-4"
+               onClick={() => isEditor && setEditing(a)}
+             >
               <div className="flex items-start justify-between gap-2 mb-2">
                 <h3 className="font-semibold line-clamp-2">{a.title}</h3>
                 <Badge variant={a.status === 'published' ? 'default' : 'outline'} className="text-[10px] shrink-0">
