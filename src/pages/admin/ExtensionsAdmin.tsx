@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
    Search, MoreVertical, Smartphone, Network, QrCode, UserCog, Headphones, FolderSync,
    AlertTriangle, Copy, Loader2, Users2, Heart, Download, PowerOff, X, LayoutDashboard,
@@ -66,9 +67,27 @@ export default function ExtensionsAdmin() {
       total,
       online: extensions.filter(e => e.status === 'available' || e.status === 'busy').length,
       noTrunk: extensions.filter(e => !e.primary_trunk_id).length,
-      avgScore: total > 0 ? Math.round(sumScore / total) : 0,
+    avgScore: total > 0 ? Math.round(sumScore / total) : 0,
     };
   }, [extensions]);
+
+  const [activeTab, setActiveTab] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('tab') || 'extensions';
+  });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    if (tab && tab !== activeTab) {
+      setActiveTab(tab);
+    }
+  }, [window.location.search]);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    navigate(`/admin/extensions?tab=${value}`, { replace: true });
+  };
 
   const allFilteredSelected = filtered.length > 0 && filtered.every(e => selectedIds.has(e.agent_id));
   const someFilteredSelected = filtered.some(e => selectedIds.has(e.agent_id));
@@ -163,59 +182,77 @@ export default function ExtensionsAdmin() {
   };
 
   return (
-    <div className="space-y-6 p-6 pb-24">
-      <div>
-        <h1 className="text-3xl font-bold text-display tracking-wide">Gestão de Ramais</h1>
-        <p className="text-muted-foreground">Visão 360° de todos os ramais, dispositivos, trunks e provisionamento.</p>
-      </div>
+    <div className="space-y-6 p-6 pb-24 relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none gradient-mesh-intense opacity-10" />
+      
+      <div className="relative z-10">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+          <div>
+            <h1 className="text-3xl font-bold text-display tracking-tight text-gradient">Painel de Ramais</h1>
+            <p className="text-muted-foreground">Gestão unificada de dispositivos, trunks e provisionamento.</p>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={() => navigate('/executive')} className="gap-2">
+              <LayoutDashboard className="h-4 w-4" /> Dashboard
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => navigate('/ldap-sync')} className="gap-2">
+              <FolderSync className="h-4 w-4" /> Sincronizar LDAP
+            </Button>
+          </div>
+        </div>
 
-       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-         <Card 
-           className="cursor-pointer border-primary/20 hover:border-primary/50 transition-all hover:shadow-lg bg-primary/5"
-           onClick={() => navigate('/executive')}
-         >
-           <CardContent className="pt-6">
-             <div className="flex items-center justify-between">
-               <div>
-                 <p className="text-xs uppercase tracking-wider text-primary font-bold">Monitoramento</p>
-                 <p className="text-sm font-semibold mt-1">Dashboard Executivo</p>
-               </div>
-               <LayoutDashboard className="h-8 w-8 text-primary opacity-70" />
-             </div>
-           </CardContent>
-         </Card>
- 
-         <Card 
-           className="cursor-pointer border-accent/20 hover:border-accent/50 transition-all hover:shadow-lg"
-           onClick={() => navigate('/ldap-sync')}
-         >
-           <CardContent className="pt-6">
-             <div className="flex items-center justify-between">
-               <div>
-                 <p className="text-xs uppercase tracking-wider text-muted-foreground font-bold">Diretório</p>
-                 <p className="text-sm font-semibold mt-1">Sincronizar AD/LDAP</p>
-               </div>
-               <FolderSync className="h-8 w-8 text-accent opacity-70" />
-             </div>
-           </CardContent>
-         </Card>
-       </div>
- 
-       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon={Users2} label="Total de Ramais" value={stats.total} tone="primary" />
-        <StatCard icon={Headphones} label="Online Agora" value={stats.online} tone="success" />
-        <StatCard icon={Network} label="Sem Trunk" value={stats.noTrunk} tone={stats.noTrunk > 0 ? 'warning' : 'muted'} />
-        <StatCard icon={Heart} label="Score Médio" value={stats.avgScore}
-          tone={stats.avgScore >= 80 ? 'success' : stats.avgScore >= 50 ? 'warning' : 'destructive'} suffix="/100" />
-      </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <StatCard icon={Users2} label="Total de Ramais" value={stats.total} tone="primary" />
+          <StatCard icon={Headphones} label="Online Agora" value={stats.online} tone="success" />
+          <StatCard icon={Network} label="Sem Trunk" value={stats.noTrunk} tone={stats.noTrunk > 0 ? 'warning' : 'muted'} />
+          <StatCard icon={Heart} label="Score Médio" value={stats.avgScore}
+            tone={stats.avgScore >= 80 ? 'success' : stats.avgScore >= 50 ? 'warning' : 'destructive'} suffix="/100" />
+        </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Ramais cadastrados</CardTitle>
-          <CardDescription>Pesquise, filtre e gerencie todos os ramais em uma única tela.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-col md:flex-row gap-3 flex-wrap">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-4">
+          <TabsList className="grid grid-cols-2 md:grid-cols-4 w-full md:w-auto">
+            <TabsTrigger value="extensions" className="gap-2">
+              <Users2 className="h-4 w-4" /> Ramais
+            </TabsTrigger>
+            <TabsTrigger value="trunks" className="gap-2">
+              <Network className="h-4 w-4" /> Trunks
+            </TabsTrigger>
+            <TabsTrigger value="provisioning" className="gap-2">
+              <QrCode className="h-4 w-4" /> Provisionamento
+            </TabsTrigger>
+            <TabsTrigger value="devices" className="gap-2">
+              <Smartphone className="h-4 w-4" /> Dispositivos
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="extensions" className="space-y-4">
+            <Card className="border-primary/10 shadow-sm bg-card/50 backdrop-blur-sm">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Ramais Ativos</CardTitle>
+                    <CardDescription>Pesquise, filtre e gerencie todos os ramais em uma única tela.</CardDescription>
+                  </div>
+                  <div className="flex gap-2">
+                    {selectedIds.size > 0 && (
+                      <div className="flex items-center gap-2 animate-in fade-in slide-in-from-right-2">
+                        <Button variant="outline" size="sm" onClick={handleBulkOffline} disabled={bulkOffline} className="gap-2 text-destructive border-destructive/20 hover:bg-destructive/10">
+                          {bulkOffline ? <Loader2 className="h-3 w-3 animate-spin" /> : <PowerOff className="h-3 w-3" />}
+                          Offline ({selectedIds.size})
+                        </Button>
+                        <Button variant="outline" size="sm" onClick={() => setBulkTrunkOpen(true)} className="gap-2">
+                          <Network className="h-3 w-3" /> Alterar Trunk ({selectedIds.size})
+                        </Button>
+                      </div>
+                    )}
+                    <Button variant="outline" size="sm" onClick={handleExportCsv} className="gap-2">
+                      <Download className="h-3 w-3" /> Exportar
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex flex-col md:flex-row gap-3 flex-wrap">
             <div className="relative flex-1 min-w-[200px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
