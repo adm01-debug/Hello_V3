@@ -3603,6 +3603,7 @@ export type Database = {
           category_id: string | null
           content: string
           created_at: string
+          embedding: string | null
           excerpt: string | null
           helpful_count: number | null
           id: string
@@ -3621,6 +3622,7 @@ export type Database = {
           category_id?: string | null
           content: string
           created_at?: string
+          embedding?: string | null
           excerpt?: string | null
           helpful_count?: number | null
           id?: string
@@ -3639,6 +3641,7 @@ export type Database = {
           category_id?: string | null
           content?: string
           created_at?: string
+          embedding?: string | null
           excerpt?: string | null
           helpful_count?: number | null
           id?: string
@@ -6492,6 +6495,28 @@ export type Database = {
           p_resource_type: string
         }
         Returns: string
+      }
+      match_kb_articles: {
+        Args: {
+          filter_category_id?: string
+          match_count: number
+          match_threshold: number
+          query_embedding: string
+        }
+        Returns: {
+          category_id: string
+          content: string
+          excerpt: string
+          helpful_count: number
+          id: string
+          similarity: number
+          slug: string
+          status: string
+          tags: string[]
+          title: string
+          updated_at: string
+          view_count: number
+        }[]
       }
       record_failed_login: {
         Args: { p_email: string; p_ip_address?: string; p_user_agent?: string }
