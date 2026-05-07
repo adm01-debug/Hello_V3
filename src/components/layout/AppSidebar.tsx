@@ -290,13 +290,13 @@ export function AppSidebar() {
         <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border/50 p-4">
+      <SidebarFooter className="border-t border-sidebar-border/10 p-6 bg-white/[0.01]">
         <div className={cn(
           'flex items-center gap-3',
           collapsed && 'justify-center'
         )}>
           <div className="relative">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-sidebar-primary/15 text-sm font-bold text-sidebar-primary border border-sidebar-primary/25 shadow-[0_0_12px_hsl(var(--sidebar-primary)/0.2)]">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/[0.05] text-sm font-bold text-primary border border-white/[0.1] shadow-sm">
               {profile?.full_name
                 ? profile.full_name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
                 : profile?.email?.slice(0, 2).toUpperCase() || '??'}
@@ -304,11 +304,11 @@ export function AppSidebar() {
             <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-sidebar-background status-dot-online" />
           </div>
           {!collapsed && (
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-0.5">
               <span className="text-sm font-medium text-sidebar-foreground">
                 {profile?.full_name || profile?.email || 'Usuário'}
               </span>
-              <span className="text-[10px] uppercase tracking-wider text-sidebar-primary/60">
+              <span className="text-[9px] uppercase font-bold tracking-[0.15em] text-primary/70">
                 {profile?.role || 'agent'}
               </span>
             </div>
