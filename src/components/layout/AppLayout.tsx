@@ -4,9 +4,7 @@ import { AppSidebar } from './AppSidebar';
 import { ActiveCallBar } from '@/components/calls/ActiveCallBar';
  import { Search, Wifi } from 'lucide-react';
  import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { AlertsDropdown } from '@/components/alerts/AlertsDropdown';
-import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdown';
-import { NotificationBell } from '@/components/notifications/NotificationBell';
+ import { UnifiedNotificationDropdown } from '@/components/notifications/UnifiedNotificationDropdown';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { BreadcrumbCompact } from '@/components/ui/breadcrumb-nav';
 import { SkipLink } from '@/components/ui/keyboard-navigation';
@@ -86,10 +84,8 @@ export function AppLayout({ children }: AppLayoutProps) {
                  </Tooltip>
                </TooltipProvider>
  
-              <ThemeToggle />
-              <NotificationBell />
-              <ContactAlertsDropdown />
-              <AlertsDropdown />
+               <ThemeToggle />
+               <UnifiedNotificationDropdown />
             </div>
           </header>
 
