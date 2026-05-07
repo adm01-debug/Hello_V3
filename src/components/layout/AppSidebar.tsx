@@ -244,7 +244,7 @@ export function AppSidebar() {
   );
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-sidebar-border/50">
+     <Sidebar collapsible="icon" className="border-r border-sidebar-border/50" aria-label="Navegação Principal">
       <SidebarHeader className="border-b border-sidebar-border/50 p-4">
         <div className="flex items-center gap-3">
           <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-sidebar-primary shadow-[0_0_20px_hsl(var(--sidebar-primary)/0.4)]">
@@ -252,10 +252,10 @@ export function AppSidebar() {
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-base font-bold text-sidebar-foreground text-display tracking-wider">
+               <span className="text-base font-bold text-sidebar-foreground text-display tracking-wider" aria-hidden="true">
                 VoIP Panel
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-sidebar-primary/60">
+               <span className="text-[10px] uppercase tracking-widest text-sidebar-primary/60" aria-hidden="true">
                 Central de Atendimento
               </span>
             </div>

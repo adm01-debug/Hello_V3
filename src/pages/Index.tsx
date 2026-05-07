@@ -1,4 +1,8 @@
-import { Phone, Clock, CheckCircle, Users, Zap, LayoutDashboard } from 'lucide-react';
+ import { Phone, Clock, CheckCircle, Users, Zap, LayoutDashboard, RefreshCw } from 'lucide-react';
+ import { useQueryClient } from '@tanstack/react-query';
+ import { useState } from 'react';
+ import { Button } from '@/components/ui/button';
+ import { toast } from 'sonner';
 import { StatsCard } from '@/components/dashboard/StatsCard';
 import { CallVolumeChart } from '@/components/dashboard/CallVolumeChart';
 import { RecentCalls } from '@/components/dashboard/RecentCalls';
@@ -22,27 +26,57 @@ const formatDuration = (seconds: number): string => {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
 
-const Index = () => {
-  usePageTitle('Dashboard');
-  const { data: stats, isLoading } = useDashboardStats();
-
-  return (
+ const Index = () => {
+   usePageTitle('Dashboard');
+   const queryClient = useQueryClient();
+   const { data: stats, isLoading, isFetching: isFetchingStats } = useDashboardStats();
+   const [isRefreshing, setIsRefreshing] = useState(false);
+ 
+   const handleRefresh = async () => {
+     setIsRefreshing(true);
+     try {
+       await queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+       await queryClient.invalidateQueries({ queryKey: ['agents-list'] });
+       await queryClient.invalidateQueries({ queryKey: ['recent-calls'] });
+       await queryClient.invalidateQueries({ queryKey: ['call-volume'] });
+       await queryClient.invalidateQueries({ queryKey: ['queue-stats'] });
+       toast.success('Dashboard atualizado com sucesso');
+     } catch (error) {
+       toast.error('Erro ao atualizar o dashboard');
+     } finally {
+       setIsRefreshing(false);
+     }
+   };
+ 
+   return (
     <main className="space-y-6 relative stagger-section" aria-label="Dashboard principal">
       {/* Ambient neon mesh background */}
       <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-40" aria-hidden="true" />
 
       {/* Header */}
-      <NeonPageHeader
-        title="Dashboard"
-        description="Visão geral do seu centro de atendimento"
-        icon={<LayoutDashboard className="h-5 w-5" />}
-        badge={
-          <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full glass-neon" aria-label="Status do sistema: ativo">
-            <Zap className="h-3.5 w-3.5 text-primary animate-glow-pulse" aria-hidden="true" />
-            <span className="text-xs font-semibold text-primary">Sistema ativo</span>
-          </div>
-        }
-      />
+       <NeonPageHeader
+         title="Dashboard"
+         description="Visão geral do seu centro de atendimento"
+         icon={<LayoutDashboard className="h-5 w-5" />}
+         badge={
+           <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full glass-neon" aria-label="Status do sistema: ativo">
+             <Zap className="h-3.5 w-3.5 text-primary animate-glow-pulse" aria-hidden="true" />
+             <span className="text-xs font-semibold text-primary">Sistema ativo</span>
+           </div>
+         }
+         actions={
+           <Button
+             variant="glass"
+             size="sm"
+             onClick={handleRefresh}
+             disabled={isRefreshing || isFetchingStats}
+             className="gap-2"
+           >
+             <RefreshCw className={`h-4 w-4 ${isRefreshing || isFetchingStats ? 'animate-spin' : ''}`} />
+             Sincronizar
+           </Button>
+         }
+       />
 
       {/* Stats Cards */}
       <SectionBoundary section="Estatísticas">
