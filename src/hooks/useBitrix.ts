@@ -48,7 +48,7 @@ export const useBitrix = () => {
 
    const callBitrixApi = useCallback(async (action: string, params?: Record<string, unknown>, maxRetries = 2) => {
      setIsLoading(true);
-     let lastError: any = null;
+     let lastError: any = null; // Keeping any here briefly because it might not strictly be Error
      
      for (let attempt = 0; attempt <= maxRetries; attempt++) {
        try {
@@ -68,7 +68,7 @@ export const useBitrix = () => {
          }
  
          lastError = error;
-         const status = (error as any).status || 0;
+         const status = (error as { status?: number }).status || 0;
          if (status >= 400 && status < 500) break; // Client error, don't retry
          if (error.message?.includes('não configurado')) break;
  

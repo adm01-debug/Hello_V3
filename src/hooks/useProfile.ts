@@ -47,7 +47,7 @@
        queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
        toast.success('Perfil atualizado com sucesso');
      },
-     onError: (error: any) => {
+     onError: (error: Error) => {
        toast.error('Erro ao atualizar perfil', { description: error.message });
      },
    });
