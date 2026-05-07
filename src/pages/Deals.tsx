@@ -91,27 +91,27 @@ export default function Deals() {
         </Dialog>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card><CardContent className="p-4"><p className="text-sm text-muted-foreground">Pipeline aberto</p><p className="text-2xl font-bold">{formatCurrency(totals.pipeline)}</p></CardContent></Card>
-        <Card><CardContent className="p-4"><p className="text-sm text-muted-foreground">Forecast ponderado</p><p className="text-2xl font-bold">{formatCurrency(totals.weighted)}</p></CardContent></Card>
-        <Card><CardContent className="p-4"><p className="text-sm text-muted-foreground">Oportunidades abertas</p><p className="text-2xl font-bold">{totals.count}</p></CardContent></Card>
-      </div>
+       <div className="grid gap-4 md:grid-cols-3">
+         <Card variant="neon"><CardContent className="p-4"><p className="text-sm text-muted-foreground">Pipeline aberto</p><p className="text-2xl font-bold">{formatCurrency(totals.pipeline)}</p></CardContent></Card>
+         <Card variant="neon"><CardContent className="p-4"><p className="text-sm text-muted-foreground">Forecast ponderado</p><p className="text-2xl font-bold">{formatCurrency(totals.weighted)}</p></CardContent></Card>
+         <Card variant="neon"><CardContent className="p-4"><p className="text-sm text-muted-foreground">Oportunidades abertas</p><p className="text-2xl font-bold">{totals.count}</p></CardContent></Card>
+       </div>
 
       {loading ? (
         <p className="text-muted-foreground">Carregando...</p>
       ) : (
-        <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6 overflow-x-auto">
-          {DEAL_STAGES.map((s) => (
-            <Card key={s.id} className="bg-card/50 backdrop-blur min-w-[220px]">
-              <CardHeader className="p-3">
-                <CardTitle className="text-sm flex items-center justify-between">
-                  <span>{s.label}</span>
-                  <Badge variant="outline">{grouped[s.id]?.length ?? 0}</Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-3 pt-0 space-y-2">
-                {(grouped[s.id] ?? []).map((d) => (
-                  <Card key={d.id} className="p-2 hover:border-primary/50 transition-all">
+         <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6 overflow-x-auto">
+           {DEAL_STAGES.map((s) => (
+             <Card key={s.id} variant="glass-neon" className="min-w-[220px]">
+               <CardHeader className="p-3">
+                 <CardTitle className="text-sm flex items-center justify-between">
+                   <span>{s.label}</span>
+                   <Badge variant="outline">{grouped[s.id]?.length ?? 0}</Badge>
+                 </CardTitle>
+               </CardHeader>
+               <CardContent className="p-3 pt-0 space-y-2">
+                 {(grouped[s.id] ?? []).map((d) => (
+                   <Card key={d.id} variant="neon-interactive" className="p-2">
                     <p className="text-sm font-medium truncate">{d.name}</p>
                     <p className="text-xs text-muted-foreground">{formatCurrency(d.value_cents, d.currency)}</p>
                     <div className="flex items-center justify-between mt-1.5">

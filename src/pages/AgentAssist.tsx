@@ -42,33 +42,33 @@ export default function AgentAssist() {
         icon={<Sparkles />}
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-        <Card className="p-4 bg-card/50 backdrop-blur border-primary/20">
-          <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Sinais (30d)</div>
-          <div className="text-3xl font-bold">{stats.total}</div>
-        </Card>
-        <Card className="p-4 bg-card/50 backdrop-blur border-primary/20">
-          <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1">
-            <TrendingUp className="h-3 w-3" /> Aceitação
-          </div>
-          <div className="text-3xl font-bold text-success">{stats.acceptance}%</div>
-        </Card>
-        <Card className="p-4 bg-card/50 backdrop-blur border-primary/20">
-          <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1">
-            <ShieldAlert className="h-3 w-3" /> Compliance
-          </div>
-          <div className="text-3xl font-bold text-destructive">{stats.compliance}</div>
-        </Card>
-        <Card className="p-4 bg-card/50 backdrop-blur border-primary/20">
-          <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1">
-            <MessageSquare className="h-3 w-3" /> Objeções
-          </div>
-          <div className="text-3xl font-bold text-warning">{stats.objectionCount}</div>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card className="lg:col-span-2 p-4 bg-card/50 backdrop-blur border-primary/20">
+       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+         <Card variant="neon" className="p-4">
+           <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Sinais (30d)</div>
+           <div className="text-3xl font-bold">{stats.total}</div>
+         </Card>
+         <Card variant="neon" className="p-4">
+           <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1">
+             <TrendingUp className="h-3 w-3" /> Aceitação
+           </div>
+           <div className="text-3xl font-bold text-success">{stats.acceptance}%</div>
+         </Card>
+         <Card variant="neon" className="p-4">
+           <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1">
+             <ShieldAlert className="h-3 w-3" /> Compliance
+           </div>
+           <div className="text-3xl font-bold text-destructive">{stats.compliance}</div>
+         </Card>
+         <Card variant="neon" className="p-4">
+           <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1">
+             <MessageSquare className="h-3 w-3" /> Objeções
+           </div>
+           <div className="text-3xl font-bold text-warning">{stats.objectionCount}</div>
+         </Card>
+       </div>
+ 
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+         <Card variant="neon" className="lg:col-span-2 p-4">
           <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" /> Sinais recentes
           </h3>
@@ -105,7 +105,7 @@ export default function AgentAssist() {
           )}
         </Card>
 
-        <Card className="p-4 bg-card/50 backdrop-blur border-primary/20">
+         <Card variant="neon" className="p-4">
           <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
             <MessageSquare className="h-4 w-4 text-warning" /> Top objeções
           </h3>

@@ -7,7 +7,7 @@ interface ChatbotPayload {
   visitor_token?: string;
 }
 
-const CONFIDENCE_THRESHOLD = 0.7;
+ const DEFAULT_THRESHOLD = 0.7;
 const MODEL = 'google/gemini-2.5-flash';
 
 Deno.serve(async (req) => {
@@ -63,13 +63,22 @@ Deno.serve(async (req) => {
             .join('\n\n')
         : 'Nenhum artigo relevante encontrado na base.';
 
-    // Histórico recente da conversa
-    const { data: history } = await supabase
-      .from('conversation_messages')
-      .select('direction, content')
-      .eq('conversation_id', body.conversation_id)
-      .order('created_at', { ascending: false })
-      .limit(6);
+     // Buscar configurações de threshold e histórico da conversa
+     const [settingsRes, convRes, historyRes] = await Promise.all([
+       supabase.from('system_settings').select('value').eq('key', 'bot_handoff_threshold').maybeSingle(),
+       supabase.from('conversations').select('handoff_threshold').eq('id', body.conversation_id).maybeSingle(),
+       supabase.from('conversation_messages')
+         .select('direction, content')
+         .eq('conversation_id', body.conversation_id)
+         .order('created_at', { ascending: false })
+         .limit(6)
+     ]);
+ 
+     const globalThreshold = parseFloat(settingsRes.data?.value as string || DEFAULT_THRESHOLD.toString());
+     const conversationThreshold = convRes.data?.handoff_threshold;
+     const activeThreshold = conversationThreshold ?? globalThreshold;
+ 
+     const history = historyRes.data;
 
     const historyMessages = (history || [])
       .reverse()
@@ -153,7 +162,7 @@ Responda de forma clara, cordial e objetiva. Use markdown leve quando útil.`;
 
     const parsed = JSON.parse(toolCall.function.arguments);
     const responseTimeMs = Date.now() - startTime;
-    const shouldHandoff = parsed.handoff || parsed.confidence < CONFIDENCE_THRESHOLD;
+     const shouldHandoff = parsed.handoff || parsed.confidence < activeThreshold;
 
     // Inserir mensagem do bot na conversa
     await supabase.from('conversation_messages').insert({
