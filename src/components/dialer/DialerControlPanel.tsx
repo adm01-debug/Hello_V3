@@ -1,3 +1,4 @@
+ import { useState, useEffect } from 'react';
  import { Phone, Play, Pause, CheckCircle, PhoneMissed, PhoneOff, Voicemail, XCircle, RotateCcw, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
