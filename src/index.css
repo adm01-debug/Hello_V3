@@ -57,7 +57,7 @@
     --input-focus: 185 100% 45%;
     --ring: 185 100% 45%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
     /* Sidebar — dark even in light mode for contrast */
     --sidebar-background: 232 35% 8%;
@@ -350,15 +350,19 @@
 }
 
 @layer components {
-  /* Neon Glass Morphism */
+  /* High-End Glass Morphism */
   .glass {
-    @apply bg-card/60 backdrop-blur-2xl border border-border/30;
-    box-shadow: var(--shadow-md), inset 0 1px 0 0 rgb(255 255 255 / 0.05);
+    @apply bg-background/70 backdrop-blur-[24px] border border-white/[0.08] dark:border-white/[0.04];
+    box-shadow: 
+      0 4px 24px -1px rgba(0, 0, 0, 0.05),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   }
 
   .glass-dark {
-    @apply bg-background/40 backdrop-blur-2xl border border-border/15;
-    box-shadow: var(--shadow-lg), inset 0 1px 0 0 rgb(255 255 255 / 0.02);
+    @apply bg-[#050507]/60 backdrop-blur-[32px] border border-white/[0.05];
+    box-shadow: 
+      0 20px 40px -10px rgba(0, 0, 0, 0.4),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   }
 
   .glass-neon {
@@ -367,10 +371,21 @@
   }
 
   /* Card Variants */
+  .card-premium {
+    @apply bg-card/40 backdrop-blur-md rounded-2xl border border-white/[0.08] dark:border-white/[0.04] transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)];
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.02);
+  }
+  .card-premium:hover {
+    @apply border-primary/20 bg-card/60 -translate-y-1;
+    box-shadow: 
+      0 20px 40px -12px rgba(0, 0, 0, 0.08),
+      0 0 20px -5px hsl(var(--primary)/0.1);
+  }
+
   .card-elevated {
-    @apply bg-card rounded-xl border border-border/50;
-    box-shadow: var(--shadow-md);
-    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    @apply bg-card rounded-2xl border border-border/40;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   }
   .card-elevated:hover {
     box-shadow: var(--shadow-lg), var(--shadow-neon);
