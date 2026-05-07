@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -19,9 +20,34 @@ export const ActiveCallsRealtime = () => {
     soundEnabled, toggleSound, isCallOnHold, getHoldDuration, getHoldSeverity,
   } = useActiveCallsRealtime();
 
-  if (loading) {
-    return (<Card><CardHeader><CardTitle className="flex items-center gap-2"><Phone className="h-5 w-5 text-primary" />Chamadas Ativas</CardTitle></CardHeader><CardContent><div className="flex items-center justify-center py-8"><div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary" /></div></CardContent></Card>);
-  }
+   if (loading) {
+     return (
+       <Card>
+         <CardHeader>
+           <CardTitle className="flex items-center gap-2">
+             <Phone className="h-5 w-5 text-primary" />
+             Chamadas Ativas
+           </CardTitle>
+         </CardHeader>
+         <CardContent className="space-y-3">
+           {[1, 2].map(i => (
+             <div key={i} className="p-4 rounded-lg border border-border">
+               <div className="flex items-start justify-between">
+                 <div className="flex items-center gap-3">
+                   <Skeleton className="h-10 w-10 rounded-full" />
+                   <div className="space-y-2">
+                     <Skeleton className="h-4 w-32" />
+                     <Skeleton className="h-3 w-24" />
+                   </div>
+                 </div>
+                 <Skeleton className="h-6 w-20 rounded-full" />
+               </div>
+             </div>
+           ))}
+         </CardContent>
+       </Card>
+     );
+   }
 
   return (
     <Card>
