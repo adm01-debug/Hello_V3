@@ -44,11 +44,11 @@ export function QueueTrendChart() {
           <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
             <div className="w-full flex flex-col-reverse gap-0.5">
               <div
-                className="w-full bg-primary rounded-t-sm"
+                className="w-full bg-primary rounded-t-lg transition-all duration-700 shadow-[0_0_15px_hsl(var(--primary)/0.3)]"
                 style={{ height: `${(point.active / maxValue) * 100}px` }}
               />
               <div
-                className="w-full bg-warning rounded-t-sm"
+                className="w-full bg-warning rounded-t-lg transition-all duration-700 shadow-[0_0_15px_hsl(var(--warning)/0.3)]"
                 style={{ height: `${(point.waiting / maxValue) * 60}px` }}
               />
             </div>
