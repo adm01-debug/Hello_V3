@@ -340,7 +340,7 @@ Total: **40+ tabelas** incluindo:
 | **P0** | ✅ Concluída | Performance, Navegação, Temas (lazy loading, sidebar, dark mode) |
  | **P1** | ✅ Concluída | Command Palette ⌘K, Notification Center unificado |
  | **P2** | ✅ Concluída | Otimização mobile, Onboarding Wizard |
- | **P3** | 🔲 Pendente | Upgrade tipografia (em andamento), Widgets drag-and-drop |
+ | **P3** | ✅ Concluída | Upgrade tipografia, Widgets drag-and-drop |
 
 ---
 
