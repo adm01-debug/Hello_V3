@@ -74,11 +74,11 @@ export function useKbCategories() {
              query_embedding: embeddingData.embedding,
              match_threshold: 0.5,
              match_count: 20,
-             filter_category_id: params.categoryId === 'all' ? null : params.categoryId
+             filter_category_id: (params.categoryId === 'all' || !params.categoryId) ? undefined : params.categoryId
            });
  
            if (error) throw error;
-           return (data ?? []) as KbArticle[];
+           return (data ?? []) as unknown as KbArticle[];
          } catch (err) {
            logger.error('Semantic search failed, falling back to keyword search', err);
          }
