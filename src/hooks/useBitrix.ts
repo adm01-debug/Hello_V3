@@ -139,14 +139,31 @@ export const useBitrix = () => {
     return [];
   }, [callBitrixApi]);
 
-  const createLead = useCallback(async (leadData: Partial<BitrixLead>) => {
-    const result = await callBitrixApi('create_lead', leadData);
-    if (result?.success) {
-      toast.success('Lead criado no Bitrix24');
-      return result.data;
-    }
-    return null;
-  }, [callBitrixApi]);
+   const createLead = useCallback(async (leadData: Partial<BitrixLead>) => {
+     // 1. Tentar sincronização imediata
+     const result = await callBitrixApi('create_lead', leadData);
+     
+     if (result?.success) {
+       toast.success('Lead criado no Bitrix24');
+       return result.data;
+     }
+ 
+     // 2. Se falhar por rede/indisponibilidade, enfileirar (offline-first strategy)
+     const { error: queueError } = await supabase.from('crm_sync_queue').insert({
+       action: 'create_lead',
+       payload: leadData,
+       status: 'pending'
+     });
+ 
+     if (!queueError) {
+       toast.info('Lead agendado para sincronização', { 
+         description: 'O Bitrix24 está temporariamente instável. Sincronizaremos em breve.' 
+       });
+       return { queued: true };
+     }
+ 
+     return null;
+   }, [callBitrixApi]);
 
   const getDeals = useCallback(async (filter?: Record<string, unknown>) => {
     const result = await callBitrixApi('get_deals', { filter, select: ['ID', 'TITLE', 'STAGE_ID', 'OPPORTUNITY', 'CURRENCY_ID', 'CONTACT_ID'] });
@@ -158,14 +175,23 @@ export const useBitrix = () => {
   }, [callBitrixApi]);
 
   // Telephony Functions
-  const registerCall = useCallback(async (callData: BitrixCallData) => {
-    const result = await callBitrixApi('register_call', callData as unknown as Record<string, unknown>);
-    if (result?.success) {
-      logger.create('Bitrix').debug('Call registered:', result.data);
-      return result.data;
-    }
-    return null;
-  }, [callBitrixApi]);
+   const registerCall = useCallback(async (callData: BitrixCallData) => {
+     const result = await callBitrixApi('register_call', callData as unknown as Record<string, unknown>);
+     
+     if (result?.success) {
+       logger.create('Bitrix').debug('Call registered:', result.data);
+       return result.data;
+     }
+ 
+     // Enfileirar registro de chamada se falhar
+     await supabase.from('crm_sync_queue').insert({
+       action: 'register_call',
+       payload: callData as any,
+       status: 'pending'
+     });
+ 
+     return null;
+   }, [callBitrixApi]);
 
   const finishCall = useCallback(async (callId: string, duration: number, statusCode: string = '200') => {
     const result = await callBitrixApi('finish_call', {
