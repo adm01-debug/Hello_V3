@@ -338,9 +338,9 @@ Total: **40+ tabelas** incluindo:
 | Fase | Status | Descrição |
 |------|--------|-----------|
 | **P0** | ✅ Concluída | Performance, Navegação, Temas (lazy loading, sidebar, dark mode) |
-| **P1** | 🔲 Pendente | Command Palette ⌘K, Notification Center unificado |
-| **P2** | 🔲 Pendente | Otimização mobile, Onboarding Wizard |
-| **P3** | 🔲 Pendente | Upgrade tipografia, Widgets drag-and-drop |
+ | **P1** | ✅ Concluída | Command Palette ⌘K, Notification Center unificado |
+ | **P2** | ✅ Concluída | Otimização mobile, Onboarding Wizard |
+ | **P3** | 🔲 Pendente | Upgrade tipografia (em andamento), Widgets drag-and-drop |
 
 ---
 
