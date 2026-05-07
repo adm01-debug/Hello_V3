@@ -19,17 +19,25 @@ const BACKGROUND_FUNCTIONS = [
 export function SystemMaintenancePanel() {
   const [runningFn, setRunningFn] = useState<string | null>(null);
 
-  const runFunction = useMutation({
-    mutationFn: async (fnName: string) => {
-      setRunningFn(fnName);
-      const { data, error } = await supabase.functions.invoke(fnName);
-      if (error) throw error;
-      return data;
-    },
-    onSuccess: (data, fnName) => {
-      setRunningFn(null);
-      toast.success(`${fnName} executado com sucesso`, { description: JSON.stringify(data).slice(0, 100) });
-    },
+   const runFunction = useMutation({
+     mutationFn: async (fnName: string) => {
+       setRunningFn(fnName);
+       const { data, error } = await supabase.functions.invoke(fnName);
+       if (error) throw error;
+       
+       // Log the maintenance action
+       await supabase.from('audit_logs').insert({
+         action: `Manual Execution: ${fnName}`,
+         resource_type: 'system_maintenance',
+         details: data || {}
+       });
+       
+       return data;
+     },
+     onSuccess: (data, fnName) => {
+       setRunningFn(null);
+       toast.success(`${fnName} executado com sucesso`, { description: JSON.stringify(data).slice(0, 100) });
+     },
     onError: (err, fnName) => {
       setRunningFn(null);
       toast.error(`Erro ao executar ${fnName}`, { description: String(err) });
