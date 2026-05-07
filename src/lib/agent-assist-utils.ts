@@ -54,13 +54,17 @@ export const INTENT_COLORS: Record<string, string> = {
  * Garante que intents críticos (compliance, churn) sempre liderem, independente
  * de uma confiança ligeiramente menor que sinais de menor severidade.
  */
-export function rankSignals<T extends MinimalSignal>(signals: T[]): T[] {
-  return [...signals].sort((a, b) => {
-     const ap = (INTENT_PRIORITY[a.intent] ?? 0) * 1000 + (a.confidence ?? 0.5);
-     const bp = (INTENT_PRIORITY[b.intent] ?? 0) * 1000 + (b.confidence ?? 0.5);
-    return bp - ap;
-  });
-}
+ export function rankSignals<T extends MinimalSignal>(signals: T[]): T[] {
+   return [...signals].sort((a, b) => {
+     const pa = INTENT_PRIORITY[a.intent] ?? 0;
+     const pb = INTENT_PRIORITY[b.intent] ?? 0;
+     if (pa !== pb) return pb - pa;
+     
+     const ca = a.confidence ?? 0.5;
+     const cb = b.confidence ?? 0.5;
+     return cb - ca;
+   });
+ }
 
 /**
  * Match flexível de keywords no texto. Para keywords compostas (várias palavras),
