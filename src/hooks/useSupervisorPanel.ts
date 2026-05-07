@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+ import { useEffect, useState, useCallback } from 'react';
+ import { formatDuration } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useCriticalAlertNotifications, AlertSoundConfig } from '@/hooks/useCriticalAlertNotifications';
@@ -174,21 +175,7 @@ export function useSupervisorPanel() {
 
   const formatTime = (dateStr: string) => new Date(dateStr).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-  const getCallDuration = (startedAt: string) => {
-    const seconds = Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000);
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const isCallInBargeIn = (callId: string) => activeBargeIn?.call_session_id === callId;
-
-  const formatWaitTime = (seconds: number) => {
-    if (seconds < 60) return `${seconds}s`;
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}m ${secs}s`;
-  };
+   const isCallInBargeIn = (callId: string) => activeBargeIn?.call_session_id === callId;
 
   const quickWhispers = [
     "Ofereça desconto de 10%", "Transfira para o setor técnico",
@@ -203,7 +190,14 @@ export function useSupervisorPanel() {
     soundEnabled, soundConfig, queueMetrics,
     handleSoundEnabledChange, handleSoundConfigChange, handleEnableSound,
     sendWhisper, startBargeIn, endBargeIn,
-    formatTime, getCallDuration, isCallInBargeIn, formatWaitTime,
-    quickWhispers, playAlertSound,
-  };
+     formatTime,
+     isCallInBargeIn,
+     getCallDuration: (startedAt: string) => {
+       const seconds = Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000);
+       return formatDuration(seconds);
+     },
+     formatWaitTime: (seconds: number) => formatDuration(seconds),
+     quickWhispers,
+     playAlertSound,
+   };
 }
