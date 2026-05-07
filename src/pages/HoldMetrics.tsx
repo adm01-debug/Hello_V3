@@ -101,7 +101,7 @@ export default function HoldMetrics() {
                 <ResponsiveContainer width="100%" height={350}>
                   <BarChart data={agentMetrics.filter(a => a.holdCount > 0)}>
                     <CartesianGrid strokeDasharray="3 3" className="stroke-muted" /><XAxis dataKey="agentName" className="text-xs" /><YAxis className="text-xs" />
-                     <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={(value: number) => [formatDuration(value), '']} />
+                      <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={(value: any) => [formatDuration(Number(value)), '']} />
                     <Bar dataKey="totalHoldTime" name="Tempo Total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="avgHoldTime" name="Tempo Médio" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
                   </BarChart>
@@ -134,13 +134,13 @@ export default function HoldMetrics() {
               <ResponsiveContainer width="100%" height={350}>
                 <LineChart data={dailyMetrics}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" /><XAxis dataKey="date" className="text-xs" /><YAxis className="text-xs" />
-                   <Tooltip 
-                     contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
-                     formatter={(value: number, name: string) => [
-                       name === 'holdCount' ? value : formatDuration(value), 
-                       name === 'holdCount' ? 'Quantidade' : name === 'avgHoldTime' ? 'Tempo Médio' : 'Tempo Total'
-                     ]} 
-                   />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
+                      formatter={(value: any, name: any) => [
+                        name === 'holdCount' ? value : formatDuration(Number(value)), 
+                        name === 'holdCount' ? 'Quantidade' : name === 'avgHoldTime' ? 'Tempo Médio' : 'Tempo Total'
+                      ]} 
+                    />
                   <Line type="monotone" dataKey="avgHoldTime" name="avgHoldTime" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ fill: 'hsl(var(--primary))' }} />
                   <Line type="monotone" dataKey="holdCount" name="holdCount" stroke="hsl(var(--chart-2))" strokeWidth={2} dot={{ fill: 'hsl(var(--chart-2))' }} />
                 </LineChart>
@@ -164,12 +164,12 @@ export default function HoldMetrics() {
                          cx="50%" 
                          cy="50%" 
                          outerRadius={100} 
-                         label={({ name, percent }: { name: string, percent: number }) => `${name} (${(percent * 100).toFixed(0)}%)`} 
+                          label={(props: any) => `${props.name} (${(props.percent * 100).toFixed(0)}%)`} 
                          labelLine={false}
                        >
                         {pieData.map((_, index) => <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />)}
                       </Pie>
-                       <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={(value: number) => [formatDuration(value), 'Tempo Total']} />
+                        <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={(value: any) => [formatDuration(Number(value)), 'Tempo Total']} />
                     </PieChart>
                   </ResponsiveContainer>
                 ) : <div className="h-[300px] flex items-center justify-center text-muted-foreground">Sem dados para o período</div>}
