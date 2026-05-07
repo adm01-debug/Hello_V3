@@ -244,18 +244,18 @@ export function AppSidebar() {
   );
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-sidebar-border/50">
-      <SidebarHeader className="border-b border-sidebar-border/50 p-4">
+    <Sidebar collapsible="icon" className="border-r border-sidebar-border/30 bg-[#050507]">
+      <SidebarHeader className="border-b border-sidebar-border/20 p-6">
         <div className="flex items-center gap-3">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-sidebar-primary shadow-[0_0_20px_hsl(var(--sidebar-primary)/0.4)]">
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-[0_8px_20px_-4px_hsl(var(--primary)/0.6)]">
             <Headphones className="h-5 w-5 text-sidebar-primary-foreground" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-base font-bold text-sidebar-foreground text-display tracking-wider">
-                VoIP Panel
+              <span className="text-lg font-black text-sidebar-foreground tracking-[-0.03em] leading-tight">
+                Aura<span className="text-primary">.</span>
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-sidebar-primary/60">
+              <span className="text-[9px] uppercase font-bold tracking-[0.2em] text-muted-foreground/50">
                 Central de Atendimento
               </span>
             </div>
