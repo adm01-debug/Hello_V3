@@ -49,54 +49,11 @@ interface QueueStats {
 export function useDashboardStats() {
   return useQuery<DashboardStats>({
     queryKey: ['dashboard-stats'],
-    queryFn: async () => {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const todayISO = today.toISOString();
-
-      const yesterday = new Date(today);
-      yesterday.setDate(yesterday.getDate() - 1);
-      const yesterdayISO = yesterday.toISOString();
-
-       const [
-         { count: todayCalls },
-         { count: yesterdayCalls },
-         { data: todayCompleted },
-         { data: agents }
-       ] = await Promise.all([
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO),
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', yesterdayISO).lt('started_at', todayISO),
-         supabase.from('call_sessions').select('duration_seconds, status').gte('started_at', todayISO).not('duration_seconds', 'is', null),
-         supabase.from('agents').select('status')
-       ]);
- 
-       const completedCalls = todayCompleted?.filter(c => c.status === 'completed') || [];
-       const avgDuration = completedCalls.length > 0
-         ? Math.round(completedCalls.reduce((s, c) => s + (c.duration_seconds || 0), 0) / completedCalls.length)
-         : 0;
- 
-       const answeredRate = (todayCalls || 0) > 0
-         ? Math.round((completedCalls.length / (todayCalls || 1)) * 100)
-         : 0;
- 
-      const totalAgents = agents?.length || 0;
-      const activeAgents = agents?.filter(a => a.status === 'available' || a.status === 'busy').length || 0;
-
-      const tc = todayCalls || 0;
-      const yc = yesterdayCalls || 0;
-      const change = yc > 0 ? Math.round(((tc - yc) / yc) * 100) : 0;
-
-      return {
-        totalCallsToday: tc,
-        totalCallsChange: change,
-        avgCallDuration: avgDuration,
-        durationChange: 0,
-        answeredRate,
-        rateChange: 0,
-        activeAgents,
-        totalAgents,
-      };
-    },
+     queryFn: async () => {
+       const { data, error } = await supabase.rpc('get_dashboard_stats');
+       if (error) throw error;
+       return data as DashboardStats;
+     },
     refetchInterval: 30000,
   });
 }
