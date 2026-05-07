@@ -4,15 +4,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
       variant: {
         // Core variants — neon enhanced
-        default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
-        secondary: "border-white/[0.1] bg-white/[0.05] text-foreground/80 hover:bg-white/[0.1] backdrop-blur-md",
-        destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm",
-        outline: "text-foreground/70 border-white/[0.1] bg-transparent",
+        default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80 shadow-[0_0_8px_hsl(var(--primary)/0.2)]",
+        secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80 shadow-[0_0_8px_hsl(var(--destructive)/0.2)]",
+        outline: "text-foreground border-border/50",
         
         // Semantic variants
         success: "border-transparent bg-success text-success-foreground hover:bg-success/80 shadow-[0_0_8px_hsl(var(--success)/0.2)]",

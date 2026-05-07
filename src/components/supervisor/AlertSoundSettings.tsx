@@ -15,7 +15,7 @@ export function AlertSoundSettings({ config, onConfigChange, onTestSound }: Aler
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-xl hover:bg-white/[0.05] transition-all duration-300">
+        <Button variant="ghost" size="icon" className="h-7 w-7">
           <Volume2 className="h-4 w-4" />
         </Button>
       </PopoverTrigger>

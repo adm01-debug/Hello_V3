@@ -226,9 +226,9 @@ export function ActiveCallBar() {
   return (
     <>
       <div className={cn(
-        'relative border-b border-white/[0.05] bg-black/60 backdrop-blur-3xl px-8 py-4 animate-fade-in shadow-2xl',
-        call.status === 'connected' && 'bg-success/[0.03]',
-        onHold && 'bg-warning/[0.03]'
+        'relative border-b border-border bg-card px-6 py-3 animate-fade-in',
+        call.status === 'connected' && 'bg-success/5 border-success/20',
+        onHold && 'bg-warning/5 border-warning/20'
       )}>
         {/* Pulse indicator */}
         <div className={cn(

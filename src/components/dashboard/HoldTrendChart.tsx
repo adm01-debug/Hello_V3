@@ -101,14 +101,12 @@ export const HoldTrendChart = () => {
   const trend = currentOnHold - previousOnHold;
 
   return (
-    <Card className="card-premium border-none">
-      <CardHeader className="pb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <CardTitle className="text-xl font-bold tracking-tight flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-destructive/5 text-destructive/80">
-              <Clock className="h-5 w-5" />
-            </div>
-            Tendência de Espera
+    <Card>
+      <CardHeader className="pb-2">
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <TrendingUp className="h-5 w-5 text-primary" />
+            Evolução de Chamadas em Espera
           </CardTitle>
           <div className="flex items-center gap-2">
             <Badge 

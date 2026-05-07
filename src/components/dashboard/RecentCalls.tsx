@@ -58,16 +58,11 @@ export function RecentCalls() {
   const calls = (recentCalls || []).slice(0, 5);
 
   return (
-    <Card className="card-premium border-none">
-      <CardHeader className="flex flex-row items-center justify-between pb-4">
-        <CardTitle className="text-xl font-bold tracking-tight flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-primary/5 text-primary/80">
-            <PhoneIncoming className="h-5 w-5" />
-          </div>
-          Recentes
-        </CardTitle>
-        <Button variant="ghost" size="sm" className="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary">
-          Histórico completo
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle className="text-lg font-semibold">Chamadas Recentes</CardTitle>
+        <Button variant="ghost" size="sm">
+          Ver todas
         </Button>
       </CardHeader>
       <CardContent>
@@ -84,11 +79,11 @@ export function RecentCalls() {
               return (
                 <div
                   key={call.id}
-                   className="group/item flex items-center justify-between rounded-2xl border border-white/[0.03] bg-muted/10 p-4 transition-all duration-500 hover:bg-muted/20 hover:border-primary/20 hover:translate-x-1.5"
+                  className="flex items-center justify-between rounded-lg border border-border bg-card p-3 transition-colors hover:bg-accent/50"
                 >
                   <div className="flex items-center gap-3">
                     <div className={cn(
-                       'flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-500 group-hover/item:scale-110 group-hover/item:rotate-3 shadow-sm group-hover/item:shadow-md',
+                      'flex h-10 w-10 items-center justify-center rounded-full',
                       getCallColor(call.status)
                     )}>
                       <Icon className="h-4 w-4" aria-hidden="true" />

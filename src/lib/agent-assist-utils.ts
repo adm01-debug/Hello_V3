@@ -12,12 +12,12 @@ export type IntentType =
   | 'compliance_violation'
   | 'sentiment_alert';
 
- export interface MinimalSignal {
-   intent: string;
-   confidence: number | null;
-   source: string;
-   metadata?: Record<string, unknown>;
- }
+export interface MinimalSignal {
+  intent: string;
+  confidence: number;
+  source: string;
+  metadata?: Record<string, unknown>;
+}
 
 const INTENT_PRIORITY: Record<string, number> = {
   compliance_violation: 100,

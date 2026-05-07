@@ -4,11 +4,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  "rounded-2xl border bg-card text-card-foreground transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
+  "rounded-xl border bg-card text-card-foreground",
   {
     variants: {
       variant: {
-        default: "shadow-sm border-white/[0.05]",
+        default: "shadow-sm",
         elevated: "shadow-md hover:shadow-lg transition-shadow duration-200",
         interactive: "shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200 cursor-pointer hover:-translate-y-0.5",
         glass: "bg-card/80 backdrop-blur-xl border-border/50 shadow-lg",

@@ -86,9 +86,9 @@ export function BreadcrumbNav({
   return (
     <nav 
       aria-label="Navegação estrutural"
-      className={cn("flex items-center text-[11px] font-bold uppercase tracking-[0.15em]", className)}
+      className={cn("flex items-center text-sm", className)}
     >
-      <ol className="flex items-center gap-2 flex-wrap">
+      <ol className="flex items-center gap-1 flex-wrap">
         {showHome && (
           <>
             <li>

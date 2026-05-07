@@ -44,7 +44,7 @@ export function NotificationBell() {
         <Button 
           variant="ghost" 
           size="icon" 
-          className="relative h-10 w-10 rounded-xl hover:bg-white/[0.05] transition-all duration-300"
+          className="relative"
           aria-label={`Notificações${unreadCount > 0 ? ` - ${unreadCount} não lidas` : ''}`}
         >
           {isEnabled ? (

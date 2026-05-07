@@ -1,5 +1,4 @@
- import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
- import { cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -25,23 +24,24 @@ export const ActiveCallsRealtime = () => {
   }
 
   return (
-    <Card className="card-premium border-none h-full">
-      <CardHeader className="pb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-               <CardTitle className="flex items-center gap-3.5 text-xl tracking-tight group">
-                 <div className="p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20 shadow-[0_0_15px_rgba(var(--primary-rgb),0.1)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                   <Phone className="h-5 w-5 animate-glow-pulse" />
-                 </div>
-                 <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent font-bold">Chamadas Ativas</span>
-              {filteredCalls.length > 0 && (
-                <Badge variant="secondary" className="ml-1 bg-primary/5 text-primary border-primary/10">
-                  {filteredCalls.length}
-                </Badge>
-              )}
-            </CardTitle>
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-2">
+            <CardTitle className="flex items-center gap-2"><Phone className="h-5 w-5 text-primary" />Chamadas Ativas{filteredCalls.length > 0 && <Badge variant="secondary" className="ml-2">{filteredCalls.length}</Badge>}</CardTitle>
+            {statusCounts.total > 0 && (
+              <div className="flex items-center gap-3 text-sm">
+                <TooltipProvider><Tooltip><TooltipTrigger asChild><div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-success/10 border border-success/20 cursor-default"><Phone className="h-3 w-3 text-success" /><span className="font-medium text-success">{statusCounts.inCall}</span></div></TooltipTrigger><TooltipContent><p>{statusCounts.inCall} chamada{statusCounts.inCall !== 1 ? 's' : ''} em andamento</p></TooltipContent></Tooltip></TooltipProvider>
+                <TooltipProvider><Tooltip><TooltipTrigger asChild>
+                  <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md cursor-default transition-all ${statusCounts.maxSeverity === 'critical' ? 'bg-destructive/20 border border-destructive/40 animate-pulse' : statusCounts.maxSeverity === 'warning' ? 'bg-call-hold/20 border border-call-hold/40 animate-pulse' : statusCounts.onHold > 0 ? 'bg-destructive/10 border border-destructive/20' : 'bg-muted border border-border'}`}>
+                    <Pause className={`h-3 w-3 ${statusCounts.maxSeverity === 'critical' ? 'text-destructive' : statusCounts.maxSeverity === 'warning' ? 'text-call-hold' : statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
+                    <span className={`font-medium ${statusCounts.maxSeverity === 'critical' ? 'text-destructive' : statusCounts.maxSeverity === 'warning' ? 'text-call-hold' : statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`}>{statusCounts.onHold}</span>
+                  </div>
+                </TooltipTrigger><TooltipContent><p>{statusCounts.onHold} chamada{statusCounts.onHold !== 1 ? 's' : ''} em espera{statusCounts.maxSeverity === 'critical' ? ' (crítico!)' : statusCounts.maxSeverity === 'warning' ? ' (atenção)' : ''}</p></TooltipContent></Tooltip></TooltipProvider>
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-2 bg-muted/30 p-1 rounded-2xl border border-white/[0.05]">
+          <div className="flex items-center gap-2">
             <TooltipProvider><Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" onClick={toggleSound} className={soundEnabled ? 'text-primary' : 'text-muted-foreground'}>{soundEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}</Button></TooltipTrigger><TooltipContent><p>{soundEnabled ? 'Desativar som' : 'Ativar som'}</p></TooltipContent></Tooltip></TooltipProvider>
             <Select value={selectedHoldStatus} onValueChange={setSelectedHoldStatus}><SelectTrigger className="w-[140px]"><Pause className="h-4 w-4 mr-2" /><SelectValue placeholder="Status" /></SelectTrigger><SelectContent><SelectItem value="all">Todos</SelectItem><SelectItem value="on_hold">Em Espera</SelectItem><SelectItem value="in_call">Em Chamada</SelectItem></SelectContent></Select>
             {agents.length > 0 && (<Select value={selectedAgent} onValueChange={setSelectedAgent}><SelectTrigger className="w-[180px]"><Filter className="h-4 w-4 mr-2" /><SelectValue placeholder="Filtrar por agente" /></SelectTrigger><SelectContent><SelectItem value="all">Todos os agentes</SelectItem>{agents.map(a => <SelectItem key={a} value={a}>{a}</SelectItem>)}</SelectContent></Select>)}
@@ -53,47 +53,18 @@ export const ActiveCallsRealtime = () => {
           <div className="text-center py-8 text-muted-foreground"><Phone className="h-12 w-12 mx-auto mb-3 opacity-20" /><p>{selectedAgent === 'all' ? 'Nenhuma chamada ativa' : `Nenhuma chamada para ${selectedAgent}`}</p></div>
         ) : (
           <div className="space-y-3">
-             {filteredCalls.map((call, index) => {
+            {filteredCalls.map(call => {
               const onHold = isCallOnHold(call.id);
               const holdDuration = getHoldDuration(call.id);
               const holdSeverity = onHold ? getHoldSeverity(holdDuration) : 'normal';
               const callDuration = Math.floor((Date.now() - new Date(call.started_at).getTime()) / 1000);
               return (
-                 <div 
-                   key={call.id} 
-                   className={cn(
-                     "p-5 rounded-2xl border transition-all duration-500 relative overflow-hidden group/item",
-                     "animate-in fade-in slide-in-from-bottom-2",
-                     { "animation-delay-100": index === 1, "animation-delay-200": index === 2 },
-                     holdSeverity === 'critical' 
-                       ? 'border-destructive/50 bg-destructive/5 shadow-[0_0_20px_rgba(var(--destructive-rgb),0.1)]' 
-                       : holdSeverity === 'warning' 
-                         ? 'border-call-hold/40 bg-call-hold/5 shadow-[0_0_20px_rgba(var(--warning-rgb),0.05)]' 
-                         : onHold 
-                           ? 'border-destructive/30 bg-destructive/5' 
-                           : 'border-white/[0.05] bg-muted/10 hover:bg-muted/20 hover:border-primary/20'
-                   )}
-                 >
-                   {/* Premium accent bar */}
-                   <div className={cn(
-                     "absolute left-0 top-0 bottom-0 w-1 transition-all duration-500",
-                     onHold ? "bg-destructive animate-pulse" : "bg-primary/40 group-hover/item:bg-primary group-hover/item:w-1.5"
-                   )} />
-                   
+                <div key={call.id} className={`p-4 rounded-lg border transition-colors ${holdSeverity === 'critical' ? 'border-destructive bg-destructive/10 animate-pulse' : holdSeverity === 'warning' ? 'border-call-hold/50 bg-call-hold/5' : onHold ? 'border-destructive/50 bg-destructive/5 animate-pulse' : 'border-border bg-card'}`}>
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                       <div className={cn(
-                         "p-2.5 rounded-full transition-all duration-500 group-hover/item:scale-110 group-hover/item:rotate-3 shadow-sm",
-                         holdSeverity === 'critical' ? 'bg-destructive/20 text-destructive shadow-[0_0_10px_rgba(var(--destructive-rgb),0.3)]' : 
-                         holdSeverity === 'warning' ? 'bg-call-hold/20 text-call-hold shadow-[0_0_10px_rgba(var(--warning-rgb),0.3)]' : 
-                         onHold ? 'bg-destructive/10 text-destructive' : 'bg-primary/10 text-primary'
-                       )}>
-                         {onHold ? (
-                           <Pause className="h-4 w-4" />
-                         ) : (
-                           <Phone className="h-4 w-4" />
-                         )}
-                       </div>
+                      <div className={`p-2 rounded-full ${holdSeverity === 'critical' ? 'bg-destructive/20' : holdSeverity === 'warning' ? 'bg-call-hold/20' : onHold ? 'bg-destructive/10' : 'bg-primary/10'}`}>
+                        {onHold ? <Pause className={`h-4 w-4 ${holdSeverity === 'critical' ? 'text-destructive' : holdSeverity === 'warning' ? 'text-call-hold' : 'text-destructive'}`} /> : <Phone className="h-4 w-4 text-primary" />}
+                      </div>
                       <div><p className="font-medium">{call.caller_name || call.caller_phone || 'Desconhecido'}</p>{call.caller_phone && call.caller_name && <p className="text-sm text-muted-foreground">{call.caller_phone}</p>}</div>
                     </div>
                     <div className="flex flex-col items-end gap-1">

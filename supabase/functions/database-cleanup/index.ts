@@ -1,7 +1,7 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
- export const handler = async (req: Request): Promise<Response> => {
+Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: buildCorsHeaders(req) });
   }
@@ -96,19 +96,15 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
       details: results,
     });
 
-     return new Response(
-       JSON.stringify({ success: true, message: "Database cleanup completed", results }),
-       { headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
-     );
-   } catch (err: any) {
-     console.error("Database cleanup error:", err);
-     return new Response(
-       JSON.stringify({ error: "Internal server error" }),
-       { status: 500, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
-     );
-   }
- };
- 
- if (import.meta.main) {
-   Deno.serve(handler);
- }
+    return new Response(
+      JSON.stringify({ success: true, message: "Database cleanup completed", results }),
+      { headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
+    );
+  } catch (err) {
+    console.error("Database cleanup error:", err);
+    return new Response(
+      JSON.stringify({ error: "Internal server error" }),
+      { status: 500, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
+    );
+  }
+});

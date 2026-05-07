@@ -27,13 +27,9 @@ const Index = () => {
   const { data: stats, isLoading } = useDashboardStats();
 
   return (
-    <main className="space-y-12 relative pb-12" aria-label="Dashboard principal">
-      {/* Refined Ambient Backgrounds */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px]" />
-        <div className="absolute top-[20%] -right-[5%] w-[30%] h-[30%] rounded-full bg-accent/5 blur-[100px]" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[150px] opacity-50" />
-      </div>
+    <main className="space-y-6 relative stagger-section" aria-label="Dashboard principal">
+      {/* Ambient neon mesh background */}
+      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-40" aria-hidden="true" />
 
       {/* Header */}
       <NeonPageHeader
@@ -48,8 +44,9 @@ const Index = () => {
         }
       />
 
-      {/* Stats Grid - Premium Layout */}
-      <section className="relative grid gap-6 grid-cols-2 lg:grid-cols-4" aria-label="Métricas principais">
+      {/* Stats Cards */}
+      <SectionBoundary section="Estatísticas">
+        <section className="relative grid gap-4 grid-cols-2 lg:grid-cols-4" aria-label="Métricas principais">
           {isLoading ? (
             <>
               {[1, 2, 3, 4].map(i => (
@@ -90,17 +87,14 @@ const Index = () => {
               />
             </>
           ) : null}
-      </section>
+        </section>
+      </SectionBoundary>
 
-      {/* Main Insights Grid */}
-      <SectionBoundary section="Monitoramento de Operação">
-        <section className="relative grid gap-6 lg:grid-cols-12" aria-label="Chamadas ativas e tendência de espera">
-          <div className="lg:col-span-7">
-            <ActiveCallsRealtime />
-          </div>
-          <div className="lg:col-span-5">
-            <HoldTrendChart />
-          </div>
+      {/* Active Calls & Hold Trend */}
+      <SectionBoundary section="Chamadas Ativas">
+        <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Chamadas ativas e tendência de espera">
+          <ActiveCallsRealtime />
+          <HoldTrendChart />
         </section>
       </SectionBoundary>
 

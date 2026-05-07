@@ -1,22 +1,16 @@
 import { memo } from 'react';
- import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
- import { useCallVolumeData } from '@/hooks/useDashboardData';
- import { Skeleton } from '@/components/ui/skeleton';
- import { TrendingUp } from 'lucide-react';
- import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useCallVolumeData } from '@/hooks/useDashboardData';
+import { Skeleton } from '@/components/ui/skeleton';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 export const CallVolumeChart = memo(function CallVolumeChart() {
   const { data: volumeData, isLoading } = useCallVolumeData();
 
   return (
-    <Card className="card-premium border-none">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-xl font-bold tracking-tight flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-primary/5 text-primary/80">
-            <TrendingUp className="h-5 w-5" />
-          </div>
-          Volume de Tráfego
-        </CardTitle>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-lg font-semibold">Volume de Chamadas</CardTitle>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -38,7 +32,7 @@ export const CallVolumeChart = memo(function CallVolumeChart() {
                     <stop offset="95%" stopColor="hsl(var(--success))" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                 <CartesianGrid strokeDasharray="3 3" className="stroke-border/30" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
                 <XAxis 
                   dataKey="hour" 
                   axisLine={false}
@@ -52,16 +46,14 @@ export const CallVolumeChart = memo(function CallVolumeChart() {
                   tick={{ fontSize: 12 }}
                   className="text-muted-foreground"
                 />
-                 <Tooltip 
-                   contentStyle={{ 
-                     backgroundColor: 'rgba(var(--card-rgb), 0.8)', 
-                     backdropFilter: 'blur(12px)',
-                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                     borderRadius: '16px',
-                     boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.3)'
-                   }}
-                   itemStyle={{ fontSize: '12px', fontWeight: 'bold' }}
-                 />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    borderColor: 'hsl(var(--border))',
+                    borderRadius: '8px',
+                  }}
+                  labelStyle={{ color: 'hsl(var(--foreground))' }}
+                />
                 <Legend 
                   verticalAlign="top" 
                   height={36}

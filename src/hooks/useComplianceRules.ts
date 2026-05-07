@@ -44,10 +44,10 @@ export function useComplianceRules() {
       toast.success('Regra salva');
       queryClient.invalidateQueries({ queryKey: ['compliance-rules'] });
     },
-     onError: (e: Error) => {
-       log.error('upsert rule failed', e);
-       toast.error(e.message || 'Falha ao salvar regra');
-     },
+    onError: (e: any) => {
+      log.error('upsert rule failed', e);
+      toast.error(e?.message || 'Falha ao salvar regra');
+    },
   });
 
   const toggleActive = useMutation({

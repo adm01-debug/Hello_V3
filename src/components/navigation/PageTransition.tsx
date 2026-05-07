@@ -9,9 +9,9 @@ interface PageTransitionProps {
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 20,
-    scale: 0.98,
-    filter: 'blur(8px)',
+    y: 12,
+    scale: 0.995,
+    filter: 'blur(4px)',
   },
   animate: {
     opacity: 1,
@@ -19,8 +19,8 @@ const pageVariants = {
     scale: 1,
     filter: 'blur(0px)',
     transition: {
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+      duration: 0.35,
+      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
     },
   },
   exit: {

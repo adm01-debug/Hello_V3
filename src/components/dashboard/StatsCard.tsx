@@ -61,32 +61,34 @@ export const StatsCard = memo(function StatsCard({
   };
 
   const iconBgMap = {
-   primary: 'bg-primary/10 text-primary shadow-[0_0_20px_hsl(var(--primary)/0.25)] ring-1 ring-primary/20',
-   success: 'bg-success/10 text-success shadow-[0_0_20px_hsl(var(--success)/0.25)] ring-1 ring-success/20',
-   warning: 'bg-warning/10 text-warning shadow-[0_0_20px_hsl(var(--warning)/0.25)] ring-1 ring-warning/20',
-   info: 'bg-info/10 text-info shadow-[0_0_20px_hsl(var(--info)/0.25)] ring-1 ring-info/20',
+    primary: 'bg-primary/10 text-primary shadow-[0_0_15px_hsl(var(--primary)/0.2)]',
+    success: 'bg-success/10 text-success shadow-[0_0_15px_hsl(var(--success)/0.2)]',
+    warning: 'bg-warning/10 text-warning shadow-[0_0_15px_hsl(var(--warning)/0.2)]',
+    info: 'bg-info/10 text-info shadow-[0_0_15px_hsl(var(--info)/0.2)]',
   };
 
   return (
     <Card className={cn(
-      'card-premium group overflow-hidden border-none',
+      'overflow-hidden group transition-all duration-300 border-border/50 card-shine',
+      'hover:border-primary/25 hover:-translate-y-1',
       glowMap[glowColor],
       className
     )} role="article" aria-label={`${title}: ${displayValue}`}>
-      <CardContent className="p-6 relative">
-        {/* Premium ambient light effect */}
-         <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-primary/5 blur-[100px] group-hover:bg-primary/15 transition-all duration-1000 pointer-events-none group-hover:scale-125" />
-         <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-primary/5 blur-[100px] pointer-events-none group-hover:bg-primary/10 transition-all duration-1000" />
+      <CardContent className="p-5 relative">
+        {/* Subtle neon mesh background */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true">
+          <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-primary/5 blur-2xl" />
+        </div>
 
-        <div className="relative flex items-start justify-between gap-4">
+        <div className="relative flex items-start justify-between gap-3">
           <div className="space-y-2 min-w-0">
-             <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground/60 group-hover:text-muted-foreground transition-colors duration-500">{title}</p>
-             <p className="text-3xl font-bold tracking-tighter tabular-nums text-foreground/90 group-hover:text-foreground transition-colors duration-500">{displayValue}</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{title}</p>
+            <p className="text-2xl font-bold tracking-tight tabular-nums text-display">{displayValue}</p>
             
             {change !== undefined && (
               <div className="flex items-center gap-1.5 pt-0.5">
                 <span className={cn(
-                  'inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full backdrop-blur-md',
+                  'inline-flex items-center gap-0.5 text-xs font-semibold px-2 py-0.5 rounded-full',
                   isPositive 
                     ? 'text-success bg-success/10' 
                     : 'text-destructive bg-destructive/10'
@@ -108,7 +110,7 @@ export const StatsCard = memo(function StatsCard({
           </div>
 
           <div className={cn(
-            'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3',
+            'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-all duration-300',
             iconBgMap[glowColor],
           )} aria-hidden="true">
             {icon}
