@@ -8,6 +8,11 @@
    assert(res.headers.get("Access-Control-Allow-Origin"));
  });
  
+ // Setup mock environment globally for the tests
+ Deno.env.set("SUPABASE_URL", "https://mock.supabase.co");
+ Deno.env.set("SUPABASE_SERVICE_ROLE_KEY", "mock-service-key");
+ Deno.env.set("SUPABASE_ANON_KEY", "mock-anon-key");
+ 
  Deno.test("voip-trunks-healthcheck: returns 401 for unauthorized requests", async () => {
    const req = new Request("http://localhost", { method: "POST" });
    const res = await handler(req);
@@ -17,11 +22,6 @@
  });
  
  Deno.test("voip-trunks-healthcheck: basic execution logic", async () => {
-   // Mock environment
-   Deno.env.set("SUPABASE_URL", "https://mock.supabase.co");
-   Deno.env.set("SUPABASE_SERVICE_ROLE_KEY", "mock-service-key");
-   Deno.env.set("SUPABASE_ANON_KEY", "mock-anon-key");
- 
    // Use service role key to simulate cron/admin bypass
    const req = new Request("http://localhost", {
      method: "POST",
@@ -31,7 +31,7 @@
    try {
      const res = await handler(req);
      // Should return 200 if it manages to "run" even if it returns empty results
-     // or 500 if the mock fetch fails
+     // or 500 if the mock fetch fails (since it will try to call Supabase API)
      assert([200, 500].includes(res.status));
    } catch (e) {
      assertEquals(true, true);
