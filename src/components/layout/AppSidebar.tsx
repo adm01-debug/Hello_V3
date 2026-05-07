@@ -235,7 +235,7 @@ const allItems = [...mainNavItems, ...omnichannelNavItems, ...toolsNavItems, ...
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === 'collapsed';
-   const { profile, isLoading: profileLoading } = useAuthContext();
+   const { profile } = useAuthContext();
   const { favorites, toggle } = useFavorites();
 
   const favoriteItems = useMemo(
