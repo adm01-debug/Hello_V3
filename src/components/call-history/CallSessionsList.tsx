@@ -2,7 +2,7 @@ import { Phone, Clock, Calendar, User, Tag, ChevronRight, Loader2, TrendingUp, T
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { cn } from '@/lib/utils';
+ import { cn, formatDuration } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { SessionWithSummary } from '@/hooks/useCallHistory';
@@ -14,13 +14,6 @@ interface Props {
   onSessionClick: (session: SessionWithSummary) => void;
   onClearFilters: () => void;
 }
-
-const formatDuration = (seconds: number | null) => {
-  if (!seconds) return '0:00';
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
 
 const getSentimentBadge = (sentiment: string | null | undefined) => {
   if (!sentiment) return null;
