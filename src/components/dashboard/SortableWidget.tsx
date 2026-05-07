@@ -1,6 +1,6 @@
  import { useSortable } from '@dnd-kit/sortable';
  import { CSS } from '@dnd-kit/utilities';
- import { GropIcon as DragHandle, X, Eye, EyeOff } from 'lucide-react';
+ import { GripVertical as DragHandle, X, Eye, EyeOff } from 'lucide-react';
  import { Button } from '@/components/ui/button';
  import { cn } from '@/lib/utils';
  
