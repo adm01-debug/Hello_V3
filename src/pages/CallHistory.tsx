@@ -1,5 +1,5 @@
-import { Search, Filter, X, Calendar, Clock, Tag, TrendingUp, TrendingDown, Minus } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+ import { Search, Filter, X, Calendar, Clock, Tag, TrendingUp, TrendingDown, Minus, Download } from 'lucide-react';
+ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -15,25 +15,55 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 export default function CallHistory() {
   usePageTitle('Histórico de Chamadas');
 
-  const {
-    sessions, isLoading, searchQuery, setSearchQuery,
-    selectedSession, setSelectedSession, sessionTranscripts, sessionAnalyses, sessionSummary,
-    isLoadingDetails, showFilters, setShowFilters, dateRangePreset, setDateRangePreset,
-    customDateFrom, setCustomDateFrom, customDateTo, setCustomDateTo,
-    sentimentFilter, setSentimentFilter, durationFilter, setDurationFilter,
-    topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
-    handleSessionClick, exportTranscript, fetchSessions,
-  } = useCallHistory();
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Histórico de Chamadas</h1>
-          <p className="text-muted-foreground">Visualize transcrições e análises de chamadas anteriores</p>
-        </div>
-        <Button variant="outline" onClick={fetchSessions}>Atualizar</Button>
-      </div>
+   const h = useCallHistory();
+ 
+   const stats = useMemo(() => {
+     const s = h.sessions || [];
+     return {
+       total: s.length,
+       completed: s.filter(c => c.status === 'completed').length,
+       missed: s.filter(c => c.status === 'missed' || c.status === 'abandoned').length,
+     };
+   }, [h.sessions]);
+ 
+   return (
+     <div className="space-y-6 relative">
+       <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
+       <div className="relative space-y-6">
+         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+           <div>
+             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Histórico de Chamadas</h1>
+             <p className="text-muted-foreground">Visualize transcrições e análises detalhadas</p>
+           </div>
+           <div className="flex items-center gap-2">
+             <Button variant="outline" size="sm" onClick={h.fetchSessions}>Atualizar</Button>
+             <Button variant="neon" size="sm" className="gap-2">
+               <Download className="h-4 w-4" /> Exportar
+             </Button>
+           </div>
+         </div>
+ 
+         {/* KPI Cards */}
+         <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
+           <Card variant="neon-interactive">
+             <CardContent className="p-4">
+               <p className="text-xs uppercase tracking-wider text-muted-foreground">Total (filtros)</p>
+               <p className="text-2xl font-bold">{stats.total}</p>
+             </CardContent>
+           </Card>
+           <Card variant="neon-interactive">
+             <CardContent className="p-4">
+               <p className="text-xs uppercase tracking-wider text-muted-foreground">Atendidas</p>
+               <p className="text-2xl font-bold text-success">{stats.completed}</p>
+             </CardContent>
+           </Card>
+           <Card variant="neon-interactive">
+             <CardContent className="p-4">
+               <p className="text-xs uppercase tracking-wider text-muted-foreground">Perdidas/Abandonadas</p>
+               <p className="text-2xl font-bold text-destructive">{stats.missed}</p>
+             </CardContent>
+           </Card>
+         </div>
 
       <div className="space-y-4">
         <div className="flex gap-4">
