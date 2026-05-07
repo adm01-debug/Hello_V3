@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
- import { Video, Plus, Users, Clock, Calendar, Play, Square, Link2, Copy, Check } from 'lucide-react';
+  import { Video, Plus, Users, Clock, Calendar, Play, Square, Link2, Copy, Check, Loader2 } from 'lucide-react';
+  import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function VideoConference() {
