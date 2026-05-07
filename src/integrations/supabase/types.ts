@@ -3552,6 +3552,50 @@ export type Database = {
         }
         Relationships: []
       }
+      kb_article_history: {
+        Row: {
+          article_id: string
+          change_type: string
+          changed_by: string | null
+          created_at: string
+          id: string
+          new_content: string | null
+          new_title: string | null
+          previous_content: string | null
+          previous_title: string | null
+        }
+        Insert: {
+          article_id: string
+          change_type: string
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          new_content?: string | null
+          new_title?: string | null
+          previous_content?: string | null
+          previous_title?: string | null
+        }
+        Update: {
+          article_id?: string
+          change_type?: string
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          new_content?: string | null
+          new_title?: string | null
+          previous_content?: string | null
+          previous_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "kb_article_history_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "kb_articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       kb_article_views: {
         Row: {
           article_id: string
