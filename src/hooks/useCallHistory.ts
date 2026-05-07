@@ -71,26 +71,34 @@ export function useCallHistory() {
 
   useEffect(() => { fetchSessions(); }, []);
 
-  const fetchSessions = async () => {
-    setIsLoading(true);
-    try {
-      const { data: sessionsData, error: sessionsError } = await supabase
-        .from('call_sessions').select('*').order('started_at', { ascending: false }).limit(100);
-      if (sessionsError) throw sessionsError;
-
-      const sessionIds = sessionsData?.map(s => s.id) || [];
-      const { data: summariesData } = await supabase
-        .from('call_summaries').select('call_session_id, overall_sentiment, main_topics, customer_satisfaction')
-        .in('call_session_id', sessionIds);
-
-      const summariesMap = new Map(summariesData?.map(s => [s.call_session_id, {
-        overall_sentiment: s.overall_sentiment, main_topics: s.main_topics, customer_satisfaction: s.customer_satisfaction
-      }]));
-
-      setSessions((sessionsData || []).map(session => ({ ...session, summary: summariesMap.get(session.id) })));
-    } catch (error) { logger.error('Error fetching sessions:', error); }
-    finally { setIsLoading(false); }
-  };
+   const fetchSessions = async () => {
+     setIsLoading(true);
+     try {
+       const { data, error } = await supabase.rpc('get_call_history_with_summaries', {
+         p_limit: 100,
+         p_search: searchQuery,
+         p_status: statusFilter,
+         p_sentiment: sentimentFilter
+       });
+ 
+       if (error) throw error;
+ 
+       const mappedData = (data as any[]).map(item => ({
+         ...item,
+         summary: item.overall_sentiment ? {
+           overall_sentiment: item.overall_sentiment,
+           main_topics: item.main_topics,
+           customer_satisfaction: item.customer_satisfaction
+         } : undefined
+       }));
+ 
+       setSessions(mappedData);
+     } catch (error) {
+       logger.error('Error fetching sessions:', error);
+     } finally {
+       setIsLoading(false);
+     }
+   };
 
   const fetchSessionDetails = async (sessionId: string) => {
     setIsLoadingDetails(true);
