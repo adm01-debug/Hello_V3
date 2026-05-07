@@ -4,8 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
- import { Phone, Pause, Clock, User, Filter, Volume2, VolumeX } from 'lucide-react';
- import { formatDuration } from '@/lib/utils';
+  import { Phone, Pause, Clock, User, Filter, Volume2, VolumeX } from 'lucide-react';
+  import { formatDuration, cn } from '@/lib/utils';
 import { useActiveCallsRealtime } from '@/hooks/useActiveCallsRealtime';
 
 export const ActiveCallsRealtime = () => {
