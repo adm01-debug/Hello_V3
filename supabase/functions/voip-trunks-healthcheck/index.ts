@@ -30,18 +30,26 @@ async function checkTrunk(server: string, transport: string): Promise<{ reachabl
     const authHeader = req.headers.get("Authorization") ?? "";
     const isCron = authHeader.includes(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "___");
 
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-    );
+     const supabaseUrl = Deno.env.get("SUPABASE_URL");
+     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+ 
+     if (!supabaseUrl || !supabaseKey) {
+       throw new Error("Missing environment variables");
+     }
+ 
+     const supabase = createClient(supabaseUrl, supabaseKey, {
+       auth: { persistSession: false, autoRefreshToken: false }
+     });
 
     // Se chamada manual, valida admin
     if (!isCron) {
-      const userClient = createClient(
-        Deno.env.get("SUPABASE_URL")!,
-        Deno.env.get("SUPABASE_ANON_KEY")!,
-        { global: { headers: { Authorization: authHeader } } },
-      );
+         const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
+         if (!supabaseAnonKey) throw new Error("Missing SUPABASE_ANON_KEY");
+ 
+         const userClient = createClient(supabaseUrl, supabaseAnonKey, {
+           global: { headers: { Authorization: authHeader } },
+           auth: { persistSession: false, autoRefreshToken: false }
+         });
       const { data: { user } } = await userClient.auth.getUser();
       if (!user) {
         return new Response(JSON.stringify({ error: "Unauthorized" }), {
