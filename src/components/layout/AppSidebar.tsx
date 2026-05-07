@@ -245,11 +245,14 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border/30 bg-[#050507]">
-      <SidebarHeader className="border-b border-sidebar-border/20 p-6">
+       <SidebarHeader className="border-b border-sidebar-border/20 p-6 bg-gradient-to-b from-white/[0.02] to-transparent">
         <div className="flex items-center gap-3">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-[0_8px_20px_-4px_hsl(var(--primary)/0.6)]">
-            <Headphones className="h-5 w-5 text-sidebar-primary-foreground" />
-          </div>
+           <div className="relative group/logo">
+             <div className="absolute -inset-1.5 bg-primary/20 rounded-2xl blur-md opacity-0 group-hover/logo:opacity-100 transition-opacity duration-500" />
+             <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-[0_8px_20px_-4px_hsl(var(--primary)/0.6)] group-hover/logo:scale-105 group-hover/logo:rotate-3 transition-transform duration-500">
+               <Headphones className="h-5 w-5 text-sidebar-primary-foreground" />
+             </div>
+           </div>
           {!collapsed && (
             <div className="flex flex-col">
               <span className="text-lg font-black text-sidebar-foreground tracking-[-0.03em] leading-tight">
