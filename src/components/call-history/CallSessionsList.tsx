@@ -1,4 +1,4 @@
-import { Phone, Clock, Calendar, User, Tag, ChevronRight, Loader2, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+ import { Phone, Clock, Calendar, User, Tag, ChevronRight, Loader2, TrendingUp, TrendingDown, Minus, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -54,9 +54,19 @@ export function CallSessionsList({ sessions, isLoading, activeFiltersCount, onSe
               {sessions.map((session) => (
                 <div key={session.id} className="flex items-center justify-between rounded-lg border border-border p-4 hover:bg-accent/50 cursor-pointer transition-colors" onClick={() => onSessionClick(session)}>
                   <div className="flex items-center gap-4">
-                    <div className={cn('flex h-10 w-10 items-center justify-center rounded-full', session.status === 'completed' ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning')}>
-                      <Phone className="h-5 w-5" />
-                    </div>
+                     <div className={cn(
+                       'flex h-10 w-10 items-center justify-center rounded-full relative',
+                       session.status === 'completed' ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning'
+                     )}>
+                       <Phone className="h-5 w-5" />
+                       <div className="absolute -top-1 -right-1 bg-background rounded-full border border-border p-0.5">
+                         {session.direction === 'outbound' ? (
+                           <ArrowUpRight className="h-3 w-3 text-primary" />
+                         ) : (
+                           <ArrowDownLeft className="h-3 w-3 text-success" />
+                         )}
+                       </div>
+                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{session.caller_name || 'Desconhecido'}</span>
