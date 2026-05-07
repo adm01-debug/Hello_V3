@@ -24,7 +24,7 @@ export function useAuthActions(
         return { data: { user: null, session: null }, error };
       }
 
-      const profile = await getProfile(data.user.id);
+       const profile = data.user ? await getProfile(data.user.id) : null;
 
       setAuthState({
         user: data.user,
