@@ -84,11 +84,11 @@ export function RecentCalls() {
               return (
                 <div
                   key={call.id}
-                  className="group/item flex items-center justify-between rounded-2xl border border-white/[0.05] bg-muted/20 p-4 transition-all duration-300 hover:bg-muted/40 hover:border-white/[0.1] hover:translate-x-1"
+                   className="group/item flex items-center justify-between rounded-2xl border border-white/[0.03] bg-muted/10 p-4 transition-all duration-500 hover:bg-muted/20 hover:border-primary/20 hover:translate-x-1.5"
                 >
                   <div className="flex items-center gap-3">
                     <div className={cn(
-                      'flex h-12 w-12 items-center justify-center rounded-2xl transition-transform duration-500 group-hover/item:scale-110',
+                       'flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-500 group-hover/item:scale-110 group-hover/item:rotate-3 shadow-sm group-hover/item:shadow-md',
                       getCallColor(call.status)
                     )}>
                       <Icon className="h-4 w-4" aria-hidden="true" />

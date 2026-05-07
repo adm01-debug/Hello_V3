@@ -24,14 +24,14 @@ export function ThemeToggle() {
   const { theme, toggleTheme, skin, setSkin } = useTheme();
 
   return (
-    <div className="flex items-center gap-2 bg-white/[0.03] p-1.5 rounded-2xl border border-white/[0.08] backdrop-blur-md">
+     <div className="flex items-center gap-1.5 bg-white/[0.02] p-1.5 rounded-2xl border border-white/[0.06] backdrop-blur-xl shadow-inner">
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            className="h-10 w-10 rounded-xl hover:bg-white/[0.05] transition-all duration-300"
+             className="h-10 w-10 rounded-xl hover:bg-white/[0.05] transition-all duration-500 hover:scale-105 active:scale-95"
             aria-label={theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
           >
             {theme === 'dark' ? (
