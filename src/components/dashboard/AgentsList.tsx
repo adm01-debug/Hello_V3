@@ -40,9 +40,14 @@ const getInitials = (name: string): string => {
      return () => clearInterval(interval);
    }, [agent.active_call_started_at]);
  
-   return (
-     <div className="flex items-center justify-between rounded-lg border border-border bg-card p-3 transition-colors hover:bg-accent/50">
-       <div className="flex items-center gap-3">
+    return (
+      <div className={cn(
+        "flex items-center justify-between rounded-lg border p-3 transition-all duration-300",
+        agent.status === 'busy' ? "border-warning/30 bg-warning/5 shadow-[0_0_10px_hsl(var(--warning)/0.05)]" : 
+        agent.status === 'available' ? "border-success/30 bg-success/5" :
+        "border-border bg-card hover:border-primary/30"
+      )}>
+        <div className="flex items-center gap-3">
          <div className="relative">
            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
              {getInitials(agent.name)}
