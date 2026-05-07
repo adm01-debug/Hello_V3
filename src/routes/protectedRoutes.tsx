@@ -4,12 +4,11 @@ import type { UserRole } from "@/hooks/useAuth";
 const Index = lazy(() => import("@/pages/Index"));
 const Contacts = lazy(() => import("@/pages/Contacts"));
 const ContactInsights = lazy(() => import("@/pages/ContactInsights"));
-const History = lazy(() => import("@/pages/History"));
-const Calls = lazy(() => import("@/pages/Calls"));
-const AIAssistant = lazy(() => import("@/pages/AIAssistant"));
-const Reports = lazy(() => import("@/pages/Reports"));
-const Settings = lazy(() => import("@/pages/Settings"));
-const CallHistory = lazy(() => import("@/pages/CallHistory"));
+ const Calls = lazy(() => import("@/pages/Calls"));
+ const AIAssistant = lazy(() => import("@/pages/AIAssistant"));
+ const Reports = lazy(() => import("@/pages/Reports"));
+ const Settings = lazy(() => import("@/pages/Settings"));
+ const CallHistory = lazy(() => import("@/pages/CallHistory"));
 const CallAnalytics = lazy(() => import("@/pages/CallAnalytics"));
 const Alerts = lazy(() => import("@/pages/Alerts"));
 const AgentRanking = lazy(() => import("@/pages/AgentRanking"));
@@ -91,8 +90,8 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/calls", element: Calls },
   { path: "/contacts", element: Contacts },
   { path: "/contacts/insights", element: ContactInsights },
-  { path: "/history", element: History },
-  { path: "/call-history", element: CallHistory },
+   { path: "/history", element: CallHistory },
+   { path: "/call-history", element: CallHistory },
   { path: "/analytics", element: CallAnalytics },
   { path: "/alerts", element: Alerts },
   { path: "/alert-history", element: AlertHistory },
