@@ -16,11 +16,14 @@ export const SupervisorPanel = () => {
   const s = useSupervisorPanel();
 
   return (
-    <Card className="h-full">
-      <CardHeader className="pb-3">
+    <Card className="card-premium border-none h-full">
+      <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <Radio className="h-5 w-5 text-primary" />Painel do Supervisor
+          <CardTitle className="text-xl font-bold tracking-tight flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-primary/5 text-primary/80">
+              <Radio className="h-5 w-5" />
+            </div>
+            Supervisão
             {s.activeBargeIn && <Badge variant="destructive" className="ml-2 animate-pulse"><PhoneCall className="h-3 w-3 mr-1" />Em Conferência</Badge>}
           </CardTitle>
           <div className="flex items-center gap-1">
