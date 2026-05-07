@@ -8,8 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import {
-  Search, MoreVertical, Smartphone, Network, QrCode, UserCog, Headphones,
-  AlertTriangle, Copy, Loader2, Users2, Heart, Download, PowerOff, X,
+   Search, MoreVertical, Smartphone, Network, QrCode, UserCog, Headphones, FolderSync,
+   AlertTriangle, Copy, Loader2, Users2, Heart, Download, PowerOff, X, LayoutDashboard,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useExtensionsOverview, type ExtensionOverview } from '@/hooks/useExtensionsOverview';
@@ -169,7 +169,39 @@ export default function ExtensionsAdmin() {
         <p className="text-muted-foreground">Visão 360° de todos os ramais, dispositivos, trunks e provisionamento.</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+         <Card 
+           className="cursor-pointer border-primary/20 hover:border-primary/50 transition-all hover:shadow-lg bg-primary/5"
+           onClick={() => navigate('/executive')}
+         >
+           <CardContent className="pt-6">
+             <div className="flex items-center justify-between">
+               <div>
+                 <p className="text-xs uppercase tracking-wider text-primary font-bold">Monitoramento</p>
+                 <p className="text-sm font-semibold mt-1">Dashboard Executivo</p>
+               </div>
+               <LayoutDashboard className="h-8 w-8 text-primary opacity-70" />
+             </div>
+           </CardContent>
+         </Card>
+ 
+         <Card 
+           className="cursor-pointer border-accent/20 hover:border-accent/50 transition-all hover:shadow-lg"
+           onClick={() => navigate('/ldap-sync')}
+         >
+           <CardContent className="pt-6">
+             <div className="flex items-center justify-between">
+               <div>
+                 <p className="text-xs uppercase tracking-wider text-muted-foreground font-bold">Diretório</p>
+                 <p className="text-sm font-semibold mt-1">Sincronizar AD/LDAP</p>
+               </div>
+               <FolderSync className="h-8 w-8 text-accent opacity-70" />
+             </div>
+           </CardContent>
+         </Card>
+       </div>
+ 
+       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard icon={Users2} label="Total de Ramais" value={stats.total} tone="primary" />
         <StatCard icon={Headphones} label="Online Agora" value={stats.online} tone="success" />
         <StatCard icon={Network} label="Sem Trunk" value={stats.noTrunk} tone={stats.noTrunk > 0 ? 'warning' : 'muted'} />
