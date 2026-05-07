@@ -42,8 +42,30 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
  const Index = () => {
    usePageTitle('Dashboard');
    const queryClient = useQueryClient();
-   const { data: stats, isLoading, isFetching: isFetchingStats, dataUpdatedAt } = useDashboardStats();
-   const [isRefreshing, setIsRefreshing] = useState(false);
+    const { data: stats, isLoading, isFetching: isFetchingStats, dataUpdatedAt } = useDashboardStats();
+    const { layout, isEditing, setIsEditing, saveLayout, resetLayout, toggleWidget } = useDashboardLayout();
+    const [isRefreshing, setIsRefreshing] = useState(false);
+ 
+    const sensors = useSensors(
+      useSensor(PointerSensor, {
+        activationConstraint: {
+          distance: 8,
+        },
+      }),
+      useSensor(KeyboardSensor, {
+        coordinateGetter: sortableKeyboardCoordinates,
+      })
+    );
+ 
+    const handleDragEnd = (event: DragEndEvent) => {
+      const { active, over } = event;
+      
+      if (over && active.id !== over.id) {
+        const oldIndex = layout.findIndex((w) => w.id === active.id);
+        const newIndex = layout.findIndex((w) => w.id === over.id);
+        saveLayout(arrayMove(layout, oldIndex, newIndex));
+      }
+    };
  
    const handleRefresh = async () => {
      setIsRefreshing(true);
