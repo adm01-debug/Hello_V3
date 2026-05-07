@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQueueStatsData } from '@/hooks/useDashboardData';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Progress } from '@/components/ui/progress';
-import { Users, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
+ import { Progress } from '@/components/ui/progress';
+ import { Users, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
+ import { cn } from '@/lib/utils';
 
 const formatDuration = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
