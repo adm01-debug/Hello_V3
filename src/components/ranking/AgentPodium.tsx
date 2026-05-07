@@ -14,9 +14,9 @@ export function AgentPodium({ agents }: Props) {
   const topAgents = agents.slice(0, 3);
   if (topAgents.length < 3) return null;
 
-  return (
-    <Card>
-      <CardHeader>
+   return (
+     <Card variant="glass-neon">
+       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2">
           <Trophy className="h-5 w-5 text-warning" /> Pódio
         </CardTitle>

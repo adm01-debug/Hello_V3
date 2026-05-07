@@ -14,8 +14,8 @@ export function AgentSummaryStats({ agents }: Props) {
   const topAgent = agents[0];
 
   return (
-    <div className="grid gap-4 md:grid-cols-4">
-      <Card>
+     <div className="grid gap-4 md:grid-cols-4">
+       <Card variant="neon">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Total de Agentes</CardTitle>
           <Users className="h-4 w-4 text-muted-foreground" />
@@ -25,7 +25,7 @@ export function AgentSummaryStats({ agents }: Props) {
           <p className="text-xs text-muted-foreground">Ativos no período</p>
         </CardContent>
       </Card>
-      <Card>
+       <Card variant="neon">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Total de Chamadas</CardTitle>
           <Phone className="h-4 w-4 text-muted-foreground" />
@@ -35,7 +35,7 @@ export function AgentSummaryStats({ agents }: Props) {
           <p className="text-xs text-muted-foreground">No período selecionado</p>
         </CardContent>
       </Card>
-      <Card>
+       <Card variant="neon">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Satisfação Média</CardTitle>
           <Star className="h-4 w-4 text-muted-foreground" />
@@ -45,7 +45,7 @@ export function AgentSummaryStats({ agents }: Props) {
           <p className="text-xs text-muted-foreground">Da equipe</p>
         </CardContent>
       </Card>
-      <Card>
+       <Card variant="neon">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Melhor Agente</CardTitle>
           <Trophy className="h-4 w-4 text-warning" />

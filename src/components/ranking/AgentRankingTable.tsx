@@ -25,9 +25,9 @@ const getRankIcon = (index: number) => {
 };
 
 export function AgentRankingTable({ agents, isLoading }: Props) {
-  return (
-    <Card>
-      <CardHeader>
+   return (
+     <Card variant="neon">
+       <CardHeader>
         <CardTitle>Ranking Completo</CardTitle>
       </CardHeader>
       <CardContent>
