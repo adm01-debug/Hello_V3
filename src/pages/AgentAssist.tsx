@@ -82,7 +82,7 @@ export default function AgentAssist() {
           ) : (
              <ScrollArea className="h-[480px] pr-2">
                <div className="space-y-2">
-                 {history.slice(0, 60).map((s: LiveAssistSignal) => (
+                 {history.slice(0, 60).map((s) => (
                    <div key={s.id} className="rounded-md border border-primary/15 p-2 text-xs">
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center gap-2">

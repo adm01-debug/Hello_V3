@@ -10,7 +10,7 @@ export interface LiveAssistSignal {
   call_session_id: string;
   agent_name: string | null;
   intent: string;
-  confidence: number;
+   confidence: number | null;
   suggestion: string | null;
   trigger_text: string | null;
   speaker: string | null;
@@ -150,7 +150,7 @@ export function useAgentAssistHistory(filters?: {
       if (filters?.intent) q = q.eq('intent', filters.intent);
       const { data, error } = await q;
       if (error) throw error;
-      return data ?? [];
+       return (data ?? []) as (LiveAssistSignal & { call_sessions: { caller_name: string | null; started_at: string; agent_name: string | null } })[];
     },
   });
 }
