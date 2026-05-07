@@ -49,54 +49,11 @@ interface QueueStats {
 export function useDashboardStats() {
   return useQuery<DashboardStats>({
     queryKey: ['dashboard-stats'],
-    queryFn: async () => {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const todayISO = today.toISOString();
-
-      const yesterday = new Date(today);
-      yesterday.setDate(yesterday.getDate() - 1);
-      const yesterdayISO = yesterday.toISOString();
-
-       const [
-         { count: todayCalls },
-         { count: yesterdayCalls },
-         { data: todayCompleted },
-         { data: agents }
-       ] = await Promise.all([
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO),
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', yesterdayISO).lt('started_at', todayISO),
-         supabase.from('call_sessions').select('duration_seconds, status').gte('started_at', todayISO).not('duration_seconds', 'is', null),
-         supabase.from('agents').select('status')
-       ]);
- 
-       const completedCalls = todayCompleted?.filter(c => c.status === 'completed') || [];
-       const avgDuration = completedCalls.length > 0
-         ? Math.round(completedCalls.reduce((s, c) => s + (c.duration_seconds || 0), 0) / completedCalls.length)
-         : 0;
- 
-       const answeredRate = (todayCalls || 0) > 0
-         ? Math.round((completedCalls.length / (todayCalls || 1)) * 100)
-         : 0;
- 
-      const totalAgents = agents?.length || 0;
-      const activeAgents = agents?.filter(a => a.status === 'available' || a.status === 'busy').length || 0;
-
-      const tc = todayCalls || 0;
-      const yc = yesterdayCalls || 0;
-      const change = yc > 0 ? Math.round(((tc - yc) / yc) * 100) : 0;
-
-      return {
-        totalCallsToday: tc,
-        totalCallsChange: change,
-        avgCallDuration: avgDuration,
-        durationChange: 0,
-        answeredRate,
-        rateChange: 0,
-        activeAgents,
-        totalAgents,
-      };
-    },
+     queryFn: async () => {
+       const { data, error } = await supabase.rpc('get_dashboard_stats');
+       if (error) throw error;
+       return data as unknown as DashboardStats;
+     },
     refetchInterval: 30000,
   });
 }
@@ -175,42 +132,10 @@ export function useQueueStatsData() {
   return useQuery<QueueStats>({
     queryKey: ['queue-stats'],
      queryFn: async () => {
-       const today = new Date();
-       today.setHours(0, 0, 0, 0);
-       const todayISO = today.toISOString();
- 
-       const [
-         { count: waiting },
-         { data: holdEvents },
-         { count: abandoned },
-         { count: totalToday },
-         { count: completedToday }
-       ] = await Promise.all([
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).eq('status', 'ringing'),
-         supabase.from('hold_events').select('duration_seconds').gte('started_at', todayISO),
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO).eq('status', 'abandoned'),
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO),
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO).eq('status', 'completed')
-       ]);
- 
-       const durations = (holdEvents || []).map(e => e.duration_seconds || 0).filter(d => d > 0);
-       const avgWaitTime = durations.length > 0
-         ? Math.round(durations.reduce((s, d) => s + d, 0) / durations.length)
-         : 0;
-       const longestWait = durations.length > 0 ? Math.max(...durations) : 0;
-
-      const serviceLevelPercent = (totalToday || 0) > 0
-        ? Math.round(((completedToday || 0) / (totalToday || 1)) * 100)
-        : 100;
-
-      return {
-        waiting: waiting || 0,
-        avgWaitTime,
-        longestWait,
-        abandoned: abandoned || 0,
-        serviceLevelPercent,
-      };
-    },
+       const { data, error } = await supabase.rpc('get_queue_stats');
+       if (error) throw error;
+       return data as unknown as QueueStats;
+     },
     refetchInterval: 15000,
   });
 }

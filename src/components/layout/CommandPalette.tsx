@@ -9,9 +9,13 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
-import {
-  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi,
-} from 'lucide-react';
+ import {
+   LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi, RefreshCw, Moon, Sun, LogOut,
+ } from 'lucide-react';
+ import { useQueryClient } from '@tanstack/react-query';
+ import { useTheme } from '@/contexts/ThemeContext';
+ import { supabase } from '@/integrations/supabase/client';
+ import { toast } from 'sonner';
 
 const allRoutes = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard, group: 'Principal' },
@@ -77,7 +81,33 @@ const allRoutes = [
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+   const navigate = useNavigate();
+   const queryClient = useQueryClient();
+   const { theme, setTheme } = useTheme();
+ 
+   const quickActions = [
+     {
+       title: 'Sincronizar Dashboard',
+       icon: RefreshCw,
+       onSelect: async () => {
+         await queryClient.invalidateQueries();
+         toast.success('Dashboard atualizado');
+       }
+     },
+     {
+       title: `Mudar para tema ${theme === 'dark' ? 'claro' : 'escuro'}`,
+       icon: theme === 'dark' ? Sun : Moon,
+       onSelect: () => setTheme(theme === 'dark' ? 'light' : 'dark')
+     },
+     {
+       title: 'Sair do sistema',
+       icon: LogOut,
+       onSelect: async () => {
+         await supabase.auth.signOut();
+         navigate('/login');
+       }
+     }
+   ];
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -100,16 +130,31 @@ export function CommandPalette() {
     return map;
   }, []);
 
-  const handleSelect = (url: string) => {
-    setOpen(false);
-    navigate(url);
-  };
+   const handleSelect = (item: any) => {
+     setOpen(false);
+     if (item.url) navigate(item.url);
+     if (item.onSelect) item.onSelect();
+   };
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
       <CommandInput placeholder="Buscar página, ferramenta ou configuração..." />
-      <CommandList>
-        <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
+       <CommandList>
+         <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
+         
+         <CommandGroup heading="Ações Rápidas">
+           {quickActions.map((action) => (
+             <CommandItem
+               key={action.title}
+               onSelect={() => handleSelect(action)}
+               className="flex items-center gap-3 cursor-pointer"
+             >
+               <action.icon className="h-4 w-4 text-primary" />
+               <span>{action.title}</span>
+             </CommandItem>
+           ))}
+         </CommandGroup>
+         
         {Array.from(groups.entries()).map(([group, items], idx) => (
           <div key={group}>
             {idx > 0 && <CommandSeparator />}

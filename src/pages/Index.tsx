@@ -79,9 +79,9 @@ const formatDuration = (seconds: number): string => {
        />
 
       {/* Stats Cards */}
-      <SectionBoundary section="Estatísticas">
-        <section className="relative grid gap-4 grid-cols-2 lg:grid-cols-4" aria-label="Métricas principais">
-          {isLoading ? (
+       <SectionBoundary section="Estatísticas">
+         <section className="relative grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" aria-label="Métricas principais">
+           {isLoading && !stats ? (
             <>
               {[1, 2, 3, 4].map(i => (
                 <Skeleton key={i} className="h-[130px] rounded-xl" />
