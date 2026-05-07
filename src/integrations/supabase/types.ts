@@ -1408,6 +1408,7 @@ export type Database = {
           contact_id: string | null
           created_at: string
           deal_id: string | null
+          direction: string | null
           duration_seconds: number | null
           ended_at: string | null
           hold_count: number | null
@@ -1423,6 +1424,7 @@ export type Database = {
           contact_id?: string | null
           created_at?: string
           deal_id?: string | null
+          direction?: string | null
           duration_seconds?: number | null
           ended_at?: string | null
           hold_count?: number | null
@@ -1438,6 +1440,7 @@ export type Database = {
           contact_id?: string | null
           created_at?: string
           deal_id?: string | null
+          direction?: string | null
           duration_seconds?: number | null
           ended_at?: string | null
           hold_count?: number | null
