@@ -33,13 +33,11 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
       latency_ms: Date.now() - start,
     };
 
-    return new Response(JSON.stringify(response), {
-      status: dbHealthy ? 200 : 503,
-      headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
- };
- 
- Deno.serve(handler);
-  } catch (err) {
+     return new Response(JSON.stringify(response), {
+       status: dbHealthy ? 200 : 503,
+       headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
+     });
+   } catch (err) {
     return new Response(
       JSON.stringify({
         status: "error",
@@ -52,5 +50,7 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
         headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
       }
     );
-  }
-});
+   }
+ };
+ 
+ Deno.serve(handler);
