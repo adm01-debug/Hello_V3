@@ -19,6 +19,8 @@
    Save,
    Link,
    Wrench,
+   LifeBuoy,
+   MessageSquare,
  } from 'lucide-react';
  import { toast } from 'sonner';
  import { usePageTitle } from '@/hooks/usePageTitle';
@@ -47,7 +49,54 @@
        </div>
  
        <Tabs defaultValue="profile" className="space-y-6">
-         <TabsList className="grid w-full max-w-3xl grid-cols-6">
+           <TabsList className="grid w-full max-w-4xl grid-cols-7">
+             <TabsTrigger value="support" className="gap-2">
+               <LifeBuoy className="h-4 w-4" />
+               Suporte
+             </TabsTrigger>
+         {/* Support Tab */}
+         <TabsContent value="support">
+           <Card>
+             <CardHeader>
+               <CardTitle>Suporte e Feedback</CardTitle>
+               <CardDescription>Precisa de ajuda ou quer sugerir uma melhoria?</CardDescription>
+             </CardHeader>
+             <CardContent className="space-y-6">
+               <div className="grid gap-4 md:grid-cols-2">
+                 <div className="p-4 rounded-lg border border-border bg-accent/30 hover:bg-accent/50 transition-colors cursor-pointer group">
+                   <div className="flex items-center gap-3 mb-2">
+                     <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                       <LifeBuoy className="h-5 w-5" />
+                     </div>
+                     <h4 className="font-semibold">Central de Ajuda</h4>
+                   </div>
+                   <p className="text-sm text-muted-foreground">Acesse nossos tutoriais e documentação completa sobre o sistema.</p>
+                 </div>
+                 
+                 <div className="p-4 rounded-lg border border-border bg-accent/30 hover:bg-accent/50 transition-colors cursor-pointer group">
+                   <div className="flex items-center gap-3 mb-2">
+                     <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                       <MessageSquare className="h-5 w-5" />
+                     </div>
+                     <h4 className="font-semibold">Enviar Feedback</h4>
+                   </div>
+                   <p className="text-sm text-muted-foreground">Sua opinião é fundamental para evoluirmos. Envie bugs ou sugestões.</p>
+                 </div>
+               </div>
+               
+               <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 flex items-center justify-between gap-4">
+                 <div>
+                   <h4 className="font-medium text-primary flex items-center gap-2">
+                     <Sparkles className="h-4 w-4" />
+                     Programa Beta
+                   </h4>
+                   <p className="text-xs text-muted-foreground mt-1">Ative o acesso antecipado a novas funcionalidades de IA e automação.</p>
+                 </div>
+                 <Switch />
+               </div>
+             </CardContent>
+           </Card>
+         </TabsContent>
            <TabsTrigger value="profile" className="gap-2">
              <User className="h-4 w-4" />
              Perfil
