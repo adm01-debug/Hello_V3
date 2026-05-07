@@ -6,8 +6,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 
 const statusConfig: Record<string, { label: string; color: string }> = {
-  available: { label: 'Disponível', color: 'bg-success' },
-  busy: { label: 'Em chamada', color: 'bg-warning' },
+   available: { label: 'Disponível', color: 'bg-success shadow-[0_0_8px_hsl(var(--success)/0.6)] animate-pulse' },
+   busy: { label: 'Em chamada', color: 'bg-warning shadow-[0_0_8px_hsl(var(--warning)/0.6)]' },
   away: { label: 'Ausente', color: 'bg-muted-foreground' },
   offline: { label: 'Offline', color: 'bg-destructive' },
 };
@@ -63,11 +63,13 @@ export function AgentsList() {
               return (
                 <div
                   key={agent.id}
-                  className="group/item flex items-center justify-between rounded-2xl border border-white/[0.05] bg-muted/20 p-4 transition-all duration-300 hover:bg-muted/40 hover:border-white/[0.1] hover:scale-[1.02]"
+                   className="group/item flex items-center justify-between rounded-2xl border border-white/[0.03] bg-muted/10 p-4 transition-all duration-500 hover:bg-muted/20 hover:border-primary/20 hover:-translate-y-1 relative overflow-hidden"
+                 >
+                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover/item:opacity-100 transition-opacity duration-700" />
                 >
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-sm font-bold text-primary transition-transform duration-500 group-hover/item:rotate-3">
+                       <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/5 text-sm font-bold text-primary ring-1 ring-primary/10 transition-all duration-500 group-hover/item:rotate-6 group-hover/item:scale-110">
                         {getInitials(agent.name)}
                       </div>
                       <div 
