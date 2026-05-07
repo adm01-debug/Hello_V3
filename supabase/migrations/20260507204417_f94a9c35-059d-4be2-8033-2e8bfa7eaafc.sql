@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS idx_hold_events_started_at ON public.hold_events (started_at DESC);
