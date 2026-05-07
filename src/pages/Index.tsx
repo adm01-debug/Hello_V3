@@ -1,4 +1,4 @@
- import { Phone, Clock, CheckCircle, Users, Zap, LayoutDashboard, RefreshCw } from 'lucide-react';
+  import { Phone, Clock, CheckCircle, Users, Zap, LayoutDashboard, RefreshCw, Settings2, RotateCcw, Save } from 'lucide-react';
  import { useQueryClient } from '@tanstack/react-query';
  import { useState } from 'react';
  import { Button } from '@/components/ui/button';
@@ -15,7 +15,25 @@ import { WhisperNotification } from '@/components/agent/WhisperNotification';
 import { BargeInNotification } from '@/components/agent/BargeInNotification';
 import { ScheduledCallbacksList } from '@/components/callbacks/ScheduledCallbacksList';
 import { SectionBoundary } from '@/components/error-boundary/ErrorBoundary';
-import { useDashboardStats } from '@/hooks/useDashboardData';
+ import { useDashboardStats } from '@/hooks/useDashboardData';
+ import { useDashboardLayout, WidgetId, WidgetLayout } from '@/hooks/useDashboardLayout';
+ import { 
+   DndContext, 
+   closestCenter, 
+   KeyboardSensor, 
+   PointerSensor, 
+   useSensor, 
+   useSensors,
+   DragEndEvent
+ } from '@dnd-kit/core';
+ import {
+   arrayMove,
+   SortableContext,
+   sortableKeyboardCoordinates,
+   verticalListSortingStrategy,
+   rectSortingStrategy,
+ } from '@dnd-kit/sortable';
+ import { SortableWidget } from '@/components/dashboard/SortableWidget';
 import { Skeleton } from '@/components/ui/skeleton';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
  import { usePageTitle } from '@/hooks/usePageTitle';
