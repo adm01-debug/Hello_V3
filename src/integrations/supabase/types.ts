@@ -2484,6 +2484,7 @@ export type Database = {
           external_id: string | null
           external_metadata: Json | null
           first_response_at: string | null
+          handoff_threshold: number | null
           id: string
           last_message_at: string | null
           priority: string
@@ -2506,6 +2507,7 @@ export type Database = {
           external_id?: string | null
           external_metadata?: Json | null
           first_response_at?: string | null
+          handoff_threshold?: number | null
           id?: string
           last_message_at?: string | null
           priority?: string
@@ -2528,6 +2530,7 @@ export type Database = {
           external_id?: string | null
           external_metadata?: Json | null
           first_response_at?: string | null
+          handoff_threshold?: number | null
           id?: string
           last_message_at?: string | null
           priority?: string
@@ -5363,6 +5366,30 @@ export type Database = {
           survey_type?: string
           trigger_event?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      system_settings: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          key: string
+          updated_at: string | null
+          value: Json
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          key: string
+          updated_at?: string | null
+          value: Json
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          key?: string
+          updated_at?: string | null
+          value?: Json
         }
         Relationships: []
       }
