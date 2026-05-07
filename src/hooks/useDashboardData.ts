@@ -58,37 +58,27 @@ export function useDashboardStats() {
       yesterday.setDate(yesterday.getDate() - 1);
       const yesterdayISO = yesterday.toISOString();
 
-      // Today's calls
-      const { count: todayCalls } = await supabase
-        .from('call_sessions')
-        .select('*', { count: 'exact', head: true })
-        .gte('started_at', todayISO);
-
-      // Yesterday's calls
-      const { count: yesterdayCalls } = await supabase
-        .from('call_sessions')
-        .select('*', { count: 'exact', head: true })
-        .gte('started_at', yesterdayISO)
-        .lt('started_at', todayISO);
-
-      // Today's completed calls with duration
-      const { data: todayCompleted } = await supabase
-        .from('call_sessions')
-        .select('duration_seconds, status')
-        .gte('started_at', todayISO)
-        .not('duration_seconds', 'is', null);
-
-      const completedCalls = todayCompleted?.filter(c => c.status === 'completed') || [];
-      const avgDuration = completedCalls.length > 0
-        ? Math.round(completedCalls.reduce((s, c) => s + (c.duration_seconds || 0), 0) / completedCalls.length)
-        : 0;
-
-      const answeredRate = (todayCalls || 0) > 0
-        ? Math.round((completedCalls.length / (todayCalls || 1)) * 100)
-        : 0;
-
-      // Agents
-      const { data: agents } = await supabase.from('agents').select('status');
+       const [
+         { count: todayCalls },
+         { count: yesterdayCalls },
+         { data: todayCompleted },
+         { data: agents }
+       ] = await Promise.all([
+         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO),
+         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', yesterdayISO).lt('started_at', todayISO),
+         supabase.from('call_sessions').select('duration_seconds, status').gte('started_at', todayISO).not('duration_seconds', 'is', null),
+         supabase.from('agents').select('status')
+       ]);
+ 
+       const completedCalls = todayCompleted?.filter(c => c.status === 'completed') || [];
+       const avgDuration = completedCalls.length > 0
+         ? Math.round(completedCalls.reduce((s, c) => s + (c.duration_seconds || 0), 0) / completedCalls.length)
+         : 0;
+ 
+       const answeredRate = (todayCalls || 0) > 0
+         ? Math.round((completedCalls.length / (todayCalls || 1)) * 100)
+         : 0;
+ 
       const totalAgents = agents?.length || 0;
       const activeAgents = agents?.filter(a => a.status === 'available' || a.status === 'busy').length || 0;
 
@@ -184,46 +174,30 @@ export function useCallVolumeData() {
 export function useQueueStatsData() {
   return useQuery<QueueStats>({
     queryKey: ['queue-stats'],
-    queryFn: async () => {
-      // Get active calls waiting
-      const { count: waiting } = await supabase
-        .from('call_sessions')
-        .select('*', { count: 'exact', head: true })
-        .eq('status', 'ringing');
-
-      // Get hold events for today
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      const { data: holdEvents } = await supabase
-        .from('hold_events')
-        .select('duration_seconds')
-        .gte('started_at', today.toISOString());
-
-      const durations = (holdEvents || []).map(e => e.duration_seconds || 0).filter(d => d > 0);
-      const avgWaitTime = durations.length > 0
-        ? Math.round(durations.reduce((s, d) => s + d, 0) / durations.length)
-        : 0;
-      const longestWait = durations.length > 0 ? Math.max(...durations) : 0;
-
-      // Get abandoned calls today
-      const { count: abandoned } = await supabase
-        .from('call_sessions')
-        .select('*', { count: 'exact', head: true })
-        .gte('started_at', today.toISOString())
-        .eq('status', 'abandoned');
-
-      // Calculate service level
-      const { count: totalToday } = await supabase
-        .from('call_sessions')
-        .select('*', { count: 'exact', head: true })
-        .gte('started_at', today.toISOString());
-
-      const { count: completedToday } = await supabase
-        .from('call_sessions')
-        .select('*', { count: 'exact', head: true })
-        .gte('started_at', today.toISOString())
-        .eq('status', 'completed');
+     queryFn: async () => {
+       const today = new Date();
+       today.setHours(0, 0, 0, 0);
+       const todayISO = today.toISOString();
+ 
+       const [
+         { count: waiting },
+         { data: holdEvents },
+         { count: abandoned },
+         { count: totalToday },
+         { count: completedToday }
+       ] = await Promise.all([
+         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).eq('status', 'ringing'),
+         supabase.from('hold_events').select('duration_seconds').gte('started_at', todayISO),
+         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO).eq('status', 'abandoned'),
+         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO),
+         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO).eq('status', 'completed')
+       ]);
+ 
+       const durations = (holdEvents || []).map(e => e.duration_seconds || 0).filter(d => d > 0);
+       const avgWaitTime = durations.length > 0
+         ? Math.round(durations.reduce((s, d) => s + d, 0) / durations.length)
+         : 0;
+       const longestWait = durations.length > 0 ? Math.max(...durations) : 0;
 
       const serviceLevelPercent = (totalToday || 0) > 0
         ? Math.round(((completedToday || 0) / (totalToday || 1)) * 100)
