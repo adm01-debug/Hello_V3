@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Phone, PhoneOff, Pause, Play, Users, Bell, Merge, X, PhoneForwarded, Clock, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+ import { cn, formatDuration } from '@/lib/utils';
 import { CallSession, CallChannel, ConferenceCall, TransferTarget, TransferType } from '@/hooks/useMultiChannelCall';
 import { useHoldReminder } from '@/hooks/useHoldReminder';
 import { TransferCallDialog } from './TransferCallDialog';
@@ -11,12 +11,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { Checkbox } from '@/components/ui/checkbox';
 import { HoldReminderSettings } from './HoldReminderSettings';
 import { ConferenceSection } from './ConferenceSection';
-
-const formatDuration = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
 
 interface ActiveCallsIndicatorProps {
   activeCalls: CallSession[];

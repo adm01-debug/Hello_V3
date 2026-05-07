@@ -1,15 +1,9 @@
 import { Users, X, Mic, MicOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+ import { cn, formatDuration } from '@/lib/utils';
 import { CallSession, ConferenceCall } from '@/hooks/useMultiChannelCall';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-
-const formatDuration = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
 
 interface ConferenceSectionProps {
   conference: ConferenceCall;

@@ -7,7 +7,8 @@ import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { Settings, Clock, AlertTriangle, Bell, Save, RefreshCw } from 'lucide-react';
+ import { Settings, Clock, AlertTriangle, Bell, Save, RefreshCw } from 'lucide-react';
+ import { formatDuration } from '@/lib/utils';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
@@ -20,8 +21,8 @@ interface HoldAlertSettings {
   notify_on_critical: boolean;
 }
 
-export default function HoldAlertSettings() {
-  
+ export default function HoldAlertSettings() {
+   usePageTitle('Config. Alertas de Espera');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [settings, setSettings] = useState<HoldAlertSettings | null>(null);
@@ -77,16 +78,6 @@ export default function HoldAlertSettings() {
     } finally {
       setSaving(false);
     }
-  };
-
-  const formatDuration = (seconds: number) => {
-  usePageTitle('Config. Alertas de Espera');
-
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    if (minutes === 0) return `${secs}s`;
-    if (secs === 0) return `${minutes}min`;
-    return `${minutes}min ${secs}s`;
   };
 
   if (loading) {

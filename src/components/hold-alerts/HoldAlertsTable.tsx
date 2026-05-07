@@ -2,7 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AlertCircle, AlertTriangle, Bell, CheckCircle, Clock, Info, X } from 'lucide-react';
+ import { AlertCircle, AlertTriangle, Bell, CheckCircle, Clock, Info, X } from 'lucide-react';
+ import { formatDurationFriendly } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
@@ -25,14 +26,6 @@ const severityConfig = {
   info: { label: 'Informativo', icon: Info, color: 'bg-info/10 text-info border-info/20', badgeVariant: 'secondary' as const },
   warning: { label: 'Aviso', icon: AlertTriangle, color: 'bg-warning/10 text-warning border-warning/20', badgeVariant: 'outline' as const },
   critical: { label: 'Crítico', icon: AlertCircle, color: 'bg-destructive/10 text-destructive border-destructive/20', badgeVariant: 'destructive' as const },
-};
-
-const formatDuration = (seconds: number | null): string => {
-  if (!seconds) return '-';
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  if (mins === 0) return `${secs}s`;
-  return `${mins}m ${secs}s`;
 };
 
 interface Props {
@@ -100,7 +93,7 @@ export function HoldAlertsTable({ alerts, isLoading, onMarkAsRead }: Props) {
                     <TableCell>
                       <div className="flex items-center gap-1">
                         <Clock className="h-3 w-3 text-muted-foreground" />
-                        {formatDuration(alert.call_session?.hold_time_seconds ?? null)}
+                         {alert.call_session?.hold_time_seconds ? formatDurationFriendly(alert.call_session.hold_time_seconds) : '-'}
                       </div>
                     </TableCell>
                     <TableCell>
