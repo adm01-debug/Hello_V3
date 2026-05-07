@@ -51,7 +51,10 @@ export function useDashboardStats() {
     queryKey: ['dashboard-stats'],
      queryFn: async () => {
        const { data, error } = await supabase.rpc('get_dashboard_stats');
-       if (error) throw error;
+       if (error) {
+         console.error('Error fetching dashboard stats:', error);
+         throw new Error('Falha ao carregar estatísticas do dashboard');
+       }
        return data as unknown as DashboardStats;
      },
     refetchInterval: 30000,
@@ -66,8 +69,11 @@ export function useAgentsListData() {
         .from('agents')
         .select('id, name, status, avatar_url, extension')
         .order('name');
-      if (error) throw error;
-      return data || [];
+       if (error) {
+         console.error('Error fetching agents list:', error);
+         throw new Error('Falha ao carregar lista de agentes');
+       }
+       return data || [];
     },
     refetchInterval: 15000,
   });
