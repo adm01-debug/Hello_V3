@@ -58,9 +58,10 @@ export function useCallHistory() {
   const [showFilters, setShowFilters] = useState(false);
   const [dateRangePreset, setDateRangePreset] = useState<DateRangePreset>('all');
   const [customDateFrom, setCustomDateFrom] = useState<Date | undefined>();
-  const [customDateTo, setCustomDateTo] = useState<Date | undefined>();
-  const [sentimentFilter, setSentimentFilter] = useState<SentimentFilter>('all');
-  const [durationFilter, setDurationFilter] = useState<DurationFilter>('all');
+   const [customDateTo, setCustomDateTo] = useState<Date | undefined>();
+   const [statusFilter, setStatusFilter] = useState<string>('all');
+   const [sentimentFilter, setSentimentFilter] = useState<SentimentFilter>('all');
+   const [durationFilter, setDurationFilter] = useState<DurationFilter>('all');
   const [topicFilter, setTopicFilter] = useState<string>('');
 
   const allTopics = useMemo(() => {
@@ -69,7 +70,7 @@ export function useCallHistory() {
     return Array.from(topics).sort();
   }, [sessions]);
 
-  useEffect(() => { fetchSessions(); }, []);
+   useEffect(() => { fetchSessions(); }, [searchQuery, statusFilter, sentimentFilter]);
 
    const fetchSessions = async () => {
      setIsLoading(true);
@@ -160,11 +161,17 @@ export function useCallHistory() {
     });
   }, [sessions, searchQuery, dateRangePreset, customDateFrom, customDateTo, sentimentFilter, durationFilter, topicFilter]);
 
-  const activeFiltersCount = [dateRangePreset !== 'all', sentimentFilter !== 'all', durationFilter !== 'all', topicFilter !== ''].filter(Boolean).length;
+   const activeFiltersCount = [
+     dateRangePreset !== 'all',
+     statusFilter !== 'all',
+     sentimentFilter !== 'all',
+     durationFilter !== 'all',
+     topicFilter !== ''
+   ].filter(Boolean).length;
 
   const clearFilters = () => {
     setDateRangePreset('all'); setCustomDateFrom(undefined); setCustomDateTo(undefined);
-    setSentimentFilter('all'); setDurationFilter('all'); setTopicFilter('');
+     setStatusFilter('all'); setSentimentFilter('all'); setDurationFilter('all'); setTopicFilter('');
   };
 
   const exportTranscript = () => {
@@ -185,8 +192,9 @@ export function useCallHistory() {
     selectedSession, setSelectedSession, sessionTranscripts, sessionAnalyses, sessionSummary,
     isLoadingDetails, showFilters, setShowFilters, dateRangePreset, setDateRangePreset,
     customDateFrom, setCustomDateFrom, customDateTo, setCustomDateTo,
-    sentimentFilter, setSentimentFilter, durationFilter, setDurationFilter,
-    topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
+     statusFilter, setStatusFilter, sentimentFilter, setSentimentFilter,
+     durationFilter, setDurationFilter, topicFilter, setTopicFilter,
+     allTopics, activeFiltersCount, clearFilters,
     handleSessionClick, exportTranscript, fetchSessions,
   };
 }
