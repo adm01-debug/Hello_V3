@@ -13,18 +13,26 @@ const formatDuration = (seconds: number): string => {
 export function QueueStatus() {
   const { data: stats, isLoading } = useQueueStatsData();
 
-  if (isLoading || !stats) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Fila de Atendimento</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {[1, 2, 3].map(i => <Skeleton key={i} className="h-16 rounded-lg" />)}
-        </CardContent>
-      </Card>
-    );
-  }
+   if (isLoading && !stats) {
+     return (
+       <Card>
+         <CardHeader>
+           <CardTitle className="text-lg font-semibold">Fila de Atendimento</CardTitle>
+         </CardHeader>
+         <CardContent className="space-y-6">
+           <div className="space-y-2">
+             <Skeleton className="h-4 w-full" />
+             <Skeleton className="h-2 w-full" />
+           </div>
+           <div className="grid grid-cols-2 gap-4">
+             {[1, 2, 3, 4].map(i => (
+               <Skeleton key={i} className="h-20 rounded-lg" />
+             ))}
+           </div>
+         </CardContent>
+       </Card>
+     );
+   }
 
   return (
     <Card>
