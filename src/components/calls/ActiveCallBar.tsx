@@ -13,8 +13,8 @@ import {
   FileText,
   Loader2
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+ import { Button } from '@/components/ui/button';
+ import { cn, formatDuration } from '@/lib/utils';
 import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
 import { LiveTranscription } from '@/components/calls/LiveTranscription';
 import { NextBestActionPanel } from '@/components/calls/NextBestActionPanel';
@@ -26,12 +26,6 @@ import { buildRecentContext } from '@/lib/agent-assist-utils';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
-
-const formatDuration = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
 
 interface ActiveCall {
   id: string;
