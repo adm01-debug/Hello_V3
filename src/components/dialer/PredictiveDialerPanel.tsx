@@ -11,9 +11,10 @@ import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem,
-  DropdownMenuSeparator, DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
+   DropdownMenuSeparator, DropdownMenuTrigger,
+ } from '@/components/ui/dropdown-menu';
+ import { AddContactsDialog } from './AddContactsDialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -125,8 +126,11 @@ export function PredictiveDialerPanel() {
           <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2"><Phone className="h-6 w-6 text-primary" />Discador Preditivo</h2>
           <p className="text-muted-foreground">Gerencie campanhas e fila de discagem automática</p>
         </div>
-        <CreateCampaignDialog />
-      </div>
+         <div className="flex items-center gap-2">
+           {selectedCampaignId && <AddContactsDialog campaignId={selectedCampaignId} />}
+           <CreateCampaignDialog />
+         </div>
+       </div>
 
       <div className="grid gap-4 md:grid-cols-4">
         <Card className="md:col-span-1"><CardHeader className="pb-2"><CardTitle className="text-sm">Campanha Ativa</CardTitle></CardHeader><CardContent>
