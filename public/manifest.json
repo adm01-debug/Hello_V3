@@ -1,20 +1,16 @@
 {
-  "name": "Hello",
-  "short_name": "Hello",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0ea5e9",
-  "icons": [
-    {
-      "src": "/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+   "name": "CallCenter Pro",
+   "short_name": "CC Pro",
+   "description": "Gestão Inteligente de Call Center",
+   "start_url": "/",
+   "display": "standalone",
+   "background_color": "#000000",
+   "theme_color": "#0ea572",
+   "icons": [
+     {
+       "src": "/favicon.ico",
+       "sizes": "64x64 32x32 24x24 16x16",
+       "type": "image/x-icon"
+     }
+   ]
 }
