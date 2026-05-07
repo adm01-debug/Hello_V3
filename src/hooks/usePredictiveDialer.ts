@@ -325,9 +325,10 @@ export const usePredictiveDialer = () => {
 
       setCurrentCall(null);
       
-      if (activeCampaign) {
-        await fetchQueue(activeCampaign.id);
-      }
+       await fetchCampaigns();
+       if (activeCampaign) {
+         await fetchQueue(activeCampaign.id);
+       }
     } catch (err) {
       log.error('Error completing call:', err);
     }
