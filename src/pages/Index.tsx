@@ -107,18 +107,42 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
              )}
            </div>
          }
-         actions={
-           <Button
-             variant="glass"
-             size="sm"
-             onClick={handleRefresh}
-             disabled={isRefreshing || isFetchingStats}
-             className="gap-2"
-           >
-             <RefreshCw className={`h-4 w-4 ${isRefreshing || isFetchingStats ? 'animate-spin' : ''}`} />
-             Sincronizar
-           </Button>
-         }
+          actions={
+            <div className="flex items-center gap-2">
+              <Button
+                variant={isEditing ? "primary" : "glass"}
+                size="sm"
+                onClick={() => setIsEditing(!isEditing)}
+                className="gap-2"
+              >
+                {isEditing ? <Save className="h-4 w-4" /> : <Settings2 className="h-4 w-4" />}
+                {isEditing ? 'Salvar Layout' : 'Customizar'}
+              </Button>
+              
+              {isEditing && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={resetLayout}
+                  className="gap-2"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  Resetar
+                </Button>
+              )}
+ 
+              <Button
+                variant="glass"
+                size="sm"
+                onClick={handleRefresh}
+                disabled={isRefreshing || isFetchingStats}
+                className="gap-2"
+              >
+                <RefreshCw className={`h-4 w-4 ${isRefreshing || isFetchingStats ? 'animate-spin' : ''}`} />
+                Sincronizar
+              </Button>
+            </div>
+          }
        />
 
       {/* Stats Cards */}
