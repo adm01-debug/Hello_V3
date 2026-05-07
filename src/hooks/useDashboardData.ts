@@ -46,9 +46,9 @@ interface QueueStats {
   serviceLevelPercent: number;
 }
 
-export function useDashboardStats() {
-  return useQuery<DashboardStats>({
-    queryKey: ['dashboard-stats'],
+ export function useDashboardStats() {
+   return useQuery<DashboardStats>({
+     queryKey: ['dashboard-stats'],
      queryFn: async () => {
        const { data, error } = await supabase.rpc('get_dashboard_stats');
        if (error) {
@@ -57,9 +57,9 @@ export function useDashboardStats() {
        }
        return data as unknown as DashboardStats;
      },
-    refetchInterval: 30000,
-  });
-}
+     refetchInterval: 15000, // Faster refresh for real-time feel
+   });
+ }
 
  export function useAgentsListData() {
    return useQuery<(AgentRow & { active_call_started_at?: string; active_call_caller?: string })[]>({
