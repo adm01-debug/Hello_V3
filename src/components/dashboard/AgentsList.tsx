@@ -66,7 +66,6 @@ export function AgentsList() {
                    className="group/item flex items-center justify-between rounded-2xl border border-white/[0.03] bg-muted/10 p-4 transition-all duration-500 hover:bg-muted/20 hover:border-primary/20 hover:-translate-y-1 relative overflow-hidden"
                  >
                    <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover/item:opacity-100 transition-opacity duration-700" />
-                >
                   <div className="flex items-center gap-3">
                     <div className="relative">
                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/5 text-sm font-bold text-primary ring-1 ring-primary/10 transition-all duration-500 group-hover/item:rotate-6 group-hover/item:scale-110">
