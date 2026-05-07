@@ -143,87 +143,84 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
               </Button>
             </div>
           }
-       />
-
-      {/* Stats Cards */}
-       <SectionBoundary section="Estatísticas">
-         <section className="relative grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" aria-label="Métricas principais">
-           {isLoading && !stats ? (
-            <>
-              {[1, 2, 3, 4].map(i => (
-                <Skeleton key={i} className="h-[130px] rounded-xl" />
-              ))}
-            </>
-          ) : stats ? (
-            <>
-              <StatsCard
-                title="Chamadas Hoje"
-                value={stats.totalCallsToday}
-                change={stats.totalCallsChange}
-                changeLabel="vs ontem"
-                icon={<Phone className="h-5 w-5" />}
-                glowColor="primary"
-              />
-              <StatsCard
-                title="Duração Média"
-                value={formatDuration(stats.avgCallDuration)}
-                change={stats.durationChange}
-                changeLabel="vs ontem"
-                icon={<Clock className="h-5 w-5" />}
-                glowColor="info"
-              />
-              <StatsCard
-                title="Taxa Atendimento"
-                value={`${stats.answeredRate}%`}
-                change={stats.rateChange}
-                changeLabel="vs ontem"
-                icon={<CheckCircle className="h-5 w-5" />}
-                glowColor="success"
-              />
-              <StatsCard
-                title="Agentes Ativos"
-                value={`${stats.activeAgents}/${stats.totalAgents}`}
-                icon={<Users className="h-5 w-5" />}
-                glowColor="warning"
-              />
-            </>
-          ) : null}
-        </section>
-      </SectionBoundary>
-
-      {/* Active Calls & Hold Trend */}
-      <SectionBoundary section="Chamadas Ativas">
-        <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Chamadas ativas e tendência de espera">
-          <ActiveCallsRealtime />
-          <HoldTrendChart />
-        </section>
-      </SectionBoundary>
-
-      {/* Charts and Queue */}
-      <SectionBoundary section="Volume e Fila">
-        <section className="relative grid gap-4 lg:grid-cols-3" aria-label="Volume de chamadas e fila de atendimento">
-          <div className="lg:col-span-2">
-            <CallVolumeChart />
-          </div>
-          <QueueStatus />
-        </section>
-      </SectionBoundary>
-
-      {/* Callbacks & Supervisor */}
-      <SectionBoundary section="Callbacks e Supervisão">
-        <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Callbacks agendados e painel do supervisor">
-          <ScheduledCallbacksList />
-          <SupervisorPanel />
-        </section>
-      </SectionBoundary>
-
-      {/* Recent & Agents */}
-      <SectionBoundary section="Chamadas Recentes">
-        <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Chamadas recentes e lista de agentes">
-          <RecentCalls />
-          <AgentsList />
-        </section>
-      </SectionBoundary>
+        />
+ 
+       <DndContext
+         sensors={sensors}
+         collisionDetection={closestCenter}
+         onDragEnd={handleDragEnd}
+       >
+         <SortableContext
+           items={layout.filter(w => w.visible).map(w => w.id)}
+           strategy={rectSortingStrategy}
+         >
+           <div className="grid gap-6">
+             {layout.filter(w => w.visible).map((widget) => (
+               <SortableWidget 
+                 key={widget.id} 
+                 id={widget.id} 
+                 isEditing={isEditing}
+                 onRemove={() => toggleWidget(widget.id as WidgetId)}
+               >
+                 {widget.id === 'stats' && (
+                   <SectionBoundary section="Estatísticas">
+                     <section className="relative grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" aria-label="Métricas principais">
+                       {isLoading && !stats ? (
+                         [1, 2, 3, 4].map(i => <Skeleton key={i} className="h-[130px] rounded-xl" />)
+                       ) : stats ? (
+                         <>
+                           <StatsCard title="Chamadas Hoje" value={stats.totalCallsToday} change={stats.totalCallsChange} changeLabel="vs ontem" icon={<Phone className="h-5 w-5" />} glowColor="primary" />
+                           <StatsCard title="Duração Média" value={formatDuration(stats.avgCallDuration)} change={stats.durationChange} changeLabel="vs ontem" icon={<Clock className="h-5 w-5" />} glowColor="info" />
+                           <StatsCard title="Taxa Atendimento" value={`${stats.answeredRate}%`} change={stats.rateChange} changeLabel="vs ontem" icon={<CheckCircle className="h-5 w-5" />} glowColor="success" />
+                           <StatsCard title="Agentes Ativos" value={`${stats.activeAgents}/${stats.totalAgents}`} icon={<Users className="h-5 w-5" />} glowColor="warning" />
+                         </>
+                       ) : null}
+                     </section>
+                   </SectionBoundary>
+                 )}
+ 
+                 {widget.id === 'active-calls' && (
+                   <SectionBoundary section="Chamadas Ativas">
+                     <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Chamadas ativas e tendência de espera">
+                       <ActiveCallsRealtime />
+                       <HoldTrendChart />
+                     </section>
+                   </SectionBoundary>
+                 )}
+ 
+                 {widget.id === 'call-volume' && (
+                    <SectionBoundary section="Volume e Fila">
+                      <section className="relative grid gap-4 lg:grid-cols-3" aria-label="Volume de chamadas e fila de atendimento">
+                        <div className="lg:col-span-2">
+                          <CallVolumeChart />
+                        </div>
+                        <QueueStatus />
+                      </section>
+                    </SectionBoundary>
+                 )}
+ 
+                 {widget.id === 'callbacks' && (
+                   <SectionBoundary section="Callbacks e Supervisão">
+                     <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Callbacks agendados e painel do supervisor">
+                       <ScheduledCallbacksList />
+                       <SupervisorPanel />
+                     </section>
+                   </SectionBoundary>
+                 )}
+ 
+                 {widget.id === 'recent-calls' && (
+                   <SectionBoundary section="Chamadas Recentes">
+                     <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Chamadas recentes e lista de agentes">
+                       <RecentCalls />
+                       <AgentsList />
+                     </section>
+                   </SectionBoundary>
+                 )}
+               </SortableWidget>
+             ))}
+           </div>
+         </SortableContext>
+       </DndContext>
 
       {/* Agent Notifications */}
       <WhisperNotification agentName="Carlos Silva" />
