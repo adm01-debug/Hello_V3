@@ -11,15 +11,15 @@ const formatDuration = (seconds: number): string => {
 };
 
 export function QueueStatus() {
-  const { data: stats, isLoading } = useQueueStatsData();
+   const { data: stats, isLoading, isFetching } = useQueueStatsData();
 
-   if (isLoading && !stats) {
+   if ((isLoading || !stats) && !stats) {
      return (
        <Card>
          <CardHeader>
            <CardTitle className="text-lg font-semibold">Fila de Atendimento</CardTitle>
          </CardHeader>
-         <CardContent className="space-y-6">
+       <CardContent className={cn("space-y-6 transition-opacity duration-300", isFetching && "opacity-50")}>
            <div className="space-y-2">
              <Skeleton className="h-4 w-full" />
              <Skeleton className="h-2 w-full" />
@@ -44,9 +44,9 @@ export function QueueStatus() {
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Nível de Serviço</span>
-            <span className="font-semibold">{stats.serviceLevelPercent}%</span>
+             <span className="font-semibold">{stats?.serviceLevelPercent ?? 0}%</span>
           </div>
-          <Progress value={stats.serviceLevelPercent} className="h-2" />
+           <Progress value={stats?.serviceLevelPercent ?? 0} className="h-2" />
         </div>
 
         {/* Stats Grid */}
@@ -56,7 +56,7 @@ export function QueueStatus() {
               <Users className="h-4 w-4" />
               <span className="text-xs">Em espera</span>
             </div>
-            <p className="mt-1 text-2xl font-bold">{stats.waiting}</p>
+             <p className="mt-1 text-2xl font-bold">{stats?.waiting ?? 0}</p>
           </div>
 
           <div className="rounded-lg border border-border bg-accent/30 p-3">
@@ -64,7 +64,7 @@ export function QueueStatus() {
               <Clock className="h-4 w-4" />
               <span className="text-xs">Tempo médio</span>
             </div>
-            <p className="mt-1 text-2xl font-bold">{stats.avgWaitTime}s</p>
+             <p className="mt-1 text-2xl font-bold">{stats?.avgWaitTime ?? 0}s</p>
           </div>
 
           <div className="rounded-lg border border-border bg-accent/30 p-3">
@@ -72,7 +72,7 @@ export function QueueStatus() {
               <AlertTriangle className="h-4 w-4" />
               <span className="text-xs">Maior espera</span>
             </div>
-            <p className="mt-1 text-2xl font-bold">{formatDuration(stats.longestWait)}</p>
+             <p className="mt-1 text-2xl font-bold">{formatDuration(stats?.longestWait ?? 0)}</p>
           </div>
 
           <div className="rounded-lg border border-border bg-accent/30 p-3">
@@ -80,7 +80,7 @@ export function QueueStatus() {
               <CheckCircle className="h-4 w-4" />
               <span className="text-xs">Abandonadas</span>
             </div>
-            <p className="mt-1 text-2xl font-bold">{stats.abandoned}</p>
+             <p className="mt-1 text-2xl font-bold">{stats?.abandoned ?? 0}</p>
           </div>
         </div>
       </CardContent>
