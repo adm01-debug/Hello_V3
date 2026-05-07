@@ -18,17 +18,11 @@ import { useCallHistoryData } from '@/hooks/useDashboardData';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { usePageTitle } from '@/hooks/usePageTitle';
+ import { usePageTitle } from '@/hooks/usePageTitle';
+ import { formatDuration } from '@/lib/utils';
 
-const formatDuration = (seconds: number): string => {
-  usePageTitle('Histórico');
-
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
-
-const History = () => {
+ const History = () => {
+   usePageTitle('Histórico');
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const { data: callHistory, isLoading } = useCallHistoryData();
