@@ -1,4 +1,5 @@
-import { Sparkles, Calendar, Clock, Brain, Loader2, TrendingUp, TrendingDown, Minus, Smile, Frown, Meh, Heart, Zap, AlertTriangle } from 'lucide-react';
+ import { Sparkles, Calendar, Clock, Brain, Loader2, TrendingUp, TrendingDown, Minus, Smile, Frown, Meh, Heart, Zap, AlertTriangle } from 'lucide-react';
+ import { formatDuration } from '@/lib/utils';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -17,12 +18,6 @@ interface Props {
   onAnalyzeSentiment: () => void;
   analyzingSentiment: boolean;
 }
-
-const formatDuration = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
 
 export function TranscriptionDialog({ open, onOpenChange, transcription, onAnalyzeSentiment, analyzingSentiment }: Props) {
   if (!transcription) return null;
