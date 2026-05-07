@@ -81,8 +81,8 @@ export default function AgentAssist() {
           ) : (
             <ScrollArea className="h-[480px] pr-2">
               <div className="space-y-2">
-                {history.slice(0, 60).map((s: any) => (
-                  <div key={s.id} className="rounded-md border border-primary/15 p-2 text-xs">
+                 {history.slice(0, 60).map((s: any) => (
+                   <Card key={s.id} variant="neon-interactive" className="p-2 text-xs mb-2">
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center gap-2">
                         <Badge variant="outline">{INTENT_LABELS[s.intent] ?? s.intent}</Badge>
@@ -98,8 +98,8 @@ export default function AgentAssist() {
                         "{s.trigger_text}"
                       </p>
                     )}
-                  </div>
-                ))}
+                   </Card>
+                 ))}
               </div>
             </ScrollArea>
           )}
@@ -113,8 +113,8 @@ export default function AgentAssist() {
             <p className="text-xs text-muted-foreground">Nenhuma objeção registrada.</p>
           ) : (
             <div className="space-y-2">
-              {topObjections.map((o) => (
-                <div key={o.id} className="rounded-md border border-primary/15 p-2 text-xs">
+               {topObjections.map((o) => (
+                 <Card key={o.id} variant="neon-interactive" className="p-2 text-xs mb-2">
                   <div className="flex items-center justify-between mb-1">
                     <Badge variant="outline" className="capitalize">{o.objection_type}</Badge>
                     <span className="text-muted-foreground">
@@ -128,8 +128,8 @@ export default function AgentAssist() {
                       {o.success_rate}% sucesso
                     </Badge>
                   )}
-                </div>
-              ))}
+                 </Card>
+               ))}
             </div>
           )}
         </Card>
