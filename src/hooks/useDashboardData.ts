@@ -89,44 +89,51 @@ export function useRecentCallsData() {
   });
 }
 
-export function useCallVolumeData() {
-  return useQuery<HourlyVolume[]>({
-    queryKey: ['call-volume'],
-    queryFn: async () => {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      const { data, error } = await supabase
-        .from('call_sessions')
-        .select('started_at')
-        .gte('started_at', today.toISOString());
-
-      if (error) throw error;
-
-      // Group by hour
-      const hourMap: Record<string, { incoming: number; outgoing: number }> = {};
-      for (let h = 8; h <= 18; h++) {
-        const key = `${h.toString().padStart(2, '0')}:00`;
-        hourMap[key] = { incoming: 0, outgoing: 0 };
-      }
-
-      for (const call of data || []) {
-        const hour = new Date(call.started_at).getHours();
-        const key = `${hour.toString().padStart(2, '0')}:00`;
-        if (hourMap[key]) {
-          // Alternate between incoming/outgoing for visualization
-          hourMap[key].incoming += 1;
-        }
-      }
-
-      return Object.entries(hourMap).map(([hour, counts]) => ({
-        hour,
-        ...counts,
-      }));
-    },
-    refetchInterval: 60000,
-  });
-}
+ export function useCallVolumeData() {
+   return useQuery<HourlyVolume[]>({
+     queryKey: ['call-volume'],
+     queryFn: async () => {
+       const now = new Date();
+       const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+ 
+       const { data, error } = await supabase
+         .from('call_sessions')
+         .select('started_at, direction')
+         .gte('started_at', twentyFourHoursAgo.toISOString());
+ 
+       if (error) throw error;
+ 
+       const hourMap: Record<string, { incoming: number; outgoing: number }> = {};
+       
+       // Initialize all 24 hours
+       for (let i = 0; i < 24; i++) {
+         const d = new Date(now.getTime() - i * 60 * 60 * 1000);
+         const hour = d.getHours();
+         const key = `${hour.toString().padStart(2, '0')}:00`;
+         hourMap[key] = { incoming: 0, outgoing: 0 };
+       }
+ 
+       for (const call of data || []) {
+         const date = new Date(call.started_at);
+         const hour = date.getHours();
+         const key = `${hour.toString().padStart(2, '0')}:00`;
+         if (hourMap[key]) {
+           if (call.direction === 'outbound') {
+             hourMap[key].outgoing += 1;
+           } else {
+             hourMap[key].incoming += 1;
+           }
+         }
+       }
+ 
+       // Sort by actual time order (ascending)
+       return Object.entries(hourMap)
+         .map(([hour, counts]) => ({ hour, ...counts }))
+         .sort((a, b) => a.hour.localeCompare(b.hour));
+     },
+     refetchInterval: 60000,
+   });
+ }
 
 export function useQueueStatsData() {
   return useQuery<QueueStats>({
