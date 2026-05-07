@@ -113,9 +113,9 @@ export function PredictiveDialerPanel() {
   const pendingQueue = queue.filter(q => q.status === 'pending');
   const completedQueue = queue.filter(q => q.status === 'completed');
 
-  const handleCompleteCall = async (result: 'answered' | 'no_answer' | 'busy' | 'voicemail' | 'wrong_number' | 'callback') => {
+   const handleCompleteCall = async (result: 'answered' | 'no_answer' | 'busy' | 'voicemail' | 'wrong_number' | 'callback', notes?: string) => {
     if (!currentCall) return;
-    await completeCall(currentCall.id, result, undefined, callTimer);
+     await completeCall(currentCall.id, result, notes, callTimer);
     toast.success('Chamada registrada');
   };
 

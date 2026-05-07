@@ -1,4 +1,4 @@
-import { Phone, Play, Pause, CheckCircle, PhoneMissed, PhoneOff, Voicemail, XCircle, RotateCcw } from 'lucide-react';
+ import { Phone, Play, Pause, CheckCircle, PhoneMissed, PhoneOff, Voicemail, XCircle, RotateCcw, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,7 +14,7 @@ interface DialerControlPanelProps {
   pendingCount: number;
   onStartCampaign: (id: string) => void;
   onPauseCampaign: (id: string) => void;
-  onCompleteCall: (result: 'answered' | 'no_answer' | 'busy' | 'voicemail' | 'wrong_number' | 'callback') => void;
+   onCompleteCall: (result: 'answered' | 'no_answer' | 'busy' | 'voicemail' | 'wrong_number' | 'callback', notes?: string) => void;
 }
 
 const formatTimer = (seconds: number) => {
@@ -23,10 +23,15 @@ const formatTimer = (seconds: number) => {
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 };
 
-export function DialerControlPanel({
-  currentCall, isDialing, callTimer, campaignId, pendingCount,
-  onStartCampaign, onPauseCampaign, onCompleteCall,
-}: DialerControlPanelProps) {
+ export function DialerControlPanel({
+   currentCall, isDialing, callTimer, campaignId, pendingCount,
+   onStartCampaign, onPauseCampaign, onCompleteCall,
+ }: DialerControlPanelProps) {
+   const [notes, setNotes] = useState('');
+ 
+   useEffect(() => {
+     if (!currentCall) setNotes('');
+   }, [currentCall]);
   return (
     <Card className="lg:col-span-1">
       <CardHeader>
