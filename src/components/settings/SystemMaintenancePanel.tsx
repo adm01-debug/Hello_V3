@@ -25,11 +25,11 @@ export function SystemMaintenancePanel() {
        const { data, error } = await supabase.functions.invoke(fnName);
        if (error) throw error;
        
-       // Log the maintenance action
-       await supabase.from('audit_logs').insert({
-         action: `Manual Execution: ${fnName}`,
-         resource_type: 'system_maintenance',
-         details: data || {}
+       // Log the maintenance action via secure RPC
+       await supabase.rpc('log_audit_event', {
+         p_action: `Manual Execution: ${fnName}`,
+         p_resource_type: 'system_maintenance',
+         p_details: data || {}
        });
        
        return data;
