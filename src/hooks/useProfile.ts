@@ -31,26 +31,36 @@
      enabled: !!user,
    });
  
-   const updateProfileMutation = useMutation({
-     mutationFn: async (updates: Partial<Profile>) => {
-       if (!user) throw new Error('Not authenticated');
-       // Filter out id/role from updates to prevent RLS/Trigger issues if they match interface but shouldn't be changed by user
-       const { id, role, ...allowedUpdates } = updates;
-       const { error } = await supabase
-         .from('user_profiles')
-         .update(allowedUpdates as any)
-         .eq('id', user.id);
- 
-       if (error) throw error;
-     },
-     onSuccess: () => {
-       queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
-       toast.success('Perfil atualizado com sucesso');
-     },
-     onError: (error: Error) => {
-       toast.error('Erro ao atualizar perfil', { description: error.message });
-     },
-   });
+    const updateProfileMutation = useMutation({
+      mutationFn: async (updates: Partial<Profile>) => {
+        if (!user) throw new Error('Not authenticated');
+        const { id, role, ...allowedUpdates } = updates;
+        const { error } = await supabase
+          .from('user_profiles')
+          .update(allowedUpdates as any)
+          .eq('id', user.id);
+  
+        if (error) throw error;
+      },
+      onMutate: async (updates) => {
+        await queryClient.cancelQueries({ queryKey: ['profile', user?.id] });
+        const previousProfile = queryClient.getQueryData(['profile', user?.id]);
+        queryClient.setQueryData(['profile', user?.id], (old: any) => ({ ...old, ...updates }));
+        return { previousProfile };
+      },
+      onSuccess: () => {
+        toast.success('Perfil atualizado com sucesso');
+      },
+      onError: (error: Error, _variables, context) => {
+        if (context?.previousProfile) {
+          queryClient.setQueryData(['profile', user?.id], context.previousProfile);
+        }
+        toast.error('Erro ao atualizar perfil', { description: error.message });
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
+      },
+    });
  
    return {
      profile,
