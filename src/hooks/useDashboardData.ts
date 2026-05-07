@@ -52,7 +52,7 @@ export function useDashboardStats() {
      queryFn: async () => {
        const { data, error } = await supabase.rpc('get_dashboard_stats');
        if (error) throw error;
-       return data as DashboardStats;
+       return data as unknown as DashboardStats;
      },
     refetchInterval: 30000,
   });
