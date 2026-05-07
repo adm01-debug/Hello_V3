@@ -12,8 +12,9 @@ export interface CallSession {
   started_at: string;
   ended_at: string | null;
   duration_seconds: number | null;
-  status: string | null;
-}
+   status: string | null;
+   direction?: string | null;
+ }
 
 export interface SessionWithSummary extends CallSession {
   summary?: {
