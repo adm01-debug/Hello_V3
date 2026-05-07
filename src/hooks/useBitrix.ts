@@ -46,12 +46,63 @@ export const useBitrix = () => {
   const [leads, setLeads] = useState<BitrixLead[]>([]);
   const [deals, setDeals] = useState<BitrixDeal[]>([]);
 
-  const callBitrixApi = useCallback(async (action: string, params?: Record<string, unknown>) => {
-    setIsLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('bitrix-api', {
-        body: { action, params }
-      });
+   const callBitrixApi = useCallback(async (action: string, params?: Record<string, unknown>, maxRetries = 2) => {
+     setIsLoading(true);
+     let lastError = null;
+     
+     for (let attempt = 0; attempt <= maxRetries; attempt++) {
+       try {
+         const { data, error } = await supabase.functions.invoke('bitrix-api', {
+           body: { action, params }
+         });
+ 
+         if (error) {
+           // If it's a configuration error or 4xx, don't retry
+           const status = (error as any).status || 0;
+           if (status >= 400 && status < 500) {
+             lastError = error;
+             break;
+           }
+           
+           // Check for "Serviço não configurado" in error message
+           if (error.message?.includes('não configurado')) {
+             lastError = error;
+             break;
+           }
+ 
+           lastError = error;
+           if (attempt < maxRetries) {
+             await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
+             continue;
+           }
+           break;
+         }
+ 
+         if (data?.configured === false) {
+           setIsConfigured(false);
+           setIsLoading(false);
+           return null;
+         }
+ 
+         setIsConfigured(true);
+         setIsLoading(false);
+         return data;
+       } catch (err) {
+         lastError = err;
+         if (attempt < maxRetries) {
+           await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
+           continue;
+         }
+       }
+     }
+ 
+     // If we reach here, it's an error
+     setIsLoading(false);
+     const error = lastError;
+ 
+     if (error) {
+       let isNotConfigured = false;
+       let description = (error as Error).message;
 
       if (error) {
         let isNotConfigured = false;
