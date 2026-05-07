@@ -126,9 +126,10 @@ export const usePredictiveDialer = () => {
           retry_attempts: input.retry_attempts || 2,
           retry_delay_minutes: input.retry_delay_minutes || 30,
           working_hours_start: input.working_hours_start || '08:00:00',
-          working_hours_end: input.working_hours_end || '18:00:00',
-          created_by: input.created_by
-        })
+           working_hours_end: input.working_hours_end || '18:00:00',
+           created_by: input.created_by,
+           status: input.status || 'paused'
+         })
         .select()
         .single();
 
