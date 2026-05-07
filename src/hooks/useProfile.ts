@@ -55,6 +55,6 @@
    return {
      profile,
      isLoading,
-     updateProfile,
+     updateProfile: updateProfileMutation,
    };
  }
