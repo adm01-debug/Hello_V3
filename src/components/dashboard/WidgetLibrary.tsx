@@ -66,7 +66,7 @@
                  </div>
                </div>
                <Button 
-                 variant={widget.visible ? "ghost" : "primary"} 
+                 variant={widget.visible ? "ghost" : "premium"} 
                  size="sm"
                  className={`text-xs h-8 ${widget.visible ? 'text-destructive hover:bg-destructive/10' : 'bg-primary text-primary-foreground'}`}
                  onClick={() => toggleWidget(widget.id)}
