@@ -56,8 +56,8 @@ export const INTENT_COLORS: Record<string, string> = {
  */
 export function rankSignals<T extends MinimalSignal>(signals: T[]): T[] {
   return [...signals].sort((a, b) => {
-    const ap = (INTENT_PRIORITY[a.intent] ?? 0) * 1000 + (a.confidence || 0.5);
-    const bp = (INTENT_PRIORITY[b.intent] ?? 0) * 1000 + (b.confidence || 0.5);
+     const ap = (INTENT_PRIORITY[a.intent] ?? 0) * 1000 + (a.confidence ?? 0.5);
+     const bp = (INTENT_PRIORITY[b.intent] ?? 0) * 1000 + (b.confidence ?? 0.5);
     return bp - ap;
   });
 }
