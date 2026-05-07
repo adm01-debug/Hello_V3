@@ -40,7 +40,7 @@ function severityClasses(intent: string, severity?: string) {
 export function NextBestActionPanel({ callSessionId, className }: NextBestActionPanelProps) {
   const { signals, markUsed, isAnalyzing } = useLiveAssist(callSessionId);
 
-  const ranked = useMemo(() => rankSignals(dedupeSignals(signals, 30)).slice(0, 6), [signals]);
+   const ranked = useMemo(() => rankSignals(dedupeSignals(signals, 30) as LiveAssistSignal[]).slice(0, 6) as LiveAssistSignal[], [signals]);
 
   if (!callSessionId) return null;
 
