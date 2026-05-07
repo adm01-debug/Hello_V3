@@ -24,7 +24,7 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
  const Index = () => {
    usePageTitle('Dashboard');
    const queryClient = useQueryClient();
-   const { data: stats, isLoading, isFetching: isFetchingStats } = useDashboardStats();
+   const { data: stats, isLoading, isFetching: isFetchingStats, dataUpdatedAt } = useDashboardStats();
    const [isRefreshing, setIsRefreshing] = useState(false);
  
    const handleRefresh = async () => {
@@ -54,9 +54,17 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
          description="Visão geral do seu centro de atendimento"
          icon={<LayoutDashboard className="h-5 w-5" />}
          badge={
-           <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full glass-neon" aria-label="Status do sistema: ativo">
-             <Zap className="h-3.5 w-3.5 text-primary animate-glow-pulse" aria-hidden="true" />
-             <span className="text-xs font-semibold text-primary">Sistema ativo</span>
+           <div className="hidden sm:flex items-center gap-4">
+             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full glass-neon" aria-label="Status do sistema: ativo">
+               <Zap className="h-3.5 w-3.5 text-primary animate-glow-pulse" aria-hidden="true" />
+               <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Ativo</span>
+             </div>
+             {dataUpdatedAt > 0 && (
+               <div className="flex items-center gap-2 text-muted-foreground/60">
+                 <Clock className="h-3 w-3" />
+                 <span className="text-[10px] font-medium">Sincronizado {new Date(dataUpdatedAt).toLocaleTimeString('pt-BR')}</span>
+               </div>
+             )}
            </div>
          }
          actions={
