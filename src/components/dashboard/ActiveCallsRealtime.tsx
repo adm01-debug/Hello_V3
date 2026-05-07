@@ -82,9 +82,18 @@ export const ActiveCallsRealtime = () => {
                    
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-full ${holdSeverity === 'critical' ? 'bg-destructive/20' : holdSeverity === 'warning' ? 'bg-call-hold/20' : onHold ? 'bg-destructive/10' : 'bg-primary/10'}`}>
-                        {onHold ? <Pause className={`h-4 w-4 ${holdSeverity === 'critical' ? 'text-destructive' : holdSeverity === 'warning' ? 'text-call-hold' : 'text-destructive'}`} /> : <Phone className="h-4 w-4 text-primary" />}
-                      </div>
+                       <div className={cn(
+                         "p-2.5 rounded-full transition-all duration-500 group-hover/item:scale-110 group-hover/item:rotate-3 shadow-sm",
+                         holdSeverity === 'critical' ? 'bg-destructive/20 text-destructive shadow-[0_0_10px_rgba(var(--destructive-rgb),0.3)]' : 
+                         holdSeverity === 'warning' ? 'bg-call-hold/20 text-call-hold shadow-[0_0_10px_rgba(var(--warning-rgb),0.3)]' : 
+                         onHold ? 'bg-destructive/10 text-destructive' : 'bg-primary/10 text-primary'
+                       )}>
+                         {onHold ? (
+                           <Pause className="h-4 w-4" />
+                         ) : (
+                           <Phone className="h-4 w-4" />
+                         )}
+                       </div>
                       <div><p className="font-medium">{call.caller_name || call.caller_phone || 'Desconhecido'}</p>{call.caller_phone && call.caller_name && <p className="text-sm text-muted-foreground">{call.caller_phone}</p>}</div>
                     </div>
                     <div className="flex flex-col items-end gap-1">
