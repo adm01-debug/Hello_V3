@@ -27,7 +27,7 @@ const Index = () => {
   const { data: stats, isLoading } = useDashboardStats();
 
   return (
-    <main className="space-y-8 relative pb-12" aria-label="Dashboard principal">
+    <main className="space-y-12 relative pb-12" aria-label="Dashboard principal">
       {/* Refined Ambient Backgrounds */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px]" />
@@ -49,8 +49,7 @@ const Index = () => {
       />
 
       {/* Stats Grid - Premium Layout */}
-      <SectionBoundary section="Métricas em tempo real">
-        <section className="relative grid gap-4 grid-cols-2 lg:grid-cols-4" aria-label="Métricas principais">
+      <section className="relative grid gap-6 grid-cols-2 lg:grid-cols-4" aria-label="Métricas principais">
           {isLoading ? (
             <>
               {[1, 2, 3, 4].map(i => (
@@ -91,8 +90,7 @@ const Index = () => {
               />
             </>
           ) : null}
-        </section>
-      </SectionBoundary>
+      </section>
 
       {/* Main Insights Grid */}
       <SectionBoundary section="Monitoramento de Operação">
