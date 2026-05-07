@@ -15,7 +15,8 @@ import { BackButton } from '@/components/navigation/BackButton';
 import { PageTransition } from '@/components/navigation/PageTransition';
 import { NavigationProgress } from '@/components/navigation/NavigationProgress';
 import { CommandPalette } from './CommandPalette';
-import { MobileBottomNav } from './MobileBottomNav';
+ import { MobileBottomNav } from './MobileBottomNav';
+ import { OnboardingWizard } from './OnboardingWizard';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -23,11 +24,12 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   return (
-    <SidebarProvider defaultOpen={true}>
-      {/* Command Palette */}
-      <CommandPalette />
-      
-      {/* Navigation progress bar */}
+     <SidebarProvider defaultOpen={true}>
+       {/* Global Utilities */}
+       <CommandPalette />
+       <OnboardingWizard />
+       
+       {/* Navigation progress bar */}
       <NavigationProgress />
       
       {/* Skip Link for A11Y */}
