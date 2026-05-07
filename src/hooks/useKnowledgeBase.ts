@@ -50,40 +50,68 @@ export function useKbCategories() {
   });
 }
 
-export function useKbArticles(params: {
-  categoryId?: string;
-  search?: string;
-  status?: KbArticle['status'];
-} = {}) {
-  return useQuery({
-    queryKey: ['kb-articles', params],
-    queryFn: async () => {
-      let q = supabase
-        .from('kb_articles')
-        .select('*')
-        .order('updated_at', { ascending: false })
-        .limit(200);
-
-      if (params.status) q = q.eq('status', params.status);
-      else q = q.eq('status', 'published');
-
-      if (params.categoryId) q = q.eq('category_id', params.categoryId);
-      if (params.search && params.search.trim().length > 1) {
-        q = q.textSearch('search_vector', params.search, {
-          type: 'websearch',
-          config: 'portuguese',
-        });
-      }
-
-      const { data, error } = await q;
-      if (error) {
-        logger.error('useKbArticles.fetch', { error });
-        throw error;
-      }
-      return (data ?? []) as KbArticle[];
-    },
-  });
-}
+ export function useKbArticles(params: {
+   categoryId?: string;
+   search?: string;
+   status?: KbArticle['status'];
+   useSemantic?: boolean;
+ } = {}) {
+   return useQuery({
+     queryKey: ['kb-articles', params],
+     queryFn: async () => {
+       // Se for busca semântica e houver termo de busca
+       if (params.useSemantic && params.search && params.search.trim().length > 2) {
+         try {
+           // 1. Obter embedding do termo de busca via Edge Function (que chama Lovable AI Gateway)
+           const { data: embeddingData, error: embedError } = await supabase.functions.invoke('embed-kb-article', {
+             body: { text: params.search } // Precisaremos ajustar a function para aceitar texto puro além de record
+           });
+ 
+           if (embedError) throw embedError;
+ 
+           // 2. Chamar RPC match_kb_articles
+           const { data, error } = await supabase.rpc('match_kb_articles', {
+             query_embedding: embeddingData.embedding,
+             match_threshold: 0.5,
+             match_count: 20,
+             filter_category_id: params.categoryId === 'all' ? null : params.categoryId
+           });
+ 
+           if (error) throw error;
+           return (data ?? []) as KbArticle[];
+         } catch (err) {
+           logger.error('Semantic search failed, falling back to keyword search', err);
+         }
+       }
+ 
+       // Fallback para busca por palavra-chave (TSVector)
+       let q = supabase
+         .from('kb_articles')
+         .select('*')
+         .order('updated_at', { ascending: false })
+         .limit(200);
+ 
+       if (params.status) q = q.eq('status', params.status);
+       else q = q.eq('status', 'published');
+ 
+       if (params.categoryId && params.categoryId !== 'all') q = q.eq('category_id', params.categoryId);
+       
+       if (params.search && params.search.trim().length > 1) {
+         q = q.textSearch('search_vector', params.search, {
+           type: 'websearch',
+           config: 'portuguese',
+         });
+       }
+ 
+       const { data, error } = await q;
+       if (error) {
+         logger.error('useKbArticles.fetch', { error });
+         throw error;
+       }
+       return (data ?? []) as KbArticle[];
+     },
+   });
+ }
 
 export function useKbArticle(id: string | null) {
   return useQuery({

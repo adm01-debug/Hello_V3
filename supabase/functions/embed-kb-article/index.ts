@@ -15,14 +15,17 @@
    );
  
    try {
-     const { record } = await req.json(); // Webhook trigger: record contendo o artigo
-     if (!record || !record.id || !record.title || !record.content) {
-       return new Response('Invalid record', { status: 400 });
+     const body = await req.json();
+     const { record, text } = body;
+ 
+     // Suporte a dois modos: trigger (record) ou busca direta (text)
+     const textToEmbed = text || (record ? `${record.title}\n\n${record.excerpt || ''}\n\n${record.content}` : null);
+ 
+     if (!textToEmbed) {
+       return new Response('Missing input', { status: 400 });
      }
  
-     // 1. Gerar embedding via Lovable AI Gateway (usando text-embedding-004 do Gemini como exemplo compatível)
-     const textToEmbed = `${record.title}\n\n${record.excerpt || ''}\n\n${record.content}`;
-     
+     // 1. Gerar embedding via Lovable AI Gateway
      const embedResp = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
        method: 'POST',
        headers: { 
@@ -39,15 +42,18 @@
      const { data } = await embedResp.json();
      const embedding = data[0].embedding;
  
-     // 2. Atualizar artigo com o vetor
-     const { error: updateError } = await supabase
-       .from('kb_articles')
-       .update({ embedding })
-       .eq('id', record.id);
+     // 2. Se for trigger, atualizar o banco. Se for busca, apenas retornar.
+     if (record?.id) {
+       const { error: updateError } = await supabase
+         .from('kb_articles')
+         .update({ embedding })
+         .eq('id', record.id);
+       if (updateError) throw updateError;
+     }
  
-     if (updateError) throw updateError;
- 
-     return new Response(JSON.stringify({ success: true }), { headers: { ...cors, 'Content-Type': 'application/json' } });
+     return new Response(JSON.stringify({ success: true, embedding }), { 
+       headers: { ...cors, 'Content-Type': 'application/json' } 
+     });
    } catch (error) {
      console.error('embed-kb-article error:', error);
      return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
