@@ -6381,6 +6381,7 @@ export type Database = {
         Returns: Json
       }
       cleanup_expired_challenges: { Args: never; Returns: undefined }
+      get_agent_performance: { Args: never; Returns: Json }
       get_dashboard_stats: { Args: never; Returns: Json }
       get_profile_role: { Args: { _user_id: string }; Returns: string }
       get_queue_stats: { Args: never; Returns: Json }
