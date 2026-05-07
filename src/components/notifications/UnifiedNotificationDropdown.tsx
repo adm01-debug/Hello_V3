@@ -28,15 +28,12 @@
    // System Alerts (from useRealtimeHoldAlerts)
    const systemAlerts = useRealtimeHoldAlerts();
    
-   // Contact Alerts
-   const contactAlerts = useContactAlerts();
-   
-   // Call Alerts
-   const callAlerts = useAlerts();
+   // Call & Contact Alerts
+   const allAlerts = useAlerts();
  
    const totalUnread = useMemo(() => {
-     return systemAlerts.unreadCount + contactAlerts.unreadCount + callAlerts.unreadCount;
-   }, [systemAlerts.unreadCount, contactAlerts.unreadCount, callAlerts.unreadCount]);
+     return systemAlerts.unreadCount + allAlerts.callUnreadCount + allAlerts.contactUnreadCount;
+   }, [systemAlerts.unreadCount, allAlerts.callUnreadCount, allAlerts.contactUnreadCount]);
  
    return (
      <Popover open={open} onOpenChange={setOpen}>
@@ -72,10 +69,11 @@
                variant="ghost" 
                size="sm" 
                className="h-8 text-xs hover:bg-primary/10"
-               onClick={() => {
-                 systemAlerts.markAllAsRead();
-                 contactAlerts.markAllAsRead();
-                 callAlerts.markAllAsRead();
+               onClick={async () => {
+                 await systemAlerts.markAllAsRead();
+                 await allAlerts.markAllCallAlertsAsRead();
+                 // useAlerts doesn't have markAllContactAlertsAsRead yet, but we can do batch
+                 await allAlerts.batchMarkContactAlertsAsRead();
                }}
              >
                <Check className="h-3.5 w-3.5 mr-1" /> Marcar lidos
@@ -95,15 +93,15 @@
              <TabsTrigger value="calls" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-primary/5 gap-2 text-xs">
                <Phone className="h-3.5 w-3.5" />
                Chamadas
-               {callAlerts.unreadCount > 0 && (
-                 <Badge variant="secondary" className="h-4 px-1 text-[10px] ml-0.5">{callAlerts.unreadCount}</Badge>
+               {allAlerts.callUnreadCount > 0 && (
+                 <Badge variant="secondary" className="h-4 px-1 text-[10px] ml-0.5">{allAlerts.callUnreadCount}</Badge>
                )}
              </TabsTrigger>
              <TabsTrigger value="contacts" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-primary/5 gap-2 text-xs">
                <Users className="h-3.5 w-3.5" />
                Contatos
-               {contactAlerts.unreadCount > 0 && (
-                 <Badge variant="secondary" className="h-4 px-1 text-[10px] ml-0.5">{contactAlerts.unreadCount}</Badge>
+               {allAlerts.contactUnreadCount > 0 && (
+                 <Badge variant="secondary" className="h-4 px-1 text-[10px] ml-0.5">{allAlerts.contactUnreadCount}</Badge>
                )}
              </TabsTrigger>
            </TabsList>
@@ -128,10 +126,10 @@
              </TabsContent>
  
              <TabsContent value="calls" className="m-0 p-2 space-y-2">
-               {callAlerts.alerts.length === 0 ? (
+               {allAlerts.callAlerts.length === 0 ? (
                  <EmptyState icon={Phone} message="Nenhum alerta de chamada" />
                ) : (
-                 callAlerts.alerts.map(alert => (
+                 allAlerts.callAlerts.map((alert: any) => (
                    <NotificationItem 
                      key={alert.id}
                      title={alert.title}
@@ -139,17 +137,17 @@
                      time={alert.created_at}
                      isRead={alert.is_read}
                      severity={alert.severity}
-                     onRead={() => callAlerts.markAsRead(alert.id)}
+                     onRead={() => allAlerts.markCallAlertAsRead(alert.id)}
                    />
                  ))
                )}
              </TabsContent>
  
              <TabsContent value="contacts" className="m-0 p-2 space-y-2">
-               {contactAlerts.alerts.length === 0 ? (
+               {allAlerts.contactAlerts.length === 0 ? (
                  <EmptyState icon={Users} message="Nenhum alerta de contatos" />
                ) : (
-                 contactAlerts.alerts.map(alert => (
+                 allAlerts.contactAlerts.map((alert: any) => (
                    <NotificationItem 
                      key={alert.id}
                      title={alert.title}
@@ -157,9 +155,9 @@
                      time={alert.created_at}
                      isRead={alert.is_read}
                      severity={alert.severity}
-                     onRead={() => contactAlerts.markAsRead(alert.id)}
+                     onRead={() => allAlerts.markContactAlertAsRead(alert.id)}
                      onClick={() => {
-                       contactAlerts.markAsRead(alert.id);
+                       allAlerts.markContactAlertAsRead(alert.id);
                        setOpen(false);
                        navigate('/contacts');
                      }}
@@ -188,9 +186,9 @@
              variant="ghost" 
              size="sm" 
              className="h-auto p-1 text-[10px] text-muted-foreground hover:text-foreground"
-             onClick={(e) => {
+             onClick={async (e) => {
                e.preventDefault();
-               callAlerts.fetchAlerts();
+               await allAlerts.fetchAllAlerts();
              }}
            >
              <RefreshCw className="h-3 w-3 mr-1" />
