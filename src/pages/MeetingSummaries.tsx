@@ -12,7 +12,7 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { useMeetingSummariesList } from '@/hooks/useMeetingSummary';
+ import { useMeetingSummariesList, MeetingSummary } from '@/hooks/useMeetingSummary';
 import { MeetingSummaryCard } from '@/components/calls/MeetingSummaryCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
@@ -28,14 +28,14 @@ export default function MeetingSummaries() {
     limit: 100,
   });
 
-  const stats = useMemo(() => {
-    const followups = summaries.filter((s: any) => s.follow_up_required).length;
-    const totalActions = summaries.reduce(
-      (sum: number, s: any) => sum + (s.action_items?.length ?? 0),
-      0
-    );
-    return { total: summaries.length, followups, totalActions };
-  }, [summaries]);
+   const stats = useMemo(() => {
+     const followups = summaries.filter((s: MeetingSummary) => s.follow_up_required).length;
+     const totalActions = summaries.reduce(
+       (sum: number, s: MeetingSummary) => sum + (s.action_items?.length ?? 0),
+       0
+     );
+     return { total: summaries.length, followups, totalActions };
+   }, [summaries]);
 
   return (
     <NeonPageLayout>
@@ -75,7 +75,7 @@ export default function MeetingSummaries() {
               className="pl-9 bg-background/50"
             />
           </div>
-          <Tabs value={filter} onValueChange={(v) => setFilter(v as any)}>
+           <Tabs value={filter} onValueChange={(v) => setFilter(v as 'all' | 'followup')}>
             <TabsList>
               <TabsTrigger value="all" className="gap-1.5"><Filter className="h-3 w-3" /> Todos</TabsTrigger>
               <TabsTrigger value="followup" className="gap-1.5"><AlertCircle className="h-3 w-3" /> Follow-up</TabsTrigger>
@@ -103,10 +103,10 @@ export default function MeetingSummaries() {
                   />
                 </div>
               ) : (
-                <div className="p-2 space-y-1.5">
-                  {summaries.map((s: any) => (
-                    <button
-                      key={s.id}
+                 <div className="p-2 space-y-1.5">
+                   {summaries.map((s: MeetingSummary & { call_sessions?: any }) => (
+                     <button
+                       key={s.id}
                       onClick={() => setSelected(s.call_session_id)}
                       className={`w-full text-left rounded-lg p-3 border transition-all ${
                         selected === s.call_session_id

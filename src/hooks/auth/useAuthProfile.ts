@@ -12,8 +12,8 @@ export function useAuthProfile() {
         .eq('id', userId)
         .maybeSingle();
 
-      if (error) throw error;
-      return data as UserProfile;
+       if (error) throw error;
+       return (data as unknown as UserProfile) || null;
     } catch (error) {
       logger.error('Error fetching profile:', error);
       return null;

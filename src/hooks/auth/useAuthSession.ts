@@ -83,7 +83,7 @@ export function useAuthSession(
       }
 
       if (session?.user) {
-        const profile = await getProfile(session.user.id);
+         const profile = session.user ? await getProfile(session.user.id) : null;
         setAuthState({ user: session.user, session, profile, loading: false, error: null });
       } else {
         setAuthState(EMPTY_STATE);
