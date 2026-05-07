@@ -17,6 +17,42 @@ export default function VideoConference() {
   const queryClient = useQueryClient();
    const [title, setTitle] = useState('');
    const [dialogOpen, setDialogOpen] = useState(false);
+   const [isStarting, setIsStarting] = useState<string | null>(null);
+   const handleStartMeeting = async (conf: any) => {
+     if (conf.status === 'ended') return;
+     
+     if (conf.status === 'active' && conf.meeting_url) {
+       window.open(conf.meeting_url, '_blank');
+       return;
+     }
+ 
+     setIsStarting(conf.id);
+     try {
+       // Simulação de ativação de reunião (em um sistema real, isso chamaria uma Edge Function de integração)
+       const meetingUrl = `https://meet.jit.si/${conf.title.replace(/\s+/g, '-')}-${conf.id.slice(0, 8)}`;
+       
+       const { error } = await supabase
+         .from('video_conferences')
+         .update({ 
+           status: 'active', 
+           started_at: new Date().toISOString(),
+           meeting_url: meetingUrl
+         })
+         .eq('id', conf.id);
+ 
+       if (error) throw error;
+       
+       queryClient.invalidateQueries({ queryKey: ['video-conferences'] });
+       toast.success('Reunião iniciada!');
+       window.open(meetingUrl, '_blank');
+     } catch (error) {
+       logger.error('Error starting meeting:', error);
+       toast.error('Erro ao iniciar reunião');
+     } finally {
+       setIsStarting(null);
+     }
+   };
+ 
    const [copiedId, setCopiedId] = useState<string | null>(null);
  
    const copyToClipboard = (text: string, id: string) => {
@@ -127,14 +163,16 @@ export default function VideoConference() {
                      {copiedId === conf.id ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
                    </Button>
                  )}
-                 <Button 
-                   variant={conf.status === 'active' ? 'default' : 'outline'} 
-                   size="sm"
-                   className={conf.status === 'active' ? 'animate-pulse' : ''}
-                   disabled={conf.status === 'ended'}
-                 >
-                   {conf.status === 'active' ? 'Entrar' : 'Iniciar'}
-                 </Button>
+                  <Button 
+                    variant={conf.status === 'active' ? 'default' : 'outline'} 
+                    size="sm"
+                    className={conf.status === 'active' ? 'animate-pulse' : ''}
+                    disabled={conf.status === 'ended' || isStarting === conf.id}
+                    onClick={() => handleStartMeeting(conf)}
+                  >
+                    {isStarting === conf.id ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                    {conf.status === 'active' ? 'Entrar' : 'Iniciar'}
+                  </Button>
                </div>
             </CardContent>
           </Card>
