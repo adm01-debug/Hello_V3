@@ -130,7 +130,7 @@ function NavGroup({ label, items, collapsed, defaultOpen = false, favorites, onT
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <SidebarGroup>
-        <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-sidebar-foreground/40 hover:text-sidebar-primary transition-colors">
+        <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-sidebar-foreground/30 hover:text-sidebar-primary transition-all duration-300">
           {label}
           <ChevronDown className={cn(
             "h-3 w-3 transition-transform duration-300",
