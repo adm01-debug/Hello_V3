@@ -24,14 +24,14 @@ export function ThemeToggle() {
   const { theme, toggleTheme, skin, setSkin } = useTheme();
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-2 bg-white/[0.03] p-1.5 rounded-2xl border border-white/[0.08] backdrop-blur-md">
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            className="h-9 w-9"
+            className="h-10 w-10 rounded-xl hover:bg-white/[0.05] transition-all duration-300"
             aria-label={theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
           >
             {theme === 'dark' ? (
@@ -50,7 +50,7 @@ export function ThemeToggle() {
         <Tooltip>
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Escolher skin">
+              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl hover:bg-white/[0.05] transition-all duration-300" aria-label="Escolher skin">
                 <Palette className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>

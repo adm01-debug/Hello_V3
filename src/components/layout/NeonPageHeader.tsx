@@ -12,22 +12,26 @@ interface NeonPageHeaderProps {
 
 export function NeonPageHeader({ title, description, icon, actions, badge, className }: NeonPageHeaderProps) {
   return (
-    <div className={cn("relative flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 animate-in fade-in slide-in-from-top-2 duration-500", className)}>
-      <div className="space-y-1.5">
-        <div className="flex items-center gap-3">
-          <h1 className="flex items-center gap-3 text-2xl sm:text-3xl font-bold tracking-tight text-gradient">
-            {icon && (
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0 shadow-[0_0_15px_hsl(var(--primary)/0.15)]">
-                {icon}
-              </span>
+    <div className={cn("relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 py-4", className)}>
+      <div className="space-y-2">
+        <div className="flex items-center gap-4">
+          {icon && (
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/5 text-primary shrink-0 border border-primary/10 backdrop-blur-sm shadow-sm">
+              {icon}
+            </div>
+          )}
+          <div className="flex flex-col">
+            <div className="flex items-center gap-3">
+              <h1 className="text-3xl font-extrabold tracking-tight text-foreground/90 sm:text-4xl">
+                {title}
+              </h1>
+              {badge}
+            </div>
+            {description && (
+              <p className="text-sm font-medium text-muted-foreground/70 tracking-tight">{description}</p>
             )}
-            {title}
-          </h1>
-          {badge}
+          </div>
         </div>
-        {description && (
-          <p className="text-sm text-muted-foreground max-w-lg">{description}</p>
-        )}
       </div>
       {actions && (
         <div className="flex items-center gap-2 flex-wrap">

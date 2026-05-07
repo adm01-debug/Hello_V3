@@ -130,7 +130,7 @@ function NavGroup({ label, items, collapsed, defaultOpen = false, favorites, onT
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <SidebarGroup>
-        <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-sidebar-foreground/40 hover:text-sidebar-primary transition-colors">
+        <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-sidebar-foreground/30 hover:text-sidebar-primary transition-all duration-300">
           {label}
           <ChevronDown className={cn(
             "h-3 w-3 transition-transform duration-300",
@@ -164,13 +164,13 @@ function NavItem({ item, collapsed, isFavorite, onToggleFavorite }: { item: NavI
         <NavLink
           to={item.url}
           className={cn(
-            'flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-all duration-200 group/nav',
-            'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+            'flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-bold tracking-tight text-sidebar-foreground/50 transition-all duration-400 group/nav',
+            'hover:bg-white/[0.03] hover:text-sidebar-foreground hover:translate-x-1',
             active && [
-              'bg-sidebar-primary/15 text-sidebar-primary',
-              'shadow-[inset_0_0_20px_hsl(var(--sidebar-primary)/0.08),0_0_15px_hsl(var(--sidebar-primary)/0.1)]',
-              'border border-sidebar-primary/20',
-              'hover:bg-sidebar-primary/20 hover:text-sidebar-primary',
+              'bg-primary/10 text-primary',
+              'shadow-[0_8px_20px_-4px_hsl(var(--primary)/0.2)]',
+              'border border-primary/10',
+              'hover:bg-primary/15 hover:text-primary',
             ]
           )}
         >
@@ -244,18 +244,18 @@ export function AppSidebar() {
   );
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-sidebar-border/50">
-      <SidebarHeader className="border-b border-sidebar-border/50 p-4">
+    <Sidebar collapsible="icon" className="border-r border-sidebar-border/30 bg-[#050507]">
+      <SidebarHeader className="border-b border-sidebar-border/20 p-6">
         <div className="flex items-center gap-3">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-sidebar-primary shadow-[0_0_20px_hsl(var(--sidebar-primary)/0.4)]">
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-[0_8px_20px_-4px_hsl(var(--primary)/0.6)]">
             <Headphones className="h-5 w-5 text-sidebar-primary-foreground" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-base font-bold text-sidebar-foreground text-display tracking-wider">
-                VoIP Panel
+              <span className="text-lg font-black text-sidebar-foreground tracking-[-0.03em] leading-tight">
+                Aura<span className="text-primary">.</span>
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-sidebar-primary/60">
+              <span className="text-[9px] uppercase font-bold tracking-[0.2em] text-muted-foreground/50">
                 Central de Atendimento
               </span>
             </div>
@@ -290,13 +290,13 @@ export function AppSidebar() {
         <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border/50 p-4">
+      <SidebarFooter className="border-t border-sidebar-border/10 p-6 bg-white/[0.01]">
         <div className={cn(
           'flex items-center gap-3',
           collapsed && 'justify-center'
         )}>
           <div className="relative">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-sidebar-primary/15 text-sm font-bold text-sidebar-primary border border-sidebar-primary/25 shadow-[0_0_12px_hsl(var(--sidebar-primary)/0.2)]">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/[0.05] text-sm font-bold text-primary border border-white/[0.1] shadow-sm">
               {profile?.full_name
                 ? profile.full_name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
                 : profile?.email?.slice(0, 2).toUpperCase() || '??'}
@@ -304,11 +304,11 @@ export function AppSidebar() {
             <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-sidebar-background status-dot-online" />
           </div>
           {!collapsed && (
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-0.5">
               <span className="text-sm font-medium text-sidebar-foreground">
                 {profile?.full_name || profile?.email || 'Usuário'}
               </span>
-              <span className="text-[10px] uppercase tracking-wider text-sidebar-primary/60">
+              <span className="text-[9px] uppercase font-bold tracking-[0.15em] text-primary/70">
                 {profile?.role || 'agent'}
               </span>
             </div>

@@ -16,7 +16,7 @@ export const MobileBottomNav = memo(function MobileBottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 flex md:hidden items-center justify-around border-t border-border/50 glass px-1 pb-[env(safe-area-inset-bottom)]"
+      className="fixed bottom-4 left-4 right-4 z-50 flex md:hidden items-center justify-around rounded-3xl border border-white/[0.08] glass-dark px-2 py-1 shadow-2xl"
       aria-label="Navegação principal mobile"
       role="navigation"
     >

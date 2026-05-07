@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Users } from 'lucide-react';
 import { EmptyState } from '@/components/ui/empty-state';
 import { useAgentsListData } from '@/hooks/useDashboardData';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -37,9 +38,14 @@ export function AgentsList() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">Agentes</CardTitle>
+    <Card className="card-premium border-none">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-xl font-bold tracking-tight flex items-center gap-2.5">
+          <div className="p-2 rounded-xl bg-primary/5 text-primary/80">
+            <Users className="h-5 w-5" />
+          </div>
+          Equipe
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {!agents || agents.length === 0 ? (
@@ -57,11 +63,11 @@ export function AgentsList() {
               return (
                 <div
                   key={agent.id}
-                  className="flex items-center justify-between rounded-lg border border-border bg-card p-3 transition-colors hover:bg-accent/50"
+                  className="group/item flex items-center justify-between rounded-2xl border border-white/[0.05] bg-muted/20 p-4 transition-all duration-300 hover:bg-muted/40 hover:border-white/[0.1] hover:scale-[1.02]"
                 >
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-sm font-bold text-primary transition-transform duration-500 group-hover/item:rotate-3">
                         {getInitials(agent.name)}
                       </div>
                       <div 

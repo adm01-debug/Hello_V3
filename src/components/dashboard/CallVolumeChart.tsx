@@ -1,16 +1,22 @@
 import { memo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useCallVolumeData } from '@/hooks/useDashboardData';
-import { Skeleton } from '@/components/ui/skeleton';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { useCallVolumeData } from '@/hooks/useDashboardData';
+ import { Skeleton } from '@/components/ui/skeleton';
+ import { TrendingUp } from 'lucide-react';
+ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 export const CallVolumeChart = memo(function CallVolumeChart() {
   const { data: volumeData, isLoading } = useCallVolumeData();
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">Volume de Chamadas</CardTitle>
+    <Card className="card-premium border-none">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-xl font-bold tracking-tight flex items-center gap-2.5">
+          <div className="p-2 rounded-xl bg-primary/5 text-primary/80">
+            <TrendingUp className="h-5 w-5" />
+          </div>
+          Volume de Tráfego
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {isLoading ? (
