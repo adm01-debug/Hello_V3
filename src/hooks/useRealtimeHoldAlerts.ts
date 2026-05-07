@@ -244,18 +244,22 @@ export function useRealtimeHoldAlerts() {
     setUnreadCount(0);
   }, []);
 
-  const markAllAsRead = useCallback(async () => {
-    const { error } = await supabase
-      .from('call_alerts')
-      .update({ is_read: true })
-      .eq('alert_type', 'hold_time_exceeded')
-      .eq('is_read', false);
-    
-    if (!error) {
-      setUnreadCount(0);
-      setRecentAlerts(prev => prev.map(a => ({ ...a, is_read: true })));
-    }
-  }, []);
+   const markAllAsRead = useCallback(async () => {
+     const { error } = await supabase
+       .from('call_alerts')
+       .update({ is_read: true })
+       .eq('alert_type', 'hold_time_exceeded')
+       .eq('is_read', false);
+     
+     if (!error) {
+       setUnreadCount(0);
+       setRecentAlerts(prev => {
+         const next = prev.map(a => ({ ...a, is_read: true }));
+         localStorage.setItem('recentHoldAlerts', JSON.stringify(next));
+         return next;
+       });
+     }
+   }, []);
 
   return {
     isEnabled,
