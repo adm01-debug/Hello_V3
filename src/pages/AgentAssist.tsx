@@ -11,7 +11,8 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useAgentAssistHistory } from '@/hooks/useLiveAssist';
 import { useObjectionLibrary } from '@/hooks/useObjectionLibrary';
-import { calculateAcceptanceRate, countByIntent, INTENT_LABELS } from '@/lib/agent-assist-utils';
+ import { calculateAcceptanceRate, countByIntent, INTENT_LABELS, MinimalSignal } from '@/lib/agent-assist-utils';
+ import { LiveAssistSignal } from '@/hooks/useLiveAssist';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function AgentAssist() {
@@ -19,15 +20,15 @@ export default function AgentAssist() {
   const { data: history = [], isLoading } = useAgentAssistHistory({ limit: 200 });
   const { objections } = useObjectionLibrary();
 
-  const stats = useMemo(() => {
-    const total = history.length;
-    const acceptance = calculateAcceptanceRate(history as any);
-    const byIntent = countByIntent(history as any);
-    const compliance = byIntent['compliance_violation'] ?? 0;
-    const buying = byIntent['buying_signal'] ?? 0;
-    const objectionCount = byIntent['objection'] ?? 0;
-    return { total, acceptance, compliance, buying, objectionCount, byIntent };
-  }, [history]);
+   const stats = useMemo(() => {
+     const total = history.length;
+     const acceptance = calculateAcceptanceRate(history as { was_used: boolean }[]);
+     const byIntent = countByIntent(history as { intent: string }[]);
+     const compliance = byIntent['compliance_violation'] ?? 0;
+     const buying = byIntent['buying_signal'] ?? 0;
+     const objectionCount = byIntent['objection'] ?? 0;
+     return { total, acceptance, compliance, buying, objectionCount, byIntent };
+   }, [history]);
 
   const topObjections = useMemo(
     () => [...objections].sort((a, b) => b.times_used - a.times_used).slice(0, 5),
@@ -79,10 +80,10 @@ export default function AgentAssist() {
           ) : history.length === 0 ? (
             <EmptyState icon={<Sparkles />} title="Sem sinais ainda" description="Faça uma chamada com o copiloto ativo para ver sinais aqui." />
           ) : (
-            <ScrollArea className="h-[480px] pr-2">
-              <div className="space-y-2">
-                {history.slice(0, 60).map((s: any) => (
-                  <div key={s.id} className="rounded-md border border-primary/15 p-2 text-xs">
+             <ScrollArea className="h-[480px] pr-2">
+               <div className="space-y-2">
+                 {history.slice(0, 60).map((s: LiveAssistSignal) => (
+                   <div key={s.id} className="rounded-md border border-primary/15 p-2 text-xs">
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center gap-2">
                         <Badge variant="outline">{INTENT_LABELS[s.intent] ?? s.intent}</Badge>
