@@ -1,3 +1,4 @@
+ import { useTelemetry } from '@/hooks/telemetry/useTelemetry';
 import { ReactNode } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from './AppSidebar';
@@ -21,7 +22,8 @@ interface AppLayoutProps {
   children: ReactNode;
 }
 
-export function AppLayout({ children }: AppLayoutProps) {
+ export function AppLayout({ children }: AppLayoutProps) {
+   useTelemetry();
   return (
      <SidebarProvider defaultOpen={true}>
        {/* Global Utilities */}

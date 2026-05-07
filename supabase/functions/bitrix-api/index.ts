@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { buildCorsHeaders } from "../_shared/cors.ts";
+ import { buildCorsHeaders } from "../_shared/cors.ts";
+ import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 
 
 interface BitrixRequest {
@@ -43,15 +44,28 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
       global: { headers: { Authorization: authHeader } }
     });
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
-        status: 401,
-        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
-    }
-
-    const body = await req.json() as BitrixRequest;
+     const { data: { user }, error: authError } = await supabase.auth.getUser();
+     if (authError || !user) {
+       return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+         status: 401,
+         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+       });
+     }
+ 
+     // Rate Limiting (Persistent DB-backed)
+     const ip = getClientIp(req);
+     const rateLimit = await checkRateLimitDB(ip, 'bitrix-api', user.id);
+      if (!rateLimit.allowed) {
+        return new Response(JSON.stringify({ 
+          error: 'Muitas requisições. Tente novamente em alguns minutos.', 
+          retryAfter: rateLimit.retryAfter 
+        }), {
+          status: 429,
+          headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+        });
+      }
+ 
+      const body = await req.json() as BitrixRequest;
     
     if (!body.action || typeof body.action !== 'string') {
       return new Response(
