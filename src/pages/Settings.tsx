@@ -1,280 +1,90 @@
-import { useState, useEffect } from 'react';
-import { SystemMaintenancePanel } from '@/components/settings/SystemMaintenancePanel';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
-import { 
-  User, 
-  Phone, 
-  Bell, 
-  Volume2,
-  Mic,
-  Save,
-  Link,
-  ExternalLink,
-  CheckCircle2,
-  AlertCircle,
-  Wrench,
-  Database,
-  Trash2,
-  Mail,
-  ShieldAlert,
-  Timer,
-  BarChart3,
-  Loader2,
-  Play,
-} from 'lucide-react';
-import { toast } from 'sonner';
-import { useBitrix } from '@/hooks/useBitrix';
-import { supabase } from '@/integrations/supabase/client';
-import { useMutation } from '@tanstack/react-query';
-import { usePageTitle } from '@/hooks/usePageTitle';
-
-const Settings = () => {
-  usePageTitle('Configurações');
-
-  const [notifications, setNotifications] = useState({
-    incomingCalls: true,
-    missedCalls: true,
-    voicemail: true,
-    sound: true,
-  });
-
-  const { isConfigured: bitrixConfigured, isLoading: bitrixLoading, checkConfiguration } = useBitrix();
-
-  useEffect(() => {
-    checkConfiguration();
-  }, [checkConfiguration]);
-
-  const handleSave = () => {
-    toast.success('✓ Configurações salvas', { description: 'Suas preferências foram atualizadas' });
-  };
-
-  return (
-    <div className="space-y-6 relative">
-      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
-      <div className="relative space-y-6">
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Configurações</h1>
-        <p className="text-muted-foreground">Gerencie suas preferências do sistema</p>
-      </div>
-
-      <Tabs defaultValue="profile" className="space-y-6">
-        <TabsList className="grid w-full max-w-3xl grid-cols-6">
-          <TabsTrigger value="profile" className="gap-2">
-            <User className="h-4 w-4" />
-            Perfil
-          </TabsTrigger>
-          <TabsTrigger value="integrations" className="gap-2">
-            <Link className="h-4 w-4" />
-            Integrações
-          </TabsTrigger>
-          <TabsTrigger value="voip" className="gap-2">
-            <Phone className="h-4 w-4" />
-            VoIP
-          </TabsTrigger>
-          <TabsTrigger value="notifications" className="gap-2">
-            <Bell className="h-4 w-4" />
-            Notificações
-          </TabsTrigger>
-          <TabsTrigger value="audio" className="gap-2">
-            <Volume2 className="h-4 w-4" />
-            Áudio
-          </TabsTrigger>
-          <TabsTrigger value="system" className="gap-2">
-            <Wrench className="h-4 w-4" />
-            Sistema
-          </TabsTrigger>
-        </TabsList>
-
-        {/* Profile Tab */}
-        <TabsContent value="profile">
-          <Card>
-            <CardHeader>
-              <CardTitle>Informações do Perfil</CardTitle>
-              <CardDescription>Atualize suas informações pessoais</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex items-center gap-6">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-2xl font-bold text-primary">
-                  LF
-                </div>
-                <Button variant="outline">Alterar foto</Button>
-              </div>
-
-              <Separator />
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Nome completo</Label>
-                  <Input id="name" defaultValue="Lucas Ferreira" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" defaultValue="lucas@empresa.com" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="extension">Ramal</Label>
-                  <Input id="extension" defaultValue="1001" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="department">Departamento</Label>
-                  <Select defaultValue="sales">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="sales">Vendas</SelectItem>
-                      <SelectItem value="support">Suporte</SelectItem>
-                      <SelectItem value="admin">Administração</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <Button className="gap-2" onClick={handleSave}>
-                <Save className="h-4 w-4" />
-                Salvar alterações
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Integrations Tab */}
-        <TabsContent value="integrations">
-          <div className="space-y-6">
-            {/* Bitrix24 Integration */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <img 
-                        src="https://www.bitrix24.com.br/images/b24/menu-icon.svg" 
-                        alt="Bitrix24" 
-                        className="h-6 w-6"
-                      />
-                      Bitrix24
-                      {bitrixConfigured === true && (
-                        <Badge variant="default" className="bg-success/10 text-success border-success/20">
-                          <CheckCircle2 className="h-3 w-3 mr-1" />
-                          Conectado
-                        </Badge>
-                      )}
-                      {bitrixConfigured === false && (
-                        <Badge variant="secondary" className="bg-warning/10 text-warning border-warning/20">
-                          <AlertCircle className="h-3 w-3 mr-1" />
-                          Não configurado
-                        </Badge>
-                      )}
-                    </CardTitle>
-                    <CardDescription>
-                      CRM, Telefonia e Webhooks do Bitrix24
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="rounded-lg border border-muted bg-muted/30 p-4">
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Para conectar ao Bitrix24, você precisa configurar a <strong>URL do Webhook</strong> nas configurações do backend.
-                  </p>
-                  <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
-                    <li>Acesse seu Bitrix24 → Aplicativos → Webhooks</li>
-                    <li>Crie um webhook de entrada com as permissões: CRM, Telefonia</li>
-                    <li>Copie a URL do webhook (ex: https://seudominio.bitrix24.com.br/rest/1/abc123/)</li>
-                    <li>Configure a secret BITRIX_WEBHOOK_URL no backend</li>
-                  </ol>
-                </div>
-
-                <div className="grid gap-4 md:grid-cols-3">
-                  <div className="p-4 rounded-lg border">
-                    <h4 className="font-medium flex items-center gap-2 mb-2">
-                      <User className="h-4 w-4 text-primary" />
-                      CRM
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      Contatos, Leads e Negócios sincronizados automaticamente
-                    </p>
-                  </div>
-                  <div className="p-4 rounded-lg border">
-                    <h4 className="font-medium flex items-center gap-2 mb-2">
-                      <Phone className="h-4 w-4 text-primary" />
-                      Telefonia
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      Chamadas registradas automaticamente no histórico
-                    </p>
-                  </div>
-                  <div className="p-4 rounded-lg border">
-                    <h4 className="font-medium flex items-center gap-2 mb-2">
-                      <Link className="h-4 w-4 text-primary" />
-                      Webhooks
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      Eventos em tempo real entre os sistemas
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <Button 
-                    variant="outline" 
-                    className="gap-2"
-                    onClick={() => window.open('https://www.bitrix24.com.br/apps/webhooks.php', '_blank')}
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Abrir Bitrix24 Webhooks
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="gap-2"
-                    disabled={bitrixLoading}
-                    onClick={() => checkConfiguration()}
-                  >
-                    {bitrixLoading ? 'Verificando...' : 'Testar Conexão'}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        {/* VoIP Tab */}
-        <TabsContent value="voip">
-          <Card>
-            <CardHeader>
-              <CardTitle>Configurações VoIP</CardTitle>
-              <CardDescription>Configure sua conexão com a operadora</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 space-y-3">
-                <div className="flex items-start gap-3">
-                  <Phone className="h-5 w-5 text-primary mt-0.5" />
-                  <div className="flex-1">
-                    <p className="font-medium">Painel de Linhas VoIP</p>
-                    <p className="text-sm text-muted-foreground">
-                      Cadastre múltiplas operadoras (Nvoip, Directcall, TotalVoice, Wavoip, SIP genérico) e atribua linhas aos agentes.
-                    </p>
-                  </div>
-                </div>
-                <Button
-                  className="gap-2"
-                  onClick={() => window.location.assign('/admin/voip-trunks')}
-                >
-                  <Phone className="h-4 w-4" />
-                  Gerenciar Linhas VoIP
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+ import { useState } from 'react';
+ import { SystemMaintenancePanel } from '@/components/settings/SystemMaintenancePanel';
+ import { ProfileSettings } from '@/components/settings/ProfileSettings';
+ import { BitrixIntegration } from '@/components/settings/BitrixIntegration';
+ import { VoipSettings } from '@/components/settings/VoipSettings';
+ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+ import { Label } from '@/components/ui/label';
+ import { Button } from '@/components/ui/button';
+ import { Switch } from '@/components/ui/switch';
+ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+ import { Separator } from '@/components/ui/separator';
+ import { 
+   User, 
+   Phone, 
+   Bell, 
+   Volume2,
+   Mic,
+   Save,
+   Link,
+   Wrench,
+ } from 'lucide-react';
+ import { toast } from 'sonner';
+ import { usePageTitle } from '@/hooks/usePageTitle';
+ 
+ const Settings = () => {
+   usePageTitle('Configurações');
+ 
+   const [notifications, setNotifications] = useState({
+     incomingCalls: true,
+     missedCalls: true,
+     voicemail: true,
+     sound: true,
+   });
+ 
+   const handleSave = () => {
+     toast.success('✓ Configurações salvas', { description: 'Suas preferências foram atualizadas' });
+   };
+ 
+   return (
+     <div className="space-y-6 relative">
+       <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
+       <div className="relative space-y-6">
+       <div>
+         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Configurações</h1>
+         <p className="text-muted-foreground">Gerencie suas preferências do sistema</p>
+       </div>
+ 
+       <Tabs defaultValue="profile" className="space-y-6">
+         <TabsList className="grid w-full max-w-3xl grid-cols-6">
+           <TabsTrigger value="profile" className="gap-2">
+             <User className="h-4 w-4" />
+             Perfil
+           </TabsTrigger>
+           <TabsTrigger value="integrations" className="gap-2">
+             <Link className="h-4 w-4" />
+             Integrações
+           </TabsTrigger>
+           <TabsTrigger value="voip" className="gap-2">
+             <Phone className="h-4 w-4" />
+             VoIP
+           </TabsTrigger>
+           <TabsTrigger value="notifications" className="gap-2">
+             <Bell className="h-4 w-4" />
+             Notificações
+           </TabsTrigger>
+           <TabsTrigger value="audio" className="gap-2">
+             <Volume2 className="h-4 w-4" />
+             Áudio
+           </TabsTrigger>
+           <TabsTrigger value="system" className="gap-2">
+             <Wrench className="h-4 w-4" />
+             Sistema
+           </TabsTrigger>
+         </TabsList>
+ 
+         <TabsContent value="profile">
+           <ProfileSettings />
+         </TabsContent>
+ 
+         <TabsContent value="integrations">
+           <BitrixIntegration />
+         </TabsContent>
+ 
+         <TabsContent value="voip">
+           <VoipSettings />
+         </TabsContent>
 
         {/* Notifications Tab */}
         <TabsContent value="notifications">
