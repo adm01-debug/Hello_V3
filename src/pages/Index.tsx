@@ -35,6 +35,7 @@ import { SectionBoundary } from '@/components/error-boundary/ErrorBoundary';
  } from '@dnd-kit/sortable';
  import { SortableWidget } from '@/components/dashboard/SortableWidget';
  import { WidgetLibrary } from '@/components/dashboard/WidgetLibrary';
+ import { PerformanceNarrative } from '@/components/dashboard/PerformanceNarrative';
 import { Skeleton } from '@/components/ui/skeleton';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
  import { usePageTitle } from '@/hooks/usePageTitle';
@@ -149,6 +150,8 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
             </div>
           }
         />
+ 
+       <PerformanceNarrative />
  
        <DndContext
          sensors={sensors}
