@@ -1,6 +1,7 @@
-import {
-  BarChart3, Phone, Clock, Users, Tag, Star, Loader2, Calendar
-} from 'lucide-react';
+ import {
+   BarChart3, Phone, Clock, Users, Tag, Star, Loader2, Calendar
+ } from 'lucide-react';
+ import { formatDuration } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -11,12 +12,6 @@ import {
 } from 'recharts';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useCallAnalytics, type DateRange } from '@/hooks/useCallAnalytics';
-
-const formatDuration = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.round(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
 
 export default function CallAnalytics() {
   usePageTitle('Analytics de Chamadas');
