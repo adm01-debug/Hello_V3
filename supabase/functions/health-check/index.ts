@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 
 
-Deno.serve(async (req) => {
+ export const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: buildCorsHeaders(req) });
   }
@@ -12,7 +12,9 @@ Deno.serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+     const supabase = createClient(supabaseUrl, supabaseKey, {
+       auth: { persistSession: false, autoRefreshToken: false }
+     });
 
     // DB check
     const { error: dbError } = await supabase
@@ -33,11 +35,11 @@ Deno.serve(async (req) => {
       latency_ms: Date.now() - start,
     };
 
-    return new Response(JSON.stringify(response), {
-      status: dbHealthy ? 200 : 503,
-      headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
-    });
-  } catch (err) {
+     return new Response(JSON.stringify(response), {
+       status: dbHealthy ? 200 : 503,
+       headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
+     });
+   } catch (err: any) {
     return new Response(
       JSON.stringify({
         status: "error",
@@ -50,5 +52,9 @@ Deno.serve(async (req) => {
         headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
       }
     );
-  }
-});
+   }
+ };
+ 
+ if (import.meta.main) {
+   Deno.serve(handler);
+ }
