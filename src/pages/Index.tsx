@@ -109,9 +109,9 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
          }
           actions={
             <div className="flex items-center gap-2">
-              <Button
-                variant={isEditing ? "primary" : "glass"}
-                size="sm"
+               <Button
+                 variant={isEditing ? "premium" : "glass"}
+                 size="sm"
                 onClick={() => setIsEditing(!isEditing)}
                 className="gap-2"
               >
