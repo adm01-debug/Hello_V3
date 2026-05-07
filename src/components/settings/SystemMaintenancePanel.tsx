@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Wrench, Play, Loader2, ShieldAlert, Timer, BarChart3, Database, Trash2, Mail } from 'lucide-react';
+ import { Wrench, Play, Loader2, ShieldAlert, Timer, BarChart3, Database, Trash2, Mail } from 'lucide-react';
+ import { SystemLogs } from './SystemLogs';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -35,9 +36,10 @@ export function SystemMaintenancePanel() {
     },
   });
 
-  return (
-    <Card>
-      <CardHeader>
+   return (
+     <div className="space-y-6">
+       <Card>
+         <CardHeader>
         <CardTitle className="flex items-center gap-2"><Wrench className="h-5 w-5" />Manutenção do Sistema</CardTitle>
         <CardDescription>Execute funções administrativas de background manualmente. Estas funções normalmente rodam de forma automática.</CardDescription>
       </CardHeader>
@@ -68,7 +70,9 @@ export function SystemMaintenancePanel() {
             </div>
           );
         })}
-      </CardContent>
-    </Card>
-  );
+       </CardContent>
+       </Card>
+       <SystemLogs />
+     </div>
+   );
 }
