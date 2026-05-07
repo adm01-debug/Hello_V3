@@ -36,7 +36,7 @@ export interface MeetingSummary {
   ai_confidence: number | null;
   generated_at: string;
   edited: boolean;
-  edited_content: any;
+   edited_content: Record<string, unknown> | null;
   edited_by: string | null;
   edited_at: string | null;
   shared_with: string[];
@@ -46,7 +46,7 @@ export interface MeetingSummary {
   updated_at: string;
 }
 
-const parse = (row: any): MeetingSummary => ({
+ const parse = (row: Record<string, any>): MeetingSummary => ({
   ...row,
   key_points: Array.isArray(row.key_points) ? row.key_points : [],
   action_items: Array.isArray(row.action_items) ? row.action_items : [],
@@ -111,7 +111,7 @@ export function useMeetingSummary(callSessionId?: string) {
       if ((data as any)?.error) throw new Error((data as any).error);
       return data;
     },
-    onSuccess: (data: any) => {
+     onSuccess: (data: { skipped?: boolean } | null) => {
       if (data?.skipped) {
         toast.info('Resumo já existente');
       } else {
@@ -192,7 +192,7 @@ export function useMeetingSummariesList(filters?: {
 
       const { data, error } = await q;
       if (error) throw error;
-      return (data ?? []).map((r: any) => ({ ...parse(r), call_sessions: r.call_sessions }));
+       return (data ?? []).map((r: Record<string, any>) => ({ ...parse(r), call_sessions: r.call_sessions }));
     },
   });
 }
@@ -208,13 +208,14 @@ export function usePendingActionItems() {
         .order('generated_at', { ascending: false })
         .limit(100);
       if (error) throw error;
-      const total = (data ?? []).reduce(
-        (sum: number, r: any) => sum + (Array.isArray(r.action_items) ? r.action_items.length : 0),
-        0
-      );
-      const followUps = (data ?? []).filter((r: any) =>
-        Array.isArray(r.action_items) && r.action_items.length > 0
-      ).length;
+       const summaries = (data ?? []) as any[];
+       const total = summaries.reduce(
+         (sum: number, r: any) => sum + (Array.isArray(r.action_items) ? r.action_items.length : 0),
+         0
+       );
+       const followUps = summaries.filter((r: any) =>
+         Array.isArray(r.action_items) && r.action_items.length > 0
+       ).length;
       return { total, followUps, recent: data ?? [] };
     },
     staleTime: 60_000,
