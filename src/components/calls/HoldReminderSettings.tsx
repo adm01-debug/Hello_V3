@@ -1,17 +1,11 @@
 import { Bell, VolumeX, Volume2, AlertTriangle, BellRing, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+ import { cn, formatDuration } from '@/lib/utils';
 import { CallSession } from '@/hooks/useMultiChannelCall';
 import { REMINDER_INTERVALS, ALERT_THRESHOLDS, ReminderInterval, HoldAlertThreshold } from '@/hooks/useHoldReminder';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-
-const formatDuration = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
 
 interface HoldReminderSettingsProps {
   isEnabled: boolean;
