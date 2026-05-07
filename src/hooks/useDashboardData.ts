@@ -61,23 +61,20 @@ export function useDashboardStats() {
   });
 }
 
-export function useAgentsListData() {
-  return useQuery<AgentRow[]>({
-    queryKey: ['agents-list'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('agents')
-        .select('id, name, status, avatar_url, extension')
-        .order('name');
+ export function useAgentsListData() {
+   return useQuery<(AgentRow & { active_call_started_at?: string; active_call_caller?: string })[]>({
+     queryKey: ['agents-list'],
+     queryFn: async () => {
+       const { data, error } = await supabase.rpc('get_agents_with_active_calls');
        if (error) {
          console.error('Error fetching agents list:', error);
          throw new Error('Falha ao carregar lista de agentes');
        }
-       return data || [];
-    },
-    refetchInterval: 15000,
-  });
-}
+       return (data as any) || [];
+     },
+     refetchInterval: 10000,
+   });
+ }
 
 export function useRecentCallsData() {
   return useQuery<CallSessionRow[]>({
