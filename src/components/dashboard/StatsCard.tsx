@@ -61,10 +61,10 @@ export const StatsCard = memo(function StatsCard({
   };
 
   const iconBgMap = {
-    primary: 'bg-primary/10 text-primary shadow-[0_0_15px_hsl(var(--primary)/0.2)]',
-    success: 'bg-success/10 text-success shadow-[0_0_15px_hsl(var(--success)/0.2)]',
-    warning: 'bg-warning/10 text-warning shadow-[0_0_15px_hsl(var(--warning)/0.2)]',
-    info: 'bg-info/10 text-info shadow-[0_0_15px_hsl(var(--info)/0.2)]',
+   primary: 'bg-primary/10 text-primary shadow-[0_0_20px_hsl(var(--primary)/0.25)] ring-1 ring-primary/20',
+   success: 'bg-success/10 text-success shadow-[0_0_20px_hsl(var(--success)/0.25)] ring-1 ring-success/20',
+   warning: 'bg-warning/10 text-warning shadow-[0_0_20px_hsl(var(--warning)/0.25)] ring-1 ring-warning/20',
+   info: 'bg-info/10 text-info shadow-[0_0_20px_hsl(var(--info)/0.25)] ring-1 ring-info/20',
   };
 
   return (
@@ -75,13 +75,13 @@ export const StatsCard = memo(function StatsCard({
     )} role="article" aria-label={`${title}: ${displayValue}`}>
       <CardContent className="p-6 relative">
         {/* Premium ambient light effect */}
-        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-primary/5 blur-[80px] group-hover:bg-primary/10 transition-colors duration-700 pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-primary/5 blur-[80px] pointer-events-none" />
+         <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-primary/5 blur-[100px] group-hover:bg-primary/15 transition-all duration-1000 pointer-events-none group-hover:scale-125" />
+         <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-primary/5 blur-[100px] pointer-events-none group-hover:bg-primary/10 transition-all duration-1000" />
 
         <div className="relative flex items-start justify-between gap-4">
           <div className="space-y-2 min-w-0">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">{title}</p>
-            <p className="text-3xl font-bold tracking-tight tabular-nums text-foreground/90">{displayValue}</p>
+             <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground/60 group-hover:text-muted-foreground transition-colors duration-500">{title}</p>
+             <p className="text-3xl font-bold tracking-tighter tabular-nums text-foreground/90 group-hover:text-foreground transition-colors duration-500">{displayValue}</p>
             
             {change !== undefined && (
               <div className="flex items-center gap-1.5 pt-0.5">
