@@ -1,4 +1,4 @@
- import { Search, Filter, X, Calendar, Clock, Tag, TrendingUp, TrendingDown, Minus, Download } from 'lucide-react';
+ import { Search, Filter, X, Calendar, Clock, Tag, TrendingUp, TrendingDown, Minus, Download, Phone } from 'lucide-react';
  import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -128,8 +128,20 @@ export default function CallHistory() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium flex items-center gap-2"><Clock className="h-4 w-4" /> Duração</label>
+                 <div className="space-y-2">
+                   <label className="text-sm font-medium flex items-center gap-2"><Phone className="h-4 w-4" /> Status</label>
+                   <Select value={statusFilter} onValueChange={setStatusFilter}>
+                     <SelectTrigger><SelectValue placeholder="Status" /></SelectTrigger>
+                     <SelectContent>
+                       <SelectItem value="all">Todos</SelectItem>
+                       <SelectItem value="completed">Atendidas</SelectItem>
+                       <SelectItem value="missed">Perdidas</SelectItem>
+                       <SelectItem value="abandoned">Abandonadas</SelectItem>
+                     </SelectContent>
+                   </Select>
+                 </div>
+                 <div className="space-y-2">
+                   <label className="text-sm font-medium flex items-center gap-2"><Clock className="h-4 w-4" /> Duração</label>
                   <Select value={durationFilter} onValueChange={(v) => setDurationFilter(v as DurationFilter)}>
                     <SelectTrigger><SelectValue placeholder="Selecionar duração" /></SelectTrigger>
                     <SelectContent>
@@ -167,9 +179,10 @@ export default function CallHistory() {
 
       <CallSessionsList sessions={sessions} isLoading={isLoading} activeFiltersCount={activeFiltersCount} onSessionClick={handleSessionClick} onClearFilters={clearFilters} />
 
-      <CallDetailDialog selectedSession={selectedSession} onClose={() => setSelectedSession(null)}
-        isLoadingDetails={isLoadingDetails} sessionTranscripts={sessionTranscripts}
-        sessionAnalyses={sessionAnalyses} sessionSummary={sessionSummary} onExportTranscript={exportTranscript} />
-    </div>
-  );
-}
+       <CallDetailDialog selectedSession={selectedSession} onClose={() => setSelectedSession(null)}
+         isLoadingDetails={isLoadingDetails} sessionTranscripts={sessionTranscripts}
+         sessionAnalyses={sessionAnalyses} sessionSummary={sessionSummary} onExportTranscript={exportTranscript} />
+       </div>
+     </div>
+   );
+ }
