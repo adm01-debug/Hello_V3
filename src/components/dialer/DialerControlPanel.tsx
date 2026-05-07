@@ -1,7 +1,10 @@
-import { Phone, Play, Pause, CheckCircle, PhoneMissed, PhoneOff, Voicemail, XCircle, RotateCcw } from 'lucide-react';
+ import { useState, useEffect } from 'react';
+ import { Phone, Play, Pause, CheckCircle, PhoneMissed, PhoneOff, Voicemail, XCircle, RotateCcw, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Badge } from '@/components/ui/badge';
+ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Input } from '@/components/ui/input';
+ import { Label } from '@/components/ui/label';
 import { PhoneCall } from 'lucide-react';
 import { AddContactsDialog } from './AddContactsDialog';
 import { DialerQueueItem } from '@/hooks/usePredictiveDialer';
@@ -14,7 +17,7 @@ interface DialerControlPanelProps {
   pendingCount: number;
   onStartCampaign: (id: string) => void;
   onPauseCampaign: (id: string) => void;
-  onCompleteCall: (result: 'answered' | 'no_answer' | 'busy' | 'voicemail' | 'wrong_number' | 'callback') => void;
+   onCompleteCall: (result: 'answered' | 'no_answer' | 'busy' | 'voicemail' | 'wrong_number' | 'callback', notes?: string) => void;
 }
 
 const formatTimer = (seconds: number) => {
@@ -23,10 +26,15 @@ const formatTimer = (seconds: number) => {
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 };
 
-export function DialerControlPanel({
-  currentCall, isDialing, callTimer, campaignId, pendingCount,
-  onStartCampaign, onPauseCampaign, onCompleteCall,
-}: DialerControlPanelProps) {
+ export function DialerControlPanel({
+   currentCall, isDialing, callTimer, campaignId, pendingCount,
+   onStartCampaign, onPauseCampaign, onCompleteCall,
+ }: DialerControlPanelProps) {
+   const [notes, setNotes] = useState('');
+ 
+   useEffect(() => {
+     if (!currentCall) setNotes('');
+   }, [currentCall]);
   return (
     <Card className="lg:col-span-1">
       <CardHeader>
@@ -71,31 +79,45 @@ export function DialerControlPanel({
           )}
         </div>
 
-        {currentCall && (
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Resultado da Chamada:</p>
-            <div className="grid grid-cols-2 gap-2">
-              <Button size="sm" variant="outline" className="gap-1 text-success hover:bg-success/10" onClick={() => onCompleteCall('answered')}>
-                <CheckCircle className="h-3 w-3" /> Atendida
-              </Button>
-              <Button size="sm" variant="outline" className="gap-1" onClick={() => onCompleteCall('no_answer')}>
-                <PhoneMissed className="h-3 w-3" /> Não Atendeu
-              </Button>
-              <Button size="sm" variant="outline" className="gap-1" onClick={() => onCompleteCall('busy')}>
-                <PhoneOff className="h-3 w-3" /> Ocupado
-              </Button>
-              <Button size="sm" variant="outline" className="gap-1" onClick={() => onCompleteCall('voicemail')}>
-                <Voicemail className="h-3 w-3" /> Caixa Postal
-              </Button>
-              <Button size="sm" variant="outline" className="gap-1 text-destructive hover:bg-destructive/10" onClick={() => onCompleteCall('wrong_number')}>
-                <XCircle className="h-3 w-3" /> Número Errado
-              </Button>
-              <Button size="sm" variant="outline" className="gap-1 text-primary hover:bg-primary/10" onClick={() => onCompleteCall('callback')}>
-                <RotateCcw className="h-3 w-3" /> Retornar
-              </Button>
-            </div>
-          </div>
-        )}
+         {currentCall && (
+           <div className="space-y-4 pt-2">
+             <div className="space-y-2">
+               <Label htmlFor="call-notes" className="text-xs flex items-center gap-1">
+                 <FileText className="h-3 w-3" /> Observações
+               </Label>
+               <Input 
+                 id="call-notes"
+                 value={notes}
+                 onChange={(e) => setNotes(e.target.value)}
+                 placeholder="Notas da chamada..."
+                 className="text-sm"
+               />
+             </div>
+             <div className="space-y-2">
+               <p className="text-sm font-medium">Resultado da Chamada:</p>
+               <div className="grid grid-cols-2 gap-2">
+                 <Button size="sm" variant="outline" className="gap-1 text-success hover:bg-success/10" onClick={() => onCompleteCall('answered', notes)}>
+                   <CheckCircle className="h-3 w-3" /> Atendida
+                 </Button>
+                 <Button size="sm" variant="outline" className="gap-1" onClick={() => onCompleteCall('no_answer', notes)}>
+                   <PhoneMissed className="h-3 w-3" /> Não Atendeu
+                 </Button>
+                 <Button size="sm" variant="outline" className="gap-1" onClick={() => onCompleteCall('busy', notes)}>
+                   <PhoneOff className="h-3 w-3" /> Ocupado
+                 </Button>
+                 <Button size="sm" variant="outline" className="gap-1" onClick={() => onCompleteCall('voicemail', notes)}>
+                   <Voicemail className="h-3 w-3" /> Caixa Postal
+                 </Button>
+                 <Button size="sm" variant="outline" className="gap-1 text-destructive hover:bg-destructive/10" onClick={() => onCompleteCall('wrong_number', notes)}>
+                   <XCircle className="h-3 w-3" /> Número Errado
+                 </Button>
+                 <Button size="sm" variant="outline" className="gap-1 text-primary hover:bg-primary/10" onClick={() => onCompleteCall('callback', notes)}>
+                   <RotateCcw className="h-3 w-3" /> Retornar
+                 </Button>
+               </div>
+             </div>
+           </div>
+         )}
 
         <AddContactsDialog campaignId={campaignId} />
       </CardContent>

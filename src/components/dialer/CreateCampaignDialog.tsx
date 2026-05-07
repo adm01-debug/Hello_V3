@@ -66,7 +66,8 @@ export function CreateCampaignDialog({ trigger }: CreateCampaignDialogProps) {
       retry_delay_minutes: formData.retry_delay_minutes,
       working_hours_start: formData.working_hours_start + ':00',
       working_hours_end: formData.working_hours_end + ':00',
-      created_by: 'Agente Demo'
+   created_by: 'Agente Demo',
+   status: 'active'
     };
 
     const result = await createCampaign(input);

@@ -52,9 +52,10 @@ export interface CreateCampaignInput {
   retry_attempts?: number;
   retry_delay_minutes?: number;
   working_hours_start?: string;
-  working_hours_end?: string;
-  created_by?: string;
-}
+   working_hours_end?: string;
+   created_by?: string;
+   status?: string;
+ }
 
 export interface AddToQueueInput {
   campaign_id: string;
@@ -125,9 +126,10 @@ export const usePredictiveDialer = () => {
           retry_attempts: input.retry_attempts || 2,
           retry_delay_minutes: input.retry_delay_minutes || 30,
           working_hours_start: input.working_hours_start || '08:00:00',
-          working_hours_end: input.working_hours_end || '18:00:00',
-          created_by: input.created_by
-        })
+           working_hours_end: input.working_hours_end || '18:00:00',
+           created_by: input.created_by,
+           status: input.status || 'paused'
+         })
         .select()
         .single();
 
@@ -323,9 +325,10 @@ export const usePredictiveDialer = () => {
 
       setCurrentCall(null);
       
-      if (activeCampaign) {
-        await fetchQueue(activeCampaign.id);
-      }
+       await fetchCampaigns();
+       if (activeCampaign) {
+         await fetchQueue(activeCampaign.id);
+       }
     } catch (err) {
       log.error('Error completing call:', err);
     }
