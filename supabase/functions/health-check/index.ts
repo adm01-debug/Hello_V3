@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 
 
-Deno.serve(async (req) => {
+ export const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: buildCorsHeaders(req) });
   }
@@ -36,7 +36,9 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify(response), {
       status: dbHealthy ? 200 : 503,
       headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
-    });
+ };
+ 
+ Deno.serve(handler);
   } catch (err) {
     return new Response(
       JSON.stringify({
