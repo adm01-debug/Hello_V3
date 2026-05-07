@@ -162,12 +162,12 @@ export function CommandPalette() {
               {items.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <CommandItem
-                    key={item.url}
-                    value={item.title}
-                    onSelect={() => handleSelect(item.url)}
-                    className="flex items-center gap-3 cursor-pointer"
-                  >
+                   <CommandItem
+                     key={item.url}
+                     value={item.title}
+                     onSelect={() => handleSelect(item)}
+                     className="flex items-center gap-3 cursor-pointer"
+                   >
                     <Icon className="h-4 w-4 text-muted-foreground" />
                     <span>{item.title}</span>
                   </CommandItem>
