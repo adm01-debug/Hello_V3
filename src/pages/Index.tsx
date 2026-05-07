@@ -1,4 +1,5 @@
   import { Phone, Clock, CheckCircle, Users, Zap, LayoutDashboard, RefreshCw, Settings2, RotateCcw, Save } from 'lucide-react';
+  import { cn } from '@/lib/utils';
  import { useQueryClient } from '@tanstack/react-query';
  import { useState } from 'react';
  import { Button } from '@/components/ui/button';
@@ -177,10 +178,24 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
                          [1, 2, 3, 4].map(i => <Skeleton key={i} className="h-[130px] rounded-xl" />)
                        ) : stats ? (
                          <>
-                           <StatsCard title="Chamadas Hoje" value={stats.totalCallsToday} change={stats.totalCallsChange} changeLabel="vs ontem" icon={<Phone className="h-5 w-5" />} glowColor="primary" />
-                           <StatsCard title="Duração Média" value={formatDuration(stats.avgCallDuration)} change={stats.durationChange} changeLabel="vs ontem" icon={<Clock className="h-5 w-5" />} glowColor="info" />
-                           <StatsCard title="Taxa Atendimento" value={`${stats.answeredRate}%`} change={stats.rateChange} changeLabel="vs ontem" icon={<CheckCircle className="h-5 w-5" />} glowColor="success" />
-                           <StatsCard title="Agentes Ativos" value={`${stats.activeAgents}/${stats.totalAgents}`} icon={<Users className="h-5 w-5" />} glowColor="warning" />
+                           <StatsCard title="Chamadas Hoje" value={stats.totalCallsToday} change={stats.totalCallsChange} changeLabel="vs ontem" icon={<Phone className="h-5 w-5" />} glowColor="primary" className={isEditing ? "cursor-grab" : ""} />
+                           <StatsCard title="Duração Média" value={formatDuration(stats.avgCallDuration)} change={stats.durationChange} changeLabel="vs ontem" icon={<Clock className="h-5 w-5" />} glowColor="info" className={isEditing ? "cursor-grab" : ""} />
+                           <StatsCard 
+                             title="Taxa Atendimento" 
+                             value={`${stats.answeredRate}%`} 
+                             change={stats.rateChange} 
+                             changeLabel="vs ontem" 
+                             icon={<CheckCircle className="h-5 w-5" />} 
+                             glowColor={stats.answeredRate < 80 ? "destructive" : "success"} 
+                             className={cn(isEditing ? "cursor-grab" : "", stats.answeredRate < 80 && "animate-pulse border-destructive/50 shadow-[0_0_15px_hsl(var(--destructive)/0.2)]")} 
+                           />
+                           <StatsCard 
+                             title="Agentes Ativos" 
+                             value={`${stats.activeAgents}/${stats.totalAgents}`} 
+                             icon={<Users className="h-5 w-5" />} 
+                             glowColor={stats.activeAgents < (stats.totalAgents / 2) ? "warning" : "primary"} 
+                             className={isEditing ? "cursor-grab" : ""} 
+                           />
                          </>
                        ) : null}
                      </section>

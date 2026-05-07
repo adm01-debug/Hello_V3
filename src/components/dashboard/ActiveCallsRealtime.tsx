@@ -4,8 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
- import { Phone, Pause, Clock, User, Filter, Volume2, VolumeX } from 'lucide-react';
- import { formatDuration } from '@/lib/utils';
+  import { Phone, Pause, Clock, User, Filter, Volume2, VolumeX } from 'lucide-react';
+  import { formatDuration, cn } from '@/lib/utils';
 import { useActiveCallsRealtime } from '@/hooks/useActiveCallsRealtime';
 
 export const ActiveCallsRealtime = () => {
@@ -79,9 +79,15 @@ export const ActiveCallsRealtime = () => {
               const holdDuration = getHoldDuration(call.id);
               const holdSeverity = onHold ? getHoldSeverity(holdDuration) : 'normal';
               const callDuration = Math.floor((Date.now() - new Date(call.started_at).getTime()) / 1000);
-              return (
-                <div key={call.id} className={`p-4 rounded-lg border transition-colors ${holdSeverity === 'critical' ? 'border-destructive bg-destructive/10 animate-pulse' : holdSeverity === 'warning' ? 'border-call-hold/50 bg-call-hold/5' : onHold ? 'border-destructive/50 bg-destructive/5 animate-pulse' : 'border-border bg-card'}`}>
-                  <div className="flex items-start justify-between">
+               return (
+                 <div key={call.id} className={cn(
+                   "p-4 rounded-lg border transition-all duration-300",
+                   holdSeverity === 'critical' ? "border-destructive bg-destructive/10 animate-pulse shadow-[0_0_15px_hsl(var(--destructive)/0.2)]" : 
+                   holdSeverity === 'warning' ? "border-call-hold/50 bg-call-hold/5 shadow-[0_0_10px_hsl(var(--call-hold)/0.1)]" : 
+                   onHold ? "border-destructive/30 bg-destructive/5 animate-pulse" : 
+                   "border-border bg-card hover:border-primary/30"
+                 )}>
+                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-full ${holdSeverity === 'critical' ? 'bg-destructive/20' : holdSeverity === 'warning' ? 'bg-call-hold/20' : onHold ? 'bg-destructive/10' : 'bg-primary/10'}`}>
                         {onHold ? <Pause className={`h-4 w-4 ${holdSeverity === 'critical' ? 'text-destructive' : holdSeverity === 'warning' ? 'text-call-hold' : 'text-destructive'}`} /> : <Phone className="h-4 w-4 text-primary" />}

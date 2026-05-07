@@ -6,8 +6,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
- import { Headphones, Phone, Send, User, Clock, Volume2, Check, Users, PhoneCall, PhoneOff, Radio, Timer, TrendingDown, Activity, AlertTriangle, ChevronDown, BarChart3, Bell, BellOff } from 'lucide-react';
- import { formatDuration } from '@/lib/utils';
+  import { Headphones, Phone, Send, User, Clock, Volume2, Check, Users, PhoneCall, PhoneOff, Radio, Timer, TrendingDown, Activity, AlertTriangle, ChevronDown, BarChart3, Bell, BellOff } from 'lucide-react';
+  import { formatDuration, cn } from '@/lib/utils';
 import { QueueTrendChart } from './QueueTrendChart';
 import { AlertSoundSettings } from './AlertSoundSettings';
 import { SoundProfileManager } from './SoundProfileManager';
@@ -117,13 +117,16 @@ export const SupervisorPanel = () => {
                     className={`p-3 rounded-lg border cursor-pointer transition-all ${s.selectedCall?.id === call.id ? 'border-primary bg-primary/5' : s.isCallInBargeIn(call.id) ? 'border-destructive bg-destructive/5' : 'border-border hover:border-primary/50'}`}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className={`p-1.5 rounded-full ${s.isCallInBargeIn(call.id) ? 'bg-destructive/10' : 'bg-success/10'}`}>
-                          {s.isCallInBargeIn(call.id) ? <Users className="h-3 w-3 text-destructive" /> : <Phone className="h-3 w-3 text-success" />}
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium">{call.caller_name || call.caller_phone || 'Desconhecido'}</p>
-                          <p className="text-xs text-muted-foreground flex items-center gap-1"><User className="h-3 w-3" />{call.agent_name || 'Sem agente'}</p>
-                        </div>
+                       <div className={cn(
+                         "p-1.5 rounded-full",
+                         s.isCallInBargeIn(call.id) ? "bg-destructive/10" : "bg-success/10"
+                       )}>
+                         {s.isCallInBargeIn(call.id) ? <Users className="h-3 w-3 text-destructive" /> : <Phone className="h-3 w-3 text-success" />}
+                       </div>
+                       <div>
+                         <p className="text-sm font-medium">{call.caller_name || call.caller_phone || 'Desconhecido'}</p>
+                         <p className="text-xs text-muted-foreground flex items-center gap-1"><User className="h-3 w-3" />{call.agent_name || 'Sem agente'}</p>
+                       </div>
                       </div>
                       <Badge variant={s.isCallInBargeIn(call.id) ? 'destructive' : 'secondary'} className="text-xs">
                         <Clock className="h-3 w-3 mr-1" />{s.getCallDuration(call.started_at)}

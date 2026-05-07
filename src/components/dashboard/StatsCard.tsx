@@ -11,8 +11,8 @@ interface StatsCardProps {
   changeLabel?: string;
   icon: ReactNode;
   className?: string;
-  glowColor?: 'primary' | 'success' | 'warning' | 'info';
-}
+   glowColor?: 'primary' | 'success' | 'warning' | 'info' | 'destructive';
+ }
 
 export const StatsCard = memo(function StatsCard({ 
   title, 
@@ -53,19 +53,21 @@ export const StatsCard = memo(function StatsCard({
     return `${prefix}${animatedValue}${suffix}`;
   }, [value, numericValue, animatedValue]);
 
-  const glowMap = {
-    primary: 'hover:shadow-[0_0_30px_-5px_hsl(var(--primary)/0.35)]',
-    success: 'hover:shadow-[0_0_30px_-5px_hsl(var(--success)/0.35)]',
-    warning: 'hover:shadow-[0_0_30px_-5px_hsl(var(--warning)/0.35)]',
-    info: 'hover:shadow-[0_0_30px_-5px_hsl(var(--info)/0.35)]',
-  };
-
-  const iconBgMap = {
-    primary: 'bg-primary/10 text-primary shadow-[0_0_15px_hsl(var(--primary)/0.2)]',
-    success: 'bg-success/10 text-success shadow-[0_0_15px_hsl(var(--success)/0.2)]',
-    warning: 'bg-warning/10 text-warning shadow-[0_0_15px_hsl(var(--warning)/0.2)]',
-    info: 'bg-info/10 text-info shadow-[0_0_15px_hsl(var(--info)/0.2)]',
-  };
+   const glowMap = {
+     primary: 'hover:shadow-[0_0_30px_-5px_hsl(var(--primary)/0.35)]',
+     success: 'hover:shadow-[0_0_30px_-5px_hsl(var(--success)/0.35)]',
+     warning: 'hover:shadow-[0_0_30px_-5px_hsl(var(--warning)/0.35)]',
+     info: 'hover:shadow-[0_0_30px_-5px_hsl(var(--info)/0.35)]',
+     destructive: 'hover:shadow-[0_0_30px_-5px_hsl(var(--destructive)/0.35)]',
+   };
+ 
+   const iconBgMap = {
+     primary: 'bg-primary/10 text-primary shadow-[0_0_15px_hsl(var(--primary)/0.2)]',
+     success: 'bg-success/10 text-success shadow-[0_0_15px_hsl(var(--success)/0.2)]',
+     warning: 'bg-warning/10 text-warning shadow-[0_0_15px_hsl(var(--warning)/0.2)]',
+     info: 'bg-info/10 text-info shadow-[0_0_15px_hsl(var(--info)/0.2)]',
+     destructive: 'bg-destructive/10 text-destructive shadow-[0_0_15px_hsl(var(--destructive)/0.2)]',
+   };
 
   return (
     <Card className={cn(
