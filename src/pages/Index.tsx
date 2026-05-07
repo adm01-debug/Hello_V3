@@ -34,6 +34,7 @@ import { SectionBoundary } from '@/components/error-boundary/ErrorBoundary';
    rectSortingStrategy,
  } from '@dnd-kit/sortable';
  import { SortableWidget } from '@/components/dashboard/SortableWidget';
+ import { WidgetLibrary } from '@/components/dashboard/WidgetLibrary';
 import { Skeleton } from '@/components/ui/skeleton';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
  import { usePageTitle } from '@/hooks/usePageTitle';
@@ -109,27 +110,31 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
          }
           actions={
             <div className="flex items-center gap-2">
+               <div className="hidden lg:flex items-center gap-2 mr-2 border-r border-border/30 pr-2">
+                 <WidgetLibrary layout={layout} toggleWidget={toggleWidget} />
+               </div>
+ 
                <Button
                  variant={isEditing ? "premium" : "glass"}
                  size="sm"
-                onClick={() => setIsEditing(!isEditing)}
-                className="gap-2"
-              >
-                {isEditing ? <Save className="h-4 w-4" /> : <Settings2 className="h-4 w-4" />}
-                {isEditing ? 'Salvar Layout' : 'Customizar'}
-              </Button>
-              
-              {isEditing && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={resetLayout}
-                  className="gap-2"
-                >
-                  <RotateCcw className="h-4 w-4" />
-                  Resetar
-                </Button>
-              )}
+                 onClick={() => setIsEditing(!isEditing)}
+                 className="gap-2 shadow-neon-glow"
+               >
+                 {isEditing ? <Save className="h-4 w-4" /> : <Settings2 className="h-4 w-4" />}
+                 {isEditing ? 'Salvar Layout' : 'Customizar'}
+               </Button>
+               
+               {isEditing && (
+                 <Button
+                   variant="ghost"
+                   size="sm"
+                   onClick={resetLayout}
+                   className="gap-2"
+                 >
+                   <RotateCcw className="h-4 w-4" />
+                   Resetar
+                 </Button>
+               )}
  
               <Button
                 variant="glass"
