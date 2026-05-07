@@ -6,7 +6,8 @@ import {
   Phone,
   User,
   Headphones,
-  Activity
+   Activity
+ import { formatDuration } from '@/lib/utils';
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -101,12 +102,6 @@ export function CallSimulation() {
     setCallDuration(0);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     if (intervalRef.current) clearInterval(intervalRef.current);
-  };
-
-  const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   const progress = (currentIndex / simulatedConversation.length) * 100;
