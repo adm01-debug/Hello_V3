@@ -30,14 +30,12 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
   try {
     // Verify authentication
     const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
-        status: 401,
-        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
- };
- 
- serve(handler);
-    }
+     if (!authHeader) {
+       return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+         status: 401,
+         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+       });
+     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
@@ -189,11 +187,13 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
       { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
 
-  } catch (error) {
-    console.error('Error in bitrix-api function:', error);
-    return new Response(
-      JSON.stringify({ error: 'Erro interno' }),
-      { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
-    );
-  }
-});
+   } catch (error) {
+     console.error('Error in bitrix-api function:', error);
+     return new Response(
+       JSON.stringify({ error: 'Erro interno' }),
+       { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
+     );
+   }
+ };
+ 
+ serve(handler);
