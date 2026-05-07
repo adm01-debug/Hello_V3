@@ -45,10 +45,10 @@ export const SupervisorPanel = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Queue Metrics */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           <TooltipProvider>
             <Tooltip><TooltipTrigger asChild>
-              <div className="p-2.5 rounded-lg border bg-accent/30">
+              <div className="p-3 rounded-2xl border border-white/[0.05] bg-muted/20 hover:bg-muted/30 transition-all duration-300">
                 <div className="flex items-center gap-1.5 text-muted-foreground mb-1"><Timer className="h-3.5 w-3.5" /><span className="text-xs">Espera Média</span></div>
                 <p className="text-lg font-bold">{s.formatWaitTime(s.queueMetrics.avgWaitTime)}</p>
               </div>
@@ -56,7 +56,7 @@ export const SupervisorPanel = () => {
           </TooltipProvider>
           <TooltipProvider>
             <Tooltip><TooltipTrigger asChild>
-              <div className={`p-2.5 rounded-lg border ${s.queueMetrics.abandonmentRate > 10 ? 'bg-destructive/10 border-destructive/30' : 'bg-accent/30'}`}>
+              <div className={`p-3 rounded-2xl border ${s.queueMetrics.abandonmentRate > 10 ? 'bg-destructive/10 border-destructive/30' : 'border-white/[0.05] bg-muted/20 hover:bg-muted/30'} transition-all duration-300`}>
                 <div className="flex items-center gap-1.5 text-muted-foreground mb-1"><TrendingDown className={`h-3.5 w-3.5 ${s.queueMetrics.abandonmentRate > 10 ? 'text-destructive' : ''}`} /><span className="text-xs">Abandono</span></div>
                 <p className={`text-lg font-bold ${s.queueMetrics.abandonmentRate > 10 ? 'text-destructive' : ''}`}>{s.queueMetrics.abandonmentRate}%</p>
               </div>
@@ -64,7 +64,7 @@ export const SupervisorPanel = () => {
           </TooltipProvider>
           <TooltipProvider>
             <Tooltip><TooltipTrigger asChild>
-              <div className={`p-2.5 rounded-lg border ${s.queueMetrics.serviceLevelPercent < 80 ? 'bg-warning/10 border-warning/30' : 'bg-accent/30'}`}>
+              <div className={`p-3 rounded-2xl border ${s.queueMetrics.serviceLevelPercent < 80 ? 'bg-warning/10 border-warning/30' : 'border-white/[0.05] bg-muted/20 hover:bg-muted/30'} transition-all duration-300`}>
                 <div className="flex items-center gap-1.5 text-muted-foreground mb-1"><Activity className={`h-3.5 w-3.5 ${s.queueMetrics.serviceLevelPercent < 80 ? 'text-warning' : ''}`} /><span className="text-xs">Nível Serviço</span></div>
                 <p className={`text-lg font-bold ${s.queueMetrics.serviceLevelPercent < 80 ? 'text-warning' : ''}`}>{s.queueMetrics.serviceLevelPercent}%</p>
               </div>
@@ -72,7 +72,7 @@ export const SupervisorPanel = () => {
           </TooltipProvider>
           <TooltipProvider>
             <Tooltip><TooltipTrigger asChild>
-              <div className={`p-2.5 rounded-lg border ${s.queueMetrics.longestWait > 120 ? 'bg-destructive/10 border-destructive/30' : 'bg-accent/30'}`}>
+              <div className={`p-3 rounded-2xl border ${s.queueMetrics.longestWait > 120 ? 'bg-destructive/10 border-destructive/30' : 'border-white/[0.05] bg-muted/20 hover:bg-muted/30'} transition-all duration-300`}>
                 <div className="flex items-center gap-1.5 text-muted-foreground mb-1"><AlertTriangle className={`h-3.5 w-3.5 ${s.queueMetrics.longestWait > 120 ? 'text-destructive' : ''}`} /><span className="text-xs">Maior Espera</span></div>
                 <p className={`text-lg font-bold ${s.queueMetrics.longestWait > 120 ? 'text-destructive' : ''}`}>{s.formatWaitTime(s.queueMetrics.longestWait)}</p>
               </div>
