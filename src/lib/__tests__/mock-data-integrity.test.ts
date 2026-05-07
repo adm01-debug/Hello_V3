@@ -4,17 +4,15 @@ import {
   mockCallHistory,
   mockActiveCall,
   mockAgents,
-  mockQueueStats,
    mockDashboardStats,
    mockHourlyCallVolume,
    formatPhoneNumber,
+   getInitials,
+   type Contact,
+   type CallRecord,
+   type Agent,
+ } from '@/data/mockData';
  import { formatDuration } from '@/lib/utils';
-  getInitials,
-  type Contact,
-  type CallRecord,
-  type Agent,
-  type QueueStats,
-} from '@/data/mockData';
 
 // ===================== Mock Data Integrity =====================
 describe('Mock Data Integrity', () => {
