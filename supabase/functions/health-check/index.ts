@@ -53,4 +53,6 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
    }
  };
  
- Deno.serve(handler);
+ if (import.meta.main) {
+   Deno.serve(handler);
+ }
