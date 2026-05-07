@@ -22,7 +22,7 @@ async function checkTrunk(server: string, transport: string): Promise<{ reachabl
   }
 }
 
-serve(async (req) => {
+ export const handler = async (req: Request): Promise<Response> => {
   const cors = buildCorsHeaders(req);
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
 
@@ -65,34 +65,46 @@ serve(async (req) => {
 
     const results: Array<{ id: string; name: string; reachable: boolean; latency_ms: number }> = [];
 
-    for (const trunk of trunks ?? []) {
-      const result = await checkTrunk(trunk.sip_server, trunk.transport);
-      const status = result.reachable ? (result.latency_ms < 300 ? "healthy" : "degraded") : "offline";
-
-      await supabase.from("voip_trunk_health_checks").insert({
-        trunk_id: trunk.id,
-        reachable: result.reachable,
-        latency_ms: result.latency_ms,
-        error_message: result.error ?? null,
-      });
-
-      await supabase.from("voip_trunks")
-        .update({
-          last_health_status: status,
-          last_health_latency_ms: result.latency_ms,
-          last_health_checked_at: new Date().toISOString(),
-        })
-        .eq("id", trunk.id);
-
-      results.push({ id: trunk.id, name: trunk.name, reachable: result.reachable, latency_ms: result.latency_ms });
-    }
+     const checks = (trunks ?? []).map(async (trunk) => {
+       const result = await checkTrunk(trunk.sip_server, trunk.transport);
+       const status = result.reachable ? (result.latency_ms < 300 ? "healthy" : "degraded") : "offline";
+ 
+       // Parallelize DB updates per trunk
+       const [checkRes, updateRes] = await Promise.all([
+         supabase.from("voip_trunk_health_checks").insert({
+           trunk_id: trunk.id,
+           reachable: result.reachable,
+           latency_ms: result.latency_ms,
+           error_message: result.error ?? null,
+         }),
+         supabase.from("voip_trunks")
+           .update({
+             last_health_status: status,
+             last_health_latency_ms: result.latency_ms,
+             last_health_checked_at: new Date().toISOString(),
+           })
+           .eq("id", trunk.id)
+       ]);
+ 
+       if (checkRes.error) console.error(`Error logging health check for trunk ${trunk.id}:`, checkRes.error);
+       if (updateRes.error) console.error(`Error updating trunk status ${trunk.id}:`, updateRes.error);
+ 
+       return { id: trunk.id, name: trunk.name, reachable: result.reachable, latency_ms: result.latency_ms };
+     });
+ 
+     const allResults = await Promise.all(checks);
+     results.push(...allResults);
 
     return new Response(JSON.stringify({ checked: results.length, results }), {
       status: 200, headers: { ...cors, "Content-Type": "application/json" },
     });
   } catch (e) {
-    return new Response(JSON.stringify({ error: (e as Error).message }), {
-      status: 500, headers: { ...cors, "Content-Type": "application/json" },
-    });
-  }
-});
+     return new Response(JSON.stringify({ error: (e as Error).message }), {
+       status: 500, headers: { ...cors, "Content-Type": "application/json" },
+     });
+   }
+ };
+ 
+ if (import.meta.main) {
+   serve(handler);
+ }
