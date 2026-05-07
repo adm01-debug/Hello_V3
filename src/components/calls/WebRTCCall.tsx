@@ -2,7 +2,8 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Phone, PhoneOff, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
+ import { Phone, PhoneOff, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
+ import { formatDuration } from "@/lib/utils";
 import { logger } from '@/lib/logger';
 
 interface WebRTCCallProps {
@@ -90,12 +91,6 @@ export function WebRTCCall({ targetNumber, onCallStarted, onCallEnded }: WebRTCC
       setIsMuted(!isMuted);
     }
   }, [isMuted]);
-
-  const formatDuration = (secs: number) => {
-    const m = Math.floor(secs / 60).toString().padStart(2, "0");
-    const s = (secs % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  };
 
   const statusColors: Record<CallStatus, string> = {
     idle: "secondary",
