@@ -38,7 +38,7 @@ export const CallVolumeChart = memo(function CallVolumeChart() {
                     <stop offset="95%" stopColor="hsl(var(--success))" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
+                 <CartesianGrid strokeDasharray="3 3" className="stroke-border/30" vertical={false} />
                 <XAxis 
                   dataKey="hour" 
                   axisLine={false}
@@ -52,14 +52,16 @@ export const CallVolumeChart = memo(function CallVolumeChart() {
                   tick={{ fontSize: 12 }}
                   className="text-muted-foreground"
                 />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    borderColor: 'hsl(var(--border))',
-                    borderRadius: '8px',
-                  }}
-                  labelStyle={{ color: 'hsl(var(--foreground))' }}
-                />
+                 <Tooltip 
+                   contentStyle={{ 
+                     backgroundColor: 'rgba(var(--card-rgb), 0.8)', 
+                     backdropFilter: 'blur(12px)',
+                     border: '1px solid rgba(255, 255, 255, 0.1)',
+                     borderRadius: '16px',
+                     boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.3)'
+                   }}
+                   itemStyle={{ fontSize: '12px', fontWeight: 'bold' }}
+                 />
                 <Legend 
                   verticalAlign="top" 
                   height={36}
