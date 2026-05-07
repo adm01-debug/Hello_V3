@@ -4,6 +4,7 @@ import {
   mockCallHistory,
   mockActiveCall,
   mockAgents,
+   mockQueueStats,
    mockDashboardStats,
    mockHourlyCallVolume,
    formatPhoneNumber,
@@ -11,6 +12,7 @@ import {
    type Contact,
    type CallRecord,
    type Agent,
+   type QueueStats,
  } from '@/data/mockData';
  import { formatDuration } from '@/lib/utils';
 
