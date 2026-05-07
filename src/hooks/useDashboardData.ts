@@ -132,42 +132,10 @@ export function useQueueStatsData() {
   return useQuery<QueueStats>({
     queryKey: ['queue-stats'],
      queryFn: async () => {
-       const today = new Date();
-       today.setHours(0, 0, 0, 0);
-       const todayISO = today.toISOString();
- 
-       const [
-         { count: waiting },
-         { data: holdEvents },
-         { count: abandoned },
-         { count: totalToday },
-         { count: completedToday }
-       ] = await Promise.all([
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).eq('status', 'ringing'),
-         supabase.from('hold_events').select('duration_seconds').gte('started_at', todayISO),
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO).eq('status', 'abandoned'),
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO),
-         supabase.from('call_sessions').select('*', { count: 'exact', head: true }).gte('started_at', todayISO).eq('status', 'completed')
-       ]);
- 
-       const durations = (holdEvents || []).map(e => e.duration_seconds || 0).filter(d => d > 0);
-       const avgWaitTime = durations.length > 0
-         ? Math.round(durations.reduce((s, d) => s + d, 0) / durations.length)
-         : 0;
-       const longestWait = durations.length > 0 ? Math.max(...durations) : 0;
-
-      const serviceLevelPercent = (totalToday || 0) > 0
-        ? Math.round(((completedToday || 0) / (totalToday || 1)) * 100)
-        : 100;
-
-      return {
-        waiting: waiting || 0,
-        avgWaitTime,
-        longestWait,
-        abandoned: abandoned || 0,
-        serviceLevelPercent,
-      };
-    },
+       const { data, error } = await supabase.rpc('get_queue_stats');
+       if (error) throw error;
+       return data as unknown as QueueStats;
+     },
     refetchInterval: 15000,
   });
 }
