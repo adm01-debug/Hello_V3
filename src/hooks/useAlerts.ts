@@ -270,7 +270,7 @@ export function useAlerts() {
     markContactAlertAsRead, markContactAlertAsActioned, deleteContactAlert,
     batchMarkContactAlertsAsRead, batchMarkContactAlertsAsActioned, batchDeleteContactAlerts,
     toggleCallAlertSelection, toggleContactAlertSelection,
-    selectAllCallAlerts, selectAllContactAlerts, createTestAlerts,
+     selectAllCallAlerts, selectAllContactAlerts, createTestAlerts, fetchAllAlerts,
     callUnreadCount, callCriticalCount, contactUnreadCount, contactPendingCount, contactCriticalCount,
     totalUnread, totalCritical,
   };

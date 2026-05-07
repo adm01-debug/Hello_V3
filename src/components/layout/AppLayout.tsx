@@ -4,9 +4,7 @@ import { AppSidebar } from './AppSidebar';
 import { ActiveCallBar } from '@/components/calls/ActiveCallBar';
  import { Search, Wifi } from 'lucide-react';
  import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { AlertsDropdown } from '@/components/alerts/AlertsDropdown';
-import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdown';
-import { NotificationBell } from '@/components/notifications/NotificationBell';
+ import { UnifiedNotificationDropdown } from '@/components/notifications/UnifiedNotificationDropdown';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { BreadcrumbCompact } from '@/components/ui/breadcrumb-nav';
 import { SkipLink } from '@/components/ui/keyboard-navigation';
@@ -15,7 +13,8 @@ import { BackButton } from '@/components/navigation/BackButton';
 import { PageTransition } from '@/components/navigation/PageTransition';
 import { NavigationProgress } from '@/components/navigation/NavigationProgress';
 import { CommandPalette } from './CommandPalette';
-import { MobileBottomNav } from './MobileBottomNav';
+ import { MobileBottomNav } from './MobileBottomNav';
+ import { OnboardingWizard } from './OnboardingWizard';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -23,11 +22,12 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   return (
-    <SidebarProvider defaultOpen={true}>
-      {/* Command Palette */}
-      <CommandPalette />
-      
-      {/* Navigation progress bar */}
+     <SidebarProvider defaultOpen={true}>
+       {/* Global Utilities */}
+       <CommandPalette />
+       <OnboardingWizard />
+       
+       {/* Navigation progress bar */}
       <NavigationProgress />
       
       {/* Skip Link for A11Y */}
@@ -84,10 +84,8 @@ export function AppLayout({ children }: AppLayoutProps) {
                  </Tooltip>
                </TooltipProvider>
  
-              <ThemeToggle />
-              <NotificationBell />
-              <ContactAlertsDropdown />
-              <AlertsDropdown />
+               <ThemeToggle />
+               <UnifiedNotificationDropdown />
             </div>
           </header>
 
