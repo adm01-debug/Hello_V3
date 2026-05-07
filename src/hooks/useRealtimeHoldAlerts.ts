@@ -59,7 +59,12 @@ const createUrgentSound = () => {
 export function useRealtimeHoldAlerts() {
   const [isEnabled, setIsEnabled] = useState(loadSavedEnabled);
   const [browserNotificationsGranted, setBrowserNotificationsGranted] = useState(false);
-  const [recentAlerts, setRecentAlerts] = useState<RealtimeHoldAlert[]>([]);
+   const [recentAlerts, setRecentAlerts] = useState<RealtimeHoldAlert[]>(() => {
+     try {
+       const saved = localStorage.getItem('recentHoldAlerts');
+       return saved ? JSON.parse(saved) : [];
+     } catch { return []; }
+   });
   const [unreadCount, setUnreadCount] = useState(0);
   const [playSoundRef] = useState<{ current: (() => void) | null }>({ current: null });
 
@@ -138,13 +143,19 @@ export function useRealtimeHoldAlerts() {
     }
   }, [playSoundRef]);
 
-  const handleNewAlert = useCallback((alert: RealtimeHoldAlert) => {
-    if (!isEnabled) return;
-
-    log.info('New hold alert received', { id: alert.id, severity: alert.severity });
-
-    setRecentAlerts(prev => [alert, ...prev].slice(0, 50));
-    setUnreadCount(prev => prev + 1);
+   const handleNewAlert = useCallback((alert: RealtimeHoldAlert) => {
+     setRecentAlerts(prev => {
+       const exists = prev.some(a => a.id === alert.id);
+       if (exists) return prev;
+       const next = [alert, ...prev].slice(0, 50);
+       localStorage.setItem('recentHoldAlerts', JSON.stringify(next));
+       return next;
+     });
+ 
+     if (!isEnabled) return;
+ 
+     log.info('New hold alert received', { id: alert.id, severity: alert.severity });
+     setUnreadCount(prev => prev + 1);
 
     const isCritical = alert.severity === 'critical' || alert.severity === 'error';
 
