@@ -24,24 +24,23 @@ export const ActiveCallsRealtime = () => {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col gap-2">
-            <CardTitle className="flex items-center gap-2"><Phone className="h-5 w-5 text-primary" />Chamadas Ativas{filteredCalls.length > 0 && <Badge variant="secondary" className="ml-2">{filteredCalls.length}</Badge>}</CardTitle>
-            {statusCounts.total > 0 && (
-              <div className="flex items-center gap-3 text-sm">
-                <TooltipProvider><Tooltip><TooltipTrigger asChild><div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-success/10 border border-success/20 cursor-default"><Phone className="h-3 w-3 text-success" /><span className="font-medium text-success">{statusCounts.inCall}</span></div></TooltipTrigger><TooltipContent><p>{statusCounts.inCall} chamada{statusCounts.inCall !== 1 ? 's' : ''} em andamento</p></TooltipContent></Tooltip></TooltipProvider>
-                <TooltipProvider><Tooltip><TooltipTrigger asChild>
-                  <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md cursor-default transition-all ${statusCounts.maxSeverity === 'critical' ? 'bg-destructive/20 border border-destructive/40 animate-pulse' : statusCounts.maxSeverity === 'warning' ? 'bg-call-hold/20 border border-call-hold/40 animate-pulse' : statusCounts.onHold > 0 ? 'bg-destructive/10 border border-destructive/20' : 'bg-muted border border-border'}`}>
-                    <Pause className={`h-3 w-3 ${statusCounts.maxSeverity === 'critical' ? 'text-destructive' : statusCounts.maxSeverity === 'warning' ? 'text-call-hold' : statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
-                    <span className={`font-medium ${statusCounts.maxSeverity === 'critical' ? 'text-destructive' : statusCounts.maxSeverity === 'warning' ? 'text-call-hold' : statusCounts.onHold > 0 ? 'text-destructive' : 'text-muted-foreground'}`}>{statusCounts.onHold}</span>
-                  </div>
-                </TooltipTrigger><TooltipContent><p>{statusCounts.onHold} chamada{statusCounts.onHold !== 1 ? 's' : ''} em espera{statusCounts.maxSeverity === 'critical' ? ' (crítico!)' : statusCounts.maxSeverity === 'warning' ? ' (atenção)' : ''}</p></TooltipContent></Tooltip></TooltipProvider>
+    <Card className="card-premium border-none h-full">
+      <CardHeader className="pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1.5">
+            <CardTitle className="flex items-center gap-2.5 text-xl">
+              <div className="p-2 rounded-xl bg-primary/10 text-primary">
+                <Phone className="h-5 w-5" />
               </div>
-            )}
+              Chamadas Ativas
+              {filteredCalls.length > 0 && (
+                <Badge variant="secondary" className="ml-1 bg-primary/5 text-primary border-primary/10">
+                  {filteredCalls.length}
+                </Badge>
+              )}
+            </CardTitle>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 bg-muted/30 p-1 rounded-2xl border border-white/[0.05]">
             <TooltipProvider><Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" onClick={toggleSound} className={soundEnabled ? 'text-primary' : 'text-muted-foreground'}>{soundEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}</Button></TooltipTrigger><TooltipContent><p>{soundEnabled ? 'Desativar som' : 'Ativar som'}</p></TooltipContent></Tooltip></TooltipProvider>
             <Select value={selectedHoldStatus} onValueChange={setSelectedHoldStatus}><SelectTrigger className="w-[140px]"><Pause className="h-4 w-4 mr-2" /><SelectValue placeholder="Status" /></SelectTrigger><SelectContent><SelectItem value="all">Todos</SelectItem><SelectItem value="on_hold">Em Espera</SelectItem><SelectItem value="in_call">Em Chamada</SelectItem></SelectContent></Select>
             {agents.length > 0 && (<Select value={selectedAgent} onValueChange={setSelectedAgent}><SelectTrigger className="w-[180px]"><Filter className="h-4 w-4 mr-2" /><SelectValue placeholder="Filtrar por agente" /></SelectTrigger><SelectContent><SelectItem value="all">Todos os agentes</SelectItem>{agents.map(a => <SelectItem key={a} value={a}>{a}</SelectItem>)}</SelectContent></Select>)}
