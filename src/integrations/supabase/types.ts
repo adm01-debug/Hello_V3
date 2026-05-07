@@ -6392,6 +6392,7 @@ export type Database = {
         }
         Returns: Json
       }
+      get_call_volume_stats: { Args: never; Returns: Json }
       get_dashboard_stats: { Args: never; Returns: Json }
       get_profile_role: { Args: { _user_id: string }; Returns: string }
       get_queue_stats: { Args: never; Returns: Json }
