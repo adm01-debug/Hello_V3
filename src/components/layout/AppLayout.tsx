@@ -2,8 +2,9 @@ import { ReactNode } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from './AppSidebar';
 import { ActiveCallBar } from '@/components/calls/ActiveCallBar';
- import { Search, Wifi } from 'lucide-react';
- import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+  import { Search } from 'lucide-react';
+  import { TooltipProvider } from '@/components/ui/tooltip';
+  import { NetworkStatusIndicator } from '@/components/network/NetworkStatusIndicator';
  import { UnifiedNotificationDropdown } from '@/components/notifications/UnifiedNotificationDropdown';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { BreadcrumbCompact } from '@/components/ui/breadcrumb-nav';
@@ -69,22 +70,11 @@ export function AppLayout({ children }: AppLayoutProps) {
               </button>
             </div>
 
-             <div className="flex items-center gap-2 md:gap-3">
-               <TooltipProvider>
-                 <Tooltip>
-                   <TooltipTrigger asChild>
-                     <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 rounded-md bg-success/10 border border-success/20 cursor-default">
-                       <Wifi className="h-3.5 w-3.5 text-success animate-pulse" />
-                       <span className="text-[10px] font-bold text-success uppercase tracking-wider">Online</span>
-                     </div>
-                   </TooltipTrigger>
-                   <TooltipContent>
-                     <p>Conexão com servidor ativa</p>
-                   </TooltipContent>
-                 </Tooltip>
-               </TooltipProvider>
- 
-               <ThemeToggle />
+              <div className="flex items-center gap-2 md:gap-3">
+                <TooltipProvider>
+                  <NetworkStatusIndicator />
+                </TooltipProvider>
+                <ThemeToggle />
                <UnifiedNotificationDropdown />
             </div>
           </header>
