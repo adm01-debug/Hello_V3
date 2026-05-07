@@ -164,13 +164,13 @@ function NavItem({ item, collapsed, isFavorite, onToggleFavorite }: { item: NavI
         <NavLink
           to={item.url}
           className={cn(
-            'flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-all duration-200 group/nav',
-            'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+            'flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-bold tracking-tight text-sidebar-foreground/50 transition-all duration-400 group/nav',
+            'hover:bg-white/[0.03] hover:text-sidebar-foreground hover:translate-x-1',
             active && [
-              'bg-sidebar-primary/15 text-sidebar-primary',
-              'shadow-[inset_0_0_20px_hsl(var(--sidebar-primary)/0.08),0_0_15px_hsl(var(--sidebar-primary)/0.1)]',
-              'border border-sidebar-primary/20',
-              'hover:bg-sidebar-primary/20 hover:text-sidebar-primary',
+              'bg-primary/10 text-primary',
+              'shadow-[0_8px_20px_-4px_hsl(var(--primary)/0.2)]',
+              'border border-primary/10',
+              'hover:bg-primary/15 hover:text-primary',
             ]
           )}
         >
