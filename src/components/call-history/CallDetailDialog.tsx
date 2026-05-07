@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Phone, MessageSquare, Brain, Download, Loader2, TrendingUp, TrendingDown, Minus, BarChart3, Sparkles, Lightbulb, Activity, PlayCircle, FileText } from 'lucide-react';
+ import { Phone, MessageSquare, Brain, Download, Loader2, TrendingUp, TrendingDown, Minus, BarChart3, Sparkles, Lightbulb, Activity, PlayCircle, FileText, Search } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+ import { Button } from '@/components/ui/button';
+ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -58,9 +59,10 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
   const { snapshots } = useLiveSentiment(sessionId);
 
   const [audioUrl, setAudioUrl] = useState<string | undefined>(undefined);
-  const [coachingTs, setCoachingTs] = useState<CoachingTs[]>([]);
-  const [seekTo, setSeekTo] = useState<number | undefined>(undefined);
-  const [activeTab, setActiveTab] = useState('player');
+   const [coachingTs, setCoachingTs] = useState<CoachingTs[]>([]);
+   const [seekTo, setSeekTo] = useState<number | undefined>(undefined);
+   const [activeTab, setActiveTab] = useState('player');
+   const [transcriptSearch, setTranscriptSearch] = useState('');
 
   useEffect(() => {
     if (!sessionId) { setAudioUrl(undefined); setCoachingTs([]); return; }
@@ -175,34 +177,50 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
               {sessionId && <MeetingSummaryCard callSessionId={sessionId} />}
             </TabsContent>
 
-            <TabsContent value="transcription">
-              <ScrollArea className="h-[350px] rounded-lg border border-border p-4">
-                {sessionTranscripts.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-12"><MessageSquare className="h-12 w-12 text-muted-foreground/50 mb-4" /><p className="text-muted-foreground">Nenhuma transcrição disponível</p></div>
-                ) : (
-                  <div className="space-y-4">
-                    {sessionTranscripts.map((t, idx) => {
-                      const ts = typeof t.start_time === 'number' ? t.start_time : idx * 5;
-                      return (
-                        <div key={t.id} className={cn('flex gap-3', t.speaker === 'agent' ? 'justify-end' : 'justify-start')}>
-                          <button
-                            type="button"
-                            onClick={() => jumpTo(ts)}
-                            className={cn('max-w-[75%] rounded-lg px-4 py-3 text-left transition-colors hover:ring-2 hover:ring-primary/50', t.speaker === 'agent' ? 'bg-primary/10 border border-primary/20' : 'bg-warning/10 border border-warning/20')}
-                          >
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className={cn('text-xs font-medium', t.speaker === 'agent' ? 'text-primary' : 'text-warning')}>{t.speaker === 'agent' ? 'Agente' : 'Cliente'}</span>
-                              <span className="text-xs text-muted-foreground">{format(new Date(t.created_at), 'HH:mm:ss')}</span>
-                            </div>
-                            <p className="text-sm">{t.text}</p>
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </ScrollArea>
-            </TabsContent>
+             <TabsContent value="transcription">
+               <div className="space-y-4">
+                 <div className="relative">
+                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                   <Input
+                     placeholder="Buscar na transcrição..."
+                     className="pl-9"
+                     value={transcriptSearch}
+                     onChange={(e) => setTranscriptSearch(e.target.value)}
+                   />
+                 </div>
+                 <ScrollArea className="h-[350px] rounded-lg border border-border p-4">
+                   {sessionTranscripts.length === 0 ? (
+                     <div className="flex flex-col items-center justify-center py-12"><MessageSquare className="h-12 w-12 text-muted-foreground/50 mb-4" /><p className="text-muted-foreground">Nenhuma transcrição disponível</p></div>
+                   ) : (
+                     <div className="space-y-4">
+                       {sessionTranscripts
+                         .filter(t => !transcriptSearch || t.text.toLowerCase().includes(transcriptSearch.toLowerCase()))
+                         .map((t, idx) => {
+                           const ts = typeof t.start_time === 'number' ? t.start_time : idx * 5;
+                           return (
+                             <div key={t.id} className={cn('flex gap-3', t.speaker === 'agent' ? 'justify-end' : 'justify-start')}>
+                               <button
+                                 type="button"
+                                 onClick={() => jumpTo(ts)}
+                                 className={cn('max-w-[75%] rounded-lg px-4 py-3 text-left transition-colors hover:ring-2 hover:ring-primary/50', t.speaker === 'agent' ? 'bg-primary/10 border border-primary/20' : 'bg-warning/10 border border-warning/20')}
+                               >
+                                 <div className="flex items-center gap-2 mb-1">
+                                   <span className={cn('text-xs font-medium', t.speaker === 'agent' ? 'text-primary' : 'text-warning')}>{t.speaker === 'agent' ? 'Agente' : 'Cliente'}</span>
+                                   <span className="text-xs text-muted-foreground">{format(new Date(t.created_at), 'HH:mm:ss')}</span>
+                                 </div>
+                                 <p className="text-sm">{t.text}</p>
+                               </button>
+                             </div>
+                           );
+                         })}
+                       {sessionTranscripts.filter(t => !transcriptSearch || t.text.toLowerCase().includes(transcriptSearch.toLowerCase())).length === 0 && (
+                         <div className="text-center py-8 text-muted-foreground">Nenhum resultado encontrado</div>
+                       )}
+                     </div>
+                   )}
+                 </ScrollArea>
+               </div>
+             </TabsContent>
 
             <TabsContent value="analysis">
               <ScrollArea className="h-[350px] rounded-lg border border-border p-4">
