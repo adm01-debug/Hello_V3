@@ -5,12 +5,10 @@
  
  export interface Profile {
    id: string;
-   name: string | null;
-   email: string | null;
-   avatar_url: string | null;
-   role: string | null;
-   extension: string | null;
-   department: string | null;
+   email: string;
+   full_name: string | null;
+   role: string;
+   agent_id: string | null;
  }
  
  export function useProfile() {
@@ -28,17 +26,19 @@
          .single();
  
        if (error) throw error;
-       return data as Profile;
+       return data as unknown as Profile;
      },
      enabled: !!user,
    });
  
-   const updateProfile = useMutation({
+   const updateProfileMutation = useMutation({
      mutationFn: async (updates: Partial<Profile>) => {
        if (!user) throw new Error('Not authenticated');
+       // Filter out id/role from updates to prevent RLS/Trigger issues if they match interface but shouldn't be changed by user
+       const { id, role, ...allowedUpdates } = updates;
        const { error } = await supabase
          .from('user_profiles')
-         .update(updates)
+         .update(allowedUpdates as any)
          .eq('id', user.id);
  
        if (error) throw error;
