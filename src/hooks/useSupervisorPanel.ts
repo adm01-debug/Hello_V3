@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+ import { useEffect, useState, useCallback } from 'react';
+ import { formatDuration } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useCriticalAlertNotifications, AlertSoundConfig } from '@/hooks/useCriticalAlertNotifications';
@@ -189,7 +190,14 @@ export function useSupervisorPanel() {
     soundEnabled, soundConfig, queueMetrics,
     handleSoundEnabledChange, handleSoundConfigChange, handleEnableSound,
     sendWhisper, startBargeIn, endBargeIn,
-    formatTime, getCallDuration, isCallInBargeIn, formatWaitTime,
-    quickWhispers, playAlertSound,
-  };
+     formatTime,
+     isCallInBargeIn,
+     getCallDuration: (startedAt: string) => {
+       const seconds = Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000);
+       return formatDuration(seconds);
+     },
+     formatWaitTime: (seconds: number) => formatDuration(seconds),
+     quickWhispers,
+     playAlertSound,
+   };
 }
