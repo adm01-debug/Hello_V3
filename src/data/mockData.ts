@@ -297,9 +297,9 @@ export const mockHourlyCallVolume = [
   { hour: '16:00', incoming: 38, outgoing: 25 },
   { hour: '17:00', incoming: 22, outgoing: 18 },
 ];
-
-  return phone;
-};
+ export const formatPhoneNumber = (phone: string): string => {
+   return phone;
+ };
 
 export const getInitials = (name: string): string => {
   return name
