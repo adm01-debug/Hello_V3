@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Users } from 'lucide-react';
 import { EmptyState } from '@/components/ui/empty-state';
 import { useAgentsListData } from '@/hooks/useDashboardData';
 import { Skeleton } from '@/components/ui/skeleton';
