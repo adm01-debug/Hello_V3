@@ -22,7 +22,7 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
   }
 }
 
-serve(async (req) => {
+ export const handler = async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: buildCorsHeaders(req) });
   }
@@ -34,7 +34,9 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: 'Não autorizado' }), {
         status: 401,
         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-      });
+ };
+ 
+ serve(handler);
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
