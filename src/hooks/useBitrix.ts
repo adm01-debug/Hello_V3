@@ -46,64 +46,74 @@ export const useBitrix = () => {
   const [leads, setLeads] = useState<BitrixLead[]>([]);
   const [deals, setDeals] = useState<BitrixDeal[]>([]);
 
-  const callBitrixApi = useCallback(async (action: string, params?: Record<string, unknown>) => {
-    setIsLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('bitrix-api', {
-        body: { action, params }
-      });
-
-      if (error) {
-        let isNotConfigured = false;
-        let description = error.message;
-
-        const responseContext = (error as { context?: Response }).context;
-        if (responseContext instanceof Response) {
-          try {
-            const payload = await responseContext.clone().json() as {
-              configured?: boolean;
-              error?: string;
-              message?: string;
-            };
-
-            const configMessage = payload?.error || payload?.message;
-            isNotConfigured = payload?.configured === false || configMessage === 'Serviço não configurado';
-
-            if (configMessage) {
-              description = configMessage;
-            }
-          } catch {
-            // Ignore parse errors and fallback to default error handling
-          }
-        }
-
-        if (isNotConfigured) {
-          setIsConfigured(false);
-          return { success: false, configured: false };
-        }
-
-        logger.error('Bitrix API error:', error);
-        toast.error('Erro ao comunicar com Bitrix', {
-          description
-        });
-        return null;
-      }
-
-      if (data?.configured === false) {
-        setIsConfigured(false);
-        return null;
-      }
-
-      setIsConfigured(true);
-      return data;
-    } catch (err) {
-      logger.error('Bitrix call error:', err);
-      toast.error('Erro na integração Bitrix');
-      return null;
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+   const callBitrixApi = useCallback(async (action: string, params?: Record<string, unknown>, maxRetries = 2) => {
+     setIsLoading(true);
+     let lastError: any = null; // Keeping any here briefly because it might not strictly be Error
+     
+     for (let attempt = 0; attempt <= maxRetries; attempt++) {
+       try {
+         const { data, error } = await supabase.functions.invoke('bitrix-api', {
+           body: { action, params }
+         });
+ 
+         if (!error) {
+           if (data?.configured === false) {
+             setIsConfigured(false);
+             setIsLoading(false);
+             return null;
+           }
+           setIsConfigured(true);
+           setIsLoading(false);
+           return data;
+         }
+ 
+         lastError = error;
+         const status = (error as { status?: number }).status || 0;
+         if (status >= 400 && status < 500) break; // Client error, don't retry
+         if (error.message?.includes('não configurado')) break;
+ 
+         if (attempt < maxRetries) {
+           await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
+           continue;
+         }
+       } catch (err) {
+         lastError = err;
+         if (attempt < maxRetries) {
+           await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
+           continue;
+         }
+       }
+     }
+ 
+     setIsLoading(false);
+     if (lastError) {
+       let isNotConfigured = false;
+       let description = lastError.message || String(lastError);
+ 
+       const responseContext = (lastError as { context?: Response }).context;
+       if (responseContext instanceof Response) {
+         try {
+           const payload = await responseContext.clone().json() as {
+             configured?: boolean;
+             error?: string;
+             message?: string;
+           };
+           const configMessage = payload?.error || payload?.message;
+           isNotConfigured = payload?.configured === false || configMessage === 'Serviço não configurado';
+           if (configMessage) description = configMessage;
+         } catch { /* ignore */ }
+       }
+ 
+       if (isNotConfigured) {
+         setIsConfigured(false);
+         return { success: false, configured: false };
+       }
+ 
+       logger.error('Bitrix API error:', lastError);
+       toast.error('Erro ao comunicar com Bitrix', { description });
+     }
+     return null;
+   }, []);
 
   const checkConfiguration = useCallback(async () => {
     const result = await callBitrixApi('get_user');
