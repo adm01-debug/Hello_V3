@@ -1,7 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useDashboardStats, useCallVolumeData, useAgentsListData } from '@/hooks/useDashboardData';
+ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+ import { Skeleton } from '@/components/ui/skeleton';
+ import { useDashboardStats, useCallVolumeData } from '@/hooks/useDashboardData';
+ import { useQuery } from '@tanstack/react-query';
+ import { supabase } from '@/integrations/supabase/client';
 import { 
   AreaChart, 
   Area, 
@@ -41,7 +43,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
    });
  
    const agentPerformance = useMemo(() => {
-     return (agentsPerf || []).map(agent => ({
+     return (agentsPerf || []).map((agent: any) => ({
        name: agent.name.split(' ')[0],
        chamadas: agent.totalCalls,
        media: agent.avgDuration
