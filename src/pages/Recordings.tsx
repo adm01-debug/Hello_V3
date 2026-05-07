@@ -5,17 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+ import { format } from 'date-fns';
+ import { ptBR } from 'date-fns/locale';
+ import { formatDuration } from '@/lib/utils';
 import { useRecordings } from '@/hooks/useRecordings';
 import { TranscriptionDialog } from '@/components/recordings/TranscriptionDialog';
 import { usePageTitle } from '@/hooks/usePageTitle';
-
-const formatDuration = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
 
 const formatFileSize = (bytes: number | null) => {
   if (!bytes) return '-';
