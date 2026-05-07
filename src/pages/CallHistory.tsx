@@ -6,8 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
-import { format } from 'date-fns';
-import { useCallHistory, DateRangePreset, SentimentFilter, DurationFilter } from '@/hooks/useCallHistory';
+ import { format } from 'date-fns';
+ import { useMemo } from 'react';
+ import { useCallHistory, DateRangePreset, SentimentFilter, DurationFilter } from '@/hooks/useCallHistory';
 import { CallSessionsList } from '@/components/call-history/CallSessionsList';
 import { CallDetailDialog } from '@/components/call-history/CallDetailDialog';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -15,16 +16,25 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 export default function CallHistory() {
   usePageTitle('Histórico de Chamadas');
 
-   const h = useCallHistory();
+   const {
+     sessions, isLoading, searchQuery, setSearchQuery,
+     selectedSession, setSelectedSession, sessionTranscripts, sessionAnalyses, sessionSummary,
+     isLoadingDetails, showFilters, setShowFilters, dateRangePreset, setDateRangePreset,
+     customDateFrom, setCustomDateFrom, customDateTo, setCustomDateTo,
+     sentimentFilter, setSentimentFilter, durationFilter, setDurationFilter,
+     statusFilter, setStatusFilter,
+     topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
+     handleSessionClick, exportTranscript, fetchSessions,
+   } = useCallHistory();
  
    const stats = useMemo(() => {
-     const s = h.sessions || [];
+     const s = sessions || [];
      return {
        total: s.length,
        completed: s.filter(c => c.status === 'completed').length,
        missed: s.filter(c => c.status === 'missed' || c.status === 'abandoned').length,
      };
-   }, [h.sessions]);
+   }, [sessions]);
  
    return (
      <div className="space-y-6 relative">
@@ -35,12 +45,12 @@ export default function CallHistory() {
              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Histórico de Chamadas</h1>
              <p className="text-muted-foreground">Visualize transcrições e análises detalhadas</p>
            </div>
-           <div className="flex items-center gap-2">
-             <Button variant="outline" size="sm" onClick={h.fetchSessions}>Atualizar</Button>
-             <Button variant="neon" size="sm" className="gap-2">
-               <Download className="h-4 w-4" /> Exportar
-             </Button>
-           </div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" onClick={fetchSessions}>Atualizar</Button>
+              <Button variant="neon" size="sm" className="gap-2">
+                <Download className="h-4 w-4" /> Exportar
+              </Button>
+            </div>
          </div>
  
          {/* KPI Cards */}
