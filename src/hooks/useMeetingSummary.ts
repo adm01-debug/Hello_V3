@@ -46,16 +46,19 @@ export interface MeetingSummary {
   updated_at: string;
 }
 
- const parse = (row: Record<string, any>): MeetingSummary => ({
-  ...row,
-  key_points: Array.isArray(row.key_points) ? row.key_points : [],
-  action_items: Array.isArray(row.action_items) ? row.action_items : [],
-  decisions: Array.isArray(row.decisions) ? row.decisions : [],
-  next_steps: Array.isArray(row.next_steps) ? row.next_steps : [],
-  participants_sentiment: Array.isArray(row.participants_sentiment) ? row.participants_sentiment : [],
-  topics_discussed: Array.isArray(row.topics_discussed) ? row.topics_discussed : [],
-  shared_with: Array.isArray(row.shared_with) ? row.shared_with : [],
-});
+ const parse = (row: Record<string, any>): MeetingSummary => {
+   const base = row as MeetingSummary;
+   return {
+     ...base,
+     key_points: Array.isArray(row.key_points) ? row.key_points : [],
+     action_items: Array.isArray(row.action_items) ? row.action_items : [],
+     decisions: Array.isArray(row.decisions) ? row.decisions : [],
+     next_steps: Array.isArray(row.next_steps) ? row.next_steps : [],
+     participants_sentiment: Array.isArray(row.participants_sentiment) ? row.participants_sentiment : [],
+     topics_discussed: Array.isArray(row.topics_discussed) ? row.topics_discussed : [],
+     shared_with: Array.isArray(row.shared_with) ? row.shared_with : [],
+   };
+ };
 
 export function useMeetingSummary(callSessionId?: string) {
   const queryClient = useQueryClient();
