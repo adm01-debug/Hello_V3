@@ -6,7 +6,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Headphones, Phone, Send, User, Clock, Volume2, Check, Users, PhoneCall, PhoneOff, Radio, Timer, TrendingDown, Activity, AlertTriangle, ChevronDown, BarChart3, Bell, BellOff } from 'lucide-react';
+ import { Headphones, Phone, Send, User, Clock, Volume2, Check, Users, PhoneCall, PhoneOff, Radio, Timer, TrendingDown, Activity, AlertTriangle, ChevronDown, BarChart3, Bell, BellOff } from 'lucide-react';
+ import { formatDuration } from '@/lib/utils';
 import { QueueTrendChart } from './QueueTrendChart';
 import { AlertSoundSettings } from './AlertSoundSettings';
 import { SoundProfileManager } from './SoundProfileManager';
@@ -47,7 +48,7 @@ export const SupervisorPanel = () => {
             <Tooltip><TooltipTrigger asChild>
               <div className="p-2.5 rounded-lg border bg-accent/30">
                 <div className="flex items-center gap-1.5 text-muted-foreground mb-1"><Timer className="h-3.5 w-3.5" /><span className="text-xs">Espera Média</span></div>
-                <p className="text-lg font-bold">{s.formatWaitTime(s.queueMetrics.avgWaitTime)}</p>
+                 <p className="text-lg font-bold">{formatDuration(s.queueMetrics.avgWaitTime)}</p>
               </div>
             </TooltipTrigger><TooltipContent><p>Tempo médio de espera das chamadas hoje</p></TooltipContent></Tooltip>
           </TooltipProvider>
@@ -71,7 +72,7 @@ export const SupervisorPanel = () => {
             <Tooltip><TooltipTrigger asChild>
               <div className={`p-2.5 rounded-lg border ${s.queueMetrics.longestWait > 120 ? 'bg-destructive/10 border-destructive/30' : 'bg-accent/30'}`}>
                 <div className="flex items-center gap-1.5 text-muted-foreground mb-1"><AlertTriangle className={`h-3.5 w-3.5 ${s.queueMetrics.longestWait > 120 ? 'text-destructive' : ''}`} /><span className="text-xs">Maior Espera</span></div>
-                <p className={`text-lg font-bold ${s.queueMetrics.longestWait > 120 ? 'text-destructive' : ''}`}>{s.formatWaitTime(s.queueMetrics.longestWait)}</p>
+                 <p className={`text-lg font-bold ${s.queueMetrics.longestWait > 120 ? 'text-destructive' : ''}`}>{formatDuration(s.queueMetrics.longestWait)}</p>
               </div>
             </TooltipTrigger><TooltipContent><p>Maior tempo de espera registrado hoje</p></TooltipContent></Tooltip>
           </TooltipProvider>
