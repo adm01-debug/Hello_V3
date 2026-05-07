@@ -2,21 +2,38 @@ import { memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCallVolumeData } from '@/hooks/useDashboardData';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+ import { EmptyState } from '@/components/ui/empty-state';
 
 export const CallVolumeChart = memo(function CallVolumeChart() {
-  const { data: volumeData, isLoading } = useCallVolumeData();
+   const { data: volumeData, isLoading, isFetching } = useCallVolumeData();
+   
+   const hasData = volumeData?.some(d => d.incoming > 0 || d.outgoing > 0);
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-lg font-semibold">Volume de Chamadas</CardTitle>
       </CardHeader>
-      <CardContent>
-        {isLoading ? (
-          <Skeleton className="h-[300px] rounded-lg" />
-        ) : (
-          <div className="h-[300px]" role="img" aria-label="Gráfico de volume de chamadas por hora">
+       <CardContent className="relative">
+         {isLoading && !volumeData ? (
+           <div className="flex flex-col gap-4">
+             <Skeleton className="h-[250px] w-full rounded-lg" />
+             <div className="flex justify-between">
+               {[1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="h-4 w-12" />)}
+             </div>
+           </div>
+         ) : !hasData ? (
+           <div className="h-[300px] flex items-center justify-center">
+             <EmptyState
+               iconType="chart"
+               title="Sem dados de volume"
+               description="Não há chamadas registradas nas últimas 24 horas para exibir no gráfico."
+               size="sm"
+             />
+           </div>
+         ) : (
+           <div className={`h-[300px] transition-opacity duration-300 ${isFetching ? 'opacity-50' : 'opacity-100'}`} role="img" aria-label="Gráfico de volume de chamadas por hora">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={volumeData || []}
