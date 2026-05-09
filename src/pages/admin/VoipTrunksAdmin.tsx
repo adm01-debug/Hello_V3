@@ -4,7 +4,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Phone, Plus, Edit, Trash2, Zap, Loader2, Users, CheckCircle2, XCircle, Activity, RefreshCw, BarChart3 } from 'lucide-react';
-import { useVoipTrunks, useDeleteTrunk, useTestTrunk, type VoipTrunk } from '@/hooks/useVoipTrunks';
+ import { useVoipTrunks, useDeleteTrunk, useTestTrunk, type VoipTrunk } from '@/hooks/useVoipTrunks';
+ import { useTrunkRealtimeMetrics } from '@/hooks/useTrunkRealtimeMetrics';
+ import { Progress } from '@/components/ui/progress';
 import { useRunHealthCheck } from '@/hooks/useTrunkHealth';
 import { VoipTrunkFormDrawer } from '@/components/admin/voip/VoipTrunkFormDrawer';
 import { TrunkAssignmentsTab } from '@/components/admin/voip/TrunkAssignmentsTab';
@@ -43,7 +45,8 @@ const PROVIDER_LABELS: Record<string, string> = {
 
 export default function VoipTrunksAdmin() {
   usePageTitle('Linhas VoIP');
-  const { data: trunks = [], isLoading } = useVoipTrunks();
+   const { data: trunks = [], isLoading } = useVoipTrunks();
+   const { metrics } = useTrunkRealtimeMetrics();
   const del = useDeleteTrunk();
   const test = useTestTrunk();
   const runHealth = useRunHealthCheck();
@@ -131,9 +134,29 @@ export default function VoipTrunksAdmin() {
                               )}
                               <HealthBadge trunk={t as TrunkWithHealth} />
                             </div>
-                            <p className="text-xs text-muted-foreground truncate">
-                              {t.sip_server} • {t.transport.toUpperCase()} • {t.max_channels} canais • prioridade {t.priority}
-                            </p>
+                             <p className="text-xs text-muted-foreground truncate mb-2">
+                               {t.sip_server} • {t.transport.toUpperCase()} • prioridade {t.priority}
+                             </p>
+                             <div className="flex items-center gap-4">
+                               <div className="flex-1 max-w-[200px] space-y-1">
+                                 <div className="flex justify-between text-[10px] text-muted-foreground uppercase font-bold">
+                                   <span>Ocupação de Canais</span>
+                                   <span className={((metrics.find(m => m.trunkId === t.id)?.occupancy || 0) > 80) ? 'text-destructive' : ''}>
+                                     {metrics.find(m => m.trunkId === t.id)?.activeCallsCount || 0} / {t.max_channels}
+                                   </span>
+                                 </div>
+                                 <Progress 
+                                   value={metrics.find(m => m.trunkId === t.id)?.occupancy || 0} 
+                                   className={`h-1.5 ${(metrics.find(m => m.trunkId === t.id)?.occupancy || 0) > 80 ? 'bg-destructive/20' : ''}`}
+                                 />
+                                 {(metrics.find(m => m.trunkId === t.id)?.occupancy || 0) > 80 && (
+                                   <p className="text-[9px] text-destructive font-bold animate-pulse">CAPACIDADE CRÍTICA</p>
+                                 )}
+                                 {(t.last_health_latency_ms || 0) > 200 && (
+                                   <p className="text-[9px] text-warning font-bold">LATÊNCIA ALTA: {t.last_health_latency_ms}ms</p>
+                                 )}
+                               </div>
+                             </div>
                           </div>
                         </div>
                         <div className="flex items-center gap-1 shrink-0">
