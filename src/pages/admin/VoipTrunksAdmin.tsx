@@ -3,9 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Phone, Plus, Edit, Trash2, Zap, Loader2, Users, CheckCircle2, XCircle, Activity, RefreshCw, BarChart3 } from 'lucide-react';
+ import { Phone, Plus, Edit, Trash2, Zap, Loader2, Users, CheckCircle2, XCircle, Activity, RefreshCw, BarChart3, Settings2 } from 'lucide-react';
  import { useVoipTrunks, useDeleteTrunk, useTestTrunk, type VoipTrunk } from '@/hooks/useVoipTrunks';
  import { useTrunkRealtimeMetrics } from '@/hooks/useTrunkRealtimeMetrics';
+ import { useVoipMonitoringSettings } from '@/hooks/useVoipMonitoringSettings';
+ import { VoipMonitoringSettingsDialog } from '@/components/admin/voip/VoipMonitoringSettingsDialog';
  import { Progress } from '@/components/ui/progress';
 import { useRunHealthCheck } from '@/hooks/useTrunkHealth';
 import { VoipTrunkFormDrawer } from '@/components/admin/voip/VoipTrunkFormDrawer';
@@ -47,6 +49,8 @@ export default function VoipTrunksAdmin() {
   usePageTitle('Linhas VoIP');
    const { data: trunks = [], isLoading } = useVoipTrunks();
    const { metrics } = useTrunkRealtimeMetrics();
+   const { settings } = useVoipMonitoringSettings();
+   const [settingsOpen, setSettingsOpen] = useState(false);
   const del = useDeleteTrunk();
   const test = useTestTrunk();
   const runHealth = useRunHealthCheck();
@@ -76,7 +80,10 @@ export default function VoipTrunksAdmin() {
             </h1>
             <p className="text-muted-foreground">Gerencie operadoras e atribuições de agentes</p>
           </div>
-          <div className="flex gap-2">
+           <div className="flex gap-2 items-center">
+             <Button onClick={() => setSettingsOpen(true)} variant="ghost" size="icon" title="Configurações de Alertas">
+               <Settings2 className="h-5 w-5" />
+             </Button>
             <Button onClick={() => runHealth.mutate()} disabled={runHealth.isPending} variant="outline" className="gap-2">
               <RefreshCw className={`h-4 w-4 ${runHealth.isPending ? 'animate-spin' : ''}`} />
               Verificar saúde
@@ -141,18 +148,18 @@ export default function VoipTrunksAdmin() {
                                <div className="flex-1 max-w-[200px] space-y-1">
                                  <div className="flex justify-between text-[10px] text-muted-foreground uppercase font-bold">
                                    <span>Ocupação de Canais</span>
-                                   <span className={((metrics.find(m => m.trunkId === t.id)?.occupancy || 0) > 80) ? 'text-destructive' : ''}>
+                                   <span className={((metrics.find(m => m.trunkId === t.id)?.occupancy || 0) > (settings?.occupancy_threshold_percent ?? 80)) ? 'text-destructive' : ''}>
                                      {metrics.find(m => m.trunkId === t.id)?.activeCallsCount || 0} / {t.max_channels}
                                    </span>
                                  </div>
                                  <Progress 
                                    value={metrics.find(m => m.trunkId === t.id)?.occupancy || 0} 
-                                   className={`h-1.5 ${(metrics.find(m => m.trunkId === t.id)?.occupancy || 0) > 80 ? 'bg-destructive/20' : ''}`}
+                                   className={`h-1.5 ${(metrics.find(m => m.trunkId === t.id)?.occupancy || 0) > (settings?.occupancy_threshold_percent ?? 80) ? 'bg-destructive/20' : ''}`}
                                  />
-                                 {(metrics.find(m => m.trunkId === t.id)?.occupancy || 0) > 80 && (
+                                 {(metrics.find(m => m.trunkId === t.id)?.occupancy || 0) > (settings?.occupancy_threshold_percent ?? 80) && (
                                    <p className="text-[9px] text-destructive font-bold animate-pulse">CAPACIDADE CRÍTICA</p>
                                  )}
-                                 {(t.last_health_latency_ms || 0) > 200 && (
+                                 {(t.last_health_latency_ms || 0) > (settings?.latency_threshold_ms ?? 200) && (
                                    <p className="text-[9px] text-warning font-bold">LATÊNCIA ALTA: {t.last_health_latency_ms}ms</p>
                                  )}
                                </div>
@@ -191,7 +198,8 @@ export default function VoipTrunksAdmin() {
         </Tabs>
       </div>
 
-      <VoipTrunkFormDrawer open={drawerOpen} onOpenChange={setDrawerOpen} trunk={editing} />
+       <VoipTrunkFormDrawer open={drawerOpen} onOpenChange={setDrawerOpen} trunk={editing} />
+       <VoipMonitoringSettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
       <TrunkHealthHistoryDrawer
         open={healthOpen}
         onOpenChange={setHealthOpen}
