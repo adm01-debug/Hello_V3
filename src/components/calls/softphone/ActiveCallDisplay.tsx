@@ -1,6 +1,7 @@
 import {
-  PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play,
-  Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines,
+   PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play,
+   Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines,
+   Zap
 } from 'lucide-react';
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import type { CallSession, CallChannel } from '@/hooks/useMultiChannelCall';
+ import type { CallSession, CallChannel } from '@/hooks/useMultiChannelCall';
+ import { VoipQualityIndicator } from '../VoipQualityIndicator';
 import { channelIcons, formatCallDuration } from './constants';
 
 interface ActiveCallDisplayProps {
@@ -21,12 +23,13 @@ interface ActiveCallDisplayProps {
   onHoldToggle: () => void;
   onVolumeToggle: () => void;
   onRecordToggle: () => void;
-  onEndCall: () => void;
+   onEndCall: () => void;
+   pc?: RTCPeerConnection | null;
 }
 
 export function ActiveCallDisplay({
   currentCall, activeChannel, channelName, isSpeaking, volume,
-  onMuteToggle, onHoldToggle, onVolumeToggle, onRecordToggle, onEndCall,
+   onMuteToggle, onHoldToggle, onVolumeToggle, onRecordToggle, onEndCall, pc,
 }: ActiveCallDisplayProps) {
   const ChannelIcon = channelIcons[activeChannel];
   const { isListening, isProcessing, lastCommand, startListening, stopListening } = useVoiceCommand();
@@ -38,8 +41,9 @@ export function ActiveCallDisplay({
         ? isSpeaking ? "bg-primary/10" : "bg-success/10"
         : currentCall.status === 'on-hold' ? "bg-warning/10" : "bg-muted/50"
     )}>
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
+       <div className="flex items-start justify-between mb-3">
+         <div className="flex flex-col gap-2">
+           <div className="flex items-center gap-2">
           <div className={cn(
             "h-10 w-10 rounded-full flex items-center justify-center",
             currentCall.status === 'active' ? "bg-success" : "bg-muted"
@@ -47,16 +51,24 @@ export function ActiveCallDisplay({
             {currentCall.direction === 'inbound'
               ? <PhoneIncoming className="h-5 w-5 text-white" />
               : <PhoneOutgoing className="h-5 w-5 text-white" />}
-          </div>
-          <div>
-            <p className="font-medium">
-              {currentCall.contactName || currentCall.phoneNumber || 'Chamada Ativa'}
-            </p>
-            <p className="text-xs text-muted-foreground flex items-center gap-1">
-              <ChannelIcon className="h-3 w-3" />
-              {channelName}
-            </p>
-          </div>
+           </div>
+           <div>
+             <p className="font-medium">
+               {currentCall.contactName || currentCall.phoneNumber || 'Chamada Ativa'}
+             </p>
+             <p className="text-xs text-muted-foreground flex items-center gap-1">
+               <ChannelIcon className="h-3 w-3" />
+               {channelName}
+             </p>
+           </div>
+           </div>
+           
+           {/* VoIP Quality Indicator */}
+           {activeChannel === 'sip' && (
+             <div className="mt-1">
+               <VoipQualityIndicator pc={pc || null} callSessionId={currentCall.dbSessionId} />
+             </div>
+           )}
         </div>
         <div className="text-right">
           <p className="text-2xl font-mono font-bold">{formatCallDuration(currentCall.duration)}</p>

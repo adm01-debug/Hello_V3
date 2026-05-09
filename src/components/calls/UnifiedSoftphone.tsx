@@ -201,9 +201,10 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
               currentCall={currentCall} activeChannel={activeChannel}
               channelName={channels.find(ch => ch.id === currentCall.channel)?.name ?? ''}
               isSpeaking={isSpeaking} volume={volume}
-              onMuteToggle={handleMuteToggle} onHoldToggle={handleHoldToggle}
-              onVolumeToggle={handleToggleVolume} onRecordToggle={handleRecordToggle}
-              onEndCall={handleEndCall}
+               onMuteToggle={handleMuteToggle} onHoldToggle={handleHoldToggle}
+               onVolumeToggle={handleToggleVolume} onRecordToggle={handleRecordToggle}
+               onEndCall={handleEndCall}
+               pc={activeChannel === 'sip' ? sipCall.pc : null}
             />
           )}
 

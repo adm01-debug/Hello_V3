@@ -14,8 +14,14 @@ export interface VoipTrunk {
   sip_realm: string | null;
   transport: 'wss' | 'tcp' | 'udp';
   max_channels: number;
-  priority: number;
-  is_active: boolean;
+   priority: number;
+   is_active: boolean;
+   last_health_status?: 'healthy' | 'degraded' | 'offline';
+   last_health_latency_ms?: number;
+   last_health_checked_at?: string;
+   failover_count: number;
+   last_failover_at?: string;
+   failover_reason?: string;
   notes: string | null;
   version: number;
   created_at: string;
