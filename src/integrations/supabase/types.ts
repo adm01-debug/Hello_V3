@@ -1103,6 +1103,33 @@ export type Database = {
           },
         ]
       }
+      call_control_audit_logs: {
+        Row: {
+          call_session_id: string | null
+          created_at: string
+          details: Json | null
+          event_type: string
+          id: string
+          source: string
+        }
+        Insert: {
+          call_session_id?: string | null
+          created_at?: string
+          details?: Json | null
+          event_type: string
+          id?: string
+          source: string
+        }
+        Update: {
+          call_session_id?: string | null
+          created_at?: string
+          details?: Json | null
+          event_type?: string
+          id?: string
+          source?: string
+        }
+        Relationships: []
+      }
       call_flows: {
         Row: {
           created_at: string
@@ -6163,6 +6190,33 @@ export type Database = {
           is_urgent?: boolean
           read_at?: string | null
           transcription?: string | null
+        }
+        Relationships: []
+      }
+      voip_monitoring_settings: {
+        Row: {
+          check_interval_seconds: number
+          created_at: string
+          id: string
+          latency_threshold_ms: number
+          occupancy_threshold_percent: number
+          updated_at: string
+        }
+        Insert: {
+          check_interval_seconds?: number
+          created_at?: string
+          id?: string
+          latency_threshold_ms?: number
+          occupancy_threshold_percent?: number
+          updated_at?: string
+        }
+        Update: {
+          check_interval_seconds?: number
+          created_at?: string
+          id?: string
+          latency_threshold_ms?: number
+          occupancy_threshold_percent?: number
+          updated_at?: string
         }
         Relationships: []
       }
