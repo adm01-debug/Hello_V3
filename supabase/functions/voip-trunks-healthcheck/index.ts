@@ -64,10 +64,10 @@ async function checkTrunk(server: string, transport: string): Promise<{ reachabl
       }
     }
 
-    const { data: trunks, error } = await supabase
-      .from("voip_trunks")
-      .select("id, name, sip_server, transport")
-      .eq("is_active", true);
+     const { data: trunks, error } = await supabase
+       .from("voip_trunks")
+       .select("id, name, sip_server, transport, failover_count")
+       .eq("is_active", true);
 
     if (error) throw error;
 
@@ -75,24 +75,68 @@ async function checkTrunk(server: string, transport: string): Promise<{ reachabl
 
      const checks = (trunks ?? []).map(async (trunk) => {
        const result = await checkTrunk(trunk.sip_server, trunk.transport);
-       const status = result.reachable ? (result.latency_ms < 300 ? "healthy" : "degraded") : "offline";
+        const status = result.reachable ? (result.latency_ms < 300 ? "healthy" : "degraded") : "offline";
  
-       // Parallelize DB updates per trunk
-       const [checkRes, updateRes] = await Promise.all([
-         supabase.from("voip_trunk_health_checks").insert({
-           trunk_id: trunk.id,
-           reachable: result.reachable,
-           latency_ms: result.latency_ms,
-           error_message: result.error ?? null,
-         }),
-         supabase.from("voip_trunks")
-           .update({
-             last_health_status: status,
-             last_health_latency_ms: result.latency_ms,
-             last_health_checked_at: new Date().toISOString(),
-           })
-           .eq("id", trunk.id)
-       ]);
+        // Self-Healing Logic: Se estiver offline, tenta failover automático
+        if (status === "offline") {
+          console.log(`Trunk ${trunk.id} (${trunk.name}) is OFFLINE. Triggering self-healing...`);
+          
+          // Busca melhor alternativa saudável (maior prioridade)
+          const { data: backupTrunk } = await supabase
+            .from("voip_trunks")
+            .select("id, name")
+            .eq("is_active", true)
+            .eq("last_health_status", "healthy")
+            .neq("id", trunk.id)
+            .order("priority", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+ 
+          if (backupTrunk) {
+            console.log(`Found backup trunk: ${backupTrunk.name} (${backupTrunk.id})`);
+            
+            // Substitui atribuições de agentes do tronco falho pelo reserva
+            const { error: swapError } = await supabase
+              .from("agent_trunk_assignments")
+              .update({ trunk_id: backupTrunk.id, updated_at: new Date().toISOString() })
+              .eq("trunk_id", trunk.id);
+ 
+            if (!swapError) {
+              // Registra evento de failover no tronco falho
+              await supabase
+                .from("voip_trunks")
+                .update({ 
+                  failover_count: (trunk.failover_count || 0) + 1,
+                  last_failover_at: new Date().toISOString(),
+                  failover_reason: "Offline status detected by auto-healthcheck"
+                })
+                .eq("id", trunk.id);
+                
+              console.log(`Failover completed successfully from ${trunk.name} to ${backupTrunk.name}`);
+            } else {
+              console.error(`Failover failed during DB update:`, swapError);
+            }
+          } else {
+            console.warn(`No healthy backup trunk found for failover of ${trunk.name}`);
+          }
+        }
+ 
+        // Parallelize DB updates per trunk
+        const [checkRes, updateRes] = await Promise.all([
+          supabase.from("voip_trunk_health_checks").insert({
+            trunk_id: trunk.id,
+            reachable: result.reachable,
+            latency_ms: result.latency_ms,
+            error_message: result.error ?? null,
+          }),
+          supabase.from("voip_trunks")
+            .update({
+              last_health_status: status,
+              last_health_latency_ms: result.latency_ms,
+              last_health_checked_at: new Date().toISOString(),
+            })
+            .eq("id", trunk.id)
+        ]);
  
        if (checkRes.error) console.error(`Error logging health check for trunk ${trunk.id}:`, checkRes.error);
        if (updateRes.error) console.error(`Error updating trunk status ${trunk.id}:`, updateRes.error);
