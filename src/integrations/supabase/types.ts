@@ -6368,8 +6368,11 @@ export type Database = {
         Row: {
           created_at: string
           created_by: string | null
+          failover_count: number | null
+          failover_reason: string | null
           id: string
           is_active: boolean
+          last_failover_at: string | null
           last_health_checked_at: string | null
           last_health_latency_ms: number | null
           last_health_status: string | null
@@ -6389,8 +6392,11 @@ export type Database = {
         Insert: {
           created_at?: string
           created_by?: string | null
+          failover_count?: number | null
+          failover_reason?: string | null
           id?: string
           is_active?: boolean
+          last_failover_at?: string | null
           last_health_checked_at?: string | null
           last_health_latency_ms?: number | null
           last_health_status?: string | null
@@ -6410,8 +6416,11 @@ export type Database = {
         Update: {
           created_at?: string
           created_by?: string | null
+          failover_count?: number | null
+          failover_reason?: string | null
           id?: string
           is_active?: boolean
+          last_failover_at?: string | null
           last_health_checked_at?: string | null
           last_health_latency_ms?: number | null
           last_health_status?: string | null
