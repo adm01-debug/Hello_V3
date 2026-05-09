@@ -12,11 +12,9 @@ import { TrunkHealthHistoryDrawer } from '@/components/admin/voip/TrunkHealthHis
 import { TrunkMetricsTab } from '@/components/admin/voip/TrunkMetricsTab';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
-interface TrunkWithHealth extends VoipTrunk {
-  last_health_status?: string | null;
-  last_health_latency_ms?: number | null;
-  last_health_checked_at?: string | null;
-}
+ interface TrunkWithHealth extends VoipTrunk {
+   last_health_status?: 'healthy' | 'degraded' | 'offline';
+ }
 
 function HealthBadge({ trunk }: { trunk: TrunkWithHealth }) {
   if (!trunk.last_health_status) {
