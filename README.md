@@ -1,73 +1,78 @@
-# Welcome to your Lovable project
+# 📞 Bitrix Call Connect - VoIP Enterprise & AI Intelligence
 
-## Project info
+Bitrix Call Connect é uma plataforma de telefonia VoIP de próxima geração, integrada nativamente ao Bitrix24 e potencializada por Inteligência Artificial. O sistema oferece uma arquitetura resiliente, segura e focada na excelência da experiência do usuário (UX) com o padrão visual Neon.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+---
 
-## How can I edit this code?
+## 🌟 Visão Geral
 
-There are several ways of editing your application.
+O sistema atua como o hub central de comunicações para operações enterprise, permitindo não apenas a realização de chamadas, mas a análise profunda de cada interação através de processamento de linguagem natural (NLP) e métricas operacionais em tempo real.
 
-**Use Lovable**
+## 🏗️ Principais Módulos
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### 1. **Core VoIP & Softphone**
+- Discador WebRTC de alta performance.
+- Gestão de Troncos SIP e monitoramento de saúde de infraestrutura.
+- Provisionamento por QR Code para dispositivos móveis.
 
-Changes made via Lovable will be committed automatically to this repo.
+### 2. **AI Intelligence (Powered by Lovable & Gemini)**
+- **Análise de Sentimento:** Identificação do humor de clientes e agentes em tempo real.
+- **Busca Semântica:** Base de conhecimento vetorial (RAG) para auxílio dinâmico aos agentes.
+- **Sumarização Automática:** Resumos executivos de reuniões e chamadas.
 
-**Use your preferred IDE**
+### 3. **Segurança & Resiliência**
+- **Autenticação Avançada:** Suporte a MFA e Passkeys (WebAuthn).
+- **Hardening de Rede:** Monitoramento de latência e controle de acesso por IP/Geolocalização.
+- **Fila de Sincronização:** Sistema de retentativa inteligente (Backoff Exponencial) para integração CRM.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 4. **Gestão Operacional & Gamificação**
+- Dashboards de SLA, Rank e Desempenho.
+- Sistema de badges e conquistas (Gamificação).
+- Monitoramento de aderência e escalas de trabalho.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🛠️ Como Rodar Localmente
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Pré-requisitos
+- [Bun](https://bun.sh/) instalado.
+- Conta no [Supabase](https://supabase.com/).
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Passo a Passo
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. **Clonar o repositório:**
+   ```bash
+   # Use a URL do seu repositório Git
+   git clone <url-do-repositorio>
+   cd bitrix-call-connect
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+2. **Instalar dependências:**
+   ```bash
+   bun install
+   ```
 
-**Edit a file directly in GitHub**
+3. **Configurar Variáveis de Ambiente:**
+   Crie um arquivo `.env` na raiz do projeto com as credenciais do seu projeto Supabase:
+   ```env
+   VITE_SUPABASE_URL=sua_url_supabase
+   VITE_SUPABASE_ANON_KEY=sua_chave_anon_supabase
+   ```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+4. **Executar o ambiente de desenvolvimento:**
+   ```bash
+   bun run dev
+   ```
+   O sistema estará disponível em `http://localhost:8080`.
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🚀 Tecnologias Utilizadas
 
-## What technologies are used for this project?
+- **Frontend:** React, TypeScript, Vite, Tailwind CSS, shadcn/ui.
+- **Backend:** Supabase (PostgreSQL, Edge Functions, Auth, Storage).
+- **IA/ML:** Gemini API (via Lovable AI Gateway), pgvector.
+- **Comunicação:** WebRTC, SIP.js.
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+*Este projeto é mantido com foco em maturidade técnica 10/10 e excelência operacional.*
