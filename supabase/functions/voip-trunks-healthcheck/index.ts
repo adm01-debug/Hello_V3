@@ -112,7 +112,21 @@ async function checkTrunk(server: string, transport: string): Promise<{ reachabl
                 })
                 .eq("id", trunk.id);
                 
-              console.log(`Failover completed successfully from ${trunk.name} to ${backupTrunk.name}`);
+               console.log(`Failover completed successfully from ${trunk.name} to ${backupTrunk.name}`);
+               
+               // Dispara notificação assíncrona para os agentes
+               fetch(`${supabaseUrl}/functions/v1/voip-failover-notifier`, {
+                 method: 'POST',
+                 headers: {
+                   'Authorization': `Bearer ${supabaseKey}`,
+                   'Content-Type': 'application/json'
+                 },
+                 body: JSON.stringify({
+                   failed_trunk_id: trunk.id,
+                   backup_trunk_id: backupTrunk.id,
+                   reason: "Healthcheck failed (offline)"
+                 })
+               }).catch(err => console.error("Error triggering notification:", err));
             } else {
               console.error(`Failover failed during DB update:`, swapError);
             }
