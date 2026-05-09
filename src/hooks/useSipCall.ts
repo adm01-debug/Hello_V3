@@ -252,7 +252,8 @@ export function useSipCall() {
   return {
     ...state,
     isInCall: state.status === 'calling' || state.status === 'ringing' || state.status === 'active',
-    quality,
-    connect, disconnect, startCall, endCall, toggleMute, toggleHold, sendDTMF,
+     quality,
+     pc: activePc,
+     connect, disconnect, startCall, endCall, toggleMute, toggleHold, sendDTMF,
   };
 }
