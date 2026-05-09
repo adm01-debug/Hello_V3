@@ -3,7 +3,8 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+ import { Button } from '@/components/ui/button';
+ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Progress } from '@/components/ui/progress';
 import { format } from 'date-fns';
@@ -104,12 +105,12 @@ interface Props {
                <div className="flex gap-2 items-center">
                  <div className="relative flex-1">
                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                   <Input 
-                     placeholder="Pesquisar na transcrição (Enter para pular)..." 
-                     value={searchQuery}
-                     onChange={(e) => setSearchQuery(e.target.value)}
-                     className="pl-10"
-                   />
+                    <Input 
+                      placeholder="Pesquisar na transcrição (Enter para pular)..." 
+                      value={searchQuery}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                      className="pl-10"
+                    />
                  </div>
                  {matches.length > 0 && (
                    <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap bg-muted px-2 py-1 rounded-md">
