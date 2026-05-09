@@ -24,12 +24,17 @@ export interface SipCallState {
   duration: number;
 }
 
-export function useSipCall() {
-  const [state, setState] = useState<SipCallState>({
-    status: 'disconnected', isRegistered: false, isConfigured: false,
-    error: null, callId: null, phoneNumber: null, duration: 0,
-  });
-
+ export interface CallControls {
+   isMuted: boolean;
+   isOnHold: boolean;
+ }
+ 
+ export function useSipCall() {
+   const [state, setState] = useState<SipCallState>({
+     status: 'disconnected', isRegistered: false, isConfigured: false,
+     error: null, callId: null, phoneNumber: null, duration: 0,
+   });
+   const [controls, setControls] = useState<CallControls>({ isMuted: false, isOnHold: false });
   const uaRef = useRef<JsSIP.UA | null>(null);
   const sessionRef = useRef<RTCSession | null>(null);
   const durationRef = useRef<number | null>(null);
@@ -152,13 +157,39 @@ export function useSipCall() {
         setState(prev => ({ ...prev, status: 'error', isRegistered: false, error: `Registro falhou: ${cause}` }));
         toast.error(`Registro SIP falhou: ${cause}`);
       });
-      ua.on('newRTCSession', (e: { session: RTCSession }) => {
-        const session = e.session as RTCSession;
-        if (session.direction === 'incoming') {
-          log.info('Incoming call', { from: session.remote_identity?.uri?.toString() });
-          toast.info(`📞 Chamada recebida de ${session.remote_identity?.display_name || session.remote_identity?.uri?.user || 'Desconhecido'}`);
-        }
-      });
+       ua.on('newRTCSession', (e: { session: RTCSession }) => {
+         const session = e.session as RTCSession;
+         
+         session.on('peerconnection', (e: { peerconnection: RTCPeerConnection }) => {
+           setActivePc(e.peerconnection);
+         });
+ 
+         session.on('mute', () => {
+           log.info('SIP Mute detected');
+           setControls(prev => ({ ...prev, isMuted: true }));
+           toast.info('Microfone silenciado');
+         });
+         session.on('unmute', () => {
+           log.info('SIP Unmute detected');
+           setControls(prev => ({ ...prev, isMuted: false }));
+           toast.info('Microfone ativado');
+         });
+         session.on('hold', () => {
+           log.info('SIP Hold detected');
+           setControls(prev => ({ ...prev, isOnHold: true }));
+           toast.warning('Chamada em espera');
+         });
+         session.on('unhold', () => {
+           log.info('SIP Unhold detected');
+           setControls(prev => ({ ...prev, isOnHold: false }));
+           toast.success('Chamada retomada');
+         });
+ 
+         if (session.direction === 'incoming') {
+           log.info('Incoming call', { from: session.remote_identity?.uri?.toString() });
+           toast.info(`📞 Chamada recebida de ${session.remote_identity?.display_name || session.remote_identity?.uri?.user || 'Desconhecido'}`);
+         }
+       });
 
       ua.start();
       uaRef.current = ua;
@@ -230,13 +261,21 @@ export function useSipCall() {
     setState(prev => ({ ...prev, status: prev.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null, duration: 0 }));
   }, [stopDurationTimer]);
 
-  const toggleMute = useCallback((muted: boolean) => {
-    if (sessionRef.current) { if (muted) sessionRef.current.mute({ audio: true }); else sessionRef.current.unmute({ audio: true }); }
-  }, []);
-
-  const toggleHold = useCallback((hold: boolean) => {
-    if (sessionRef.current) { if (hold) sessionRef.current.hold(); else sessionRef.current.unhold(); }
-  }, []);
+   const toggleMute = useCallback((muted: boolean) => {
+     if (sessionRef.current) {
+       if (muted) sessionRef.current.mute({ audio: true });
+       else sessionRef.current.unmute({ audio: true });
+       setControls(prev => ({ ...prev, isMuted: muted }));
+     }
+   }, []);
+ 
+   const toggleHold = useCallback((hold: boolean) => {
+     if (sessionRef.current) {
+       if (hold) sessionRef.current.hold();
+       else sessionRef.current.unhold();
+       setControls(prev => ({ ...prev, isOnHold: hold }));
+     }
+   }, []);
 
   const sendDTMF = useCallback((tone: string) => { if (sessionRef.current) sessionRef.current.sendDTMF(tone); }, []);
 
@@ -249,11 +288,12 @@ export function useSipCall() {
 
   useEffect(() => { return () => { disconnect(); }; }, [disconnect]);
 
-  return {
-    ...state,
-    isInCall: state.status === 'calling' || state.status === 'ringing' || state.status === 'active',
-     quality,
-     pc: activePc,
-     connect, disconnect, startCall, endCall, toggleMute, toggleHold, sendDTMF,
-  };
+   return {
+     ...state,
+     ...controls,
+     isInCall: state.status === 'calling' || state.status === 'ringing' || state.status === 'active',
+      quality,
+      pc: activePc,
+      connect, disconnect, startCall, endCall, toggleMute, toggleHold, sendDTMF,
+   };
 }
