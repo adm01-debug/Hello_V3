@@ -164,15 +164,22 @@ export interface SipCallState {
            setActivePc(e.peerconnection);
          });
  
-         session.on('mute', () => {
-           log.info('SIP Mute detected');
-           setControls(prev => ({ ...prev, isMuted: true }));
-           toast.info('Microfone silenciado');
-         });
-         session.on('unmute', () => {
-           log.info('SIP Unmute detected');
-           setControls(prev => ({ ...prev, isMuted: false }));
-           toast.info('Microfone ativado');
+         session.on('peerconnection', (e: { peerconnection: RTCPeerConnection }) => {
+           setActivePc(e.peerconnection);
+           
+           // Monitoramento via track para sincronizar mute de outros dispositivos/trunk
+           e.peerconnection.getSenders().forEach(sender => {
+             if (sender.track) {
+               sender.track.onmute = () => {
+                 log.info('Track Mute detected');
+                 setControls(prev => ({ ...prev, isMuted: true }));
+               };
+               sender.track.onunmute = () => {
+                 log.info('Track Unmute detected');
+                 setControls(prev => ({ ...prev, isMuted: false }));
+               };
+             }
+           });
          });
          session.on('hold', () => {
            log.info('SIP Hold detected');
