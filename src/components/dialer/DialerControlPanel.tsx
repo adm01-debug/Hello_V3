@@ -1,13 +1,14 @@
  import { useState, useEffect } from 'react';
- import { Phone, Play, Pause, CheckCircle, PhoneMissed, PhoneOff, Voicemail, XCircle, RotateCcw, FileText } from 'lucide-react';
+ import { Phone, Play, Pause, CheckCircle, PhoneMissed, PhoneOff, Voicemail, XCircle, RotateCcw, FileText, Mic, MicOff, PhoneForwarded, PhonePaused } from 'lucide-react';
 import { Button } from '@/components/ui/button';
  import { Badge } from '@/components/ui/badge';
  import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
  import { Input } from '@/components/ui/input';
  import { Label } from '@/components/ui/label';
 import { PhoneCall } from 'lucide-react';
-import { AddContactsDialog } from './AddContactsDialog';
-import { DialerQueueItem } from '@/hooks/usePredictiveDialer';
+ import { AddContactsDialog } from './AddContactsDialog';
+ import { DialerQueueItem } from '@/hooks/usePredictiveDialer';
+ import { useSipCall } from '@/hooks/useSipCall';
 
 interface DialerControlPanelProps {
   currentCall: DialerQueueItem | null;
@@ -26,15 +27,34 @@ const formatTimer = (seconds: number) => {
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 };
 
- export function DialerControlPanel({
-   currentCall, isDialing, callTimer, campaignId, pendingCount,
-   onStartCampaign, onPauseCampaign, onCompleteCall,
- }: DialerControlPanelProps) {
-   const [notes, setNotes] = useState('');
- 
-   useEffect(() => {
-     if (!currentCall) setNotes('');
-   }, [currentCall]);
+  export function DialerControlPanel({
+    currentCall, isDialing, callTimer, campaignId, pendingCount,
+    onStartCampaign, onPauseCampaign, onCompleteCall,
+  }: DialerControlPanelProps) {
+    const [notes, setNotes] = useState('');
+    const { toggleMute, toggleHold } = useSipCall();
+    const [isMuted, setIsMuted] = useState(false);
+    const [isOnHold, setIsOnHold] = useState(false);
+  
+    useEffect(() => {
+      if (!currentCall) {
+        setNotes('');
+        setIsMuted(false);
+        setIsOnHold(false);
+      }
+    }, [currentCall]);
+
+    const handleToggleMute = () => {
+      const newMuted = !isMuted;
+      setIsMuted(newMuted);
+      toggleMute(newMuted);
+    };
+
+    const handleToggleHold = () => {
+      const newHold = !isOnHold;
+      setIsOnHold(newHold);
+      toggleHold(newHold);
+    };
   return (
     <Card className="lg:col-span-1">
       <CardHeader>
@@ -57,7 +77,34 @@ const formatTimer = (seconds: number) => {
                 <p className="text-sm text-muted-foreground font-mono">{currentCall.phone}</p>
               </div>
               <div className="text-3xl font-mono font-bold text-primary">{formatTimer(callTimer)}</div>
-              <Badge className="bg-success text-success-foreground">Em Chamada</Badge>
+               <div className="flex flex-col items-center gap-2">
+                 <Badge className="bg-success text-success-foreground">Em Chamada</Badge>
+                 <div className="flex gap-2">
+                   {isMuted && <Badge variant="outline" className="text-destructive border-destructive/50">Mudo</Badge>}
+                   {isOnHold && <Badge variant="outline" className="text-warning border-warning/50">Em Espera</Badge>}
+                 </div>
+               </div>
+
+               <div className="flex items-center justify-center gap-4 mt-4">
+                 <Button
+                   variant={isMuted ? "destructive" : "outline"}
+                   size="icon"
+                   onClick={handleToggleMute}
+                   className="h-12 w-12 rounded-full shadow-sm"
+                   title={isMuted ? "Desativar Mudo" : "Mudar"}
+                 >
+                   {isMuted ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+                 </Button>
+                 <Button
+                   variant={isOnHold ? "secondary" : "outline"}
+                   size="icon"
+                   onClick={handleToggleHold}
+                   className={`h-12 w-12 rounded-full shadow-sm ${isOnHold ? 'bg-warning text-warning-foreground hover:bg-warning/90' : ''}`}
+                   title={isOnHold ? "Retomar Chamada" : "Colocar em Espera"}
+                 >
+                   {isOnHold ? <PhoneForwarded className="h-5 w-5" /> : <PhonePaused className="h-5 w-5" />}
+                 </Button>
+               </div>
             </div>
           ) : (
             <div className="space-y-3 py-4">
