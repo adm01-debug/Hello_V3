@@ -1,5 +1,5 @@
  import { useState, useEffect } from 'react';
- import { Phone, Play, Pause, CheckCircle, PhoneMissed, PhoneOff, Voicemail, XCircle, RotateCcw, FileText, Mic, MicOff, PhoneForwarded, PhonePaused } from 'lucide-react';
+ import { Phone, Play, Pause, CheckCircle, PhoneMissed, PhoneOff, Voicemail, XCircle, RotateCcw, FileText, Mic, MicOff, PhoneForwarded, PhoneIncoming } from 'lucide-react';
 import { Button } from '@/components/ui/button';
  import { Badge } from '@/components/ui/badge';
  import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -102,7 +102,7 @@ const formatTimer = (seconds: number) => {
                    className={`h-12 w-12 rounded-full shadow-sm ${isOnHold ? 'bg-warning text-warning-foreground hover:bg-warning/90' : ''}`}
                    title={isOnHold ? "Retomar Chamada" : "Colocar em Espera"}
                  >
-                   {isOnHold ? <PhoneForwarded className="h-5 w-5" /> : <PhonePaused className="h-5 w-5" />}
+                    {isOnHold ? <PhoneForwarded className="h-5 w-5" /> : <PhoneIncoming className="h-5 w-5" />}
                  </Button>
                </div>
             </div>
