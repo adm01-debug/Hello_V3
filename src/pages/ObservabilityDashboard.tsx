@@ -3,7 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+ import { VoipInfrastructureTab } from '@/components/executive/VoipInfrastructureTab';
 import { useWebVitals } from '@/hooks/useWebVitals';
 import { useHealthCheck } from '@/hooks/useHealthCheck';
 import { getErrorReports } from '@/lib/error-tracking';
@@ -86,7 +87,8 @@ export default function ObservabilityDashboard() {
       <Tabs defaultValue="vitals" className="space-y-4">
         <TabsList>
           <TabsTrigger value="vitals">Web Vitals</TabsTrigger>
-          <TabsTrigger value="health">Health Checks</TabsTrigger>
+           <TabsTrigger value="health">Health Checks</TabsTrigger>
+           <TabsTrigger value="voip">Infraestrutura VoIP</TabsTrigger>
           <TabsTrigger value="errors">
             Erros
             {errors.length > 0 && (
@@ -201,7 +203,12 @@ export default function ObservabilityDashboard() {
           </Card>
         </TabsContent>
 
-        {/* Errors */}
+         {/* VoIP Infrastructure */}
+         <TabsContent value="voip" className="space-y-4">
+           <VoipInfrastructureTab />
+         </TabsContent>
+ 
+         {/* Errors */}
         <TabsContent value="errors" className="space-y-4">
           <Card>
             <CardHeader>
