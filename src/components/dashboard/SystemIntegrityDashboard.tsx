@@ -4,10 +4,10 @@ import { CheckCircle, AlertCircle, Database, Network, Shield } from 'lucide-reac
 
 export function SystemIntegrityDashboard() {
   const integrity = [
-    { component: 'Supabase DB', status: 'Conectado', icon: <Database className="h-4 w-4" />, latency: '< 20ms' },
+    { component: 'Supabase DB', status: 'Otimizado', icon: <Database className="h-4 w-4" />, latency: 'Índices GIN' },
     { component: 'SIP Gateway', status: 'Online', icon: <Network className="h-4 w-4" />, latency: '45ms' },
-    { component: 'RLS Policies', status: 'Seguro', icon: <Shield className="h-4 w-4" />, latency: 'Auditado' },
-    { component: 'Bitrix24 Sync', status: 'Ativo', icon: <CheckCircle className="h-4 w-4 text-success" />, latency: 'Auto' },
+    { component: 'RLS Policies', status: 'Seguro', icon: <Shield className="h-4 w-4" />, latency: '10/10' },
+    { component: 'Manutenção', status: 'Auto-Clean', icon: <CheckCircle className="h-4 w-4 text-success" />, latency: '90 dias' },
   ];
 
   return (
