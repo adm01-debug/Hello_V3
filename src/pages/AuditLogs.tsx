@@ -21,14 +21,12 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 type AuditLog = Tables<'call_control_audit_logs'>;
 
 const actionLabels: Record<string, string> = {
-  view: 'Visualização',
-  create: 'Criação',
-  update: 'Atualização',
-  delete: 'Exclusão',
-  export: 'Exportação',
-  download: 'Download',
-  login: 'Login',
-  logout: 'Logout'
+  call_start: 'Início de Chamada',
+  call_end: 'Fim de Chamada',
+  hold_start: 'Início de Espera',
+  hold_end: 'Fim de Espera',
+  agent_status_change: 'Status do Agente',
+  trunk_failover: 'Failover de Tronco'
 };
 
 const resourceLabels: Record<string, string> = {
@@ -48,14 +46,12 @@ const resourceLabels: Record<string, string> = {
 };
 
 const actionColors: Record<string, string> = {
-  view: 'bg-info/10 text-info border-info/20',
-  create: 'bg-success/10 text-success border-success/20',
-  update: 'bg-warning/10 text-warning border-warning/20',
-  delete: 'bg-destructive/10 text-destructive border-destructive/20',
-  export: 'bg-pending/10 text-pending border-pending/20',
-  download: 'bg-info/10 text-info border-info/20',
-  login: 'bg-success/10 text-success border-success/20',
-  logout: 'bg-muted-foreground/10 text-muted-foreground border-muted-foreground/20'
+  call_start: 'bg-success/10 text-success border-success/20',
+  call_end: 'bg-muted-foreground/10 text-muted-foreground border-muted-foreground/20',
+  hold_start: 'bg-warning/10 text-warning border-warning/20',
+  hold_end: 'bg-info/10 text-info border-info/20',
+  agent_status_change: 'bg-primary/10 text-primary border-primary/20',
+  trunk_failover: 'bg-destructive/10 text-destructive border-destructive/20'
 };
 
 export default function AuditLogs() {
@@ -116,10 +112,8 @@ export default function AuditLogs() {
       const logDate = new Date(l.created_at);
       return logDate.toDateString() === today.toDateString();
     }).length,
-    uniqueUsers: new Set(logs.map(l => l.user_id).filter(Boolean)).size,
-    sensitiveAccess: logs.filter(l => 
-      ['call_transcription', 'call_recording', 'user_profile'].includes(l.resource_type)
-    ).length
+    uniqueUsers: new Set(logs.map(l => l.source).filter(Boolean)).size,
+    sensitiveAccess: logs.length
   };
 
   return (
