@@ -6648,6 +6648,7 @@ export type Database = {
       }
       check_rls_enabled: { Args: { table_name: string }; Returns: boolean }
       cleanup_expired_challenges: { Args: never; Returns: undefined }
+      cleanup_old_data: { Args: never; Returns: undefined }
       get_agent_performance: { Args: never; Returns: Json }
       get_agents_with_active_calls: { Args: never; Returns: Json }
       get_call_history_with_summaries: {
@@ -6738,6 +6739,8 @@ export type Database = {
         }
         Returns: string
       }
+      show_limit: { Args: never; Returns: number }
+      show_trgm: { Args: { "": string }; Returns: string[] }
       validate_audit_insert: { Args: never; Returns: boolean }
     }
     Enums: {
