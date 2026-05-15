@@ -20,6 +20,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
 
 const vitalConfig: Record<string, { label: string; unit: string; icon: React.ReactNode }> = {
   LCP: { label: 'Largest Contentful Paint', unit: 'ms', icon: <Monitor className="h-4 w-4" /> },
@@ -49,21 +50,18 @@ export default function ObservabilityDashboard() {
   const { vitals, history, refresh: refreshVitals } = useWebVitals();
   const { services, overallStatus, isChecking, runChecks } = useHealthCheck();
   const errors = getErrorReports();
-  const [rlsStatus, setRlsStatus] = useState<{ table: string; rls_enabled: boolean }[]>([]);
+  const [rlsStatus, setRlsStatus] = useState<{ table_name: string; rls_enabled: boolean }[]>([]);
   const [loadingRls, setLoadingRls] = useState(false);
   const [rlsSearch, setRlsSearch] = useState('');
 
   const fetchRlsStatus = async () => {
     setLoadingRls(true);
     try {
-      const { data, error } = await supabase.rpc('check_all_tables_rl_status');
+      const { data, error } = await supabase.rpc('check_all_tables_rls_status');
       if (error) {
-        // Fallback para query direta se a RPC não existir ou falhar
-        const { data: queryData, error: queryError } = await supabase.from('audit_logs').select('id').limit(1);
-        if (queryError) throw queryError;
         toast.error('Algumas verificações de RLS requerem privilégios elevados.');
       } else {
-        setRlsStatus(data || []);
+        setRlsStatus((data as any[]) || []);
       }
     } catch (err) {
       console.error('Error fetching RLS status:', err);
@@ -78,7 +76,7 @@ export default function ObservabilityDashboard() {
   }, [runChecks]);
 
   const filteredRls = rlsStatus.filter(t => 
-    t.table.toLowerCase().includes(rlsSearch.toLowerCase())
+    t.table_name.toLowerCase().includes(rlsSearch.toLowerCase())
   );
 
   const vitalChartData = Object.entries(vitals)
@@ -314,8 +312,8 @@ export default function ObservabilityDashboard() {
                  </TableHeader>
                  <TableBody>
                    {filteredRls.map((row) => (
-                     <TableRow key={row.table}>
-                       <TableCell className="font-mono text-sm">{row.table}</TableCell>
+                     <TableRow key={row.table_name}>
+                       <TableCell className="font-mono text-sm">{row.table_name}</TableCell>
                        <TableCell>
                          <Badge variant={row.rls_enabled ? "default" : "destructive"}>
                            {row.rls_enabled ? "Ativo" : "Desativado"}
