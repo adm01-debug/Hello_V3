@@ -18,17 +18,15 @@ import type { Tables } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
-type AuditLog = Tables<'audit_logs'>;
+type AuditLog = Tables<'call_control_audit_logs'>;
 
 const actionLabels: Record<string, string> = {
-  view: 'Visualização',
-  create: 'Criação',
-  update: 'Atualização',
-  delete: 'Exclusão',
-  export: 'Exportação',
-  download: 'Download',
-  login: 'Login',
-  logout: 'Logout'
+  call_start: 'Início de Chamada',
+  call_end: 'Fim de Chamada',
+  hold_start: 'Início de Espera',
+  hold_end: 'Fim de Espera',
+  agent_status_change: 'Status do Agente',
+  trunk_failover: 'Failover de Tronco'
 };
 
 const resourceLabels: Record<string, string> = {
@@ -48,14 +46,12 @@ const resourceLabels: Record<string, string> = {
 };
 
 const actionColors: Record<string, string> = {
-  view: 'bg-info/10 text-info border-info/20',
-  create: 'bg-success/10 text-success border-success/20',
-  update: 'bg-warning/10 text-warning border-warning/20',
-  delete: 'bg-destructive/10 text-destructive border-destructive/20',
-  export: 'bg-pending/10 text-pending border-pending/20',
-  download: 'bg-info/10 text-info border-info/20',
-  login: 'bg-success/10 text-success border-success/20',
-  logout: 'bg-muted-foreground/10 text-muted-foreground border-muted-foreground/20'
+  call_start: 'bg-success/10 text-success border-success/20',
+  call_end: 'bg-muted-foreground/10 text-muted-foreground border-muted-foreground/20',
+  hold_start: 'bg-warning/10 text-warning border-warning/20',
+  hold_end: 'bg-info/10 text-info border-info/20',
+  agent_status_change: 'bg-primary/10 text-primary border-primary/20',
+  trunk_failover: 'bg-destructive/10 text-destructive border-destructive/20'
 };
 
 export default function AuditLogs() {
@@ -82,7 +78,7 @@ export default function AuditLogs() {
     setLoading(true);
     try {
       const { data, error } = await supabase
-        .from('audit_logs')
+        .from('call_control_audit_logs')
         .select('*')
         .order('created_at', { ascending: false })
         .limit(500);
@@ -99,12 +95,12 @@ export default function AuditLogs() {
 
   const filteredLogs = logs.filter(log => {
     const matchesSearch = 
-      log.user_email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.resource_id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      log.call_session_id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      log.source?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       JSON.stringify(log.details).toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesAction = actionFilter === 'all' || log.action === actionFilter;
-    const matchesResource = resourceFilter === 'all' || log.resource_type === resourceFilter;
+    const matchesAction = actionFilter === 'all' || log.event_type === actionFilter;
+    const matchesResource = true; // No resource_type in call_control_audit_logs
     
     return matchesSearch && matchesAction && matchesResource;
   });
@@ -116,10 +112,8 @@ export default function AuditLogs() {
       const logDate = new Date(l.created_at);
       return logDate.toDateString() === today.toDateString();
     }).length,
-    uniqueUsers: new Set(logs.map(l => l.user_id).filter(Boolean)).size,
-    sensitiveAccess: logs.filter(l => 
-      ['call_transcription', 'call_recording', 'user_profile'].includes(l.resource_type)
-    ).length
+    uniqueUsers: new Set(logs.map(l => l.source).filter(Boolean)).size,
+    sensitiveAccess: logs.length
   };
 
   return (
@@ -246,10 +240,9 @@ export default function AuditLogs() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Data/Hora</TableHead>
-                  <TableHead>Usuário</TableHead>
-                  <TableHead>Ação</TableHead>
-                  <TableHead>Recurso</TableHead>
-                  <TableHead>ID do Recurso</TableHead>
+                  <TableHead>Fonte</TableHead>
+                  <TableHead>Evento</TableHead>
+                  <TableHead>Sessão</TableHead>
                   <TableHead>Detalhes</TableHead>
                 </TableRow>
               </TableHeader>
@@ -260,25 +253,17 @@ export default function AuditLogs() {
                       {format(new Date(log.created_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })}
                     </TableCell>
                     <TableCell>
-                      <div className="flex flex-col">
-                        <span className="font-medium">{log.user_email || 'Sistema'}</span>
-                        {log.user_role && (
-                          <Badge variant="outline" className="w-fit text-xs">
-                            {log.user_role}
-                          </Badge>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge className={actionColors[log.action] || ''}>
-                        {actionLabels[log.action] || log.action}
+                      <Badge variant="outline">
+                        {log.source || 'Sistema'}
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      {resourceLabels[log.resource_type] || log.resource_type}
+                      <Badge className={actionColors[log.event_type] || ''}>
+                        {actionLabels[log.event_type] || log.event_type}
+                      </Badge>
                     </TableCell>
                     <TableCell className="font-mono text-xs">
-                      {log.resource_id ? log.resource_id.slice(0, 8) + '...' : '-'}
+                      {log.call_session_id || '-'}
                     </TableCell>
                     <TableCell className="max-w-[200px] truncate">
                       {log.details && typeof log.details === 'object' && Object.keys(log.details).length > 0 
