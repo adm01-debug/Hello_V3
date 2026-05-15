@@ -8,12 +8,13 @@ import { VoipInfrastructureTab } from '@/components/executive/VoipInfrastructure
 import { RealtimeQualityDashboard } from '@/components/executive/RealtimeQualityDashboard';
 import { useWebVitals } from '@/hooks/useWebVitals';
 import { SystemIntegrityDashboard } from '@/components/dashboard/SystemIntegrityDashboard';
+import { QualityTrunkDashboard } from '@/components/executive/QualityTrunkDashboard';
 import { useHealthCheck } from '@/hooks/useHealthCheck';
 import { getErrorReports } from '@/lib/error-tracking';
 import {
   Activity, Heart, AlertTriangle, CheckCircle, XCircle,
   RefreshCw, Gauge, Clock, Monitor, Zap, Loader2, FileDown,
-  ShieldCheck, Database, Lock, Search
+  ShieldCheck, Database, Lock, Search, PlayCircle, BarChart3
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -53,6 +54,23 @@ export default function ObservabilityDashboard() {
   const [rlsStatus, setRlsStatus] = useState<{ table_name: string; rls_enabled: boolean }[]>([]);
   const [loadingRls, setLoadingRls] = useState(false);
   const [rlsSearch, setRlsSearch] = useState('');
+  const [loadTestResult, setLoadTestResult] = useState<any>(null);
+  const [isRunningLoadTest, setIsRunningLoadTest] = useState(false);
+
+  const runLoadTest = async () => {
+    setIsRunningLoadTest(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('voip-load-test');
+      if (error) throw error;
+      setLoadTestResult(data.stats);
+      toast.success('Teste de carga concluído com sucesso!');
+    } catch (err) {
+      console.error('Error running load test:', err);
+      toast.error('Erro ao executar teste de carga');
+    } finally {
+      setIsRunningLoadTest(false);
+    }
+  };
 
   const fetchRlsStatus = async () => {
     setLoadingRls(true);
@@ -124,9 +142,10 @@ export default function ObservabilityDashboard() {
       <Tabs defaultValue="vitals" className="space-y-4">
         <TabsList>
           <TabsTrigger value="vitals">Web Vitals</TabsTrigger>
-           <TabsTrigger value="health">Health Checks</TabsTrigger>
-           <TabsTrigger value="voip">Infraestrutura</TabsTrigger>
-           <TabsTrigger value="quality">Qualidade (RT)</TabsTrigger>
+            <TabsTrigger value="health">Health Checks</TabsTrigger>
+            <TabsTrigger value="voip">Infraestrutura</TabsTrigger>
+            <TabsTrigger value="quality">Qualidade (RT)</TabsTrigger>
+            <TabsTrigger value="load-test">Teste de Carga</TabsTrigger>
           <TabsTrigger value="security">
             <ShieldCheck className="w-4 h-4 mr-2" />
             Segurança & RLS
@@ -250,10 +269,70 @@ export default function ObservabilityDashboard() {
            <VoipInfrastructureTab />
          </TabsContent>
 
-         {/* Real-time Quality */}
-         <TabsContent value="quality" className="space-y-4">
-           <RealtimeQualityDashboard />
-         </TabsContent>
+          {/* Real-time Quality */}
+          <TabsContent value="quality" className="space-y-4">
+            <QualityTrunkDashboard />
+            <RealtimeQualityDashboard />
+          </TabsContent>
+  
+          {/* Load Test */}
+          <TabsContent value="load-test" className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-medium">Simulação de Carga VoIP</h3>
+                <p className="text-sm text-muted-foreground">Valida latência e gargalos do banco de dados sob estresse</p>
+              </div>
+              <Button onClick={runLoadTest} disabled={isRunningLoadTest}>
+                {isRunningLoadTest ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <PlayCircle className="mr-2 h-4 w-4" />
+                )}
+                Iniciar Teste Real
+              </Button>
+            </div>
+
+            {loadTestResult && (
+              <div className="grid gap-4 md:grid-cols-4">
+                <Card>
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                      <Zap className="h-4 w-4" /> Latência Inserção
+                    </div>
+                    <p className="text-2xl font-bold">{loadTestResult.insert_latency_avg_ms.toFixed(2)}ms</p>
+                    <Badge variant={loadTestResult.insert_latency_avg_ms < 50 ? "default" : "destructive"} className="mt-1">
+                      {loadTestResult.insert_latency_avg_ms < 50 ? "Excelente" : "Degradado"}
+                    </Badge>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                      <Search className="h-4 w-4" /> Latência Query
+                    </div>
+                    <p className="text-2xl font-bold">{loadTestResult.select_latency_ms.toFixed(2)}ms</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                      <Clock className="h-4 w-4" /> Duração Total
+                    </div>
+                    <p className="text-2xl font-bold">{loadTestResult.total_duration_ms.toFixed(2)}ms</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                      <BarChart3 className="h-4 w-4" /> Registros
+                    </div>
+                    <p className="text-2xl font-bold">{loadTestResult.records_processed}</p>
+                    <p className="text-xs text-muted-foreground mt-1">Lote SIP Processado</p>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </TabsContent>
  
          {/* Security & RLS */}
          <TabsContent value="security" className="space-y-4">
