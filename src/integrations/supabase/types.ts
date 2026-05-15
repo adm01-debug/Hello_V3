@@ -6646,6 +6646,7 @@ export type Database = {
         Args: { _endpoint: string; _ip_address: string; _user_id?: string }
         Returns: Json
       }
+      check_rls_enabled: { Args: { table_name: string }; Returns: boolean }
       cleanup_expired_challenges: { Args: never; Returns: undefined }
       get_agent_performance: { Args: never; Returns: Json }
       get_agents_with_active_calls: { Args: never; Returns: Json }
