@@ -40,8 +40,8 @@ export const QualityTrunkDashboard = () => {
 
   if (loadingQuality || loadingTrunks) return <div>Carregando métricas...</div>;
 
-  const avgMos = qualityMetrics?.reduce((acc, m) => acc + Number(m.mos_avg), 0) / (qualityMetrics?.length || 1);
-  const avgJitter = qualityMetrics?.reduce((acc, m) => acc + Number(m.jitter_avg_ms), 0) / (qualityMetrics?.length || 1);
+  const avgMos = (qualityMetrics && qualityMetrics.length > 0) ? qualityMetrics.reduce((acc, m) => acc + Number(m.mos_avg), 0) / qualityMetrics.length : 0;
+  const avgJitter = (qualityMetrics && qualityMetrics.length > 0) ? qualityMetrics.reduce((acc, m) => acc + Number(m.jitter_avg_ms), 0) / qualityMetrics.length : 0;
 
   return (
     <div className="space-y-6">
