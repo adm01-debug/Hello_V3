@@ -18,7 +18,7 @@ import type { Tables } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
-type AuditLog = Tables<'audit_logs'>;
+type AuditLog = Tables<'call_control_audit_logs'>;
 
 const actionLabels: Record<string, string> = {
   view: 'Visualização',
@@ -82,7 +82,7 @@ export default function AuditLogs() {
     setLoading(true);
     try {
       const { data, error } = await supabase
-        .from('audit_logs')
+        .from('call_control_audit_logs')
         .select('*')
         .order('created_at', { ascending: false })
         .limit(500);
@@ -99,12 +99,12 @@ export default function AuditLogs() {
 
   const filteredLogs = logs.filter(log => {
     const matchesSearch = 
-      log.user_email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.resource_id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      log.call_session_id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      log.source?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       JSON.stringify(log.details).toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesAction = actionFilter === 'all' || log.action === actionFilter;
-    const matchesResource = resourceFilter === 'all' || log.resource_type === resourceFilter;
+    const matchesAction = actionFilter === 'all' || log.event_type === actionFilter;
+    const matchesResource = true; // No resource_type in call_control_audit_logs
     
     return matchesSearch && matchesAction && matchesResource;
   });
@@ -246,10 +246,9 @@ export default function AuditLogs() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Data/Hora</TableHead>
-                  <TableHead>Usuário</TableHead>
-                  <TableHead>Ação</TableHead>
-                  <TableHead>Recurso</TableHead>
-                  <TableHead>ID do Recurso</TableHead>
+                  <TableHead>Fonte</TableHead>
+                  <TableHead>Evento</TableHead>
+                  <TableHead>Sessão</TableHead>
                   <TableHead>Detalhes</TableHead>
                 </TableRow>
               </TableHeader>
@@ -260,25 +259,17 @@ export default function AuditLogs() {
                       {format(new Date(log.created_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })}
                     </TableCell>
                     <TableCell>
-                      <div className="flex flex-col">
-                        <span className="font-medium">{log.user_email || 'Sistema'}</span>
-                        {log.user_role && (
-                          <Badge variant="outline" className="w-fit text-xs">
-                            {log.user_role}
-                          </Badge>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge className={actionColors[log.action] || ''}>
-                        {actionLabels[log.action] || log.action}
+                      <Badge variant="outline">
+                        {log.source || 'Sistema'}
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      {resourceLabels[log.resource_type] || log.resource_type}
+                      <Badge className={actionColors[log.event_type] || ''}>
+                        {actionLabels[log.event_type] || log.event_type}
+                      </Badge>
                     </TableCell>
                     <TableCell className="font-mono text-xs">
-                      {log.resource_id ? log.resource_id.slice(0, 8) + '...' : '-'}
+                      {log.call_session_id || '-'}
                     </TableCell>
                     <TableCell className="max-w-[200px] truncate">
                       {log.details && typeof log.details === 'object' && Object.keys(log.details).length > 0 
