@@ -9,7 +9,9 @@ import { Shield, ShieldCheck, ShieldAlert, Lock, Users, Database, FileText, Eye,
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { usePageTitle } from '@/hooks/usePageTitle';
-import { securityFeatures, securityDecisions, rlsPolicies } from '@/lib/security-report-data';
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { securityFeatures, securityDecisions, rlsPolicies as fallbackRlsPolicies } from '@/lib/security-report-data';
 
 const getStatusIcon = (status: string) => {
   switch (status) {
