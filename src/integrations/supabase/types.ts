@@ -6686,6 +6686,7 @@ export type Database = {
       is_admin: { Args: never; Returns: boolean }
       is_admin_or_supervisor: { Args: never; Returns: boolean }
       is_admin_user: { Args: { _user_id: string }; Returns: boolean }
+      is_supervisor: { Args: never; Returns: boolean }
       log_audit_event: {
         Args: {
           p_action: string
