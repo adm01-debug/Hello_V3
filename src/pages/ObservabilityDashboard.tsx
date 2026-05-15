@@ -8,6 +8,7 @@ import { VoipInfrastructureTab } from '@/components/executive/VoipInfrastructure
 import { RealtimeQualityDashboard } from '@/components/executive/RealtimeQualityDashboard';
 import { useWebVitals } from '@/hooks/useWebVitals';
 import { SystemIntegrityDashboard } from '@/components/dashboard/SystemIntegrityDashboard';
+import { QualityTrunkDashboard } from '@/components/executive/QualityTrunkDashboard';
 import { useHealthCheck } from '@/hooks/useHealthCheck';
 import { getErrorReports } from '@/lib/error-tracking';
 import {
@@ -268,8 +269,9 @@ export default function ObservabilityDashboard() {
            <VoipInfrastructureTab />
          </TabsContent>
 
-         {/* Real-time Quality */}
+          {/* Real-time Quality */}
           <TabsContent value="quality" className="space-y-4">
+            <QualityTrunkDashboard />
             <RealtimeQualityDashboard />
           </TabsContent>
   
