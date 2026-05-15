@@ -12,7 +12,7 @@ import { useHealthCheck } from '@/hooks/useHealthCheck';
 import { getErrorReports } from '@/lib/error-tracking';
 import {
   Activity, Heart, AlertTriangle, CheckCircle, XCircle,
-  RefreshCw, Gauge, Clock, Monitor, Zap, Loader2,
+  RefreshCw, Gauge, Clock, Monitor, Zap, Loader2, FileDown
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -79,9 +79,13 @@ export default function ObservabilityDashboard() {
             {statusIcons[overallStatus]}
             <span className="ml-1 capitalize">{overallStatus}</span>
           </Badge>
+          <Button variant="outline" onClick={() => window.print()} className="hidden sm:flex">
+            <FileDown className="mr-2 h-4 w-4" />
+            Exportar Auditoria
+          </Button>
           <Button variant="outline" onClick={() => { refreshVitals(); runChecks(); }} disabled={isChecking}>
             <RefreshCw className={`mr-2 h-4 w-4 ${isChecking ? 'animate-spin' : ''}`} />
-            Atualizar
+            Sincronizar
           </Button>
         </div>
       </div>
