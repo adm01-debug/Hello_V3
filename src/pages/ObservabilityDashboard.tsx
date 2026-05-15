@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { VoipInfrastructureTab } from '@/components/executive/VoipInfrastructureTab';
 import { RealtimeQualityDashboard } from '@/components/executive/RealtimeQualityDashboard';
 import { useWebVitals } from '@/hooks/useWebVitals';
+import { SystemIntegrityDashboard } from '@/components/dashboard/SystemIntegrityDashboard';
 import { useHealthCheck } from '@/hooks/useHealthCheck';
 import { getErrorReports } from '@/lib/error-tracking';
 import {
@@ -84,6 +85,8 @@ export default function ObservabilityDashboard() {
           </Button>
         </div>
       </div>
+
+      <SystemIntegrityDashboard />
 
       <Tabs defaultValue="vitals" className="space-y-4">
         <TabsList>
