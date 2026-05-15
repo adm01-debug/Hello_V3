@@ -6631,6 +6631,13 @@ export type Database = {
         Args: { target_agent_name: string }
         Returns: boolean
       }
+      check_all_tables_rls_status: {
+        Args: never
+        Returns: {
+          rls_enabled: boolean
+          table_name: string
+        }[]
+      }
       check_calling_hours: { Args: { p_region_code?: string }; Returns: Json }
       check_dnc: { Args: { p_phone: string }; Returns: boolean }
       check_ip_allowed: {
