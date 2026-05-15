@@ -776,6 +776,60 @@ export type Database = {
         }
         Relationships: []
       }
+      bitrix_departments: {
+        Row: {
+          id: string
+          last_sync_at: string | null
+          name: string
+          parent_id: string | null
+        }
+        Insert: {
+          id: string
+          last_sync_at?: string | null
+          name: string
+          parent_id?: string | null
+        }
+        Update: {
+          id?: string
+          last_sync_at?: string | null
+          name?: string
+          parent_id?: string | null
+        }
+        Relationships: []
+      }
+      bitrix_users: {
+        Row: {
+          active: boolean | null
+          email: string | null
+          id: string
+          last_name: string | null
+          last_sync_at: string | null
+          name: string
+          personal_phone: string | null
+          work_phone: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          email?: string | null
+          id: string
+          last_name?: string | null
+          last_sync_at?: string | null
+          name: string
+          personal_phone?: string | null
+          work_phone?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          email?: string | null
+          id?: string
+          last_name?: string | null
+          last_sync_at?: string | null
+          name?: string
+          personal_phone?: string | null
+          work_phone?: string | null
+        }
+        Relationships: []
+      }
       blocked_access_logs: {
         Row: {
           city: string | null
