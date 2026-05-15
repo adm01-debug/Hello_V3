@@ -46,74 +46,97 @@ export const useBitrix = () => {
   const [leads, setLeads] = useState<BitrixLead[]>([]);
   const [deals, setDeals] = useState<BitrixDeal[]>([]);
 
-   const callBitrixApi = useCallback(async (action: string, params?: Record<string, unknown>, maxRetries = 2) => {
-     setIsLoading(true);
-     let lastError: any = null; // Keeping any here briefly because it might not strictly be Error
-     
-     for (let attempt = 0; attempt <= maxRetries; attempt++) {
-       try {
-         const { data, error } = await supabase.functions.invoke('bitrix-api', {
-           body: { action, params }
-         });
- 
-         if (!error) {
-           if (data?.configured === false) {
-             setIsConfigured(false);
-             setIsLoading(false);
-             return null;
-           }
-           setIsConfigured(true);
-           setIsLoading(false);
-           return data;
-         }
- 
-         lastError = error;
-         const status = (error as { status?: number }).status || 0;
-         if (status >= 400 && status < 500) break; // Client error, don't retry
-         if (error.message?.includes('não configurado')) break;
- 
-         if (attempt < maxRetries) {
-           await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
-           continue;
-         }
-       } catch (err) {
-         lastError = err;
-         if (attempt < maxRetries) {
-           await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
-           continue;
-         }
-       }
-     }
- 
-     setIsLoading(false);
-     if (lastError) {
-       let isNotConfigured = false;
-       let description = lastError.message || String(lastError);
- 
-       const responseContext = (lastError as { context?: Response }).context;
-       if (responseContext instanceof Response) {
-         try {
-           const payload = await responseContext.clone().json() as {
-             configured?: boolean;
-             error?: string;
-             message?: string;
-           };
-           const configMessage = payload?.error || payload?.message;
-           isNotConfigured = payload?.configured === false || configMessage === 'Serviço não configurado';
-           if (configMessage) description = configMessage;
-         } catch { /* ignore */ }
-       }
- 
-       if (isNotConfigured) {
-         setIsConfigured(false);
-         return { success: false, configured: false };
-       }
- 
-       logger.error('Bitrix API error:', lastError);
-       toast.error('Erro ao comunicar com Bitrix', { description });
-     }
-     return null;
-   }, []);
+  const callBitrixApi = useCallback(async (action: string, params?: Record<string, unknown>, maxRetries = 2) => {
+    setIsLoading(true);
+    let lastError: any = null;
+    
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const { data, error } = await supabase.functions.invoke('bitrix-api', {
+          body: { action, params }
+        });
+
+        if (!error) {
+          if (data?.configured === false) {
+            setIsConfigured(false);
+            setIsLoading(false);
+            return null;
+          }
+          setIsConfigured(true);
+          setIsLoading(false);
+          return data;
+        }
+
+        lastError = error;
+        if (attempt < maxRetries) {
+          await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
+          continue;
+        }
+      } catch (err) {
+        lastError = err;
+        if (attempt < maxRetries) {
+          await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
+          continue;
+        }
+      }
+    }
+
+    setIsLoading(false);
+    return null;
+  }, []);
+
+  const syncAgents = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const result = await callBitrixApi('get_users', { FILTER: { ACTIVE: 'Y' } });
+      if (result?.data) {
+        const users = result.data;
+        for (const user of users) {
+          await supabase.from('bitrix_users').upsert({
+            id: user.ID,
+            name: user.NAME,
+            last_name: user.LAST_NAME,
+            email: user.EMAIL,
+            work_phone: user.WORK_PHONE,
+            personal_phone: user.PERSONAL_PHONE,
+            active: user.ACTIVE === 'Y'
+          });
+        }
+        toast.success('Agentes sincronizados com sucesso');
+        return users;
+      }
+    } catch (error) {
+      logger.error('Error syncing agents:', error);
+      toast.error('Erro ao sincronizar agentes');
+    } finally {
+      setIsLoading(false);
+    }
+    return null;
+  }, [callBitrixApi]);
+
+  const syncDepartments = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const result = await callBitrixApi('get_departments');
+      if (result?.data) {
+        const departments = result.data;
+        for (const dept of departments) {
+          await supabase.from('bitrix_departments').upsert({
+            id: dept.ID,
+            name: dept.NAME,
+            parent_id: dept.PARENT
+          });
+        }
+        toast.success('Departamentos sincronizados');
+        return departments;
+      }
+    } catch (error) {
+      logger.error('Error syncing departments:', error);
+    } finally {
+      setIsLoading(false);
+    }
+    return null;
+  }, [callBitrixApi]);
 
   const checkConfiguration = useCallback(async () => {
     const result = await callBitrixApi('get_user');
@@ -229,6 +252,8 @@ export const useBitrix = () => {
     getDeals,
     registerCall,
     finishCall,
+    syncAgents,
+    syncDepartments,
     findContactByPhone
   };
 };

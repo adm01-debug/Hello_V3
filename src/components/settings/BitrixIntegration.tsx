@@ -1,23 +1,51 @@
- import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
- import { Badge } from '@/components/ui/badge';
- import { Button } from '@/components/ui/button';
- import { 
-   CheckCircle2, 
-   AlertCircle, 
-   ExternalLink, 
-   User, 
-   Phone, 
-   Link as LinkIcon 
- } from 'lucide-react';
- import { useBitrix } from '@/hooks/useBitrix';
- import { useEffect } from 'react';
+  import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+  import { Badge } from '@/components/ui/badge';
+  import { Button } from '@/components/ui/button';
+  import { Label } from '@/components/ui/label';
+  import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+  import { 
+    CheckCircle2, 
+    AlertCircle, 
+    ExternalLink, 
+    User, 
+    Phone, 
+    Link as LinkIcon,
+    RefreshCw
+  } from 'lucide-react';
+  import { useBitrix } from '@/hooks/useBitrix';
+  import { useEffect, useState } from 'react';
+  import { supabase } from '@/integrations/supabase/client';
+  import { toast } from 'sonner';
  
- export function BitrixIntegration() {
-   const { isConfigured, isLoading, checkConfiguration } = useBitrix();
- 
-   useEffect(() => {
-     checkConfiguration();
-   }, [checkConfiguration]);
+  export function BitrixIntegration() {
+    const { isConfigured, isLoading, checkConfiguration, syncAgents, syncDepartments } = useBitrix();
+    const [logDestination, setLogDestination] = useState<'crm_timeline' | 'call_list'>('crm_timeline');
+    const [saving, setSaving] = useState(false);
+  
+    useEffect(() => {
+      checkConfiguration();
+      loadSettings();
+    }, [checkConfiguration]);
+
+    const loadSettings = async () => {
+      const { data } = await supabase.from('system_settings').select('value').eq('key', 'bitrix_config').single();
+      if (data?.value && typeof data.value === 'object' && 'log_destination' in data.value) {
+        setLogDestination((data.value as any).log_destination);
+      }
+    };
+
+    const saveSettings = async (val: string) => {
+      setSaving(true);
+      const { error } = await supabase.from('system_settings').upsert({
+        key: 'bitrix_config',
+        value: { log_destination: val, sync_enabled: true }
+      });
+      if (!error) {
+        setLogDestination(val as any);
+        toast.success('Configuração de log atualizada');
+      }
+      setSaving(false);
+    };
  
    return (
      <Card>
@@ -93,24 +121,52 @@
            </div>
          </div>
  
-         <div className="flex gap-3">
-           <Button 
-             variant="outline" 
-             className="gap-2"
-             onClick={() => window.open('https://www.bitrix24.com.br/apps/webhooks.php', '_blank')}
-           >
-             <ExternalLink className="h-4 w-4" />
-             Abrir Bitrix24 Webhooks
-           </Button>
-           <Button 
-             variant="outline" 
-             className="gap-2"
-             disabled={isLoading}
-             onClick={() => checkConfiguration()}
-           >
-             {isLoading ? 'Verificando...' : 'Testar Conexão'}
-           </Button>
-         </div>
+          <div className="space-y-2 py-2 border-t border-b my-4">
+            <Label>Destino dos Logs de Chamada</Label>
+            <Select value={logDestination} onValueChange={saveSettings} disabled={saving}>
+              <SelectTrigger className="w-full sm:w-[300px]">
+                <SelectValue placeholder="Selecione o destino" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="crm_timeline">Timeline do CRM (Leads/Contatos)</SelectItem>
+                <SelectItem value="call_list">Lista de Chamadas (Telefonia)</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-[10px] text-muted-foreground italic">
+              Define onde os eventos de auditoria e logs de chamadas serão exibidos no Bitrix24.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <Button 
+              variant="outline" 
+              className="gap-2"
+              onClick={() => window.open('https://www.bitrix24.com.br/apps/webhooks.php', '_blank')}
+            >
+              <ExternalLink className="h-4 w-4" />
+              Abrir Bitrix24 Webhooks
+            </Button>
+            <Button 
+              variant="outline" 
+              className="gap-2"
+              disabled={isLoading}
+              onClick={() => checkConfiguration()}
+            >
+              {isLoading ? 'Verificando...' : 'Testar Conexão'}
+            </Button>
+            <Button
+              variant="premium"
+              className="gap-2"
+              disabled={isLoading || !isConfigured}
+              onClick={() => {
+                syncAgents();
+                syncDepartments();
+              }}
+            >
+              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+              Sincronizar Agentes e Filas
+            </Button>
+          </div>
        </CardContent>
      </Card>
    );
