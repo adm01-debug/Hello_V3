@@ -6628,6 +6628,7 @@ export type Database = {
         Returns: boolean
       }
       is_active_agent: { Args: { _agent_name: string }; Returns: boolean }
+      is_admin: { Args: never; Returns: boolean }
       is_admin_or_supervisor: { Args: never; Returns: boolean }
       is_admin_user: { Args: { _user_id: string }; Returns: boolean }
       log_audit_event: {
