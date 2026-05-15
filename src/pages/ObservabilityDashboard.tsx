@@ -4,7 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
  import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
- import { VoipInfrastructureTab } from '@/components/executive/VoipInfrastructureTab';
+import { VoipInfrastructureTab } from '@/components/executive/VoipInfrastructureTab';
+import { RealtimeQualityDashboard } from '@/components/executive/RealtimeQualityDashboard';
 import { useWebVitals } from '@/hooks/useWebVitals';
 import { useHealthCheck } from '@/hooks/useHealthCheck';
 import { getErrorReports } from '@/lib/error-tracking';
@@ -88,7 +89,8 @@ export default function ObservabilityDashboard() {
         <TabsList>
           <TabsTrigger value="vitals">Web Vitals</TabsTrigger>
            <TabsTrigger value="health">Health Checks</TabsTrigger>
-           <TabsTrigger value="voip">Infraestrutura VoIP</TabsTrigger>
+           <TabsTrigger value="voip">Infraestrutura</TabsTrigger>
+           <TabsTrigger value="quality">Qualidade (RT)</TabsTrigger>
           <TabsTrigger value="errors">
             Erros
             {errors.length > 0 && (
@@ -206,6 +208,11 @@ export default function ObservabilityDashboard() {
          {/* VoIP Infrastructure */}
          <TabsContent value="voip" className="space-y-4">
            <VoipInfrastructureTab />
+         </TabsContent>
+
+         {/* Real-time Quality */}
+         <TabsContent value="quality" className="space-y-4">
+           <RealtimeQualityDashboard />
          </TabsContent>
  
          {/* Errors */}
