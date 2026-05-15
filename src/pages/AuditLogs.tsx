@@ -9,8 +9,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Shield, Search, Filter, RefreshCw, Calendar, User, Activity } from 'lucide-react';
+import { Shield, Search, Filter, RefreshCw, Calendar, User, Activity, Info, Eye } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
@@ -265,10 +266,41 @@ export default function AuditLogs() {
                     <TableCell className="font-mono text-xs">
                       {log.call_session_id || '-'}
                     </TableCell>
-                    <TableCell className="max-w-[200px] truncate">
-                      {log.details && typeof log.details === 'object' && Object.keys(log.details).length > 0 
-                        ? JSON.stringify(log.details)
-                        : '-'}
+                    <TableCell className="max-w-[200px] truncate font-mono text-[10px]">
+                      {log.details && typeof log.details === 'object' && Object.keys(log.details).length > 0 ? (
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 gap-2 text-xs">
+                              <Eye className="h-3 w-3" /> Ver Detalhes
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl">
+                            <DialogHeader>
+                              <DialogTitle className="flex items-center gap-2">
+                                <Info className="h-5 w-5 text-primary" />
+                                Detalhes do Evento
+                              </DialogTitle>
+                            </DialogHeader>
+                            <div className="bg-muted p-4 rounded-lg overflow-auto max-h-[400px]">
+                              <pre className="text-[10px] leading-relaxed">
+                                {JSON.stringify(log.details, null, 2)}
+                              </pre>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4 text-xs mt-2 border-t pt-4">
+                              <div>
+                                <p className="text-muted-foreground">ID do Log</p>
+                                <p className="font-mono">{log.id}</p>
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground">Sessão</p>
+                                <p className="font-mono">{log.call_session_id}</p>
+                              </div>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      ) : (
+                        <span className="text-muted-foreground italic">-</span>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
