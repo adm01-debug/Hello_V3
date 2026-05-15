@@ -27,7 +27,8 @@ const actionLabels: Record<string, string> = {
   hold_start: 'Início de Espera',
   hold_end: 'Fim de Espera',
   agent_status_change: 'Status do Agente',
-  trunk_failover: 'Failover de Tronco'
+  trunk_failover: 'Failover de Tronco',
+  table_modification: 'Modificação de Tabela'
 };
 
 const resourceLabels: Record<string, string> = {
@@ -52,7 +53,8 @@ const actionColors: Record<string, string> = {
   hold_start: 'bg-warning/10 text-warning border-warning/20',
   hold_end: 'bg-info/10 text-info border-info/20',
   agent_status_change: 'bg-primary/10 text-primary border-primary/20',
-  trunk_failover: 'bg-destructive/10 text-destructive border-destructive/20'
+  trunk_failover: 'bg-destructive/10 text-destructive border-destructive/20',
+  table_modification: 'bg-purple-500/10 text-purple-600 border-purple-500/20'
 };
 
 export default function AuditLogs() {

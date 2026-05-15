@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
- import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { VoipInfrastructureTab } from '@/components/executive/VoipInfrastructureTab';
 import { RealtimeQualityDashboard } from '@/components/executive/RealtimeQualityDashboard';
 import { useWebVitals } from '@/hooks/useWebVitals';
@@ -12,10 +12,15 @@ import { useHealthCheck } from '@/hooks/useHealthCheck';
 import { getErrorReports } from '@/lib/error-tracking';
 import {
   Activity, Heart, AlertTriangle, CheckCircle, XCircle,
-  RefreshCw, Gauge, Clock, Monitor, Zap, Loader2, FileDown
+  RefreshCw, Gauge, Clock, Monitor, Zap, Loader2, FileDown,
+  ShieldCheck, Database, Lock, Search
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
 
 const vitalConfig: Record<string, { label: string; unit: string; icon: React.ReactNode }> = {
   LCP: { label: 'Largest Contentful Paint', unit: 'ms', icon: <Monitor className="h-4 w-4" /> },
@@ -45,10 +50,34 @@ export default function ObservabilityDashboard() {
   const { vitals, history, refresh: refreshVitals } = useWebVitals();
   const { services, overallStatus, isChecking, runChecks } = useHealthCheck();
   const errors = getErrorReports();
+  const [rlsStatus, setRlsStatus] = useState<{ table_name: string; rls_enabled: boolean }[]>([]);
+  const [loadingRls, setLoadingRls] = useState(false);
+  const [rlsSearch, setRlsSearch] = useState('');
+
+  const fetchRlsStatus = async () => {
+    setLoadingRls(true);
+    try {
+      const { data, error } = await supabase.rpc('check_all_tables_rls_status');
+      if (error) {
+        toast.error('Algumas verificações de RLS requerem privilégios elevados.');
+      } else {
+        setRlsStatus((data as any[]) || []);
+      }
+    } catch (err) {
+      console.error('Error fetching RLS status:', err);
+    } finally {
+      setLoadingRls(false);
+    }
+  };
 
   useEffect(() => {
     runChecks();
+    fetchRlsStatus();
   }, [runChecks]);
+
+  const filteredRls = rlsStatus.filter(t => 
+    t.table_name.toLowerCase().includes(rlsSearch.toLowerCase())
+  );
 
   const vitalChartData = Object.entries(vitals)
     .filter(([, m]) => m)
@@ -98,6 +127,10 @@ export default function ObservabilityDashboard() {
            <TabsTrigger value="health">Health Checks</TabsTrigger>
            <TabsTrigger value="voip">Infraestrutura</TabsTrigger>
            <TabsTrigger value="quality">Qualidade (RT)</TabsTrigger>
+          <TabsTrigger value="security">
+            <ShieldCheck className="w-4 h-4 mr-2" />
+            Segurança & RLS
+          </TabsTrigger>
           <TabsTrigger value="errors">
             Erros
             {errors.length > 0 && (
@@ -222,6 +255,92 @@ export default function ObservabilityDashboard() {
            <RealtimeQualityDashboard />
          </TabsContent>
  
+         {/* Security & RLS */}
+         <TabsContent value="security" className="space-y-4">
+           <div className="grid gap-4 md:grid-cols-4">
+             <Card>
+               <CardContent className="pt-6">
+                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                   <Lock className="h-4 w-4" />
+                   Tabelas Protegidas
+                 </div>
+                 <p className="text-2xl font-bold">
+                   {rlsStatus.filter(t => t.rls_enabled).length} / {rlsStatus.length}
+                 </p>
+                 <Progress 
+                   value={rlsStatus.length > 0 ? (rlsStatus.filter(t => t.rls_enabled).length / rlsStatus.length) * 100 : 0} 
+                   className="mt-2 h-1" 
+                 />
+               </CardContent>
+             </Card>
+             <Card>
+               <CardContent className="pt-6">
+                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                   <Database className="h-4 w-4" />
+                   Total de Tabelas
+                 </div>
+                 <p className="text-2xl font-bold">{rlsStatus.length || '—'}</p>
+                 <p className="text-xs text-muted-foreground mt-1">Esquema Public</p>
+               </CardContent>
+             </Card>
+           </div>
+
+           <Card>
+             <CardHeader className="flex flex-row items-center justify-between">
+               <div>
+                 <CardTitle>Auditoria de Row Level Security (RLS)</CardTitle>
+                 <CardDescription>Status de proteção de cada tabela no banco de dados</CardDescription>
+               </div>
+               <div className="relative w-64">
+                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                 <Input 
+                   placeholder="Filtrar tabelas..." 
+                   className="pl-8" 
+                   value={rlsSearch}
+                   onChange={(e) => setRlsSearch(e.target.value)}
+                 />
+               </div>
+             </CardHeader>
+             <CardContent>
+               <Table>
+                 <TableHeader>
+                   <TableRow>
+                     <TableHead>Tabela</TableHead>
+                     <TableHead>Status RLS</TableHead>
+                     <TableHead>Risco</TableHead>
+                   </TableRow>
+                 </TableHeader>
+                 <TableBody>
+                   {filteredRls.map((row) => (
+                     <TableRow key={row.table_name}>
+                       <TableCell className="font-mono text-sm">{row.table_name}</TableCell>
+                       <TableCell>
+                         <Badge variant={row.rls_enabled ? "default" : "destructive"}>
+                           {row.rls_enabled ? "Ativo" : "Desativado"}
+                         </Badge>
+                       </TableCell>
+                       <TableCell>
+                         {row.rls_enabled ? (
+                           <Badge variant="outline" className="text-emerald-600 border-emerald-200 bg-emerald-50">Protegido</Badge>
+                         ) : (
+                           <Badge variant="outline" className="text-destructive border-destructive/20 bg-destructive/5">ALTO RISCO</Badge>
+                         )}
+                       </TableCell>
+                     </TableRow>
+                   ))}
+                   {rlsStatus.length === 0 && !loadingRls && (
+                     <TableRow>
+                       <TableCell colSpan={3} className="text-center py-8 text-muted-foreground italic">
+                         Execute 'Sincronizar' para carregar dados de auditoria detalhados.
+                       </TableCell>
+                     </TableRow>
+                   )}
+                 </TableBody>
+               </Table>
+             </CardContent>
+           </Card>
+         </TabsContent>
+
          {/* Errors */}
         <TabsContent value="errors" className="space-y-4">
           <Card>
