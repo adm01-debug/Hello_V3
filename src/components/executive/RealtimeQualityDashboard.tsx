@@ -3,7 +3,8 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useQualityMetrics, useTrunkUsageMetrics } from '@/hooks/useQualityMetrics';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { Activity, ShieldAlert, Zap, Wifi } from 'lucide-react';
+import { Activity, ShieldAlert, Zap, Wifi, ShieldCheck } from 'lucide-react';
+import { SecurityAuditCard } from './SecurityAuditCard';
 import { format } from 'date-fns';
 
 export function RealtimeQualityDashboard() {
