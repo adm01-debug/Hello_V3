@@ -6658,6 +6658,7 @@ export type Database = {
       cleanup_old_data: { Args: never; Returns: undefined }
       get_agent_performance: { Args: never; Returns: Json }
       get_agents_with_active_calls: { Args: never; Returns: Json }
+      get_auth_agent_id: { Args: never; Returns: string }
       get_call_history_with_summaries: {
         Args: {
           p_limit?: number
