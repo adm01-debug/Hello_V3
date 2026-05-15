@@ -3,9 +3,9 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useQualityMetrics, useTrunkUsageMetrics } from '@/hooks/useQualityMetrics';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { Activity, ShieldAlert, Zap, Wifi, ShieldCheck } from 'lucide-react';
-import { SecurityAuditCard } from './SecurityAuditCard';
+import { Activity, ShieldAlert, Zap, Wifi } from 'lucide-react';
 import { format } from 'date-fns';
+import { SecurityAuditCard } from './SecurityAuditCard';
 
 export function RealtimeQualityDashboard() {
   const { data: quality = [], isLoading: loadingQuality } = useQualityMetrics();
@@ -87,36 +87,44 @@ export function RealtimeQualityDashboard() {
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Tendência de Qualidade (MOS)</CardTitle>
-            <CardDescription>Monitoramento contínuo da experiência do usuário</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData}>
-                  <defs>
-                    <linearGradient id="colorMos" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                  <XAxis dataKey="time" hide />
-                  <YAxis domain={[0, 5]} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
-                    itemStyle={{ color: 'hsl(var(--primary))' }}
-                  />
-                  <Area type="monotone" dataKey="mos" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorMos)" strokeWidth={2} />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="md:col-span-2 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Tendência de Qualidade (MOS)</CardTitle>
+              <CardDescription>Monitoramento contínuo da experiência do usuário</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[300px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={chartData}>
+                    <defs>
+                      <linearGradient id="colorMos" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                    <XAxis dataKey="time" hide />
+                    <YAxis domain={[0, 5]} />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
+                      itemStyle={{ color: 'hsl(var(--primary))' }}
+                    />
+                    <Area type="monotone" dataKey="mos" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorMos)" strokeWidth={2} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
+        <div className="md:col-span-1">
+          <SecurityAuditCard />
+        </div>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Latência e Jitter</CardTitle>
@@ -139,46 +147,40 @@ export function RealtimeQualityDashboard() {
             </div>
           </CardContent>
         </Card>
-      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Últimas Amostras de Qualidade</CardTitle>
-          <CardDescription>Detalhes granulares por sessão de chamada</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="relative overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-xs uppercase bg-muted/50">
-                <tr>
-                  <th className="px-4 py-3">Agente</th>
-                  <th className="px-4 py-3">MOS</th>
-                  <th className="px-4 py-3">Jitter</th>
-                  <th className="px-4 py-3">Perda</th>
-                  <th className="px-4 py-3">Latência (RTT)</th>
-                  <th className="px-4 py-3">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {quality.slice(0, 10).map((m) => (
-                  <tr key={m.id} className="hover:bg-muted/30 transition-colors">
-                    <td className="px-4 py-3 font-medium">{m.agent_name}</td>
-                    <td className="px-4 py-3 font-mono">{m.mos_avg}</td>
-                    <td className="px-4 py-3">{m.jitter_avg_ms}ms</td>
-                    <td className="px-4 py-3">{m.packet_loss_pct}%</td>
-                    <td className="px-4 py-3">{m.rtt_avg_ms}ms</td>
-                    <td className="px-4 py-3">
-                      <Badge variant={m.quality_label === 'good' ? 'default' : m.quality_label === 'fair' ? 'secondary' : 'destructive'} className="text-[10px]">
-                        {m.quality_label === 'good' ? 'EXCELENTE' : m.quality_label === 'fair' ? 'ACEITÁVEL' : 'CRÍTICO'}
-                      </Badge>
-                    </td>
+        <Card>
+          <CardHeader>
+            <CardTitle>Últimas Amostras de Qualidade</CardTitle>
+            <CardDescription>Detalhes granulares por sessão de chamada</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="relative overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="text-xs uppercase bg-muted/50">
+                  <tr>
+                    <th className="px-4 py-3">Agente</th>
+                    <th className="px-4 py-3">MOS</th>
+                    <th className="px-4 py-3">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+                </thead>
+                <tbody className="divide-y">
+                  {quality.slice(0, 5).map((m) => (
+                    <tr key={m.id} className="hover:bg-muted/30 transition-colors">
+                      <td className="px-4 py-3 font-medium">{m.agent_name}</td>
+                      <td className="px-4 py-3 font-mono">{m.mos_avg}</td>
+                      <td className="px-4 py-3">
+                        <Badge variant={m.quality_label === 'good' ? 'default' : m.quality_label === 'fair' ? 'secondary' : 'destructive'} className="text-[10px]">
+                          {m.quality_label === 'good' ? 'EXCELENTE' : m.quality_label === 'fair' ? 'ACEITÁVEL' : 'CRÍTICO'}
+                        </Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
