@@ -5,7 +5,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 
 interface BitrixRequest {
-  action: 'get_contacts' | 'get_leads' | 'create_lead' | 'update_lead' | 'get_deals' | 'create_call' | 'register_call' | 'finish_call' | 'get_user';
+  action: 'get_contacts' | 'get_leads' | 'create_lead' | 'update_lead' | 'get_deals' | 'create_call' | 'register_call' | 'finish_call' | 'get_user' | 'get_users' | 'get_departments';
   params?: Record<string, unknown>;
 }
 
@@ -119,6 +119,12 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
         break;
       case 'get_user':
         endpoint = 'user.current';
+        break;
+      case 'get_users':
+        endpoint = 'user.get';
+        break;
+      case 'get_departments':
+        endpoint = 'department.get';
         break;
       default:
         return new Response(
