@@ -47,11 +47,16 @@ serve(async (req) => {
       });
     }
 
-    const { data: isAdmin } = await supabase.rpc("is_admin_user", { _user_id: user.id });
-    if (!isAdmin) {
-      return new Response(JSON.stringify({ error: "Forbidden" }), {
-        status: 403, headers: { ...cors, "Content-Type": "application/json" },
-      });
+    const { data: isAdmin, error: rpcError } = await supabase.rpc("is_admin_user", { _user_id: user.id });
+    // Use fallback check if RPC is not found or fails
+    const adminCheck = !rpcError && isAdmin;
+    if (!adminCheck) {
+      const { data: userRole } = await supabase.from('user_roles').select('role').eq('user_id', user.id).eq('role', 'admin').maybeSingle();
+      if (!userRole) {
+        return new Response(JSON.stringify({ error: "Forbidden", rpcError: rpcError?.message }), {
+          status: 403, headers: { ...cors, "Content-Type": "application/json" },
+        });
+      }
     }
 
     const body = await req.json().catch(() => ({}));
@@ -83,9 +88,11 @@ serve(async (req) => {
         created_by: user.id,
       }).select().single();
       if (error) throw error;
-      await supabase.rpc("log_audit_event", {
-        p_action: "create", p_resource_type: "voip_trunk", p_resource_id: data.id,
-        p_details: { name, provider },
+      await supabase.from('call_control_audit_logs').insert({
+        call_session_id: 'system-trunk-mgmt',
+        event_type: 'create',
+        source: 'trunk-manage-function',
+        details: { resource_type: "voip_trunk", resource_id: data.id, name, provider },
       });
       return json({ trunk: data }, cors);
     }
@@ -99,8 +106,11 @@ serve(async (req) => {
       const { data, error } = await supabase.from("voip_trunks")
         .update(updates).eq("id", id).select().single();
       if (error) throw error;
-      await supabase.rpc("log_audit_event", {
-        p_action: "update", p_resource_type: "voip_trunk", p_resource_id: id, p_details: { fields: Object.keys(rest) },
+      await supabase.from('call_control_audit_logs').insert({
+        call_session_id: 'system-trunk-mgmt',
+        event_type: 'update',
+        source: 'trunk-manage-function',
+        details: { resource_type: "voip_trunk", resource_id: id, fields: Object.keys(rest) },
       });
       return json({ trunk: data }, cors);
     }
@@ -110,8 +120,11 @@ serve(async (req) => {
       if (!id) return json({ error: "id obrigatório" }, cors, 400);
       const { error } = await supabase.from("voip_trunks").delete().eq("id", id);
       if (error) throw error;
-      await supabase.rpc("log_audit_event", {
-        p_action: "delete", p_resource_type: "voip_trunk", p_resource_id: id, p_details: {},
+      await supabase.from('call_control_audit_logs').insert({
+        call_session_id: 'system-trunk-mgmt',
+        event_type: 'delete',
+        source: 'trunk-manage-function',
+        details: { resource_type: "voip_trunk", resource_id: id },
       });
       return json({ ok: true }, cors);
     }
