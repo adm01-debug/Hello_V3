@@ -6656,6 +6656,7 @@ export type Database = {
       check_rls_enabled: { Args: { table_name: string }; Returns: boolean }
       cleanup_expired_challenges: { Args: never; Returns: undefined }
       cleanup_old_data: { Args: never; Returns: undefined }
+      cleanup_old_logs: { Args: never; Returns: undefined }
       get_agent_performance: { Args: never; Returns: Json }
       get_agents_with_active_calls: { Args: never; Returns: Json }
       get_auth_agent_id: { Args: never; Returns: string }
