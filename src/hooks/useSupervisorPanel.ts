@@ -50,15 +50,30 @@ export function useSupervisorPanel() {
   const [loading, setLoading] = useState(true);
   const [showTrendChart, setShowTrendChart] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => {
-    const saved = localStorage.getItem('supervisor-sound-enabled');
-    return saved !== null ? JSON.parse(saved) : true;
+    try {
+      const saved = localStorage.getItem('supervisor-sound-enabled');
+      if (saved === null) return true;
+      const parsed = JSON.parse(saved);
+      return typeof parsed === 'boolean' ? parsed : true;
+    } catch {
+      return true;
+    }
   });
+  const DEFAULT_SOUND_CONFIG: AlertSoundConfig = {
+    warningFrequency: 520, warningPattern: 'single', warningVolume: 0.2,
+    criticalFrequency: 880, criticalPattern: 'urgent', criticalVolume: 0.3,
+  };
   const [soundConfig, setSoundConfig] = useState<AlertSoundConfig>(() => {
-    const saved = localStorage.getItem('supervisor-sound-config');
-    return saved ? JSON.parse(saved) : {
-      warningFrequency: 520, warningPattern: 'single', warningVolume: 0.2,
-      criticalFrequency: 880, criticalPattern: 'urgent', criticalVolume: 0.3,
-    };
+    try {
+      const saved = localStorage.getItem('supervisor-sound-config');
+      if (!saved) return DEFAULT_SOUND_CONFIG;
+      const parsed = JSON.parse(saved);
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed)
+        ? { ...DEFAULT_SOUND_CONFIG, ...parsed }
+        : DEFAULT_SOUND_CONFIG;
+    } catch {
+      return DEFAULT_SOUND_CONFIG;
+    }
   });
   const [queueMetrics, setQueueMetrics] = useState<SupervisorQueueMetrics>({
     avgWaitTime: 0, abandonmentRate: 0, totalCompleted: 0,

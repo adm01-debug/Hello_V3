@@ -31,7 +31,17 @@ function readQueue(): CoachingItem[] {
   try {
     const raw = localStorage.getItem(QUEUE_KEY);
     if (!raw) return [];
-    return JSON.parse(raw) as CoachingItem[];
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (i): i is CoachingItem =>
+        !!i &&
+        typeof i === 'object' &&
+        typeof (i as CoachingItem).recommendationId === 'string' &&
+        typeof (i as CoachingItem).title === 'string' &&
+        typeof (i as CoachingItem).scheduledAt === 'number' &&
+        typeof (i as CoachingItem).appliedAt === 'number',
+    );
   } catch { return []; }
 }
 
@@ -43,7 +53,13 @@ function readCoached(): Record<string, number> {
   try {
     const raw = localStorage.getItem(COACHED_KEY);
     if (!raw) return {};
-    return JSON.parse(raw) as Record<string, number>;
+    const parsed = JSON.parse(raw) as unknown;
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+    const result: Record<string, number> = {};
+    for (const [k, v] of Object.entries(parsed)) {
+      if (typeof v === 'number') result[k] = v;
+    }
+    return result;
   } catch { return {}; }
 }
 

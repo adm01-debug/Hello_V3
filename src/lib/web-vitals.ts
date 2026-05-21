@@ -52,7 +52,11 @@ function observePaint(entryType: string, name: string, vitalName: 'FCP' | 'LCP')
   try {
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      const entry = entries[entries.length - 1];
+      // For 'paint' type, both 'first-paint' and 'first-contentful-paint' fire — must filter
+      // by name. For 'largest-contentful-paint', any entry counts; the last is the most recent.
+      const entry = name
+        ? entries.filter((e) => e.name === name).pop()
+        : entries[entries.length - 1];
       if (entry) {
         const value = entry.startTime;
         addMetric({

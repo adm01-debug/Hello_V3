@@ -36,22 +36,35 @@ export function setProactiveEnabled(enabled: boolean): void {
   }
 }
 
-export function shouldRunProactiveCheck(): boolean {
-  if (!isProactiveEnabled()) return false;
+function readSnapshot(): Snapshot | null {
   try {
     const raw = localStorage.getItem(SNAPSHOT_KEY);
-    if (!raw) return true;
-    const snap = JSON.parse(raw) as Snapshot;
-    return Date.now() - snap.takenAt >= CHECK_INTERVAL_MS;
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as unknown;
+    if (
+      !parsed ||
+      typeof parsed !== 'object' ||
+      !Array.isArray((parsed as Snapshot).ids) ||
+      typeof (parsed as Snapshot).takenAt !== 'number'
+    ) {
+      return null;
+    }
+    return parsed as Snapshot;
   } catch {
-    return true;
+    return null;
   }
+}
+
+export function shouldRunProactiveCheck(): boolean {
+  if (!isProactiveEnabled()) return false;
+  const snap = readSnapshot();
+  if (!snap) return true;
+  return Date.now() - snap.takenAt >= CHECK_INTERVAL_MS;
 }
 
 export function compareSnapshotAndNotify(currentCritical: CriticalRec[]): void {
   try {
-    const raw = localStorage.getItem(SNAPSHOT_KEY);
-    const previousIds = raw ? (JSON.parse(raw) as Snapshot).ids : [];
+    const previousIds = readSnapshot()?.ids ?? [];
     const newCritical = currentCritical.filter(r => !previousIds.includes(r.id));
 
     if (newCritical.length > 0) {

@@ -90,7 +90,7 @@ describe('Rate Limiter Logic', () => {
 
   it('blocks after exceeding limit', () => {
     const maxRequests = 5;
-    let count = 6;
+    const count = 6;
     expect(count > maxRequests).toBe(true);
   });
 

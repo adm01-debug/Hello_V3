@@ -30,8 +30,14 @@
  
  export function useDashboardLayout() {
    const [layout, setLayout] = useState<WidgetLayout[]>(() => {
-     const saved = localStorage.getItem(STORAGE_KEY);
-     return saved ? JSON.parse(saved) : DEFAULT_LAYOUT;
+     try {
+       const saved = localStorage.getItem(STORAGE_KEY);
+       if (!saved) return DEFAULT_LAYOUT;
+       const parsed = JSON.parse(saved);
+       return Array.isArray(parsed) ? (parsed as WidgetLayout[]) : DEFAULT_LAYOUT;
+     } catch {
+       return DEFAULT_LAYOUT;
+     }
    });
    const [isEditing, setIsEditing] = useState(false);
  

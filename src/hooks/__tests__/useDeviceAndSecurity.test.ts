@@ -218,7 +218,7 @@ describe('Critical Alert Sound System', () => {
     });
 
     it('allows different alert ID', () => {
-      let lastAlertId: string | null = 'alert-1';
+      const lastAlertId: string | null = 'alert-1';
       const newAlertId = 'alert-2';
       expect(lastAlertId !== newAlertId).toBe(true);
     });

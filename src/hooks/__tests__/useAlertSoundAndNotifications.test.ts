@@ -62,7 +62,7 @@ describe('Critical Alert Notifications', () => {
 
   describe('Alert deduplication', () => {
     it('skips duplicate alert ID', () => {
-      let lastAlertId: string | null = 'alert-1';
+      const lastAlertId: string | null = 'alert-1';
       const newAlert = { id: 'alert-1' };
       const isDuplicate = lastAlertId === newAlert.id;
       expect(isDuplicate).toBe(true);

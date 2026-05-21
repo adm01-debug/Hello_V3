@@ -1,26 +1,48 @@
-import js from "@eslint/js";
-import globals from "globals";
+// Flat config using only packages declared in devDependencies.
+// Mirrors the rules from the legacy .eslintrc.json (now removed).
+import tsParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
+import prettierConfig from "eslint-config-prettier";
 import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
-import tseslint from "typescript-eslint";
 
-export default tseslint.config(
-  { ignores: ["dist"] },
+export default [
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    ignores: [
+      "dist",
+      "build",
+      "coverage",
+      "node_modules",
+      "**/*.config.js",
+      "**/*.config.ts",
+      "supabase/**",
+    ],
+  },
+  {
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      parser: tsParser,
+      ecmaVersion: 2023,
+      sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
     },
     plugins: {
+      "@typescript-eslint": tsPlugin,
       "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-      "@typescript-eslint/no-unused-vars": "off",
+      ...tsPlugin.configs.recommended.rules,
+      ...prettierConfig.rules,
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "no-debugger": "error",
+      "prefer-const": "error",
+      "no-var": "error",
+      eqeqeq: ["error", "always", { null: "ignore" }],
     },
   },
-);
+];

@@ -159,9 +159,19 @@ export function useMFA() {
   };
 
   const generateBackupCodes = () => {
-    return Array.from({ length: 10 }, () => 
-      Math.random().toString(36).substring(2, 8).toUpperCase()
-    );
+    // Unambiguous Crockford-style alphabet: omits O/0, I/1 to avoid transcription errors.
+    const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const codes = new Set<string>();
+    while (codes.size < 10) {
+      const bytes = new Uint8Array(6);
+      crypto.getRandomValues(bytes);
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += ALPHABET[bytes[i] % ALPHABET.length];
+      }
+      codes.add(code);
+    }
+    return Array.from(codes);
   };
 
   const saveSettings = async (newSettings: Partial<MFASettings>) => {

@@ -18,8 +18,13 @@ export function decodeJWTPayload(token: string): JWTPayload | null {
   try {
     const parts = token.split(".");
     if (parts.length !== 3) return null;
-    const payload = atob(parts[1].replace(/-/g, "+").replace(/_/g, "/"));
-    return JSON.parse(payload) as JWTPayload;
+    const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4);
+    const binary = atob(padded);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    const json = new TextDecoder("utf-8").decode(bytes);
+    return JSON.parse(json) as JWTPayload;
   } catch {
     return null;
   }

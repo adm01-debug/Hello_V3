@@ -11,6 +11,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 type VerificationStatus = 'loading' | 'success' | 'error' | 'expired';
 
 export default function VerifyEmail() {
+  usePageTitle('Verificar E-mail');
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [status, setStatus] = useState<VerificationStatus>('loading');
@@ -89,8 +90,6 @@ export default function VerifyEmail() {
   };
 
   const renderContent = () => {
-  usePageTitle('Verificar E-mail');
-
     switch (status) {
       case 'loading':
         return (

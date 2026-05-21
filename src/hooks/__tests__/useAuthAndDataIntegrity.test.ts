@@ -115,7 +115,7 @@ describe('Realtime Hold Alerts', () => {
 
     it('handles localStorage error gracefully', () => {
       // Simulates fallback
-      let enabled = true;
+      const enabled = true;
       try {
         throw new Error('localStorage disabled');
       } catch {
