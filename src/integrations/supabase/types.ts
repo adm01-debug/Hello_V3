@@ -4927,6 +4927,36 @@ export type Database = {
           },
         ]
       }
+      rls_audit_logs: {
+        Row: {
+          client_ip: string | null
+          created_at: string | null
+          details: Json | null
+          id: string
+          operation: string
+          table_name: string
+          user_id: string | null
+        }
+        Insert: {
+          client_ip?: string | null
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          operation: string
+          table_name: string
+          user_id?: string | null
+        }
+        Update: {
+          client_ip?: string | null
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          operation?: string
+          table_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       role_permissions: {
         Row: {
           created_at: string | null
@@ -6705,6 +6735,10 @@ export type Database = {
           p_resource_type: string
         }
         Returns: string
+      }
+      log_rls_event: {
+        Args: { p_details?: Json; p_operation: string; p_table_name: string }
+        Returns: undefined
       }
       match_kb_articles: {
         Args: {
