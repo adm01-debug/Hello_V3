@@ -6748,8 +6748,6 @@ export type Database = {
         }
         Returns: string
       }
-      show_limit: { Args: never; Returns: number }
-      show_trgm: { Args: { "": string }; Returns: string[] }
       validate_audit_insert: { Args: never; Returns: boolean }
     }
     Enums: {
