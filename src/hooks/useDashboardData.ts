@@ -51,10 +51,10 @@ interface QueueStats {
      queryKey: ['dashboard-stats'],
      queryFn: async () => {
        const { data, error } = await supabase.rpc('get_dashboard_stats');
-       if (error) {
-         console.error('Error fetching dashboard stats:', error);
-         throw new Error('Falha ao carregar estatísticas do dashboard');
-       }
+        if (error) {
+          console.error('Error fetching dashboard stats:', error);
+          throw error;
+        }
        return data as unknown as DashboardStats;
      },
      refetchInterval: 15000, // Faster refresh for real-time feel
