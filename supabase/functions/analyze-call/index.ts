@@ -19,6 +19,10 @@ serve(async (req) => {
   const cors = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
+  const url = new URL(req.url);
+  const path = url.pathname.replace(/\/analyze-call\/?/, '');
+  const version = path.startsWith('v2') ? 'v2' : 'v1';
+
   try {
     // Auth
     const authHeader = req.headers.get('Authorization');
@@ -37,15 +41,20 @@ serve(async (req) => {
     }
 
     // Rate limiting
-    const rl = await checkRateLimitDB(getClientIp(req), 'analyze-call', user.id);
+    const rl = await checkRateLimitDB(getClientIp(req), `analyze-call-${version}`, user.id);
     if (!rl.allowed) {
       return createErrorResponse('Limite de requisições excedido', 'RATE_LIMIT_EXCEEDED', undefined, 429, {
         ...cors, 'Retry-After': String(rl.retryAfter ?? 60)
       });
     }
 
-    // Input validation using standard Zod-based validator
-    const validation = await validateBody(req, AnalyzeCallSchema, cors);
+    // Input validation with auditing for 422 errors
+    const validation = await validateBody(req, AnalyzeCallSchema, cors, {
+      endpoint: `analyze-call/${version}`,
+      userId: user.id,
+      audit: true
+    });
+    
     if (validation.errorResponse) return validation.errorResponse;
     const { transcript, callInfo } = validation.data!;
 
@@ -54,8 +63,12 @@ serve(async (req) => {
       return createErrorResponse('Serviço indisponível', 'SERVICE_UNAVAILABLE', undefined, 503, cors);
     }
 
+    // V2 can have different logic or model
+    const model = version === 'v2' ? 'google/gemini-2.5-flash' : 'google/gemini-1.5-flash';
+    
     const systemPrompt = `Você é um especialista em análise de chamadas de call center.
 Analise a transcrição da chamada e forneça insights detalhados.
+${version === 'v2' ? 'Inclua uma análise mais profunda do tom de voz e sugestões proativas.' : ''}
 
 Responda APENAS com um JSON válido no seguinte formato:
 {
@@ -81,7 +94,7 @@ ${transcript.slice(0, 10000)}`;
       method: 'POST',
       headers: { 'Authorization': `Bearer ${LOVABLE_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model,
         messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }],
       }),
     });
@@ -112,7 +125,9 @@ ${transcript.slice(0, 10000)}`;
       };
     }
 
-    return new Response(JSON.stringify(analysis), { headers: { ...cors, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ ...analysis, version }), { 
+      headers: { ...cors, 'Content-Type': 'application/json' } 
+    });
   } catch (error) {
     console.error('analyze-call error:', error);
     return createErrorResponse('Erro interno', 'INTERNAL_ERROR', undefined, 500, cors);
