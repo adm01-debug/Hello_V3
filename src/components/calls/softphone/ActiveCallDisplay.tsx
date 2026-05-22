@@ -1,8 +1,9 @@
 import {
    PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play,
    Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines,
-   Zap
+   Zap, Activity, Smile, Frown, Meh
 } from 'lucide-react';
+
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -81,15 +82,42 @@ export function ActiveCallDisplay({
             {currentCall.status === 'active' && (isSpeaking ? 'Agente falando' : 'Ativo')}
             {currentCall.status === 'on-hold' && 'Em espera'}
           </Badge>
+          
+          {/* Sentiment Indicator (Mock/placeholder for real sentiment) */}
+          {currentCall.status === 'active' && (
+            <div className="flex items-center gap-1 mt-1 justify-end">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground">Humor</span>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge variant="outline" className="h-5 px-1 bg-background/50">
+                    <Smile className="h-3 w-3 text-success" />
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent>Sentimento do cliente: Positivo</TooltipContent>
+              </Tooltip>
+            </div>
+          )}
         </div>
       </div>
 
-      {currentCall.isRecording && (
-        <div className="flex items-center gap-2 text-xs text-destructive mb-2">
-          <Circle className="h-2 w-2 fill-current animate-pulse" />
-          Gravando
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          {currentCall.isRecording && (
+            <div className="flex items-center gap-2 text-xs text-destructive">
+              <Circle className="h-2 w-2 fill-current animate-pulse" />
+              Gravando
+            </div>
+          )}
         </div>
-      )}
+        
+        {/* Signal/Network Info */}
+        <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+          <Activity className="h-3 w-3" />
+          <span>Latência: 45ms</span>
+          <span className="border-l pl-2">Codec: OPUS</span>
+        </div>
+      </div>
+
 
       {currentCall.transcripts.length > 0 && (
         <ScrollArea className="h-24 rounded border bg-background/50 p-2">
@@ -102,7 +130,15 @@ export function ActiveCallDisplay({
         </ScrollArea>
       )}
 
+      {lastCommand && (
+        <div className="mb-2 px-2 py-1 bg-primary/5 rounded border border-primary/10 flex items-center gap-2 animate-in fade-in slide-in-from-top-1">
+          <Zap className="h-3 w-3 text-primary" />
+          <span className="text-[10px] text-primary font-medium">Comando: {lastCommand.command}</span>
+        </div>
+      )}
+
       <div className="flex justify-center gap-2 mt-3">
+
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="outline" size="icon"
