@@ -96,14 +96,30 @@ export function CallSessionsList({ sessions, isLoading, activeFiltersCount, onSe
             {activeFiltersCount > 0 && <button className="text-primary underline text-sm mt-2" onClick={onClearFilters}>Limpar filtros</button>}
           </div>
         ) : (
-          <VirtualList
-            items={sessions}
-            renderItem={renderSessionItem}
-            estimateSize={85}
-            height={500}
-            className="pr-4"
-            keyExtractor={(session) => session.id}
-          />
+          <div className="space-y-4">
+            <VirtualList
+              items={sessions}
+              renderItem={renderSessionItem}
+              estimateSize={85}
+              height={500}
+              className="pr-4"
+              keyExtractor={(session) => session.id}
+            />
+            {hasMore && (
+              <div className="flex justify-center pt-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={onLoadMore} 
+                  disabled={isLoading}
+                  className="w-full max-w-xs"
+                >
+                  {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                  Carregar mais chamadas
+                </Button>
+              </div>
+            )}
+          </div>
         )}
       </CardContent>
     </Card>
