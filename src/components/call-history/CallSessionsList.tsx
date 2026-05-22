@@ -32,7 +32,7 @@ const getSentimentBadge = (sentiment: string | null | undefined) => {
   );
 };
 
-export function CallSessionsList({ sessions, isLoading, activeFiltersCount, onSessionClick, onClearFilters }: Props) {
+export function CallSessionsList({ sessions, isLoading, activeFiltersCount, onSessionClick, onClearFilters, onLoadMore, hasMore }: Props) {
   const renderSessionItem = (session: SessionWithSummary) => (
     <div 
       className="flex items-center justify-between rounded-lg border border-border p-4 hover:bg-accent/50 cursor-pointer transition-colors mb-2 bg-card" 
