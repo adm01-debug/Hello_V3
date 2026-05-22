@@ -79,6 +79,7 @@ export const useContacts = () => {
     } catch (err) {
       log.error('Error fetching contacts', err);
       setError('Erro ao carregar contatos');
+      toast.error('Erro ao carregar lista de contatos');
       return [];
     } finally {
       setIsLoading(false);
@@ -98,6 +99,7 @@ export const useContacts = () => {
       return data as Contact | null;
     } catch (err) {
       log.error('Error finding contact by phone', err);
+      toast.error('Erro ao buscar contato por telefone');
       return null;
     }
   }, []);
@@ -192,6 +194,7 @@ export const useContacts = () => {
       return (data || []) as ContactInteraction[];
     } catch (err) {
       log.error('Error fetching interactions', err);
+      toast.error('Erro ao carregar histórico de interações');
       return [];
     }
   }, []);
