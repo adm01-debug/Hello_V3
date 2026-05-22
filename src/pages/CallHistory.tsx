@@ -24,7 +24,7 @@ export default function CallHistory() {
      sentimentFilter, setSentimentFilter, durationFilter, setDurationFilter,
      statusFilter, setStatusFilter,
      topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
-     handleSessionClick, exportTranscript, fetchSessions,
+     handleSessionClick, exportTranscript, fetchSessions, loadMore, hasMore,
    } = useCallHistory();
  
    const stats = useMemo(() => {
@@ -46,7 +46,7 @@ export default function CallHistory() {
              <p className="text-muted-foreground">Visualize transcrições e análises detalhadas</p>
            </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={fetchSessions}>Atualizar</Button>
+              <Button variant="outline" size="sm" onClick={() => fetchSessions(0)}>Atualizar</Button>
               <Button variant="neon" size="sm" className="gap-2">
                 <Download className="h-4 w-4" /> Exportar
               </Button>
@@ -177,7 +177,7 @@ export default function CallHistory() {
         )}
       </div>
 
-      <CallSessionsList sessions={sessions} isLoading={isLoading} activeFiltersCount={activeFiltersCount} onSessionClick={handleSessionClick} onClearFilters={clearFilters} />
+      <CallSessionsList sessions={sessions} isLoading={isLoading} activeFiltersCount={activeFiltersCount} onSessionClick={handleSessionClick} onClearFilters={clearFilters} onLoadMore={loadMore} hasMore={hasMore} />
 
        <CallDetailDialog selectedSession={selectedSession} onClose={() => setSelectedSession(null)}
          isLoadingDetails={isLoadingDetails} sessionTranscripts={sessionTranscripts}

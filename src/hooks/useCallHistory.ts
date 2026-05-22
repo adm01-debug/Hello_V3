@@ -55,14 +55,17 @@ export function useCallHistory() {
   const [sessionAnalyses, setSessionAnalyses] = useState<Analysis[]>([]);
   const [sessionSummary, setSessionSummary] = useState<CallSummary | null>(null);
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const PAGE_SIZE = 50;
 
   const [showFilters, setShowFilters] = useState(false);
   const [dateRangePreset, setDateRangePreset] = useState<DateRangePreset>('all');
   const [customDateFrom, setCustomDateFrom] = useState<Date | undefined>();
-   const [customDateTo, setCustomDateTo] = useState<Date | undefined>();
-   const [statusFilter, setStatusFilter] = useState<string>('all');
-   const [sentimentFilter, setSentimentFilter] = useState<SentimentFilter>('all');
-   const [durationFilter, setDurationFilter] = useState<DurationFilter>('all');
+  const [customDateTo, setCustomDateTo] = useState<Date | undefined>();
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [sentimentFilter, setSentimentFilter] = useState<SentimentFilter>('all');
+  const [durationFilter, setDurationFilter] = useState<DurationFilter>('all');
   const [topicFilter, setTopicFilter] = useState<string>('');
 
   const allTopics = useMemo(() => {
@@ -71,36 +74,54 @@ export function useCallHistory() {
     return Array.from(topics).sort();
   }, [sessions]);
 
-   useEffect(() => { fetchSessions(); }, [searchQuery, statusFilter, sentimentFilter]);
+  useEffect(() => { 
+    setPage(0);
+    setSessions([]);
+    fetchSessions(0); 
+  }, [searchQuery, statusFilter, sentimentFilter]);
 
-   const fetchSessions = async () => {
-     setIsLoading(true);
-     try {
-       const { data, error } = await supabase.rpc('get_call_history_with_summaries', {
-         p_limit: 100,
-         p_search: searchQuery,
-         p_status: statusFilter,
-         p_sentiment: sentimentFilter
-       });
- 
-       if (error) throw error;
- 
-       const mappedData = (data as any[]).map(item => ({
-         ...item,
-         summary: item.overall_sentiment ? {
-           overall_sentiment: item.overall_sentiment,
-           main_topics: item.main_topics,
-           customer_satisfaction: item.customer_satisfaction
-         } : undefined
-       }));
- 
-       setSessions(mappedData);
-     } catch (error) {
-       logger.error('Error fetching sessions:', error);
-     } finally {
-       setIsLoading(false);
-     }
-   };
+  const fetchSessions = async (pageToFetch: number = 0) => {
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.rpc('get_call_history_with_summaries', {
+        p_limit: PAGE_SIZE,
+        p_offset: pageToFetch * PAGE_SIZE,
+        p_search: searchQuery,
+        p_status: statusFilter,
+        p_sentiment: sentimentFilter
+      });
+
+      if (error) throw error;
+
+      const mappedData = (data as any[]).map(item => ({
+        ...item,
+        summary: item.overall_sentiment ? {
+          overall_sentiment: item.overall_sentiment,
+          main_topics: item.main_topics,
+          customer_satisfaction: item.customer_satisfaction
+        } : undefined
+      }));
+
+      if (pageToFetch === 0) {
+        setSessions(mappedData);
+      } else {
+        setSessions(prev => [...prev, ...mappedData]);
+      }
+      
+      setHasMore(mappedData.length === PAGE_SIZE);
+      setPage(pageToFetch);
+    } catch (error) {
+      logger.error('Error fetching sessions:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadMore = () => {
+    if (!isLoading && hasMore) {
+      fetchSessions(page + 1);
+    }
+  };
 
   const fetchSessionDetails = async (sessionId: string) => {
     setIsLoadingDetails(true);
@@ -196,6 +217,6 @@ export function useCallHistory() {
      statusFilter, setStatusFilter, sentimentFilter, setSentimentFilter,
      durationFilter, setDurationFilter, topicFilter, setTopicFilter,
      allTopics, activeFiltersCount, clearFilters,
-    handleSessionClick, exportTranscript, fetchSessions,
+    handleSessionClick, exportTranscript, fetchSessions, loadMore, hasMore,
   };
 }

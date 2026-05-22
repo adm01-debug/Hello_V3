@@ -35,6 +35,18 @@ export async function checkRateLimitDB(
       return { allowed: true }; // fail-open
     }
 
+    if (!data.allowed) {
+      // Log blocked request in background
+      supabase.from('rate_limit_logs').insert({
+        user_id: userId || null,
+        ip_address: ipAddress,
+        endpoint: endpoint,
+        is_blocked: true,
+        block_reason: data.reason || 'Rate limit exceeded',
+        request_count: data.remaining === 0 ? 1 : 0 // heuristic
+      }).catch(err => console.error('[rate-limit] Log insert failed:', err));
+    }
+
     return {
       allowed: data.allowed,
       remaining: data.remaining,
