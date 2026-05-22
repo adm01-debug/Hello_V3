@@ -13,6 +13,8 @@ interface Props {
   activeFiltersCount: number;
   onSessionClick: (session: SessionWithSummary) => void;
   onClearFilters: () => void;
+  onLoadMore?: () => void;
+  hasMore?: boolean;
 }
 
 const getSentimentBadge = (sentiment: string | null | undefined) => {
