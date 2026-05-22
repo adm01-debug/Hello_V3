@@ -94,8 +94,9 @@ export function useAgentRanking() {
       if (allAchieved && !notifiedAgents.has(agent.name)) {
         setNotifiedAgents((prev) => new Set(prev).add(agent.name));
         toast.success(`🎉 ${agent.name} atingiu todas as metas!`, {
-          description: `Chamadas: ${agent.totalCalls}, Satisfação: ${agent.avgSatisfaction.toFixed(1)}, Performance: ${agent.avgPerformance.toFixed(1)}`,
+          description: `Chamadas: ${agent.totalCalls}/${goals.calls_target}, Satisfação: ${agent.avgSatisfaction.toFixed(1)}/10`,
           duration: 6000,
+          className: "bg-success/10 border-success/20",
         });
 
         const { data: session } = await supabase

@@ -267,18 +267,18 @@ export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps
           </div>
           <div className="text-right">
             <p className="text-xs text-muted-foreground">Sentimento Geral</p>
-            <div className="flex items-center gap-1">
-              {overallSentiment >= 60 ? (
-                <TrendingUp className="h-4 w-4 text-success" />
-              ) : overallSentiment <= 40 ? (
-                <TrendingDown className="h-4 w-4 text-destructive" />
+            <div className="flex items-center gap-1.5">
+              {overallSentiment >= 70 ? (
+                <Smile className="h-4 w-4 text-success" />
+              ) : overallSentiment <= 30 ? (
+                <Frown className="h-4 w-4 text-destructive" />
               ) : (
-                <Minus className="h-4 w-4 text-warning" />
+                <Meh className="h-4 w-4 text-warning" />
               )}
               <span className={cn(
-                'font-bold',
-                overallSentiment >= 60 ? 'text-success' : 
-                overallSentiment <= 40 ? 'text-destructive' : 'text-warning'
+                'font-bold text-lg',
+                overallSentiment >= 70 ? 'text-success' : 
+                overallSentiment <= 30 ? 'text-destructive' : 'text-warning'
               )}>
                 {overallSentiment}%
               </span>

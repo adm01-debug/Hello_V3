@@ -56,7 +56,7 @@ export function SkeletonCard({ className }: SkeletonProps) {
 
 export function SkeletonStatsCard({ className }: SkeletonProps) {
   return (
-    <div className={cn("rounded-lg border bg-card p-6 animate-pulse", className)}>
+    <div className={cn("rounded-lg border bg-card p-6 animate-pulse hover:border-primary/20 transition-colors", className)}>
       <div className="flex items-start justify-between">
         <div className="space-y-3 flex-1">
           <Skeleton className="h-3.5 w-28" />
