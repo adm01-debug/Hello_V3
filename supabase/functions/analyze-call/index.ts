@@ -1,7 +1,8 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
-import { validate, string, optional } from "../_shared/validate.ts";
+import { validateBody, createErrorResponse } from "../_shared/validator.ts";
+import { AnalyzeCallSchema } from "./schema.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 
 interface AnalysisResult {
@@ -22,7 +23,7 @@ serve(async (req) => {
     // Auth
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
+      return createErrorResponse('Não autorizado', 'UNAUTHORIZED', undefined, 401, cors);
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -32,37 +33,26 @@ serve(async (req) => {
 
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
-      return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
+      return createErrorResponse('Não autorizado', 'UNAUTHORIZED', undefined, 401, cors);
     }
 
     // Rate limiting
     const rl = await checkRateLimitDB(getClientIp(req), 'analyze-call', user.id);
     if (!rl.allowed) {
-      return new Response(JSON.stringify({ error: 'Limite de requisições excedido', retryAfter: rl.retryAfter }), {
-        status: 429, headers: { ...cors, 'Content-Type': 'application/json', 'Retry-After': String(rl.retryAfter ?? 60) }
+      return createErrorResponse('Limite de requisições excedido', 'RATE_LIMIT_EXCEEDED', undefined, 429, {
+        ...cors, 'Retry-After': String(rl.retryAfter ?? 60)
       });
     }
 
-    // Input validation
-    const body = await req.json();
-    const parsed = validate(body, {
-      transcript: string({ min: 1, max: 50000 }),
-      callInfo: optional(string()),
-    });
-
-    if (!parsed.ok) {
-      return new Response(JSON.stringify({ error: 'Dados inválidos', details: parsed.errors }), {
-        status: 400, headers: { ...cors, 'Content-Type': 'application/json' }
-      });
-    }
+    // Input validation using standard Zod-based validator
+    const validation = await validateBody(req, AnalyzeCallSchema, cors);
+    if (validation.errorResponse) return validation.errorResponse;
+    const { transcript, callInfo } = validation.data!;
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
-      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
+      return createErrorResponse('Serviço indisponível', 'SERVICE_UNAVAILABLE', undefined, 503, cors);
     }
-
-    const callInfo = body.callInfo;
-    const transcript = parsed.data.transcript as string;
 
     const systemPrompt = `Você é um especialista em análise de chamadas de call center.
 Analise a transcrição da chamada e forneça insights detalhados.
@@ -98,9 +88,9 @@ ${transcript.slice(0, 10000)}`;
 
     if (!response.ok) {
       if (response.status === 429) {
-        return new Response(JSON.stringify({ error: 'Limite de requisições excedido' }), { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } });
+        return createErrorResponse('Limite de requisições excedido no provedor de AI', 'AI_RATE_LIMIT', undefined, 429, cors);
       }
-      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
+      return createErrorResponse('Serviço indisponível', 'AI_SERVICE_UNAVAILABLE', undefined, 503, cors);
     }
 
     const aiResponse = await response.json();
@@ -124,6 +114,8 @@ ${transcript.slice(0, 10000)}`;
 
     return new Response(JSON.stringify(analysis), { headers: { ...cors, 'Content-Type': 'application/json' } });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Erro interno' }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
+    console.error('analyze-call error:', error);
+    return createErrorResponse('Erro interno', 'INTERNAL_ERROR', undefined, 500, cors);
   }
 });
+
