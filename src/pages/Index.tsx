@@ -17,6 +17,7 @@ import { BargeInNotification } from '@/components/agent/BargeInNotification';
 import { ScheduledCallbacksList } from '@/components/callbacks/ScheduledCallbacksList';
 import { SectionBoundary } from '@/components/error-boundary/ErrorBoundary';
  import { useDashboardStats } from '@/hooks/useDashboardData';
+ import { useAuthContext } from '@/contexts/AuthContext';
  import { useDashboardLayout, WidgetId, WidgetLayout } from '@/hooks/useDashboardLayout';
  import { 
    DndContext, 
