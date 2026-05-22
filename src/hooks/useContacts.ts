@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { reportError } from '@/lib/error-tracking';
 
 const log = logger.create('Contacts');
 
@@ -73,11 +74,16 @@ export const useContacts = () => {
 
       if (fetchError) throw fetchError;
       
-      // Type assertion since DB types may not be updated yet
       setContacts((data || []) as Contact[]);
       return data as Contact[];
-    } catch (err) {
+    } catch (err: any) {
       log.error('Error fetching contacts', err);
+      reportError({
+        message: 'Erro ao carregar contatos',
+        type: 'network-error',
+        error: err,
+        metadata: { search }
+      });
       setError('Erro ao carregar contatos');
       toast.error('Erro ao carregar lista de contatos');
       return [];
@@ -97,8 +103,14 @@ export const useContacts = () => {
 
       if (error) throw error;
       return data as Contact | null;
-    } catch (err) {
+    } catch (err: any) {
       log.error('Error finding contact by phone', err);
+      reportError({
+        message: 'Erro ao buscar contato por telefone',
+        type: 'network-error',
+        error: err,
+        metadata: { phone }
+      });
       toast.error('Erro ao buscar contato por telefone');
       return null;
     }
@@ -127,8 +139,14 @@ export const useContacts = () => {
       toast.success('Contato criado com sucesso');
       await fetchContacts();
       return data as Contact;
-    } catch (err) {
+    } catch (err: any) {
       log.error('Error creating contact', err);
+      reportError({
+        message: 'Erro ao criar contato',
+        type: 'network-error',
+        error: err,
+        metadata: { input }
+      });
       toast.error('Erro ao criar contato');
       return null;
     }
@@ -155,8 +173,14 @@ export const useContacts = () => {
       toast.success('Contato atualizado');
       await fetchContacts();
       return data as Contact;
-    } catch (err) {
+    } catch (err: any) {
       log.error('Error updating contact', err);
+      reportError({
+        message: 'Erro ao atualizar contato',
+        type: 'network-error',
+        error: err,
+        metadata: { id, updates }
+      });
       toast.error('Erro ao atualizar contato');
       return null;
     }
@@ -174,14 +198,19 @@ export const useContacts = () => {
       toast.success('Contato removido');
       await fetchContacts();
       return true;
-    } catch (err) {
+    } catch (err: any) {
       log.error('Error deleting contact', err);
+      reportError({
+        message: 'Erro ao remover contato',
+        type: 'network-error',
+        error: err,
+        metadata: { id }
+      });
       toast.error('Erro ao remover contato');
       return false;
     }
   }, [fetchContacts]);
 
-  // Contact Interactions
   const getContactInteractions = useCallback(async (contactId: string): Promise<ContactInteraction[]> => {
     try {
       const { data, error } = await supabase
@@ -192,8 +221,14 @@ export const useContacts = () => {
 
       if (error) throw error;
       return (data || []) as ContactInteraction[];
-    } catch (err) {
+    } catch (err: any) {
       log.error('Error fetching interactions', err);
+      reportError({
+        message: 'Erro ao carregar histórico de interações',
+        type: 'network-error',
+        error: err,
+        metadata: { contactId }
+      });
       toast.error('Erro ao carregar histórico de interações');
       return [];
     }
@@ -215,7 +250,6 @@ export const useContacts = () => {
     }
   ): Promise<ContactInteraction | null> => {
     try {
-      // Build the insert object with explicit typing
       const insertData = {
         contact_id: contactId,
         interaction_type: interaction.interaction_type,
@@ -238,18 +272,22 @@ export const useContacts = () => {
 
       if (error) throw error;
       return data as ContactInteraction;
-    } catch (err) {
+    } catch (err: any) {
       log.error('Error adding interaction', err);
+      reportError({
+        message: 'Erro ao adicionar interação',
+        type: 'network-error',
+        error: err,
+        metadata: { contactId, interaction }
+      });
       return null;
     }
   }, []);
 
-  // Find or create contact by phone
   const findOrCreateContact = useCallback(async (phone: string, name?: string): Promise<Contact | null> => {
     const existing = await getContactByPhone(phone);
     if (existing) return existing;
 
-    // Create new contact
     return createContact({
       name: name || `Contato ${phone}`,
       phone: phone.replace(/\D/g, ''),
@@ -257,7 +295,6 @@ export const useContacts = () => {
     });
   }, [getContactByPhone, createContact]);
 
-  // Load contacts on mount
   useEffect(() => {
     fetchContacts();
   }, [fetchContacts]);
@@ -276,3 +313,4 @@ export const useContacts = () => {
     findOrCreateContact
   };
 };
+
