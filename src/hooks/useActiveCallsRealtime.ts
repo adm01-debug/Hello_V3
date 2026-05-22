@@ -53,7 +53,11 @@ export function useActiveCallsRealtime() {
 
   useEffect(() => { 
     if (activeCalls.length === 0 && activeHolds.length === 0) return;
-    const interval = setInterval(() => setTick(t => t + 1), 1000); 
+    
+    const interval = setInterval(() => {
+      setTick(t => t + 1);
+    }, 1000); 
+    
     return () => clearInterval(interval); 
   }, [activeCalls.length, activeHolds.length]);
 
