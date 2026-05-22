@@ -177,7 +177,7 @@ export default function CallHistory() {
         )}
       </div>
 
-      <CallSessionsList sessions={sessions} isLoading={isLoading} activeFiltersCount={activeFiltersCount} onSessionClick={handleSessionClick} onClearFilters={clearFilters} />
+      <CallSessionsList sessions={sessions} isLoading={isLoading} activeFiltersCount={activeFiltersCount} onSessionClick={handleSessionClick} onClearFilters={clearFilters} onLoadMore={loadMore} hasMore={hasMore} />
 
        <CallDetailDialog selectedSession={selectedSession} onClose={() => setSelectedSession(null)}
          isLoadingDetails={isLoadingDetails} sessionTranscripts={sessionTranscripts}
