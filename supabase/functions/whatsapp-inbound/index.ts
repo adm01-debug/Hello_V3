@@ -1,14 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
-
-interface WhatsAppInboundPayload {
-  from: string;
-  name?: string;
-  message: string;
-  message_id?: string;
-  timestamp?: string;
-  attachments?: Array<{ url: string; type: string; filename?: string }>;
-}
+import { validateBody, createErrorResponse } from '../_shared/validator.ts';
+import { WhatsAppInboundV1Schema, WhatsAppInboundV2Schema } from './schema.ts';
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -16,33 +9,36 @@ Deno.serve(async (req) => {
 
   try {
     if (req.method !== 'POST') {
-      return new Response(JSON.stringify({ error: 'Método não permitido' }), {
-        status: 405,
-        headers: { ...cors, 'Content-Type': 'application/json' },
-      });
+      return createErrorResponse('Método não permitido', 'METHOD_NOT_ALLOWED', undefined, 405, cors);
     }
 
-    const body = (await req.json()) as WhatsAppInboundPayload;
+    const url = new URL(req.url);
+    const version = url.searchParams.get('v') || 'v1';
 
-    if (!body.from || !body.message) {
-      return new Response(
-        JSON.stringify({ error: 'Campos obrigatórios: from, message' }),
-        { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } }
-      );
+    let validationResult;
+    if (version === 'v2') {
+      validationResult = await validateBody(req, WhatsAppInboundV2Schema, cors);
+    } else {
+      validationResult = await validateBody(req, WhatsAppInboundV1Schema, cors);
     }
+
+    if (validationResult.errorResponse) return validationResult.errorResponse;
+    const body = validationResult.data!;
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const normalizedPhone = body.from.replace(/[^0-9]/g, '');
+    const fromPhone = 'from' in body ? body.from : '';
+    const messageContent = 'message' in body ? body.message : '';
+    const normalizedPhone = fromPhone.replace(/[^0-9]/g, '');
 
     // Encontrar contato existente por telefone
     const { data: contact } = await supabase
       .from('contacts')
       .select('id')
-      .or(`phone.eq.${body.from},phone.eq.${normalizedPhone}`)
+      .or(`phone.eq.${fromPhone},phone.eq.${normalizedPhone}`)
       .maybeSingle();
 
     // Procurar conversa aberta deste contato no canal whatsapp
@@ -90,11 +86,11 @@ Deno.serve(async (req) => {
           channel: 'whatsapp',
           status: 'open',
           priority: 'normal',
-          subject: `WhatsApp: ${body.name || body.from}`,
+          subject: `WhatsApp: ${body.name || fromPhone}`,
           contact_id: contact?.id ?? null,
           assigned_agent_name: assignedAgent,
           external_id: body.message_id,
-          external_metadata: { from: body.from, name: body.name },
+          external_metadata: { from: fromPhone, name: body.name, version },
           last_message_at: new Date().toISOString(),
           unread_count: 1,
         })
@@ -120,25 +116,23 @@ Deno.serve(async (req) => {
         conversation_id: conversationId,
         direction: 'inbound',
         sender_type: 'contact',
-        sender_name: body.name || body.from,
-        sender_identifier: body.from,
-        content: body.message,
+        sender_name: body.name || fromPhone,
+        sender_identifier: fromPhone,
+        content: messageContent,
         content_type: 'text',
         attachments: body.attachments || [],
-        metadata: { message_id: body.message_id, timestamp: body.timestamp },
+        metadata: { message_id: body.message_id, timestamp: body.timestamp, version },
       });
 
     if (msgErr) throw msgErr;
 
     return new Response(
-      JSON.stringify({ success: true, conversation_id: conversationId }),
+      JSON.stringify({ success: true, conversation_id: conversationId, version }),
       { status: 200, headers: { ...cors, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
     console.error('whatsapp-inbound error:', error);
-    return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Erro interno' }),
-      { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } }
-    );
+    return createErrorResponse(error instanceof Error ? error.message : 'Erro interno', 'INTERNAL_ERROR', undefined, 500, cors);
   }
 });
+
