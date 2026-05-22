@@ -10,6 +10,7 @@ interface VirtualListProps<T> {
   className?: string;
   overscan?: number;
   keyExtractor?: (item: T, index: number) => string | number;
+  onScroll?: (scrollTop: number) => void;
 }
 
 export function VirtualList<T>({ 
@@ -19,7 +20,8 @@ export function VirtualList<T>({
   height = '400px',
   className,
   overscan = 5,
-  keyExtractor
+  keyExtractor,
+  onScroll
 }: VirtualListProps<T>) {
   const parentRef = React.useRef<HTMLDivElement>(null);
 
@@ -33,8 +35,9 @@ export function VirtualList<T>({
   return (
     <div 
       ref={parentRef} 
-      className={cn("overflow-auto relative", className)}
+      className={cn("overflow-auto relative scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20", className)}
       style={{ height }}
+      onScroll={(e) => onScroll?.(e.currentTarget.scrollTop)}
     >
       <div
         style={{

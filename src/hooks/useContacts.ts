@@ -78,14 +78,17 @@ export const useContacts = () => {
       return data as Contact[];
     } catch (err: any) {
       log.error('Error fetching contacts', err);
-      reportError({
-        message: 'Erro ao carregar contatos',
-        type: 'network-error',
-        error: err,
-        metadata: { search }
-      });
-      setError('Erro ao carregar contatos');
-      toast.error('Erro ao carregar lista de contatos');
+      // Silent error reporting for background refresh
+      if (!contacts.length) {
+        reportError({
+          message: 'Erro ao carregar contatos (falha inicial)',
+          type: 'network-error',
+          error: err,
+          metadata: { search }
+        });
+        setError('Erro ao carregar contatos');
+        toast.error('Erro ao carregar lista de contatos');
+      }
       return [];
     } finally {
       setIsLoading(false);

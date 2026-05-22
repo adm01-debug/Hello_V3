@@ -110,7 +110,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <CardContent className="text-center space-y-6">
               <p className="text-base text-muted-foreground leading-relaxed">
                 Tivemos um problema inesperado ao renderizar esta página. 
-                Nossos desenvolvedores foram notificados automaticamente.
+                Tentamos recuperar o estado automaticamente, mas o erro persistiu.
               </p>
               
               {this.state.error && (
