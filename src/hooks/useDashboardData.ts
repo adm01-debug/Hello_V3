@@ -51,10 +51,10 @@ interface QueueStats {
      queryKey: ['dashboard-stats'],
      queryFn: async () => {
        const { data, error } = await supabase.rpc('get_dashboard_stats');
-       if (error) {
-         console.error('Error fetching dashboard stats:', error);
-         throw new Error('Falha ao carregar estatísticas do dashboard');
-       }
+        if (error) {
+          console.error('Error fetching dashboard stats:', error);
+          throw error;
+        }
        return data as unknown as DashboardStats;
      },
      refetchInterval: 15000, // Faster refresh for real-time feel
@@ -66,10 +66,10 @@ interface QueueStats {
      queryKey: ['agents-list'],
      queryFn: async () => {
        const { data, error } = await supabase.rpc('get_agents_with_active_calls');
-       if (error) {
-         console.error('Error fetching agents list:', error);
-         throw new Error('Falha ao carregar lista de agentes');
-       }
+        if (error) {
+          console.error('Error fetching agents list:', error);
+          throw error;
+        }
        return (data as any) || [];
      },
      refetchInterval: 10000,

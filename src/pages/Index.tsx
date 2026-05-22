@@ -17,6 +17,7 @@ import { BargeInNotification } from '@/components/agent/BargeInNotification';
 import { ScheduledCallbacksList } from '@/components/callbacks/ScheduledCallbacksList';
 import { SectionBoundary } from '@/components/error-boundary/ErrorBoundary';
  import { useDashboardStats } from '@/hooks/useDashboardData';
+ import { useAuthContext } from '@/contexts/AuthContext';
  import { useDashboardLayout, WidgetId, WidgetLayout } from '@/hooks/useDashboardLayout';
  import { 
    DndContext, 
@@ -47,6 +48,7 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
    const queryClient = useQueryClient();
     const { data: stats, isLoading, isFetching: isFetchingStats, dataUpdatedAt } = useDashboardStats();
     const { layout, isEditing, setIsEditing, saveLayout, resetLayout, toggleWidget } = useDashboardLayout();
+    const { profile } = useAuthContext();
     const [isRefreshing, setIsRefreshing] = useState(false);
  
     const sensors = useSensors(
@@ -246,8 +248,12 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
        </DndContext>
 
       {/* Agent Notifications */}
-      <WhisperNotification agentName="Carlos Silva" />
-      <BargeInNotification agentName="Carlos Silva" />
+      {profile?.full_name && (
+        <>
+          <WhisperNotification agentName={profile.full_name} />
+          <BargeInNotification agentName={profile.full_name} />
+        </>
+      )}
     </main>
   );
 };

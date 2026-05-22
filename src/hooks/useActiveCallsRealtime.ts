@@ -51,7 +51,11 @@ export function useActiveCallsRealtime() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
-  useEffect(() => { const interval = setInterval(() => setTick(t => t + 1), 1000); return () => clearInterval(interval); }, []);
+  useEffect(() => { 
+    if (activeCalls.length === 0 && activeHolds.length === 0) return;
+    const interval = setInterval(() => setTick(t => t + 1), 1000); 
+    return () => clearInterval(interval); 
+  }, [activeCalls.length, activeHolds.length]);
 
   const isCallOnHold = (callId: string) => activeHolds.some(h => h.call_session_id === callId);
 
