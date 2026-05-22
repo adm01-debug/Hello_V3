@@ -217,6 +217,6 @@ export function useCallHistory() {
      statusFilter, setStatusFilter, sentimentFilter, setSentimentFilter,
      durationFilter, setDurationFilter, topicFilter, setTopicFilter,
      allTopics, activeFiltersCount, clearFilters,
-    handleSessionClick, exportTranscript, fetchSessions,
+    handleSessionClick, exportTranscript, fetchSessions, loadMore, hasMore,
   };
 }
