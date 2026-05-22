@@ -130,7 +130,15 @@ export function ActiveCallDisplay({
         </ScrollArea>
       )}
 
+      {lastCommand && (
+        <div className="mb-2 px-2 py-1 bg-primary/5 rounded border border-primary/10 flex items-center gap-2 animate-in fade-in slide-in-from-top-1">
+          <Zap className="h-3 w-3 text-primary" />
+          <span className="text-[10px] text-primary font-medium">Comando: {lastCommand}</span>
+        </div>
+      )}
+
       <div className="flex justify-center gap-2 mt-3">
+
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="outline" size="icon"
