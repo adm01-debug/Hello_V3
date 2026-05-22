@@ -1,8 +1,9 @@
 import {
    PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play,
    Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines,
-   Zap
+   Zap, Activity, Smile, Frown, Meh
 } from 'lucide-react';
+
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
