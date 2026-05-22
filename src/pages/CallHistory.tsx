@@ -24,7 +24,7 @@ export default function CallHistory() {
      sentimentFilter, setSentimentFilter, durationFilter, setDurationFilter,
      statusFilter, setStatusFilter,
      topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
-     handleSessionClick, exportTranscript, fetchSessions,
+     handleSessionClick, exportTranscript, fetchSessions, loadMore, hasMore,
    } = useCallHistory();
  
    const stats = useMemo(() => {
