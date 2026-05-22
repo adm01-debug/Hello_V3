@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { 
   Users, 
   Plus,
   Loader2,
   Upload,
-  UserPlus
+  UserPlus,
+  Search
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,7 +23,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePredictiveDialer, AddToQueueInput } from '@/hooks/usePredictiveDialer';
 import { useContacts } from '@/hooks/useContacts';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { VirtualList } from '@/components/ui/VirtualList';
 import { Checkbox } from '@/components/ui/checkbox';
 
 interface AddContactsDialogProps {
@@ -32,6 +33,7 @@ interface AddContactsDialogProps {
 export function AddContactsDialog({ campaignId }: AddContactsDialogProps) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { addToQueue } = usePredictiveDialer();
   const { contacts } = useContacts();
 
@@ -41,6 +43,18 @@ export function AddContactsDialog({ campaignId }: AddContactsDialogProps) {
     phone: ''
   });
   const [bulkNumbers, setBulkNumbers] = useState('');
+
+  const contactsWithPhone = useMemo(() => {
+    let filtered = contacts.filter(c => c.phone);
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(c => 
+        c.name.toLowerCase().includes(q) || 
+        c.phone?.includes(q)
+      );
+    }
+    return filtered;
+  }, [contacts, searchQuery]);
 
   const handleAddManual = async () => {
     if (!manualEntry.phone) return;
@@ -114,14 +128,12 @@ export function AddContactsDialog({ campaignId }: AddContactsDialogProps) {
   };
 
   const selectAllContacts = () => {
-    if (selectedContacts.size === contacts.filter(c => c.phone).length) {
+    if (selectedContacts.size === contactsWithPhone.length) {
       setSelectedContacts(new Set());
     } else {
-      setSelectedContacts(new Set(contacts.filter(c => c.phone).map(c => c.id)));
+      setSelectedContacts(new Set(contactsWithPhone.map(c => c.id)));
     }
   };
-
-  const contactsWithPhone = contacts.filter(c => c.phone);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -150,45 +162,62 @@ export function AddContactsDialog({ campaignId }: AddContactsDialogProps) {
           </TabsList>
 
           <TabsContent value="contacts" className="space-y-4 mt-4">
-            <div className="flex items-center justify-between">
-              <Label>Selecione os contatos</Label>
-              <Button 
-                type="button" 
-                variant="ghost" 
-                size="sm"
-                onClick={selectAllContacts}
-              >
-                {selectedContacts.size === contactsWithPhone.length ? 'Desmarcar Todos' : 'Selecionar Todos'}
-              </Button>
-            </div>
+            <div className="space-y-4">
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar por nome ou telefone..."
+                  className="pl-9"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
 
-            <ScrollArea className="h-[250px] border rounded-lg p-2">
+              <div className="flex items-center justify-between">
+                <Label className="text-xs text-muted-foreground">
+                  {contactsWithPhone.length} contatos encontrados
+                </Label>
+                <Button 
+                  type="button" 
+                  variant="ghost" 
+                  size="sm"
+                  className="h-8 text-xs"
+                  onClick={selectAllContacts}
+                >
+                  {selectedContacts.size === contactsWithPhone.length ? 'Desmarcar Todos' : 'Selecionar Todos'}
+                </Button>
+              </div>
+
               {contactsWithPhone.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
-                  <Users className="h-8 w-8 mb-2 opacity-50" />
-                  <p className="text-sm">Nenhum contato com telefone</p>
+                <div className="flex flex-col items-center justify-center py-12 border rounded-lg bg-muted/30">
+                  <Users className="h-8 w-8 mb-2 opacity-30" />
+                  <p className="text-sm text-muted-foreground">Nenhum contato encontrado</p>
                 </div>
               ) : (
-                <div className="space-y-1">
-                  {contactsWithPhone.map(contact => (
+                <VirtualList
+                  items={contactsWithPhone}
+                  estimateSize={56}
+                  height="250px"
+                  className="border rounded-lg p-1"
+                  keyExtractor={(c) => c.id}
+                  renderItem={(contact) => (
                     <div 
-                      key={contact.id}
-                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted cursor-pointer"
+                      className="flex items-center gap-3 p-2 rounded-md hover:bg-accent cursor-pointer transition-colors"
                       onClick={() => toggleContact(contact.id)}
                     >
                       <Checkbox 
                         checked={selectedContacts.has(contact.id)}
                         onCheckedChange={() => toggleContact(contact.id)}
                       />
-                      <div className="flex-1">
-                        <p className="font-medium">{contact.name}</p>
-                        <p className="text-xs text-muted-foreground font-mono">{contact.phone}</p>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm truncate">{contact.name}</p>
+                        <p className="text-[10px] text-muted-foreground font-mono">{contact.phone}</p>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  )}
+                />
               )}
-            </ScrollArea>
+            </div>
 
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setOpen(false)}>
@@ -291,3 +320,4 @@ export function AddContactsDialog({ campaignId }: AddContactsDialogProps) {
     </Dialog>
   );
 }
+
