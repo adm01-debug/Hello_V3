@@ -31,37 +31,21 @@ Deno.test("AnalyzeCallSchema fails on very long transcript exceeding limit", () 
   assertEquals(result.success, false);
 });
 
-
 Deno.test("Integration: analyze-call v1 structure", async () => {
-  // Simulated request for integration check
-  const req = new Request("http://localhost/analyze-call/v1", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ transcript: "Integration test call." })
-  });
-  
-  // This just tests the schema logic which is what drives the function
-  const body = await req.json();
-  const result = AnalyzeCallSchema.safeParse(body);
+  const data = { transcript: "Integration test call." };
+  const result = AnalyzeCallSchema.safeParse(data);
   assertEquals(result.success, true);
 });
 
 Deno.test("Integration: analyze-call v2 structure with extended info", async () => {
-  const req = new Request("http://localhost/analyze-call/v2", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ 
-      transcript: "High value customer call.",
-      callInfo: { type: "inbound", duration: "10:00" }
-    })
-  });
+  const data = { 
+    transcript: "High value customer call.",
+    callInfo: { type: "inbound", duration: "10:00" }
+  };
   
-  const body = await req.json();
-  const result = AnalyzeCallSchema.safeParse(body);
+  const result = AnalyzeCallSchema.safeParse(data);
   assertEquals(result.success, true);
-  if (result.success) {
+  if (result.success === true) {
     assertEquals(result.data.callInfo?.type, "inbound");
   }
 });
-
-
