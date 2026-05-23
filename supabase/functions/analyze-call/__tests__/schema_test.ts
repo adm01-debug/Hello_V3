@@ -50,7 +50,7 @@ Deno.test("AnalyzeCallSchema - transcript too short", async () => {
 });
 
 Deno.test("AnalyzeCallSchema - transcript too long", async () => {
-  const payload = { transcript: "a".repeat(50001) };
+  const payload = { transcript: "a".repeat(10001) };
   const req = new Request("http://localhost", {
     method: "POST",
     body: JSON.stringify(payload),
