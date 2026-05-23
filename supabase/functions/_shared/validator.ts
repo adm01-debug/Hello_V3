@@ -1,6 +1,7 @@
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 import { buildCorsHeaders } from "./cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { trackMetric } from "./observability.ts";
 
 export type ValidationError = {
   field: string;
@@ -80,6 +81,7 @@ export const validateBody = async <T>(
       if (options.audit && options.endpoint) {
         // Run audit logging in background
         logValidationError(req, options.endpoint, fields, options.userId).catch(console.error);
+        trackMetric('validation_error_422', 1, { endpoint: options.endpoint }).catch(console.error);
       }
 
       return {
