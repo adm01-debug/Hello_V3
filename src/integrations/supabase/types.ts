@@ -6604,6 +6604,30 @@ export type Database = {
         }
         Relationships: []
       }
+      webhook_secrets: {
+        Row: {
+          created_at: string | null
+          id: string
+          provider: string
+          secret_key: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          provider: string
+          secret_key: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          provider?: string
+          secret_key?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       whisper_messages: {
         Row: {
           agent_name: string
