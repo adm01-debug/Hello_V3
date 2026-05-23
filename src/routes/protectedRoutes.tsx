@@ -77,6 +77,7 @@ const SLAPolicies = lazy(() => import("@/pages/SLAPolicies"));
 const ConcurrencyConflicts = lazy(() => import("@/pages/ConcurrencyConflicts"));
 const VoipTrunksAdmin = lazy(() => import("@/pages/admin/VoipTrunksAdmin"));
 const ExtensionsAdmin = lazy(() => import("@/pages/admin/ExtensionsAdmin"));
+const SecurityAudit = lazy(() => import("@/pages/admin/SecurityDashboard"));
 
 export interface RouteConfig {
   path: string;
@@ -166,6 +167,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/concurrency-conflicts", element: ConcurrencyConflicts, roles: ["supervisor", "admin"] },
   { path: "/admin/voip-trunks", element: VoipTrunksAdmin, roles: ["admin"] },
   { path: "/admin/extensions", element: ExtensionsAdmin, roles: ["admin"] },
+  { path: "/admin/security-audit", element: SecurityAudit, roles: ["admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },
