@@ -59,6 +59,9 @@ Deno.test("Integration: analyze-call v2 structure with extended info", async () 
   const body = await req.json();
   const result = AnalyzeCallSchema.safeParse(body);
   assertEquals(result.success, true);
-  assertEquals(result.data?.callInfo?.type, "inbound");
+  if (result.success) {
+    assertEquals(result.data.callInfo?.type, "inbound");
+  }
 });
+
 
