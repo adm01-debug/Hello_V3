@@ -26,7 +26,7 @@ Deno.test("AnalyzeCallSchema fails on missing transcript", () => {
 });
 
 Deno.test("AnalyzeCallSchema fails on very long transcript exceeding limit", () => {
-  const longTranscript = "a".repeat(50001); // Limit is 50000
+  const longTranscript = "a".repeat(10001); // Limit is 10000
   const result = AnalyzeCallSchema.safeParse({ transcript: longTranscript });
   assertEquals(result.success, false);
 });
