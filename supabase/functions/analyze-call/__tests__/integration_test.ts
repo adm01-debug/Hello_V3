@@ -26,7 +26,7 @@ Deno.test("analyze-call integration: reject invalid v2 flow (missing transcript)
 });
 
 Deno.test("analyze-call integration: validate character limits", async () => {
-  const longTranscript = "a".repeat(10001);
+  const longTranscript = "a".repeat(50001); // O limite no schema.ts é 50000
   const payload = {
     transcript: longTranscript,
     callInfo: { contactName: "Teste" }
@@ -35,3 +35,4 @@ Deno.test("analyze-call integration: validate character limits", async () => {
   const result = AnalyzeCallSchema.safeParse(payload);
   assertEquals(result.success, false);
 });
+
