@@ -16,14 +16,46 @@ serve(async (req) => {
     )
 
     const scenarios = [
-      { table: 'calls', data: { status: 'completed', direction: 'inbound', duration: 120 } },
-      { table: 'contacts', data: { first_name: 'Test', last_name: 'User', email: `test_${Date.now()}@example.com` } },
-      { table: 'deals', data: { title: 'High Volume Deal', value: 10000, status: 'negotiation' } },
-      { table: 'audit_logs', data: { action: 'SECURITY_AUDIT', severity: 'info', details: { msg: 'Load test event' } } }
+      { 
+        table: 'call_sessions', 
+        data: { 
+          agent_name: 'Load Test Bot', 
+          duration_seconds: 120, 
+          direction: 'inbound',
+          status: 'completed'
+        } 
+      },
+      { 
+        table: 'contacts', 
+        data: { 
+          name: 'Load Test Contact', 
+          email: `test_${Date.now()}@example.com`,
+          phone: '+5511999999999',
+          source: 'load_test'
+        } 
+      },
+      { 
+        table: 'deals', 
+        data: { 
+          name: 'Load Test Deal', 
+          value_cents: 1000000, 
+          currency: 'BRL',
+          stage: 'proposal',
+          status: 'open'
+        } 
+      },
+      { 
+        table: 'audit_logs', 
+        data: { 
+          action: 'LOAD_TEST_EVENT', 
+          resource_type: 'SYSTEM',
+          details: { msg: 'Global load test automated run' } 
+        } 
+      }
     ]
 
     const results = []
-    const iterations = 50 // Simulating volume
+    const iterations = 50 
 
     const startTime = performance.now()
 
@@ -31,7 +63,6 @@ serve(async (req) => {
       const batchStart = performance.now()
       const payload = Array.from({ length: iterations }, () => ({
         ...scenario.data,
-        metadata: { load_test_id: crypto.randomUUID() }
       }))
 
       const { data, error } = await supabaseClient
@@ -57,7 +88,8 @@ serve(async (req) => {
         total_records: scenarios.length * iterations,
         total_duration_ms: totalTime,
         breakdown: results,
-        system_status: totalTime < 5000 ? 'optimal' : 'degraded'
+        system_status: totalTime < 5000 ? 'optimal' : 'degraded',
+        latency_p50_ms: totalTime / (scenarios.length * iterations)
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
