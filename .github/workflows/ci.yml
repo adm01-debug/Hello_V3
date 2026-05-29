@@ -36,9 +36,24 @@ jobs:
         run: bun run type-check
 
       - name: Unit tests (Vitest)
-        run: bunx vitest run --reporter=default
+        run: bunx vitest run --reporter=default --coverage
         env:
           CI: true
+
+      - name: E2E tests (Playwright)
+        run: |
+          bunx playwright install chromium --with-deps
+          bunx playwright test
+        env:
+          CI: true
+
+      - name: Edge Function Tests (Deno)
+        run: |
+          curl -fsSL https://deno.land/install.sh | sh
+          export DENO_INSTALL="$HOME/.deno"
+          export PATH="$DENO_INSTALL/bin:$PATH"
+          deno test -A supabase/functions/
+
 
       - name: Build
         run: bun run build
