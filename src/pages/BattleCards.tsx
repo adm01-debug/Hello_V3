@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
 import { Swords, Plus, Trash2, Edit, Check, Search, Sparkles } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { toast } from 'sonner';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
@@ -33,6 +34,10 @@ const empty = {
   keywords: '',
 };
 
+// These tables are not present in the generated Supabase Database types,
+// so use an untyped client view for them.
+const db = supabase as unknown as SupabaseClient;
+
 export default function BattleCards() {
   usePageTitle('Battle Cards');
   const [cards, setCards] = useState<BattleCard[]>([]);
@@ -44,8 +49,8 @@ export default function BattleCards() {
 
   const load = async () => {
     const [{ data: c }, { data: t }] = await Promise.all([
-      (supabase.from('battle_cards') as any).select('*').order('competitor_name'),
-      (supabase.from('battle_card_triggers') as any).select('*'),
+      db.from('battle_cards').select('*').order('competitor_name'),
+      db.from('battle_card_triggers').select('*'),
     ]);
     setCards((c || []) as BattleCard[]);
     setTriggers((t || []) as Trigger[]);
@@ -76,19 +81,19 @@ export default function BattleCards() {
 
     let cardId = editingId;
     if (editingId) {
-      const { error } = await (supabase.from('battle_cards') as any).update(payload).eq('id', editingId);
+      const { error } = await db.from('battle_cards').update(payload).eq('id', editingId);
       if (error) { toast.error(error.message); return; }
     } else {
-      const { data, error } = await (supabase.from('battle_cards') as any).insert(payload).select().single();
+      const { data, error } = await db.from('battle_cards').insert(payload).select().single();
       if (error) { toast.error(error.message); return; }
       cardId = data.id;
     }
 
     if (cardId) {
-      await (supabase.from('battle_card_triggers') as any).delete().eq('battle_card_id', cardId);
+      await db.from('battle_card_triggers').delete().eq('battle_card_id', cardId);
       const kws = form.keywords.split(',').map(k => k.trim()).filter(Boolean);
       if (kws.length > 0) {
-        await (supabase.from('battle_card_triggers') as any).insert(
+        await db.from('battle_card_triggers').insert(
           kws.map(keyword => ({ battle_card_id: cardId, keyword, match_type: 'contains', is_active: true }))
         );
       }
@@ -101,7 +106,7 @@ export default function BattleCards() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Excluir este battle card?')) return;
-    const { error } = await (supabase.from('battle_cards') as any).delete().eq('id', id);
+    const { error } = await db.from('battle_cards').delete().eq('id', id);
     if (error) { toast.error(error.message); return; }
     toast.success('Battle card excluído');
     load();

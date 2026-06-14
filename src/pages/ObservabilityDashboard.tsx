@@ -45,6 +45,13 @@ const statusIcons: Record<string, React.ReactNode> = {
   checking: <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />,
 };
 
+interface LoadTestStats {
+  insert_latency_avg_ms: number;
+  select_latency_ms: number;
+  total_duration_ms: number;
+  records_processed: number;
+}
+
 export default function ObservabilityDashboard() {
   usePageTitle('Observabilidade');
 
@@ -54,7 +61,7 @@ export default function ObservabilityDashboard() {
   const [rlsStatus, setRlsStatus] = useState<{ table_name: string; rls_enabled: boolean }[]>([]);
   const [loadingRls, setLoadingRls] = useState(false);
   const [rlsSearch, setRlsSearch] = useState('');
-  const [loadTestResult, setLoadTestResult] = useState<any>(null);
+  const [loadTestResult, setLoadTestResult] = useState<LoadTestStats | null>(null);
   const [isRunningLoadTest, setIsRunningLoadTest] = useState(false);
 
   const runLoadTest = async () => {
@@ -62,7 +69,7 @@ export default function ObservabilityDashboard() {
     try {
       const { data, error } = await supabase.functions.invoke('voip-load-test');
       if (error) throw error;
-      setLoadTestResult(data.stats);
+      setLoadTestResult((data as { stats: LoadTestStats }).stats);
       toast.success('Teste de carga concluído com sucesso!');
     } catch (err) {
       console.error('Error running load test:', err);
@@ -79,7 +86,7 @@ export default function ObservabilityDashboard() {
       if (error) {
         toast.error('Algumas verificações de RLS requerem privilégios elevados.');
       } else {
-        setRlsStatus((data as any[]) || []);
+        setRlsStatus((data as { table_name: string; rls_enabled: boolean }[]) || []);
       }
     } catch (err) {
       console.error('Error fetching RLS status:', err);

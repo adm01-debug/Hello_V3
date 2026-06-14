@@ -23,7 +23,7 @@ export function checkPasswordStrength(password: string): PasswordStrengthResult 
   if (/\d/.test(password)) score++;
   else suggestions.push("Adicione números");
 
-  if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) score++;
+  if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) score++;
   else suggestions.push("Adicione caracteres especiais");
 
   // Penalize common patterns

@@ -15,7 +15,7 @@ interface ErrorReport {
   userAgent: string;
   type: 'error' | 'unhandled-rejection' | 'react-component' | 'network-error';
   userId?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 const ERROR_BUFFER: ErrorReport[] = [];
@@ -46,7 +46,7 @@ export function reportError(params: {
   message: string;
   type?: ErrorReport['type'];
   error?: Error;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }) {
   const { message, type = 'error', error, metadata } = params;
   addReport({ message, stack: error?.stack, type, metadata, ...context() });

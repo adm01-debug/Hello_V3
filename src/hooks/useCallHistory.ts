@@ -93,12 +93,17 @@ export function useCallHistory() {
 
       if (error) throw error;
 
-      const mappedData = (data as any[]).map(item => ({
+      type CallHistoryRow = CallSession & {
+        overall_sentiment?: string | null;
+        main_topics?: string[] | null;
+        customer_satisfaction?: number | null;
+      };
+      const mappedData = ((data ?? []) as unknown as CallHistoryRow[]).map(item => ({
         ...item,
         summary: item.overall_sentiment ? {
           overall_sentiment: item.overall_sentiment,
-          main_topics: item.main_topics,
-          customer_satisfaction: item.customer_satisfaction
+          main_topics: item.main_topics ?? null,
+          customer_satisfaction: item.customer_satisfaction ?? null
         } : undefined
       }));
 

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { useTalkRatio } from '@/hooks/useTalkRatio';
 
@@ -26,7 +26,7 @@ describe('useTalkRatio', () => {
   });
 
   it('analisa com sucesso', async () => {
-    (supabase.functions.invoke as any).mockResolvedValueOnce({ data: mockResult, error: null });
+    (supabase.functions.invoke as Mock).mockResolvedValueOnce({ data: mockResult, error: null });
     const { result } = renderHook(() => useTalkRatio());
     await act(async () => {
       await result.current.analyze('c1', [{ speaker: 'a', start: 0, end: 50 }]);
@@ -35,7 +35,7 @@ describe('useTalkRatio', () => {
   });
 
   it('captura erro do backend', async () => {
-    (supabase.functions.invoke as any).mockResolvedValueOnce({ data: null, error: new Error('falhou') });
+    (supabase.functions.invoke as Mock).mockResolvedValueOnce({ data: null, error: new Error('falhou') });
     const { result } = renderHook(() => useTalkRatio());
     await act(async () => { await result.current.analyze('c1', []); });
     await waitFor(() => expect(result.current.error).toBe('falhou'));

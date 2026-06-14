@@ -12,9 +12,17 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { useMeetingSummariesList } from '@/hooks/useMeetingSummary';
+import { useMeetingSummariesList, type MeetingSummary } from '@/hooks/useMeetingSummary';
 import { MeetingSummaryCard } from '@/components/calls/MeetingSummaryCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
+
+type MeetingSummaryListItem = MeetingSummary & {
+  call_sessions?: {
+    caller_name?: string | null;
+    caller_phone?: string | null;
+    agent_name?: string | null;
+  } | null;
+};
 
 export default function MeetingSummaries() {
   usePageTitle('Resumos IA de Reuniões');
@@ -26,12 +34,12 @@ export default function MeetingSummaries() {
     followUpOnly: filter === 'followup',
     search: search || undefined,
     limit: 100,
-  });
+  }) as { data: MeetingSummaryListItem[]; isLoading: boolean };
 
   const stats = useMemo(() => {
-    const followups = summaries.filter((s: any) => s.follow_up_required).length;
+    const followups = summaries.filter((s) => s.follow_up_required).length;
     const totalActions = summaries.reduce(
-      (sum: number, s: any) => sum + (s.action_items?.length ?? 0),
+      (sum, s) => sum + (s.action_items?.length ?? 0),
       0
     );
     return { total: summaries.length, followups, totalActions };
@@ -75,7 +83,7 @@ export default function MeetingSummaries() {
               className="pl-9 bg-background/50"
             />
           </div>
-          <Tabs value={filter} onValueChange={(v) => setFilter(v as any)}>
+          <Tabs value={filter} onValueChange={(v) => setFilter(v as 'all' | 'followup')}>
             <TabsList>
               <TabsTrigger value="all" className="gap-1.5"><Filter className="h-3 w-3" /> Todos</TabsTrigger>
               <TabsTrigger value="followup" className="gap-1.5"><AlertCircle className="h-3 w-3" /> Follow-up</TabsTrigger>
@@ -104,7 +112,7 @@ export default function MeetingSummaries() {
                 </div>
               ) : (
                 <div className="p-2 space-y-1.5">
-                  {summaries.map((s: any) => (
+                  {summaries.map((s) => (
                     <button
                       key={s.id}
                       onClick={() => setSelected(s.call_session_id)}

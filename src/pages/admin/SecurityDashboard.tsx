@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
@@ -10,7 +11,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 export default function SecurityDashboard() {
-  const [logs, setLogs] = useState<any[]>([]);
+  const [logs, setLogs] = useState<Database['public']['Tables']['audit_logs']['Row'][]>([]);
   const [filter, setFilter] = useState({
     user: '',
     type: 'all',

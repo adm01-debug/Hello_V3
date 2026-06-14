@@ -130,7 +130,7 @@ export function CommandPalette() {
     return map;
   }, []);
 
-   const handleSelect = (item: any) => {
+   const handleSelect = (item: { url?: string; onSelect?: () => void }) => {
      setOpen(false);
      if (item.url) navigate(item.url);
      if (item.onSelect) item.onSelect();

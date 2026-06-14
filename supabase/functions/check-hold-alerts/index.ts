@@ -73,7 +73,13 @@ serve(async (req) => {
       }
     });
 
-    const alerts: any[] = [];
+    const alerts: Array<{
+      call_session_id: string;
+      alert_type: string;
+      severity: string;
+      title: string;
+      message: string;
+    }> = [];
     const now = new Date();
 
     for (const hold of activeHolds || []) {

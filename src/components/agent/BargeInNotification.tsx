@@ -21,7 +21,7 @@ export const BargeInNotification = ({ agentName }: BargeInNotificationProps) => 
   const [activeBargeIn, setActiveBargeIn] = useState<BargeInSession | null>(null);
 
   const playJoinSound = () => {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
     
     // Play two ascending tones
     [440, 660].forEach((freq, i) => {

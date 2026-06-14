@@ -134,7 +134,7 @@ serve(async (req) => {
         .order('start_time', { ascending: true })
         .limit(80);
       timestampedTranscript = (trans || [])
-        .map((t: any) => `[${Math.round(t.start_time ?? 0)}s][${t.speaker}] ${t.text}`)
+        .map((t: { start_time?: number; speaker: string; text: string }) => `[${Math.round(t.start_time ?? 0)}s][${t.speaker}] ${t.text}`)
         .join('\n');
     }
 

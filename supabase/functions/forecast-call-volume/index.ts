@@ -46,7 +46,7 @@ Deno.serve(async (req) => {
     }
     const counts: Record<string, number> = {};
 
-    (sessions || []).forEach((s: any) => {
+    (sessions || []).forEach((s: { started_at: string }) => {
       const d = new Date(s.started_at);
       const dow = d.getDay();
       const hour = d.getHours();

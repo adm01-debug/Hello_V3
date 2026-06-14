@@ -88,7 +88,7 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
       { label: 'Letra maiúscula', met: /[A-Z]/.test(password) },
       { label: 'Letra minúscula', met: /[a-z]/.test(password) },
       { label: 'Número', met: /[0-9]/.test(password) },
-      { label: 'Caractere especial (!@#$%...)', met: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password), critical: true },
+      { label: 'Caractere especial (!@#$%...)', met: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password), critical: true },
     ];
 
     const metCount = requirements.filter(r => r.met).length;
@@ -251,7 +251,7 @@ export function usePasswordStrength(password: string) {
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
-    const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+    const hasSpecial = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
 
     const metCount = [hasMinLength, hasUppercase, hasLowercase, hasNumber, hasSpecial].filter(Boolean).length;
     

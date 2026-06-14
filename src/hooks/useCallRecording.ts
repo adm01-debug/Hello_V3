@@ -53,7 +53,7 @@ export function useCallRecording() {
           const filePath = `recordings/${fileName}`;
           const { error: uploadError } = await supabase.storage.from('call-recordings').upload(filePath, blob);
           if (uploadError) throw uploadError;
-          await (supabase.from('call_recordings') as any).insert({
+          await supabase.from('call_recordings').insert({
             file_path: filePath, call_session_id: options?.callSessionId || null,
             conference_id: options?.conferenceId || null, participant_count: options?.participantCount || null,
             duration_seconds: null, file_size_bytes: blob.size,
@@ -72,7 +72,7 @@ export function useCallRecording() {
   }, []);
 
   const getRecordings = useCallback(async (sessionOrConferenceId?: string): Promise<Recording[]> => {
-    let query = (supabase.from('call_recordings') as any).select('*').order('recorded_at', { ascending: false });
+    let query = supabase.from('call_recordings').select('*').order('recorded_at', { ascending: false });
     if (sessionOrConferenceId) query = query.or(`call_session_id.eq.${sessionOrConferenceId},conference_id.eq.${sessionOrConferenceId}`);
     const { data } = await query;
     return (data || []) as Recording[];

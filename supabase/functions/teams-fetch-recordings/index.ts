@@ -60,7 +60,7 @@ Deno.serve(async (req) => {
     // Full implementation requires onlineMeeting IDs which depend on user permissions.
     for (const team of teams.slice(0, 20)) {
       try {
-        const { error: insErr } = await (supabase.from('call_recordings') as any).insert({
+        const { error: insErr } = await supabase.from('call_recordings').insert({
           file_path: `teams-imports/${team.id}-${Date.now()}.placeholder`,
           source: 'teams',
           duration_seconds: null,

@@ -47,9 +47,9 @@ export function useObjectionLibrary() {
       toast.success('Objeção salva');
       queryClient.invalidateQueries({ queryKey: ['objection-library'] });
     },
-    onError: (e: any) => {
+    onError: (e: unknown) => {
       log.error('upsert objection failed', e);
-      toast.error(e?.message || 'Falha ao salvar objeção');
+      toast.error((e instanceof Error ? e.message : '') || 'Falha ao salvar objeção');
     },
   });
 
@@ -62,7 +62,7 @@ export function useObjectionLibrary() {
       toast.success('Objeção removida');
       queryClient.invalidateQueries({ queryKey: ['objection-library'] });
     },
-    onError: (e: any) => toast.error(e?.message || 'Falha ao remover'),
+    onError: (e: unknown) => toast.error((e instanceof Error ? e.message : '') || 'Falha ao remover'),
   });
 
   const recordWin = useMutation({

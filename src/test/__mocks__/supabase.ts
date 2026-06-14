@@ -2,7 +2,10 @@ import { vi } from 'vitest';
 
 // Chainable query builder mock
 function createQueryBuilder() {
-  const builder: any = {
+  const builder: Record<string, unknown> & {
+    _data: unknown;
+    _error: unknown;
+  } = {
     _data: null,
     _error: null,
     select: vi.fn().mockReturnThis(),
@@ -29,7 +32,10 @@ function createQueryBuilder() {
   const defaultResolve = () => Promise.resolve({ data: builder._data ?? [], error: builder._error, count: 0 });
   
   // Override then so await works
-  builder.then = (resolve: any, reject: any) => defaultResolve().then(resolve, reject);
+  builder.then = (
+    resolve: (value: unknown) => unknown,
+    reject: (reason: unknown) => unknown,
+  ) => defaultResolve().then(resolve, reject);
 
   return builder;
 }

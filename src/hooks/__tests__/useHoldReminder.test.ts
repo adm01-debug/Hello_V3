@@ -223,7 +223,7 @@ describe('Hold Reminder System', () => {
         'call-2': { warning: true, critical: true },
       };
       const activeCallIds = new Set(['call-1']);
-      const cleaned: Record<string, any> = {};
+      const cleaned: Record<string, { warning: boolean; critical: boolean }> = {};
       Object.entries(alertedCalls).forEach(([id, alerts]) => {
         if (activeCallIds.has(id)) cleaned[id] = alerts;
       });
@@ -254,7 +254,7 @@ describe('Hold Reminder System', () => {
     });
 
     it('changing threshold resets alerted calls', () => {
-      let alertedCalls: Record<string, any> = { 'call-1': { warning: true } };
+      let alertedCalls: Record<string, { warning: boolean }> = { 'call-1': { warning: true } };
       // On threshold change:
       alertedCalls = {};
       expect(Object.keys(alertedCalls)).toHaveLength(0);

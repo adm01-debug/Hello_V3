@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -9,10 +10,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
-import { 
-  Loader2, Shield, Key, Users, Phone, FileText, Settings, 
-  Lock, Eye, Edit, Trash2, Plus, Save 
+import {
+  Loader2, Shield, Key, Users, Phone, FileText, Settings,
+  Lock, Eye, Edit, Trash2, Plus, Save
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface Permission {
@@ -29,7 +31,7 @@ interface RolePermission {
   permission_id: string;
 }
 
-const MODULE_ICONS: Record<string, any> = {
+const MODULE_ICONS: Record<string, LucideIcon> = {
   users: Users,
   roles: Shield,
   contacts: Phone,
@@ -119,7 +121,9 @@ export default function Permissions() {
 
       // Adicionar novas permissões
       if (toAdd.length > 0) {
-        const { error } = await supabase.from('role_permissions').insert(toAdd as any);
+        const { error } = await supabase
+          .from('role_permissions')
+          .insert(toAdd as { role: Database['public']['Enums']['app_role']; permission_id: string }[]);
         if (error) throw error;
       }
 

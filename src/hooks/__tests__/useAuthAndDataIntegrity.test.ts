@@ -115,7 +115,7 @@ describe('Realtime Hold Alerts', () => {
 
     it('handles localStorage error gracefully', () => {
       // Simulates fallback
-      let enabled = true;
+      const enabled = true;
       try {
         throw new Error('localStorage disabled');
       } catch {
@@ -309,7 +309,7 @@ describe('Data Integrity Checks', () => {
 
   describe('JSON serialization safety', () => {
     it('handles circular reference gracefully', () => {
-      const obj: any = { a: 1 };
+      const obj: Record<string, unknown> = { a: 1 };
       let result: string;
       try {
         result = JSON.stringify(obj);
@@ -334,7 +334,7 @@ describe('Data Integrity Checks', () => {
 
   describe('Array bounds safety', () => {
     it('empty array access returns undefined', () => {
-      const arr: any[] = [];
+      const arr: unknown[] = [];
       expect(arr[0]).toBeUndefined();
     });
 

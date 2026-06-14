@@ -65,7 +65,7 @@ serve(async (req) => {
         response = { success: true, connected: true, message: 'Conexão estabelecida' };
         break;
 
-      case 'start':
+      case 'start': {
         if (!whatsappId || typeof whatsappId !== 'string') {
           return new Response(
             JSON.stringify({ success: false, error: 'Número WhatsApp é obrigatório' }),
@@ -80,6 +80,7 @@ serve(async (req) => {
           message: `Iniciando chamada para ${formattedPhone}`
         };
         break;
+      }
 
       case 'end':
         if (!callId || typeof callId !== 'string') {

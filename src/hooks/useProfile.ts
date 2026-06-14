@@ -2,6 +2,7 @@
  import { supabase } from '@/integrations/supabase/client';
  import { useAuthContext } from '@/contexts/AuthContext';
  import { toast } from 'sonner';
+ import type { TablesUpdate } from '@/integrations/supabase/types';
  
  export interface Profile {
    id: string;
@@ -37,7 +38,7 @@
         const { id, role, ...allowedUpdates } = updates;
         const { error } = await supabase
           .from('user_profiles')
-          .update(allowedUpdates as any)
+          .update(allowedUpdates as TablesUpdate<'user_profiles'>)
           .eq('id', user.id);
   
         if (error) throw error;
@@ -45,7 +46,7 @@
       onMutate: async (updates) => {
         await queryClient.cancelQueries({ queryKey: ['profile', user?.id] });
         const previousProfile = queryClient.getQueryData(['profile', user?.id]);
-        queryClient.setQueryData(['profile', user?.id], (old: any) => ({ ...old, ...updates }));
+        queryClient.setQueryData(['profile', user?.id], (old: Profile | undefined) => ({ ...old, ...updates }));
         return { previousProfile };
       },
       onSuccess: () => {

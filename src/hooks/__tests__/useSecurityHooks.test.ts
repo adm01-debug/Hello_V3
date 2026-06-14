@@ -8,10 +8,10 @@ const mockRemoveChannel = vi.fn();
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
-    from: vi.fn((..._args: any[]) => mockFrom()),
-    rpc: vi.fn((..._args: any[]) => mockRpc()),
-    channel: vi.fn((..._args: any[]) => mockChannel()),
-    removeChannel: vi.fn((..._args: any[]) => mockRemoveChannel()),
+    from: vi.fn((..._args: unknown[]) => mockFrom()),
+    rpc: vi.fn((..._args: unknown[]) => mockRpc()),
+    channel: vi.fn((..._args: unknown[]) => mockChannel()),
+    removeChannel: vi.fn((..._args: unknown[]) => mockRemoveChannel()),
     auth: {
       getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'user-1' } }, error: null }),
       mfa: {
@@ -154,7 +154,7 @@ describe('useIPValidation', () => {
     vi.mocked(supabase.functions.invoke).mockResolvedValue({
       data: { allowed: true },
       error: null,
-    } as any);
+    } as unknown as Awaited<ReturnType<typeof supabase.functions.invoke>>);
 
     const { data } = await supabase.functions.invoke('validate-ip', {
       body: { userId: 'user-1', userEmail: 'test@test.com' },
@@ -167,7 +167,7 @@ describe('useIPValidation', () => {
     vi.mocked(supabase.functions.invoke).mockResolvedValue({
       data: null,
       error: { message: 'Network error' },
-    } as any);
+    } as unknown as Awaited<ReturnType<typeof supabase.functions.invoke>>);
 
     const { error } = await supabase.functions.invoke('validate-ip', {
       body: { userId: 'user-1', userEmail: 'test@test.com' },
@@ -180,7 +180,7 @@ describe('useIPValidation', () => {
 describe('useAuditLog', () => {
   it('calls log_audit_event RPC with correct params', async () => {
     const { supabase } = await import('@/integrations/supabase/client');
-    vi.mocked(supabase.rpc).mockResolvedValue({ data: 'audit-id-1', error: null } as any);
+    vi.mocked(supabase.rpc).mockResolvedValue({ data: 'audit-id-1', error: null } as unknown as Awaited<ReturnType<typeof supabase.rpc>>);
 
     await supabase.rpc('log_audit_event', {
       p_action: 'view',

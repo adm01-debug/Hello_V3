@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
  import { Clock, Users, TrendingDown, AlertTriangle, Phone, Timer, BarChart3 } from 'lucide-react';
  import { formatDurationFriendly } from '@/lib/utils';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import type { Formatter } from 'recharts/types/component/DefaultTooltipContent';
+import type { PieLabelRenderProps } from 'recharts/types/polar/Pie';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useHoldMetrics } from '@/hooks/useHoldMetrics';
 
@@ -92,7 +94,7 @@ export default function HoldMetrics() {
                 <ResponsiveContainer width="100%" height={350}>
                   <BarChart data={agentMetrics.filter(a => a.holdCount > 0)}>
                     <CartesianGrid strokeDasharray="3 3" className="stroke-muted" /><XAxis dataKey="agentName" className="text-xs" /><YAxis className="text-xs" />
-                     <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={((value: number) => [formatDurationFriendly(value), ''] as [string, string]) as any} />
+                     <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={((value: number) => [formatDurationFriendly(value), ''] as [string, string]) as unknown as Formatter} />
                     <Bar dataKey="totalHoldTime" name="Tempo Total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="avgHoldTime" name="Tempo Médio" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
                   </BarChart>
@@ -126,7 +128,7 @@ export default function HoldMetrics() {
                 <LineChart data={dailyMetrics}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" /><XAxis dataKey="date" className="text-xs" /><YAxis className="text-xs" />
                    <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
-                     formatter={((value: number, name: string) => [name === 'holdCount' ? value : formatDurationFriendly(value), name === 'holdCount' ? 'Quantidade' : name === 'avgHoldTime' ? 'Tempo Médio' : 'Tempo Total'] as [string | number, string]) as any} />
+                     formatter={((value: number, name: string) => [name === 'holdCount' ? value : formatDurationFriendly(value), name === 'holdCount' ? 'Quantidade' : name === 'avgHoldTime' ? 'Tempo Médio' : 'Tempo Total'] as [string | number, string]) as unknown as Formatter} />
                   <Line type="monotone" dataKey="avgHoldTime" name="avgHoldTime" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ fill: 'hsl(var(--primary))' }} />
                   <Line type="monotone" dataKey="holdCount" name="holdCount" stroke="hsl(var(--chart-2))" strokeWidth={2} dot={{ fill: 'hsl(var(--chart-2))' }} />
                 </LineChart>
@@ -143,10 +145,10 @@ export default function HoldMetrics() {
                 {pieData.length > 0 ? (
                   <ResponsiveContainer width="100%" height={300}>
                     <PieChart>
-                      <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label={({ name, percent }: any) => `${name} (${(percent * 100).toFixed(0)}%)`} labelLine={false}>
+                      <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label={({ name, percent }: PieLabelRenderProps) => `${name} (${((percent ?? 0) * 100).toFixed(0)}%)`} labelLine={false}>
                         {pieData.map((_, index) => <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />)}
                       </Pie>
-                       <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={((value: number) => [formatDurationFriendly(value), 'Tempo Total']) as any} />
+                       <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={((value: number) => [formatDurationFriendly(value), 'Tempo Total']) as unknown as Formatter} />
                     </PieChart>
                   </ResponsiveContainer>
                 ) : <div className="h-[300px] flex items-center justify-center text-muted-foreground">Sem dados para o período</div>}

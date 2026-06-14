@@ -150,7 +150,7 @@ export function useAgentAssistHistory(filters?: {
       if (filters?.intent) q = q.eq('intent', filters.intent);
       const { data, error } = await q;
       if (error) throw error;
-      return data ?? [];
+      return (data ?? []) as unknown as LiveAssistSignal[];
     },
   });
 }

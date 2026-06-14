@@ -6,7 +6,7 @@ describe('Password Strength Analysis', () => {
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
-    const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+    const hasSpecial = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
 
     const metCount = [hasMinLength, hasUppercase, hasLowercase, hasNumber, hasSpecial].filter(Boolean).length;
     const criticalMet = [hasMinLength, hasSpecial].filter(Boolean).length;
@@ -90,7 +90,7 @@ describe('Rate Limiter Logic', () => {
 
   it('blocks after exceeding limit', () => {
     const maxRequests = 5;
-    let count = 6;
+    const count = 6;
     expect(count > maxRequests).toBe(true);
   });
 
@@ -174,7 +174,15 @@ describe('Badge Award Logic', () => {
     { id: 'b5', requirement_type: 'weekly_rank', requirement_value: 3 },
   ];
 
-  const checkBadge = (badge: typeof badges[0], stats: any, earned: Set<string>) => {
+  type BadgeStats = {
+    totalCalls: number;
+    avgSatisfaction: number;
+    weeklyDuration: number;
+    dailyCalls: number;
+    weeklyRank: number;
+  };
+
+  const checkBadge = (badge: typeof badges[0], stats: BadgeStats, earned: Set<string>) => {
     if (earned.has(badge.id)) return false;
     switch (badge.requirement_type) {
       case 'total_calls': return stats.totalCalls >= badge.requirement_value;

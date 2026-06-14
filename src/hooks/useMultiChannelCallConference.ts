@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { CallSession, CallStatus, ConferenceCall, TransferTarget, TransferType } from './useMultiChannelCall';
+import { CallChannel, CallSession, CallStatus, ConferenceCall, TransferTarget, TransferType } from './useMultiChannelCall';
 import { logger } from '@/lib/logger';
 
 const log = logger.create('MultiChannelCallConference');
@@ -9,7 +9,7 @@ interface UseConferenceProps {
   activeCallId: string | null;
   setActiveCalls: React.Dispatch<React.SetStateAction<CallSession[]>>;
   setActiveCallId: React.Dispatch<React.SetStateAction<string | null>>;
-  setActiveChannel: React.Dispatch<React.SetStateAction<any>>;
+  setActiveChannel: React.Dispatch<React.SetStateAction<CallChannel>>;
   setCallHistory: React.Dispatch<React.SetStateAction<CallSession[]>>;
   stopDurationTimer: (callId: string) => void;
 }

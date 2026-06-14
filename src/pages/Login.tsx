@@ -88,7 +88,9 @@ export default function Login() {
         const ipResult = await validateIP();
         if (!ipResult.allowed) {
           await signOut(); setIpBlocked(true);
-          try { await supabase.functions.invoke('notify-blocked-ip', { body: { ip: ipInfo?.ip || 'Não detectado', email, country: ipInfo?.country, city: ipInfo?.city, userAgent: navigator.userAgent, timestamp: new Date().toISOString() } }); } catch {}
+          try { await supabase.functions.invoke('notify-blocked-ip', { body: { ip: ipInfo?.ip || 'Não detectado', email, country: ipInfo?.country, city: ipInfo?.city, userAgent: navigator.userAgent, timestamp: new Date().toISOString() } }); } catch {
+            // best-effort notification; ignore failures so blocking still proceeds
+          }
           toast.error('Acesso bloqueado', { description: 'Seu IP não está autorizado para acessar o sistema.', duration: 10000 }); return;
         }
         await recordSuccessfulLogin(email, ipInfo?.ip);

@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, BarChart, Bar } from 'recharts';
+import type { Formatter, ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
 import { supabase } from '@/integrations/supabase/client';
 import { format, subDays, eachDayOfInterval, startOfDay, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -236,14 +237,14 @@ export function AlertsTrendChart() {
                     borderRadius: '8px',
                   }}
                   labelStyle={{ color: 'hsl(var(--foreground))' }}
-                  formatter={((value: number, name: string) => {
+                  formatter={((value, name) => {
                     const labels: Record<string, string> = {
                       critical: 'Críticos',
                       warning: 'Avisos',
                       info: 'Informativos'
                     };
-                    return [value, labels[name] || name] as [number, string];
-                  }) as any}
+                    return [value, labels[name as string] || name] as [typeof value, typeof name];
+                  }) as Formatter<ValueType, NameType>}
                 />
                 <Legend
                   verticalAlign="top"
@@ -320,7 +321,7 @@ export function AlertsTrendChart() {
                       borderColor: 'hsl(var(--border))',
                       borderRadius: '8px',
                     }}
-                    formatter={((value: number) => [value, 'Alertas'] as [number, string]) as any}
+                    formatter={((value) => [value, 'Alertas'] as [typeof value, string]) as Formatter<ValueType, NameType>}
                     labelFormatter={(label) => label}
                   />
                   <Bar 

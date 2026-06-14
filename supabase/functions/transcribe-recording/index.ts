@@ -99,7 +99,13 @@ serve(async (req) => {
       let currentSpeaker = '';
       let currentText = '';
       let currentStartTime = 0;
-      const transcriptionEntries: any[] = [];
+      const transcriptionEntries: Array<{
+        call_session_id: string;
+        speaker: string;
+        text: string;
+        start_time: number;
+        end_time: number;
+      }> = [];
 
       for (const word of transcription.words) {
         const speaker = word.speaker || 'unknown';

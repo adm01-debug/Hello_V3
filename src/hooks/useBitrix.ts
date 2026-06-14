@@ -1,6 +1,7 @@
 import { logger } from '@/lib/logger';
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import type { Json } from '@/integrations/supabase/types';
 import { toast } from 'sonner';
 
 export interface BitrixContact {
@@ -48,7 +49,7 @@ export const useBitrix = () => {
 
   const callBitrixApi = useCallback(async (action: string, params?: Record<string, unknown>, maxRetries = 2) => {
     setIsLoading(true);
-    let lastError: any = null;
+    let lastError: unknown = null;
     
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
@@ -209,7 +210,7 @@ export const useBitrix = () => {
      // Enfileirar registro de chamada se falhar
      await supabase.from('crm_sync_queue').insert({
        action: 'register_call',
-       payload: callData as any,
+       payload: callData as unknown as Json,
        status: 'pending'
      });
  

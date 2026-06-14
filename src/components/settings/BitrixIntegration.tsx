@@ -17,9 +17,14 @@
   import { supabase } from '@/integrations/supabase/client';
   import { toast } from 'sonner';
  
+  type LogDestination = 'crm_timeline' | 'call_list';
+
+  const isLogDestination = (val: unknown): val is LogDestination =>
+    val === 'crm_timeline' || val === 'call_list';
+
   export function BitrixIntegration() {
     const { isConfigured, isLoading, checkConfiguration, syncAgents, syncDepartments } = useBitrix();
-    const [logDestination, setLogDestination] = useState<'crm_timeline' | 'call_list'>('crm_timeline');
+    const [logDestination, setLogDestination] = useState<LogDestination>('crm_timeline');
     const [saving, setSaving] = useState(false);
   
     useEffect(() => {
@@ -30,7 +35,10 @@
     const loadSettings = async () => {
       const { data } = await supabase.from('system_settings').select('value').eq('key', 'bitrix_config').single();
       if (data?.value && typeof data.value === 'object' && 'log_destination' in data.value) {
-        setLogDestination((data.value as any).log_destination);
+        const dest = (data.value as Record<string, unknown>).log_destination;
+        if (isLogDestination(dest)) {
+          setLogDestination(dest);
+        }
       }
     };
 
@@ -40,8 +48,8 @@
         key: 'bitrix_config',
         value: { log_destination: val, sync_enabled: true }
       });
-      if (!error) {
-        setLogDestination(val as any);
+      if (!error && isLogDestination(val)) {
+        setLogDestination(val);
         toast.success('Configuração de log atualizada');
       }
       setSaving(false);

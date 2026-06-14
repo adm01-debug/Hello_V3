@@ -29,7 +29,7 @@ describe('useCallSearch', () => {
   });
 
   it('preenche resultados em sucesso', async () => {
-    (supabase.functions.invoke as any).mockResolvedValueOnce({
+    vi.mocked(supabase.functions.invoke).mockResolvedValueOnce({
       data: { results: [{ id: '1', call_session_id: 'c1', agent_name: 'A', duration_seconds: 60, created_at: '2024-01-01', snippet: 'olá' }], count: 1 },
       error: null,
     });
@@ -40,7 +40,7 @@ describe('useCallSearch', () => {
   });
 
   it('encaminha filtros e paginação', async () => {
-    (supabase.functions.invoke as any).mockResolvedValueOnce({ data: { results: [], count: 0 }, error: null });
+    vi.mocked(supabase.functions.invoke).mockResolvedValueOnce({ data: { results: [], count: 0 }, error: null });
     const { result } = renderHook(() => useCallSearch());
     await act(async () => {
       await result.current.search('preco', { agentName: 'João', momentType: 'price' }, { limit: 10, offset: 20 });
@@ -51,7 +51,7 @@ describe('useCallSearch', () => {
   });
 
   it('captura erro em falha', async () => {
-    (supabase.functions.invoke as any).mockResolvedValueOnce({ data: null, error: new Error('boom') });
+    vi.mocked(supabase.functions.invoke).mockResolvedValueOnce({ data: null, error: new Error('boom') });
     const { result } = renderHook(() => useCallSearch());
     await act(async () => { await result.current.search('x'); });
     await waitFor(() => expect(result.current.error).toBeTruthy());

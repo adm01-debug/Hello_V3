@@ -11,7 +11,12 @@ export interface CoachingRecommendation {
   title: string;
   description: string;
   action_items: string[];
-  metrics_snapshot: Record<string, any>;
+  metrics_snapshot: {
+    totalCalls?: number;
+    avgSatisfaction?: number;
+    avgPerformance?: number;
+    avgDuration?: number;
+  } & Record<string, unknown>;
   status: 'pending' | 'in_progress' | 'completed' | 'dismissed';
   created_at: string;
   reviewed_at: string | null;

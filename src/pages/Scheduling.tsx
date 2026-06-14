@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useShifts, AgentShift } from '@/hooks/useShifts';
+import { useShifts } from '@/hooks/useShifts';
 import { useTimeOff } from '@/hooks/useTimeOff';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
@@ -49,8 +49,7 @@ export default function Scheduling() {
       template_id: null,
       status: 'scheduled',
       notes: null,
-      created_by: null as any,
-    } as Omit<AgentShift, 'id' | 'created_at' | 'updated_at'>);
+    });
     setOpen(false);
   };
 

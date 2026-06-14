@@ -6,14 +6,15 @@ import { useMeetingSummary } from '../useMeetingSummary';
 
 const invokeMock = vi.fn();
 const fromMock = vi.fn();
-const channelObj: any = {};
-channelObj.on = vi.fn(() => channelObj);
-channelObj.subscribe = vi.fn(() => channelObj);
+const channelObj: { on: ReturnType<typeof vi.fn>; subscribe: ReturnType<typeof vi.fn> } = {
+  on: vi.fn(() => channelObj),
+  subscribe: vi.fn(() => channelObj),
+};
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
-    from: (...a: any[]) => fromMock(...a),
-    functions: { invoke: (...a: any[]) => invokeMock(...a) },
+    from: (...a: unknown[]) => fromMock(...a),
+    functions: { invoke: (...a: unknown[]) => invokeMock(...a) },
     channel: vi.fn(() => channelObj),
     removeChannel: vi.fn(),
   },
@@ -30,7 +31,7 @@ function wrapper({ children }: { children: React.ReactNode }) {
   return React.createElement(QueryClientProvider, { client: qc }, children);
 }
 
-function makeQuery(rowData: any) {
+function makeQuery(rowData: Record<string, unknown> | null) {
   return {
     select: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
@@ -53,7 +54,7 @@ describe('useMeetingSummary - parse', () => {
         key_points: null,
         action_items: null,
         decisions: undefined,
-        next_steps: 'invalido' as any,
+        next_steps: 'invalido' as unknown,
         participants_sentiment: null,
         topics_discussed: null,
         shared_with: null,

@@ -9,7 +9,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { EmptyState } from '@/components/ui/empty-state';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { useAgentAssistHistory } from '@/hooks/useLiveAssist';
+import { useAgentAssistHistory, type LiveAssistSignal } from '@/hooks/useLiveAssist';
 import { useObjectionLibrary } from '@/hooks/useObjectionLibrary';
 import { calculateAcceptanceRate, countByIntent, INTENT_LABELS } from '@/lib/agent-assist-utils';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -21,8 +21,8 @@ export default function AgentAssist() {
 
   const stats = useMemo(() => {
     const total = history.length;
-    const acceptance = calculateAcceptanceRate(history as any);
-    const byIntent = countByIntent(history as any);
+    const acceptance = calculateAcceptanceRate(history);
+    const byIntent = countByIntent(history);
     const compliance = byIntent['compliance_violation'] ?? 0;
     const buying = byIntent['buying_signal'] ?? 0;
     const objectionCount = byIntent['objection'] ?? 0;
@@ -81,7 +81,7 @@ export default function AgentAssist() {
           ) : (
             <ScrollArea className="h-[480px] pr-2">
               <div className="space-y-2">
-                 {history.slice(0, 60).map((s: any) => (
+                 {history.slice(0, 60).map((s: LiveAssistSignal) => (
                    <Card key={s.id} variant="neon-interactive" className="p-2 text-xs mb-2">
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center gap-2">

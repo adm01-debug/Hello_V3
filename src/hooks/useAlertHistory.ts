@@ -34,7 +34,7 @@ export function useAlertHistory() {
   });
   const [stats, setStats] = useState<AlertStats>({ total: 0, critical: 0, warning: 0, info: 0, readRate: 0 });
   const [alertTypes, setAlertTypes] = useState<string[]>([]);
-  const [dailyStats, setDailyStats] = useState<any[]>([]);
+  const [dailyStats, setDailyStats] = useState<Array<{ date: string; critical: number; warning: number; info: number; total: number }>>([]);
 
   const fetchAlerts = useCallback(async () => {
     setLoading(true);

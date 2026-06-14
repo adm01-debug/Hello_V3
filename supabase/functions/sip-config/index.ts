@@ -71,7 +71,7 @@ serve(async (req) => {
         .order('is_primary', { ascending: false });
 
       const trunks: TrunkRow[] = (assignments ?? [])
-        .map((a: any) => a.voip_trunks)
+        .map((a: { voip_trunks: TrunkRow }) => a.voip_trunks)
         .filter((t: TrunkRow) => t && t.is_active);
 
       if (trunks.length > 0) {

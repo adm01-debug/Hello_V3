@@ -326,7 +326,7 @@ export function LiveTranscription({ isActive, onTranscript, callSessionId, agent
       </div>
 
       {/* Transcripts */}
-      <ScrollArea className="h-[180px]" ref={scrollRef as any}>
+      <ScrollArea className="h-[180px]" ref={scrollRef}>
         <div className="p-4 space-y-3">
           {transcripts.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-6 text-center">

@@ -38,7 +38,7 @@ describe('Call Session Logic', () => {
 
   describe('Transcript batching logic', () => {
     it('batches transcripts before save', () => {
-      const pending: any[] = [];
+      const pending: { text: string; speaker: string }[] = [];
       const batchSize = 2000; // 2 second batch interval
 
       pending.push({ text: 'Hello', speaker: 'agent' });

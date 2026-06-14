@@ -21,7 +21,17 @@ const getInitials = (name: string): string => {
     .slice(0, 2);
 };
 
- function AgentItem({ agent }: { agent: any }) {
+interface Agent {
+  id: string;
+  name: string;
+  status: string;
+  avatar_url: string | null;
+  extension: string;
+  active_call_started_at?: string;
+  active_call_caller?: string;
+}
+
+ function AgentItem({ agent }: { agent: Agent }) {
    const status = statusConfig[agent.status] || statusConfig.offline;
    const [duration, setDuration] = useState<number | null>(null);
  

@@ -16,7 +16,8 @@ vi.mock('@/integrations/supabase/client', () => ({
       limit: vi.fn().mockReturnThis(),
       single: vi.fn().mockResolvedValue({ data: null, error: null }),
       maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
-      then: (r: any) => Promise.resolve({ data: [], error: null }).then(r),
+      then: (r: (value: { data: unknown[]; error: null }) => unknown) =>
+        Promise.resolve({ data: [], error: null }).then(r),
     })),
     rpc: vi.fn().mockResolvedValue({ data: null, error: null }),
     functions: { invoke: vi.fn().mockResolvedValue({ data: null, error: null }) },
@@ -280,8 +281,8 @@ describe('Audit Log Logic', () => {
   });
 
   it('logDataExport handles undefined resourceId', () => {
-    const event = { action: 'export', resourceType: 'contact', details: { record_count: 50 } };
-    expect((event as any).resourceId).toBeUndefined();
+    const event: { action: string; resourceType: string; details: { record_count: number }; resourceId?: string } = { action: 'export', resourceType: 'contact', details: { record_count: 50 } };
+    expect(event.resourceId).toBeUndefined();
     expect(event.details.record_count).toBe(50);
   });
 });
@@ -587,7 +588,7 @@ describe('Voice Command Logic', () => {
 // ===================== Realtime Hold Alerts Logic =====================
 describe('Realtime Hold Alerts Logic', () => {
   it('recent alerts limited to 50', () => {
-    const alerts: any[] = Array.from({ length: 60 }, (_, i) => ({ id: `a-${i}` }));
+    const alerts: { id: string }[] = Array.from({ length: 60 }, (_, i) => ({ id: `a-${i}` }));
     const newAlert = { id: 'new' };
     const result = [newAlert, ...alerts].slice(0, 50);
     expect(result).toHaveLength(50);

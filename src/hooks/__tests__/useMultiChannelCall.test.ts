@@ -44,7 +44,7 @@ describe('Multi-Channel Call System', () => {
     });
 
     it('allows first call when none active', () => {
-      const activeCalls: any[] = [];
+      const activeCalls: { id: string }[] = [];
       const canInitiate = activeCalls.length < MAX_SIMULTANEOUS_CALLS;
       expect(canInitiate).toBe(true);
     });
