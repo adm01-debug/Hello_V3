@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule */
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 export type ThemeMode = 'light' | 'dark';

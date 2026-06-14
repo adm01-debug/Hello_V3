@@ -1,4 +1,3 @@
-// @ts-ignore - jest-dom types
 import "@testing-library/jest-dom";
 import { vi } from 'vitest';
 

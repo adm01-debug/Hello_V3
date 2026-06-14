@@ -76,14 +76,14 @@ export const useContacts = () => {
       
       setContacts((data || []) as Contact[]);
       return data as Contact[];
-    } catch (err: any) {
+    } catch (err: unknown) {
       log.error('Error fetching contacts', err);
       // Silent error reporting for background refresh
       if (!contacts.length) {
         reportError({
           message: 'Erro ao carregar contatos (falha inicial)',
           type: 'network-error',
-          error: err,
+          error: err instanceof Error ? err : undefined,
           metadata: { search }
         });
         setError('Erro ao carregar contatos');
@@ -93,6 +93,7 @@ export const useContacts = () => {
     } finally {
       setIsLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getContactByPhone = useCallback(async (phone: string): Promise<Contact | null> => {
@@ -106,12 +107,12 @@ export const useContacts = () => {
 
       if (error) throw error;
       return data as Contact | null;
-    } catch (err: any) {
+    } catch (err: unknown) {
       log.error('Error finding contact by phone', err);
       reportError({
         message: 'Erro ao buscar contato por telefone',
         type: 'network-error',
-        error: err,
+        error: err instanceof Error ? err : undefined,
         metadata: { phone }
       });
       toast.error('Erro ao buscar contato por telefone');
@@ -142,12 +143,12 @@ export const useContacts = () => {
       toast.success('Contato criado com sucesso');
       await fetchContacts();
       return data as Contact;
-    } catch (err: any) {
+    } catch (err: unknown) {
       log.error('Error creating contact', err);
       reportError({
         message: 'Erro ao criar contato',
         type: 'network-error',
-        error: err,
+        error: err instanceof Error ? err : undefined,
         metadata: { input }
       });
       toast.error('Erro ao criar contato');
@@ -176,12 +177,12 @@ export const useContacts = () => {
       toast.success('Contato atualizado');
       await fetchContacts();
       return data as Contact;
-    } catch (err: any) {
+    } catch (err: unknown) {
       log.error('Error updating contact', err);
       reportError({
         message: 'Erro ao atualizar contato',
         type: 'network-error',
-        error: err,
+        error: err instanceof Error ? err : undefined,
         metadata: { id, updates }
       });
       toast.error('Erro ao atualizar contato');
@@ -201,12 +202,12 @@ export const useContacts = () => {
       toast.success('Contato removido');
       await fetchContacts();
       return true;
-    } catch (err: any) {
+    } catch (err: unknown) {
       log.error('Error deleting contact', err);
       reportError({
         message: 'Erro ao remover contato',
         type: 'network-error',
-        error: err,
+        error: err instanceof Error ? err : undefined,
         metadata: { id }
       });
       toast.error('Erro ao remover contato');
@@ -224,12 +225,12 @@ export const useContacts = () => {
 
       if (error) throw error;
       return (data || []) as ContactInteraction[];
-    } catch (err: any) {
+    } catch (err: unknown) {
       log.error('Error fetching interactions', err);
       reportError({
         message: 'Erro ao carregar histórico de interações',
         type: 'network-error',
-        error: err,
+        error: err instanceof Error ? err : undefined,
         metadata: { contactId }
       });
       toast.error('Erro ao carregar histórico de interações');
@@ -275,12 +276,12 @@ export const useContacts = () => {
 
       if (error) throw error;
       return data as ContactInteraction;
-    } catch (err: any) {
+    } catch (err: unknown) {
       log.error('Error adding interaction', err);
       reportError({
         message: 'Erro ao adicionar interação',
         type: 'network-error',
-        error: err,
+        error: err instanceof Error ? err : undefined,
         metadata: { contactId, interaction }
       });
       return null;

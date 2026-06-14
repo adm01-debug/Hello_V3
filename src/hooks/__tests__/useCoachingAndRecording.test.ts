@@ -10,7 +10,7 @@ describe('Coaching System', () => {
 
     it('pending → in_progress sets reviewed_at', () => {
       const status = 'in_progress';
-      const updates: any = { status };
+      const updates: Record<string, unknown> = { status };
       if (status === 'in_progress') updates.reviewed_at = new Date().toISOString();
       expect(updates.reviewed_at).toBeTruthy();
       expect(updates.completed_at).toBeUndefined();
@@ -18,14 +18,14 @@ describe('Coaching System', () => {
 
     it('pending → completed sets completed_at', () => {
       const status = 'completed';
-      const updates: any = { status };
+      const updates: Record<string, unknown> = { status };
       if (status === 'completed') updates.completed_at = new Date().toISOString();
       expect(updates.completed_at).toBeTruthy();
     });
 
     it('dismissed does not set timestamps', () => {
       const status = 'dismissed' as string;
-      const updates: any = { status };
+      const updates: Record<string, unknown> = { status };
       if (status === 'in_progress') updates.reviewed_at = new Date().toISOString();
       if (status === 'completed') updates.completed_at = new Date().toISOString();
       expect(updates.reviewed_at).toBeUndefined();
@@ -139,7 +139,7 @@ describe('Call Recording System', () => {
   describe('Recording options', () => {
     it('callSessionId is optional', () => {
       const options = {};
-      const callSessionId = (options as any).callSessionId || null;
+      const callSessionId = (options as Record<string, unknown>).callSessionId || null;
       expect(callSessionId).toBeNull();
     });
 
@@ -150,7 +150,7 @@ describe('Call Recording System', () => {
 
     it('participantCount defaults to null', () => {
       const options = {};
-      const count = (options as any).participantCount || null;
+      const count = (options as Record<string, unknown>).participantCount || null;
       expect(count).toBeNull();
     });
   });

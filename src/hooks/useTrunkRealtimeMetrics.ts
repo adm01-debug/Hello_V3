@@ -8,9 +8,22 @@ export interface TrunkPerformance {
   activeCallsCount: number;
 }
 
+interface ActiveCallRow {
+  id: string;
+  status: string | null;
+}
+
+interface TrunkRow {
+  id: string;
+  name: string | null;
+  max_channels: number | null;
+  last_health_latency_ms: number | null;
+  last_health_status: string | null;
+}
+
 export function useTrunkRealtimeMetrics() {
-  const [activeCalls, setActiveCalls] = useState<any[]>([]);
-  const [trunks, setTrunks] = useState<any[]>([]);
+  const [activeCalls, setActiveCalls] = useState<ActiveCallRow[]>([]);
+  const [trunks, setTrunks] = useState<TrunkRow[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +55,8 @@ export function useTrunkRealtimeMetrics() {
     return trunks.map(t => {
       // Simulação: distribuímos as chamadas ativas entre os troncos para visualização
       const count = activeCalls.length > 0 ? Math.ceil(activeCalls.length / (trunks.length || 1)) : 0;
-      const occupancy = t.max_channels > 0 ? (count / t.max_channels) * 100 : 0;
+      const maxChannels = t.max_channels ?? 0;
+      const occupancy = maxChannels > 0 ? (count / maxChannels) * 100 : 0;
       
       return {
         trunkId: t.id,

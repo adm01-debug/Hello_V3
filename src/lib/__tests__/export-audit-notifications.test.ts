@@ -13,7 +13,8 @@ vi.mock('@/integrations/supabase/client', () => ({
       update: vi.fn().mockReturnThis(),
       maybeSingle: vi.fn().mockResolvedValue({ data: null }),
       order: vi.fn().mockReturnThis(),
-      then: (r: any) => Promise.resolve({ data: [], error: null }).then(r),
+      then: (r: (value: { data: unknown[]; error: null }) => unknown) =>
+        Promise.resolve({ data: [], error: null }).then(r),
     })),
     rpc: vi.fn().mockResolvedValue({ data: 'mock-id', error: null }),
     functions: { invoke: vi.fn().mockResolvedValue({ data: { success: true }, error: null }) },
@@ -215,7 +216,7 @@ describe('Notification Validation - Comprehensive', () => {
     });
 
     it('invalid category fails', () => {
-      const errors = validateNotification({ ...validPayload, category: 'invalid' as any });
+      const errors = validateNotification({ ...validPayload, category: 'invalid' as NotificationCategory });
       expect(errors.some(e => e.includes('category'))).toBe(true);
     });
 
@@ -236,7 +237,7 @@ describe('Notification Validation - Comprehensive', () => {
     });
 
     it('invalid severity fails', () => {
-      const errors = validateNotification({ ...validPayload, severity: 'extreme' as any });
+      const errors = validateNotification({ ...validPayload, severity: 'extreme' as NotificationSeverity });
       expect(errors.some(e => e.includes('severity'))).toBe(true);
     });
 
@@ -251,8 +252,8 @@ describe('Notification Validation - Comprehensive', () => {
       const errors = validateNotification({
         title: 'a'.repeat(201),
         message: 'a'.repeat(2001),
-        category: 'bad' as any,
-        severity: 'bad' as any,
+        category: 'bad' as NotificationCategory,
+        severity: 'bad' as NotificationSeverity,
       });
       // Should have: userId + title_len + message_len + category + severity
       expect(errors.length).toBeGreaterThanOrEqual(4);

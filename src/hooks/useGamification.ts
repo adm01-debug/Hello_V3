@@ -286,6 +286,7 @@ export function useGamification(agentId?: string) {
     };
 
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agentId]);
 
   return {

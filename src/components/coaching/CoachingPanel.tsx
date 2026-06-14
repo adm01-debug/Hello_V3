@@ -65,6 +65,7 @@ export function CoachingPanel() {
     if (currentAgent?.id && !selectedAgentId) {
       setSelectedAgentId(currentAgent.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAgent]);
 
   const handleAgentChange = (agentId: string) => {
@@ -84,6 +85,7 @@ export function CoachingPanel() {
         logCoachingAccess(rec.id, agents.find(a => a.id === selectedAgentId)?.name);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recommendations.length, selectedAgentId]);
 
   const filteredRecommendations = recommendations.filter(rec => 

@@ -19,7 +19,7 @@ vi.mock('@/integrations/supabase/client', () => ({
       not: vi.fn().mockReturnThis(),
       single: vi.fn().mockResolvedValue({ data: null, error: null }),
       maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
-      then: (r: any) => Promise.resolve({ data: [], error: null }).then(r),
+      then: (r: (value: { data: unknown[]; error: null }) => unknown) => Promise.resolve({ data: [], error: null }).then(r),
     })),
     rpc: vi.fn().mockResolvedValue({ data: null, error: null }),
     channel: vi.fn(() => ({
@@ -249,7 +249,7 @@ describe('Contact alerts logic', () => {
   });
 
   it('recent alerts limited to 50', () => {
-    const alerts: any[] = Array.from({ length: 55 }, (_, i) => ({ id: `alert-${i}` }));
+    const alerts: { id: string }[] = Array.from({ length: 55 }, (_, i) => ({ id: `alert-${i}` }));
     const limited = alerts.slice(0, 50);
     expect(limited).toHaveLength(50);
   });

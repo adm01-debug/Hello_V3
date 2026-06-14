@@ -19,11 +19,16 @@ export function useTrunkFailoverMonitor() {
           filter: 'last_failover_at=is.not.null' 
         },
         (payload) => {
-          const oldData = payload.old as any;
-          const newData = payload.new as any;
+          interface TrunkRow {
+            name?: string;
+            failover_count?: number;
+            failover_reason?: string;
+          }
+          const oldData = payload.old as TrunkRow;
+          const newData = payload.new as TrunkRow;
 
           // Se o failover_count aumentou, houve um failover recente
-          if (newData.failover_count > (oldData.failover_count || 0)) {
+          if ((newData.failover_count ?? 0) > (oldData.failover_count || 0)) {
             log.warn('Trunk failover event detected', { 
               trunk: newData.name, 
               reason: newData.failover_reason 

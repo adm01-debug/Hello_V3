@@ -36,7 +36,7 @@ export interface MeetingSummary {
   ai_confidence: number | null;
   generated_at: string;
   edited: boolean;
-  edited_content: any;
+  edited_content: unknown;
   edited_by: string | null;
   edited_at: string | null;
   shared_with: string[];
@@ -46,8 +46,8 @@ export interface MeetingSummary {
   updated_at: string;
 }
 
-const parse = (row: any): MeetingSummary => ({
-  ...row,
+const parse = (row: Record<string, unknown>): MeetingSummary => ({
+  ...(row as unknown as MeetingSummary),
   key_points: Array.isArray(row.key_points) ? row.key_points : [],
   action_items: Array.isArray(row.action_items) ? row.action_items : [],
   decisions: Array.isArray(row.decisions) ? row.decisions : [],
@@ -71,7 +71,7 @@ export function useMeetingSummary(callSessionId?: string) {
         .eq('call_session_id', callSessionId)
         .maybeSingle();
       if (error) throw error;
-      return data ? parse(data) : null;
+      return data ? parse(data as unknown as Record<string, unknown>) : null;
     },
   });
 
@@ -108,11 +108,12 @@ export function useMeetingSummary(callSessionId?: string) {
         }),
       );
       if (error) throw error;
-      if ((data as any)?.error) throw new Error((data as any).error);
+      const dataObj = data as { error?: string } | null;
+      if (dataObj?.error) throw new Error(dataObj.error);
       return data;
     },
-    onSuccess: (data: any) => {
-      if (data?.skipped) {
+    onSuccess: (data) => {
+      if ((data as { skipped?: boolean } | null)?.skipped) {
         toast.info('Resumo já existente');
       } else {
         toast.success('Resumo gerado pela IA');
@@ -120,9 +121,9 @@ export function useMeetingSummary(callSessionId?: string) {
       queryClient.invalidateQueries({ queryKey: ['meeting-summary', callSessionId] });
       queryClient.invalidateQueries({ queryKey: ['meeting-summaries-list'] });
     },
-    onError: (err: any) => {
+    onError: (err: unknown) => {
       log.error('generate failed', err);
-      toast.error(err?.message || 'Falha ao gerar resumo');
+      toast.error((err instanceof Error ? err.message : '') || 'Falha ao gerar resumo');
     },
   });
 
@@ -143,7 +144,7 @@ export function useMeetingSummary(callSessionId?: string) {
       toast.success('Resumo atualizado');
       queryClient.invalidateQueries({ queryKey: ['meeting-summary', callSessionId] });
     },
-    onError: (err: any) => toast.error(err?.message || 'Falha ao atualizar'),
+    onError: (err: unknown) => toast.error((err instanceof Error ? err.message : '') || 'Falha ao atualizar'),
   });
 
   const share = useMutation({
@@ -159,7 +160,7 @@ export function useMeetingSummary(callSessionId?: string) {
       toast.success('Compartilhado');
       queryClient.invalidateQueries({ queryKey: ['meeting-summary', callSessionId] });
     },
-    onError: (err: any) => toast.error(err?.message || 'Falha ao compartilhar'),
+    onError: (err: unknown) => toast.error((err instanceof Error ? err.message : '') || 'Falha ao compartilhar'),
   });
 
   return {
@@ -192,7 +193,10 @@ export function useMeetingSummariesList(filters?: {
 
       const { data, error } = await q;
       if (error) throw error;
-      return (data ?? []).map((r: any) => ({ ...parse(r), call_sessions: r.call_sessions }));
+      return (data ?? []).map((r) => {
+        const row = r as unknown as Record<string, unknown>;
+        return { ...parse(row), call_sessions: row.call_sessions };
+      });
     },
   });
 }
@@ -209,10 +213,10 @@ export function usePendingActionItems() {
         .limit(100);
       if (error) throw error;
       const total = (data ?? []).reduce(
-        (sum: number, r: any) => sum + (Array.isArray(r.action_items) ? r.action_items.length : 0),
+        (sum: number, r) => sum + (Array.isArray(r.action_items) ? r.action_items.length : 0),
         0
       );
-      const followUps = (data ?? []).filter((r: any) =>
+      const followUps = (data ?? []).filter((r) =>
         Array.isArray(r.action_items) && r.action_items.length > 0
       ).length;
       return { total, followUps, recent: data ?? [] };

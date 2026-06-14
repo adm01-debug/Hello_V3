@@ -130,7 +130,7 @@ export function useCallSession() {
 
     // Populate searchable transcripts (trigger keeps tsvector updated).
     try {
-      await (supabase.from('call_transcripts_searchable') as any).upsert({
+      await supabase.from('call_transcripts_searchable').upsert({
         call_session_id: sessionId,
         full_text: fullText,
         agent_name: agentName ?? null,

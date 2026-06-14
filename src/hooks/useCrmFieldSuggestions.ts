@@ -89,9 +89,9 @@ export function useCrmFieldSuggestions(callSessionId?: string) {
       queryClient.invalidateQueries({ queryKey: ['crm-suggestions', callSessionId] });
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
     },
-    onError: (e: any) => {
+    onError: (e: unknown) => {
       log.error('accept suggestion failed', e);
-      toast.error(e?.message || 'Falha ao aplicar sugestão');
+      toast.error((e instanceof Error ? e.message : '') || 'Falha ao aplicar sugestão');
     },
   });
 
@@ -117,12 +117,12 @@ export function useCrmFieldSuggestions(callSessionId?: string) {
       if (error) throw error;
       return data;
     },
-    onSuccess: (data: any) => {
+    onSuccess: (data: { inserted?: number } | null | undefined) => {
       const n = data?.inserted ?? 0;
       if (n > 0) toast.success(`${n} sugestão(ões) de CRM disponíveis`);
       queryClient.invalidateQueries({ queryKey: ['crm-suggestions', callSessionId] });
     },
-    onError: (e: any) => {
+    onError: (e: unknown) => {
       log.error('extract failed', e);
     },
   });

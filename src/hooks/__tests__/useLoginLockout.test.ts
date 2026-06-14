@@ -9,6 +9,16 @@ vi.mock('@/integrations/supabase/client', () => ({
 
 import { supabase } from '@/integrations/supabase/client';
 
+type RpcResult = Awaited<ReturnType<typeof supabase.rpc>>;
+
+type LockoutData = {
+  locked: boolean;
+  attempts: number;
+  remaining_seconds?: number;
+  remaining_attempts?: number;
+  locked_until?: string;
+};
+
 describe('useLoginLockout', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -19,7 +29,7 @@ describe('useLoginLockout', () => {
       vi.mocked(supabase.rpc).mockResolvedValue({
         data: { locked: false, attempts: 0 },
         error: null,
-      } as any);
+      } as unknown as RpcResult);
 
       const { data } = await supabase.rpc('check_login_lockout', { p_email: 'new@test.com' });
       expect(data).toEqual({ locked: false, attempts: 0 });
@@ -29,19 +39,19 @@ describe('useLoginLockout', () => {
       vi.mocked(supabase.rpc).mockResolvedValue({
         data: { locked: true, attempts: 5, remaining_seconds: 60, locked_until: '2026-01-01T00:01:00Z' },
         error: null,
-      } as any);
+      } as unknown as RpcResult);
 
       const { data } = await supabase.rpc('check_login_lockout', { p_email: 'locked@test.com' });
-      expect((data as any).locked).toBe(true);
-      expect((data as any).attempts).toBe(5);
-      expect((data as any).remaining_seconds).toBeGreaterThan(0);
+      expect((data as LockoutData).locked).toBe(true);
+      expect((data as LockoutData).attempts).toBe(5);
+      expect((data as LockoutData).remaining_seconds).toBeGreaterThan(0);
     });
 
     it('handles RPC errors gracefully', async () => {
       vi.mocked(supabase.rpc).mockResolvedValue({
         data: null,
         error: { message: 'DB error' },
-      } as any);
+      } as unknown as RpcResult);
 
       const { error } = await supabase.rpc('check_login_lockout', { p_email: 'test@test.com' });
       expect(error).toBeTruthy();
@@ -53,29 +63,29 @@ describe('useLoginLockout', () => {
       vi.mocked(supabase.rpc).mockResolvedValue({
         data: { locked: false, attempts: 3, remaining_attempts: 2 },
         error: null,
-      } as any);
+      } as unknown as RpcResult);
 
       const { data } = await supabase.rpc('record_failed_login', {
         p_email: 'test@test.com',
         p_ip_address: '1.2.3.4',
         p_user_agent: 'test',
       });
-      expect((data as any).attempts).toBe(3);
-      expect((data as any).remaining_attempts).toBe(2);
+      expect((data as LockoutData).attempts).toBe(3);
+      expect((data as LockoutData).remaining_attempts).toBe(2);
     });
 
     it('locks after reaching threshold', async () => {
       vi.mocked(supabase.rpc).mockResolvedValue({
         data: { locked: true, attempts: 5, remaining_seconds: 60 },
         error: null,
-      } as any);
+      } as unknown as RpcResult);
 
       const { data } = await supabase.rpc('record_failed_login', {
         p_email: 'test@test.com',
         p_ip_address: '1.2.3.4',
         p_user_agent: 'test',
       });
-      expect((data as any).locked).toBe(true);
+      expect((data as LockoutData).locked).toBe(true);
     });
   });
 
@@ -84,7 +94,7 @@ describe('useLoginLockout', () => {
       vi.mocked(supabase.rpc).mockResolvedValue({
         data: null,
         error: null,
-      } as any);
+      } as unknown as RpcResult);
 
       const { error } = await supabase.rpc('record_successful_login', {
         p_email: 'test@test.com',

@@ -1,5 +1,5 @@
 import { assertEquals, assert } from "https://deno.land/std@0.224.0/assert/mod.ts";
-import { buildHistory, forecastNextDays } from "../index.ts";
+import { buildHistory, forecastNextDays, type HistoryDay } from "../index.ts";
 
 Deno.test("buildHistory — agrupa sessões por dia e identifica pico", () => {
   const sessions = [
@@ -20,7 +20,7 @@ Deno.test("forecastNextDays — vazio quando histórico < 7 dias", () => {
 });
 
 Deno.test("forecastNextDays — gera 7 dias com confiança quando há histórico", () => {
-  const h: any[] = [];
+  const h: HistoryDay[] = [];
   for (let i = 0; i < 28; i++) {
     const d = new Date('2025-01-01T12:00:00Z');
     d.setUTCDate(d.getUTCDate() + i);
@@ -33,7 +33,7 @@ Deno.test("forecastNextDays — gera 7 dias com confiança quando há histórico
 });
 
 Deno.test("forecastNextDays — sinaliza exceeds_capacity quando peak > cap", () => {
-  const h: any[] = [];
+  const h: HistoryDay[] = [];
   for (let i = 0; i < 28; i++) {
     const d = new Date('2025-01-01T12:00:00Z');
     d.setUTCDate(d.getUTCDate() + i);

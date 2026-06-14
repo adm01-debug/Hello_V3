@@ -16,10 +16,10 @@ export async function trackMetric(name: string, value: number, tags: Record<stri
 /**
  * Log structured error for observability
  */
-export function logStructuredError(error: any, context: Record<string, any> = {}) {
+export function logStructuredError(error: unknown, context: Record<string, unknown> = {}) {
   console.error('[Structured Error]', {
     timestamp: new Date().toISOString(),
-    error: error.message || error,
+    error: error instanceof Error ? error.message : String(error),
     ...context
   });
 }

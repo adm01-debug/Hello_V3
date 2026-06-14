@@ -146,7 +146,7 @@ Deno.serve(async (req) => {
     const windowStart = Date.now() - windowHours * 3600_000;
     const currentByBucket: Record<string, { mos: number[]; jitter: number[]; count: number }> = {};
 
-    (rows || []).forEach((r: any) => {
+    (rows || []).forEach((r: { created_at: string; mos_avg: number | null; jitter_avg_ms: number | null }) => {
       const d = new Date(r.created_at);
       const key = `${d.getDay()}-${d.getHours()}`;
       const bucket = (d.getTime() >= windowStart ? currentByBucket : buckets);

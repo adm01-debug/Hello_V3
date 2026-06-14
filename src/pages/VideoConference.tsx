@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +13,8 @@ import { toast } from 'sonner';
   import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+type VideoConferenceRow = Database['public']['Tables']['video_conferences']['Row'];
+
 export default function VideoConference() {
   usePageTitle('Videoconferência');
 
@@ -19,7 +22,7 @@ export default function VideoConference() {
    const [title, setTitle] = useState('');
    const [dialogOpen, setDialogOpen] = useState(false);
    const [isStarting, setIsStarting] = useState<string | null>(null);
-   const handleStartMeeting = async (conf: any) => {
+   const handleStartMeeting = async (conf: VideoConferenceRow) => {
      if (conf.status === 'ended') return;
      
      if (conf.status === 'active' && conf.meeting_url) {
@@ -145,7 +148,7 @@ export default function VideoConference() {
                 <div>
                   <p className="font-medium">{conf.title}</p>
                   <p className="text-xs text-muted-foreground flex items-center gap-2">
-                    <Users className="h-3 w-3" /> {(conf.participants as any[])?.length || 0} participantes
+                    <Users className="h-3 w-3" /> {(Array.isArray(conf.participants) ? conf.participants.length : 0)} participantes
                     <Clock className="h-3 w-3 ml-2" /> {new Date(conf.created_at).toLocaleString('pt-BR')}
                   </p>
                 </div>

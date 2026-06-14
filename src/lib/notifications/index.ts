@@ -68,7 +68,10 @@ export async function sendLocalNotification(params: SendNotificationParams): Pro
     source_id: params.sourceId,
     expires_at: params.expiresAt,
   };
-  const { error } = await (supabase.from as any)('notifications').insert(payload);
+  const fromUntyped = supabase.from as unknown as (
+    table: string,
+  ) => { insert: (values: typeof payload) => Promise<{ error: { message: string } | null }> };
+  const { error } = await fromUntyped('notifications').insert(payload);
 
   return !error;
 }

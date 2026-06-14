@@ -1,8 +1,8 @@
  import { useState, useMemo } from 'react';
- import { 
+ import {
    Bell, BellRing, Settings2, Users, Phone,
    Check, Trash2, ChevronRight, RefreshCw, Loader2,
-   FlaskConical, ExternalLink
+   FlaskConical, ExternalLink, type LucideIcon
  } from 'lucide-react';
  import { Button } from '@/components/ui/button';
  import { Badge } from '@/components/ui/badge';
@@ -129,7 +129,7 @@
                {allAlerts.callAlerts.length === 0 ? (
                  <EmptyState icon={Phone} message="Nenhum alerta de chamada" />
                ) : (
-                 allAlerts.callAlerts.map((alert: any) => (
+                 allAlerts.callAlerts.map((alert) => (
                    <NotificationItem 
                      key={alert.id}
                      title={alert.title}
@@ -147,7 +147,7 @@
                {allAlerts.contactAlerts.length === 0 ? (
                  <EmptyState icon={Users} message="Nenhum alerta de contatos" />
                ) : (
-                 allAlerts.contactAlerts.map((alert: any) => (
+                 allAlerts.contactAlerts.map((alert) => (
                    <NotificationItem 
                      key={alert.id}
                      title={alert.title}
@@ -200,7 +200,17 @@
    );
  }
  
- function NotificationItem({ title, message, time, isRead, severity, onRead, onClick }: any) {
+ interface NotificationItemProps {
+   title: string;
+   message: string;
+   time: string;
+   isRead: boolean;
+   severity: string;
+   onRead: () => void;
+   onClick?: () => void;
+ }
+
+ function NotificationItem({ title, message, time, isRead, severity, onRead, onClick }: NotificationItemProps) {
    const getSeverityColor = (sev: string) => {
      switch (sev) {
        case 'critical':
@@ -249,7 +259,7 @@
    );
  }
  
- function EmptyState({ icon: Icon, message }: any) {
+ function EmptyState({ icon: Icon, message }: { icon: LucideIcon; message: string }) {
    return (
      <div className="flex flex-col items-center justify-center py-12 text-center">
        <div className="h-12 w-12 rounded-full bg-muted/20 flex items-center justify-center mb-3">

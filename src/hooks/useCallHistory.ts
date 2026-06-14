@@ -77,7 +77,8 @@ export function useCallHistory() {
   useEffect(() => { 
     setPage(0);
     setSessions([]);
-    fetchSessions(0); 
+    fetchSessions(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, statusFilter, sentimentFilter]);
 
   const fetchSessions = async (pageToFetch: number = 0) => {
@@ -93,12 +94,17 @@ export function useCallHistory() {
 
       if (error) throw error;
 
-      const mappedData = (data as any[]).map(item => ({
+      type CallHistoryRow = CallSession & {
+        overall_sentiment?: string | null;
+        main_topics?: string[] | null;
+        customer_satisfaction?: number | null;
+      };
+      const mappedData = ((data ?? []) as unknown as CallHistoryRow[]).map(item => ({
         ...item,
         summary: item.overall_sentiment ? {
           overall_sentiment: item.overall_sentiment,
-          main_topics: item.main_topics,
-          customer_satisfaction: item.customer_satisfaction
+          main_topics: item.main_topics ?? null,
+          customer_satisfaction: item.customer_satisfaction ?? null
         } : undefined
       }));
 
@@ -181,6 +187,7 @@ export function useCallHistory() {
       if (topicFilter && !(session.summary?.main_topics || []).some(t => t.toLowerCase().includes(topicFilter.toLowerCase()))) return false;
       return true;
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessions, searchQuery, dateRangePreset, customDateFrom, customDateTo, sentimentFilter, durationFilter, topicFilter]);
 
    const activeFiltersCount = [

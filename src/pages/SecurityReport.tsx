@@ -46,7 +46,7 @@ const SecurityReport = () => {
   const { profile, loading } = useAuth();
   const navigate = useNavigate();
   const [reportDate] = useState(new Date());
-  const [rlsStatus, setRlsStatus] = useState<any[]>([]);
+  const [rlsStatus, setRlsStatus] = useState<{ table_name: string; rls_enabled: boolean }[]>([]);
   const [fetchingRls, setFetchingRls] = useState(false);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const SecurityReport = () => {
     try {
       const { data, error } = await supabase.rpc('check_all_tables_rls_status');
       if (error) throw error;
-      setRlsStatus(data || []);
+      setRlsStatus((data as { table_name: string; rls_enabled: boolean }[]) || []);
     } catch (err) {
       console.error('Error fetching RLS:', err);
     } finally {

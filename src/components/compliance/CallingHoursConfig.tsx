@@ -35,6 +35,22 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 
+interface CallingHoursRegion {
+  id: string;
+  region_code: string;
+  region_name: string;
+  timezone: string;
+  weekday_start: string;
+  weekday_end: string;
+  saturday_start: string | null;
+  saturday_end: string | null;
+  sunday_allowed: boolean;
+  sunday_start: string | null;
+  sunday_end: string | null;
+  holidays_allowed: boolean;
+  is_active: boolean;
+}
+
 export function CallingHoursConfig() {
   const { callingHours, isLoadingHours, checkCallingHours } = useDNCCompliance();
   
@@ -45,7 +61,7 @@ export function CallingHoursConfig() {
     reason: string;
   } | null>(null);
   const [isCheckingStatus, setIsCheckingStatus] = useState(false);
-  const [editingRegion, setEditingRegion] = useState<any>(null);
+  const [editingRegion, setEditingRegion] = useState<CallingHoursRegion | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   const handleCheckCurrentStatus = async () => {

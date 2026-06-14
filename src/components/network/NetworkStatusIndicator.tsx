@@ -1,6 +1,6 @@
  import { useNetworkMonitor } from "@/hooks/useNetworkMonitor";
  import { Wifi, WifiOff, AlertTriangle } from "lucide-react";
- import { Badge } from "@/components/ui/badge";
+ import { Badge, type BadgeProps } from "@/components/ui/badge";
  import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
  import { cn } from "@/lib/utils";
  
@@ -26,7 +26,7 @@
      }
    };
  
-   const getVariant = () => {
+   const getVariant = (): BadgeProps['variant'] => {
      switch (status) {
        case 'offline': return 'destructive';
        case 'unstable': return 'warning';
@@ -38,7 +38,7 @@
      <Tooltip>
        <TooltipTrigger asChild>
           <Badge 
-            variant={getVariant() as any} 
+            variant={getVariant()}
             className={cn(
               "gap-1.5 px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider transition-all duration-300",
               status === 'unstable' && "animate-pulse shadow-[0_0_10px_rgba(245,158,11,0.5)]",

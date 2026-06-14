@@ -87,7 +87,7 @@ export function useHoldSoundAlert(activeHolds: Array<{ id: string; call_session_
 
   const initAudio = useCallback(() => {
     if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      audioContextRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       playWarningRef.current = createWarningSound(audioContextRef.current);
       playCriticalRef.current = createCriticalSound(audioContextRef.current);
     }

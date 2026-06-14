@@ -32,11 +32,11 @@ export function useBattleCardDetection(active: boolean) {
     if (!active) return;
     (async () => {
       const [{ data: cardsData }, { data: trigsData }] = await Promise.all([
-        (supabase.from('battle_cards') as any).select('*').eq('is_active', true),
-        (supabase.from('battle_card_triggers') as any).select('*').eq('is_active', true),
+        supabase.from('battle_cards').select('*').eq('is_active', true),
+        supabase.from('battle_card_triggers').select('*').eq('is_active', true),
       ]);
-      setCards((cardsData || []) as BattleCard[]);
-      setTriggers((trigsData || []) as Trigger[]);
+      setCards((cardsData || []) as unknown as BattleCard[]);
+      setTriggers((trigsData || []) as unknown as Trigger[]);
       log.info('Battle cards loaded', { count: cardsData?.length || 0 });
     })();
   }, [active]);

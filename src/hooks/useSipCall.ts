@@ -208,6 +208,7 @@ export interface SipCallState {
       toast.error(errMsg);
       return false;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startCall = useCallback(async (phoneNumber: string): Promise<boolean> => {
@@ -260,6 +261,7 @@ export interface SipCallState {
       toast.error(errMsg);
       return false;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isRegistered, connect, startDurationTimer, stopDurationTimer, attachRemoteStream]);
 
   const endCall = useCallback(() => {

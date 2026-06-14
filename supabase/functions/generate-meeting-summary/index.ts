@@ -182,7 +182,7 @@ Deno.serve(async (req) => {
       );
 
     const transcriptText = transcripts
-      .map((t: any) => `[${t.speaker === "agent" ? "Agente" : "Cliente"}] ${t.text}`)
+      .map((t: { speaker: string; text: string }) => `[${t.speaker === "agent" ? "Agente" : "Cliente"}] ${t.text}`)
       .join("\n");
 
     const userPrompt = `Chamada com ${session.caller_name ?? "cliente"} (${session.caller_phone ?? "sem telefone"}).

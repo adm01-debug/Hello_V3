@@ -83,7 +83,7 @@ describe('Error Tracking Module', () => {
       vi.spyOn(console, 'error').mockImplementation(() => {});
       initErrorTracking();
 
-      const event = new Event('unhandledrejection') as any;
+      const event = new Event('unhandledrejection') as Event & { reason: unknown };
       event.reason = new Error('Promise failed');
       window.dispatchEvent(event);
 

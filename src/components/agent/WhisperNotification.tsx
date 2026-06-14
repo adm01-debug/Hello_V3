@@ -35,7 +35,7 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
 
   const playNotificationSound = () => {
     // Create a simple notification sound using Web Audio API
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
 
@@ -95,6 +95,7 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
     return () => {
       supabase.removeChannel(channel);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agentName]);
 
   const markAsRead = async (whisperId: string) => {

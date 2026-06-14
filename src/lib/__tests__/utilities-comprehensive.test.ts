@@ -10,7 +10,7 @@ import {
 import {
   getSessionTimeout,
 } from '@/lib/session/index';
-import { validateNotification } from '@/lib/notifications/index';
+import { validateNotification, type NotificationCategory, type NotificationSeverity } from '@/lib/notifications/index';
 import type { ExportColumn } from '@/lib/export/index';
 
 // Mock supabase for modules that import it
@@ -176,7 +176,7 @@ describe('Notification Validation', () => {
   it('rejects invalid category', () => {
     const errors = validateNotification({
       userId: '123', title: 'Test', message: 'x',
-      category: 'invalid' as any,
+      category: 'invalid' as NotificationCategory,
     });
     expect(errors.some(e => e.includes('category'))).toBe(true);
   });
@@ -184,7 +184,7 @@ describe('Notification Validation', () => {
   it('rejects invalid severity', () => {
     const errors = validateNotification({
       userId: '123', title: 'Test', message: 'x',
-      severity: 'extreme' as any,
+      severity: 'extreme' as NotificationSeverity,
     });
     expect(errors.some(e => e.includes('severity'))).toBe(true);
   });

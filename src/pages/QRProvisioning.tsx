@@ -42,6 +42,7 @@ function generateProvisioningURL(config: SIPConfig): string {
 }
 
 export default function QRProvisioning() {
+  usePageTitle('QR Provisioning');
   const [config, setConfig] = useState<SIPConfig>({
     displayName: '',
     username: '',
@@ -62,8 +63,6 @@ export default function QRProvisioning() {
   const isValid = config.displayName && config.username && config.password && config.domain;
 
   const handleGenerate = () => {
-  usePageTitle('QR Provisioning');
-
     if (!isValid) {
       toast.error('Preencha todos os campos obrigatórios');
       return;

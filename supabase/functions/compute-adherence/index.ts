@@ -42,21 +42,26 @@ Deno.serve(async (req) => {
       const scheduledMinutes = Math.round((end - start) / 60000) - (shift.break_minutes || 0);
 
       // Buscar histórico de status (presumindo agent_status_history existe; se não, usa fallback)
-      const { data: statusHistory } = await supabase
-        .from("agent_status_history" as any)
+      interface StatusHistoryRow {
+        status: string;
+        created_at: string;
+      }
+
+      const { data: statusHistory } = await (supabase
+        .from("agent_status_history" as never)
         .select("*")
         .eq("agent_name", shift.agent_name)
         .gte("created_at", shift.start_time)
         .lte("created_at", shift.end_time)
-        .order("created_at", { ascending: true });
+        .order("created_at", { ascending: true }) as unknown as Promise<{ data: StatusHistoryRow[] | null }>);
 
       let actualMinutes = 0;
       const deviations: Array<{ type: string; minutes: number }> = [];
 
       if (statusHistory && statusHistory.length > 0) {
         for (let i = 0; i < statusHistory.length - 1; i++) {
-          const cur = statusHistory[i] as any;
-          const next = statusHistory[i + 1] as any;
+          const cur = statusHistory[i];
+          const next = statusHistory[i + 1];
           const dur = (new Date(next.created_at).getTime() - new Date(cur.created_at).getTime()) / 60000;
           if (cur.status === "available" || cur.status === "busy") {
             actualMinutes += dur;

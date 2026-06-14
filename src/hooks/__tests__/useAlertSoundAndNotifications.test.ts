@@ -62,7 +62,7 @@ describe('Critical Alert Notifications', () => {
 
   describe('Alert deduplication', () => {
     it('skips duplicate alert ID', () => {
-      let lastAlertId: string | null = 'alert-1';
+      const lastAlertId: string | null = 'alert-1';
       const newAlert = { id: 'alert-1' };
       const isDuplicate = lastAlertId === newAlert.id;
       expect(isDuplicate).toBe(true);
@@ -107,20 +107,20 @@ describe('Critical Alert Notifications', () => {
 
   describe('Options defaults', () => {
     it('enabled defaults to true', () => {
-      const options = {};
-      const enabled = (options as any).enabled ?? true;
+      const options: { enabled?: boolean } = {};
+      const enabled = options.enabled ?? true;
       expect(enabled).toBe(true);
     });
 
     it('soundEnabled defaults to true', () => {
-      const options = {};
-      const soundEnabled = (options as any).soundEnabled ?? true;
+      const options: { soundEnabled?: boolean } = {};
+      const soundEnabled = options.soundEnabled ?? true;
       expect(soundEnabled).toBe(true);
     });
 
     it('browserNotificationsEnabled defaults to true', () => {
-      const options = {};
-      const enabled = (options as any).browserNotificationsEnabled ?? true;
+      const options: { browserNotificationsEnabled?: boolean } = {};
+      const enabled = options.browserNotificationsEnabled ?? true;
       expect(enabled).toBe(true);
     });
   });

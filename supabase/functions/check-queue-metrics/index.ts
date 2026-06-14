@@ -110,7 +110,13 @@ serve(async (req) => {
     const answeredQuickly = completed.filter(call => (call.hold_time_seconds || 0) <= 30).length;
     const serviceLevelPercent = completed.length > 0 ? Math.round((answeredQuickly / completed.length) * 100) : 100;
     // Check if we need to create alerts
-    const alerts: any[] = [];
+    const alerts: Array<{
+      call_session_id: string;
+      alert_type: string;
+      severity: string;
+      title: string;
+      message: string;
+    }> = [];
     const now = new Date();
     const currentHour = now.getHours();
 

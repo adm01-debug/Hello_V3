@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { useBattleCardDetection } from '@/hooks/useBattleCardDetection';
+import { useBattleCardDetection, type BattleCard } from '@/hooks/useBattleCardDetection';
 
 vi.mock('@/integrations/supabase/client', () => {
   const cards = [
@@ -34,19 +34,19 @@ describe('useBattleCardDetection', () => {
   it('matches contains keyword', async () => {
     const { result } = renderHook(() => useBattleCardDetection(true));
     await waitFor(() => expect(result.current.cards.length).toBeGreaterThan(0));
-    let card = null;
+    let card: BattleCard | null = null;
     act(() => { card = result.current.checkText('Vi a Acme oferecendo desconto'); });
     expect(card).not.toBeNull();
-    expect((card as any)!.competitor_name).toBe('Acme');
+    expect(card!.competitor_name).toBe('Acme');
   });
 
   it('matches exact keyword as a whole word', async () => {
     const { result } = renderHook(() => useBattleCardDetection(true));
     await waitFor(() => expect(result.current.triggers.length).toBeGreaterThan(0));
     act(() => { result.current.reset(); });
-    let card = null;
+    let card: BattleCard | null = null;
     act(() => { card = result.current.checkText('estou usando globex hoje'); });
-    expect((card as any)!.competitor_name).toBe('Globex');
+    expect(card!.competitor_name).toBe('Globex');
   });
 
   it('matches starts_with keyword', async () => {

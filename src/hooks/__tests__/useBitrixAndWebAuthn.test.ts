@@ -40,13 +40,13 @@
    });
  
    it("gets contacts from Bitrix", async () => {
-     (supabase.functions.invoke as any).mockResolvedValueOnce({
+     vi.mocked(supabase.functions.invoke).mockResolvedValueOnce({
        data: { success: true, data: [{ ID: "1", NAME: "John" }] },
        error: null,
      });
  
      const { result } = renderHook(() => useBitrix());
-     let data: any;
+     let data: Awaited<ReturnType<typeof result.current.getContacts>>;
      await act(async () => {
        data = await result.current.getContacts();
      });
@@ -59,13 +59,13 @@
    });
  
    it("handles unconfigured service", async () => {
-     (supabase.functions.invoke as any).mockResolvedValueOnce({
+     vi.mocked(supabase.functions.invoke).mockResolvedValueOnce({
        data: { configured: false },
        error: null,
      });
  
      const { result } = renderHook(() => useBitrix());
-     let data: any;
+     let data!: Awaited<ReturnType<typeof result.current.checkConfiguration>>;
      await act(async () => {
        data = await result.current.checkConfiguration();
      });
@@ -86,17 +86,17 @@
        delete: vi.fn().mockReturnThis(),
        update: vi.fn().mockReturnThis(),
      };
-     (supabase.from as any).mockReturnValue(mockFrom);
+     vi.mocked(supabase.from).mockReturnValue(mockFrom as unknown as ReturnType<typeof supabase.from>);
      // Default for order.mockResolvedValue is needed for initial load
      mockFrom.order.mockResolvedValue({ data: [], error: null });
    });
  
    it("loads passkeys on mount", async () => {
-     (supabase.from as any).mockReturnValue({
+     vi.mocked(supabase.from).mockReturnValue({
        select: vi.fn().mockReturnThis(),
        eq: vi.fn().mockReturnThis(),
        order: vi.fn().mockResolvedValue({ data: [{ id: "p1", friendly_name: "My Key" }], error: null }),
-     });
+     } as unknown as ReturnType<typeof supabase.from>);
  
      const { result } = renderHook(() => useWebAuthn());
      // Wait for initial load

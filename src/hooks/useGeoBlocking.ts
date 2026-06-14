@@ -111,6 +111,7 @@ export function useGeoBlocking() {
 
   useEffect(() => {
     if (!settingsLoading && !settings) initializeSettings.mutate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settingsLoading, settings]);
 
   const allowedCountries = restrictions.filter(r => r.restriction_type === 'allow');

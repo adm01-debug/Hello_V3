@@ -70,7 +70,7 @@ interface QueueStats {
           console.error('Error fetching agents list:', error);
           throw error;
         }
-       return (data as any) || [];
+       return (data as unknown as (AgentRow & { active_call_started_at?: string; active_call_caller?: string })[]) || [];
      },
      refetchInterval: 10000,
    });

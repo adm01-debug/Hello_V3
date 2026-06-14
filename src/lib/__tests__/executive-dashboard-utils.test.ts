@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getPeriodLabel, formatDuration } from '@/hooks/useExecutiveDashboard';
+import { getPeriodLabel, formatDuration, type PeriodType } from '@/hooks/useExecutiveDashboard';
 
 describe('getPeriodLabel', () => {
   it('returns correct label for today', () => {
@@ -15,7 +15,7 @@ describe('getPeriodLabel', () => {
     expect(getPeriodLabel('all')).toBe('todo período');
   });
   it('returns fallback for unknown period', () => {
-    expect(getPeriodLabel('unknown' as any)).toBe('últimos 7 dias');
+    expect(getPeriodLabel('unknown' as PeriodType)).toBe('últimos 7 dias');
   });
 });
 

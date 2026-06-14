@@ -146,7 +146,7 @@ export function CallPlayerWithTranscript({ audioUrl, segments, seekTo, markers =
         </div>
       )}
 
-      <ScrollArea className="h-[300px] pr-4" ref={scrollAreaRef as any}>
+      <ScrollArea className="h-[300px] pr-4" ref={scrollAreaRef}>
         <div className="space-y-2">
           {segments.length === 0 ? (
             <p className="text-center text-sm text-muted-foreground py-6">Nenhuma transcrição segmentada disponível.</p>

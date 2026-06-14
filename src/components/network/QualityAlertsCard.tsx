@@ -57,7 +57,8 @@ export function QualityAlertsCard() {
     }
   };
 
-  useEffect(() => { load(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [filter]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { load(); }, [filter]);
 
   const unackCount = useMemo(() => alerts.filter(a => !a.acknowledged_at).length, [alerts]);
 

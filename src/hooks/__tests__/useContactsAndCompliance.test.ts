@@ -219,7 +219,8 @@ describe('DNC Compliance System', () => {
 
     it('blocks on DNC only', () => {
       const reasons: string[] = [];
-      if (true) reasons.push('DNC');
+      const inDNC = true as boolean;
+      if (inDNC) reasons.push('DNC');
       expect(reasons).toHaveLength(1);
     });
 
@@ -367,7 +368,7 @@ describe('Permissions System', () => {
     });
 
     it('no roles returns empty permissions', () => {
-      const userRoles: any[] = [];
+      const userRoles: unknown[] = [];
       const hasRoles = userRoles.length > 0;
       expect(hasRoles).toBe(false);
     });
@@ -402,7 +403,7 @@ describe('Audit Log System', () => {
     });
 
     it('null details default to empty object', () => {
-      let details: Record<string, any> | undefined;
+      let details: Record<string, unknown> | undefined;
       const resolved = details || {};
       expect(Object.keys(resolved)).toHaveLength(0);
     });

@@ -3,7 +3,7 @@
  */
 
 export function createNotificationSound() {
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+  const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
 
   return () => {
     const oscillator = audioContext.createOscillator();
@@ -33,7 +33,7 @@ export function createNotificationSound() {
 }
 
 export function createUrgentSound() {
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+  const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
 
   return () => {
     for (let i = 0; i < 3; i++) {

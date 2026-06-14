@@ -97,13 +97,18 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@eslint/js": "8.57.1",
     "@playwright/test": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "prettier": "^3.2.4"
+    "eslint-plugin-react-hooks": "4.6.2",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "globals": "15.15.0",
+    "prettier": "^3.2.4",
+    "typescript-eslint": "7.18.0"
   },
   "engines": {
     "node": ">=20.0.0",

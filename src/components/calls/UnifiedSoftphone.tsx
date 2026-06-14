@@ -50,6 +50,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   });
 
   useEffect(() => { if (wavoip.isConfigured) configureChannel('wavoip', { enabled: true, configured: true }); }, [wavoip.isConfigured, configureChannel]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (activeChannel === 'sip' && !sipCall.isRegistered && sipCall.status === 'disconnected') sipCall.connect(); }, [activeChannel, sipCall.isRegistered, sipCall.status]);
 
   const conversation = useConversation({

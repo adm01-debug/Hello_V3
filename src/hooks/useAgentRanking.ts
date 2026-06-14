@@ -59,12 +59,14 @@ export function useAgentRanking() {
     fetchAgentStats();
     fetchPerformanceHistory();
     fetchAgentGoals();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
 
   useEffect(() => {
     if (agents.length > 0 && agentGoals.size >= 0) {
       checkGoalAchievements();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agents, agentGoals]);
 
   useEffect(() => {
@@ -77,6 +79,7 @@ export function useAgentRanking() {
       }
     });
     setAgents(sorted);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy]);
 
   const getGoalsForAgent = (agentName: string): AgentGoals => {

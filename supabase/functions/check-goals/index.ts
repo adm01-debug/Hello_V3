@@ -191,6 +191,7 @@ serve(async (req) => {
         if (violationError) {
           console.error('Error recording violation:', violationError);
         } else {
+          // Violation recorded successfully; nothing further to do here.
         }
 
         const shouldNotify = 
@@ -266,6 +267,7 @@ serve(async (req) => {
               alertsCreated++;
             }
           } else {
+            // A recent alert already exists for this goal; skip creating a duplicate.
           }
         }
       }

@@ -38,7 +38,7 @@ describe('Gamification System', () => {
       { id: 'b5', requirement_type: 'weekly_rank', requirement_value: 3, points: 200 },
     ];
 
-    const checkEarned = (badge: typeof badges[0], stats: any): boolean => {
+    const checkEarned = (badge: typeof badges[0], stats: Record<string, number>): boolean => {
       switch (badge.requirement_type) {
         case 'total_calls': return stats.totalCalls >= badge.requirement_value;
         case 'avg_satisfaction': return stats.avgSatisfaction * 10 >= badge.requirement_value;
@@ -310,7 +310,7 @@ describe('Achievement Notifications', () => {
     });
 
     it('clears latest achievement', () => {
-      let latest: any = { id: 'n1' };
+      let latest: { id: string } | null = { id: 'n1' };
       latest = null;
       expect(latest).toBeNull();
     });

@@ -85,7 +85,7 @@ describe('Device Detection', () => {
     });
 
     it('first login is not flagged (no existing sessions)', () => {
-      const existingSessions: any[] = [];
+      const existingSessions: unknown[] = [];
       const isNewDevice = true;
       const shouldNotify = isNewDevice && existingSessions.length > 0;
       expect(shouldNotify).toBe(false);
@@ -218,7 +218,7 @@ describe('Critical Alert Sound System', () => {
     });
 
     it('allows different alert ID', () => {
-      let lastAlertId: string | null = 'alert-1';
+      const lastAlertId: string | null = 'alert-1';
       const newAlertId = 'alert-2';
       expect(lastAlertId !== newAlertId).toBe(true);
     });
@@ -299,13 +299,13 @@ describe('Hold Sound Alert System', () => {
 describe('Coaching System', () => {
   describe('Status transitions', () => {
     it('pending → in_progress sets reviewed_at', () => {
-      const updates: Record<string, any> = { status: 'in_progress' };
+      const updates: Record<string, string> = { status: 'in_progress' };
       updates.reviewed_at = new Date().toISOString();
       expect(updates.reviewed_at).toBeTruthy();
     });
 
     it('in_progress → completed sets completed_at', () => {
-      const updates: Record<string, any> = { status: 'completed' };
+      const updates: Record<string, string> = { status: 'completed' };
       updates.completed_at = new Date().toISOString();
       expect(updates.completed_at).toBeTruthy();
     });

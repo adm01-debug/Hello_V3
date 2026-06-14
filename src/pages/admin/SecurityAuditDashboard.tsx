@@ -19,13 +19,30 @@ import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+interface AuditLogRow {
+  id: string;
+  created_at: string;
+  user_email: string | null;
+  action: string;
+  ip_address: string | null;
+  details: unknown;
+}
+
+interface RlsLogRow {
+  id: string;
+  created_at: string;
+  table_name: string;
+  action: string;
+  details: unknown;
+}
+
 export default function SecurityAuditDashboard() {
   usePageTitle('Painel de Auditoria de Segurança');
 
   const navigate = useNavigate();
   const { hasRole, user } = useAuthContext();
-  const [auditLogs, setAuditLogs] = useState<any[]>([]);
-  const [rlsLogs, setRlsLogs] = useState<any[]>([]);
+  const [auditLogs, setAuditLogs] = useState<AuditLogRow[]>([]);
+  const [rlsLogs, setRlsLogs] = useState<RlsLogRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
@@ -37,6 +54,7 @@ export default function SecurityAuditDashboard() {
       return;
     }
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasRole]);
 
   const fetchData = async () => {
@@ -50,8 +68,8 @@ export default function SecurityAuditDashboard() {
       if (auditRes.error) throw auditRes.error;
       if (rlsRes.error) throw rlsRes.error;
 
-      setAuditLogs(auditRes.data || []);
-      setRlsLogs(rlsRes.data || []);
+      setAuditLogs((auditRes.data as unknown as AuditLogRow[]) || []);
+      setRlsLogs((rlsRes.data as unknown as RlsLogRow[]) || []);
     } catch (err) {
       logger.error('Error fetching security logs:', err);
       toast.error('Erro ao carregar logs');

@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Badge, type BadgeProps } from "@/components/ui/badge";
  import { Phone, PhoneOff, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
  import { formatDuration } from "@/lib/utils";
 import { logger } from '@/lib/logger';
@@ -28,6 +28,7 @@ export function WebRTCCall({ targetNumber, onCallStarted, onCallEnded }: WebRTCC
       if (timerRef.current) clearInterval(timerRef.current);
       endCall();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startCall = useCallback(async () => {
@@ -62,6 +63,7 @@ export function WebRTCCall({ targetNumber, onCallStarted, onCallEnded }: WebRTCC
       logger.error("Failed to start WebRTC call:", err);
       setStatus("idle");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onCallStarted]);
 
   const endCall = useCallback(() => {
@@ -92,7 +94,7 @@ export function WebRTCCall({ targetNumber, onCallStarted, onCallEnded }: WebRTCC
     }
   }, [isMuted]);
 
-  const statusColors: Record<CallStatus, string> = {
+  const statusColors: Record<CallStatus, BadgeProps["variant"]> = {
     idle: "secondary",
     connecting: "outline",
     ringing: "outline",
@@ -105,7 +107,7 @@ export function WebRTCCall({ targetNumber, onCallStarted, onCallEnded }: WebRTCC
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base">WebRTC Call</CardTitle>
-          <Badge variant={statusColors[status] as any}>
+          <Badge variant={statusColors[status]}>
             {status === "idle" && "Pronto"}
             {status === "connecting" && "Conectando..."}
             {status === "ringing" && "Chamando..."}

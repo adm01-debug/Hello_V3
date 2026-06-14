@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule */
 import { createContext, useContext, ReactNode } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import type { User, Session } from '@supabase/supabase-js';

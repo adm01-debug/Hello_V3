@@ -103,12 +103,12 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       if (holdTime >= criticalThreshold && !callAlerts.critical) {
         const a: HoldAlert = { callId: call.id, callName, holdTime, threshold: criticalThreshold, triggeredAt: new Date(), severity: 'critical' };
         newAlerts.push(a); newAlertedCalls[call.id] = { ...callAlerts, critical: true };
-        try { playUrgentSoundRef.current?.(); } catch {}
+        try { playUrgentSoundRef.current?.(); } catch { /* ignore audio playback errors */ }
         sendBrowserNotification(a); showThresholdAlert(a);
       } else if (holdTime >= alertThreshold && !callAlerts.warning) {
         const a: HoldAlert = { callId: call.id, callName, holdTime, threshold: alertThreshold, triggeredAt: new Date(), severity: 'warning' };
         newAlerts.push(a); newAlertedCalls[call.id] = { ...callAlerts, warning: true };
-        try { playSoundRef.current?.(); } catch {}
+        try { playSoundRef.current?.(); } catch { /* ignore audio playback errors */ }
         showThresholdAlert(a);
       }
     });
@@ -126,7 +126,7 @@ export function useHoldReminder(activeCalls: CallSession[]) {
     const newLRT = { ...lastReminderTime };
     let shouldNotify = false;
     callsOnHold.forEach(c => { if (now - (lastReminderTime[c.id] || 0) >= intervalMs) { shouldNotify = true; newLRT[c.id] = now; } });
-    if (shouldNotify) { try { playSoundRef.current?.(); } catch {} showVisualNotification(callsOnHold); }
+    if (shouldNotify) { try { playSoundRef.current?.(); } catch { /* ignore audio playback errors */ } showVisualNotification(callsOnHold); }
     setLastReminderTime(newLRT);
   }, [activeCalls, isEnabled, lastReminderTime, initAudio, intervalMs, showVisualNotification]);
 

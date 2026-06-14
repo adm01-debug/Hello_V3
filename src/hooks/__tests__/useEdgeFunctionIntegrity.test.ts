@@ -69,7 +69,7 @@ describe('Edge Function: check-contact-alerts', () => {
 
   describe('Empty contacts handling', () => {
     it('returns early with zero contacts', () => {
-      const contacts: any[] = [];
+      const contacts: unknown[] = [];
       const hasContacts = contacts.length > 0;
       expect(hasContacts).toBe(false);
     });
@@ -216,7 +216,7 @@ describe('Edge Function: log-audit-event', () => {
     });
 
     it('details defaults to empty jsonb', () => {
-      let details: Record<string, any> | undefined;
+      let details: Record<string, unknown> | undefined;
       const resolved = details || {};
       expect(Object.keys(resolved)).toHaveLength(0);
     });

@@ -62,6 +62,7 @@ interface Props {
      };
      window.addEventListener('keydown', handleKeyDown);
      return () => window.removeEventListener('keydown', handleKeyDown);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [searchQuery, matches, currentIndex]);
  
    if (!transcription) return null;

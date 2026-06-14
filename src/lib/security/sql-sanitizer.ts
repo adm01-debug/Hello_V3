@@ -18,6 +18,7 @@ export function sanitizeSQLInput(input: string): string {
   return input
     .replace(/'/g, "''")
     .replace(/\\/g, "\\\\")
+    // eslint-disable-next-line no-control-regex -- intentionally strips NUL bytes to prevent null-byte injection
     .replace(/\x00/g, "")
     .trim();
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule */
 import { useEffect, useCallback, useRef } from 'react';
 
 interface KeyboardNavigationOptions {

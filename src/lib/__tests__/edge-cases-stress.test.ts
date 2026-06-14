@@ -28,7 +28,7 @@ import {
   scanForSecrets,
   maskSecret,
 } from '@/lib/security/secrets-scanner';
-import { validateNotification } from '@/lib/notifications/index';
+import { validateNotification, type NotificationCategory, type NotificationSeverity } from '@/lib/notifications/index';
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
@@ -314,8 +314,8 @@ describe('Edge Cases & Boundary Tests', () => {
       const errors = validateNotification({
         title: 'a'.repeat(201),
         message: 'a'.repeat(2001),
-        category: 'bad' as any,
-        severity: 'bad' as any,
+        category: 'bad' as NotificationCategory,
+        severity: 'bad' as NotificationSeverity,
       });
       expect(errors.length).toBeGreaterThanOrEqual(4); // userId + title + message + category + severity
     });

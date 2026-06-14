@@ -44,9 +44,9 @@ export function useComplianceRules() {
       toast.success('Regra salva');
       queryClient.invalidateQueries({ queryKey: ['compliance-rules'] });
     },
-    onError: (e: any) => {
+    onError: (e: unknown) => {
       log.error('upsert rule failed', e);
-      toast.error(e?.message || 'Falha ao salvar regra');
+      toast.error((e instanceof Error ? e.message : '') || 'Falha ao salvar regra');
     },
   });
 

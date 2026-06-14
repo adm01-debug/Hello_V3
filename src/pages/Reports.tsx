@@ -29,6 +29,12 @@ import { usePageTitle } from '@/hooks/usePageTitle';
  
  const COLORS = ['hsl(var(--primary))', 'hsl(var(--success))', 'hsl(var(--warning))', 'hsl(var(--destructive))'];
 
+ interface AgentPerformanceRow {
+   name: string;
+   totalCalls: number;
+   avgDuration: number;
+ }
+
  const Reports = () => {
    usePageTitle('Relatórios');
    const { data: stats, isLoading: statsLoading } = useDashboardStats();
@@ -38,12 +44,12 @@ import { usePageTitle } from '@/hooks/usePageTitle';
      queryFn: async () => {
        const { data, error } = await supabase.rpc('get_agent_performance');
        if (error) throw error;
-       return data as any[];
+       return data as unknown as AgentPerformanceRow[];
      },
    });
  
    const agentPerformance = useMemo(() => {
-     return (agentsPerf || []).map((agent: any) => ({
+     return (agentsPerf || []).map((agent) => ({
        name: agent.name.split(' ')[0],
        chamadas: agent.totalCalls,
        media: agent.avgDuration

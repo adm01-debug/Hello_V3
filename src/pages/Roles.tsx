@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -111,7 +112,7 @@ export default function Roles() {
         .from('user_roles')
         .insert({
           user_id: profile.id,
-          role: selectedRole as any,
+          role: selectedRole as Database['public']['Enums']['app_role'],
           granted_by: user?.id,
           is_active: true,
         });

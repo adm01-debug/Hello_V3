@@ -46,10 +46,22 @@ serve(async (req) => {
       .from('contact_alerts').select('contact_id, alert_type').gte('created_at', oneDayAgo);
 
     const recentAlertKeys = new Set((recentAlerts || []).map(a => `${a.contact_id}-${a.alert_type}`));
-    const alertsToCreate: any[] = [];
+
+    interface ContactAlert {
+      contact_id: string;
+      alert_type: string;
+      severity: string;
+      title: string;
+      message: string;
+      trigger_data: Record<string, unknown>;
+    }
+    const alertsToCreate: ContactAlert[] = [];
 
     for (const contact of contacts) {
-      const profile = contact.personality_insights as any;
+      const profile = contact.personality_insights as {
+        buying_signals?: unknown[];
+        sentiment_trend?: string;
+      } | null;
       if (!profile) continue;
 
       if (profile.buying_signals?.length && !recentAlertKeys.has(`${contact.id}-buying_signal`)) {

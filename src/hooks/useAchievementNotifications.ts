@@ -18,7 +18,7 @@ export function useAchievementNotifications(agentId?: string) {
 
   const showAchievementToast = useCallback((badge: Badge, agentName: string) => {
     toast.success('🏆 Nova Conquista!', { description: `${agentName} ganhou a badge "${badge.name}"! (+${badge.points} pts)`, duration: 5000 });
-  }, [toast]);
+  }, []);
 
   useEffect(() => {
     // Subscribe to new badge awards
