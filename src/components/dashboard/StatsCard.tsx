@@ -109,11 +109,7 @@ export const StatsCard = memo(function StatsCard({
                   )}
                   {Math.abs(change)}%
                 </span>
-                {changeLabel && (
-                  <span className="text-2xs text-muted-foreground">
-                    {changeLabel}
-                  </span>
-                )}
+                {changeLabel && <span className="text-2xs text-muted-foreground">{changeLabel}</span>}
               </div>
             )}
           </div>

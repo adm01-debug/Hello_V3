@@ -50,6 +50,7 @@ const ROLE_COLORS: Record<string, string> = {
 };
 
 export default function Permissions() {
+  usePageTitle('Permissões');
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [permissions, setPermissions] = useState<Permission[]>([]);
@@ -82,8 +83,6 @@ export default function Permissions() {
   };
 
   const hasPermission = (role: string, permissionId: string): boolean => {
-  usePageTitle('Permissões');
-
     const key = `${role}-${permissionId}`;
     if (changes.has(key)) {
       return changes.get(key)!;

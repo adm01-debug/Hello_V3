@@ -55,6 +55,7 @@ function formatRelativeTime(dateString: string) {
 }
 
 export default function SessionManagement() {
+  usePageTitle('Sessões Ativas');
   const {
     sessions,
     currentSessionId,
@@ -71,8 +72,6 @@ export default function SessionManagement() {
   } | null>(null);
 
   const handleRevokeSession = (sessionId: string) => {
-  usePageTitle('Sessões Ativas');
-
     if (sessionId === currentSessionId) {
       revokeSession(sessionId);
     } else {

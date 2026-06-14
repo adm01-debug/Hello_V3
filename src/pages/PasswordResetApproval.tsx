@@ -28,6 +28,7 @@ interface ResetRequest {
 }
 
 export default function PasswordResetApproval() {
+  usePageTitle('Aprovação de Reset de Senha');
   const queryClient = useQueryClient();
   const { user } = useAuthContext();
   const [rejectDialogOpen, setRejectDialogOpen] = useState(false);
@@ -96,8 +97,6 @@ export default function PasswordResetApproval() {
   });
 
   const getStatusBadge = (status: string) => {
-  usePageTitle('Aprovação de Reset de Senha');
-
     switch (status) {
       case 'pending':
         return <Badge variant="secondary" className="bg-warning/20 text-warning"><Clock className="h-3 w-3 mr-1" /> Pendente</Badge>;

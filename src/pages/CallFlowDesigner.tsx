@@ -91,8 +91,6 @@ function FlowCanvas({ flow, onUpdate }: { flow: CallFlow; onUpdate: (data: { nod
   const edges = flowData?.edges || [];
 
   const addNode = (type: string) => {
-  usePageTitle('Call Flow Designer');
-
     const nodeType = NODE_TYPES.find(t => t.type === type);
     const newNode: FlowNode = {
       id: `node-${Date.now()}`,
@@ -178,6 +176,7 @@ function FlowCanvas({ flow, onUpdate }: { flow: CallFlow; onUpdate: (data: { nod
 }
 
 export default function CallFlowDesigner() {
+  usePageTitle('Call Flow Designer');
   const queryClient = useQueryClient();
   const [selectedFlow, setSelectedFlow] = useState<string | null>(null);
   const [newFlowName, setNewFlowName] = useState('');

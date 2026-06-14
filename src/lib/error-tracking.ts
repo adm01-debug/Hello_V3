@@ -1,9 +1,7 @@
 /**
  * Global error tracking — captures unhandled errors and promise rejections.
- * Sends to console in dev, can be extended to send to a logging endpoint.
+ * Logs to console in dev; can be extended to forward to a logging endpoint.
  */
-
-import { supabase } from "@/integrations/supabase/client";
 
 interface ErrorReport {
   message: string;
@@ -21,29 +19,18 @@ interface ErrorReport {
 }
 
 const ERROR_BUFFER: ErrorReport[] = [];
-const MAX_BUFFER = 50;
+const MAX_BUFFER = 20;
 
-async function sendToLog(report: ErrorReport) {
+/** Shared environment fields attached to every report. */
+function context() {
+  return { timestamp: Date.now(), url: window.location.href, userAgent: navigator.userAgent };
+}
+
+function sendToLog(r: ErrorReport) {
   try {
-    // In production, we would send this to an Edge Function or Sentry-like service
-    // For now, we persist in local buffer and log to console
-    console.error(`[ErrorTracker] [${report.type.toUpperCase()}] at ${report.url}:`, {
-      message: report.message,
-      stack: report.stack,
-      metadata: report.metadata,
+    console.error(`[ErrorTracker] [${r.type.toUpperCase()}] at ${r.url}:`, {
+      message: r.message, stack: r.stack, metadata: r.metadata,
     });
-
-    // Example of optional persistent logging (commented out to avoid side-effects during dev unless needed)
-    /*
-    await supabase.from('client_error_logs').insert([{
-      message: report.message,
-      stack_trace: report.stack,
-      url: report.url,
-      type: report.type,
-      metadata: report.metadata,
-      user_agent: report.userAgent
-    }]);
-    */
   } catch (e) {
     console.warn('[ErrorTracker] Failed to send log:', e);
   }
@@ -62,16 +49,7 @@ export function reportError(params: {
   metadata?: Record<string, any>;
 }) {
   const { message, type = 'error', error, metadata } = params;
-  
-  addReport({
-    message,
-    stack: error?.stack,
-    timestamp: Date.now(),
-    url: window.location.href,
-    userAgent: navigator.userAgent,
-    type,
-    metadata
-  });
+  addReport({ message, stack: error?.stack, type, metadata, ...context() });
 }
 
 export function initErrorTracking(): void {
@@ -80,13 +58,8 @@ export function initErrorTracking(): void {
   window.addEventListener('error', (event) => {
     addReport({
       message: event.message || 'Unknown error',
-      filename: event.filename,
-      lineno: event.lineno,
-      colno: event.colno,
-      timestamp: Date.now(),
-      url: window.location.href,
-      userAgent: navigator.userAgent,
-      type: 'error',
+      filename: event.filename, lineno: event.lineno, colno: event.colno,
+      type: 'error', ...context(),
     });
   });
 
@@ -94,11 +67,7 @@ export function initErrorTracking(): void {
     const reason = event.reason;
     addReport({
       message: reason?.message || String(reason) || 'Unhandled rejection',
-      stack: reason?.stack,
-      timestamp: Date.now(),
-      url: window.location.href,
-      userAgent: navigator.userAgent,
-      type: 'unhandled-rejection',
+      stack: reason?.stack, type: 'unhandled-rejection', ...context(),
     });
   });
 }
@@ -106,4 +75,3 @@ export function initErrorTracking(): void {
 export function getErrorReports(): ReadonlyArray<ErrorReport> {
   return [...ERROR_BUFFER];
 }
-
