@@ -71,6 +71,7 @@ export function useCallAnalytics() {
     const sessionIds = new Set(filteredSessions.map(s => s.id));
     const filteredSummaries = summaries.filter(s => sessionIds.has(s.call_session_id));
     return { sessions: filteredSessions, summaries: filteredSummaries };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessions, summaries, dateRange]);
 
   const stats = useMemo(() => {

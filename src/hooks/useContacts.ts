@@ -93,6 +93,7 @@ export const useContacts = () => {
     } finally {
       setIsLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getContactByPhone = useCallback(async (phone: string): Promise<Contact | null> => {

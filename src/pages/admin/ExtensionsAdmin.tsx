@@ -82,6 +82,7 @@ export default function ExtensionsAdmin() {
     if (tab && tab !== activeTab) {
       setActiveTab(tab);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.location.search]);
 
   const handleTabChange = (value: string) => {

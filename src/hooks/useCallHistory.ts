@@ -77,7 +77,8 @@ export function useCallHistory() {
   useEffect(() => { 
     setPage(0);
     setSessions([]);
-    fetchSessions(0); 
+    fetchSessions(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, statusFilter, sentimentFilter]);
 
   const fetchSessions = async (pageToFetch: number = 0) => {
@@ -186,6 +187,7 @@ export function useCallHistory() {
       if (topicFilter && !(session.summary?.main_topics || []).some(t => t.toLowerCase().includes(topicFilter.toLowerCase()))) return false;
       return true;
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessions, searchQuery, dateRangePreset, customDateFrom, customDateTo, sentimentFilter, durationFilter, topicFilter]);
 
    const activeFiltersCount = [

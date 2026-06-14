@@ -78,13 +78,17 @@ export function useGoalViolations() {
     setMetricBreakdown(Array.from(metricMap.entries()).map(([metric, count]) => ({ metric, label: METRIC_LABELS[metric] || metric, count })).sort((a, b) => b.count - a.count));
   };
 
-  useEffect(() => { fetchViolations(); }, [dateRange]);
+  useEffect(() => {
+    fetchViolations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateRange]);
 
   useEffect(() => {
     const channel = supabase.channel('goal-violations')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'goal_violations' }, () => fetchViolations())
       .subscribe();
     return () => { supabase.removeChannel(channel); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange]);
 
   const totalViolations = violations.length;

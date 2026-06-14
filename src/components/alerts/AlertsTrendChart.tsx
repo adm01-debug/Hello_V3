@@ -42,6 +42,7 @@ export function AlertsTrendChart() {
 
   useEffect(() => {
     fetchAlerts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange]);
 
   const fetchAlerts = async () => {

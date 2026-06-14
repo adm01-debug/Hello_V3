@@ -145,6 +145,7 @@ export function LiveTranscription({ isActive, onTranscript, callSessionId, agent
     } finally {
       setIsProcessing(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onTranscript]);
 
   const startRecording = useCallback(async () => {

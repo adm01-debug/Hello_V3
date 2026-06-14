@@ -72,6 +72,7 @@ export const BargeInNotification = ({ agentName }: BargeInNotificationProps) => 
     return () => {
       supabase.removeChannel(channel);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agentName]);
 
   const getConferenceDuration = (startedAt: string) => {

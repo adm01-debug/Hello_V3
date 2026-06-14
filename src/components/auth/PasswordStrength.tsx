@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule */
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { Check, X, AlertTriangle, Loader2 } from 'lucide-react';
@@ -80,7 +81,7 @@ export function PasswordStrength({ password, showRequirements = true, checkLeake
     }, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [password, checkLeaked, toast]);
+  }, [password, checkLeaked]);
 
   const analysis = useMemo(() => {
     const requirements: Requirement[] = [

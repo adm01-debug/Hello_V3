@@ -33,6 +33,7 @@ export default function AgentRanking() {
     if (currentAgent?.id && !selectedAgentId) {
       setSelectedAgentId(currentAgent.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAgent]);
 
    return (

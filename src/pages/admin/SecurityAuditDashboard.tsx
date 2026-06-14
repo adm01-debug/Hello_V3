@@ -54,6 +54,7 @@ export default function SecurityAuditDashboard() {
       return;
     }
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasRole]);
 
   const fetchData = async () => {

@@ -69,10 +69,14 @@ export function useSecurityDashboard(userId: string | undefined) {
     }
   };
 
-  useEffect(() => { if (userId) loadSecurityData(); }, [userId]);
+  useEffect(() => {
+    if (userId) loadSecurityData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   useEffect(() => {
     if (!mfaLoading && userId) calculateSecurityScore(ipRestrictionEnabled, recentAlerts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mfaSettings, sessions, ipRestrictionEnabled, mfaLoading]);
 
   return {

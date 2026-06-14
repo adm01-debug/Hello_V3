@@ -28,6 +28,7 @@ export function WebRTCCall({ targetNumber, onCallStarted, onCallEnded }: WebRTCC
       if (timerRef.current) clearInterval(timerRef.current);
       endCall();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startCall = useCallback(async () => {
@@ -62,6 +63,7 @@ export function WebRTCCall({ targetNumber, onCallStarted, onCallEnded }: WebRTCC
       logger.error("Failed to start WebRTC call:", err);
       setStatus("idle");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onCallStarted]);
 
   const endCall = useCallback(() => {

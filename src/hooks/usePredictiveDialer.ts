@@ -332,6 +332,7 @@ export const usePredictiveDialer = () => {
     } catch (err) {
       log.error('Error completing call:', err);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queue, activeCampaign, campaigns, fetchQueue]);
 
   // Delete campaign

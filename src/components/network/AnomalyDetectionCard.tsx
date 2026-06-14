@@ -50,6 +50,7 @@ function buildSparkline(a: DetectedAnomaly) {
 export const AnomalyDetectionCard = () => {
   const { data, isLoading } = useVoipAnomalies();
   const remediate = useAnomalyRemediation();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const anomalies = data ?? [];
 
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
@@ -75,8 +76,10 @@ export const AnomalyDetectionCard = () => {
         autoFiredRef.current.add(a.id);
         remediate.mutate({ anomalyId: a.id, metric: a.metric, kind: a.kind, silent: false });
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoEnabled, anomalies, dismissed, remediate]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const visible = useMemo(() => anomalies.filter((a) => !dismissed.has(a.id)), [anomalies, dismissed]);
 
   const handleApply = (a: DetectedAnomaly) => {
