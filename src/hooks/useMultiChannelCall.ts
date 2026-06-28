@@ -86,7 +86,7 @@ export function useMultiChannelCall() {
   const initiateCall = useCallback((channel: CallChannel, phoneNumber?: string, contactName?: string): CallSession | null => {
     if (activeCalls.length >= MAX_SIMULTANEOUS_CALLS) return null;
     const newCall: CallSession = {
-      id: `call-${Date.now()}`, channel, status: 'connecting', direction: 'outbound',
+      id: `call-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, channel, status: 'connecting', direction: 'outbound',
       phoneNumber, contactName, startedAt: new Date(), duration: 0, totalHoldTime: 0,
       holdCount: 0, isMuted: false, isOnHold: false, isRecording: false, isInConference: false, transcripts: [],
     };
