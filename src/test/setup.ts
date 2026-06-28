@@ -31,17 +31,15 @@ const localStorageMock = (() => {
 
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
-// Mock Notification API
-Object.defineProperty(window, 'Notification', {
-  writable: true,
-  value: class MockNotification {
-    static permission = 'default';
-    static requestPermission = vi.fn().mockResolvedValue('granted');
-    onclick: (() => void) | null = null;
-    close = vi.fn();
-    constructor(public title: string, public options?: NotificationOptions) {}
-  },
-});
+// Mock Notification API (avoid vi.fn so vi.clearAllMocks() doesn't wipe impls)
+class MockNotification {
+  static permission: NotificationPermission = 'default';
+  static requestPermission = async () => MockNotification.permission;
+  onclick: (() => void) | null = null;
+  close = () => {};
+  constructor(public title: string, public options?: NotificationOptions) {}
+}
+Object.defineProperty(window, 'Notification', { writable: true, value: MockNotification });
 
 // Mock AudioContext
 Object.defineProperty(window, 'AudioContext', {
@@ -64,6 +62,7 @@ Object.defineProperty(window, 'AudioContext', {
       },
     });
     destination = {};
+    close = async () => {};
   },
 });
 

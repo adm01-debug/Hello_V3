@@ -152,7 +152,12 @@ export const useCriticalAlertNotifications = (options: UseCriticalAlertNotificat
   }, [browserNotificationsEnabled]);
 
   useEffect(() => {
-    return () => { if (audioContextRef.current) audioContextRef.current.close(); };
+    return () => {
+      const ctx = audioContextRef.current;
+      if (ctx && typeof ctx.close === 'function') {
+        try { void ctx.close(); } catch { /* ignore */ }
+      }
+    };
   }, []);
 
   return { notificationPermission, requestNotificationPermission, playAlertSound, initAudioContext, defaultSoundConfig: DEFAULT_SOUND_CONFIG };
