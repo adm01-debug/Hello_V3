@@ -47,7 +47,7 @@ describe('web-vitals', () => {
 
   it('initWebVitals registers observers and records metrics across ratings', () => {
     vi.spyOn(performance, 'getEntriesByType').mockReturnValue([
-      { type: 'navigate', responseStart: 1000, requestStart: 100 } as unknown as PerformanceEntry,
+      { type: 'navigate', responseStart: 1000, requestStart: 100 } as unknown as PerformanceNavigationTiming,
     ]);
 
     initWebVitals();
