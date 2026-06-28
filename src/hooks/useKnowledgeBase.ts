@@ -169,16 +169,17 @@ export function useRecordKbView() {
       conversationId?: string;
       wasHelpful?: boolean;
     }) => {
-      const { data: userData } = await supabase.auth.getUser();
-      const { error } = await supabase.from('kb_article_views').insert({
+      const userRes = await supabase.auth.getUser();
+      const userData = userRes?.data;
+      const insertRes = await supabase.from('kb_article_views').insert({
         article_id: params.articleId,
-        viewer_id: userData.user?.id ?? null,
+        viewer_id: userData?.user?.id ?? null,
         viewer_type: 'agent',
         conversation_id: params.conversationId ?? null,
         was_helpful: params.wasHelpful ?? null,
       });
-      if (error) {
-        logger.error('useRecordKbView.error', { error });
+      if (insertRes?.error) {
+        logger.error('useRecordKbView.error', { error: insertRes.error });
       }
     },
   });
