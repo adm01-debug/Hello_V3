@@ -187,7 +187,8 @@ export function useSessionManager() {
     const minutesUntilExpiry = (expiresAt.getTime() - now.getTime()) / 60000;
 
     if (minutesUntilExpiry <= REFRESH_THRESHOLD_MINUTES) {
-      const { error } = await supabase.auth.refreshSession();
+      const result = await supabase.auth.refreshSession();
+      const error = result?.error;
       if (error) {
         logger.error('Error refreshing session:', error);
         toast.error('Sua sessão expirou. Faça login novamente.');
