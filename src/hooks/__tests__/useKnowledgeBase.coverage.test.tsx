@@ -70,6 +70,8 @@ beforeEach(() => {
   rpcResult.current = { data: [], error: null };
   invokeResult.current = { data: { embedding: [0.1, 0.2] }, error: null };
   insertResult.current = { data: null, error: null };
+  // Re-attach implementation because vitest's mockReset/restoreMocks wipe it.
+  insertSpy.mockImplementation(() => insertResult.current);
 });
 
 describe('useKbCategories', () => {
