@@ -21,6 +21,7 @@ import { AgentAssistDashboardCard } from '@/components/executive/AgentAssistDash
 import { OutboundComplianceCard } from '@/components/executive/OutboundComplianceCard';
 import { MultilingualDashboardCard } from '@/components/executive/MultilingualDashboardCard';
 import { OmnichannelCard } from '@/components/executive/OmnichannelCard';
+import { PendingFollowupsCard } from '@/components/executive/PendingFollowupsCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function ExecutiveDashboard() {
@@ -83,6 +84,7 @@ export default function ExecutiveDashboard() {
       <OutboundComplianceCard />
       <MultilingualDashboardCard />
       <OmnichannelCard />
+      <PendingFollowupsCard />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <CallsVolumeChart data={callsByDay} />
