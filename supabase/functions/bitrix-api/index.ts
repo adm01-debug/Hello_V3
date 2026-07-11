@@ -141,12 +141,28 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
 
     let response: Response;
     try {
-      response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params || {}),
-        signal: controller.signal,
-      });
+      const { resilientCall } = await import('../_shared/resilience.ts');
+      response = await resilientCall(
+        'bitrix-api',
+        async () => {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(params || {}),
+            signal: controller.signal,
+          });
+          if (res.status >= 500 || res.status === 429) {
+            const err = new Error(`Bitrix HTTP ${res.status}`) as Error & { status: number };
+            err.status = res.status;
+            throw err;
+          }
+          return res;
+        },
+        {
+          retry: { retries: 2, baseDelayMs: 250, maxDelayMs: 2000 },
+          breaker: { failureThreshold: 5, openDurationMs: 30_000 },
+        },
+      );
     } catch (fetchError) {
       const isTimeout = fetchError instanceof DOMException && fetchError.name === 'AbortError';
       const message = isTimeout
