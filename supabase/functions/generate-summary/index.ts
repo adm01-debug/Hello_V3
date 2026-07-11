@@ -53,7 +53,8 @@ serve(async (req) => {
     const safeCallerName = String(callInfo.callerName || 'Cliente').slice(0, 100);
     const safeDuration = Math.max(0, Math.min(86400, callInfo.duration || 0));
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const { resilientFetch } = await import('../_shared/resilience.ts');
+    const response = await resilientFetch('ai-gateway-summary', "https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: { Authorization: `Bearer ${LOVABLE_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -63,7 +64,7 @@ serve(async (req) => {
           { role: "user", content: `Analise chamada de ${safeCallerName} (${Math.floor(safeDuration / 60)}min):\n${transcriptText.slice(0, 8000)}\n\nJSON: {"summary":"","mainTopics":[],"overallSentiment":"positive|neutral|negative","customerSatisfaction":1-10,"agentPerformance":1-10,"nextSteps":[]}` }
         ],
       }),
-    });
+    }, { retry: { retries: 2, baseDelayMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } });
 
     if (!response.ok) {
       if (response.status === 429) return new Response(JSON.stringify({ error: "Limite excedido" }), { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } });

@@ -47,7 +47,8 @@ serve(async (req) => {
     const transcription = parsed.data.transcription as string;
     const callSessionId = parsed.data.callSessionId as string | undefined;
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const { resilientFetch } = await import('../_shared/resilience.ts');
+    const response = await resilientFetch('ai-gateway-sentiment', 'https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${LOVABLE_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -57,7 +58,7 @@ serve(async (req) => {
           content: `Analise o sentimento desta transcrição:\n${transcription.slice(0, 5000)}\n\nRetorne JSON: {"overall_sentiment":"positive|negative|neutral","sentiment_score":-1 a 1,"customer_satisfaction_estimate":1-10,"summary":""}`
         }],
       }),
-    });
+    }, { retry: { retries: 2, baseDelayMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } });
 
     if (!response.ok) {
       return new Response(JSON.stringify({ error: 'Serviço indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });

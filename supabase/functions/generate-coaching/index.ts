@@ -180,7 +180,8 @@ Gere recomendações de coaching no formato JSON:
 }
 Gere 3 recomendações e até 6 feedbacks com timestamp (apenas se houver transcrição). Caso não haja transcrição, retorne timestamped_feedback como [].`;
 
-    const aiResponse = await fetch('https://api.lovable.dev/v1/chat/completions', {
+    const { resilientFetch } = await import('../_shared/resilience.ts');
+    const aiResponse = await resilientFetch('ai-gateway-coaching', 'https://api.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${lovableApiKey}`,
@@ -191,7 +192,7 @@ Gere 3 recomendações e até 6 feedbacks com timestamp (apenas se houver transc
         messages: [{ role: 'user', content: prompt }],
         response_format: { type: 'json_object' }
       }),
-    });
+    }, { retry: { retries: 2, baseDelayMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } });
 
     if (!aiResponse.ok) {
       console.error('AI API error:', aiResponse.status);

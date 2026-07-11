@@ -41,7 +41,8 @@ Deno.serve(async (req) => {
       `- id="${c.id}" "${c.label}" (max ${c.max_score}): ${c.description ?? ""}`
     ).join("\n");
 
-    const aiResp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const { resilientFetch } = await import('../_shared/resilience.ts');
+    const aiResp = await resilientFetch('ai-gateway-score', "https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +62,7 @@ ${ctx}
 Responda em JSON: {"responses":[{"criterion_id":"<id>","score":<num>,"comment":"<texto curto pt-BR>"}],"feedback":"<resumo geral pt-BR>"}` },
         ],
       }),
-    });
+    }, { retry: { retries: 2, baseDelayMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } });
 
     if (!aiResp.ok) {
       const txt = await aiResp.text();
