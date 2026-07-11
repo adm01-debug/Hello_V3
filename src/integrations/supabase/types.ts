@@ -2867,6 +2867,89 @@ export type Database = {
         }
         Relationships: []
       }
+      data_lake_exports: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          dataset: string
+          error_message: string | null
+          expires_at: string
+          file_path: string | null
+          format: string
+          id: string
+          requested_by: string
+          row_count: number | null
+          since_date: string | null
+          size_bytes: number | null
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          dataset: string
+          error_message?: string | null
+          expires_at?: string
+          file_path?: string | null
+          format: string
+          id?: string
+          requested_by: string
+          row_count?: number | null
+          since_date?: string | null
+          size_bytes?: number | null
+          status?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          dataset?: string
+          error_message?: string | null
+          expires_at?: string
+          file_path?: string | null
+          format?: string
+          id?: string
+          requested_by?: string
+          row_count?: number | null
+          since_date?: string | null
+          size_bytes?: number | null
+          status?: string
+        }
+        Relationships: []
+      }
+      deal_revenue_snapshots: {
+        Row: {
+          created_at: string
+          currency: string
+          deal_id: string | null
+          id: string
+          occurred_at: string
+          revenue_cents: number
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          deal_id?: string | null
+          id?: string
+          occurred_at?: string
+          revenue_cents: number
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          deal_id?: string | null
+          id?: string
+          occurred_at?: string
+          revenue_cents?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deal_revenue_snapshots_deal_id_fkey"
+            columns: ["deal_id"]
+            isOneToOne: false
+            referencedRelation: "deals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       deals: {
         Row: {
           contact_id: string | null
@@ -5248,6 +5331,83 @@ export type Database = {
         }
         Relationships: []
       }
+      shift_swap_suggestions: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          from_agent_id: string
+          from_shift_id: string | null
+          id: string
+          metadata: Json | null
+          reason: string
+          score: number
+          status: string
+          to_agent_id: string
+          to_shift_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          from_agent_id: string
+          from_shift_id?: string | null
+          id?: string
+          metadata?: Json | null
+          reason: string
+          score: number
+          status?: string
+          to_agent_id: string
+          to_shift_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          from_agent_id?: string
+          from_shift_id?: string | null
+          id?: string
+          metadata?: Json | null
+          reason?: string
+          score?: number
+          status?: string
+          to_agent_id?: string
+          to_shift_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shift_swap_suggestions_from_agent_id_fkey"
+            columns: ["from_agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_swap_suggestions_from_shift_id_fkey"
+            columns: ["from_shift_id"]
+            isOneToOne: false
+            referencedRelation: "agent_shifts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_swap_suggestions_to_agent_id_fkey"
+            columns: ["to_agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_swap_suggestions_to_shift_id_fkey"
+            columns: ["to_shift_id"]
+            isOneToOne: false
+            referencedRelation: "agent_shifts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       shift_templates: {
         Row: {
           break_minutes: number
@@ -6151,6 +6311,10 @@ export type Database = {
           file_path: string | null
           from_number: string | null
           id: string
+          ocr_completed_at: string | null
+          ocr_confidence: number | null
+          ocr_search_vector: unknown
+          ocr_text: string | null
           page_count: number
           received_at: string | null
           sent_at: string | null
@@ -6166,6 +6330,10 @@ export type Database = {
           file_path?: string | null
           from_number?: string | null
           id?: string
+          ocr_completed_at?: string | null
+          ocr_confidence?: number | null
+          ocr_search_vector?: unknown
+          ocr_text?: string | null
           page_count?: number
           received_at?: string | null
           sent_at?: string | null
@@ -6181,6 +6349,10 @@ export type Database = {
           file_path?: string | null
           from_number?: string | null
           id?: string
+          ocr_completed_at?: string | null
+          ocr_confidence?: number | null
+          ocr_search_vector?: unknown
+          ocr_text?: string | null
           page_count?: number
           received_at?: string | null
           sent_at?: string | null
@@ -6504,6 +6676,7 @@ export type Database = {
       }
       voip_trunks: {
         Row: {
+          cost_per_minute_cents: number
           created_at: string
           created_by: string | null
           failover_count: number | null
@@ -6528,6 +6701,7 @@ export type Database = {
           version: number
         }
         Insert: {
+          cost_per_minute_cents?: number
           created_at?: string
           created_by?: string | null
           failover_count?: number | null
@@ -6552,6 +6726,7 @@ export type Database = {
           version?: number
         }
         Update: {
+          cost_per_minute_cents?: number
           created_at?: string
           created_by?: string | null
           failover_count?: number | null
@@ -6668,7 +6843,18 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      financial_impact_daily: {
+        Row: {
+          day: string | null
+          deals_won: number | null
+          estimated_cost_cents: number | null
+          profit_cents: number | null
+          revenue_cents: number | null
+          total_calls: number | null
+          total_seconds: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       add_to_dnc: {
