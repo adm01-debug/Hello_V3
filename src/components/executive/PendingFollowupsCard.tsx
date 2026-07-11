@@ -14,10 +14,10 @@ export function PendingFollowupsCard() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('scheduled_callbacks')
-        .select('id, contact_name, contact_phone, scheduled_for, priority, status')
+        .select('id, caller_name, caller_phone, scheduled_at, priority, status')
         .in('status', ['pending', 'scheduled'])
-        .lte('scheduled_for', new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString())
-        .order('scheduled_for', { ascending: true })
+        .lte('scheduled_at', new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString())
+        .order('scheduled_at', { ascending: true })
         .limit(8);
       if (error) throw error;
       return data ?? [];
