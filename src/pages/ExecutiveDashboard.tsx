@@ -84,6 +84,7 @@ export default function ExecutiveDashboard() {
       <OutboundComplianceCard />
       <MultilingualDashboardCard />
       <OmnichannelCard />
+      <PendingFollowupsCard />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <CallsVolumeChart data={callsByDay} />
