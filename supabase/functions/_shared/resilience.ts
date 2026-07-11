@@ -172,7 +172,31 @@ function defaultShouldRetry(err: unknown): boolean {
     if (status === 429) return true;
     if (status >= 500 && status < 600) return true;
     if (status >= 400 && status < 500) return false;
-  }
+}
+
+/**
+ * Convenience wrapper: fetch com retry + circuit breaker.
+ * Trata 429/5xx como erro para reciclar via retry.
+ */
+export async function resilientFetch(
+  key: string,
+  input: string | URL | Request,
+  init?: RequestInit,
+  opts: { retry?: RetryOptions; breaker?: CircuitBreakerOptions } = {},
+): Promise<Response> {
+  return resilientCall(key, async () => {
+    const res = await fetch(input, init);
+    if (res.status === 429 || res.status >= 500) {
+      // Consumir corpo para evitar leak em Deno.
+      try { await res.clone().text(); } catch { /* ignore */ }
+      const err = new Error(`HTTP ${res.status}`) as Error & { status: number };
+      err.status = res.status;
+      throw err;
+    }
+    return res;
+  }, opts);
+}
+
   return /timeout|network|fetch|econn|socket|aborted/.test(msg);
 }
 
