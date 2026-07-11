@@ -76,7 +76,7 @@ export default function FinancialImpact() {
                 <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
                 <XAxis dataKey="day" tick={{ fontSize: 11 }} />
                 <YAxis tick={{ fontSize: 11 }} />
-                <Tooltip formatter={(v: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v)} />
+                <Tooltip formatter={(v) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(v))} />
                 <Legend />
                 <Line type="monotone" dataKey="Receita" stroke="hsl(var(--success))" strokeWidth={2} dot={false} />
                 <Line type="monotone" dataKey="Custo" stroke="hsl(var(--destructive))" strokeWidth={2} dot={false} />
