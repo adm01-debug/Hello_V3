@@ -8,12 +8,14 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { Printer, Send, Inbox, Plus, FileText, Clock, CheckCircle2, XCircle } from 'lucide-react';
+import { Printer, Send, Inbox, Plus, FileText, Clock, CheckCircle2, XCircle, ScanText } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useVirtualFaxOcr } from '@/hooks/useVirtualFaxOcr';
 
 export default function VirtualFax() {
   usePageTitle('Fax Virtual');
   const queryClient = useQueryClient();
+  const ocr = useVirtualFaxOcr();
   const [to, setTo] = useState('');
   const [subject, setSubject] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -110,6 +112,14 @@ export default function VirtualFax() {
                   {fax.direction === 'outbound' ? 'Enviado' : 'Recebido'}
                 </Badge>
                 <Badge variant="outline">{fax.status}</Badge>
+                {fax.file_path && !fax.ocr_completed_at && (
+                  <Button size="sm" variant="outline" onClick={() => ocr.mutate(fax.id)} disabled={ocr.isPending}>
+                    <ScanText className="h-3.5 w-3.5 mr-1" /> OCR
+                  </Button>
+                )}
+                {fax.ocr_completed_at && (
+                  <Badge variant="secondary" className="text-[10px]">OCR ✓</Badge>
+                )}
               </div>
             </CardContent>
           </Card>
