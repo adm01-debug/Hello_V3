@@ -16,6 +16,7 @@ import { useUnreadConflicts } from '@/hooks/useUnreadConflicts';
 const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
   { title: 'Executivo', url: '/executive', icon: Gauge },
+  { title: 'Impacto Financeiro', url: '/financial-impact', icon: PieChart },
   { title: 'Métricas Fila', url: '/queue-dashboard', icon: Activity },
   { title: 'Chamadas', url: '/calls', icon: Phone },
   { title: 'Discador', url: '/dialer', icon: PhoneOutgoing },
@@ -93,6 +94,8 @@ const settingsNavItems = [
   { title: 'Roles & Permissões', url: '/roles', icon: UserCog },
   { title: 'Linhas VoIP', url: '/admin/voip-trunks', icon: Phone },
   { title: 'Ramais', url: '/admin/extensions', icon: Headphones },
+  { title: 'Sugestões de Escala IA', url: '/shift-swap-suggestions', icon: CalendarDays },
+  { title: 'Exportação Data Lake', url: '/admin/data-export', icon: Cloud },
   { title: 'Configurações', url: '/settings', icon: Settings },
 ];
 
