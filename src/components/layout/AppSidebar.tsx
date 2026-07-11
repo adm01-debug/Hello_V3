@@ -12,6 +12,7 @@ import { useState, useCallback, useMemo } from 'react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
 import { useUnreadConflicts } from '@/hooks/useUnreadConflicts';
+import { prefetchHandlers } from '@/lib/route-prefetch';
 
 const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
@@ -165,6 +166,7 @@ function NavItem({ item, collapsed, isFavorite, onToggleFavorite }: { item: NavI
       <SidebarMenuButton asChild>
         <NavLink
           to={item.url}
+          {...prefetchHandlers(item.url)}
           className={cn(
             'flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-all duration-200 group/nav',
             'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
