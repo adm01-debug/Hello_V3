@@ -78,6 +78,9 @@ const ConcurrencyConflicts = lazy(() => import("@/pages/ConcurrencyConflicts"));
 const VoipTrunksAdmin = lazy(() => import("@/pages/admin/VoipTrunksAdmin"));
 const ExtensionsAdmin = lazy(() => import("@/pages/admin/ExtensionsAdmin"));
 const SecurityAudit = lazy(() => import("@/pages/admin/SecurityDashboard"));
+const FinancialImpact = lazy(() => import("@/pages/FinancialImpact"));
+const ShiftSwapSuggestions = lazy(() => import("@/pages/ShiftSwapSuggestions"));
+const DataExport = lazy(() => import("@/pages/admin/DataExport"));
 
 export interface RouteConfig {
   path: string;
@@ -168,6 +171,9 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/admin/voip-trunks", element: VoipTrunksAdmin, roles: ["admin"] },
   { path: "/admin/extensions", element: ExtensionsAdmin, roles: ["admin"] },
   { path: "/admin/security-audit", element: SecurityAudit, roles: ["admin"] },
+  { path: "/financial-impact", element: FinancialImpact, roles: ["supervisor", "admin"] },
+  { path: "/shift-swap-suggestions", element: ShiftSwapSuggestions, roles: ["supervisor", "admin"] },
+  { path: "/admin/data-export", element: DataExport, roles: ["admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },
