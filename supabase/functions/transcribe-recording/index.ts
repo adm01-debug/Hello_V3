@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { resilientFetch } from "../_shared/resilience.ts";
 
 
 serve(async (req) => {
@@ -73,11 +74,21 @@ serve(async (req) => {
     formData.append('diarize', 'true');
     formData.append('tag_audio_events', 'true');
 
-    const response = await fetch('https://api.elevenlabs.io/v1/speech-to-text', {
-      method: 'POST',
-      headers: { 'xi-api-key': ELEVENLABS_API_KEY },
-      body: formData,
-    });
+    let response: Response;
+    try {
+      response = await resilientFetch(
+        'elevenlabs:stt',
+        'https://api.elevenlabs.io/v1/speech-to-text',
+        { method: 'POST', headers: { 'xi-api-key': ELEVENLABS_API_KEY }, body: formData },
+        { retry: { retries: 2, baseMs: 500 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } },
+      );
+    } catch (err) {
+      console.error('ElevenLabs resilient error:', err);
+      return new Response(JSON.stringify({ error: 'Erro no serviço de transcrição', circuit_open: true }), {
+        status: 503,
+        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+      });
+    }
 
     if (!response.ok) {
       console.error('ElevenLabs API error:', response.status);

@@ -1,6 +1,7 @@
  import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
- import { buildCorsHeaders } from "../_shared/cors.ts";
+import { buildCorsHeaders } from "../_shared/cors.ts";
+import { resilientFetch } from "../_shared/resilience.ts";
  
  serve(async (req) => {
    const cors = buildCorsHeaders(req);
@@ -26,19 +27,24 @@
      }
  
      // 1. Gerar embedding via Lovable AI Gateway
-     const embedResp = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-       method: 'POST',
-       headers: { 
-         'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-         'Content-Type': 'application/json' 
-       },
-       body: JSON.stringify({
-         model: 'text-embedding-004',
-         input: textToEmbed
-       })
-     });
- 
-     if (!embedResp.ok) throw new Error(`Gateway error: ${await embedResp.text()}`);
+    const embedResp = await resilientFetch(
+      'lovable-ai:embeddings',
+      'https://ai.gateway.lovable.dev/v1/embeddings',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'text-embedding-004',
+          input: textToEmbed
+        })
+      },
+      { retry: { retries: 2, baseMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } },
+    );
+
+    if (!embedResp.ok) throw new Error(`Gateway error: ${await embedResp.text()}`);
      const { data } = await embedResp.json();
      const embedding = data[0].embedding;
  

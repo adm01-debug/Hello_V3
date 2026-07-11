@@ -1,5 +1,6 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
+import { resilientFetch } from '../_shared/resilience.ts';
 
 interface Body {
   callSessionId: string;
@@ -63,15 +64,27 @@ Deno.serve(async (req) => {
     const sys = `Traduza o resumo de chamada abaixo para o idioma alvo. Responda em JSON com as MESMAS chaves: summary (string), main_topics (array string), next_steps (array string), overall_sentiment (string). Sem markdown, sem comentários.`;
     const usr = `Idioma alvo: ${body.targetLang}\nResumo:\n${JSON.stringify(payload)}`;
 
-    const aiRes = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }],
-        response_format: { type: 'json_object' },
-      }),
-    });
+    let aiRes: Response;
+    try {
+      aiRes = await resilientFetch(
+        'lovable-ai:translate-summary',
+        'https://ai.gateway.lovable.dev/v1/chat/completions',
+        {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'google/gemini-2.5-flash',
+            messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }],
+            response_format: { type: 'json_object' },
+          }),
+        },
+        { retry: { retries: 2, baseMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } },
+      );
+    } catch (err) {
+      console.error('translate-summary resilient error', err);
+      return new Response(JSON.stringify({ error: 'AI gateway indisponível', circuit_open: true }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
+    }
+
 
     if (aiRes.status === 429) return new Response(JSON.stringify({ error: 'Rate limit' }), { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } });
     if (aiRes.status === 402) return new Response(JSON.stringify({ error: 'Créditos esgotados' }), { status: 402, headers: { ...cors, 'Content-Type': 'application/json' } });
