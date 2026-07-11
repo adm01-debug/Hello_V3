@@ -184,3 +184,26 @@ export async function resilientCall<T>(
 ): Promise<T> {
   return retry(() => withCircuitBreaker(key, fn, opts.breaker), opts.retry);
 }
+
+/**
+ * Convenience wrapper: fetch com retry + circuit breaker.
+ * Trata 429/5xx como erro para reciclar via retry.
+ */
+export async function resilientFetch(
+  key: string,
+  input: string | URL | Request,
+  init?: RequestInit,
+  opts: { retry?: RetryOptions; breaker?: CircuitBreakerOptions } = {},
+): Promise<Response> {
+  return resilientCall(key, async () => {
+    const res = await fetch(input, init);
+    if (res.status === 429 || res.status >= 500) {
+      try { await res.clone().text(); } catch { /* ignore */ }
+      const err = new Error(`HTTP ${res.status}`) as Error & { status: number };
+      err.status = res.status;
+      throw err;
+    }
+    return res;
+  }, opts);
+}
+

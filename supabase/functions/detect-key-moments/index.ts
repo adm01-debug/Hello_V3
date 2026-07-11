@@ -56,7 +56,8 @@ Deno.serve(async (req) => {
     const { callSessionId, transcript } = parsed.data;
     const persist = parsed.data.persist !== 'false';
 
-    const aiResp = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const { resilientFetch } = await import('../_shared/resilience.ts');
+    const aiResp = await resilientFetch('ai-gateway-keymoments', 'https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${LOVABLE_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -67,7 +68,7 @@ Deno.serve(async (req) => {
         ],
         response_format: { type: 'json_object' },
       }),
-    });
+    }, { retry: { retries: 2, baseDelayMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } });
 
     if (!aiResp.ok) {
       const errText = await aiResp.text();
