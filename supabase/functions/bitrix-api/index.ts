@@ -165,9 +165,12 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
       );
     } catch (fetchError) {
       const isTimeout = fetchError instanceof DOMException && fetchError.name === 'AbortError';
-      const message = isTimeout
-        ? 'Tempo limite de conexão com Bitrix excedido'
-        : 'Não foi possível conectar ao Bitrix';
+      const isCircuitOpen = (fetchError as Error)?.name === 'CircuitOpenError';
+      const message = isCircuitOpen
+        ? 'Bitrix indisponível — circuito aberto, tente em 30s'
+        : isTimeout
+          ? 'Tempo limite de conexão com Bitrix excedido'
+          : 'Não foi possível conectar ao Bitrix';
 
       console.error('Bitrix request error:', message, fetchError);
 
@@ -179,9 +182,9 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
       }
 
       return new Response(
-        JSON.stringify({ error: message, configured: true }),
+        JSON.stringify({ error: message, configured: true, circuit_open: isCircuitOpen }),
         {
-          status: isTimeout ? 504 : 502,
+          status: isCircuitOpen ? 503 : isTimeout ? 504 : 502,
           headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
         }
       );
