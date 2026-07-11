@@ -141,17 +141,36 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
 
     let response: Response;
     try {
-      response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params || {}),
-        signal: controller.signal,
-      });
+      const { resilientCall } = await import('../_shared/resilience.ts');
+      response = await resilientCall(
+        'bitrix-api',
+        async () => {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(params || {}),
+            signal: controller.signal,
+          });
+          if (res.status >= 500 || res.status === 429) {
+            const err = new Error(`Bitrix HTTP ${res.status}`) as Error & { status: number };
+            err.status = res.status;
+            throw err;
+          }
+          return res;
+        },
+        {
+          retry: { retries: 2, baseDelayMs: 250, maxDelayMs: 2000 },
+          breaker: { failureThreshold: 5, openDurationMs: 30_000 },
+        },
+      );
     } catch (fetchError) {
       const isTimeout = fetchError instanceof DOMException && fetchError.name === 'AbortError';
-      const message = isTimeout
-        ? 'Tempo limite de conexão com Bitrix excedido'
-        : 'Não foi possível conectar ao Bitrix';
+      const isCircuitOpen = (fetchError as Error)?.name === 'CircuitOpenError';
+      const message = isCircuitOpen
+        ? 'Bitrix indisponível — circuito aberto, tente em 30s'
+        : isTimeout
+          ? 'Tempo limite de conexão com Bitrix excedido'
+          : 'Não foi possível conectar ao Bitrix';
 
       console.error('Bitrix request error:', message, fetchError);
 
@@ -163,9 +182,9 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
       }
 
       return new Response(
-        JSON.stringify({ error: message, configured: true }),
+        JSON.stringify({ error: message, configured: true, circuit_open: isCircuitOpen }),
         {
-          status: isTimeout ? 504 : 502,
+          status: isCircuitOpen ? 503 : isTimeout ? 504 : 502,
           headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
         }
       );
