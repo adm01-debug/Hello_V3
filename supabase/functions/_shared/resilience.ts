@@ -172,6 +172,17 @@ function defaultShouldRetry(err: unknown): boolean {
     if (status === 429) return true;
     if (status >= 500 && status < 600) return true;
     if (status >= 400 && status < 500) return false;
+  }
+  return /timeout|network|fetch|econn|socket|aborted/.test(msg);
+}
+
+/** Convenience: retry + circuit breaker together. */
+export async function resilientCall<T>(
+  key: string,
+  fn: () => Promise<T>,
+  opts: { retry?: RetryOptions; breaker?: CircuitBreakerOptions } = {},
+): Promise<T> {
+  return retry(() => withCircuitBreaker(key, fn, opts.breaker), opts.retry);
 }
 
 /**
@@ -187,7 +198,6 @@ export async function resilientFetch(
   return resilientCall(key, async () => {
     const res = await fetch(input, init);
     if (res.status === 429 || res.status >= 500) {
-      // Consumir corpo para evitar leak em Deno.
       try { await res.clone().text(); } catch { /* ignore */ }
       const err = new Error(`HTTP ${res.status}`) as Error & { status: number };
       err.status = res.status;
@@ -197,14 +207,3 @@ export async function resilientFetch(
   }, opts);
 }
 
-  return /timeout|network|fetch|econn|socket|aborted/.test(msg);
-}
-
-/** Convenience: retry + circuit breaker together. */
-export async function resilientCall<T>(
-  key: string,
-  fn: () => Promise<T>,
-  opts: { retry?: RetryOptions; breaker?: CircuitBreakerOptions } = {},
-): Promise<T> {
-  return retry(() => withCircuitBreaker(key, fn, opts.breaker), opts.retry);
-}
