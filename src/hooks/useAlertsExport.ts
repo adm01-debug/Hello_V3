@@ -34,7 +34,12 @@ interface WebhookHistoryPayload {
   error?: string;
   kind: "export";
   attempts: number;
+  request_id?: string;
+  response_snippet?: string;
+  response_headers?: Record<string, string>;
+  attempts_detail?: import("@/lib/security-alerts-webhook-history").WebhookAttemptDetail[];
 }
+
 
 interface UseAlertsExportParams {
   sinceIso: string;
