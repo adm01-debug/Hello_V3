@@ -106,6 +106,18 @@ function severityBadgeVariant(s: Severity): "destructive" | "secondary" | "outli
   return "outline";
 }
 
+function formatQueueAge(ms: number): string {
+  if (ms <= 0) return "agora";
+  const s = Math.floor(ms / 1000);
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}min`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h`;
+  return `${Math.floor(h / 24)}d`;
+}
+
+
 export default function SecurityAlerts() {
   usePageTitle("Alertas de Segurança");
   const qc = useQueryClient();
@@ -231,12 +243,21 @@ export default function SecurityAlerts() {
   }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
-  const [webhookPendingCount, setWebhookPendingCount] = useState<number>(() => loadWebhookQueue().length);
+  const [webhookQueue, setWebhookQueue] = useState(() => loadWebhookQueue());
+  const webhookPendingCount = webhookQueue.length;
+  const webhookOldestAgeMs = webhookQueue.length
+    ? Date.now() - Math.min(...webhookQueue.map((q) => new Date(q.enqueuedAt).getTime()))
+    : 0;
   const [isFlushingQueue, setIsFlushingQueue] = useState(false);
   useEffect(() => {
     installWebhookQueueAutoFlush();
-    const unsub = subscribeWebhookQueue((q) => setWebhookPendingCount(q.length));
-    return unsub;
+    const unsub = subscribeWebhookQueue((q) => setWebhookQueue([...q]));
+    // Tick para atualizar "idade do mais antigo" a cada 30s enquanto houver fila.
+    const tick = setInterval(() => setWebhookQueue((prev) => (prev.length ? [...prev] : prev)), 30_000);
+    return () => {
+      unsub();
+      clearInterval(tick);
+    };
   }, []);
   const handleFlushQueue = useCallback(async () => {
     if (isFlushingQueue) return;
@@ -766,7 +787,7 @@ export default function SecurityAlerts() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-muted-foreground">Total (30d)</CardTitle>
@@ -791,7 +812,41 @@ export default function SecurityAlerts() {
             <div className="text-2xl font-semibold text-destructive">{criticalCount}</div>
           </CardContent>
         </Card>
+        <Card
+          className={
+            webhookPendingCount > 0
+              ? "border-warning/60 bg-warning/5"
+              : undefined
+          }
+          aria-live="polite"
+        >
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm text-muted-foreground flex items-center justify-between">
+              <span>Fila webhooks</span>
+              {webhookPendingCount > 0 && (
+                <Badge variant="outline" className="text-[10px]">
+                  pendente
+                </Badge>
+              )}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div
+              className={`text-2xl font-semibold ${
+                webhookPendingCount > 0 ? "text-warning" : ""
+              }`}
+            >
+              {webhookPendingCount}
+            </div>
+            <div className="text-[11px] text-muted-foreground mt-1">
+              {webhookPendingCount > 0
+                ? `mais antigo: ${formatQueueAge(webhookOldestAgeMs)}`
+                : "sem pendências"}
+            </div>
+          </CardContent>
+        </Card>
       </div>
+
 
       <Card>
         <CardHeader className="pb-3 flex-row items-center justify-between space-y-0">
