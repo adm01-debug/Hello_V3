@@ -160,6 +160,25 @@ export default function SecurityAlerts() {
     );
   }
 
+  // Série completa de 30 dias (preenche dias sem alertas com 0)
+  const chartData = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const n of data) {
+      const day = format(new Date(n.created_at), "yyyy-MM-dd");
+      counts.set(day, (counts.get(day) ?? 0) + 1);
+    }
+    const today = startOfDay(new Date());
+    const start = subDays(today, 29);
+    return eachDayOfInterval({ start, end: today }).map((d) => {
+      const key = format(d, "yyyy-MM-dd");
+      return {
+        day: key,
+        label: format(d, "dd/MM"),
+        count: counts.get(key) ?? 0,
+      };
+    });
+  }, [data]);
+
 
   return (
     <div className="space-y-6 p-4 md:p-6 max-w-6xl">
