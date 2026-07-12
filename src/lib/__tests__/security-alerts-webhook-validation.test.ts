@@ -32,7 +32,7 @@ describe("validateWebhookConfig", () => {
 
   it.each([
     ["ftp://x.com", "Protocolo"],
-    ["not a url", "URL inválida"],
+    ["notaurl", "URL inválida"],
     ["https://user:pass@x.com", "usuário/senha"],
     ["https://x.com com espaço", "espaços"],
   ])("rejeita URL inválida: %s", (url, expected) => {
