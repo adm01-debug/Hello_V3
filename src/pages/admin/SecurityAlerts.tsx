@@ -217,6 +217,48 @@ export default function SecurityAlerts() {
       </div>
 
       <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm">Filtros</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-[220px_1fr_auto] gap-3">
+            <Select value={sourceFilter} onValueChange={(v) => updateParam("source", v)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Origem (source_type)" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={ALL_SOURCES}>Todas as origens</SelectItem>
+                {availableSources.map((s) => (
+                  <SelectItem key={s} value={s} className="font-mono text-xs">
+                    {s}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Input
+              placeholder="Buscar por título, mensagem ou origem…"
+              value={searchTerm}
+              onChange={(e) => updateParam("q", e.target.value)}
+            />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSearchParams(new URLSearchParams(), { replace: true })}
+              disabled={!hasActiveFilters}
+            >
+              <X className="w-4 h-4 mr-1" />
+              Limpar
+            </Button>
+          </div>
+          {hasActiveFilters && (
+            <p className="text-xs text-muted-foreground mt-2">
+              Exibindo {data.length} de {allData.length} alertas com os filtros aplicados.
+            </p>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
         <CardHeader>
           <CardTitle>Timeline</CardTitle>
         </CardHeader>
