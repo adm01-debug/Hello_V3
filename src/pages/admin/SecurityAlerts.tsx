@@ -10,9 +10,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { toast } from "sonner";
-import { format } from "date-fns";
+import { format, eachDayOfInterval, subDays, startOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Link, useSearchParams } from "react-router-dom";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
 const ALL_SOURCES = "__all__";
 
@@ -159,6 +160,25 @@ export default function SecurityAlerts() {
     );
   }
 
+  // Série completa de 30 dias (preenche dias sem alertas com 0)
+  const chartData = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const n of data) {
+      const day = format(new Date(n.created_at), "yyyy-MM-dd");
+      counts.set(day, (counts.get(day) ?? 0) + 1);
+    }
+    const today = startOfDay(new Date());
+    const start = subDays(today, 29);
+    return eachDayOfInterval({ start, end: today }).map((d) => {
+      const key = format(d, "yyyy-MM-dd");
+      return {
+        day: key,
+        label: format(d, "dd/MM"),
+        count: counts.get(key) ?? 0,
+      };
+    });
+  }, [data]);
+
 
   return (
     <div className="space-y-6 p-4 md:p-6 max-w-6xl">
@@ -255,6 +275,54 @@ export default function SecurityAlerts() {
               Exibindo {data.length} de {allData.length} alertas com os filtros aplicados.
             </p>
           )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm">Alertas por dia (últimos 30 dias)</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+                <XAxis
+                  dataKey="label"
+                  stroke="hsl(var(--muted-foreground))"
+                  fontSize={11}
+                  tickLine={false}
+                  interval="preserveStartEnd"
+                  minTickGap={16}
+                />
+                <YAxis
+                  stroke="hsl(var(--muted-foreground))"
+                  fontSize={11}
+                  tickLine={false}
+                  allowDecimals={false}
+                  width={32}
+                />
+                <Tooltip
+                  cursor={{ fill: "hsl(var(--muted) / 0.4)" }}
+                  contentStyle={{
+                    background: "hsl(var(--popover))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: 6,
+                    fontSize: 12,
+                    color: "hsl(var(--popover-foreground))",
+                  }}
+                  labelFormatter={(_, payload) => {
+                    const d = payload?.[0]?.payload?.day as string | undefined;
+                    return d
+                      ? format(new Date(`${d}T00:00:00`), "EEEE, dd 'de' MMMM", { locale: ptBR })
+                      : "";
+                  }}
+                  formatter={(v) => [Number(v ?? 0), "Alertas"] as [number, string]}
+                />
+                <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </CardContent>
       </Card>
 
