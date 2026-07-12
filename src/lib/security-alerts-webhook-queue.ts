@@ -98,33 +98,61 @@ export function enqueueWebhook(
 
 let flushing = false;
 
-export async function flushWebhookQueue(): Promise<{ sent: number; failed: number; remaining: number }> {
-  if (flushing) return { sent: 0, failed: 0, remaining: safeLoad().length };
+export interface WebhookFlushResult {
+  sent: number;
+  failed: number;
+  remaining: number;
+  /** Tamanho da fila no início do flush. */
+  pending_before: number;
+  /** Idade (ms) do item mais antigo no início do flush. */
+  oldest_age_ms: number;
+  /** Duração total do flush em ms. */
+  duration_ms: number;
+}
+
+/** Nome do CustomEvent emitido em window ao concluir um flush (para métricas externas). */
+export const WEBHOOK_QUEUE_FLUSH_EVENT = "lovable:webhook-queue-flush";
+
+export async function flushWebhookQueue(): Promise<WebhookFlushResult> {
+  const emptyResult: WebhookFlushResult = {
+    sent: 0,
+    failed: 0,
+    remaining: safeLoad().length,
+    pending_before: safeLoad().length,
+    oldest_age_ms: 0,
+    duration_ms: 0,
+  };
+  if (flushing) return emptyResult;
   flushing = true;
   let sent = 0;
   let failed = 0;
+  const t0 = typeof performance !== "undefined" ? performance.now() : Date.now();
+  const initialItems = safeLoad();
+  const pending_before = initialItems.length;
+  const oldest_age_ms = initialItems.length
+    ? Date.now() - Math.min(...initialItems.map((q) => new Date(q.enqueuedAt).getTime()))
+    : 0;
   try {
     const secret = loadWebhookSecret();
     const maxAttempts = loadWebhookMaxAttempts();
     const baseDelayMs = loadWebhookBaseDelayMs();
     const maxDelayMs = loadWebhookMaxDelayMs();
-    const items = safeLoad();
     const remaining: QueuedWebhook[] = [];
-    for (const item of items) {
+    for (const item of initialItems) {
       // Usa URL atual se o item foi enfileirado com URL antiga vazia.
       const targetUrl = item.url || loadWebhookUrl();
       if (!targetUrl) {
         remaining.push(item);
         continue;
       }
-      const t0 = performance.now();
+      const start = performance.now();
       const res = await sendExportWebhook(targetUrl, item.payload, {
         secret: item.hasSecret ? secret : undefined,
         maxAttempts,
         baseDelayMs,
         maxDelayMs,
       });
-      const latency_ms = Math.round(performance.now() - t0);
+      const latency_ms = Math.round(performance.now() - start);
       appendWebhookHistory({
         url: targetUrl,
         filename: item.payload.filename,
@@ -152,11 +180,32 @@ export async function flushWebhookQueue(): Promise<{ sent: number; failed: numbe
       }
     }
     safeSave(remaining);
-    return { sent, failed, remaining: remaining.length };
+    const duration_ms = Math.round(
+      (typeof performance !== "undefined" ? performance.now() : Date.now()) - t0,
+    );
+    const result: WebhookFlushResult = {
+      sent,
+      failed,
+      remaining: remaining.length,
+      pending_before,
+      oldest_age_ms,
+      duration_ms,
+    };
+    if (typeof window !== "undefined" && typeof CustomEvent !== "undefined") {
+      try {
+        window.dispatchEvent(
+          new CustomEvent(WEBHOOK_QUEUE_FLUSH_EVENT, { detail: result }),
+        );
+      } catch {
+        /* ignore */
+      }
+    }
+    return result;
   } finally {
     flushing = false;
   }
 }
+
 
 let installed = false;
 export function installWebhookQueueAutoFlush(): void {

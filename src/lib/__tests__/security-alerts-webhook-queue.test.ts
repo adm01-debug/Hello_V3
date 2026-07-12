@@ -84,7 +84,7 @@ describe("security-alerts-webhook-queue", () => {
 
   it("flush is a no-op with empty queue", async () => {
     const res = await flushWebhookQueue();
-    expect(res).toEqual({ sent: 0, failed: 0, remaining: 0 });
+    expect(res).toMatchObject({ sent: 0, failed: 0, remaining: 0, pending_before: 0, oldest_age_ms: 0 });
   });
 
   it("auto-flushes on 'online' event after being offline", async () => {
