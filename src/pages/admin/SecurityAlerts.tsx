@@ -546,7 +546,7 @@ export default function SecurityAlerts() {
         setIsExporting(false);
       }
     },
-    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, webhookMaxAttempts, SINCE_ISO, recordWebhookHistory],
+    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, webhookMaxAttempts, webhookBaseDelayMs, webhookMaxDelayMs, SINCE_ISO, recordWebhookHistory],
 
   );
 
