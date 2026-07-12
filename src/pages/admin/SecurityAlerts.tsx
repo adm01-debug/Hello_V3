@@ -231,6 +231,36 @@ export default function SecurityAlerts() {
   }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
+  const [webhookPendingCount, setWebhookPendingCount] = useState<number>(() => loadWebhookQueue().length);
+  const [isFlushingQueue, setIsFlushingQueue] = useState(false);
+  useEffect(() => {
+    installWebhookQueueAutoFlush();
+    const unsub = subscribeWebhookQueue((q) => setWebhookPendingCount(q.length));
+    return unsub;
+  }, []);
+  const handleFlushQueue = useCallback(async () => {
+    if (isFlushingQueue) return;
+    setIsFlushingQueue(true);
+    const t = toast.loading("Reenviando webhooks pendentes…");
+    try {
+      const res = await flushWebhookQueue();
+      setWebhookHistory(loadWebhookHistory());
+      toast.dismiss(t);
+      if (res.sent > 0 && res.failed === 0) {
+        toast.success(`Fila esvaziada — ${res.sent} envio(s) OK`);
+      } else if (res.sent === 0 && res.failed === 0) {
+        toast.info("Nada na fila para reenviar");
+      } else {
+        toast.warning(`Reenviados: ${res.sent} · Falharam: ${res.failed} · Restantes: ${res.remaining}`);
+      }
+    } finally {
+      setIsFlushingQueue(false);
+    }
+  }, [isFlushingQueue]);
+  const handleClearQueue = useCallback(() => {
+    clearWebhookQueue();
+    toast.success("Fila de webhooks limpa");
+  }, []);
   const recordWebhookHistory = useCallback((entry: Omit<WebhookHistoryEntry, "id" | "at">) => {
     appendWebhookHistory(entry);
     setWebhookHistory(loadWebhookHistory());
