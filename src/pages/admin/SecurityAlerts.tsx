@@ -122,9 +122,29 @@ export default function SecurityAlerts() {
     void alerts.refetch();
   };
 
-  const data = alerts.data ?? [];
+  const allData = alerts.data ?? [];
+
+  const availableSources = useMemo(() => {
+    const set = new Set<string>();
+    for (const n of allData) if (n.source_type) set.add(n.source_type);
+    return Array.from(set).sort();
+  }, [allData]);
+
+  const data = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    return allData.filter((n) => {
+      if (sourceFilter !== ALL_SOURCES && (n.source_type ?? "") !== sourceFilter) return false;
+      if (term) {
+        const hay = `${n.title}\n${n.message}\n${n.source_type ?? ""}`.toLowerCase();
+        if (!hay.includes(term)) return false;
+      }
+      return true;
+    });
+  }, [allData, sourceFilter, searchTerm]);
+
   const unreadCount = data.filter((a) => !a.is_read).length;
   const criticalCount = data.filter((a) => normalizeSeverity(a.severity) === "critical").length;
+  const hasActiveFilters = sourceFilter !== ALL_SOURCES || searchTerm.length > 0;
 
   // Agrupa por dia (YYYY-MM-DD) e ordena severidade dentro do dia
   const grouped = data.reduce<Record<string, SecurityNotification[]>>((acc, n) => {
@@ -138,6 +158,7 @@ export default function SecurityAlerts() {
       (a, b) => severityRank[normalizeSeverity(a.severity)] - severityRank[normalizeSeverity(b.severity)],
     );
   }
+
 
   return (
     <div className="space-y-6 p-4 md:p-6 max-w-6xl">
