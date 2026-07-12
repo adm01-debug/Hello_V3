@@ -222,7 +222,9 @@ export default function SecurityAlerts() {
     record: recordWebhookHistory,
     clear: handleClearWebhookHistory,
     exportCsv: handleExportWebhookHistory,
+    exportNdjson: handleExportWebhookHistoryNdjson,
   } = useWebhookHistory(webhookQueueFlushedAt);
+
 
   const handleTestWebhook = useCallback(async () => {
     // Bloqueia teste com qualquer erro bloqueante — mensagem precisa vem do validator.
