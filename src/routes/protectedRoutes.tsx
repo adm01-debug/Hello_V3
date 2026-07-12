@@ -81,6 +81,7 @@ const SecurityAudit = lazy(() => import("@/pages/admin/SecurityDashboard"));
 const FinancialImpact = lazy(() => import("@/pages/FinancialImpact"));
 const ShiftSwapSuggestions = lazy(() => import("@/pages/ShiftSwapSuggestions"));
 const DataExport = lazy(() => import("@/pages/admin/DataExport"));
+const DatabaseHealth = lazy(() => import("@/pages/admin/DatabaseHealth"));
 
 export interface RouteConfig {
   path: string;
@@ -174,6 +175,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/financial-impact", element: FinancialImpact, roles: ["supervisor", "admin"] },
   { path: "/shift-swap-suggestions", element: ShiftSwapSuggestions, roles: ["supervisor", "admin"] },
   { path: "/admin/data-export", element: DataExport, roles: ["admin"] },
+  { path: "/admin/database-health", element: DatabaseHealth, roles: ["admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },
