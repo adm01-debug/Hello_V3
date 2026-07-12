@@ -205,6 +205,89 @@ export default function SecurityAlerts() {
     void alerts.refetch();
   };
 
+  // Busca todos os alertas dos últimos 30 dias respeitando os filtros ativos
+  // (paginando com o mesmo cursor composto usado na UI). Necessário para
+  // exportar mesmo quando o usuário ainda não rolou a timeline até o fim.
+  const [isExporting, setIsExporting] = useState(false);
+  const fetchAllFilteredAlerts = useCallback(async (): Promise<SecurityNotification[]> => {
+    const CHUNK = 1000;
+    const MAX_ROWS = 20000; // salvaguarda para memória do navegador
+    const out: SecurityNotification[] = [];
+    let cursor: { createdAt: string; id: string } | null = null;
+    while (out.length < MAX_ROWS) {
+      let q = supabase
+        .from("notifications")
+        .select(
+          "id, title, message, severity, type, action_url, action_label, source_type, is_read, read_at, created_at, metadata",
+        )
+        .eq("category", "security")
+        .gte("created_at", SINCE_ISO)
+        .order("created_at", { ascending: false })
+        .order("id", { ascending: false })
+        .limit(CHUNK);
+      if (cursor) {
+        q = q.or(
+          `created_at.lt.${cursor.createdAt},and(created_at.eq.${cursor.createdAt},id.lt.${cursor.id})`,
+        );
+      }
+      const { data, error } = await q;
+      if (error) throw error;
+      const rows = (data as SecurityNotification[]) ?? [];
+      out.push(...rows);
+      if (rows.length < CHUNK) break;
+      const last = rows[rows.length - 1];
+      cursor = { createdAt: last.created_at, id: last.id };
+    }
+    return out;
+  }, [SINCE_ISO]);
+
+  const handleExport = useCallback(
+    async (fmt: "csv" | "pdf") => {
+      setIsExporting(true);
+      const toastId = toast.loading("Preparando exportação…");
+      try {
+        const rows = await fetchAllFilteredAlerts();
+        const term = searchTerm.trim().toLowerCase();
+        const filtered = rows.filter((n) => {
+          if (sourceFilter !== ALL_SOURCES && (n.source_type ?? "") !== sourceFilter) return false;
+          if (term) {
+            const hay = `${n.title}\n${n.message}\n${n.source_type ?? ""}`.toLowerCase();
+            if (!hay.includes(term)) return false;
+          }
+          return true;
+        });
+        if (filtered.length === 0) {
+          toast.dismiss(toastId);
+          toast.warning("Nenhum alerta corresponde aos filtros — nada para exportar.");
+          return;
+        }
+        const payload: ExportableAlert[] = filtered.map((n) => ({
+          id: n.id,
+          created_at: n.created_at,
+          severity: n.severity,
+          type: n.type,
+          source_type: n.source_type,
+          title: n.title,
+          message: n.message,
+          is_read: n.is_read,
+          read_at: n.read_at,
+          action_url: n.action_url,
+          metadata: n.metadata,
+        }));
+        const filename = fmt === "csv" ? exportAlertsToCsv(payload) : exportAlertsToPdf(payload);
+        toast.dismiss(toastId);
+        toast.success(`Exportado: ${filename} (${filtered.length} alerta${filtered.length === 1 ? "" : "s"})`);
+      } catch (err) {
+        toast.dismiss(toastId);
+        const msg = err instanceof Error ? err.message : "Erro desconhecido";
+        toast.error(`Falha ao exportar: ${msg}`);
+      } finally {
+        setIsExporting(false);
+      }
+    },
+    [fetchAllFilteredAlerts, searchTerm, sourceFilter],
+  );
+
   const allData = useMemo<SecurityNotification[]>(
     () => alerts.data?.pages.flat() ?? [],
     [alerts.data],
