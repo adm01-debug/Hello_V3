@@ -19,6 +19,8 @@ import {
   type WebhookField,
 } from "@/lib/security-alerts-webhook-validation";
 import type { WebhookHistoryEntry } from "@/lib/security-alerts-webhook-history";
+import { WebhookHistoryEntryRow } from "@/components/security-alerts/WebhookHistoryEntryRow";
+
 
 
 export interface WebhookConfigDialogProps {
