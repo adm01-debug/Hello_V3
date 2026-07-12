@@ -454,6 +454,29 @@ export default function SecurityAlerts() {
                   })}
                 </div>
               ))}
+
+              <div ref={sentinelRef} aria-hidden className="h-1" />
+
+              {alerts.isFetchingNextPage && (
+                <div className="space-y-2 pt-2">
+                  <Skeleton className="h-20 w-full" />
+                  <Skeleton className="h-20 w-full" />
+                </div>
+              )}
+
+              {!alerts.hasNextPage && allData.length > 0 && (
+                <p className="text-center text-xs text-muted-foreground pt-4">
+                  Fim da timeline — {allData.length} alerta{allData.length === 1 ? "" : "s"} carregado{allData.length === 1 ? "" : "s"}.
+                </p>
+              )}
+
+              {alerts.hasNextPage && !alerts.isFetchingNextPage && (
+                <div className="flex justify-center pt-2">
+                  <Button variant="outline" size="sm" onClick={() => void alerts.fetchNextPage()}>
+                    Carregar mais
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </CardContent>
