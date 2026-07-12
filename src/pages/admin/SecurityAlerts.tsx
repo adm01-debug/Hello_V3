@@ -772,65 +772,14 @@ export default function SecurityAlerts() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">Total (30d)</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-semibold">{data.length}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">Não lidos</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-semibold">{unreadCount}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">Críticos</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-semibold text-destructive">{criticalCount}</div>
-          </CardContent>
-        </Card>
-        <Card
-          className={
-            webhookPendingCount > 0
-              ? "border-warning/60 bg-warning/5"
-              : undefined
-          }
-          aria-live="polite"
-        >
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground flex items-center justify-between">
-              <span>Fila webhooks</span>
-              {webhookPendingCount > 0 && (
-                <Badge variant="outline" className="text-[10px]">
-                  pendente
-                </Badge>
-              )}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div
-              className={`text-2xl font-semibold ${
-                webhookPendingCount > 0 ? "text-warning" : ""
-              }`}
-            >
-              {webhookPendingCount}
-            </div>
-            <div className="text-[11px] text-muted-foreground mt-1">
-              {webhookPendingCount > 0
-                ? `mais antigo: ${formatQueueAge(webhookOldestAgeMs)}`
-                : "sem pendências"}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <KpiStrip
+        total={data.length}
+        unread={unreadCount}
+        critical={criticalCount}
+        webhookPending={webhookPendingCount}
+        webhookOldestLabel={formatQueueAge(webhookOldestAgeMs)}
+      />
+
 
 
       <Card>
