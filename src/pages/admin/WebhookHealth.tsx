@@ -115,8 +115,19 @@ export default function WebhookHealth() {
     if (typeof window === "undefined") return;
     window.localStorage.setItem(AUTO_REFRESH_KEY, autoRefresh ? "1" : "0");
     if (!autoRefresh) return;
-    const id = window.setInterval(() => { void loadRows(); }, AUTO_REFRESH_MS);
-    return () => window.clearInterval(id);
+    const tick = () => {
+      if (typeof document !== "undefined" && document.visibilityState === "hidden") return;
+      void loadRows();
+    };
+    const id = window.setInterval(tick, AUTO_REFRESH_MS);
+    const onVis = () => {
+      if (document.visibilityState === "visible") void loadRows();
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      window.clearInterval(id);
+      document.removeEventListener("visibilitychange", onVis);
+    };
   }, [autoRefresh, loadRows]);
 
   // Atalhos de teclado: R = refresh, A = auto, Esc = limpar filtro de endpoint
