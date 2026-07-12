@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -67,20 +67,32 @@ export default function SecurityAlerts() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
 
-  const alerts = useQuery({
-    queryKey: ["admin-security-alerts-30d"],
-    queryFn: async (): Promise<SecurityNotification[]> => {
-      const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-      const { data, error } = await supabase
+  const PAGE_SIZE = 50;
+  const SINCE_ISO = useMemo(
+    () => new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    [],
+  );
+
+  const alerts = useInfiniteQuery({
+    queryKey: ["admin-security-alerts-30d", SINCE_ISO],
+    initialPageParam: null as string | null,
+    queryFn: async ({ pageParam }): Promise<SecurityNotification[]> => {
+      let q = supabase
         .from("notifications")
-        .select("id, title, message, severity, type, action_url, action_label, source_type, is_read, read_at, created_at, metadata")
+        .select(
+          "id, title, message, severity, type, action_url, action_label, source_type, is_read, read_at, created_at, metadata",
+        )
         .eq("category", "security")
-        .gte("created_at", since)
+        .gte("created_at", SINCE_ISO)
         .order("created_at", { ascending: false })
-        .limit(200);
+        .limit(PAGE_SIZE);
+      if (pageParam) q = q.lt("created_at", pageParam);
+      const { data, error } = await q;
       if (error) throw error;
       return (data as SecurityNotification[]) ?? [];
     },
+    getNextPageParam: (lastPage) =>
+      lastPage.length < PAGE_SIZE ? undefined : lastPage[lastPage.length - 1]?.created_at ?? undefined,
     staleTime: 30_000,
   });
 
@@ -140,10 +152,28 @@ export default function SecurityAlerts() {
     void alerts.refetch();
   };
 
+  const allData = useMemo<SecurityNotification[]>(
+    () => alerts.data?.pages.flat() ?? [],
+    [alerts.data],
+  );
 
+  // Infinite-scroll sentinel
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting && alerts.hasNextPage && !alerts.isFetchingNextPage) {
+          void alerts.fetchNextPage();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.fetchNextPage]);
 
-
-  const allData = alerts.data ?? [];
 
   const availableSources = useMemo(() => {
     const set = new Set<string>();
@@ -424,6 +454,29 @@ export default function SecurityAlerts() {
                   })}
                 </div>
               ))}
+
+              <div ref={sentinelRef} aria-hidden className="h-1" />
+
+              {alerts.isFetchingNextPage && (
+                <div className="space-y-2 pt-2">
+                  <Skeleton className="h-20 w-full" />
+                  <Skeleton className="h-20 w-full" />
+                </div>
+              )}
+
+              {!alerts.hasNextPage && allData.length > 0 && (
+                <p className="text-center text-xs text-muted-foreground pt-4">
+                  Fim da timeline — {allData.length} alerta{allData.length === 1 ? "" : "s"} carregado{allData.length === 1 ? "" : "s"}.
+                </p>
+              )}
+
+              {alerts.hasNextPage && !alerts.isFetchingNextPage && (
+                <div className="flex justify-center pt-2">
+                  <Button variant="outline" size="sm" onClick={() => void alerts.fetchNextPage()}>
+                    Carregar mais
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </CardContent>
