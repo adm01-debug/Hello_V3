@@ -94,3 +94,11 @@ Sistema **production-ready** com maturidade técnica máxima certificada.
 - Escrita apenas via RPC SECURITY DEFINER (sem policy INSERT); leitura restrita a admins.
 - Zero novas dependências; arquivos ≤400 linhas.
 
+## Re-verificação Onda 43 (2026-07-12)
+- Detecção de anomalias: trigger `trg_notify_suspicious_index_drop_activity` em `index_drop_audit` dispara notificação crítica (`severity=critical`, `category=security`) para todos os outros admins quando um admin copia >5 comandos `DROP INDEX` em 24h.
+- Revisão cruzada: o próprio autor nunca é notificado — apenas os outros admins, forçando peer review em caso de conta comprometida.
+- Debounce 24h por admin evita spam durante manutenções legítimas em massa.
+- Trigger em bloco `EXCEPTION WHEN OTHERS` garante que falhas de notificação nunca bloqueiem o INSERT principal em `index_drop_audit`.
+- Zero novas dependências; zero schema change.
+
+
