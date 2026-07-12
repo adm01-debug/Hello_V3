@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet, AlertOctagon, MailWarning } from "lucide-react";
+import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet, AlertOctagon, MailWarning, Bookmark, BookmarkPlus, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,6 +22,12 @@ import {
   DropdownMenuSubContent,
   DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
+import {
+  loadPresets,
+  addPreset,
+  removePreset,
+  type AlertFilterPreset,
+} from "@/lib/security-alerts-presets";
 import { exportAlertsToCsv, exportAlertsToPdf, type ExportableAlert } from "@/lib/security-alerts-export";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { toast } from "sonner";
@@ -94,6 +100,45 @@ export default function SecurityAlerts() {
   }, [searchInput, searchTerm, updateParam]);
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  // Presets salvos (localStorage) — carregados uma vez e mantidos em estado
+  // para revalidar após add/remove sem custo de leitura extra.
+  const [presets, setPresets] = useState<AlertFilterPreset[]>(() => loadPresets());
+  const refreshPresets = useCallback(() => setPresets(loadPresets()), []);
+
+  const applyPreset = useCallback(
+    (p: AlertFilterPreset) => {
+      const next = new URLSearchParams();
+      if (p.source && p.source !== ALL_SOURCES) next.set("source", p.source);
+      if (p.q) next.set("q", p.q);
+      setSearchParams(next, { replace: true });
+      setSearchInput(p.q);
+      toast.success(`Preset "${p.name}" aplicado`);
+    },
+    [setSearchParams],
+  );
+
+  const handleSavePreset = useCallback(() => {
+    const name = window.prompt("Nome do preset:");
+    if (!name) return;
+    try {
+      addPreset({ name, source: sourceFilter, q: searchTerm });
+      refreshPresets();
+      toast.success(`Preset "${name.trim()}" salvo`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erro ao salvar preset";
+      toast.error(msg);
+    }
+  }, [refreshPresets, searchTerm, sourceFilter]);
+
+  const handleRemovePreset = useCallback(
+    (p: AlertFilterPreset) => {
+      removePreset(p.id);
+      refreshPresets();
+      toast.success(`Preset "${p.name}" removido`);
+    },
+    [refreshPresets],
+  );
 
 
 
@@ -498,8 +543,60 @@ export default function SecurityAlerts() {
       </div>
 
       <Card>
-        <CardHeader className="pb-3">
+        <CardHeader className="pb-3 flex-row items-center justify-between space-y-0">
           <CardTitle className="text-sm">Filtros</CardTitle>
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Bookmark className="w-4 h-4 mr-2" />
+                  Presets {presets.length > 0 ? `(${presets.length})` : ""}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-72">
+                <DropdownMenuLabel>Presets salvos</DropdownMenuLabel>
+                {presets.length === 0 ? (
+                  <div className="px-2 py-3 text-xs text-muted-foreground">
+                    Nenhum preset ainda. Ajuste os filtros e clique em "Salvar como preset".
+                  </div>
+                ) : (
+                  presets.map((p) => (
+                    <div
+                      key={p.id}
+                      className="flex items-center gap-1 px-1 py-0.5 hover:bg-accent/50 rounded-sm"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => applyPreset(p)}
+                        className="flex-1 text-left px-2 py-1.5 text-sm truncate"
+                        title={`origem: ${p.source === ALL_SOURCES ? "todas" : p.source} • busca: ${p.q || "—"}`}
+                      >
+                        <div className="truncate font-medium">{p.name}</div>
+                        <div className="truncate text-[10px] text-muted-foreground font-mono">
+                          {p.source === ALL_SOURCES ? "todas" : p.source}
+                          {p.q ? ` · "${p.q}"` : ""}
+                        </div>
+                      </button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 shrink-0"
+                        onClick={() => handleRemovePreset(p)}
+                        title="Remover preset"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 text-destructive" />
+                      </Button>
+                    </div>
+                  ))
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSavePreset}>
+                  <BookmarkPlus className="w-4 h-4 mr-2" />
+                  Salvar filtros atuais como preset
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-[220px_1fr_auto] gap-3">
