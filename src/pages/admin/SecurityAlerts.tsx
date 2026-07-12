@@ -50,6 +50,18 @@ function severityBadgeVariant(s: Severity): "destructive" | "secondary" | "outli
 export default function SecurityAlerts() {
   usePageTitle("Alertas de Segurança");
   const qc = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const sourceFilter = searchParams.get("source") ?? ALL_SOURCES;
+  const searchTerm = searchParams.get("q") ?? "";
+
+  const updateParam = (key: string, value: string) => {
+    const next = new URLSearchParams(searchParams);
+    if (!value || value === ALL_SOURCES) next.delete(key);
+    else next.set(key, value);
+    setSearchParams(next, { replace: true });
+  };
+
 
   const alerts = useQuery({
     queryKey: ["admin-security-alerts-30d"],
