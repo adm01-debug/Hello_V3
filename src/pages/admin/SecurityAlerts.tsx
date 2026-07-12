@@ -845,11 +845,12 @@ export default function SecurityAlerts() {
             <Button variant="ghost" onClick={() => setWebhookDialogOpen(false)}>
               Cancelar
             </Button>
-            {webhookUrl && (
+            {(webhookUrl || webhookSecret) && (
               <Button
                 variant="outline"
                 onClick={() => {
                   setWebhookDraft("");
+                  setWebhookSecretDraft("");
                 }}
               >
                 <Trash2 className="w-4 h-4 mr-1" />
