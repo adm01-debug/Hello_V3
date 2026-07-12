@@ -4,6 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { logger } from "@/lib/logger";
+import { EndpointSparkline } from "@/components/admin/EndpointSparkline";
+
+const SPARK_HOURS = 24;
 
 interface Row {
   created_at: string;
