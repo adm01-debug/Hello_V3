@@ -50,6 +50,8 @@ export default function WebhookHealth() {
   });
   const [sortMode, setSortMode] = useState<SortMode>(() => {
     if (typeof window === "undefined") return "volume";
+    const q = new URLSearchParams(window.location.search).get("sort");
+    if (q === "trend" || q === "ratio" || q === "volume") return q;
     const v = window.localStorage.getItem(SORT_KEY);
     return v === "trend" || v === "ratio" || v === "volume" ? v : "volume";
   });
@@ -66,8 +68,10 @@ export default function WebhookHealth() {
     const url = new URL(window.location.href);
     if (endpointFilter === "all") url.searchParams.delete("endpoint");
     else url.searchParams.set("endpoint", endpointFilter);
+    if (sortMode === "volume") url.searchParams.delete("sort");
+    else url.searchParams.set("sort", sortMode);
     window.history.replaceState({}, "", url.toString());
-  }, [endpointFilter]);
+  }, [endpointFilter, sortMode]);
 
   useEffect(() => {
     let cancelled = false;
