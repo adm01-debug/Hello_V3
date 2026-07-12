@@ -317,7 +317,7 @@ export default function SecurityAlerts() {
                       ? format(new Date(`${d}T00:00:00`), "EEEE, dd 'de' MMMM", { locale: ptBR })
                       : "";
                   }}
-                  formatter={(v: number) => [v, "Alertas"]}
+                  formatter={(v) => [Number(v ?? 0), "Alertas"] as [number, string]}
                 />
                 <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
               </BarChart>
