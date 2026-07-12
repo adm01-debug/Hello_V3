@@ -573,7 +573,8 @@ export default function SecurityAlerts() {
             toast.success(`Webhook OK (HTTP ${result.status})${suffix}${retryNote} · ${latency}ms`);
           } else {
             const retryNote = result.attempts > 1 ? ` (após ${result.attempts} tentativas)` : "";
-            toast.error(`Webhook falhou${retryNote}: ${result.error ?? `HTTP ${result.status}`}`);
+            enqueueWebhook(webhookUrl, hookPayload, Boolean(webhookSecret?.trim()), result.error ?? `HTTP ${result.status}`);
+            toast.error(`Webhook falhou${retryNote}: ${result.error ?? `HTTP ${result.status}`} · adicionado à fila`);
           }
         }
       } catch (err) {
