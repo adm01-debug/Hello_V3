@@ -324,8 +324,8 @@ export default function SecurityAlerts() {
             </Select>
             <Input
               placeholder="Buscar por título, mensagem ou origem…"
-              value={searchTerm}
-              onChange={(e) => updateParam("q", e.target.value)}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
             />
             <Button
               variant="ghost"
