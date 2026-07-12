@@ -590,7 +590,10 @@ function VirtualTimeline({
   totalLoaded,
   onLoadMore,
   resetKey,
+  nextPageError,
 }: VirtualTimelineProps) {
+  const nextPageErrorMessage =
+    nextPageError instanceof Error ? nextPageError.message : nextPageError ? String(nextPageError) : null;
   const rows = useMemo<TimelineRow[]>(() => {
     const out: TimelineRow[] = [];
     for (const day of days) {
