@@ -36,6 +36,7 @@ export interface WebhookConfigDialogProps {
   setWebhookBaseDelayDraft: (v: number) => void;
   webhookMaxDelayDraft: number;
   setWebhookMaxDelayDraft: (v: number) => void;
+  webhookValidation: WebhookValidationResult;
   webhookHistory: WebhookHistoryEntry[];
   webhookPendingCount: number;
   isTestingWebhook: boolean;
@@ -47,6 +48,40 @@ export interface WebhookConfigDialogProps {
   onExportHistory: () => void;
   onClearHistory: () => void;
 }
+
+/** Renderiza mensagem inline de erro ou aviso sob um input. */
+function FieldMessage({
+  validation,
+  field,
+}: {
+  validation: WebhookValidationResult;
+  field: WebhookField;
+}) {
+  const err = validation.errors[field];
+  const warn = validation.warnings[field];
+  if (err) {
+    return (
+      <p role="alert" className="mt-1 flex items-start gap-1 text-xs text-destructive">
+        <AlertCircle className="w-3 h-3 mt-0.5 shrink-0" />
+        <span>{err}</span>
+      </p>
+    );
+  }
+  if (warn) {
+    return (
+      <p className="mt-1 flex items-start gap-1 text-xs text-amber-600 dark:text-amber-500">
+        <AlertTriangle className="w-3 h-3 mt-0.5 shrink-0" />
+        <span>{warn}</span>
+      </p>
+    );
+  }
+  return null;
+}
+
+function inputErrorClass(v: WebhookValidationResult, field: WebhookField): string {
+  return v.errors[field] ? "border-destructive focus-visible:ring-destructive" : "";
+}
+
 
 export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
   const {
