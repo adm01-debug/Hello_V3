@@ -35,30 +35,32 @@ const NUM_RUNS = 1000;
 
 const validHostArb = fc
   .tuple(
-    fc.stringOf(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789-".split("")), {
+    fc.string({
+      unit: fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789-".split("")),
       minLength: 3,
       maxLength: 20,
     }),
     fc.constantFrom("com", "io", "app", "dev", "net"),
   )
-  .filter(([h]) => !h.startsWith("-") && !h.endsWith("-"))
-  .map(([h, tld]) => `${h}.${tld}`);
+  .filter(([h]: [string, string]) => !h.startsWith("-") && !h.endsWith("-"))
+  .map(([h, tld]: [string, string]) => `${h}.${tld}`);
 
 const validUrlArb = fc
   .tuple(
     fc.constantFrom("https://", "http://"),
     validHostArb,
-    fc.stringOf(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789/-_".split("")), {
+    fc.string({
+      unit: fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789/-_".split("")),
       maxLength: 30,
     }),
   )
-  .map(([proto, host, path]) => `${proto}${host}/${path}`);
+  .map(([proto, host, path]: [string, string, string]) => `${proto}${host}/${path}`);
 
-const validSecretArb = fc
-  .stringOf(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789ABCDEF".split("")), {
-    minLength: WEBHOOK_SECRET_MIN_LENGTH,
-    maxLength: 64,
-  });
+const validSecretArb = fc.string({
+  unit: fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789ABCDEF".split("")),
+  minLength: WEBHOOK_SECRET_MIN_LENGTH,
+  maxLength: 64,
+});
 
 const validAttemptsArb = fc.integer({ min: WEBHOOK_MAX_ATTEMPTS_MIN, max: WEBHOOK_MAX_ATTEMPTS_MAX });
 const validBaseDelayArb = fc.integer({ min: WEBHOOK_BASE_DELAY_MIN, max: WEBHOOK_BASE_DELAY_MAX });
@@ -159,7 +161,7 @@ describe("validateWebhookConfig — property-based (fast-check)", () => {
 
   it("URL http válida nunca gera erro em url (apenas warning de TLS)", () => {
     const httpUrlArb = fc
-      .tuple(validHostArb, fc.stringOf(fc.constantFrom(..."abc0123".split("")), { maxLength: 10 }))
+      .tuple(validHostArb, fc.string({ unit: fc.constantFrom(..."abc0123".split("")), maxLength: 10 }))
       .map(([host, path]) => `http://${host}/${path}`);
     fc.assert(
       fc.property(validDraftArb, httpUrlArb, (draft, httpUrl) => {
