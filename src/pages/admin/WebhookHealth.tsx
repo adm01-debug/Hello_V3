@@ -162,9 +162,62 @@ export default function WebhookHealth() {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Heatmap · 3 dias × 24 horas</CardTitle>
+        <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
+          <CardTitle>Endpoints (drill-down)</CardTitle>
+          {endpointFilter !== "all" && (
+            <Button size="sm" variant="ghost" onClick={() => setEndpointFilter("all")}>
+              Limpar filtro
+            </Button>
+          )}
         </CardHeader>
+        <CardContent>
+          {endpoints.length === 0 ? (
+            <p className="text-sm text-muted-foreground">Sem dados nas últimas 72h.</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant={endpointFilter === "all" ? "default" : "outline"}
+                onClick={() => setEndpointFilter("all")}
+              >
+                Todos ({rows.length})
+              </Button>
+              {endpoints.map((e) => {
+                const ratio = e.attempts > 0 ? (e.failed / e.attempts) * 100 : 0;
+                const active = endpointFilter === e.hash;
+                return (
+                  <Button
+                    key={e.hash}
+                    size="sm"
+                    variant={active ? "default" : "outline"}
+                    onClick={() => setEndpointFilter(e.hash)}
+                    className="font-mono text-xs"
+                    title={`${e.attempts} tentativas · ${e.failed} falhas · ${ratio.toFixed(1)}%`}
+                  >
+                    {e.hash} · {e.attempts}
+                    {ratio >= 20 && (
+                      <span className="ml-1 text-destructive">⚠ {ratio.toFixed(0)}%</span>
+                    )}
+                  </Button>
+                );
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            Heatmap · 3 dias × 24 horas
+            {endpointFilter !== "all" && (
+              <span className="ml-2 font-mono text-xs text-muted-foreground">
+                endpoint {endpointFilter}
+              </span>
+            )}
+          </CardTitle>
+        </CardHeader>
+
         <CardContent>
           {loading ? (
             <p className="text-muted-foreground">Carregando…</p>
