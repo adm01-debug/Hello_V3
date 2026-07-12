@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { RefreshCw, Trash2, Download } from "lucide-react";
+import { RefreshCw, Trash2, Download, AlertCircle, AlertTriangle } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   WEBHOOK_MAX_ATTEMPTS_MIN,
   WEBHOOK_MAX_ATTEMPTS_MAX,
@@ -12,7 +13,13 @@ import {
   WEBHOOK_MAX_DELAY_MIN,
   WEBHOOK_MAX_DELAY_MAX,
 } from "@/lib/security-alerts-webhook";
+import {
+  hasBlockingErrors,
+  type WebhookValidationResult,
+  type WebhookField,
+} from "@/lib/security-alerts-webhook-validation";
 import type { WebhookHistoryEntry } from "@/lib/security-alerts-webhook-history";
+
 
 export interface WebhookConfigDialogProps {
   open: boolean;
@@ -29,6 +36,7 @@ export interface WebhookConfigDialogProps {
   setWebhookBaseDelayDraft: (v: number) => void;
   webhookMaxDelayDraft: number;
   setWebhookMaxDelayDraft: (v: number) => void;
+  webhookValidation: WebhookValidationResult;
   webhookHistory: WebhookHistoryEntry[];
   webhookPendingCount: number;
   isTestingWebhook: boolean;
@@ -41,6 +49,40 @@ export interface WebhookConfigDialogProps {
   onClearHistory: () => void;
 }
 
+/** Renderiza mensagem inline de erro ou aviso sob um input. */
+function FieldMessage({
+  validation,
+  field,
+}: {
+  validation: WebhookValidationResult;
+  field: WebhookField;
+}) {
+  const err = validation.errors[field];
+  const warn = validation.warnings[field];
+  if (err) {
+    return (
+      <p role="alert" className="mt-1 flex items-start gap-1 text-xs text-destructive">
+        <AlertCircle className="w-3 h-3 mt-0.5 shrink-0" />
+        <span>{err}</span>
+      </p>
+    );
+  }
+  if (warn) {
+    return (
+      <p className="mt-1 flex items-start gap-1 text-xs text-amber-600 dark:text-amber-500">
+        <AlertTriangle className="w-3 h-3 mt-0.5 shrink-0" />
+        <span>{warn}</span>
+      </p>
+    );
+  }
+  return null;
+}
+
+function inputErrorClass(v: WebhookValidationResult, field: WebhookField): string {
+  return v.errors[field] ? "border-destructive focus-visible:ring-destructive" : "";
+}
+
+
 export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
   const {
     open, onOpenChange,
@@ -50,10 +92,14 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
     webhookMaxAttemptsDraft, setWebhookMaxAttemptsDraft,
     webhookBaseDelayDraft, setWebhookBaseDelayDraft,
     webhookMaxDelayDraft, setWebhookMaxDelayDraft,
+    webhookValidation,
     webhookHistory, webhookPendingCount,
     isTestingWebhook, isFlushingQueue,
     onSave, onTest, onFlushQueue, onClearQueue, onExportHistory, onClearHistory,
   } = props;
+  const blocked = hasBlockingErrors(webhookValidation);
+  const canTest = !blocked && webhookValidation.normalizedUrl.length > 0;
+
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -73,8 +119,14 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
             placeholder="https://exemplo.com/hooks/security-alerts"
             value={webhookDraft}
             onChange={(e) => setWebhookDraft(e.target.value)}
+            aria-invalid={!!webhookValidation.errors.url}
+            aria-describedby="webhook-url-msg"
+            className={cn(inputErrorClass(webhookValidation, "url"))}
             autoFocus
           />
+          <div id="webhook-url-msg">
+            <FieldMessage validation={webhookValidation} field="url" />
+          </div>
           <p className="text-xs text-muted-foreground">
             Armazenado localmente neste navegador. Requer CORS habilitado no endpoint receptor.
           </p>
@@ -85,8 +137,14 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
             placeholder="Deixe em branco para desativar assinatura"
             value={webhookSecretDraft}
             onChange={(e) => setWebhookSecretDraft(e.target.value)}
+            aria-invalid={!!webhookValidation.errors.secret}
+            aria-describedby="webhook-secret-msg"
+            className={cn(inputErrorClass(webhookValidation, "secret"))}
             autoComplete="off"
           />
+          <div id="webhook-secret-msg">
+            <FieldMessage validation={webhookValidation} field="secret" />
+          </div>
           <p className="text-xs text-muted-foreground">
             Quando definido, o POST inclui <code className="font-mono">X-Lovable-Signature: sha256=&lt;hmac&gt;</code>{" "}
             e <code className="font-mono">X-Lovable-Timestamp</code> (= <code className="font-mono">generated_at</code>).
@@ -106,8 +164,10 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
               const n = Number.parseInt(e.target.value, 10);
               setWebhookMaxAttemptsDraft(Number.isFinite(n) ? n : WEBHOOK_MAX_ATTEMPTS_MIN);
             }}
-            className="w-24"
+            aria-invalid={!!webhookValidation.errors.maxAttempts}
+            className={cn("w-24", inputErrorClass(webhookValidation, "maxAttempts"))}
           />
+          <FieldMessage validation={webhookValidation} field="maxAttempts" />
           <div className="grid grid-cols-2 gap-2 pt-2">
             <div>
               <Label htmlFor="webhook-base-delay" className="block">Backoff base (ms)</Label>
@@ -122,7 +182,10 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
                   const n = Number.parseInt(e.target.value, 10);
                   setWebhookBaseDelayDraft(Number.isFinite(n) ? n : WEBHOOK_BASE_DELAY_MIN);
                 }}
+                aria-invalid={!!webhookValidation.errors.baseDelayMs}
+                className={cn(inputErrorClass(webhookValidation, "baseDelayMs"))}
               />
+              <FieldMessage validation={webhookValidation} field="baseDelayMs" />
             </div>
             <div>
               <Label htmlFor="webhook-max-delay" className="block">Backoff máx (ms)</Label>
@@ -137,9 +200,13 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
                   const n = Number.parseInt(e.target.value, 10);
                   setWebhookMaxDelayDraft(Number.isFinite(n) ? n : WEBHOOK_MAX_DELAY_MIN);
                 }}
+                aria-invalid={!!webhookValidation.errors.maxDelayMs}
+                className={cn(inputErrorClass(webhookValidation, "maxDelayMs"))}
               />
+              <FieldMessage validation={webhookValidation} field="maxDelayMs" />
             </div>
           </div>
+
           <p className="text-xs text-muted-foreground">
             Retries usam backoff exponencial com jitter (AWS full-jitter): delay = random(0, min(máx, base·2^(n-1))).
             Só disparam em falhas transitórias (rede/timeout, 408, 429, 5xx); 4xx normais não retentam.
@@ -258,10 +325,28 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
               <Trash2 className="w-4 h-4 mr-1" /> Limpar
             </Button>
           )}
-          <Button variant="secondary" onClick={onTest} disabled={isTestingWebhook || !webhookDraft.trim()}>
+          <Button
+            variant="secondary"
+            onClick={onTest}
+            disabled={isTestingWebhook || !canTest}
+            title={
+              !webhookValidation.normalizedUrl
+                ? "Informe uma URL para testar"
+                : blocked
+                  ? "Corrija os campos destacados antes de testar"
+                  : undefined
+            }
+          >
             {isTestingWebhook ? "Testando…" : "Testar"}
           </Button>
-          <Button onClick={onSave}>Salvar</Button>
+          <Button
+            onClick={onSave}
+            disabled={blocked}
+            title={blocked ? "Corrija os campos destacados antes de salvar" : undefined}
+          >
+            Salvar
+          </Button>
+
         </DialogFooter>
       </DialogContent>
     </Dialog>

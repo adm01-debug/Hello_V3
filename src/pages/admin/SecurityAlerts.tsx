@@ -204,7 +204,9 @@ export default function SecurityAlerts() {
     setDialogOpen: setWebhookDialogOpen,
     openDialog: openWebhookDialog,
     save: handleSaveWebhook,
+    validation: webhookValidation,
   } = useWebhookConfig();
+
 
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const {
@@ -223,12 +225,26 @@ export default function SecurityAlerts() {
   } = useWebhookHistory(webhookQueueFlushedAt);
 
   const handleTestWebhook = useCallback(async () => {
-    const trimmed = webhookDraft.trim();
-    if (!trimmed || !isValidHttpUrl(trimmed)) {
-      toast.error("Informe uma URL http(s) válida antes de testar");
+    // Bloqueia teste com qualquer erro bloqueante — mensagem precisa vem do validator.
+    if (webhookValidation.errors.url || !webhookValidation.normalizedUrl) {
+      toast.error(webhookValidation.errors.url ?? "Informe uma URL http(s) válida antes de testar");
       return;
     }
+    if (webhookValidation.errors.secret) {
+      toast.error(`Segredo: ${webhookValidation.errors.secret}`);
+      return;
+    }
+    if (
+      webhookValidation.errors.maxAttempts ||
+      webhookValidation.errors.baseDelayMs ||
+      webhookValidation.errors.maxDelayMs
+    ) {
+      toast.error("Corrija os parâmetros de retry antes de testar.");
+      return;
+    }
+    const trimmed = webhookValidation.normalizedUrl;
     setIsTestingWebhook(true);
+
     const toastId = toast.loading("Enviando payload de teste…");
     const started = performance.now();
     try {
@@ -242,11 +258,12 @@ export default function SecurityAlerts() {
         generated_at: new Date().toISOString(),
       };
       const result = await sendExportWebhook(trimmed, payload, {
-        secret: webhookSecretDraft.trim() || undefined,
+        secret: webhookValidation.normalizedSecret || undefined,
         maxAttempts: webhookMaxAttemptsDraft,
         baseDelayMs: webhookBaseDelayDraft,
         maxDelayMs: Math.max(webhookBaseDelayDraft, webhookMaxDelayDraft),
       });
+
       const latency = Math.round(performance.now() - started);
       recordWebhookHistory({
         url: trimmed,
@@ -274,7 +291,7 @@ export default function SecurityAlerts() {
     } finally {
       setIsTestingWebhook(false);
     }
-  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft, recordWebhookHistory]);
+  }, [webhookValidation, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft, recordWebhookHistory]);
 
 
 
@@ -586,6 +603,7 @@ export default function SecurityAlerts() {
         setWebhookBaseDelayDraft={setWebhookBaseDelayDraft}
         webhookMaxDelayDraft={webhookMaxDelayDraft}
         setWebhookMaxDelayDraft={setWebhookMaxDelayDraft}
+        webhookValidation={webhookValidation}
         webhookHistory={webhookHistory}
         webhookPendingCount={webhookPendingCount}
         isTestingWebhook={isTestingWebhook}

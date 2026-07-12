@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
 import {
   loadWebhookUrl,
@@ -12,20 +12,24 @@ import {
   loadWebhookMaxDelayMs,
   saveWebhookMaxDelayMs,
   WEBHOOK_MAX_ATTEMPTS_MIN,
-  WEBHOOK_MAX_ATTEMPTS_MAX,
   WEBHOOK_BASE_DELAY_MIN,
-  WEBHOOK_BASE_DELAY_MAX,
   WEBHOOK_MAX_DELAY_MIN,
-  WEBHOOK_MAX_DELAY_MAX,
-  isValidHttpUrl,
 } from "@/lib/security-alerts-webhook";
+import {
+  validateWebhookConfig,
+  hasBlockingErrors,
+  summarizeErrors,
+  type WebhookValidationResult,
+} from "@/lib/security-alerts-webhook-validation";
 
 /**
  * Hook: consolida a configuração persistente do webhook de exportação
- * (URL, secret HMAC, políticas de retry) com um par draft/committed. O draft
- * viabiliza edição dentro do WebhookConfigDialog sem mutar o valor efetivo
- * até o usuário confirmar. `save` aplica clamps min/max defensivos e valida
- * a URL, evitando persistência de valores fora dos intervalos suportados.
+ * (URL, secret HMAC, políticas de retry) com um par draft/committed.
+ *
+ * A validação delega para `validateWebhookConfig` — o hook expõe o resultado
+ * (`validation`) para a UI renderizar mensagens inline por campo e bloqueia
+ * `save`/`test` quando há erros. Coerência base>max continua sendo elevada
+ * silenciosamente ao salvar (aparece como aviso na UI antes disso).
  */
 export function useWebhookConfig() {
   const [url, setUrl] = useState<string>(() => loadWebhookUrl());
@@ -41,6 +45,18 @@ export function useWebhookConfig() {
   const [baseDelayDraft, setBaseDelayDraft] = useState<number>(WEBHOOK_BASE_DELAY_MIN);
   const [maxDelayDraft, setMaxDelayDraft] = useState<number>(WEBHOOK_MAX_DELAY_MIN);
 
+  const validation: WebhookValidationResult = useMemo(
+    () =>
+      validateWebhookConfig({
+        url: urlDraft,
+        secret: secretDraft,
+        maxAttempts: maxAttemptsDraft,
+        baseDelayMs: baseDelayDraft,
+        maxDelayMs: maxDelayDraft,
+      }),
+    [urlDraft, secretDraft, maxAttemptsDraft, baseDelayDraft, maxDelayDraft],
+  );
+
   const openDialog = useCallback(() => {
     setUrlDraft(url);
     setSecretDraft(secret);
@@ -51,39 +67,29 @@ export function useWebhookConfig() {
   }, [url, secret, maxAttempts, baseDelayMs, maxDelayMs]);
 
   const save = useCallback(() => {
-    const trimmed = urlDraft.trim();
-    if (trimmed && !isValidHttpUrl(trimmed)) {
-      toast.error("URL inválida — use http(s)://…");
+    if (hasBlockingErrors(validation)) {
+      toast.error(`Corrija os campos: ${summarizeErrors(validation)}`);
       return;
     }
-    const clampedAttempts = Math.max(
-      WEBHOOK_MAX_ATTEMPTS_MIN,
-      Math.min(WEBHOOK_MAX_ATTEMPTS_MAX, Math.floor(maxAttemptsDraft || WEBHOOK_MAX_ATTEMPTS_MIN)),
-    );
-    const clampedBase = Math.max(
-      WEBHOOK_BASE_DELAY_MIN,
-      Math.min(WEBHOOK_BASE_DELAY_MAX, Math.floor(baseDelayDraft || WEBHOOK_BASE_DELAY_MIN)),
-    );
-    let clampedMax = Math.max(
-      WEBHOOK_MAX_DELAY_MIN,
-      Math.min(WEBHOOK_MAX_DELAY_MAX, Math.floor(maxDelayDraft || WEBHOOK_MAX_DELAY_MIN)),
-    );
-    if (clampedMax < clampedBase) clampedMax = clampedBase;
+    const trimmedUrl = validation.normalizedUrl;
+    const trimmedSecret = validation.normalizedSecret;
+    // base já validado; garantimos apenas que max >= base ao persistir
+    const finalMax = Math.max(baseDelayDraft, maxDelayDraft);
 
-    saveWebhookUrl(trimmed);
-    saveWebhookSecret(secretDraft);
-    saveWebhookMaxAttempts(clampedAttempts);
-    saveWebhookBaseDelayMs(clampedBase);
-    saveWebhookMaxDelayMs(clampedMax);
+    saveWebhookUrl(trimmedUrl);
+    saveWebhookSecret(trimmedSecret);
+    saveWebhookMaxAttempts(maxAttemptsDraft);
+    saveWebhookBaseDelayMs(baseDelayDraft);
+    saveWebhookMaxDelayMs(finalMax);
 
-    setUrl(trimmed);
-    setSecret(secretDraft.trim());
-    setMaxAttempts(clampedAttempts);
-    setBaseDelayMs(clampedBase);
-    setMaxDelayMs(clampedMax);
+    setUrl(trimmedUrl);
+    setSecret(trimmedSecret);
+    setMaxAttempts(maxAttemptsDraft);
+    setBaseDelayMs(baseDelayDraft);
+    setMaxDelayMs(finalMax);
     setDialogOpen(false);
-    toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
-  }, [urlDraft, secretDraft, maxAttemptsDraft, baseDelayDraft, maxDelayDraft]);
+    toast.success(trimmedUrl ? "Webhook salvo" : "Webhook removido");
+  }, [validation, baseDelayDraft, maxDelayDraft, maxAttemptsDraft]);
 
   return {
     // committed
@@ -96,7 +102,10 @@ export function useWebhookConfig() {
     maxDelayDraft, setMaxDelayDraft,
     // dialog
     dialogOpen, setDialogOpen, openDialog,
+    // validação (para UI inline)
+    validation,
     // actions
     save,
   };
 }
+
