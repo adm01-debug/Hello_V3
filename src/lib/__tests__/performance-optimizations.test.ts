@@ -65,13 +65,16 @@ describe('Performance: Vite bundle splitting (manualChunks)', () => {
   });
 
   const expectedChunks = [
-    { name: 'vendor-react', deps: ['react', 'react-dom', 'react-router-dom'] },
-    { name: 'vendor-ui', deps: ['@radix-ui/react-dialog'] },
+    { name: 'vendor-react', deps: ['react', 'react-dom', 'scheduler'] },
+    { name: 'vendor-router', deps: ['react-router'] },
+    { name: 'vendor-radix', deps: ['@radix-ui'] },
     { name: 'vendor-charts', deps: ['recharts'] },
     { name: 'vendor-query', deps: ['@tanstack/react-query'] },
-    { name: 'vendor-supabase', deps: ['@supabase/supabase-js'] },
-    { name: 'vendor-utils', deps: ['date-fns', 'zod'] },
+    { name: 'vendor-supabase', deps: ['@supabase'] },
+    { name: 'vendor-date', deps: ['date-fns'] },
+    { name: 'vendor-zod', deps: ['zod'] },
   ];
+
 
   expectedChunks.forEach(({ name, deps }) => {
     it(`defines chunk "${name}"`, () => {
