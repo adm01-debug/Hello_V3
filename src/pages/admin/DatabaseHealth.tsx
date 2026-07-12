@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Database, AlertTriangle, RefreshCw, Gauge, Trash2, Copy, History } from "lucide-react";
+import { Database, AlertTriangle, RefreshCw, Gauge, Trash2, Copy, History, ShieldAlert } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { toast } from "sonner";
 
@@ -144,10 +144,18 @@ export default function DatabaseHealth() {
             </p>
           </div>
         </div>
-        <Button variant="outline" size="sm" onClick={refresh}>
-          <RefreshCw className="w-4 h-4 mr-2" />
-          Atualizar
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button asChild variant="outline" size="sm">
+            <a href="/admin/security-alerts">
+              <ShieldAlert className="w-4 h-4 mr-2" />
+              Alertas de segurança
+            </a>
+          </Button>
+          <Button variant="outline" size="sm" onClick={refresh}>
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Atualizar
+          </Button>
+        </div>
       </div>
 
       {/* Atividade */}
