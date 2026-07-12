@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,6 +38,8 @@ function ratioColor(ratio: number, attempts: number): string {
 
 type SortMode = "volume" | "trend" | "ratio";
 const SORT_KEY = "webhook-health:sort-mode";
+const AUTO_REFRESH_KEY = "webhook-health:auto-refresh";
+const AUTO_REFRESH_MS = 30_000;
 
 export default function WebhookHealth() {
   usePageTitle("Saúde de Webhooks");
@@ -73,28 +75,50 @@ export default function WebhookHealth() {
     window.history.replaceState({}, "", url.toString());
   }, [endpointFilter, sortMode]);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const since = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
-      const { data, error } = await supabase
-        .from("webhook_flush_metrics")
-        .select("created_at,sent,failed,oldest_age_ms,duration_ms,endpoint_hash")
-        .gte("created_at", since)
-        .order("created_at", { ascending: true })
-        .limit(10000);
-      if (cancelled) return;
-      if (error) {
-        logger.error("webhook_health_load_failed", { error: error.message });
-      } else {
-        setRows((data ?? []) as Row[]);
-      }
-      setLoading(false);
-    })();
-    return () => {
-      cancelled = true;
-    };
+  const [autoRefresh, setAutoRefresh] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem(AUTO_REFRESH_KEY) === "1";
+  });
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+  const cancelRef = useRef(false);
+
+  const loadRows = useCallback(async () => {
+    const since = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
+    const { data, error } = await supabase
+      .from("webhook_flush_metrics")
+      .select("created_at,sent,failed,oldest_age_ms,duration_ms,endpoint_hash")
+      .gte("created_at", since)
+      .order("created_at", { ascending: true })
+      .limit(10000);
+    if (cancelRef.current) return;
+    if (error) {
+      logger.error("webhook_health_load_failed", { error: error.message });
+    } else {
+      setRows((data ?? []) as Row[]);
+      setLastRefresh(new Date());
+    }
+    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    cancelRef.current = false;
+    void loadRows();
+    return () => {
+      cancelRef.current = true;
+    };
+  }, [loadRows]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(AUTO_REFRESH_KEY, autoRefresh ? "1" : "0");
+    if (!autoRefresh) return;
+    const id = window.setInterval(() => { void loadRows(); }, AUTO_REFRESH_MS);
+    return () => window.clearInterval(id);
+  }, [autoRefresh, loadRows]);
+
+
+
+
 
 
 
@@ -241,6 +265,24 @@ export default function WebhookHealth() {
         <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
           <CardTitle>Endpoints (drill-down)</CardTitle>
           <div className="flex items-center gap-2 flex-wrap">
+            <Button
+              size="sm"
+              variant={autoRefresh ? "default" : "outline"}
+              className="h-7 px-2 text-xs"
+              onClick={() => setAutoRefresh((v) => !v)}
+              title={autoRefresh ? "Auto-refresh a cada 30s ativo" : "Ativar auto-refresh (30s)"}
+            >
+              {autoRefresh ? "⏸ Auto 30s" : "▶ Auto 30s"}
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-7 px-2 text-xs"
+              onClick={() => { void loadRows(); }}
+              title={lastRefresh ? `Última atualização: ${lastRefresh.toLocaleTimeString()}` : "Atualizar agora"}
+            >
+              ↻
+            </Button>
             <div className="flex items-center gap-1 rounded-md border p-0.5" role="group" aria-label="Ordenação">
               {(["volume", "trend", "ratio"] as SortMode[]).map((m) => (
                 <Button
