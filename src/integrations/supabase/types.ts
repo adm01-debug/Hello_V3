@@ -3689,6 +3689,39 @@ export type Database = {
         }
         Relationships: []
       }
+      index_drop_audit: {
+        Row: {
+          action: string
+          admin_email: string | null
+          admin_id: string | null
+          created_at: string
+          id: string
+          index_name: string
+          sql_generated: string
+          table_name: string
+        }
+        Insert: {
+          action?: string
+          admin_email?: string | null
+          admin_id?: string | null
+          created_at?: string
+          id?: string
+          index_name: string
+          sql_generated: string
+          table_name: string
+        }
+        Update: {
+          action?: string
+          admin_email?: string | null
+          admin_id?: string | null
+          created_at?: string
+          id?: string
+          index_name?: string
+          sql_generated?: string
+          table_name?: string
+        }
+        Relationships: []
+      }
       ip_whitelist: {
         Row: {
           created_at: string
@@ -6968,6 +7001,10 @@ export type Database = {
         }
         Returns: string
       }
+      log_index_drop_copy: {
+        Args: { p_index_name: string; p_table_name: string }
+        Returns: string
+      }
       log_rls_event: {
         Args: { p_details?: Json; p_operation: string; p_table_name: string }
         Returns: undefined
@@ -7016,6 +7053,7 @@ export type Database = {
         }
         Returns: string
       }
+      reset_public_index_stats: { Args: never; Returns: Json }
       validate_audit_insert: { Args: never; Returns: boolean }
     }
     Enums: {
