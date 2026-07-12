@@ -196,9 +196,7 @@ describe("useAlertsExport", () => {
   });
 
   it("captura exceções do fetch de alertas e reporta erro", async () => {
-    supabaseChain.limit.mockImplementationOnce(() =>
-      Promise.resolve({ data: null, error: new Error("db down") }),
-    );
+    supabaseState.error = new Error("db down");
     const { toast } = await import("sonner");
     const { result } = renderHook(() => useAlertsExport(baseParams()));
     await act(async () => {
