@@ -552,6 +552,14 @@ export default function SecurityAlerts() {
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={openWebhookDialog}>
+                <Webhook className="w-4 h-4 mr-2" />
+                Configurar webhook…
+                {webhookUrl && (
+                  <span className="ml-auto text-[10px] text-muted-foreground font-mono">ativo</span>
+                )}
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button
