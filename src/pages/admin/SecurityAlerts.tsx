@@ -233,7 +233,6 @@ export default function SecurityAlerts() {
     toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
   }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
-  const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
   const {
     pendingCount: webhookPendingCount,
     oldestAgeMs: webhookOldestAgeMs,
@@ -242,27 +241,13 @@ export default function SecurityAlerts() {
     flush: handleFlushQueue,
     clear: handleClearQueue,
   } = useWebhookQueue();
-  useEffect(() => {
-    if (webhookQueueFlushedAt > 0) setWebhookHistory(loadWebhookHistory());
-  }, [webhookQueueFlushedAt]);
+  const {
+    history: webhookHistory,
+    record: recordWebhookHistory,
+    clear: handleClearWebhookHistory,
+    exportCsv: handleExportWebhookHistory,
+  } = useWebhookHistory(webhookQueueFlushedAt);
 
-  const recordWebhookHistory = useCallback((entry: Omit<WebhookHistoryEntry, "id" | "at">) => {
-    appendWebhookHistory(entry);
-    setWebhookHistory(loadWebhookHistory());
-  }, []);
-  const handleClearWebhookHistory = useCallback(() => {
-    clearWebhookHistory();
-    setWebhookHistory([]);
-    toast.success("Histórico limpo");
-  }, []);
-  const handleExportWebhookHistory = useCallback(() => {
-    if (webhookHistory.length === 0) {
-      toast.error("Sem histórico para exportar");
-      return;
-    }
-    const filename = downloadWebhookHistoryCSV(webhookHistory);
-    toast.success(`Histórico exportado (${webhookHistory.length}) — ${filename}`);
-  }, [webhookHistory]);
   const handleTestWebhook = useCallback(async () => {
     const trimmed = webhookDraft.trim();
     if (!trimmed || !isValidHttpUrl(trimmed)) {
