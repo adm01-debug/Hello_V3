@@ -1,16 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+
+const ALL_SOURCES = "__all__";
 
 type SecurityNotification = {
   id: string;
@@ -46,6 +50,18 @@ function severityBadgeVariant(s: Severity): "destructive" | "secondary" | "outli
 export default function SecurityAlerts() {
   usePageTitle("Alertas de Segurança");
   const qc = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const sourceFilter = searchParams.get("source") ?? ALL_SOURCES;
+  const searchTerm = searchParams.get("q") ?? "";
+
+  const updateParam = (key: string, value: string) => {
+    const next = new URLSearchParams(searchParams);
+    if (!value || value === ALL_SOURCES) next.delete(key);
+    else next.set(key, value);
+    setSearchParams(next, { replace: true });
+  };
+
 
   const alerts = useQuery({
     queryKey: ["admin-security-alerts-30d"],
@@ -91,24 +107,44 @@ export default function SecurityAlerts() {
     void alerts.refetch();
   };
 
-  const markAllRead = async () => {
-    const unread = (alerts.data ?? []).filter((a) => !a.is_read).map((a) => a.id);
-    if (unread.length === 0) return;
+  const markAllRead = async (ids: string[]) => {
+    if (ids.length === 0) return;
     const { error } = await supabase
       .from("notifications")
       .update({ is_read: true, read_at: new Date().toISOString() })
-      .in("id", unread);
+      .in("id", ids);
     if (error) {
       toast.error("Falha ao marcar todos como lidos");
       return;
     }
-    toast.success(`${unread.length} alertas marcados como lidos`);
+    toast.success(`${ids.length} alertas marcados como lidos`);
     void alerts.refetch();
   };
 
-  const data = alerts.data ?? [];
+
+  const allData = alerts.data ?? [];
+
+  const availableSources = useMemo(() => {
+    const set = new Set<string>();
+    for (const n of allData) if (n.source_type) set.add(n.source_type);
+    return Array.from(set).sort();
+  }, [allData]);
+
+  const data = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    return allData.filter((n) => {
+      if (sourceFilter !== ALL_SOURCES && (n.source_type ?? "") !== sourceFilter) return false;
+      if (term) {
+        const hay = `${n.title}\n${n.message}\n${n.source_type ?? ""}`.toLowerCase();
+        if (!hay.includes(term)) return false;
+      }
+      return true;
+    });
+  }, [allData, sourceFilter, searchTerm]);
+
   const unreadCount = data.filter((a) => !a.is_read).length;
   const criticalCount = data.filter((a) => normalizeSeverity(a.severity) === "critical").length;
+  const hasActiveFilters = sourceFilter !== ALL_SOURCES || searchTerm.length > 0;
 
   // Agrupa por dia (YYYY-MM-DD) e ordena severidade dentro do dia
   const grouped = data.reduce<Record<string, SecurityNotification[]>>((acc, n) => {
@@ -122,6 +158,7 @@ export default function SecurityAlerts() {
       (a, b) => severityRank[normalizeSeverity(a.severity)] - severityRank[normalizeSeverity(b.severity)],
     );
   }
+
 
   return (
     <div className="space-y-6 p-4 md:p-6 max-w-6xl">
@@ -140,9 +177,14 @@ export default function SecurityAlerts() {
             <RefreshCw className="w-4 h-4 mr-2" />
             Atualizar
           </Button>
-          <Button variant="secondary" size="sm" onClick={markAllRead} disabled={unreadCount === 0}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => markAllRead(data.filter((a) => !a.is_read).map((a) => a.id))}
+            disabled={unreadCount === 0}
+          >
             <CheckCircle2 className="w-4 h-4 mr-2" />
-            Marcar todos como lidos ({unreadCount})
+            Marcar {hasActiveFilters ? "filtrados" : "todos"} como lidos ({unreadCount})
           </Button>
         </div>
       </div>
@@ -173,6 +215,48 @@ export default function SecurityAlerts() {
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm">Filtros</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-[220px_1fr_auto] gap-3">
+            <Select value={sourceFilter} onValueChange={(v) => updateParam("source", v)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Origem (source_type)" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={ALL_SOURCES}>Todas as origens</SelectItem>
+                {availableSources.map((s) => (
+                  <SelectItem key={s} value={s} className="font-mono text-xs">
+                    {s}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Input
+              placeholder="Buscar por título, mensagem ou origem…"
+              value={searchTerm}
+              onChange={(e) => updateParam("q", e.target.value)}
+            />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSearchParams(new URLSearchParams(), { replace: true })}
+              disabled={!hasActiveFilters}
+            >
+              <X className="w-4 h-4 mr-1" />
+              Limpar
+            </Button>
+          </div>
+          {hasActiveFilters && (
+            <p className="text-xs text-muted-foreground mt-2">
+              Exibindo {data.length} de {allData.length} alertas com os filtros aplicados.
+            </p>
+          )}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>
