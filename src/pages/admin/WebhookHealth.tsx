@@ -310,6 +310,23 @@ export default function WebhookHealth() {
                 </Button>
               </>
             )}
+            {(endpointFilter !== "all" || sortMode !== "volume") && (
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-xs"
+                onClick={() => {
+                  setEndpointFilter("all");
+                  setSortMode("volume");
+                  try {
+                    window.localStorage.removeItem(SORT_KEY);
+                  } catch { /* ignore */ }
+                }}
+                title="Resetar filtros e ordenação"
+              >
+                Resetar
+              </Button>
+            )}
 
           </div>
         </CardHeader>
