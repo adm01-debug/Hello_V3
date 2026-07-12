@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { KpiStrip } from "@/components/security-alerts/KpiStrip";
+
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
