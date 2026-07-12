@@ -47,6 +47,7 @@ import {
   flushWebhookQueue,
   clearWebhookQueue,
 } from "@/lib/security-alerts-webhook-queue";
+import { WebhookConfigDialog } from "@/components/security-alerts/WebhookConfigDialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
