@@ -815,6 +815,20 @@ export default function SecurityAlerts() {
             <p className="text-xs text-muted-foreground">
               Armazenado localmente neste navegador. Requer CORS habilitado no endpoint receptor.
             </p>
+            <Label htmlFor="webhook-secret" className="pt-2 block">Segredo HMAC (opcional)</Label>
+            <Input
+              id="webhook-secret"
+              type="password"
+              placeholder="Deixe em branco para desativar assinatura"
+              value={webhookSecretDraft}
+              onChange={(e) => setWebhookSecretDraft(e.target.value)}
+              autoComplete="off"
+            />
+            <p className="text-xs text-muted-foreground">
+              Quando definido, o POST inclui <code className="font-mono">X-Lovable-Signature: sha256=&lt;hmac&gt;</code>{" "}
+              e <code className="font-mono">X-Lovable-Timestamp</code> (= <code className="font-mono">generated_at</code>).
+              Valide no receptor recomputando HMAC-SHA256 do corpo bruto com o mesmo segredo.
+            </p>
             <pre className="text-[10px] p-2 rounded-md border bg-muted/30 overflow-auto font-mono">
 {`{
   "event": "security_alerts.export",
