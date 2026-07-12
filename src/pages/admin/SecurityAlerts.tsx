@@ -3,6 +3,7 @@ import { KpiStrip } from "@/components/security-alerts/KpiStrip";
 import { AlertsDailyChart } from "@/components/security-alerts/AlertsDailyChart";
 import { AlertsFilterBar } from "@/components/security-alerts/AlertsFilterBar";
 import { AlertsHeader } from "@/components/security-alerts/AlertsHeader";
+import { AlertsTimelineCard } from "@/components/security-alerts/AlertsTimelineCard";
 
 
 
@@ -731,38 +732,21 @@ export default function SecurityAlerts() {
       <AlertsDailyChart data={chartData} />
 
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Timeline</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {alerts.isLoading ? (
-            <div className="space-y-3">
-              <Skeleton className="h-20 w-full" />
-              <Skeleton className="h-20 w-full" />
-              <Skeleton className="h-20 w-full" />
-            </div>
-          ) : days.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              Nenhum alerta de segurança nos últimos 30 dias. 🎉
-            </p>
-          ) : (
-            <VirtualTimeline
-              days={days}
-              grouped={grouped}
-              onSelect={setSelectedId}
-              onMarkRead={markRead}
-              sentinelRef={sentinelRef}
-              isFetchingNextPage={alerts.isFetchingNextPage}
-              hasNextPage={!!alerts.hasNextPage}
-              totalLoaded={allData.length}
-              onLoadMore={() => void alerts.fetchNextPage()}
-              resetKey={filterKey}
-              nextPageError={alerts.isFetchNextPageError ? alerts.error : null}
-            />
-          )}
-        </CardContent>
-      </Card>
+      <AlertsTimelineCard
+        isLoading={alerts.isLoading}
+        days={days}
+        grouped={grouped}
+        onSelect={setSelectedId}
+        onMarkRead={markRead}
+        sentinelRef={sentinelRef}
+        isFetchingNextPage={alerts.isFetchingNextPage}
+        hasNextPage={!!alerts.hasNextPage}
+        totalLoaded={allData.length}
+        onLoadMore={() => void alerts.fetchNextPage()}
+        resetKey={filterKey}
+        nextPageError={alerts.isFetchNextPageError ? alerts.error : null}
+      />
+
 
 
       <AlertDetailsDialog
