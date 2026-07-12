@@ -4,6 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { logger } from "@/lib/logger";
+import { EndpointSparkline } from "@/components/admin/EndpointSparkline";
+
+const SPARK_HOURS = 24;
 
 interface Row {
   created_at: string;
@@ -72,16 +75,42 @@ export default function WebhookHealth() {
   );
 
   const endpoints = useMemo(() => {
-    const map = new Map<string, { attempts: number; failed: number }>();
+    const nowHour = Math.floor(Date.now() / 3_600_000);
+    const map = new Map<
+      string,
+      { attempts: number; failed: number; hourly: { sent: number; failed: number }[] }
+    >();
     for (const r of rows) {
       const key = r.endpoint_hash ?? "—";
-      const cur = map.get(key) ?? { attempts: 0, failed: 0 };
-      cur.attempts += (r.sent ?? 0) + (r.failed ?? 0);
-      cur.failed += r.failed ?? 0;
+      const cur =
+        map.get(key) ??
+        {
+          attempts: 0,
+          failed: 0,
+          hourly: Array.from({ length: SPARK_HOURS }, () => ({ sent: 0, failed: 0 })),
+        };
+      const sent = r.sent ?? 0;
+      const failed = r.failed ?? 0;
+      cur.attempts += sent + failed;
+      cur.failed += failed;
+      const rowHour = Math.floor(new Date(r.created_at).getTime() / 3_600_000);
+      const idx = SPARK_HOURS - 1 - (nowHour - rowHour);
+      if (idx >= 0 && idx < SPARK_HOURS) {
+        cur.hourly[idx].sent += sent;
+        cur.hourly[idx].failed += failed;
+      }
       map.set(key, cur);
     }
     return Array.from(map.entries())
-      .map(([hash, s]) => ({ hash, ...s }))
+      .map(([hash, s]) => ({
+        hash,
+        attempts: s.attempts,
+        failed: s.failed,
+        trend: s.hourly.map((h) => {
+          const a = h.sent + h.failed;
+          return a > 0 ? h.failed / a : 0;
+        }),
+      }))
       .sort((a, b) => b.attempts - a.attempts);
   }, [rows]);
 
@@ -191,12 +220,15 @@ export default function WebhookHealth() {
                     size="sm"
                     variant={active ? "default" : "outline"}
                     onClick={() => setEndpointFilter(e.hash)}
-                    className="font-mono text-xs"
-                    title={`${e.attempts} tentativas · ${e.failed} falhas · ${ratio.toFixed(1)}%`}
+                    className="h-auto gap-2 px-2 py-1 font-mono text-xs"
+                    title={`${e.attempts} tentativas · ${e.failed} falhas · ${ratio.toFixed(1)}% · tendência ${SPARK_HOURS}h`}
                   >
-                    {e.hash} · {e.attempts}
+                    <span>
+                      {e.hash} · {e.attempts}
+                    </span>
+                    <EndpointSparkline points={e.trend} />
                     {ratio >= 20 && (
-                      <span className="ml-1 text-destructive">⚠ {ratio.toFixed(0)}%</span>
+                      <span className="text-destructive">⚠ {ratio.toFixed(0)}%</span>
                     )}
                   </Button>
                 );
