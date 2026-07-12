@@ -364,6 +364,27 @@ export default function SecurityAlerts() {
         toast.success(
           `Exportado: ${filename} (${filtered.length} alerta${filtered.length === 1 ? "" : "s"}, ${scopeLabel})`,
         );
+        // Notifica webhook configurado (best-effort — falha não bloqueia export).
+        if (webhookUrl) {
+          const hookPayload: WebhookExportPayload = {
+            event: "security_alerts.export",
+            filename,
+            format: fmt,
+            count: filtered.length,
+            scope,
+            filters: {
+              source: sourceFilter === ALL_SOURCES ? null : sourceFilter,
+              q: searchTerm || null,
+              since_iso: SINCE_ISO,
+            },
+            generated_at: new Date().toISOString(),
+          };
+          const hookToast = toast.loading("Enviando ao webhook…");
+          const result = await sendExportWebhook(webhookUrl, hookPayload);
+          toast.dismiss(hookToast);
+          if (result.ok) toast.success(`Webhook OK (HTTP ${result.status})`);
+          else toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
+        }
       } catch (err) {
         toast.dismiss(toastId);
         const msg = err instanceof Error ? err.message : "Erro desconhecido";
@@ -372,7 +393,8 @@ export default function SecurityAlerts() {
         setIsExporting(false);
       }
     },
-    [fetchAllFilteredAlerts, searchTerm, sourceFilter],
+    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, SINCE_ISO],
+
   );
 
   const allData = useMemo<SecurityNotification[]>(
