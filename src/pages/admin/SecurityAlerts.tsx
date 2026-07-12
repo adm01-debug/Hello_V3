@@ -8,7 +8,7 @@ import { AlertsTimelineCard } from "@/components/security-alerts/AlertsTimelineC
 
 
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -290,7 +290,7 @@ export default function SecurityAlerts() {
   type Cursor = { createdAt: string; id: string } | null;
 
   const alerts = useInfiniteQuery({
-    queryKey: ["admin-security-alerts-30d", SINCE_ISO],
+    queryKey: ["admin-security-alerts-30d", SINCE_ISO, sourceFilter, searchTerm],
     initialPageParam: null as Cursor,
     queryFn: async ({ pageParam }): Promise<SecurityNotification[]> => {
       let q = supabase
@@ -303,6 +303,16 @@ export default function SecurityAlerts() {
         .order("created_at", { ascending: false })
         .order("id", { ascending: false })
         .limit(PAGE_SIZE);
+      if (sourceFilter !== ALL_SOURCES) {
+        q = q.eq("source_type", sourceFilter);
+      }
+      const term = searchTerm.trim();
+      if (term) {
+        // Busca server-side (ILIKE) em title/message — evita puxar páginas
+        // inteiras só para descartar no cliente.
+        const escaped = term.replace(/[%,()]/g, "\\$&");
+        q = q.or(`title.ilike.%${escaped}%,message.ilike.%${escaped}%`);
+      }
       if (pageParam) {
         // (created_at, id) < (cursor.createdAt, cursor.id) em ordem lexicográfica
         // desc: created_at < cursor OR (created_at = cursor AND id < cursor.id)
@@ -322,18 +332,11 @@ export default function SecurityAlerts() {
     staleTime: 30_000,
   });
 
-  // Ao mudar filtros: revalida páginas já carregadas (traz updates recentes
-  // como is_read alterados por outros clientes) sem descartar o histórico.
+
+  // Filtros participam do queryKey — troca de filtro cria automaticamente
+  // uma nova cache entry paginada, sem precisar de refetch manual.
   const filterKey = `${sourceFilter}::${searchTerm}`;
-  const firstFilterRun = useRef(true);
-  useEffect(() => {
-    if (firstFilterRun.current) {
-      firstFilterRun.current = false;
-      return;
-    }
-    void alerts.refetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterKey]);
+
 
 
 
@@ -436,23 +439,32 @@ export default function SecurityAlerts() {
   }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.isFetchNextPageError, alerts.fetchNextPage]);
 
 
-  const availableSources = useMemo(() => {
-    const set = new Set<string>();
-    for (const n of allData) if (n.source_type) set.add(n.source_type);
-    return Array.from(set).sort();
-  }, [allData]);
-
-  const data = useMemo(() => {
-    const term = searchTerm.trim().toLowerCase();
-    return allData.filter((n) => {
-      if (sourceFilter !== ALL_SOURCES && (n.source_type ?? "") !== sourceFilter) return false;
-      if (term) {
-        const hay = `${n.title}\n${n.message}\n${n.source_type ?? ""}`.toLowerCase();
-        if (!hay.includes(term)) return false;
+  // Fontes disponíveis — query dedicada (30d) para não colapsar quando o
+  // filtro server-side por source_type está ativo.
+  const availableSourcesQuery = useQuery({
+    queryKey: ["admin-security-alerts-sources-30d", SINCE_ISO],
+    queryFn: async (): Promise<string[]> => {
+      const { data, error } = await supabase
+        .from("notifications")
+        .select("source_type")
+        .eq("category", "security")
+        .gte("created_at", SINCE_ISO)
+        .not("source_type", "is", null)
+        .limit(5000);
+      if (error) throw error;
+      const set = new Set<string>();
+      for (const row of (data ?? []) as Array<{ source_type: string | null }>) {
+        if (row.source_type) set.add(row.source_type);
       }
-      return true;
-    });
-  }, [allData, sourceFilter, searchTerm]);
+      return Array.from(set).sort();
+    },
+    staleTime: 5 * 60_000,
+  });
+  const availableSources = availableSourcesQuery.data ?? [];
+
+  // Filtros já aplicados no servidor — mantido só como salvaguarda defensiva.
+  const data = allData;
+
 
   const unreadCount = data.filter((a) => !a.is_read).length;
   const criticalCount = data.filter((a) => normalizeSeverity(a.severity) === "critical").length;
