@@ -220,12 +220,15 @@ export default function WebhookHealth() {
                     size="sm"
                     variant={active ? "default" : "outline"}
                     onClick={() => setEndpointFilter(e.hash)}
-                    className="font-mono text-xs"
-                    title={`${e.attempts} tentativas · ${e.failed} falhas · ${ratio.toFixed(1)}%`}
+                    className="h-auto gap-2 px-2 py-1 font-mono text-xs"
+                    title={`${e.attempts} tentativas · ${e.failed} falhas · ${ratio.toFixed(1)}% · tendência ${SPARK_HOURS}h`}
                   >
-                    {e.hash} · {e.attempts}
+                    <span>
+                      {e.hash} · {e.attempts}
+                    </span>
+                    <EndpointSparkline points={e.trend} />
                     {ratio >= 20 && (
-                      <span className="ml-1 text-destructive">⚠ {ratio.toFixed(0)}%</span>
+                      <span className="text-destructive">⚠ {ratio.toFixed(0)}%</span>
                     )}
                   </Button>
                 );
