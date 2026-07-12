@@ -275,6 +275,24 @@ export default function WebhookHealth() {
               {endpoints.map((e) => {
                 const ratio = e.attempts > 0 ? (e.failed / e.attempts) * 100 : 0;
                 const active = endpointFilter === e.hash;
+                const lastHour = e.trend[e.trend.length - 1] ?? 0;
+                const priorAvg =
+                  e.trend.length > 1
+                    ? e.trend.slice(0, -1).reduce((s, v) => s + v, 0) / (e.trend.length - 1)
+                    : 0;
+                const diff = lastHour - priorAvg;
+                const trendUp = diff > 0.02;
+                const trendDown = diff < -0.02;
+                const trendLabel = trendUp
+                  ? `▲ ${(diff * 100).toFixed(0)}pp`
+                  : trendDown
+                    ? `▼ ${(Math.abs(diff) * 100).toFixed(0)}pp`
+                    : "•";
+                const trendClass = trendUp
+                  ? "text-destructive"
+                  : trendDown
+                    ? "text-success"
+                    : "text-muted-foreground";
                 return (
                   <Button
                     key={e.hash}
@@ -282,18 +300,20 @@ export default function WebhookHealth() {
                     variant={active ? "default" : "outline"}
                     onClick={() => setEndpointFilter(e.hash)}
                     className="h-auto gap-2 px-2 py-1 font-mono text-xs"
-                    title={`${e.attempts} tentativas · ${e.failed} falhas · ${ratio.toFixed(1)}% · tendência ${SPARK_HOURS}h`}
+                    title={`${e.attempts} tentativas · ${e.failed} falhas · ${ratio.toFixed(1)}% · última hora ${(lastHour * 100).toFixed(0)}% vs média ${(priorAvg * 100).toFixed(0)}%`}
                   >
                     <span>
                       {e.hash} · {e.attempts}
                     </span>
                     <EndpointSparkline points={e.trend} />
+                    <span className={trendClass}>{trendLabel}</span>
                     {ratio >= 20 && (
                       <span className="text-destructive">⚠ {ratio.toFixed(0)}%</span>
                     )}
                   </Button>
                 );
               })}
+
             </div>
           )}
         </CardContent>
