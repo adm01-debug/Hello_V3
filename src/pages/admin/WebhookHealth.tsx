@@ -36,6 +36,9 @@ function ratioColor(ratio: number, attempts: number): string {
   return "bg-success/60";
 }
 
+type SortMode = "volume" | "trend" | "ratio";
+const SORT_KEY = "webhook-health:sort-mode";
+
 export default function WebhookHealth() {
   usePageTitle("Saúde de Webhooks");
   const [rows, setRows] = useState<Row[]>([]);
@@ -45,6 +48,18 @@ export default function WebhookHealth() {
     const p = new URLSearchParams(window.location.search).get("endpoint");
     return p && p.length > 0 ? p : "all";
   });
+  const [sortMode, setSortMode] = useState<SortMode>(() => {
+    if (typeof window === "undefined") return "volume";
+    const v = window.localStorage.getItem(SORT_KEY);
+    return v === "trend" || v === "ratio" || v === "volume" ? v : "volume";
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(SORT_KEY, sortMode);
+    } catch { /* ignore */ }
+  }, [sortMode]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
