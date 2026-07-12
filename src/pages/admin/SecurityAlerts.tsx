@@ -8,7 +8,7 @@ import { AlertsTimelineCard } from "@/components/security-alerts/AlertsTimelineC
 
 
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
