@@ -201,6 +201,9 @@ export async function flushWebhookQueue(): Promise<WebhookFlushResult> {
     const duration_ms = Math.round(
       (typeof performance !== "undefined" ? performance.now() : Date.now()) - t0,
     );
+    // Endpoint predominante: primeiro item processado (fila normalmente aponta ao mesmo destino).
+    const dominantUrl =
+      initialItems[0]?.url || loadWebhookUrl() || "";
     const result: WebhookFlushResult = {
       sent,
       failed,
@@ -208,7 +211,9 @@ export async function flushWebhookQueue(): Promise<WebhookFlushResult> {
       pending_before,
       oldest_age_ms,
       duration_ms,
+      endpoint_hash: dominantUrl ? hashEndpoint(dominantUrl) : undefined,
     };
+
     if (typeof window !== "undefined" && typeof CustomEvent !== "undefined") {
       try {
         window.dispatchEvent(
