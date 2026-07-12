@@ -11,7 +11,7 @@ import {
   sendExportWebhook,
   type WebhookExportPayload,
 } from "./security-alerts-webhook";
-import { addWebhookHistoryEntry } from "./security-alerts-webhook-history";
+import { appendWebhookHistory } from "./security-alerts-webhook-history";
 
 const QUEUE_KEY = "security-alerts:webhook-queue";
 const MAX_QUEUE = 50;
