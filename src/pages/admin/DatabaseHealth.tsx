@@ -42,6 +42,16 @@ type IdleIndex = {
   index_size_pretty: string;
 };
 
+type IndexDropAuditRow = {
+  id: string;
+  index_name: string;
+  table_name: string;
+  admin_email: string | null;
+  action: "copy" | "execute";
+  created_at: string;
+};
+
+
 interface Snapshot {
   generated_at: string;
   bloat: BloatRow[];
