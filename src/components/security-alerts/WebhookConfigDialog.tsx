@@ -46,7 +46,9 @@ export interface WebhookConfigDialogProps {
   onFlushQueue: () => void;
   onClearQueue: () => void;
   onExportHistory: () => void;
+  onExportHistoryNdjson?: () => void;
   onClearHistory: () => void;
+
 }
 
 /** Renderiza mensagem inline de erro ou aviso sob um input. */
