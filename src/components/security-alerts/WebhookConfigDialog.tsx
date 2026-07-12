@@ -119,8 +119,14 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
             placeholder="https://exemplo.com/hooks/security-alerts"
             value={webhookDraft}
             onChange={(e) => setWebhookDraft(e.target.value)}
+            aria-invalid={!!webhookValidation.errors.url}
+            aria-describedby="webhook-url-msg"
+            className={cn(inputErrorClass(webhookValidation, "url"))}
             autoFocus
           />
+          <div id="webhook-url-msg">
+            <FieldMessage validation={webhookValidation} field="url" />
+          </div>
           <p className="text-xs text-muted-foreground">
             Armazenado localmente neste navegador. Requer CORS habilitado no endpoint receptor.
           </p>
@@ -131,8 +137,14 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
             placeholder="Deixe em branco para desativar assinatura"
             value={webhookSecretDraft}
             onChange={(e) => setWebhookSecretDraft(e.target.value)}
+            aria-invalid={!!webhookValidation.errors.secret}
+            aria-describedby="webhook-secret-msg"
+            className={cn(inputErrorClass(webhookValidation, "secret"))}
             autoComplete="off"
           />
+          <div id="webhook-secret-msg">
+            <FieldMessage validation={webhookValidation} field="secret" />
+          </div>
           <p className="text-xs text-muted-foreground">
             Quando definido, o POST inclui <code className="font-mono">X-Lovable-Signature: sha256=&lt;hmac&gt;</code>{" "}
             e <code className="font-mono">X-Lovable-Timestamp</code> (= <code className="font-mono">generated_at</code>).
@@ -152,8 +164,10 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
               const n = Number.parseInt(e.target.value, 10);
               setWebhookMaxAttemptsDraft(Number.isFinite(n) ? n : WEBHOOK_MAX_ATTEMPTS_MIN);
             }}
-            className="w-24"
+            aria-invalid={!!webhookValidation.errors.maxAttempts}
+            className={cn("w-24", inputErrorClass(webhookValidation, "maxAttempts"))}
           />
+          <FieldMessage validation={webhookValidation} field="maxAttempts" />
           <div className="grid grid-cols-2 gap-2 pt-2">
             <div>
               <Label htmlFor="webhook-base-delay" className="block">Backoff base (ms)</Label>
@@ -168,7 +182,10 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
                   const n = Number.parseInt(e.target.value, 10);
                   setWebhookBaseDelayDraft(Number.isFinite(n) ? n : WEBHOOK_BASE_DELAY_MIN);
                 }}
+                aria-invalid={!!webhookValidation.errors.baseDelayMs}
+                className={cn(inputErrorClass(webhookValidation, "baseDelayMs"))}
               />
+              <FieldMessage validation={webhookValidation} field="baseDelayMs" />
             </div>
             <div>
               <Label htmlFor="webhook-max-delay" className="block">Backoff máx (ms)</Label>
@@ -183,9 +200,13 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
                   const n = Number.parseInt(e.target.value, 10);
                   setWebhookMaxDelayDraft(Number.isFinite(n) ? n : WEBHOOK_MAX_DELAY_MIN);
                 }}
+                aria-invalid={!!webhookValidation.errors.maxDelayMs}
+                className={cn(inputErrorClass(webhookValidation, "maxDelayMs"))}
               />
+              <FieldMessage validation={webhookValidation} field="maxDelayMs" />
             </div>
           </div>
+
           <p className="text-xs text-muted-foreground">
             Retries usam backoff exponencial com jitter (AWS full-jitter): delay = random(0, min(máx, base·2^(n-1))).
             Só disparam em falhas transitórias (rede/timeout, 408, 429, 5xx); 4xx normais não retentam.
