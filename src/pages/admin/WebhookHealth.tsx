@@ -283,8 +283,17 @@ export default function WebhookHealth() {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
-          <CardTitle>Endpoints (drill-down)</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            Endpoints (drill-down)
+            <span
+              className="hidden md:inline text-[10px] font-normal text-muted-foreground border rounded px-1.5 py-0.5"
+              title="Atalhos: R = atualizar, A = alternar auto-refresh, Esc = limpar filtro"
+            >
+              <kbd className="font-mono">R</kbd> atualizar · <kbd className="font-mono">A</kbd> auto · <kbd className="font-mono">Esc</kbd> limpar
+            </span>
+          </CardTitle>
           <div className="flex items-center gap-2 flex-wrap">
+
             <Button
               size="sm"
               variant={autoRefresh ? "default" : "outline"}
