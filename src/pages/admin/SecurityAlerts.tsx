@@ -247,10 +247,13 @@ export default function SecurityAlerts() {
     return out;
   }, [SINCE_ISO]);
 
+  type ExportScope = "all" | "critical" | "unread";
   const handleExport = useCallback(
-    async (fmt: "csv" | "pdf") => {
+    async (fmt: "csv" | "pdf", scope: ExportScope = "all") => {
       setIsExporting(true);
-      const toastId = toast.loading("Preparando exportação…");
+      const scopeLabel =
+        scope === "critical" ? "apenas críticos" : scope === "unread" ? "apenas não lidos" : "todos";
+      const toastId = toast.loading(`Preparando exportação (${scopeLabel})…`);
       try {
         const rows = await fetchAllFilteredAlerts();
         const term = searchTerm.trim().toLowerCase();
@@ -260,11 +263,13 @@ export default function SecurityAlerts() {
             const hay = `${n.title}\n${n.message}\n${n.source_type ?? ""}`.toLowerCase();
             if (!hay.includes(term)) return false;
           }
+          if (scope === "critical" && normalizeSeverity(n.severity) !== "critical") return false;
+          if (scope === "unread" && n.is_read) return false;
           return true;
         });
         if (filtered.length === 0) {
           toast.dismiss(toastId);
-          toast.warning("Nenhum alerta corresponde aos filtros — nada para exportar.");
+          toast.warning(`Nenhum alerta (${scopeLabel}) corresponde aos filtros — nada para exportar.`);
           return;
         }
         const payload: ExportableAlert[] = filtered.map((n) => ({
@@ -282,7 +287,9 @@ export default function SecurityAlerts() {
         }));
         const filename = fmt === "csv" ? exportAlertsToCsv(payload) : exportAlertsToPdf(payload);
         toast.dismiss(toastId);
-        toast.success(`Exportado: ${filename} (${filtered.length} alerta${filtered.length === 1 ? "" : "s"})`);
+        toast.success(
+          `Exportado: ${filename} (${filtered.length} alerta${filtered.length === 1 ? "" : "s"}, ${scopeLabel})`,
+        );
       } catch (err) {
         toast.dismiss(toastId);
         const msg = err instanceof Error ? err.message : "Erro desconhecido";
