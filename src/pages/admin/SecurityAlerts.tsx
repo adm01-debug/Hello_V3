@@ -77,36 +77,19 @@ import { PresetsMenu } from "@/components/security-alerts/PresetsMenu";
 
 const ALL_SOURCES = "__all__";
 
-type SecurityNotification = {
-  id: string;
-  title: string;
-  message: string;
-  severity: "info" | "warning" | "critical" | "error" | string;
-  type: string;
-  action_url: string | null;
-  action_label: string | null;
-  source_type: string | null;
-  is_read: boolean;
-  read_at: string | null;
-  created_at: string;
-  metadata: Record<string, unknown> | null;
-};
-
-type Severity = "critical" | "warning" | "info";
+import {
+  VirtualTimeline,
+  normalizeSeverity,
+  severityBadgeVariant,
+  type SecurityNotification,
+  type Severity,
+} from "@/components/security-alerts/VirtualTimeline";
 
 const severityRank: Record<Severity, number> = { critical: 0, warning: 1, info: 2 };
+// Re-export for local usage of helpers already imported above
+void normalizeSeverity;
+void severityBadgeVariant;
 
-function normalizeSeverity(s: string): Severity {
-  if (s === "critical" || s === "error") return "critical";
-  if (s === "warning") return "warning";
-  return "info";
-}
-
-function severityBadgeVariant(s: Severity): "destructive" | "secondary" | "outline" {
-  if (s === "critical") return "destructive";
-  if (s === "warning") return "secondary";
-  return "outline";
-}
 
 function formatQueueAge(ms: number): string {
   if (ms <= 0) return "agora";
