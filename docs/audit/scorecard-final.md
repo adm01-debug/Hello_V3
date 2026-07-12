@@ -101,4 +101,11 @@ Sistema **production-ready** com maturidade técnica máxima certificada.
 - Trigger em bloco `EXCEPTION WHEN OTHERS` garante que falhas de notificação nunca bloqueiem o INSERT principal em `index_drop_audit`.
 - Zero novas dependências; zero schema change.
 
+## Re-verificação Onda 44 (2026-07-12)
+- Dashboard `/admin/security-alerts` (admin-only, lazy) com timeline dos últimos 30 dias das notificações `category='security'`.
+- Agrupamento por dia (ptBR) + ordenação por severidade dentro do dia; cards de resumo (total / não lidos / críticos).
+- Ações: marcar individual, marcar todos, seguir `action_url` (deep-link para `/admin/database-health` no caso da Onda 43).
+- Realtime via `postgres_changes` filtrado por `category=eq.security` invalida a query automaticamente.
+- Zero schema change; reusa RLS existente da tabela `notifications` (user_id = auth.uid()). Link cruzado adicionado no header de `/admin/database-health`.
+
 
