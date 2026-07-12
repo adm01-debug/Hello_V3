@@ -603,6 +603,7 @@ export default function SecurityAlerts() {
         setWebhookBaseDelayDraft={setWebhookBaseDelayDraft}
         webhookMaxDelayDraft={webhookMaxDelayDraft}
         setWebhookMaxDelayDraft={setWebhookMaxDelayDraft}
+        webhookValidation={webhookValidation}
         webhookHistory={webhookHistory}
         webhookPendingCount={webhookPendingCount}
         isTestingWebhook={isTestingWebhook}
