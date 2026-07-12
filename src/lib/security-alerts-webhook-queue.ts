@@ -108,7 +108,25 @@ export interface WebhookFlushResult {
   oldest_age_ms: number;
   /** Duração total do flush em ms. */
   duration_ms: number;
+  /** Hash curto (12 hex) do endpoint predominante processado neste flush. */
+  endpoint_hash?: string;
 }
+
+/** Hash não criptográfico estável (djb2 → 12 hex) para agrupar endpoints sem expor a URL. */
+export function hashEndpoint(url: string): string {
+  let h = 5381;
+  for (let i = 0; i < url.length; i++) {
+    h = ((h << 5) + h + url.charCodeAt(i)) | 0;
+  }
+  const hex = (h >>> 0).toString(16).padStart(8, "0");
+  // Duplica com variante para atingir 12 hex estáveis.
+  let h2 = 0;
+  for (let i = url.length - 1; i >= 0; i--) {
+    h2 = ((h2 << 3) + h2 + url.charCodeAt(i)) | 0;
+  }
+  return (hex + (h2 >>> 0).toString(16).padStart(8, "0")).slice(0, 12);
+}
+
 
 /** Nome do CustomEvent emitido em window ao concluir um flush (para métricas externas). */
 export const WEBHOOK_QUEUE_FLUSH_EVENT = "lovable:webhook-queue-flush";
@@ -183,6 +201,9 @@ export async function flushWebhookQueue(): Promise<WebhookFlushResult> {
     const duration_ms = Math.round(
       (typeof performance !== "undefined" ? performance.now() : Date.now()) - t0,
     );
+    // Endpoint predominante: primeiro item processado (fila normalmente aponta ao mesmo destino).
+    const dominantUrl =
+      initialItems[0]?.url || loadWebhookUrl() || "";
     const result: WebhookFlushResult = {
       sent,
       failed,
@@ -190,7 +211,9 @@ export async function flushWebhookQueue(): Promise<WebhookFlushResult> {
       pending_before,
       oldest_age_ms,
       duration_ms,
+      endpoint_hash: dominantUrl ? hashEndpoint(dominantUrl) : undefined,
     };
+
     if (typeof window !== "undefined" && typeof CustomEvent !== "undefined") {
       try {
         window.dispatchEvent(

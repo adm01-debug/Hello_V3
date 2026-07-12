@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { logger } from "@/lib/logger";
 
 interface Row {
@@ -10,6 +11,7 @@ interface Row {
   failed: number;
   oldest_age_ms: number | null;
   duration_ms: number | null;
+  endpoint_hash: string | null;
 }
 
 interface Bucket {
@@ -35,6 +37,7 @@ export default function WebhookHealth() {
   usePageTitle("Saúde de Webhooks");
   const [rows, setRows] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
+  const [endpointFilter, setEndpointFilter] = useState<string | "all">("all");
 
   useEffect(() => {
     let cancelled = false;
@@ -42,7 +45,7 @@ export default function WebhookHealth() {
       const since = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
       const { data, error } = await supabase
         .from("webhook_flush_metrics")
-        .select("created_at,sent,failed,oldest_age_ms,duration_ms")
+        .select("created_at,sent,failed,oldest_age_ms,duration_ms,endpoint_hash")
         .gte("created_at", since)
         .order("created_at", { ascending: true })
         .limit(10000);
@@ -59,9 +62,32 @@ export default function WebhookHealth() {
     };
   }, []);
 
+
+  const filteredRows = useMemo(
+    () =>
+      endpointFilter === "all"
+        ? rows
+        : rows.filter((r) => (r.endpoint_hash ?? "—") === endpointFilter),
+    [rows, endpointFilter],
+  );
+
+  const endpoints = useMemo(() => {
+    const map = new Map<string, { attempts: number; failed: number }>();
+    for (const r of rows) {
+      const key = r.endpoint_hash ?? "—";
+      const cur = map.get(key) ?? { attempts: 0, failed: 0 };
+      cur.attempts += (r.sent ?? 0) + (r.failed ?? 0);
+      cur.failed += r.failed ?? 0;
+      map.set(key, cur);
+    }
+    return Array.from(map.entries())
+      .map(([hash, s]) => ({ hash, ...s }))
+      .sort((a, b) => b.attempts - a.attempts);
+  }, [rows]);
+
   const { buckets, days, totals } = useMemo(() => {
     const map = new Map<string, Bucket>();
-    for (const r of rows) {
+    for (const r of filteredRows) {
       const d = new Date(r.created_at);
       const day = d.toISOString().slice(0, 10);
       const hour = d.getUTCHours();
@@ -86,7 +112,7 @@ export default function WebhookHealth() {
       daySet.add(d.toISOString().slice(0, 10));
     }
     const daysArr = Array.from(daySet);
-    const totals = rows.reduce(
+    const totals = filteredRows.reduce(
       (acc, r) => {
         acc.sent += r.sent ?? 0;
         acc.failed += r.failed ?? 0;
@@ -95,7 +121,8 @@ export default function WebhookHealth() {
       { sent: 0, failed: 0 },
     );
     return { buckets: map, days: daysArr, totals };
-  }, [rows]);
+  }, [filteredRows]);
+
 
   const totalAttempts = totals.sent + totals.failed;
   const globalRatio = totalAttempts > 0 ? (totals.failed / totalAttempts) * 100 : 0;
@@ -135,9 +162,62 @@ export default function WebhookHealth() {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Heatmap · 3 dias × 24 horas</CardTitle>
+        <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
+          <CardTitle>Endpoints (drill-down)</CardTitle>
+          {endpointFilter !== "all" && (
+            <Button size="sm" variant="ghost" onClick={() => setEndpointFilter("all")}>
+              Limpar filtro
+            </Button>
+          )}
         </CardHeader>
+        <CardContent>
+          {endpoints.length === 0 ? (
+            <p className="text-sm text-muted-foreground">Sem dados nas últimas 72h.</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant={endpointFilter === "all" ? "default" : "outline"}
+                onClick={() => setEndpointFilter("all")}
+              >
+                Todos ({rows.length})
+              </Button>
+              {endpoints.map((e) => {
+                const ratio = e.attempts > 0 ? (e.failed / e.attempts) * 100 : 0;
+                const active = endpointFilter === e.hash;
+                return (
+                  <Button
+                    key={e.hash}
+                    size="sm"
+                    variant={active ? "default" : "outline"}
+                    onClick={() => setEndpointFilter(e.hash)}
+                    className="font-mono text-xs"
+                    title={`${e.attempts} tentativas · ${e.failed} falhas · ${ratio.toFixed(1)}%`}
+                  >
+                    {e.hash} · {e.attempts}
+                    {ratio >= 20 && (
+                      <span className="ml-1 text-destructive">⚠ {ratio.toFixed(0)}%</span>
+                    )}
+                  </Button>
+                );
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            Heatmap · 3 dias × 24 horas
+            {endpointFilter !== "all" && (
+              <span className="ml-2 font-mono text-xs text-muted-foreground">
+                endpoint {endpointFilter}
+              </span>
+            )}
+          </CardTitle>
+        </CardHeader>
+
         <CardContent>
           {loading ? (
             <p className="text-muted-foreground">Carregando…</p>
