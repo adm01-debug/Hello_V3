@@ -890,6 +890,13 @@ export default function SecurityAlerts() {
                 Limpar
               </Button>
             )}
+            <Button
+              variant="secondary"
+              onClick={handleTestWebhook}
+              disabled={isTestingWebhook || !webhookDraft.trim()}
+            >
+              {isTestingWebhook ? "Testando…" : "Testar"}
+            </Button>
             <Button onClick={handleSaveWebhook}>Salvar</Button>
           </DialogFooter>
         </DialogContent>
