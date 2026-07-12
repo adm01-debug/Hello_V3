@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { VirtualTimeline, type SecurityAlertRow } from "./VirtualTimeline";
+import { VirtualTimeline, type SecurityNotification } from "./VirtualTimeline";
 import type { RefObject } from "react";
 
 interface AlertsTimelineCardProps {
