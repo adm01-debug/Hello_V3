@@ -1081,6 +1081,38 @@ export default function SecurityAlerts() {
 }`}
             </pre>
             <div className="pt-3 space-y-2">
+              <div className="flex items-center justify-between rounded-md border border-border/60 bg-muted/30 p-2">
+                <div className="text-xs">
+                  <span className="font-medium">Fila pendente:</span>{" "}
+                  <Badge variant={webhookPendingCount > 0 ? "destructive" : "secondary"}>{webhookPendingCount}</Badge>
+                  <span className="ml-2 text-muted-foreground">
+                    reenvia automaticamente ao voltar online / focar a aba
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleFlushQueue}
+                    disabled={isFlushingQueue || webhookPendingCount === 0}
+                    className="h-7 px-2"
+                  >
+                    <RefreshCw className={`w-3 h-3 mr-1 ${isFlushingQueue ? "animate-spin" : ""}`} />
+                    Reenviar agora
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearQueue}
+                    disabled={webhookPendingCount === 0}
+                    className="h-7 px-2"
+                  >
+                    <Trash2 className="w-3 h-3 mr-1" /> Limpar fila
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="pt-3 space-y-2">
               <div className="flex items-center justify-between">
                 <Label className="text-xs uppercase tracking-wider text-muted-foreground">
                   Histórico ({webhookHistory.length})
