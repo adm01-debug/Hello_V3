@@ -24,11 +24,12 @@ interface AlertsFilterBarProps {
   hasActiveFilters: boolean;
   filteredCount: number;
   totalCount: number;
-  presets: FilterPreset[];
-  onApplyPreset: (p: FilterPreset) => void;
-  onRemovePreset: (id: string) => void;
-  onSavePreset: (name: string) => void;
+  presets: AlertFilterPreset[];
+  onApplyPreset: (p: AlertFilterPreset) => void;
+  onRemovePreset: (p: AlertFilterPreset) => void;
+  onSavePreset: () => void;
 }
+
 
 /**
  * Barra de filtros do painel de alertas de segurança (origem + busca +
