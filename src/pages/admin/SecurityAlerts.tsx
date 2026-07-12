@@ -478,12 +478,17 @@ export default function SecurityAlerts() {
             latency_ms: latency,
             error: result.error,
             kind: "export",
+            attempts: result.attempts,
           });
           toast.dismiss(hookToast);
           if (result.ok) {
             const suffix = result.signed ? " · assinado (HMAC)" : "";
-            toast.success(`Webhook OK (HTTP ${result.status})${suffix} · ${latency}ms`);
-          } else toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
+            const retryNote = result.attempts > 1 ? ` · ${result.attempts} tentativas` : "";
+            toast.success(`Webhook OK (HTTP ${result.status})${suffix}${retryNote} · ${latency}ms`);
+          } else {
+            const retryNote = result.attempts > 1 ? ` (após ${result.attempts} tentativas)` : "";
+            toast.error(`Webhook falhou${retryNote}: ${result.error ?? `HTTP ${result.status}`}`);
+          }
         }
       } catch (err) {
         toast.dismiss(toastId);
