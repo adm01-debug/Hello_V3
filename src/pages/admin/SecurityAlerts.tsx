@@ -333,18 +333,10 @@ export default function SecurityAlerts() {
   });
 
 
-  // Ao mudar filtros: revalida páginas já carregadas (traz updates recentes
-  // como is_read alterados por outros clientes) sem descartar o histórico.
+  // Filtros participam do queryKey — troca de filtro cria automaticamente
+  // uma nova cache entry paginada, sem precisar de refetch manual.
   const filterKey = `${sourceFilter}::${searchTerm}`;
-  const firstFilterRun = useRef(true);
-  useEffect(() => {
-    if (firstFilterRun.current) {
-      firstFilterRun.current = false;
-      return;
-    }
-    void alerts.refetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterKey]);
+
 
 
 
