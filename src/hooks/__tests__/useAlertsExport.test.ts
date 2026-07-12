@@ -29,22 +29,25 @@ vi.mock("@/lib/security-alerts-webhook-queue", () => ({
 }));
 
 // Mock cadeia do Supabase — retorna 1 chunk com N linhas e depois vazio.
-let mockRows: Array<Record<string, unknown>> = [];
-const orderMock = vi.fn();
-const limitMock = vi.fn();
-const supabaseChain = {
-  select: vi.fn().mockReturnThis(),
-  eq: vi.fn().mockReturnThis(),
-  gte: vi.fn().mockReturnThis(),
-  order: vi.fn().mockReturnThis(),
-  or: vi.fn().mockReturnThis(),
-  limit: vi.fn(
-    (): Promise<{ data: unknown; error: unknown }> =>
-      Promise.resolve({ data: mockRows, error: null }),
-  ),
-};
+// vi.hoisted garante disponibilidade antes das factories serem executadas.
+const supabaseState = vi.hoisted(() => {
+  const state: {
+    rows: Array<Record<string, unknown>>;
+    error: unknown;
+    chain: Record<string, unknown>;
+  } = { rows: [], error: null, chain: {} as Record<string, unknown> };
+  Object.assign(state.chain, {
+    select: () => state.chain,
+    eq: () => state.chain,
+    gte: () => state.chain,
+    order: () => state.chain,
+    or: () => state.chain,
+    limit: () => Promise.resolve({ data: state.error ? null : state.rows, error: state.error }),
+  });
+  return state;
+});
 vi.mock("@/integrations/supabase/client", () => ({
-  supabase: { from: vi.fn(() => supabaseChain) },
+  supabase: { from: () => supabaseState.chain },
 }));
 
 // ---------- Fixtures ----------
