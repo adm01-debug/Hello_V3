@@ -236,7 +236,27 @@ export default function WebhookHealth() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
           <CardTitle>Endpoints (drill-down)</CardTitle>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1 rounded-md border p-0.5" role="group" aria-label="Ordenação">
+              {(["volume", "trend", "ratio"] as SortMode[]).map((m) => (
+                <Button
+                  key={m}
+                  size="sm"
+                  variant={sortMode === m ? "default" : "ghost"}
+                  className="h-7 px-2 text-xs"
+                  onClick={() => setSortMode(m)}
+                  title={
+                    m === "volume"
+                      ? "Ordenar por volume de tentativas"
+                      : m === "trend"
+                        ? "Ordenar por tendência (última hora vs média)"
+                        : "Ordenar por taxa de falhas"
+                  }
+                >
+                  {m === "volume" ? "Volume" : m === "trend" ? "Tendência" : "Taxa"}
+                </Button>
+              ))}
+            </div>
             <Button
               size="sm"
               variant="outline"
