@@ -451,11 +451,26 @@ export default function SecurityAlerts() {
             generated_at: new Date().toISOString(),
           };
           const hookToast = toast.loading("Enviando ao webhook…");
+          const started = performance.now();
           const result = await sendExportWebhook(webhookUrl, hookPayload, { secret: webhookSecret });
+          const latency = Math.round(performance.now() - started);
+          recordWebhookHistory({
+            url: webhookUrl,
+            filename,
+            format: fmt,
+            scope,
+            count: filtered.length,
+            status: result.status,
+            ok: result.ok,
+            signed: Boolean(result.signed),
+            latency_ms: latency,
+            error: result.error,
+            kind: "export",
+          });
           toast.dismiss(hookToast);
           if (result.ok) {
             const suffix = result.signed ? " · assinado (HMAC)" : "";
-            toast.success(`Webhook OK (HTTP ${result.status})${suffix}`);
+            toast.success(`Webhook OK (HTTP ${result.status})${suffix} · ${latency}ms`);
           } else toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
         }
       } catch (err) {
