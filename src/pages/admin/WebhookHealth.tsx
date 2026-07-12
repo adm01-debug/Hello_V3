@@ -265,6 +265,24 @@ export default function WebhookHealth() {
         <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
           <CardTitle>Endpoints (drill-down)</CardTitle>
           <div className="flex items-center gap-2 flex-wrap">
+            <Button
+              size="sm"
+              variant={autoRefresh ? "default" : "outline"}
+              className="h-7 px-2 text-xs"
+              onClick={() => setAutoRefresh((v) => !v)}
+              title={autoRefresh ? "Auto-refresh a cada 30s ativo" : "Ativar auto-refresh (30s)"}
+            >
+              {autoRefresh ? "⏸ Auto 30s" : "▶ Auto 30s"}
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-7 px-2 text-xs"
+              onClick={() => { void loadRows(); }}
+              title={lastRefresh ? `Última atualização: ${lastRefresh.toLocaleTimeString()}` : "Atualizar agora"}
+            >
+              ↻
+            </Button>
             <div className="flex items-center gap-1 rounded-md border p-0.5" role="group" aria-label="Ordenação">
               {(["volume", "trend", "ratio"] as SortMode[]).map((m) => (
                 <Button
