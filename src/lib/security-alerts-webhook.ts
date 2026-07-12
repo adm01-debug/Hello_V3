@@ -3,6 +3,34 @@
 
 const STORAGE_KEY = "security-alerts:webhook-url";
 const SECRET_KEY = "security-alerts:webhook-secret";
+const MAX_ATTEMPTS_KEY = "security-alerts:webhook-max-attempts";
+
+export const WEBHOOK_MAX_ATTEMPTS_MIN = 1;
+export const WEBHOOK_MAX_ATTEMPTS_MAX = 6;
+export const WEBHOOK_MAX_ATTEMPTS_DEFAULT = 3;
+
+export function loadWebhookMaxAttempts(): number {
+  if (typeof window === "undefined") return WEBHOOK_MAX_ATTEMPTS_DEFAULT;
+  try {
+    const raw = window.localStorage.getItem(MAX_ATTEMPTS_KEY);
+    if (!raw) return WEBHOOK_MAX_ATTEMPTS_DEFAULT;
+    const n = Number.parseInt(raw, 10);
+    if (!Number.isFinite(n)) return WEBHOOK_MAX_ATTEMPTS_DEFAULT;
+    return Math.max(WEBHOOK_MAX_ATTEMPTS_MIN, Math.min(WEBHOOK_MAX_ATTEMPTS_MAX, n));
+  } catch {
+    return WEBHOOK_MAX_ATTEMPTS_DEFAULT;
+  }
+}
+
+export function saveWebhookMaxAttempts(n: number): void {
+  if (typeof window === "undefined") return;
+  const clamped = Math.max(WEBHOOK_MAX_ATTEMPTS_MIN, Math.min(WEBHOOK_MAX_ATTEMPTS_MAX, Math.floor(n)));
+  try {
+    window.localStorage.setItem(MAX_ATTEMPTS_KEY, String(clamped));
+  } catch {
+    /* ignore */
+  }
+}
 
 export interface WebhookExportPayload {
   event: "security_alerts.export";
