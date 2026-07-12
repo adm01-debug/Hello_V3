@@ -223,6 +223,42 @@ export default function DatabaseHealth() {
         </CardContent>
       </Card>
 
+      {/* Idle indexes */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Trash2 className="w-4 h-4 text-warning" />
+            Índices ociosos (idx_scan = 0, &gt; 1MB)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {idle.isLoading ? (
+            <Skeleton className="h-24 w-full" />
+          ) : idle.data && idle.data.length > 0 ? (
+            <div className="space-y-2">
+              {idle.data.map((i) => (
+                <div
+                  key={i.indexrelname}
+                  className="flex items-center justify-between p-3 rounded-md border bg-card/50"
+                >
+                  <div>
+                    <div className="font-mono text-sm">{i.indexrelname}</div>
+                    <div className="text-xs text-muted-foreground">
+                      em <span className="font-mono">{i.relname}</span>
+                    </div>
+                  </div>
+                  <Badge variant="outline">{i.index_size_pretty}</Badge>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Nenhum índice ocioso relevante. Todos os índices estão sendo utilizados.
+            </p>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Slow queries */}
       <Card>
         <CardHeader>
