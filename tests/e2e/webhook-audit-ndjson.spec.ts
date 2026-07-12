@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { seedAdminSession } from './helpers/adminSession';
 
 /**
  * Cobre o fluxo de auditoria do webhook de exportação em Segurança > Alertas:
@@ -65,11 +66,13 @@ test.describe('Webhook — auditoria e download NDJSON', () => {
       [STORAGE_KEY, JSON.stringify([seededEntry])],
     );
 
+    // Tenta seedar uma sessão admin real (via E2E_ADMIN_EMAIL/PASSWORD ou
+    // E2E_SUPABASE_SESSION_JSON). Se indisponível, o teste é auto-skipped.
+    const seeded = await seedAdminSession(context, page);
     await page.goto('/admin/security-alerts');
 
-    // Se a rota exigir login, o teste é inconclusivo neste ambiente — pular.
-    if (/\/(auth|login)/.test(page.url())) {
-      test.skip(true, 'Rota protegida — sessão admin não disponível no ambiente E2E.');
+    if (!seeded && /\/(auth|login)/.test(page.url())) {
+      test.skip(true, 'Rota protegida — configure E2E_ADMIN_EMAIL/PASSWORD para executar.');
       return;
     }
 
