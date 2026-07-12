@@ -9,12 +9,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet } from "lucide-react";
+import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet, AlertOctagon, MailWarning } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
 import { exportAlertsToCsv, exportAlertsToPdf, type ExportableAlert } from "@/lib/security-alerts-export";
 import { usePageTitle } from "@/hooks/usePageTitle";
@@ -241,10 +247,13 @@ export default function SecurityAlerts() {
     return out;
   }, [SINCE_ISO]);
 
+  type ExportScope = "all" | "critical" | "unread";
   const handleExport = useCallback(
-    async (fmt: "csv" | "pdf") => {
+    async (fmt: "csv" | "pdf", scope: ExportScope = "all") => {
       setIsExporting(true);
-      const toastId = toast.loading("Preparando exportação…");
+      const scopeLabel =
+        scope === "critical" ? "apenas críticos" : scope === "unread" ? "apenas não lidos" : "todos";
+      const toastId = toast.loading(`Preparando exportação (${scopeLabel})…`);
       try {
         const rows = await fetchAllFilteredAlerts();
         const term = searchTerm.trim().toLowerCase();
@@ -254,11 +263,13 @@ export default function SecurityAlerts() {
             const hay = `${n.title}\n${n.message}\n${n.source_type ?? ""}`.toLowerCase();
             if (!hay.includes(term)) return false;
           }
+          if (scope === "critical" && normalizeSeverity(n.severity) !== "critical") return false;
+          if (scope === "unread" && n.is_read) return false;
           return true;
         });
         if (filtered.length === 0) {
           toast.dismiss(toastId);
-          toast.warning("Nenhum alerta corresponde aos filtros — nada para exportar.");
+          toast.warning(`Nenhum alerta (${scopeLabel}) corresponde aos filtros — nada para exportar.`);
           return;
         }
         const payload: ExportableAlert[] = filtered.map((n) => ({
@@ -276,7 +287,9 @@ export default function SecurityAlerts() {
         }));
         const filename = fmt === "csv" ? exportAlertsToCsv(payload) : exportAlertsToPdf(payload);
         toast.dismiss(toastId);
-        toast.success(`Exportado: ${filename} (${filtered.length} alerta${filtered.length === 1 ? "" : "s"})`);
+        toast.success(
+          `Exportado: ${filename} (${filtered.length} alerta${filtered.length === 1 ? "" : "s"}, ${scopeLabel})`,
+        );
       } catch (err) {
         toast.dismiss(toastId);
         const msg = err instanceof Error ? err.message : "Erro desconhecido";
@@ -396,15 +409,53 @@ export default function SecurityAlerts() {
                 {isExporting ? "Exportando…" : "Exportar"}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => void handleExport("csv")} disabled={isExporting}>
+            <DropdownMenuContent align="end" className="w-64">
+              <DropdownMenuLabel>Todos os alertas filtrados</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => void handleExport("csv", "all")} disabled={isExporting}>
                 <FileSpreadsheet className="w-4 h-4 mr-2" />
                 CSV (Excel / planilha)
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => void handleExport("pdf")} disabled={isExporting}>
+              <DropdownMenuItem onClick={() => void handleExport("pdf", "all")} disabled={isExporting}>
                 <FileText className="w-4 h-4 mr-2" />
                 PDF (relatório)
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <AlertOctagon className="w-4 h-4 mr-2 text-destructive" />
+                  Apenas críticos
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem onClick={() => void handleExport("csv", "critical")} disabled={isExporting}>
+                      <FileSpreadsheet className="w-4 h-4 mr-2" />
+                      CSV
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => void handleExport("pdf", "critical")} disabled={isExporting}>
+                      <FileText className="w-4 h-4 mr-2" />
+                      PDF
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <MailWarning className="w-4 h-4 mr-2" />
+                  Apenas não lidos
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem onClick={() => void handleExport("csv", "unread")} disabled={isExporting}>
+                      <FileSpreadsheet className="w-4 h-4 mr-2" />
+                      CSV
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => void handleExport("pdf", "unread")} disabled={isExporting}>
+                      <FileText className="w-4 h-4 mr-2" />
+                      PDF
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button
