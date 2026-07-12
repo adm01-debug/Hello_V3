@@ -204,7 +204,9 @@ export default function SecurityAlerts() {
     setDialogOpen: setWebhookDialogOpen,
     openDialog: openWebhookDialog,
     save: handleSaveWebhook,
+    validation: webhookValidation,
   } = useWebhookConfig();
+
 
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const {
