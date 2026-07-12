@@ -90,9 +90,13 @@ export default function SecurityAlerts() {
     [],
   );
 
+  // Cursor composto (created_at, id) — evita duplicatas/buracos quando vários
+  // alertas compartilham o mesmo timestamp (comum em bursts do mesmo trigger).
+  type Cursor = { createdAt: string; id: string } | null;
+
   const alerts = useInfiniteQuery({
     queryKey: ["admin-security-alerts-30d", SINCE_ISO],
-    initialPageParam: null as string | null,
+    initialPageParam: null as Cursor,
     queryFn: async ({ pageParam }): Promise<SecurityNotification[]> => {
       let q = supabase
         .from("notifications")
@@ -102,14 +106,24 @@ export default function SecurityAlerts() {
         .eq("category", "security")
         .gte("created_at", SINCE_ISO)
         .order("created_at", { ascending: false })
+        .order("id", { ascending: false })
         .limit(PAGE_SIZE);
-      if (pageParam) q = q.lt("created_at", pageParam);
+      if (pageParam) {
+        // (created_at, id) < (cursor.createdAt, cursor.id) em ordem lexicográfica
+        // desc: created_at < cursor OR (created_at = cursor AND id < cursor.id)
+        q = q.or(
+          `created_at.lt.${pageParam.createdAt},and(created_at.eq.${pageParam.createdAt},id.lt.${pageParam.id})`,
+        );
+      }
       const { data, error } = await q;
       if (error) throw error;
       return (data as SecurityNotification[]) ?? [];
     },
-    getNextPageParam: (lastPage) =>
-      lastPage.length < PAGE_SIZE ? undefined : lastPage[lastPage.length - 1]?.created_at ?? undefined,
+    getNextPageParam: (lastPage): Cursor => {
+      if (lastPage.length < PAGE_SIZE) return null;
+      const last = lastPage[lastPage.length - 1];
+      return last ? { createdAt: last.created_at, id: last.id } : null;
+    },
     staleTime: 30_000,
   });
 
