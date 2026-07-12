@@ -4,6 +4,7 @@ import {
   clearWebhookQueue,
   enqueueWebhook,
   flushWebhookQueue,
+  installWebhookQueueAutoFlush,
   loadWebhookQueue,
   subscribeWebhookQueue,
 } from "../security-alerts-webhook-queue";
