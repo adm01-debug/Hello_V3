@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { RefreshCw, Trash2, Download } from "lucide-react";
+import { RefreshCw, Trash2, Download, AlertCircle, AlertTriangle } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   WEBHOOK_MAX_ATTEMPTS_MIN,
   WEBHOOK_MAX_ATTEMPTS_MAX,
@@ -12,7 +13,13 @@ import {
   WEBHOOK_MAX_DELAY_MIN,
   WEBHOOK_MAX_DELAY_MAX,
 } from "@/lib/security-alerts-webhook";
+import {
+  hasBlockingErrors,
+  type WebhookValidationResult,
+  type WebhookField,
+} from "@/lib/security-alerts-webhook-validation";
 import type { WebhookHistoryEntry } from "@/lib/security-alerts-webhook-history";
+
 
 export interface WebhookConfigDialogProps {
   open: boolean;
