@@ -130,17 +130,32 @@ export default function WebhookHealth() {
       map.set(key, cur);
     }
     return Array.from(map.entries())
-      .map(([hash, s]) => ({
-        hash,
-        attempts: s.attempts,
-        failed: s.failed,
-        trend: s.hourly.map((h) => {
+      .map(([hash, s]) => {
+        const trend = s.hourly.map((h) => {
           const a = h.sent + h.failed;
           return a > 0 ? h.failed / a : 0;
-        }),
-      }))
-      .sort((a, b) => b.attempts - a.attempts);
-  }, [rows]);
+        });
+        const lastHour = trend[trend.length - 1] ?? 0;
+        const priorAvg =
+          trend.length > 1
+            ? trend.slice(0, -1).reduce((sum, v) => sum + v, 0) / (trend.length - 1)
+            : 0;
+        const ratio = s.attempts > 0 ? s.failed / s.attempts : 0;
+        return {
+          hash,
+          attempts: s.attempts,
+          failed: s.failed,
+          trend,
+          trendDiff: lastHour - priorAvg,
+          ratio,
+        };
+      })
+      .sort((a, b) => {
+        if (sortMode === "trend") return b.trendDiff - a.trendDiff;
+        if (sortMode === "ratio") return b.ratio - a.ratio;
+        return b.attempts - a.attempts;
+      });
+  }, [rows, sortMode]);
 
   const { buckets, days, totals } = useMemo(() => {
     const map = new Map<string, Bucket>();
