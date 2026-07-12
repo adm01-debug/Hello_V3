@@ -89,6 +89,7 @@ function baseParams(over: Partial<Parameters<typeof useAlertsExport>[0]> = {}) {
 describe("useAlertsExport", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    supabaseState.error = null;
     supabaseState.rows = [alert(), alert({ severity: "info", is_read: true, source_type: "system" })];
   });
 
