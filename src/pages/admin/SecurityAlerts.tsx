@@ -9,12 +9,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet } from "lucide-react";
+import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet, AlertOctagon, MailWarning } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
 import { exportAlertsToCsv, exportAlertsToPdf, type ExportableAlert } from "@/lib/security-alerts-export";
 import { usePageTitle } from "@/hooks/usePageTitle";
