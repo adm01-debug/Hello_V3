@@ -193,12 +193,40 @@ export default function WebhookHealth() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
           <CardTitle>Endpoints (drill-down)</CardTitle>
-          {endpointFilter !== "all" && (
-            <Button size="sm" variant="ghost" onClick={() => setEndpointFilter("all")}>
-              Limpar filtro
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={endpoints.length === 0}
+              onClick={() => {
+                const header = "endpoint_hash,attempts,failed,failure_ratio_pct\n";
+                const body = endpoints
+                  .map((e) => {
+                    const ratio = e.attempts > 0 ? (e.failed / e.attempts) * 100 : 0;
+                    return `${e.hash},${e.attempts},${e.failed},${ratio.toFixed(2)}`;
+                  })
+                  .join("\n");
+                const blob = new Blob([header + body], { type: "text/csv;charset=utf-8" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `webhook-endpoints-${new Date().toISOString().slice(0, 10)}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+              }}
+            >
+              Exportar CSV
             </Button>
-          )}
+            {endpointFilter !== "all" && (
+              <Button size="sm" variant="ghost" onClick={() => setEndpointFilter("all")}>
+                Limpar filtro
+              </Button>
+            )}
+          </div>
         </CardHeader>
+
         <CardContent>
           {endpoints.length === 0 ? (
             <p className="text-sm text-muted-foreground">Sem dados nas últimas 72h.</p>
