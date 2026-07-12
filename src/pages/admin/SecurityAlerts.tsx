@@ -51,6 +51,7 @@ import {
   enqueueWebhook,
 } from "@/lib/security-alerts-webhook-queue";
 import { useWebhookQueue } from "@/hooks/useWebhookQueue";
+import { useWebhookHistory } from "@/hooks/useWebhookHistory";
 
 import { WebhookConfigDialog } from "@/components/security-alerts/WebhookConfigDialog";
 import { AlertDetailsDialog } from "@/components/security-alerts/AlertDetailsDialog";
