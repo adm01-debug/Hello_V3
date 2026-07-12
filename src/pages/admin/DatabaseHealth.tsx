@@ -80,9 +80,20 @@ export default function DatabaseHealth() {
     staleTime: 60_000,
   });
 
+  const idle = useQuery({
+    queryKey: ["db-idle-indexes"],
+    queryFn: async (): Promise<IdleIndex[]> => {
+      const { data, error } = await supabase.rpc("check_idle_indexes");
+      if (error) throw error;
+      return (data as unknown as IdleIndex[]) ?? [];
+    },
+    staleTime: 60_000,
+  });
+
   const refresh = () => {
     snapshot.refetch();
     slow.refetch();
+    idle.refetch();
   };
 
   return (
