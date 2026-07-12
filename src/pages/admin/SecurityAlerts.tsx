@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { KpiStrip } from "@/components/security-alerts/KpiStrip";
 import { AlertsDailyChart } from "@/components/security-alerts/AlertsDailyChart";
+import { AlertsFilterBar } from "@/components/security-alerts/AlertsFilterBar";
+
 
 
 import { useVirtualizer } from "@tanstack/react-virtual";
