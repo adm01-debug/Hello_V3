@@ -94,7 +94,7 @@ describe("useAlertsExport", () => {
     });
     const { exportAlertsToCsv } = await import("@/lib/security-alerts-export");
     expect(exportAlertsToCsv).toHaveBeenCalledTimes(1);
-    const payload = (exportAlertsToCsv as unknown as vi.Mock).mock.calls[0][0];
+    const payload = (exportAlertsToCsv as unknown as import("vitest").Mock).mock.calls[0][0];
     expect(payload).toHaveLength(2);
     expect(result.current.isExporting).toBe(false);
   });
@@ -105,7 +105,7 @@ describe("useAlertsExport", () => {
       await result.current.handleExport("csv", "critical");
     });
     const { exportAlertsToCsv } = await import("@/lib/security-alerts-export");
-    const payload = (exportAlertsToCsv as unknown as vi.Mock).mock.calls[0][0];
+    const payload = (exportAlertsToCsv as unknown as import("vitest").Mock).mock.calls[0][0];
     expect(payload).toHaveLength(1);
     expect(payload[0].severity).toBe("critical");
   });
@@ -116,7 +116,7 @@ describe("useAlertsExport", () => {
       await result.current.handleExport("pdf", "unread");
     });
     const { exportAlertsToPdf } = await import("@/lib/security-alerts-export");
-    const payload = (exportAlertsToPdf as unknown as vi.Mock).mock.calls[0][0];
+    const payload = (exportAlertsToPdf as unknown as import("vitest").Mock).mock.calls[0][0];
     expect(payload.every((n: { is_read: boolean }) => !n.is_read)).toBe(true);
   });
 
@@ -132,7 +132,7 @@ describe("useAlertsExport", () => {
       await result.current.handleExport("csv");
     });
     const { exportAlertsToCsv } = await import("@/lib/security-alerts-export");
-    const payload = (exportAlertsToCsv as unknown as vi.Mock).mock.calls[0][0];
+    const payload = (exportAlertsToCsv as unknown as import("vitest").Mock).mock.calls[0][0];
     expect(payload).toHaveLength(1);
     expect(payload[0].title).toBe("Login suspeito");
   });
