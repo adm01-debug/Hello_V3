@@ -455,6 +455,7 @@ export default function SecurityAlerts() {
               totalLoaded={allData.length}
               onLoadMore={() => void alerts.fetchNextPage()}
               resetKey={filterKey}
+              nextPageError={alerts.isFetchNextPageError ? alerts.error : null}
             />
           )}
         </CardContent>
