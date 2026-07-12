@@ -172,7 +172,7 @@ export default function SecurityAlerts() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.fetchNextPage, days_placeholder_noop()]);
+  }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.fetchNextPage]);
 
 
   const availableSources = useMemo(() => {
