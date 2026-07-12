@@ -4,8 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Database, AlertTriangle, RefreshCw, Gauge, Trash2 } from "lucide-react";
+import { Database, AlertTriangle, RefreshCw, Gauge, Trash2, Copy } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
+import { toast } from "sonner";
 
 type BloatRow = {
   schemaname: string;
