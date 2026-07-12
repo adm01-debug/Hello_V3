@@ -72,6 +72,7 @@ import { format, eachDayOfInterval, subDays, startOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Link, useSearchParams } from "react-router-dom";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { PresetsMenu } from "@/components/security-alerts/PresetsMenu";
 
 const ALL_SOURCES = "__all__";
 
