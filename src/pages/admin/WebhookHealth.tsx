@@ -100,6 +100,7 @@ export default function WebhookHealth() {
       setLastRefresh(new Date());
     }
     setLoading(false);
+    setFetching(false);
   }, []);
 
   useEffect(() => {
