@@ -389,6 +389,24 @@ export default function SecurityAlerts() {
             <RefreshCw className="w-4 h-4 mr-2" />
             Atualizar
           </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" disabled={isExporting}>
+                <Download className="w-4 h-4 mr-2" />
+                {isExporting ? "Exportando…" : "Exportar"}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => void handleExport("csv")} disabled={isExporting}>
+                <FileSpreadsheet className="w-4 h-4 mr-2" />
+                CSV (Excel / planilha)
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => void handleExport("pdf")} disabled={isExporting}>
+                <FileText className="w-4 h-4 mr-2" />
+                PDF (relatório)
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button
             variant="secondary"
             size="sm"
