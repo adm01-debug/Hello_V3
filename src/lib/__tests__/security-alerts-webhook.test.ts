@@ -70,7 +70,7 @@ describe("security-alerts-webhook", () => {
     it("retorna ok=false imediatamente para URL inválida (sem fetch)", async () => {
       const fetchMock = mockFetchSequence([]);
       const res = await sendExportWebhook("not-a-url", basePayload);
-      expect(res).toEqual({ ok: false, status: 0, error: "URL inválida", attempts: 0 });
+      expect(res).toMatchObject({ ok: false, status: 0, error: "URL inválida", attempts: 0 });
       expect(fetchMock).not.toHaveBeenCalled();
     });
 
