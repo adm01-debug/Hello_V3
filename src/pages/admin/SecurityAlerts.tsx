@@ -101,6 +101,45 @@ export default function SecurityAlerts() {
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
+  // Presets salvos (localStorage) — carregados uma vez e mantidos em estado
+  // para revalidar após add/remove sem custo de leitura extra.
+  const [presets, setPresets] = useState<AlertFilterPreset[]>(() => loadPresets());
+  const refreshPresets = useCallback(() => setPresets(loadPresets()), []);
+
+  const applyPreset = useCallback(
+    (p: AlertFilterPreset) => {
+      const next = new URLSearchParams();
+      if (p.source && p.source !== ALL_SOURCES) next.set("source", p.source);
+      if (p.q) next.set("q", p.q);
+      setSearchParams(next, { replace: true });
+      setSearchInput(p.q);
+      toast.success(`Preset "${p.name}" aplicado`);
+    },
+    [setSearchParams],
+  );
+
+  const handleSavePreset = useCallback(() => {
+    const name = window.prompt("Nome do preset:");
+    if (!name) return;
+    try {
+      addPreset({ name, source: sourceFilter, q: searchTerm });
+      refreshPresets();
+      toast.success(`Preset "${name.trim()}" salvo`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erro ao salvar preset";
+      toast.error(msg);
+    }
+  }, [refreshPresets, searchTerm, sourceFilter]);
+
+  const handleRemovePreset = useCallback(
+    (p: AlertFilterPreset) => {
+      removePreset(p.id);
+      refreshPresets();
+      toast.success(`Preset "${p.name}" removido`);
+    },
+    [refreshPresets],
+  );
+
 
 
   const PAGE_SIZE = 50;
