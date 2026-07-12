@@ -69,3 +69,61 @@ export function clearWebhookHistory(): void {
     /* ignore */
   }
 }
+
+function csvEscape(value: unknown): string {
+  const s = value === undefined || value === null ? "" : String(value);
+  if (/[",\n\r]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+  return s;
+}
+
+export function webhookHistoryToCSV(entries: WebhookHistoryEntry[]): string {
+  const headers = [
+    "at",
+    "kind",
+    "url",
+    "filename",
+    "format",
+    "scope",
+    "count",
+    "status",
+    "ok",
+    "signed",
+    "latency_ms",
+    "error",
+  ];
+  const rows = entries.map((e) =>
+    [
+      e.at,
+      e.kind,
+      e.url,
+      e.filename,
+      e.format,
+      e.scope,
+      e.count,
+      e.status,
+      e.ok,
+      e.signed,
+      e.latency_ms,
+      e.error ?? "",
+    ]
+      .map(csvEscape)
+      .join(","),
+  );
+  return [headers.join(","), ...rows].join("\r\n");
+}
+
+export function downloadWebhookHistoryCSV(entries: WebhookHistoryEntry[]): string {
+  const csv = webhookHistoryToCSV(entries);
+  const filename = `webhook-history-${new Date().toISOString().replace(/[:.]/g, "-")}.csv`;
+  if (typeof window === "undefined") return filename;
+  const blob = new Blob([`\ufeff${csv}`], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return filename;
+}
