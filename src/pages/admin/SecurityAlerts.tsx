@@ -21,6 +21,12 @@ import {
   type WebhookExportPayload,
 } from "@/lib/security-alerts-webhook";
 import {
+  loadWebhookHistory,
+  appendWebhookHistory,
+  clearWebhookHistory,
+  type WebhookHistoryEntry,
+} from "@/lib/security-alerts-webhook-history";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
