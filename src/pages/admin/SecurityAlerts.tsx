@@ -258,11 +258,12 @@ export default function SecurityAlerts() {
         generated_at: new Date().toISOString(),
       };
       const result = await sendExportWebhook(trimmed, payload, {
-        secret: webhookSecretDraft.trim() || undefined,
+        secret: webhookValidation.normalizedSecret || undefined,
         maxAttempts: webhookMaxAttemptsDraft,
         baseDelayMs: webhookBaseDelayDraft,
         maxDelayMs: Math.max(webhookBaseDelayDraft, webhookMaxDelayDraft),
       });
+
       const latency = Math.round(performance.now() - started);
       recordWebhookHistory({
         url: trimmed,
