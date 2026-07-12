@@ -12,9 +12,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, Search, Filter, RefreshCw, Calendar, User, Activity, Info, Eye, AlertTriangle } from 'lucide-react';
+import { Shield, Search, Filter, RefreshCw, Calendar, User, Activity, Info, Eye, AlertTriangle, Send } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
+
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -36,6 +38,15 @@ interface RlsLogRow {
   details: unknown;
 }
 
+interface FlushMetricRow {
+  created_at: string;
+  sent: number;
+  failed: number;
+  oldest_age_ms: number;
+  duration_ms: number;
+}
+
+
 export default function SecurityAuditDashboard() {
   usePageTitle('Painel de Auditoria de Segurança');
 
@@ -43,6 +54,7 @@ export default function SecurityAuditDashboard() {
   const { hasRole, user } = useAuthContext();
   const [auditLogs, setAuditLogs] = useState<AuditLogRow[]>([]);
   const [rlsLogs, setRlsLogs] = useState<RlsLogRow[]>([]);
+  const [flushMetrics, setFlushMetrics] = useState<FlushMetricRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
@@ -60,16 +72,25 @@ export default function SecurityAuditDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [auditRes, rlsRes] = await Promise.all([
+      const sinceIso = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+      const [auditRes, rlsRes, flushRes] = await Promise.all([
         supabase.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(200),
-        supabase.from('rls_audit_logs').select('*').order('created_at', { ascending: false }).limit(200)
+        supabase.from('rls_audit_logs').select('*').order('created_at', { ascending: false }).limit(200),
+        supabase
+          .from('webhook_flush_metrics')
+          .select('created_at, sent, failed, oldest_age_ms, duration_ms')
+          .gte('created_at', sinceIso)
+          .order('created_at', { ascending: true })
+          .limit(1000),
       ]);
 
       if (auditRes.error) throw auditRes.error;
       if (rlsRes.error) throw rlsRes.error;
+      if (flushRes.error) throw flushRes.error;
 
       setAuditLogs((auditRes.data as unknown as AuditLogRow[]) || []);
       setRlsLogs((rlsRes.data as unknown as RlsLogRow[]) || []);
+      setFlushMetrics((flushRes.data as unknown as FlushMetricRow[]) || []);
     } catch (err) {
       logger.error('Error fetching security logs:', err);
       toast.error('Erro ao carregar logs');
@@ -77,6 +98,22 @@ export default function SecurityAuditDashboard() {
       setLoading(false);
     }
   };
+
+  // Aggregate per day for the chart
+  const flushDaily = (() => {
+    const map = new Map<string, { day: string; sent: number; failed: number; avg_age_s: number; n: number }>();
+    for (const m of flushMetrics) {
+      const day = m.created_at.slice(0, 10);
+      const cur = map.get(day) ?? { day, sent: 0, failed: 0, avg_age_s: 0, n: 0 };
+      cur.sent += m.sent || 0;
+      cur.failed += m.failed || 0;
+      cur.avg_age_s = (cur.avg_age_s * cur.n + (m.oldest_age_ms || 0) / 1000) / (cur.n + 1);
+      cur.n += 1;
+      map.set(day, cur);
+    }
+    return Array.from(map.values()).map((d) => ({ ...d, avg_age_s: Math.round(d.avg_age_s) }));
+  })();
+
 
   const filteredAudit = auditLogs.filter(log => {
     const matchesSearch = 
@@ -136,6 +173,34 @@ export default function SecurityAuditDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader className="flex flex-row items-center gap-2">
+          <Send className="h-5 w-5 text-primary" />
+          <CardTitle>Webhooks — Últimos 14 dias</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {flushDaily.length === 0 ? (
+            <p className="text-sm text-muted-foreground">Nenhum flush registrado ainda.</p>
+          ) : (
+            <div className="h-56">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={flushDaily}>
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                  <XAxis dataKey="day" fontSize={11} />
+                  <YAxis fontSize={11} />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="sent" name="Enviados" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="failed" name="Falhas" stroke="hsl(var(--destructive))" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="avg_age_s" name="Idade média (s)" stroke="hsl(var(--warning))" strokeWidth={2} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
 
       <Card>
         <CardHeader>

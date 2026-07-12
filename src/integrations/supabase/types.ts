@@ -6812,6 +6812,42 @@ export type Database = {
         }
         Relationships: []
       }
+      webhook_flush_metrics: {
+        Row: {
+          created_at: string
+          duration_ms: number
+          failed: number
+          id: string
+          oldest_age_ms: number
+          pending_before: number
+          remaining: number
+          sent: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          duration_ms?: number
+          failed?: number
+          id?: string
+          oldest_age_ms?: number
+          pending_before?: number
+          remaining?: number
+          sent?: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          duration_ms?: number
+          failed?: number
+          id?: string
+          oldest_age_ms?: number
+          pending_before?: number
+          remaining?: number
+          sent?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       webhook_secrets: {
         Row: {
           created_at: string | null
