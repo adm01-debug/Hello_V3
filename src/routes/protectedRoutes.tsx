@@ -82,6 +82,7 @@ const FinancialImpact = lazy(() => import("@/pages/FinancialImpact"));
 const ShiftSwapSuggestions = lazy(() => import("@/pages/ShiftSwapSuggestions"));
 const DataExport = lazy(() => import("@/pages/admin/DataExport"));
 const DatabaseHealth = lazy(() => import("@/pages/admin/DatabaseHealth"));
+const SecurityAlerts = lazy(() => import("@/pages/admin/SecurityAlerts"));
 
 export interface RouteConfig {
   path: string;
