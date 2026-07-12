@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Database, AlertTriangle, RefreshCw, Gauge } from "lucide-react";
+import { Database, AlertTriangle, RefreshCw, Gauge, Trash2 } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 
 type BloatRow = {
@@ -30,6 +30,14 @@ type SlowQuery = {
   mean_ms: number;
   total_ms: number;
   max_ms: number;
+};
+
+type IdleIndex = {
+  schemaname: string;
+  relname: string;
+  indexrelname: string;
+  index_size_bytes: number;
+  index_size_pretty: string;
 };
 
 interface Snapshot {
@@ -80,9 +88,20 @@ export default function DatabaseHealth() {
     staleTime: 60_000,
   });
 
+  const idle = useQuery({
+    queryKey: ["db-idle-indexes"],
+    queryFn: async (): Promise<IdleIndex[]> => {
+      const { data, error } = await supabase.rpc("check_idle_indexes");
+      if (error) throw error;
+      return (data as unknown as IdleIndex[]) ?? [];
+    },
+    staleTime: 60_000,
+  });
+
   const refresh = () => {
     snapshot.refetch();
     slow.refetch();
+    idle.refetch();
   };
 
   return (
@@ -200,6 +219,42 @@ export default function DatabaseHealth() {
                 </tbody>
               </table>
             </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Idle indexes */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Trash2 className="w-4 h-4 text-warning" />
+            Índices ociosos (idx_scan = 0, &gt; 1MB)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {idle.isLoading ? (
+            <Skeleton className="h-24 w-full" />
+          ) : idle.data && idle.data.length > 0 ? (
+            <div className="space-y-2">
+              {idle.data.map((i) => (
+                <div
+                  key={i.indexrelname}
+                  className="flex items-center justify-between p-3 rounded-md border bg-card/50"
+                >
+                  <div>
+                    <div className="font-mono text-sm">{i.indexrelname}</div>
+                    <div className="text-xs text-muted-foreground">
+                      em <span className="font-mono">{i.relname}</span>
+                    </div>
+                  </div>
+                  <Badge variant="outline">{i.index_size_pretty}</Badge>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Nenhum índice ocioso relevante. Todos os índices estão sendo utilizados.
+            </p>
           )}
         </CardContent>
       </Card>
