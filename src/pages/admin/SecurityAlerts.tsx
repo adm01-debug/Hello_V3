@@ -18,8 +18,16 @@ import {
   saveWebhookSecret,
   loadWebhookMaxAttempts,
   saveWebhookMaxAttempts,
+  loadWebhookBaseDelayMs,
+  saveWebhookBaseDelayMs,
+  loadWebhookMaxDelayMs,
+  saveWebhookMaxDelayMs,
   WEBHOOK_MAX_ATTEMPTS_MIN,
   WEBHOOK_MAX_ATTEMPTS_MAX,
+  WEBHOOK_BASE_DELAY_MIN,
+  WEBHOOK_BASE_DELAY_MAX,
+  WEBHOOK_MAX_DELAY_MIN,
+  WEBHOOK_MAX_DELAY_MAX,
   isValidHttpUrl,
   sendExportWebhook,
   type WebhookExportPayload,
@@ -165,16 +173,22 @@ export default function SecurityAlerts() {
   const [webhookUrl, setWebhookUrl] = useState<string>(() => loadWebhookUrl());
   const [webhookSecret, setWebhookSecret] = useState<string>(() => loadWebhookSecret());
   const [webhookMaxAttempts, setWebhookMaxAttempts] = useState<number>(() => loadWebhookMaxAttempts());
+  const [webhookBaseDelayMs, setWebhookBaseDelayMs] = useState<number>(() => loadWebhookBaseDelayMs());
+  const [webhookMaxDelayMs, setWebhookMaxDelayMs] = useState<number>(() => loadWebhookMaxDelayMs());
   const [webhookDialogOpen, setWebhookDialogOpen] = useState(false);
   const [webhookDraft, setWebhookDraft] = useState<string>("");
   const [webhookSecretDraft, setWebhookSecretDraft] = useState<string>("");
   const [webhookMaxAttemptsDraft, setWebhookMaxAttemptsDraft] = useState<number>(WEBHOOK_MAX_ATTEMPTS_MIN);
+  const [webhookBaseDelayDraft, setWebhookBaseDelayDraft] = useState<number>(WEBHOOK_BASE_DELAY_MIN);
+  const [webhookMaxDelayDraft, setWebhookMaxDelayDraft] = useState<number>(WEBHOOK_MAX_DELAY_MIN);
   const openWebhookDialog = useCallback(() => {
     setWebhookDraft(webhookUrl);
     setWebhookSecretDraft(webhookSecret);
     setWebhookMaxAttemptsDraft(webhookMaxAttempts);
+    setWebhookBaseDelayDraft(webhookBaseDelayMs);
+    setWebhookMaxDelayDraft(webhookMaxDelayMs);
     setWebhookDialogOpen(true);
-  }, [webhookUrl, webhookSecret, webhookMaxAttempts]);
+  }, [webhookUrl, webhookSecret, webhookMaxAttempts, webhookBaseDelayMs, webhookMaxDelayMs]);
   const handleSaveWebhook = useCallback(() => {
     const trimmed = webhookDraft.trim();
     if (trimmed && !isValidHttpUrl(trimmed)) {
@@ -185,15 +199,28 @@ export default function SecurityAlerts() {
       WEBHOOK_MAX_ATTEMPTS_MIN,
       Math.min(WEBHOOK_MAX_ATTEMPTS_MAX, Math.floor(webhookMaxAttemptsDraft || WEBHOOK_MAX_ATTEMPTS_MIN)),
     );
+    const clampedBase = Math.max(
+      WEBHOOK_BASE_DELAY_MIN,
+      Math.min(WEBHOOK_BASE_DELAY_MAX, Math.floor(webhookBaseDelayDraft || WEBHOOK_BASE_DELAY_MIN)),
+    );
+    let clampedMax = Math.max(
+      WEBHOOK_MAX_DELAY_MIN,
+      Math.min(WEBHOOK_MAX_DELAY_MAX, Math.floor(webhookMaxDelayDraft || WEBHOOK_MAX_DELAY_MIN)),
+    );
+    if (clampedMax < clampedBase) clampedMax = clampedBase;
     saveWebhookUrl(trimmed);
     saveWebhookSecret(webhookSecretDraft);
     saveWebhookMaxAttempts(clampedAttempts);
+    saveWebhookBaseDelayMs(clampedBase);
+    saveWebhookMaxDelayMs(clampedMax);
     setWebhookUrl(trimmed);
     setWebhookSecret(webhookSecretDraft.trim());
     setWebhookMaxAttempts(clampedAttempts);
+    setWebhookBaseDelayMs(clampedBase);
+    setWebhookMaxDelayMs(clampedMax);
     setWebhookDialogOpen(false);
     toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
-  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft]);
+  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
   const recordWebhookHistory = useCallback((entry: Omit<WebhookHistoryEntry, "id" | "at">) => {
@@ -235,6 +262,8 @@ export default function SecurityAlerts() {
       const result = await sendExportWebhook(trimmed, payload, {
         secret: webhookSecretDraft.trim() || undefined,
         maxAttempts: webhookMaxAttemptsDraft,
+        baseDelayMs: webhookBaseDelayDraft,
+        maxDelayMs: Math.max(webhookBaseDelayDraft, webhookMaxDelayDraft),
       });
       const latency = Math.round(performance.now() - started);
       recordWebhookHistory({
@@ -263,7 +292,7 @@ export default function SecurityAlerts() {
     } finally {
       setIsTestingWebhook(false);
     }
-  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, recordWebhookHistory]);
+  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft, recordWebhookHistory]);
 
 
 
@@ -481,6 +510,8 @@ export default function SecurityAlerts() {
           const result = await sendExportWebhook(webhookUrl, hookPayload, {
             secret: webhookSecret,
             maxAttempts: webhookMaxAttempts,
+            baseDelayMs: webhookBaseDelayMs,
+            maxDelayMs: Math.max(webhookBaseDelayMs, webhookMaxDelayMs),
           });
           const latency = Math.round(performance.now() - started);
           recordWebhookHistory({
@@ -515,7 +546,7 @@ export default function SecurityAlerts() {
         setIsExporting(false);
       }
     },
-    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, webhookMaxAttempts, SINCE_ISO, recordWebhookHistory],
+    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, webhookMaxAttempts, webhookBaseDelayMs, webhookMaxDelayMs, SINCE_ISO, recordWebhookHistory],
 
   );
 
@@ -958,9 +989,46 @@ export default function SecurityAlerts() {
               }}
               className="w-24"
             />
+            <div className="grid grid-cols-2 gap-2 pt-2">
+              <div>
+                <Label htmlFor="webhook-base-delay" className="block">
+                  Backoff base (ms)
+                </Label>
+                <Input
+                  id="webhook-base-delay"
+                  type="number"
+                  min={WEBHOOK_BASE_DELAY_MIN}
+                  max={WEBHOOK_BASE_DELAY_MAX}
+                  step={50}
+                  value={webhookBaseDelayDraft}
+                  onChange={(e) => {
+                    const n = Number.parseInt(e.target.value, 10);
+                    setWebhookBaseDelayDraft(Number.isFinite(n) ? n : WEBHOOK_BASE_DELAY_MIN);
+                  }}
+                />
+              </div>
+              <div>
+                <Label htmlFor="webhook-max-delay" className="block">
+                  Backoff máx (ms)
+                </Label>
+                <Input
+                  id="webhook-max-delay"
+                  type="number"
+                  min={WEBHOOK_MAX_DELAY_MIN}
+                  max={WEBHOOK_MAX_DELAY_MAX}
+                  step={100}
+                  value={webhookMaxDelayDraft}
+                  onChange={(e) => {
+                    const n = Number.parseInt(e.target.value, 10);
+                    setWebhookMaxDelayDraft(Number.isFinite(n) ? n : WEBHOOK_MAX_DELAY_MIN);
+                  }}
+                />
+              </div>
+            </div>
             <p className="text-xs text-muted-foreground">
-              Retries usam backoff exponencial com jitter (AWS full-jitter) e só disparam em falhas transitórias
-              (rede/timeout, 408, 429, 5xx). 4xx normais não retentam.
+              Retries usam backoff exponencial com jitter (AWS full-jitter): delay = random(0, min(máx, base·2^(n-1))).
+              Só disparam em falhas transitórias (rede/timeout, 408, 429, 5xx); 4xx normais não retentam.
+              Se máx &lt; base, será elevado ao valor de base ao salvar.
             </p>
             <pre className="text-[10px] p-2 rounded-md border bg-muted/30 overflow-auto font-mono">
 {`{

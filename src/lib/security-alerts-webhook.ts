@@ -4,32 +4,61 @@
 const STORAGE_KEY = "security-alerts:webhook-url";
 const SECRET_KEY = "security-alerts:webhook-secret";
 const MAX_ATTEMPTS_KEY = "security-alerts:webhook-max-attempts";
+const BASE_DELAY_KEY = "security-alerts:webhook-base-delay-ms";
+const MAX_DELAY_KEY = "security-alerts:webhook-max-delay-ms";
 
 export const WEBHOOK_MAX_ATTEMPTS_MIN = 1;
 export const WEBHOOK_MAX_ATTEMPTS_MAX = 6;
 export const WEBHOOK_MAX_ATTEMPTS_DEFAULT = 3;
 
-export function loadWebhookMaxAttempts(): number {
-  if (typeof window === "undefined") return WEBHOOK_MAX_ATTEMPTS_DEFAULT;
+export const WEBHOOK_BASE_DELAY_MIN = 50;
+export const WEBHOOK_BASE_DELAY_MAX = 10_000;
+export const WEBHOOK_BASE_DELAY_DEFAULT = 400;
+
+export const WEBHOOK_MAX_DELAY_MIN = 100;
+export const WEBHOOK_MAX_DELAY_MAX = 60_000;
+export const WEBHOOK_MAX_DELAY_DEFAULT = 5_000;
+
+function loadIntClamped(key: string, def: number, min: number, max: number): number {
+  if (typeof window === "undefined") return def;
   try {
-    const raw = window.localStorage.getItem(MAX_ATTEMPTS_KEY);
-    if (!raw) return WEBHOOK_MAX_ATTEMPTS_DEFAULT;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return def;
     const n = Number.parseInt(raw, 10);
-    if (!Number.isFinite(n)) return WEBHOOK_MAX_ATTEMPTS_DEFAULT;
-    return Math.max(WEBHOOK_MAX_ATTEMPTS_MIN, Math.min(WEBHOOK_MAX_ATTEMPTS_MAX, n));
+    if (!Number.isFinite(n)) return def;
+    return Math.max(min, Math.min(max, n));
   } catch {
-    return WEBHOOK_MAX_ATTEMPTS_DEFAULT;
+    return def;
   }
 }
 
-export function saveWebhookMaxAttempts(n: number): void {
+function saveIntClamped(key: string, n: number, min: number, max: number): void {
   if (typeof window === "undefined") return;
-  const clamped = Math.max(WEBHOOK_MAX_ATTEMPTS_MIN, Math.min(WEBHOOK_MAX_ATTEMPTS_MAX, Math.floor(n)));
+  const clamped = Math.max(min, Math.min(max, Math.floor(n)));
   try {
-    window.localStorage.setItem(MAX_ATTEMPTS_KEY, String(clamped));
+    window.localStorage.setItem(key, String(clamped));
   } catch {
     /* ignore */
   }
+}
+
+export function loadWebhookMaxAttempts(): number {
+  return loadIntClamped(MAX_ATTEMPTS_KEY, WEBHOOK_MAX_ATTEMPTS_DEFAULT, WEBHOOK_MAX_ATTEMPTS_MIN, WEBHOOK_MAX_ATTEMPTS_MAX);
+}
+export function saveWebhookMaxAttempts(n: number): void {
+  saveIntClamped(MAX_ATTEMPTS_KEY, n, WEBHOOK_MAX_ATTEMPTS_MIN, WEBHOOK_MAX_ATTEMPTS_MAX);
+}
+export function loadWebhookBaseDelayMs(): number {
+  return loadIntClamped(BASE_DELAY_KEY, WEBHOOK_BASE_DELAY_DEFAULT, WEBHOOK_BASE_DELAY_MIN, WEBHOOK_BASE_DELAY_MAX);
+}
+export function saveWebhookBaseDelayMs(n: number): void {
+  saveIntClamped(BASE_DELAY_KEY, n, WEBHOOK_BASE_DELAY_MIN, WEBHOOK_BASE_DELAY_MAX);
+}
+export function loadWebhookMaxDelayMs(): number {
+  return loadIntClamped(MAX_DELAY_KEY, WEBHOOK_MAX_DELAY_DEFAULT, WEBHOOK_MAX_DELAY_MIN, WEBHOOK_MAX_DELAY_MAX);
+}
+export function saveWebhookMaxDelayMs(n: number): void {
+  saveIntClamped(MAX_DELAY_KEY, n, WEBHOOK_MAX_DELAY_MIN, WEBHOOK_MAX_DELAY_MAX);
 }
 
 export interface WebhookExportPayload {
