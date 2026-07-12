@@ -64,6 +64,8 @@ export default function SecurityAlerts() {
     setSearchParams(next, { replace: true });
   };
 
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
 
   const alerts = useQuery({
     queryKey: ["admin-security-alerts-30d"],
