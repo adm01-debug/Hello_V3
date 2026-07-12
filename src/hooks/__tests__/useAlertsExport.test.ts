@@ -89,7 +89,7 @@ function baseParams(over: Partial<Parameters<typeof useAlertsExport>[0]> = {}) {
 describe("useAlertsExport", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockRows = [alert(), alert({ severity: "info", is_read: true, source_type: "system" })];
+    supabaseState.rows = [alert(), alert({ severity: "info", is_read: true, source_type: "system" })];
   });
 
   it("exporta CSV com escopo 'all' e sinaliza sucesso", async () => {
@@ -115,7 +115,7 @@ describe("useAlertsExport", () => {
     console.log("DEBUG csv", (exportAlertsToCsv as unknown as import("vitest").Mock).mock.calls.length,
       "warn", (toast.warning as unknown as import("vitest").Mock).mock.calls,
       "err", (toast.error as unknown as import("vitest").Mock).mock.calls,
-      "rows", mockRows);
+      "rows", supabaseState.rows);
     const payload = (exportAlertsToCsv as unknown as import("vitest").Mock).mock.calls[0]?.[0];
     expect(payload).toHaveLength(1);
     expect(payload[0].severity).toBe("critical");
@@ -132,7 +132,7 @@ describe("useAlertsExport", () => {
   });
 
   it("filtra por sourceFilter e searchTerm (case-insensitive)", async () => {
-    mockRows = [
+    supabaseState.rows = [
       alert({ source_type: "auth", title: "Login suspeito" }),
       alert({ source_type: "system", title: "Backup falhou" }),
     ];
@@ -149,7 +149,7 @@ describe("useAlertsExport", () => {
   });
 
   it("emite warning e não exporta quando filtros zerarem o conjunto", async () => {
-    mockRows = [alert({ severity: "info" })];
+    supabaseState.rows = [alert({ severity: "info" })];
     const { toast } = await import("sonner");
     const { result } = renderHook(() => useAlertsExport(baseParams()));
     await act(async () => {
