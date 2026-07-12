@@ -177,9 +177,14 @@ export default function SecurityAlerts() {
             <RefreshCw className="w-4 h-4 mr-2" />
             Atualizar
           </Button>
-          <Button variant="secondary" size="sm" onClick={markAllRead} disabled={unreadCount === 0}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => markAllRead(data.filter((a) => !a.is_read).map((a) => a.id))}
+            disabled={unreadCount === 0}
+          >
             <CheckCircle2 className="w-4 h-4 mr-2" />
-            Marcar todos como lidos ({unreadCount})
+            Marcar {hasActiveFilters ? "filtrados" : "todos"} como lidos ({unreadCount})
           </Button>
         </div>
       </div>
