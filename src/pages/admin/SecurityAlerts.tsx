@@ -9,7 +9,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet, AlertOctagon, MailWarning, Bookmark, BookmarkPlus, Trash2 } from "lucide-react";
+import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet, AlertOctagon, MailWarning, Bookmark, BookmarkPlus, Trash2, Webhook } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import {
+  loadWebhookUrl,
+  saveWebhookUrl,
+  isValidHttpUrl,
+  sendExportWebhook,
+  type WebhookExportPayload,
+} from "@/lib/security-alerts-webhook";
 import {
   DropdownMenu,
   DropdownMenuContent,
