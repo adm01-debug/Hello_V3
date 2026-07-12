@@ -233,10 +233,30 @@ export default function WebhookHealth() {
               Exportar CSV
             </Button>
             {endpointFilter !== "all" && (
-              <Button size="sm" variant="ghost" onClick={() => setEndpointFilter("all")}>
-                Limpar filtro
-              </Button>
+              <>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(window.location.href);
+                      logger.info("webhook_health_link_copied", { endpoint: endpointFilter });
+                    } catch (err) {
+                      logger.warn("webhook_health_link_copy_failed", {
+                        error: err instanceof Error ? err.message : String(err),
+                      });
+                    }
+                  }}
+                  title="Copiar link do drill-down"
+                >
+                  Copiar link
+                </Button>
+                <Button size="sm" variant="ghost" onClick={() => setEndpointFilter("all")}>
+                  Limpar filtro
+                </Button>
+              </>
             )}
+
           </div>
         </CardHeader>
 
