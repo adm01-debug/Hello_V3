@@ -176,7 +176,12 @@ export function useAlertsExport({
             error: result.error,
             kind: "export",
             attempts: result.attempts,
+            request_id: result.request_id,
+            response_snippet: result.response_snippet,
+            response_headers: result.response_headers,
+            attempts_detail: result.attempts_detail,
           });
+
           toast.dismiss(hookToast);
           if (result.ok) {
             const suffix = result.signed ? " · assinado (HMAC)" : "";
