@@ -40,6 +40,14 @@ import {
   type WebhookHistoryEntry,
 } from "@/lib/security-alerts-webhook-history";
 import {
+  installWebhookQueueAutoFlush,
+  loadWebhookQueue,
+  subscribeWebhookQueue,
+  enqueueWebhook,
+  flushWebhookQueue,
+  clearWebhookQueue,
+} from "@/lib/security-alerts-webhook-queue";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
