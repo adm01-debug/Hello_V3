@@ -152,12 +152,15 @@ export default function SecurityAlerts() {
 
   // Webhook de exportação — URL configurável por navegador (localStorage).
   const [webhookUrl, setWebhookUrl] = useState<string>(() => loadWebhookUrl());
+  const [webhookSecret, setWebhookSecret] = useState<string>(() => loadWebhookSecret());
   const [webhookDialogOpen, setWebhookDialogOpen] = useState(false);
   const [webhookDraft, setWebhookDraft] = useState<string>("");
+  const [webhookSecretDraft, setWebhookSecretDraft] = useState<string>("");
   const openWebhookDialog = useCallback(() => {
     setWebhookDraft(webhookUrl);
+    setWebhookSecretDraft(webhookSecret);
     setWebhookDialogOpen(true);
-  }, [webhookUrl]);
+  }, [webhookUrl, webhookSecret]);
   const handleSaveWebhook = useCallback(() => {
     const trimmed = webhookDraft.trim();
     if (trimmed && !isValidHttpUrl(trimmed)) {
@@ -165,10 +168,12 @@ export default function SecurityAlerts() {
       return;
     }
     saveWebhookUrl(trimmed);
+    saveWebhookSecret(webhookSecretDraft);
     setWebhookUrl(trimmed);
+    setWebhookSecret(webhookSecretDraft.trim());
     setWebhookDialogOpen(false);
     toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
-  }, [webhookDraft]);
+  }, [webhookDraft, webhookSecretDraft]);
 
 
 
