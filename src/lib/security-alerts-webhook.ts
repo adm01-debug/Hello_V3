@@ -38,6 +38,26 @@ export function saveWebhookUrl(url: string): void {
   }
 }
 
+export function loadWebhookSecret(): string {
+  if (typeof window === "undefined") return "";
+  try {
+    return window.localStorage.getItem(SECRET_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+
+export function saveWebhookSecret(secret: string): void {
+  if (typeof window === "undefined") return;
+  const trimmed = secret.trim();
+  try {
+    if (!trimmed) window.localStorage.removeItem(SECRET_KEY);
+    else window.localStorage.setItem(SECRET_KEY, trimmed);
+  } catch {
+    /* ignore */
+  }
+}
+
 export function isValidHttpUrl(url: string): boolean {
   try {
     const u = new URL(url);
@@ -45,6 +65,21 @@ export function isValidHttpUrl(url: string): boolean {
   } catch {
     return false;
   }
+}
+
+async function hmacSha256Hex(secret: string, payload: string): Promise<string> {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(payload));
+  return Array.from(new Uint8Array(sig))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 // Timeout curto: webhook não deve travar a UX de exportação.
