@@ -119,6 +119,23 @@ export default function WebhookHealth() {
     return () => window.clearInterval(id);
   }, [autoRefresh, loadRows]);
 
+  // Atalhos de teclado: R = refresh, A = auto, Esc = limpar filtro de endpoint
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === "r" || e.key === "R") { e.preventDefault(); void loadRows(); }
+      else if (e.key === "a" || e.key === "A") { e.preventDefault(); setAutoRefresh((v) => !v); }
+      else if (e.key === "Escape" && endpointFilter !== "all") { e.preventDefault(); setEndpointFilter("all"); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [loadRows, endpointFilter]);
+
+
+
 
 
 
