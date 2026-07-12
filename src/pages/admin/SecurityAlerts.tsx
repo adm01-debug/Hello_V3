@@ -24,6 +24,7 @@ import {
   loadWebhookHistory,
   appendWebhookHistory,
   clearWebhookHistory,
+  downloadWebhookHistoryCSV,
   type WebhookHistoryEntry,
 } from "@/lib/security-alerts-webhook-history";
 import {
