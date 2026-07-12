@@ -125,6 +125,23 @@ export default function SecurityAlerts() {
     void alerts.refetch();
   };
 
+  const markResolved = async (id: string) => {
+    const nowIso = new Date().toISOString();
+    const { error } = await supabase
+      .from("notifications")
+      .update({ is_read: true, read_at: nowIso, is_archived: true })
+      .eq("id", id);
+    if (error) {
+      toast.error("Falha ao marcar como resolvido");
+      return;
+    }
+    toast.success("Alerta resolvido e arquivado");
+    setSelectedId(null);
+    void alerts.refetch();
+  };
+
+
+
 
   const allData = alerts.data ?? [];
 
