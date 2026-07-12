@@ -40,6 +40,14 @@ import {
   type WebhookHistoryEntry,
 } from "@/lib/security-alerts-webhook-history";
 import {
+  installWebhookQueueAutoFlush,
+  loadWebhookQueue,
+  subscribeWebhookQueue,
+  enqueueWebhook,
+  flushWebhookQueue,
+  clearWebhookQueue,
+} from "@/lib/security-alerts-webhook-queue";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -223,6 +231,36 @@ export default function SecurityAlerts() {
   }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
+  const [webhookPendingCount, setWebhookPendingCount] = useState<number>(() => loadWebhookQueue().length);
+  const [isFlushingQueue, setIsFlushingQueue] = useState(false);
+  useEffect(() => {
+    installWebhookQueueAutoFlush();
+    const unsub = subscribeWebhookQueue((q) => setWebhookPendingCount(q.length));
+    return unsub;
+  }, []);
+  const handleFlushQueue = useCallback(async () => {
+    if (isFlushingQueue) return;
+    setIsFlushingQueue(true);
+    const t = toast.loading("Reenviando webhooks pendentes…");
+    try {
+      const res = await flushWebhookQueue();
+      setWebhookHistory(loadWebhookHistory());
+      toast.dismiss(t);
+      if (res.sent > 0 && res.failed === 0) {
+        toast.success(`Fila esvaziada — ${res.sent} envio(s) OK`);
+      } else if (res.sent === 0 && res.failed === 0) {
+        toast.info("Nada na fila para reenviar");
+      } else {
+        toast.warning(`Reenviados: ${res.sent} · Falharam: ${res.failed} · Restantes: ${res.remaining}`);
+      }
+    } finally {
+      setIsFlushingQueue(false);
+    }
+  }, [isFlushingQueue]);
+  const handleClearQueue = useCallback(() => {
+    clearWebhookQueue();
+    toast.success("Fila de webhooks limpa");
+  }, []);
   const recordWebhookHistory = useCallback((entry: Omit<WebhookHistoryEntry, "id" | "at">) => {
     appendWebhookHistory(entry);
     setWebhookHistory(loadWebhookHistory());
@@ -535,7 +573,8 @@ export default function SecurityAlerts() {
             toast.success(`Webhook OK (HTTP ${result.status})${suffix}${retryNote} · ${latency}ms`);
           } else {
             const retryNote = result.attempts > 1 ? ` (após ${result.attempts} tentativas)` : "";
-            toast.error(`Webhook falhou${retryNote}: ${result.error ?? `HTTP ${result.status}`}`);
+            enqueueWebhook(webhookUrl, hookPayload, Boolean(webhookSecret?.trim()), result.error ?? `HTTP ${result.status}`);
+            toast.error(`Webhook falhou${retryNote}: ${result.error ?? `HTTP ${result.status}`} · adicionado à fila`);
           }
         }
       } catch (err) {
@@ -1041,6 +1080,38 @@ export default function SecurityAlerts() {
   "generated_at": "..."
 }`}
             </pre>
+            <div className="pt-3 space-y-2">
+              <div className="flex items-center justify-between rounded-md border border-border/60 bg-muted/30 p-2">
+                <div className="text-xs">
+                  <span className="font-medium">Fila pendente:</span>{" "}
+                  <Badge variant={webhookPendingCount > 0 ? "destructive" : "secondary"}>{webhookPendingCount}</Badge>
+                  <span className="ml-2 text-muted-foreground">
+                    reenvia automaticamente ao voltar online / focar a aba
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleFlushQueue}
+                    disabled={isFlushingQueue || webhookPendingCount === 0}
+                    className="h-7 px-2"
+                  >
+                    <RefreshCw className={`w-3 h-3 mr-1 ${isFlushingQueue ? "animate-spin" : ""}`} />
+                    Reenviar agora
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearQueue}
+                    disabled={webhookPendingCount === 0}
+                    className="h-7 px-2"
+                  >
+                    <Trash2 className="w-3 h-3 mr-1" /> Limpar fila
+                  </Button>
+                </div>
+              </div>
+            </div>
             <div className="pt-3 space-y-2">
               <div className="flex items-center justify-between">
                 <Label className="text-xs uppercase tracking-wider text-muted-foreground">
