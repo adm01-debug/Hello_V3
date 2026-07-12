@@ -325,10 +325,28 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
               <Trash2 className="w-4 h-4 mr-1" /> Limpar
             </Button>
           )}
-          <Button variant="secondary" onClick={onTest} disabled={isTestingWebhook || !webhookDraft.trim()}>
+          <Button
+            variant="secondary"
+            onClick={onTest}
+            disabled={isTestingWebhook || !canTest}
+            title={
+              !webhookValidation.normalizedUrl
+                ? "Informe uma URL para testar"
+                : blocked
+                  ? "Corrija os campos destacados antes de testar"
+                  : undefined
+            }
+          >
             {isTestingWebhook ? "Testando…" : "Testar"}
           </Button>
-          <Button onClick={onSave}>Salvar</Button>
+          <Button
+            onClick={onSave}
+            disabled={blocked}
+            title={blocked ? "Corrija os campos destacados antes de salvar" : undefined}
+          >
+            Salvar
+          </Button>
+
         </DialogFooter>
       </DialogContent>
     </Dialog>
