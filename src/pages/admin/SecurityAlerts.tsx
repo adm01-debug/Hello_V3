@@ -53,6 +53,7 @@ import {
 import { useWebhookQueue } from "@/hooks/useWebhookQueue";
 import { useWebhookHistory } from "@/hooks/useWebhookHistory";
 import { useWebhookConfig } from "@/hooks/useWebhookConfig";
+import { useAlertsExport } from "@/hooks/useAlertsExport";
 
 import { WebhookConfigDialog } from "@/components/security-alerts/WebhookConfigDialog";
 import { AlertDetailsDialog } from "@/components/security-alerts/AlertDetailsDialog";
