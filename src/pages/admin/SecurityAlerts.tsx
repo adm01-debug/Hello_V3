@@ -10,9 +10,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { toast } from "sonner";
-import { format } from "date-fns";
+import { format, eachDayOfInterval, subDays, startOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Link, useSearchParams } from "react-router-dom";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
 const ALL_SOURCES = "__all__";
 
