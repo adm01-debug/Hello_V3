@@ -158,12 +158,41 @@ function sleep(ms: number, signal?: AbortSignal): Promise<void> {
   });
 }
 
+import {
+  type WebhookAttemptDetail,
+  truncateResponseSnippet,
+  pickSafeHeaders,
+} from "./security-alerts-webhook-history";
+
 export interface SendExportWebhookResult {
   ok: boolean;
   status: number;
   error?: string;
   signed?: boolean;
   attempts: number;
+  /** Correlation id (enviado como X-Lovable-Request-Id). */
+  request_id: string;
+  /** Trecho da última resposta recebida (pode ser undefined se nunca recebemos resposta). */
+  response_snippet?: string;
+  /** Headers seguros da última resposta. */
+  response_headers?: Record<string, string>;
+  /** Trilha por tentativa para auditoria/depuração. */
+  attempts_detail: WebhookAttemptDetail[];
+}
+
+function generateRequestId(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
+  return `req_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+async function readResponseSnippet(res: Response): Promise<string | undefined> {
+  try {
+    // Evita travar em bodies gigantes: consumimos e truncamos.
+    const text = await res.text();
+    return truncateResponseSnippet(text);
+  } catch {
+    return undefined;
+  }
 }
 
 // Timeout curto: webhook não deve travar a UX de exportação.
@@ -182,13 +211,25 @@ export async function sendExportWebhook(
   const maxAttempts = Math.max(1, Math.min(6, options.maxAttempts ?? 3));
   const baseDelayMs = options.baseDelayMs ?? 400;
   const maxDelayMs = options.maxDelayMs ?? 5000;
+  const request_id = generateRequestId();
+  const attempts_detail: WebhookAttemptDetail[] = [];
 
   if (!isValidHttpUrl(url)) {
-    return { ok: false, status: 0, error: "URL inválida", attempts: 0 };
+    return {
+      ok: false,
+      status: 0,
+      error: "URL inválida",
+      attempts: 0,
+      request_id,
+      attempts_detail,
+    };
   }
 
   const body = JSON.stringify(payload);
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "X-Lovable-Request-Id": request_id,
+  };
   let signed = false;
   if (options.secret && options.secret.trim()) {
     try {
@@ -203,19 +244,64 @@ export async function sendExportWebhook(
 
   let lastStatus = 0;
   let lastError: string | undefined;
+  let lastSnippet: string | undefined;
+  let lastHeaders: Record<string, string> | undefined;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
+    const started_at = new Date().toISOString();
+    const startedMs = performance.now();
     try {
       const res = await fetch(url, { method: "POST", headers, body, signal: controller.signal });
       lastStatus = res.status;
+      lastHeaders = pickSafeHeaders(res.headers);
+      lastSnippet = await readResponseSnippet(res);
+      const duration_ms = Math.round(performance.now() - startedMs);
       if (res.ok) {
-        return { ok: true, status: res.status, signed, attempts: attempt };
+        attempts_detail.push({
+          attempt,
+          started_at,
+          duration_ms,
+          status: res.status,
+          ok: true,
+          response_snippet: lastSnippet,
+          response_headers: lastHeaders,
+        });
+        return {
+          ok: true,
+          status: res.status,
+          signed,
+          attempts: attempt,
+          request_id,
+          response_snippet: lastSnippet,
+          response_headers: lastHeaders,
+          attempts_detail,
+        };
       }
       lastError = `HTTP ${res.status}`;
+      attempts_detail.push({
+        attempt,
+        started_at,
+        duration_ms,
+        status: res.status,
+        ok: false,
+        error: lastError,
+        response_snippet: lastSnippet,
+        response_headers: lastHeaders,
+      });
       if (!isRetriableStatus(res.status) || attempt === maxAttempts) {
-        return { ok: false, status: res.status, error: lastError, signed, attempts: attempt };
+        return {
+          ok: false,
+          status: res.status,
+          error: lastError,
+          signed,
+          attempts: attempt,
+          request_id,
+          response_snippet: lastSnippet,
+          response_headers: lastHeaders,
+          attempts_detail,
+        };
       }
     } catch (err) {
       lastStatus = 0;
@@ -225,8 +311,27 @@ export async function sendExportWebhook(
           : err instanceof Error
             ? err.message
             : "erro desconhecido";
+      const duration_ms = Math.round(performance.now() - startedMs);
+      attempts_detail.push({
+        attempt,
+        started_at,
+        duration_ms,
+        status: 0,
+        ok: false,
+        error: lastError,
+      });
       if (attempt === maxAttempts) {
-        return { ok: false, status: 0, error: lastError, signed, attempts: attempt };
+        return {
+          ok: false,
+          status: 0,
+          error: lastError,
+          signed,
+          attempts: attempt,
+          request_id,
+          response_snippet: lastSnippet,
+          response_headers: lastHeaders,
+          attempts_detail,
+        };
       }
     } finally {
       clearTimeout(timer);
@@ -237,5 +342,16 @@ export async function sendExportWebhook(
     await sleep(delay);
   }
 
-  return { ok: false, status: lastStatus, error: lastError, signed, attempts: maxAttempts };
+  return {
+    ok: false,
+    status: lastStatus,
+    error: lastError,
+    signed,
+    attempts: maxAttempts,
+    request_id,
+    response_snippet: lastSnippet,
+    response_headers: lastHeaders,
+    attempts_detail,
+  };
 }
+
