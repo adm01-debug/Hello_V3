@@ -9,7 +9,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet, AlertOctagon, MailWarning, Bookmark, BookmarkPlus, Trash2 } from "lucide-react";
+import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive, Download, FileText, FileSpreadsheet, AlertOctagon, MailWarning, Bookmark, BookmarkPlus, Trash2, Webhook } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import {
+  loadWebhookUrl,
+  saveWebhookUrl,
+  isValidHttpUrl,
+  sendExportWebhook,
+  type WebhookExportPayload,
+} from "@/lib/security-alerts-webhook";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -139,6 +147,27 @@ export default function SecurityAlerts() {
     },
     [refreshPresets],
   );
+
+  // Webhook de exportação — URL configurável por navegador (localStorage).
+  const [webhookUrl, setWebhookUrl] = useState<string>(() => loadWebhookUrl());
+  const [webhookDialogOpen, setWebhookDialogOpen] = useState(false);
+  const [webhookDraft, setWebhookDraft] = useState<string>("");
+  const openWebhookDialog = useCallback(() => {
+    setWebhookDraft(webhookUrl);
+    setWebhookDialogOpen(true);
+  }, [webhookUrl]);
+  const handleSaveWebhook = useCallback(() => {
+    const trimmed = webhookDraft.trim();
+    if (trimmed && !isValidHttpUrl(trimmed)) {
+      toast.error("URL inválida — use http(s)://…");
+      return;
+    }
+    saveWebhookUrl(trimmed);
+    setWebhookUrl(trimmed);
+    setWebhookDialogOpen(false);
+    toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
+  }, [webhookDraft]);
+
 
 
 
@@ -335,6 +364,27 @@ export default function SecurityAlerts() {
         toast.success(
           `Exportado: ${filename} (${filtered.length} alerta${filtered.length === 1 ? "" : "s"}, ${scopeLabel})`,
         );
+        // Notifica webhook configurado (best-effort — falha não bloqueia export).
+        if (webhookUrl) {
+          const hookPayload: WebhookExportPayload = {
+            event: "security_alerts.export",
+            filename,
+            format: fmt,
+            count: filtered.length,
+            scope,
+            filters: {
+              source: sourceFilter === ALL_SOURCES ? null : sourceFilter,
+              q: searchTerm || null,
+              since_iso: SINCE_ISO,
+            },
+            generated_at: new Date().toISOString(),
+          };
+          const hookToast = toast.loading("Enviando ao webhook…");
+          const result = await sendExportWebhook(webhookUrl, hookPayload);
+          toast.dismiss(hookToast);
+          if (result.ok) toast.success(`Webhook OK (HTTP ${result.status})`);
+          else toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
+        }
       } catch (err) {
         toast.dismiss(toastId);
         const msg = err instanceof Error ? err.message : "Erro desconhecido";
@@ -343,7 +393,8 @@ export default function SecurityAlerts() {
         setIsExporting(false);
       }
     },
-    [fetchAllFilteredAlerts, searchTerm, sourceFilter],
+    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, SINCE_ISO],
+
   );
 
   const allData = useMemo<SecurityNotification[]>(
@@ -501,6 +552,14 @@ export default function SecurityAlerts() {
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={openWebhookDialog}>
+                <Webhook className="w-4 h-4 mr-2" />
+                Configurar webhook…
+                {webhookUrl && (
+                  <span className="ml-auto text-[10px] text-muted-foreground font-mono">ativo</span>
+                )}
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button
@@ -724,7 +783,62 @@ export default function SecurityAlerts() {
         onMarkRead={markRead}
         onMarkResolved={markResolved}
       />
+
+      <Dialog open={webhookDialogOpen} onOpenChange={setWebhookDialogOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Webhook de exportação</DialogTitle>
+            <DialogDescription>
+              Toda exportação (CSV/PDF) dispara um POST JSON com <code className="font-mono">filename</code>,{" "}
+              <code className="font-mono">format</code>, <code className="font-mono">count</code> e os filtros
+              ativos. Deixe em branco para desativar.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="webhook-url">URL do webhook</Label>
+            <Input
+              id="webhook-url"
+              placeholder="https://exemplo.com/hooks/security-alerts"
+              value={webhookDraft}
+              onChange={(e) => setWebhookDraft(e.target.value)}
+              autoFocus
+            />
+            <p className="text-xs text-muted-foreground">
+              Armazenado localmente neste navegador. Requer CORS habilitado no endpoint receptor.
+            </p>
+            <pre className="text-[10px] p-2 rounded-md border bg-muted/30 overflow-auto font-mono">
+{`{
+  "event": "security_alerts.export",
+  "filename": "alertas-seguranca-20260712-140033.csv",
+  "format": "csv",
+  "count": 42,
+  "scope": "all",
+  "filters": { "source": null, "q": null, "since_iso": "..." },
+  "generated_at": "..."
+}`}
+            </pre>
+          </div>
+          <DialogFooter className="gap-2 sm:gap-2">
+            <Button variant="ghost" onClick={() => setWebhookDialogOpen(false)}>
+              Cancelar
+            </Button>
+            {webhookUrl && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setWebhookDraft("");
+                }}
+              >
+                <Trash2 className="w-4 h-4 mr-1" />
+                Limpar
+              </Button>
+            )}
+            <Button onClick={handleSaveWebhook}>Salvar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
+
   );
 }
 
