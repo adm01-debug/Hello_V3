@@ -27,6 +27,8 @@ if (typeof window !== "undefined") {
         remaining: Number(detail.remaining ?? 0),
         oldest_age_ms: Number(detail.oldest_age_ms ?? 0),
         duration_ms: Number(detail.duration_ms ?? 0),
+        endpoint_hash:
+          typeof detail.endpoint_hash === "string" ? detail.endpoint_hash : null,
       });
     });
   });
