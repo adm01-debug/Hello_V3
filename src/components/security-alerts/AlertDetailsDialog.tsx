@@ -16,7 +16,7 @@ import {
   normalizeSeverity,
   severityBadgeVariant,
   type SecurityNotification,
-} from "@/lib/security-alerts-types";
+} from "@/components/security-alerts/VirtualTimeline";
 
 interface AlertDetailsDialogProps {
   alert: SecurityNotification | null;
