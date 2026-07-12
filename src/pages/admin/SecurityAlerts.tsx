@@ -48,13 +48,10 @@ import {
   type WebhookHistoryEntry,
 } from "@/lib/security-alerts-webhook-history";
 import {
-  installWebhookQueueAutoFlush,
-  loadWebhookQueue,
-  subscribeWebhookQueue,
   enqueueWebhook,
-  flushWebhookQueue,
-  clearWebhookQueue,
 } from "@/lib/security-alerts-webhook-queue";
+import { useWebhookQueue } from "@/hooks/useWebhookQueue";
+
 import { WebhookConfigDialog } from "@/components/security-alerts/WebhookConfigDialog";
 import { AlertDetailsDialog } from "@/components/security-alerts/AlertDetailsDialog";
 import {
@@ -237,45 +234,18 @@ export default function SecurityAlerts() {
   }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
-  const [webhookQueue, setWebhookQueue] = useState(() => loadWebhookQueue());
-  const webhookPendingCount = webhookQueue.length;
-  const webhookOldestAgeMs = webhookQueue.length
-    ? Date.now() - Math.min(...webhookQueue.map((q) => new Date(q.enqueuedAt).getTime()))
-    : 0;
-  const [isFlushingQueue, setIsFlushingQueue] = useState(false);
+  const {
+    pendingCount: webhookPendingCount,
+    oldestAgeMs: webhookOldestAgeMs,
+    isFlushing: isFlushingQueue,
+    flushedAt: webhookQueueFlushedAt,
+    flush: handleFlushQueue,
+    clear: handleClearQueue,
+  } = useWebhookQueue();
   useEffect(() => {
-    installWebhookQueueAutoFlush();
-    const unsub = subscribeWebhookQueue((q) => setWebhookQueue([...q]));
-    // Tick para atualizar "idade do mais antigo" a cada 30s enquanto houver fila.
-    const tick = setInterval(() => setWebhookQueue((prev) => (prev.length ? [...prev] : prev)), 30_000);
-    return () => {
-      unsub();
-      clearInterval(tick);
-    };
-  }, []);
-  const handleFlushQueue = useCallback(async () => {
-    if (isFlushingQueue) return;
-    setIsFlushingQueue(true);
-    const t = toast.loading("Reenviando webhooks pendentes…");
-    try {
-      const res = await flushWebhookQueue();
-      setWebhookHistory(loadWebhookHistory());
-      toast.dismiss(t);
-      if (res.sent > 0 && res.failed === 0) {
-        toast.success(`Fila esvaziada — ${res.sent} envio(s) OK`);
-      } else if (res.sent === 0 && res.failed === 0) {
-        toast.info("Nada na fila para reenviar");
-      } else {
-        toast.warning(`Reenviados: ${res.sent} · Falharam: ${res.failed} · Restantes: ${res.remaining}`);
-      }
-    } finally {
-      setIsFlushingQueue(false);
-    }
-  }, [isFlushingQueue]);
-  const handleClearQueue = useCallback(() => {
-    clearWebhookQueue();
-    toast.success("Fila de webhooks limpa");
-  }, []);
+    if (webhookQueueFlushedAt > 0) setWebhookHistory(loadWebhookHistory());
+  }, [webhookQueueFlushedAt]);
+
   const recordWebhookHistory = useCallback((entry: Omit<WebhookHistoryEntry, "id" | "at">) => {
     appendWebhookHistory(entry);
     setWebhookHistory(loadWebhookHistory());
