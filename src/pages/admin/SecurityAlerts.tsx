@@ -581,6 +581,13 @@ function VirtualTimeline({
 
   const parentRef = useRef<HTMLDivElement | null>(null);
 
+  // Reset de scroll ao topo quando filtros mudam — paginação virtual
+  // sempre reinicia no primeiro item visível do novo subconjunto.
+  useEffect(() => {
+    parentRef.current?.scrollTo({ top: 0 });
+  }, [resetKey]);
+
+
   const estimateSize = useCallback((index: number) => {
     const r = rows[index];
     if (!r) return 96;
