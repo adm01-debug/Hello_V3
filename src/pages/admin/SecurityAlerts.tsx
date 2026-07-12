@@ -148,6 +148,27 @@ export default function SecurityAlerts() {
     [refreshPresets],
   );
 
+  // Webhook de exportação — URL configurável por navegador (localStorage).
+  const [webhookUrl, setWebhookUrl] = useState<string>(() => loadWebhookUrl());
+  const [webhookDialogOpen, setWebhookDialogOpen] = useState(false);
+  const [webhookDraft, setWebhookDraft] = useState<string>("");
+  const openWebhookDialog = useCallback(() => {
+    setWebhookDraft(webhookUrl);
+    setWebhookDialogOpen(true);
+  }, [webhookUrl]);
+  const handleSaveWebhook = useCallback(() => {
+    const trimmed = webhookDraft.trim();
+    if (trimmed && !isValidHttpUrl(trimmed)) {
+      toast.error("URL inválida — use http(s)://…");
+      return;
+    }
+    saveWebhookUrl(trimmed);
+    setWebhookUrl(trimmed);
+    setWebhookDialogOpen(false);
+    toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
+  }, [webhookDraft]);
+
+
 
 
   const PAGE_SIZE = 50;
