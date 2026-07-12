@@ -18,6 +18,7 @@ export interface WebhookHistoryEntry {
   latency_ms: number;
   error?: string;
   kind: "export" | "test";
+  attempts?: number;
 }
 
 function isValid(v: unknown): v is WebhookHistoryEntry {
@@ -88,6 +89,7 @@ export function webhookHistoryToCSV(entries: WebhookHistoryEntry[]): string {
     "status",
     "ok",
     "signed",
+    "attempts",
     "latency_ms",
     "error",
   ];
@@ -103,6 +105,7 @@ export function webhookHistoryToCSV(entries: WebhookHistoryEntry[]): string {
       e.status,
       e.ok,
       e.signed,
+      e.attempts ?? 1,
       e.latency_ms,
       e.error ?? "",
     ]
