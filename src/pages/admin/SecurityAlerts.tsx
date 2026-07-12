@@ -620,7 +620,9 @@ export default function SecurityAlerts() {
         onFlushQueue={handleFlushQueue}
         onClearQueue={handleClearQueue}
         onExportHistory={handleExportWebhookHistory}
+        onExportHistoryNdjson={handleExportWebhookHistoryNdjson}
         onClearHistory={handleClearWebhookHistory}
+
       />
     </div>
 
