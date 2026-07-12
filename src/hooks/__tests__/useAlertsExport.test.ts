@@ -88,7 +88,6 @@ describe("useAlertsExport", () => {
     vi.clearAllMocks();
     mockRows = [alert(), alert({ severity: "info", is_read: true, source_type: "system" })];
   });
-  afterEach(() => vi.restoreAllMocks());
 
   it("exporta CSV com escopo 'all' e sinaliza sucesso", async () => {
     const { result } = renderHook(() => useAlertsExport(baseParams()));
