@@ -80,9 +80,11 @@ export default function WebhookHealth() {
     return window.localStorage.getItem(AUTO_REFRESH_KEY) === "1";
   });
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+  const [fetching, setFetching] = useState(false);
   const cancelRef = useRef(false);
 
   const loadRows = useCallback(async () => {
+    setFetching(true);
     const since = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
     const { data, error } = await supabase
       .from("webhook_flush_metrics")
