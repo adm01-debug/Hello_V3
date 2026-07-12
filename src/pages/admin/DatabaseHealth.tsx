@@ -286,10 +286,18 @@ export default function DatabaseHealth() {
                           try {
                             await navigator.clipboard.writeText(sql);
                             toast.success("DROP INDEX copiado para a área de transferência");
+                            // Best-effort audit: não bloquear UX se falhar
+                            void supabase
+                              .rpc("log_index_drop_copy", {
+                                p_index_name: i.indexrelname,
+                                p_table_name: i.relname,
+                              })
+                              .then(() => dropAudit.refetch());
                           } catch {
                             toast.error("Falha ao copiar SQL");
                           }
                         }}
+
                         title={sql}
                       >
                         <Copy className="w-3.5 h-3.5 mr-1" />
