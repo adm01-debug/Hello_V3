@@ -203,14 +203,20 @@ export default function SecurityAlerts() {
     [alerts.data],
   );
 
-  // Infinite-scroll sentinel
+  // Infinite-scroll sentinel — pausa auto-fetch quando há erro na próxima
+  // página para não entrar em loop de tentativas; usuário reativa via botão.
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const el = sentinelRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting && alerts.hasNextPage && !alerts.isFetchingNextPage) {
+        if (
+          entries[0]?.isIntersecting &&
+          alerts.hasNextPage &&
+          !alerts.isFetchingNextPage &&
+          !alerts.isFetchNextPageError
+        ) {
           void alerts.fetchNextPage();
         }
       },
@@ -218,7 +224,7 @@ export default function SecurityAlerts() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.fetchNextPage]);
+  }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.isFetchNextPageError, alerts.fetchNextPage]);
 
 
   const availableSources = useMemo(() => {
@@ -449,6 +455,7 @@ export default function SecurityAlerts() {
               totalLoaded={allData.length}
               onLoadMore={() => void alerts.fetchNextPage()}
               resetKey={filterKey}
+              nextPageError={alerts.isFetchNextPageError ? alerts.error : null}
             />
           )}
         </CardContent>
@@ -569,6 +576,7 @@ interface VirtualTimelineProps {
   totalLoaded: number;
   onLoadMore: () => void;
   resetKey: string;
+  nextPageError: unknown;
 }
 
 function VirtualTimeline({
@@ -582,7 +590,10 @@ function VirtualTimeline({
   totalLoaded,
   onLoadMore,
   resetKey,
+  nextPageError,
 }: VirtualTimelineProps) {
+  const nextPageErrorMessage =
+    nextPageError instanceof Error ? nextPageError.message : nextPageError ? String(nextPageError) : null;
   const rows = useMemo<TimelineRow[]>(() => {
     const out: TimelineRow[] = [];
     for (const day of days) {
@@ -662,12 +673,31 @@ function VirtualTimeline({
                       <Skeleton className="h-20 w-full" />
                     </div>
                   )}
-                  {!hasNextPage && totalLoaded > 0 && (
+                  {nextPageErrorMessage && !isFetchingNextPage && (
+                    <div
+                      role="alert"
+                      className="mt-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm"
+                    >
+                      <p className="font-medium text-destructive">
+                        Falha ao carregar mais alertas
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1 break-words">
+                        {nextPageErrorMessage}
+                      </p>
+                      <div className="flex justify-end pt-2">
+                        <Button variant="destructive" size="sm" onClick={onLoadMore}>
+                          <RefreshCw className="w-3.5 h-3.5 mr-1" />
+                          Tentar novamente
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                  {!hasNextPage && totalLoaded > 0 && !nextPageErrorMessage && (
                     <p className="text-center text-xs text-muted-foreground pt-4">
                       Fim da timeline — {totalLoaded} alerta{totalLoaded === 1 ? "" : "s"} carregado{totalLoaded === 1 ? "" : "s"}.
                     </p>
                   )}
-                  {hasNextPage && !isFetchingNextPage && (
+                  {hasNextPage && !isFetchingNextPage && !nextPageErrorMessage && (
                     <div className="flex justify-center pt-2">
                       <Button variant="outline" size="sm" onClick={onLoadMore}>
                         Carregar mais
