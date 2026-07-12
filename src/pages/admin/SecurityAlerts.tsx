@@ -510,6 +510,8 @@ export default function SecurityAlerts() {
           const result = await sendExportWebhook(webhookUrl, hookPayload, {
             secret: webhookSecret,
             maxAttempts: webhookMaxAttempts,
+            baseDelayMs: webhookBaseDelayMs,
+            maxDelayMs: Math.max(webhookBaseDelayMs, webhookMaxDelayMs),
           });
           const latency = Math.round(performance.now() - started);
           recordWebhookHistory({
