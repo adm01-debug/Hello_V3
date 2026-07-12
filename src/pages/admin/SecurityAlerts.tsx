@@ -673,12 +673,31 @@ function VirtualTimeline({
                       <Skeleton className="h-20 w-full" />
                     </div>
                   )}
-                  {!hasNextPage && totalLoaded > 0 && (
+                  {nextPageErrorMessage && !isFetchingNextPage && (
+                    <div
+                      role="alert"
+                      className="mt-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm"
+                    >
+                      <p className="font-medium text-destructive">
+                        Falha ao carregar mais alertas
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1 break-words">
+                        {nextPageErrorMessage}
+                      </p>
+                      <div className="flex justify-end pt-2">
+                        <Button variant="destructive" size="sm" onClick={onLoadMore}>
+                          <RefreshCw className="w-3.5 h-3.5 mr-1" />
+                          Tentar novamente
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                  {!hasNextPage && totalLoaded > 0 && !nextPageErrorMessage && (
                     <p className="text-center text-xs text-muted-foreground pt-4">
                       Fim da timeline — {totalLoaded} alerta{totalLoaded === 1 ? "" : "s"} carregado{totalLoaded === 1 ? "" : "s"}.
                     </p>
                   )}
-                  {hasNextPage && !isFetchingNextPage && (
+                  {hasNextPage && !isFetchingNextPage && !nextPageErrorMessage && (
                     <div className="flex justify-center pt-2">
                       <Button variant="outline" size="sm" onClick={onLoadMore}>
                         Carregar mais
