@@ -83,6 +83,7 @@ const ShiftSwapSuggestions = lazy(() => import("@/pages/ShiftSwapSuggestions"));
 const DataExport = lazy(() => import("@/pages/admin/DataExport"));
 const DatabaseHealth = lazy(() => import("@/pages/admin/DatabaseHealth"));
 const SecurityAlerts = lazy(() => import("@/pages/admin/SecurityAlerts"));
+const WebhookHealth = lazy(() => import("@/pages/admin/WebhookHealth"));
 
 export interface RouteConfig {
   path: string;
