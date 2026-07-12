@@ -934,9 +934,14 @@ export default function SecurityAlerts() {
                   Histórico ({webhookHistory.length})
                 </Label>
                 {webhookHistory.length > 0 && (
-                  <Button variant="ghost" size="sm" onClick={handleClearWebhookHistory} className="h-7 px-2">
-                    <Trash2 className="w-3 h-3 mr-1" /> Limpar histórico
-                  </Button>
+                  <div className="flex items-center gap-1">
+                    <Button variant="ghost" size="sm" onClick={handleExportWebhookHistory} className="h-7 px-2">
+                      <Download className="w-3 h-3 mr-1" /> Exportar CSV
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={handleClearWebhookHistory} className="h-7 px-2">
+                      <Trash2 className="w-3 h-3 mr-1" /> Limpar
+                    </Button>
+                  </div>
                 )}
               </div>
               {webhookHistory.length === 0 ? (
