@@ -203,14 +203,20 @@ export default function SecurityAlerts() {
     [alerts.data],
   );
 
-  // Infinite-scroll sentinel
+  // Infinite-scroll sentinel — pausa auto-fetch quando há erro na próxima
+  // página para não entrar em loop de tentativas; usuário reativa via botão.
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const el = sentinelRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting && alerts.hasNextPage && !alerts.isFetchingNextPage) {
+        if (
+          entries[0]?.isIntersecting &&
+          alerts.hasNextPage &&
+          !alerts.isFetchingNextPage &&
+          !alerts.isFetchNextPageError
+        ) {
           void alerts.fetchNextPage();
         }
       },
@@ -218,7 +224,7 @@ export default function SecurityAlerts() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.fetchNextPage]);
+  }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.isFetchNextPageError, alerts.fetchNextPage]);
 
 
   const availableSources = useMemo(() => {
