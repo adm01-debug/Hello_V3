@@ -225,12 +225,26 @@ export default function SecurityAlerts() {
   } = useWebhookHistory(webhookQueueFlushedAt);
 
   const handleTestWebhook = useCallback(async () => {
-    const trimmed = webhookDraft.trim();
-    if (!trimmed || !isValidHttpUrl(trimmed)) {
-      toast.error("Informe uma URL http(s) válida antes de testar");
+    // Bloqueia teste com qualquer erro bloqueante — mensagem precisa vem do validator.
+    if (webhookValidation.errors.url || !webhookValidation.normalizedUrl) {
+      toast.error(webhookValidation.errors.url ?? "Informe uma URL http(s) válida antes de testar");
       return;
     }
+    if (webhookValidation.errors.secret) {
+      toast.error(`Segredo: ${webhookValidation.errors.secret}`);
+      return;
+    }
+    if (
+      webhookValidation.errors.maxAttempts ||
+      webhookValidation.errors.baseDelayMs ||
+      webhookValidation.errors.maxDelayMs
+    ) {
+      toast.error("Corrija os parâmetros de retry antes de testar.");
+      return;
+    }
+    const trimmed = webhookValidation.normalizedUrl;
     setIsTestingWebhook(true);
+
     const toastId = toast.loading("Enviando payload de teste…");
     const started = performance.now();
     try {
