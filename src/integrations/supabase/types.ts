@@ -6894,6 +6894,16 @@ export type Database = {
         Returns: Json
       }
       check_rls_enabled: { Args: { table_name: string }; Returns: boolean }
+      check_table_bloat: {
+        Args: never
+        Returns: {
+          dead_ratio: number
+          dead_tuples: number
+          live_tuples: number
+          relname: string
+          schemaname: string
+        }[]
+      }
       cleanup_expired_challenges: { Args: never; Returns: undefined }
       cleanup_old_data: { Args: never; Returns: undefined }
       cleanup_old_logs: { Args: never; Returns: undefined }
@@ -6972,6 +6982,7 @@ export type Database = {
           view_count: number
         }[]
       }
+      notify_bloat_hotspots: { Args: never; Returns: Json }
       record_failed_login: {
         Args: { p_email: string; p_ip_address?: string; p_user_agent?: string }
         Returns: Json
