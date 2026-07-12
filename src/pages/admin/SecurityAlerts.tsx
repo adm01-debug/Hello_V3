@@ -447,23 +447,32 @@ export default function SecurityAlerts() {
   }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.isFetchNextPageError, alerts.fetchNextPage]);
 
 
-  const availableSources = useMemo(() => {
-    const set = new Set<string>();
-    for (const n of allData) if (n.source_type) set.add(n.source_type);
-    return Array.from(set).sort();
-  }, [allData]);
-
-  const data = useMemo(() => {
-    const term = searchTerm.trim().toLowerCase();
-    return allData.filter((n) => {
-      if (sourceFilter !== ALL_SOURCES && (n.source_type ?? "") !== sourceFilter) return false;
-      if (term) {
-        const hay = `${n.title}\n${n.message}\n${n.source_type ?? ""}`.toLowerCase();
-        if (!hay.includes(term)) return false;
+  // Fontes disponíveis — query dedicada (30d) para não colapsar quando o
+  // filtro server-side por source_type está ativo.
+  const availableSourcesQuery = useQuery({
+    queryKey: ["admin-security-alerts-sources-30d", SINCE_ISO],
+    queryFn: async (): Promise<string[]> => {
+      const { data, error } = await supabase
+        .from("notifications")
+        .select("source_type")
+        .eq("category", "security")
+        .gte("created_at", SINCE_ISO)
+        .not("source_type", "is", null)
+        .limit(5000);
+      if (error) throw error;
+      const set = new Set<string>();
+      for (const row of (data ?? []) as Array<{ source_type: string | null }>) {
+        if (row.source_type) set.add(row.source_type);
       }
-      return true;
-    });
-  }, [allData, sourceFilter, searchTerm]);
+      return Array.from(set).sort();
+    },
+    staleTime: 5 * 60_000,
+  });
+  const availableSources = availableSourcesQuery.data ?? [];
+
+  // Filtros já aplicados no servidor — mantido só como salvaguarda defensiva.
+  const data = allData;
+
 
   const unreadCount = data.filter((a) => !a.is_read).length;
   const criticalCount = data.filter((a) => normalizeSeverity(a.severity) === "critical").length;
