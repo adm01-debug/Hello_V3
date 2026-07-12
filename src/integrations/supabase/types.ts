@@ -6880,6 +6880,16 @@ export type Database = {
       }
       check_calling_hours: { Args: { p_region_code?: string }; Returns: Json }
       check_dnc: { Args: { p_phone: string }; Returns: boolean }
+      check_idle_indexes: {
+        Args: never
+        Returns: {
+          index_size_bytes: number
+          index_size_pretty: string
+          indexrelname: string
+          relname: string
+          schemaname: string
+        }[]
+      }
       check_ip_allowed: {
         Args: { p_ip_address: string; p_user_id: string }
         Returns: boolean
@@ -6985,6 +6995,7 @@ export type Database = {
         }[]
       }
       notify_bloat_hotspots: { Args: never; Returns: Json }
+      notify_idle_indexes: { Args: never; Returns: Json }
       record_failed_login: {
         Args: { p_email: string; p_ip_address?: string; p_user_agent?: string }
         Returns: Json
