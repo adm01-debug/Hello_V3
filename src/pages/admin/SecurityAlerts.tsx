@@ -181,6 +181,16 @@ export default function SecurityAlerts() {
     toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
   }, [webhookDraft, webhookSecretDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
+  const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
+  const recordWebhookHistory = useCallback((entry: Omit<WebhookHistoryEntry, "id" | "at">) => {
+    appendWebhookHistory(entry);
+    setWebhookHistory(loadWebhookHistory());
+  }, []);
+  const handleClearWebhookHistory = useCallback(() => {
+    clearWebhookHistory();
+    setWebhookHistory([]);
+    toast.success("Histórico limpo");
+  }, []);
   const handleTestWebhook = useCallback(async () => {
     const trimmed = webhookDraft.trim();
     if (!trimmed || !isValidHttpUrl(trimmed)) {
@@ -189,6 +199,7 @@ export default function SecurityAlerts() {
     }
     setIsTestingWebhook(true);
     const toastId = toast.loading("Enviando payload de teste…");
+    const started = performance.now();
     try {
       const payload: WebhookExportPayload = {
         event: "security_alerts.export",
@@ -202,17 +213,31 @@ export default function SecurityAlerts() {
       const result = await sendExportWebhook(trimmed, payload, {
         secret: webhookSecretDraft.trim() || undefined,
       });
+      const latency = Math.round(performance.now() - started);
+      recordWebhookHistory({
+        url: trimmed,
+        filename: payload.filename,
+        format: payload.format,
+        scope: payload.scope,
+        count: payload.count,
+        status: result.status,
+        ok: result.ok,
+        signed: Boolean(result.signed),
+        latency_ms: latency,
+        error: result.error,
+        kind: "test",
+      });
       toast.dismiss(toastId);
       if (result.ok) {
         const suffix = result.signed ? " · assinado (HMAC)" : "";
-        toast.success(`Webhook OK (HTTP ${result.status})${suffix}`);
+        toast.success(`Webhook OK (HTTP ${result.status})${suffix} · ${latency}ms`);
       } else {
         toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
       }
     } finally {
       setIsTestingWebhook(false);
     }
-  }, [webhookDraft, webhookSecretDraft]);
+  }, [webhookDraft, webhookSecretDraft, recordWebhookHistory]);
 
 
 
