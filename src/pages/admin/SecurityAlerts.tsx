@@ -107,20 +107,20 @@ export default function SecurityAlerts() {
     void alerts.refetch();
   };
 
-  const markAllRead = async () => {
-    const unread = (alerts.data ?? []).filter((a) => !a.is_read).map((a) => a.id);
-    if (unread.length === 0) return;
+  const markAllRead = async (ids: string[]) => {
+    if (ids.length === 0) return;
     const { error } = await supabase
       .from("notifications")
       .update({ is_read: true, read_at: new Date().toISOString() })
-      .in("id", unread);
+      .in("id", ids);
     if (error) {
       toast.error("Falha ao marcar todos como lidos");
       return;
     }
-    toast.success(`${unread.length} alertas marcados como lidos`);
+    toast.success(`${ids.length} alertas marcados como lidos`);
     void alerts.refetch();
   };
+
 
   const allData = alerts.data ?? [];
 
