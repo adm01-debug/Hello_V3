@@ -38,6 +38,8 @@ function ratioColor(ratio: number, attempts: number): string {
 
 type SortMode = "volume" | "trend" | "ratio";
 const SORT_KEY = "webhook-health:sort-mode";
+const AUTO_REFRESH_KEY = "webhook-health:auto-refresh";
+const AUTO_REFRESH_MS = 30_000;
 
 export default function WebhookHealth() {
   usePageTitle("Saúde de Webhooks");
