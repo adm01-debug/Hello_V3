@@ -107,7 +107,9 @@ describe("useAlertsExport", () => {
       await result.current.handleExport("csv", "critical");
     });
     const { exportAlertsToCsv } = await import("@/lib/security-alerts-export");
-    const payload = (exportAlertsToCsv as unknown as import("vitest").Mock).mock.calls[0][0];
+    // eslint-disable-next-line no-console
+    console.log("DEBUG calls", (exportAlertsToCsv as unknown as import("vitest").Mock).mock.calls.length, "rows", mockRows.length);
+    const payload = (exportAlertsToCsv as unknown as import("vitest").Mock).mock.calls[0]?.[0];
     expect(payload).toHaveLength(1);
     expect(payload[0].severity).toBe("critical");
   });
