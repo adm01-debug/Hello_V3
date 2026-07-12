@@ -4,6 +4,7 @@ import {
   clearWebhookQueue,
   enqueueWebhook,
   flushWebhookQueue,
+  installWebhookQueueAutoFlush,
   loadWebhookQueue,
   subscribeWebhookQueue,
 } from "../security-alerts-webhook-queue";
@@ -85,4 +86,26 @@ describe("security-alerts-webhook-queue", () => {
     const res = await flushWebhookQueue();
     expect(res).toEqual({ sent: 0, failed: 0, remaining: 0 });
   });
+
+  it("auto-flushes on 'online' event after being offline", async () => {
+    // Instala listeners uma vez (idempotente).
+    installWebhookQueueAutoFlush();
+
+    enqueueWebhook("https://ok.example.com/hook", payload({ filename: "auto.csv" }), false);
+    expect(loadWebhookQueue()).toHaveLength(1);
+
+    const fetchMock = vi.fn(async () => new Response("", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    // Simula estado offline → online.
+    Object.defineProperty(navigator, "onLine", { configurable: true, get: () => true });
+    window.dispatchEvent(new Event("online"));
+
+    // Aguarda o flush em background concluir.
+    await vi.waitFor(() => {
+      expect(loadWebhookQueue()).toHaveLength(0);
+    }, { timeout: 5000 });
+
+    expect(fetchMock).toHaveBeenCalled();
+  }, 20000);
 });
