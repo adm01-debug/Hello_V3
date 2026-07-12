@@ -174,6 +174,39 @@ export default function SecurityAlerts() {
     setWebhookDialogOpen(false);
     toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
   }, [webhookDraft, webhookSecretDraft]);
+  const [isTestingWebhook, setIsTestingWebhook] = useState(false);
+  const handleTestWebhook = useCallback(async () => {
+    const trimmed = webhookDraft.trim();
+    if (!trimmed || !isValidHttpUrl(trimmed)) {
+      toast.error("Informe uma URL http(s) válida antes de testar");
+      return;
+    }
+    setIsTestingWebhook(true);
+    const toastId = toast.loading("Enviando payload de teste…");
+    try {
+      const payload: WebhookExportPayload = {
+        event: "security_alerts.export",
+        filename: `teste-${new Date().toISOString().replace(/[:.]/g, "-")}.csv`,
+        format: "csv",
+        count: 0,
+        scope: "all",
+        filters: { source: null, q: null, since_iso: new Date().toISOString() },
+        generated_at: new Date().toISOString(),
+      };
+      const result = await sendExportWebhook(trimmed, payload, {
+        secret: webhookSecretDraft.trim() || undefined,
+      });
+      toast.dismiss(toastId);
+      if (result.ok) {
+        const suffix = result.signed ? " · assinado (HMAC)" : "";
+        toast.success(`Webhook OK (HTTP ${result.status})${suffix}`);
+      } else {
+        toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
+      }
+    } finally {
+      setIsTestingWebhook(false);
+    }
+  }, [webhookDraft, webhookSecretDraft]);
 
 
 
@@ -857,6 +890,13 @@ export default function SecurityAlerts() {
                 Limpar
               </Button>
             )}
+            <Button
+              variant="secondary"
+              onClick={handleTestWebhook}
+              disabled={isTestingWebhook || !webhookDraft.trim()}
+            >
+              {isTestingWebhook ? "Testando…" : "Testar"}
+            </Button>
             <Button onClick={handleSaveWebhook}>Salvar</Button>
           </DialogFooter>
         </DialogContent>
