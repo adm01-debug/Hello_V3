@@ -481,7 +481,7 @@ export default function SecurityAlerts() {
         setIsExporting(false);
       }
     },
-    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, SINCE_ISO],
+    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, SINCE_ISO, recordWebhookHistory],
 
   );
 
