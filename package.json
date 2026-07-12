@@ -99,6 +99,7 @@
   "devDependencies": {
     "@eslint/js": "8.57.1",
     "@playwright/test": "^1.60.0",
+    "@types/papaparse": "^5.5.2",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "eslint": "^8.56.0",
