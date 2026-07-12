@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { ShieldAlert, ExternalLink, CheckCircle2, RefreshCw, X, Archive } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { toast } from "sonner";
 import { format, eachDayOfInterval, subDays, startOfDay } from "date-fns";
@@ -62,6 +63,8 @@ export default function SecurityAlerts() {
     else next.set(key, value);
     setSearchParams(next, { replace: true });
   };
+
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
 
   const alerts = useQuery({
@@ -121,6 +124,23 @@ export default function SecurityAlerts() {
     toast.success(`${ids.length} alertas marcados como lidos`);
     void alerts.refetch();
   };
+
+  const markResolved = async (id: string) => {
+    const nowIso = new Date().toISOString();
+    const { error } = await supabase
+      .from("notifications")
+      .update({ is_read: true, read_at: nowIso, is_archived: true })
+      .eq("id", id);
+    if (error) {
+      toast.error("Falha ao marcar como resolvido");
+      return;
+    }
+    toast.success("Alerta resolvido e arquivado");
+    setSelectedId(null);
+    void alerts.refetch();
+  };
+
+
 
 
   const allData = alerts.data ?? [];
@@ -353,7 +373,16 @@ export default function SecurityAlerts() {
                     return (
                       <div
                         key={n.id}
-                        className={`p-3 rounded-md border bg-card/50 flex gap-3 ${
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => setSelectedId(n.id)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            setSelectedId(n.id);
+                          }
+                        }}
+                        className={`p-3 rounded-md border bg-card/50 flex gap-3 cursor-pointer hover:bg-accent/40 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                           n.is_read ? "opacity-60" : ""
                         }`}
                       >
@@ -370,11 +399,11 @@ export default function SecurityAlerts() {
                             </span>
                           </div>
                           <div className="font-medium mt-1">{n.title}</div>
-                          <div className="text-sm text-muted-foreground whitespace-pre-wrap">
+                          <div className="text-sm text-muted-foreground whitespace-pre-wrap line-clamp-2">
                             {n.message}
                           </div>
                         </div>
-                        <div className="flex flex-col gap-2 shrink-0">
+                        <div className="flex flex-col gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
                           {n.action_url && (
                             <Button asChild variant="outline" size="sm">
                               <Link to={n.action_url}>
@@ -399,6 +428,102 @@ export default function SecurityAlerts() {
           )}
         </CardContent>
       </Card>
+
+      <AlertDetailsDialog
+        alert={allData.find((a) => a.id === selectedId) ?? null}
+        onOpenChange={(open) => !open && setSelectedId(null)}
+        onMarkRead={markRead}
+        onMarkResolved={markResolved}
+      />
     </div>
   );
 }
+
+interface AlertDetailsDialogProps {
+  alert: SecurityNotification | null;
+  onOpenChange: (open: boolean) => void;
+  onMarkRead: (id: string) => void | Promise<void>;
+  onMarkResolved: (id: string) => void | Promise<void>;
+}
+
+function AlertDetailsDialog({ alert, onOpenChange, onMarkRead, onMarkResolved }: AlertDetailsDialogProps) {
+  const open = alert !== null;
+  const sev = alert ? normalizeSeverity(alert.severity) : "info";
+  const payload = alert?.metadata ?? null;
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+        {alert && (
+          <>
+            <DialogHeader>
+              <div className="flex items-center gap-2 flex-wrap">
+                <Badge variant={severityBadgeVariant(sev)}>{sev}</Badge>
+                {alert.source_type && (
+                  <Badge variant="outline" className="font-mono text-xs">
+                    {alert.source_type}
+                  </Badge>
+                )}
+                <Badge variant="outline" className="font-mono text-xs">
+                  {alert.type}
+                </Badge>
+              </div>
+              <DialogTitle className="text-left">{alert.title}</DialogTitle>
+              <DialogDescription className="text-left whitespace-pre-wrap">
+                {alert.message}
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <div className="p-3 rounded-md border bg-muted/30">
+                <div className="text-xs uppercase text-muted-foreground">Criado em</div>
+                <div className="font-mono">
+                  {format(new Date(alert.created_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })}
+                </div>
+              </div>
+              <div className="p-3 rounded-md border bg-muted/30">
+                <div className="text-xs uppercase text-muted-foreground">Lido em</div>
+                <div className="font-mono">
+                  {alert.read_at
+                    ? format(new Date(alert.read_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })
+                    : "—"}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="text-xs uppercase text-muted-foreground mb-1">Payload completo</div>
+              <pre className="text-xs p-3 rounded-md border bg-muted/30 overflow-auto max-h-72 font-mono">
+                {payload && Object.keys(payload).length > 0
+                  ? JSON.stringify(payload, null, 2)
+                  : "// sem metadata"}
+              </pre>
+            </div>
+
+            <DialogFooter className="flex-col sm:flex-row gap-2">
+              {alert.action_url && (
+                <Button asChild variant="outline">
+                  <Link to={alert.action_url}>
+                    <ExternalLink className="w-4 h-4 mr-1" />
+                    {alert.action_label ?? "Abrir"}
+                  </Link>
+                </Button>
+              )}
+              {!alert.is_read && (
+                <Button variant="secondary" onClick={() => onMarkRead(alert.id)}>
+                  <CheckCircle2 className="w-4 h-4 mr-1" />
+                  Marcar como lido
+                </Button>
+              )}
+              <Button variant="default" onClick={() => onMarkResolved(alert.id)}>
+                <Archive className="w-4 h-4 mr-1" />
+                Marcar como resolvido
+              </Button>
+            </DialogFooter>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
