@@ -919,6 +919,57 @@ export default function SecurityAlerts() {
   "generated_at": "..."
 }`}
             </pre>
+            <div className="pt-3 space-y-2">
+              <div className="flex items-center justify-between">
+                <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+                  Histórico ({webhookHistory.length})
+                </Label>
+                {webhookHistory.length > 0 && (
+                  <Button variant="ghost" size="sm" onClick={handleClearWebhookHistory} className="h-7 px-2">
+                    <Trash2 className="w-3 h-3 mr-1" /> Limpar histórico
+                  </Button>
+                )}
+              </div>
+              {webhookHistory.length === 0 ? (
+                <p className="text-xs text-muted-foreground italic">
+                  Nenhum envio registrado ainda. Exporte ou clique em Testar.
+                </p>
+              ) : (
+                <div className="max-h-48 overflow-auto rounded-md border divide-y divide-border/50">
+                  {webhookHistory.map((h) => (
+                    <div key={h.id} className="p-2 text-[11px] flex items-center gap-2">
+                      <Badge
+                        variant={h.ok ? "secondary" : "destructive"}
+                        className="font-mono min-w-[52px] justify-center"
+                      >
+                        {h.status || "ERR"}
+                      </Badge>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1 flex-wrap">
+                          <span className="font-medium truncate max-w-[220px]" title={h.filename}>
+                            {h.filename}
+                          </span>
+                          <span className="text-muted-foreground">·</span>
+                          <span className="uppercase text-muted-foreground">{h.format}</span>
+                          <span className="text-muted-foreground">·</span>
+                          <span className="text-muted-foreground">{h.count} alerta(s)</span>
+                          {h.kind === "test" && (
+                            <Badge variant="outline" className="h-4 px-1 text-[9px]">teste</Badge>
+                          )}
+                          {h.signed && (
+                            <Badge variant="outline" className="h-4 px-1 text-[9px]">HMAC</Badge>
+                          )}
+                        </div>
+                        <div className="text-muted-foreground truncate" title={h.error ?? h.url}>
+                          {new Date(h.at).toLocaleString("pt-BR")} · {h.latency_ms}ms
+                          {h.error ? ` · ${h.error}` : ""}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           <DialogFooter className="gap-2 sm:gap-2">
             <Button variant="ghost" onClick={() => setWebhookDialogOpen(false)}>
