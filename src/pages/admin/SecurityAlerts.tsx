@@ -290,7 +290,7 @@ export default function SecurityAlerts() {
   type Cursor = { createdAt: string; id: string } | null;
 
   const alerts = useInfiniteQuery({
-    queryKey: ["admin-security-alerts-30d", SINCE_ISO],
+    queryKey: ["admin-security-alerts-30d", SINCE_ISO, sourceFilter, searchTerm],
     initialPageParam: null as Cursor,
     queryFn: async ({ pageParam }): Promise<SecurityNotification[]> => {
       let q = supabase
@@ -303,6 +303,16 @@ export default function SecurityAlerts() {
         .order("created_at", { ascending: false })
         .order("id", { ascending: false })
         .limit(PAGE_SIZE);
+      if (sourceFilter !== ALL_SOURCES) {
+        q = q.eq("source_type", sourceFilter);
+      }
+      const term = searchTerm.trim();
+      if (term) {
+        // Busca server-side (ILIKE) em title/message — evita puxar páginas
+        // inteiras só para descartar no cliente.
+        const escaped = term.replace(/[%,()]/g, "\\$&");
+        q = q.or(`title.ilike.%${escaped}%,message.ilike.%${escaped}%`);
+      }
       if (pageParam) {
         // (created_at, id) < (cursor.createdAt, cursor.id) em ordem lexicográfica
         // desc: created_at < cursor OR (created_at = cursor AND id < cursor.id)
@@ -321,6 +331,7 @@ export default function SecurityAlerts() {
     },
     staleTime: 30_000,
   });
+
 
   // Ao mudar filtros: revalida páginas já carregadas (traz updates recentes
   // como is_read alterados por outros clientes) sem descartar o histórico.
