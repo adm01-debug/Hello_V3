@@ -231,12 +231,21 @@ export default function SecurityAlerts() {
   }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
-  const [webhookPendingCount, setWebhookPendingCount] = useState<number>(() => loadWebhookQueue().length);
+  const [webhookQueue, setWebhookQueue] = useState(() => loadWebhookQueue());
+  const webhookPendingCount = webhookQueue.length;
+  const webhookOldestAgeMs = webhookQueue.length
+    ? Date.now() - Math.min(...webhookQueue.map((q) => new Date(q.enqueuedAt).getTime()))
+    : 0;
   const [isFlushingQueue, setIsFlushingQueue] = useState(false);
   useEffect(() => {
     installWebhookQueueAutoFlush();
-    const unsub = subscribeWebhookQueue((q) => setWebhookPendingCount(q.length));
-    return unsub;
+    const unsub = subscribeWebhookQueue((q) => setWebhookQueue([...q]));
+    // Tick para atualizar "idade do mais antigo" a cada 30s enquanto houver fila.
+    const tick = setInterval(() => setWebhookQueue((prev) => (prev.length ? [...prev] : prev)), 30_000);
+    return () => {
+      unsub();
+      clearInterval(tick);
+    };
   }, []);
   const handleFlushQueue = useCallback(async () => {
     if (isFlushingQueue) return;
