@@ -6,7 +6,7 @@ import type { RefObject } from "react";
 interface AlertsTimelineCardProps {
   isLoading: boolean;
   days: string[];
-  grouped: Record<string, SecurityAlertRow[]>;
+  grouped: Record<string, SecurityNotification[]>;
   onSelect: (id: string) => void;
   onMarkRead: (id: string) => void;
   sentinelRef: RefObject<HTMLDivElement>;
