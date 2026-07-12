@@ -942,6 +942,26 @@ export default function SecurityAlerts() {
               e <code className="font-mono">X-Lovable-Timestamp</code> (= <code className="font-mono">generated_at</code>).
               Valide no receptor recomputando HMAC-SHA256 do corpo bruto com o mesmo segredo.
             </p>
+            <Label htmlFor="webhook-max-attempts" className="pt-2 block">
+              Máximo de tentativas ({WEBHOOK_MAX_ATTEMPTS_MIN}–{WEBHOOK_MAX_ATTEMPTS_MAX})
+            </Label>
+            <Input
+              id="webhook-max-attempts"
+              type="number"
+              min={WEBHOOK_MAX_ATTEMPTS_MIN}
+              max={WEBHOOK_MAX_ATTEMPTS_MAX}
+              step={1}
+              value={webhookMaxAttemptsDraft}
+              onChange={(e) => {
+                const n = Number.parseInt(e.target.value, 10);
+                setWebhookMaxAttemptsDraft(Number.isFinite(n) ? n : WEBHOOK_MAX_ATTEMPTS_MIN);
+              }}
+              className="w-24"
+            />
+            <p className="text-xs text-muted-foreground">
+              Retries usam backoff exponencial com jitter (AWS full-jitter) e só disparam em falhas transitórias
+              (rede/timeout, 408, 429, 5xx). 4xx normais não retentam.
+            </p>
             <pre className="text-[10px] p-2 rounded-md border bg-muted/30 overflow-auto font-mono">
 {`{
   "event": "security_alerts.export",
