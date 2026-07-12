@@ -373,7 +373,16 @@ export default function SecurityAlerts() {
                     return (
                       <div
                         key={n.id}
-                        className={`p-3 rounded-md border bg-card/50 flex gap-3 ${
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => setSelectedId(n.id)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            setSelectedId(n.id);
+                          }
+                        }}
+                        className={`p-3 rounded-md border bg-card/50 flex gap-3 cursor-pointer hover:bg-accent/40 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                           n.is_read ? "opacity-60" : ""
                         }`}
                       >
@@ -390,11 +399,11 @@ export default function SecurityAlerts() {
                             </span>
                           </div>
                           <div className="font-medium mt-1">{n.title}</div>
-                          <div className="text-sm text-muted-foreground whitespace-pre-wrap">
+                          <div className="text-sm text-muted-foreground whitespace-pre-wrap line-clamp-2">
                             {n.message}
                           </div>
                         </div>
-                        <div className="flex flex-col gap-2 shrink-0">
+                        <div className="flex flex-col gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
                           {n.action_url && (
                             <Button asChild variant="outline" size="sm">
                               <Link to={n.action_url}>
