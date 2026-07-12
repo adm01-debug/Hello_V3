@@ -67,20 +67,32 @@ export default function SecurityAlerts() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
 
-  const alerts = useQuery({
-    queryKey: ["admin-security-alerts-30d"],
-    queryFn: async (): Promise<SecurityNotification[]> => {
-      const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-      const { data, error } = await supabase
+  const PAGE_SIZE = 50;
+  const SINCE_ISO = useMemo(
+    () => new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    [],
+  );
+
+  const alerts = useInfiniteQuery({
+    queryKey: ["admin-security-alerts-30d", SINCE_ISO],
+    initialPageParam: null as string | null,
+    queryFn: async ({ pageParam }): Promise<SecurityNotification[]> => {
+      let q = supabase
         .from("notifications")
-        .select("id, title, message, severity, type, action_url, action_label, source_type, is_read, read_at, created_at, metadata")
+        .select(
+          "id, title, message, severity, type, action_url, action_label, source_type, is_read, read_at, created_at, metadata",
+        )
         .eq("category", "security")
-        .gte("created_at", since)
+        .gte("created_at", SINCE_ISO)
         .order("created_at", { ascending: false })
-        .limit(200);
+        .limit(PAGE_SIZE);
+      if (pageParam) q = q.lt("created_at", pageParam);
+      const { data, error } = await q;
       if (error) throw error;
       return (data as SecurityNotification[]) ?? [];
     },
+    getNextPageParam: (lastPage) =>
+      lastPage.length < PAGE_SIZE ? undefined : lastPage[lastPage.length - 1]?.created_at ?? undefined,
     staleTime: 30_000,
   });
 
@@ -140,10 +152,28 @@ export default function SecurityAlerts() {
     void alerts.refetch();
   };
 
+  const allData = useMemo<SecurityNotification[]>(
+    () => alerts.data?.pages.flat() ?? [],
+    [alerts.data],
+  );
 
+  // Infinite-scroll sentinel
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting && alerts.hasNextPage && !alerts.isFetchingNextPage) {
+          void alerts.fetchNextPage();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.fetchNextPage, days_placeholder_noop()]);
 
-
-  const allData = alerts.data ?? [];
 
   const availableSources = useMemo(() => {
     const set = new Set<string>();
