@@ -284,8 +284,15 @@ export default function WebhookHealth() {
               onClick={() => { void loadRows(); }}
               title={lastRefresh ? `Última atualização: ${lastRefresh.toLocaleTimeString()}` : "Atualizar agora"}
             >
-              ↻
+              <span className={fetching ? "inline-block animate-spin" : "inline-block"}>↻</span>
             </Button>
+            <span
+              aria-hidden
+              className={`inline-block h-2 w-2 rounded-full transition-colors ${
+                fetching ? "bg-primary animate-pulse" : "bg-muted-foreground/40"
+              }`}
+              title={fetching ? "Carregando…" : "Ocioso"}
+            />
             <div className="flex items-center gap-1 rounded-md border p-0.5" role="group" aria-label="Ordenação">
               {(["volume", "trend", "ratio"] as SortMode[]).map((m) => (
                 <Button
