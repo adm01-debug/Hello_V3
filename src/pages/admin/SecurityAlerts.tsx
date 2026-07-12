@@ -14,6 +14,8 @@ import { Label } from "@/components/ui/label";
 import {
   loadWebhookUrl,
   saveWebhookUrl,
+  loadWebhookSecret,
+  saveWebhookSecret,
   isValidHttpUrl,
   sendExportWebhook,
   type WebhookExportPayload,
