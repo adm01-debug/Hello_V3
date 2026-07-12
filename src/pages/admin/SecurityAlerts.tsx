@@ -478,7 +478,10 @@ export default function SecurityAlerts() {
           };
           const hookToast = toast.loading("Enviando ao webhook…");
           const started = performance.now();
-          const result = await sendExportWebhook(webhookUrl, hookPayload, { secret: webhookSecret });
+          const result = await sendExportWebhook(webhookUrl, hookPayload, {
+            secret: webhookSecret,
+            maxAttempts: webhookMaxAttempts,
+          });
           const latency = Math.round(performance.now() - started);
           recordWebhookHistory({
             url: webhookUrl,
