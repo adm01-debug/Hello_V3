@@ -263,7 +263,7 @@ export default function SecurityAlerts() {
     } finally {
       setIsTestingWebhook(false);
     }
-  }, [webhookDraft, webhookSecretDraft, recordWebhookHistory]);
+  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, recordWebhookHistory]);
 
 
 
