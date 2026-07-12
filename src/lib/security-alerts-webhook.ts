@@ -2,6 +2,7 @@
 // Persistência local (por navegador/usuário) — não envolve backend.
 
 const STORAGE_KEY = "security-alerts:webhook-url";
+const SECRET_KEY = "security-alerts:webhook-secret";
 
 export interface WebhookExportPayload {
   event: "security_alerts.export";
