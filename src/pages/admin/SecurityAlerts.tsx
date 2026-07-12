@@ -576,6 +576,7 @@ interface VirtualTimelineProps {
   totalLoaded: number;
   onLoadMore: () => void;
   resetKey: string;
+  nextPageError: unknown;
 }
 
 function VirtualTimeline({
