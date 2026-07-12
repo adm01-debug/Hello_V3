@@ -63,9 +63,31 @@ export default function WebhookHealth() {
   }, []);
 
 
+  const filteredRows = useMemo(
+    () =>
+      endpointFilter === "all"
+        ? rows
+        : rows.filter((r) => (r.endpoint_hash ?? "—") === endpointFilter),
+    [rows, endpointFilter],
+  );
+
+  const endpoints = useMemo(() => {
+    const map = new Map<string, { attempts: number; failed: number }>();
+    for (const r of rows) {
+      const key = r.endpoint_hash ?? "—";
+      const cur = map.get(key) ?? { attempts: 0, failed: 0 };
+      cur.attempts += (r.sent ?? 0) + (r.failed ?? 0);
+      cur.failed += r.failed ?? 0;
+      map.set(key, cur);
+    }
+    return Array.from(map.entries())
+      .map(([hash, s]) => ({ hash, ...s }))
+      .sort((a, b) => b.attempts - a.attempts);
+  }, [rows]);
+
   const { buckets, days, totals } = useMemo(() => {
     const map = new Map<string, Bucket>();
-    for (const r of rows) {
+    for (const r of filteredRows) {
       const d = new Date(r.created_at);
       const day = d.toISOString().slice(0, 10);
       const hour = d.getUTCHours();
@@ -90,7 +112,7 @@ export default function WebhookHealth() {
       daySet.add(d.toISOString().slice(0, 10));
     }
     const daysArr = Array.from(daySet);
-    const totals = rows.reduce(
+    const totals = filteredRows.reduce(
       (acc, r) => {
         acc.sent += r.sent ?? 0;
         acc.failed += r.failed ?? 0;
@@ -99,7 +121,8 @@ export default function WebhookHealth() {
       { sent: 0, failed: 0 },
     );
     return { buckets: map, days: daysArr, totals };
-  }, [rows]);
+  }, [filteredRows]);
+
 
   const totalAttempts = totals.sent + totals.failed;
   const globalRatio = totalAttempts > 0 ? (totals.failed / totalAttempts) * 100 : 0;
