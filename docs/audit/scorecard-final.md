@@ -87,3 +87,10 @@ Sistema **production-ready** com maturidade técnica máxima certificada.
 - Função pura `buildRecommendations(ctx)` exportada e coberta — +4 Deno tests, total: **93 testes em 17 Edge Functions**.
 - ADR-031 publicado; zero schema change; zero novas dependências; arquivos ≤400 linhas.
 - Findings de segurança: inalterados (3 WARN pré-existentes aceitos).
+
+## Re-verificação Onda 42 (2026-07-12)
+- Auditoria de manutenção: tabela `index_drop_audit` + RPC `log_index_drop_copy` registram todas as cópias de `DROP INDEX CONCURRENTLY` feitas por admins no painel `/admin/database-health`. Card "Histórico de manutenção de índices (últimas 20)" mostra quem, quando e qual índice.
+- Reset trimestral: cron `quarterly-reset-index-stats` (1º dia de jan/abr/jul/out às 06:00 UTC) zera `pg_stat_user_indexes` do schema `public` para reavaliar índices ociosos com baseline limpo — evita descarte prematuro de índices que servem relatórios raros.
+- Escrita apenas via RPC SECURITY DEFINER (sem policy INSERT); leitura restrita a admins.
+- Zero novas dependências; arquivos ≤400 linhas.
+
