@@ -179,6 +179,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/admin/data-export", element: DataExport, roles: ["admin"] },
   { path: "/admin/database-health", element: DatabaseHealth, roles: ["admin"] },
   { path: "/admin/security-alerts", element: SecurityAlerts, roles: ["admin"] },
+  { path: "/admin/webhook-health", element: WebhookHealth, roles: ["admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },
