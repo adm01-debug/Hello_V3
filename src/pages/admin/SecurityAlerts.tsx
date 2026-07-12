@@ -554,6 +554,7 @@ interface VirtualTimelineProps {
   hasNextPage: boolean;
   totalLoaded: number;
   onLoadMore: () => void;
+  resetKey: string;
 }
 
 function VirtualTimeline({
@@ -566,6 +567,7 @@ function VirtualTimeline({
   hasNextPage,
   totalLoaded,
   onLoadMore,
+  resetKey,
 }: VirtualTimelineProps) {
   const rows = useMemo<TimelineRow[]>(() => {
     const out: TimelineRow[] = [];
