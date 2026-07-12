@@ -687,96 +687,16 @@ export default function SecurityAlerts() {
 
   return (
     <div className="space-y-6 p-4 md:p-6 max-w-6xl">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-semibold flex items-center gap-2">
-            <ShieldAlert className="w-6 h-6 text-primary" />
-            Alertas de Segurança
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Timeline dos últimos 30 dias — categoria <code className="font-mono">security</code>.
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => alerts.refetch()}>
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Atualizar
-          </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" disabled={isExporting}>
-                <Download className="w-4 h-4 mr-2" />
-                {isExporting ? "Exportando…" : "Exportar"}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-64">
-              <DropdownMenuLabel>Todos os alertas filtrados</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => void handleExport("csv", "all")} disabled={isExporting}>
-                <FileSpreadsheet className="w-4 h-4 mr-2" />
-                CSV (Excel / planilha)
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => void handleExport("pdf", "all")} disabled={isExporting}>
-                <FileText className="w-4 h-4 mr-2" />
-                PDF (relatório)
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <AlertOctagon className="w-4 h-4 mr-2 text-destructive" />
-                  Apenas críticos
-                </DropdownMenuSubTrigger>
-                <DropdownMenuPortal>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem onClick={() => void handleExport("csv", "critical")} disabled={isExporting}>
-                      <FileSpreadsheet className="w-4 h-4 mr-2" />
-                      CSV
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => void handleExport("pdf", "critical")} disabled={isExporting}>
-                      <FileText className="w-4 h-4 mr-2" />
-                      PDF
-                    </DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuPortal>
-              </DropdownMenuSub>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <MailWarning className="w-4 h-4 mr-2" />
-                  Apenas não lidos
-                </DropdownMenuSubTrigger>
-                <DropdownMenuPortal>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem onClick={() => void handleExport("csv", "unread")} disabled={isExporting}>
-                      <FileSpreadsheet className="w-4 h-4 mr-2" />
-                      CSV
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => void handleExport("pdf", "unread")} disabled={isExporting}>
-                      <FileText className="w-4 h-4 mr-2" />
-                      PDF
-                    </DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuPortal>
-              </DropdownMenuSub>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={openWebhookDialog}>
-                <Webhook className="w-4 h-4 mr-2" />
-                Configurar webhook…
-                {webhookUrl && (
-                  <span className="ml-auto text-[10px] text-muted-foreground font-mono">ativo</span>
-                )}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => markAllRead(data.filter((a) => !a.is_read).map((a) => a.id))}
-            disabled={unreadCount === 0}
-          >
-            <CheckCircle2 className="w-4 h-4 mr-2" />
-            Marcar {hasActiveFilters ? "filtrados" : "todos"} como lidos ({unreadCount})
-          </Button>
-        </div>
-      </div>
+      <AlertsHeader
+        onRefresh={() => alerts.refetch()}
+        onExport={handleExport}
+        isExporting={isExporting}
+        onOpenWebhookDialog={openWebhookDialog}
+        webhookConfigured={!!webhookUrl}
+        onMarkAllRead={() => markAllRead(data.filter((a) => !a.is_read).map((a) => a.id))}
+        unreadCount={unreadCount}
+        hasActiveFilters={hasActiveFilters}
+      />
 
       <KpiStrip
         total={data.length}
