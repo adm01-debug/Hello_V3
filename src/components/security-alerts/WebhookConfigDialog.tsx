@@ -11,8 +11,8 @@ import {
   WEBHOOK_BASE_DELAY_MAX,
   WEBHOOK_MAX_DELAY_MIN,
   WEBHOOK_MAX_DELAY_MAX,
-  type WebhookHistoryEntry,
 } from "@/lib/security-alerts-webhook";
+import type { WebhookHistoryEntry } from "@/lib/security-alerts-webhook-history";
 
 export interface WebhookConfigDialogProps {
   open: boolean;
