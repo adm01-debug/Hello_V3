@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { KpiStrip } from "@/components/security-alerts/KpiStrip";
 import { AlertsDailyChart } from "@/components/security-alerts/AlertsDailyChart";
+import { AlertsFilterBar } from "@/components/security-alerts/AlertsFilterBar";
+
 
 
 import { useVirtualizer } from "@tanstack/react-virtual";
@@ -786,56 +788,23 @@ export default function SecurityAlerts() {
 
 
 
-      <Card>
-        <CardHeader className="pb-3 flex-row items-center justify-between space-y-0">
-          <CardTitle className="text-sm">Filtros</CardTitle>
-          <div className="flex items-center gap-2">
-            <PresetsMenu
-              presets={presets}
-              allSourcesToken={ALL_SOURCES}
-              onApply={applyPreset}
-              onRemove={handleRemovePreset}
-              onSave={handleSavePreset}
-            />
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-[220px_1fr_auto] gap-3">
-            <Select value={sourceFilter} onValueChange={(v) => updateParam("source", v)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Origem (source_type)" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={ALL_SOURCES}>Todas as origens</SelectItem>
-                {availableSources.map((s) => (
-                  <SelectItem key={s} value={s} className="font-mono text-xs">
-                    {s}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Input
-              placeholder="Buscar por título, mensagem ou origem…"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSearchParams(new URLSearchParams(), { replace: true })}
-              disabled={!hasActiveFilters}
-            >
-              <X className="w-4 h-4 mr-1" />
-              Limpar
-            </Button>
-          </div>
-          {hasActiveFilters && (
-            <p className="text-xs text-muted-foreground mt-2">
-              Exibindo {data.length} de {allData.length} alertas com os filtros aplicados.
-            </p>
-          )}
-        </CardContent>
-      </Card>
+      <AlertsFilterBar
+        sourceFilter={sourceFilter}
+        allSourcesToken={ALL_SOURCES}
+        availableSources={availableSources}
+        searchInput={searchInput}
+        onSearchChange={setSearchInput}
+        onSourceChange={(v) => updateParam("source", v)}
+        onClear={() => setSearchParams(new URLSearchParams(), { replace: true })}
+        hasActiveFilters={hasActiveFilters}
+        filteredCount={data.length}
+        totalCount={allData.length}
+        presets={presets}
+        onApplyPreset={applyPreset}
+        onRemovePreset={handleRemovePreset}
+        onSavePreset={handleSavePreset}
+      />
+
 
       <AlertsDailyChart data={chartData} />
 
