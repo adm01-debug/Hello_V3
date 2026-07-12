@@ -97,7 +97,7 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
     webhookValidation,
     webhookHistory, webhookPendingCount,
     isTestingWebhook, isFlushingQueue,
-    onSave, onTest, onFlushQueue, onClearQueue, onExportHistory, onClearHistory,
+    onSave, onTest, onFlushQueue, onClearQueue, onExportHistory, onExportHistoryNdjson, onClearHistory,
   } = props;
   const blocked = hasBlockingErrors(webhookValidation);
   const canTest = !blocked && webhookValidation.normalizedUrl.length > 0;
