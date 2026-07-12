@@ -113,6 +113,21 @@ export default function SecurityAlerts() {
     staleTime: 30_000,
   });
 
+  // Ao mudar filtros: revalida páginas já carregadas (traz updates recentes
+  // como is_read alterados por outros clientes) sem descartar o histórico.
+  const filterKey = `${sourceFilter}::${searchTerm}`;
+  const firstFilterRun = useRef(true);
+  useEffect(() => {
+    if (firstFilterRun.current) {
+      firstFilterRun.current = false;
+      return;
+    }
+    void alerts.refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterKey]);
+
+
+
   useEffect(() => {
     const channel = supabase
       .channel("admin-security-alerts")
