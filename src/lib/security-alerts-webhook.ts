@@ -86,22 +86,30 @@ async function hmacSha256Hex(secret: string, payload: string): Promise<string> {
 export async function sendExportWebhook(
   url: string,
   payload: WebhookExportPayload,
-  timeoutMs = 8000,
-): Promise<{ ok: boolean; status: number; error?: string }> {
+  options: { timeoutMs?: number; secret?: string } = {},
+): Promise<{ ok: boolean; status: number; error?: string; signed?: boolean }> {
+  const timeoutMs = options.timeoutMs ?? 8000;
   if (!isValidHttpUrl(url)) {
     return { ok: false, status: 0, error: "URL inválida" };
   }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-      // Modo padrão — respeita CORS do endpoint receptor.
-    });
-    return { ok: res.ok, status: res.status };
+    const body = JSON.stringify(payload);
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    let signed = false;
+    if (options.secret && options.secret.trim()) {
+      try {
+        const sig = await hmacSha256Hex(options.secret.trim(), body);
+        headers["X-Lovable-Signature"] = `sha256=${sig}`;
+        headers["X-Lovable-Timestamp"] = payload.generated_at;
+        signed = true;
+      } catch {
+        /* se HMAC falhar, envia sem assinatura */
+      }
+    }
+    const res = await fetch(url, { method: "POST", headers, body, signal: controller.signal });
+    return { ok: res.ok, status: res.status, signed };
   } catch (err) {
     const msg =
       err instanceof DOMException && err.name === "AbortError"
