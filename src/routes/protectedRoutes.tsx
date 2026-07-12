@@ -81,6 +81,7 @@ const SecurityAudit = lazy(() => import("@/pages/admin/SecurityDashboard"));
 const FinancialImpact = lazy(() => import("@/pages/FinancialImpact"));
 const ShiftSwapSuggestions = lazy(() => import("@/pages/ShiftSwapSuggestions"));
 const DataExport = lazy(() => import("@/pages/admin/DataExport"));
+const DatabaseHealth = lazy(() => import("@/pages/admin/DatabaseHealth"));
 
 export interface RouteConfig {
   path: string;
