@@ -58,14 +58,30 @@ export default function SecurityAlerts() {
   const sourceFilter = searchParams.get("source") ?? ALL_SOURCES;
   const searchTerm = searchParams.get("q") ?? "";
 
-  const updateParam = (key: string, value: string) => {
-    const next = new URLSearchParams(searchParams);
-    if (!value || value === ALL_SOURCES) next.delete(key);
-    else next.set(key, value);
-    setSearchParams(next, { replace: true });
-  };
+  const updateParam = useCallback(
+    (key: string, value: string) => {
+      const next = new URLSearchParams(searchParams);
+      if (!value || value === ALL_SOURCES) next.delete(key);
+      else next.set(key, value);
+      setSearchParams(next, { replace: true });
+    },
+    [searchParams, setSearchParams],
+  );
+
+  // Debounced search input — evita atualizar a URL/refetch a cada tecla.
+  const [searchInput, setSearchInput] = useState(searchTerm);
+  useEffect(() => {
+    // Sincroniza quando a URL muda externamente (ex.: botão Limpar).
+    setSearchInput(searchTerm);
+  }, [searchTerm]);
+  useEffect(() => {
+    if (searchInput === searchTerm) return;
+    const t = setTimeout(() => updateParam("q", searchInput), 300);
+    return () => clearTimeout(t);
+  }, [searchInput, searchTerm, updateParam]);
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
 
 
   const PAGE_SIZE = 50;
@@ -96,6 +112,21 @@ export default function SecurityAlerts() {
       lastPage.length < PAGE_SIZE ? undefined : lastPage[lastPage.length - 1]?.created_at ?? undefined,
     staleTime: 30_000,
   });
+
+  // Ao mudar filtros: revalida páginas já carregadas (traz updates recentes
+  // como is_read alterados por outros clientes) sem descartar o histórico.
+  const filterKey = `${sourceFilter}::${searchTerm}`;
+  const firstFilterRun = useRef(true);
+  useEffect(() => {
+    if (firstFilterRun.current) {
+      firstFilterRun.current = false;
+      return;
+    }
+    void alerts.refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterKey]);
+
+
 
   useEffect(() => {
     const channel = supabase
@@ -308,8 +339,8 @@ export default function SecurityAlerts() {
             </Select>
             <Input
               placeholder="Buscar por título, mensagem ou origem…"
-              value={searchTerm}
-              onChange={(e) => updateParam("q", e.target.value)}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
             />
             <Button
               variant="ghost"
@@ -403,6 +434,7 @@ export default function SecurityAlerts() {
               hasNextPage={!!alerts.hasNextPage}
               totalLoaded={allData.length}
               onLoadMore={() => void alerts.fetchNextPage()}
+              resetKey={filterKey}
             />
           )}
         </CardContent>
@@ -522,6 +554,7 @@ interface VirtualTimelineProps {
   hasNextPage: boolean;
   totalLoaded: number;
   onLoadMore: () => void;
+  resetKey: string;
 }
 
 function VirtualTimeline({
@@ -534,6 +567,7 @@ function VirtualTimeline({
   hasNextPage,
   totalLoaded,
   onLoadMore,
+  resetKey,
 }: VirtualTimelineProps) {
   const rows = useMemo<TimelineRow[]>(() => {
     const out: TimelineRow[] = [];
@@ -546,6 +580,13 @@ function VirtualTimeline({
   }, [days, grouped]);
 
   const parentRef = useRef<HTMLDivElement | null>(null);
+
+  // Reset de scroll ao topo quando filtros mudam — paginação virtual
+  // sempre reinicia no primeiro item visível do novo subconjunto.
+  useEffect(() => {
+    parentRef.current?.scrollTo({ top: 0 });
+  }, [resetKey]);
+
 
   const estimateSize = useCallback((index: number) => {
     const r = rows[index];
