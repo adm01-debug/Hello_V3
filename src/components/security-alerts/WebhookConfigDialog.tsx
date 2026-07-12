@@ -92,10 +92,14 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
     webhookMaxAttemptsDraft, setWebhookMaxAttemptsDraft,
     webhookBaseDelayDraft, setWebhookBaseDelayDraft,
     webhookMaxDelayDraft, setWebhookMaxDelayDraft,
+    webhookValidation,
     webhookHistory, webhookPendingCount,
     isTestingWebhook, isFlushingQueue,
     onSave, onTest, onFlushQueue, onClearQueue, onExportHistory, onClearHistory,
   } = props;
+  const blocked = hasBlockingErrors(webhookValidation);
+  const canTest = !blocked && webhookValidation.normalizedUrl.length > 0;
+
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
