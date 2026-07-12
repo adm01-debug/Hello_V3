@@ -114,25 +114,6 @@ export function webhookHistoryToCSV(entries: WebhookHistoryEntry[]): string {
   );
   return [headers.join(","), ...rows].join("\r\n");
 }
-    [
-      e.at,
-      e.kind,
-      e.url,
-      e.filename,
-      e.format,
-      e.scope,
-      e.count,
-      e.status,
-      e.ok,
-      e.signed,
-      e.latency_ms,
-      e.error ?? "",
-    ]
-      .map(csvEscape)
-      .join(","),
-  );
-  return [headers.join(","), ...rows].join("\r\n");
-}
 
 export function downloadWebhookHistoryCSV(entries: WebhookHistoryEntry[]): string {
   const csv = webhookHistoryToCSV(entries);
