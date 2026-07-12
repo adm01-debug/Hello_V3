@@ -6922,8 +6922,10 @@ export type Database = {
       }
       get_call_volume_stats: { Args: never; Returns: Json }
       get_dashboard_stats: { Args: never; Returns: Json }
+      get_database_health_snapshot: { Args: never; Returns: Json }
       get_profile_role: { Args: { _user_id: string }; Returns: string }
       get_queue_stats: { Args: never; Returns: Json }
+      get_top_slow_queries: { Args: { p_limit?: number }; Returns: Json }
       get_user_agent_id: { Args: never; Returns: string }
       get_user_agent_name: { Args: never; Returns: string }
       get_user_role: { Args: never; Returns: string }
