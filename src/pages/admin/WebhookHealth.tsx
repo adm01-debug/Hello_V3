@@ -75,16 +75,42 @@ export default function WebhookHealth() {
   );
 
   const endpoints = useMemo(() => {
-    const map = new Map<string, { attempts: number; failed: number }>();
+    const nowHour = Math.floor(Date.now() / 3_600_000);
+    const map = new Map<
+      string,
+      { attempts: number; failed: number; hourly: { sent: number; failed: number }[] }
+    >();
     for (const r of rows) {
       const key = r.endpoint_hash ?? "—";
-      const cur = map.get(key) ?? { attempts: 0, failed: 0 };
-      cur.attempts += (r.sent ?? 0) + (r.failed ?? 0);
-      cur.failed += r.failed ?? 0;
+      const cur =
+        map.get(key) ??
+        {
+          attempts: 0,
+          failed: 0,
+          hourly: Array.from({ length: SPARK_HOURS }, () => ({ sent: 0, failed: 0 })),
+        };
+      const sent = r.sent ?? 0;
+      const failed = r.failed ?? 0;
+      cur.attempts += sent + failed;
+      cur.failed += failed;
+      const rowHour = Math.floor(new Date(r.created_at).getTime() / 3_600_000);
+      const idx = SPARK_HOURS - 1 - (nowHour - rowHour);
+      if (idx >= 0 && idx < SPARK_HOURS) {
+        cur.hourly[idx].sent += sent;
+        cur.hourly[idx].failed += failed;
+      }
       map.set(key, cur);
     }
     return Array.from(map.entries())
-      .map(([hash, s]) => ({ hash, ...s }))
+      .map(([hash, s]) => ({
+        hash,
+        attempts: s.attempts,
+        failed: s.failed,
+        trend: s.hourly.map((h) => {
+          const a = h.sent + h.failed;
+          return a > 0 ? h.failed / a : 0;
+        }),
+      }))
       .sort((a, b) => b.attempts - a.attempts);
   }, [rows]);
 
