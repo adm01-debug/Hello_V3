@@ -222,7 +222,9 @@ export default function SecurityAlerts() {
     record: recordWebhookHistory,
     clear: handleClearWebhookHistory,
     exportCsv: handleExportWebhookHistory,
+    exportNdjson: handleExportWebhookHistoryNdjson,
   } = useWebhookHistory(webhookQueueFlushedAt);
+
 
   const handleTestWebhook = useCallback(async () => {
     // Bloqueia teste com qualquer erro bloqueante — mensagem precisa vem do validator.
@@ -278,7 +280,12 @@ export default function SecurityAlerts() {
         error: result.error,
         kind: "test",
         attempts: result.attempts,
+        request_id: result.request_id,
+        response_snippet: result.response_snippet,
+        response_headers: result.response_headers,
+        attempts_detail: result.attempts_detail,
       });
+
       toast.dismiss(toastId);
       if (result.ok) {
         const suffix = result.signed ? " · assinado (HMAC)" : "";
@@ -613,7 +620,9 @@ export default function SecurityAlerts() {
         onFlushQueue={handleFlushQueue}
         onClearQueue={handleClearQueue}
         onExportHistory={handleExportWebhookHistory}
+        onExportHistoryNdjson={handleExportWebhookHistoryNdjson}
         onClearHistory={handleClearWebhookHistory}
+
       />
     </div>
 

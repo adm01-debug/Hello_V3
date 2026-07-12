@@ -34,7 +34,12 @@ interface WebhookHistoryPayload {
   error?: string;
   kind: "export";
   attempts: number;
+  request_id?: string;
+  response_snippet?: string;
+  response_headers?: Record<string, string>;
+  attempts_detail?: import("@/lib/security-alerts-webhook-history").WebhookAttemptDetail[];
 }
+
 
 interface UseAlertsExportParams {
   sinceIso: string;
@@ -176,7 +181,12 @@ export function useAlertsExport({
             error: result.error,
             kind: "export",
             attempts: result.attempts,
+            request_id: result.request_id,
+            response_snippet: result.response_snippet,
+            response_headers: result.response_headers,
+            attempts_detail: result.attempts_detail,
           });
+
           toast.dismiss(hookToast);
           if (result.ok) {
             const suffix = result.signed ? " · assinado (HMAC)" : "";

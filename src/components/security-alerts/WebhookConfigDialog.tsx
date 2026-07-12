@@ -19,6 +19,8 @@ import {
   type WebhookField,
 } from "@/lib/security-alerts-webhook-validation";
 import type { WebhookHistoryEntry } from "@/lib/security-alerts-webhook-history";
+import { WebhookHistoryEntryRow } from "@/components/security-alerts/WebhookHistoryEntryRow";
+
 
 
 export interface WebhookConfigDialogProps {
@@ -46,7 +48,9 @@ export interface WebhookConfigDialogProps {
   onFlushQueue: () => void;
   onClearQueue: () => void;
   onExportHistory: () => void;
+  onExportHistoryNdjson?: () => void;
   onClearHistory: () => void;
+
 }
 
 /** Renderiza mensagem inline de erro ou aviso sob um input. */
@@ -95,7 +99,7 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
     webhookValidation,
     webhookHistory, webhookPendingCount,
     isTestingWebhook, isFlushingQueue,
-    onSave, onTest, onFlushQueue, onClearQueue, onExportHistory, onClearHistory,
+    onSave, onTest, onFlushQueue, onClearQueue, onExportHistory, onExportHistoryNdjson, onClearHistory,
   } = props;
   const blocked = hasBlockingErrors(webhookValidation);
   const canTest = !blocked && webhookValidation.normalizedUrl.length > 0;
@@ -263,8 +267,13 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
               {webhookHistory.length > 0 && (
                 <div className="flex items-center gap-1">
                   <Button variant="ghost" size="sm" onClick={onExportHistory} className="h-7 px-2">
-                    <Download className="w-3 h-3 mr-1" /> Exportar CSV
+                    <Download className="w-3 h-3 mr-1" /> CSV
                   </Button>
+                  {onExportHistoryNdjson && (
+                    <Button variant="ghost" size="sm" onClick={onExportHistoryNdjson} className="h-7 px-2">
+                      <Download className="w-3 h-3 mr-1" /> NDJSON
+                    </Button>
+                  )}
                   <Button variant="ghost" size="sm" onClick={onClearHistory} className="h-7 px-2">
                     <Trash2 className="w-3 h-3 mr-1" /> Limpar
                   </Button>
@@ -276,41 +285,14 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
                 Nenhum envio registrado ainda. Exporte ou clique em Testar.
               </p>
             ) : (
-              <div className="max-h-48 overflow-auto rounded-md border divide-y divide-border/50">
+              <div className="max-h-64 overflow-auto rounded-md border divide-y divide-border/50">
                 {webhookHistory.map((h) => (
-                  <div key={h.id} className="p-2 text-[11px] flex items-center gap-2">
-                    <Badge
-                      variant={h.ok ? "secondary" : "destructive"}
-                      className="font-mono min-w-[52px] justify-center"
-                    >
-                      {h.status || "ERR"}
-                    </Badge>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1 flex-wrap">
-                        <span className="font-medium truncate max-w-[220px]" title={h.filename}>
-                          {h.filename}
-                        </span>
-                        <span className="text-muted-foreground">·</span>
-                        <span className="uppercase text-muted-foreground">{h.format}</span>
-                        <span className="text-muted-foreground">·</span>
-                        <span className="text-muted-foreground">{h.count} alerta(s)</span>
-                        {h.kind === "test" && (
-                          <Badge variant="outline" className="h-4 px-1 text-[9px]">teste</Badge>
-                        )}
-                        {h.signed && (
-                          <Badge variant="outline" className="h-4 px-1 text-[9px]">HMAC</Badge>
-                        )}
-                      </div>
-                      <div className="text-muted-foreground truncate" title={h.error ?? h.url}>
-                        {new Date(h.at).toLocaleString("pt-BR")} · {h.latency_ms}ms
-                        {h.error ? ` · ${h.error}` : ""}
-                      </div>
-                    </div>
-                  </div>
+                  <WebhookHistoryEntryRow key={h.id} entry={h} />
                 ))}
               </div>
             )}
           </div>
+
         </div>
         <DialogFooter className="gap-2 sm:gap-2">
           <Button variant="ghost" onClick={() => onOpenChange(false)}>Cancelar</Button>
