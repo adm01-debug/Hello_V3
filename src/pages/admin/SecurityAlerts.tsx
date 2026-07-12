@@ -234,6 +234,7 @@ export default function SecurityAlerts() {
       };
       const result = await sendExportWebhook(trimmed, payload, {
         secret: webhookSecretDraft.trim() || undefined,
+        maxAttempts: webhookMaxAttemptsDraft,
       });
       const latency = Math.round(performance.now() - started);
       recordWebhookHistory({
