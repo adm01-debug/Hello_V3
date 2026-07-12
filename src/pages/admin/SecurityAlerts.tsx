@@ -387,10 +387,12 @@ export default function SecurityAlerts() {
             generated_at: new Date().toISOString(),
           };
           const hookToast = toast.loading("Enviando ao webhook…");
-          const result = await sendExportWebhook(webhookUrl, hookPayload);
+          const result = await sendExportWebhook(webhookUrl, hookPayload, { secret: webhookSecret });
           toast.dismiss(hookToast);
-          if (result.ok) toast.success(`Webhook OK (HTTP ${result.status})`);
-          else toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
+          if (result.ok) {
+            const suffix = result.signed ? " · assinado (HMAC)" : "";
+            toast.success(`Webhook OK (HTTP ${result.status})${suffix}`);
+          } else toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
         }
       } catch (err) {
         toast.dismiss(toastId);
@@ -400,7 +402,7 @@ export default function SecurityAlerts() {
         setIsExporting(false);
       }
     },
-    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, SINCE_ISO],
+    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, SINCE_ISO],
 
   );
 
