@@ -184,7 +184,12 @@ export async function flushWebhookQueue(): Promise<WebhookFlushResult> {
         error: res.error,
         kind: "export",
         attempts: res.attempts,
+        request_id: res.request_id,
+        response_snippet: res.response_snippet,
+        response_headers: res.response_headers,
+        attempts_detail: res.attempts_detail,
       });
+
       if (res.ok) {
         sent++;
       } else {
