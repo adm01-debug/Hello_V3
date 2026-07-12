@@ -2,6 +2,7 @@
 // Persistência local (por navegador/usuário) — não envolve backend.
 
 const STORAGE_KEY = "security-alerts:webhook-url";
+const SECRET_KEY = "security-alerts:webhook-secret";
 
 export interface WebhookExportPayload {
   event: "security_alerts.export";
@@ -37,6 +38,26 @@ export function saveWebhookUrl(url: string): void {
   }
 }
 
+export function loadWebhookSecret(): string {
+  if (typeof window === "undefined") return "";
+  try {
+    return window.localStorage.getItem(SECRET_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+
+export function saveWebhookSecret(secret: string): void {
+  if (typeof window === "undefined") return;
+  const trimmed = secret.trim();
+  try {
+    if (!trimmed) window.localStorage.removeItem(SECRET_KEY);
+    else window.localStorage.setItem(SECRET_KEY, trimmed);
+  } catch {
+    /* ignore */
+  }
+}
+
 export function isValidHttpUrl(url: string): boolean {
   try {
     const u = new URL(url);
@@ -46,26 +67,49 @@ export function isValidHttpUrl(url: string): boolean {
   }
 }
 
+async function hmacSha256Hex(secret: string, payload: string): Promise<string> {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(payload));
+  return Array.from(new Uint8Array(sig))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
 // Timeout curto: webhook não deve travar a UX de exportação.
 export async function sendExportWebhook(
   url: string,
   payload: WebhookExportPayload,
-  timeoutMs = 8000,
-): Promise<{ ok: boolean; status: number; error?: string }> {
+  options: { timeoutMs?: number; secret?: string } = {},
+): Promise<{ ok: boolean; status: number; error?: string; signed?: boolean }> {
+  const timeoutMs = options.timeoutMs ?? 8000;
   if (!isValidHttpUrl(url)) {
     return { ok: false, status: 0, error: "URL inválida" };
   }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-      // Modo padrão — respeita CORS do endpoint receptor.
-    });
-    return { ok: res.ok, status: res.status };
+    const body = JSON.stringify(payload);
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    let signed = false;
+    if (options.secret && options.secret.trim()) {
+      try {
+        const sig = await hmacSha256Hex(options.secret.trim(), body);
+        headers["X-Lovable-Signature"] = `sha256=${sig}`;
+        headers["X-Lovable-Timestamp"] = payload.generated_at;
+        signed = true;
+      } catch {
+        /* se HMAC falhar, envia sem assinatura */
+      }
+    }
+    const res = await fetch(url, { method: "POST", headers, body, signal: controller.signal });
+    return { ok: res.ok, status: res.status, signed };
   } catch (err) {
     const msg =
       err instanceof DOMException && err.name === "AbortError"

@@ -14,6 +14,8 @@ import { Label } from "@/components/ui/label";
 import {
   loadWebhookUrl,
   saveWebhookUrl,
+  loadWebhookSecret,
+  saveWebhookSecret,
   isValidHttpUrl,
   sendExportWebhook,
   type WebhookExportPayload,
@@ -150,12 +152,15 @@ export default function SecurityAlerts() {
 
   // Webhook de exportação — URL configurável por navegador (localStorage).
   const [webhookUrl, setWebhookUrl] = useState<string>(() => loadWebhookUrl());
+  const [webhookSecret, setWebhookSecret] = useState<string>(() => loadWebhookSecret());
   const [webhookDialogOpen, setWebhookDialogOpen] = useState(false);
   const [webhookDraft, setWebhookDraft] = useState<string>("");
+  const [webhookSecretDraft, setWebhookSecretDraft] = useState<string>("");
   const openWebhookDialog = useCallback(() => {
     setWebhookDraft(webhookUrl);
+    setWebhookSecretDraft(webhookSecret);
     setWebhookDialogOpen(true);
-  }, [webhookUrl]);
+  }, [webhookUrl, webhookSecret]);
   const handleSaveWebhook = useCallback(() => {
     const trimmed = webhookDraft.trim();
     if (trimmed && !isValidHttpUrl(trimmed)) {
@@ -163,10 +168,12 @@ export default function SecurityAlerts() {
       return;
     }
     saveWebhookUrl(trimmed);
+    saveWebhookSecret(webhookSecretDraft);
     setWebhookUrl(trimmed);
+    setWebhookSecret(webhookSecretDraft.trim());
     setWebhookDialogOpen(false);
     toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
-  }, [webhookDraft]);
+  }, [webhookDraft, webhookSecretDraft]);
 
 
 
@@ -380,10 +387,12 @@ export default function SecurityAlerts() {
             generated_at: new Date().toISOString(),
           };
           const hookToast = toast.loading("Enviando ao webhook…");
-          const result = await sendExportWebhook(webhookUrl, hookPayload);
+          const result = await sendExportWebhook(webhookUrl, hookPayload, { secret: webhookSecret });
           toast.dismiss(hookToast);
-          if (result.ok) toast.success(`Webhook OK (HTTP ${result.status})`);
-          else toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
+          if (result.ok) {
+            const suffix = result.signed ? " · assinado (HMAC)" : "";
+            toast.success(`Webhook OK (HTTP ${result.status})${suffix}`);
+          } else toast.error(`Webhook falhou: ${result.error ?? `HTTP ${result.status}`}`);
         }
       } catch (err) {
         toast.dismiss(toastId);
@@ -393,7 +402,7 @@ export default function SecurityAlerts() {
         setIsExporting(false);
       }
     },
-    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, SINCE_ISO],
+    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, SINCE_ISO],
 
   );
 
@@ -806,6 +815,20 @@ export default function SecurityAlerts() {
             <p className="text-xs text-muted-foreground">
               Armazenado localmente neste navegador. Requer CORS habilitado no endpoint receptor.
             </p>
+            <Label htmlFor="webhook-secret" className="pt-2 block">Segredo HMAC (opcional)</Label>
+            <Input
+              id="webhook-secret"
+              type="password"
+              placeholder="Deixe em branco para desativar assinatura"
+              value={webhookSecretDraft}
+              onChange={(e) => setWebhookSecretDraft(e.target.value)}
+              autoComplete="off"
+            />
+            <p className="text-xs text-muted-foreground">
+              Quando definido, o POST inclui <code className="font-mono">X-Lovable-Signature: sha256=&lt;hmac&gt;</code>{" "}
+              e <code className="font-mono">X-Lovable-Timestamp</code> (= <code className="font-mono">generated_at</code>).
+              Valide no receptor recomputando HMAC-SHA256 do corpo bruto com o mesmo segredo.
+            </p>
             <pre className="text-[10px] p-2 rounded-md border bg-muted/30 overflow-auto font-mono">
 {`{
   "event": "security_alerts.export",
@@ -822,11 +845,12 @@ export default function SecurityAlerts() {
             <Button variant="ghost" onClick={() => setWebhookDialogOpen(false)}>
               Cancelar
             </Button>
-            {webhookUrl && (
+            {(webhookUrl || webhookSecret) && (
               <Button
                 variant="outline"
                 onClick={() => {
                   setWebhookDraft("");
+                  setWebhookSecretDraft("");
                 }}
               >
                 <Trash2 className="w-4 h-4 mr-1" />
