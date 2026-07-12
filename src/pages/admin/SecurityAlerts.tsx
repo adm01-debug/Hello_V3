@@ -58,14 +58,30 @@ export default function SecurityAlerts() {
   const sourceFilter = searchParams.get("source") ?? ALL_SOURCES;
   const searchTerm = searchParams.get("q") ?? "";
 
-  const updateParam = (key: string, value: string) => {
-    const next = new URLSearchParams(searchParams);
-    if (!value || value === ALL_SOURCES) next.delete(key);
-    else next.set(key, value);
-    setSearchParams(next, { replace: true });
-  };
+  const updateParam = useCallback(
+    (key: string, value: string) => {
+      const next = new URLSearchParams(searchParams);
+      if (!value || value === ALL_SOURCES) next.delete(key);
+      else next.set(key, value);
+      setSearchParams(next, { replace: true });
+    },
+    [searchParams, setSearchParams],
+  );
+
+  // Debounced search input — evita atualizar a URL/refetch a cada tecla.
+  const [searchInput, setSearchInput] = useState(searchTerm);
+  useEffect(() => {
+    // Sincroniza quando a URL muda externamente (ex.: botão Limpar).
+    setSearchInput(searchTerm);
+  }, [searchTerm]);
+  useEffect(() => {
+    if (searchInput === searchTerm) return;
+    const t = setTimeout(() => updateParam("q", searchInput), 300);
+    return () => clearTimeout(t);
+  }, [searchInput, searchTerm, updateParam]);
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
 
 
   const PAGE_SIZE = 50;
