@@ -38,7 +38,10 @@ const supabaseChain = {
   gte: vi.fn().mockReturnThis(),
   order: vi.fn().mockReturnThis(),
   or: vi.fn().mockReturnThis(),
-  limit: vi.fn(() => Promise.resolve({ data: mockRows, error: null })),
+  limit: vi.fn(
+    (): Promise<{ data: unknown; error: unknown }> =>
+      Promise.resolve({ data: mockRows, error: null }),
+  ),
 };
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: { from: vi.fn(() => supabaseChain) },
