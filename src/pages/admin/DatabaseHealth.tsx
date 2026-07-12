@@ -110,11 +110,27 @@ export default function DatabaseHealth() {
     staleTime: 60_000,
   });
 
+  const dropAudit = useQuery({
+    queryKey: ["db-index-drop-audit"],
+    queryFn: async (): Promise<IndexDropAuditRow[]> => {
+      const { data, error } = await supabase
+        .from("index_drop_audit")
+        .select("id, index_name, table_name, admin_email, action, created_at")
+        .order("created_at", { ascending: false })
+        .limit(20);
+      if (error) throw error;
+      return (data as IndexDropAuditRow[]) ?? [];
+    },
+    staleTime: 60_000,
+  });
+
   const refresh = () => {
     snapshot.refetch();
     slow.refetch();
     idle.refetch();
+    dropAudit.refetch();
   };
+
 
   return (
     <div className="p-6 space-y-6">
