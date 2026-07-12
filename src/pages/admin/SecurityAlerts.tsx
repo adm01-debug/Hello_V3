@@ -173,16 +173,22 @@ export default function SecurityAlerts() {
   const [webhookUrl, setWebhookUrl] = useState<string>(() => loadWebhookUrl());
   const [webhookSecret, setWebhookSecret] = useState<string>(() => loadWebhookSecret());
   const [webhookMaxAttempts, setWebhookMaxAttempts] = useState<number>(() => loadWebhookMaxAttempts());
+  const [webhookBaseDelayMs, setWebhookBaseDelayMs] = useState<number>(() => loadWebhookBaseDelayMs());
+  const [webhookMaxDelayMs, setWebhookMaxDelayMs] = useState<number>(() => loadWebhookMaxDelayMs());
   const [webhookDialogOpen, setWebhookDialogOpen] = useState(false);
   const [webhookDraft, setWebhookDraft] = useState<string>("");
   const [webhookSecretDraft, setWebhookSecretDraft] = useState<string>("");
   const [webhookMaxAttemptsDraft, setWebhookMaxAttemptsDraft] = useState<number>(WEBHOOK_MAX_ATTEMPTS_MIN);
+  const [webhookBaseDelayDraft, setWebhookBaseDelayDraft] = useState<number>(WEBHOOK_BASE_DELAY_MIN);
+  const [webhookMaxDelayDraft, setWebhookMaxDelayDraft] = useState<number>(WEBHOOK_MAX_DELAY_MIN);
   const openWebhookDialog = useCallback(() => {
     setWebhookDraft(webhookUrl);
     setWebhookSecretDraft(webhookSecret);
     setWebhookMaxAttemptsDraft(webhookMaxAttempts);
+    setWebhookBaseDelayDraft(webhookBaseDelayMs);
+    setWebhookMaxDelayDraft(webhookMaxDelayMs);
     setWebhookDialogOpen(true);
-  }, [webhookUrl, webhookSecret, webhookMaxAttempts]);
+  }, [webhookUrl, webhookSecret, webhookMaxAttempts, webhookBaseDelayMs, webhookMaxDelayMs]);
   const handleSaveWebhook = useCallback(() => {
     const trimmed = webhookDraft.trim();
     if (trimmed && !isValidHttpUrl(trimmed)) {
@@ -193,15 +199,28 @@ export default function SecurityAlerts() {
       WEBHOOK_MAX_ATTEMPTS_MIN,
       Math.min(WEBHOOK_MAX_ATTEMPTS_MAX, Math.floor(webhookMaxAttemptsDraft || WEBHOOK_MAX_ATTEMPTS_MIN)),
     );
+    const clampedBase = Math.max(
+      WEBHOOK_BASE_DELAY_MIN,
+      Math.min(WEBHOOK_BASE_DELAY_MAX, Math.floor(webhookBaseDelayDraft || WEBHOOK_BASE_DELAY_MIN)),
+    );
+    let clampedMax = Math.max(
+      WEBHOOK_MAX_DELAY_MIN,
+      Math.min(WEBHOOK_MAX_DELAY_MAX, Math.floor(webhookMaxDelayDraft || WEBHOOK_MAX_DELAY_MIN)),
+    );
+    if (clampedMax < clampedBase) clampedMax = clampedBase;
     saveWebhookUrl(trimmed);
     saveWebhookSecret(webhookSecretDraft);
     saveWebhookMaxAttempts(clampedAttempts);
+    saveWebhookBaseDelayMs(clampedBase);
+    saveWebhookMaxDelayMs(clampedMax);
     setWebhookUrl(trimmed);
     setWebhookSecret(webhookSecretDraft.trim());
     setWebhookMaxAttempts(clampedAttempts);
+    setWebhookBaseDelayMs(clampedBase);
+    setWebhookMaxDelayMs(clampedMax);
     setWebhookDialogOpen(false);
     toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
-  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft]);
+  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, webhookBaseDelayDraft, webhookMaxDelayDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
   const recordWebhookHistory = useCallback((entry: Omit<WebhookHistoryEntry, "id" | "at">) => {
