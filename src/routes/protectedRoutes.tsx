@@ -177,6 +177,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/shift-swap-suggestions", element: ShiftSwapSuggestions, roles: ["supervisor", "admin"] },
   { path: "/admin/data-export", element: DataExport, roles: ["admin"] },
   { path: "/admin/database-health", element: DatabaseHealth, roles: ["admin"] },
+  { path: "/admin/security-alerts", element: SecurityAlerts, roles: ["admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },
