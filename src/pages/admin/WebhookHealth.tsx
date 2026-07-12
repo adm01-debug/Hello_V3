@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { logger } from "@/lib/logger";
 
 interface Row {
@@ -10,6 +11,7 @@ interface Row {
   failed: number;
   oldest_age_ms: number | null;
   duration_ms: number | null;
+  endpoint_hash: string | null;
 }
 
 interface Bucket {
@@ -35,6 +37,7 @@ export default function WebhookHealth() {
   usePageTitle("Saúde de Webhooks");
   const [rows, setRows] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
+  const [endpointFilter, setEndpointFilter] = useState<string | "all">("all");
 
   useEffect(() => {
     let cancelled = false;
@@ -42,7 +45,7 @@ export default function WebhookHealth() {
       const since = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
       const { data, error } = await supabase
         .from("webhook_flush_metrics")
-        .select("created_at,sent,failed,oldest_age_ms,duration_ms")
+        .select("created_at,sent,failed,oldest_age_ms,duration_ms,endpoint_hash")
         .gte("created_at", since)
         .order("created_at", { ascending: true })
         .limit(10000);
@@ -58,6 +61,7 @@ export default function WebhookHealth() {
       cancelled = true;
     };
   }, []);
+
 
   const { buckets, days, totals } = useMemo(() => {
     const map = new Map<string, Bucket>();
