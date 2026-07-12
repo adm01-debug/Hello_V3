@@ -38,6 +38,15 @@ interface RlsLogRow {
   details: unknown;
 }
 
+interface FlushMetricRow {
+  created_at: string;
+  sent: number;
+  failed: number;
+  oldest_age_ms: number;
+  duration_ms: number;
+}
+
+
 export default function SecurityAuditDashboard() {
   usePageTitle('Painel de Auditoria de Segurança');
 
