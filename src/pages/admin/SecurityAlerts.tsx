@@ -783,7 +783,62 @@ export default function SecurityAlerts() {
         onMarkRead={markRead}
         onMarkResolved={markResolved}
       />
+
+      <Dialog open={webhookDialogOpen} onOpenChange={setWebhookDialogOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Webhook de exportação</DialogTitle>
+            <DialogDescription>
+              Toda exportação (CSV/PDF) dispara um POST JSON com <code className="font-mono">filename</code>,{" "}
+              <code className="font-mono">format</code>, <code className="font-mono">count</code> e os filtros
+              ativos. Deixe em branco para desativar.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="webhook-url">URL do webhook</Label>
+            <Input
+              id="webhook-url"
+              placeholder="https://exemplo.com/hooks/security-alerts"
+              value={webhookDraft}
+              onChange={(e) => setWebhookDraft(e.target.value)}
+              autoFocus
+            />
+            <p className="text-xs text-muted-foreground">
+              Armazenado localmente neste navegador. Requer CORS habilitado no endpoint receptor.
+            </p>
+            <pre className="text-[10px] p-2 rounded-md border bg-muted/30 overflow-auto font-mono">
+{`{
+  "event": "security_alerts.export",
+  "filename": "alertas-seguranca-20260712-140033.csv",
+  "format": "csv",
+  "count": 42,
+  "scope": "all",
+  "filters": { "source": null, "q": null, "since_iso": "..." },
+  "generated_at": "..."
+}`}
+            </pre>
+          </div>
+          <DialogFooter className="gap-2 sm:gap-2">
+            <Button variant="ghost" onClick={() => setWebhookDialogOpen(false)}>
+              Cancelar
+            </Button>
+            {webhookUrl && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setWebhookDraft("");
+                }}
+              >
+                <Trash2 className="w-4 h-4 mr-1" />
+                Limpar
+              </Button>
+            )}
+            <Button onClick={handleSaveWebhook}>Salvar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
+
   );
 }
 
