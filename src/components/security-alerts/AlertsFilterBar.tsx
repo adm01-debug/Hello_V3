@@ -9,7 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PresetsMenu, type FilterPreset } from "./PresetsMenu";
+import { PresetsMenu } from "./PresetsMenu";
+import type { AlertFilterPreset } from "@/lib/security-alerts-presets";
+
 
 interface AlertsFilterBarProps {
   sourceFilter: string;
