@@ -117,23 +117,27 @@ export async function flushWebhookQueue(): Promise<{ sent: number; failed: numbe
         remaining.push(item);
         continue;
       }
+      const t0 = performance.now();
       const res = await sendExportWebhook(targetUrl, item.payload, {
         secret: item.hasSecret ? secret : undefined,
         maxAttempts,
         baseDelayMs,
         maxDelayMs,
       });
-      addWebhookHistoryEntry({
+      const latency_ms = Math.round(performance.now() - t0);
+      appendWebhookHistory({
         url: targetUrl,
+        filename: item.payload.filename,
+        format: item.payload.format,
+        scope: item.payload.scope,
+        count: item.payload.count,
         status: res.status,
         ok: res.ok,
         signed: res.signed ?? false,
-        attempts: res.attempts,
-        scope: item.payload.scope,
-        format: item.payload.format,
-        count: item.payload.count,
+        latency_ms,
         error: res.error,
-        source: "queue-flush",
+        kind: "export",
+        attempts: res.attempts,
       });
       if (res.ok) {
         sent++;
