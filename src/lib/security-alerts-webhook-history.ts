@@ -18,6 +18,7 @@ export interface WebhookHistoryEntry {
   latency_ms: number;
   error?: string;
   kind: "export" | "test";
+  attempts?: number;
 }
 
 function isValid(v: unknown): v is WebhookHistoryEntry {
