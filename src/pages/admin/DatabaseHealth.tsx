@@ -32,6 +32,14 @@ type SlowQuery = {
   max_ms: number;
 };
 
+type IdleIndex = {
+  schemaname: string;
+  relname: string;
+  indexrelname: string;
+  index_size_bytes: number;
+  index_size_pretty: string;
+};
+
 interface Snapshot {
   generated_at: string;
   bloat: BloatRow[];
