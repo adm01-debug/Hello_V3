@@ -36,6 +36,9 @@ function ratioColor(ratio: number, attempts: number): string {
   return "bg-success/60";
 }
 
+type SortMode = "volume" | "trend" | "ratio";
+const SORT_KEY = "webhook-health:sort-mode";
+
 export default function WebhookHealth() {
   usePageTitle("Saúde de Webhooks");
   const [rows, setRows] = useState<Row[]>([]);
@@ -45,6 +48,18 @@ export default function WebhookHealth() {
     const p = new URLSearchParams(window.location.search).get("endpoint");
     return p && p.length > 0 ? p : "all";
   });
+  const [sortMode, setSortMode] = useState<SortMode>(() => {
+    if (typeof window === "undefined") return "volume";
+    const v = window.localStorage.getItem(SORT_KEY);
+    return v === "trend" || v === "ratio" || v === "volume" ? v : "volume";
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(SORT_KEY, sortMode);
+    } catch { /* ignore */ }
+  }, [sortMode]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -115,17 +130,32 @@ export default function WebhookHealth() {
       map.set(key, cur);
     }
     return Array.from(map.entries())
-      .map(([hash, s]) => ({
-        hash,
-        attempts: s.attempts,
-        failed: s.failed,
-        trend: s.hourly.map((h) => {
+      .map(([hash, s]) => {
+        const trend = s.hourly.map((h) => {
           const a = h.sent + h.failed;
           return a > 0 ? h.failed / a : 0;
-        }),
-      }))
-      .sort((a, b) => b.attempts - a.attempts);
-  }, [rows]);
+        });
+        const lastHour = trend[trend.length - 1] ?? 0;
+        const priorAvg =
+          trend.length > 1
+            ? trend.slice(0, -1).reduce((sum, v) => sum + v, 0) / (trend.length - 1)
+            : 0;
+        const ratio = s.attempts > 0 ? s.failed / s.attempts : 0;
+        return {
+          hash,
+          attempts: s.attempts,
+          failed: s.failed,
+          trend,
+          trendDiff: lastHour - priorAvg,
+          ratio,
+        };
+      })
+      .sort((a, b) => {
+        if (sortMode === "trend") return b.trendDiff - a.trendDiff;
+        if (sortMode === "ratio") return b.ratio - a.ratio;
+        return b.attempts - a.attempts;
+      });
+  }, [rows, sortMode]);
 
   const { buckets, days, totals } = useMemo(() => {
     const map = new Map<string, Bucket>();
@@ -206,7 +236,27 @@ export default function WebhookHealth() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
           <CardTitle>Endpoints (drill-down)</CardTitle>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1 rounded-md border p-0.5" role="group" aria-label="Ordenação">
+              {(["volume", "trend", "ratio"] as SortMode[]).map((m) => (
+                <Button
+                  key={m}
+                  size="sm"
+                  variant={sortMode === m ? "default" : "ghost"}
+                  className="h-7 px-2 text-xs"
+                  onClick={() => setSortMode(m)}
+                  title={
+                    m === "volume"
+                      ? "Ordenar por volume de tentativas"
+                      : m === "trend"
+                        ? "Ordenar por tendência (última hora vs média)"
+                        : "Ordenar por taxa de falhas"
+                  }
+                >
+                  {m === "volume" ? "Volume" : m === "trend" ? "Tendência" : "Taxa"}
+                </Button>
+              ))}
+            </div>
             <Button
               size="sm"
               variant="outline"
