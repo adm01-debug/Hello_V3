@@ -16,6 +16,10 @@ import {
   saveWebhookUrl,
   loadWebhookSecret,
   saveWebhookSecret,
+  loadWebhookMaxAttempts,
+  saveWebhookMaxAttempts,
+  WEBHOOK_MAX_ATTEMPTS_MIN,
+  WEBHOOK_MAX_ATTEMPTS_MAX,
   isValidHttpUrl,
   sendExportWebhook,
   type WebhookExportPayload,
@@ -160,27 +164,36 @@ export default function SecurityAlerts() {
   // Webhook de exportação — URL configurável por navegador (localStorage).
   const [webhookUrl, setWebhookUrl] = useState<string>(() => loadWebhookUrl());
   const [webhookSecret, setWebhookSecret] = useState<string>(() => loadWebhookSecret());
+  const [webhookMaxAttempts, setWebhookMaxAttempts] = useState<number>(() => loadWebhookMaxAttempts());
   const [webhookDialogOpen, setWebhookDialogOpen] = useState(false);
   const [webhookDraft, setWebhookDraft] = useState<string>("");
   const [webhookSecretDraft, setWebhookSecretDraft] = useState<string>("");
+  const [webhookMaxAttemptsDraft, setWebhookMaxAttemptsDraft] = useState<number>(WEBHOOK_MAX_ATTEMPTS_MIN);
   const openWebhookDialog = useCallback(() => {
     setWebhookDraft(webhookUrl);
     setWebhookSecretDraft(webhookSecret);
+    setWebhookMaxAttemptsDraft(webhookMaxAttempts);
     setWebhookDialogOpen(true);
-  }, [webhookUrl, webhookSecret]);
+  }, [webhookUrl, webhookSecret, webhookMaxAttempts]);
   const handleSaveWebhook = useCallback(() => {
     const trimmed = webhookDraft.trim();
     if (trimmed && !isValidHttpUrl(trimmed)) {
       toast.error("URL inválida — use http(s)://…");
       return;
     }
+    const clampedAttempts = Math.max(
+      WEBHOOK_MAX_ATTEMPTS_MIN,
+      Math.min(WEBHOOK_MAX_ATTEMPTS_MAX, Math.floor(webhookMaxAttemptsDraft || WEBHOOK_MAX_ATTEMPTS_MIN)),
+    );
     saveWebhookUrl(trimmed);
     saveWebhookSecret(webhookSecretDraft);
+    saveWebhookMaxAttempts(clampedAttempts);
     setWebhookUrl(trimmed);
     setWebhookSecret(webhookSecretDraft.trim());
+    setWebhookMaxAttempts(clampedAttempts);
     setWebhookDialogOpen(false);
     toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
-  }, [webhookDraft, webhookSecretDraft]);
+  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
   const recordWebhookHistory = useCallback((entry: Omit<WebhookHistoryEntry, "id" | "at">) => {
@@ -221,6 +234,7 @@ export default function SecurityAlerts() {
       };
       const result = await sendExportWebhook(trimmed, payload, {
         secret: webhookSecretDraft.trim() || undefined,
+        maxAttempts: webhookMaxAttemptsDraft,
       });
       const latency = Math.round(performance.now() - started);
       recordWebhookHistory({
@@ -249,7 +263,7 @@ export default function SecurityAlerts() {
     } finally {
       setIsTestingWebhook(false);
     }
-  }, [webhookDraft, webhookSecretDraft, recordWebhookHistory]);
+  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft, recordWebhookHistory]);
 
 
 
@@ -464,7 +478,10 @@ export default function SecurityAlerts() {
           };
           const hookToast = toast.loading("Enviando ao webhook…");
           const started = performance.now();
-          const result = await sendExportWebhook(webhookUrl, hookPayload, { secret: webhookSecret });
+          const result = await sendExportWebhook(webhookUrl, hookPayload, {
+            secret: webhookSecret,
+            maxAttempts: webhookMaxAttempts,
+          });
           const latency = Math.round(performance.now() - started);
           recordWebhookHistory({
             url: webhookUrl,
@@ -498,7 +515,7 @@ export default function SecurityAlerts() {
         setIsExporting(false);
       }
     },
-    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, SINCE_ISO, recordWebhookHistory],
+    [fetchAllFilteredAlerts, searchTerm, sourceFilter, webhookUrl, webhookSecret, webhookMaxAttempts, SINCE_ISO, recordWebhookHistory],
 
   );
 
@@ -924,6 +941,26 @@ export default function SecurityAlerts() {
               Quando definido, o POST inclui <code className="font-mono">X-Lovable-Signature: sha256=&lt;hmac&gt;</code>{" "}
               e <code className="font-mono">X-Lovable-Timestamp</code> (= <code className="font-mono">generated_at</code>).
               Valide no receptor recomputando HMAC-SHA256 do corpo bruto com o mesmo segredo.
+            </p>
+            <Label htmlFor="webhook-max-attempts" className="pt-2 block">
+              Máximo de tentativas ({WEBHOOK_MAX_ATTEMPTS_MIN}–{WEBHOOK_MAX_ATTEMPTS_MAX})
+            </Label>
+            <Input
+              id="webhook-max-attempts"
+              type="number"
+              min={WEBHOOK_MAX_ATTEMPTS_MIN}
+              max={WEBHOOK_MAX_ATTEMPTS_MAX}
+              step={1}
+              value={webhookMaxAttemptsDraft}
+              onChange={(e) => {
+                const n = Number.parseInt(e.target.value, 10);
+                setWebhookMaxAttemptsDraft(Number.isFinite(n) ? n : WEBHOOK_MAX_ATTEMPTS_MIN);
+              }}
+              className="w-24"
+            />
+            <p className="text-xs text-muted-foreground">
+              Retries usam backoff exponencial com jitter (AWS full-jitter) e só disparam em falhas transitórias
+              (rede/timeout, 408, 429, 5xx). 4xx normais não retentam.
             </p>
             <pre className="text-[10px] p-2 rounded-md border bg-muted/30 overflow-auto font-mono">
 {`{
