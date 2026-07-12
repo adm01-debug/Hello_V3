@@ -40,7 +40,19 @@ export default function WebhookHealth() {
   usePageTitle("Saúde de Webhooks");
   const [rows, setRows] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
-  const [endpointFilter, setEndpointFilter] = useState<string | "all">("all");
+  const [endpointFilter, setEndpointFilter] = useState<string | "all">(() => {
+    if (typeof window === "undefined") return "all";
+    const p = new URLSearchParams(window.location.search).get("endpoint");
+    return p && p.length > 0 ? p : "all";
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    if (endpointFilter === "all") url.searchParams.delete("endpoint");
+    else url.searchParams.set("endpoint", endpointFilter);
+    window.history.replaceState({}, "", url.toString());
+  }, [endpointFilter]);
 
   useEffect(() => {
     let cancelled = false;
@@ -64,6 +76,7 @@ export default function WebhookHealth() {
       cancelled = true;
     };
   }, []);
+
 
 
   const filteredRows = useMemo(
