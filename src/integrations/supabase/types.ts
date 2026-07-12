@@ -6816,6 +6816,7 @@ export type Database = {
         Row: {
           created_at: string
           duration_ms: number
+          endpoint_hash: string | null
           failed: number
           id: string
           oldest_age_ms: number
@@ -6827,6 +6828,7 @@ export type Database = {
         Insert: {
           created_at?: string
           duration_ms?: number
+          endpoint_hash?: string | null
           failed?: number
           id?: string
           oldest_age_ms?: number
@@ -6838,6 +6840,7 @@ export type Database = {
         Update: {
           created_at?: string
           duration_ms?: number
+          endpoint_hash?: string | null
           failed?: number
           id?: string
           oldest_age_ms?: number
