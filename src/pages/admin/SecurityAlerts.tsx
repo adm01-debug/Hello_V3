@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { KpiStrip } from "@/components/security-alerts/KpiStrip";
+import { AlertsDailyChart } from "@/components/security-alerts/AlertsDailyChart";
+
 
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
