@@ -175,6 +175,34 @@ export default function SecurityAuditDashboard() {
       </div>
 
       <Card>
+        <CardHeader className="flex flex-row items-center gap-2">
+          <Send className="h-5 w-5 text-primary" />
+          <CardTitle>Webhooks — Últimos 14 dias</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {flushDaily.length === 0 ? (
+            <p className="text-sm text-muted-foreground">Nenhum flush registrado ainda.</p>
+          ) : (
+            <div className="h-56">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={flushDaily}>
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                  <XAxis dataKey="day" fontSize={11} />
+                  <YAxis fontSize={11} />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="sent" name="Enviados" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="failed" name="Falhas" stroke="hsl(var(--destructive))" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="avg_age_s" name="Idade média (s)" stroke="hsl(var(--warning))" strokeWidth={2} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+
+      <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Filtros de Auditoria</CardTitle>
