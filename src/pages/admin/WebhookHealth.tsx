@@ -80,9 +80,11 @@ export default function WebhookHealth() {
     return window.localStorage.getItem(AUTO_REFRESH_KEY) === "1";
   });
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+  const [fetching, setFetching] = useState(false);
   const cancelRef = useRef(false);
 
   const loadRows = useCallback(async () => {
+    setFetching(true);
     const since = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
     const { data, error } = await supabase
       .from("webhook_flush_metrics")
@@ -98,6 +100,7 @@ export default function WebhookHealth() {
       setLastRefresh(new Date());
     }
     setLoading(false);
+    setFetching(false);
   }, []);
 
   useEffect(() => {
@@ -281,8 +284,15 @@ export default function WebhookHealth() {
               onClick={() => { void loadRows(); }}
               title={lastRefresh ? `Última atualização: ${lastRefresh.toLocaleTimeString()}` : "Atualizar agora"}
             >
-              ↻
+              <span className={fetching ? "inline-block animate-spin" : "inline-block"}>↻</span>
             </Button>
+            <span
+              aria-hidden
+              className={`inline-block h-2 w-2 rounded-full transition-colors ${
+                fetching ? "bg-primary animate-pulse" : "bg-muted-foreground/40"
+              }`}
+              title={fetching ? "Carregando…" : "Ocioso"}
+            />
             <div className="flex items-center gap-1 rounded-md border p-0.5" role="group" aria-label="Ordenação">
               {(["volume", "trend", "ratio"] as SortMode[]).map((m) => (
                 <Button
