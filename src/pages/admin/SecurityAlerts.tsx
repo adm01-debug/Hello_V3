@@ -434,6 +434,7 @@ export default function SecurityAlerts() {
               hasNextPage={!!alerts.hasNextPage}
               totalLoaded={allData.length}
               onLoadMore={() => void alerts.fetchNextPage()}
+              resetKey={filterKey}
             />
           )}
         </CardContent>
