@@ -82,43 +82,103 @@ async function hmacSha256Hex(secret: string, payload: string): Promise<string> {
     .join("");
 }
 
+// Retry: apenas para falhas transitórias (network/timeout, 408, 429, 5xx).
+// Backoff exponencial com jitter completo. Nunca retenta 4xx (exceto 408/429).
+function isRetriableStatus(status: number): boolean {
+  if (status === 0) return true; // network/timeout
+  if (status === 408 || status === 429) return true;
+  if (status >= 500 && status <= 599) return true;
+  return false;
+}
+
+function sleep(ms: number, signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve) => {
+    const t = setTimeout(resolve, ms);
+    signal?.addEventListener("abort", () => {
+      clearTimeout(t);
+      resolve();
+    });
+  });
+}
+
+export interface SendExportWebhookResult {
+  ok: boolean;
+  status: number;
+  error?: string;
+  signed?: boolean;
+  attempts: number;
+}
+
 // Timeout curto: webhook não deve travar a UX de exportação.
 export async function sendExportWebhook(
   url: string,
   payload: WebhookExportPayload,
-  options: { timeoutMs?: number; secret?: string } = {},
-): Promise<{ ok: boolean; status: number; error?: string; signed?: boolean }> {
+  options: {
+    timeoutMs?: number;
+    secret?: string;
+    maxAttempts?: number;
+    baseDelayMs?: number;
+    maxDelayMs?: number;
+  } = {},
+): Promise<SendExportWebhookResult> {
   const timeoutMs = options.timeoutMs ?? 8000;
+  const maxAttempts = Math.max(1, Math.min(6, options.maxAttempts ?? 3));
+  const baseDelayMs = options.baseDelayMs ?? 400;
+  const maxDelayMs = options.maxDelayMs ?? 5000;
+
   if (!isValidHttpUrl(url)) {
-    return { ok: false, status: 0, error: "URL inválida" };
+    return { ok: false, status: 0, error: "URL inválida", attempts: 0 };
   }
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const body = JSON.stringify(payload);
-    const headers: Record<string, string> = { "Content-Type": "application/json" };
-    let signed = false;
-    if (options.secret && options.secret.trim()) {
-      try {
-        const sig = await hmacSha256Hex(options.secret.trim(), body);
-        headers["X-Lovable-Signature"] = `sha256=${sig}`;
-        headers["X-Lovable-Timestamp"] = payload.generated_at;
-        signed = true;
-      } catch {
-        /* se HMAC falhar, envia sem assinatura */
-      }
+
+  const body = JSON.stringify(payload);
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  let signed = false;
+  if (options.secret && options.secret.trim()) {
+    try {
+      const sig = await hmacSha256Hex(options.secret.trim(), body);
+      headers["X-Lovable-Signature"] = `sha256=${sig}`;
+      headers["X-Lovable-Timestamp"] = payload.generated_at;
+      signed = true;
+    } catch {
+      /* se HMAC falhar, envia sem assinatura */
     }
-    const res = await fetch(url, { method: "POST", headers, body, signal: controller.signal });
-    return { ok: res.ok, status: res.status, signed };
-  } catch (err) {
-    const msg =
-      err instanceof DOMException && err.name === "AbortError"
-        ? `timeout após ${timeoutMs}ms`
-        : err instanceof Error
-          ? err.message
-          : "erro desconhecido";
-    return { ok: false, status: 0, error: msg };
-  } finally {
-    clearTimeout(timer);
   }
+
+  let lastStatus = 0;
+  let lastError: string | undefined;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { method: "POST", headers, body, signal: controller.signal });
+      lastStatus = res.status;
+      if (res.ok) {
+        return { ok: true, status: res.status, signed, attempts: attempt };
+      }
+      lastError = `HTTP ${res.status}`;
+      if (!isRetriableStatus(res.status) || attempt === maxAttempts) {
+        return { ok: false, status: res.status, error: lastError, signed, attempts: attempt };
+      }
+    } catch (err) {
+      lastStatus = 0;
+      lastError =
+        err instanceof DOMException && err.name === "AbortError"
+          ? `timeout após ${timeoutMs}ms`
+          : err instanceof Error
+            ? err.message
+            : "erro desconhecido";
+      if (attempt === maxAttempts) {
+        return { ok: false, status: 0, error: lastError, signed, attempts: attempt };
+      }
+    } finally {
+      clearTimeout(timer);
+    }
+    // Backoff exponencial com jitter completo (AWS full-jitter).
+    const expDelay = Math.min(maxDelayMs, baseDelayMs * 2 ** (attempt - 1));
+    const delay = Math.floor(Math.random() * expDelay);
+    await sleep(delay);
+  }
+
+  return { ok: false, status: lastStatus, error: lastError, signed, attempts: maxAttempts };
 }
