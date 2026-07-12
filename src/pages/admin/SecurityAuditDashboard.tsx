@@ -54,6 +54,7 @@ export default function SecurityAuditDashboard() {
   const { hasRole, user } = useAuthContext();
   const [auditLogs, setAuditLogs] = useState<AuditLogRow[]>([]);
   const [rlsLogs, setRlsLogs] = useState<RlsLogRow[]>([]);
+  const [flushMetrics, setFlushMetrics] = useState<FlushMetricRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
@@ -71,16 +72,25 @@ export default function SecurityAuditDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [auditRes, rlsRes] = await Promise.all([
+      const sinceIso = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+      const [auditRes, rlsRes, flushRes] = await Promise.all([
         supabase.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(200),
-        supabase.from('rls_audit_logs').select('*').order('created_at', { ascending: false }).limit(200)
+        supabase.from('rls_audit_logs').select('*').order('created_at', { ascending: false }).limit(200),
+        supabase
+          .from('webhook_flush_metrics')
+          .select('created_at, sent, failed, oldest_age_ms, duration_ms')
+          .gte('created_at', sinceIso)
+          .order('created_at', { ascending: true })
+          .limit(1000),
       ]);
 
       if (auditRes.error) throw auditRes.error;
       if (rlsRes.error) throw rlsRes.error;
+      if (flushRes.error) throw flushRes.error;
 
       setAuditLogs((auditRes.data as unknown as AuditLogRow[]) || []);
       setRlsLogs((rlsRes.data as unknown as RlsLogRow[]) || []);
+      setFlushMetrics((flushRes.data as unknown as FlushMetricRow[]) || []);
     } catch (err) {
       logger.error('Error fetching security logs:', err);
       toast.error('Erro ao carregar logs');
@@ -88,6 +98,22 @@ export default function SecurityAuditDashboard() {
       setLoading(false);
     }
   };
+
+  // Aggregate per day for the chart
+  const flushDaily = (() => {
+    const map = new Map<string, { day: string; sent: number; failed: number; avg_age_s: number; n: number }>();
+    for (const m of flushMetrics) {
+      const day = m.created_at.slice(0, 10);
+      const cur = map.get(day) ?? { day, sent: 0, failed: 0, avg_age_s: 0, n: 0 };
+      cur.sent += m.sent || 0;
+      cur.failed += m.failed || 0;
+      cur.avg_age_s = (cur.avg_age_s * cur.n + (m.oldest_age_ms || 0) / 1000) / (cur.n + 1);
+      cur.n += 1;
+      map.set(day, cur);
+    }
+    return Array.from(map.values()).map((d) => ({ ...d, avg_age_s: Math.round(d.avg_age_s) }));
+  })();
+
 
   const filteredAudit = auditLogs.filter(log => {
     const matchesSearch = 
