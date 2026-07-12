@@ -164,27 +164,36 @@ export default function SecurityAlerts() {
   // Webhook de exportação — URL configurável por navegador (localStorage).
   const [webhookUrl, setWebhookUrl] = useState<string>(() => loadWebhookUrl());
   const [webhookSecret, setWebhookSecret] = useState<string>(() => loadWebhookSecret());
+  const [webhookMaxAttempts, setWebhookMaxAttempts] = useState<number>(() => loadWebhookMaxAttempts());
   const [webhookDialogOpen, setWebhookDialogOpen] = useState(false);
   const [webhookDraft, setWebhookDraft] = useState<string>("");
   const [webhookSecretDraft, setWebhookSecretDraft] = useState<string>("");
+  const [webhookMaxAttemptsDraft, setWebhookMaxAttemptsDraft] = useState<number>(WEBHOOK_MAX_ATTEMPTS_MIN);
   const openWebhookDialog = useCallback(() => {
     setWebhookDraft(webhookUrl);
     setWebhookSecretDraft(webhookSecret);
+    setWebhookMaxAttemptsDraft(webhookMaxAttempts);
     setWebhookDialogOpen(true);
-  }, [webhookUrl, webhookSecret]);
+  }, [webhookUrl, webhookSecret, webhookMaxAttempts]);
   const handleSaveWebhook = useCallback(() => {
     const trimmed = webhookDraft.trim();
     if (trimmed && !isValidHttpUrl(trimmed)) {
       toast.error("URL inválida — use http(s)://…");
       return;
     }
+    const clampedAttempts = Math.max(
+      WEBHOOK_MAX_ATTEMPTS_MIN,
+      Math.min(WEBHOOK_MAX_ATTEMPTS_MAX, Math.floor(webhookMaxAttemptsDraft || WEBHOOK_MAX_ATTEMPTS_MIN)),
+    );
     saveWebhookUrl(trimmed);
     saveWebhookSecret(webhookSecretDraft);
+    saveWebhookMaxAttempts(clampedAttempts);
     setWebhookUrl(trimmed);
     setWebhookSecret(webhookSecretDraft.trim());
+    setWebhookMaxAttempts(clampedAttempts);
     setWebhookDialogOpen(false);
     toast.success(trimmed ? "Webhook salvo" : "Webhook removido");
-  }, [webhookDraft, webhookSecretDraft]);
+  }, [webhookDraft, webhookSecretDraft, webhookMaxAttemptsDraft]);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [webhookHistory, setWebhookHistory] = useState<WebhookHistoryEntry[]>(() => loadWebhookHistory());
   const recordWebhookHistory = useCallback((entry: Omit<WebhookHistoryEntry, "id" | "at">) => {
