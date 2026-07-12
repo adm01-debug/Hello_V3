@@ -264,7 +264,8 @@ describe('Observability: Vite config optimizations', () => {
 
   it('separates vendor bundles', () => {
     expect(content).toContain('vendor-react');
-    expect(content).toContain('vendor-ui');
+    expect(content).toContain('vendor-radix');
     expect(content).toContain('vendor-charts');
   });
+
 });
