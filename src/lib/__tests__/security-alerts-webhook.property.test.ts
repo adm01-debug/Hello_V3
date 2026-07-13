@@ -45,8 +45,14 @@ function mockFetchSequence(statuses: number[]): ReturnType<typeof vi.fn> {
   return fn;
 }
 
-beforeEach(() => {
+beforeEach(async () => {
   vi.restoreAllMocks();
+  // jsdom não expõe crypto.subtle — usar o webcrypto do Node.
+  const { webcrypto } = await import("node:crypto");
+  Object.defineProperty(globalThis.crypto, "subtle", {
+    configurable: true,
+    value: webcrypto.subtle,
+  });
 });
 afterEach(() => {
   vi.unstubAllGlobals();
