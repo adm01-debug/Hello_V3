@@ -22,8 +22,7 @@ export function useShiftSwapSuggestions() {
   return useQuery<ShiftSwapSuggestion[]>({
     queryKey: ['shift-swap-suggestions'],
     queryFn: async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('shift_swap_suggestions')
         .select('*')
         .order('created_at', { ascending: false })
@@ -55,8 +54,7 @@ export function useUpdateSwapSuggestion() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, status }: { id: string; status: 'approved' | 'rejected' }) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('shift_swap_suggestions')
         .update({ status, approved_at: new Date().toISOString() })
         .eq('id', id);

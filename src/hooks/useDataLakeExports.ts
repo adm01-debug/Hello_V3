@@ -25,8 +25,7 @@ export function useDataLakeExports() {
   return useQuery<DataLakeExport[]>({
     queryKey: ['data-lake-exports'],
     queryFn: async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('data_lake_exports')
         .select('*')
         .order('created_at', { ascending: false })

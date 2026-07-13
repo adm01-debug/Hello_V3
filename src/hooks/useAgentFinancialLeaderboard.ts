@@ -17,9 +17,7 @@ export function useAgentFinancialLeaderboard(days: number = 30) {
   return useQuery<AgentLeaderboardRow[]>({
     queryKey: ['agent-financial-leaderboard', days],
     queryFn: async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const client = supabase as any;
-      const { data, error } = await client.rpc('get_agent_financial_leaderboard', { p_days: days });
+      const { data, error } = await supabase.rpc('get_agent_financial_leaderboard', { p_days: days });
       if (error) throw error;
       return (data ?? []) as AgentLeaderboardRow[];
     },
