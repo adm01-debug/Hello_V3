@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useMemo } from 'react';
+import { logger } from '@/lib/logger';
+
+const dashboardLog = logger.create('useDashboardData');
 
 interface DashboardStats {
   totalCallsToday: number;
