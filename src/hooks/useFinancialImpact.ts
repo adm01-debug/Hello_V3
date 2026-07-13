@@ -38,7 +38,7 @@ export interface FinancialImpactResult {
   deltas: FinancialImpactDeltas;
 }
 
-function summarize(series: FinancialImpactDay[]): FinancialImpactSummary {
+export function summarize(series: FinancialImpactDay[]): FinancialImpactSummary {
   const total_cost_cents = series.reduce((s, d) => s + d.estimated_cost_cents, 0);
   const total_revenue_cents = series.reduce((s, d) => s + d.revenue_cents, 0);
   const total_profit_cents = total_revenue_cents - total_cost_cents;
