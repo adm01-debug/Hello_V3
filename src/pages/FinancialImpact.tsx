@@ -144,6 +144,8 @@ export default function FinancialImpact() {
           )}
         </CardContent>
       </Card>
+
+      <AgentFinancialLeaderboard days={days} />
     </NeonPageLayout>
   );
 }
