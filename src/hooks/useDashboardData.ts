@@ -55,7 +55,7 @@ interface QueueStats {
      queryFn: async () => {
        const { data, error } = await supabase.rpc('get_dashboard_stats');
         if (error) {
-          console.error('Error fetching dashboard stats:', error);
+          dashboardLog.error('fetch stats failed', error);
           throw error;
         }
        return data as unknown as DashboardStats;
@@ -70,7 +70,7 @@ interface QueueStats {
      queryFn: async () => {
        const { data, error } = await supabase.rpc('get_agents_with_active_calls');
         if (error) {
-          console.error('Error fetching agents list:', error);
+          dashboardLog.error('fetch agents failed', error);
           throw error;
         }
        return (data as unknown as (AgentRow & { active_call_started_at?: string; active_call_caller?: string })[]) || [];
