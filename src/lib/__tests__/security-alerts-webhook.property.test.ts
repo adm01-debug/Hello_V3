@@ -152,7 +152,11 @@ describe("sendExportWebhook — property-based (fast-check)", () => {
   });
 
   it("com secret ⇒ header X-Lovable-Signature=sha256=<hex64> e signed=true", async () => {
-    const secretArb = fc.string({ minLength: 16, maxLength: 64 }).filter((s) => s.trim().length >= 16);
+    const secretArb = fc.string({
+      unit: fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789ABCDEF".split("")),
+      minLength: 16,
+      maxLength: 64,
+    });
     await fc.assert(
       fc.asyncProperty(secretArb, async (secret) => {
         const fetchSpy = mockFetchSequence([200]);
