@@ -73,15 +73,13 @@ export function useFinancialImpact(days: number = 30) {
       const previousStart = new Date(now - 2 * days * dayMs).toISOString().slice(0, 10);
       const previousEnd = currentStart;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const client = supabase as any;
       const [currentRes, previousRes] = await Promise.all([
-        client
+        supabase
           .from('financial_impact_daily')
           .select('*')
           .gte('day', currentStart)
           .order('day', { ascending: true }),
-        client
+        supabase
           .from('financial_impact_daily')
           .select('*')
           .gte('day', previousStart)
