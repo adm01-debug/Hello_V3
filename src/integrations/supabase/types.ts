@@ -6989,6 +6989,20 @@ export type Database = {
       cleanup_expired_challenges: { Args: never; Returns: undefined }
       cleanup_old_data: { Args: never; Returns: undefined }
       cleanup_old_logs: { Args: never; Returns: undefined }
+      get_agent_financial_leaderboard: {
+        Args: { p_days?: number }
+        Returns: {
+          agent_name: string
+          cac_cents: number
+          deals_won: number
+          estimated_cost_cents: number
+          profit_cents: number
+          revenue_cents: number
+          roi_percent: number
+          total_calls: number
+          total_seconds: number
+        }[]
+      }
       get_agent_performance: { Args: never; Returns: Json }
       get_agents_with_active_calls: { Args: never; Returns: Json }
       get_auth_agent_id: { Args: never; Returns: string }
