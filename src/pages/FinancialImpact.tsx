@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useFinancialImpact, financialImpactToCSV } from '@/hooks/useFinancialImpact';
+import { AgentFinancialLeaderboard } from '@/components/financial/AgentFinancialLeaderboard';
 import { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 import { toast } from 'sonner';
@@ -143,6 +144,8 @@ export default function FinancialImpact() {
           )}
         </CardContent>
       </Card>
+
+      <AgentFinancialLeaderboard days={days} />
     </NeonPageLayout>
   );
 }
