@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { supabase } from "@/integrations/supabase/client";
+import { logger } from "@/lib/logger";
 import { toast } from "sonner";
 import { securityFeatures, securityDecisions } from '@/lib/security-report-data';
 
@@ -61,7 +62,7 @@ const SecurityReport = () => {
       if (error) throw error;
       setRlsStatus((data as { table_name: string; rls_enabled: boolean }[]) || []);
     } catch (err) {
-      console.error('Error fetching RLS:', err);
+      logger.error('SecurityReport: fetch RLS failed', err);
     } finally {
       setFetchingRls(false);
     }

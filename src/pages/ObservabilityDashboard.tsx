@@ -72,7 +72,7 @@ export default function ObservabilityDashboard() {
       setLoadTestResult((data as { stats: LoadTestStats }).stats);
       toast.success('Teste de carga concluído com sucesso!');
     } catch (err) {
-      console.error('Error running load test:', err);
+      logger.error('Observability: load test failed', err);
       toast.error('Erro ao executar teste de carga');
     } finally {
       setIsRunningLoadTest(false);
@@ -89,7 +89,7 @@ export default function ObservabilityDashboard() {
         setRlsStatus((data as { table_name: string; rls_enabled: boolean }[]) || []);
       }
     } catch (err) {
-      console.error('Error fetching RLS status:', err);
+      logger.error('Observability: fetch RLS failed', err);
     } finally {
       setLoadingRls(false);
     }
