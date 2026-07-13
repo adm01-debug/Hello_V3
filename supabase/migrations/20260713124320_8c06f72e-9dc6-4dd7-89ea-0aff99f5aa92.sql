@@ -1,0 +1,11 @@
+DROP INDEX IF EXISTS public.idx_call_sessions_contact;
+DROP INDEX IF EXISTS public.idx_call_sessions_deal;
+DROP INDEX IF EXISTS public.idx_contacts_account;
+DROP INDEX IF EXISTS public.idx_conversations_contact;
+DROP INDEX IF EXISTS public.idx_deals_contact;
+DROP INDEX IF EXISTS public.idx_notifications_user_unread;
+ANALYZE public.call_sessions;
+ANALYZE public.contacts;
+ANALYZE public.conversations;
+ANALYZE public.deals;
+ANALYZE public.notifications;
