@@ -38,7 +38,7 @@ export interface FinancialImpactResult {
   deltas: FinancialImpactDeltas;
 }
 
-function summarize(series: FinancialImpactDay[]): FinancialImpactSummary {
+export function summarize(series: FinancialImpactDay[]): FinancialImpactSummary {
   const total_cost_cents = series.reduce((s, d) => s + d.estimated_cost_cents, 0);
   const total_revenue_cents = series.reduce((s, d) => s + d.revenue_cents, 0);
   const total_profit_cents = total_revenue_cents - total_cost_cents;
@@ -58,7 +58,7 @@ function summarize(series: FinancialImpactDay[]): FinancialImpactSummary {
   };
 }
 
-function pct(current: number, previous: number): number {
+export function pct(current: number, previous: number): number {
   if (previous === 0) return current === 0 ? 0 : 100;
   return Number((((current - previous) / Math.abs(previous)) * 100).toFixed(1));
 }
