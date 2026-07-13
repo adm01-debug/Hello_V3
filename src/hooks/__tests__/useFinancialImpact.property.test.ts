@@ -88,8 +88,9 @@ describe("useFinancialImpact helpers (PBT)", () => {
         fc.integer({ min: -1_000_000, max: 1_000_000 }).filter((n) => n !== 0),
         (current, previous) => {
           const p = pct(current, previous);
-          if (current > previous) expect(p).toBeGreaterThan(0);
-          else if (current < previous) expect(p).toBeLessThan(0);
+          // Sinal: pode arredondar para 0 quando |Δ| < 0.05% de |previous|.
+          if (current > previous) expect(p).toBeGreaterThanOrEqual(0);
+          else if (current < previous) expect(p).toBeLessThanOrEqual(0);
           else expect(p).toBe(0);
         },
       ),
