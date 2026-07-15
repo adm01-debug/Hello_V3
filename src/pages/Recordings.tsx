@@ -1,8 +1,8 @@
-import { Play, Pause, Download, Search, Disc, Volume2, VolumeX, SkipBack, SkipForward, Loader2, Calendar, Clock, Users, Trash2, FileText } from 'lucide-react';
+import { Play, Pause, Download, Disc, Volume2, VolumeX, SkipBack, SkipForward, Loader2, Calendar, Clock, Users, Trash2, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
+import { SearchInput } from '@/components/ui/search-input';
 import { Slider } from '@/components/ui/slider';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
  import { format } from 'date-fns';
