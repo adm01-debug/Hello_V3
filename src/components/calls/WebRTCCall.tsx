@@ -122,7 +122,7 @@ export function WebRTCCall({ targetNumber, onCallStarted, onCallEnded }: WebRTCC
       <CardContent>
         <div className="flex items-center justify-center gap-3">
           {status === "idle" && (
-            <Button onClick={startCall} className="bg-green-600 hover:bg-green-700">
+            <Button onClick={startCall} className="bg-success text-success-foreground hover:bg-success/90">
               <Phone className="h-4 w-4 mr-2" />
               Ligar
             </Button>

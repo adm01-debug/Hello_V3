@@ -22,9 +22,9 @@ function formatCurrency(cents: number, currency = "BRL") {
 
 function healthClass(score: number | null) {
   if (score == null) return "bg-muted text-muted-foreground";
-  if (score >= 75) return "bg-emerald-500/20 text-emerald-400 border-emerald-500/40";
-  if (score >= 50) return "bg-amber-500/20 text-amber-400 border-amber-500/40";
-  return "bg-red-500/20 text-red-400 border-red-500/40";
+  if (score >= 75) return "bg-success/20 text-success border-success/40";
+  if (score >= 50) return "bg-warning/20 text-warning border-warning/40";
+  return "bg-destructive/20 text-destructive border-destructive/40";
 }
 
 export default function Deals() {

@@ -102,8 +102,8 @@ export default function VoicemailPage() {
         </Card>
         <Card className="cursor-pointer hover:shadow-md" onClick={() => setFilter('unread')}>
           <CardContent className="p-4 flex items-center gap-4">
-            <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-              <MailOpen className="h-5 w-5 text-blue-500" />
+            <div className="h-10 w-10 rounded-lg bg-info/10 flex items-center justify-center">
+              <MailOpen className="h-5 w-5 text-info" />
             </div>
             <div>
               <p className="text-2xl font-bold">{unreadCount}</p>
