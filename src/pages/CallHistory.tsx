@@ -7,11 +7,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
  import { format } from 'date-fns';
- import { useMemo } from 'react';
- import { useCallHistory, DateRangePreset, SentimentFilter, DurationFilter } from '@/hooks/useCallHistory';
+import { useEffect, useMemo } from 'react';
+import { useCallHistory, DateRangePreset, SentimentFilter, DurationFilter } from '@/hooks/useCallHistory';
 import { CallSessionsList } from '@/components/call-history/CallSessionsList';
 import { CallDetailDialog } from '@/components/call-history/CallDetailDialog';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
 
 export default function CallHistory() {
   usePageTitle('Histórico de Chamadas');
@@ -26,6 +27,17 @@ export default function CallHistory() {
      topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
      handleSessionClick, exportTranscript, fetchSessions, loadMore, hasMore,
    } = useCallHistory();
+
+   const {
+     inputValue: searchInput,
+     debouncedValue: debouncedSearch,
+     setValue: setSearchInput,
+   } = useDebouncedSearchParam({ paramKey: 'q', delay: 300 });
+
+   useEffect(() => {
+     if (debouncedSearch !== searchQuery) setSearchQuery(debouncedSearch);
+   }, [debouncedSearch, searchQuery, setSearchQuery]);
+
  
    const stats = useMemo(() => {
      const s = sessions || [];
@@ -79,7 +91,7 @@ export default function CallHistory() {
         <div className="flex gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Buscar por nome, telefone ou agente..." className="pl-10" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <Input placeholder="Buscar por nome, telefone ou agente..." className="pl-10" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
           </div>
           <Button variant={showFilters ? 'default' : 'outline'} className="gap-2" onClick={() => setShowFilters(!showFilters)}>
             <Filter className="h-4 w-4" /> Filtros

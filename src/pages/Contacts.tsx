@@ -16,6 +16,7 @@ import { CreateContactDialog } from '@/components/contacts/CreateContactDialog';
 import { motion } from 'framer-motion';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
 
 const getInitials = (name: string) => {
   return name
@@ -44,7 +45,11 @@ const itemVariants = {
 
 const Contacts = () => {
   usePageTitle('Contatos');
-  const [search, setSearch] = useState('');
+  const {
+    inputValue: searchInput,
+    debouncedValue: search,
+    setValue: setSearch,
+  } = useDebouncedSearchParam({ paramKey: 'q', delay: 250 });
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [showDetail, setShowDetail] = useState(false);
@@ -55,10 +60,11 @@ const Contacts = () => {
   const { contacts, isLoading, fetchContacts, deleteContact, createContact } = useContacts();
   const { isConfigured, getContacts: getBitrixContacts, isLoading: bitrixLoading } = useBitrix();
 
+  const searchLower = search.toLowerCase();
   const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(search.toLowerCase()) ||
+    contact.name.toLowerCase().includes(searchLower) ||
     contact.phone?.includes(search) ||
-    contact.company?.toLowerCase().includes(search.toLowerCase())
+    contact.company?.toLowerCase().includes(searchLower)
   );
 
   const favoriteContacts = filteredContacts.filter(c => favorites.includes(c.id));
@@ -310,7 +316,7 @@ const Contacts = () => {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Buscar por nome, telefone ou empresa..."
-            value={search}
+            value={searchInput}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-9 bg-muted/30 border-border/50 focus:border-primary/40 focus:shadow-[0_0_15px_hsl(var(--primary)/0.12)] transition-shadow"
           />
