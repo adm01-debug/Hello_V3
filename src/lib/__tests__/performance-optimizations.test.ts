@@ -78,12 +78,15 @@ describe('Performance: Vite bundle splitting (manualChunks)', () => {
 
   expectedChunks.forEach(({ name, deps }) => {
     it(`defines chunk "${name}"`, () => {
-      expect(viteConfig).toContain(`'${name}'`);
+      expect(viteConfig).toMatch(new RegExp(`['"\`]${name}['"\`]`));
     });
 
     deps.forEach((dep) => {
       it(`chunk "${name}" includes "${dep}"`, () => {
-        expect(viteConfig).toContain(`'${dep}'`);
+        // aceita string literal ('dep'/"dep") ou match por includes/regex em manualChunks(id)
+        const escaped = dep.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const re = new RegExp(`['"\`\/]${escaped}['"\`\/]`);
+        expect(viteConfig).toMatch(re);
       });
     });
   });
