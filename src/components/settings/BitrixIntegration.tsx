@@ -179,5 +179,8 @@
           </div>
        </CardContent>
      </Card>
+
+      <BitrixSyncStatus />
+    </div>
    );
  }
