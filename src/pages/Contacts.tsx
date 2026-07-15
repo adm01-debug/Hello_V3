@@ -16,6 +16,7 @@ import { CreateContactDialog } from '@/components/contacts/CreateContactDialog';
 import { motion } from 'framer-motion';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
 
 const getInitials = (name: string) => {
   return name
