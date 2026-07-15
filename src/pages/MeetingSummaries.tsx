@@ -1,10 +1,10 @@
 import { useState, useMemo } from 'react';
 import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
-import { Sparkles, Search, Filter, AlertCircle, ListChecks, Phone } from 'lucide-react';
+import { Sparkles, Filter, AlertCircle, ListChecks, Phone } from 'lucide-react';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { SearchInput } from '@/components/ui/search-input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -79,15 +79,13 @@ export default function MeetingSummaries() {
 
       <Card className="p-4 bg-card/50 backdrop-blur border-primary/20 mb-4">
         <div className="flex flex-col md:flex-row gap-3">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Buscar no conteúdo dos resumos..."
-              value={searchInput}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 bg-background/50"
-            />
-          </div>
+          <SearchInput
+            value={searchInput}
+            onValueChange={setSearch}
+            placeholder="Buscar no conteúdo dos resumos..."
+            wrapperClassName="flex-1"
+            className="bg-background/50"
+          />
           <Tabs value={filter} onValueChange={(v) => setFilter(v as 'all' | 'followup')}>
             <TabsList>
               <TabsTrigger value="all" className="gap-1.5"><Filter className="h-3 w-3" /> Todos</TabsTrigger>
