@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { vitalConfig, ratingColors } from './constants';
-import type { WebVitalMetric } from '@/hooks/useWebVitals';
+import type { WebVitalMetric } from '@/lib/web-vitals';
 
 interface Props {
   vitals: Record<string, WebVitalMetric | undefined>;
