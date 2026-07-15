@@ -72,8 +72,8 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
           key={particle.id}
           className={cn(
             'absolute w-3 h-3 rounded-full animate-bounce',
-            particle.id % 3 === 0 && 'bg-yellow-400',
-            particle.id % 3 === 1 && 'bg-purple-500',
+            particle.id % 3 === 0 && 'bg-warning',
+            particle.id % 3 === 1 && 'bg-accent',
             particle.id % 3 === 2 && 'bg-primary'
           )}
           style={{
