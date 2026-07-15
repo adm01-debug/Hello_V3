@@ -16,9 +16,29 @@ const state = {
   sessionsLen: 1,
 };
 
+// Referências estáveis para evitar re-render infinito por identidade em useEffect deps
+const sessionsCache = new Map<number, ReadonlyArray<{ id: string }>>();
+const getSessions = (n: number) => {
+  const cached = sessionsCache.get(n);
+  if (cached) return cached;
+  const arr = Object.freeze(Array.from({ length: n }, (_, i) => ({ id: `s${i}` })));
+  sessionsCache.set(n, arr);
+  return arr;
+};
+
+const mfaCache = new Map<string, unknown>();
+const getMfaSettings = (enabled: boolean) => {
+  const key = String(enabled);
+  const cached = mfaCache.get(key);
+  if (cached) return cached;
+  const s = Object.freeze({ mfa_enabled: enabled, mfa_method: 'totp', backup_codes: [], last_verified_at: null, recovery_email: null });
+  mfaCache.set(key, s);
+  return s;
+};
+
 vi.mock('@/hooks/useSessionManager', () => ({
   useSessionManager: () => ({
-    sessions: Array.from({ length: state.sessionsLen }, (_, i) => ({ id: `s${i}` })),
+    sessions: getSessions(state.sessionsLen),
     currentSessionId: 's0',
     sessionDurationHours: 24,
   }),
@@ -26,7 +46,7 @@ vi.mock('@/hooks/useSessionManager', () => ({
 
 vi.mock('@/hooks/useMFA', () => ({
   useMFA: () => ({
-    settings: { mfa_enabled: state.mfaEnabled, mfa_method: 'totp', backup_codes: [], last_verified_at: null, recovery_email: null },
+    settings: getMfaSettings(state.mfaEnabled),
     isLoading: state.mfaLoading,
   }),
 }));
