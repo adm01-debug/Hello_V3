@@ -11,6 +11,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { useRecordings } from '@/hooks/useRecordings';
 import { TranscriptionDialog } from '@/components/recordings/TranscriptionDialog';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
+import { useEffect } from 'react';
 
 const formatFileSize = (bytes: number | null) => {
   if (!bytes) return '-';
@@ -28,6 +30,17 @@ export default function Recordings() {
     transcribing, analyzingSentiment, transcriptionDialog, setTranscriptionDialog, currentTranscription,
     currentRecording, handlePlay, handleSeek, handleSkip, handleDownload, handleDelete, handleTranscribe, handleAnalyzeSentiment,
   } = useRecordings();
+
+  const {
+    inputValue: searchInput,
+    debouncedValue: debouncedSearch,
+    setValue: setSearchInput,
+  } = useDebouncedSearchParam({ paramKey: 'q', delay: 300 });
+
+  useEffect(() => {
+    if (debouncedSearch !== searchTerm) setSearchTerm(debouncedSearch);
+  }, [debouncedSearch, searchTerm, setSearchTerm]);
+
 
   return (
     <div className="space-y-6 p-6">
@@ -71,7 +84,7 @@ export default function Recordings() {
         <CardContent className="p-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Buscar por data, conferência ou sessão..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-10" />
+            <Input placeholder="Buscar por data, conferência ou sessão..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)} className="pl-10" />
           </div>
         </CardContent>
       </Card>

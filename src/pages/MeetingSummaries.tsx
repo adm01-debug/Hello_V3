@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
 import { Sparkles, Search, Filter, AlertCircle, ListChecks, Phone } from 'lucide-react';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
@@ -26,7 +27,11 @@ type MeetingSummaryListItem = MeetingSummary & {
 
 export default function MeetingSummaries() {
   usePageTitle('Resumos IA de Reuniões');
-  const [search, setSearch] = useState('');
+  const {
+    inputValue: searchInput,
+    debouncedValue: search,
+    setValue: setSearch,
+  } = useDebouncedSearchParam({ paramKey: 'q', delay: 300 });
   const [filter, setFilter] = useState<'all' | 'followup'>('all');
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -78,7 +83,7 @@ export default function MeetingSummaries() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Buscar no conteúdo dos resumos..."
-              value={search}
+              value={searchInput}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-9 bg-background/50"
             />

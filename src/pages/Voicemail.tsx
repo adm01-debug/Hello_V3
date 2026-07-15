@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,7 +28,11 @@ interface VoicemailMessage {
 
 export default function VoicemailPage() {
   const queryClient = useQueryClient();
-  const [search, setSearch] = useState('');
+  const {
+    inputValue: searchInput,
+    debouncedValue: search,
+    setValue: setSearch,
+  } = useDebouncedSearchParam({ paramKey: 'q', delay: 300 });
   const [filter, setFilter] = useState<'all' | 'unread' | 'urgent'>('all');
 
   const { data: messages = [], isLoading } = useQuery({
@@ -127,7 +132,7 @@ export default function VoicemailPage() {
       {/* Search */}
       <div className="relative">
         <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-        <Input className="pl-10" placeholder="Buscar por nome, telefone ou transcrição..." value={search} onChange={e => setSearch(e.target.value)} />
+        <Input className="pl-10" placeholder="Buscar por nome, telefone ou transcrição..." value={searchInput} onChange={e => setSearch(e.target.value)} />
       </div>
 
       {/* Messages */}
