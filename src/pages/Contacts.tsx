@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
-import { 
-  Search, Star, Phone, Mail, Building2, MoreHorizontal, Plus, Filter, RefreshCw, CloudDownload, Loader2, Users, Zap
+import {
+  Star, Phone, Mail, Building2, MoreHorizontal, Plus, Filter, RefreshCw, CloudDownload, Loader2, Users, Zap
 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { SearchInput } from '@/components/ui/search-input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
