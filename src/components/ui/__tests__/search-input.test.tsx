@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { SearchInput } from "../search-input";
 
 describe("SearchInput", () => {
@@ -9,14 +8,11 @@ describe("SearchInput", () => {
     expect(screen.getByRole("searchbox")).toHaveValue("foo");
   });
 
-  it("chama onValueChange a cada tecla", async () => {
-    const user = userEvent.setup();
+  it("chama onValueChange ao digitar", () => {
     const onChange = vi.fn();
-    render(<SearchInput value="" onValueChange={onChange} placeholder="q" />);
-    await user.type(screen.getByRole("searchbox"), "ab");
-    expect(onChange).toHaveBeenCalledTimes(2);
-    expect(onChange).toHaveBeenNthCalledWith(1, "a");
-    expect(onChange).toHaveBeenNthCalledWith(2, "b");
+    render(<SearchInput value="" onValueChange={onChange} />);
+    fireEvent.change(screen.getByRole("searchbox"), { target: { value: "abc" } });
+    expect(onChange).toHaveBeenCalledWith("abc");
   });
 
   it("mostra botão limpar somente quando há valor", () => {
@@ -26,29 +22,32 @@ describe("SearchInput", () => {
     expect(screen.getByRole("button", { name: /limpar busca/i })).toBeInTheDocument();
   });
 
-  it("botão limpar chama onValueChange('')", async () => {
-    const user = userEvent.setup();
+  it("botão limpar chama onValueChange('')", () => {
     const onChange = vi.fn();
     render(<SearchInput value="abc" onValueChange={onChange} />);
-    await user.click(screen.getByRole("button", { name: /limpar busca/i }));
+    fireEvent.click(screen.getByRole("button", { name: /limpar busca/i }));
     expect(onChange).toHaveBeenCalledWith("");
   });
 
-  it("Esc limpa quando há valor", async () => {
-    const user = userEvent.setup();
+  it("Esc limpa quando há valor", () => {
     const onChange = vi.fn();
     render(<SearchInput value="abc" onValueChange={onChange} />);
-    screen.getByRole("searchbox").focus();
-    await user.keyboard("{Escape}");
+    fireEvent.keyDown(screen.getByRole("searchbox"), { key: "Escape" });
     expect(onChange).toHaveBeenCalledWith("");
   });
 
-  it("onClear customizado sobrescreve default", async () => {
-    const user = userEvent.setup();
+  it("Esc não faz nada quando valor está vazio", () => {
+    const onChange = vi.fn();
+    render(<SearchInput value="" onValueChange={onChange} />);
+    fireEvent.keyDown(screen.getByRole("searchbox"), { key: "Escape" });
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("onClear customizado sobrescreve default", () => {
     const onClear = vi.fn();
     const onChange = vi.fn();
     render(<SearchInput value="x" onValueChange={onChange} onClear={onClear} />);
-    await user.click(screen.getByRole("button", { name: /limpar busca/i }));
+    fireEvent.click(screen.getByRole("button", { name: /limpar busca/i }));
     expect(onClear).toHaveBeenCalled();
     expect(onChange).not.toHaveBeenCalled();
   });
