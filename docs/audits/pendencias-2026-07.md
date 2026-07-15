@@ -9,9 +9,9 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 | Item | Descrição | Status | Evidência / Nota |
 | ---- | --------- | ------ | ---------------- |
 | A1 | Corrigir 3 policies RLS `USING/WITH CHECK (true)` (lint 0024) | ⚪ | `SELECT ... FROM pg_policies WHERE (qual='true' OR with_check='true') AND cmd IN ('INSERT','UPDATE','DELETE','ALL')` → **0 linhas** em 2026-07-15. Ondas anteriores (23, 26) já reescreveram os alvos históricos. Os 3 findings 0024 restantes são padrões `SELECT USING (true)` para catálogos públicos, explicitamente aceitos no scorecard-final. |
-| A2 | `REVOKE EXECUTE` em ~69 funções `SECURITY DEFINER` (lint 0028/0029) | 🔴 | Inventário via `pg_proc` → dividir em lotes ~15. |
-| A3 | Refatorar `SecurityAlerts.tsx` (1.560 linhas) | 🔴 | Extrair Header/Filters/Timeline/Row/Drawer/ExportBar. |
-| A4 | Refatorar demais arquivos >400 linhas | 🔴 | Ordem: WebhookHealth → ExtensionsAdmin → ObservabilityDashboard → DNCListManager → LDAPSync → QueueMetricsAlertSettings → NotificationCenter. |
+| A2 | `REVOKE EXECUTE` em ~69 funções `SECURITY DEFINER` (lint 0028/0029) | 🟢 | Migração 2026-07-15: `REVOKE ALL` de `PUBLIC`/`anon` em 62 funções; `authenticated` mantido apenas em RPCs de cliente (checagens de papel, dashboards, DNC, rate-limit). Warnings 0029 remanescentes referem-se às funções intencionalmente expostas a `authenticated`. |
+| A3 | Refatorar `SecurityAlerts.tsx` (1.560 linhas) | ⚪ | Já reduzido para 251 linhas em ondas anteriores (Header/Filters/Timeline/Drawer/Toolbar/KpiStrip extraídos). |
+| A4 | Refatorar demais arquivos >400 linhas | 🟡 | **WebhookHealth ✅** (559 → 155 linhas; extraído `useWebhookHealthData`, `webhook-health-utils`, `KpiCards`, `EndpointList`, `EndpointsToolbar`, `HealthHeatmap`). Próximos: ExtensionsAdmin (510) → ObservabilityDashboard (482) → DNCListManager (456) → LDAPSync (437) → QueueMetricsAlertSettings (430) → NotificationCenter (420). |
 | A5 | Reauth centralizado (Context + sessionStorage + HMAC) | 🔴 | Ver `useReauth.ts`. |
 
 ## Bloco B — 🟠 Importante (Dados / Integrações / CI)
