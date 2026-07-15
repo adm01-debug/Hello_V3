@@ -37,7 +37,6 @@ export default function SecurityAlerts() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sourceFilter = searchParams.get("source") ?? ALL_SOURCES;
-  const searchTerm = searchParams.get("q") ?? "";
 
   const updateParam = useCallback(
     (key: string, value: string) => {
@@ -49,14 +48,11 @@ export default function SecurityAlerts() {
     [searchParams, setSearchParams],
   );
 
-  // Debounced search — evita refetch a cada tecla.
-  const [searchInput, setSearchInput] = useState(searchTerm);
-  useEffect(() => setSearchInput(searchTerm), [searchTerm]);
-  useEffect(() => {
-    if (searchInput === searchTerm) return;
-    const t = setTimeout(() => updateParam("q", searchInput), 300);
-    return () => clearTimeout(t);
-  }, [searchInput, searchTerm, updateParam]);
+  const {
+    inputValue: searchInput,
+    debouncedValue: searchTerm,
+    setValue: setSearchInput,
+  } = useDebouncedSearchParam({ paramKey: "q", delay: 300 });
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
