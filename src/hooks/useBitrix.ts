@@ -93,27 +93,33 @@ export const useBitrix = () => {
 
   const syncAgents = useCallback(async () => {
     setIsLoading(true);
+    const attemptId = await startSyncAttempt('sync_agents');
     try {
       const result = await callBitrixApi('get_users', { FILTER: { ACTIVE: 'Y' } });
-      if (result?.data) {
-        const users = result.data;
-        for (const user of users) {
-          await supabase.from('bitrix_users').upsert({
-            id: user.ID,
-            name: user.NAME,
-            last_name: user.LAST_NAME,
-            email: user.EMAIL,
-            work_phone: user.WORK_PHONE,
-            personal_phone: user.PERSONAL_PHONE,
-            active: user.ACTIVE === 'Y'
-          });
-        }
-        toast.success('Agentes sincronizados com sucesso');
-        return users;
+      if (!result?.data) {
+        throw new Error('Bitrix24 não retornou dados de usuários');
       }
+      const users = result.data;
+      for (const user of users) {
+        await supabase.from('bitrix_users').upsert({
+          id: user.ID,
+          name: user.NAME,
+          last_name: user.LAST_NAME,
+          email: user.EMAIL,
+          work_phone: user.WORK_PHONE,
+          personal_phone: user.PERSONAL_PHONE,
+          active: user.ACTIVE === 'Y'
+        });
+      }
+      await markSyncSuccess(attemptId);
+      toast.success('Agentes sincronizados com sucesso');
+      return users;
     } catch (error) {
       logger.error('Error syncing agents:', error);
-      toast.error('Erro ao sincronizar agentes');
+      await markSyncFailure(attemptId, error);
+      toast.error('Erro ao sincronizar agentes', {
+        description: error instanceof Error ? error.message : undefined,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -122,22 +128,29 @@ export const useBitrix = () => {
 
   const syncDepartments = useCallback(async () => {
     setIsLoading(true);
+    const attemptId = await startSyncAttempt('sync_departments');
     try {
       const result = await callBitrixApi('get_departments');
-      if (result?.data) {
-        const departments = result.data;
-        for (const dept of departments) {
-          await supabase.from('bitrix_departments').upsert({
-            id: dept.ID,
-            name: dept.NAME,
-            parent_id: dept.PARENT
-          });
-        }
-        toast.success('Departamentos sincronizados');
-        return departments;
+      if (!result?.data) {
+        throw new Error('Bitrix24 não retornou departamentos');
       }
+      const departments = result.data;
+      for (const dept of departments) {
+        await supabase.from('bitrix_departments').upsert({
+          id: dept.ID,
+          name: dept.NAME,
+          parent_id: dept.PARENT
+        });
+      }
+      await markSyncSuccess(attemptId);
+      toast.success('Departamentos sincronizados');
+      return departments;
     } catch (error) {
       logger.error('Error syncing departments:', error);
+      await markSyncFailure(attemptId, error);
+      toast.error('Erro ao sincronizar departamentos', {
+        description: error instanceof Error ? error.message : undefined,
+      });
     } finally {
       setIsLoading(false);
     }
