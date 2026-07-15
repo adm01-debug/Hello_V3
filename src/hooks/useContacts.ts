@@ -132,46 +132,85 @@ export const useContacts = () => {
   }, []);
 
   const createContact = useCallback(async (input: CreateContactInput): Promise<Contact | null> => {
+    const parsed = contactInputSchema.safeParse(input);
+    if (!parsed.success) {
+      const first = parsed.error.errors[0];
+      const field = first?.path.join('.') || 'campo';
+      toast.error('Dados inválidos', { description: `${field}: ${first?.message ?? 'inválido'}` });
+      return null;
+    }
+
+    const clean = parsed.data;
+    const phone = normalizePhoneForStorage(clean.phone);
+
     try {
       const { data, error } = await supabase
         .from('contacts')
         .insert({
-          name: input.name,
-          phone: input.phone,
-          email: input.email,
-          company: input.company,
-          position: input.position,
-          notes: input.notes,
-          tags: input.tags,
-          external_id: input.external_id,
-          source: input.source || 'manual'
+          name: clean.name,
+          phone,
+          email: clean.email ?? null,
+          company: clean.company ?? null,
+          position: clean.position ?? null,
+          notes: clean.notes ?? null,
+          tags: clean.tags ?? null,
+          external_id: clean.external_id ?? null,
+          source: clean.source || 'manual',
         })
         .select()
         .single();
 
       if (error) throw error;
-      
+
       toast.success('Contato criado com sucesso');
       await fetchContacts();
       return data as Contact;
     } catch (err: unknown) {
       log.error('Error creating contact', err);
+      const friendly = mapContactError(err);
       reportError({
         message: 'Erro ao criar contato',
         type: 'network-error',
         error: err instanceof Error ? err : undefined,
-        metadata: { input }
+        metadata: { input: { ...input, notes: undefined } },
       });
-      toast.error('Erro ao criar contato');
+      toast.error(friendly);
       return null;
     }
   }, [fetchContacts]);
 
-  const updateContact = useCallback(async (id: string, updates: Partial<CreateContactInput> & { version?: number }): Promise<Contact | null> => {
+  const updateContact = useCallback(async (
+    id: string,
+    updates: Partial<CreateContactInput> & { version?: number }
+  ): Promise<Contact | null> => {
+    if (!id || typeof id !== 'string') {
+      toast.error('ID de contato inválido');
+      return null;
+    }
+
+    const { version, ...rest } = updates;
+    const parsed = contactInputSchema.partial().safeParse(rest);
+    if (!parsed.success) {
+      const first = parsed.error.errors[0];
+      const field = first?.path.join('.') || 'campo';
+      toast.error('Dados inválidos', { description: `${field}: ${first?.message ?? 'inválido'}` });
+      return null;
+    }
+
+    const clean = parsed.data;
+    const payload: Record<string, unknown> = { ...clean };
+    if ('phone' in clean) payload.phone = normalizePhoneForStorage(clean.phone);
+    if (typeof version === 'number') payload.version = version;
+
+    if (Object.keys(payload).length === 0) {
+      toast.info('Nenhum campo alterado');
+      return null;
+    }
+
     try {
       const { data, error } = await supabase
         .from('contacts')
-        .update(updates)
+        .update(payload)
         .eq('id', id)
         .select()
         .single();
@@ -184,19 +223,20 @@ export const useContacts = () => {
         }
         throw error;
       }
-      
+
       toast.success('Contato atualizado');
       await fetchContacts();
       return data as Contact;
     } catch (err: unknown) {
       log.error('Error updating contact', err);
+      const friendly = mapContactError(err);
       reportError({
         message: 'Erro ao atualizar contato',
         type: 'network-error',
         error: err instanceof Error ? err : undefined,
-        metadata: { id, updates }
+        metadata: { id },
       });
-      toast.error('Erro ao atualizar contato');
+      toast.error(friendly);
       return null;
     }
   }, [fetchContacts]);
