@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+import { useDebouncedSearchParam } from "@/hooks/useDebouncedSearchParam";
 import { useSearchParams } from "react-router-dom";
 import { KpiStrip } from "@/components/security-alerts/KpiStrip";
 import { AlertsDailyChart } from "@/components/security-alerts/AlertsDailyChart";
