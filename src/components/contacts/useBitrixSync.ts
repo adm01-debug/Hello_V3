@@ -2,11 +2,11 @@ import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { useBitrix } from '@/hooks/useBitrix';
-import type { Contact } from '@/hooks/useContacts';
+import type { Contact, CreateContactInput } from '@/hooks/useContacts';
 
 interface Options {
   contacts: Contact[];
-  createContact: (input: Partial<Contact>) => Promise<unknown>;
+  createContact: (input: CreateContactInput) => Promise<Contact | null>;
   fetchContacts: () => Promise<unknown> | void;
 }
 
