@@ -31,6 +31,17 @@ export default function Recordings() {
     currentRecording, handlePlay, handleSeek, handleSkip, handleDownload, handleDelete, handleTranscribe, handleAnalyzeSentiment,
   } = useRecordings();
 
+  const {
+    inputValue: searchInput,
+    debouncedValue: debouncedSearch,
+    setValue: setSearchInput,
+  } = useDebouncedSearchParam({ paramKey: 'q', delay: 300 });
+
+  useEffect(() => {
+    if (debouncedSearch !== searchTerm) setSearchTerm(debouncedSearch);
+  }, [debouncedSearch, searchTerm, setSearchTerm]);
+
+
   return (
     <div className="space-y-6 p-6">
       <div className="flex items-center justify-between">
