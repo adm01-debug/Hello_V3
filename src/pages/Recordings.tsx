@@ -11,6 +11,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { useRecordings } from '@/hooks/useRecordings';
 import { TranscriptionDialog } from '@/components/recordings/TranscriptionDialog';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
+import { useEffect } from 'react';
 
 const formatFileSize = (bytes: number | null) => {
   if (!bytes) return '-';
