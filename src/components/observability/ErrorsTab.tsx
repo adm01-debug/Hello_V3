@@ -7,7 +7,7 @@ import type { getErrorReports } from '@/lib/error-tracking';
 type ErrorReport = ReturnType<typeof getErrorReports>[number];
 
 interface Props {
-  errors: ErrorReport[];
+  errors: readonly ErrorReport[];
 }
 
 export function ErrorsTab({ errors }: Props) {
