@@ -23,15 +23,14 @@ import {
 } from '@/components/ui/form';
 import { useContacts, Contact, CreateContactInput } from '@/hooks/useContacts';
 
-const contactSchema = z.object({
-  name: z.string().min(1, 'Nome é obrigatório'),
-  phone: z.string().optional(),
-  email: z.string().email('Email inválido').optional().or(z.literal('')),
-  company: z.string().optional(),
-  position: z.string().optional(),
-  notes: z.string().optional(),
-  tags: z.string().optional(), // Will be split by comma
-});
+import { contactInputSchema } from '@/lib/validation/contact-schema';
+
+// Schema do formulário: derivado do schema canônico, com `tags` como string CSV
+const contactSchema = contactInputSchema
+  .pick({ name: true, phone: true, email: true, company: true, position: true, notes: true })
+  .extend({
+    tags: z.string().max(400, 'Lista de tags muito longa').optional(),
+  });
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
