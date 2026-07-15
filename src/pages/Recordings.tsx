@@ -1,8 +1,8 @@
-import { Play, Pause, Download, Search, Disc, Volume2, VolumeX, SkipBack, SkipForward, Loader2, Calendar, Clock, Users, Trash2, FileText } from 'lucide-react';
+import { Play, Pause, Download, Disc, Volume2, VolumeX, SkipBack, SkipForward, Loader2, Calendar, Clock, Users, Trash2, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
+import { SearchInput } from '@/components/ui/search-input';
 import { Slider } from '@/components/ui/slider';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
  import { format } from 'date-fns';
@@ -82,10 +82,11 @@ export default function Recordings() {
 
       <Card className="bg-card border-border">
         <CardContent className="p-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Buscar por data, conferência ou sessão..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)} className="pl-10" />
-          </div>
+          <SearchInput
+            value={searchInput}
+            onValueChange={setSearchInput}
+            placeholder="Buscar por data, conferência ou sessão..."
+          />
         </CardContent>
       </Card>
 

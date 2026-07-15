@@ -5,9 +5,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
+import { SearchInput } from '@/components/ui/search-input';
 import { toast } from 'sonner';
- import { Voicemail, Play, Check, Clock, Phone, AlertTriangle, Search, Trash2, MailOpen, Mail } from 'lucide-react';
+ import { Voicemail, Play, Check, Clock, Phone, AlertTriangle, Trash2, MailOpen, Mail } from 'lucide-react';
  import { formatDuration } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -130,10 +130,11 @@ export default function VoicemailPage() {
       </div>
 
       {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-        <Input className="pl-10" placeholder="Buscar por nome, telefone ou transcrição..." value={searchInput} onChange={e => setSearch(e.target.value)} />
-      </div>
+      <SearchInput
+        value={searchInput}
+        onValueChange={setSearch}
+        placeholder="Buscar por nome, telefone ou transcrição..."
+      />
 
       {/* Messages */}
       <div className="space-y-3">

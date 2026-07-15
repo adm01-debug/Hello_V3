@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
-import { 
-  Search, Star, Phone, Mail, Building2, MoreHorizontal, Plus, Filter, RefreshCw, CloudDownload, Loader2, Users, Zap
+import {
+  Star, Phone, Mail, Building2, MoreHorizontal, Plus, Filter, RefreshCw, CloudDownload, Loader2, Users, Zap
 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { SearchInput } from '@/components/ui/search-input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -312,15 +312,13 @@ const Contacts = () => {
 
       {/* Search and Filters */}
       <div className="relative flex items-center gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Buscar por nome, telefone ou empresa..."
-            value={searchInput}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 bg-muted/30 border-border/50 focus:border-primary/40 focus:shadow-[0_0_15px_hsl(var(--primary)/0.12)] transition-shadow"
-          />
-        </div>
+        <SearchInput
+          value={searchInput}
+          onValueChange={setSearch}
+          placeholder="Buscar por nome, telefone ou empresa..."
+          wrapperClassName="flex-1"
+          className="bg-muted/30 border-border/50 focus:border-primary/40 focus:shadow-[0_0_15px_hsl(var(--primary)/0.12)] transition-shadow"
+        />
         <Button variant="outline" className="gap-2 border-border/50 hover:border-primary/30">
           <Filter className="h-4 w-4" />
           Filtros

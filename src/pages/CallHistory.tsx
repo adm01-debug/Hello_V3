@@ -1,4 +1,5 @@
- import { Search, Filter, X, Calendar, Clock, Tag, TrendingUp, TrendingDown, Minus, Download, Phone } from 'lucide-react';
+ import { Filter, X, Calendar, Clock, Tag, TrendingUp, TrendingDown, Minus, Download, Phone } from 'lucide-react';
+ import { SearchInput } from '@/components/ui/search-input';
  import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -89,10 +90,12 @@ export default function CallHistory() {
 
       <div className="space-y-4">
         <div className="flex gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Buscar por nome, telefone ou agente..." className="pl-10" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
-          </div>
+          <SearchInput
+            value={searchInput}
+            onValueChange={setSearchInput}
+            placeholder="Buscar por nome, telefone ou agente..."
+            wrapperClassName="flex-1"
+          />
           <Button variant={showFilters ? 'default' : 'outline'} className="gap-2" onClick={() => setShowFilters(!showFilters)}>
             <Filter className="h-4 w-4" /> Filtros
             {activeFiltersCount > 0 && <Badge variant="secondary" className="ml-1 h-5 w-5 rounded-full p-0 flex items-center justify-center">{activeFiltersCount}</Badge>}
