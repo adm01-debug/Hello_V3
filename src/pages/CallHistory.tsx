@@ -27,6 +27,17 @@ export default function CallHistory() {
      topicFilter, setTopicFilter, allTopics, activeFiltersCount, clearFilters,
      handleSessionClick, exportTranscript, fetchSessions, loadMore, hasMore,
    } = useCallHistory();
+
+   const {
+     inputValue: searchInput,
+     debouncedValue: debouncedSearch,
+     setValue: setSearchInput,
+   } = useDebouncedSearchParam({ paramKey: 'q', delay: 300 });
+
+   useEffect(() => {
+     if (debouncedSearch !== searchQuery) setSearchQuery(debouncedSearch);
+   }, [debouncedSearch, searchQuery, setSearchQuery]);
+
  
    const stats = useMemo(() => {
      const s = sessions || [];
