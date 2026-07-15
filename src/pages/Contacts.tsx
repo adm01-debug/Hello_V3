@@ -45,7 +45,11 @@ const itemVariants = {
 
 const Contacts = () => {
   usePageTitle('Contatos');
-  const [search, setSearch] = useState('');
+  const {
+    inputValue: searchInput,
+    debouncedValue: search,
+    setValue: setSearch,
+  } = useDebouncedSearchParam({ paramKey: 'q', delay: 250 });
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [showDetail, setShowDetail] = useState(false);
@@ -56,10 +60,11 @@ const Contacts = () => {
   const { contacts, isLoading, fetchContacts, deleteContact, createContact } = useContacts();
   const { isConfigured, getContacts: getBitrixContacts, isLoading: bitrixLoading } = useBitrix();
 
+  const searchLower = search.toLowerCase();
   const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(search.toLowerCase()) ||
+    contact.name.toLowerCase().includes(searchLower) ||
     contact.phone?.includes(search) ||
-    contact.company?.toLowerCase().includes(search.toLowerCase())
+    contact.company?.toLowerCase().includes(searchLower)
   );
 
   const favoriteContacts = filteredContacts.filter(c => favorites.includes(c.id));
