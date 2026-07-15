@@ -26,24 +26,24 @@ import { useAuditLog } from '@/hooks/useAuditLog';
 import { cn } from '@/lib/utils';
 
 const categoryConfig: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
-  communication: { label: 'Comunicação', icon: <MessageSquare className="h-4 w-4" />, color: 'bg-blue-500' },
-  efficiency: { label: 'Eficiência', icon: <Clock className="h-4 w-4" />, color: 'bg-green-500' },
-  satisfaction: { label: 'Satisfação', icon: <TrendingUp className="h-4 w-4" />, color: 'bg-purple-500' },
-  skills: { label: 'Habilidades', icon: <Brain className="h-4 w-4" />, color: 'bg-orange-500' },
-  goals: { label: 'Metas', icon: <Target className="h-4 w-4" />, color: 'bg-pink-500' },
+  communication: { label: 'Comunicação', icon: <MessageSquare className="h-4 w-4" />, color: 'bg-info' },
+  efficiency: { label: 'Eficiência', icon: <Clock className="h-4 w-4" />, color: 'bg-success' },
+  satisfaction: { label: 'Satisfação', icon: <TrendingUp className="h-4 w-4" />, color: 'bg-primary' },
+  skills: { label: 'Habilidades', icon: <Brain className="h-4 w-4" />, color: 'bg-warning' },
+  goals: { label: 'Metas', icon: <Target className="h-4 w-4" />, color: 'bg-accent' },
 };
 
 const priorityConfig: Record<string, { label: string; color: string }> = {
-  high: { label: 'Alta', color: 'bg-red-500 text-white' },
-  medium: { label: 'Média', color: 'bg-yellow-500 text-black' },
-  low: { label: 'Baixa', color: 'bg-green-500 text-white' },
+  high: { label: 'Alta', color: 'bg-destructive text-destructive-foreground' },
+  medium: { label: 'Média', color: 'bg-warning text-warning-foreground' },
+  low: { label: 'Baixa', color: 'bg-success text-success-foreground' },
 };
 
 const statusConfig: Record<string, { label: string; color: string }> = {
   pending: { label: 'Pendente', color: 'bg-muted text-muted-foreground' },
-  in_progress: { label: 'Em Progresso', color: 'bg-blue-500 text-white' },
-  completed: { label: 'Concluído', color: 'bg-green-500 text-white' },
-  dismissed: { label: 'Dispensado', color: 'bg-gray-500 text-white' },
+  in_progress: { label: 'Em Progresso', color: 'bg-info text-info-foreground' },
+  completed: { label: 'Concluído', color: 'bg-success text-success-foreground' },
+  dismissed: { label: 'Dispensado', color: 'bg-muted text-muted-foreground' },
 };
 
 export function CoachingPanel() {

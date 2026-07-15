@@ -54,7 +54,7 @@ const actionColors: Record<string, string> = {
   hold_end: 'bg-info/10 text-info border-info/20',
   agent_status_change: 'bg-primary/10 text-primary border-primary/20',
   trunk_failover: 'bg-destructive/10 text-destructive border-destructive/20',
-  table_modification: 'bg-purple-500/10 text-purple-600 border-purple-500/20'
+  table_modification: 'bg-accent/40 text-accent-foreground border-accent'
 };
 
 export default function AuditLogs() {

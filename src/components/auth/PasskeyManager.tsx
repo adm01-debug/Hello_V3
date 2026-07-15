@@ -118,7 +118,7 @@ export function PasskeyManager() {
               <Fingerprint className="h-5 w-5" />
               Passkeys / Login Biométrico
               {hasPasskeys && (
-                <Badge variant="default" className="ml-2 bg-green-500">
+                <Badge variant="default" className="ml-2 bg-success text-success-foreground hover:bg-success/90">
                   <CheckCircle className="h-3 w-3 mr-1" />
                   Ativo
                 </Badge>
