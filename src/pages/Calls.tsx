@@ -93,20 +93,33 @@ const Calls = () => {
               <CardDescription>Configure integrações para mais canais</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              {/* WebRTC */}
-              <div className="flex items-center gap-3 p-3 rounded-lg border bg-success/5 border-success/20">
+              {/* WebRTC / SIP */}
+              <div className={`flex items-center gap-3 p-3 rounded-lg border ${sip.isRegistered ? 'bg-success/5 border-success/20' : ''}`}>
                 <div className="p-2 rounded-lg bg-info/10">
                   <Radio className="h-5 w-5 text-info" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <p className="font-medium">WebRTC</p>
-                    <Badge variant="default" className="text-xs">Ativo</Badge>
+                    <p className="font-medium">WebRTC / SIP</p>
+                    <Badge
+                      variant={sip.isRegistered ? 'default' : sip.error ? 'destructive' : 'outline'}
+                      className="text-xs"
+                    >
+                      {sip.isRegistered ? 'Registrado' : sip.status === 'connecting' ? 'Conectando' : sip.error ? 'Erro' : 'Não configurado'}
+                    </Badge>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Chamadas via navegador com IA conversacional
+                    {sip.isRegistered
+                      ? 'Chamadas via navegador prontas para uso'
+                      : 'Configure um trunk SIP em Configurações → VoIP para ativar'}
                   </p>
                 </div>
+                {!sip.isRegistered && (
+                  <Button variant="outline" size="sm" className="gap-1" onClick={() => window.location.assign('/admin/voip-trunks')}>
+                    <ExternalLink className="h-3 w-3" />
+                    Configurar
+                  </Button>
+                )}
               </div>
 
               {/* Wavoip */}
