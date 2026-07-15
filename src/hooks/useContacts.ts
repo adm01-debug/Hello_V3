@@ -3,8 +3,19 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { reportError } from '@/lib/error-tracking';
+import { contactInputSchema, mapContactError } from '@/lib/validation/contact-schema';
+import { normalizeBrPhone, stripNonDigits, isE164 } from '@/lib/phone-normalization';
 
 const log = logger.create('Contacts');
+
+function normalizePhoneForStorage(phone?: string): string | undefined {
+  if (!phone) return undefined;
+  if (isE164(phone)) return phone;
+  const br = normalizeBrPhone(phone);
+  if (br) return br;
+  const digits = stripNonDigits(phone);
+  return digits.length >= 8 ? digits : undefined;
+}
 
 export interface Contact {
   id: string;
