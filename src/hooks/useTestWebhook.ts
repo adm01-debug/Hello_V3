@@ -23,7 +23,7 @@ interface UseTestWebhookOptions {
   maxAttemptsDraft: number;
   baseDelayDraft: number;
   maxDelayDraft: number;
-  recordHistory: (entry: Omit<WebhookHistoryEntry, "id" | "created_at">) => void;
+  recordHistory: (entry: Omit<WebhookHistoryEntry, "id" | "at">) => void;
 }
 
 /**
