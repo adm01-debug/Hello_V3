@@ -16,6 +16,7 @@
   import { useEffect, useState } from 'react';
   import { supabase } from '@/integrations/supabase/client';
   import { toast } from 'sonner';
+  import { BitrixSyncStatus } from './BitrixSyncStatus';
  
   type LogDestination = 'crm_timeline' | 'call_list';
 
@@ -56,8 +57,9 @@
     };
  
    return (
-     <Card>
-       <CardHeader>
+     <div className="space-y-6">
+      <Card>
+        <CardHeader>
          <div className="flex items-center justify-between">
            <div>
              <CardTitle className="flex items-center gap-2">
@@ -177,5 +179,8 @@
           </div>
        </CardContent>
      </Card>
+
+      <BitrixSyncStatus />
+    </div>
    );
  }
