@@ -1,10 +1,10 @@
 /**
  * usePageVisibility — retorna `true` quando a aba está visível.
- * Fonte: Page Visibility API (`document.visibilityState`).
+ * Fonte: Page Visibility API (document.visibilityState).
  *
  * Uso típico:
  *   const isVisible = usePageVisibility();
- *   useEffect(() => { if (!isVisible) return; /* subscribe */ }, [isVisible]);
+ *   useEffect(() => { if (!isVisible) return; // subscribe... }, [isVisible]);
  *
  * SSR-safe: assume visível quando `document` não existe.
  */
