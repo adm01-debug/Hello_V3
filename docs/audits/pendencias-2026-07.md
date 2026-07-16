@@ -24,7 +24,7 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 | B4 | Circuit breaker no cliente Bitrix | 🔴 | Reusar `resilientFetch`. |
 | B5 | Retry idempotente `whatsapp-inbound` | 🔴 | Padrão de `security-alerts-webhook-queue`. |
 | B6 | CHECK/enums nas colunas `text` (status/type/severity) | 🔴 | Auditar via `information_schema.columns`. |
-| B7 | `usePageVisibility` em Observability/SecurityAlerts/ExtensionsAdmin | 🔴 | Reduzir CPU/rede em aba oculta. |
+| B7 | `usePageVisibility` em Observability/SecurityAlerts/ExtensionsAdmin | 🟢 | Hook `src/hooks/usePageVisibility.ts` criado. Integrado em `useSecurityMonitoringData` (pausa canais `audit-logs-realtime` + `security-alerts-realtime` quando aba oculta e refaz fetch ao voltar) e `useExtensionsOverview` (desliga canal `extensions-overview-realtime` e desabilita `useQuery` enquanto oculto, com `refetchIntervalInBackground: false`). |
 | B8 | Whitelist de hosts (SSRF) em edges com egress | 🔴 | `_shared/allowed-hosts.ts`. |
 
 ## Bloco C — 🔵 Desejável (Observabilidade / Custo)

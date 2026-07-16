@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { usePageVisibility } from '@/hooks/usePageVisibility';
 
 export interface AuditLog {
   id: string;
@@ -71,8 +72,10 @@ export function useSecurityMonitoringData(profileEmail: string | undefined) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
+  const isVisible = usePageVisibility();
+
   useEffect(() => {
-    if (!isLive) return;
+    if (!isLive || !isVisible) return; // Pausa realtime quando aba oculta — economiza CPU/websocket
     const logsChannel = supabase.channel('audit-logs-realtime').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'audit_logs' }, (payload) => {
       const newLog = payload.new as AuditLog;
       setRecentLogs(prev => [newLog, ...prev.slice(0, 49)]);
@@ -87,8 +90,11 @@ export function useSecurityMonitoringData(profileEmail: string | undefined) {
       toast.error(`Alerta de Segurança: ${newAlert.title}`, { description: newAlert.description, duration: 10000 });
     }).subscribe();
 
+    // Ao voltar a ficar visível, refaz um fetch para preencher gaps ocorridos enquanto oculta
+    void fetchData();
+
     return () => { supabase.removeChannel(logsChannel); supabase.removeChannel(alertsChannel); };
-  }, [isLive]);
+  }, [isLive, isVisible, fetchData]);
 
   const resolveAlert = async (alertId: string) => {
     const { error } = await supabase.from('security_alerts').update({ is_resolved: true, resolved_at: new Date().toISOString(), resolved_by: profileEmail }).eq('id', alertId);

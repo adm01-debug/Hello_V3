@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { computeHealth } from '@/lib/health-score';
+import { usePageVisibility } from '@/hooks/usePageVisibility';
 
 export type AgentStatus = 'available' | 'busy' | 'away' | 'offline' | 'inactive';
 
@@ -78,8 +79,10 @@ interface CallStats {
 
 export function useExtensionsOverview() {
   const qc = useQueryClient();
+  const isVisible = usePageVisibility();
 
   useEffect(() => {
+    if (!isVisible) return; // Não abrir canal realtime enquanto aba oculta (economia de CPU/rede)
     const ch = supabase
       .channel('extensions-overview-realtime')
       .on(
@@ -91,11 +94,13 @@ export function useExtensionsOverview() {
     return () => {
       supabase.removeChannel(ch);
     };
-  }, [qc]);
+  }, [qc, isVisible]);
 
   return useQuery({
     queryKey: ['extensions-overview'],
     staleTime: 60 * 1000,
+    refetchIntervalInBackground: false,
+    enabled: isVisible,
     queryFn: async (): Promise<ExtensionOverview[]> => {
       const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
       const [agentsRes, profilesRes, assignmentsRes, devicesRes, callsRes] = await Promise.all([
