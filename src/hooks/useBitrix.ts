@@ -8,6 +8,13 @@ import {
   markSyncSuccess,
   markSyncFailure,
 } from '@/lib/bitrix/sync-log';
+import {
+  shouldShortCircuit,
+  recordSuccess,
+  recordFailure,
+  tripOpen,
+  cooldownRemainingMs,
+} from '@/lib/bitrix/circuit-breaker';
 
 export interface BitrixContact {
   ID: string;
@@ -53,23 +60,44 @@ export const useBitrix = () => {
   const [deals, setDeals] = useState<BitrixDeal[]>([]);
 
   const callBitrixApi = useCallback(async (action: string, params?: Record<string, unknown>, maxRetries = 2) => {
+    // Circuit breaker client-side: se aberto, curto-circuita e informa o usuário
+    if (shouldShortCircuit()) {
+      const seconds = Math.ceil(cooldownRemainingMs() / 1000);
+      toast.warning('Bitrix24 indisponível', {
+        description: `Circuito aberto após falhas consecutivas. Nova tentativa em ${seconds}s.`,
+      });
+      return null;
+    }
+
     setIsLoading(true);
     let lastError: unknown = null;
-    
+
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
         const { data, error } = await supabase.functions.invoke('bitrix-api', {
           body: { action, params }
         });
 
+        // Servidor sinalizou circuito aberto → propaga estado local
+        if (data?.circuit_open === true) {
+          tripOpen();
+          setIsLoading(false);
+          toast.warning('Bitrix24 indisponível', {
+            description: 'Circuito aberto no servidor. Aguarde alguns segundos.',
+          });
+          return null;
+        }
+
         if (!error) {
           if (data?.configured === false) {
             setIsConfigured(false);
             setIsLoading(false);
+            recordSuccess();
             return null;
           }
           setIsConfigured(true);
           setIsLoading(false);
+          recordSuccess();
           return data;
         }
 
@@ -87,6 +115,11 @@ export const useBitrix = () => {
       }
     }
 
+    // Todas as tentativas falharam → contabiliza no breaker
+    recordFailure();
+    if (lastError) {
+      logger.warn('bitrix-api falhou após retries', { action, error: String(lastError) });
+    }
     setIsLoading(false);
     return null;
   }, []);
