@@ -8,6 +8,13 @@ import {
   markSyncSuccess,
   markSyncFailure,
 } from '@/lib/bitrix/sync-log';
+import {
+  shouldShortCircuit,
+  recordSuccess,
+  recordFailure,
+  tripOpen,
+  cooldownRemainingMs,
+} from '@/lib/bitrix/circuit-breaker';
 
 export interface BitrixContact {
   ID: string;
