@@ -21,7 +21,7 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 | B1 | Particionar `audit_logs`, `call_quality_metrics`, `webhook_flush_metrics`, `rls_audit_logs`, `login_attempts`, `voip_trunk_health_checks` | 🔴 | `pg_partman` mensal + retenção 90 d. |
 | B2 | Script CI `scripts/audit-edge-functions.ts` | 🔴 | Enforce `validateBody`, `hmac`, `rateLimit`, `corsHeaders`. |
 | B3 | Índices trigram em `call_sessions.caller_name/phone` | 🔴 | `pg_trgm` + GIN CONCURRENTLY. |
-| B4 | Circuit breaker no cliente Bitrix | 🔴 | Reusar `resilientFetch`. |
+| B4 | Circuit breaker no cliente Bitrix | 🟢 | `src/lib/bitrix/circuit-breaker.ts` (states closed/open/half-open, threshold 5, cooldown 30s). Integrado em `useBitrix.callBitrixApi`: curto-circuita antes de invocar edge, respeita `circuit_open` do servidor, exibe toast com cooldown remanescente e chama `recordSuccess/Failure` conforme o resultado. |
 | B5 | Retry idempotente `whatsapp-inbound` | 🔴 | Padrão de `security-alerts-webhook-queue`. |
 | B6 | CHECK/enums nas colunas `text` (status/type/severity) | 🔴 | Auditar via `information_schema.columns`. |
 | B7 | `usePageVisibility` em Observability/SecurityAlerts/ExtensionsAdmin | 🟢 | Hook `src/hooks/usePageVisibility.ts` criado. Integrado em `useSecurityMonitoringData` (pausa canais `audit-logs-realtime` + `security-alerts-realtime` quando aba oculta e refaz fetch ao voltar) e `useExtensionsOverview` (desliga canal `extensions-overview-realtime` e desabilita `useQuery` enquanto oculto, com `refetchIntervalInBackground: false`). |
