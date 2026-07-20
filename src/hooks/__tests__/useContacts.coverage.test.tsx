@@ -144,13 +144,18 @@ describe('useContacts (coverage)', () => {
     expect(res).toEqual(contact);
 
     // not existing -> create
+    // call=1: getContactByPhone lookup (maybeSingle returns null → not found)
+    // call=2: createContact insert
+    // call=3: fetchContacts re-load triggered inside createContact after insert
     let call = 0;
     fromMock.mockImplementation(() => {
       call += 1;
       if (call === 1) return { select: vi.fn(() => ({ or: vi.fn(() => ({ maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }) })) })) };
-      return { insert: vi.fn(() => ({ select: vi.fn(() => ({ single: vi.fn().mockResolvedValue({ data: contact, error: null }) })) })) };
+      if (call === 2) return { insert: vi.fn(() => ({ select: vi.fn(() => ({ single: vi.fn().mockResolvedValue({ data: contact, error: null }) })) })) };
+      // call >= 3: fetchContacts background re-load after insert
+      return { select: vi.fn(() => ({ order: vi.fn().mockResolvedValue({ data: [contact], error: null }) })) };
     });
-    await act(async () => { res = await result.current.findOrCreateContact('5511888', 'NameX'); });
+    await act(async () => { res = await result.current.findOrCreateContact('55119998888', 'NameX'); });
     expect(res).toEqual(contact);
   });
 });

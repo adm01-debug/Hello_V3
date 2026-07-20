@@ -53,7 +53,8 @@ describe('web-vitals', () => {
     initWebVitals();
 
     // FCP / LCP (paint observers)
-    emit('paint', [{ startTime: 1500 }]);
+    // FCP entry must carry name='first-contentful-paint' so the observer filter matches
+    emit('paint', [{ name: 'first-contentful-paint', startTime: 1500 }]);
     emit('largest-contentful-paint', [{ startTime: 5000 }]); // poor LCP
 
     // CLS — first with hadRecentInput (skipped), then a real shift

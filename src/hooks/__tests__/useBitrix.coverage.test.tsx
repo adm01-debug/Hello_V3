@@ -11,14 +11,23 @@ const invokeMock = vi.fn(() => {
   return Promise.resolve(next ?? { data: null, error: null });
 });
 
-let insertResult: InvokeResult = { error: null, data: null };
+let insertResult: InvokeResult = { error: null, data: { id: 'mock-sync-id' } };
 const upsertMock = vi.fn(() => Promise.resolve({ error: null }));
-const insertMock = vi.fn(() => Promise.resolve(insertResult));
+const updateMock = vi.fn(() => ({ eq: vi.fn().mockResolvedValue({ error: null }) }));
+// insertMock must be both directly awaitable (createLead uses `await insert(...)`)
+// and support `.select('id').single()` chaining (startSyncAttempt uses the full chain).
+const insertMock = vi.fn(() => {
+  const p = Promise.resolve(insertResult) as Promise<InvokeResult> & { select?: unknown };
+  p.select = vi.fn(() => ({
+    single: vi.fn(() => Promise.resolve(insertResult)),
+  }));
+  return p;
+});
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
     functions: { invoke: (_name: string, _opts: unknown) => invokeMock() },
-    from: vi.fn(() => ({ upsert: upsertMock, insert: insertMock })),
+    from: vi.fn(() => ({ upsert: upsertMock, insert: insertMock, update: updateMock })),
   },
 }));
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn(), info: vi.fn(), warning: vi.fn() } }));
@@ -41,7 +50,7 @@ describe('useBitrix', () => {
     vi.clearAllMocks();
     invokeQueue = [{ data: null, error: null }];
     invokeThrows = false;
-    insertResult = { error: null, data: null };
+    insertResult = { error: null, data: { id: 'mock-sync-id' } };
   });
 
   it('checkConfiguration returns true when configured', async () => {
