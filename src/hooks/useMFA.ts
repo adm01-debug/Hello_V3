@@ -159,9 +159,14 @@ export function useMFA() {
   };
 
   const generateBackupCodes = () => {
-    return Array.from({ length: 10 }, () => 
-      Math.random().toString(36).substring(2, 8).toUpperCase()
-    );
+    const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const codes = new Set<string>();
+    while (codes.size < 10) {
+      const bytes = crypto.getRandomValues(new Uint8Array(6));
+      const code = Array.from(bytes, b => ALPHABET[b % ALPHABET.length]).join('');
+      codes.add(code);
+    }
+    return [...codes];
   };
 
   const saveSettings = async (newSettings: Partial<MFASettings>) => {

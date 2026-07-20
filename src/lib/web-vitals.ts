@@ -51,7 +51,8 @@ export function getLatestVitals(): Record<string, WebVitalMetric | undefined> {
 function observePaint(entryType: string, name: string, vitalName: 'FCP' | 'LCP'): void {
   try {
     const observer = new PerformanceObserver((list) => {
-      const entries = list.getEntries();
+      const allEntries = list.getEntries();
+      const entries = name ? allEntries.filter(e => e.name === name) : allEntries;
       const entry = entries[entries.length - 1];
       if (entry) {
         const value = entry.startTime;
