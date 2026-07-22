@@ -3035,13 +3035,18 @@ export type Database = {
           created_by: string | null
           description: string | null
           id: string
+          last_pacing_adjustment_at: string | null
+          last_pacing_reason: string | null
           max_concurrent_calls: number
+          max_pace: number
+          min_pace: number
           mode: string
           name: string
           retry_attempts: number
           retry_delay_minutes: number
           status: string
           successful_contacts: number | null
+          target_abandon_rate: number
           total_contacts: number | null
           updated_at: string
           working_hours_end: string | null
@@ -3054,13 +3059,18 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           id?: string
+          last_pacing_adjustment_at?: string | null
+          last_pacing_reason?: string | null
           max_concurrent_calls?: number
+          max_pace?: number
+          min_pace?: number
           mode?: string
           name: string
           retry_attempts?: number
           retry_delay_minutes?: number
           status?: string
           successful_contacts?: number | null
+          target_abandon_rate?: number
           total_contacts?: number | null
           updated_at?: string
           working_hours_end?: string | null
@@ -3073,13 +3083,18 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           id?: string
+          last_pacing_adjustment_at?: string | null
+          last_pacing_reason?: string | null
           max_concurrent_calls?: number
+          max_pace?: number
+          min_pace?: number
           mode?: string
           name?: string
           retry_attempts?: number
           retry_delay_minutes?: number
           status?: string
           successful_contacts?: number | null
+          target_abandon_rate?: number
           total_contacts?: number | null
           updated_at?: string
           working_hours_end?: string | null
@@ -6938,6 +6953,11 @@ export type Database = {
           p_source?: string
         }
         Returns: string
+      }
+      apply_predictive_pacing: { Args: never; Returns: Json }
+      calculate_predictive_pace: {
+        Args: { p_campaign_id: string }
+        Returns: Json
       }
       can_access_agent_data: {
         Args: { target_agent_name: string }
