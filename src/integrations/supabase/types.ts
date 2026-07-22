@@ -7106,6 +7106,7 @@ export type Database = {
       }
       notify_bloat_hotspots: { Args: never; Returns: Json }
       notify_idle_indexes: { Args: never; Returns: Json }
+      recalc_deal_health: { Args: { p_deal_id: string }; Returns: undefined }
       record_failed_login: {
         Args: { p_email: string; p_ip_address?: string; p_user_agent?: string }
         Returns: Json
@@ -7127,6 +7128,7 @@ export type Database = {
         Returns: string
       }
       reset_public_index_stats: { Args: never; Returns: Json }
+      snapshot_deals_daily: { Args: never; Returns: Json }
       validate_audit_insert: { Args: never; Returns: boolean }
     }
     Enums: {
