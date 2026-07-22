@@ -1,76 +1,85 @@
- import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
- 
- const TRACE_HEADER = 'x-request-id';
- const TRACE_OP_HEADER = 'x-trace-operation';
-import { buildCorsHeaders } from "../_shared/cors.ts";
+// Health check consolidado — endpoint público retornando status dos componentes
+import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
+import { createClient } from 'npm:@supabase/supabase-js@2';
 
-
- export const handler = async (req: Request): Promise<Response> => {
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: buildCorsHeaders(req) });
-  }
-
-   const start = performance.now();
-   const traceId = req.headers.get(TRACE_HEADER);
-   const operation = req.headers.get(TRACE_OP_HEADER);
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-     const supabase = createClient(supabaseUrl, supabaseKey, {
-       auth: { persistSession: false, autoRefreshToken: false }
-     });
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+    );
 
-    // DB check
-     // DB check com timeout agressivo de 3s
-     const dbController = new AbortController();
-     const dbTimeout = setTimeout(() => dbController.abort(), 3000);
- 
-     const { error: dbError } = await supabase
-       .from("agents")
-       .select("id")
-       .limit(1)
-       .abortSignal(dbController.signal);
-     
-     clearTimeout(dbTimeout);
+    const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();
 
-    const dbHealthy = !dbError;
+    const [trunksRes, webhookRes] = await Promise.allSettled([
+      supabase
+        .from('voip_trunk_health_checks')
+        .select('reachable, latency_ms')
+        .gte('checked_at', since),
+      supabase
+        .from('webhook_flush_metrics')
+        .select('sent, failed, latency_ms_avg')
+        .gte('created_at', since),
+    ]);
 
-     const latency = Math.round(performance.now() - start);
-     const response = {
-       status: dbHealthy ? "healthy" : "degraded",
-       timestamp: new Date().toISOString(),
-       trace_id: traceId,
-       operation: operation,
-       checks: {
-         database: { status: dbHealthy ? "ok" : "error", error: dbError?.message },
-         runtime: { status: "ok", version: Deno.version.deno },
-       },
-       latency_ms: latency,
-     };
+    const trunks = trunksRes.status === 'fulfilled' ? trunksRes.value.data ?? [] : [];
+    const webhooks = webhookRes.status === 'fulfilled' ? webhookRes.value.data ?? [] : [];
 
-     return new Response(JSON.stringify(response), {
-       status: dbHealthy ? 200 : 503,
-       headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
-     });
-   } catch (err) {
-     const latency = Math.round(performance.now() - start);
-     return new Response(
-       JSON.stringify({
-         status: "error",
-         timestamp: new Date().toISOString(),
-         trace_id: traceId,
-         error: err instanceof Error ? err.message : String(err),
-         latency_ms: latency,
-       }),
-       {
-         status: 500,
-         headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" },
-       }
-     );
-   }
- };
- 
- if (import.meta.main) {
-   Deno.serve(handler);
- }
+    const trunkReachable = trunks.filter((t) => t.reachable).length;
+    const trunkTotal = trunks.length;
+    const trunkUptimePct = trunkTotal ? (trunkReachable / trunkTotal) * 100 : 100;
+
+    const webhookSent = webhooks.reduce((s, w) => s + (w.sent ?? 0), 0);
+    const webhookFailed = webhooks.reduce((s, w) => s + (w.failed ?? 0), 0);
+    const webhookErrorRate = webhookSent + webhookFailed > 0
+      ? (webhookFailed / (webhookSent + webhookFailed)) * 100
+      : 0;
+    const webhookP95Latency = percentile(webhooks.map((w) => w.latency_ms_avg ?? 0), 0.95);
+
+    const components = {
+      trunks: {
+        status: trunkUptimePct >= 99 ? 'operational' : trunkUptimePct >= 95 ? 'degraded' : 'outage',
+        uptime_pct: Number(trunkUptimePct.toFixed(2)),
+        checks_15min: trunkTotal,
+      },
+      webhooks: {
+        status: webhookErrorRate < 1 ? 'operational' : webhookErrorRate < 5 ? 'degraded' : 'outage',
+        error_rate_pct: Number(webhookErrorRate.toFixed(2)),
+        p95_latency_ms: Math.round(webhookP95Latency),
+        attempts_15min: webhookSent + webhookFailed,
+      },
+      database: { status: 'operational' },
+    };
+
+    const overall = Object.values(components).some((c) => c.status === 'outage')
+      ? 'outage'
+      : Object.values(components).some((c) => c.status === 'degraded')
+      ? 'degraded'
+      : 'operational';
+
+    return new Response(JSON.stringify({
+      status: overall,
+      components,
+      checked_at: new Date().toISOString(),
+      window_minutes: 15,
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return new Response(JSON.stringify({ status: 'unknown', error: message }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500,
+    });
+  }
+});
+
+function percentile(nums: number[], p: number): number {
+  if (nums.length === 0) return 0;
+  const sorted = [...nums].sort((a, b) => a - b);
+  const idx = Math.min(sorted.length - 1, Math.floor(sorted.length * p));
+  return sorted[idx];
+}
