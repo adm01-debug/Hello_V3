@@ -116,31 +116,29 @@ export default function VsThreeCPlus() {
               </tr>
             </thead>
             <tbody>
-              {categories.map((cat) => (
-                <>
-                  <tr key={cat} className="bg-muted/20">
-                    <td colSpan={3} className="px-6 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      {cat}
-                    </td>
-                  </tr>
-                  {rows
-                    .filter((r) => r.category === cat)
-                    .map((r) => (
-                      <tr key={r.feature} className="border-t border-border/30 hover:bg-muted/10">
-                        <td className="px-6 py-3">
-                          <div>{r.feature}</div>
-                          {r.note && <div className="mt-0.5 text-xs text-muted-foreground">{r.note}</div>}
-                        </td>
-                        <td className="px-6 py-3 text-center">
-                          <Cell value={r.ours} />
-                        </td>
-                        <td className="px-6 py-3 text-center">
-                          <Cell value={r.competitor} />
-                        </td>
-                      </tr>
-                    ))}
-                </>
-              ))}
+              {categories.flatMap((cat) => [
+                <tr key={`cat-${cat}`} className="bg-muted/20">
+                  <td colSpan={3} className="px-6 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    {cat}
+                  </td>
+                </tr>,
+                ...rows
+                  .filter((r) => r.category === cat)
+                  .map((r) => (
+                    <tr key={r.feature} className="border-t border-border/30 hover:bg-muted/10">
+                      <td className="px-6 py-3">
+                        <div>{r.feature}</div>
+                        {r.note && <div className="mt-0.5 text-xs text-muted-foreground">{r.note}</div>}
+                      </td>
+                      <td className="px-6 py-3 text-center">
+                        <Cell value={r.ours} />
+                      </td>
+                      <td className="px-6 py-3 text-center">
+                        <Cell value={r.competitor} />
+                      </td>
+                    </tr>
+                  )),
+              ])}
             </tbody>
           </table>
         </div>
