@@ -84,6 +84,7 @@ const DataExport = lazy(() => import("@/pages/admin/DataExport"));
 const DatabaseHealth = lazy(() => import("@/pages/admin/DatabaseHealth"));
 const SecurityAlerts = lazy(() => import("@/pages/admin/SecurityAlerts"));
 const WebhookHealth = lazy(() => import("@/pages/admin/WebhookHealth"));
+const Onboarding = lazy(() => import("@/pages/Onboarding"));
 
 export interface RouteConfig {
   path: string;
@@ -94,6 +95,7 @@ export interface RouteConfig {
 export const protectedRoutes: RouteConfig[] = [
   // General
   { path: "/", element: Index },
+  { path: "/onboarding", element: Onboarding },
   { path: "/calls", element: Calls },
   { path: "/contacts", element: Contacts },
   { path: "/contacts/insights", element: ContactInsights },

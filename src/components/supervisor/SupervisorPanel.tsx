@@ -140,11 +140,28 @@ export const SupervisorPanel = () => {
         </div>
 
         {s.selectedCall && (
-          <Tabs defaultValue="whisper" className="pt-2 border-t">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="whisper" className="text-xs"><Headphones className="h-3 w-3 mr-1" />Whisper</TabsTrigger>
+          <Tabs defaultValue="listen" className="pt-2 border-t">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="listen" className="text-xs"><Headphones className="h-3 w-3 mr-1" />Escuta</TabsTrigger>
+              <TabsTrigger value="whisper" className="text-xs"><Volume2 className="h-3 w-3 mr-1" />Whisper</TabsTrigger>
               <TabsTrigger value="bargein" className="text-xs"><Users className="h-3 w-3 mr-1" />Barge-in</TabsTrigger>
             </TabsList>
+            <TabsContent value="listen" className="space-y-3 mt-3">
+              <div className="p-4 rounded-lg border bg-muted/30 text-center">
+                <Headphones className="h-10 w-10 mx-auto mb-3 text-primary opacity-60" />
+                <h4 className="font-medium mb-1">Modo Escuta silenciosa</h4>
+                <p className="text-xs text-muted-foreground mb-4">
+                  Ouça a chamada em tempo real sem que agente ou cliente saibam. Ideal para QA e coaching passivo.
+                </p>
+                <Badge variant="secondary" className="gap-1">
+                  <Radio className="h-3 w-3" /> Áudio recebido pelo canal SIP do supervisor
+                </Badge>
+                <div className="mt-3 pt-3 border-t text-xs text-muted-foreground">
+                  <p className="flex items-center justify-center gap-1"><Phone className="h-3 w-3" />Chamada: {s.selectedCall.caller_name || s.selectedCall.caller_phone}</p>
+                  <p className="flex items-center justify-center gap-1 mt-1"><User className="h-3 w-3" />Agente: {s.selectedCall.agent_name}</p>
+                </div>
+              </div>
+            </TabsContent>
             <TabsContent value="whisper" className="space-y-3 mt-3">
               <div className="flex items-center gap-2 text-sm"><Volume2 className="h-4 w-4 text-primary" /><span>Sussurrar para:</span><Badge variant="default">{s.selectedCall.agent_name}</Badge></div>
               <div className="flex flex-wrap gap-1.5">
