@@ -75,27 +75,27 @@ export default function Status() {
       const [trunkRes, webhookRes] = await Promise.all([
         supabase
           .from("voip_trunk_health_checks")
-          .select("checked_at, status")
+          .select("checked_at, reachable")
           .gte("checked_at", sinceIso)
           .limit(20000),
         supabase
           .from("webhook_flush_metrics")
-          .select("flushed_at, success_count, error_count")
-          .gte("flushed_at", sinceIso)
+          .select("created_at, sent, failed")
+          .gte("created_at", sinceIso)
           .limit(20000),
       ]);
 
       const trunkRows = (trunkRes.data ?? []).map((r) => ({
         at: (r.checked_at as string) ?? new Date().toISOString(),
-        healthy: (r.status as string) === "healthy" || (r.status as string) === "ok",
+        healthy: Boolean(r.reachable),
       }));
       const trunkSamples = groupByDay(trunkRows);
 
       const webhookRows: { at: string; healthy: boolean }[] = [];
       for (const r of webhookRes.data ?? []) {
-        const at = (r.flushed_at as string) ?? new Date().toISOString();
-        const ok = Number(r.success_count ?? 0);
-        const err = Number(r.error_count ?? 0);
+        const at = (r.created_at as string) ?? new Date().toISOString();
+        const ok = Number(r.sent ?? 0);
+        const err = Number(r.failed ?? 0);
         for (let i = 0; i < ok; i++) webhookRows.push({ at, healthy: true });
         for (let i = 0; i < err; i++) webhookRows.push({ at, healthy: false });
       }
