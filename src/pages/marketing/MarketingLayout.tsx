@@ -42,6 +42,12 @@ export function MarketingLayout({ children, title, description }: MarketingLayou
             <Link to="/vs/3cplus" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Comparativo
             </Link>
+            <Link to="/marketplace" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Integrações
+            </Link>
+            <Link to="/status" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Status
+            </Link>
             <Link to="/landing#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               FAQ
             </Link>

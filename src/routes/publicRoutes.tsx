@@ -11,6 +11,8 @@ const Unauthorized = lazy(() => import("@/pages/Unauthorized"));
 const Landing = lazy(() => import("@/pages/marketing/Landing"));
 const Pricing = lazy(() => import("@/pages/marketing/Pricing"));
 const VsThreeCPlus = lazy(() => import("@/pages/marketing/VsThreeCPlus"));
+const Status = lazy(() => import("@/pages/Status"));
+const Marketplace = lazy(() => import("@/pages/Marketplace"));
 
 export const publicRoutes = [
   { path: "/login", element: Login },
@@ -22,4 +24,7 @@ export const publicRoutes = [
   { path: "/landing", element: Landing },
   { path: "/pricing", element: Pricing },
   { path: "/vs/3cplus", element: VsThreeCPlus },
+  { path: "/status", element: Status },
+  { path: "/marketplace", element: Marketplace },
 ];
+
