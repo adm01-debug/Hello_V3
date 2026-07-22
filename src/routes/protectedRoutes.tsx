@@ -85,6 +85,8 @@ const DatabaseHealth = lazy(() => import("@/pages/admin/DatabaseHealth"));
 const SecurityAlerts = lazy(() => import("@/pages/admin/SecurityAlerts"));
 const WebhookHealth = lazy(() => import("@/pages/admin/WebhookHealth"));
 const Onboarding = lazy(() => import("@/pages/Onboarding"));
+const PredictiveDialer = lazy(() => import("@/pages/PredictiveDialer"));
+const VoiceQuality = lazy(() => import("@/pages/admin/VoiceQuality"));
 
 export interface RouteConfig {
   path: string;
@@ -150,6 +152,8 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/executive", element: ExecutiveDashboard, roles: ["supervisor", "admin"] },
   { path: "/queue-metrics-settings", element: QueueMetricsAlertSettings, roles: ["supervisor", "admin"] },
   { path: "/dialer", element: Dialer, roles: ["supervisor", "admin"] },
+  { path: "/dialer/predictive", element: PredictiveDialer, roles: ["supervisor", "admin"] },
+  { path: "/admin/voice-quality", element: VoiceQuality, roles: ["supervisor", "admin"] },
   { path: "/compliance", element: Compliance, roles: ["supervisor", "admin"] },
   { path: "/outbound-compliance", element: OutboundCompliance, roles: ["supervisor", "admin"] },
   { path: "/call-flow-designer", element: CallFlowDesigner, roles: ["supervisor", "admin"] },
