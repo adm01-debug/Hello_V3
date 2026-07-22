@@ -87,6 +87,7 @@ const WebhookHealth = lazy(() => import("@/pages/admin/WebhookHealth"));
 const Onboarding = lazy(() => import("@/pages/Onboarding"));
 const PredictiveDialer = lazy(() => import("@/pages/PredictiveDialer"));
 const VoiceQuality = lazy(() => import("@/pages/admin/VoiceQuality"));
+const SloDashboard = lazy(() => import("@/pages/admin/SloDashboard"));
 
 export interface RouteConfig {
   path: string;
@@ -186,6 +187,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/admin/database-health", element: DatabaseHealth, roles: ["admin"] },
   { path: "/admin/security-alerts", element: SecurityAlerts, roles: ["admin"] },
   { path: "/admin/webhook-health", element: WebhookHealth, roles: ["admin"] },
+  { path: "/admin/slo", element: SloDashboard, roles: ["admin"] },
 
   // Catch-all
   { path: "*", element: NotFound },
