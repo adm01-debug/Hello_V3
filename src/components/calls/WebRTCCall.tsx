@@ -219,24 +219,20 @@ export function WebRTCCall({
     setIsMuted(tracks[0] ? !tracks[0].enabled : false);
   }, []);
 
-  const toggleSpeaker = useCallback(async () => {
+  const audioOutput = useAudioOutputDevices(remoteAudioRef);
+
+  // Sincroniza estado de mute/speaker com o elemento de áudio remoto.
+  useEffect(() => {
     const audio = remoteAudioRef.current;
-    const next = !isSpeakerOn;
-    setIsSpeakerOn(next);
     if (!audio) return;
-    audio.muted = !next;
-    // Se o browser suportar setSinkId, alterna para default/none
-    const audioEl = audio as HTMLAudioElement & {
-      setSinkId?: (id: string) => Promise<void>;
-    };
-    if (typeof audioEl.setSinkId === "function") {
-      try {
-        await audioEl.setSinkId(next ? "default" : "");
-      } catch (err) {
-        logger.warn("setSinkId não suportado ou falhou:", err);
-      }
-    }
+    audio.muted = !isSpeakerOn;
   }, [isSpeakerOn]);
+
+  const toggleSpeaker = useCallback(() => {
+    setIsSpeakerOn((prev) => !prev);
+  }, []);
+
+
 
   useEffect(() => {
     return () => {
