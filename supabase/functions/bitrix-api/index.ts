@@ -2,6 +2,11 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
  import { buildCorsHeaders } from "../_shared/cors.ts";
  import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import {
+  BitrixRequestSchema,
+  paramsSchemaFor,
+} from "../_shared/external-payload-schemas.ts";
+import { parseNumericSafely } from "../_shared/numeric-schemas.ts";
 
 
 interface BitrixRequest {
