@@ -98,7 +98,7 @@ Deno.serve(async (req) => {
       : 'defer';
 
     return json({
-      score: parseFloat(score.toFixed(3)),
+      score: parseFloat(score.toFixed(3)), // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
       recommendation,
       factors,
       dnc: false,

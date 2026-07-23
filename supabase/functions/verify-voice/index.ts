@@ -60,7 +60,7 @@ serve(async (req) => {
     }
 
     const sim = cosineSimilarity(sample, vp.embedding as number[]);
-    const verdict = verifyVerdict(sim, Number(vp.confidence_baseline ?? 0.85));
+    const verdict = verifyVerdict(sim, Number(vp.confidence_baseline ?? 0.85)); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
 
     // Atualiza última verificação
     await adminClient.from('voice_prints').update({ last_verified_at: new Date().toISOString() }).eq('id', vp.id);

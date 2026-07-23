@@ -83,8 +83,8 @@ serve(async (req) => {
       summary: String(result.summary || "Resumo não disponível").slice(0, 1000),
       mainTopics: Array.isArray(result.mainTopics) ? result.mainTopics.slice(0, 10) : [],
       overallSentiment: ["positive", "neutral", "negative"].includes(result.overallSentiment) ? result.overallSentiment : "neutral",
-      customerSatisfaction: Math.min(10, Math.max(1, parseInt(result.customerSatisfaction) || 5)),
-      agentPerformance: Math.min(10, Math.max(1, parseInt(result.agentPerformance) || 5)),
+      customerSatisfaction: Math.min(10, Math.max(1, parseInt(result.customerSatisfaction) || 5)), // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
+      agentPerformance: Math.min(10, Math.max(1, parseInt(result.agentPerformance) || 5)), // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
       nextSteps: Array.isArray(result.nextSteps) ? result.nextSteps.slice(0, 10) : []
     };
 

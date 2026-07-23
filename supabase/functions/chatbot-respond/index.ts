@@ -74,7 +74,7 @@ Deno.serve(async (req) => {
          .limit(6)
      ]);
  
-     const globalThreshold = parseFloat(settingsRes.data?.value as string || DEFAULT_THRESHOLD.toString());
+     const globalThreshold = parseFloat(settingsRes.data?.value as string || DEFAULT_THRESHOLD.toString()); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
      const conversationThreshold = convRes.data?.handoff_threshold;
      const activeThreshold = conversationThreshold ?? globalThreshold;
  

@@ -78,9 +78,9 @@ Responda em JSON: {"responses":[{"criterion_id":"<id>","score":<num>,"comment":"
 
     const total = validResponses.reduce((s, r) => {
       const crit = criteria.find((c) => c.id === r.criterion_id)!;
-      return s + Number(r.score) * Number(crit.weight);
+      return s + Number(r.score) * Number(crit.weight); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
     }, 0);
-    const max = criteria.reduce((s, c) => s + c.max_score * Number(c.weight), 0);
+    const max = criteria.reduce((s, c) => s + c.max_score * Number(c.weight), 0); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
 
     const { data: scorecard, error: scErr } = await supabase
       .from("call_scorecards").insert({

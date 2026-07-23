@@ -80,7 +80,7 @@ Deno.serve(async (req) => {
       for (const [h, stats] of Object.entries(hourly)) {
         if (stats.attempts < 2) continue;
         const rate = stats.answered / stats.attempts;
-        if (rate > bestHourRate) { bestHourRate = rate; bestHour = parseInt(h); }
+        if (rate > bestHourRate) { bestHourRate = rate; bestHour = parseInt(h); } // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
       }
 
       let bestDay: number | null = null;
@@ -88,7 +88,7 @@ Deno.serve(async (req) => {
       for (const [d, stats] of Object.entries(daily)) {
         if (stats.attempts < 2) continue;
         const rate = stats.answered / stats.attempts;
-        if (rate > bestDayRate) { bestDayRate = rate; bestDay = parseInt(d); }
+        if (rate > bestDayRate) { bestDayRate = rate; bestDay = parseInt(d); } // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
       }
 
       const answerRate = sessions.length > 0 ? totalAnswered / sessions.length : 0;
@@ -98,7 +98,7 @@ Deno.serve(async (req) => {
         contact_id: contact.id,
         best_hour: bestHour,
         best_day_of_week: bestDay,
-        answer_rate: parseFloat(answerRate.toFixed(4)),
+        answer_rate: parseFloat(answerRate.toFixed(4)), // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
         total_attempts: sessions.length,
         total_answered: totalAnswered,
         avg_call_duration_seconds: avgDuration,

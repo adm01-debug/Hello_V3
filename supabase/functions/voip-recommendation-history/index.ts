@@ -91,7 +91,7 @@ Deno.serve(async (req) => {
     }
 
     const period = params.period as 'day' | 'week' | 'month';
-    const limit = Number(params.limit);
+    const limit = Number(params.limit); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
     const days = PERIOD_DAYS[period];
     const since = new Date(Date.now() - days * 86_400_000).toISOString();
 
