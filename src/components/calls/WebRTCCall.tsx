@@ -283,6 +283,13 @@ export function WebRTCCall({
       <CardContent className="space-y-3">
         <audio ref={remoteAudioRef} autoPlay playsInline className="hidden" />
         {status === "active" && <WebRTCMetricsPanel quality={quality} />}
+        <AudioOutputSelector
+          supported={audioOutput.supported}
+          devices={audioOutput.devices}
+          selectedSinkId={audioOutput.selectedSinkId}
+          onChange={audioOutput.setSinkId}
+          disabled={!isSpeakerOn}
+        />
         <div className="flex items-center justify-center gap-3">
           {status === "idle" && (
             <Button
