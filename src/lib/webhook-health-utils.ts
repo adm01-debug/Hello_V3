@@ -103,13 +103,9 @@ export function aggregateHeatmap(rows: WebhookHealthRow[]): {
   totals: { sent: number; failed: number };
 } {
   const map = new Map<string, HeatmapBucket>();
-  let skipped = 0;
   for (const r of rows) {
     const d = new Date(r.created_at);
-    if (Number.isNaN(d.getTime())) {
-      skipped++;
-      continue;
-    }
+    if (Number.isNaN(d.getTime())) continue;
     const day = d.toISOString().slice(0, 10);
     const hour = d.getUTCHours();
     const key = `${day}#${hour}`;
