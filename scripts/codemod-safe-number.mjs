@@ -186,11 +186,14 @@ function ensureImport(src, needInt, needFloat) {
     return src.replace(importRe, `import { ${merged} } from '@/lib/safe-number';`);
   }
   const importLine = `import { ${[...wanted].sort().join(', ')} } from '@/lib/safe-number';\n`;
-  // Insere após o último import do topo do arquivo.
-  const lastImport = [...src.matchAll(/^import[^\n]*\n/gm)].pop();
-  if (lastImport) {
-    const idx = lastImport.index + lastImport[0].length;
-    return src.slice(0, idx) + importLine + src.slice(idx);
+  // Insere após o último import (suporta imports multi-linha terminados em `;`).
+  const importStmtRe = /^import[\s\S]*?;\s*\n/gm;
+  let lastEnd = -1;
+  for (const m of src.matchAll(importStmtRe)) {
+    lastEnd = m.index + m[0].length;
+  }
+  if (lastEnd >= 0) {
+    return src.slice(0, lastEnd) + importLine + src.slice(lastEnd);
   }
   return importLine + src;
 }
