@@ -11,7 +11,22 @@ serve(async (req) => {
 
   const url = new URL(req.url)
   const targetFunction = url.searchParams.get('target') || 'analyze-call'
+  const mode = url.searchParams.get('mode') || 'generic' // 'generic' | 'numeric'
   const endpoint = `${Deno.env.get('SUPABASE_URL')}/functions/v1/${targetFunction}`
+
+  // Payloads numéricos hostis: garantem que Zod `.number().finite()` bloqueia.
+  const hostileNumericSamples: unknown[] = [
+    { amount: NaN },
+    { amount: Infinity },
+    { amount: -Infinity },
+    { amount: "12abc" },
+    { amount: null },
+    { latitude: 999, longitude: -999 },
+    { percent: 100.0001 },
+    { count: 3.14 },
+    { timestamp: -1 },
+    { duration_ms: Number.MAX_SAFE_INTEGER * 2 },
+  ]
 
   try {
     const results = []
@@ -21,9 +36,10 @@ serve(async (req) => {
 
     // Fuzzing loop
     for (let i = 0; i < runs; i++) {
-      // Generate malformed payload
-      const payload = fc.sample(fc.anything(), 1)[0]
-      
+      const payload = mode === 'numeric'
+        ? hostileNumericSamples[i % hostileNumericSamples.length]
+        : fc.sample(fc.anything(), 1)[0]
+
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -44,6 +60,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         target: targetFunction,
+        mode,
         total_runs: runs,
         duration_ms: totalTime,
         failures_caught: results.filter(r => r.passed).length,
