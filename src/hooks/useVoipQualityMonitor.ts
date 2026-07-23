@@ -196,5 +196,10 @@ export function useVoipQualityMonitor(
     };
   }, [pc, collect, persist]);
 
-  return state;
+  const getSamples = useCallback(() => samplesRef.current.slice(), []);
+
+  return { ...state, getSamples };
 }
+
+export type VoipQualityMonitor = VoipQualityState & { getSamples: () => VoipQualitySample[] };
+
