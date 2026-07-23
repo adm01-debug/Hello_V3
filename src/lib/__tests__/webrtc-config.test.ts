@@ -12,10 +12,11 @@ describe("getIceServers", () => {
 
   beforeEach(() => {
     vi.resetModules();
-    env.VITE_TURN_URL = original.VITE_TURN_URL;
-    env.VITE_TURN_USER = original.VITE_TURN_USER;
-    env.VITE_TURN_CRED = original.VITE_TURN_CRED;
+    delete env.VITE_TURN_URL;
+    delete env.VITE_TURN_USER;
+    delete env.VITE_TURN_CRED;
   });
+
 
   it("retorna STUN servers padrão sem TURN quando envs ausentes", async () => {
     env.VITE_TURN_URL = undefined;
