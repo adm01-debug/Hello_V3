@@ -12,6 +12,7 @@ import { AlertTriangle, AlertCircle, Info, Calendar as CalendarIcon, Search, Fil
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useAlertHistory } from '@/hooks/useAlertHistory';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 const SEVERITY_COLORS = {
   critical: 'hsl(var(--destructive))',
@@ -114,7 +115,7 @@ const AlertHistory = () => {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1"><span className="font-medium truncate">{alert.title}</span>{getSeverityBadge(alert.severity)}<Badge variant="outline" className="text-xs">{alert.alert_type}</Badge>{alert.is_read && <CheckCircle className="h-4 w-4 text-success" />}</div>
                       <p className="text-sm text-muted-foreground truncate">{alert.message}</p>
-                      <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground"><Clock className="h-3 w-3" />{format(new Date(alert.created_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</div>
+                      <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground"><Clock className="h-3 w-3" />{safeFormatDatePtBR(alert.created_at, "dd/MM/yyyy 'às' HH:mm")}</div>
                     </div>
                   </div>
                 ))}

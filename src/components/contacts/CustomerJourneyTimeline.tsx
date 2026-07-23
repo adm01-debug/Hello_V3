@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Phone, Mail, MessageSquare, Calendar, type LucideIcon } from 'lucide-react';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface Interaction {
   id: string;
@@ -76,7 +77,7 @@ export function CustomerJourneyTimeline({ contactId, interactions }: CustomerJou
                 )}
               </div>
               <p className="text-xs text-muted-foreground">
-                {format(new Date(interaction.created_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+                {safeFormatDatePtBR(interaction.created_at, "dd/MM/yyyy 'às' HH:mm")}
                 {interaction.agent_name && ` • ${interaction.agent_name}`}
               </p>
               {interaction.summary && (

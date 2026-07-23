@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ShieldCheck, Clock, Sparkles, FileText, RefreshCw, Phone, CheckCircle2, XCircle } from 'lucide-react';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useConsent, type ConsentChannel, type ConsentType } from '@/hooks/useConsent';
@@ -16,6 +16,7 @@ import { useBestTimeToContact } from '@/hooks/useBestTimeToContact';
 import { useCallScoring, type CallScoreResult } from '@/hooks/useCallScoring';
 import { recommendationLabel, recommendationColor } from '@/lib/outbound-scoring';
 import { toast } from 'sonner';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 const DAY_NAMES = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
@@ -152,7 +153,7 @@ function ConsentsTab() {
                         : <Badge variant="destructive" className="gap-1"><XCircle className="h-3 w-3" /> Opt-out</Badge>}
                     </TableCell>
                     <TableCell className="text-xs text-muted-foreground">
-                      {format(new Date(r.created_at), 'dd/MM HH:mm', { locale: ptBR })}
+                      {safeFormatDatePtBR(r.created_at, 'dd/MM HH:mm')}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -206,7 +207,7 @@ function BestTimesTab() {
                   </TableCell>
                   <TableCell>{p.total_attempts}</TableCell>
                   <TableCell className="text-xs text-muted-foreground">
-                    {p.last_attempt_at ? format(new Date(p.last_attempt_at), 'dd/MM HH:mm', { locale: ptBR }) : '—'}
+                    {p.last_attempt_at ? safeFormatDatePtBR(p.last_attempt_at, 'dd/MM HH:mm') : '—'}
                   </TableCell>
                 </TableRow>
               ))}
@@ -300,7 +301,7 @@ function AuditTab() {
                 <div className="flex-1">
                   <p className="font-medium">{r.granted ? 'Opt-in' : 'Opt-out'} • {r.consent_type} • {r.channel}</p>
                   <p className="text-xs text-muted-foreground">
-                    {r.phone ?? r.contact_id?.slice(0, 8)} • por {r.recorded_by ?? 'sistema'} • {format(new Date(r.created_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+                    {r.phone ?? r.contact_id?.slice(0, 8)} • por {r.recorded_by ?? 'sistema'} • {safeFormatDatePtBR(r.created_at, "dd/MM/yyyy 'às' HH:mm")}
                   </p>
                   {r.notes && <p className="text-xs mt-1">{r.notes}</p>}
                 </div>

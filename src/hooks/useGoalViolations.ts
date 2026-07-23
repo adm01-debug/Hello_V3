@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { format, subDays, startOfDay, endOfDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { logger } from '@/lib/logger';
+import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
 
 export interface GoalViolation {
   id: string;
@@ -66,11 +67,11 @@ export function useGoalViolations() {
     const dailyMap = new Map<string, { warning: number; critical: number }>();
     for (let i = 0; i <= days; i++) dailyMap.set(format(subDays(new Date(), i), 'yyyy-MM-dd'), { warning: 0, critical: 0 });
     data.forEach(v => {
-      const entry = dailyMap.get(format(new Date(v.created_at), 'yyyy-MM-dd'));
+      const entry = dailyMap.get(safeFormatDate(v.created_at, 'yyyy-MM-dd'));
       if (entry) { if (v.threshold_type === 'warning') entry.warning++; else entry.critical++; }
     });
     setDailyTrends(Array.from(dailyMap.entries()).map(([date, counts]) => ({
-      date: format(new Date(date), 'dd/MM', { locale: ptBR }), warning: counts.warning, critical: counts.critical, total: counts.warning + counts.critical,
+      date: safeFormatDatePtBR(date, 'dd/MM'), warning: counts.warning, critical: counts.critical, total: counts.warning + counts.critical,
     })).reverse());
 
     const metricMap = new Map<string, number>();

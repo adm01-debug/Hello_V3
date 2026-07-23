@@ -30,6 +30,7 @@ import {
 } from '@/components/ui/select';
 import { useScheduledCallbacks, CreateCallbackInput } from '@/hooks/useScheduledCallbacks';
 import { format, addHours, addDays, setHours, setMinutes } from 'date-fns';
+import { safeFormatDate } from "@/lib/safe-date";
 
 interface ScheduleCallbackDialogProps {
   trigger?: React.ReactNode;
@@ -53,7 +54,7 @@ export function ScheduleCallbackDialog({
   const [formData, setFormData] = useState({
     caller_name: defaultName,
     caller_phone: defaultPhone,
-    scheduled_date: format(new Date(), 'yyyy-MM-dd'),
+    scheduled_date: safeFormatDate(, 'yyyy-MM-dd'),
     scheduled_time: format(addHours(new Date(), 1), 'HH:mm'),
     notes: '',
     priority: 'normal',
@@ -90,7 +91,7 @@ export function ScheduleCallbackDialog({
       setFormData({
         caller_name: '',
         caller_phone: '',
-        scheduled_date: format(new Date(), 'yyyy-MM-dd'),
+        scheduled_date: safeFormatDate(, 'yyyy-MM-dd'),
         scheduled_time: format(addHours(new Date(), 1), 'HH:mm'),
         notes: '',
         priority: 'normal',
@@ -205,7 +206,7 @@ export function ScheduleCallbackDialog({
                 type="date"
                 value={formData.scheduled_date}
                 onChange={(e) => setFormData(prev => ({ ...prev, scheduled_date: e.target.value }))}
-                min={format(new Date(), 'yyyy-MM-dd')}
+                min={safeFormatDate(, 'yyyy-MM-dd')}
                 required
               />
             </div>

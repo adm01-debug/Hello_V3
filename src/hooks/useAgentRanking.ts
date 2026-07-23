@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { format, subDays, eachDayOfInterval } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { logger } from '@/lib/logger';
+import { safeFormatDate } from "@/lib/safe-date";
 
 export interface AgentStats {
   name: string;
@@ -233,7 +234,7 @@ export function useAgentRanking() {
     sessions?.forEach((session) => {
       if (!session.agent_name) return;
       agentNames.add(session.agent_name);
-      const dayKey = format(new Date(session.created_at), 'yyyy-MM-dd');
+      const dayKey = safeFormatDate(session.created_at, 'yyyy-MM-dd');
       const performance = sessionPerformanceMap.get(session.id);
       if (performance) {
         if (!agentDailyPerformance.has(dayKey)) agentDailyPerformance.set(dayKey, new Map());

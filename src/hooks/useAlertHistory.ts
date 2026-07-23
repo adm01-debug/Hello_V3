@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { format, subDays, startOfDay, endOfDay } from 'date-fns';
+import { subDays, startOfDay, endOfDay } from 'date-fns';
 import { logger } from '@/lib/logger';
+import { safeFormatDate } from "@/lib/safe-date";
 
 export interface AlertItem {
   id: string;
@@ -63,7 +64,7 @@ export function useAlertHistory() {
 
       const dailyMap = new Map<string, { critical: number; warning: number; info: number }>();
       alertsData.forEach(alert => {
-        const day = format(new Date(alert.created_at), 'dd/MM');
+        const day = safeFormatDate(alert.created_at, 'dd/MM');
         const current = dailyMap.get(day) || { critical: 0, warning: 0, info: 0 };
         current[alert.severity as keyof typeof current]++;
         dailyMap.set(day, current);

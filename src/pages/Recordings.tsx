@@ -13,6 +13,7 @@ import { TranscriptionDialog } from '@/components/recordings/TranscriptionDialog
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
 import { useEffect } from 'react';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 const formatFileSize = (bytes: number | null) => {
   if (!bytes) return '-';
@@ -66,7 +67,7 @@ export default function Recordings() {
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <span>{formatDuration(currentTime)}</span>
-                  <span className="text-foreground font-medium">{format(new Date(currentRecording.recorded_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</span>
+                  <span className="text-foreground font-medium">{safeFormatDatePtBR(currentRecording.recorded_at, "dd/MM/yyyy 'às' HH:mm")}</span>
                   <span>{formatDuration(duration)}</span>
                 </div>
                 <Slider value={[currentTime]} max={duration || 100} step={0.1} onValueChange={handleSeek} className="cursor-pointer" />
@@ -108,7 +109,7 @@ export default function Recordings() {
               <TableBody>
                 {recordings.map((recording) => (
                   <TableRow key={recording.id} className={playingId === recording.id ? 'bg-muted/50' : ''}>
-                    <TableCell><div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-muted-foreground" />{format(new Date(recording.recorded_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</div></TableCell>
+                    <TableCell><div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-muted-foreground" />{safeFormatDatePtBR(recording.recorded_at, "dd/MM/yyyy 'às' HH:mm")}</div></TableCell>
                     <TableCell><div className="flex items-center gap-2"><Clock className="h-4 w-4 text-muted-foreground" />{recording.duration_seconds ? formatDuration(recording.duration_seconds) : '-'}</div></TableCell>
                     <TableCell><div className="flex items-center gap-2"><Users className="h-4 w-4 text-muted-foreground" />{recording.participant_count || 1}</div></TableCell>
                     <TableCell>{formatFileSize(recording.file_size_bytes)}</TableCell>

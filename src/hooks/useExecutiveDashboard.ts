@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { subDays, eachDayOfInterval, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { safeFormatDate } from "@/lib/safe-date";
 
 // ─── Types ──────────────────────────────────────────────────────────────
 export interface DashboardMetrics {
@@ -180,14 +181,14 @@ export function useExecutiveDashboardData(period: PeriodType) {
     const days = eachDayOfInterval({ start: subDays(now, 6), end: now });
     setCallsByDay(days.map(day => {
       const dayStr = format(day, 'yyyy-MM-dd');
-      const dayCalls = sessions.filter(s => format(new Date(s.created_at), 'yyyy-MM-dd') === dayStr);
+      const dayCalls = sessions.filter(s => safeFormatDate(s.created_at, 'yyyy-MM-dd') === dayStr);
       return { date: format(day, 'dd/MM', { locale: ptBR }), calls: dayCalls.length, completed: dayCalls.filter(s => s.status === 'completed').length };
     }));
 
     // Satisfaction trend
     setSatisfactionTrend(days.map(day => {
       const dayStr = format(day, 'yyyy-MM-dd');
-      const daySessions = sessions.filter(s => format(new Date(s.created_at), 'yyyy-MM-dd') === dayStr);
+      const daySessions = sessions.filter(s => safeFormatDate(s.created_at, 'yyyy-MM-dd') === dayStr);
       const dayIds = new Set(daySessions.map(s => s.id));
       const ds = summaries?.filter(s => dayIds.has(s.call_session_id) && (s.customer_satisfaction || s.agent_performance_score)) ?? [];
       return {

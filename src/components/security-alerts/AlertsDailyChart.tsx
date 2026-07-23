@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+
 import { ptBR } from "date-fns/locale";
 import {
   Bar,
@@ -10,6 +10,7 @@ import {
   YAxis,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface AlertsDailyChartProps {
   data: Array<{ day: string; label: string; count: number }>;
@@ -57,7 +58,7 @@ export function AlertsDailyChart({ data }: AlertsDailyChartProps) {
                 labelFormatter={(_, payload) => {
                   const d = payload?.[0]?.payload?.day as string | undefined;
                   return d
-                    ? format(new Date(`${d}T00:00:00`), "EEEE, dd 'de' MMMM", { locale: ptBR })
+                    ? safeFormatDatePtBR(`${d}T00:00:00`, "EEEE, dd 'de' MMMM")
                     : "";
                 }}
                 formatter={(v) => [Number(v ?? 0), "Alertas"] as [number, string]}

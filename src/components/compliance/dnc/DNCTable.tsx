@@ -3,9 +3,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Phone, Trash2 } from 'lucide-react';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { getReasonLabel, getReasonVariant } from './constants';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface DNCItem {
   id: string;
@@ -60,7 +61,7 @@ export function DNCTable({ items, isLoading, onRemove }: Props) {
                 <TableCell className="text-muted-foreground">{item.source}</TableCell>
                 <TableCell className="text-muted-foreground">{item.added_by || '-'}</TableCell>
                 <TableCell className="text-muted-foreground">
-                  {format(new Date(item.created_at), 'dd/MM/yyyy', { locale: ptBR })}
+                  {safeFormatDatePtBR(item.created_at, 'dd/MM/yyyy')}
                 </TableCell>
                 <TableCell>
                   <Badge variant={item.is_active ? 'default' : 'secondary'}>

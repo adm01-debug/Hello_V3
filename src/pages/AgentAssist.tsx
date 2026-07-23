@@ -7,12 +7,13 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { EmptyState } from '@/components/ui/empty-state';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { useAgentAssistHistory, type LiveAssistSignal } from '@/hooks/useLiveAssist';
 import { useObjectionLibrary } from '@/hooks/useObjectionLibrary';
 import { calculateAcceptanceRate, countByIntent, INTENT_LABELS } from '@/lib/agent-assist-utils';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export default function AgentAssist() {
   usePageTitle('Agent Assist em Tempo Real');
@@ -89,7 +90,7 @@ export default function AgentAssist() {
                         {s.was_used && <Badge variant="default" className="text-[10px]">usada</Badge>}
                       </div>
                       <span className="text-muted-foreground">
-                        {format(new Date(s.created_at), 'dd/MM HH:mm', { locale: ptBR })}
+                        {safeFormatDatePtBR(s.created_at, 'dd/MM HH:mm')}
                       </span>
                     </div>
                     {s.suggestion && <p className="text-foreground/90">{s.suggestion}</p>}

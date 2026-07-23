@@ -32,11 +32,12 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { format, formatDistanceToNow, isPast, isToday, isTomorrow, differenceInMinutes } from 'date-fns';
+import { formatDistanceToNow, isPast, isToday, isTomorrow, differenceInMinutes } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useScheduledCallbacks, ScheduledCallback } from '@/hooks/useScheduledCallbacks';
 import { ScheduleCallbackDialog } from './ScheduleCallbackDialog';
 import { toast } from 'sonner';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export function ScheduledCallbacksList() {
   const { 
@@ -301,7 +302,7 @@ function CallbackCard({
                 {isOverdue && <AlertTriangle className="h-3 w-3" />}
                 {isSoon && <Bell className="h-3 w-3 animate-pulse" />}
                 <Calendar className="h-3 w-3" />
-                {format(new Date(callback.scheduled_at), "dd/MM 'às' HH:mm", { locale: ptBR })}
+                {safeFormatDatePtBR(callback.scheduled_at, "dd/MM 'às' HH:mm")}
               </span>
               <span className="text-muted-foreground">
                 {formatDistanceToNow(new Date(callback.scheduled_at), { 

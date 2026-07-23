@@ -12,8 +12,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { toast } from 'sonner';
 import { Calendar, Plus, Trash2, Globe, MapPin, RotateCcw } from 'lucide-react';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export function HolidaysManager() {
   const queryClient = useQueryClient();
@@ -138,7 +139,7 @@ export function HolidaysManager() {
                 {holidays.map(h => (
                   <TableRow key={h.id}>
                     <TableCell className="font-medium">{h.name}</TableCell>
-                    <TableCell className="text-sm">{format(new Date(h.date + 'T12:00:00'), 'dd/MM/yyyy', { locale: ptBR })}</TableCell>
+                    <TableCell className="text-sm">{safeFormatDatePtBR(h.date + 'T12:00:00', 'dd/MM/yyyy')}</TableCell>
                     <TableCell>
                       {h.is_national ? (
                         <Badge variant="secondary" className="gap-1"><Globe className="h-3 w-3" />Nacional</Badge>

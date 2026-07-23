@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+
 import { ptBR } from "date-fns/locale";
 import { Link } from "react-router-dom";
 import { Archive, CheckCircle2, ExternalLink } from "lucide-react";
@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+import { safeFormatDatePtBR } from "@/lib/safe-date";
   normalizeSeverity,
   severityBadgeVariant,
   type SecurityNotification,
@@ -57,14 +58,14 @@ export function AlertDetailsDialog({ alert, onOpenChange, onMarkRead, onMarkReso
               <div className="p-3 rounded-md border bg-muted/30">
                 <div className="text-xs uppercase text-muted-foreground">Criado em</div>
                 <div className="font-mono">
-                  {format(new Date(alert.created_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })}
+                  {safeFormatDatePtBR(alert.created_at, "dd/MM/yyyy HH:mm:ss")}
                 </div>
               </div>
               <div className="p-3 rounded-md border bg-muted/30">
                 <div className="text-xs uppercase text-muted-foreground">Lido em</div>
                 <div className="font-mono">
                   {alert.read_at
-                    ? format(new Date(alert.read_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })
+                    ? safeFormatDatePtBR(alert.read_at, "dd/MM/yyyy HH:mm:ss")
                     : "—"}
                 </div>
               </div>

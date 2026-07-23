@@ -1,8 +1,9 @@
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Badge as BadgeType } from '@/hooks/useGamification';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface BadgeCardProps {
   badge: BadgeType;
@@ -40,7 +41,7 @@ export function BadgeCard({ badge, earned, earnedAt, size = 'md' }: BadgeCardPro
         <p className="text-xs mt-1">+{badge.points} pontos</p>
         {earned && earnedAt && (
           <p className="text-xs text-primary mt-1">
-            Conquistado em {format(new Date(earnedAt), "dd/MM/yyyy", { locale: ptBR })}
+            Conquistado em {safeFormatDatePtBR(earnedAt, "dd/MM/yyyy")}
           </p>
         )}
       </TooltipContent>

@@ -10,10 +10,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Shield, Plus, Trash2, Globe, User, AlertTriangle, Clock, Network } from 'lucide-react';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { useIPWhitelist } from '@/hooks/useIPWhitelist';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export default function IPWhitelist() {
   usePageTitle('Whitelist de IPs');
@@ -101,7 +102,7 @@ export default function IPWhitelist() {
                         <TableCell className="font-mono">{ip.ip_address}</TableCell>
                         <TableCell>{ip.description || '-'}</TableCell>
                         <TableCell><Badge variant={ip.is_cidr ? 'default' : 'secondary'}>{ip.is_cidr ? 'CIDR' : 'IP'}</Badge></TableCell>
-                        <TableCell>{format(new Date(ip.created_at), 'dd/MM/yyyy HH:mm', { locale: ptBR })}</TableCell>
+                        <TableCell>{safeFormatDatePtBR(ip.created_at, 'dd/MM/yyyy HH:mm')}</TableCell>
                         <TableCell><Button variant="ghost" size="icon" onClick={() => removeGlobalIP(ip.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell>
                       </TableRow>
                     ))}
@@ -178,7 +179,7 @@ export default function IPWhitelist() {
                   <TableBody>
                     {blockedLogs.map((log) => (
                       <TableRow key={log.id}>
-                        <TableCell><div className="flex items-center gap-2"><Clock className="h-4 w-4 text-muted-foreground" />{format(new Date(log.created_at), 'dd/MM/yyyy HH:mm:ss', { locale: ptBR })}</div></TableCell>
+                        <TableCell><div className="flex items-center gap-2"><Clock className="h-4 w-4 text-muted-foreground" />{safeFormatDatePtBR(log.created_at, 'dd/MM/yyyy HH:mm:ss')}</div></TableCell>
                         <TableCell>{log.user_email || 'Desconhecido'}</TableCell>
                         <TableCell className="font-mono">{log.ip_address}</TableCell>
                         <TableCell><Badge variant="destructive">{log.reason}</Badge></TableCell>

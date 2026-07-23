@@ -5,8 +5,9 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Upload, CheckCircle2, XCircle, Clock, FileText, AlertTriangle } from 'lucide-react';
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 const statusConfig: Record<string, { label: string; icon: React.ElementType; className: string }> = {
   completed: { label: 'Concluída', icon: CheckCircle2, className: 'bg-emerald-500/15 text-emerald-600' },
@@ -81,7 +82,7 @@ export function DNCImportLogs() {
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground">{log.imported_by || '—'}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">
-                        {format(new Date(log.started_at), 'dd/MM/yyyy HH:mm', { locale: ptBR })}
+                        {safeFormatDatePtBR(log.started_at, 'dd/MM/yyyy HH:mm')}
                       </TableCell>
                     </TableRow>
                   );

@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { format } from 'date-fns';
+
 import { useAuditLog } from '@/hooks/useAuditLog';
 import { logger } from '@/lib/logger';
+import { safeFormatDate } from "@/lib/safe-date";
 
 export interface Recording {
   id: string; file_path: string; conference_id: string | null;
@@ -88,7 +89,7 @@ export function useRecordings() {
     const url = await getSignedUrl(recording.file_path);
     if (!url) { toast.error('Erro ao baixar gravação'); return; }
     const link = document.createElement('a'); link.href = url;
-    link.download = `gravacao-${format(new Date(recording.recorded_at), 'yyyy-MM-dd-HH-mm')}.webm`;
+    link.download = `gravacao-${safeFormatDate(recording.recorded_at, 'yyyy-MM-dd-HH-mm')}.webm`;
     document.body.appendChild(link); link.click(); document.body.removeChild(link);
     toast.success('Download iniciado');
   };
@@ -148,7 +149,7 @@ export function useRecordings() {
 
   const filteredRecordings = recordings.filter(r => {
     const s = searchTerm.toLowerCase();
-    return r.conference_id?.toLowerCase().includes(s) || r.call_session_id?.toLowerCase().includes(s) || format(new Date(r.recorded_at), 'dd/MM/yyyy HH:mm').includes(s);
+    return r.conference_id?.toLowerCase().includes(s) || r.call_session_id?.toLowerCase().includes(s) || safeFormatDate(r.recorded_at, 'dd/MM/yyyy HH:mm').includes(s);
   });
 
   const currentRecording = recordings.find(r => r.id === playingId);

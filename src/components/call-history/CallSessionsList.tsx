@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn, formatDuration } from '@/lib/utils';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { SessionWithSummary } from '@/hooks/useCallHistory';
 import { VirtualList } from '@/components/ui/VirtualList';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface Props {
   sessions: SessionWithSummary[];
@@ -71,7 +72,7 @@ export function CallSessionsList({ sessions, isLoading, activeFiltersCount, onSe
       </div>
       <div className="flex items-center gap-6">
         <div className="text-right">
-          <div className="flex items-center gap-1 text-sm"><Calendar className="h-3 w-3 text-muted-foreground" />{format(new Date(session.started_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</div>
+          <div className="flex items-center gap-1 text-sm"><Calendar className="h-3 w-3 text-muted-foreground" />{safeFormatDatePtBR(session.started_at, "dd/MM/yyyy 'às' HH:mm")}</div>
           <div className="flex items-center gap-1 text-sm text-muted-foreground"><Clock className="h-3 w-3" />{formatDuration(session.duration_seconds)}</div>
         </div>
         <ChevronRight className="h-5 w-5 text-muted-foreground" />

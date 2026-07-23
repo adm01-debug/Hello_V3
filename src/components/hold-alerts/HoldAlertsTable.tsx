@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
  import { AlertCircle, AlertTriangle, Bell, CheckCircle, Clock, Info, X } from 'lucide-react';
  import { formatDurationFriendly } from '@/lib/utils';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export interface HoldAlertRow {
   id: string;
@@ -98,9 +99,9 @@ export function HoldAlertsTable({ alerts, isLoading, onMarkAsRead }: Props) {
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        <p>{format(new Date(alert.created_at), 'dd/MM/yyyy', { locale: ptBR })}</p>
+                        <p>{safeFormatDatePtBR(alert.created_at, 'dd/MM/yyyy')}</p>
                         <p className="text-muted-foreground">
-                          {format(new Date(alert.created_at), 'HH:mm:ss', { locale: ptBR })}
+                          {safeFormatDatePtBR(alert.created_at, 'HH:mm:ss')}
                         </p>
                       </div>
                     </TableCell>
