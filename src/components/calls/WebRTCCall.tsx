@@ -224,7 +224,7 @@ export function WebRTCCall({
       setStatus("ringing");
     } catch (err) {
       const error = err as DOMException;
-      logger.error("Falha ao iniciar chamada WebRTC:", err);
+      logger.error("Falha ao iniciar chamada WebRTC:", err, (err as Error)?.message, (err as Error)?.stack);
       if (error.name === "NotAllowedError") {
         toast.error("Permissão de microfone negada");
       } else if (error.name === "NotFoundError") {
