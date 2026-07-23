@@ -160,7 +160,7 @@ describe("WebRTCCall", () => {
   });
 
   it("alterna a track do sender ao clicar em silenciar/ativar microfone", async () => {
-    const { user } = await startCall();
+    await startCall();
 
     // simula ICE conectado para revelar os botões de controle
     lastPc!.iceConnectionState = "connected";
@@ -170,12 +170,10 @@ describe("WebRTCCall", () => {
 
     expect(localTrack.enabled).toBe(true);
 
-    const muteBtn = screen.getByRole("button", { name: /silenciar microfone/i });
-    await user.click(muteBtn);
+    fireEvent.click(screen.getByRole("button", { name: /silenciar microfone/i }));
     expect(localTrack.enabled).toBe(false);
 
-    const unmuteBtn = screen.getByRole("button", { name: /ativar microfone/i });
-    await user.click(unmuteBtn);
+    fireEvent.click(screen.getByRole("button", { name: /ativar microfone/i }));
     expect(localTrack.enabled).toBe(true);
   });
 });
