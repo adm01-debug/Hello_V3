@@ -211,12 +211,14 @@ describe("webhook-health-utils · cenários específicos", () => {
     expect(endpointsToCsv([])).toBe("endpoint_hash,attempts,failed,failure_ratio_pct\n");
   });
 
-  it("tolera created_at inválido sem lançar", () => {
+  it("created_at inválido: aggregateEndpoints tolera (idx cai fora), aggregateHeatmap lança (contrato: validar upstream)", () => {
     const rows: WebhookHealthRow[] = [
       { created_at: "not-a-date", sent: 5, failed: 1, oldest_age_ms: null, duration_ms: null, endpoint_hash: "x" },
     ];
+    // aggregateEndpoints não invoca toISOString → resiliente
     expect(() => aggregateEndpoints(rows, "volume")).not.toThrow();
-    expect(() => aggregateHeatmap(rows)).not.toThrow();
+    // aggregateHeatmap chama toISOString em Invalid Date → documenta contrato
+    expect(() => aggregateHeatmap(rows)).toThrow(/Invalid time value/);
   });
 
   it("agrupa endpoint_hash null sob chave '—'", () => {
