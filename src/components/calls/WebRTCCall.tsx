@@ -33,11 +33,18 @@ export function WebRTCCall({
   const [isSpeakerOn, setIsSpeakerOn] = useState(true);
   const [duration, setDuration] = useState(0);
   const [pc, setPc] = useState<RTCPeerConnection | null>(null);
+  const [reconnect, setReconnect] = useState<{ attempt: number; max: number } | null>(null);
 
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
   const localStreamRef = useRef<MediaStream | null>(null);
   const remoteAudioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reconnectAttemptRef = useRef(0);
+  const disconnectGraceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const MAX_RECONNECT_ATTEMPTS = 5;
+  const DISCONNECT_GRACE_MS = 3000;
 
   const quality = useVoipQualityMonitor(pc, {
     callSessionId: callSessionId ?? null,
@@ -46,11 +53,25 @@ export function WebRTCCall({
     persistOnEnd: true,
   });
 
+  const clearReconnectTimers = useCallback(() => {
+    if (reconnectTimerRef.current) {
+      clearTimeout(reconnectTimerRef.current);
+      reconnectTimerRef.current = null;
+    }
+    if (disconnectGraceRef.current) {
+      clearTimeout(disconnectGraceRef.current);
+      disconnectGraceRef.current = null;
+    }
+  }, []);
+
   const endCall = useCallback(() => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
+    clearReconnectTimers();
+    reconnectAttemptRef.current = 0;
+    setReconnect(null);
 
     // Parar senders antes de fechar
     peerConnectionRef.current?.getSenders().forEach((s) => s.track?.stop());
@@ -71,7 +92,38 @@ export function WebRTCCall({
     onCallEnded?.();
 
     setTimeout(() => setStatus("idle"), 2000);
-  }, [onCallEnded]);
+  }, [onCallEnded, clearReconnectTimers]);
+
+  const scheduleReconnect = useCallback(
+    (reason: string) => {
+      const conn = peerConnectionRef.current;
+      if (!conn) return;
+
+      if (reconnectAttemptRef.current >= MAX_RECONNECT_ATTEMPTS) {
+        logger.error(`Reconexão abortada após ${MAX_RECONNECT_ATTEMPTS} tentativas (${reason})`);
+        toast.error("Não foi possível restabelecer a chamada");
+        endCall();
+        return;
+      }
+
+      const attempt = reconnectAttemptRef.current + 1;
+      reconnectAttemptRef.current = attempt;
+      const delay = Math.min(1000 * 2 ** (attempt - 1), 16000);
+      setReconnect({ attempt, max: MAX_RECONNECT_ATTEMPTS });
+      logger.warn(`Reconexão ${attempt}/${MAX_RECONNECT_ATTEMPTS} em ${delay}ms (${reason})`);
+      toast.warning(`Reconectando (${attempt}/${MAX_RECONNECT_ATTEMPTS})…`);
+
+      reconnectTimerRef.current = setTimeout(() => {
+        try {
+          conn.restartIce();
+        } catch (err) {
+          logger.error("ICE restart falhou:", err);
+          endCall();
+        }
+      }, delay);
+    },
+    [endCall],
+  );
 
   const startCall = useCallback(async () => {
     try {
@@ -102,26 +154,37 @@ export function WebRTCCall({
       };
 
       conn.oniceconnectionstatechange = () => {
-        if (conn.iceConnectionState === "connected") {
+        const state = conn.iceConnectionState;
+        if (state === "connected" || state === "completed") {
+          clearReconnectTimers();
+          reconnectAttemptRef.current = 0;
+          setReconnect(null);
           setStatus("active");
           onCallStarted?.();
           if (!timerRef.current) {
             timerRef.current = setInterval(() => setDuration((d) => d + 1), 1000);
           }
-        } else if (conn.iceConnectionState === "disconnected") {
-          logger.warn("ICE desconectado — aguardando reconexão");
+        } else if (state === "disconnected") {
+          logger.warn("ICE desconectado — grace period antes de reconectar");
+          if (!disconnectGraceRef.current) {
+            disconnectGraceRef.current = setTimeout(() => {
+              disconnectGraceRef.current = null;
+              if (
+                conn.iceConnectionState === "disconnected" ||
+                conn.iceConnectionState === "failed"
+              ) {
+                scheduleReconnect("ice-disconnected");
+              }
+            }, DISCONNECT_GRACE_MS);
+          }
+        } else if (state === "failed") {
+          scheduleReconnect("ice-failed");
         }
       };
 
       conn.onconnectionstatechange = () => {
         if (conn.connectionState === "failed") {
-          logger.warn("Conexão falhou — tentando ICE restart");
-          try {
-            conn.restartIce();
-          } catch (err) {
-            logger.error("ICE restart falhou:", err);
-            endCall();
-          }
+          scheduleReconnect("connection-failed");
         } else if (conn.connectionState === "closed") {
           endCall();
         }
@@ -176,6 +239,8 @@ export function WebRTCCall({
   useEffect(() => {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
+      if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
+      if (disconnectGraceRef.current) clearTimeout(disconnectGraceRef.current);
       peerConnectionRef.current?.getSenders().forEach((s) => s.track?.stop());
       localStreamRef.current?.getTracks().forEach((t) => t.stop());
       peerConnectionRef.current?.close();
@@ -210,6 +275,11 @@ export function WebRTCCall({
           <div className="pt-2">
             <CallQualityIndicator quality={quality} />
           </div>
+        )}
+        {reconnect && (
+          <p className="pt-2 text-xs text-warning" role="status" aria-live="polite">
+            Reconectando… tentativa {reconnect.attempt} de {reconnect.max}
+          </p>
         )}
       </CardHeader>
       <CardContent className="space-y-3">
