@@ -132,19 +132,34 @@ function scanFile(file) {
   const coercionRe =
     /\b(?:Number\s*\.\s*(parseInt|parseFloat)|Number|parseInt|parseFloat)\s*\(/g;
   while ((m = coercionRe.exec(src)) !== null) {
-    // "Number.isFinite(" etc: verificar caractere anterior à "(" — se for member allow, skip.
-    // A regex já casa somente formas com "(" após identificador de coerção;
-    // "Number.isFinite" não bate porque exige (parseInt|parseFloat) ou Number seguido de "(".
-    // Distinguir `Number.isFinite(` do bruto: se antes do casamento houver `Number.` e o membro
-    // for allowlisted, o regex acima não deveria ter casado. Confirmar:
     const before = src.slice(Math.max(0, m.index - 20), m.index);
     if (/Number\s*\.\s*$/.test(before)) {
-      // caso "Number.<algo>(" — verificar se <algo> é allowlisted.
       const memberMatch = /\b(Number)\s*\.\s*(\w+)\s*\($/.exec(
         src.slice(Math.max(0, m.index - 20), m.index + m[0].length),
       );
       if (memberMatch && ALLOW_NUMBER_MEMBERS.has(memberMatch[2])) continue;
     }
+    // Idioma seguro de arredondamento: Number(<expr>.toFixed(<n>)). O argumento
+    // já é um número finito; `.toFixed()` só existe em `number`. Não é coerção
+    // de input externo, então não exigimos parseNumericSafely.
+    const argStart = m.index + m[0].length;
+    let depth = 1;
+    let j = argStart;
+    while (j < src.length && depth > 0) {
+      const ch = src[j];
+      if (ch === "(") depth += 1;
+      else if (ch === ")") depth -= 1;
+      j += 1;
+    }
+    const arg = src.slice(argStart, j - 1);
+    if (/\.toFixed\s*\(/.test(arg) && /^Number\s*\($/.test(m[0].trim())) continue;
+
+    // Supressão explícita: comentário `// safe-numeric-ok` na mesma linha.
+    const lineStart = src.lastIndexOf("\n", m.index) + 1;
+    const lineEnd = src.indexOf("\n", m.index);
+    const lineText = raw.slice(lineStart, lineEnd === -1 ? raw.length : lineEnd);
+    if (/safe-numeric-ok/.test(lineText)) continue;
+
     violations.push({
       rule: "R2",
       line: lineOf(src, m.index),
