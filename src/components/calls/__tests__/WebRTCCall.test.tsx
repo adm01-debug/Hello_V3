@@ -176,4 +176,95 @@ describe("WebRTCCall", () => {
     fireEvent.click(screen.getByRole("button", { name: /ativar microfone/i }));
     expect(localTrack.enabled).toBe(true);
   });
+
+  it("aguarda grace period no 'disconnected' e não reconecta se ICE se recupera", async () => {
+    vi.useFakeTimers();
+    try {
+      render(<WebRTCCall targetNumber="+551199999" />);
+      fireEvent.click(screen.getByRole("button", { name: /ligar/i }));
+      await act(async () => {
+        await Promise.resolve();
+        await Promise.resolve();
+        await Promise.resolve();
+      });
+
+      lastPc!.iceConnectionState = "disconnected";
+      await act(async () => {
+        lastPc!.oniceconnectionstatechange!();
+      });
+      expect(lastPc!.restartIce).not.toHaveBeenCalled();
+
+      lastPc!.iceConnectionState = "connected";
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(3100);
+      });
+      expect(lastPc!.restartIce).not.toHaveBeenCalled();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("faz restartIce com backoff exponencial em ICE 'failed'", async () => {
+    vi.useFakeTimers();
+    try {
+      render(<WebRTCCall targetNumber="+551199999" />);
+      fireEvent.click(screen.getByRole("button", { name: /ligar/i }));
+      await act(async () => {
+        await Promise.resolve();
+        await Promise.resolve();
+        await Promise.resolve();
+      });
+
+      lastPc!.iceConnectionState = "failed";
+      await act(async () => {
+        lastPc!.oniceconnectionstatechange!();
+      });
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(1000);
+      });
+      expect(lastPc!.restartIce).toHaveBeenCalledTimes(1);
+      expect(screen.getByText(/tentativa 1 de 5/i)).toBeInTheDocument();
+
+      await act(async () => {
+        lastPc!.oniceconnectionstatechange!();
+      });
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(2000);
+      });
+      expect(lastPc!.restartIce).toHaveBeenCalledTimes(2);
+      expect(screen.getByText(/tentativa 2 de 5/i)).toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("reseta indicador de reconexão quando ICE retorna a 'connected'", async () => {
+    vi.useFakeTimers();
+    try {
+      render(<WebRTCCall targetNumber="+551199999" />);
+      fireEvent.click(screen.getByRole("button", { name: /ligar/i }));
+      await act(async () => {
+        await Promise.resolve();
+        await Promise.resolve();
+        await Promise.resolve();
+      });
+
+      lastPc!.iceConnectionState = "failed";
+      await act(async () => {
+        lastPc!.oniceconnectionstatechange!();
+      });
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(1000);
+      });
+      expect(lastPc!.restartIce).toHaveBeenCalledTimes(1);
+
+      lastPc!.iceConnectionState = "connected";
+      await act(async () => {
+        lastPc!.oniceconnectionstatechange!();
+      });
+      expect(screen.queryByText(/reconectando/i)).not.toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });
