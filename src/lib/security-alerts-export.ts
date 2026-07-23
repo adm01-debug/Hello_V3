@@ -21,8 +21,6 @@ export interface ExportableAlert {
 function timestamp(): string {
   return format(new Date(), "yyyyMMdd-HHmmss");
 }
-
-function safeFormatDate(input: string | null | undefined, mask: string): string {
   if (!input) return "—";
   const d = new Date(input);
   if (Number.isNaN(d.getTime())) return "—";
