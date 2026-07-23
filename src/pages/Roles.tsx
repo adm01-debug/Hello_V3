@@ -8,6 +8,7 @@ import { useRoles } from './roles/useRoles';
 import { RoleStatsCards } from './roles/RoleStatsCards';
 import { AddRoleDialog } from './roles/AddRoleDialog';
 import { RolesTable } from './roles/RolesTable';
+import { RoleAuditTrail } from './roles/RoleAuditTrail';
 
 export default function Roles() {
   usePageTitle('Roles & Permissões');
