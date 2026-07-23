@@ -38,6 +38,8 @@ export function WebRTCCall({
   const [duration, setDuration] = useState(0);
   const [pc, setPc] = useState<RTCPeerConnection | null>(null);
   const [reconnect, setReconnect] = useState<{ attempt: number; max: number } | null>(null);
+  const [summary, setSummary] = useState<PostCallSummaryData | null>(null);
+  const [summaryOpen, setSummaryOpen] = useState(false);
 
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
   const localStreamRef = useRef<MediaStream | null>(null);
@@ -46,6 +48,7 @@ export function WebRTCCall({
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reconnectAttemptRef = useRef(0);
   const disconnectGraceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const callStartedAtRef = useRef<number | null>(null);
 
   const MAX_RECONNECT_ATTEMPTS = 5;
   const DISCONNECT_GRACE_MS = 3000;
