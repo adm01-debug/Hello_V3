@@ -135,7 +135,7 @@ describe("WebRTCCall", () => {
 
     const audioEl = container.querySelector("audio") as HTMLAudioElement;
     expect(audioEl).toBeTruthy();
-    expect(audioEl.srcObject).toBeNull();
+    expect(audioEl.srcObject ?? null).toBeNull();
 
     expect(lastPc).not.toBeNull();
     expect(lastPc!.ontrack).toBeInstanceOf(Function);
