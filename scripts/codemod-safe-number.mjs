@@ -211,7 +211,7 @@ for (const file of files) {
 if (report.length > 0) {
   console.log(`\n${CHECK_ONLY ? '❌' : '✅'} safe-number codemod: ${totalChanges} ocorrência(s) em ${report.length} arquivo(s)`);
   for (const r of report) {
-    console.log(`  • ${r.file} (${r.changes} substituição${r.changes > 1 ? 'ões' : ''})`);
+    console.log(`  • ${r.file} (${r.changes === 1 ? '1 substituição' : `${r.changes} substituições`})`);
     for (const reason of r.reasons) console.log(`      ↳ ${reason}`);
   }
 } else {
