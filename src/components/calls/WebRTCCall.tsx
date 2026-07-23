@@ -8,8 +8,10 @@ import { logger } from "@/lib/logger";
 import { toast } from "sonner";
 import { getIceServers, RECOMMENDED_AUDIO_CONSTRAINTS } from "@/lib/webrtc-config";
 import { useVoipQualityMonitor } from "@/hooks/useVoipQualityMonitor";
+import { useAudioOutputDevices } from "@/hooks/useAudioOutputDevices";
 import { CallQualityIndicator } from "@/components/calls/CallQualityIndicator";
 import { WebRTCMetricsPanel } from "@/components/calls/WebRTCMetricsPanel";
+import { AudioOutputSelector } from "@/components/calls/AudioOutputSelector";
 
 interface WebRTCCallProps {
   targetNumber?: string;
