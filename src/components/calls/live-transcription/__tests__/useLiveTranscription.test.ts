@@ -40,7 +40,6 @@ function makeStream(): MediaStream {
 const getUserMediaMock = vi.fn();
 
 beforeEach(() => {
-  vi.useFakeTimers();
   vi.clearAllMocks();
   MockMediaRecorder.latest = null;
   MockMediaRecorder.isTypeSupported = vi.fn().mockReturnValue(true);
@@ -60,7 +59,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  vi.useRealTimers();
+  // no-op
 });
 
 describe('useLiveTranscription', () => {
