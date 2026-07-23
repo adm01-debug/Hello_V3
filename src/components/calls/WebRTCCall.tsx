@@ -8,8 +8,10 @@ import { logger } from "@/lib/logger";
 import { toast } from "sonner";
 import { getIceServers, RECOMMENDED_AUDIO_CONSTRAINTS } from "@/lib/webrtc-config";
 import { useVoipQualityMonitor } from "@/hooks/useVoipQualityMonitor";
+import { useAudioOutputDevices } from "@/hooks/useAudioOutputDevices";
 import { CallQualityIndicator } from "@/components/calls/CallQualityIndicator";
 import { WebRTCMetricsPanel } from "@/components/calls/WebRTCMetricsPanel";
+import { AudioOutputSelector } from "@/components/calls/AudioOutputSelector";
 
 interface WebRTCCallProps {
   targetNumber?: string;
@@ -217,24 +219,20 @@ export function WebRTCCall({
     setIsMuted(tracks[0] ? !tracks[0].enabled : false);
   }, []);
 
-  const toggleSpeaker = useCallback(async () => {
+  const audioOutput = useAudioOutputDevices(remoteAudioRef);
+
+  // Sincroniza estado de mute/speaker com o elemento de áudio remoto.
+  useEffect(() => {
     const audio = remoteAudioRef.current;
-    const next = !isSpeakerOn;
-    setIsSpeakerOn(next);
     if (!audio) return;
-    audio.muted = !next;
-    // Se o browser suportar setSinkId, alterna para default/none
-    const audioEl = audio as HTMLAudioElement & {
-      setSinkId?: (id: string) => Promise<void>;
-    };
-    if (typeof audioEl.setSinkId === "function") {
-      try {
-        await audioEl.setSinkId(next ? "default" : "");
-      } catch (err) {
-        logger.warn("setSinkId não suportado ou falhou:", err);
-      }
-    }
+    audio.muted = !isSpeakerOn;
   }, [isSpeakerOn]);
+
+  const toggleSpeaker = useCallback(() => {
+    setIsSpeakerOn((prev) => !prev);
+  }, []);
+
+
 
   useEffect(() => {
     return () => {
@@ -285,6 +283,13 @@ export function WebRTCCall({
       <CardContent className="space-y-3">
         <audio ref={remoteAudioRef} autoPlay playsInline className="hidden" />
         {status === "active" && <WebRTCMetricsPanel quality={quality} />}
+        <AudioOutputSelector
+          supported={audioOutput.supported}
+          devices={audioOutput.devices}
+          selectedSinkId={audioOutput.selectedSinkId}
+          onChange={audioOutput.setSinkId}
+          disabled={!isSpeakerOn}
+        />
         <div className="flex items-center justify-center gap-3">
           {status === "idle" && (
             <Button
