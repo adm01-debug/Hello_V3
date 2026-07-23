@@ -4,8 +4,8 @@ import { toast } from 'sonner';
 
 import { DashboardGoal } from '@/components/dashboard/DashboardGoalsSettings';
 import { logger } from '@/lib/logger';
-import { safeFormatDate } from "@/lib/safe-date";
 
+import { safeFormatDate } from "@/lib/safe-date";
 export interface QueueMetrics {
   activeCalls: number;
   waitingCalls: number;

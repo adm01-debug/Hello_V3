@@ -13,12 +13,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-import { safeFormatDatePtBR } from "@/lib/safe-date";
   normalizeSeverity,
   severityBadgeVariant,
   type SecurityNotification,
 } from "@/components/security-alerts/VirtualTimeline";
 
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 interface AlertDetailsDialogProps {
   alert: SecurityNotification | null;
   onOpenChange: (open: boolean) => void;
