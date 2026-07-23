@@ -104,7 +104,7 @@ export const usePredictiveDialer = () => {
   const startCampaign = useCallback(
     async (campaignId: string) => {
       try {
-        const data = await apiSetCampaignStatus(campaignId, 'active');
+        const data = await apiStartCampaign(campaignId);
         setActiveCampaign(data);
         setIsDialing(true);
         toast.success('Campanha iniciada');
@@ -120,7 +120,7 @@ export const usePredictiveDialer = () => {
   const pauseCampaign = useCallback(
     async (campaignId: string) => {
       try {
-        await apiSetCampaignStatus(campaignId, 'paused');
+        await apiPauseCampaign(campaignId);
         setIsDialing(false);
         setActiveCampaign(null);
         toast.info('Campanha pausada');
