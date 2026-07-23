@@ -154,26 +154,37 @@ export function WebRTCCall({
       };
 
       conn.oniceconnectionstatechange = () => {
-        if (conn.iceConnectionState === "connected") {
+        const state = conn.iceConnectionState;
+        if (state === "connected" || state === "completed") {
+          clearReconnectTimers();
+          reconnectAttemptRef.current = 0;
+          setReconnect(null);
           setStatus("active");
           onCallStarted?.();
           if (!timerRef.current) {
             timerRef.current = setInterval(() => setDuration((d) => d + 1), 1000);
           }
-        } else if (conn.iceConnectionState === "disconnected") {
-          logger.warn("ICE desconectado — aguardando reconexão");
+        } else if (state === "disconnected") {
+          logger.warn("ICE desconectado — grace period antes de reconectar");
+          if (!disconnectGraceRef.current) {
+            disconnectGraceRef.current = setTimeout(() => {
+              disconnectGraceRef.current = null;
+              if (
+                conn.iceConnectionState === "disconnected" ||
+                conn.iceConnectionState === "failed"
+              ) {
+                scheduleReconnect("ice-disconnected");
+              }
+            }, DISCONNECT_GRACE_MS);
+          }
+        } else if (state === "failed") {
+          scheduleReconnect("ice-failed");
         }
       };
 
       conn.onconnectionstatechange = () => {
         if (conn.connectionState === "failed") {
-          logger.warn("Conexão falhou — tentando ICE restart");
-          try {
-            conn.restartIce();
-          } catch (err) {
-            logger.error("ICE restart falhou:", err);
-            endCall();
-          }
+          scheduleReconnect("connection-failed");
         } else if (conn.connectionState === "closed") {
           endCall();
         }
