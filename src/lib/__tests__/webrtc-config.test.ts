@@ -1,24 +1,26 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
+
+type MutableEnv = Record<string, string | undefined>;
 
 describe("getIceServers", () => {
-  const originalEnv = { ...import.meta.env };
+  const env = import.meta.env as unknown as MutableEnv;
+  const original = {
+    VITE_TURN_URL: env.VITE_TURN_URL,
+    VITE_TURN_USER: env.VITE_TURN_USER,
+    VITE_TURN_CRED: env.VITE_TURN_CRED,
+  };
 
   beforeEach(() => {
     vi.resetModules();
-  });
-
-  afterEach(() => {
-    // Restaura env
-    Object.assign(import.meta.env, originalEnv);
+    env.VITE_TURN_URL = original.VITE_TURN_URL;
+    env.VITE_TURN_USER = original.VITE_TURN_USER;
+    env.VITE_TURN_CRED = original.VITE_TURN_CRED;
   });
 
   it("retorna STUN servers padrão sem TURN quando envs ausentes", async () => {
-    // @ts-expect-error - manipulação controlada de env em teste
-    import.meta.env.VITE_TURN_URL = undefined;
-    // @ts-expect-error
-    import.meta.env.VITE_TURN_USER = undefined;
-    // @ts-expect-error
-    import.meta.env.VITE_TURN_CRED = undefined;
+    env.VITE_TURN_URL = undefined;
+    env.VITE_TURN_USER = undefined;
+    env.VITE_TURN_CRED = undefined;
 
     const { getIceServers } = await import("@/lib/webrtc-config");
     const servers = getIceServers();
@@ -30,12 +32,9 @@ describe("getIceServers", () => {
   });
 
   it("inclui TURN quando todas as envs estão presentes", async () => {
-    // @ts-expect-error
-    import.meta.env.VITE_TURN_URL = "turn:turn.example.com:3478";
-    // @ts-expect-error
-    import.meta.env.VITE_TURN_USER = "user";
-    // @ts-expect-error
-    import.meta.env.VITE_TURN_CRED = "cred";
+    env.VITE_TURN_URL = "turn:turn.example.com:3478";
+    env.VITE_TURN_USER = "user";
+    env.VITE_TURN_CRED = "cred";
 
     const { getIceServers } = await import("@/lib/webrtc-config");
     const servers = getIceServers();
@@ -48,12 +47,9 @@ describe("getIceServers", () => {
   });
 
   it("não inclui TURN quando falta uma das credenciais", async () => {
-    // @ts-expect-error
-    import.meta.env.VITE_TURN_URL = "turn:turn.example.com:3478";
-    // @ts-expect-error
-    import.meta.env.VITE_TURN_USER = "user";
-    // @ts-expect-error
-    import.meta.env.VITE_TURN_CRED = undefined;
+    env.VITE_TURN_URL = "turn:turn.example.com:3478";
+    env.VITE_TURN_USER = "user";
+    env.VITE_TURN_CRED = undefined;
 
     const { getIceServers } = await import("@/lib/webrtc-config");
     const servers = getIceServers();
