@@ -70,16 +70,44 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
         });
       }
  
-      const body = await req.json() as BitrixRequest;
-    
-    if (!body.action || typeof body.action !== 'string') {
-      return new Response(
-        JSON.stringify({ error: 'Dados inválidos' }),
-        { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
-      );
-    }
+      const requestId = req.headers.get('x-request-id') ?? crypto.randomUUID();
 
-    const { action, params } = body;
+      let rawBody: unknown;
+      try {
+        rawBody = await req.json();
+      } catch {
+        return new Response(
+          JSON.stringify({ error: 'JSON inválido' }),
+          { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
+        );
+      }
+
+      const envelope = await parseNumericSafely(BitrixRequestSchema, rawBody, {
+        requestId,
+        functionName: 'bitrix-api',
+        field: 'envelope',
+      });
+      if (!envelope.ok) {
+        return new Response(
+          JSON.stringify({ error: 'Dados inválidos', issues: envelope.error.flatten(), request_id: requestId }),
+          { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json', 'x-request-id': requestId } }
+        );
+      }
+
+      const { action, params: rawParams } = envelope.data;
+
+      const paramsResult = await parseNumericSafely(
+        paramsSchemaFor(action),
+        rawParams ?? {},
+        { requestId, functionName: 'bitrix-api', field: `params.${action}` },
+      );
+      if (!paramsResult.ok) {
+        return new Response(
+          JSON.stringify({ error: 'Parâmetros inválidos', issues: paramsResult.error.flatten(), request_id: requestId }),
+          { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json', 'x-request-id': requestId } }
+        );
+      }
+      const params = paramsResult.data as Record<string, unknown> | undefined;
 
     const webhookBaseUrl = buildWebhookBaseUrl(Deno.env.get('BITRIX_WEBHOOK_URL'));
     if (!webhookBaseUrl) {
