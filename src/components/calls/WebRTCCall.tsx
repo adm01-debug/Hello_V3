@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { getIceServers, RECOMMENDED_AUDIO_CONSTRAINTS } from "@/lib/webrtc-config";
 import { useVoipQualityMonitor } from "@/hooks/useVoipQualityMonitor";
 import { CallQualityIndicator } from "@/components/calls/CallQualityIndicator";
+import { WebRTCMetricsPanel } from "@/components/calls/WebRTCMetricsPanel";
 
 interface WebRTCCallProps {
   targetNumber?: string;
@@ -211,8 +212,9 @@ export function WebRTCCall({
           </div>
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-3">
         <audio ref={remoteAudioRef} autoPlay playsInline className="hidden" />
+        {status === "active" && <WebRTCMetricsPanel quality={quality} />}
         <div className="flex items-center justify-center gap-3">
           {status === "idle" && (
             <Button
