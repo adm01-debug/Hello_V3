@@ -36,7 +36,7 @@ export const WaitTimeThresholdCard = ({ settings, updateSetting }: Props) => (
               type="number"
               value={settings.avg_wait_time_warning}
               onChange={(e) =>
-                updateSetting('avg_wait_time_warning', parseInt(e.target.value) || 0)
+                updateSetting('avg_wait_time_warning', safeParseInt(e.target.value, { min: 0 }))
               }
               min={0}
               max={300}
@@ -58,7 +58,7 @@ export const WaitTimeThresholdCard = ({ settings, updateSetting }: Props) => (
               type="number"
               value={settings.avg_wait_time_critical}
               onChange={(e) =>
-                updateSetting('avg_wait_time_critical', parseInt(e.target.value) || 0)
+                updateSetting('avg_wait_time_critical', safeParseInt(e.target.value, { min: 0 }))
               }
               min={0}
               max={600}
