@@ -12,6 +12,8 @@ import { useAudioOutputDevices } from "@/hooks/useAudioOutputDevices";
 import { CallQualityIndicator } from "@/components/calls/CallQualityIndicator";
 import { WebRTCMetricsPanel } from "@/components/calls/WebRTCMetricsPanel";
 import { AudioOutputSelector } from "@/components/calls/AudioOutputSelector";
+import { PostCallSummary, type PostCallSummaryData } from "@/components/calls/PostCallSummary";
+
 
 interface WebRTCCallProps {
   targetNumber?: string;
