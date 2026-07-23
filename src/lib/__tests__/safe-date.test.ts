@@ -6,7 +6,14 @@
  */
 import { describe, expect, it } from "vitest";
 import fc from "fast-check";
-import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
+import {
+  safeFormatDate,
+  safeFormatDatePtBR,
+  safeFormatDistanceToNow,
+  safeToLocaleDateString,
+  safeToLocaleString,
+  safeToLocaleTimeString,
+} from "@/lib/safe-date";
 
 describe("safe-date · entradas hostis nunca lançam", () => {
   it("PBT: qualquer string arbitrária é tolerada", () => {
