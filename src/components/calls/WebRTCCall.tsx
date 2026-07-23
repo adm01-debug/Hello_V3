@@ -33,11 +33,18 @@ export function WebRTCCall({
   const [isSpeakerOn, setIsSpeakerOn] = useState(true);
   const [duration, setDuration] = useState(0);
   const [pc, setPc] = useState<RTCPeerConnection | null>(null);
+  const [reconnect, setReconnect] = useState<{ attempt: number; max: number } | null>(null);
 
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
   const localStreamRef = useRef<MediaStream | null>(null);
   const remoteAudioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reconnectAttemptRef = useRef(0);
+  const disconnectGraceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const MAX_RECONNECT_ATTEMPTS = 5;
+  const DISCONNECT_GRACE_MS = 3000;
 
   const quality = useVoipQualityMonitor(pc, {
     callSessionId: callSessionId ?? null,
