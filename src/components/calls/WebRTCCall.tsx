@@ -239,6 +239,8 @@ export function WebRTCCall({
   useEffect(() => {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
+      if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
+      if (disconnectGraceRef.current) clearTimeout(disconnectGraceRef.current);
       peerConnectionRef.current?.getSenders().forEach((s) => s.track?.stop());
       localStreamRef.current?.getTracks().forEach((t) => t.stop());
       peerConnectionRef.current?.close();
