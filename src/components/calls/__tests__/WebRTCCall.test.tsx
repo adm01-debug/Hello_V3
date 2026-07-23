@@ -101,12 +101,12 @@ beforeEach(() => {
     },
   });
 
-  (globalThis as unknown as { RTCPeerConnection: unknown }).RTCPeerConnection = vi
-    .fn()
-    .mockImplementation(() => {
-      lastPc = createFakePeerConnection();
-      return lastPc;
-    });
+  function PCCtor(this: unknown) {
+    lastPc = createFakePeerConnection();
+    return lastPc;
+  }
+  (globalThis as unknown as { RTCPeerConnection: unknown }).RTCPeerConnection = PCCtor;
+
 
   // Silencia auto-play (jsdom não implementa play)
   vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
