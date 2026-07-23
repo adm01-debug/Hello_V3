@@ -1,6 +1,7 @@
 /**
  * Audio utilities for hold reminder notifications.
  */
+import { safeParseInt } from '@/lib/safe-number';
 
 export function createNotificationSound() {
   const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
@@ -86,7 +87,7 @@ export function loadSavedInterval(): ReminderInterval {
   try {
     const saved = localStorage.getItem(STORAGE_KEY_INTERVAL);
     if (saved) {
-      const parsed = parseInt(saved, 10);
+      const parsed = safeParseInt(saved, { fallback: -1 });
       if (parsed === 15 || parsed === 30 || parsed === 60) return parsed;
     }
   } catch { /* noop */ }
@@ -105,7 +106,7 @@ export function loadSavedAlertThreshold(): HoldAlertThreshold {
   try {
     const saved = localStorage.getItem(STORAGE_KEY_ALERT_THRESHOLD);
     if (saved) {
-      const parsed = parseInt(saved, 10);
+      const parsed = safeParseInt(saved, { fallback: -1 });
       if ([30, 60, 120, 180, 300].includes(parsed)) return parsed as HoldAlertThreshold;
     }
   } catch { /* noop */ }

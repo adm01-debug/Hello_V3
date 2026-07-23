@@ -66,7 +66,7 @@ export function computeAttemptScore({ inDNC, withinHours, pattern, now = new Dat
     : score >= 0.15 ? 'low_priority'
     : 'defer';
 
-  return { score: parseFloat(score.toFixed(3)), recommendation, factors };
+  return { score: safeToFixed(score, 3), recommendation, factors };
 }
 
 export function formatBestWindow(pattern: EngagementPattern | null): string {

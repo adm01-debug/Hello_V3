@@ -4,6 +4,7 @@ import { format, subDays, startOfDay, endOfDay, eachDayOfInterval } from 'date-f
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { safeParseInt } from '@/lib/safe-number';
 
 import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
 export interface BlockedLog {
@@ -77,7 +78,7 @@ export function useBlockedAccessLogs() {
   const fetchLogs = useCallback(async () => {
     setLoading(true);
     try {
-      const startDate = subDays(new Date(), parseInt(dateRange));
+      const startDate = subDays(new Date(), safeParseInt(dateRange, { min: 1, max: 365, fallback: 7 }));
       const { data, error } = await supabase
         .from('blocked_access_logs')
         .select('*')

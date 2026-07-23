@@ -8,6 +8,7 @@ import { ptBR } from 'date-fns/locale';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TrendingUp, BarChart3 } from 'lucide-react';
+import { safeParseInt } from '@/lib/safe-number';
 
 interface AlertData {
   id: string;

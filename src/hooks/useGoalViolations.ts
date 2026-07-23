@@ -5,6 +5,7 @@ import { format, subDays, startOfDay, endOfDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { logger } from '@/lib/logger';
 import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
+import { safeParseInt } from '@/lib/safe-number';
 
 export interface GoalViolation {
   id: string;
@@ -48,7 +49,7 @@ export function useGoalViolations() {
   const fetchViolations = async () => {
     setLoading(true);
     try {
-      const days = parseInt(dateRange);
+      const days = safeParseInt(dateRange, { min: 1, max: 365, fallback: 7 });
       const { data, error } = await supabase
         .from('goal_violations').select('*')
         .gte('created_at', startOfDay(subDays(new Date(), days)).toISOString())

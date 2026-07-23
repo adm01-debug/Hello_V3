@@ -50,8 +50,8 @@ export default function Deals() {
   }, [deals]);
 
   const handleCreate = async () => {
-    const value_cents = Math.round(parseFloat(form.value || "0") * 100);
-    const probability = parseFloat(form.probability || "10");
+    const value_cents = Math.round(safeParseFloat(form.value, { min: 0, fallback: 0 }) * 100);
+    const probability = safeParseFloat(form.probability, { min: 0, max: 100, fallback: 10 });
     const ok = await createDeal({
       name: form.name, value_cents, stage: form.stage,
       probability, status: "open", currency: "BRL",
