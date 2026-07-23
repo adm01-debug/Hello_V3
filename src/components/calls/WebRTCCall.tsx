@@ -53,11 +53,25 @@ export function WebRTCCall({
     persistOnEnd: true,
   });
 
+  const clearReconnectTimers = useCallback(() => {
+    if (reconnectTimerRef.current) {
+      clearTimeout(reconnectTimerRef.current);
+      reconnectTimerRef.current = null;
+    }
+    if (disconnectGraceRef.current) {
+      clearTimeout(disconnectGraceRef.current);
+      disconnectGraceRef.current = null;
+    }
+  }, []);
+
   const endCall = useCallback(() => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
+    clearReconnectTimers();
+    reconnectAttemptRef.current = 0;
+    setReconnect(null);
 
     // Parar senders antes de fechar
     peerConnectionRef.current?.getSenders().forEach((s) => s.track?.stop());
@@ -78,7 +92,38 @@ export function WebRTCCall({
     onCallEnded?.();
 
     setTimeout(() => setStatus("idle"), 2000);
-  }, [onCallEnded]);
+  }, [onCallEnded, clearReconnectTimers]);
+
+  const scheduleReconnect = useCallback(
+    (reason: string) => {
+      const conn = peerConnectionRef.current;
+      if (!conn) return;
+
+      if (reconnectAttemptRef.current >= MAX_RECONNECT_ATTEMPTS) {
+        logger.error(`Reconexão abortada após ${MAX_RECONNECT_ATTEMPTS} tentativas (${reason})`);
+        toast.error("Não foi possível restabelecer a chamada");
+        endCall();
+        return;
+      }
+
+      const attempt = reconnectAttemptRef.current + 1;
+      reconnectAttemptRef.current = attempt;
+      const delay = Math.min(1000 * 2 ** (attempt - 1), 16000);
+      setReconnect({ attempt, max: MAX_RECONNECT_ATTEMPTS });
+      logger.warn(`Reconexão ${attempt}/${MAX_RECONNECT_ATTEMPTS} em ${delay}ms (${reason})`);
+      toast.warning(`Reconectando (${attempt}/${MAX_RECONNECT_ATTEMPTS})…`);
+
+      reconnectTimerRef.current = setTimeout(() => {
+        try {
+          conn.restartIce();
+        } catch (err) {
+          logger.error("ICE restart falhou:", err);
+          endCall();
+        }
+      }, delay);
+    },
+    [endCall],
+  );
 
   const startCall = useCallback(async () => {
     try {
