@@ -20,6 +20,7 @@ import {
 } from "@/lib/security-alerts-webhook-validation";
 import type { WebhookHistoryEntry } from "@/lib/security-alerts-webhook-history";
 import { WebhookHistoryEntryRow } from "@/components/security-alerts/WebhookHistoryEntryRow";
+import { safeParseInt } from '@/lib/safe-number';
 
 
 
@@ -165,7 +166,7 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
             step={1}
             value={webhookMaxAttemptsDraft}
             onChange={(e) => {
-              const n = Number.parseInt(e.target.value, 10);
+              const n = safeParseInt(e.target.value);
               setWebhookMaxAttemptsDraft(Number.isFinite(n) ? n : WEBHOOK_MAX_ATTEMPTS_MIN);
             }}
             aria-invalid={!!webhookValidation.errors.maxAttempts}
@@ -183,7 +184,7 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
                 step={50}
                 value={webhookBaseDelayDraft}
                 onChange={(e) => {
-                  const n = Number.parseInt(e.target.value, 10);
+                  const n = safeParseInt(e.target.value);
                   setWebhookBaseDelayDraft(Number.isFinite(n) ? n : WEBHOOK_BASE_DELAY_MIN);
                 }}
                 aria-invalid={!!webhookValidation.errors.baseDelayMs}
@@ -201,7 +202,7 @@ export function WebhookConfigDialog(props: WebhookConfigDialogProps) {
                 step={100}
                 value={webhookMaxDelayDraft}
                 onChange={(e) => {
-                  const n = Number.parseInt(e.target.value, 10);
+                  const n = safeParseInt(e.target.value);
                   setWebhookMaxDelayDraft(Number.isFinite(n) ? n : WEBHOOK_MAX_DELAY_MIN);
                 }}
                 aria-invalid={!!webhookValidation.errors.maxDelayMs}

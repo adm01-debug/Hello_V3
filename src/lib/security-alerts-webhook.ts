@@ -24,7 +24,7 @@ function loadIntClamped(key: string, def: number, min: number, max: number): num
   try {
     const raw = window.localStorage.getItem(key);
     if (!raw) return def;
-    const n = Number.parseInt(raw, 10);
+    const n = safeParseInt(raw);
     if (!Number.isFinite(n)) return def;
     return Math.max(min, Math.min(max, n));
   } catch {
@@ -158,6 +158,7 @@ function sleep(ms: number, signal?: AbortSignal): Promise<void> {
   });
 }
 
+import { safeParseInt } from '@/lib/safe-number';
 import {
   type WebhookAttemptDetail,
   truncateResponseSnippet,
