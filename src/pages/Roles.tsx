@@ -69,6 +69,8 @@ export default function Roles() {
           <RolesTable roles={filteredRoles} onToggle={toggleRoleStatus} onRemove={removeRole} />
         </CardContent>
       </Card>
+
+      <RoleAuditTrail />
     </div>
   );
 }
