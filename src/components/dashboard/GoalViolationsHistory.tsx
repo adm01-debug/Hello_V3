@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { AlertTriangle, AlertCircle, RefreshCw, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, Legend } from 'recharts';
 import { format } from 'date-fns';
+import { safeFormatDate, safeFormatDatePtBR } from '@/lib/safe-date';
 import { ptBR } from 'date-fns/locale';
 import { useGoalViolations, METRIC_LABELS } from '@/hooks/useGoalViolations';
 
@@ -58,7 +59,7 @@ export const GoalViolationsHistory = () => {
               <div key={v.id} className={`p-4 rounded-lg border ${v.threshold_type === 'critical' ? 'border-destructive/30 bg-destructive/5' : 'border-warning/30 bg-warning/5'}`}>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">{v.threshold_type === 'critical' ? <AlertCircle className="h-5 w-5 text-destructive" /> : <AlertTriangle className="h-5 w-5 text-warning" />}<div><p className="font-medium">{v.goal_name}</p><p className="text-sm text-muted-foreground">{METRIC_LABELS[v.metric_type] || v.metric_type}</p></div></div>
-                  <div className="text-right"><Badge variant={v.threshold_type === 'critical' ? 'destructive' : 'outline'}>{v.threshold_type === 'critical' ? 'Crítico' : 'Aviso'}</Badge><p className="text-xs text-muted-foreground mt-1">{format(new Date(v.created_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</p></div>
+                  <div className="text-right"><Badge variant={v.threshold_type === 'critical' ? 'destructive' : 'outline'}>{v.threshold_type === 'critical' ? 'Crítico' : 'Aviso'}</Badge><p className="text-xs text-muted-foreground mt-1">{safeFormatDatePtBR(v.created_at, "dd/MM/yyyy 'às' HH:mm")}</p></div>
                 </div>
                 <div className="mt-3 flex items-center gap-4 text-sm">
                   <span><span className="text-muted-foreground">Atual:</span> <span className="font-medium">{formatValue(v.actual_value, v.metric_type)}</span></span>

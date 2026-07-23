@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Shield, Search, Filter, RefreshCw, Calendar, User, Activity, Info, Eye } from 'lucide-react';
 import { format } from 'date-fns';
+import { safeFormatDate, safeFormatDatePtBR } from '@/lib/safe-date';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import type { Tables } from '@/integrations/supabase/types';
@@ -253,7 +254,7 @@ export default function AuditLogs() {
                 {filteredLogs.map((log) => (
                   <TableRow key={log.id}>
                     <TableCell className="whitespace-nowrap">
-                      {format(new Date(log.created_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })}
+                      {safeFormatDatePtBR(log.created_at, "dd/MM/yyyy HH:mm:ss")}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline">
