@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { format } from 'date-fns';
+
 import { DashboardGoal } from '@/components/dashboard/DashboardGoalsSettings';
 import { logger } from '@/lib/logger';
 
+import { safeFormatDate } from "@/lib/safe-date";
 export interface QueueMetrics {
   activeCalls: number;
   waitingCalls: number;
@@ -117,7 +118,7 @@ export function useQueueMetrics() {
 
       setRealtimeData(prev => {
         const updated = [...prev, {
-          timestamp: format(new Date(), 'HH:mm:ss'),
+          timestamp: safeFormatDate(new Date(), 'HH:mm:ss'),
           activeCalls: active, waitingCalls: waiting,
           avgWaitTime: Math.round(avgWaitTime), serviceLevel: Math.round(serviceLevel),
         }];

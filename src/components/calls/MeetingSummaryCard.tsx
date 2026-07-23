@@ -13,8 +13,9 @@ import {
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useMeetingSummary, type ActionItem, type ParticipantSentiment } from '@/hooks/useMeetingSummary';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface Props {
   callSessionId: string;
@@ -99,7 +100,7 @@ export function MeetingSummaryCard({ callSessionId, className }: Props) {
           <div className="min-w-0">
             <h3 className="font-semibold text-sm">Resumo IA</h3>
             <p className="text-xs text-muted-foreground truncate">
-              {summary.ai_model} · {format(new Date(summary.generated_at), 'dd/MM HH:mm', { locale: ptBR })}
+              {summary.ai_model} · {safeFormatDatePtBR(summary.generated_at, 'dd/MM HH:mm')}
               {summary.edited && ' · editado'}
               {summary.ai_confidence != null && ` · ${Math.round(summary.ai_confidence * 100)}% confiança`}
             </p>

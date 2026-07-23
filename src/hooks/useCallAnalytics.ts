@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { format, subDays, subWeeks, subMonths, isAfter } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { logger } from '@/lib/logger';
+import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface CallSession {
   id: string;
@@ -108,7 +109,7 @@ export function useCallAnalytics() {
     const last7Days = Array.from({ length: 7 }, (_, i) => format(subDays(new Date(), 6 - i), 'yyyy-MM-dd'));
     last7Days.forEach(day => callsByDay[day] = 0);
     fSessions.forEach(s => {
-      const day = format(new Date(s.started_at), 'yyyy-MM-dd');
+      const day = safeFormatDate(s.started_at, 'yyyy-MM-dd');
       if (callsByDay[day] !== undefined) callsByDay[day]++;
     });
 
@@ -116,7 +117,7 @@ export function useCallAnalytics() {
       totalCalls, avgDuration, avgSatisfaction, avgPerformance,
       sentimentCounts, topTopics,
       callsByDay: last7Days.map(day => ({
-        date: format(new Date(day), 'dd/MM', { locale: ptBR }),
+        date: safeFormatDatePtBR(day, 'dd/MM'),
         calls: callsByDay[day],
       })),
       summariesCount: fSummaries.length,

@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { format } from "date-fns";
+
 import { ptBR } from "date-fns/locale";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CheckCircle2, ExternalLink, RefreshCw } from "lucide-react";
+import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
 
 export type SecurityNotification = {
   id: string;
@@ -135,7 +136,7 @@ export function VirtualTimeline({
             >
               {row.kind === "day" && (
                 <div className="text-xs uppercase tracking-wide text-muted-foreground font-medium pt-2">
-                  {format(new Date(`${row.day}T00:00:00`), "EEEE, dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
+                  {safeFormatDatePtBR(`${row.day}T00:00:00`, "EEEE, dd 'de' MMMM 'de' yyyy")}
                 </div>
               )}
               {row.kind === "alert" && (
@@ -222,7 +223,7 @@ function AlertRow({ alert: n, onSelect, onMarkRead }: AlertRowProps) {
             </Badge>
           )}
           <span className="text-xs text-muted-foreground">
-            {format(new Date(n.created_at), "HH:mm:ss")}
+            {safeFormatDate(n.created_at, "HH:mm:ss")}
           </span>
         </div>
         <div className="font-medium mt-1">{n.title}</div>

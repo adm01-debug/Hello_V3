@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
  import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
@@ -22,6 +22,7 @@ import { useTalkRatio } from '@/hooks/useTalkRatio';
 import { useKeyMoments } from '@/hooks/useKeyMoments';
 import { useLiveSentiment } from '@/hooks/useLiveSentiment';
 import { MeetingSummaryCard } from '@/components/calls/MeetingSummaryCard';
+import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
 
 const log = logger.create('CallDetailDialog');
 
@@ -122,7 +123,7 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2"><Phone className="h-5 w-5" /> Detalhes da Chamada</DialogTitle>
           <DialogDescription>
-            {selectedSession && <span>{selectedSession.caller_name} • {format(new Date(selectedSession.started_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</span>}
+            {selectedSession && <span>{selectedSession.caller_name} • {safeFormatDatePtBR(selectedSession.started_at, "dd/MM/yyyy 'às' HH:mm")}</span>}
           </DialogDescription>
         </DialogHeader>
 
@@ -206,7 +207,7 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
                                >
                                  <div className="flex items-center gap-2 mb-1">
                                    <span className={cn('text-xs font-medium', t.speaker === 'agent' ? 'text-primary' : 'text-warning')}>{t.speaker === 'agent' ? 'Agente' : 'Cliente'}</span>
-                                   <span className="text-xs text-muted-foreground">{format(new Date(t.created_at), 'HH:mm:ss')}</span>
+                                   <span className="text-xs text-muted-foreground">{safeFormatDate(t.created_at, 'HH:mm:ss')}</span>
                                  </div>
                                  <p className="text-sm">{t.text}</p>
                                </button>
@@ -238,7 +239,7 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
                             <Badge variant="secondary">{a.emotion}</Badge>
                             <Badge variant={a.urgency === 'high' ? 'destructive' : a.urgency === 'medium' ? 'default' : 'secondary'}>{a.urgency}</Badge>
                           </div>
-                          <span className="text-xs text-muted-foreground">{format(new Date(a.created_at), 'HH:mm:ss')}</span>
+                          <span className="text-xs text-muted-foreground">{safeFormatDate(a.created_at, 'HH:mm:ss')}</span>
                         </div>
                         {a.message_analyzed && <p className="text-sm text-muted-foreground italic">"{a.message_analyzed}"</p>}
                         {a.suggestion && <div className="rounded-lg bg-primary/5 border border-primary/20 p-3"><p className="text-xs font-medium text-primary mb-1">Sugestão</p><p className="text-sm">{a.suggestion}</p></div>}

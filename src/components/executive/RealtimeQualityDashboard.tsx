@@ -4,15 +4,16 @@ import { Progress } from '@/components/ui/progress';
 import { useQualityMetrics, useTrunkUsageMetrics } from '@/hooks/useQualityMetrics';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { Activity, ShieldAlert, Zap, Wifi } from 'lucide-react';
-import { format } from 'date-fns';
+
 import { SecurityAuditCard } from './SecurityAuditCard';
+import { safeFormatDate } from "@/lib/safe-date";
 
 export function RealtimeQualityDashboard() {
   const { data: quality = [], isLoading: loadingQuality } = useQualityMetrics();
   const { data: usage = [], isLoading: loadingUsage } = useTrunkUsageMetrics();
 
   const chartData = [...quality].reverse().map(m => ({
-    time: format(new Date(m.created_at), 'HH:mm:ss'),
+    time: safeFormatDate(m.created_at, 'HH:mm:ss'),
     mos: Number(m.mos_avg),
     jitter: Number(m.jitter_avg_ms),
     loss: Number(m.packet_loss_pct),

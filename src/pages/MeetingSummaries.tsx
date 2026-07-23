@@ -11,11 +11,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { useMeetingSummariesList, type MeetingSummary } from '@/hooks/useMeetingSummary';
 import { MeetingSummaryCard } from '@/components/calls/MeetingSummaryCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 type MeetingSummaryListItem = MeetingSummary & {
   call_sessions?: {
@@ -141,7 +142,7 @@ export default function MeetingSummaries() {
                       </p>
                       <div className="flex items-center justify-between text-[10px] text-muted-foreground">
                         <span>{s.call_sessions?.agent_name || '—'}</span>
-                        <span>{format(new Date(s.generated_at), 'dd/MM HH:mm', { locale: ptBR })}</span>
+                        <span>{safeFormatDatePtBR(s.generated_at, 'dd/MM HH:mm')}</span>
                       </div>
                       <div className="flex flex-wrap gap-1 mt-1.5">
                         {s.action_items?.length > 0 && (

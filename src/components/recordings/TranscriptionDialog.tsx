@@ -7,9 +7,10 @@ import { Badge } from '@/components/ui/badge';
  import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Progress } from '@/components/ui/progress';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
  import { TranscriptionSegment, SentimentAnalysis, Recording } from '@/hooks/useRecordings';
  import { useState, useMemo, useEffect } from 'react';
 
@@ -77,7 +78,7 @@ interface Props {
           {transcription.recording && (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-1"><Calendar className="h-4 w-4" />{format(new Date(transcription.recording.recorded_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</div>
+                <div className="flex items-center gap-1"><Calendar className="h-4 w-4" />{safeFormatDatePtBR(transcription.recording.recorded_at, "dd/MM/yyyy 'às' HH:mm")}</div>
                 {transcription.recording.duration_seconds && <div className="flex items-center gap-1"><Clock className="h-4 w-4" />{formatDuration(transcription.recording.duration_seconds)}</div>}
               </div>
               {!transcription.sentiment && (

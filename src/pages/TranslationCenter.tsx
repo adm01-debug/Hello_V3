@@ -9,8 +9,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { langFlag, langLabel, SUPPORTED_LANGS } from '@/lib/language-detection';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface TranslationRow {
   id: string;
@@ -104,7 +105,7 @@ export default function TranslationCenter() {
                           <Badge variant="outline">{r.speaker === 'agent' ? 'Agente' : 'Cliente'}</Badge>
                           <span>{langFlag(r.source_lang)} → {langFlag(r.target_lang)}</span>
                           {r.latency_ms && <span>· {r.latency_ms}ms</span>}
-                          <span className="ml-auto">{format(new Date(r.created_at), 'dd/MM HH:mm', { locale: ptBR })}</span>
+                          <span className="ml-auto">{safeFormatDatePtBR(r.created_at, 'dd/MM HH:mm')}</span>
                         </div>
                         <p className="italic text-muted-foreground text-xs">{r.original_text}</p>
                         <p className="font-medium">{r.translated_text}</p>

@@ -5,8 +5,9 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { FileText, CheckCircle2, XCircle, Phone, Shield, Clock } from 'lucide-react';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export function ConsentHistoryViewer() {
   const { data: consents = [], isLoading } = useQuery({
@@ -63,18 +64,18 @@ export function ConsentHistoryViewer() {
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">{c.consent_method}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">
-                      {format(new Date(c.recorded_at), 'dd/MM/yyyy HH:mm', { locale: ptBR })}
+                      {safeFormatDatePtBR(c.recorded_at, 'dd/MM/yyyy HH:mm')}
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">{c.recorded_by || '—'}</TableCell>
                     <TableCell>
                       {c.revoked_at ? (
                         <Badge variant="destructive" className="text-[10px]">
-                          Revogado {format(new Date(c.revoked_at), 'dd/MM/yy', { locale: ptBR })}
+                          Revogado {safeFormatDatePtBR(c.revoked_at, 'dd/MM/yy')}
                         </Badge>
                       ) : c.expires_at ? (
                         <Badge variant="secondary" className="text-[10px] gap-1">
                           <Clock className="h-3 w-3" />
-                          Expira {format(new Date(c.expires_at), 'dd/MM/yy', { locale: ptBR })}
+                          Expira {safeFormatDatePtBR(c.expires_at, 'dd/MM/yy')}
                         </Badge>
                       ) : '—'}
                     </TableCell>

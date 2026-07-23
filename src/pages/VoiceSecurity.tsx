@@ -6,10 +6,11 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { useVoicePrints, useFraudSignals, useRedactCall, type VerifyResult } from '@/hooks/useVoiceBiometrics';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 const SEVERITY_COLOR: Record<string, string> = {
   low: 'bg-success/10 text-success border-success/30',
@@ -118,11 +119,11 @@ export default function VoiceSecurity() {
                       <p className="text-xs text-muted-foreground">
                         {vp.sample_count} amostra{vp.sample_count === 1 ? '' : 's'} · baseline{' '}
                         {(Number(vp.confidence_baseline) * 100).toFixed(0)}% · cadastrada em{' '}
-                        {format(new Date(vp.enrolled_at), 'dd/MM/yyyy HH:mm', { locale: ptBR })}
+                        {safeFormatDatePtBR(vp.enrolled_at, 'dd/MM/yyyy HH:mm')}
                       </p>
                       {vp.last_verified_at && (
                         <p className="text-xs text-muted-foreground">
-                          Última verificação: {format(new Date(vp.last_verified_at), 'dd/MM HH:mm', { locale: ptBR })}
+                          Última verificação: {safeFormatDatePtBR(vp.last_verified_at, 'dd/MM HH:mm')}
                         </p>
                       )}
                     </div>
@@ -166,7 +167,7 @@ export default function VoiceSecurity() {
                     </div>
                     {s.description && <p className="text-xs">{s.description}</p>}
                     <p className="text-[10px] text-muted-foreground">
-                      {format(new Date(s.created_at), "dd/MM/yyyy HH:mm", { locale: ptBR })}
+                      {safeFormatDatePtBR(s.created_at, "dd/MM/yyyy HH:mm")}
                       {s.agent_name && ` · agente ${s.agent_name}`}
                     </p>
                   </div>

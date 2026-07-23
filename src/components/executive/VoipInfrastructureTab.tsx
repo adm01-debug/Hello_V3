@@ -3,8 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CheckCircle, XCircle, AlertTriangle, RefreshCw, Database, Loader2 } from 'lucide-react';
-import { format } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export function VoipInfrastructureTab() {
   const { data: trunks = [], isLoading, refetch } = useVoipTrunks();
@@ -130,7 +131,7 @@ export function VoipInfrastructureTab() {
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground">
                     {trunk.last_health_checked_at 
-                      ? format(new Date(trunk.last_health_checked_at), "HH:mm:ss 'em' dd/MM", { locale: ptBR })
+                      ? safeFormatDatePtBR(trunk.last_health_checked_at, "HH:mm:ss 'em' dd/MM")
                       : 'Nunca'}
                   </TableCell>
                 </TableRow>

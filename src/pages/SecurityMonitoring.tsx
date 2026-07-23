@@ -10,10 +10,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
 import { Shield, ShieldAlert, Activity, Eye, Download, Users, FileText, CheckCircle2, AlertTriangle, XCircle, RefreshCw, Bell, Clock, LogIn } from "lucide-react";
-import { format, formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useSecurityMonitoringData } from '@/hooks/useSecurityMonitoringData';
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 const SecurityMonitoring = () => {
   usePageTitle('Monitoramento de Segurança');
@@ -125,7 +126,7 @@ const SecurityMonitoring = () => {
                             <div className="flex items-center gap-2"><h4 className="font-medium">{alert.title}</h4><Badge className={getSeverityColor(alert.severity)}>{alert.severity}</Badge></div>
                             <p className="text-sm text-muted-foreground mt-1">{alert.description}</p>
                             {alert.source_user_email && <p className="text-sm mt-2"><span className="text-muted-foreground">Usuário: </span><span className="font-mono">{alert.source_user_email}</span></p>}
-                            <p className="text-xs text-muted-foreground mt-2">{format(new Date(alert.created_at), "dd/MM/yyyy 'às' HH:mm:ss", { locale: ptBR })}</p>
+                            <p className="text-xs text-muted-foreground mt-2">{safeFormatDatePtBR(alert.created_at, "dd/MM/yyyy 'às' HH:mm:ss")}</p>
                             {alert.is_resolved && alert.resolved_by && <p className="text-xs text-green-500 mt-1">Resolvido por {alert.resolved_by}</p>}
                           </div>
                         </div>
@@ -186,7 +187,7 @@ function LoginAttemptsPanel() {
                     <TableCell>{a.success ? <Badge className="bg-emerald-500/15 text-emerald-600 gap-1"><CheckCircle2 className="h-3 w-3" />Sucesso</Badge> : <Badge variant="destructive" className="gap-1"><XCircle className="h-3 w-3" />Falha</Badge>}</TableCell>
                     <TableCell className="font-mono text-xs text-muted-foreground">{a.ip_address || '—'}</TableCell>
                     <TableCell className="text-xs text-muted-foreground max-w-[200px] truncate">{a.user_agent || '—'}</TableCell>
-                    <TableCell className="text-sm text-muted-foreground">{format(new Date(a.created_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })}</TableCell>
+                    <TableCell className="text-sm text-muted-foreground">{safeFormatDatePtBR(a.created_at, "dd/MM/yyyy HH:mm:ss")}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -9,6 +9,7 @@ import {
   type Severity,
 } from "@/components/security-alerts/VirtualTimeline";
 
+import { safeFormatDate } from "@/lib/safe-date";
 const ALL_SOURCES = "__all__";
 const PAGE_SIZE = 50;
 const severityRank: Record<Severity, number> = { critical: 0, warning: 1, info: 2 };
@@ -137,7 +138,7 @@ export function useSecurityAlertNotifications({
 
   const grouped = useMemo(() => {
     const g = allData.reduce<Record<string, SecurityNotification[]>>((acc, n) => {
-      const day = format(new Date(n.created_at), "yyyy-MM-dd");
+      const day = safeFormatDate(n.created_at, "yyyy-MM-dd");
       (acc[day] ??= []).push(n);
       return acc;
     }, {});
@@ -157,7 +158,7 @@ export function useSecurityAlertNotifications({
   const chartData = useMemo(() => {
     const counts = new Map<string, number>();
     for (const n of allData) {
-      const day = format(new Date(n.created_at), "yyyy-MM-dd");
+      const day = safeFormatDate(n.created_at, "yyyy-MM-dd");
       counts.set(day, (counts.get(day) ?? 0) + 1);
     }
     const today = startOfDay(new Date());
