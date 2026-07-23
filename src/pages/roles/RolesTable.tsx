@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ROLE_LABELS, type UserRoleRow } from './types';
 
+import { safeToLocaleDateString } from "@/lib/safe-date";
 interface Props {
   roles: UserRoleRow[];
   onToggle: (id: string, current: boolean) => void;
@@ -57,9 +58,9 @@ export function RolesTable({ roles, onToggle, onRemove }: Props) {
                     {role.is_active ? 'Ativa' : 'Inativa'}
                   </Badge>
                 </TableCell>
-                <TableCell>{new Date(role.granted_at ?? 0).toLocaleDateString('pt-BR')}</TableCell>
+                <TableCell>{safeToLocaleDateString(role.granted_at ?? 0, 'pt-BR')}</TableCell>
                 <TableCell>
-                  {role.expires_at ? new Date(role.expires_at).toLocaleDateString('pt-BR') : 'Permanente'}
+                  {role.expires_at ? safeToLocaleDateString(role.expires_at, 'pt-BR') : 'Permanente'}
                 </TableCell>
                 <TableCell className="text-right">
                   <Button variant="ghost" size="icon" onClick={() => onRemove(role.id)}>

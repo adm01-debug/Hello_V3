@@ -25,6 +25,7 @@ import { useAgentStatus } from '@/hooks/useAgentStatus';
 import { useAuditLog } from '@/hooks/useAuditLog';
 import { cn } from '@/lib/utils';
 
+import { safeToLocaleDateString } from "@/lib/safe-date";
 const categoryConfig: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
   communication: { label: 'Comunicação', icon: <MessageSquare className="h-4 w-4" />, color: 'bg-info' },
   efficiency: { label: 'Eficiência', icon: <Clock className="h-4 w-4" />, color: 'bg-success' },
@@ -278,7 +279,7 @@ export function CoachingPanel() {
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground truncate">
-                        {category.label} • {new Date(rec.created_at).toLocaleDateString('pt-BR')}
+                        {category.label} • {safeToLocaleDateString(rec.created_at, 'pt-BR')}
                       </p>
                     </div>
                   </div>

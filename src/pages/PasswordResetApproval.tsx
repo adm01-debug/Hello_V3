@@ -13,6 +13,7 @@ import { KeyRound, Check, X, Clock, AlertTriangle, Shield } from 'lucide-react';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 interface ResetRequest {
   id: string;
   user_id: string;
@@ -172,10 +173,10 @@ export default function PasswordResetApproval() {
                   <TableRow key={request.id}>
                     <TableCell className="font-medium">{request.user_email}</TableCell>
                     <TableCell className="text-muted-foreground">
-                      {new Date(request.requested_at).toLocaleString('pt-BR')}
+                      {safeToLocaleString(request.requested_at, 'pt-BR')}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {new Date(request.expires_at).toLocaleString('pt-BR')}
+                      {safeToLocaleString(request.expires_at, 'pt-BR')}
                     </TableCell>
                     <TableCell className="font-mono text-sm">{request.ip_address || '-'}</TableCell>
                     <TableCell>{getStatusBadge(request.status)}</TableCell>
@@ -236,11 +237,11 @@ export default function PasswordResetApproval() {
                   <TableRow key={request.id}>
                     <TableCell className="font-medium">{request.user_email}</TableCell>
                     <TableCell className="text-muted-foreground">
-                      {new Date(request.requested_at).toLocaleString('pt-BR')}
+                      {safeToLocaleString(request.requested_at, 'pt-BR')}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
                       {request.reviewed_at 
-                        ? new Date(request.reviewed_at).toLocaleString('pt-BR')
+                        ? safeToLocaleString(request.reviewed_at, 'pt-BR')
                         : '-'}
                     </TableCell>
                     <TableCell>{request.reviewer_email || '-'}</TableCell>

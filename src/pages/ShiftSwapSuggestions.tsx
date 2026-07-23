@@ -12,9 +12,10 @@ import {
   useGenerateSwapSuggestions,
   useUpdateSwapSuggestion,
 } from '@/hooks/useShiftSwapSuggestions';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 export default function ShiftSwapSuggestions() {
   usePageTitle('Sugestões IA de Turnos');
   const { data: suggestions = [], isLoading } = useShiftSwapSuggestions();
@@ -65,7 +66,7 @@ export default function ShiftSwapSuggestions() {
                         <div className="flex items-center gap-2 mb-1">
                           <Badge variant="outline" className="border-primary/40">Score +{s.score}</Badge>
                           <span className="text-xs text-muted-foreground">
-                            {formatDistanceToNow(new Date(s.created_at), { locale: ptBR, addSuffix: true })}
+                            {safeFormatDistanceToNow(s.created_at, { locale: ptBR, addSuffix: true })}
                           </span>
                         </div>
                         <p className="text-sm">{s.reason}</p>
@@ -103,7 +104,7 @@ export default function ShiftSwapSuggestions() {
                       <span className="text-sm truncate">{s.reason}</span>
                     </div>
                     <span className="text-xs text-muted-foreground shrink-0">
-                      {s.approved_at ? formatDistanceToNow(new Date(s.approved_at), { locale: ptBR, addSuffix: true }) : ''}
+                      {s.approved_at ? safeFormatDistanceToNow(s.approved_at, { locale: ptBR, addSuffix: true }) : ''}
                     </span>
                   </CardContent>
                 </Card>

@@ -10,11 +10,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
 import { Shield, ShieldAlert, Activity, Eye, Download, Users, FileText, CheckCircle2, AlertTriangle, XCircle, RefreshCw, Bell, Clock, LogIn } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
+
 import { ptBR } from "date-fns/locale";
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useSecurityMonitoringData } from '@/hooks/useSecurityMonitoringData';
-import { safeFormatDatePtBR } from "@/lib/safe-date";
+import { safeFormatDatePtBR, safeFormatDistanceToNow } from "@/lib/safe-date";
 
 const SecurityMonitoring = () => {
   usePageTitle('Monitoramento de Segurança');
@@ -102,7 +102,7 @@ const SecurityMonitoring = () => {
                         <div className="flex items-center gap-2"><span className="font-medium truncate">{log.user_email || 'Sistema'}</span><Badge variant="outline" className="text-xs">{log.user_role || 'N/A'}</Badge></div>
                         <div className="text-sm text-muted-foreground"><span className="capitalize">{log.action}</span> em <span className="font-mono text-xs bg-muted px-1 rounded">{log.resource_type}</span></div>
                       </div>
-                      <div className="text-xs text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />{formatDistanceToNow(new Date(log.created_at), { addSuffix: true, locale: ptBR })}</div>
+                      <div className="text-xs text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />{safeFormatDistanceToNow(log.created_at, { addSuffix: true, locale: ptBR })}</div>
                     </div>
                   ))}
                 </div>

@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { format, subDays, startOfDay, endOfDay, eachDayOfInterval, parseISO } from 'date-fns';
+import { format, subDays, startOfDay, endOfDay, eachDayOfInterval } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 
+import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
 export interface BlockedLog {
   id: string;
   ip_address: string;
@@ -51,11 +52,11 @@ export function useBlockedAccessLogs() {
     const dailyMap = new Map<string, number>();
     days.forEach(day => dailyMap.set(format(day, 'yyyy-MM-dd'), 0));
     data.forEach(log => {
-      const dateKey = format(parseISO(log.created_at), 'yyyy-MM-dd');
+      const dateKey = safeFormatDate(log.created_at, 'yyyy-MM-dd');
       if (dailyMap.has(dateKey)) dailyMap.set(dateKey, (dailyMap.get(dateKey) || 0) + 1);
     });
     setDailyStats(Array.from(dailyMap.entries()).map(([date, count]) => ({
-      date: format(parseISO(date), 'dd/MM', { locale: ptBR }), count
+      date: safeFormatDatePtBR(date, 'dd/MM'), count
     })));
 
     const reasonMap = new Map<string, number>();

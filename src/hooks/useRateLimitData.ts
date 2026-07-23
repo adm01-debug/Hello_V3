@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 
+import { safeToLocaleTimeString } from "@/lib/safe-date";
 export interface RateLimitLog {
   id: string;
   user_id: string | null;
@@ -122,7 +123,7 @@ export function useRateLimitData() {
   };
 
   const chartData = logs.slice(0, 24).reverse().map(log => ({
-    time: new Date(log.created_at ?? 0).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+    time: safeToLocaleTimeString(log.created_at ?? 0, 'pt-BR', { hour: '2-digit', minute: '2-digit' }),
     requests: log.request_count ?? 0,
     blocked: log.is_blocked ? 1 : 0,
   }));

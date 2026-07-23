@@ -16,13 +16,14 @@ import {
  } from '@/components/ui/dropdown-menu';
  import { AddContactsDialog } from './AddContactsDialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { usePredictiveDialer, DialerCampaign, DialerQueueItem } from '@/hooks/usePredictiveDialer';
 import { CreateCampaignDialog } from './CreateCampaignDialog';
 import { DialerControlPanel } from './DialerControlPanel';
 import { toast } from 'sonner';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'active': return 'bg-success text-success-foreground';
@@ -193,7 +194,7 @@ export function PredictiveDialerPanel() {
                       <div className="flex items-center justify-between mb-2"><h3 className="font-semibold truncate">{c.name}</h3><Badge className={`text-xs ${getStatusColor(c.status)}`}>{c.status === 'active' ? 'Ativa' : c.status === 'paused' ? 'Pausada' : 'Concluída'}</Badge></div>
                       {c.description && <p className="text-sm text-muted-foreground mb-3 truncate">{c.description}</p>}
                       <Progress value={getProgressPercent(c)} className="mb-2" />
-                      <div className="flex items-center justify-between text-xs text-muted-foreground"><span>{c.completed_contacts}/{c.total_contacts} contatos</span><span>Criada {formatDistanceToNow(new Date(c.created_at), { addSuffix: true, locale: ptBR })}</span></div>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground"><span>{c.completed_contacts}/{c.total_contacts} contatos</span><span>Criada {safeFormatDistanceToNow(c.created_at, { addSuffix: true, locale: ptBR })}</span></div>
                       <div className="flex justify-end mt-3">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild><Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => e.stopPropagation()}><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>

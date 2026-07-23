@@ -5,6 +5,7 @@ import { ChevronDown, ChevronRight, Copy } from "lucide-react";
 import { toast } from "sonner";
 import type { WebhookHistoryEntry } from "@/lib/security-alerts-webhook-history";
 
+import { safeToLocaleString, safeToLocaleTimeString } from "@/lib/safe-date";
 /**
  * Linha de uma entrada do histórico de webhook com detalhes expansíveis.
  *
@@ -70,7 +71,7 @@ export function WebhookHistoryEntryRow({ entry }: { entry: WebhookHistoryEntry }
             )}
           </div>
           <div className="text-muted-foreground truncate" title={entry.error ?? entry.url}>
-            {new Date(entry.at).toLocaleString("pt-BR")} · {entry.latency_ms}ms
+            {safeToLocaleString(entry.at, "pt-BR")} · {entry.latency_ms}ms
             {entry.error ? ` · ${entry.error}` : ""}
           </div>
         </div>
@@ -141,7 +142,7 @@ export function WebhookHistoryEntryRow({ entry }: { entry: WebhookHistoryEntry }
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
                         <span className="font-medium">Tentativa {a.attempt}</span>
                         <span className="text-muted-foreground">
-                          {new Date(a.started_at).toLocaleTimeString("pt-BR")}
+                          {safeToLocaleTimeString(a.started_at, "pt-BR")}
                         </span>
                         <span className="text-muted-foreground">· {a.duration_ms}ms</span>
                         {a.error && <span className="text-destructive">· {a.error}</span>}

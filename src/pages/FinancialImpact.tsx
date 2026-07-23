@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 import { toast } from 'sonner';
 
+import { safeToLocaleDateString } from "@/lib/safe-date";
 const brl = (cents: number) =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100);
 
@@ -46,7 +47,7 @@ export default function FinancialImpact() {
   ];
 
   const chartData = (data?.series ?? []).map((d) => ({
-    day: new Date(d.day).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }),
+    day: safeToLocaleDateString(d.day, 'pt-BR', { day: '2-digit', month: '2-digit' }),
     Receita: d.revenue_cents / 100,
     Custo: d.estimated_cost_cents / 100,
     Lucro: d.profit_cents / 100,

@@ -9,10 +9,11 @@ import { SearchInput } from '@/components/ui/search-input';
 import { toast } from 'sonner';
  import { Voicemail, Play, Check, Clock, Phone, AlertTriangle, Trash2, MailOpen, Mail } from 'lucide-react';
  import { formatDuration } from '@/lib/utils';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 interface VoicemailMessage {
   id: string;
   caller_name: string | null;
@@ -164,7 +165,7 @@ export default function VoicemailPage() {
                     <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
                       <span className="flex items-center gap-1"><Phone className="h-3 w-3" /> {msg.caller_phone}</span>
                       <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {formatDuration(msg.duration_seconds)}</span>
-                      <span>{formatDistanceToNow(new Date(msg.created_at), { addSuffix: true, locale: ptBR })}</span>
+                      <span>{safeFormatDistanceToNow(msg.created_at, { addSuffix: true, locale: ptBR })}</span>
                     </div>
                     {msg.transcription && (
                       <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-3 italic">

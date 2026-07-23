@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { CheckCircle } from 'lucide-react';
 import type { getErrorReports } from '@/lib/error-tracking';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 type ErrorReport = ReturnType<typeof getErrorReports>[number];
 
 interface Props {
@@ -48,7 +49,7 @@ export function ErrorsTab({ errors }: Props) {
                     {err.filename ? `${err.filename}:${err.lineno}` : '—'}
                   </TableCell>
                   <TableCell className="text-sm">
-                    {new Date(err.timestamp).toLocaleString('pt-BR')}
+                    {safeToLocaleString(err.timestamp, 'pt-BR')}
                   </TableCell>
                 </TableRow>
               ))}

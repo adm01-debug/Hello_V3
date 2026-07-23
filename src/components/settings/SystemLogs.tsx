@@ -1,3 +1,4 @@
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
  import { useQuery } from '@tanstack/react-query';
  import { supabase } from '@/integrations/supabase/client';
  import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -51,7 +52,7 @@
                  </div>
                  <div className="text-right shrink-0">
                    <span className="text-muted-foreground">
-                     {formatDistanceToNow(new Date(log.created_at), { addSuffix: true, locale: ptBR })}
+                     {safeFormatDistanceToNow(log.created_at, { addSuffix: true, locale: ptBR })}
                    </span>
                  </div>
                </div>

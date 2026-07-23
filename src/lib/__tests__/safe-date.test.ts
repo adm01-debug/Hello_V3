@@ -6,7 +6,14 @@
  */
 import { describe, expect, it } from "vitest";
 import fc from "fast-check";
-import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
+import {
+  safeFormatDate,
+  safeFormatDatePtBR,
+  safeFormatDistanceToNow,
+  safeToLocaleDateString,
+  safeToLocaleString,
+  safeToLocaleTimeString,
+} from "@/lib/safe-date";
 
 describe("safe-date · entradas hostis nunca lançam", () => {
   it("PBT: qualquer string arbitrária é tolerada", () => {
@@ -66,6 +73,55 @@ describe("safe-date · entradas hostis nunca lançam", () => {
   it("máscaras exóticas não lançam", () => {
     for (const mask of ["", "'lit'", "yyyy 'às' HH:mm", "T"]) {
       expect(() => safeFormatDate("2025-06-15T12:00:00Z", mask)).not.toThrow();
+    }
+  });
+});
+
+describe("safe-date · wrappers auxiliares nunca lançam", () => {
+  const hostileInputs = fc.oneof(
+    fc.string(),
+    fc.constant(null),
+    fc.constant(undefined),
+    fc.constant(""),
+    fc.constant(NaN),
+    fc.constant(Infinity),
+    fc.constant(-Infinity),
+    fc.double(),
+    fc.date().map((d) => d.toISOString()),
+  );
+
+  it("PBT: safeFormatDistanceToNow tolera qualquer entrada", () => {
+    fc.assert(
+      fc.property(hostileInputs, (v) => {
+        expect(() => safeFormatDistanceToNow(v as never)).not.toThrow();
+      }),
+      { numRuns: 400 },
+    );
+  });
+
+  it("PBT: safeToLocale* tolera qualquer entrada", () => {
+    fc.assert(
+      fc.property(hostileInputs, (v) => {
+        expect(() => safeToLocaleString(v as never, "pt-BR")).not.toThrow();
+        expect(() => safeToLocaleDateString(v as never, "pt-BR")).not.toThrow();
+        expect(() => safeToLocaleTimeString(v as never, "pt-BR")).not.toThrow();
+      }),
+      { numRuns: 300 },
+    );
+  });
+
+  it("valores válidos produzem output plausível", () => {
+    expect(safeFormatDistanceToNow(new Date(Date.now() - 60_000))).toMatch(/minute|minuto/i);
+    expect(safeToLocaleDateString("2025-06-15T00:00:00Z", "pt-BR")).toMatch(/\d{2}\/\d{2}\/\d{4}/);
+    expect(safeToLocaleTimeString("2025-06-15T12:34:56Z", "pt-BR")).toMatch(/\d{2}:\d{2}/);
+  });
+
+  it("null/undefined/'' retornam fallback nos wrappers auxiliares", () => {
+    for (const v of [null, undefined, ""] as const) {
+      expect(safeFormatDistanceToNow(v)).toBe("—");
+      expect(safeToLocaleString(v)).toBe("—");
+      expect(safeToLocaleDateString(v)).toBe("—");
+      expect(safeToLocaleTimeString(v)).toBe("—");
     }
   });
 });

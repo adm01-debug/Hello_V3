@@ -10,6 +10,7 @@ import { Globe, Shield, Plus, Trash2, MapPin, AlertTriangle, Check, Search, Load
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useGeoBlocking } from '@/hooks/useGeoBlocking';
 
+import { safeToLocaleDateString, safeToLocaleString } from "@/lib/safe-date";
 export default function GeoBlocking() {
   usePageTitle('Bloqueio Geográfico');
 
@@ -80,7 +81,7 @@ export default function GeoBlocking() {
           ) : (
             <Table><TableHeader><TableRow><TableHead>País</TableHead><TableHead>Código</TableHead><TableHead>Motivo</TableHead><TableHead>Adicionado em</TableHead><TableHead className="w-[80px]">Ações</TableHead></TableRow></TableHeader>
               <TableBody>{allowedCountries.map(c => (
-                <TableRow key={c.id}><TableCell className="font-medium">{c.country_name}</TableCell><TableCell><Badge variant="secondary">{c.country_code}</Badge></TableCell><TableCell className="text-muted-foreground">{c.reason || '-'}</TableCell><TableCell className="text-muted-foreground">{new Date(c.created_at).toLocaleDateString('pt-BR')}</TableCell><TableCell><Button variant="ghost" size="icon" onClick={() => removeCountry.mutate(c.id)} disabled={removeCountry.isPending}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell></TableRow>
+                <TableRow key={c.id}><TableCell className="font-medium">{c.country_name}</TableCell><TableCell><Badge variant="secondary">{c.country_code}</Badge></TableCell><TableCell className="text-muted-foreground">{c.reason || '-'}</TableCell><TableCell className="text-muted-foreground">{safeToLocaleDateString(c.created_at, 'pt-BR')}</TableCell><TableCell><Button variant="ghost" size="icon" onClick={() => removeCountry.mutate(c.id)} disabled={removeCountry.isPending}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell></TableRow>
               ))}</TableBody></Table>
           )}
         </CardContent>
@@ -112,7 +113,7 @@ export default function GeoBlocking() {
           <CardContent>
             <Table><TableHeader><TableRow><TableHead>Data/Hora</TableHead><TableHead>País</TableHead><TableHead>IP</TableHead><TableHead>Usuário</TableHead><TableHead>Motivo</TableHead></TableRow></TableHeader>
               <TableBody>{blockedLogs.slice(0, 10).map(log => (
-                <TableRow key={log.id}><TableCell className="text-muted-foreground">{new Date(log.created_at).toLocaleString('pt-BR')}</TableCell><TableCell><Badge variant="destructive">{log.country_name || log.country_code || 'Desconhecido'}</Badge></TableCell><TableCell className="font-mono text-sm">{log.ip_address}</TableCell><TableCell>{log.user_email || '-'}</TableCell><TableCell className="text-muted-foreground">{log.reason || 'País não permitido'}</TableCell></TableRow>
+                <TableRow key={log.id}><TableCell className="text-muted-foreground">{safeToLocaleString(log.created_at, 'pt-BR')}</TableCell><TableCell><Badge variant="destructive">{log.country_name || log.country_code || 'Desconhecido'}</Badge></TableCell><TableCell className="font-mono text-sm">{log.ip_address}</TableCell><TableCell>{log.user_email || '-'}</TableCell><TableCell className="text-muted-foreground">{log.reason || 'País não permitido'}</TableCell></TableRow>
               ))}</TableBody></Table>
           </CardContent>
         </Card>

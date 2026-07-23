@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 const log = logger.create('QualityAlertsCard');
 
 type AlertType = 'degrading' | 'poor' | 'offline';
@@ -137,7 +138,7 @@ export function QualityAlertsCard() {
               <tbody>
                 {alerts.map((a) => (
                   <tr key={a.id} className={cn('border-b border-border/20 hover:bg-muted/30 transition-colors', !a.acknowledged_at && 'bg-warning/5')}>
-                    <td className="py-2 px-2 font-mono text-xs">{new Date(a.created_at).toLocaleString('pt-BR')}</td>
+                    <td className="py-2 px-2 font-mono text-xs">{safeToLocaleString(a.created_at, 'pt-BR')}</td>
                     <td className="py-2 px-2">
                       <Badge variant="outline" className={cn('font-mono text-[10px] uppercase', TYPE_STYLES[a.alert_type])}>
                         {a.alert_type}

@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
 import type { SyncLog } from './types';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 function statusIcon(status: SyncLog['status']) {
   switch (status) {
     case 'success': return <CheckCircle2 className="h-4 w-4 text-success" />;
@@ -37,7 +38,7 @@ export function LDAPLogsTab({ logs }: { logs: SyncLog[] }) {
               <TableRow key={log.id}>
                 <TableCell>{statusIcon(log.status)}</TableCell>
                 <TableCell className="text-sm">
-                  {new Date(log.timestamp).toLocaleString('pt-BR')}
+                  {safeToLocaleString(log.timestamp, 'pt-BR')}
                 </TableCell>
                 <TableCell>{log.contactsSynced}</TableCell>
                 <TableCell>{log.contactsCreated}</TableCell>

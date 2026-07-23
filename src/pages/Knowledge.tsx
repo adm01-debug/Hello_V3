@@ -15,9 +15,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useKbCategories, useKbArticles, useUpsertArticle, type KbArticle } from '@/hooks/useKnowledgeBase';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 export default function Knowledge() {
   usePageTitle('Knowledge Base');
   const { profile } = useAuthContext();
@@ -131,7 +132,7 @@ export default function Knowledge() {
                     <ThumbsUp className="h-3 w-3" /> {a.helpful_count}
                   </span>
                 </div>
-                <span>{formatDistanceToNow(new Date(a.updated_at), { locale: ptBR, addSuffix: true })}</span>
+                <span>{safeFormatDistanceToNow(a.updated_at, { locale: ptBR, addSuffix: true })}</span>
               </div>
               {a.tags && a.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1 mt-2">

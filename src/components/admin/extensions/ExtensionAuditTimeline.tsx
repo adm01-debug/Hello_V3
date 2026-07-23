@@ -1,8 +1,9 @@
 import { useExtensionAuditHistory } from '@/hooks/useExtensionAuditHistory';
 import { Loader2, Network, PowerOff, Download, UserCog, Eye, FileEdit, Trash2, LogIn, History } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 interface Props {
   agentId: string;
 }
@@ -43,7 +44,7 @@ export function ExtensionAuditTimeline({ agentId }: Props) {
       {data.map(entry => {
         const meta = actionMeta[entry.action] ?? { icon: History, label: entry.action, tone: 'text-muted-foreground' };
         const Icon = meta.icon;
-        const when = formatDistanceToNow(new Date(entry.created_at), { addSuffix: true, locale: ptBR });
+        const when = safeFormatDistanceToNow(entry.created_at, { addSuffix: true, locale: ptBR });
         const detailCount = entry.details && typeof entry.details === 'object' && 'count' in entry.details
           ? (entry.details as { count?: number }).count
           : undefined;

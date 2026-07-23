@@ -5,6 +5,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianG
 import { Badge } from '@/components/ui/badge';
 import { useMemo } from 'react';
 
+import { safeToLocaleString, safeToLocaleTimeString } from "@/lib/safe-date";
 interface Props {
   trunkId: string | null;
   trunkName?: string;
@@ -17,7 +18,7 @@ export function TrunkHealthHistoryDrawer({ trunkId, trunkName, open, onOpenChang
 
   const chartData = useMemo(
     () => history.map(h => ({
-      time: new Date(h.checked_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      time: safeToLocaleTimeString(h.checked_at, 'pt-BR', { hour: '2-digit', minute: '2-digit' }),
       latency: h.reachable ? h.latency_ms ?? 0 : 0,
       reachable: h.reachable ? 1 : 0,
     })),
@@ -84,7 +85,7 @@ export function TrunkHealthHistoryDrawer({ trunkId, trunkName, open, onOpenChang
                 {[...history].reverse().slice(0, 30).map(h => (
                   <div key={h.id} className="flex items-center justify-between p-2 rounded border bg-card text-sm">
                     <span className="text-muted-foreground">
-                      {new Date(h.checked_at).toLocaleString('pt-BR')}
+                      {safeToLocaleString(h.checked_at, 'pt-BR')}
                     </span>
                     <div className="flex items-center gap-2">
                       {h.reachable ? (

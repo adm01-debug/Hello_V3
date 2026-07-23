@@ -16,9 +16,10 @@ import {
   type ExportFormat,
 } from '@/hooks/useDataLakeExports';
 import { useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 const statusVariants = { pending: 'outline', processing: 'default', completed: 'secondary', failed: 'destructive' } as const;
 
 export default function DataExport() {
@@ -96,7 +97,7 @@ export default function DataExport() {
                     </span>
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    {formatDistanceToNow(new Date(e.created_at), { locale: ptBR, addSuffix: true })}
+                    {safeFormatDistanceToNow(e.created_at, { locale: ptBR, addSuffix: true })}
                     {e.error_message ? ` · ${e.error_message}` : ''}
                   </div>
                 </div>

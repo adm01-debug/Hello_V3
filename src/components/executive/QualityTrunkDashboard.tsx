@@ -9,6 +9,7 @@ import {
 } from 'recharts';
 import { Activity, PhoneCall, Zap, AlertTriangle, CheckCircle } from "lucide-react";
 
+import { safeToLocaleTimeString } from "@/lib/safe-date";
 export const QualityTrunkDashboard = () => {
   const { data: qualityMetrics, isLoading: loadingQuality } = useQuery({
     queryKey: ['call-quality-summary'],
@@ -94,7 +95,7 @@ export const QualityTrunkDashboard = () => {
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                   <XAxis dataKey="created_at" hide />
                   <YAxis domain={[0, 5]} />
-                  <Tooltip labelFormatter={(val) => new Date(val).toLocaleTimeString()} />
+                  <Tooltip labelFormatter={(val) => safeToLocaleTimeString(val)} />
                   <Area type="monotone" dataKey="mos_avg" stroke="hsl(var(--primary))" fill="hsl(var(--primary)/0.2)" />
                 </AreaChart>
               </ResponsiveContainer>

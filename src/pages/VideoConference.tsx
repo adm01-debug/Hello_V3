@@ -13,6 +13,7 @@ import { toast } from 'sonner';
   import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 type VideoConferenceRow = Database['public']['Tables']['video_conferences']['Row'];
 
 export default function VideoConference() {
@@ -149,7 +150,7 @@ export default function VideoConference() {
                   <p className="font-medium">{conf.title}</p>
                   <p className="text-xs text-muted-foreground flex items-center gap-2">
                     <Users className="h-3 w-3" /> {(Array.isArray(conf.participants) ? conf.participants.length : 0)} participantes
-                    <Clock className="h-3 w-3 ml-2" /> {new Date(conf.created_at).toLocaleString('pt-BR')}
+                    <Clock className="h-3 w-3 ml-2" /> {safeToLocaleString(conf.created_at, 'pt-BR')}
                   </p>
                 </div>
               </div>

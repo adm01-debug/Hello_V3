@@ -27,6 +27,7 @@ import { ExecutiveSummaryDialog } from '@/components/network/ExecutiveSummaryDia
 import { useVoipRecommendations } from '@/hooks/useVoipRecommendations';
 import { shouldRunProactiveCheck, compareSnapshotAndNotify } from '@/lib/voipProactiveSnapshot';
 
+import { safeToLocaleString, safeToLocaleTimeString } from "@/lib/safe-date";
 const log = logger.create('NetworkDiagnostics');
 
 interface QualityMetric {
@@ -104,7 +105,7 @@ const NetworkDiagnostics = () => {
         mos: m.mos_avg ?? 0,
         rtt: m.rtt_avg_ms ?? 0,
         jitter: m.jitter_avg_ms ?? 0,
-        time: new Date(m.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+        time: safeToLocaleTimeString(m.created_at, 'pt-BR', { hour: '2-digit', minute: '2-digit' }),
       }));
   }, [metrics]);
 
@@ -307,7 +308,7 @@ const NetworkDiagnostics = () => {
                   <tbody>
                     {metrics.map((m) => (
                       <tr key={m.id} className="border-b border-border/20 hover:bg-muted/30 transition-colors">
-                        <td className="py-2 px-2 font-mono text-xs">{new Date(m.created_at).toLocaleString('pt-BR')}</td>
+                        <td className="py-2 px-2 font-mono text-xs">{safeToLocaleString(m.created_at, 'pt-BR')}</td>
                         <td className="py-2 px-2">{m.agent_name || '—'}</td>
                         <td className="py-2 px-2 uppercase text-xs">{m.channel}</td>
                         <td className="py-2 px-2 font-mono">{m.mos_avg?.toFixed(2) ?? '—'}</td>

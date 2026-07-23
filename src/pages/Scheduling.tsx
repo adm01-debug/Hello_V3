@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Calendar, CalendarDays, Plus, CheckCircle2, XCircle } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+import { safeToLocaleTimeString } from "@/lib/safe-date";
 const DAYS_PT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
 function getWeekStart(d = new Date()): string {
@@ -111,7 +112,7 @@ export default function Scheduling() {
                           <div key={s.id} className="p-2 rounded border border-primary/30 bg-primary/5 text-xs space-y-1">
                             <div className="font-medium">{s.agent_name}</div>
                             <div className="text-muted-foreground">
-                              {new Date(s.start_time).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} - {new Date(s.end_time).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                              {safeToLocaleTimeString(s.start_time, 'pt-BR', { hour: '2-digit', minute: '2-digit' })} - {safeToLocaleTimeString(s.end_time, 'pt-BR', { hour: '2-digit', minute: '2-digit' })}
                             </div>
                             <Button variant="ghost" size="sm" className="h-6 w-full text-destructive" onClick={() => deleteShift(s.id)}>Remover</Button>
                           </div>
