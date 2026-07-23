@@ -11,6 +11,10 @@ export interface VoipQualitySample {
   jitterMs: number;
   packetsLost: number;
   packetsReceived: number;
+  packetsDiscarded: number;
+  fractionLost: number | null;
+  concealedSamples: number;
+  totalSamplesReceived: number;
   rttMs: number;
   audioLevel: number;
   mos: number;
@@ -23,6 +27,7 @@ export interface VoipQualityState {
   jitterAvgMs: number | null;
   packetLossPct: number | null;
   rttAvgMs: number | null;
+  concealmentPct: number | null;
   label: QualityLabel;
   samplesCount: number;
 }
