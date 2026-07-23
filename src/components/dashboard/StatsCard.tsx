@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import { useAnimatedCounter } from '@/hooks/useAnimatedCounter';
+import { safeParseFloat } from '@/lib/safe-number';
 
 interface StatsCardProps {
   title: string;
