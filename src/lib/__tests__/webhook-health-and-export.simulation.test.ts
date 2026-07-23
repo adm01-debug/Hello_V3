@@ -214,14 +214,20 @@ describe("webhook-health-utils · cenários específicos", () => {
   it("created_at inválido: ambos toleram e ignoram a linha (validação defensiva)", () => {
     const rows: WebhookHealthRow[] = [
       { created_at: "not-a-date", sent: 5, failed: 1, oldest_age_ms: null, duration_ms: null, endpoint_hash: "x" },
+      { created_at: "", sent: 2, failed: 0, oldest_age_ms: null, duration_ms: null, endpoint_hash: "x" },
       { created_at: new Date().toISOString(), sent: 3, failed: 0, oldest_age_ms: null, duration_ms: null, endpoint_hash: "y" },
     ];
     expect(() => aggregateEndpoints(rows, "volume")).not.toThrow();
     expect(() => aggregateHeatmap(rows)).not.toThrow();
     const h = aggregateHeatmap(rows);
-    // apenas a linha válida entra em buckets; totals contabiliza ambas as contagens brutas
+    // apenas a linha válida entra em buckets; totals contabiliza todas as contagens brutas
     expect(h.buckets.size).toBe(1);
-    expect(h.totals).toEqual({ sent: 8, failed: 1 });
+    expect(h.totals).toEqual({ sent: 10, failed: 1 });
+    // aggregateEndpoints: linhas com data inválida não poluem trend, mas contam attempts/failed
+    const stats = aggregateEndpoints(rows, "volume");
+    const bucketX = stats.find((s) => s.hash === "x");
+    expect(bucketX?.attempts).toBe(8);
+    expect(bucketX?.trend.every((v) => v === 0)).toBe(true);
   });
 
   it("agrupa endpoint_hash null sob chave '—'", () => {

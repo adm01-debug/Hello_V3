@@ -61,11 +61,14 @@ export function aggregateEndpoints(
     const failed = r.failed ?? 0;
     cur.attempts += sent + failed;
     cur.failed += failed;
-    const rowHour = Math.floor(new Date(r.created_at).getTime() / 3_600_000);
-    const idx = SPARK_HOURS - 1 - (nowHour - rowHour);
-    if (idx >= 0 && idx < SPARK_HOURS) {
-      cur.hourly[idx].sent += sent;
-      cur.hourly[idx].failed += failed;
+    const ts = new Date(r.created_at).getTime();
+    if (!Number.isNaN(ts)) {
+      const rowHour = Math.floor(ts / 3_600_000);
+      const idx = SPARK_HOURS - 1 - (nowHour - rowHour);
+      if (idx >= 0 && idx < SPARK_HOURS) {
+        cur.hourly[idx].sent += sent;
+        cur.hourly[idx].failed += failed;
+      }
     }
     map.set(key, cur);
   }

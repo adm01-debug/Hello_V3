@@ -21,6 +21,13 @@ function timestamp(): string {
   return format(new Date(), "yyyyMMdd-HHmmss");
 }
 
+function safeFormatDate(input: string | null | undefined, mask: string): string {
+  if (!input) return "—";
+  const d = new Date(input);
+  if (Number.isNaN(d.getTime())) return "—";
+  return format(d, mask);
+}
+
 function triggerDownload(blob: Blob, filename: string): void {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -70,7 +77,7 @@ export function exportAlertsToPdf(alerts: ExportableAlert[]): string {
     startY: 76,
     head: [["Data/Hora", "Severidade", "Origem", "Título", "Mensagem", "Lido"]],
     body: alerts.map((a) => [
-      format(new Date(a.created_at), "dd/MM/yyyy HH:mm:ss"),
+      safeFormatDate(a.created_at, "dd/MM/yyyy HH:mm:ss"),
       a.severity,
       a.source_type ?? "—",
       a.title,
