@@ -54,7 +54,7 @@ type Subscriber = (event: SafeNumberRejection) => void;
 const subscribers = new Set<Subscriber>();
 const counters = new Map<string, number>();
 
-const numericLogger = logger("safe-number");
+const numericLogger = logger.create("safe-number");
 
 function emit(event: Omit<SafeNumberRejection, "timestamp" | "requestId">): void {
   const full: SafeNumberRejection = {
