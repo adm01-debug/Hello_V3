@@ -26,17 +26,17 @@ export function GoalsConfigDialog({ open, onOpenChange, editingGoals, setEditing
           <div className="space-y-2">
             <Label htmlFor="calls_target">Meta de Chamadas</Label>
             <Input id="calls_target" type="number" min={1} max={500} value={editingGoals.calls_target}
-              onChange={(e) => setEditingGoals({ ...editingGoals, calls_target: Math.max(1, Math.min(500, parseInt(e.target.value) || 1)) })} />
+              onChange={(e) => setEditingGoals({ ...editingGoals, calls_target: safeParseInt(e.target.value, { min: 1, max: 500, fallback: 1 }) })} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="satisfaction_target">Meta de Satisfação (1-10)</Label>
             <Input id="satisfaction_target" type="number" min={1} max={10} step={0.1} value={editingGoals.satisfaction_target}
-              onChange={(e) => setEditingGoals({ ...editingGoals, satisfaction_target: Math.max(1, Math.min(10, parseFloat(e.target.value) || 1)) })} />
+              onChange={(e) => setEditingGoals({ ...editingGoals, satisfaction_target: safeParseFloat(e.target.value, { min: 1, max: 10, fallback: 1 }) })} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="performance_target">Meta de Performance (1-10)</Label>
             <Input id="performance_target" type="number" min={1} max={10} step={0.1} value={editingGoals.performance_target}
-              onChange={(e) => setEditingGoals({ ...editingGoals, performance_target: Math.max(1, Math.min(10, parseFloat(e.target.value) || 1)) })} />
+              onChange={(e) => setEditingGoals({ ...editingGoals, performance_target: safeParseFloat(e.target.value, { min: 1, max: 10, fallback: 1 }) })} />
           </div>
           <div className="flex justify-end gap-2 pt-4">
             <Button variant="outline" onClick={() => onOpenChange(false)}>Cancelar</Button>
