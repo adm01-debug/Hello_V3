@@ -28,7 +28,7 @@ export function DNCListManager() {
     const csv = [
       'Telefone,Telefone Normalizado,Motivo,Fonte,Adicionado Por,Notas,Data',
       ...dncList.map(item =>
-        `"${item.phone}","${item.phone_normalized}","${item.reason}","${item.source}","${item.added_by || ''}","${item.notes || ''}","${format(new Date(item.created_at), 'dd/MM/yyyy HH:mm')}"`
+        `"${item.phone}","${item.phone_normalized}","${item.reason}","${item.source}","${item.added_by || ''}","${item.notes || ''}","${safeFormatDate(item.created_at, 'dd/MM/yyyy HH:mm')}"`
       ),
     ].join('\n');
 
