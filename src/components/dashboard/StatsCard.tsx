@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import { useAnimatedCounter } from '@/hooks/useAnimatedCounter';
+import { safeParseFloat } from '@/lib/safe-number';
 
 interface StatsCardProps {
   title: string;
@@ -27,9 +28,9 @@ export const StatsCard = memo(function StatsCard({
 
   // Parse numeric value for animation
   const numericValue = useMemo(() => {
-    if (typeof value === 'number') return value;
-    const parsed = parseFloat(String(value).replace(/[^0-9.-]/g, ''));
-    return isNaN(parsed) ? null : parsed;
+    if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+    const parsed = safeParseFloat(String(value).replace(/[^0-9.-]/g, ''), { fallback: Number.NaN });
+    return Number.isFinite(parsed) ? parsed : null;
   }, [value]);
 
   const decimals = useMemo(() => {

@@ -2,6 +2,7 @@
  * Utilitários para scoring de tentativas outbound e análise de melhor janela de contato.
  * Usado pelo Predictive Dialer e pelo painel de Outbound Compliance.
  */
+import { safeToFixed } from '@/lib/safe-number';
 
 export type Recommendation = 'block' | 'defer' | 'low_priority' | 'normal' | 'high_priority';
 
@@ -66,7 +67,7 @@ export function computeAttemptScore({ inDNC, withinHours, pattern, now = new Dat
     : score >= 0.15 ? 'low_priority'
     : 'defer';
 
-  return { score: parseFloat(score.toFixed(3)), recommendation, factors };
+  return { score: safeToFixed(score, 3), recommendation, factors };
 }
 
 export function formatBestWindow(pattern: EngagementPattern | null): string {

@@ -28,6 +28,25 @@ export default tseslint.config(
       "prefer-const": "error",
       "no-var": "error",
       "eqeqeq": ["error", "always", { null: "ignore" }],
+      "no-restricted-globals": [
+        "error",
+        { name: "parseInt", message: "Use safeParseInt de '@/lib/safe-number' — parseInt retorna NaN silenciosamente." },
+        { name: "parseFloat", message: "Use safeParseFloat de '@/lib/safe-number' — parseFloat retorna NaN silenciosamente." },
+      ],
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "MemberExpression[object.name='Number'][property.name=/^(parseInt|parseFloat)$/]",
+          message: "Use safeParseInt/safeParseFloat de '@/lib/safe-number' em vez de Number.parseInt/parseFloat.",
+        },
+      ],
+    },
+  },
+  {
+    files: ["src/lib/safe-number.ts", "src/lib/__tests__/**", "src/hooks/__tests__/**", "**/*.test.ts", "**/*.test.tsx"],
+    rules: {
+      "no-restricted-globals": "off",
+      "no-restricted-syntax": "off",
     },
   },
 );
