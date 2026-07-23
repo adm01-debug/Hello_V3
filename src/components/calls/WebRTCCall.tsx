@@ -187,6 +187,9 @@ export function WebRTCCall({
           setReconnect(null);
           setStatus("active");
           onCallStarted?.();
+          if (callStartedAtRef.current === null) {
+            callStartedAtRef.current = Date.now();
+          }
           if (!timerRef.current) {
             timerRef.current = setInterval(() => setDuration((d) => d + 1), 1000);
           }
