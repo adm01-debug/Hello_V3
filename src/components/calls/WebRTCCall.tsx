@@ -355,7 +355,17 @@ export function WebRTCCall({
             </>
           )}
         </div>
+        {status === "ended" && summary && (
+          <Button variant="outline" size="sm" className="w-full" onClick={() => setSummaryOpen(true)}>
+            Ver resumo da chamada
+          </Button>
+        )}
       </CardContent>
+      <PostCallSummary
+        open={summaryOpen}
+        data={summary}
+        onClose={() => setSummaryOpen(false)}
+      />
     </Card>
   );
 }
