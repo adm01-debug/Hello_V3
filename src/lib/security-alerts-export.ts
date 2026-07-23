@@ -77,7 +77,7 @@ export function exportAlertsToPdf(alerts: ExportableAlert[]): string {
     startY: 76,
     head: [["Data/Hora", "Severidade", "Origem", "Título", "Mensagem", "Lido"]],
     body: alerts.map((a) => [
-      format(new Date(a.created_at), "dd/MM/yyyy HH:mm:ss"),
+      safeFormatDate(a.created_at, "dd/MM/yyyy HH:mm:ss"),
       a.severity,
       a.source_type ?? "—",
       a.title,
