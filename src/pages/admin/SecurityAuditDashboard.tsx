@@ -14,6 +14,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Shield, Search, Filter, RefreshCw, Calendar, User, Activity, Info, Eye, AlertTriangle, Send } from 'lucide-react';
 import { format } from 'date-fns';
+import { safeFormatDate, safeFormatDatePtBR } from '@/lib/safe-date';
 import { ptBR } from 'date-fns/locale';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 
@@ -249,7 +250,7 @@ export default function SecurityAuditDashboard() {
                     {filteredAudit.map((log) => (
                       <TableRow key={log.id}>
                         <TableCell className="text-xs">
-                          {format(new Date(log.created_at), "dd/MM/yy HH:mm")}
+                          {safeFormatDate(log.created_at, "dd/MM/yy HH:mm")}
                         </TableCell>
                         <TableCell className="text-xs">{log.user_email || 'Anônimo'}</TableCell>
                         <TableCell>
@@ -293,7 +294,7 @@ export default function SecurityAuditDashboard() {
                     {rlsLogs.map((log) => (
                       <TableRow key={log.id}>
                         <TableCell className="text-xs">
-                          {format(new Date(log.created_at), "dd/MM/yy HH:mm")}
+                          {safeFormatDate(log.created_at, "dd/MM/yy HH:mm")}
                         </TableCell>
                         <TableCell><Badge variant="outline">{log.table_name}</Badge></TableCell>
                         <TableCell><Badge variant="destructive">{log.action}</Badge></TableCell>

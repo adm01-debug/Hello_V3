@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Shield, AlertTriangle, Search, Filter, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
+import { safeFormatDate, safeFormatDatePtBR } from '@/lib/safe-date';
 import { ptBR } from 'date-fns/locale';
 
 export default function SecurityDashboard() {
@@ -114,7 +115,7 @@ export default function SecurityDashboard() {
               {logs.map((log) => (
                 <TableRow key={log.id}>
                   <TableCell className="text-xs">
-                    {format(new Date(log.created_at), "dd/MM HH:mm:ss", { locale: ptBR })}
+                    {safeFormatDatePtBR(log.created_at, "dd/MM HH:mm:ss")}
                   </TableCell>
                   <TableCell>
                     <Badge variant={log.action.includes('FAILURE') ? 'destructive' : 'secondary'}>

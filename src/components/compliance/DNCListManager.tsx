@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Ban, Search, Download } from 'lucide-react';
 import { useDNCCompliance } from '@/hooks/useDNCCompliance';
 import { format } from 'date-fns';
+import { safeFormatDate } from '@/lib/safe-date';
 import { DNCStats } from './dnc/DNCStats';
 import { AddDNCDialog } from './dnc/AddDNCDialog';
 import { ImportDNCDialog } from './dnc/ImportDNCDialog';
@@ -27,7 +28,7 @@ export function DNCListManager() {
     const csv = [
       'Telefone,Telefone Normalizado,Motivo,Fonte,Adicionado Por,Notas,Data',
       ...dncList.map(item =>
-        `"${item.phone}","${item.phone_normalized}","${item.reason}","${item.source}","${item.added_by || ''}","${item.notes || ''}","${format(new Date(item.created_at), 'dd/MM/yyyy HH:mm')}"`
+        `"${item.phone}","${item.phone_normalized}","${item.reason}","${item.source}","${item.added_by || ''}","${item.notes || ''}","${safeFormatDate(item.created_at, 'dd/MM/yyyy HH:mm')}"`
       ),
     ].join('\n');
 
