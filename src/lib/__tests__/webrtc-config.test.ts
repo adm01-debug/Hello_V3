@@ -19,9 +19,7 @@ describe("getIceServers", () => {
 
 
   it("retorna STUN servers padrão sem TURN quando envs ausentes", async () => {
-    env.VITE_TURN_URL = undefined;
-    env.VITE_TURN_USER = undefined;
-    env.VITE_TURN_CRED = undefined;
+
 
     const { getIceServers } = await import("@/lib/webrtc-config");
     const servers = getIceServers();
