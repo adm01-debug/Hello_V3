@@ -211,14 +211,17 @@ describe("webhook-health-utils · cenários específicos", () => {
     expect(endpointsToCsv([])).toBe("endpoint_hash,attempts,failed,failure_ratio_pct\n");
   });
 
-  it("created_at inválido: aggregateEndpoints tolera (idx cai fora), aggregateHeatmap lança (contrato: validar upstream)", () => {
+  it("created_at inválido: ambos toleram e ignoram a linha (validação defensiva)", () => {
     const rows: WebhookHealthRow[] = [
       { created_at: "not-a-date", sent: 5, failed: 1, oldest_age_ms: null, duration_ms: null, endpoint_hash: "x" },
+      { created_at: new Date().toISOString(), sent: 3, failed: 0, oldest_age_ms: null, duration_ms: null, endpoint_hash: "y" },
     ];
-    // aggregateEndpoints não invoca toISOString → resiliente
     expect(() => aggregateEndpoints(rows, "volume")).not.toThrow();
-    // aggregateHeatmap chama toISOString em Invalid Date → documenta contrato
-    expect(() => aggregateHeatmap(rows)).toThrow(/Invalid time value/);
+    expect(() => aggregateHeatmap(rows)).not.toThrow();
+    const h = aggregateHeatmap(rows);
+    // apenas a linha válida entra em buckets; totals contabiliza ambas as contagens brutas
+    expect(h.buckets.size).toBe(1);
+    expect(h.totals).toEqual({ sent: 8, failed: 1 });
   });
 
   it("agrupa endpoint_hash null sob chave '—'", () => {
