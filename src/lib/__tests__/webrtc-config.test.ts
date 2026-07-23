@@ -48,7 +48,8 @@ describe("getIceServers", () => {
   it("não inclui TURN quando falta uma das credenciais", async () => {
     env.VITE_TURN_URL = "turn:turn.example.com:3478";
     env.VITE_TURN_USER = "user";
-    env.VITE_TURN_CRED = undefined;
+    delete env.VITE_TURN_CRED;
+
 
     const { getIceServers } = await import("@/lib/webrtc-config");
     const servers = getIceServers();
