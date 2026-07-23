@@ -276,6 +276,11 @@ export function WebRTCCall({
             <CallQualityIndicator quality={quality} />
           </div>
         )}
+        {reconnect && (
+          <p className="pt-2 text-xs text-warning" role="status" aria-live="polite">
+            Reconectando… tentativa {reconnect.attempt} de {reconnect.max}
+          </p>
+        )}
       </CardHeader>
       <CardContent className="space-y-3">
         <audio ref={remoteAudioRef} autoPlay playsInline className="hidden" />
