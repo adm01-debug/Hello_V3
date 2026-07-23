@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { usePredictiveDialer, CreateCampaignInput } from '@/hooks/usePredictiveDialer';
+import { safeParseInt } from '@/lib/safe-number';
 
 interface CreateCampaignDialogProps {
   trigger?: React.ReactNode;
@@ -162,7 +163,7 @@ export function CreateCampaignDialog({ trigger }: CreateCampaignDialogProps) {
                 min={1}
                 max={10}
                 value={formData.max_concurrent_calls}
-                onChange={(e) => setFormData(prev => ({ ...prev, max_concurrent_calls: parseInt(e.target.value) }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, max_concurrent_calls: safeParseInt(e.target.value, { fallback: 1, min: 1, max: 10 }) }))}
               />
             </div>
           </div>
@@ -176,7 +177,7 @@ export function CreateCampaignDialog({ trigger }: CreateCampaignDialogProps) {
                 min={10}
                 max={120}
                 value={formData.call_timeout_seconds}
-                onChange={(e) => setFormData(prev => ({ ...prev, call_timeout_seconds: parseInt(e.target.value) }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, call_timeout_seconds: safeParseInt(e.target.value, { fallback: 30, min: 10, max: 120 }) }))}
               />
             </div>
 
@@ -188,7 +189,7 @@ export function CreateCampaignDialog({ trigger }: CreateCampaignDialogProps) {
                 min={0}
                 max={5}
                 value={formData.retry_attempts}
-                onChange={(e) => setFormData(prev => ({ ...prev, retry_attempts: parseInt(e.target.value) }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, retry_attempts: safeParseInt(e.target.value, { fallback: 0, min: 0, max: 5 }) }))}
               />
             </div>
           </div>
