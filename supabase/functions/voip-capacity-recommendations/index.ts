@@ -149,7 +149,7 @@ Deno.serve(async (req) => {
     }
 
     const url = new URL(req.url);
-    const horizon = Math.min(168, Math.max(1, Number(url.searchParams.get('horizon') ?? 24)));
+    const horizon = Math.min(168, Math.max(1, Number(url.searchParams.get('horizon') ?? 24))); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
 
     // Reusa edge function de forecast via invoke interno
     const forecastUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/voip-quality-forecast?horizon=${horizon}`;

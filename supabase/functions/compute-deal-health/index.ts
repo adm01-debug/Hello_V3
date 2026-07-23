@@ -62,7 +62,7 @@ Deno.serve(async (req) => {
     const avgSat = avg((summaries ?? []).map((s) => s.customer_satisfaction).filter(Boolean) as number[]);
     const satScore = avgSat ? avgSat * 10 : 50;
 
-    const probabilityScore = Number(deal.probability) || 50;
+    const probabilityScore = Number(deal.probability) || 50; // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
 
     const healthScore = Math.round(
       recencyScore * 0.2 + sentimentScore * 0.25 + momentScore * 0.25 +

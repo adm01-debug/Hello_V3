@@ -31,6 +31,9 @@ jobs:
       - name: Guard • parseInt/parseFloat proibidos fora de safe-number.ts
         run: node scripts/codemod-safe-number.mjs --check
 
+      - name: Guard • Edge Functions com coerção numérica insegura
+        run: node scripts/guard-edge-numeric.mjs --check
+
       - name: Lint
         run: bun run lint
         continue-on-error: false

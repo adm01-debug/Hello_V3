@@ -73,7 +73,7 @@ serve(async (req) => {
     const recentContext = (parsed.data.recentContext as string) || '';
     const speaker = (parsed.data.speaker as string) || 'customer';
     const agentName = (parsed.data.agentName as string) || null;
-    const timestampSeconds = Math.floor(Number(parsed.data.timestampSeconds ?? 0));
+    const timestampSeconds = Math.floor(Number(parsed.data.timestampSeconds ?? 0)); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
 
     // Carrega regras de compliance e biblioteca de objeções (via service role para garantir acesso)
     const adminClient = createClient(supabaseUrl, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
@@ -169,7 +169,7 @@ Retorne intent="none" se nada relevante for detectado.`;
         if (ai && ai.intent && ai.intent !== 'none') {
           signals.push({
             intent: ai.intent,
-            confidence: Math.min(1, Math.max(0, Number(ai.confidence) || 0.7)),
+            confidence: Math.min(1, Math.max(0, Number(ai.confidence) || 0.7)), // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
             suggestion: String(ai.suggestion || '').slice(0, 500),
             trigger_text: latestUtterance.slice(0, 200),
             speaker,

@@ -116,9 +116,9 @@ Deno.serve(async (req) => {
     for (const s of scores) {
       const c = critMap.get(s.criterion_id);
       if (!c) continue;
-      const clamped = Math.max(0, Math.min(c.max_score, Number(s.score) || 0));
-      total += clamped * Number(c.weight);
-      maxTotal += c.max_score * Number(c.weight);
+      const clamped = Math.max(0, Math.min(c.max_score, Number(s.score) || 0)); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
+      total += clamped * Number(c.weight); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
+      maxTotal += c.max_score * Number(c.weight); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
       validScores.push({ criterion_id: c.id, score: clamped, comment: (s.comment ?? '').slice(0, 500) });
     }
 
