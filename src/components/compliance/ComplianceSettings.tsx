@@ -13,6 +13,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { useDNCCompliance } from '@/hooks/useDNCCompliance';
+import { safeParseInt } from '@/lib/safe-number';
 
 export function ComplianceSettings() {
   const { settings, isLoadingSettings, getSettingValue, updateSetting } = useDNCCompliance();
@@ -23,8 +24,8 @@ export function ComplianceSettings() {
   };
 
   const handleNumberSetting = (key: string, value: string) => {
-    const numValue = parseInt(value, 10);
-    if (!isNaN(numValue) && numValue >= 0) {
+    const numValue = safeParseInt(value, { min: 0, fallback: -1 });
+    if (numValue >= 0) {
       updateSetting({ key, value: numValue });
     }
   };
