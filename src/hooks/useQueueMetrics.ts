@@ -118,7 +118,7 @@ export function useQueueMetrics() {
 
       setRealtimeData(prev => {
         const updated = [...prev, {
-          timestamp: safeFormatDate(, 'HH:mm:ss'),
+          timestamp: safeFormatDate(new Date(), 'HH:mm:ss'),
           activeCalls: active, waitingCalls: waiting,
           avgWaitTime: Math.round(avgWaitTime), serviceLevel: Math.round(serviceLevel),
         }];

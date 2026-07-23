@@ -54,7 +54,7 @@ export function ScheduleCallbackDialog({
   const [formData, setFormData] = useState({
     caller_name: defaultName,
     caller_phone: defaultPhone,
-    scheduled_date: safeFormatDate(, 'yyyy-MM-dd'),
+    scheduled_date: safeFormatDate(new Date(), 'yyyy-MM-dd'),
     scheduled_time: format(addHours(new Date(), 1), 'HH:mm'),
     notes: '',
     priority: 'normal',
@@ -91,7 +91,7 @@ export function ScheduleCallbackDialog({
       setFormData({
         caller_name: '',
         caller_phone: '',
-        scheduled_date: safeFormatDate(, 'yyyy-MM-dd'),
+        scheduled_date: safeFormatDate(new Date(), 'yyyy-MM-dd'),
         scheduled_time: format(addHours(new Date(), 1), 'HH:mm'),
         notes: '',
         priority: 'normal',
@@ -206,7 +206,7 @@ export function ScheduleCallbackDialog({
                 type="date"
                 value={formData.scheduled_date}
                 onChange={(e) => setFormData(prev => ({ ...prev, scheduled_date: e.target.value }))}
-                min={safeFormatDate(, 'yyyy-MM-dd')}
+                min={safeFormatDate(new Date(), 'yyyy-MM-dd')}
                 required
               />
             </div>
