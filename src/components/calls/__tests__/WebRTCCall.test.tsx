@@ -118,16 +118,15 @@ afterEach(() => {
 });
 
 async function startCall() {
-  const user = userEvent.setup();
   render(<WebRTCCall targetNumber="+551199999" />);
-  await user.click(screen.getByRole("button", { name: /ligar/i }));
-  // aguarda o startCall assíncrono completar
+  fireEvent.click(screen.getByRole("button", { name: /ligar/i }));
   await act(async () => {
     await Promise.resolve();
     await Promise.resolve();
+    await Promise.resolve();
   });
-  return { user };
 }
+
 
 describe("WebRTCCall", () => {
   it("anexa o stream remoto ao elemento <audio> quando ontrack dispara", async () => {
