@@ -111,9 +111,18 @@ export function paramsSchemaFor(action: BitrixAction): z.ZodTypeAny {
     case "register_call":
       return bitrixCallParams;
     case "finish_call":
-      return bitrixCallParams
-        .pick({ CALL_ID: true, USER_ID: true, DURATION: true, STATUS_CODE: true, FAILED_REASON: true, COST: true, COST_CURRENCY: true, RECORD_URL: true })
-        .required({ CALL_ID: true });
+      return z
+        .object({
+          CALL_ID: z.string().min(1).max(128),
+          USER_ID: bitrixId().optional(),
+          DURATION: nonNegativeInt().max(86_400).optional(),
+          STATUS_CODE: z.string().max(16).optional(),
+          FAILED_REASON: z.string().max(255).optional(),
+          COST: finiteNumber().min(0).max(1e9).optional(),
+          COST_CURRENCY: z.string().length(3).optional(),
+          RECORD_URL: z.string().url().max(2048).optional(),
+        })
+        .catchall(z.unknown());
     case "get_user":
     case "get_departments":
       return z.object({}).catchall(z.unknown()).optional();
