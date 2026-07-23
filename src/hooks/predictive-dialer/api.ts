@@ -66,18 +66,23 @@ export async function apiUpdateCampaignTotal(campaignId: string, total: number):
   await supabase.from('dialer_campaigns').update({ total_contacts: total }).eq('id', campaignId);
 }
 
-export async function apiSetCampaignStatus(
-  campaignId: string,
-  status: 'active' | 'paused',
-): Promise<DialerCampaign> {
+export async function apiStartCampaign(campaignId: string): Promise<DialerCampaign> {
   const { data, error } = await supabase
     .from('dialer_campaigns')
-    .update({ status })
+    .update({ status: 'active' })
     .eq('id', campaignId)
     .select()
     .single();
   if (error) throw error;
   return data as DialerCampaign;
+}
+
+export async function apiPauseCampaign(campaignId: string): Promise<void> {
+  const { error } = await supabase
+    .from('dialer_campaigns')
+    .update({ status: 'paused' })
+    .eq('id', campaignId);
+  if (error) throw error;
 }
 
 export async function apiGetNextContact(campaignId: string): Promise<DialerQueueItem | null> {
