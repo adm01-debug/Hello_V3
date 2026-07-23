@@ -1,80 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Database, AlertTriangle, RefreshCw, Gauge, Trash2, Copy, History, ShieldAlert } from "lucide-react";
+import { Database, RefreshCw, ShieldAlert } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
-import { toast } from "sonner";
-
-
-type BloatRow = {
-  schemaname: string;
-  relname: string;
-  dead_tuples: number;
-  live_tuples: number;
-  dead_ratio: number;
-};
-
-type TopTable = {
-  relname: string;
-  total_bytes: number;
-  heap_bytes: number;
-  index_bytes: number;
-  live_tuples: number | null;
-  dead_tuples: number | null;
-};
-
-type SlowQuery = {
-  query: string;
-  calls: number;
-  mean_ms: number;
-  total_ms: number;
-  max_ms: number;
-};
-
-type IdleIndex = {
-  schemaname: string;
-  relname: string;
-  indexrelname: string;
-  index_size_bytes: number;
-  index_size_pretty: string;
-};
-
-type IndexDropAuditRow = {
-  id: string;
-  index_name: string;
-  table_name: string;
-  admin_email: string | null;
-  action: "copy" | "execute";
-  created_at: string;
-};
-
-
-interface Snapshot {
-  generated_at: string;
-  bloat: BloatRow[];
-  top_tables: TopTable[];
-  activity: {
-    total_connections: number;
-    active: number;
-    idle: number;
-    idle_in_txn: number;
-  };
-}
-
-function formatBytes(n: number): string {
-  if (n < 1024) return `${n} B`;
-  const units = ["KB", "MB", "GB", "TB"];
-  let v = n / 1024;
-  let i = 0;
-  while (v >= 1024 && i < units.length - 1) {
-    v /= 1024;
-    i++;
-  }
-  return `${v.toFixed(1)} ${units[i]}`;
-}
+import type {
+  IdleIndex,
+  IndexDropAuditRow,
+  SlowQuery,
+  Snapshot,
+} from "./database-health/types";
+import { ActivityCards } from "./database-health/ActivityCards";
+import { BloatCard } from "./database-health/BloatCard";
+import { TopTablesCard } from "./database-health/TopTablesCard";
+import { IdleIndexesCard } from "./database-health/IdleIndexesCard";
+import { DropAuditCard } from "./database-health/DropAuditCard";
+import { SlowQueriesCard } from "./database-health/SlowQueriesCard";
 
 export default function DatabaseHealth() {
   usePageTitle("Saúde do Banco");
@@ -131,7 +71,6 @@ export default function DatabaseHealth() {
     dropAudit.refetch();
   };
 
-
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
@@ -158,251 +97,16 @@ export default function DatabaseHealth() {
         </div>
       </div>
 
-      {/* Atividade */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {(["total_connections", "active", "idle", "idle_in_txn"] as const).map((key) => (
-          <Card key={key}>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xs uppercase text-muted-foreground">
-                {key.replace(/_/g, " ")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {snapshot.isLoading ? (
-                <Skeleton className="h-8 w-16" />
-              ) : (
-                <div className="text-2xl font-bold">
-                  {snapshot.data?.activity?.[key] ?? 0}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Bloat */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-warning" />
-            Hotspots de Bloat
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {snapshot.isLoading ? (
-            <Skeleton className="h-24 w-full" />
-          ) : snapshot.data?.bloat?.length ? (
-            <div className="space-y-2">
-              {snapshot.data.bloat.map((b) => (
-                <div
-                  key={b.relname}
-                  className="flex items-center justify-between p-3 rounded-md border bg-card/50"
-                >
-                  <div>
-                    <div className="font-mono text-sm">{b.relname}</div>
-                    <div className="text-xs text-muted-foreground">
-                      {b.dead_tuples.toLocaleString()} dead / {b.live_tuples.toLocaleString()} live
-                    </div>
-                  </div>
-                  <Badge variant="destructive">{b.dead_ratio}%</Badge>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              Nenhum hotspot detectado. Todas as tabelas com bloat aceitável.
-            </p>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Top tabelas por tamanho */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Top 15 tabelas por tamanho</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {snapshot.isLoading ? (
-            <Skeleton className="h-64 w-full" />
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-left text-xs uppercase text-muted-foreground border-b">
-                    <th className="py-2">Tabela</th>
-                    <th className="py-2 text-right">Total</th>
-                    <th className="py-2 text-right">Heap</th>
-                    <th className="py-2 text-right">Índices</th>
-                    <th className="py-2 text-right">Linhas</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {snapshot.data?.top_tables?.map((t) => (
-                    <tr key={t.relname} className="border-b border-border/40">
-                      <td className="py-2 font-mono">{t.relname}</td>
-                      <td className="py-2 text-right">{formatBytes(t.total_bytes)}</td>
-                      <td className="py-2 text-right text-muted-foreground">
-                        {formatBytes(t.heap_bytes)}
-                      </td>
-                      <td className="py-2 text-right text-muted-foreground">
-                        {formatBytes(t.index_bytes)}
-                      </td>
-                      <td className="py-2 text-right">
-                        {(t.live_tuples ?? 0).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Idle indexes */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Trash2 className="w-4 h-4 text-warning" />
-            Índices ociosos (idx_scan = 0, &gt; 1MB)
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {idle.isLoading ? (
-            <Skeleton className="h-24 w-full" />
-          ) : idle.data && idle.data.length > 0 ? (
-            <div className="space-y-2">
-              {idle.data.map((i) => {
-                const sql = `DROP INDEX CONCURRENTLY IF EXISTS ${i.schemaname}.${i.indexrelname};`;
-                return (
-                  <div
-                    key={i.indexrelname}
-                    className="flex items-center justify-between p-3 rounded-md border bg-card/50 gap-3"
-                  >
-                    <div className="min-w-0">
-                      <div className="font-mono text-sm truncate">{i.indexrelname}</div>
-                      <div className="text-xs text-muted-foreground">
-                        em <span className="font-mono">{i.relname}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <Badge variant="outline">{i.index_size_pretty}</Badge>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={async () => {
-                          try {
-                            await navigator.clipboard.writeText(sql);
-                            toast.success("DROP INDEX copiado para a área de transferência");
-                            // Best-effort audit: não bloquear UX se falhar
-                            void supabase
-                              .rpc("log_index_drop_copy", {
-                                p_index_name: i.indexrelname,
-                                p_table_name: i.relname,
-                              })
-                              .then(() => dropAudit.refetch());
-                          } catch {
-                            toast.error("Falha ao copiar SQL");
-                          }
-                        }}
-
-                        title={sql}
-                      >
-                        <Copy className="w-3.5 h-3.5 mr-1" />
-                        DROP
-                      </Button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              Nenhum índice ocioso relevante. Todos os índices estão sendo utilizados.
-            </p>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Histórico de manutenção de índices */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <History className="w-4 h-4 text-primary" />
-            Histórico de manutenção de índices (últimas 20)
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {dropAudit.isLoading ? (
-            <Skeleton className="h-24 w-full" />
-          ) : dropAudit.data && dropAudit.data.length > 0 ? (
-            <div className="space-y-2">
-              {dropAudit.data.map((row) => (
-                <div
-                  key={row.id}
-                  className="flex items-center justify-between p-2 rounded-md border bg-card/50 gap-3 text-sm"
-                >
-                  <div className="min-w-0">
-                    <div className="font-mono truncate">{row.index_name}</div>
-                    <div className="text-xs text-muted-foreground">
-                      em <span className="font-mono">{row.table_name}</span> • {row.admin_email ?? "—"}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <Badge variant={row.action === "execute" ? "destructive" : "outline"}>
-                      {row.action}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">
-                      {new Date(row.created_at).toLocaleString("pt-BR")}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              Nenhuma cópia de DROP INDEX registrada ainda.
-            </p>
-          )}
-        </CardContent>
-      </Card>
-
-
-
-      {/* Slow queries */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Gauge className="w-4 h-4 text-primary" />
-            Top 15 consultas mais lentas
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {slow.isLoading ? (
-            <Skeleton className="h-64 w-full" />
-          ) : slow.data && slow.data.length > 0 ? (
-            <div className="space-y-2">
-              {slow.data.map((q, i) => (
-                <div key={i} className="p-3 rounded-md border bg-card/50 space-y-1">
-                  <pre className="text-xs font-mono whitespace-pre-wrap break-all text-muted-foreground">
-                    {q.query}
-                  </pre>
-                  <div className="flex flex-wrap gap-2 text-xs">
-                    <Badge variant="secondary">{q.calls.toLocaleString()} calls</Badge>
-                    <Badge variant="outline">média {q.mean_ms} ms</Badge>
-                    <Badge variant="outline">máx {q.max_ms} ms</Badge>
-                    <Badge>total {q.total_ms} ms</Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              pg_stat_statements indisponível ou sem dados suficientes.
-            </p>
-          )}
-        </CardContent>
-      </Card>
+      <ActivityCards isLoading={snapshot.isLoading} data={snapshot.data} />
+      <BloatCard isLoading={snapshot.isLoading} bloat={snapshot.data?.bloat} />
+      <TopTablesCard isLoading={snapshot.isLoading} tables={snapshot.data?.top_tables} />
+      <IdleIndexesCard
+        isLoading={idle.isLoading}
+        indexes={idle.data}
+        onAudited={() => dropAudit.refetch()}
+      />
+      <DropAuditCard isLoading={dropAudit.isLoading} rows={dropAudit.data} />
+      <SlowQueriesCard isLoading={slow.isLoading} queries={slow.data} />
 
       {snapshot.data?.generated_at && (
         <p className="text-xs text-muted-foreground text-right">
