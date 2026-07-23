@@ -2,6 +2,7 @@
  * Utilitários para scoring de tentativas outbound e análise de melhor janela de contato.
  * Usado pelo Predictive Dialer e pelo painel de Outbound Compliance.
  */
+import { safeToFixed } from '@/lib/safe-number';
 
 export type Recommendation = 'block' | 'defer' | 'low_priority' | 'normal' | 'high_priority';
 
