@@ -48,7 +48,7 @@ export function AlertsTrendChart() {
 
   const fetchAlerts = async () => {
     setIsLoading(true);
-    const daysAgo = parseInt(dateRange);
+    const daysAgo = safeParseInt(dateRange, { min: 1, max: 365, fallback: 7 });
     const startDate = subDays(new Date(), daysAgo).toISOString();
 
     const [callRes, contactRes] = await Promise.all([
@@ -76,7 +76,7 @@ export function AlertsTrendChart() {
   }, [callAlerts, contactAlerts, alertSource]);
 
   const trendData = useMemo(() => {
-    const daysAgo = parseInt(dateRange);
+    const daysAgo = safeParseInt(dateRange, { min: 1, max: 365, fallback: 7 });
     const dateInterval = eachDayOfInterval({
       start: subDays(new Date(), daysAgo - 1),
       end: new Date()
@@ -144,7 +144,7 @@ export function AlertsTrendChart() {
   }, [filteredAlerts]);
 
   const totalAlerts = trendData.reduce((sum, day) => sum + day.total, 0);
-  const avgPerDay = totalAlerts > 0 ? (totalAlerts / parseInt(dateRange)).toFixed(1) : '0';
+  const avgPerDay = totalAlerts > 0 ? (totalAlerts / safeParseInt(dateRange, { min: 1, max: 365, fallback: 7 })).toFixed(1) : '0';
   const criticalTotal = trendData.reduce((sum, day) => sum + day.critical, 0);
 
   return (
