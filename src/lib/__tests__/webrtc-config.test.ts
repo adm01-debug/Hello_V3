@@ -4,11 +4,7 @@ type MutableEnv = Record<string, string | undefined>;
 
 describe("getIceServers", () => {
   const env = import.meta.env as unknown as MutableEnv;
-  const original = {
-    VITE_TURN_URL: env.VITE_TURN_URL,
-    VITE_TURN_USER: env.VITE_TURN_USER,
-    VITE_TURN_CRED: env.VITE_TURN_CRED,
-  };
+
 
   beforeEach(() => {
     vi.resetModules();
