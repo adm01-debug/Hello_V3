@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { NeonPageLayout } from "@/components/layout/NeonPageLayout";
+import { safeParseFloat } from "@/lib/safe-number";
 
 function formatCurrency(cents: number, currency = "BRL") {
   return new Intl.NumberFormat("pt-BR", { style: "currency", currency })
