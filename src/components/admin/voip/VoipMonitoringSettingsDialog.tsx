@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useVoipMonitoringSettings } from '@/hooks/useVoipMonitoringSettings';
 import { Settings2, BarChart3, Clock } from 'lucide-react';
+import { safeParseInt } from '@/lib/safe-number';
 
 export function VoipMonitoringSettingsDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void }) {
   const { settings, save } = useVoipMonitoringSettings();
@@ -43,7 +44,7 @@ export function VoipMonitoringSettingsDialog({ open, onOpenChange }: { open: boo
             <Input 
               type="number" 
               value={localSettings.occupancy_threshold_percent}
-              onChange={e => setLocalSettings(p => ({ ...p, occupancy_threshold_percent: parseInt(e.target.value) }))}
+              onChange={e => setLocalSettings(p => ({ ...p, occupancy_threshold_percent: safeParseInt(e.target.value, { fallback: 0, min: 0, max: 100 }) }))}
             />
             <p className="text-xs text-muted-foreground">Define o limite para o alerta de capacidade crítica.</p>
           </div>
@@ -54,7 +55,7 @@ export function VoipMonitoringSettingsDialog({ open, onOpenChange }: { open: boo
             <Input 
               type="number" 
               value={localSettings.latency_threshold_ms}
-              onChange={e => setLocalSettings(p => ({ ...p, latency_threshold_ms: parseInt(e.target.value) }))}
+              onChange={e => setLocalSettings(p => ({ ...p, latency_threshold_ms: safeParseInt(e.target.value, { fallback: 0, min: 0, max: 10_000 }) }))}
             />
             <p className="text-xs text-muted-foreground">Define o limite para o alerta de latência alta.</p>
           </div>

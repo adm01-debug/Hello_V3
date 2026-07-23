@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { safeParseFloat } from '@/lib/safe-number';
 
 export interface DashboardGoal {
   id: string;
@@ -85,8 +86,8 @@ export function useDashboardGoals(onGoalsChange?: () => void) {
     setSaving(true);
     const goalData = {
       name: formData.name, metric_type: formData.metric_type,
-      target_value: parseFloat(formData.target_value), warning_threshold: parseFloat(formData.warning_threshold),
-      critical_threshold: parseFloat(formData.critical_threshold), comparison_operator: formData.comparison_operator,
+      target_value: safeParseFloat(formData.target_value), warning_threshold: safeParseFloat(formData.warning_threshold),
+      critical_threshold: safeParseFloat(formData.critical_threshold), comparison_operator: formData.comparison_operator,
       is_active: formData.is_active, notify_on_warning: formData.notify_on_warning, notify_on_critical: formData.notify_on_critical,
     };
     let error;
