@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Ban, Search, Download } from 'lucide-react';
 import { useDNCCompliance } from '@/hooks/useDNCCompliance';
 import { format } from 'date-fns';
+import { safeFormatDate } from '@/lib/safe-date';
 import { DNCStats } from './dnc/DNCStats';
 import { AddDNCDialog } from './dnc/AddDNCDialog';
 import { ImportDNCDialog } from './dnc/ImportDNCDialog';
