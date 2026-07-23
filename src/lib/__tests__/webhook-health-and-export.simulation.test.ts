@@ -192,11 +192,9 @@ describe("webhook-health-utils · simulação massiva", () => {
         const csv = endpointsToCsv(stats);
         const lines = csv.split("\n");
         expect(lines[0]).toBe("endpoint_hash,attempts,failed,failure_ratio_pct");
-        if (stats.length === 0) {
-          expect(lines).toHaveLength(1);
-        } else {
-          expect(lines).toHaveLength(1 + stats.length);
-        }
+        // Header sempre termina com \n; body é join("\n"). Empty → ["header",""].
+        const expectedLen = stats.length === 0 ? 2 : 1 + stats.length;
+        expect(lines).toHaveLength(expectedLen);
       }),
       { numRuns: 200 },
     );
