@@ -11,6 +11,10 @@ export interface VoipQualitySample {
   jitterMs: number;
   packetsLost: number;
   packetsReceived: number;
+  packetsDiscarded: number;
+  fractionLost: number | null;
+  concealedSamples: number;
+  totalSamplesReceived: number;
   rttMs: number;
   audioLevel: number;
   mos: number;
@@ -23,6 +27,7 @@ export interface VoipQualityState {
   jitterAvgMs: number | null;
   packetLossPct: number | null;
   rttAvgMs: number | null;
+  concealmentPct: number | null;
   label: QualityLabel;
   samplesCount: number;
 }
@@ -57,7 +62,8 @@ export function useVoipQualityMonitor(
 ) {
   const [state, setState] = useState<VoipQualityState>({
     current: null, mosAvg: null, mosMin: null, jitterAvgMs: null,
-    packetLossPct: null, rttAvgMs: null, label: 'unknown', samplesCount: 0,
+    packetLossPct: null, rttAvgMs: null, concealmentPct: null,
+    label: 'unknown', samplesCount: 0,
   });
 
   const samplesRef = useRef<VoipQualitySample[]>([]);
@@ -70,30 +76,46 @@ export function useVoipQualityMonitor(
     try {
       const stats = await pc.getStats();
       let jitterMs = 0, packetsLost = 0, packetsReceived = 0, rttMs = 0, audioLevel = 0;
+      let packetsDiscarded = 0, concealedSamples = 0, totalSamplesReceived = 0;
+      let fractionLost: number | null = null;
       stats.forEach((report) => {
+        const r = report as unknown as Record<string, number | string | undefined>;
         if (report.type === 'inbound-rtp' && report.kind === 'audio') {
-          jitterMs = (report.jitter ?? 0) * 1000;
-          packetsLost = report.packetsLost ?? 0;
-          packetsReceived = report.packetsReceived ?? 0;
-          audioLevel = report.audioLevel ?? 0;
+          jitterMs = ((r.jitter as number | undefined) ?? 0) * 1000;
+          packetsLost = (r.packetsLost as number | undefined) ?? 0;
+          packetsReceived = (r.packetsReceived as number | undefined) ?? 0;
+          audioLevel = (r.audioLevel as number | undefined) ?? 0;
+          packetsDiscarded = (r.packetsDiscarded as number | undefined) ?? 0;
+          concealedSamples = (r.concealedSamples as number | undefined) ?? 0;
+          totalSamplesReceived = (r.totalSamplesReceived as number | undefined) ?? 0;
         }
         if (report.type === 'remote-inbound-rtp' && report.kind === 'audio') {
-          rttMs = (report.roundTripTime ?? 0) * 1000;
+          rttMs = ((r.roundTripTime as number | undefined) ?? 0) * 1000;
+          const fl = r.fractionLost as number | undefined;
+          if (typeof fl === 'number') fractionLost = fl;
         }
-        if (report.type === 'candidate-pair' && report.state === 'succeeded' && rttMs === 0) {
-          rttMs = (report.currentRoundTripTime ?? 0) * 1000;
+        if (report.type === 'candidate-pair' && (r.state as string | undefined) === 'succeeded' && rttMs === 0) {
+          rttMs = ((r.currentRoundTripTime as number | undefined) ?? 0) * 1000;
         }
       });
 
-      const lostDelta = Math.max(0, packetsLost - prevPacketsLostRef.current);
-      const recvDelta = Math.max(1, packetsReceived - prevPacketsReceivedRef.current);
-      const lossPct = (lostDelta / (lostDelta + recvDelta)) * 100;
+      let lossPct: number;
+      if (fractionLost !== null) {
+        // fractionLost é 0..1 (fração dos últimos pacotes perdidos) — mais preciso
+        lossPct = fractionLost * 100;
+      } else {
+        const lostDelta = Math.max(0, packetsLost - prevPacketsLostRef.current);
+        const recvDelta = Math.max(1, packetsReceived - prevPacketsReceivedRef.current);
+        lossPct = (lostDelta / (lostDelta + recvDelta)) * 100;
+      }
       prevPacketsLostRef.current = packetsLost;
       prevPacketsReceivedRef.current = packetsReceived;
 
       const mos = calculateMos(rttMs, jitterMs, lossPct);
       const sample: VoipQualitySample = {
-        ts: Date.now(), jitterMs, packetsLost, packetsReceived, rttMs, audioLevel, mos,
+        ts: Date.now(), jitterMs, packetsLost, packetsReceived,
+        packetsDiscarded, fractionLost, concealedSamples, totalSamplesReceived,
+        rttMs, audioLevel, mos,
       };
       samplesRef.current.push(sample);
 
@@ -105,6 +127,9 @@ export function useVoipQualityMonitor(
       const totalLost = samples.reduce((s, x) => s + x.packetsLost, 0);
       const totalRecv = samples.reduce((s, x) => s + x.packetsReceived, 0);
       const lossPctAvg = totalRecv > 0 ? (totalLost / (totalLost + totalRecv)) * 100 : 0;
+      const totalConcealed = samples.reduce((s, x) => s + x.concealedSamples, 0);
+      const totalSamples = samples.reduce((s, x) => s + x.totalSamplesReceived, 0);
+      const concealmentPct = totalSamples > 0 ? (totalConcealed / totalSamples) * 100 : null;
 
       setState({
         current: sample,
@@ -113,6 +138,7 @@ export function useVoipQualityMonitor(
         jitterAvgMs: Number(jitterAvg.toFixed(2)),
         packetLossPct: Number(lossPctAvg.toFixed(2)),
         rttAvgMs: Number(rttAvg.toFixed(2)),
+        concealmentPct: concealmentPct !== null ? Number(concealmentPct.toFixed(2)) : null,
         label: labelFromMos(mosAvg),
         samplesCount: samples.length,
       });
