@@ -7,9 +7,10 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Gauge, Activity, RefreshCw, Zap } from 'lucide-react';
 import { useCampaignPacing, useApplyPacingNow } from '@/hooks/usePredictivePacing';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 interface Campaign {
   id: string;
   name: string;
@@ -142,7 +143,7 @@ export default function PredictiveDialer() {
               />
               <Row
                 label="Calculado"
-                value={formatDistanceToNow(new Date(pacing.computed_at), {
+                value={safeFormatDistanceToNow(pacing.computed_at, {
                   addSuffix: true,
                   locale: ptBR,
                 })}

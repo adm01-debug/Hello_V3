@@ -3,6 +3,7 @@ import type { ExportColumn } from '@/lib/export/index';
 import type { AuditAction, AuditEvent } from '@/lib/audit/index';
 import { validateNotification, type NotificationCategory, type NotificationSeverity } from '@/lib/notifications/index';
 
+import { safeToLocaleDateString } from "@/lib/safe-date";
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
     from: vi.fn(() => ({
@@ -27,7 +28,7 @@ describe('Export Column Formatting', () => {
     const col: ExportColumn = {
       key: 'created_at',
       label: 'Criado em',
-      format: (v) => new Date(v as string).toLocaleDateString('pt-BR'),
+      format: (v) => safeToLocaleDateString(v as string, 'pt-BR'),
     };
     expect(col.format!('2024-06-15T10:00:00Z')).toContain('/');
   });

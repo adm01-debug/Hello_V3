@@ -13,6 +13,7 @@ import {
 import { validateNotification, type NotificationCategory, type NotificationSeverity } from '@/lib/notifications/index';
 import type { ExportColumn } from '@/lib/export/index';
 
+import { safeToLocaleDateString } from "@/lib/safe-date";
 // Mock supabase for modules that import it
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
@@ -213,7 +214,7 @@ describe('Export Utilities - Column Logic', () => {
     const col: ExportColumn = {
       key: 'date',
       label: 'Data',
-      format: (v) => new Date(v as string).toLocaleDateString('pt-BR'),
+      format: (v) => safeToLocaleDateString(v as string, 'pt-BR'),
     };
     expect(col.format!('2024-01-15')).toContain('/');
   });

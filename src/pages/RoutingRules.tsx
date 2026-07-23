@@ -13,6 +13,7 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useRoutingRules, useUpsertRoutingRule, useDeleteRoutingRule, type RoutingRule } from '@/hooks/useRoutingRules';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 export default function RoutingRules() {
   usePageTitle('Regras de Roteamento');
 
@@ -78,7 +79,7 @@ export default function RoutingRules() {
                   {r.description && <p className="text-sm text-muted-foreground mb-2">{r.description}</p>}
                   <div className="flex gap-4 text-xs text-muted-foreground">
                     <span>Matches: {r.match_count}</span>
-                    {r.last_matched_at && <span>Último: {new Date(r.last_matched_at).toLocaleString('pt-BR')}</span>}
+                    {r.last_matched_at && <span>Último: {safeToLocaleString(r.last_matched_at, 'pt-BR')}</span>}
                   </div>
                 </div>
                 <div className="flex gap-2 shrink-0">

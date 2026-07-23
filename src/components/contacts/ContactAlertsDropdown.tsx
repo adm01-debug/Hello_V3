@@ -19,12 +19,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { useContactAlerts, ContactAlert } from '@/hooks/useContactAlerts';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 export function ContactAlertsDropdown() {
   const navigate = useNavigate();
   const { 
@@ -180,7 +181,7 @@ export function ContactAlertsDropdown() {
                       </p>
                       <div className="flex items-center gap-2 mt-2">
                         <span className="text-[10px] text-muted-foreground">
-                          {formatDistanceToNow(new Date(alert.created_at), { 
+                          {safeFormatDistanceToNow(alert.created_at, { 
                             locale: ptBR, 
                             addSuffix: true 
                           })}

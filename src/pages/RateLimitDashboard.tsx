@@ -10,6 +10,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useRateLimitData } from '@/hooks/useRateLimitData';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 export default function RateLimitDashboard() {
   usePageTitle('Rate Limit');
 
@@ -98,7 +99,7 @@ export default function RateLimitDashboard() {
                       <TableCell className="font-mono text-sm">{log.endpoint}</TableCell>
                       <TableCell>{log.request_count}</TableCell>
                       <TableCell><Badge variant={log.is_blocked ? 'destructive' : 'default'}>{log.is_blocked ? 'Bloqueado' : 'OK'}</Badge></TableCell>
-                      <TableCell>{new Date(log.created_at ?? 0).toLocaleString('pt-BR')}</TableCell>
+                      <TableCell>{safeToLocaleString(log.created_at ?? 0, 'pt-BR')}</TableCell>
                       <TableCell className="text-right">{log.is_blocked && <Button variant="ghost" size="sm" onClick={() => unblockIP(log.ip_address)}>Desbloquear</Button>}</TableCell>
                     </TableRow>
                   ))}

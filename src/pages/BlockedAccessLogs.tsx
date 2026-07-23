@@ -4,13 +4,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format, parseISO } from "date-fns";
+
 import { ptBR } from "date-fns/locale";
 import { Search, RefreshCw, ShieldX, Globe, MapPin, TrendingUp, Filter, X } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useBlockedAccessLogs } from '@/hooks/useBlockedAccessLogs';
 
+import { safeFormatDatePtBR } from "@/lib/safe-date";
 const COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3))', 'hsl(var(--chart-4))', 'hsl(var(--chart-5))'];
 
 const BlockedAccessLogs = () => {
@@ -220,7 +221,7 @@ const BlockedAccessLogs = () => {
                 ) : (
                   filteredLogs.slice(0, 50).map((log) => (
                     <TableRow key={log.id}>
-                      <TableCell className="font-mono text-xs">{format(parseISO(log.created_at), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })}</TableCell>
+                      <TableCell className="font-mono text-xs">{safeFormatDatePtBR(log.created_at, "dd/MM/yyyy HH:mm:ss")}</TableCell>
                       <TableCell>{log.user_email || "-"}</TableCell>
                       <TableCell className="font-mono text-sm">{log.ip_address}</TableCell>
                       <TableCell>

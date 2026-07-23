@@ -12,6 +12,7 @@ import { Printer, Send, Inbox, Plus, FileText, Clock, CheckCircle2, XCircle, Sca
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useVirtualFaxOcr } from '@/hooks/useVirtualFaxOcr';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 export default function VirtualFax() {
   usePageTitle('Fax Virtual');
   const queryClient = useQueryClient();
@@ -103,7 +104,7 @@ export default function VirtualFax() {
                   <p className="font-medium">{fax.subject || fax.to_number}</p>
                   <p className="text-xs text-muted-foreground">
                     {fax.direction === 'outbound' ? `Para: ${fax.to_number}` : `De: ${fax.from_number}`} • 
-                    {fax.page_count} páginas • {new Date(fax.created_at).toLocaleString('pt-BR')}
+                    {fax.page_count} páginas • {safeToLocaleString(fax.created_at, 'pt-BR')}
                   </p>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { History } from "lucide-react";
 import type { IndexDropAuditRow } from "./types";
 
+import { safeToLocaleString } from "@/lib/safe-date";
 interface Props {
   isLoading: boolean;
   rows?: IndexDropAuditRow[];
@@ -39,7 +40,7 @@ export function DropAuditCard({ isLoading, rows }: Props) {
                     {row.action}
                   </Badge>
                   <span className="text-xs text-muted-foreground">
-                    {new Date(row.created_at).toLocaleString("pt-BR")}
+                    {safeToLocaleString(row.created_at, "pt-BR")}
                   </span>
                 </div>
               </div>

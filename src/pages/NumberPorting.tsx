@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { ArrowLeftRight, Plus, Phone, Building, Clock, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+import { safeToLocaleDateString } from "@/lib/safe-date";
 export default function NumberPorting() {
   usePageTitle('Portabilidade Numérica');
 
@@ -95,7 +96,7 @@ export default function NumberPorting() {
                   <div>
                     <p className="font-medium flex items-center gap-2"><Phone className="h-4 w-4" /> {req.phone_number}</p>
                     <p className="text-xs text-muted-foreground flex items-center gap-2">
-                      <Building className="h-3 w-3" /> {req.current_provider} • {req.authorized_name} • {new Date(req.created_at).toLocaleDateString('pt-BR')}
+                      <Building className="h-3 w-3" /> {req.current_provider} • {req.authorized_name} • {safeToLocaleDateString(req.created_at, 'pt-BR')}
                     </p>
                   </div>
                 </div>

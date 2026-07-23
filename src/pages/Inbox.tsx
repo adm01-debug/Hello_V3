@@ -22,9 +22,10 @@ import {
   type Conversation,
 } from '@/hooks/useConversations';
 import { cn } from '@/lib/utils';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 const channelIcons: Record<ConversationChannel, typeof MessageCircle> = {
   voice: Phone,
   whatsapp: MessageCircle,
@@ -183,7 +184,7 @@ export default function Inbox() {
                       <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
                         <span className="truncate">{c.assigned_agent_name || 'Não atribuída'}</span>
                         <span className="shrink-0">
-                          {formatDistanceToNow(new Date(c.last_message_at), { locale: ptBR, addSuffix: true })}
+                          {safeFormatDistanceToNow(c.last_message_at, { locale: ptBR, addSuffix: true })}
                         </span>
                       </div>
                       <div className="flex flex-wrap gap-1 mt-1.5">
@@ -304,7 +305,7 @@ function ConversationThread({ conversation, messages, draft, setDraft, isPrivate
                   </div>
                   <div className="whitespace-pre-wrap break-words">{m.content}</div>
                   <div className="text-[10px] opacity-50 mt-1 text-right">
-                    {formatDistanceToNow(new Date(m.created_at), { locale: ptBR, addSuffix: true })}
+                    {safeFormatDistanceToNow(m.created_at, { locale: ptBR, addSuffix: true })}
                   </div>
                 </div>
               </div>

@@ -10,6 +10,7 @@ import { useVoipRecommendationHistory, type HistoryPeriod, type HistoryOutcome }
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
+import { safeToLocaleDateString, safeToLocaleString } from "@/lib/safe-date";
 const OUTCOME_LABEL: Record<HistoryOutcome, string> = {
   applied: 'Aplicada',
   auto_applied: 'Auto-aplicada',
@@ -64,7 +65,7 @@ export function RecommendationHistoryDrawer() {
       return;
     }
     const csv = toCsv(filtered.map(i => ({
-      data: new Date(i.applied_at).toLocaleString('pt-BR'),
+      data: safeToLocaleString(i.applied_at, 'pt-BR'),
       categoria: CATEGORY_LABEL[i.category] ?? i.category,
       severidade: i.severity,
       outcome: OUTCOME_LABEL[i.outcome] ?? i.outcome,
@@ -146,7 +147,7 @@ export function RecommendationHistoryDrawer() {
                   <XAxis dataKey="date" hide />
                   <RTooltip
                     contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: 8, fontSize: 11 }}
-                    labelFormatter={(v) => new Date(v as string).toLocaleDateString('pt-BR')}
+                    labelFormatter={(v) => safeToLocaleDateString(v as string, 'pt-BR')}
                   />
                   <Line type="monotone" dataKey="count" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
                 </LineChart>
@@ -179,7 +180,7 @@ export function RecommendationHistoryDrawer() {
                       <span className="text-[10px] uppercase text-muted-foreground">{item.severity}</span>
                     </div>
                     <span className="text-[10px] font-mono text-muted-foreground">
-                      {new Date(item.applied_at).toLocaleString('pt-BR')}
+                      {safeToLocaleString(item.applied_at, 'pt-BR')}
                     </span>
                   </div>
                   <p className="mt-1 font-mono text-[11px] text-foreground/80 truncate">{item.recommendation_id}</p>

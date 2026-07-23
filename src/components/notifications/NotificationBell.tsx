@@ -11,9 +11,10 @@ import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { EmptyNotificationsState } from '@/components/ui/empty-state';
 import { useRealtimeHoldAlerts } from '@/hooks/useRealtimeHoldAlerts';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 export function NotificationBell() {
   const navigate = useNavigate();
   const {
@@ -140,7 +141,7 @@ export function NotificationBell() {
                         </div>
                       </div>
                       <p className="text-[10px] text-muted-foreground mt-1">
-                        {formatDistanceToNow(new Date(alert.created_at), { 
+                        {safeFormatDistanceToNow(alert.created_at, { 
                           addSuffix: true,
                           locale: ptBR 
                         })}

@@ -5,12 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Phone, Smartphone, Network, QrCode, ExternalLink, Copy, UserCog, PhoneCall, History } from 'lucide-react';
 import { toast } from 'sonner';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { ExtensionStatusBadge, TrunkHealthBadge } from './ExtensionStatusBadge';
 import { ExtensionAuditTimeline } from './ExtensionAuditTimeline';
 import type { ExtensionOverview } from '@/hooks/useExtensionsOverview';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 interface Props {
   extension: ExtensionOverview | null;
   open: boolean;
@@ -92,7 +93,7 @@ export function ExtensionDetailsDrawer({ extension, open, onOpenChange }: Props)
                   <div className="rounded-lg bg-muted/40 p-2">
                     <p className="text-xs font-semibold pt-1">
                       {extension.last_call_at
-                        ? formatDistanceToNow(new Date(extension.last_call_at), { addSuffix: true, locale: ptBR })
+                        ? safeFormatDistanceToNow(extension.last_call_at, { addSuffix: true, locale: ptBR })
                         : '—'}
                     </p>
                     <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Última</p>

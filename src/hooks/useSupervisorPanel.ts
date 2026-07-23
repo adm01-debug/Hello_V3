@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { useCriticalAlertNotifications, AlertSoundConfig } from '@/hooks/useCriticalAlertNotifications';
 import { logger } from '@/lib/logger';
 
+import { safeToLocaleTimeString } from "@/lib/safe-date";
 export interface ActiveCall {
   id: string;
   caller_name: string | null;
@@ -189,7 +190,7 @@ export function useSupervisorPanel() {
     else { setActiveBargeIn(null); toast.info('Você saiu da conferência'); }
   };
 
-  const formatTime = (dateStr: string) => new Date(dateStr).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const formatTime = (dateStr: string) => safeToLocaleTimeString(dateStr, 'pt-BR', { hour: '2-digit', minute: '2-digit' });
 
    const isCallInBargeIn = (callId: string) => activeBargeIn?.call_session_id === callId;
 

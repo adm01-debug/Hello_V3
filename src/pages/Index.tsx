@@ -28,6 +28,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+import { safeToLocaleTimeString } from "@/lib/safe-date";
 const Index = () => {
   usePageTitle('Dashboard');
   const queryClient = useQueryClient();
@@ -84,7 +85,7 @@ const Index = () => {
             {dataUpdatedAt > 0 && (
               <div className="flex items-center gap-2 text-muted-foreground/60">
                 <Clock className="h-3 w-3" />
-                <span className="text-[10px] font-medium">Sincronizado {new Date(dataUpdatedAt).toLocaleTimeString('pt-BR')}</span>
+                <span className="text-[10px] font-medium">Sincronizado {safeToLocaleTimeString(dataUpdatedAt, 'pt-BR')}</span>
               </div>
             )}
           </div>

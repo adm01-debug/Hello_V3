@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import {
   AlertCircle,
@@ -33,6 +33,7 @@ import {
   type SyncAttemptStatus,
 } from '@/lib/bitrix/sync-log';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 type Row = Database['public']['Tables']['crm_sync_queue']['Row'];
 
 const toAttempt = (r: Row): SyncAttempt => ({
@@ -184,7 +185,7 @@ export function BitrixSyncStatus() {
                           {actionLabel(a.action)}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {formatDistanceToNow(new Date(a.updated_at), {
+                          {safeFormatDistanceToNow(a.updated_at, {
                             addSuffix: true,
                             locale: ptBR,
                           })}

@@ -14,6 +14,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { Link } from 'react-router-dom';
 import { HighlightedSnippet } from '@/components/conversation-intelligence/HighlightedSnippet';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 const PAGE_SIZE = 20;
 
 const MOMENT_OPTIONS = [
@@ -158,7 +159,7 @@ export default function CallLibrary() {
                                 )}
                                 <span className="flex items-center gap-1">
                                   <Calendar className="h-3 w-3" />
-                                  {new Date(r.created_at).toLocaleString('pt-BR')}
+                                  {safeToLocaleString(r.created_at, 'pt-BR')}
                                 </span>
                                 {r.duration_seconds && <span>{Math.floor(r.duration_seconds / 60)} min</span>}
                               </div>

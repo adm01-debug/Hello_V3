@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { supabase } from '@/integrations/supabase/client';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 export function PendingFollowupsCard() {
   const { data, isLoading } = useQuery({
     queryKey: ['pending-followups'],
@@ -47,7 +48,7 @@ export function PendingFollowupsCard() {
                   <div className="min-w-0">
                     <p className="text-sm truncate">{cb.caller_name ?? cb.caller_phone}</p>
                     <p className="text-xs text-muted-foreground">
-                      {formatDistanceToNow(new Date(cb.scheduled_at), { locale: ptBR, addSuffix: true })}
+                      {safeFormatDistanceToNow(cb.scheduled_at, { locale: ptBR, addSuffix: true })}
                     </p>
                   </div>
                 </div>

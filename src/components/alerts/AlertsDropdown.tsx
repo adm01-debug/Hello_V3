@@ -12,11 +12,12 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { supabase } from '@/integrations/supabase/client';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 interface Alert {
   id: string;
   call_session_id: string;
@@ -267,7 +268,7 @@ export function AlertsDropdown() {
                       {alert.message}
                     </p>
                     <span className="text-xs text-muted-foreground mt-1 block">
-                      {formatDistanceToNow(new Date(alert.created_at), {
+                      {safeFormatDistanceToNow(alert.created_at, {
                         addSuffix: true,
                         locale: ptBR,
                       })}

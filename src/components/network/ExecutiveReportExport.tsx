@@ -6,6 +6,7 @@ import { exportToCSV, type ExportColumn } from '@/lib/export';
 import { useVoipExecutiveSummary, type ExecutivePeriod } from '@/hooks/useVoipExecutiveSummary';
 import { logger } from '@/lib/logger';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 const log = logger.create('ExecutiveReportExport');
 
 interface Props {
@@ -36,7 +37,7 @@ export function ExecutiveReportExport({ period = 'week' }: Props) {
       }
 
       const rows: ReportRow[] = [
-        { metric: 'Período', value: summary.period, detail: `Desde ${new Date(summary.since).toLocaleString('pt-BR')}` },
+        { metric: 'Período', value: summary.period, detail: `Desde ${safeToLocaleString(summary.since, 'pt-BR')}` },
         { metric: 'Health Score', value: `${summary.health_score} / 100`, detail: '40% SLA + 30% MOS + 20% Alertas + 10% Capacidade' },
         { metric: 'SLA — Score', value: `${Math.round(summary.breakdown.sla_score)}`, detail: `Atual: ${summary.sla.current_pct ?? '—'}% / Anterior: ${summary.sla.previous_pct ?? '—'}%` },
         { metric: 'MOS — Score', value: `${Math.round(summary.breakdown.mos_score)}`, detail: `Média: ${summary.mos_avg ?? '—'}` },

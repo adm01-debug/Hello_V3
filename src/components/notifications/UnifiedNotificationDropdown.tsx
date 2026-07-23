@@ -1,3 +1,4 @@
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
  import { useState, useMemo } from 'react';
  import {
    Bell, BellRing, Settings2, Users, Phone,
@@ -242,7 +243,7 @@
            </span>
          </div>
          <span className="text-[10px] text-muted-foreground shrink-0 font-mono">
-           {formatDistanceToNow(new Date(time), { addSuffix: true, locale: ptBR })}
+           {safeFormatDistanceToNow(time, { addSuffix: true, locale: ptBR })}
          </span>
        </div>
        <p className="text-xs text-muted-foreground line-clamp-2 mt-1 leading-relaxed">

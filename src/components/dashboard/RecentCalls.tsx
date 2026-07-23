@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EmptyCallsState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
  import { useRecentCallsData } from '@/hooks/useDashboardData';
  import { cn, formatDuration } from '@/lib/utils';
  import { formatDistanceToNow } from 'date-fns';
@@ -89,7 +90,7 @@ export function RecentCalls() {
                         <span>{call.caller_phone || '—'}</span>
                         <span>•</span>
                         <span>
-                          {formatDistanceToNow(new Date(call.started_at), { 
+                          {safeFormatDistanceToNow(call.started_at, { 
                             addSuffix: true, 
                             locale: ptBR 
                           })}

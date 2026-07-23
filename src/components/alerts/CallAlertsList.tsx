@@ -4,9 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Checkbox } from '@/components/ui/checkbox';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
-import { safeFormatDatePtBR } from "@/lib/safe-date";
+import { safeFormatDatePtBR, safeFormatDistanceToNow } from "@/lib/safe-date";
 
 interface Props {
   alerts: {
@@ -118,7 +118,7 @@ export function CallAlertsList({ alerts }: Props) {
                             {safeFormatDatePtBR(alert.created_at, "dd/MM/yyyy 'às' HH:mm")}
                           </span>
                           <span className="text-xs text-muted-foreground">
-                            ({formatDistanceToNow(new Date(alert.created_at), { addSuffix: true, locale: ptBR })})
+                            ({safeFormatDistanceToNow(alert.created_at, { addSuffix: true, locale: ptBR })})
                           </span>
                         </div>
                       </div>

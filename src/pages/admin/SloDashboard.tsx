@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Gauge, Activity, Clock, AlertCircle } from 'lucide-react';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 interface HealthResponse {
   status: 'operational' | 'degraded' | 'outage' | 'unknown';
   components: {
@@ -103,7 +104,7 @@ export default function SloDashboard() {
           </div>
 
           <p className="text-xs text-muted-foreground">
-            Última verificação: {new Date(data.checked_at).toLocaleString('pt-BR')}
+            Última verificação: {safeToLocaleString(data.checked_at, 'pt-BR')}
           </p>
         </>
       )}

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { Download, History, Loader2, Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,6 +19,7 @@ import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 interface AuditEntry {
   id: string;
   action: string;
@@ -273,7 +274,7 @@ export function RoleAuditTrail() {
                         <p className="text-sm truncate">{describeChange(entry)}</p>
                         <p className="text-xs text-muted-foreground">
                           Por <span className="font-medium">{entry.user_email ?? 'sistema'}</span> ·{' '}
-                          {formatDistanceToNow(new Date(entry.created_at), {
+                          {safeFormatDistanceToNow(entry.created_at, {
                             addSuffix: true,
                             locale: ptBR,
                           })}

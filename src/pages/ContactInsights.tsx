@@ -15,6 +15,7 @@ import { Contact } from '@/hooks/useContacts';
 import { useContactInsights } from '@/hooks/useContactInsights';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+import { safeToLocaleDateString } from "@/lib/safe-date";
 interface PersonalityProfile {
   sentiment_trend: string;
 }
@@ -164,9 +165,9 @@ const ContactInsights = () => {
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={metrics.interactionsTrend}>
                       <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
-                      <XAxis dataKey="date" tickFormatter={(v) => new Date(v).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} fontSize={12} />
+                      <XAxis dataKey="date" tickFormatter={(v) => safeToLocaleDateString(v, 'pt-BR', { day: '2-digit', month: '2-digit' })} fontSize={12} />
                       <YAxis fontSize={12} />
-                      <Tooltip labelFormatter={(v) => new Date(v).toLocaleDateString('pt-BR')} />
+                      <Tooltip labelFormatter={(v) => safeToLocaleDateString(v, 'pt-BR')} />
                       <Line type="monotone" dataKey="count" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ r: 3 }} name="Interações" />
                     </LineChart>
                   </ResponsiveContainer>

@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { useVoipExecutiveNarrative, type NarrativePeriod } from '@/hooks/useVoipExecutiveNarrative';
 import { logger } from '@/lib/logger';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 const log = logger.create('ExecutiveSummaryDialog');
 
 export const ExecutiveSummaryDialog = () => {
@@ -40,7 +41,7 @@ export const ExecutiveSummaryDialog = () => {
       y += 22;
       doc.setFontSize(10);
       doc.setTextColor(120);
-      doc.text(`Período: ${period === 'week' ? 'Última semana' : 'Último mês'} • Gerado em ${new Date(data.generatedAt).toLocaleString('pt-BR')}`, margin, y);
+      doc.text(`Período: ${period === 'week' ? 'Última semana' : 'Último mês'} • Gerado em ${safeToLocaleString(data.generatedAt, 'pt-BR')}`, margin, y);
       y += 24;
       doc.setTextColor(0);
       doc.setFontSize(11);

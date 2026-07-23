@@ -12,10 +12,11 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+import { safeFormatDistanceToNow, safeToLocaleString } from "@/lib/safe-date";
 interface TopicTrend {
   id: string;
   topic: string;
@@ -306,10 +307,10 @@ export default function TopicDetection() {
                           </TableCell>
                           <TableCell className="font-medium">{d.occurrence_count}x</TableCell>
                           <TableCell className="text-sm text-muted-foreground">
-                            {formatDistanceToNow(new Date(d.first_detected_at), { addSuffix: true, locale: ptBR })}
+                            {safeFormatDistanceToNow(d.first_detected_at, { addSuffix: true, locale: ptBR })}
                           </TableCell>
                           <TableCell className="text-sm text-muted-foreground">
-                            {formatDistanceToNow(new Date(d.last_detected_at), { addSuffix: true, locale: ptBR })}
+                            {safeFormatDistanceToNow(d.last_detected_at, { addSuffix: true, locale: ptBR })}
                           </TableCell>
                           <TableCell className="font-mono text-xs text-muted-foreground">
                             {d.call_session_id ? d.call_session_id.slice(0, 8) + '...' : '—'}
@@ -349,7 +350,7 @@ export default function TopicDetection() {
                     <div>
                       <p className="text-sm font-medium">{alert.trigger_reason}</p>
                       <p className="text-xs text-muted-foreground">
-                        {alert.agent_name || 'N/A'} • {new Date(alert.created_at).toLocaleString('pt-BR')}
+                        {alert.agent_name || 'N/A'} • {safeToLocaleString(alert.created_at, 'pt-BR')}
                       </p>
                     </div>
                   </div>

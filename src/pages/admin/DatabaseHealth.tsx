@@ -16,6 +16,7 @@ import { IdleIndexesCard } from "./database-health/IdleIndexesCard";
 import { DropAuditCard } from "./database-health/DropAuditCard";
 import { SlowQueriesCard } from "./database-health/SlowQueriesCard";
 
+import { safeToLocaleString } from "@/lib/safe-date";
 export default function DatabaseHealth() {
   usePageTitle("Saúde do Banco");
 
@@ -110,7 +111,7 @@ export default function DatabaseHealth() {
 
       {snapshot.data?.generated_at && (
         <p className="text-xs text-muted-foreground text-right">
-          Gerado em {new Date(snapshot.data.generated_at).toLocaleString("pt-BR")}
+          Gerado em {safeToLocaleString(snapshot.data.generated_at, "pt-BR")}
         </p>
       )}
     </div>

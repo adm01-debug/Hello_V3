@@ -1,10 +1,11 @@
 import { Phone, FileText, MessageSquare, Clock, User } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { VirtualList } from '@/components/ui/VirtualList';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { ContactInteraction } from '@/hooks/useContacts';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 interface ContactHistoryTabProps {
   interactions: ContactInteraction[];
   loadingInteractions: boolean;
@@ -47,7 +48,7 @@ export function ContactHistoryTab({ interactions, loadingInteractions, getSentim
                     )}
                   </div>
                   <span className="text-[10px] text-muted-foreground font-medium">
-                    {formatDistanceToNow(new Date(interaction.created_at), { locale: ptBR, addSuffix: true })}
+                    {safeFormatDistanceToNow(interaction.created_at, { locale: ptBR, addSuffix: true })}
                   </span>
                 </div>
                 

@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import { Contact, ContactInteraction, useContacts } from '@/hooks/useContacts';
 import { supabase } from '@/integrations/supabase/client';
@@ -16,6 +16,7 @@ import { ContactHistoryTab } from './ContactHistoryTab';
 import { useAuditLog } from '@/hooks/useAuditLog';
 import { logger } from '@/lib/logger';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 interface PersonalityProfile {
   personality_traits: string[]; communication_style: string; preferred_contact_time: string;
   interests: string[]; pain_points: string[]; buying_signals: string[];
@@ -112,7 +113,7 @@ export function ContactDetailSheet({ contact, open, onOpenChange, onEdit, onDele
             {contact.notes && <div className="space-y-2"><h4 className="text-sm font-medium text-muted-foreground">Notas</h4><p className="text-sm">{contact.notes}</p></div>}
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-lg border p-3"><div className="flex items-center gap-2 text-muted-foreground"><MessageSquare className="h-4 w-4" /><span className="text-xs">Interações</span></div><p className="mt-1 text-2xl font-bold">{interactions.length}</p></div>
-              <div className="rounded-lg border p-3"><div className="flex items-center gap-2 text-muted-foreground"><Calendar className="h-4 w-4" /><span className="text-xs">Desde</span></div><p className="mt-1 text-sm font-medium">{formatDistanceToNow(new Date(contact.created_at), { locale: ptBR, addSuffix: true })}</p></div>
+              <div className="rounded-lg border p-3"><div className="flex items-center gap-2 text-muted-foreground"><Calendar className="h-4 w-4" /><span className="text-xs">Desde</span></div><p className="mt-1 text-sm font-medium">{safeFormatDistanceToNow(contact.created_at, { locale: ptBR, addSuffix: true })}</p></div>
             </div>
             <div className="flex items-center justify-between text-sm"><span className="text-muted-foreground">Origem</span><Badge variant="outline">{contact.source}</Badge></div>
           </TabsContent>

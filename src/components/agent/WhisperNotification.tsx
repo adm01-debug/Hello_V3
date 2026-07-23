@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
+import { safeToLocaleTimeString } from "@/lib/safe-date";
 interface WhisperMessage {
   id: string;
   supervisor_name: string;
@@ -128,7 +129,7 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
   };
 
   const formatTime = (dateStr: string) => {
-    return new Date(dateStr).toLocaleTimeString('pt-BR', { 
+    return safeToLocaleTimeString(dateStr, 'pt-BR', { 
       hour: '2-digit', 
       minute: '2-digit' 
     });

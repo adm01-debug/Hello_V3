@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Archive, CheckCircle2, Trash2 } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 import {
   categoryIcons,
@@ -13,6 +13,7 @@ import {
   type NotificationRow,
 } from './constants';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 interface Props {
   notifications: NotificationRow[];
   isLoading: boolean;
@@ -92,7 +93,7 @@ export function NotificationList({
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">{n.message}</p>
                     <p className="text-[10px] text-muted-foreground mt-1.5">
-                      {formatDistanceToNow(new Date(n.created_at), {
+                      {safeFormatDistanceToNow(n.created_at, {
                         addSuffix: true,
                         locale: ptBR,
                       })}

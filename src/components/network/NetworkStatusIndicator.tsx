@@ -1,3 +1,4 @@
+import { safeToLocaleTimeString } from "@/lib/safe-date";
  import { useNetworkMonitor } from "@/hooks/useNetworkMonitor";
  import { Wifi, WifiOff, AlertTriangle } from "lucide-react";
  import { Badge, type BadgeProps } from "@/components/ui/badge";
@@ -52,7 +53,7 @@
        </TooltipTrigger>
        <TooltipContent side="bottom" className="text-xs">
          <p>Latência: {latencyMs ? `${latencyMs}ms` : 'N/A'}</p>
-         <p>Último check: {lastCheckedAt ? new Date(lastCheckedAt).toLocaleTimeString() : '-'}</p>
+         <p>Último check: {lastCheckedAt ? safeToLocaleTimeString(lastCheckedAt) : '-'}</p>
        </TooltipContent>
      </Tooltip>
    );

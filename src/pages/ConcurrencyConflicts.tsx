@@ -8,6 +8,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianG
 import { useOptimisticLockConflicts, type ConflictPeriod } from '@/hooks/useOptimisticLockConflicts';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
+import { safeToLocaleString } from "@/lib/safe-date";
 const TABLE_OPTIONS = [
   { value: 'all', label: 'Todas as tabelas' },
   { value: 'deals', label: 'Deals' },
@@ -186,7 +187,7 @@ export default function ConcurrencyConflicts() {
                   {data?.recent.map((c) => (
                     <tr key={c.id} className="border-b border-border/50">
                       <td className="p-2 text-muted-foreground">
-                        {new Date(c.attempted_at).toLocaleString('pt-BR')}
+                        {safeToLocaleString(c.attempted_at, 'pt-BR')}
                       </td>
                       <td className="p-2 font-mono text-xs">{c.table_name}</td>
                       <td className="p-2 font-mono text-xs truncate max-w-[180px]">{c.record_id}</td>

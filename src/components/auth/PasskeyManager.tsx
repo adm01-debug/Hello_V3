@@ -38,9 +38,10 @@ import {
   AlertTriangle,
   CheckCircle,
 } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
+
 import { ptBR } from 'date-fns/locale';
 
+import { safeFormatDistanceToNow } from "@/lib/safe-date";
 export function PasskeyManager() {
   const {
     passkeys,
@@ -240,14 +241,14 @@ export function PasskeyManager() {
                         </p>
                         <p className="text-sm text-muted-foreground">
                           {passkey.device_type} • Criada{' '}
-                          {formatDistanceToNow(new Date(passkey.created_at), {
+                          {safeFormatDistanceToNow(passkey.created_at, {
                             addSuffix: true,
                             locale: ptBR,
                           })}
                           {passkey.last_used_at && (
                             <>
                               {' '}• Último uso{' '}
-                              {formatDistanceToNow(new Date(passkey.last_used_at), {
+                              {safeFormatDistanceToNow(passkey.last_used_at, {
                                 addSuffix: true,
                                 locale: ptBR,
                               })}
