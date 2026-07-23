@@ -80,6 +80,23 @@ export function WebRTCCall({
     reconnectAttemptRef.current = 0;
     setReconnect(null);
 
+    // Captura resumo ANTES de limpar samples/pc
+    const samples = quality.getSamples();
+    const endedAt = Date.now();
+    const startedAt = callStartedAtRef.current ?? (samples[0]?.ts ?? endedAt);
+    if (samples.length > 0) {
+      setSummary({
+        samples,
+        durationSec: duration,
+        targetNumber: targetNumber ?? null,
+        channel: "webrtc",
+        startedAt,
+        endedAt,
+      });
+      setSummaryOpen(true);
+    }
+    callStartedAtRef.current = null;
+
     // Parar senders antes de fechar
     peerConnectionRef.current?.getSenders().forEach((s) => s.track?.stop());
     localStreamRef.current?.getTracks().forEach((t) => t.stop());
@@ -99,7 +116,9 @@ export function WebRTCCall({
     onCallEnded?.();
 
     setTimeout(() => setStatus("idle"), 2000);
-  }, [onCallEnded, clearReconnectTimers]);
+  }, [onCallEnded, clearReconnectTimers, quality, duration, targetNumber]);
+
+
 
   const scheduleReconnect = useCallback(
     (reason: string) => {
