@@ -106,3 +106,133 @@ Deno.test("ação desconhecida retorna 400 e é auditada", async () => {
   const details = inserts[0].row.details as Record<string, unknown>;
   assertEquals(details.status, "bad_request");
 });
+
+// --- action=audit ---
+
+interface QueryCall {
+  filters: Array<[string, unknown]>;
+  order?: { col: string; ascending: boolean };
+  limit?: number;
+}
+
+function makeQueryFactory(rows: Array<Record<string, unknown>>, opts: { fail?: boolean } = {}) {
+  const calls: QueryCall[] = [];
+  const factory = () => {
+    const call: QueryCall = { filters: [] };
+    calls.push(call);
+    const builder = {
+      select: (_cols: string) => builder,
+      eq: (col: string, val: unknown) => {
+        call.filters.push([col, val]);
+        return builder;
+      },
+      order: (col: string, o: { ascending: boolean }) => {
+        call.order = { col, ascending: o.ascending };
+        return builder;
+      },
+      limit: (n: number) => {
+        call.limit = n;
+        return Promise.resolve(
+          opts.fail ? { data: null, error: { message: "db down" } } : { data: rows, error: null },
+        );
+      },
+    };
+    return {
+      from: (_t: string) => builder,
+      // deno-lint-ignore no-explicit-any
+    } as any;
+  };
+  return { factory, calls };
+}
+
+Deno.test("action=audit exige x-access-key", async () => {
+  const { factory: audit } = makeFactory();
+  const { factory: query } = makeQueryFactory([]);
+  const res = await handleRequest(
+    new Request("http://x/?action=audit"),
+    { auditFactory: audit, queryFactory: query },
+  );
+  await res.text();
+  assertEquals(res.status, 401);
+});
+
+Deno.test("action=audit filtra por request_id e action_filter e retorna apenas campos não sensíveis", async () => {
+  const rows = [
+    {
+      id: "row-1",
+      action: "migrate_helper.ping",
+      resource_type: "edge_function",
+      resource_id: "migrate-helper",
+      created_at: "2026-07-25T10:00:00Z",
+      user_id: "SENSITIVE",
+      user_email: "SENSITIVE",
+      ip_address: "1.2.3.4",
+      user_agent: "curl",
+      details: {
+        request_id: "rid-abc",
+        action: "ping",
+        status: "ok",
+        duration_ms: 42,
+        query: { foo: "bar" },
+        caller_email: "SENSITIVE",
+      },
+    },
+  ];
+  const { factory: audit } = makeFactory();
+  const { factory: query, calls } = makeQueryFactory(rows);
+  const res = await handleRequest(
+    new Request(
+      "http://x/?action=audit&request_id=rid-abc&action_filter=ping&limit=5",
+      { headers: { "x-access-key": ACCESS_KEY } },
+    ),
+    { auditFactory: audit, queryFactory: query },
+  );
+  const body = await res.json();
+  assertEquals(res.status, 200);
+  assertEquals(body.count, 1);
+  const row = body.rows[0];
+  assertEquals(row.request_id, "rid-abc");
+  assertEquals(row.sub_action, "ping");
+  assertEquals(row.status, "ok");
+  assertEquals(row.duration_ms, 42);
+  // Não pode vazar campos sensíveis
+  assertEquals(row.user_id, undefined);
+  assertEquals(row.user_email, undefined);
+  assertEquals(row.ip_address, undefined);
+  assertEquals(row.user_agent, undefined);
+  assertEquals(row.details, undefined);
+  // Filtros aplicados
+  const filterKeys = calls[0].filters.map((f) => f[0]);
+  assertEquals(filterKeys.includes("resource_id"), true);
+  assertEquals(filterKeys.includes("details->>request_id"), true);
+  assertEquals(filterKeys.includes("details->>action"), true);
+  assertEquals(calls[0].limit, 5);
+});
+
+Deno.test("action=audit clampa limit fora do intervalo", async () => {
+  const { factory: audit } = makeFactory();
+  const { factory: query, calls } = makeQueryFactory([]);
+  const res = await handleRequest(
+    new Request("http://x/?action=audit&limit=9999", {
+      headers: { "x-access-key": ACCESS_KEY },
+    }),
+    { auditFactory: audit, queryFactory: query },
+  );
+  await res.text();
+  assertEquals(res.status, 200);
+  assertEquals(calls[0].limit, 100);
+});
+
+Deno.test("action=audit falha graciosamente quando query retorna erro", async () => {
+  const { factory: audit } = makeFactory();
+  const { factory: query } = makeQueryFactory([], { fail: true });
+  const res = await handleRequest(
+    new Request("http://x/?action=audit", {
+      headers: { "x-access-key": ACCESS_KEY },
+    }),
+    { auditFactory: audit, queryFactory: query },
+  );
+  const body = await res.json();
+  assertEquals(res.status, 500);
+  assertEquals(body.error, "audit_query_failed");
+});
