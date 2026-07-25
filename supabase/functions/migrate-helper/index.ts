@@ -141,6 +141,7 @@ async function persistAudit(
 
 export interface HandlerDeps {
   auditFactory?: AuditClientFactory;
+  queryFactory?: AuditClientFactory;
 }
 
 export async function handleRequest(
@@ -148,6 +149,7 @@ export async function handleRequest(
   deps: HandlerDeps = {},
 ): Promise<Response> {
   const factory = deps.auditFactory ?? defaultAuditClientFactory;
+  const queryFactory = deps.queryFactory ?? factory;
   const started = performance.now();
 
   const incomingRequestId = req.headers.get("x-request-id");
