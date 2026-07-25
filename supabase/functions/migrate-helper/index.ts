@@ -236,6 +236,85 @@ export async function handleRequest(
         db_url: Deno.env.get("SUPABASE_DB_URL"),
       });
     }
+    if (action === "audit") {
+      const client = queryFactory();
+      if (!client) {
+        return await finalize(
+          "error",
+          500,
+          { error: "audit_client_unavailable", request_id: requestId },
+          "audit_client_unavailable",
+        );
+      }
+      const filterRequestId = url.searchParams.get("request_id");
+      const filterAction = url.searchParams.get("action_filter");
+      const rawLimit = Number(url.searchParams.get("limit") ?? "20");
+      const limit = Number.isFinite(rawLimit)
+        ? Math.min(100, Math.max(1, Math.trunc(rawLimit)))
+        : 20;
+
+      if (filterRequestId && filterRequestId.length > 128) {
+        return await finalize(
+          "bad_request",
+          400,
+          { error: "invalid_request_id", request_id: requestId },
+          "invalid_request_id",
+        );
+      }
+      if (filterAction && filterAction.length > 64) {
+        return await finalize(
+          "bad_request",
+          400,
+          { error: "invalid_action_filter", request_id: requestId },
+          "invalid_action_filter",
+        );
+      }
+
+      // deno-lint-ignore no-explicit-any
+      let q: any = client
+        .from("audit_logs")
+        .select("id, action, resource_type, resource_id, created_at, details")
+        .eq("resource_id", "migrate-helper");
+      if (filterRequestId) {
+        q = q.eq("details->>request_id", filterRequestId);
+      }
+      if (filterAction) {
+        q = q.eq("details->>action", filterAction);
+      }
+      q = q.order("created_at", { ascending: false }).limit(limit);
+      const { data, error } = await q;
+      if (error) {
+        return await finalize(
+          "error",
+          500,
+          { error: "audit_query_failed", request_id: requestId },
+          error.message,
+        );
+      }
+      // Whitelist: nunca retorna user_id, user_email, ip_address, user_agent
+      // ou detalhes sensíveis (query params, mensagens de erro internas).
+      const rows = Array.isArray(data)
+        ? data.map((r: Record<string, unknown>) => {
+          const d = (r.details ?? {}) as Record<string, unknown>;
+          return {
+            id: r.id,
+            action: r.action,
+            resource_type: r.resource_type,
+            resource_id: r.resource_id,
+            created_at: r.created_at,
+            request_id: d.request_id ?? null,
+            sub_action: d.action ?? null,
+            status: d.status ?? null,
+            duration_ms: d.duration_ms ?? null,
+          };
+        })
+        : [];
+      return await finalize("ok", 200, {
+        request_id: requestId,
+        count: rows.length,
+        rows,
+      });
+    }
     return await finalize(
       "bad_request",
       400,
