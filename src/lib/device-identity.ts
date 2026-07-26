@@ -87,6 +87,20 @@ export function setCurrentDeviceLabel(value: unknown): string {
 }
 
 /**
+ * Indica se o rótulo atual foi escolhido pelo usuário (difere do derivado do
+ * user agent). Usado para decidir se o valor do perfil pode sobrescrever o local.
+ */
+export function isCustomDeviceLabel(label: unknown): boolean {
+  const sanitized = sanitizeDeviceLabel(label);
+  if (!sanitized) return false;
+  const derived =
+    sanitizeDeviceLabel(
+      detectDeviceLabel(typeof navigator === 'undefined' ? null : navigator.userAgent),
+    ) ?? FALLBACK_DEVICE_LABEL;
+  return sanitized !== derived && sanitized !== FALLBACK_DEVICE_LABEL;
+}
+
+/**
  * Formata a origem de uma alteração sincronizada para exibição na UI.
  * `subject` é o rótulo do que mudou (ex.: "Toque", "Filtro").
  */
