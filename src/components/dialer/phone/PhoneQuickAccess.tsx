@@ -150,7 +150,19 @@ export function PhoneQuickAccess({
   onOpenContacts,
   isFavorite,
   onToggleFavorite,
+  onReorderFavorite,
 }: PhoneQuickAccessProps) {
+  const [dragFrom, setDragFrom] = useState<number | null>(null);
+  const [dragOver, setDragOver] = useState<number | null>(null);
+
+  const commitDrop = () => {
+    if (dragFrom !== null && dragOver !== null && dragFrom !== dragOver) {
+      onReorderFavorite?.(dragFrom, dragOver);
+    }
+    setDragFrom(null);
+    setDragOver(null);
+  };
+
   return (
     <div className="flex h-full flex-col gap-4 rounded-xl border border-border/50 bg-card/60 p-4 backdrop-blur-sm">
       <div className="flex flex-wrap gap-2">
@@ -175,14 +187,28 @@ export function PhoneQuickAccess({
           <p className="px-3 text-xs text-muted-foreground">Nenhum favorito ainda.</p>
         ) : (
           <ul className="space-y-1">
-            {favorites.map((entry) => (
+            {favorites.map((entry, index) => (
               <li key={entry.id}>
                 <EntryRow
                   entry={entry}
                   onSelect={onSelect}
                   isFavorite={isFavorite?.(entry.phone) ?? entry.favorite}
                   onToggleFavorite={onToggleFavorite}
+                  reorder={
+                    onReorderFavorite && favorites.length > 1
+                      ? {
+                          index,
+                          total: favorites.length,
+                          onMove: onReorderFavorite,
+                          onDragStart: () => setDragFrom(index),
+                          onDragOver: () => setDragOver(index),
+                          onDrop: commitDrop,
+                          isDragging: dragFrom === index,
+                        }
+                      : undefined
+                  }
                 />
+
               </li>
             ))}
           </ul>
