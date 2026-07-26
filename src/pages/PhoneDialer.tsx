@@ -136,6 +136,8 @@ const PhoneDialer = () => {
         return;
       }
       setLastDialed(number);
+      // Gesto do usuário: momento válido para pedir permissão de notificação.
+      void ensureNotificationPermission();
       call.updateCallStatus('ringing', session.id);
       if (call.activeChannel === 'sip') {
         void sip.startCall(number).then((ok) => {
