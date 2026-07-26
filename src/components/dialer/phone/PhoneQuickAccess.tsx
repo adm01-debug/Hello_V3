@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { formatPhoneDisplay } from './phone-utils';
 import { FavoriteTagMenu } from './FavoriteTagMenu';
 import { RingtoneSettings } from './RingtoneSettings';
+import { VoicePreferencesPanel } from './VoicePreferencesPanel';
 import { FavoriteTagFilter } from './FavoriteTagFilter';
 import { RemoteOriginNotice } from './RemoteOriginNotice';
 import { usePersistedTagFilter } from '@/hooks/usePersistedTagFilter';
@@ -305,6 +306,8 @@ export function PhoneQuickAccess({
       </section>
 
       <RingtoneSettings />
+
+      <VoicePreferencesPanel />
 
       <section aria-labelledby="recentes-heading" className="flex min-h-0 flex-1 flex-col">
         <h3
