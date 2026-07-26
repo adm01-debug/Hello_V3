@@ -7,6 +7,7 @@ import { formatPhoneDisplay } from './phone-utils';
 import { FavoriteTagMenu } from './FavoriteTagMenu';
 import { RingtoneSettings } from './RingtoneSettings';
 import { VoicePreferencesPanel } from './VoicePreferencesPanel';
+import { SyncHistoryPanel } from './SyncHistoryPanel';
 import { FavoriteTagFilter } from './FavoriteTagFilter';
 import { RemoteOriginNotice } from './RemoteOriginNotice';
 import { usePersistedTagFilter } from '@/hooks/usePersistedTagFilter';
@@ -308,6 +309,8 @@ export function PhoneQuickAccess({
       <RingtoneSettings />
 
       <VoicePreferencesPanel />
+
+      <SyncHistoryPanel />
 
       <section aria-labelledby="recentes-heading" className="flex min-h-0 flex-1 flex-col">
         <h3
