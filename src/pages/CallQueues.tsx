@@ -19,6 +19,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useCallQueues } from '@/hooks/useCallQueues';
 import { QueueCard } from '@/components/queues/QueueCard';
 import { QueueFormDialog } from '@/components/queues/QueueFormDialog';
+import { QueueAudioLibrary } from '@/components/queues/QueueAudioLibrary';
+import { useQueueAudioPrompts } from '@/hooks/useQueueAudioPrompts';
 import type { CallQueue, CallQueueDraft } from '@/lib/call-queue';
 
 const CallQueues = () => {
@@ -37,6 +39,9 @@ const CallQueues = () => {
     deleteQueue,
     toggleActive,
   } = useCallQueues();
+
+  const { prompts: audioPrompts } = useQueueAudioPrompts();
+
 
   const [search, setSearch] = useState('');
   const [formOpen, setFormOpen] = useState(false);
@@ -161,11 +166,15 @@ const CallQueues = () => {
         </div>
       )}
 
+      <QueueAudioLibrary canManage={canManage} />
+
+
       <QueueFormDialog
         open={formOpen}
         onOpenChange={setFormOpen}
         queue={editing}
         otherQueues={queues.filter((queue) => queue.id !== editing?.id)}
+        audioPrompts={audioPrompts}
         saving={saving}
         onSubmit={handleSubmit}
       />

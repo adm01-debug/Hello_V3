@@ -51,6 +51,12 @@ export interface CallQueueDraft {
   announce_interval_seconds: number;
   moh_enabled: boolean;
   moh_url: string | null;
+  /** Slots de áudio da biblioteca (`queue_audio_prompts`). */
+  moh_prompt_id: string | null;
+  greeting_prompt_id: string | null;
+  periodic_prompt_id: string | null;
+  overflow_prompt_id: string | null;
+  greeting_enabled: boolean;
 }
 
 export interface CallQueue extends CallQueueDraft {
@@ -91,6 +97,11 @@ export const DEFAULT_QUEUE_DRAFT: CallQueueDraft = {
   announce_interval_seconds: 30,
   moh_enabled: true,
   moh_url: null,
+  moh_prompt_id: null,
+  greeting_prompt_id: null,
+  periodic_prompt_id: null,
+  overflow_prompt_id: null,
+  greeting_enabled: false,
 };
 
 /** Recorta um inteiro para dentro da faixa aceita pelo banco. */
@@ -120,6 +131,15 @@ function cleanText(value: unknown, maxLength: number): string | null {
   return trimmed.slice(0, maxLength);
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Aceita apenas UUIDs — impede enviar lixo em colunas com FK. */
+function cleanUuid(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const trimmed = value.trim();
+  return UUID_RE.test(trimmed) ? trimmed.toLowerCase() : null;
+}
+
 /**
  * Normaliza um rascunho vindo do formulário para um payload que o banco
  * sempre aceita: nenhum CHECK constraint pode ser violado após esta função.
@@ -137,6 +157,8 @@ export function normalizeQueueDraft(input: Partial<CallQueueDraft>): CallQueueDr
 
   const overflowQueueId =
     overflowAction === 'transfer_queue' ? cleanText(input.overflow_queue_id, 64) : null;
+
+  const greetingPromptId = cleanUuid(input.greeting_prompt_id);
 
   return {
     name: (cleanText(input.name, 120) ?? '').slice(0, 120),
@@ -185,6 +207,12 @@ export function normalizeQueueDraft(input: Partial<CallQueueDraft>): CallQueueDr
     ),
     moh_enabled: input.moh_enabled !== false,
     moh_url: cleanText(input.moh_url, 2048),
+    moh_prompt_id: cleanUuid(input.moh_prompt_id),
+    greeting_prompt_id: greetingPromptId,
+    periodic_prompt_id: cleanUuid(input.periodic_prompt_id),
+    overflow_prompt_id: cleanUuid(input.overflow_prompt_id),
+    // O trigger do banco recusa saudação ativa sem faixa selecionada.
+    greeting_enabled: input.greeting_enabled === true && greetingPromptId !== null,
   };
 }
 

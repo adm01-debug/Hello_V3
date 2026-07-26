@@ -35,12 +35,15 @@ import {
   type CallQueue,
   type CallQueueDraft,
 } from '@/lib/call-queue';
+import { QueueAudioSlotSelect } from '@/components/queues/QueueAudioSlotSelect';
+import type { QueueAudioPrompt } from '@/lib/queue-audio';
 
 export interface QueueFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   queue: CallQueue | null;
   otherQueues: CallQueue[];
+  audioPrompts: readonly QueueAudioPrompt[];
   saving: boolean;
   onSubmit: (draft: CallQueueDraft) => void;
 }
@@ -52,6 +55,7 @@ export function QueueFormDialog({
   onOpenChange,
   queue,
   otherQueues,
+  audioPrompts,
   saving,
   onSubmit,
 }: QueueFormDialogProps) {
@@ -251,13 +255,62 @@ export function QueueFormDialog({
               />
             </div>
             {draft.moh_enabled && (
-              <Input
-                aria-label="URL do áudio de espera"
-                value={draft.moh_url ?? ''}
-                placeholder="https://.../espera.mp3"
-                onChange={(event) => set('moh_url', event.target.value)}
-              />
+              <>
+                <QueueAudioSlotSelect
+                  slot="moh_prompt_id"
+                  prompts={audioPrompts}
+                  value={draft.moh_prompt_id}
+                  onChange={(value) => set('moh_prompt_id', value)}
+                />
+                <Input
+                  aria-label="URL do áudio de espera"
+                  value={draft.moh_url ?? ''}
+                  placeholder="Ou uma URL externa: https://.../espera.mp3"
+                  onChange={(event) => set('moh_url', event.target.value)}
+                />
+              </>
             )}
+
+            <QueueAudioSlotSelect
+              slot="greeting_prompt_id"
+              prompts={audioPrompts}
+              value={draft.greeting_prompt_id}
+              onChange={(value) =>
+                setDraft((prev) => ({
+                  ...prev,
+                  greeting_prompt_id: value,
+                  greeting_enabled: value ? prev.greeting_enabled : false,
+                }))
+              }
+            />
+
+            {draft.greeting_prompt_id && (
+              <div className="flex items-center justify-between gap-4">
+                <Label htmlFor="queue-greeting-enabled" className="cursor-pointer">
+                  Tocar saudação ao entrar na fila
+                </Label>
+                <Switch
+                  id="queue-greeting-enabled"
+                  checked={draft.greeting_enabled}
+                  onCheckedChange={(checked) => set('greeting_enabled', checked)}
+                />
+              </div>
+            )}
+
+            <QueueAudioSlotSelect
+              slot="periodic_prompt_id"
+              prompts={audioPrompts}
+              value={draft.periodic_prompt_id}
+              onChange={(value) => set('periodic_prompt_id', value)}
+            />
+
+            <QueueAudioSlotSelect
+              slot="overflow_prompt_id"
+              prompts={audioPrompts}
+              value={draft.overflow_prompt_id}
+              onChange={(value) => set('overflow_prompt_id', value)}
+            />
+
 
             <div className="flex items-center justify-between gap-4">
               <Label htmlFor="queue-announce" className="cursor-pointer">
