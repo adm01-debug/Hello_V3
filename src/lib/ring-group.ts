@@ -111,7 +111,15 @@ export function sanitizeExtension(value: unknown): string | null {
  * Normaliza um rascunho para um payload sempre aceito pelo banco:
  * nenhum CHECK constraint nem o trigger de validação pode falhar depois disto.
  */
-export function normalizeRingGroupDraft(input: Partial<RingGroupDraft>): RingGroupDraft {
+export function normalizeRingGroupDraft(
+  raw: Partial<RingGroupDraft> | null | undefined,
+): RingGroupDraft {
+  // Defesa contra entradas não-objeto (null, primitivos, arrays de API externa).
+  const input: Partial<RingGroupDraft> =
+    typeof raw === 'object' && raw !== null && !Array.isArray(raw)
+      ? raw
+      : {};
+
   const strategy: RingStrategy = RING_STRATEGIES.includes(input.strategy as RingStrategy)
     ? (input.strategy as RingStrategy)
     : DEFAULT_RING_GROUP_DRAFT.strategy;
