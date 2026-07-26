@@ -93,6 +93,10 @@ export function useRingtoneSettings() {
    * dispositivo, o toque muda aqui sem recarregar a página. Os valores vindos
    * do banco passam pelos mesmos normalizadores usados na escrita, então um
    * preset removido ou um volume fora de faixa degrada para o padrão.
+   *
+   * Eco da própria escrita: a atualização feita neste dispositivo também volta
+   * pelo canal. Comparamos com o último valor gravado localmente e só sinalizamos
+   * "atualizado em outro dispositivo" quando algo de fato divergiu.
    */
   useEffect(() => {
     if (!userId) return;
@@ -106,16 +110,24 @@ export function useRingtoneSettings() {
           const next = payload.new as { ringtone_preset?: unknown; ringtone_volume?: unknown } | null;
           if (!next) return;
 
+          let changed = false;
+
           if (typeof next.ringtone_preset === 'string' && next.ringtone_preset.length > 0) {
             const resolved = getRingtonePreset(next.ringtone_preset).id;
+            if (resolved !== localRef.current.presetId) changed = true;
+            localRef.current.presetId = resolved;
             setPresetId(resolved);
             saveRingtoneSettings({ presetId: resolved });
           }
           if (next.ringtone_volume !== null && next.ringtone_volume !== undefined) {
             const parsed = clampVolume(Number(next.ringtone_volume));
+            if (Math.abs(parsed - localRef.current.volume) > 0.001) changed = true;
+            localRef.current.volume = parsed;
             setVolume(parsed);
             saveRingtoneSettings({ volume: parsed });
           }
+
+          if (changed) setRemoteUpdatedAt(Date.now());
         },
       )
       .subscribe();
