@@ -25,8 +25,12 @@ const log = logger.create('usePersistedTagFilter');
 export function usePersistedTagFilter() {
   const [filter, setFilterState] = useState<TagFilter>(ALL_TAGS_FILTER);
   const [userId, setUserId] = useState<string | null>(null);
+  const [remoteDevice, setRemoteDevice] = useState<string | null>(null);
+  const [remoteUpdatedAt, setRemoteUpdatedAt] = useState<number | null>(null);
   const userIdRef = useRef<string | null>(null);
   const localRef = useRef<TagFilter>(ALL_TAGS_FILTER);
+  const deviceLabelRef = useRef<string>(getCurrentDeviceLabel());
+
 
   const applyLocal = useCallback((next: TagFilter) => {
     localRef.current = next;
@@ -88,11 +92,17 @@ export function usePersistedTagFilter() {
         'postgres_changes',
         { event: 'UPDATE', schema: 'public', table: 'user_profiles', filter: `id=eq.${userId}` },
         (payload) => {
-          const next = payload.new as { dialer_tag_filter?: unknown } | null;
+          const next = payload.new as {
+            dialer_tag_filter?: unknown;
+            dialer_filter_updated_by_device?: unknown;
+          } | null;
           if (!next || typeof next.dialer_tag_filter !== 'string') return;
           const sanitized = sanitizeStoredFilter(next.dialer_tag_filter);
           if (sanitized === localRef.current) return; // eco da própria escrita
           applyLocal(saveTagFilter(userId, sanitized));
+          const origin = sanitizeDeviceLabel(next.dialer_filter_updated_by_device);
+          setRemoteDevice(origin && origin !== deviceLabelRef.current ? origin : null);
+          setRemoteUpdatedAt(Date.now());
         },
       )
       .subscribe();
@@ -102,17 +112,28 @@ export function usePersistedTagFilter() {
     };
   }, [userId, applyLocal]);
 
+  const acknowledgeRemoteUpdate = useCallback(() => {
+    setRemoteDevice(null);
+    setRemoteUpdatedAt(null);
+  }, []);
+
   const setFilter = useCallback(
     (next: TagFilter) => {
       const uid = userIdRef.current;
       const persisted = saveTagFilter(uid, next);
       applyLocal(persisted);
+      setRemoteDevice(null);
+      setRemoteUpdatedAt(null);
       if (!uid) return;
       void (async () => {
         try {
           const { error } = await supabase
             .from('user_profiles')
-            .update({ dialer_tag_filter: persisted })
+            .update({
+              dialer_tag_filter: persisted,
+              dialer_filter_updated_by_device: deviceLabelRef.current,
+              dialer_filter_updated_at: new Date().toISOString(),
+            })
             .eq('id', uid);
           if (error) throw error;
         } catch (error) {
@@ -123,5 +144,6 @@ export function usePersistedTagFilter() {
     [applyLocal],
   );
 
-  return { filter, setFilter };
+  return { filter, setFilter, remoteDevice, remoteUpdatedAt, acknowledgeRemoteUpdate };
 }
+
