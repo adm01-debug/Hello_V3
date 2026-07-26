@@ -9,6 +9,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { useMultiChannelCall, type CallChannel } from '@/hooks/useMultiChannelCall';
 import { useCallHistory } from '@/hooks/useCallHistory';
 import { useSipCall } from '@/hooks/useSipCall';
+import { useDialerFavorites } from '@/hooks/useDialerFavorites';
 import { PhoneFrame } from '@/components/dialer/phone/PhoneFrame';
 import { PhoneDialpad } from '@/components/dialer/phone/PhoneDialpad';
 import { PhoneCallScreen } from '@/components/dialer/phone/PhoneCallScreen';
@@ -39,6 +40,7 @@ const PhoneDialer = () => {
   const call = useMultiChannelCall();
   const { sessions, isLoading } = useCallHistory();
   const sip = useSipCall();
+  const { favorites: savedFavorites, isFavorite, toggleFavorite } = useDialerFavorites();
 
   const [input, setInput] = useState('');
   const [isSpeaker, setIsSpeaker] = useState(false);
@@ -88,7 +90,16 @@ const PhoneDialer = () => {
     [sessions],
   );
 
-  const favorites: QuickAccessEntry[] = useMemo(() => recents.slice(0, 3), [recents]);
+  const favorites: QuickAccessEntry[] = useMemo(
+    () =>
+      savedFavorites.map((favorite) => ({
+        id: favorite.id,
+        name: favorite.label || favorite.phone,
+        phone: favorite.phone,
+        favorite: true,
+      })),
+    [savedFavorites],
+  );
 
   const startCall = useCallback(
     (rawNumber: string, contactName?: string) => {
@@ -251,6 +262,8 @@ const PhoneDialer = () => {
               setInput(sanitizeDialInput(phone));
               if (name) toast.info(name, { description: 'Número carregado no discador' });
             }}
+            isFavorite={isFavorite}
+            onToggleFavorite={toggleFavorite}
             onPaste={handlePaste}
             onOpenContacts={() => navigate('/contacts')}
           />
