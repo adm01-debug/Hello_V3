@@ -169,3 +169,13 @@ export function resolveActiveFilter<T extends TaggedItem>(
   );
   return exists ? filter : ALL_TAGS_FILTER;
 }
+
+/**
+ * Rótulo legível do filtro ativo, usado no histórico de sincronização.
+ * Nunca lança: valores inválidos degradam para "Todos".
+ */
+export function formatTagFilterLabel(filter: TagFilter | null | undefined): string {
+  if (typeof filter !== 'string' || filter === ALL_TAGS_FILTER) return 'Todos';
+  if (filter === UNTAGGED_FILTER) return UNTAGGED_LABEL;
+  return normalizeTag(filter) ?? 'Todos';
+}
