@@ -72,7 +72,13 @@ export function useDeviceLabel() {
 
         if (remote && !isCustomDeviceLabel(local)) {
           // Estação nova/limpa: adota o apelido salvo no perfil.
-          setLabel(setCurrentDeviceLabel(remote));
+          const applied = setCurrentDeviceLabel(remote);
+          setLabel(applied);
+          pushSyncEvent(uid, {
+            subject: 'Apelido',
+            detail: applied,
+            device: null,
+          });
         } else if (!remote && isCustomDeviceLabel(local)) {
           // Perfil ainda sem apelido: promove o local.
           await persist(local);
@@ -95,7 +101,16 @@ export function useDeviceLabel() {
   const updateLabel = useCallback(
     (value: unknown) => {
       const applied = setCurrentDeviceLabel(value);
-      setLabel(applied);
+      setLabel((previous) => {
+        if (previous !== applied) {
+          pushSyncEvent(userIdRef.current, {
+            subject: 'Apelido',
+            detail: applied,
+            device: previous,
+          });
+        }
+        return applied;
+      });
       void persist(applied);
       return applied;
     },
