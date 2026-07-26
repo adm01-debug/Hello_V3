@@ -113,6 +113,8 @@ export function RingtoneSettings() {
         </div>
 
         <DeviceNameSetting />
+        <SyncHistoryList entries={syncHistory} onClear={clearSyncHistory} />
+
       </div>
     </section>
 
