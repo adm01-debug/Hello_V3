@@ -9,6 +9,9 @@ import {
   loadSyncHistory,
   recordSyncEvent,
   sanitizeEntry,
+  listSyncSubjects,
+  filterSyncEntries,
+  type SyncHistoryEntry,
   type SyncHistoryStorageLike,
 } from '@/lib/sync-history';
 
