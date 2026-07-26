@@ -1,21 +1,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Keyboard, MicOff, Send, Trash2, Volume2, VolumeX, X } from 'lucide-react';
+import { Gauge, Keyboard, MicOff, Send, Trash2, Volume2, VolumeX, X } from 'lucide-react';
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
-import { supabase } from '@/integrations/supabase/client';
-import {
-  clearCommandHistory,
-  loadCommandHistory,
-  pushCommandHistory,
-  type VoiceCommandEntry,
-} from '@/lib/voice-command-history';
+import { useVoicePreferences } from '@/hooks/useVoicePreferences';
+import { formatTtsRate } from '@/lib/voice-preferences';
 import { cancelSpeech, isSpeechSupported, speak } from '@/lib/voice-speech';
 import { FloatingParticles } from './overlay/FloatingParticles';
 import { VoiceOrb } from './overlay/VoiceOrb';
 import { SpectrumWaveform } from './overlay/VoiceVisualEffects';
 import { usePhaseColors, type VoicePhase } from './overlay/usePhaseColors';
 import { describeIntent, parseVoiceIntent, type VoiceIntent } from './voice-intent';
+
 
 interface VoiceAssistantDialogProps {
   open: boolean;
@@ -49,28 +45,14 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const [bootingTimedOut, setBootingTimedOut] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [ttsEnabled, setTtsEnabled] = useState(() => isSpeechSupported());
-  const [userId, setUserId] = useState<string | null>(null);
-  const [history, setHistory] = useState<VoiceCommandEntry[]>(() => loadCommandHistory(null));
+  const { ttsEnabled, ttsRate, history, toggleTts, cycleRate, recordCommand, clearHistory } =
+    useVoicePreferences();
   const textInputRef = useRef<HTMLInputElement>(null);
   const wasOpenRef = useRef(false);
   const ttsEnabledRef = useRef(ttsEnabled);
   ttsEnabledRef.current = ttsEnabled;
-
-  // Escopo do histórico por usuário (evita vazamento em hot desking).
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      const { data } = await supabase.auth.getUser();
-      const uid = data?.user?.id ?? null;
-      if (cancelled || !uid) return;
-      setUserId(uid);
-      setHistory(loadCommandHistory(uid));
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const ttsRateRef = useRef(ttsRate);
+  ttsRateRef.current = ttsRate;
 
   const phase: VoicePhase = hasError
     ? 'error'
@@ -87,7 +69,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const respond = useCallback((text: string) => {
     if (!ttsEnabledRef.current) return;
     setIsSpeaking(true);
-    const started = speak(text, { onEnd: () => setIsSpeaking(false) });
+    const started = speak(text, { rate: ttsRateRef.current, onEnd: () => setIsSpeaking(false) });
     if (!started) setIsSpeaking(false);
   }, []);
 
@@ -96,7 +78,8 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       const intent = parseVoiceIntent(text);
       const description = describeIntent(intent);
       setFeedback(description);
-      setHistory(pushCommandHistory(userId, text));
+      recordCommand(text);
+
 
       if (intent.action === 'none') {
         // Fase de erro real: comando não reconhecido.
@@ -110,7 +93,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       onIntent(intent);
       onOpenChange(false);
     },
-    [onIntent, onOpenChange, respond, userId],
+    [onIntent, onOpenChange, recordCommand, respond],
   );
 
   useEffect(() => {
@@ -376,7 +359,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                       {history.length > 0 && (
                         <button
                           type="button"
-                          onClick={() => setHistory(clearCommandHistory(userId))}
+                          onClick={clearHistory}
                           className="text-white/20 transition-colors hover:text-white/60"
                           aria-label="Limpar histórico de comandos"
                           title="Limpar histórico"
@@ -457,25 +440,42 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                   </motion.p>
                   <div className="flex items-center gap-1.5">
                     {isSpeechSupported() && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setTtsEnabled((enabled) => {
-                            if (enabled) {
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const enabled = toggleTts();
+                            if (!enabled) {
                               cancelSpeech();
                               setIsSpeaking(false);
                             }
-                            return !enabled;
-                          });
-                        }}
-                        className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
-                        aria-label={ttsEnabled ? 'Desativar resposta falada' : 'Ativar resposta falada'}
-                        aria-pressed={ttsEnabled}
-                        title={ttsEnabled ? 'Resposta falada ativada' : 'Resposta falada desativada'}
-                      >
-                        {ttsEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
-                      </button>
+                          }}
+                          className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+                          aria-label={ttsEnabled ? 'Desativar resposta falada' : 'Ativar resposta falada'}
+                          aria-pressed={ttsEnabled}
+                          title={ttsEnabled ? 'Resposta falada ativada' : 'Resposta falada desativada'}
+                        >
+                          {ttsEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
+                        </button>
+                        {ttsEnabled && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              cancelSpeech();
+                              setIsSpeaking(false);
+                              cycleRate();
+                            }}
+                            className="flex h-7 items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 text-[10px] font-medium text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+                            aria-label={`Velocidade da fala: ${formatTtsRate(ttsRate)}. Tocar para alterar`}
+                            title="Velocidade da resposta falada"
+                          >
+                            <Gauge className="h-3 w-3" />
+                            {formatTtsRate(ttsRate)}
+                          </button>
+                        )}
+                      </>
                     )}
+
                     <button
                       type="button"
                       onClick={() => {

@@ -6276,6 +6276,10 @@ export type Database = {
           ringtone_volume: number | null
           role: string
           updated_at: string
+          voice_command_history: Json
+          voice_prefs_updated_at: string | null
+          voice_tts_enabled: boolean
+          voice_tts_rate: number
         }
         Insert: {
           agent_id?: string | null
@@ -6294,6 +6298,10 @@ export type Database = {
           ringtone_volume?: number | null
           role?: string
           updated_at?: string
+          voice_command_history?: Json
+          voice_prefs_updated_at?: string | null
+          voice_tts_enabled?: boolean
+          voice_tts_rate?: number
         }
         Update: {
           agent_id?: string | null
@@ -6312,6 +6320,10 @@ export type Database = {
           ringtone_volume?: number | null
           role?: string
           updated_at?: string
+          voice_command_history?: Json
+          voice_prefs_updated_at?: string | null
+          voice_tts_enabled?: boolean
+          voice_tts_rate?: number
         }
         Relationships: [
           {
