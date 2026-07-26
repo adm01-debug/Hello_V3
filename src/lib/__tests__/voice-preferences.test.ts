@@ -9,6 +9,10 @@ import {
   mergeCommandHistories,
   nextTtsRate,
   parseRemoteHistory,
+  MAX_VOICE_URI_LENGTH,
+  formatVoiceLabel,
+  nextVoiceUri,
+  sanitizeVoiceUri,
 } from '../voice-preferences';
 import { MAX_HISTORY_ENTRIES } from '../voice-command-history';
 
@@ -98,5 +102,70 @@ describe('voice-preferences (PBT)', () => {
 
   it('mergeCommandHistories aceita entradas nulas sem lançar', () => {
     expect(mergeCommandHistories(null, undefined)).toEqual([]);
+  });
+});
+
+describe('seleção de voz (PBT)', () => {
+  const voiceArb = fc.record({
+    uri: fc.string({ minLength: 1, maxLength: 30 }),
+    name: fc.string({ maxLength: 40 }),
+    lang: fc.constantFrom('pt-BR', 'pt-PT'),
+  });
+
+  it('sanitizeVoiceUri devolve null ou string limpa dentro do limite', () => {
+    fc.assert(
+      fc.property(fc.anything(), (input) => {
+        const result = sanitizeVoiceUri(input);
+        if (result === null) return true;
+        return (
+          typeof result === 'string' &&
+          result.length > 0 &&
+          result.length <= MAX_VOICE_URI_LENGTH &&
+          result === result.trim() &&
+          !/[\u0000-\u001f\u007f]/.test(result)
+        );
+      }),
+      RUNS,
+    );
+  });
+
+  it('nextVoiceUri sempre devolve null ou um URI presente na lista', () => {
+    fc.assert(
+      fc.property(fc.array(voiceArb, { maxLength: 6 }), fc.anything(), (options, current) => {
+        const next = nextVoiceUri(options, current);
+        if (next === null) return true;
+        return options.some((option) => sanitizeVoiceUri(option.uri) === next);
+      }),
+      RUNS,
+    );
+  });
+
+  it('nextVoiceUri percorre todo o ciclo e retorna ao padrão', () => {
+    fc.assert(
+      fc.property(fc.array(voiceArb, { minLength: 1, maxLength: 5 }), (options) => {
+        const valid = options.filter((option) => sanitizeVoiceUri(option.uri));
+        if (valid.length === 0) return nextVoiceUri(options, null) === null;
+        const unique = new Set(valid.map((option) => sanitizeVoiceUri(option.uri) as string));
+        let current: string | null = null;
+        const seen = new Set<string | null>([null]);
+        for (let i = 0; i < unique.size + 1; i += 1) {
+          current = nextVoiceUri(options, current);
+          seen.add(current);
+        }
+        // volta ao padrão em no máximo (n + 1) passos
+        return current === null && seen.has(null);
+      }),
+      RUNS,
+    );
+  });
+
+  it('formatVoiceLabel nunca devolve string vazia e respeita o limite visual', () => {
+    fc.assert(
+      fc.property(fc.array(voiceArb, { maxLength: 6 }), fc.anything(), (options, current) => {
+        const label = formatVoiceLabel(options, current);
+        return typeof label === 'string' && label.length > 0 && label.length <= 14;
+      }),
+      RUNS,
+    );
   });
 });

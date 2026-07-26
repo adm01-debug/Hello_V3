@@ -19,24 +19,31 @@ import {
   clampTtsRate,
   mergeCommandHistories,
   nextTtsRate,
+  nextVoiceUri,
   parseRemoteHistory,
+  sanitizeVoiceUri,
+  type VoiceOption,
 } from '@/lib/voice-preferences';
-import { isSpeechSupported } from '@/lib/voice-speech';
+import { isSpeechSupported, listVoices, onVoicesChanged } from '@/lib/voice-speech';
 import { logger } from '@/lib/logger';
 
 interface VoiceProfileRow {
   voice_tts_enabled?: unknown;
   voice_tts_rate?: unknown;
   voice_command_history?: unknown;
+  voice_tts_voice?: unknown;
 }
 
 export interface UseVoicePreferences {
   userId: string | null;
   ttsEnabled: boolean;
   ttsRate: number;
+  ttsVoice: string | null;
+  voices: VoiceOption[];
   history: VoiceCommandEntry[];
   toggleTts: () => boolean;
   cycleRate: () => number;
+  cycleVoice: () => string | null;
   recordCommand: (command: string) => void;
   clearHistory: () => void;
 }
@@ -46,7 +53,17 @@ export function useVoicePreferences(): UseVoicePreferences {
   const [userId, setUserId] = useState<string | null>(null);
   const [ttsEnabled, setTtsEnabled] = useState<boolean>(speechSupported);
   const [ttsRate, setTtsRate] = useState<number>(1);
+  const [ttsVoice, setTtsVoice] = useState<string | null>(null);
+  const [voices, setVoices] = useState<VoiceOption[]>(() => listVoices());
   const [history, setHistory] = useState<VoiceCommandEntry[]>(() => loadCommandHistory(null));
+
+  // Vozes chegam de forma assíncrona no Chrome: reagir a `voiceschanged`.
+  useEffect(() => {
+    if (!speechSupported) return;
+    const sync = () => setVoices(listVoices());
+    sync();
+    return onVoicesChanged(sync);
+  }, [speechSupported]);
 
   const userIdRef = useRef<string | null>(null);
   const historyRef = useRef<VoiceCommandEntry[]>(history);
@@ -83,7 +100,7 @@ export function useVoicePreferences(): UseVoicePreferences {
 
         const { data, error } = await supabase
           .from('user_profiles')
-          .select('voice_tts_enabled, voice_tts_rate, voice_command_history')
+          .select('voice_tts_enabled, voice_tts_rate, voice_command_history, voice_tts_voice')
           .eq('id', uid)
           .maybeSingle();
         if (error) throw error;
@@ -94,6 +111,7 @@ export function useVoicePreferences(): UseVoicePreferences {
           setTtsEnabled(speechSupported && row.voice_tts_enabled);
         }
         setTtsRate(clampTtsRate(row.voice_tts_rate));
+        setTtsVoice(sanitizeVoiceUri(row.voice_tts_voice));
 
         const merged = mergeCommandHistories(local, parseRemoteHistory(row.voice_command_history));
         setHistory(merged);
@@ -123,6 +141,13 @@ export function useVoicePreferences(): UseVoicePreferences {
     return next;
   }, [pushToProfile, ttsRate]);
 
+  const cycleVoice = useCallback((): string | null => {
+    const next = nextVoiceUri(voices, ttsVoice);
+    setTtsVoice(next);
+    void pushToProfile({ voice_tts_voice: next });
+    return next;
+  }, [pushToProfile, ttsVoice, voices]);
+
   const recordCommand = useCallback(
     (command: string) => {
       const next = pushCommandHistory(userIdRef.current, command);
@@ -137,5 +162,17 @@ export function useVoicePreferences(): UseVoicePreferences {
     void pushToProfile({ voice_command_history: [] });
   }, [pushToProfile]);
 
-  return { userId, ttsEnabled, ttsRate, history, toggleTts, cycleRate, recordCommand, clearHistory };
+  return {
+    userId,
+    ttsEnabled,
+    ttsRate,
+    ttsVoice,
+    voices,
+    history,
+    toggleTts,
+    cycleRate,
+    cycleVoice,
+    recordCommand,
+    clearHistory,
+  };
 }
