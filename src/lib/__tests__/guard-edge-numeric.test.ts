@@ -48,6 +48,10 @@ function scaffold(name: string, body: string) {
 
 const WS = fc.stringMatching(/^[ \t\n]{0,4}$/);
 
+// PBT com I/O de repositório: sob carga da suíte completa o default de 10s
+// é insuficiente. Timeout explícito evita flakiness sem mascarar regressões.
+vi.setConfig({ testTimeout: 120_000 });
+
 describe("guard-edge-numeric — Regra 1 (z.number sem .finite)", () => {
   it("detecta z.number() em qualquer disposição de whitespace", () => {
     fc.assert(
