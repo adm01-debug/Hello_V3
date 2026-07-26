@@ -6,7 +6,9 @@ import {
   sanitizeDeviceLabel,
   detectDeviceLabel,
   formatRemoteOrigin,
+  formatOriginNotice,
 } from '@/lib/device-identity';
+
 
 describe('device-identity', () => {
   it('sanitize sempre respeita o CHECK do banco (trim + limite)', () => {
