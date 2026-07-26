@@ -158,6 +158,8 @@ export function normalizeQueueDraft(input: Partial<CallQueueDraft>): CallQueueDr
   const overflowQueueId =
     overflowAction === 'transfer_queue' ? cleanText(input.overflow_queue_id, 64) : null;
 
+  const greetingPromptId = cleanUuid(input.greeting_prompt_id);
+
   return {
     name: (cleanText(input.name, 120) ?? '').slice(0, 120),
     description: cleanText(input.description, 500),
