@@ -83,16 +83,34 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
           : 'idle';
 
 
+  /** Fala uma resposta e mantém a fase "speaking" enquanto durar o áudio. */
+  const respond = useCallback((text: string) => {
+    if (!ttsEnabledRef.current) return;
+    setIsSpeaking(true);
+    const started = speak(text, { onEnd: () => setIsSpeaking(false) });
+    if (!started) setIsSpeaking(false);
+  }, []);
+
   const handleIntent = useCallback(
     (text: string) => {
       const intent = parseVoiceIntent(text);
-      setFeedback(describeIntent(intent));
-      if (intent.action !== 'none') {
-        onIntent(intent);
-        onOpenChange(false);
+      const description = describeIntent(intent);
+      setFeedback(description);
+      setHistory(pushCommandHistory(userId, text));
+
+      if (intent.action === 'none') {
+        // Fase de erro real: comando não reconhecido.
+        setHasError(true);
+        respond(description);
+        return;
       }
+
+      setHasError(false);
+      respond(description);
+      onIntent(intent);
+      onOpenChange(false);
     },
-    [onIntent, onOpenChange],
+    [onIntent, onOpenChange, respond, userId],
   );
 
   useEffect(() => {
@@ -110,10 +128,21 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       wasOpenRef.current = false;
       setIsClosing(true);
       setFeedback(null);
+      setHasError(false);
       const timer = window.setTimeout(() => setIsClosing(false), 300);
       return () => window.clearTimeout(timer);
     }
   }, [open]);
+
+  // Interrompe a fala ao fechar ou desmontar o overlay.
+  useEffect(() => {
+    if (open) return;
+    cancelSpeech();
+    setIsSpeaking(false);
+  }, [open]);
+
+  useEffect(() => () => cancelSpeech(), []);
+
 
   const toggleListening = useCallback(() => {
     if (isProcessing) return;
