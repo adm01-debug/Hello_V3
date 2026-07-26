@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, Radio, Headphones, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
@@ -8,6 +8,8 @@ import { cn } from '@/lib/utils';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useMultiChannelCall, type CallChannel } from '@/hooks/useMultiChannelCall';
 import { useCallHistory } from '@/hooks/useCallHistory';
+import { useSipCall } from '@/hooks/useSipCall';
+import { useDialerFavorites } from '@/hooks/useDialerFavorites';
 import { PhoneFrame } from '@/components/dialer/phone/PhoneFrame';
 import { PhoneDialpad } from '@/components/dialer/phone/PhoneDialpad';
 import { PhoneCallScreen } from '@/components/dialer/phone/PhoneCallScreen';
@@ -37,6 +39,8 @@ const PhoneDialer = () => {
   const navigate = useNavigate();
   const call = useMultiChannelCall();
   const { sessions, isLoading } = useCallHistory();
+  const sip = useSipCall();
+  const { favorites: savedFavorites, isFavorite, toggleFavorite } = useDialerFavorites();
 
   const [input, setInput] = useState('');
   const [isSpeaker, setIsSpeaker] = useState(false);
@@ -44,6 +48,33 @@ const PhoneDialer = () => {
   const [lastDialed, setLastDialed] = useState<string | null>(null);
 
   const current = call.currentCall;
+  const incomingSessionIdRef = useRef<string | null>(null);
+
+  /**
+   * Espelha convites SIP entrantes no estado multicanal para que a tela de
+   * chamada exiba "Atender/Recusar" com dados reais do chamador.
+   */
+  useEffect(() => {
+    const incoming = sip.incomingCall;
+    if (incoming && !incomingSessionIdRef.current) {
+      const session = call.initiateCall('sip', incoming.from || 'desconhecido', incoming.displayName ?? undefined);
+      if (!session) {
+        // Sem linha livre: rejeita para não deixar o chamador em espera indefinida.
+        sip.rejectCall();
+        toast.warning('Chamada recebida recusada', { description: 'Limite de linhas simultâneas atingido.' });
+        return;
+      }
+      incomingSessionIdRef.current = session.id;
+      call.updateCallStatus('ringing', session.id);
+    }
+    if (!incoming && incomingSessionIdRef.current) {
+      const pendingId = incomingSessionIdRef.current;
+      incomingSessionIdRef.current = null;
+      // Só encerra se ainda estiver tocando (não atendida)
+      const pending = call.getCallById(pendingId);
+      if (pending && pending.status === 'ringing') call.endCall(pendingId);
+    }
+  }, [sip, call]);
 
   const recents: QuickAccessEntry[] = useMemo(
     () =>
@@ -59,7 +90,16 @@ const PhoneDialer = () => {
     [sessions],
   );
 
-  const favorites: QuickAccessEntry[] = useMemo(() => recents.slice(0, 3), [recents]);
+  const favorites: QuickAccessEntry[] = useMemo(
+    () =>
+      savedFavorites.map((favorite) => ({
+        id: favorite.id,
+        name: favorite.label || favorite.phone,
+        phone: favorite.phone,
+        favorite: true,
+      })),
+    [savedFavorites],
+  );
 
   const startCall = useCallback(
     (rawNumber: string, contactName?: string) => {
@@ -75,9 +115,14 @@ const PhoneDialer = () => {
       }
       setLastDialed(number);
       call.updateCallStatus('ringing', session.id);
+      if (call.activeChannel === 'sip') {
+        void sip.startCall(number).then((ok) => {
+          if (!ok) call.endCall(session.id);
+        });
+      }
       toast.success('Chamada iniciada', { description: `Canal ${call.activeChannel.toUpperCase()}` });
     },
-    [call],
+    [call, sip],
   );
 
   const handleVoiceIntent = useCallback(
@@ -87,12 +132,16 @@ const PhoneDialer = () => {
           if (intent.target) startCall(intent.target);
           break;
         case 'hangup':
+          sip.endCall();
           call.endCall();
           break;
         case 'mute':
-        case 'unmute':
+        case 'unmute': {
+          const next = !(current?.isMuted ?? false);
+          sip.toggleMute(next);
           call.toggleMute();
           break;
+        }
         case 'redial':
           if (lastDialed) startCall(lastDialed);
           else toast.info('Nenhuma chamada recente para repetir');
@@ -104,7 +153,7 @@ const PhoneDialer = () => {
           break;
       }
     },
-    [call, lastDialed, navigate, startCall],
+    [call, current, lastDialed, navigate, sip, startCall],
   );
 
   // Suporte a teclado físico no dialpad
@@ -154,14 +203,22 @@ const PhoneDialer = () => {
               isMuted={current.isMuted}
               isSpeaker={isSpeaker}
               isIncoming={current.direction === 'inbound' && current.status === 'ringing'}
-              onToggleMute={() => call.toggleMute()}
+              onToggleMute={() => { sip.toggleMute(!current.isMuted); call.toggleMute(); }}
               onToggleSpeaker={() => setIsSpeaker((prev) => !prev)}
               onToggleKeypad={() => navigate('/calls')}
               onAddCall={() => navigate('/calls')}
               onVideo={() => navigate('/video-conference')}
               onContacts={() => navigate('/contacts')}
-              onHangup={() => call.endCall()}
-              onAccept={() => call.updateCallStatus('active')}
+              onHangup={() => {
+                if (sip.incomingCall) sip.rejectCall();
+                else if (current.direction === 'inbound' || call.activeChannel === 'sip') sip.endCall();
+                call.endCall();
+              }}
+              onAccept={() => {
+                void sip.answerCall().then((ok) => {
+                  if (ok) call.updateCallStatus('active');
+                });
+              }}
             />
           ) : (
             <>
@@ -205,6 +262,8 @@ const PhoneDialer = () => {
               setInput(sanitizeDialInput(phone));
               if (name) toast.info(name, { description: 'Número carregado no discador' });
             }}
+            isFavorite={isFavorite}
+            onToggleFavorite={toggleFavorite}
             onPaste={handlePaste}
             onOpenContacts={() => navigate('/contacts')}
           />

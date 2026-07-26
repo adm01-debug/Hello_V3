@@ -14,6 +14,15 @@ const log = logger.create('SIP');
 
 export type SipStatus = 'disconnected' | 'connecting' | 'registered' | 'calling' | 'ringing' | 'active' | 'error';
 
+export interface IncomingCallInfo {
+  /** Número/ramal do chamador (somente dígitos quando disponível). */
+  from: string;
+  /** Nome de exibição enviado pelo peer, quando existir. */
+  displayName: string | null;
+  /** Momento (epoch ms) em que o convite chegou — usado para timeout de UI. */
+  receivedAt: number;
+}
+
 export interface SipCallState {
   status: SipStatus;
   isRegistered: boolean;
@@ -22,7 +31,10 @@ export interface SipCallState {
   callId: string | null;
   phoneNumber: string | null;
   duration: number;
+  /** Convite entrante pendente de atendimento (null quando não há). */
+  incomingCall: IncomingCallInfo | null;
 }
+
 
  export interface CallControls {
    isMuted: boolean;
@@ -32,11 +44,12 @@ export interface SipCallState {
  export function useSipCall() {
    const [state, setState] = useState<SipCallState>({
      status: 'disconnected', isRegistered: false, isConfigured: false,
-     error: null, callId: null, phoneNumber: null, duration: 0,
+     error: null, callId: null, phoneNumber: null, duration: 0, incomingCall: null,
    });
    const [controls, setControls] = useState<CallControls>({ isMuted: false, isOnHold: false });
   const uaRef = useRef<JsSIP.UA | null>(null);
   const sessionRef = useRef<RTCSession | null>(null);
+  const incomingRef = useRef<RTCSession | null>(null);
   const durationRef = useRef<number | null>(null);
   const remoteAudioRef = useRef<HTMLAudioElement | null>(null);
   const serverRef = useRef<string>('');
@@ -193,9 +206,32 @@ export interface SipCallState {
          });
  
          if (session.direction === 'incoming') {
-           log.info('Incoming call', { from: session.remote_identity?.uri?.toString() });
-           toast.info(`📞 Chamada recebida de ${session.remote_identity?.display_name || session.remote_identity?.uri?.user || 'Desconhecido'}`);
+           const from = session.remote_identity?.uri?.user ?? '';
+           const displayName = session.remote_identity?.display_name ?? null;
+           log.info('Incoming call', { from });
+
+           // Se já existe chamada ativa, rejeita com 486 (Busy Here) para não derrubar a atual.
+           if (sessionRef.current) {
+             try { session.terminate({ status_code: 486, reason_phrase: 'Busy Here' }); } catch { /* ignore */ }
+             log.warn('Incoming call rejected: line busy', { from });
+             return;
+           }
+
+           incomingRef.current = session;
+           setState(prev => ({ ...prev, incomingCall: { from, displayName, receivedAt: Date.now() } }));
+           toast.info(`📞 Chamada recebida de ${displayName || from || 'Desconhecido'}`);
+
+           // Chamador desistiu / rede caiu antes do atendimento
+           const clearIncoming = () => {
+             if (incomingRef.current === session) {
+               incomingRef.current = null;
+               setState(prev => (prev.incomingCall ? { ...prev, incomingCall: null } : prev));
+             }
+           };
+           session.on('failed', clearIncoming);
+           session.on('ended', clearIncoming);
          }
+
        });
 
       ua.start();
@@ -264,11 +300,77 @@ export interface SipCallState {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isRegistered, connect, startDurationTimer, stopDurationTimer, attachRemoteStream]);
 
+  /** Atende o convite entrante pendente. Retorna false quando não há convite válido. */
+  const answerCall = useCallback(async (): Promise<boolean> => {
+    const session = incomingRef.current;
+    if (!session) { toast.error('Nenhuma chamada recebida pendente'); return false; }
+    if (sessionRef.current) { toast.error('Já existe uma chamada em andamento'); return false; }
+
+    try {
+      const from = session.remote_identity?.uri?.user ?? '';
+      session.answer({
+        mediaConstraints: { audio: true, video: false },
+        pcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }] },
+      });
+      sessionRef.current = session;
+      incomingRef.current = null;
+      setState(prev => ({
+        ...prev,
+        status: 'active',
+        incomingCall: null,
+        phoneNumber: from,
+        duration: 0,
+        callId: `sip-in-${Date.now()}`,
+        error: null,
+      }));
+
+      session.on('confirmed', () => { attachRemoteStream(session); if (session.connection) setActivePc(session.connection); });
+      const finish = (cause?: string) => {
+        stopDurationTimer();
+        sessionRef.current = null;
+        setActivePc(null);
+        setState(prev => ({
+          ...prev,
+          status: prev.isRegistered ? 'registered' : 'disconnected',
+          callId: null, phoneNumber: null, duration: 0,
+          error: cause ?? null,
+        }));
+      };
+      session.on('ended', () => finish());
+      session.on('failed', (e: { cause?: string }) => { finish(e?.cause); if (e?.cause) toast.error(`Chamada encerrada: ${e.cause}`); });
+
+      attachRemoteStream(session);
+      if (session.connection) setActivePc(session.connection);
+      startDurationTimer();
+      return true;
+    } catch (error) {
+      log.error('Answer error', error);
+      incomingRef.current = null;
+      setState(prev => ({ ...prev, incomingCall: null, error: 'Falha ao atender chamada' }));
+      toast.error('Falha ao atender a chamada');
+      return false;
+    }
+  }, [attachRemoteStream, startDurationTimer, stopDurationTimer]);
+
+  /** Rejeita o convite entrante pendente com 603 Decline. */
+  const rejectCall = useCallback(() => {
+    const session = incomingRef.current;
+    incomingRef.current = null;
+    setState(prev => ({ ...prev, incomingCall: null }));
+    if (!session) return;
+    try { session.terminate({ status_code: 603, reason_phrase: 'Decline' }); } catch (e) { log.warn('Error rejecting call', e); }
+  }, []);
+
   const endCall = useCallback(() => {
+    if (incomingRef.current) {
+      try { incomingRef.current.terminate({ status_code: 603, reason_phrase: 'Decline' }); } catch { /* ignore */ }
+      incomingRef.current = null;
+    }
     if (sessionRef.current) { try { sessionRef.current.terminate(); } catch (e) { log.warn('Error terminating session', e); } sessionRef.current = null; }
     stopDurationTimer();
-    setState(prev => ({ ...prev, status: prev.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null, duration: 0 }));
+    setState(prev => ({ ...prev, status: prev.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null, duration: 0, incomingCall: null }));
   }, [stopDurationTimer]);
+
 
    const toggleMute = useCallback((muted: boolean) => {
      if (sessionRef.current) {
@@ -292,7 +394,7 @@ export interface SipCallState {
     if (sessionRef.current) { try { sessionRef.current.terminate(); } catch { /* ignore */ } sessionRef.current = null; }
     if (uaRef.current) { try { uaRef.current.stop(); } catch { /* ignore */ } uaRef.current = null; }
     stopDurationTimer();
-    setState({ status: 'disconnected', isRegistered: false, isConfigured: false, error: null, callId: null, phoneNumber: null, duration: 0 });
+    setState({ status: 'disconnected', isRegistered: false, isConfigured: false, error: null, callId: null, phoneNumber: null, duration: 0, incomingCall: null });
   }, [stopDurationTimer]);
 
   useEffect(() => { return () => { disconnect(); }; }, [disconnect]);
@@ -301,8 +403,9 @@ export interface SipCallState {
      ...state,
      ...controls,
      isInCall: state.status === 'calling' || state.status === 'ringing' || state.status === 'active',
+     hasIncomingCall: state.incomingCall !== null,
       quality,
       pc: activePc,
-      connect, disconnect, startCall, endCall, toggleMute, toggleHold, sendDTMF,
+      connect, disconnect, startCall, endCall, answerCall, rejectCall, toggleMute, toggleHold, sendDTMF,
    };
 }

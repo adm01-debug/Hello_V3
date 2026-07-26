@@ -1,0 +1,115 @@
+import { useCallback } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
+
+const log = logger.create('DialerFavorites');
+
+export interface DialerFavorite {
+  id: string;
+  phone: string;
+  label: string | null;
+  position: number;
+}
+
+const QUERY_KEY = ['dialer-favorites'] as const;
+const MAX_FAVORITES = 12;
+
+/** Favoritos do discador persistidos por usuário (RLS por auth.uid()). */
+export function useDialerFavorites() {
+  const queryClient = useQueryClient();
+
+  const query = useQuery({
+    queryKey: QUERY_KEY,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+    retry: (failureCount, error) => {
+      const status = (error as { status?: number } | null)?.status;
+      if (status === 401 || status === 403 || status === 404) return false;
+      return failureCount < 2;
+    },
+    queryFn: async (): Promise<DialerFavorite[]> => {
+      const { data, error } = await supabase
+        .from('dialer_favorites')
+        .select('id, phone, label, position')
+        .order('position', { ascending: true })
+        .order('created_at', { ascending: true });
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const favorites = query.data ?? [];
+
+  const addMutation = useMutation({
+    mutationFn: async ({ phone, label }: { phone: string; label?: string | null }) => {
+      const { data: auth } = await supabase.auth.getUser();
+      const userId = auth.user?.id;
+      if (!userId) throw new Error('Sessão expirada');
+      const { error } = await supabase.from('dialer_favorites').insert({
+        user_id: userId,
+        phone,
+        label: label?.trim() || null,
+        position: favorites.length,
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      toast.success('Adicionado aos favoritos');
+    },
+    onError: (error: unknown) => {
+      const message = error instanceof Error ? error.message : 'Erro desconhecido';
+      const duplicate = message.includes('dialer_favorites_unique_phone');
+      log.error('Falha ao adicionar favorito', error);
+      toast.error(duplicate ? 'Este número já está nos favoritos' : 'Não foi possível salvar o favorito');
+    },
+  });
+
+  const removeMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from('dialer_favorites').delete().eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      toast.success('Removido dos favoritos');
+    },
+    onError: (error: unknown) => {
+      log.error('Falha ao remover favorito', error);
+      toast.error('Não foi possível remover o favorito');
+    },
+  });
+
+  const isFavorite = useCallback(
+    (phone: string) => favorites.some((favorite) => favorite.phone === phone),
+    [favorites],
+  );
+
+  const toggleFavorite = useCallback(
+    (phone: string, label?: string | null) => {
+      const existing = favorites.find((favorite) => favorite.phone === phone);
+      if (existing) {
+        removeMutation.mutate(existing.id);
+        return;
+      }
+      if (favorites.length >= MAX_FAVORITES) {
+        toast.warning(`Limite de ${MAX_FAVORITES} favoritos atingido`);
+        return;
+      }
+      addMutation.mutate({ phone, label });
+    },
+    [favorites, addMutation, removeMutation],
+  );
+
+  return {
+    favorites,
+    isLoading: query.isLoading,
+    isError: query.isError,
+    isMutating: addMutation.isPending || removeMutation.isPending,
+    isFavorite,
+    toggleFavorite,
+    maxFavorites: MAX_FAVORITES,
+  };
+}

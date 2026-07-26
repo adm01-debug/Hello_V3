@@ -3102,6 +3102,36 @@ export type Database = {
         }
         Relationships: []
       }
+      dialer_favorites: {
+        Row: {
+          created_at: string
+          id: string
+          label: string | null
+          phone: string
+          position: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          label?: string | null
+          phone: string
+          position?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          label?: string | null
+          phone?: string
+          position?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       dialer_queue: {
         Row: {
           assigned_agent: string | null

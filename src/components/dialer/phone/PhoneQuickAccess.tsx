@@ -19,34 +19,57 @@ interface PhoneQuickAccessProps {
   onSelect: (phone: string, name?: string) => void;
   onPaste: () => void;
   onOpenContacts: () => void;
+  /** Indica se o número já está salvo como favorito do usuário. */
+  isFavorite?: (phone: string) => boolean;
+  /** Alterna o favorito persistido do usuário. */
+  onToggleFavorite?: (phone: string, label?: string | null) => void;
 }
 
 function EntryRow({
   entry,
   onSelect,
+  isFavorite,
+  onToggleFavorite,
 }: {
   entry: QuickAccessEntry;
   onSelect: (phone: string, name?: string) => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: (phone: string, label?: string | null) => void;
 }) {
   return (
-    <button
-      type="button"
-      onClick={() => onSelect(entry.phone, entry.name)}
-      className={cn(
-        'flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left transition-colors',
-        'hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-      )}
-    >
-      <span className="min-w-0">
-        <span className="block truncate text-sm font-medium text-foreground">{entry.name}</span>
-        <span className="block truncate text-xs text-muted-foreground">
-          {formatPhoneDisplay(entry.phone) || entry.phone}
+    <div className="flex items-center gap-1 rounded-lg pr-1 transition-colors hover:bg-accent">
+      <button
+        type="button"
+        onClick={() => onSelect(entry.phone, entry.name)}
+        className={cn(
+          'flex min-w-0 flex-1 items-center justify-between gap-3 rounded-lg px-3 py-2 text-left',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        )}
+      >
+        <span className="min-w-0">
+          <span className="block truncate text-sm font-medium text-foreground">{entry.name}</span>
+          <span className="block truncate text-xs text-muted-foreground">
+            {formatPhoneDisplay(entry.phone) || entry.phone}
+          </span>
         </span>
-      </span>
-      {entry.hint ? (
-        <span className="shrink-0 text-[11px] text-muted-foreground">{entry.hint}</span>
+        {entry.hint ? (
+          <span className="shrink-0 text-[11px] text-muted-foreground">{entry.hint}</span>
+        ) : null}
+      </button>
+      {onToggleFavorite ? (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 shrink-0"
+          aria-pressed={Boolean(isFavorite)}
+          aria-label={isFavorite ? `Remover ${entry.name} dos favoritos` : `Adicionar ${entry.name} aos favoritos`}
+          onClick={() => onToggleFavorite(entry.phone, entry.name)}
+        >
+          <Star className={cn('h-4 w-4', isFavorite ? 'fill-primary text-primary' : 'text-muted-foreground')} />
+        </Button>
       ) : null}
-    </button>
+    </div>
   );
 }
 
@@ -58,6 +81,8 @@ export function PhoneQuickAccess({
   onSelect,
   onPaste,
   onOpenContacts,
+  isFavorite,
+  onToggleFavorite,
 }: PhoneQuickAccessProps) {
   return (
     <div className="flex h-full flex-col gap-4 rounded-xl border border-border/50 bg-card/60 p-4 backdrop-blur-sm">
@@ -85,7 +110,12 @@ export function PhoneQuickAccess({
           <ul className="space-y-1">
             {favorites.map((entry) => (
               <li key={entry.id}>
-                <EntryRow entry={entry} onSelect={onSelect} />
+                <EntryRow
+                  entry={entry}
+                  onSelect={onSelect}
+                  isFavorite={isFavorite?.(entry.phone) ?? entry.favorite}
+                  onToggleFavorite={onToggleFavorite}
+                />
               </li>
             ))}
           </ul>
@@ -108,7 +138,12 @@ export function PhoneQuickAccess({
             <ul className="space-y-1">
               {recents.map((entry) => (
                 <li key={entry.id}>
-                  <EntryRow entry={entry} onSelect={onSelect} />
+                  <EntryRow
+                  entry={entry}
+                  onSelect={onSelect}
+                  isFavorite={isFavorite?.(entry.phone) ?? entry.favorite}
+                  onToggleFavorite={onToggleFavorite}
+                />
                 </li>
               ))}
             </ul>
