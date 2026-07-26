@@ -18,6 +18,7 @@ const loaders: Record<string, Loader> = {
   "/queue-dashboard": () => import("@/pages/QueueMetricsDashboard"),
   "/call-queues": () => import("@/pages/CallQueues"),
   "/ring-groups": () => import("@/pages/RingGroups"),
+  "/call-park": () => import("@/pages/CallPark"),
   "/calls": () => import("@/pages/Calls"),
   "/dialer": () => import("@/pages/Dialer"),
   "/contacts": () => import("@/pages/Contacts"),
