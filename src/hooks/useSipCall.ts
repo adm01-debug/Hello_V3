@@ -205,9 +205,32 @@ export interface SipCallState {
          });
  
          if (session.direction === 'incoming') {
-           log.info('Incoming call', { from: session.remote_identity?.uri?.toString() });
-           toast.info(`📞 Chamada recebida de ${session.remote_identity?.display_name || session.remote_identity?.uri?.user || 'Desconhecido'}`);
+           const from = session.remote_identity?.uri?.user ?? '';
+           const displayName = session.remote_identity?.display_name ?? null;
+           log.info('Incoming call', { from });
+
+           // Se já existe chamada ativa, rejeita com 486 (Busy Here) para não derrubar a atual.
+           if (sessionRef.current) {
+             try { session.terminate({ status_code: 486, reason_phrase: 'Busy Here' }); } catch { /* ignore */ }
+             log.warn('Incoming call rejected: line busy', { from });
+             return;
+           }
+
+           incomingRef.current = session;
+           setState(prev => ({ ...prev, incomingCall: { from, displayName, receivedAt: Date.now() } }));
+           toast.info(`📞 Chamada recebida de ${displayName || from || 'Desconhecido'}`);
+
+           // Chamador desistiu / rede caiu antes do atendimento
+           const clearIncoming = () => {
+             if (incomingRef.current === session) {
+               incomingRef.current = null;
+               setState(prev => (prev.incomingCall ? { ...prev, incomingCall: null } : prev));
+             }
+           };
+           session.on('failed', clearIncoming);
+           session.on('ended', clearIncoming);
          }
+
        });
 
       ua.start();
