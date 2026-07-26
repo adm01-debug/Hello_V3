@@ -6280,6 +6280,7 @@ export type Database = {
           voice_prefs_updated_at: string | null
           voice_tts_enabled: boolean
           voice_tts_rate: number
+          voice_tts_voice: string | null
         }
         Insert: {
           agent_id?: string | null
@@ -6302,6 +6303,7 @@ export type Database = {
           voice_prefs_updated_at?: string | null
           voice_tts_enabled?: boolean
           voice_tts_rate?: number
+          voice_tts_voice?: string | null
         }
         Update: {
           agent_id?: string | null
@@ -6324,6 +6326,7 @@ export type Database = {
           voice_prefs_updated_at?: string | null
           voice_tts_enabled?: boolean
           voice_tts_rate?: number
+          voice_tts_voice?: string | null
         }
         Relationships: [
           {
