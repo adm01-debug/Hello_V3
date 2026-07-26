@@ -146,6 +146,9 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
 
   const toggleListening = useCallback(() => {
     if (isProcessing) return;
+    setHasError(false);
+    cancelSpeech();
+    setIsSpeaking(false);
     if (isListening) {
       stopListening();
     } else {
@@ -153,6 +156,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       void startListening();
     }
   }, [isListening, isProcessing, startListening, stopListening]);
+
 
   useEffect(() => {
     if (isListening || isProcessing) setIsBooting(false);
