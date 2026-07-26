@@ -7,17 +7,28 @@
  */
 
 import { logger } from '@/lib/logger';
+import {
+  clampVolume,
+  getRingtonePreset,
+  loadRingtoneSettings,
+  type RingtonePreset,
+} from '@/lib/ringtone-presets';
 
 const log = logger.create('IncomingCallAlert');
 
 /** Cadência clássica de telefonia BR: 1s de toque, 4s de silêncio. */
 export const RING_ON_MS = 1000;
 export const RING_CYCLE_MS = 5000;
-const RING_FREQ_HZ = 440;
-const RING_GAIN = 0.12;
 
 interface AlertHandle {
   stop: () => void;
+}
+
+export interface RingtoneOptions {
+  /** Id do preset; quando omitido usa a preferência salva do usuário. */
+  presetId?: string;
+  /** Volume 0..1; quando omitido usa a preferência salva do usuário. */
+  volume?: number;
 }
 
 type AudioContextCtor = typeof AudioContext;
@@ -31,10 +42,19 @@ function getAudioContextCtor(): AudioContextCtor | null {
   return w.AudioContext ?? w.webkitAudioContext ?? null;
 }
 
+function resolveOptions(options?: RingtoneOptions): { preset: RingtonePreset; volume: number } {
+  const stored = loadRingtoneSettings();
+  const preset = getRingtonePreset(options?.presetId ?? stored.presetId);
+  const volume = clampVolume(options?.volume ?? stored.volume);
+  return { preset, volume };
+}
+
 /** Inicia o toque em loop. Retorna um handle idempotente para parar. */
-export function startRingtone(): AlertHandle {
+export function startRingtone(options?: RingtoneOptions): AlertHandle {
+  const { preset, volume } = resolveOptions(options);
   const Ctor = getAudioContextCtor();
-  if (!Ctor) return { stop: () => undefined };
+  // Preset silencioso ou volume zerado: nada a tocar, mas o handle é válido.
+  if (!Ctor || preset.tones.length === 0 || volume <= 0) return { stop: () => undefined };
 
   let context: AudioContext | null = null;
   let interval: ReturnType<typeof setInterval> | null = null;
@@ -47,21 +67,25 @@ export function startRingtone(): AlertHandle {
     return { stop: () => undefined };
   }
 
-  const beep = () => {
+  const playCycle = () => {
     if (stopped || !context || context.state === 'closed') return;
-    try {
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-      oscillator.type = 'sine';
-      oscillator.frequency.value = RING_FREQ_HZ;
-      gain.gain.setValueAtTime(RING_GAIN, context.currentTime);
-      // Fade-out curto evita "click" audível ao final do toque.
-      gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + RING_ON_MS / 1000);
-      oscillator.connect(gain).connect(context.destination);
-      oscillator.start();
-      oscillator.stop(context.currentTime + RING_ON_MS / 1000);
-    } catch (error) {
-      log.warn('Falha ao emitir toque', error);
+    for (const tone of preset.tones) {
+      try {
+        const startAt = context.currentTime + tone.offsetMs / 1000;
+        const endAt = startAt + tone.durationMs / 1000;
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        oscillator.type = 'sine';
+        oscillator.frequency.value = tone.freq;
+        gain.gain.setValueAtTime(volume, startAt);
+        // Fade-out curto evita "click" audível ao final do toque.
+        gain.gain.exponentialRampToValueAtTime(0.0001, endAt);
+        oscillator.connect(gain).connect(context.destination);
+        oscillator.start(startAt);
+        oscillator.stop(endAt);
+      } catch (error) {
+        log.warn('Falha ao emitir toque', error);
+      }
     }
   };
 
@@ -70,8 +94,8 @@ export function startRingtone(): AlertHandle {
     void Promise.resolve(context.resume()).catch(() => undefined);
   }
 
-  beep();
-  interval = setInterval(beep, RING_CYCLE_MS);
+  playCycle();
+  interval = setInterval(playCycle, preset.cycleMs);
 
   return {
     stop: () => {
@@ -87,6 +111,21 @@ export function startRingtone(): AlertHandle {
       context = null;
     },
   };
+}
+
+/** Toca uma única vez o preset informado (pré-escuta nas preferências). */
+export function previewRingtone(presetId: string, volume?: number): void {
+  const handle = startRingtone({ presetId, volume });
+  const { preset } = resolveOptions({ presetId, volume });
+  const durationMs = preset.tones.reduce(
+    (max, tone) => Math.max(max, tone.offsetMs + tone.durationMs),
+    0,
+  );
+  if (typeof window === 'undefined') {
+    handle.stop();
+    return;
+  }
+  window.setTimeout(() => handle.stop(), durationMs + 200);
 }
 
 /**
@@ -140,8 +179,12 @@ export async function ensureNotificationPermission(): Promise<NotificationPermis
 }
 
 /** Combina toque + notificação em um único ciclo de vida. */
-export function startIncomingCallAlert(title: string, body: string): AlertHandle {
-  const ringtone = startRingtone();
+export function startIncomingCallAlert(
+  title: string,
+  body: string,
+  options?: RingtoneOptions,
+): AlertHandle {
+  const ringtone = startRingtone(options);
   const closeNotification = showIncomingNotification(title, body);
   let stopped = false;
   return {

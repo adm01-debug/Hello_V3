@@ -3109,6 +3109,7 @@ export type Database = {
           label: string | null
           phone: string
           position: number
+          tag: string | null
           updated_at: string
           user_id: string
         }
@@ -3118,6 +3119,7 @@ export type Database = {
           label?: string | null
           phone: string
           position?: number
+          tag?: string | null
           updated_at?: string
           user_id: string
         }
@@ -3127,6 +3129,7 @@ export type Database = {
           label?: string | null
           phone?: string
           position?: number
+          tag?: string | null
           updated_at?: string
           user_id?: string
         }
