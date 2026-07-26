@@ -81,6 +81,23 @@ const PhoneDialer = () => {
     }
   }, [sip, call]);
 
+  /**
+   * Toque + notificação nativa enquanto houver convite não atendido.
+   * O alerta é encerrado ao atender, recusar ou quando o chamador desiste.
+   */
+  const incomingKey = sip.incomingCall
+    ? `${sip.incomingCall.from ?? ''}|${sip.incomingCall.displayName ?? ''}`
+    : null;
+  useEffect(() => {
+    if (!incomingKey) return;
+    const [from, displayName] = incomingKey.split('|');
+    const caller = displayName || formatPhoneDisplay(from) || from || 'Número desconhecido';
+    const alert = startIncomingCallAlert('Chamada recebida', caller);
+    return () => alert.stop();
+  }, [incomingKey]);
+
+
+
   const recents: QuickAccessEntry[] = useMemo(
     () =>
       (sessions ?? [])
