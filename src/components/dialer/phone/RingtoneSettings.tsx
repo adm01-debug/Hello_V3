@@ -1,4 +1,4 @@
-import { Bell, Play, RefreshCw, X } from 'lucide-react';
+import { Bell, Play, RefreshCw, RotateCcw, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/select';
 import { useRingtoneSettings } from '@/hooks/useRingtoneSettings';
 import { getRingtonePreset } from '@/lib/ringtone-presets';
+import { formatRemoteOrigin } from '@/lib/device-identity';
 
 /** Preferências de toque para chamadas recebidas (sincronizadas no perfil). */
 export function RingtoneSettings() {
@@ -22,19 +23,35 @@ export function RingtoneSettings() {
     changeVolume,
     preview,
     remoteUpdatedAt,
+    remoteDevice,
     acknowledgeRemoteUpdate,
+    resetToDefaults,
+    isDefault,
   } = useRingtoneSettings();
   const active = getRingtonePreset(presetId);
   const volumePercent = Math.round(volume * 100);
 
   return (
     <section aria-labelledby="toque-heading" className="rounded-lg border border-border/50 p-3">
-      <h3
-        id="toque-heading"
-        className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
-      >
-        <Bell className="h-3.5 w-3.5" /> Toque
-      </h3>
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <h3
+          id="toque-heading"
+          className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+        >
+          <Bell className="h-3.5 w-3.5" /> Toque
+        </h3>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="h-7 gap-1 px-2 text-[11px] text-muted-foreground"
+          onClick={resetToDefaults}
+          disabled={isDefault}
+          aria-label="Restaurar toque padrão"
+        >
+          <RotateCcw className="h-3 w-3" aria-hidden="true" /> Padrão
+        </Button>
+      </div>
 
       {remoteUpdatedAt !== null && (
         <div
@@ -43,7 +60,7 @@ export function RingtoneSettings() {
           className="mb-2 flex items-center gap-2 rounded-md border border-primary/40 bg-primary/10 px-2 py-1.5 text-[11px] text-foreground"
         >
           <RefreshCw className="h-3 w-3 shrink-0 text-primary" aria-hidden="true" />
-          <span className="flex-1">Toque atualizado em outro dispositivo</span>
+          <span className="flex-1">{formatRemoteOrigin(remoteDevice, remoteUpdatedAt)}</span>
           <button
             type="button"
             onClick={acknowledgeRemoteUpdate}
@@ -54,6 +71,7 @@ export function RingtoneSettings() {
           </button>
         </div>
       )}
+
 
 
       <div className="space-y-3">

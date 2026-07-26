@@ -6267,6 +6267,8 @@ export type Database = {
           full_name: string | null
           id: string
           ringtone_preset: string | null
+          ringtone_updated_at: string | null
+          ringtone_updated_by_device: string | null
           ringtone_volume: number | null
           role: string
           updated_at: string
@@ -6279,6 +6281,8 @@ export type Database = {
           full_name?: string | null
           id: string
           ringtone_preset?: string | null
+          ringtone_updated_at?: string | null
+          ringtone_updated_by_device?: string | null
           ringtone_volume?: number | null
           role?: string
           updated_at?: string
@@ -6291,6 +6295,8 @@ export type Database = {
           full_name?: string | null
           id?: string
           ringtone_preset?: string | null
+          ringtone_updated_at?: string | null
+          ringtone_updated_by_device?: string | null
           ringtone_volume?: number | null
           role?: string
           updated_at?: string
