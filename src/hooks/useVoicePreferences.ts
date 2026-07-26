@@ -17,6 +17,8 @@ import {
 } from '@/lib/voice-command-history';
 import {
   clampTtsRate,
+  formatTtsRate,
+  formatVoiceLabel,
   mergeCommandHistories,
   nextTtsRate,
   nextVoiceUri,
@@ -25,6 +27,8 @@ import {
   type VoiceOption,
 } from '@/lib/voice-preferences';
 import { isSpeechSupported, listVoices, onVoicesChanged } from '@/lib/voice-speech';
+import { pushSyncEvent } from '@/hooks/useSyncHistory';
+import { getCurrentDeviceLabel } from '@/lib/device-identity';
 import { logger } from '@/lib/logger';
 
 interface VoiceProfileRow {
@@ -68,6 +72,19 @@ export function useVoicePreferences(): UseVoicePreferences {
   const userIdRef = useRef<string | null>(null);
   const historyRef = useRef<VoiceCommandEntry[]>(history);
   historyRef.current = history;
+
+  /**
+   * Registra a mudança no histórico curto de sincronização. Nunca deve
+   * interromper o fluxo principal: falhas de storage já são absorvidas
+   * pelo helper, mas mantemos o try/catch por robustez.
+   */
+  const trackChange = useCallback((subject: string, detail: string) => {
+    try {
+      pushSyncEvent(userIdRef.current, { subject, detail, device: getCurrentDeviceLabel() });
+    } catch (error) {
+      logger.warn('Falha ao registrar evento de sincronização de voz', { error });
+    }
+  }, []);
 
   /** Grava um patch no perfil; falhas são acessórias e apenas logadas. */
   const pushToProfile = useCallback(async (patch: Record<string, unknown>) => {
@@ -130,23 +147,26 @@ export function useVoicePreferences(): UseVoicePreferences {
   const toggleTts = useCallback((): boolean => {
     const next = !ttsEnabled;
     setTtsEnabled(next);
+    trackChange('Resposta falada', next ? 'Ativada' : 'Desativada');
     void pushToProfile({ voice_tts_enabled: next });
     return next;
-  }, [pushToProfile, ttsEnabled]);
+  }, [pushToProfile, trackChange, ttsEnabled]);
 
   const cycleRate = useCallback((): number => {
     const next = nextTtsRate(ttsRate);
     setTtsRate(next);
+    trackChange('Velocidade da fala', formatTtsRate(next));
     void pushToProfile({ voice_tts_rate: next });
     return next;
-  }, [pushToProfile, ttsRate]);
+  }, [pushToProfile, trackChange, ttsRate]);
 
   const cycleVoice = useCallback((): string | null => {
     const next = nextVoiceUri(voices, ttsVoice);
     setTtsVoice(next);
+    trackChange('Voz do assistente', formatVoiceLabel(voices, next));
     void pushToProfile({ voice_tts_voice: next });
     return next;
-  }, [pushToProfile, ttsVoice, voices]);
+  }, [pushToProfile, trackChange, ttsVoice, voices]);
 
   const recordCommand = useCallback(
     (command: string) => {
