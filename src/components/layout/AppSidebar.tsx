@@ -1,4 +1,5 @@
 import { 
+  CircleParking,
   LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Clock as ClockIcon, Wifi,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -21,6 +22,7 @@ const mainNavItems = [
   { title: 'Impacto Financeiro', url: '/financial-impact', icon: PieChart },
   { title: 'Métricas Fila', url: '/queue-dashboard', icon: Activity },
   { title: 'Chamadas', url: '/calls', icon: Phone },
+  { title: 'Estacionamento', url: '/call-park', icon: CircleParking },
   { title: 'Discador Preditivo', url: '/dialer', icon: PhoneOutgoing },
   { title: 'Contatos', url: '/contacts', icon: Users },
   { title: 'Insights', url: '/contacts/insights', icon: Brain },

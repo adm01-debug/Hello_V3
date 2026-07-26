@@ -1264,6 +1264,62 @@ export type Database = {
           },
         ]
       }
+      call_park_orbits: {
+        Row: {
+          announce_slot: boolean
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          moh_prompt_id: string | null
+          name: string
+          park_timeout_seconds: number
+          slot_end: number
+          slot_start: number
+          timeout_action: string
+          timeout_target: string | null
+          updated_at: string
+        }
+        Insert: {
+          announce_slot?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          moh_prompt_id?: string | null
+          name: string
+          park_timeout_seconds?: number
+          slot_end?: number
+          slot_start?: number
+          timeout_action?: string
+          timeout_target?: string | null
+          updated_at?: string
+        }
+        Update: {
+          announce_slot?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          moh_prompt_id?: string | null
+          name?: string
+          park_timeout_seconds?: number
+          slot_end?: number
+          slot_start?: number
+          timeout_action?: string
+          timeout_target?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_park_orbits_moh_prompt_id_fkey"
+            columns: ["moh_prompt_id"]
+            isOneToOne: false
+            referencedRelation: "queue_audio_prompts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       call_playlists: {
         Row: {
           auto_query: Json | null
@@ -4770,6 +4826,81 @@ export type Database = {
         }
         Relationships: []
       }
+      parked_calls: {
+        Row: {
+          call_session_id: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          notes: string | null
+          orbit_id: string
+          parked_at: string
+          parked_by: string | null
+          parked_by_name: string | null
+          retrieved_at: string | null
+          retrieved_by: string | null
+          retrieved_by_name: string | null
+          slot_number: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          call_session_id?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          expires_at: string
+          id?: string
+          notes?: string | null
+          orbit_id: string
+          parked_at?: string
+          parked_by?: string | null
+          parked_by_name?: string | null
+          retrieved_at?: string | null
+          retrieved_by?: string | null
+          retrieved_by_name?: string | null
+          slot_number: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          call_session_id?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          notes?: string | null
+          orbit_id?: string
+          parked_at?: string
+          parked_by?: string | null
+          parked_by_name?: string | null
+          retrieved_at?: string | null
+          retrieved_by?: string | null
+          retrieved_by_name?: string | null
+          slot_number?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parked_calls_call_session_id_fkey"
+            columns: ["call_session_id"]
+            isOneToOne: false
+            referencedRelation: "call_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "parked_calls_orbit_id_fkey"
+            columns: ["orbit_id"]
+            isOneToOne: false
+            referencedRelation: "call_park_orbits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       password_reset_requests: {
         Row: {
           created_at: string
@@ -7390,6 +7521,7 @@ export type Database = {
       cleanup_expired_challenges: { Args: never; Returns: undefined }
       cleanup_old_data: { Args: never; Returns: undefined }
       cleanup_old_logs: { Args: never; Returns: undefined }
+      expire_parked_calls: { Args: never; Returns: number }
       get_agent_financial_leaderboard: {
         Args: { p_days?: number }
         Returns: {

@@ -10,7 +10,8 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
  import {
-   LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi, RefreshCw, Moon, Sun, LogOut,
+  CircleParking,
+  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi, RefreshCw, Moon, Sun, LogOut,
  } from 'lucide-react';
  import { useQueryClient } from '@tanstack/react-query';
  import { useTheme } from '@/contexts/ThemeContext';
@@ -78,6 +79,7 @@ const allRoutes = [
   { title: 'Gestão de Ramais', url: '/admin/extensions', icon: Headphones, group: 'Sistema' },
   { title: 'Filas de Atendimento', url: '/call-queues', icon: ListChecks, group: 'Sistema' },
   { title: 'Grupos de Toque', url: '/ring-groups', icon: Bell, group: 'Sistema' },
+  { title: 'Estacionamento de Chamadas', url: '/call-park', icon: CircleParking, group: 'Chamadas' },
   { title: 'Linhas VoIP', url: '/admin/voip-trunks', icon: Phone, group: 'Sistema' },
   { title: 'Configurações', url: '/settings', icon: Settings, group: 'Sistema' },
 ];
