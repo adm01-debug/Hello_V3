@@ -97,6 +97,11 @@ export const DEFAULT_QUEUE_DRAFT: CallQueueDraft = {
   announce_interval_seconds: 30,
   moh_enabled: true,
   moh_url: null,
+  moh_prompt_id: null,
+  greeting_prompt_id: null,
+  periodic_prompt_id: null,
+  overflow_prompt_id: null,
+  greeting_enabled: false,
 };
 
 /** Recorta um inteiro para dentro da faixa aceita pelo banco. */
