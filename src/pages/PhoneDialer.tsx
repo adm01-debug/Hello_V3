@@ -18,6 +18,11 @@ import { sanitizeDialInput, isDialable } from '@/components/dialer/phone/phone-u
 import { VoiceAssistantDialog } from '@/components/voice/VoiceAssistantDialog';
 import { VoiceAssistantOrb } from '@/components/voice/VoiceAssistantOrb';
 import type { VoiceIntent } from '@/components/voice/voice-intent';
+import {
+  ensureNotificationPermission,
+  startIncomingCallAlert,
+} from '@/lib/incoming-call-alert';
+import { formatPhoneDisplay } from '@/components/dialer/phone/phone-utils';
 
 const CHANNELS: Array<{ id: CallChannel; label: string; icon: React.ComponentType<{ className?: string }> }> = [
   { id: 'sip', label: 'SIP', icon: Headphones },
@@ -40,7 +45,7 @@ const PhoneDialer = () => {
   const call = useMultiChannelCall();
   const { sessions, isLoading } = useCallHistory();
   const sip = useSipCall();
-  const { favorites: savedFavorites, isFavorite, toggleFavorite } = useDialerFavorites();
+  const { favorites: savedFavorites, isFavorite, toggleFavorite, moveFavorite } = useDialerFavorites();
 
   const [input, setInput] = useState('');
   const [isSpeaker, setIsSpeaker] = useState(false);
@@ -75,6 +80,23 @@ const PhoneDialer = () => {
       if (pending && pending.status === 'ringing') call.endCall(pendingId);
     }
   }, [sip, call]);
+
+  /**
+   * Toque + notificação nativa enquanto houver convite não atendido.
+   * O alerta é encerrado ao atender, recusar ou quando o chamador desiste.
+   */
+  const incomingKey = sip.incomingCall
+    ? `${sip.incomingCall.from ?? ''}|${sip.incomingCall.displayName ?? ''}`
+    : null;
+  useEffect(() => {
+    if (!incomingKey) return;
+    const [from, displayName] = incomingKey.split('|');
+    const caller = displayName || formatPhoneDisplay(from) || from || 'Número desconhecido';
+    const alert = startIncomingCallAlert('Chamada recebida', caller);
+    return () => alert.stop();
+  }, [incomingKey]);
+
+
 
   const recents: QuickAccessEntry[] = useMemo(
     () =>
@@ -114,6 +136,8 @@ const PhoneDialer = () => {
         return;
       }
       setLastDialed(number);
+      // Gesto do usuário: momento válido para pedir permissão de notificação.
+      void ensureNotificationPermission();
       call.updateCallStatus('ringing', session.id);
       if (call.activeChannel === 'sip') {
         void sip.startCall(number).then((ok) => {
@@ -264,6 +288,7 @@ const PhoneDialer = () => {
             }}
             isFavorite={isFavorite}
             onToggleFavorite={toggleFavorite}
+            onReorderFavorite={moveFavorite}
             onPaste={handlePaste}
             onOpenContacts={() => navigate('/contacts')}
           />
