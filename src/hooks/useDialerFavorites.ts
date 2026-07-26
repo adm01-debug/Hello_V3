@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
@@ -37,6 +37,19 @@ const MAX_FAVORITES = 12;
 /** Favoritos do discador persistidos por usuário (RLS por auth.uid()). */
 export function useDialerFavorites() {
   const queryClient = useQueryClient();
+  // Escopo do histórico de sincronização: resolvido uma vez por sessão para
+  // que eventos locais (ex.: reordenação otimista) caiam no bucket correto.
+  const userIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void supabase.auth.getUser().then(({ data }) => {
+      if (!cancelled) userIdRef.current = data.user?.id ?? null;
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const query = useQuery({
     queryKey: QUERY_KEY,
@@ -186,6 +199,18 @@ export function useDialerFavorites() {
       const changes = diffPositions(favorites, reordered);
       if (changes.length === 0) return;
       queryClient.setQueryData<DialerFavorite[]>(QUERY_KEY, reordered);
+      // `from`/`to` já foram saneados por `reorderFavorites`; recuperamos o
+      // item efetivamente movido pela diferença entre as duas listas.
+      const moved = reordered.find((favorite, index) => favorites[index]?.id !== favorite.id) ?? null;
+      trackFavoriteChange(
+        userIdRef.current,
+        'Ordem dos favoritos',
+        moved
+          ? `${describeFavorite(moved.label, moved.phone)} → posição ${
+              reordered.findIndex((favorite) => favorite.id === moved.id) + 1
+            }`
+          : `${changes.length} posição(ões) atualizada(s)`,
+      );
       reorderMutation.mutate(changes);
     },
     [favorites, queryClient, reorderMutation],
