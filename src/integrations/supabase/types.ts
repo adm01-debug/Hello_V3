@@ -5213,6 +5213,102 @@ export type Database = {
           },
         ]
       }
+      ring_group_members: {
+        Row: {
+          agent_id: string
+          created_at: string
+          delay_seconds: number
+          group_id: string
+          id: string
+          is_enabled: boolean
+          ring_order: number
+          updated_at: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          delay_seconds?: number
+          group_id: string
+          id?: string
+          is_enabled?: boolean
+          ring_order?: number
+          updated_at?: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          delay_seconds?: number
+          group_id?: string
+          id?: string
+          is_enabled?: boolean
+          ring_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ring_group_members_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ring_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "ring_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ring_groups: {
+        Row: {
+          created_at: string
+          description: string | null
+          extension: string | null
+          forward_target: string | null
+          id: string
+          is_active: boolean
+          name: string
+          no_answer_action: string
+          ring_timeout_seconds: number
+          skip_busy_agents: boolean
+          step_timeout_seconds: number
+          strategy: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          extension?: string | null
+          forward_target?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          no_answer_action?: string
+          ring_timeout_seconds?: number
+          skip_busy_agents?: boolean
+          step_timeout_seconds?: number
+          strategy?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          extension?: string | null
+          forward_target?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          no_answer_action?: string
+          ring_timeout_seconds?: number
+          skip_busy_agents?: boolean
+          step_timeout_seconds?: number
+          strategy?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       rls_audit_logs: {
         Row: {
           client_ip: string | null
