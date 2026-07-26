@@ -2,23 +2,20 @@ import { useState } from 'react';
 import { Check, Laptop, Pencil, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  MAX_DEVICE_LABEL_LENGTH,
-  getCurrentDeviceLabel,
-  setCurrentDeviceLabel,
-} from '@/lib/device-identity';
+import { MAX_DEVICE_LABEL_LENGTH } from '@/lib/device-identity';
+import { useDeviceLabel } from '@/hooks/useDeviceLabel';
 
 /**
- * Apelido desta estação de trabalho, usado nos avisos de sincronização.
+ * Apelido desta estação de trabalho, persistido no perfil do usuário, usado nos avisos de sincronização.
  * Puramente cosmético e local: nunca participa de autorização.
  */
 export function DeviceNameSetting() {
-  const [label, setLabel] = useState<string>(() => getCurrentDeviceLabel());
+  const { label, updateLabel, isSyncing } = useDeviceLabel();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<string>(label);
 
   const commit = () => {
-    setLabel(setCurrentDeviceLabel(draft));
+    updateLabel(draft);
     setEditing(false);
   };
 
@@ -70,6 +67,7 @@ export function DeviceNameSetting() {
             variant="ghost"
             size="icon"
             className="h-7 w-7"
+            disabled={isSyncing}
             onClick={() => {
               setDraft(label);
               setEditing(true);
