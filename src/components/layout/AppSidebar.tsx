@@ -96,6 +96,8 @@ const settingsNavItems = [
   { title: 'Roles & Permissões', url: '/roles', icon: UserCog },
   { title: 'Linhas VoIP', url: '/admin/voip-trunks', icon: Phone },
   { title: 'Ramais', url: '/admin/extensions', icon: Headphones },
+  { title: 'Filas de Atendimento', url: '/call-queues', icon: ListChecks },
+  { title: 'Grupos de Toque', url: '/ring-groups', icon: BellRing },
   { title: 'Sugestões de Escala IA', url: '/shift-swap-suggestions', icon: CalendarDays },
   { title: 'Exportação Data Lake', url: '/admin/data-export', icon: Cloud },
   { title: 'Configurações', url: '/settings', icon: Settings },
