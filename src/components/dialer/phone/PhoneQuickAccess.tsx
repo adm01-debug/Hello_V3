@@ -7,16 +7,16 @@ import { formatPhoneDisplay } from './phone-utils';
 import { FavoriteTagMenu } from './FavoriteTagMenu';
 import { RingtoneSettings } from './RingtoneSettings';
 import { FavoriteTagFilter } from './FavoriteTagFilter';
+import { usePersistedTagFilter } from '@/hooks/usePersistedTagFilter';
 import {
-  ALL_TAGS_FILTER,
   buildTagFilterOptions,
   collectTagOptions,
   filterFavoritesByTag,
   groupFavoritesByTag,
   normalizeTag,
   resolveActiveFilter,
-  type TagFilter,
 } from '@/lib/dialer-favorite-tags';
+
 
 export interface QuickAccessEntry {
   id: string;
@@ -191,7 +191,9 @@ export function PhoneQuickAccess({
     setDragOver(null);
   };
 
-  const [tagFilter, setTagFilter] = useState<TagFilter>(ALL_TAGS_FILTER);
+  // Filtro lembrado entre sessões (escopado por usuário).
+  const { filter: tagFilter, setFilter: setTagFilter } = usePersistedTagFilter();
+
 
   const filterOptions = useMemo(() => buildTagFilterOptions(favorites), [favorites]);
   // Reconcilia o filtro sempre que a lista muda (etiqueta removida/renomeada).

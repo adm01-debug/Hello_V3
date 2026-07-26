@@ -28,7 +28,9 @@ export function useRingtoneSettings() {
   const [presetId, setPresetId] = useState<string>(DEFAULT_RINGTONE_ID);
   const [volume, setVolume] = useState<number>(DEFAULT_VOLUME);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const userIdRef = useRef<string | null>(null);
+
 
   // Leitura só após montagem: evita divergência em SSR/hidratação.
   useEffect(() => {
@@ -45,14 +47,17 @@ export function useRingtoneSettings() {
       setIsSyncing(true);
       try {
         const { data: auth } = await supabase.auth.getUser();
-        const userId = auth?.user?.id ?? null;
-        userIdRef.current = userId;
-        if (!userId || cancelled) return;
+        const uid = auth?.user?.id ?? null;
+        userIdRef.current = uid;
+        if (!cancelled) setUserId(uid);
+        if (!uid || cancelled) return;
+
 
         const { data, error } = await supabase
           .from('user_profiles')
           .select('ringtone_preset, ringtone_volume')
-          .eq('id', userId)
+          .eq('id', uid)
+
           .maybeSingle();
 
         if (error) throw error;
@@ -82,6 +87,45 @@ export function useRingtoneSettings() {
       cancelled = true;
     };
   }, []);
+
+  /**
+   * Propagação em tempo real: quando o perfil é atualizado em outra aba ou
+   * dispositivo, o toque muda aqui sem recarregar a página. Os valores vindos
+   * do banco passam pelos mesmos normalizadores usados na escrita, então um
+   * preset removido ou um volume fora de faixa degrada para o padrão.
+   */
+  useEffect(() => {
+    if (!userId) return;
+
+    const channel = supabase
+      .channel(`ringtone-profile-${userId}`)
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'user_profiles', filter: `id=eq.${userId}` },
+        (payload) => {
+          const next = payload.new as { ringtone_preset?: unknown; ringtone_volume?: unknown } | null;
+          if (!next) return;
+
+          if (typeof next.ringtone_preset === 'string' && next.ringtone_preset.length > 0) {
+            const resolved = getRingtonePreset(next.ringtone_preset).id;
+            setPresetId(resolved);
+            saveRingtoneSettings({ presetId: resolved });
+          }
+          if (next.ringtone_volume !== null && next.ringtone_volume !== undefined) {
+            const parsed = clampVolume(Number(next.ringtone_volume));
+            setVolume(parsed);
+            saveRingtoneSettings({ volume: parsed });
+          }
+        },
+      )
+      .subscribe();
+
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [userId]);
+
+
 
   const pushToProfile = useCallback(
     async (patch: { ringtone_preset?: string; ringtone_volume?: number }) => {
