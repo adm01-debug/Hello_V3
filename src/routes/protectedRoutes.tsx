@@ -25,6 +25,7 @@ const QueueMetricsAlertSettings = lazy(() => import("@/pages/QueueMetricsAlertSe
 const AlertHistory = lazy(() => import("@/pages/AlertHistory"));
 const QueueMetricsDashboard = lazy(() => import("@/pages/QueueMetricsDashboard"));
 const CallQueues = lazy(() => import("@/pages/CallQueues"));
+const RingGroups = lazy(() => import("@/pages/RingGroups"));
 const AuditLogs = lazy(() => import("@/pages/AuditLogs"));
 const SecurityReport = lazy(() => import("@/pages/SecurityReport"));
 const SecurityMonitoring = lazy(() => import("@/pages/SecurityMonitoring"));
@@ -154,6 +155,7 @@ export const protectedRoutes: RouteConfig[] = [
   // Supervisor + Admin
   { path: "/queue-dashboard", element: QueueMetricsDashboard, roles: ["supervisor", "admin"] },
   { path: "/call-queues", element: CallQueues, roles: ["supervisor", "admin"] },
+  { path: "/ring-groups", element: RingGroups, roles: ["supervisor", "admin"] },
   { path: "/executive", element: ExecutiveDashboard, roles: ["supervisor", "admin"] },
   { path: "/queue-metrics-settings", element: QueueMetricsAlertSettings, roles: ["supervisor", "admin"] },
   { path: "/dialer", element: Dialer, roles: ["supervisor", "admin"] },

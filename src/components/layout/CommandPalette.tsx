@@ -76,6 +76,8 @@ const allRoutes = [
   { title: 'Relatório Segurança', url: '/security-report', icon: FileBarChart, group: 'Sistema' },
   { title: 'Roles & Permissões', url: '/roles', icon: UserCog, group: 'Sistema' },
   { title: 'Gestão de Ramais', url: '/admin/extensions', icon: Headphones, group: 'Sistema' },
+  { title: 'Filas de Atendimento', url: '/call-queues', icon: ListChecks, group: 'Sistema' },
+  { title: 'Grupos de Toque', url: '/ring-groups', icon: Bell, group: 'Sistema' },
   { title: 'Linhas VoIP', url: '/admin/voip-trunks', icon: Phone, group: 'Sistema' },
   { title: 'Configurações', url: '/settings', icon: Settings, group: 'Sistema' },
 ];
