@@ -336,7 +336,7 @@ export interface SipCallState {
           error: cause ?? null,
         }));
       };
-      session.on('ended', (e: { cause?: string }) => finish(e?.cause ? undefined : undefined));
+      session.on('ended', () => finish());
       session.on('failed', (e: { cause?: string }) => { finish(e?.cause); if (e?.cause) toast.error(`Chamada encerrada: ${e.cause}`); });
 
       attachRemoteStream(session);
@@ -403,8 +403,9 @@ export interface SipCallState {
      ...state,
      ...controls,
      isInCall: state.status === 'calling' || state.status === 'ringing' || state.status === 'active',
+     hasIncomingCall: state.incomingCall !== null,
       quality,
       pc: activePc,
-      connect, disconnect, startCall, endCall, toggleMute, toggleHold, sendDTMF,
+      connect, disconnect, startCall, endCall, answerCall, rejectCall, toggleMute, toggleHold, sendDTMF,
    };
 }
