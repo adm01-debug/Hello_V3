@@ -1371,6 +1371,128 @@ export type Database = {
           },
         ]
       }
+      call_queue_members: {
+        Row: {
+          agent_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          penalty: number
+          queue_id: string
+          updated_at: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          penalty?: number
+          queue_id: string
+          updated_at?: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          penalty?: number
+          queue_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_queue_members_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "call_queue_members_queue_id_fkey"
+            columns: ["queue_id"]
+            isOneToOne: false
+            referencedRelation: "call_queues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      call_queues: {
+        Row: {
+          announce_hold_time: boolean
+          announce_interval_seconds: number
+          announce_position: boolean
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          max_queue_size: number
+          max_wait_seconds: number
+          moh_enabled: boolean
+          moh_url: string | null
+          name: string
+          overflow_action: string
+          overflow_queue_id: string | null
+          priority: number
+          ring_timeout_seconds: number
+          strategy: string
+          updated_at: string
+          wrap_up_seconds: number
+        }
+        Insert: {
+          announce_hold_time?: boolean
+          announce_interval_seconds?: number
+          announce_position?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          max_queue_size?: number
+          max_wait_seconds?: number
+          moh_enabled?: boolean
+          moh_url?: string | null
+          name: string
+          overflow_action?: string
+          overflow_queue_id?: string | null
+          priority?: number
+          ring_timeout_seconds?: number
+          strategy?: string
+          updated_at?: string
+          wrap_up_seconds?: number
+        }
+        Update: {
+          announce_hold_time?: boolean
+          announce_interval_seconds?: number
+          announce_position?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          max_queue_size?: number
+          max_wait_seconds?: number
+          moh_enabled?: boolean
+          moh_url?: string | null
+          name?: string
+          overflow_action?: string
+          overflow_queue_id?: string | null
+          priority?: number
+          ring_timeout_seconds?: number
+          strategy?: string
+          updated_at?: string
+          wrap_up_seconds?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_queues_overflow_queue_id_fkey"
+            columns: ["overflow_queue_id"]
+            isOneToOne: false
+            referencedRelation: "call_queues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       call_recordings: {
         Row: {
           call_session_id: string | null
@@ -7111,6 +7233,7 @@ export type Database = {
         }
         Returns: Json
       }
+      get_call_queues_overview: { Args: never; Returns: Json }
       get_call_volume_stats: { Args: never; Returns: Json }
       get_dashboard_stats: { Args: never; Returns: Json }
       get_database_health_snapshot: { Args: never; Returns: Json }
