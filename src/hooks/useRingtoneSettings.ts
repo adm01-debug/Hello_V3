@@ -47,9 +47,11 @@ export function useRingtoneSettings() {
       setIsSyncing(true);
       try {
         const { data: auth } = await supabase.auth.getUser();
-        const userId = auth?.user?.id ?? null;
-        userIdRef.current = userId;
-        if (!userId || cancelled) return;
+        const uid = auth?.user?.id ?? null;
+        userIdRef.current = uid;
+        if (!cancelled) setUserId(uid);
+        if (!uid || cancelled) return;
+
 
         const { data, error } = await supabase
           .from('user_profiles')
