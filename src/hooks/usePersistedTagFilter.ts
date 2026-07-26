@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { ALL_TAGS_FILTER, type TagFilter } from '@/lib/dialer-favorite-tags';
+import { ALL_TAGS_FILTER, formatTagFilterLabel, type TagFilter } from '@/lib/dialer-favorite-tags';
+import { pushSyncEvent } from '@/hooks/useSyncHistory';
 import { loadTagFilter, saveTagFilter, sanitizeStoredFilter } from '@/lib/dialer-filter-storage';
 import { getCurrentDeviceLabel, sanitizeDeviceLabel } from '@/lib/device-identity';
 import { logger } from '@/lib/logger';
@@ -22,6 +23,22 @@ const log = logger.create('usePersistedTagFilter');
  * O canal realtime do próprio perfil propaga a troca feita em outra aba ou
  * estação. O eco da escrita local é ignorado por comparação de valor.
  */
+/**
+ * Registra a troca de filtro no histórico curto de sincronização.
+ * Best-effort: falhas de storage jamais interrompem a navegação.
+ */
+function trackFilterChange(uid: string | null, filter: TagFilter, device: string) {
+  try {
+    pushSyncEvent(uid, {
+      subject: 'Filtro de etiquetas',
+      detail: formatTagFilterLabel(filter),
+      device,
+    });
+  } catch (error) {
+    log.warn('Falha ao registrar evento de filtro de etiquetas', { error });
+  }
+}
+
 export function usePersistedTagFilter() {
   const [filter, setFilterState] = useState<TagFilter>(ALL_TAGS_FILTER);
   const [userId, setUserId] = useState<string | null>(null);
@@ -103,6 +120,7 @@ export function usePersistedTagFilter() {
           const origin = sanitizeDeviceLabel(next.dialer_filter_updated_by_device);
           setRemoteDevice(origin && origin !== deviceLabelRef.current ? origin : null);
           setRemoteUpdatedAt(Date.now());
+          trackFilterChange(userId, sanitized, origin ?? 'Outro dispositivo');
         },
       )
       .subscribe();
@@ -122,6 +140,7 @@ export function usePersistedTagFilter() {
       const uid = userIdRef.current;
       const persisted = saveTagFilter(uid, next);
       applyLocal(persisted);
+      trackFilterChange(uid, persisted, deviceLabelRef.current);
       setRemoteDevice(null);
       setRemoteUpdatedAt(null);
       if (!uid) return;
