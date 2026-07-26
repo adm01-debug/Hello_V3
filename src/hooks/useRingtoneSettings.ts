@@ -28,7 +28,9 @@ export function useRingtoneSettings() {
   const [presetId, setPresetId] = useState<string>(DEFAULT_RINGTONE_ID);
   const [volume, setVolume] = useState<number>(DEFAULT_VOLUME);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const userIdRef = useRef<string | null>(null);
+
 
   // Leitura só após montagem: evita divergência em SSR/hidratação.
   useEffect(() => {
