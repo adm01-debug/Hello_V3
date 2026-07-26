@@ -5,6 +5,8 @@
 // duração, IP e user agent. Nunca gravamos service_role ou db_url no detalhe.
 
 import { createClient, SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { parseNumericSafely } from "../_shared/numeric-schemas.ts";
 
 const ACCESS_KEY = "92894ad8f9f1b264e52c923bab8c46249e256a6ba9a80aeb";
 
@@ -248,9 +250,14 @@ export async function handleRequest(
       }
       const filterRequestId = url.searchParams.get("request_id");
       const filterAction = url.searchParams.get("action_filter");
-      const rawLimit = Number(url.searchParams.get("limit") ?? "20");
-      const limit = Number.isFinite(rawLimit)
-        ? Math.min(100, Math.max(1, Math.trunc(rawLimit)))
+      // Coerção validada: rejeita NaN/Infinity/notação exótica antes do clamp.
+      const limitParsed = await parseNumericSafely(
+        z.coerce.number().finite(),
+        url.searchParams.get("limit") ?? "20",
+        { requestId, functionName: "migrate-helper", field: "limit" },
+      );
+      const limit = limitParsed.ok
+        ? Math.min(100, Math.max(1, Math.trunc(limitParsed.data)))
         : 20;
 
       if (filterRequestId && filterRequestId.length > 128) {

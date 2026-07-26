@@ -11,7 +11,7 @@
  *  - R2 respeita supressão inline `// safe-numeric-ok`.
  *  - Ocorrências dentro de comentários e strings são ignoradas.
  */
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect, beforeAll, vi } from "vitest";
 import { execSync } from "node:child_process";
 import { mkdtempSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -47,6 +47,10 @@ function scaffold(name: string, body: string) {
 }
 
 const WS = fc.stringMatching(/^[ \t\n]{0,4}$/);
+
+// PBT com I/O de repositório: sob carga da suíte completa o default de 10s
+// é insuficiente. Timeout explícito evita flakiness sem mascarar regressões.
+vi.setConfig({ testTimeout: 120_000 });
 
 describe("guard-edge-numeric — Regra 1 (z.number sem .finite)", () => {
   it("detecta z.number() em qualquer disposição de whitespace", () => {

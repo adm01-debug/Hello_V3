@@ -6,7 +6,17 @@ import { cn } from '@/lib/utils';
 import { formatPhoneDisplay } from './phone-utils';
 import { FavoriteTagMenu } from './FavoriteTagMenu';
 import { RingtoneSettings } from './RingtoneSettings';
-import { collectTagOptions, groupFavoritesByTag, normalizeTag } from '@/lib/dialer-favorite-tags';
+import { FavoriteTagFilter } from './FavoriteTagFilter';
+import {
+  ALL_TAGS_FILTER,
+  buildTagFilterOptions,
+  collectTagOptions,
+  filterFavoritesByTag,
+  groupFavoritesByTag,
+  normalizeTag,
+  resolveActiveFilter,
+  type TagFilter,
+} from '@/lib/dialer-favorite-tags';
 
 export interface QuickAccessEntry {
   id: string;
@@ -181,7 +191,17 @@ export function PhoneQuickAccess({
     setDragOver(null);
   };
 
-  const groups = useMemo(() => groupFavoritesByTag(favorites), [favorites]);
+  const [tagFilter, setTagFilter] = useState<TagFilter>(ALL_TAGS_FILTER);
+
+  const filterOptions = useMemo(() => buildTagFilterOptions(favorites), [favorites]);
+  // Reconcilia o filtro sempre que a lista muda (etiqueta removida/renomeada).
+  const activeFilter = useMemo(() => resolveActiveFilter(favorites, tagFilter), [favorites, tagFilter]);
+  const visibleFavorites = useMemo(
+    () => filterFavoritesByTag(favorites, activeFilter),
+    [favorites, activeFilter],
+  );
+
+  const groups = useMemo(() => groupFavoritesByTag(visibleFavorites), [visibleFavorites]);
   const tagOptions = useMemo(() => collectTagOptions(favorites), [favorites]);
   // Índice global preserva a semântica de posição usada na persistência.
   const indexOf = useMemo(() => {
@@ -210,8 +230,11 @@ export function PhoneQuickAccess({
         >
           <Star className="h-3.5 w-3.5" /> Favoritos
         </h3>
+        <FavoriteTagFilter options={filterOptions} value={activeFilter} onChange={setTagFilter} />
         {favorites.length === 0 ? (
           <p className="px-3 text-xs text-muted-foreground">Nenhum favorito ainda.</p>
+        ) : visibleFavorites.length === 0 ? (
+          <p className="px-3 text-xs text-muted-foreground">Nenhum favorito nesta etiqueta.</p>
         ) : (
           <div className="space-y-3">
             {groups.map((group) => (
