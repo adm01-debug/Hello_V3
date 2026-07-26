@@ -164,7 +164,9 @@ export function useRingtoneSettings() {
   const selectPreset = useCallback(
     (nextId: string) => {
       const resolved = getRingtonePreset(nextId).id;
+      localRef.current.presetId = resolved;
       setPresetId(resolved);
+      setRemoteUpdatedAt(null);
       saveRingtoneSettings({ presetId: resolved });
       void pushToProfile({ ringtone_preset: resolved });
     },
@@ -174,7 +176,9 @@ export function useRingtoneSettings() {
   const changeVolume = useCallback(
     (nextVolume: number) => {
       const resolved = clampVolume(nextVolume);
+      localRef.current.volume = resolved;
       setVolume(resolved);
+      setRemoteUpdatedAt(null);
       saveRingtoneSettings({ volume: resolved });
       void pushToProfile({ ringtone_volume: resolved });
     },
@@ -185,11 +189,16 @@ export function useRingtoneSettings() {
     previewRingtone(presetId, volume);
   }, [presetId, volume]);
 
+  /** Dispensa o aviso de "atualizado em outro dispositivo". */
+  const acknowledgeRemoteUpdate = useCallback(() => setRemoteUpdatedAt(null), []);
+
   return {
     presetId,
     volume,
     presets: RINGTONE_PRESETS,
     isSyncing,
+    remoteUpdatedAt,
+    acknowledgeRemoteUpdate,
     selectPreset,
     changeVolume,
     preview,
