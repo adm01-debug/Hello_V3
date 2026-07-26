@@ -45,7 +45,9 @@ const PhoneDialer = () => {
   const call = useMultiChannelCall();
   const { sessions, isLoading } = useCallHistory();
   const sip = useSipCall();
-  const { favorites: savedFavorites, isFavorite, toggleFavorite, moveFavorite } = useDialerFavorites();
+  const { favorites: savedFavorites, isFavorite, toggleFavorite, moveFavorite, setFavoriteTag } =
+    useDialerFavorites();
+
 
   const [input, setInput] = useState('');
   const [isSpeaker, setIsSpeaker] = useState(false);
@@ -118,10 +120,12 @@ const PhoneDialer = () => {
         id: favorite.id,
         name: favorite.label || favorite.phone,
         phone: favorite.phone,
+        tag: favorite.tag,
         favorite: true,
       })),
     [savedFavorites],
   );
+
 
   const startCall = useCallback(
     (rawNumber: string, contactName?: string) => {
