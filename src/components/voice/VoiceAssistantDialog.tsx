@@ -361,19 +361,32 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                   </div>
                 )}
 
-                {/* Sugestões */}
-                {phase === 'idle' && !showBooting && (
+                {/* Comandos recentes (fallback: sugestões) */}
+                {(phase === 'idle' || phase === 'error') && !showBooting && (
                   <motion.div
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.25 }}
                     className="w-full space-y-3 text-center"
                   >
-                    <p className="text-[10px] font-medium uppercase tracking-widest text-white/25">
-                      Experimente dizer
-                    </p>
+                    <div className="flex items-center justify-center gap-2">
+                      <p className="text-[10px] font-medium uppercase tracking-widest text-white/25">
+                        {history.length > 0 ? 'Comandos recentes' : 'Experimente dizer'}
+                      </p>
+                      {history.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setHistory(clearCommandHistory(userId))}
+                          className="text-white/20 transition-colors hover:text-white/60"
+                          aria-label="Limpar histórico de comandos"
+                          title="Limpar histórico"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </button>
+                      )}
+                    </div>
                     <div className="flex flex-wrap justify-center gap-2">
-                      {SUGGESTIONS.map((cmd) => (
+                      {(history.length > 0 ? history.map((entry) => entry.command) : SUGGESTIONS).map((cmd) => (
                         <button
                           key={cmd}
                           type="button"
@@ -386,6 +399,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                     </div>
                   </motion.div>
                 )}
+
 
                 {/* Entrada por texto */}
                 <AnimatePresence>
