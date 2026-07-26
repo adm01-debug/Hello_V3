@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { diffPositions, reorderFavorites } from '@/lib/dialer-favorites-order';
+import { normalizeTag } from '@/lib/dialer-favorite-tags';
 
 const log = logger.create('DialerFavorites');
 
@@ -12,6 +13,7 @@ export interface DialerFavorite {
   phone: string;
   label: string | null;
   position: number;
+  tag: string | null;
 }
 
 const QUERY_KEY = ['dialer-favorites'] as const;
@@ -33,13 +35,14 @@ export function useDialerFavorites() {
     queryFn: async (): Promise<DialerFavorite[]> => {
       const { data, error } = await supabase
         .from('dialer_favorites')
-        .select('id, phone, label, position')
+        .select('id, phone, label, position, tag')
         .order('position', { ascending: true })
         .order('created_at', { ascending: true });
       if (error) throw error;
       return data ?? [];
     },
   });
+
 
   const favorites = query.data ?? [];
 
