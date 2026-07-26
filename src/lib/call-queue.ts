@@ -196,6 +196,12 @@ export function normalizeQueueDraft(input: Partial<CallQueueDraft>): CallQueueDr
     ),
     moh_enabled: input.moh_enabled !== false,
     moh_url: cleanText(input.moh_url, 2048),
+    moh_prompt_id: cleanUuid(input.moh_prompt_id),
+    greeting_prompt_id: greetingPromptId,
+    periodic_prompt_id: cleanUuid(input.periodic_prompt_id),
+    overflow_prompt_id: cleanUuid(input.overflow_prompt_id),
+    // O trigger do banco recusa saudação ativa sem faixa selecionada.
+    greeting_enabled: input.greeting_enabled === true && greetingPromptId !== null,
   };
 }
 
