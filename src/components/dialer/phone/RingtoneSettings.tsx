@@ -1,4 +1,4 @@
-import { Bell, Play, RefreshCw, RotateCcw, X } from 'lucide-react';
+import { Bell, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -11,7 +11,9 @@ import {
 } from '@/components/ui/select';
 import { useRingtoneSettings } from '@/hooks/useRingtoneSettings';
 import { getRingtonePreset } from '@/lib/ringtone-presets';
-import { formatRemoteOrigin } from '@/lib/device-identity';
+import { RemoteOriginNotice } from './RemoteOriginNotice';
+import { DeviceNameSetting } from './DeviceNameSetting';
+
 
 /** Preferências de toque para chamadas recebidas (sincronizadas no perfil). */
 export function RingtoneSettings() {
@@ -53,24 +55,13 @@ export function RingtoneSettings() {
         </Button>
       </div>
 
-      {remoteUpdatedAt !== null && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="mb-2 flex items-center gap-2 rounded-md border border-primary/40 bg-primary/10 px-2 py-1.5 text-[11px] text-foreground"
-        >
-          <RefreshCw className="h-3 w-3 shrink-0 text-primary" aria-hidden="true" />
-          <span className="flex-1">{formatRemoteOrigin(remoteDevice, remoteUpdatedAt)}</span>
-          <button
-            type="button"
-            onClick={acknowledgeRemoteUpdate}
-            aria-label="Dispensar aviso de atualização do toque"
-            className="rounded p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <X className="h-3 w-3" />
-          </button>
-        </div>
-      )}
+      <RemoteOriginNotice
+        subject="Toque"
+        device={remoteDevice}
+        updatedAt={remoteUpdatedAt}
+        onDismiss={acknowledgeRemoteUpdate}
+      />
+
 
 
 
@@ -116,7 +107,10 @@ export function RingtoneSettings() {
             aria-label="Volume do toque"
           />
         </div>
+
+        <DeviceNameSetting />
       </div>
     </section>
+
   );
 }

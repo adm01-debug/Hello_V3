@@ -6262,6 +6262,8 @@ export type Database = {
         Row: {
           agent_id: string | null
           created_at: string
+          dialer_filter_updated_at: string | null
+          dialer_filter_updated_by_device: string | null
           dialer_tag_filter: string | null
           email: string
           full_name: string | null
@@ -6276,6 +6278,8 @@ export type Database = {
         Insert: {
           agent_id?: string | null
           created_at?: string
+          dialer_filter_updated_at?: string | null
+          dialer_filter_updated_by_device?: string | null
           dialer_tag_filter?: string | null
           email: string
           full_name?: string | null
@@ -6290,6 +6294,8 @@ export type Database = {
         Update: {
           agent_id?: string | null
           created_at?: string
+          dialer_filter_updated_at?: string | null
+          dialer_filter_updated_by_device?: string | null
           dialer_tag_filter?: string | null
           email?: string
           full_name?: string | null

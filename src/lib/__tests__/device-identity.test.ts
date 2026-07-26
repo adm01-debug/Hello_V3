@@ -6,7 +6,9 @@ import {
   sanitizeDeviceLabel,
   detectDeviceLabel,
   formatRemoteOrigin,
+  formatOriginNotice,
 } from '@/lib/device-identity';
+
 
 describe('device-identity', () => {
   it('sanitize sempre respeita o CHECK do banco (trim + limite)', () => {
@@ -79,4 +81,27 @@ describe('device-identity', () => {
       { numRuns: 500 },
     );
   });
+
+  it('formatOriginNotice nunca produz assunto vazio', () => {
+    fc.assert(
+      fc.property(
+        fc.string(),
+        fc.option(fc.string(), { nil: null }),
+        fc.oneof(fc.constant(null), fc.constant(NaN), fc.integer({ min: 0, max: 2 ** 40 })),
+        (subject, device, at) => {
+          const text = formatOriginNotice(subject, device, at as number | null);
+          return typeof text === 'string' && text.includes(' atualizado em ') && text.length > 12;
+        },
+      ),
+      { numRuns: 800 },
+    );
+  });
+
+  it('formatOriginNotice usa o dispositivo quando informado', () => {
+    expect(formatOriginNotice('Filtro', 'Chrome em Windows', null)).toBe(
+      'Filtro atualizado em Chrome em Windows',
+    );
+    expect(formatOriginNotice('   ', null, null)).toBe('Preferência atualizado em outro dispositivo');
+  });
 });
+
