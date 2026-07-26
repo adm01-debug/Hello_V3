@@ -1,21 +1,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Keyboard, MicOff, Send, Trash2, Volume2, VolumeX, X } from 'lucide-react';
+import { Gauge, Keyboard, MicOff, Send, Trash2, Volume2, VolumeX, X } from 'lucide-react';
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
-import { supabase } from '@/integrations/supabase/client';
-import {
-  clearCommandHistory,
-  loadCommandHistory,
-  pushCommandHistory,
-  type VoiceCommandEntry,
-} from '@/lib/voice-command-history';
+import { useVoicePreferences } from '@/hooks/useVoicePreferences';
+import { formatTtsRate } from '@/lib/voice-preferences';
 import { cancelSpeech, isSpeechSupported, speak } from '@/lib/voice-speech';
 import { FloatingParticles } from './overlay/FloatingParticles';
 import { VoiceOrb } from './overlay/VoiceOrb';
 import { SpectrumWaveform } from './overlay/VoiceVisualEffects';
 import { usePhaseColors, type VoicePhase } from './overlay/usePhaseColors';
 import { describeIntent, parseVoiceIntent, type VoiceIntent } from './voice-intent';
+
 
 interface VoiceAssistantDialogProps {
   open: boolean;
