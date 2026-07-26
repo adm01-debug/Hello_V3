@@ -51,6 +51,12 @@ export interface CallQueueDraft {
   announce_interval_seconds: number;
   moh_enabled: boolean;
   moh_url: string | null;
+  /** Slots de áudio da biblioteca (`queue_audio_prompts`). */
+  moh_prompt_id: string | null;
+  greeting_prompt_id: string | null;
+  periodic_prompt_id: string | null;
+  overflow_prompt_id: string | null;
+  greeting_enabled: boolean;
 }
 
 export interface CallQueue extends CallQueueDraft {
