@@ -166,6 +166,7 @@ const CallQueues = () => {
         onOpenChange={setFormOpen}
         queue={editing}
         otherQueues={queues.filter((queue) => queue.id !== editing?.id)}
+        audioPrompts={audioPrompts}
         saving={saving}
         onSubmit={handleSubmit}
       />
