@@ -209,6 +209,11 @@ export function useRingtoneSettings() {
       clearRemoteNotice();
       saveRingtoneSettings({ presetId: resolved });
       void pushToProfile({ ringtone_preset: resolved });
+      pushSyncEvent(userIdRef.current, {
+        subject: 'Toque',
+        detail: getRingtonePreset(resolved).label,
+        device: null,
+      });
     },
     [pushToProfile, clearRemoteNotice],
   );
@@ -221,6 +226,11 @@ export function useRingtoneSettings() {
       clearRemoteNotice();
       saveRingtoneSettings({ volume: resolved });
       void pushToProfile({ ringtone_volume: resolved });
+      pushSyncEvent(userIdRef.current, {
+        subject: 'Volume',
+        detail: `${Math.round(resolved * 100)}%`,
+        device: null,
+      });
     },
     [pushToProfile, clearRemoteNotice],
   );
@@ -233,6 +243,11 @@ export function useRingtoneSettings() {
     clearRemoteNotice();
     saveRingtoneSettings({ presetId: DEFAULT_RINGTONE_ID, volume: DEFAULT_VOLUME });
     void pushToProfile({ ringtone_preset: DEFAULT_RINGTONE_ID, ringtone_volume: DEFAULT_VOLUME });
+    pushSyncEvent(userIdRef.current, {
+      subject: 'Toque',
+      detail: 'restaurado ao padrão',
+      device: null,
+    });
   }, [pushToProfile, clearRemoteNotice]);
 
   const preview = useCallback(() => {
@@ -243,6 +258,8 @@ export function useRingtoneSettings() {
   const acknowledgeRemoteUpdate = clearRemoteNotice;
 
   const isDefault = presetId === DEFAULT_RINGTONE_ID && Math.abs(volume - DEFAULT_VOLUME) < 0.001;
+
+  const { entries: syncHistory, clear: clearSyncHistory } = useSyncHistory(userId);
 
   return {
     presetId,
@@ -258,6 +275,9 @@ export function useRingtoneSettings() {
     selectPreset,
     changeVolume,
     preview,
+    syncHistory,
+    clearSyncHistory,
   };
+
 
 }
