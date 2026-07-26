@@ -21,6 +21,7 @@ const mainNavItems = [
   { title: 'Impacto Financeiro', url: '/financial-impact', icon: PieChart },
   { title: 'Métricas Fila', url: '/queue-dashboard', icon: Activity },
   { title: 'Chamadas', url: '/calls', icon: Phone },
+  { title: 'Estacionamento', url: '/call-park', icon: CircleParking },
   { title: 'Discador Preditivo', url: '/dialer', icon: PhoneOutgoing },
   { title: 'Contatos', url: '/contacts', icon: Users },
   { title: 'Insights', url: '/contacts/insights', icon: Brain },
