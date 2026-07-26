@@ -9,7 +9,7 @@
 
 import { sanitizeDeviceLabel, MAX_DEVICE_LABEL_LENGTH } from '@/lib/device-identity';
 
-export const MAX_SYNC_HISTORY_ENTRIES = 5;
+export const MAX_SYNC_HISTORY_ENTRIES = 12;
 const STORAGE_PREFIX = 'lovable.sync-history';
 
 export interface SyncHistoryEntry {
@@ -135,4 +135,24 @@ export function formatSyncEntry(entry: SyncHistoryEntry): string {
     ? ''
     : ` às ${time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
   return `${entry.subject} → ${entry.detail} · ${origin}${clock}`;
+}
+
+/** Assuntos distintos presentes no histórico, em ordem alfabética (pt-BR). */
+export function listSyncSubjects(entries: readonly SyncHistoryEntry[]): string[] {
+  const unique = new Set<string>();
+  for (const entry of entries) {
+    const subject = typeof entry?.subject === 'string' ? entry.subject.trim() : '';
+    if (subject.length > 0) unique.add(subject);
+  }
+  return Array.from(unique).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+}
+
+/** Filtra por assunto; `null`/vazio devolve tudo (nunca lança). */
+export function filterSyncEntries(
+  entries: readonly SyncHistoryEntry[],
+  subject: string | null | undefined,
+): SyncHistoryEntry[] {
+  const target = typeof subject === 'string' ? subject.trim() : '';
+  if (target.length === 0) return [...entries];
+  return entries.filter((entry) => entry?.subject?.trim() === target);
 }
