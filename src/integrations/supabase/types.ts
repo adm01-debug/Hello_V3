@@ -6265,6 +6265,8 @@ export type Database = {
           email: string
           full_name: string | null
           id: string
+          ringtone_preset: string | null
+          ringtone_volume: number | null
           role: string
           updated_at: string
         }
@@ -6274,6 +6276,8 @@ export type Database = {
           email: string
           full_name?: string | null
           id: string
+          ringtone_preset?: string | null
+          ringtone_volume?: number | null
           role?: string
           updated_at?: string
         }
@@ -6283,6 +6287,8 @@ export type Database = {
           email?: string
           full_name?: string | null
           id?: string
+          ringtone_preset?: string | null
+          ringtone_volume?: number | null
           role?: string
           updated_at?: string
         }

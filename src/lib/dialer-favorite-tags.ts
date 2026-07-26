@@ -101,3 +101,71 @@ export function collectTagOptions(items: readonly TaggedItem[]): string[] {
     a.localeCompare(b, 'pt-BR', { sensitivity: 'base' }),
   );
 }
+
+/** Valor sentinela do filtro "todas as etiquetas". */
+export const ALL_TAGS_FILTER = '__all__' as const;
+/** Valor sentinela do filtro "sem etiqueta". */
+export const UNTAGGED_FILTER = '__untagged__' as const;
+
+export type TagFilter = string | typeof ALL_TAGS_FILTER | typeof UNTAGGED_FILTER;
+
+/**
+ * Filtra favoritos pela etiqueta selecionada, preservando a ordem original.
+ *
+ * Regras defensivas:
+ * - filtro ausente/inválido ou `ALL_TAGS_FILTER` → devolve tudo;
+ * - `UNTAGGED_FILTER` → apenas itens sem etiqueta válida;
+ * - qualquer outro valor → comparação insensível a caixa/acento via `isSameTag`.
+ */
+export function filterFavoritesByTag<T extends TaggedItem>(
+  items: readonly T[],
+  filter: TagFilter | null | undefined,
+): T[] {
+  const safeItems = Array.isArray(items) ? items.filter((i) => i && typeof i === 'object') : [];
+  if (typeof filter !== 'string' || filter === ALL_TAGS_FILTER) return safeItems;
+  if (filter === UNTAGGED_FILTER) return safeItems.filter((i) => normalizeTag(i.tag) === null);
+  const normalized = normalizeTag(filter);
+  if (normalized === null) return safeItems;
+  return safeItems.filter((i) => isSameTag(i.tag, normalized));
+}
+
+export interface TagFilterOption {
+  value: TagFilter;
+  label: string;
+  count: number;
+}
+
+/**
+ * Opções de filtro derivadas dos favoritos atuais (com contagens).
+ * Só inclui "Sem etiqueta" quando existir ao menos um item nessa condição.
+ */
+export function buildTagFilterOptions<T extends TaggedItem>(items: readonly T[]): TagFilterOption[] {
+  const groups = groupFavoritesByTag(items);
+  const total = Array.isArray(items) ? items.filter((i) => i && typeof i === 'object').length : 0;
+  const options: TagFilterOption[] = [{ value: ALL_TAGS_FILTER, label: 'Todos', count: total }];
+  for (const group of groups) {
+    options.push({
+      value: group.tag ?? UNTAGGED_FILTER,
+      label: group.label,
+      count: group.items.length,
+    });
+  }
+  return options;
+}
+
+/**
+ * Garante que o filtro ativo continue existindo após alterações na lista.
+ * Caso contrário, volta para "Todos" — evitando painel vazio sem explicação.
+ */
+export function resolveActiveFilter<T extends TaggedItem>(
+  items: readonly T[],
+  filter: TagFilter | null | undefined,
+): TagFilter {
+  if (typeof filter !== 'string' || filter === ALL_TAGS_FILTER) return ALL_TAGS_FILTER;
+  const options = buildTagFilterOptions(items);
+  const exists = options.some((option) =>
+    option.value === filter ||
+    (option.value !== ALL_TAGS_FILTER && option.value !== UNTAGGED_FILTER && isSameTag(option.value, filter)),
+  );
+  return exists ? filter : ALL_TAGS_FILTER;
+}
