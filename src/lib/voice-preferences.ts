@@ -83,3 +83,56 @@ export function mergeCommandHistories(
     .sort((a, b) => b.at - a.at || a.command.localeCompare(b.command))
     .slice(0, MAX_HISTORY_ENTRIES);
 }
+
+/** Limite espelhado do CHECK `user_profiles_voice_tts_voice_len`. */
+export const MAX_VOICE_URI_LENGTH = 160;
+
+/**
+ * Normaliza o identificador de voz vindo do perfil/localStorage.
+ * Devolve `null` quando o valor não é utilizável (vazio, tipo errado,
+ * caracteres de controle ou acima do limite do banco).
+ */
+export function sanitizeVoiceUri(raw: unknown): string | null {
+  if (typeof raw !== 'string') return null;
+  // eslint-disable-next-line no-control-regex
+  const cleaned = raw.replace(/[\u0000-\u001f\u007f]/g, '').trim();
+  if (!cleaned) return null;
+  return cleaned.length > MAX_VOICE_URI_LENGTH ? cleaned.slice(0, MAX_VOICE_URI_LENGTH) : cleaned;
+}
+
+/** Voz disponível no dispositivo, já reduzida ao que a UI precisa. */
+export interface VoiceOption {
+  uri: string;
+  name: string;
+  lang: string;
+}
+
+/**
+ * Próxima voz do ciclo. `null` representa "voz padrão do dispositivo" e
+ * sempre participa do ciclo, de modo que o usuário consiga voltar ao padrão.
+ */
+export function nextVoiceUri(
+  options: readonly VoiceOption[] | null | undefined,
+  current: unknown,
+): string | null {
+  const list = Array.isArray(options) ? options.filter((item) => sanitizeVoiceUri(item?.uri)) : [];
+  if (list.length === 0) return null;
+  const cycle: (string | null)[] = [null, ...list.map((item) => sanitizeVoiceUri(item.uri) as string)];
+  const currentUri = sanitizeVoiceUri(current);
+  const index = cycle.findIndex((item) => item === currentUri);
+  return cycle[(index + 1) % cycle.length] ?? null;
+}
+
+/** Rótulo curto para o botão de voz (ex.: "Luciana" ou "Padrão"). */
+export function formatVoiceLabel(
+  options: readonly VoiceOption[] | null | undefined,
+  current: unknown,
+): string {
+  const currentUri = sanitizeVoiceUri(current);
+  if (!currentUri) return 'Padrão';
+  const match = Array.isArray(options) ? options.find((item) => sanitizeVoiceUri(item?.uri) === currentUri) : undefined;
+  const name = typeof match?.name === 'string' ? match.name.trim() : '';
+  if (!name) return 'Padrão';
+  const firstWord = name.split(/[\s(]/)[0] ?? name;
+  return firstWord.length > 14 ? `${firstWord.slice(0, 13)}…` : firstWord;
+}
