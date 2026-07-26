@@ -10,6 +10,8 @@ import {
 } from '@/lib/ringtone-presets';
 import { previewRingtone } from '@/lib/incoming-call-alert';
 import { getCurrentDeviceLabel, sanitizeDeviceLabel } from '@/lib/device-identity';
+import { pushSyncEvent, useSyncHistory } from '@/hooks/useSyncHistory';
+
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 
