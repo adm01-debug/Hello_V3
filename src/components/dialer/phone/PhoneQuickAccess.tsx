@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Clock, Star, ClipboardPaste, Users, ChevronUp, ChevronDown, GripVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { formatPhoneDisplay } from './phone-utils';
+import { FavoriteTagMenu } from './FavoriteTagMenu';
+import { RingtoneSettings } from './RingtoneSettings';
+import { collectTagOptions, groupFavoritesByTag, normalizeTag } from '@/lib/dialer-favorite-tags';
 
 export interface QuickAccessEntry {
   id: string;
@@ -11,6 +14,8 @@ export interface QuickAccessEntry {
   phone: string;
   hint?: string;
   favorite?: boolean;
+  /** Etiqueta (grupo) do favorito; ausente em recentes. */
+  tag?: string | null;
 }
 
 interface PhoneQuickAccessProps {
@@ -26,6 +31,8 @@ interface PhoneQuickAccessProps {
   onToggleFavorite?: (phone: string, label?: string | null) => void;
   /** Reordena os favoritos persistidos (drag-and-drop ou teclado). */
   onReorderFavorite?: (from: number, to: number) => void;
+  /** Define ou remove a etiqueta (grupo) de um favorito. */
+  onSetFavoriteTag?: (id: string, tag: string | null) => void;
 }
 
 interface ReorderControls {
@@ -44,12 +51,14 @@ function EntryRow({
   isFavorite,
   onToggleFavorite,
   reorder,
+  tagMenu,
 }: {
   entry: QuickAccessEntry;
   onSelect: (phone: string, name?: string) => void;
   isFavorite?: boolean;
   onToggleFavorite?: (phone: string, label?: string | null) => void;
   reorder?: ReorderControls;
+  tagMenu?: { options: readonly string[]; onSelect: (tag: string | null) => void };
 }) {
   return (
     <div
@@ -123,6 +132,14 @@ function EntryRow({
           </Button>
         </>
       ) : null}
+      {tagMenu ? (
+        <FavoriteTagMenu
+          entryName={entry.name}
+          currentTag={normalizeTag(entry.tag)}
+          options={tagMenu.options}
+          onSelect={tagMenu.onSelect}
+        />
+      ) : null}
       {onToggleFavorite ? (
         <Button
           type="button"
@@ -140,7 +157,7 @@ function EntryRow({
   );
 }
 
-/** Painel lateral com favoritos, recentes e atalhos. */
+/** Painel lateral com favoritos agrupados, recentes, atalhos e toque. */
 export function PhoneQuickAccess({
   recents,
   favorites,
@@ -151,6 +168,7 @@ export function PhoneQuickAccess({
   isFavorite,
   onToggleFavorite,
   onReorderFavorite,
+  onSetFavoriteTag,
 }: PhoneQuickAccessProps) {
   const [dragFrom, setDragFrom] = useState<number | null>(null);
   const [dragOver, setDragOver] = useState<number | null>(null);
@@ -162,6 +180,15 @@ export function PhoneQuickAccess({
     setDragFrom(null);
     setDragOver(null);
   };
+
+  const groups = useMemo(() => groupFavoritesByTag(favorites), [favorites]);
+  const tagOptions = useMemo(() => collectTagOptions(favorites), [favorites]);
+  // Índice global preserva a semântica de posição usada na persistência.
+  const indexOf = useMemo(() => {
+    const map = new Map<string, number>();
+    favorites.forEach((entry, index) => map.set(entry.id, index));
+    return map;
+  }, [favorites]);
 
   return (
     <div className="flex h-full flex-col gap-4 rounded-xl border border-border/50 bg-card/60 p-4 backdrop-blur-sm">
@@ -186,34 +213,57 @@ export function PhoneQuickAccess({
         {favorites.length === 0 ? (
           <p className="px-3 text-xs text-muted-foreground">Nenhum favorito ainda.</p>
         ) : (
-          <ul className="space-y-1">
-            {favorites.map((entry, index) => (
-              <li key={entry.id}>
-                <EntryRow
-                  entry={entry}
-                  onSelect={onSelect}
-                  isFavorite={isFavorite?.(entry.phone) ?? entry.favorite}
-                  onToggleFavorite={onToggleFavorite}
-                  reorder={
-                    onReorderFavorite && favorites.length > 1
-                      ? {
-                          index,
-                          total: favorites.length,
-                          onMove: onReorderFavorite,
-                          onDragStart: () => setDragFrom(index),
-                          onDragOver: () => setDragOver(index),
-                          onDrop: commitDrop,
-                          isDragging: dragFrom === index,
-                        }
-                      : undefined
-                  }
-                />
-
-              </li>
+          <div className="space-y-3">
+            {groups.map((group) => (
+              <div key={group.tag ?? '__untagged__'}>
+                {groups.length > 1 ? (
+                  <p className="px-3 pb-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                    {group.label}
+                  </p>
+                ) : null}
+                <ul className="space-y-1">
+                  {group.items.map((entry) => {
+                    const index = indexOf.get(entry.id) ?? 0;
+                    return (
+                      <li key={entry.id}>
+                        <EntryRow
+                          entry={entry}
+                          onSelect={onSelect}
+                          isFavorite={isFavorite?.(entry.phone) ?? entry.favorite}
+                          onToggleFavorite={onToggleFavorite}
+                          tagMenu={
+                            onSetFavoriteTag
+                              ? {
+                                  options: tagOptions,
+                                  onSelect: (tag) => onSetFavoriteTag(entry.id, tag),
+                                }
+                              : undefined
+                          }
+                          reorder={
+                            onReorderFavorite && favorites.length > 1
+                              ? {
+                                  index,
+                                  total: favorites.length,
+                                  onMove: onReorderFavorite,
+                                  onDragStart: () => setDragFrom(index),
+                                  onDragOver: () => setDragOver(index),
+                                  onDrop: commitDrop,
+                                  isDragging: dragFrom === index,
+                                }
+                              : undefined
+                          }
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </section>
+
+      <RingtoneSettings />
 
       <section aria-labelledby="recentes-heading" className="flex min-h-0 flex-1 flex-col">
         <h3
@@ -232,11 +282,11 @@ export function PhoneQuickAccess({
               {recents.map((entry) => (
                 <li key={entry.id}>
                   <EntryRow
-                  entry={entry}
-                  onSelect={onSelect}
-                  isFavorite={isFavorite?.(entry.phone) ?? entry.favorite}
-                  onToggleFavorite={onToggleFavorite}
-                />
+                    entry={entry}
+                    onSelect={onSelect}
+                    isFavorite={isFavorite?.(entry.phone) ?? entry.favorite}
+                    onToggleFavorite={onToggleFavorite}
+                  />
                 </li>
               ))}
             </ul>
