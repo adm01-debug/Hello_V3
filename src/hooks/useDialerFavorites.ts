@@ -186,6 +186,18 @@ export function useDialerFavorites() {
       const changes = diffPositions(favorites, reordered);
       if (changes.length === 0) return;
       queryClient.setQueryData<DialerFavorite[]>(QUERY_KEY, reordered);
+      // `from`/`to` já foram saneados por `reorderFavorites`; recuperamos o
+      // item efetivamente movido pela diferença entre as duas listas.
+      const moved = reordered.find((favorite, index) => favorites[index]?.id !== favorite.id) ?? null;
+      trackFavoriteChange(
+        null,
+        'Ordem dos favoritos',
+        moved
+          ? `${describeFavorite(moved.label, moved.phone)} → posição ${
+              reordered.findIndex((favorite) => favorite.id === moved.id) + 1
+            }`
+          : `${changes.length} posição(ões) atualizada(s)`,
+      );
       reorderMutation.mutate(changes);
     },
     [favorites, queryClient, reorderMutation],
