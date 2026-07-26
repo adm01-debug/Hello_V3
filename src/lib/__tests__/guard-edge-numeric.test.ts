@@ -11,7 +11,7 @@
  *  - R2 respeita supressão inline `// safe-numeric-ok`.
  *  - Ocorrências dentro de comentários e strings são ignoradas.
  */
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect, beforeAll, vi } from "vitest";
 import { execSync } from "node:child_process";
 import { mkdtempSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
