@@ -55,6 +55,7 @@ export function QueueFormDialog({
   onOpenChange,
   queue,
   otherQueues,
+  audioPrompts,
   saving,
   onSubmit,
 }: QueueFormDialogProps) {
