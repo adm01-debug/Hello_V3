@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Gauge, Keyboard, MicOff, Send, Trash2, Volume2, VolumeX, X } from 'lucide-react';
+import { AudioLines, Gauge, Keyboard, MicOff, Send, Trash2, Volume2, VolumeX, X } from 'lucide-react';
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { useVoicePreferences } from '@/hooks/useVoicePreferences';
 import { formatTtsRate } from '@/lib/voice-preferences';
@@ -45,14 +45,26 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const [bootingTimedOut, setBootingTimedOut] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const { ttsEnabled, ttsRate, history, toggleTts, cycleRate, recordCommand, clearHistory } =
-    useVoicePreferences();
+  const {
+    ttsEnabled,
+    ttsRate,
+    ttsVoice,
+    voices,
+    history,
+    toggleTts,
+    cycleRate,
+    cycleVoice,
+    recordCommand,
+    clearHistory,
+  } = useVoicePreferences();
   const textInputRef = useRef<HTMLInputElement>(null);
   const wasOpenRef = useRef(false);
   const ttsEnabledRef = useRef(ttsEnabled);
   ttsEnabledRef.current = ttsEnabled;
   const ttsRateRef = useRef(ttsRate);
   ttsRateRef.current = ttsRate;
+  const ttsVoiceRef = useRef(ttsVoice);
+  ttsVoiceRef.current = ttsVoice;
 
   const phase: VoicePhase = hasError
     ? 'error'
@@ -69,7 +81,11 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const respond = useCallback((text: string) => {
     if (!ttsEnabledRef.current) return;
     setIsSpeaking(true);
-    const started = speak(text, { rate: ttsRateRef.current, onEnd: () => setIsSpeaking(false) });
+    const started = speak(text, {
+      rate: ttsRateRef.current,
+      voiceUri: ttsVoiceRef.current,
+      onEnd: () => setIsSpeaking(false),
+    });
     if (!started) setIsSpeaking(false);
   }, []);
 
@@ -471,6 +487,22 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                           >
                             <Gauge className="h-3 w-3" />
                             {formatTtsRate(ttsRate)}
+                          </button>
+                        )}
+                        {ttsEnabled && voices.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              cancelSpeech();
+                              setIsSpeaking(false);
+                              cycleVoice();
+                            }}
+                            className="flex h-7 items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 text-[10px] font-medium text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+                            aria-label={`Voz do assistente: ${formatVoiceLabel(voices, ttsVoice)}. Tocar para alterar`}
+                            title="Voz da resposta falada"
+                          >
+                            <AudioLines className="h-3 w-3" />
+                            {formatVoiceLabel(voices, ttsVoice)}
                           </button>
                         )}
                       </>
