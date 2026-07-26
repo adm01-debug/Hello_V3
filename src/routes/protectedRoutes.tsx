@@ -155,6 +155,7 @@ export const protectedRoutes: RouteConfig[] = [
   // Supervisor + Admin
   { path: "/queue-dashboard", element: QueueMetricsDashboard, roles: ["supervisor", "admin"] },
   { path: "/call-queues", element: CallQueues, roles: ["supervisor", "admin"] },
+  { path: "/ring-groups", element: RingGroups, roles: ["supervisor", "admin"] },
   { path: "/executive", element: ExecutiveDashboard, roles: ["supervisor", "admin"] },
   { path: "/queue-metrics-settings", element: QueueMetricsAlertSettings, roles: ["supervisor", "admin"] },
   { path: "/dialer", element: Dialer, roles: ["supervisor", "admin"] },
