@@ -6262,6 +6262,7 @@ export type Database = {
         Row: {
           agent_id: string | null
           created_at: string
+          dialer_tag_filter: string | null
           email: string
           full_name: string | null
           id: string
@@ -6273,6 +6274,7 @@ export type Database = {
         Insert: {
           agent_id?: string | null
           created_at?: string
+          dialer_tag_filter?: string | null
           email: string
           full_name?: string | null
           id: string
@@ -6284,6 +6286,7 @@ export type Database = {
         Update: {
           agent_id?: string | null
           created_at?: string
+          dialer_tag_filter?: string | null
           email?: string
           full_name?: string | null
           id?: string
