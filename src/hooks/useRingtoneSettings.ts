@@ -29,14 +29,20 @@ export function useRingtoneSettings() {
   const [volume, setVolume] = useState<number>(DEFAULT_VOLUME);
   const [isSyncing, setIsSyncing] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [remoteUpdatedAt, setRemoteUpdatedAt] = useState<number | null>(null);
   const userIdRef = useRef<string | null>(null);
-
+  /** Último valor efetivamente aplicado aqui — usado para ignorar o eco da própria escrita. */
+  const localRef = useRef<{ presetId: string; volume: number }>({
+    presetId: DEFAULT_RINGTONE_ID,
+    volume: DEFAULT_VOLUME,
+  });
 
   // Leitura só após montagem: evita divergência em SSR/hidratação.
   useEffect(() => {
     const stored = loadRingtoneSettings();
     setPresetId(stored.presetId);
     setVolume(stored.volume);
+    localRef.current = { presetId: stored.presetId, volume: stored.volume };
   }, []);
 
   // Hidratação a partir do perfil (multi-dispositivo).
@@ -65,12 +71,14 @@ export function useRingtoneSettings() {
 
         if (typeof data.ringtone_preset === 'string' && data.ringtone_preset.length > 0) {
           const resolved = getRingtonePreset(data.ringtone_preset).id;
+          localRef.current.presetId = resolved;
           setPresetId(resolved);
           saveRingtoneSettings({ presetId: resolved });
         }
         // Numeric do Postgres pode chegar como string: normalizamos sempre.
         if (data.ringtone_volume !== null && data.ringtone_volume !== undefined) {
           const parsed = clampVolume(Number(data.ringtone_volume));
+          localRef.current.volume = parsed;
           setVolume(parsed);
           saveRingtoneSettings({ volume: parsed });
         }
