@@ -44,7 +44,7 @@ export interface SipCallState {
  export function useSipCall() {
    const [state, setState] = useState<SipCallState>({
      status: 'disconnected', isRegistered: false, isConfigured: false,
-     error: null, callId: null, phoneNumber: null, duration: 0,
+     error: null, callId: null, phoneNumber: null, duration: 0, incomingCall: null,
    });
    const [controls, setControls] = useState<CallControls>({ isMuted: false, isOnHold: false });
   const uaRef = useRef<JsSIP.UA | null>(null);
@@ -304,7 +304,7 @@ export interface SipCallState {
     if (sessionRef.current) { try { sessionRef.current.terminate(); } catch { /* ignore */ } sessionRef.current = null; }
     if (uaRef.current) { try { uaRef.current.stop(); } catch { /* ignore */ } uaRef.current = null; }
     stopDurationTimer();
-    setState({ status: 'disconnected', isRegistered: false, isConfigured: false, error: null, callId: null, phoneNumber: null, duration: 0 });
+    setState({ status: 'disconnected', isRegistered: false, isConfigured: false, error: null, callId: null, phoneNumber: null, duration: 0, incomingCall: null });
   }, [stopDurationTimer]);
 
   useEffect(() => { return () => { disconnect(); }; }, [disconnect]);
