@@ -7,7 +7,9 @@ import { formatPhoneDisplay } from './phone-utils';
 import { FavoriteTagMenu } from './FavoriteTagMenu';
 import { RingtoneSettings } from './RingtoneSettings';
 import { FavoriteTagFilter } from './FavoriteTagFilter';
+import { RemoteOriginNotice } from './RemoteOriginNotice';
 import { usePersistedTagFilter } from '@/hooks/usePersistedTagFilter';
+
 import {
   buildTagFilterOptions,
   collectTagOptions,
@@ -239,7 +241,14 @@ export function PhoneQuickAccess({
         >
           <Star className="h-3.5 w-3.5" /> Favoritos
         </h3>
+        <RemoteOriginNotice
+          subject="Filtro"
+          device={filterRemoteDevice}
+          updatedAt={filterRemoteUpdatedAt}
+          onDismiss={acknowledgeFilterUpdate}
+        />
         <FavoriteTagFilter options={filterOptions} value={activeFilter} onChange={setTagFilter} />
+
         {favorites.length === 0 ? (
           <p className="px-3 text-xs text-muted-foreground">Nenhum favorito ainda.</p>
         ) : visibleFavorites.length === 0 ? (
