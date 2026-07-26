@@ -101,16 +101,14 @@ export function useDeviceLabel() {
   const updateLabel = useCallback(
     (value: unknown) => {
       const applied = setCurrentDeviceLabel(value);
-      setLabel((previous) => {
-        if (previous !== applied) {
-          pushSyncEvent(userIdRef.current, {
-            subject: 'Apelido',
-            detail: applied,
-            device: previous,
-          });
-        }
-        return applied;
-      });
+      if (applied !== label) {
+        pushSyncEvent(userIdRef.current, {
+          subject: 'Apelido',
+          detail: applied,
+          device: label,
+        });
+      }
+      setLabel(applied);
       void persist(applied);
       return applied;
     },
