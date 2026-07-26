@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, Radio, Headphones, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
@@ -46,7 +46,7 @@ const PhoneDialer = () => {
   const [lastDialed, setLastDialed] = useState<string | null>(null);
 
   const current = call.currentCall;
-  const incomingSessionIdRef = useState<{ id: string | null }>(() => ({ id: null }))[0];
+  const incomingSessionIdRef = useRef<string | null>(null);
 
   /**
    * Espelha convites SIP entrantes no estado multicanal para que a tela de
@@ -54,7 +54,7 @@ const PhoneDialer = () => {
    */
   useEffect(() => {
     const incoming = sip.incomingCall;
-    if (incoming && !incomingSessionIdRef.id) {
+    if (incoming && !incomingSessionIdRef.current) {
       const session = call.initiateCall('sip', incoming.from || 'desconhecido', incoming.displayName ?? undefined);
       if (!session) {
         // Sem linha livre: rejeita para não deixar o chamador em espera indefinida.
@@ -62,17 +62,17 @@ const PhoneDialer = () => {
         toast.warning('Chamada recebida recusada', { description: 'Limite de linhas simultâneas atingido.' });
         return;
       }
-      incomingSessionIdRef.id = session.id;
+      incomingSessionIdRef.current = session.id;
       call.updateCallStatus('ringing', session.id);
     }
-    if (!incoming && incomingSessionIdRef.id) {
-      const pendingId = incomingSessionIdRef.id;
-      incomingSessionIdRef.id = null;
+    if (!incoming && incomingSessionIdRef.current) {
+      const pendingId = incomingSessionIdRef.current;
+      incomingSessionIdRef.current = null;
       // Só encerra se ainda estiver tocando (não atendida)
       const pending = call.getCallById(pendingId);
       if (pending && pending.status === 'ringing') call.endCall(pendingId);
     }
-  }, [sip, call, incomingSessionIdRef]);
+  }, [sip, call]);
 
   const recents: QuickAccessEntry[] = useMemo(
     () =>
