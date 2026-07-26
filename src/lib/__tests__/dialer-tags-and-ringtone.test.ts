@@ -219,16 +219,22 @@ describe('persistência das preferências de toque', () => {
   });
 
   it('não lança quando o storage está indisponível', () => {
-    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
-      throw new Error('bloqueado');
+    const original = Object.getOwnPropertyDescriptor(window, 'localStorage');
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new Error('bloqueado');
+      },
     });
-    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
-      throw new Error('bloqueado');
-    });
-    expect(() => saveRingtoneSettings({ presetId: 'soft', volume: 0.5 })).not.toThrow();
-    expect(loadRingtoneSettings()).toEqual({
-      presetId: DEFAULT_RINGTONE_ID,
-      volume: DEFAULT_VOLUME,
-    });
+    try {
+      expect(() => saveRingtoneSettings({ presetId: 'soft', volume: 0.5 })).not.toThrow();
+      expect(loadRingtoneSettings()).toEqual({
+        presetId: DEFAULT_RINGTONE_ID,
+        volume: DEFAULT_VOLUME,
+      });
+    } finally {
+      if (original) Object.defineProperty(window, 'localStorage', original);
+    }
   });
+
 });
