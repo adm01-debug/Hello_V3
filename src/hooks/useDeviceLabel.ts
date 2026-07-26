@@ -7,6 +7,7 @@ import {
   sanitizeDeviceLabel,
   setCurrentDeviceLabel,
 } from '@/lib/device-identity';
+import { pushSyncEvent } from '@/hooks/useSyncHistory';
 
 const log = logger.create('useDeviceLabel');
 
