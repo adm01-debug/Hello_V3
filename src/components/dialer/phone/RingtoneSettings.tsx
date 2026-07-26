@@ -29,8 +29,6 @@ export function RingtoneSettings() {
     acknowledgeRemoteUpdate,
     resetToDefaults,
     isDefault,
-    syncHistory,
-    clearSyncHistory,
   } = useRingtoneSettings();
 
   const active = getRingtonePreset(presetId);

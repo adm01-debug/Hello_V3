@@ -121,3 +121,37 @@ describe('sync-history', () => {
     expect(loadSyncHistory('u1', storage)).toEqual([]);
   });
 });
+
+describe('filtros do histórico unificado', () => {
+  const entry = (subject: string, at: number): SyncHistoryEntry => ({
+    subject,
+    detail: 'x',
+    device: null,
+    at,
+  });
+
+  it('lista assuntos únicos ordenados', () => {
+    const subjects = listSyncSubjects([entry('Voz', 2), entry('Toque', 1), entry('Voz', 3)]);
+    expect(subjects).toEqual(['Toque', 'Voz']);
+  });
+
+  it('filtro vazio devolve tudo e filtro específico é subconjunto', () => {
+    fc.assert(
+      fc.property(
+        fc.array(fc.record({ s: fc.constantFrom('Toque', 'Voz', 'Favorito'), a: fc.integer({ min: 1, max: 1e12 }) }), { maxLength: 30 }),
+        fc.constantFrom<string | null>(null, '', 'Toque', 'Voz', 'Inexistente'),
+        (raw, subject) => {
+          const list = raw.map((r) => entry(r.s, r.a));
+          const out = filterSyncEntries(list, subject);
+          if (!subject || subject.trim() === '') {
+            expect(out).toHaveLength(list.length);
+          } else {
+            expect(out.every((e) => e.subject === subject)).toBe(true);
+            expect(out.length).toBeLessThanOrEqual(list.length);
+          }
+        },
+      ),
+      { numRuns: 400 },
+    );
+  });
+});
