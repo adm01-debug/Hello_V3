@@ -1424,15 +1424,20 @@ export type Database = {
           created_at: string
           created_by: string | null
           description: string | null
+          greeting_enabled: boolean
+          greeting_prompt_id: string | null
           id: string
           is_active: boolean
           max_queue_size: number
           max_wait_seconds: number
           moh_enabled: boolean
+          moh_prompt_id: string | null
           moh_url: string | null
           name: string
           overflow_action: string
+          overflow_prompt_id: string | null
           overflow_queue_id: string | null
+          periodic_prompt_id: string | null
           priority: number
           ring_timeout_seconds: number
           strategy: string
@@ -1446,15 +1451,20 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          greeting_enabled?: boolean
+          greeting_prompt_id?: string | null
           id?: string
           is_active?: boolean
           max_queue_size?: number
           max_wait_seconds?: number
           moh_enabled?: boolean
+          moh_prompt_id?: string | null
           moh_url?: string | null
           name: string
           overflow_action?: string
+          overflow_prompt_id?: string | null
           overflow_queue_id?: string | null
+          periodic_prompt_id?: string | null
           priority?: number
           ring_timeout_seconds?: number
           strategy?: string
@@ -1468,15 +1478,20 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          greeting_enabled?: boolean
+          greeting_prompt_id?: string | null
           id?: string
           is_active?: boolean
           max_queue_size?: number
           max_wait_seconds?: number
           moh_enabled?: boolean
+          moh_prompt_id?: string | null
           moh_url?: string | null
           name?: string
           overflow_action?: string
+          overflow_prompt_id?: string | null
           overflow_queue_id?: string | null
+          periodic_prompt_id?: string | null
           priority?: number
           ring_timeout_seconds?: number
           strategy?: string
@@ -1485,10 +1500,38 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "call_queues_greeting_prompt_id_fkey"
+            columns: ["greeting_prompt_id"]
+            isOneToOne: false
+            referencedRelation: "queue_audio_prompts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "call_queues_moh_prompt_id_fkey"
+            columns: ["moh_prompt_id"]
+            isOneToOne: false
+            referencedRelation: "queue_audio_prompts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "call_queues_overflow_prompt_id_fkey"
+            columns: ["overflow_prompt_id"]
+            isOneToOne: false
+            referencedRelation: "queue_audio_prompts"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "call_queues_overflow_queue_id_fkey"
             columns: ["overflow_queue_id"]
             isOneToOne: false
             referencedRelation: "call_queues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "call_queues_periodic_prompt_id_fkey"
+            columns: ["periodic_prompt_id"]
+            isOneToOne: false
+            referencedRelation: "queue_audio_prompts"
             referencedColumns: ["id"]
           },
         ]
@@ -4912,6 +4955,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      queue_audio_prompts: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          duration_seconds: number
+          file_size_bytes: number
+          id: string
+          is_active: boolean
+          kind: string
+          mime_type: string
+          name: string
+          storage_path: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration_seconds?: number
+          file_size_bytes?: number
+          id?: string
+          is_active?: boolean
+          kind?: string
+          mime_type?: string
+          name: string
+          storage_path: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration_seconds?: number
+          file_size_bytes?: number
+          id?: string
+          is_active?: boolean
+          kind?: string
+          mime_type?: string
+          name?: string
+          storage_path?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       queue_metrics_settings: {
         Row: {
