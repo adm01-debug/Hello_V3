@@ -6268,6 +6268,8 @@ export type Database = {
           email: string
           full_name: string | null
           id: string
+          preferred_device_label: string | null
+          preferred_device_label_updated_at: string | null
           ringtone_preset: string | null
           ringtone_updated_at: string | null
           ringtone_updated_by_device: string | null
@@ -6284,6 +6286,8 @@ export type Database = {
           email: string
           full_name?: string | null
           id: string
+          preferred_device_label?: string | null
+          preferred_device_label_updated_at?: string | null
           ringtone_preset?: string | null
           ringtone_updated_at?: string | null
           ringtone_updated_by_device?: string | null
@@ -6300,6 +6304,8 @@ export type Database = {
           email?: string
           full_name?: string | null
           id?: string
+          preferred_device_label?: string | null
+          preferred_device_label_updated_at?: string | null
           ringtone_preset?: string | null
           ringtone_updated_at?: string | null
           ringtone_updated_by_device?: string | null
