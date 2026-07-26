@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { AudioLines, Gauge, Keyboard, MicOff, Send, Trash2, Volume2, VolumeX, X } from 'lucide-react';
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { useVoicePreferences } from '@/hooks/useVoicePreferences';
-import { formatTtsRate } from '@/lib/voice-preferences';
+import { formatTtsRate, formatVoiceLabel } from '@/lib/voice-preferences';
 import { cancelSpeech, isSpeechSupported, speak } from '@/lib/voice-speech';
 import { FloatingParticles } from './overlay/FloatingParticles';
 import { VoiceOrb } from './overlay/VoiceOrb';
