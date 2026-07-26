@@ -156,3 +156,27 @@ export function filterSyncEntries(
   if (target.length === 0) return [...entries];
   return entries.filter((entry) => entry?.subject?.trim() === target);
 }
+
+/** Escapa um campo CSV (RFC 4180) neutralizando fórmulas (CSV injection). */
+export function escapeCsvField(value: unknown): string {
+  const raw = value === null || value === undefined ? '' : String(value);
+  const cleaned = raw.replace(/[\r\n]+/g, ' ').trim();
+  const safe = /^[=+\-@\t]/.test(cleaned) ? `'${cleaned}` : cleaned;
+  return `"${safe.replace(/"/g, '""')}"`;
+}
+
+/** Gera CSV (com cabeçalho) das entradas visíveis do histórico. */
+export function buildSyncHistoryCsv(entries: readonly SyncHistoryEntry[]): string {
+  const header = ['data_hora', 'assunto', 'detalhe', 'dispositivo'].join(',');
+  const rows = entries.map((entry) => {
+    const at = new Date(entry.at);
+    const iso = Number.isNaN(at.getTime()) ? '' : at.toISOString();
+    return [
+      escapeCsvField(iso),
+      escapeCsvField(entry.subject),
+      escapeCsvField(entry.detail),
+      escapeCsvField(entry.device ?? 'este dispositivo'),
+    ].join(',');
+  });
+  return [header, ...rows].join('\n');
+}
