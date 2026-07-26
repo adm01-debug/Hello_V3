@@ -12,7 +12,8 @@ type Loader = () => Promise<unknown>;
 const prefetched = new Set<string>();
 
 const loaders: Record<string, Loader> = {
-  "/": () => import("@/pages/Index"),
+  "/": () => import("@/pages/PhoneDialer"),
+  "/dashboard": () => import("@/pages/Index"),
   "/executive": () => import("@/pages/ExecutiveDashboard"),
   "/queue-dashboard": () => import("@/pages/QueueMetricsDashboard"),
   "/calls": () => import("@/pages/Calls"),

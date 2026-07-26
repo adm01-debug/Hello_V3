@@ -2,6 +2,7 @@ import { lazy } from "react";
 import type { UserRole } from "@/hooks/useAuth";
 
 const Index = lazy(() => import("@/pages/Index"));
+const PhoneDialer = lazy(() => import("@/pages/PhoneDialer"));
 const Contacts = lazy(() => import("@/pages/Contacts"));
 const ContactInsights = lazy(() => import("@/pages/ContactInsights"));
  const Calls = lazy(() => import("@/pages/Calls"));
@@ -97,7 +98,8 @@ export interface RouteConfig {
 
 export const protectedRoutes: RouteConfig[] = [
   // General
-  { path: "/", element: Index },
+  { path: "/", element: PhoneDialer },
+  { path: "/dashboard", element: Index },
   { path: "/onboarding", element: Onboarding },
   { path: "/calls", element: Calls },
   { path: "/contacts", element: Contacts },
