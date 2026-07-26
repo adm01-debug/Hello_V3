@@ -112,7 +112,7 @@ export function useDeviceLabel() {
       void persist(applied);
       return applied;
     },
-    [persist],
+    [persist, label],
   );
 
   return { label, updateLabel, isSyncing };
