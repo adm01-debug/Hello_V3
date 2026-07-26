@@ -131,6 +131,15 @@ function cleanText(value: unknown, maxLength: number): string | null {
   return trimmed.slice(0, maxLength);
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Aceita apenas UUIDs — impede enviar lixo em colunas com FK. */
+function cleanUuid(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const trimmed = value.trim();
+  return UUID_RE.test(trimmed) ? trimmed.toLowerCase() : null;
+}
+
 /**
  * Normaliza um rascunho vindo do formulário para um payload que o banco
  * sempre aceita: nenhum CHECK constraint pode ser violado após esta função.
