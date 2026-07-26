@@ -7,16 +7,16 @@ import { formatPhoneDisplay } from './phone-utils';
 import { FavoriteTagMenu } from './FavoriteTagMenu';
 import { RingtoneSettings } from './RingtoneSettings';
 import { FavoriteTagFilter } from './FavoriteTagFilter';
+import { usePersistedTagFilter } from '@/hooks/usePersistedTagFilter';
 import {
-  ALL_TAGS_FILTER,
   buildTagFilterOptions,
   collectTagOptions,
   filterFavoritesByTag,
   groupFavoritesByTag,
   normalizeTag,
   resolveActiveFilter,
-  type TagFilter,
 } from '@/lib/dialer-favorite-tags';
+
 
 export interface QuickAccessEntry {
   id: string;
