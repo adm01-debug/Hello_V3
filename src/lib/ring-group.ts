@@ -82,7 +82,17 @@ export const DEFAULT_RING_GROUP_DRAFT: RingGroupDraft = {
 
 /** Recorta um inteiro para dentro da faixa aceita pelo banco. */
 export function clampInt(value: unknown, min: number, max: number, fallback: number): number {
-  const parsed = typeof value === 'number' ? value : Number(value);
+  let parsed: number;
+  if (typeof value === 'number') {
+    parsed = value;
+  } else {
+    // `Number(x)` lança para símbolos e objetos sem conversão primitiva.
+    try {
+      parsed = Number(value);
+    } catch {
+      return fallback;
+    }
+  }
   if (!Number.isFinite(parsed)) return fallback;
   const rounded = Math.round(parsed);
   if (rounded < min) return min;
