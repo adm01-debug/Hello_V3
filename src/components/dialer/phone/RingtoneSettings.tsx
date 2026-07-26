@@ -107,7 +107,10 @@ export function RingtoneSettings() {
             aria-label="Volume do toque"
           />
         </div>
+
+        <DeviceNameSetting />
       </div>
     </section>
+
   );
 }

@@ -191,8 +191,15 @@ export function PhoneQuickAccess({
     setDragOver(null);
   };
 
-  // Filtro lembrado entre sessões (escopado por usuário).
-  const { filter: tagFilter, setFilter: setTagFilter } = usePersistedTagFilter();
+  // Filtro lembrado entre sessões (escopado por usuário) + origem da última mudança remota.
+  const {
+    filter: tagFilter,
+    setFilter: setTagFilter,
+    remoteDevice: filterRemoteDevice,
+    remoteUpdatedAt: filterRemoteUpdatedAt,
+    acknowledgeRemoteUpdate: acknowledgeFilterUpdate,
+  } = usePersistedTagFilter();
+
 
 
   const filterOptions = useMemo(() => buildTagFilterOptions(favorites), [favorites]);
