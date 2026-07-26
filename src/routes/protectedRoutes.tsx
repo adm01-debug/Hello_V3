@@ -106,6 +106,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/onboarding", element: Onboarding },
   { path: "/calls", element: Calls },
   { path: "/contacts", element: Contacts },
+  { path: "/call-park", element: CallPark },
   { path: "/contacts/insights", element: ContactInsights },
    { path: "/history", element: CallHistory },
    { path: "/call-history", element: CallHistory },
