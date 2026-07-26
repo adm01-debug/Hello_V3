@@ -9,8 +9,10 @@ import {
   RINGTONE_PRESETS,
 } from '@/lib/ringtone-presets';
 import { previewRingtone } from '@/lib/incoming-call-alert';
+import { getCurrentDeviceLabel, sanitizeDeviceLabel } from '@/lib/device-identity';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+
 
 const log = logger.create('useRingtoneSettings');
 
