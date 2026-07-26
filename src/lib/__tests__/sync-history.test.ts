@@ -10,6 +10,8 @@ import {
   recordSyncEvent,
   sanitizeEntry,
   listSyncSubjects,
+  escapeCsvField,
+  buildSyncHistoryCsv,
   filterSyncEntries,
   type SyncHistoryEntry,
   type SyncHistoryStorageLike,
@@ -152,6 +154,37 @@ describe('filtros do histórico unificado', () => {
             expect(out.every((e) => e.subject === subject)).toBe(true);
             expect(out.length).toBeLessThanOrEqual(list.length);
           }
+        },
+      ),
+      { numRuns: 400 },
+    );
+  });
+});
+
+describe('exportação CSV', () => {
+  it('neutraliza fórmulas e aspas', () => {
+    expect(escapeCsvField('=SUM(A1)')).toBe('"\'=SUM(A1)"');
+    expect(escapeCsvField('diz "oi"')).toBe('"diz ""oi"""');
+    expect(escapeCsvField('a\nb')).toBe('"a b"');
+  });
+
+  it('CSV tem sempre cabeçalho + 1 linha por entrada e nenhuma quebra extra', () => {
+    fc.assert(
+      fc.property(
+        fc.array(
+          fc.record({
+            subject: fc.string(),
+            detail: fc.string(),
+            device: fc.option(fc.string(), { nil: null }),
+            at: fc.integer({ min: 1, max: 1e12 }),
+          }),
+          { maxLength: 20 },
+        ),
+        (list) => {
+          const csv = buildSyncHistoryCsv(list as SyncHistoryEntry[]);
+          const lines = csv.split('\n');
+          expect(lines).toHaveLength(list.length + 1);
+          expect(lines[0]).toBe('data_hora,assunto,detalhe,dispositivo');
         },
       ),
       { numRuns: 400 },

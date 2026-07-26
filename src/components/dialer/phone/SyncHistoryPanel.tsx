@@ -1,10 +1,16 @@
 import { useMemo, useState } from 'react';
-import { History, Trash2 } from 'lucide-react';
+import { Download, History, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
 import { useSyncHistory } from '@/hooks/useSyncHistory';
-import { filterSyncEntries, formatSyncEntry, listSyncSubjects } from '@/lib/sync-history';
+import { toast } from 'sonner';
+import {
+  buildSyncHistoryCsv,
+  filterSyncEntries,
+  formatSyncEntry,
+  listSyncSubjects,
+} from '@/lib/sync-history';
 
 /**
  * Painel unificado com as últimas sincronizações de preferências
@@ -19,6 +25,24 @@ export function SyncHistoryPanel() {
   const subjects = useMemo(() => listSyncSubjects(entries), [entries]);
   const visible = useMemo(() => filterSyncEntries(entries, subject), [entries, subject]);
 
+  const exportCsv = () => {
+    try {
+      const csv = buildSyncHistoryCsv(visible);
+      const blob = new Blob([`\ufeff${csv}`], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `sincronizacoes-${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      toast.success('Histórico exportado em CSV');
+    } catch {
+      toast.error('Não foi possível exportar o histórico');
+    }
+  };
+
   if (entries.length === 0) return null;
 
   return (
@@ -30,6 +54,17 @@ export function SyncHistoryPanel() {
         <span className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           <History className="h-3 w-3" aria-hidden="true" /> Sincronizações recentes
         </span>
+        <div className="flex items-center gap-1">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="h-6 w-6"
+          onClick={exportCsv}
+          aria-label="Exportar histórico em CSV"
+        >
+          <Download className="h-3 w-3" />
+        </Button>
         <Button
           type="button"
           variant="ghost"
@@ -43,6 +78,7 @@ export function SyncHistoryPanel() {
         >
           <Trash2 className="h-3 w-3" />
         </Button>
+        </div>
       </div>
 
       {subjects.length > 1 && (
