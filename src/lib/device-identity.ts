@@ -86,12 +86,28 @@ export function setCurrentDeviceLabel(value: unknown): string {
   return sanitized;
 }
 
-/** Formata a origem da última alteração para exibição na UI. */
-export function formatRemoteOrigin(device: string | null, at: number | null): string {
+/**
+ * Formata a origem de uma alteração sincronizada para exibição na UI.
+ * `subject` é o rótulo do que mudou (ex.: "Toque", "Filtro").
+ */
+export function formatOriginNotice(
+  subject: string,
+  device: string | null,
+  at: number | null,
+): string {
+  const safeSubject = sanitizeDeviceLabel(subject) ?? 'Preferência';
   const label = sanitizeDeviceLabel(device);
-  const base = label ? `Toque atualizado em ${label}` : 'Toque atualizado em outro dispositivo';
+  const base = label
+    ? `${safeSubject} atualizado em ${label}`
+    : `${safeSubject} atualizado em outro dispositivo`;
   if (at === null || !Number.isFinite(at)) return base;
   const time = new Date(at);
   if (Number.isNaN(time.getTime())) return base;
   return `${base} às ${time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
 }
+
+/** Atalho para a preferência de toque. */
+export function formatRemoteOrigin(device: string | null, at: number | null): string {
+  return formatOriginNotice('Toque', device, at);
+}
+
