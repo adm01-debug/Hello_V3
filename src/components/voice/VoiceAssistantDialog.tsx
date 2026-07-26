@@ -45,28 +45,14 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const [bootingTimedOut, setBootingTimedOut] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [ttsEnabled, setTtsEnabled] = useState(() => isSpeechSupported());
-  const [userId, setUserId] = useState<string | null>(null);
-  const [history, setHistory] = useState<VoiceCommandEntry[]>(() => loadCommandHistory(null));
+  const { ttsEnabled, ttsRate, history, toggleTts, cycleRate, recordCommand, clearHistory } =
+    useVoicePreferences();
   const textInputRef = useRef<HTMLInputElement>(null);
   const wasOpenRef = useRef(false);
   const ttsEnabledRef = useRef(ttsEnabled);
   ttsEnabledRef.current = ttsEnabled;
-
-  // Escopo do histórico por usuário (evita vazamento em hot desking).
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      const { data } = await supabase.auth.getUser();
-      const uid = data?.user?.id ?? null;
-      if (cancelled || !uid) return;
-      setUserId(uid);
-      setHistory(loadCommandHistory(uid));
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const ttsRateRef = useRef(ttsRate);
+  ttsRateRef.current = ttsRate;
 
   const phase: VoicePhase = hasError
     ? 'error'
@@ -83,7 +69,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const respond = useCallback((text: string) => {
     if (!ttsEnabledRef.current) return;
     setIsSpeaking(true);
-    const started = speak(text, { onEnd: () => setIsSpeaking(false) });
+    const started = speak(text, { rate: ttsRateRef.current, onEnd: () => setIsSpeaking(false) });
     if (!started) setIsSpeaking(false);
   }, []);
 
@@ -92,7 +78,8 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       const intent = parseVoiceIntent(text);
       const description = describeIntent(intent);
       setFeedback(description);
-      setHistory(pushCommandHistory(userId, text));
+      recordCommand(text);
+
 
       if (intent.action === 'none') {
         // Fase de erro real: comando não reconhecido.
