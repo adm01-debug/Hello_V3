@@ -143,9 +143,10 @@ export function useDialerFavorites() {
     favorites,
     isLoading: query.isLoading,
     isError: query.isError,
-    isMutating: addMutation.isPending || removeMutation.isPending,
+    isMutating: addMutation.isPending || removeMutation.isPending || reorderMutation.isPending,
     isFavorite,
     toggleFavorite,
+    moveFavorite,
     maxFavorites: MAX_FAVORITES,
   };
 }
