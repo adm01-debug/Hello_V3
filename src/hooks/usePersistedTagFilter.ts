@@ -2,9 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { ALL_TAGS_FILTER, type TagFilter } from '@/lib/dialer-favorite-tags';
 import { loadTagFilter, saveTagFilter, sanitizeStoredFilter } from '@/lib/dialer-filter-storage';
+import { getCurrentDeviceLabel, sanitizeDeviceLabel } from '@/lib/device-identity';
 import { logger } from '@/lib/logger';
 
 const log = logger.create('usePersistedTagFilter');
+
 
 /**
  * Filtro de etiquetas persistido por usuário, com sincronização no perfil.
