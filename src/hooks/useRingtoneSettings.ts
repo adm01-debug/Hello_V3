@@ -150,9 +150,16 @@ export function useRingtoneSettings() {
             const origin = sanitizeDeviceLabel(next.ringtone_updated_by_device);
             // Origem igual a este dispositivo indica eco de outra aba local:
             // ainda avisamos, mas sem atribuir a um aparelho diferente.
-            setRemoteDevice(origin && origin !== deviceLabelRef.current ? origin : null);
+            const remote = origin && origin !== deviceLabelRef.current ? origin : null;
+            setRemoteDevice(remote);
             setRemoteUpdatedAt(Date.now());
+            pushSyncEvent(userId, {
+              subject: 'Toque',
+              detail: getRingtonePreset(localRef.current.presetId).label,
+              device: remote,
+            });
           }
+
         },
       )
 
