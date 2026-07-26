@@ -7,6 +7,7 @@ import {
   sanitizeDeviceLabel,
   setCurrentDeviceLabel,
 } from '@/lib/device-identity';
+import { pushSyncEvent } from '@/hooks/useSyncHistory';
 
 const log = logger.create('useDeviceLabel');
 
@@ -71,7 +72,13 @@ export function useDeviceLabel() {
 
         if (remote && !isCustomDeviceLabel(local)) {
           // Estação nova/limpa: adota o apelido salvo no perfil.
-          setLabel(setCurrentDeviceLabel(remote));
+          const applied = setCurrentDeviceLabel(remote);
+          setLabel(applied);
+          pushSyncEvent(uid, {
+            subject: 'Apelido',
+            detail: applied,
+            device: null,
+          });
         } else if (!remote && isCustomDeviceLabel(local)) {
           // Perfil ainda sem apelido: promove o local.
           await persist(local);
@@ -94,11 +101,18 @@ export function useDeviceLabel() {
   const updateLabel = useCallback(
     (value: unknown) => {
       const applied = setCurrentDeviceLabel(value);
+      if (applied !== label) {
+        pushSyncEvent(userIdRef.current, {
+          subject: 'Apelido',
+          detail: applied,
+          device: label,
+        });
+      }
       setLabel(applied);
       void persist(applied);
       return applied;
     },
-    [persist],
+    [persist, label],
   );
 
   return { label, updateLabel, isSyncing };
