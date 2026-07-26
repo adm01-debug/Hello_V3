@@ -359,7 +359,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                       {history.length > 0 && (
                         <button
                           type="button"
-                          onClick={() => setHistory(clearCommandHistory(userId))}
+                          onClick={clearHistory}
                           className="text-white/20 transition-colors hover:text-white/60"
                           aria-label="Limpar histórico de comandos"
                           title="Limpar histórico"
