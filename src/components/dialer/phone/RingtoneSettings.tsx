@@ -1,4 +1,4 @@
-import { Bell, Play, RefreshCw, RotateCcw, X } from 'lucide-react';
+import { Bell, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -11,7 +11,9 @@ import {
 } from '@/components/ui/select';
 import { useRingtoneSettings } from '@/hooks/useRingtoneSettings';
 import { getRingtonePreset } from '@/lib/ringtone-presets';
-import { formatRemoteOrigin } from '@/lib/device-identity';
+import { RemoteOriginNotice } from './RemoteOriginNotice';
+import { DeviceNameSetting } from './DeviceNameSetting';
+
 
 /** Preferências de toque para chamadas recebidas (sincronizadas no perfil). */
 export function RingtoneSettings() {
