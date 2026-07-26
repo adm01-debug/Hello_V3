@@ -29,14 +29,20 @@ export function useRingtoneSettings() {
   const [volume, setVolume] = useState<number>(DEFAULT_VOLUME);
   const [isSyncing, setIsSyncing] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [remoteUpdatedAt, setRemoteUpdatedAt] = useState<number | null>(null);
   const userIdRef = useRef<string | null>(null);
-
+  /** Último valor efetivamente aplicado aqui — usado para ignorar o eco da própria escrita. */
+  const localRef = useRef<{ presetId: string; volume: number }>({
+    presetId: DEFAULT_RINGTONE_ID,
+    volume: DEFAULT_VOLUME,
+  });
 
   // Leitura só após montagem: evita divergência em SSR/hidratação.
   useEffect(() => {
     const stored = loadRingtoneSettings();
     setPresetId(stored.presetId);
     setVolume(stored.volume);
+    localRef.current = { presetId: stored.presetId, volume: stored.volume };
   }, []);
 
   // Hidratação a partir do perfil (multi-dispositivo).
@@ -65,12 +71,14 @@ export function useRingtoneSettings() {
 
         if (typeof data.ringtone_preset === 'string' && data.ringtone_preset.length > 0) {
           const resolved = getRingtonePreset(data.ringtone_preset).id;
+          localRef.current.presetId = resolved;
           setPresetId(resolved);
           saveRingtoneSettings({ presetId: resolved });
         }
         // Numeric do Postgres pode chegar como string: normalizamos sempre.
         if (data.ringtone_volume !== null && data.ringtone_volume !== undefined) {
           const parsed = clampVolume(Number(data.ringtone_volume));
+          localRef.current.volume = parsed;
           setVolume(parsed);
           saveRingtoneSettings({ volume: parsed });
         }
@@ -93,6 +101,10 @@ export function useRingtoneSettings() {
    * dispositivo, o toque muda aqui sem recarregar a página. Os valores vindos
    * do banco passam pelos mesmos normalizadores usados na escrita, então um
    * preset removido ou um volume fora de faixa degrada para o padrão.
+   *
+   * Eco da própria escrita: a atualização feita neste dispositivo também volta
+   * pelo canal. Comparamos com o último valor gravado localmente e só sinalizamos
+   * "atualizado em outro dispositivo" quando algo de fato divergiu.
    */
   useEffect(() => {
     if (!userId) return;
@@ -106,16 +118,24 @@ export function useRingtoneSettings() {
           const next = payload.new as { ringtone_preset?: unknown; ringtone_volume?: unknown } | null;
           if (!next) return;
 
+          let changed = false;
+
           if (typeof next.ringtone_preset === 'string' && next.ringtone_preset.length > 0) {
             const resolved = getRingtonePreset(next.ringtone_preset).id;
+            if (resolved !== localRef.current.presetId) changed = true;
+            localRef.current.presetId = resolved;
             setPresetId(resolved);
             saveRingtoneSettings({ presetId: resolved });
           }
           if (next.ringtone_volume !== null && next.ringtone_volume !== undefined) {
             const parsed = clampVolume(Number(next.ringtone_volume));
+            if (Math.abs(parsed - localRef.current.volume) > 0.001) changed = true;
+            localRef.current.volume = parsed;
             setVolume(parsed);
             saveRingtoneSettings({ volume: parsed });
           }
+
+          if (changed) setRemoteUpdatedAt(Date.now());
         },
       )
       .subscribe();
@@ -144,7 +164,9 @@ export function useRingtoneSettings() {
   const selectPreset = useCallback(
     (nextId: string) => {
       const resolved = getRingtonePreset(nextId).id;
+      localRef.current.presetId = resolved;
       setPresetId(resolved);
+      setRemoteUpdatedAt(null);
       saveRingtoneSettings({ presetId: resolved });
       void pushToProfile({ ringtone_preset: resolved });
     },
@@ -154,7 +176,9 @@ export function useRingtoneSettings() {
   const changeVolume = useCallback(
     (nextVolume: number) => {
       const resolved = clampVolume(nextVolume);
+      localRef.current.volume = resolved;
       setVolume(resolved);
+      setRemoteUpdatedAt(null);
       saveRingtoneSettings({ volume: resolved });
       void pushToProfile({ ringtone_volume: resolved });
     },
@@ -165,11 +189,16 @@ export function useRingtoneSettings() {
     previewRingtone(presetId, volume);
   }, [presetId, volume]);
 
+  /** Dispensa o aviso de "atualizado em outro dispositivo". */
+  const acknowledgeRemoteUpdate = useCallback(() => setRemoteUpdatedAt(null), []);
+
   return {
     presetId,
     volume,
     presets: RINGTONE_PRESETS,
     isSyncing,
+    remoteUpdatedAt,
+    acknowledgeRemoteUpdate,
     selectPreset,
     changeVolume,
     preview,
