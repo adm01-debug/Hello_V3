@@ -35,12 +35,15 @@ import {
   type CallQueue,
   type CallQueueDraft,
 } from '@/lib/call-queue';
+import { QueueAudioSlotSelect } from '@/components/queues/QueueAudioSlotSelect';
+import type { QueueAudioPrompt } from '@/lib/queue-audio';
 
 export interface QueueFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   queue: CallQueue | null;
   otherQueues: CallQueue[];
+  audioPrompts: readonly QueueAudioPrompt[];
   saving: boolean;
   onSubmit: (draft: CallQueueDraft) => void;
 }
