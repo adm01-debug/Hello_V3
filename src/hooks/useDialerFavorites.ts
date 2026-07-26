@@ -82,6 +82,41 @@ export function useDialerFavorites() {
     },
   });
 
+  const reorderMutation = useMutation({
+    mutationFn: async (changes: Array<{ id: string; position: number }>) => {
+      if (changes.length === 0) return;
+      // Atualizações individuais mantêm a RLS por linha e evitam upsert
+      // (que exigiria reenviar user_id/phone e poderia colidir com a unicidade).
+      const results = await Promise.all(
+        changes.map(({ id, position }) =>
+          supabase.from('dialer_favorites').update({ position }).eq('id', id),
+        ),
+      );
+      const failed = results.find((result) => result.error);
+      if (failed?.error) throw failed.error;
+    },
+    onError: (error: unknown) => {
+      log.error('Falha ao reordenar favoritos', error);
+      toast.error('Não foi possível salvar a nova ordem');
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+    },
+  });
+
+  /** Move um favorito de posição, com atualização otimista no cache. */
+  const moveFavorite = useCallback(
+    (from: number, to: number) => {
+      const reordered = reorderFavorites(favorites, from, to);
+      const changes = diffPositions(favorites, reordered);
+      if (changes.length === 0) return;
+      queryClient.setQueryData<DialerFavorite[]>(QUERY_KEY, reordered);
+      reorderMutation.mutate(changes);
+    },
+    [favorites, queryClient, reorderMutation],
+  );
+
   const isFavorite = useCallback(
     (phone: string) => favorites.some((favorite) => favorite.phone === phone),
     [favorites],
