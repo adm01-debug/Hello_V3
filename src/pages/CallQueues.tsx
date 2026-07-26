@@ -19,6 +19,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useCallQueues } from '@/hooks/useCallQueues';
 import { QueueCard } from '@/components/queues/QueueCard';
 import { QueueFormDialog } from '@/components/queues/QueueFormDialog';
+import { QueueAudioLibrary } from '@/components/queues/QueueAudioLibrary';
+import { useQueueAudioPrompts } from '@/hooks/useQueueAudioPrompts';
 import type { CallQueue, CallQueueDraft } from '@/lib/call-queue';
 
 const CallQueues = () => {
