@@ -14,6 +14,12 @@ import {
   RING_CYCLE_MS,
 } from '@/lib/incoming-call-alert';
 
+
+/** JSDOM define algumas globais como não-configuráveis; redefinimos com segurança. */
+function setGlobal(name: string, value: unknown): void {
+  Object.defineProperty(globalThis, name, { value, configurable: true, writable: true });
+}
+
 const makeFavorites = (n: number) =>
   Array.from({ length: n }, (_, index) => ({ id: `fav-${index}`, position: index }));
 
@@ -125,9 +131,9 @@ describe('dialer-favorites-order — simulação de centenas de cenários', () =
 
 describe('incoming-call-alert — resiliência de ambiente', () => {
   afterEach(() => {
-    vi.unstubAllGlobals();
     vi.useRealTimers();
-    Reflect.deleteProperty(window as unknown as Record<string, unknown>, 'AudioContext');
+    setGlobal('AudioContext', undefined);
+    setGlobal('Notification', undefined);
   });
 
   it('não lança quando AudioContext é indisponível', () => {
@@ -137,8 +143,7 @@ describe('incoming-call-alert — resiliência de ambiente', () => {
   });
 
   it('não lança quando o AudioContext falha ao ser construído', () => {
-    vi.stubGlobal(
-      'AudioContext',
+    setGlobal('AudioContext',
       class {
         constructor() {
           throw new Error('bloqueado por política de autoplay');
@@ -159,8 +164,7 @@ describe('incoming-call-alert — resiliência de ambiente', () => {
       stop: vi.fn(),
     }));
     const close = vi.fn();
-    vi.stubGlobal(
-      'AudioContext',
+    setGlobal('AudioContext',
       class {
         state = 'running';
         currentTime = 0;
@@ -187,7 +191,7 @@ describe('incoming-call-alert — resiliência de ambiente', () => {
 
   it('não cria notificação sem permissão concedida', () => {
     const ctor = vi.fn();
-    vi.stubGlobal('Notification', Object.assign(ctor, { permission: 'denied' }));
+    setGlobal('Notification', Object.assign(ctor, { permission: 'denied' }));
     const close = showIncomingNotification('Chamada', '+55 11 99999-0000');
     expect(ctor).not.toHaveBeenCalled();
     expect(() => close()).not.toThrow();
@@ -198,7 +202,7 @@ describe('incoming-call-alert — resiliência de ambiente', () => {
     const ctor = vi.fn(function NotificationMock(this: Record<string, unknown>) {
       this.close = close;
     });
-    vi.stubGlobal('Notification', Object.assign(ctor, { permission: 'granted' }));
+    setGlobal('Notification', Object.assign(ctor, { permission: 'granted' }));
     const dispose = showIncomingNotification('Chamada recebida', 'Maria');
     expect(ctor).toHaveBeenCalledWith(
       'Chamada recebida',
@@ -209,17 +213,17 @@ describe('incoming-call-alert — resiliência de ambiente', () => {
   });
 
   it('ensureNotificationPermission devolve denied sem API e não re-pergunta', async () => {
-    vi.stubGlobal('Notification', undefined);
+    setGlobal('Notification', undefined);
     await expect(ensureNotificationPermission()).resolves.toBe('denied');
 
     const request = vi.fn();
-    vi.stubGlobal('Notification', Object.assign(vi.fn(), { permission: 'granted', requestPermission: request }));
+    setGlobal('Notification', Object.assign(vi.fn(), { permission: 'granted', requestPermission: request }));
     await expect(ensureNotificationPermission()).resolves.toBe('granted');
     expect(request).not.toHaveBeenCalled();
   });
 
   it('startIncomingCallAlert é seguro e idempotente em ambiente sem APIs', () => {
-    vi.stubGlobal('Notification', undefined);
+    setGlobal('Notification', undefined);
     const alert = startIncomingCallAlert('Chamada recebida', 'Desconhecido');
     expect(() => {
       alert.stop();
