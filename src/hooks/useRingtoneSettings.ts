@@ -34,6 +34,9 @@ export function useRingtoneSettings() {
   const [remoteUpdatedAt, setRemoteUpdatedAt] = useState<number | null>(null);
   const [remoteDevice, setRemoteDevice] = useState<string | null>(null);
   const userIdRef = useRef<string | null>(null);
+  /** Rótulo deste dispositivo, calculado uma vez (evita ler navigator a cada render). */
+  const deviceLabelRef = useRef<string>(getCurrentDeviceLabel());
+
 
   /** Último valor efetivamente aplicado aqui — usado para ignorar o eco da própria escrita. */
   const localRef = useRef<{ presetId: string; volume: number }>({
@@ -167,7 +170,15 @@ export function useRingtoneSettings() {
       const userId = userIdRef.current;
       if (!userId) return;
       try {
-        const { error } = await supabase.from('user_profiles').update(patch).eq('id', userId);
+        const { error } = await supabase
+          .from('user_profiles')
+          .update({
+            ...patch,
+            // Rastro de origem: cosmético, nunca usado para autorização.
+            ringtone_updated_by_device: deviceLabelRef.current,
+            ringtone_updated_at: new Date().toISOString(),
+          })
+          .eq('id', userId);
         if (error) throw error;
       } catch (error) {
         log.warn('Falha ao sincronizar preferência de toque', { error });
@@ -176,16 +187,21 @@ export function useRingtoneSettings() {
     [],
   );
 
+  const clearRemoteNotice = useCallback(() => {
+    setRemoteUpdatedAt(null);
+    setRemoteDevice(null);
+  }, []);
+
   const selectPreset = useCallback(
     (nextId: string) => {
       const resolved = getRingtonePreset(nextId).id;
       localRef.current.presetId = resolved;
       setPresetId(resolved);
-      setRemoteUpdatedAt(null);
+      clearRemoteNotice();
       saveRingtoneSettings({ presetId: resolved });
       void pushToProfile({ ringtone_preset: resolved });
     },
-    [pushToProfile],
+    [pushToProfile, clearRemoteNotice],
   );
 
   const changeVolume = useCallback(
@@ -193,29 +209,46 @@ export function useRingtoneSettings() {
       const resolved = clampVolume(nextVolume);
       localRef.current.volume = resolved;
       setVolume(resolved);
-      setRemoteUpdatedAt(null);
+      clearRemoteNotice();
       saveRingtoneSettings({ volume: resolved });
       void pushToProfile({ ringtone_volume: resolved });
     },
-    [pushToProfile],
+    [pushToProfile, clearRemoteNotice],
   );
+
+  /** Volta preset e volume aos padrões de fábrica, local e remotamente. */
+  const resetToDefaults = useCallback(() => {
+    localRef.current = { presetId: DEFAULT_RINGTONE_ID, volume: DEFAULT_VOLUME };
+    setPresetId(DEFAULT_RINGTONE_ID);
+    setVolume(DEFAULT_VOLUME);
+    clearRemoteNotice();
+    saveRingtoneSettings({ presetId: DEFAULT_RINGTONE_ID, volume: DEFAULT_VOLUME });
+    void pushToProfile({ ringtone_preset: DEFAULT_RINGTONE_ID, ringtone_volume: DEFAULT_VOLUME });
+  }, [pushToProfile, clearRemoteNotice]);
 
   const preview = useCallback(() => {
     previewRingtone(presetId, volume);
   }, [presetId, volume]);
 
   /** Dispensa o aviso de "atualizado em outro dispositivo". */
-  const acknowledgeRemoteUpdate = useCallback(() => setRemoteUpdatedAt(null), []);
+  const acknowledgeRemoteUpdate = clearRemoteNotice;
+
+  const isDefault = presetId === DEFAULT_RINGTONE_ID && Math.abs(volume - DEFAULT_VOLUME) < 0.001;
 
   return {
     presetId,
     volume,
     presets: RINGTONE_PRESETS,
     isSyncing,
+    isDefault,
+    deviceLabel: deviceLabelRef.current,
     remoteUpdatedAt,
+    remoteDevice,
     acknowledgeRemoteUpdate,
+    resetToDefaults,
     selectPreset,
     changeVolume,
     preview,
   };
+
 }
