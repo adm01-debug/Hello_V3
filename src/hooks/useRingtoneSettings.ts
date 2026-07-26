@@ -88,6 +88,45 @@ export function useRingtoneSettings() {
     };
   }, []);
 
+  /**
+   * Propagação em tempo real: quando o perfil é atualizado em outra aba ou
+   * dispositivo, o toque muda aqui sem recarregar a página. Os valores vindos
+   * do banco passam pelos mesmos normalizadores usados na escrita, então um
+   * preset removido ou um volume fora de faixa degrada para o padrão.
+   */
+  useEffect(() => {
+    if (!userId) return;
+
+    const channel = supabase
+      .channel(`ringtone-profile-${userId}`)
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'user_profiles', filter: `id=eq.${userId}` },
+        (payload) => {
+          const next = payload.new as { ringtone_preset?: unknown; ringtone_volume?: unknown } | null;
+          if (!next) return;
+
+          if (typeof next.ringtone_preset === 'string' && next.ringtone_preset.length > 0) {
+            const resolved = getRingtonePreset(next.ringtone_preset).id;
+            setPresetId(resolved);
+            saveRingtoneSettings({ presetId: resolved });
+          }
+          if (next.ringtone_volume !== null && next.ringtone_volume !== undefined) {
+            const parsed = clampVolume(Number(next.ringtone_volume));
+            setVolume(parsed);
+            saveRingtoneSettings({ volume: parsed });
+          }
+        },
+      )
+      .subscribe();
+
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [userId]);
+
+
+
   const pushToProfile = useCallback(
     async (patch: { ringtone_preset?: string; ringtone_volume?: number }) => {
       const userId = userIdRef.current;
