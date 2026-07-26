@@ -14,6 +14,15 @@ const log = logger.create('SIP');
 
 export type SipStatus = 'disconnected' | 'connecting' | 'registered' | 'calling' | 'ringing' | 'active' | 'error';
 
+export interface IncomingCallInfo {
+  /** Número/ramal do chamador (somente dígitos quando disponível). */
+  from: string;
+  /** Nome de exibição enviado pelo peer, quando existir. */
+  displayName: string | null;
+  /** Momento (epoch ms) em que o convite chegou — usado para timeout de UI. */
+  receivedAt: number;
+}
+
 export interface SipCallState {
   status: SipStatus;
   isRegistered: boolean;
@@ -22,7 +31,10 @@ export interface SipCallState {
   callId: string | null;
   phoneNumber: string | null;
   duration: number;
+  /** Convite entrante pendente de atendimento (null quando não há). */
+  incomingCall: IncomingCallInfo | null;
 }
+
 
  export interface CallControls {
    isMuted: boolean;
