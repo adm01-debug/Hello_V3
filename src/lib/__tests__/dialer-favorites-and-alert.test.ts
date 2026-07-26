@@ -17,7 +17,12 @@ import {
 
 /** JSDOM define algumas globais como não-configuráveis; redefinimos com segurança. */
 function setGlobal(name: string, value: unknown): void {
-  Object.defineProperty(globalThis, name, { value, configurable: true, writable: true });
+  const target = globalThis as unknown as Record<string, unknown>;
+  try {
+    target[name] = value;
+  } catch {
+    Object.defineProperty(target, name, { value, configurable: true, writable: true });
+  }
 }
 
 const makeFavorites = (n: number) =>
