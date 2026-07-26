@@ -93,7 +93,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       onIntent(intent);
       onOpenChange(false);
     },
-    [onIntent, onOpenChange, respond, userId],
+    [onIntent, onOpenChange, recordCommand, respond],
   );
 
   useEffect(() => {
