@@ -49,6 +49,7 @@ export interface SipCallState {
    const [controls, setControls] = useState<CallControls>({ isMuted: false, isOnHold: false });
   const uaRef = useRef<JsSIP.UA | null>(null);
   const sessionRef = useRef<RTCSession | null>(null);
+  const incomingRef = useRef<RTCSession | null>(null);
   const durationRef = useRef<number | null>(null);
   const remoteAudioRef = useRef<HTMLAudioElement | null>(null);
   const serverRef = useRef<string>('');
