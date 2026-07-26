@@ -28,6 +28,21 @@ export function useDeviceLabel() {
   const [isSyncing, setIsSyncing] = useState(false);
   const userIdRef = useRef<string | null>(null);
 
+  const persist = useCallback(async (value: string) => {
+    const uid = userIdRef.current;
+    if (!uid) return;
+    const { error } = await supabase
+      .from('user_profiles')
+      .update({
+        preferred_device_label: value,
+        preferred_device_label_updated_at: new Date().toISOString(),
+      })
+      .eq('id', uid);
+    if (error) {
+      log.warn('Falha ao salvar apelido do dispositivo no perfil', { error: error.message });
+    }
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
 
@@ -73,21 +88,6 @@ export function useDeviceLabel() {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const persist = useCallback(async (value: string) => {
-    const uid = userIdRef.current;
-    if (!uid) return;
-    const { error } = await supabase
-      .from('user_profiles')
-      .update({
-        preferred_device_label: value,
-        preferred_device_label_updated_at: new Date().toISOString(),
-      })
-      .eq('id', uid);
-    if (error) {
-      log.warn('Falha ao salvar apelido do dispositivo no perfil', { error: error.message });
-    }
   }, []);
 
   /** Aplica o apelido localmente (imediato) e replica no perfil. */
