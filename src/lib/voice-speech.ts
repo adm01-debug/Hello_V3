@@ -4,11 +4,15 @@
  * não carregadas ou erros de síntese nunca devem quebrar a UI.
  */
 
+import type { VoiceOption } from './voice-preferences';
+
 export interface SpeakOptions {
   /** Idioma BCP-47 (padrão pt-BR). */
   lang?: string;
   /** Velocidade da fala (0.5 – 2). */
   rate?: number;
+  /** Identificador (voiceURI) da voz preferida; ausente = melhor voz do idioma. */
+  voiceUri?: string | null;
   /** Chamado quando a fala termina, é cancelada ou falha. */
   onEnd?: () => void;
 }
@@ -27,12 +31,50 @@ function clampRate(rate: unknown): number {
   return Math.min(2, Math.max(0.5, value));
 }
 
-/** Escolhe a melhor voz disponível para o idioma solicitado. */
-function pickVoice(lang: string): SpeechSynthesisVoice | null {
+/**
+ * Lista as vozes disponíveis para um idioma, já reduzidas ao formato usado
+ * pela UI. Sempre devolve array (vazio quando o navegador não expõe vozes,
+ * o que é comum antes do evento `voiceschanged`).
+ */
+export function listVoices(lang = 'pt-BR'): VoiceOption[] {
+  if (!isSpeechSupported()) return [];
+  try {
+    const voices = window.speechSynthesis.getVoices();
+    if (!Array.isArray(voices)) return [];
+    const prefix = lang.toLowerCase().slice(0, 2);
+    return voices
+      .filter((voice) => typeof voice?.voiceURI === 'string' && voice.lang?.toLowerCase().startsWith(prefix))
+      .map((voice) => ({ uri: voice.voiceURI, name: voice.name || voice.voiceURI, lang: voice.lang || lang }));
+  } catch {
+    return [];
+  }
+}
+
+/** Registra um listener para quando o navegador carregar as vozes. */
+export function onVoicesChanged(handler: () => void): () => void {
+  if (!isSpeechSupported()) return () => undefined;
+  try {
+    window.speechSynthesis.addEventListener('voiceschanged', handler);
+    return () => {
+      try {
+        window.speechSynthesis.removeEventListener('voiceschanged', handler);
+      } catch {
+        // ignorado
+      }
+    };
+  } catch {
+    return () => undefined;
+  }
+}
+
+/** Escolhe a voz preferida ou, na falta dela, a melhor voz do idioma. */
+function pickVoice(lang: string, preferredUri?: string | null): SpeechSynthesisVoice | null {
   try {
     const voices = window.speechSynthesis.getVoices();
     if (!Array.isArray(voices) || voices.length === 0) return null;
     const target = lang.toLowerCase();
+    const preferred = preferredUri ? voices.find((voice) => voice.voiceURI === preferredUri) : undefined;
+    if (preferred) return preferred;
     return (
       voices.find((voice) => voice.lang?.toLowerCase() === target) ??
       voices.find((voice) => voice.lang?.toLowerCase().startsWith(target.slice(0, 2))) ??
@@ -73,7 +115,7 @@ export function speak(text: string, options: SpeakOptions = {}): boolean {
     const utterance = new SpeechSynthesisUtterance(content);
     utterance.lang = lang;
     utterance.rate = clampRate(options.rate);
-    const voice = pickVoice(lang);
+    const voice = pickVoice(lang, options.voiceUri ?? null);
     if (voice) utterance.voice = voice;
 
     let settled = false;
