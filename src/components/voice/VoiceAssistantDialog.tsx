@@ -456,6 +456,26 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                     <kbd className="rounded border border-white/10 bg-white/5 px-1 py-0.5 font-mono text-[9px]">SPACE</kbd> ativar
                   </motion.p>
                   <div className="flex items-center gap-1.5">
+                    {isSpeechSupported() && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setTtsEnabled((enabled) => {
+                            if (enabled) {
+                              cancelSpeech();
+                              setIsSpeaking(false);
+                            }
+                            return !enabled;
+                          });
+                        }}
+                        className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+                        aria-label={ttsEnabled ? 'Desativar resposta falada' : 'Ativar resposta falada'}
+                        aria-pressed={ttsEnabled}
+                        title={ttsEnabled ? 'Resposta falada ativada' : 'Resposta falada desativada'}
+                      >
+                        {ttsEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
+                      </button>
+                    )}
                     <button
                       type="button"
                       onClick={() => {
@@ -486,7 +506,10 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
             {showBooting && 'Ativando microfone.'}
             {phase === 'listening' && 'Ouvindo. Fale seu comando.'}
             {phase === 'processing' && 'Processando comando.'}
+            {phase === 'speaking' && 'Assistente respondendo.'}
+            {phase === 'error' && 'Comando não reconhecido.'}
           </div>
+
         </motion.div>
       )}
     </AnimatePresence>,
