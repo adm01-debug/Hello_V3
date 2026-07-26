@@ -109,6 +109,36 @@ export function useDialerFavorites() {
     },
   });
 
+  const tagMutation = useMutation({
+    mutationFn: async ({ id, tag }: { id: string; tag: string | null }) => {
+      const { error } = await supabase.from('dialer_favorites').update({ tag }).eq('id', id);
+      if (error) throw error;
+    },
+    onError: (error: unknown) => {
+      log.error('Falha ao atualizar etiqueta do favorito', error);
+      toast.error('Não foi possível salvar a etiqueta');
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+    },
+  });
+
+  /** Define (ou remove, com `null`) a etiqueta de um favorito. */
+  const setFavoriteTag = useCallback(
+    (id: string, rawTag: string | null) => {
+      const tag = normalizeTag(rawTag);
+      const current = favorites.find((favorite) => favorite.id === id);
+      if (!current || current.tag === tag) return;
+      queryClient.setQueryData<DialerFavorite[]>(
+        QUERY_KEY,
+        favorites.map((favorite) => (favorite.id === id ? { ...favorite, tag } : favorite)),
+      );
+      tagMutation.mutate({ id, tag });
+    },
+    [favorites, queryClient, tagMutation],
+  );
+
   /** Move um favorito de posição, com atualização otimista no cache. */
   const moveFavorite = useCallback(
     (from: number, to: number) => {
@@ -146,10 +176,16 @@ export function useDialerFavorites() {
     favorites,
     isLoading: query.isLoading,
     isError: query.isError,
-    isMutating: addMutation.isPending || removeMutation.isPending || reorderMutation.isPending,
+    isMutating:
+      addMutation.isPending ||
+      removeMutation.isPending ||
+      reorderMutation.isPending ||
+      tagMutation.isPending,
     isFavorite,
     toggleFavorite,
     moveFavorite,
+    setFavoriteTag,
     maxFavorites: MAX_FAVORITES,
+
   };
 }
