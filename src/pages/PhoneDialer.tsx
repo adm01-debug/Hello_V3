@@ -40,7 +40,7 @@ const PhoneDialer = () => {
   const call = useMultiChannelCall();
   const { sessions, isLoading } = useCallHistory();
   const sip = useSipCall();
-  const { favorites: savedFavorites, isFavorite, toggleFavorite } = useDialerFavorites();
+  const { favorites: savedFavorites, isFavorite, toggleFavorite, moveFavorite } = useDialerFavorites();
 
   const [input, setInput] = useState('');
   const [isSpeaker, setIsSpeaker] = useState(false);
