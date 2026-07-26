@@ -1,4 +1,5 @@
-import { Clock, Star, ClipboardPaste, Users } from 'lucide-react';
+import { useState } from 'react';
+import { Clock, Star, ClipboardPaste, Users, ChevronUp, ChevronDown, GripVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -23,6 +24,18 @@ interface PhoneQuickAccessProps {
   isFavorite?: (phone: string) => boolean;
   /** Alterna o favorito persistido do usuário. */
   onToggleFavorite?: (phone: string, label?: string | null) => void;
+  /** Reordena os favoritos persistidos (drag-and-drop ou teclado). */
+  onReorderFavorite?: (from: number, to: number) => void;
+}
+
+interface ReorderControls {
+  index: number;
+  total: number;
+  onMove: (from: number, to: number) => void;
+  onDragStart: () => void;
+  onDragOver: () => void;
+  onDrop: () => void;
+  isDragging: boolean;
 }
 
 function EntryRow({
@@ -30,14 +43,42 @@ function EntryRow({
   onSelect,
   isFavorite,
   onToggleFavorite,
+  reorder,
 }: {
   entry: QuickAccessEntry;
   onSelect: (phone: string, name?: string) => void;
   isFavorite?: boolean;
   onToggleFavorite?: (phone: string, label?: string | null) => void;
+  reorder?: ReorderControls;
 }) {
   return (
-    <div className="flex items-center gap-1 rounded-lg pr-1 transition-colors hover:bg-accent">
+    <div
+      className={cn(
+        'flex items-center gap-1 rounded-lg pr-1 transition-colors hover:bg-accent',
+        reorder?.isDragging && 'opacity-50 ring-1 ring-primary',
+      )}
+      draggable={Boolean(reorder)}
+      onDragStart={() => reorder?.onDragStart()}
+      onDragOver={(event) => {
+        if (!reorder) return;
+        event.preventDefault();
+        reorder.onDragOver();
+      }}
+      onDrop={(event) => {
+        if (!reorder) return;
+        event.preventDefault();
+        reorder.onDrop();
+      }}
+      onDragEnd={() => reorder?.onDrop()}
+    >
+      {reorder ? (
+        <span
+          aria-hidden="true"
+          className="shrink-0 cursor-grab pl-1 text-muted-foreground active:cursor-grabbing"
+        >
+          <GripVertical className="h-4 w-4" />
+        </span>
+      ) : null}
       <button
         type="button"
         onClick={() => onSelect(entry.phone, entry.name)}
@@ -56,6 +97,32 @@ function EntryRow({
           <span className="shrink-0 text-[11px] text-muted-foreground">{entry.hint}</span>
         ) : null}
       </button>
+      {reorder ? (
+        <>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 shrink-0"
+            disabled={reorder.index === 0}
+            aria-label={`Mover ${entry.name} para cima`}
+            onClick={() => reorder.onMove(reorder.index, reorder.index - 1)}
+          >
+            <ChevronUp className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 shrink-0"
+            disabled={reorder.index === reorder.total - 1}
+            aria-label={`Mover ${entry.name} para baixo`}
+            onClick={() => reorder.onMove(reorder.index, reorder.index + 1)}
+          >
+            <ChevronDown className="h-4 w-4" />
+          </Button>
+        </>
+      ) : null}
       {onToggleFavorite ? (
         <Button
           type="button"
