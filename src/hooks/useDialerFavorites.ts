@@ -5,6 +5,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { diffPositions, reorderFavorites } from '@/lib/dialer-favorites-order';
 import { normalizeTag } from '@/lib/dialer-favorite-tags';
+import { describeFavorite } from '@/lib/favorite-sync-labels';
+import { pushSyncEvent } from '@/hooks/useSyncHistory';
+import { getCurrentDeviceLabel } from '@/lib/device-identity';
 
 const log = logger.create('DialerFavorites');
 
@@ -14,6 +17,18 @@ export interface DialerFavorite {
   label: string | null;
   position: number;
   tag: string | null;
+}
+
+/**
+ * Registra a mudança de favoritos no histórico curto de sincronização.
+ * Best-effort: nunca interrompe a mutação principal.
+ */
+function trackFavoriteChange(userId: string | null, subject: string, detail: string) {
+  try {
+    pushSyncEvent(userId, { subject, detail, device: getCurrentDeviceLabel() });
+  } catch (error) {
+    log.warn('Falha ao registrar evento de favorito', { error });
+  }
 }
 
 const QUERY_KEY = ['dialer-favorites'] as const;
@@ -58,9 +73,15 @@ export function useDialerFavorites() {
         position: favorites.length,
       });
       if (error) throw error;
+      return { userId, phone, label: label ?? null };
     },
-    onSuccess: () => {
+    onSuccess: (result) => {
       void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      trackFavoriteChange(
+        result?.userId ?? null,
+        'Favorito adicionado',
+        describeFavorite(result?.label, result?.phone),
+      );
       toast.success('Adicionado aos favoritos');
     },
     onError: (error: unknown) => {
@@ -73,11 +94,19 @@ export function useDialerFavorites() {
 
   const removeMutation = useMutation({
     mutationFn: async (id: string) => {
+      const target = favorites.find((favorite) => favorite.id === id) ?? null;
+      const { data: auth } = await supabase.auth.getUser();
       const { error } = await supabase.from('dialer_favorites').delete().eq('id', id);
       if (error) throw error;
+      return { userId: auth.user?.id ?? null, target };
     },
-    onSuccess: () => {
+    onSuccess: (result) => {
       void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      trackFavoriteChange(
+        result?.userId ?? null,
+        'Favorito removido',
+        describeFavorite(result?.target?.label, result?.target?.phone),
+      );
       toast.success('Removido dos favoritos');
     },
     onError: (error: unknown) => {
@@ -111,8 +140,19 @@ export function useDialerFavorites() {
 
   const tagMutation = useMutation({
     mutationFn: async ({ id, tag }: { id: string; tag: string | null }) => {
+      const target = favorites.find((favorite) => favorite.id === id) ?? null;
+      const { data: auth } = await supabase.auth.getUser();
       const { error } = await supabase.from('dialer_favorites').update({ tag }).eq('id', id);
       if (error) throw error;
+      return { userId: auth.user?.id ?? null, target, tag };
+    },
+    onSuccess: (result) => {
+      const who = describeFavorite(result?.target?.label, result?.target?.phone);
+      trackFavoriteChange(
+        result?.userId ?? null,
+        'Etiqueta do favorito',
+        result?.tag ? `${who} → ${result.tag}` : `${who} → sem etiqueta`,
+      );
     },
     onError: (error: unknown) => {
       log.error('Falha ao atualizar etiqueta do favorito', error);
