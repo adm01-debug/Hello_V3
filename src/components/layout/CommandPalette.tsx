@@ -18,7 +18,8 @@ import {
  import { toast } from 'sonner';
 
 const allRoutes = [
-  { title: 'Dashboard', url: '/', icon: LayoutDashboard, group: 'Principal' },
+  { title: 'Discador', url: '/', icon: LayoutDashboard, group: 'Principal' },
+  { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard, group: 'Principal' },
   { title: 'Dashboard Executivo', url: '/executive', icon: Gauge, group: 'Principal' },
   { title: 'Métricas de Fila', url: '/queue-dashboard', icon: Activity, group: 'Principal' },
   { title: 'Chamadas', url: '/calls', icon: Phone, group: 'Principal' },
