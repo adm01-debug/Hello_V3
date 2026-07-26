@@ -32,7 +32,9 @@ export function useRingtoneSettings() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [remoteUpdatedAt, setRemoteUpdatedAt] = useState<number | null>(null);
+  const [remoteDevice, setRemoteDevice] = useState<string | null>(null);
   const userIdRef = useRef<string | null>(null);
+
   /** Último valor efetivamente aplicado aqui — usado para ignorar o eco da própria escrita. */
   const localRef = useRef<{ presetId: string; volume: number }>({
     presetId: DEFAULT_RINGTONE_ID,
@@ -117,7 +119,11 @@ export function useRingtoneSettings() {
         'postgres_changes',
         { event: 'UPDATE', schema: 'public', table: 'user_profiles', filter: `id=eq.${userId}` },
         (payload) => {
-          const next = payload.new as { ringtone_preset?: unknown; ringtone_volume?: unknown } | null;
+          const next = payload.new as {
+            ringtone_preset?: unknown;
+            ringtone_volume?: unknown;
+            ringtone_updated_by_device?: unknown;
+          } | null;
           if (!next) return;
 
           let changed = false;
@@ -137,9 +143,16 @@ export function useRingtoneSettings() {
             saveRingtoneSettings({ volume: parsed });
           }
 
-          if (changed) setRemoteUpdatedAt(Date.now());
+          if (changed) {
+            const origin = sanitizeDeviceLabel(next.ringtone_updated_by_device);
+            // Origem igual a este dispositivo indica eco de outra aba local:
+            // ainda avisamos, mas sem atribuir a um aparelho diferente.
+            setRemoteDevice(origin && origin !== deviceLabelRef.current ? origin : null);
+            setRemoteUpdatedAt(Date.now());
+          }
         },
       )
+
       .subscribe();
 
     return () => {
