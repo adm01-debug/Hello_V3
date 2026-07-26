@@ -440,25 +440,42 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                   </motion.p>
                   <div className="flex items-center gap-1.5">
                     {isSpeechSupported() && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setTtsEnabled((enabled) => {
-                            if (enabled) {
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const enabled = toggleTts();
+                            if (!enabled) {
                               cancelSpeech();
                               setIsSpeaking(false);
                             }
-                            return !enabled;
-                          });
-                        }}
-                        className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
-                        aria-label={ttsEnabled ? 'Desativar resposta falada' : 'Ativar resposta falada'}
-                        aria-pressed={ttsEnabled}
-                        title={ttsEnabled ? 'Resposta falada ativada' : 'Resposta falada desativada'}
-                      >
-                        {ttsEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
-                      </button>
+                          }}
+                          className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+                          aria-label={ttsEnabled ? 'Desativar resposta falada' : 'Ativar resposta falada'}
+                          aria-pressed={ttsEnabled}
+                          title={ttsEnabled ? 'Resposta falada ativada' : 'Resposta falada desativada'}
+                        >
+                          {ttsEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
+                        </button>
+                        {ttsEnabled && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              cancelSpeech();
+                              setIsSpeaking(false);
+                              cycleRate();
+                            }}
+                            className="flex h-7 items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 text-[10px] font-medium text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+                            aria-label={`Velocidade da fala: ${formatTtsRate(ttsRate)}. Tocar para alterar`}
+                            title="Velocidade da resposta falada"
+                          >
+                            <Gauge className="h-3 w-3" />
+                            {formatTtsRate(ttsRate)}
+                          </button>
+                        )}
+                      </>
                     )}
+
                     <button
                       type="button"
                       onClick={() => {
