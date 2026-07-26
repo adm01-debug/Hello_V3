@@ -293,6 +293,8 @@ const PhoneDialer = () => {
             isFavorite={isFavorite}
             onToggleFavorite={toggleFavorite}
             onReorderFavorite={moveFavorite}
+            onSetFavoriteTag={setFavoriteTag}
+
             onPaste={handlePaste}
             onOpenContacts={() => navigate('/contacts')}
           />
