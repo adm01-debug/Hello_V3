@@ -1,8 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Keyboard, MicOff, Send, X } from 'lucide-react';
+import { Keyboard, MicOff, Send, Trash2, Volume2, VolumeX, X } from 'lucide-react';
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  clearCommandHistory,
+  loadCommandHistory,
+  pushCommandHistory,
+  type VoiceCommandEntry,
+} from '@/lib/voice-command-history';
+import { cancelSpeech, isSpeechSupported, speak } from '@/lib/voice-speech';
 import { FloatingParticles } from './overlay/FloatingParticles';
 import { VoiceOrb } from './overlay/VoiceOrb';
 import { SpectrumWaveform } from './overlay/VoiceVisualEffects';
@@ -27,7 +35,7 @@ const PHASE_META: Record<VoicePhase, { title: string; subtitle: string }> = {
   listening: { title: 'Ouvindo…', subtitle: 'Diga o que você precisa' },
   processing: { title: 'Processando…', subtitle: 'IA interpretando seu comando' },
   speaking: { title: 'Respondendo…', subtitle: 'Ouvindo a resposta' },
-  error: { title: 'Erro', subtitle: 'Toque para tentar novamente' },
+  error: { title: 'Não entendi', subtitle: 'Toque no orbe e tente de novo' },
 };
 
 /** Overlay imersivo do assistente de voz (design portado do PROMO GIFTS). */
@@ -39,21 +47,70 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const [isClosing, setIsClosing] = useState(false);
   const [isBooting, setIsBooting] = useState(false);
   const [bootingTimedOut, setBootingTimedOut] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [ttsEnabled, setTtsEnabled] = useState(() => isSpeechSupported());
+  const [userId, setUserId] = useState<string | null>(null);
+  const [history, setHistory] = useState<VoiceCommandEntry[]>(() => loadCommandHistory(null));
   const textInputRef = useRef<HTMLInputElement>(null);
   const wasOpenRef = useRef(false);
+  const ttsEnabledRef = useRef(ttsEnabled);
+  ttsEnabledRef.current = ttsEnabled;
 
-  const phase: VoicePhase = isProcessing ? 'processing' : isListening ? 'listening' : 'idle';
+  // Escopo do histórico por usuário (evita vazamento em hot desking).
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const { data } = await supabase.auth.getUser();
+      const uid = data?.user?.id ?? null;
+      if (cancelled || !uid) return;
+      setUserId(uid);
+      setHistory(loadCommandHistory(uid));
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const phase: VoicePhase = hasError
+    ? 'error'
+    : isProcessing
+      ? 'processing'
+      : isListening
+        ? 'listening'
+        : isSpeaking
+          ? 'speaking'
+          : 'idle';
+
+
+  /** Fala uma resposta e mantém a fase "speaking" enquanto durar o áudio. */
+  const respond = useCallback((text: string) => {
+    if (!ttsEnabledRef.current) return;
+    setIsSpeaking(true);
+    const started = speak(text, { onEnd: () => setIsSpeaking(false) });
+    if (!started) setIsSpeaking(false);
+  }, []);
 
   const handleIntent = useCallback(
     (text: string) => {
       const intent = parseVoiceIntent(text);
-      setFeedback(describeIntent(intent));
-      if (intent.action !== 'none') {
-        onIntent(intent);
-        onOpenChange(false);
+      const description = describeIntent(intent);
+      setFeedback(description);
+      setHistory(pushCommandHistory(userId, text));
+
+      if (intent.action === 'none') {
+        // Fase de erro real: comando não reconhecido.
+        setHasError(true);
+        respond(description);
+        return;
       }
+
+      setHasError(false);
+      respond(description);
+      onIntent(intent);
+      onOpenChange(false);
     },
-    [onIntent, onOpenChange],
+    [onIntent, onOpenChange, respond, userId],
   );
 
   useEffect(() => {
@@ -71,13 +128,27 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       wasOpenRef.current = false;
       setIsClosing(true);
       setFeedback(null);
+      setHasError(false);
       const timer = window.setTimeout(() => setIsClosing(false), 300);
       return () => window.clearTimeout(timer);
     }
   }, [open]);
 
+  // Interrompe a fala ao fechar ou desmontar o overlay.
+  useEffect(() => {
+    if (open) return;
+    cancelSpeech();
+    setIsSpeaking(false);
+  }, [open]);
+
+  useEffect(() => () => cancelSpeech(), []);
+
+
   const toggleListening = useCallback(() => {
     if (isProcessing) return;
+    setHasError(false);
+    cancelSpeech();
+    setIsSpeaking(false);
     if (isListening) {
       stopListening();
     } else {
@@ -85,6 +156,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       void startListening();
     }
   }, [isListening, isProcessing, startListening, stopListening]);
+
 
   useEffect(() => {
     if (isListening || isProcessing) setIsBooting(false);
@@ -289,19 +361,32 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                   </div>
                 )}
 
-                {/* Sugestões */}
-                {phase === 'idle' && !showBooting && (
+                {/* Comandos recentes (fallback: sugestões) */}
+                {(phase === 'idle' || phase === 'error') && !showBooting && (
                   <motion.div
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.25 }}
                     className="w-full space-y-3 text-center"
                   >
-                    <p className="text-[10px] font-medium uppercase tracking-widest text-white/25">
-                      Experimente dizer
-                    </p>
+                    <div className="flex items-center justify-center gap-2">
+                      <p className="text-[10px] font-medium uppercase tracking-widest text-white/25">
+                        {history.length > 0 ? 'Comandos recentes' : 'Experimente dizer'}
+                      </p>
+                      {history.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setHistory(clearCommandHistory(userId))}
+                          className="text-white/20 transition-colors hover:text-white/60"
+                          aria-label="Limpar histórico de comandos"
+                          title="Limpar histórico"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </button>
+                      )}
+                    </div>
                     <div className="flex flex-wrap justify-center gap-2">
-                      {SUGGESTIONS.map((cmd) => (
+                      {(history.length > 0 ? history.map((entry) => entry.command) : SUGGESTIONS).map((cmd) => (
                         <button
                           key={cmd}
                           type="button"
@@ -314,6 +399,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                     </div>
                   </motion.div>
                 )}
+
 
                 {/* Entrada por texto */}
                 <AnimatePresence>
@@ -370,6 +456,26 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                     <kbd className="rounded border border-white/10 bg-white/5 px-1 py-0.5 font-mono text-[9px]">SPACE</kbd> ativar
                   </motion.p>
                   <div className="flex items-center gap-1.5">
+                    {isSpeechSupported() && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setTtsEnabled((enabled) => {
+                            if (enabled) {
+                              cancelSpeech();
+                              setIsSpeaking(false);
+                            }
+                            return !enabled;
+                          });
+                        }}
+                        className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+                        aria-label={ttsEnabled ? 'Desativar resposta falada' : 'Ativar resposta falada'}
+                        aria-pressed={ttsEnabled}
+                        title={ttsEnabled ? 'Resposta falada ativada' : 'Resposta falada desativada'}
+                      >
+                        {ttsEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
+                      </button>
+                    )}
                     <button
                       type="button"
                       onClick={() => {
@@ -400,7 +506,10 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
             {showBooting && 'Ativando microfone.'}
             {phase === 'listening' && 'Ouvindo. Fale seu comando.'}
             {phase === 'processing' && 'Processando comando.'}
+            {phase === 'speaking' && 'Assistente respondendo.'}
+            {phase === 'error' && 'Comando não reconhecido.'}
           </div>
+
         </motion.div>
       )}
     </AnimatePresence>,
