@@ -56,7 +56,8 @@ export function useRingtoneSettings() {
         const { data, error } = await supabase
           .from('user_profiles')
           .select('ringtone_preset, ringtone_volume')
-          .eq('id', userId)
+          .eq('id', uid)
+
           .maybeSingle();
 
         if (error) throw error;
