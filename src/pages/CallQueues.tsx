@@ -40,6 +40,9 @@ const CallQueues = () => {
     toggleActive,
   } = useCallQueues();
 
+  const { prompts: audioPrompts } = useQueueAudioPrompts();
+
+
   const [search, setSearch] = useState('');
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState<CallQueue | null>(null);
