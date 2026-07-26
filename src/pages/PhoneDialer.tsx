@@ -18,6 +18,11 @@ import { sanitizeDialInput, isDialable } from '@/components/dialer/phone/phone-u
 import { VoiceAssistantDialog } from '@/components/voice/VoiceAssistantDialog';
 import { VoiceAssistantOrb } from '@/components/voice/VoiceAssistantOrb';
 import type { VoiceIntent } from '@/components/voice/voice-intent';
+import {
+  ensureNotificationPermission,
+  startIncomingCallAlert,
+} from '@/lib/incoming-call-alert';
+import { formatPhoneDisplay } from '@/components/dialer/phone/phone-utils';
 
 const CHANNELS: Array<{ id: CallChannel; label: string; icon: React.ComponentType<{ className?: string }> }> = [
   { id: 'sip', label: 'SIP', icon: Headphones },
