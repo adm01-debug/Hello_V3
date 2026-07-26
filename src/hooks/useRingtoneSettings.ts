@@ -10,6 +10,8 @@ import {
 } from '@/lib/ringtone-presets';
 import { previewRingtone } from '@/lib/incoming-call-alert';
 import { getCurrentDeviceLabel, sanitizeDeviceLabel } from '@/lib/device-identity';
+import { pushSyncEvent, useSyncHistory } from '@/hooks/useSyncHistory';
+
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 
@@ -150,9 +152,16 @@ export function useRingtoneSettings() {
             const origin = sanitizeDeviceLabel(next.ringtone_updated_by_device);
             // Origem igual a este dispositivo indica eco de outra aba local:
             // ainda avisamos, mas sem atribuir a um aparelho diferente.
-            setRemoteDevice(origin && origin !== deviceLabelRef.current ? origin : null);
+            const remote = origin && origin !== deviceLabelRef.current ? origin : null;
+            setRemoteDevice(remote);
             setRemoteUpdatedAt(Date.now());
+            pushSyncEvent(userId, {
+              subject: 'Toque',
+              detail: getRingtonePreset(localRef.current.presetId).label,
+              device: remote,
+            });
           }
+
         },
       )
 
@@ -200,6 +209,11 @@ export function useRingtoneSettings() {
       clearRemoteNotice();
       saveRingtoneSettings({ presetId: resolved });
       void pushToProfile({ ringtone_preset: resolved });
+      pushSyncEvent(userIdRef.current, {
+        subject: 'Toque',
+        detail: getRingtonePreset(resolved).label,
+        device: null,
+      });
     },
     [pushToProfile, clearRemoteNotice],
   );
@@ -212,6 +226,11 @@ export function useRingtoneSettings() {
       clearRemoteNotice();
       saveRingtoneSettings({ volume: resolved });
       void pushToProfile({ ringtone_volume: resolved });
+      pushSyncEvent(userIdRef.current, {
+        subject: 'Volume',
+        detail: `${Math.round(resolved * 100)}%`,
+        device: null,
+      });
     },
     [pushToProfile, clearRemoteNotice],
   );
@@ -224,6 +243,11 @@ export function useRingtoneSettings() {
     clearRemoteNotice();
     saveRingtoneSettings({ presetId: DEFAULT_RINGTONE_ID, volume: DEFAULT_VOLUME });
     void pushToProfile({ ringtone_preset: DEFAULT_RINGTONE_ID, ringtone_volume: DEFAULT_VOLUME });
+    pushSyncEvent(userIdRef.current, {
+      subject: 'Toque',
+      detail: 'restaurado ao padrão',
+      device: null,
+    });
   }, [pushToProfile, clearRemoteNotice]);
 
   const preview = useCallback(() => {
@@ -234,6 +258,8 @@ export function useRingtoneSettings() {
   const acknowledgeRemoteUpdate = clearRemoteNotice;
 
   const isDefault = presetId === DEFAULT_RINGTONE_ID && Math.abs(volume - DEFAULT_VOLUME) < 0.001;
+
+  const { entries: syncHistory, clear: clearSyncHistory } = useSyncHistory(userId);
 
   return {
     presetId,
@@ -249,6 +275,9 @@ export function useRingtoneSettings() {
     selectPreset,
     changeVolume,
     preview,
+    syncHistory,
+    clearSyncHistory,
   };
+
 
 }

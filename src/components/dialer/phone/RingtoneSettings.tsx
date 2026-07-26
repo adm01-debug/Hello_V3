@@ -13,6 +13,7 @@ import { useRingtoneSettings } from '@/hooks/useRingtoneSettings';
 import { getRingtonePreset } from '@/lib/ringtone-presets';
 import { RemoteOriginNotice } from './RemoteOriginNotice';
 import { DeviceNameSetting } from './DeviceNameSetting';
+import { SyncHistoryList } from './SyncHistoryList';
 
 
 /** Preferências de toque para chamadas recebidas (sincronizadas no perfil). */
@@ -29,7 +30,10 @@ export function RingtoneSettings() {
     acknowledgeRemoteUpdate,
     resetToDefaults,
     isDefault,
+    syncHistory,
+    clearSyncHistory,
   } = useRingtoneSettings();
+
   const active = getRingtonePreset(presetId);
   const volumePercent = Math.round(volume * 100);
 
@@ -109,6 +113,8 @@ export function RingtoneSettings() {
         </div>
 
         <DeviceNameSetting />
+        <SyncHistoryList entries={syncHistory} onClear={clearSyncHistory} />
+
       </div>
     </section>
 
