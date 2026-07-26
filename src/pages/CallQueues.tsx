@@ -166,6 +166,9 @@ const CallQueues = () => {
         </div>
       )}
 
+      <QueueAudioLibrary canManage={canManage} />
+
+
       <QueueFormDialog
         open={formOpen}
         onOpenChange={setFormOpen}
