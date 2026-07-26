@@ -1,8 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Keyboard, MicOff, Send, X } from 'lucide-react';
+import { Keyboard, MicOff, Send, Trash2, Volume2, VolumeX, X } from 'lucide-react';
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  clearCommandHistory,
+  loadCommandHistory,
+  pushCommandHistory,
+  type VoiceCommandEntry,
+} from '@/lib/voice-command-history';
+import { cancelSpeech, isSpeechSupported, speak } from '@/lib/voice-speech';
 import { FloatingParticles } from './overlay/FloatingParticles';
 import { VoiceOrb } from './overlay/VoiceOrb';
 import { SpectrumWaveform } from './overlay/VoiceVisualEffects';
@@ -27,7 +35,7 @@ const PHASE_META: Record<VoicePhase, { title: string; subtitle: string }> = {
   listening: { title: 'Ouvindo…', subtitle: 'Diga o que você precisa' },
   processing: { title: 'Processando…', subtitle: 'IA interpretando seu comando' },
   speaking: { title: 'Respondendo…', subtitle: 'Ouvindo a resposta' },
-  error: { title: 'Erro', subtitle: 'Toque para tentar novamente' },
+  error: { title: 'Não entendi', subtitle: 'Toque no orbe e tente de novo' },
 };
 
 /** Overlay imersivo do assistente de voz (design portado do PROMO GIFTS). */
@@ -39,10 +47,41 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const [isClosing, setIsClosing] = useState(false);
   const [isBooting, setIsBooting] = useState(false);
   const [bootingTimedOut, setBootingTimedOut] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [ttsEnabled, setTtsEnabled] = useState(() => isSpeechSupported());
+  const [userId, setUserId] = useState<string | null>(null);
+  const [history, setHistory] = useState<VoiceCommandEntry[]>(() => loadCommandHistory(null));
   const textInputRef = useRef<HTMLInputElement>(null);
   const wasOpenRef = useRef(false);
+  const ttsEnabledRef = useRef(ttsEnabled);
+  ttsEnabledRef.current = ttsEnabled;
 
-  const phase: VoicePhase = isProcessing ? 'processing' : isListening ? 'listening' : 'idle';
+  // Escopo do histórico por usuário (evita vazamento em hot desking).
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const { data } = await supabase.auth.getUser();
+      const uid = data?.user?.id ?? null;
+      if (cancelled || !uid) return;
+      setUserId(uid);
+      setHistory(loadCommandHistory(uid));
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const phase: VoicePhase = hasError
+    ? 'error'
+    : isProcessing
+      ? 'processing'
+      : isListening
+        ? 'listening'
+        : isSpeaking
+          ? 'speaking'
+          : 'idle';
+
 
   const handleIntent = useCallback(
     (text: string) => {
