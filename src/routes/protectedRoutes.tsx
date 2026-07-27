@@ -27,6 +27,7 @@ const QueueMetricsDashboard = lazy(() => import("@/pages/QueueMetricsDashboard")
 const CallQueues = lazy(() => import("@/pages/CallQueues"));
 const RingGroups = lazy(() => import("@/pages/RingGroups"));
 const CallPark = lazy(() => import("@/pages/CallPark"));
+const BlfBoard = lazy(() => import("@/pages/BlfBoard"));
 const AuditLogs = lazy(() => import("@/pages/AuditLogs"));
 const SecurityReport = lazy(() => import("@/pages/SecurityReport"));
 const SecurityMonitoring = lazy(() => import("@/pages/SecurityMonitoring"));
@@ -107,6 +108,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/calls", element: Calls },
   { path: "/contacts", element: Contacts },
   { path: "/call-park", element: CallPark },
+  { path: "/blf", element: BlfBoard },
   { path: "/contacts/insights", element: ContactInsights },
    { path: "/history", element: CallHistory },
    { path: "/call-history", element: CallHistory },
