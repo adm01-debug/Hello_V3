@@ -15,16 +15,6 @@ import {
   type LampState,
 } from '@/lib/blf';
 
-interface ParkedRawRow {
-  id: string;
-  slot_number: number | null;
-  contact_name: string | null;
-  contact_phone: string | null;
-  parked_at: string | null;
-  status: string | null;
-  parked_by_agent_name: string | null;
-}
-
 async function fetchBoard(): Promise<{
   agents: BlfAgentRow[];
   sessions: BlfSessionRow[];
@@ -38,7 +28,7 @@ async function fetchBoard(): Promise<{
       .in('status', ['active', 'ringing', 'on_hold']),
     supabase
       .from('parked_calls')
-      .select('id,slot_number,contact_name,contact_phone,parked_at,status,parked_by_agent_name')
+      .select('id,slot_number,contact_name,contact_phone,parked_at,status,parked_by_name')
       .eq('status', 'parked'),
   ]);
 
@@ -49,15 +39,7 @@ async function fetchBoard(): Promise<{
     logger.warn('blf: falha ao carregar chamadas estacionadas', { error: parkedRes.error.message });
   }
 
-  const parked: BlfParkedRow[] = ((parkedRes.data ?? []) as ParkedRawRow[]).map((row) => ({
-    id: row.id,
-    slot_number: row.slot_number,
-    contact_name: row.contact_name,
-    contact_phone: row.contact_phone,
-    parked_at: row.parked_at,
-    status: row.status,
-    parked_by_name: row.parked_by_agent_name,
-  }));
+  const parked: BlfParkedRow[] = (parkedRes.data ?? []) as BlfParkedRow[];
 
   return {
     agents: (agentsRes.data ?? []) as BlfAgentRow[],
