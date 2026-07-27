@@ -80,6 +80,7 @@ const allRoutes = [
   { title: 'Filas de Atendimento', url: '/call-queues', icon: ListChecks, group: 'Sistema' },
   { title: 'Grupos de Toque', url: '/ring-groups', icon: Bell, group: 'Sistema' },
   { title: 'Estacionamento de Chamadas', url: '/call-park', icon: CircleParking, group: 'Chamadas' },
+  { title: 'Painel BLF de Ramais', url: '/blf', icon: LayoutGrid, group: 'Chamadas' },
   { title: 'Linhas VoIP', url: '/admin/voip-trunks', icon: Phone, group: 'Sistema' },
   { title: 'Configurações', url: '/settings', icon: Settings, group: 'Sistema' },
 ];

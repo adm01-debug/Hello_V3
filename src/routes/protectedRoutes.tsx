@@ -27,6 +27,7 @@ const QueueMetricsDashboard = lazy(() => import("@/pages/QueueMetricsDashboard")
 const CallQueues = lazy(() => import("@/pages/CallQueues"));
 const RingGroups = lazy(() => import("@/pages/RingGroups"));
 const CallPark = lazy(() => import("@/pages/CallPark"));
+const BlfBoard = lazy(() => import("@/pages/BlfBoard"));
 const AuditLogs = lazy(() => import("@/pages/AuditLogs"));
 const SecurityReport = lazy(() => import("@/pages/SecurityReport"));
 const SecurityMonitoring = lazy(() => import("@/pages/SecurityMonitoring"));
