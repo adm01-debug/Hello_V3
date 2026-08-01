@@ -1,341 +1,35 @@
-// Edge function temporária para migração de banco, com auditoria persistente.
-// Toda invocação (autorizada, não autorizada, sucesso ou erro) é registrada
-// em public.audit_logs via service_role, incluindo request_id, identidade
-// do chamador (quando o JWT for enviado apenas para fins informativos),
-// duração, IP e user agent. Nunca gravamos service_role ou db_url no detalhe.
+// Edge function temporária para migração de banco.
+// Cole em: Cloud > Edge Functions > migrate-helper > View code
+// Após a migração, remova esta função.
 
-import { createClient, SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
-import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
-import { parseNumericSafely } from "../_shared/numeric-schemas.ts";
-
-const ACCESS_KEY = "92894ad8f9f1b264e52c923bab8c46249e256a6ba9a80aeb";
-
-const cors: Record<string, string> = {
+const ACCESS_KEY = "9f01341c103399c63553cef43e01cb0c3c19e91183e7f2df";
+const cors = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, apikey, content-type, x-access-key, x-request-id",
-  "Access-Control-Expose-Headers": "x-request-id",
+  "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-access-key",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
 
-const UUID_RE =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-
-interface CallerIdentity {
-  id: string | null;
-  email: string | null;
-}
-
-interface AuditPayload {
-  requestId: string;
-  action: string;
-  status: "ok" | "unauthorized" | "error" | "bad_request";
-  durationMs: number;
-  ip: string | null;
-  userAgent: string | null;
-  caller: CallerIdentity;
-  query: Record<string, string>;
-  error?: string;
-}
-
-// Decodifica payload do JWT sem verificar assinatura (uso informativo apenas —
-// o gate real é a x-access-key). Nunca lança.
-function decodeJwt(authHeader: string | null): CallerIdentity {
-  if (!authHeader) return { id: null, email: null };
-  const token = authHeader.replace(/^Bearer\s+/i, "").trim();
-  const parts = token.split(".");
-  if (parts.length !== 3) return { id: null, email: null };
-  try {
-    const padded = parts[1].replace(/-/g, "+").replace(/_/g, "/");
-    const json = atob(padded + "===".slice((padded.length + 3) % 4));
-    const payload = JSON.parse(json) as { sub?: unknown; email?: unknown };
-    const sub = typeof payload.sub === "string" ? payload.sub : null;
-    const email = typeof payload.email === "string" ? payload.email : null;
-    return { id: sub && UUID_RE.test(sub) ? sub : null, email };
-  } catch {
-    return { id: null, email: null };
-  }
-}
-
-function firstIp(header: string | null): string | null {
-  if (!header) return null;
-  const first = header.split(",")[0]?.trim();
-  return first || null;
-}
-
-function logStructured(level: "info" | "error", payload: AuditPayload): void {
-  const line = JSON.stringify({
-    ts: new Date().toISOString(),
-    level,
-    request_id: payload.requestId,
-    action: payload.action,
-    status: payload.status,
-    duration_ms: payload.durationMs,
-    caller_id: payload.caller.id,
-    caller_email: payload.caller.email,
-    ip: payload.ip,
-    user_agent: payload.userAgent,
-    query: payload.query,
-    ...(payload.error ? { error: payload.error } : {}),
-  });
-  if (level === "error") console.error(line);
-  else console.log(line);
-}
-
-// Injetável para tests.
-export type AuditClientFactory = () => SupabaseClient | null;
-
-const defaultAuditClientFactory: AuditClientFactory = () => {
-  const url = Deno.env.get("SUPABASE_URL");
-  const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!url || !key) return null;
-  return createClient(url, key, { auth: { persistSession: false } });
-};
-
-async function persistAudit(
-  factory: AuditClientFactory,
-  payload: AuditPayload,
-): Promise<void> {
-  try {
-    const client = factory();
-    if (!client) return;
-    const { error } = await client.from("audit_logs").insert({
-      user_id: payload.caller.id,
-      user_email: payload.caller.email,
-      action: `migrate_helper.${payload.action}`,
-      resource_type: "edge_function",
-      resource_id: "migrate-helper",
-      ip_address: payload.ip,
-      user_agent: payload.userAgent,
-      details: {
-        request_id: payload.requestId,
-        action: payload.action,
-        status: payload.status,
-        duration_ms: payload.durationMs,
-        query: payload.query,
-        caller_email: payload.caller.email,
-        ...(payload.error ? { error: payload.error } : {}),
-      },
-    });
-    if (error) {
-      console.error(
-        JSON.stringify({
-          ts: new Date().toISOString(),
-          level: "error",
-          request_id: payload.requestId,
-          action: "audit_insert_failed",
-          error: error.message,
-        }),
-      );
-    }
-  } catch (err) {
-    console.error(
-      JSON.stringify({
-        ts: new Date().toISOString(),
-        level: "error",
-        request_id: payload.requestId,
-        action: "audit_insert_exception",
-        error: err instanceof Error ? err.message : String(err),
-      }),
-    );
-  }
-}
-
-export interface HandlerDeps {
-  auditFactory?: AuditClientFactory;
-  queryFactory?: AuditClientFactory;
-}
-
-export async function handleRequest(
-  req: Request,
-  deps: HandlerDeps = {},
-): Promise<Response> {
-  const factory = deps.auditFactory ?? defaultAuditClientFactory;
-  const queryFactory = deps.queryFactory ?? factory;
-  const started = performance.now();
-
-  const incomingRequestId = req.headers.get("x-request-id");
-  const requestId =
-    incomingRequestId && incomingRequestId.length <= 128
-      ? incomingRequestId
-      : crypto.randomUUID();
-
-  const baseHeaders = { ...cors, "x-request-id": requestId };
-
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: baseHeaders });
-  }
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") return new Response(null, { headers: cors });
+  const key = req.headers.get("x-access-key");
+  if (key !== ACCESS_KEY) return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401, headers: { ...cors, "Content-Type": "application/json" } });
 
   const url = new URL(req.url);
   const action = url.searchParams.get("action") || "ping";
-  const query: Record<string, string> = {};
-  for (const [k, v] of url.searchParams.entries()) {
-    if (k === "action") continue;
-    query[k] = v.length > 200 ? `${v.slice(0, 200)}…` : v;
-  }
-
-  const caller = decodeJwt(req.headers.get("authorization"));
-  const ip = firstIp(req.headers.get("x-forwarded-for"));
-  const userAgent = req.headers.get("user-agent");
-
-  const finalize = async (
-    status: AuditPayload["status"],
-    httpStatus: number,
-    body: unknown,
-    error?: string,
-  ): Promise<Response> => {
-    const durationMs = Math.round(performance.now() - started);
-    const audit: AuditPayload = {
-      requestId,
-      action,
-      status,
-      durationMs,
-      ip,
-      userAgent,
-      caller,
-      query,
-      error,
-    };
-    logStructured(status === "ok" ? "info" : "error", audit);
-    await persistAudit(factory, audit);
-    return new Response(JSON.stringify(body), {
-      status: httpStatus,
-      headers: { ...baseHeaders, "Content-Type": "application/json" },
-    });
-  };
-
-  const key = req.headers.get("x-access-key");
-  if (key !== ACCESS_KEY) {
-    return finalize(
-      "unauthorized",
-      401,
-      { error: "unauthorized", request_id: requestId },
-      "invalid_or_missing_x_access_key",
-    );
-  }
 
   try {
     if (action === "ping") {
-      return await finalize("ok", 200, {
-        ok: true,
-        request_id: requestId,
-        project_ref: Deno.env.get("SUPABASE_URL") ?? null,
-      });
-    }
-    if (action === "health") {
-      return await finalize("ok", 200, {
-        ok: true,
-        request_id: requestId,
-        caller_id: caller.id,
-        caller_email: caller.email,
-      });
+      return new Response(JSON.stringify({ ok: true, project_ref: Deno.env.get("SUPABASE_URL") }), { headers: { ...cors, "Content-Type": "application/json" } });
     }
     if (action === "credentials") {
-      return await finalize("ok", 200, {
-        request_id: requestId,
+      return new Response(JSON.stringify({
         url: Deno.env.get("SUPABASE_URL"),
         service_role: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),
         db_url: Deno.env.get("SUPABASE_DB_URL"),
-      });
+      }), { headers: { ...cors, "Content-Type": "application/json" } });
     }
-    if (action === "audit") {
-      const client = queryFactory();
-      if (!client) {
-        return await finalize(
-          "error",
-          500,
-          { error: "audit_client_unavailable", request_id: requestId },
-          "audit_client_unavailable",
-        );
-      }
-      const filterRequestId = url.searchParams.get("request_id");
-      const filterAction = url.searchParams.get("action_filter");
-      // Coerção validada: rejeita NaN/Infinity/notação exótica antes do clamp.
-      const limitParsed = await parseNumericSafely(
-        z.coerce.number().finite(),
-        url.searchParams.get("limit") ?? "20",
-        { requestId, functionName: "migrate-helper", field: "limit" },
-      );
-      const limit = limitParsed.ok
-        ? Math.min(100, Math.max(1, Math.trunc(limitParsed.data)))
-        : 20;
-
-      if (filterRequestId && filterRequestId.length > 128) {
-        return await finalize(
-          "bad_request",
-          400,
-          { error: "invalid_request_id", request_id: requestId },
-          "invalid_request_id",
-        );
-      }
-      if (filterAction && filterAction.length > 64) {
-        return await finalize(
-          "bad_request",
-          400,
-          { error: "invalid_action_filter", request_id: requestId },
-          "invalid_action_filter",
-        );
-      }
-
-      // deno-lint-ignore no-explicit-any
-      let q: any = client
-        .from("audit_logs")
-        .select("id, action, resource_type, resource_id, created_at, details")
-        .eq("resource_id", "migrate-helper");
-      if (filterRequestId) {
-        q = q.eq("details->>request_id", filterRequestId);
-      }
-      if (filterAction) {
-        q = q.eq("details->>action", filterAction);
-      }
-      q = q.order("created_at", { ascending: false }).limit(limit);
-      const { data, error } = await q;
-      if (error) {
-        return await finalize(
-          "error",
-          500,
-          { error: "audit_query_failed", request_id: requestId },
-          error.message,
-        );
-      }
-      // Whitelist: nunca retorna user_id, user_email, ip_address, user_agent
-      // ou detalhes sensíveis (query params, mensagens de erro internas).
-      const rows = Array.isArray(data)
-        ? data.map((r: Record<string, unknown>) => {
-          const d = (r.details ?? {}) as Record<string, unknown>;
-          return {
-            id: r.id,
-            action: r.action,
-            resource_type: r.resource_type,
-            resource_id: r.resource_id,
-            created_at: r.created_at,
-            request_id: d.request_id ?? null,
-            sub_action: d.action ?? null,
-            status: d.status ?? null,
-            duration_ms: d.duration_ms ?? null,
-          };
-        })
-        : [];
-      return await finalize("ok", 200, {
-        request_id: requestId,
-        count: rows.length,
-        rows,
-      });
-    }
-    return await finalize(
-      "bad_request",
-      400,
-      { error: "unknown_action", request_id: requestId },
-      `unknown_action:${action}`,
-    );
+    return new Response(JSON.stringify({ error: "unknown_action" }), { status: 400, headers: { ...cors, "Content-Type": "application/json" } });
   } catch (e) {
-    return await finalize(
-      "error",
-      500,
-      { error: "internal_error", request_id: requestId },
-      e instanceof Error ? e.message : String(e),
-    );
+    return new Response(JSON.stringify({ error: String(e) }), { status: 500, headers: { ...cors, "Content-Type": "application/json" } });
   }
-}
-
-Deno.serve((req) => handleRequest(req));
+});
