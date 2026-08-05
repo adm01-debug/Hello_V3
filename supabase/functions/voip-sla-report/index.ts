@@ -2,7 +2,7 @@
 // Agrega métricas de qualidade VoIP (call_quality_metrics) e retorna SLA, MOS médio,
 // p95 de jitter/RTT por período (day/week/month). JWT obrigatório, CORS centralizado,
 // validação Zod-like via _shared/validate, tracing via x-request-id.
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, string as vstring, oneOf } from '../_shared/validate.ts';
 

@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useForecastVolume } from '@/hooks/useForecastVolume';
 import { TrendingUp, Clock, Users } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Fragment } from 'react';
 
 const DAYS_PT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
@@ -51,7 +52,7 @@ export const VolumeForecastCard = () => {
               <div key={h} className="text-center text-muted-foreground">{h}</div>
             ))}
             {DAYS_PT.map((day, dow) => (
-              <>
+              <Fragment key={dow}>
                 <div key={`d-${dow}`} className="text-muted-foreground py-1">{day}</div>
                 {Array.from({ length: 24 }).map((_, h) => {
                   const slot = forecast.find(f => f.day_of_week === dow && f.hour === h);
@@ -65,7 +66,7 @@ export const VolumeForecastCard = () => {
                     />
                   );
                 })}
-              </>
+              </Fragment>
             ))}
           </div>
         </div>

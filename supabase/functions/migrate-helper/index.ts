@@ -5,7 +5,7 @@
 const ACCESS_KEY = "9f01341c103399c63553cef43e01cb0c3c19e91183e7f2df";
 const cors = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-access-key",
+  "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-access-key, x-request-id, x-correlation-id, x-trace-id, x-trace-operation",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
 

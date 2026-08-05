@@ -1,6 +1,4 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { traceHeaders } from '@/lib/tracing';
 import { logger } from '@/lib/logger';
 
 const log = logger.create('NetworkMonitor');
@@ -79,13 +77,16 @@ export function useNetworkMonitor(enabled = true) {
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), PING_TIMEOUT_MS);
-      const { error } = await supabase.functions.invoke('health-check', {
-        method: 'GET',
-        headers: traceHeaders(),
+      // Ping the static asset origin (same host as the SPA) — measures real user
+      // network RTT without depending on Edge Function cold-start latency.
+      // cache: 'no-store' forces a real request every time.
+      await fetch(window.location.origin + '/favicon.ico', {
+        method: 'HEAD',
+        cache: 'no-store',
+        signal: controller.signal,
       });
       clearTimeout(timeout);
       const latency = Math.round(performance.now() - start);
-      if (error) throw error;
       failuresRef.current = 0;
       setInfo(prev => ({
         ...prev,

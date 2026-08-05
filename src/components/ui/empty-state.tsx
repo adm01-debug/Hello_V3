@@ -87,6 +87,7 @@ const presetIcons: Record<string, LucideIcon> = {
   calendar: Calendar,
   notifications: Bell,
   analytics: BarChart3,
+  chart: BarChart3,
   settings: Settings,
   unknown: FileQuestion,
 };

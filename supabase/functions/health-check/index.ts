@@ -1,8 +1,9 @@
 // Health check consolidado — endpoint público retornando status dos componentes
-import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
+import { buildCorsHeaders } from '../_shared/cors.ts';
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 Deno.serve(async (req) => {
+  const corsHeaders = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
@@ -20,7 +21,7 @@ Deno.serve(async (req) => {
         .gte('checked_at', since),
       supabase
         .from('webhook_flush_metrics')
-        .select('sent, failed, latency_ms_avg')
+        .select('sent, failed, duration_ms')
         .gte('created_at', since),
     ]);
 
@@ -36,7 +37,7 @@ Deno.serve(async (req) => {
     const webhookErrorRate = webhookSent + webhookFailed > 0
       ? (webhookFailed / (webhookSent + webhookFailed)) * 100
       : 0;
-    const webhookP95Latency = percentile(webhooks.map((w) => w.latency_ms_avg ?? 0), 0.95);
+    const webhookP95Latency = percentile(webhooks.map((w) => w.duration_ms ?? 0), 0.95);
 
     const components = {
       trunks: {

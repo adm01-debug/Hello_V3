@@ -2,7 +2,7 @@
 // Agrega call_quality_metrics por (dow, hour) nos últimos N dias.
 // Retorna matriz 7x24 com {mos_avg, count, jitter_p95}.
 // JWT obrigatório, CORS centralizado, validação numérica.
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, number } from '../_shared/validate.ts';
 

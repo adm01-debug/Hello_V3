@@ -72,7 +72,7 @@ export function useSessionManager() {
 
       const { data, error } = await supabase
         .from('active_sessions')
-        .insert({
+        .upsert({
           user_id: user.id,
           session_token: session.access_token.substring(0, 32),
           user_agent: navigator.userAgent,
@@ -81,7 +81,7 @@ export function useSessionManager() {
           location: { city: ipInfo.city, country: ipInfo.country, countryCode: ipInfo.countryCode },
           expires_at: expiresAt.toISOString(),
           is_active: true,
-        })
+        }, { onConflict: 'session_token' })
         .select()
         .single();
 

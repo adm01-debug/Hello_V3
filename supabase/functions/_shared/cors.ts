@@ -1,14 +1,17 @@
 // Centralized CORS configuration for all Edge Functions
 // Restrict to known origins in production; fallback to first allowed origin
 const ALLOWED_ORIGINS = [
+  'http://localhost:8086',
+  'http://localhost:8081',
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://localhost:8080',
   'https://id-preview--e326811c-e59a-4850-bf9e-cfc9d6748662.lovable.app',
   'https://lovable.dev',
-  'http://localhost:8080',
-  'http://localhost:5173',
 ];
 
 const ALLOWED_HEADERS =
-  'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version';
+  'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version, x-request-id, x-correlation-id, x-trace-id, x-trace-operation';
 
 export function getCorsOrigin(req?: Request): string {
   if (!req) return ALLOWED_ORIGINS[0];

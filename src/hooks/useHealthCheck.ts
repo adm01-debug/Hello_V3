@@ -77,19 +77,22 @@ export function useHealthCheck(): HealthCheckResult {
         if (error) throw error;
       }),
       checkService('Realtime', async () => {
-        // Simple connectivity check
         const channel = supabase.channel('health-check-probe');
-        await new Promise<void>((resolve, reject) => {
-          const timeout = setTimeout(() => {
-            supabase.removeChannel(channel);
-            reject(new Error('Timeout'));
-          }, 5000);
-          channel.subscribe((status) => {
-            clearTimeout(timeout);
-            supabase.removeChannel(channel);
-            if (status === 'SUBSCRIBED') resolve();
-            else reject(new Error(`Status: ${status}`));
-          });
+        let settled = false;
+        const settle = (cb: () => void) => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          supabase.removeChannel(channel);
+          cb();
+        };
+        const timer = setTimeout(() => settle(() => { throw new Error('Timeout'); }), 5000);
+        channel.subscribe((status, err) => {
+          if (settled) return;
+          if (status === 'SUBSCRIBED') settle(() => {});
+          else if (status === 'CHANNEL_ERROR' || status === 'CLOSED' || status === 'TIMED_OUT' || err) {
+            settle(() => { throw new Error(`Status: ${status}`); });
+          }
         });
       }),
     ]);
