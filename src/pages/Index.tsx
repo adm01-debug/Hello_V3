@@ -1,0 +1,194 @@
+import { Phone, Clock, CheckCircle, Users, Zap, LayoutDashboard, RefreshCw, Settings2, RotateCcw, Save } from 'lucide-react';
+import { cn, formatDuration } from '@/lib/utils';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+import { StatsCard } from '@/components/dashboard/StatsCard';
+import { CallVolumeChart } from '@/components/dashboard/CallVolumeChart';
+import { RecentCalls } from '@/components/dashboard/RecentCalls';
+import { AgentsList } from '@/components/dashboard/AgentsList';
+import { QueueStatus } from '@/components/dashboard/QueueStatus';
+import { ActiveCallsRealtime } from '@/components/dashboard/ActiveCallsRealtime';
+import { HoldTrendChart } from '@/components/dashboard/HoldTrendChart';
+import { SupervisorPanel } from '@/components/supervisor/SupervisorPanel';
+import { WhisperNotification } from '@/components/agent/WhisperNotification';
+import { BargeInNotification } from '@/components/agent/BargeInNotification';
+import { ScheduledCallbacksList } from '@/components/callbacks/ScheduledCallbacksList';
+import { SectionBoundary } from '@/components/error-boundary/ErrorBoundary';
+import { useDashboardStats } from '@/hooks/useDashboardData';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { useDashboardLayout, WidgetId } from '@/hooks/useDashboardLayout';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from '@dnd-kit/sortable';
+import { SortableWidget } from '@/components/dashboard/SortableWidget';
+import { WidgetLibrary } from '@/components/dashboard/WidgetLibrary';
+import { PerformanceNarrative } from '@/components/dashboard/PerformanceNarrative';
+import { Skeleton } from '@/components/ui/skeleton';
+import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
+import { usePageTitle } from '@/hooks/usePageTitle';
+
+import { safeToLocaleTimeString } from "@/lib/safe-date";
+const Index = () => {
+  usePageTitle('Dashboard');
+  const queryClient = useQueryClient();
+  const { data: stats, isLoading, isFetching: isFetchingStats, dataUpdatedAt } = useDashboardStats();
+  const { layout, isEditing, setIsEditing, saveLayout, resetLayout, toggleWidget } = useDashboardLayout();
+  const { profile } = useAuthContext();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = layout.findIndex((w) => w.id === active.id);
+      const newIndex = layout.findIndex((w) => w.id === over.id);
+      saveLayout(arrayMove(layout, oldIndex, newIndex));
+    }
+  };
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      await Promise.all(
+        ['dashboard-stats', 'agents-list', 'recent-calls', 'call-volume', 'queue-stats'].map((key) =>
+          queryClient.invalidateQueries({ queryKey: [key] })
+        )
+      );
+      toast.success('Dashboard atualizado com sucesso');
+    } catch (error) {
+      toast.error('Erro ao atualizar o dashboard');
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  return (
+    <main className="space-y-6 relative stagger-section" aria-label="Dashboard principal">
+      {/* Ambient neon mesh background */}
+      <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-40" aria-hidden="true" />
+
+      <NeonPageHeader
+        title="Dashboard"
+        description="Visão geral do seu centro de atendimento"
+        icon={<LayoutDashboard className="h-5 w-5" />}
+        badge={
+          <div className="hidden sm:flex items-center gap-4">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full glass-neon" aria-label="Status do sistema: ativo">
+              <Zap className="h-3.5 w-3.5 text-primary animate-glow-pulse" aria-hidden="true" />
+              <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Ativo</span>
+            </div>
+            {dataUpdatedAt > 0 && (
+              <div className="flex items-center gap-2 text-muted-foreground/60">
+                <Clock className="h-3 w-3" />
+                <span className="text-[10px] font-medium">Sincronizado {safeToLocaleTimeString(dataUpdatedAt, 'pt-BR')}</span>
+              </div>
+            )}
+          </div>
+        }
+        actions={
+          <div className="flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-2 mr-2 border-r border-border/30 pr-2">
+              <WidgetLibrary layout={layout} toggleWidget={toggleWidget} />
+            </div>
+            <Button variant={isEditing ? 'premium' : 'glass'} size="sm" onClick={() => setIsEditing(!isEditing)} className="gap-2 shadow-neon-glow">
+              {isEditing ? <Save className="h-4 w-4" /> : <Settings2 className="h-4 w-4" />}
+              {isEditing ? 'Salvar Layout' : 'Customizar'}
+            </Button>
+            {isEditing && (
+              <Button variant="ghost" size="sm" onClick={resetLayout} className="gap-2">
+                <RotateCcw className="h-4 w-4" />
+                Resetar
+              </Button>
+            )}
+            <Button variant="glass" size="sm" onClick={handleRefresh} disabled={isRefreshing || isFetchingStats} className="gap-2">
+              <RefreshCw className={`h-4 w-4 ${isRefreshing || isFetchingStats ? 'animate-spin' : ''}`} />
+              Sincronizar
+            </Button>
+          </div>
+        }
+      />
+
+      <PerformanceNarrative />
+
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={layout.filter((w) => w.visible).map((w) => w.id)} strategy={rectSortingStrategy}>
+          <div className="grid gap-6">
+            {layout.filter((w) => w.visible).map((widget) => (
+              <SortableWidget key={widget.id} id={widget.id} isEditing={isEditing} onRemove={() => toggleWidget(widget.id as WidgetId)}>
+                {widget.id === 'stats' && (
+                  <SectionBoundary section="Estatísticas">
+                    <section className="relative grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" aria-label="Métricas principais">
+                      {isLoading && !stats ? (
+                        [1, 2, 3, 4].map((i) => <Skeleton key={i} className="h-[130px] rounded-xl" />)
+                      ) : stats ? (
+                        <>
+                          <StatsCard title="Chamadas Hoje" value={stats.totalCallsToday} change={stats.totalCallsChange} changeLabel="vs ontem" icon={<Phone className="h-5 w-5" />} glowColor="primary" className={isEditing ? 'cursor-grab' : ''} />
+                          <StatsCard title="Duração Média" value={formatDuration(stats.avgCallDuration)} change={stats.durationChange} changeLabel="vs ontem" icon={<Clock className="h-5 w-5" />} glowColor="info" className={isEditing ? 'cursor-grab' : ''} />
+                          <StatsCard title="Taxa Atendimento" value={`${stats.answeredRate}%`} change={stats.rateChange} changeLabel="vs ontem" icon={<CheckCircle className="h-5 w-5" />} glowColor={stats.answeredRate < 80 ? 'destructive' : 'success'} className={cn(isEditing ? 'cursor-grab' : '', stats.answeredRate < 80 && 'animate-pulse border-destructive/50 shadow-[0_0_15px_hsl(var(--destructive)/0.2)]')} />
+                          <StatsCard title="Agentes Ativos" value={`${stats.activeAgents}/${stats.totalAgents}`} icon={<Users className="h-5 w-5" />} glowColor={stats.activeAgents < stats.totalAgents / 2 ? 'warning' : 'primary'} className={isEditing ? 'cursor-grab' : ''} />
+                        </>
+                      ) : null}
+                    </section>
+                  </SectionBoundary>
+                )}
+
+                {widget.id === 'active-calls' && (
+                  <SectionBoundary section="Chamadas Ativas">
+                    <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Chamadas ativas e tendência de espera">
+                      <ActiveCallsRealtime />
+                      <HoldTrendChart />
+                    </section>
+                  </SectionBoundary>
+                )}
+
+                {widget.id === 'call-volume' && (
+                  <SectionBoundary section="Volume e Fila">
+                    <section className="relative grid gap-4 lg:grid-cols-3" aria-label="Volume de chamadas e fila de atendimento">
+                      <div className="lg:col-span-2">
+                        <CallVolumeChart />
+                      </div>
+                      <QueueStatus />
+                    </section>
+                  </SectionBoundary>
+                )}
+
+                {widget.id === 'callbacks' && (
+                  <SectionBoundary section="Callbacks e Supervisão">
+                    <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Callbacks agendados e painel do supervisor">
+                      <ScheduledCallbacksList />
+                      <SupervisorPanel />
+                    </section>
+                  </SectionBoundary>
+                )}
+
+                {widget.id === 'recent-calls' && (
+                  <SectionBoundary section="Chamadas Recentes">
+                    <section className="relative grid gap-4 lg:grid-cols-2" aria-label="Chamadas recentes e lista de agentes">
+                      <RecentCalls />
+                      <AgentsList />
+                    </section>
+                  </SectionBoundary>
+                )}
+              </SortableWidget>
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
+
+      {/* Agent Notifications */}
+      {profile?.full_name && (
+        <>
+          <WhisperNotification agentName={profile.full_name} />
+          <BargeInNotification agentName={profile.full_name} />
+        </>
+      )}
+    </main>
+  );
+};
+
+export default Index;

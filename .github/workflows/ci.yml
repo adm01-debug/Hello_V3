@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Lint • Type-check • Test • Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Guard • parseInt/parseFloat proibidos fora de safe-number.ts
+        run: node scripts/codemod-safe-number.mjs --check
+
+      - name: Guard • Edge Functions com coerção numérica insegura
+        run: node scripts/guard-edge-numeric.mjs --check
+
+      - name: Lint
+        run: bun run lint
+        continue-on-error: false
+
+      - name: Type-check
+        run: bun run type-check
+
+      - name: Unit tests (Vitest)
+        run: bunx vitest run --reporter=default --coverage
+        env:
+          CI: true
+
+      - name: E2E tests (Playwright)
+        run: |
+          bunx playwright install chromium --with-deps
+          bunx playwright test
+        env:
+          CI: true
+
+      - name: Edge Function Tests (Deno)
+        run: |
+          curl -fsSL https://deno.land/install.sh | sh
+          export DENO_INSTALL="$HOME/.deno"
+          export PATH="$DENO_INSTALL/bin:$PATH"
+          deno test -A supabase/functions/
+
+
+      - name: Build
+        run: bun run build
+
+      - name: Upload build artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ github.sha }}
+          path: dist/
+          retention-days: 7
+
+  security:
+    name: Security audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Audit dependencies
+        run: bun audit || true

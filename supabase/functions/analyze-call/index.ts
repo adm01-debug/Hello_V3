@@ -1,0 +1,146 @@
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { buildCorsHeaders } from "../_shared/cors.ts";
+import { validateBody, createErrorResponse } from "../_shared/validator.ts";
+import { AnalyzeCallSchema } from "./schema.ts";
+import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import { trackMetric } from "../_shared/observability.ts";
+import { verifyWebhookSignature } from "../_shared/hmac.ts";
+
+interface AnalysisResult {
+  summary: string;
+  sentiment: 'positive' | 'neutral' | 'negative';
+  sentimentScore: number;
+  keyTopics: string[];
+  actionItems: string[];
+  customerSatisfaction: number;
+  agentPerformance: { clarity: number; empathy: number; resolution: number };
+}
+
+serve(async (req) => {
+  const cors = buildCorsHeaders(req);
+  if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
+
+  const url = new URL(req.url);
+  const path = url.pathname.replace(/\/analyze-call\/?/, '');
+  const version = path.startsWith('v2') ? 'v2' : 'v1';
+  const isWebhook = url.searchParams.get('webhook') === 'true';
+
+  try {
+    // Webhook Security (HMAC)
+    if (isWebhook) {
+      const isValid = await verifyWebhookSignature(req, 'analyze-call-webhook', 'x-signature');
+      if (!isValid) {
+        await trackMetric('webhook_unauthorized_access', 1, { endpoint: 'analyze-call' });
+        return createErrorResponse('Assinatura inválida', 'UNAUTHORIZED_WEBHOOK', undefined, 401, cors);
+      }
+    }
+
+    // Auth (Only for non-webhook calls)
+    let userId = 'system';
+    if (!isWebhook) {
+      const authHeader = req.headers.get('Authorization');
+      if (!authHeader) return createErrorResponse('Não autorizado', 'UNAUTHORIZED', undefined, 401, cors);
+
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
+        global: { headers: { Authorization: authHeader } }
+      });
+
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      if (authError || !user) return createErrorResponse('Não autorizado', 'UNAUTHORIZED', undefined, 401, cors);
+      userId = user.id;
+    }
+
+    // Rate limiting
+    const rl = await checkRateLimitDB(getClientIp(req), `analyze-call-${version}`, userId);
+    if (!rl.allowed) {
+      await trackMetric('rate_limit_exceeded', 1, { userId, endpoint: `analyze-call/${version}` });
+      return createErrorResponse('Limite de requisições excedido', 'RATE_LIMIT_EXCEEDED', undefined, 429, {
+        ...cors, 'Retry-After': String(rl.retryAfter ?? 60)
+      });
+    }
+
+    // Input validation with auditing for 422 errors
+    const validation = await validateBody(req, AnalyzeCallSchema, cors, {
+      endpoint: `analyze-call/${version}`,
+      userId: userId,
+      audit: true
+    });
+    
+    if (validation.errorResponse) {
+      await trackMetric('validation_error_422', 1, { endpoint: `analyze-call/${version}` });
+      return validation.errorResponse;
+    }
+    const { transcript, callInfo } = validation.data!;
+
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    if (!LOVABLE_API_KEY) return createErrorResponse('Serviço indisponível', 'SERVICE_UNAVAILABLE', undefined, 503, cors);
+
+    // V2 Logic
+    const model = version === 'v2' ? 'google/gemini-2.0-flash' : 'google/gemini-1.5-flash';
+    
+    const systemPrompt = `Você é um especialista em análise de chamadas de call center.
+Analise a transcrição da chamada e forneça insights detalhados.
+${version === 'v2' ? 'Inclua uma análise mais profunda do tom de voz e sugestões proativas.' : ''}
+
+Responda APENAS com um JSON válido no seguinte formato:
+{
+  "summary": "Resumo conciso da chamada em 2-3 frases",
+  "sentiment": "positive" | "neutral" | "negative",
+  "sentimentScore": número de 0 a 100,
+  "keyTopics": ["tópico1", "tópico2"],
+  "actionItems": ["ação necessária 1"],
+  "customerSatisfaction": número de 0 a 100,
+  "agentPerformance": { "clarity": 0-100, "empathy": 0-100, "resolution": 0-100 }
+}`;
+
+    const userPrompt = `Informações da chamada:
+${callInfo ? `- Contato: ${String(callInfo.contactName || '').slice(0, 100)}
+- Telefone: ${String(callInfo.phone || '').slice(0, 20)}
+- Duração: ${String(callInfo.duration || '').slice(0, 20)}
+- Tipo: ${String(callInfo.type || '').slice(0, 50)}` : 'Não disponível'}
+
+Transcrição:
+${transcript.slice(0, 10000)}`;
+
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${LOVABLE_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model,
+        messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }],
+      }),
+    });
+
+    if (!response.ok) {
+      await trackMetric('ai_service_error', 1, { status: String(response.status) });
+      return createErrorResponse('Serviço indisponível', 'AI_SERVICE_UNAVAILABLE', undefined, 503, cors);
+    }
+
+    const aiResponse = await response.json();
+    const content = aiResponse.choices?.[0]?.message?.content;
+
+    let analysis: AnalysisResult;
+    try {
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      analysis = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
+      if (!analysis) throw new Error('Invalid AI format');
+    } catch {
+      analysis = {
+        summary: 'Não foi possível analisar a chamada.',
+        sentiment: 'neutral', sentimentScore: 50, keyTopics: [], actionItems: [],
+        customerSatisfaction: 50, agentPerformance: { clarity: 50, empathy: 50, resolution: 50 }
+      };
+    }
+
+    return new Response(JSON.stringify({ ...analysis, version }), { 
+      headers: { ...cors, 'Content-Type': 'application/json' } 
+    });
+  } catch (error) {
+    console.error('analyze-call error:', error);
+    return createErrorResponse('Erro interno', 'INTERNAL_ERROR', undefined, 500, cors);
+  }
+});
+
+

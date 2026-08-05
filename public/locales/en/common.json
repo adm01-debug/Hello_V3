@@ -1,0 +1,16 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "calls": "Calls",
+    "contacts": "Contacts",
+    "settings": "Settings"
+  }
+}

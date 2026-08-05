@@ -1,0 +1,10 @@
+{
+  "locales": ["en", "pt-BR", "es"],
+  "defaultLocale": "en",
+  "pages": {
+    "*": ["common", "navigation"],
+    "/dashboard": ["dashboard"],
+    "/calls": ["calls"],
+    "/contacts": ["contacts"]
+  }
+}

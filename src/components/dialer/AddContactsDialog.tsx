@@ -1,0 +1,323 @@
+import { useState, useMemo } from 'react';
+import { 
+  Users, 
+  Plus,
+  Loader2,
+  Upload,
+  UserPlus,
+  Search
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { usePredictiveDialer, AddToQueueInput } from '@/hooks/usePredictiveDialer';
+import { useContacts } from '@/hooks/useContacts';
+import { VirtualList } from '@/components/ui/VirtualList';
+import { Checkbox } from '@/components/ui/checkbox';
+
+interface AddContactsDialogProps {
+  campaignId: string;
+}
+
+export function AddContactsDialog({ campaignId }: AddContactsDialogProps) {
+  const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const { addToQueue } = usePredictiveDialer();
+  const { contacts } = useContacts();
+
+  const [selectedContacts, setSelectedContacts] = useState<Set<string>>(new Set());
+  const [manualEntry, setManualEntry] = useState({
+    name: '',
+    phone: ''
+  });
+  const [bulkNumbers, setBulkNumbers] = useState('');
+
+  const contactsWithPhone = useMemo(() => {
+    let filtered = contacts.filter(c => c.phone);
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(c => 
+        c.name.toLowerCase().includes(q) || 
+        c.phone?.includes(q)
+      );
+    }
+    return filtered;
+  }, [contacts, searchQuery]);
+
+  const handleAddManual = async () => {
+    if (!manualEntry.phone) return;
+
+    setIsSubmitting(true);
+    
+    const items: AddToQueueInput[] = [{
+      campaign_id: campaignId,
+      phone: manualEntry.phone,
+      name: manualEntry.name || undefined
+    }];
+
+    await addToQueue(items);
+    setIsSubmitting(false);
+    setManualEntry({ name: '', phone: '' });
+  };
+
+  const handleAddFromContacts = async () => {
+    if (selectedContacts.size === 0) return;
+
+    setIsSubmitting(true);
+    
+    const items: AddToQueueInput[] = Array.from(selectedContacts).map(contactId => {
+      const contact = contacts.find(c => c.id === contactId);
+      return {
+        campaign_id: campaignId,
+        phone: contact?.phone || '',
+        name: contact?.name,
+        contact_id: contactId
+      };
+    }).filter(item => item.phone);
+
+    await addToQueue(items);
+    setIsSubmitting(false);
+    setSelectedContacts(new Set());
+    setOpen(false);
+  };
+
+  const handleAddBulk = async () => {
+    if (!bulkNumbers.trim()) return;
+
+    setIsSubmitting(true);
+
+    const lines = bulkNumbers.split('\n').filter(line => line.trim());
+    const items: AddToQueueInput[] = lines.map(line => {
+      const parts = line.split(',').map(p => p.trim());
+      return {
+        campaign_id: campaignId,
+        phone: parts[0],
+        name: parts[1] || undefined
+      };
+    }).filter(item => item.phone);
+
+    if (items.length > 0) {
+      await addToQueue(items);
+      setBulkNumbers('');
+      setOpen(false);
+    }
+
+    setIsSubmitting(false);
+  };
+
+  const toggleContact = (contactId: string) => {
+    const newSet = new Set(selectedContacts);
+    if (newSet.has(contactId)) {
+      newSet.delete(contactId);
+    } else {
+      newSet.add(contactId);
+    }
+    setSelectedContacts(newSet);
+  };
+
+  const selectAllContacts = () => {
+    if (selectedContacts.size === contactsWithPhone.length) {
+      setSelectedContacts(new Set());
+    } else {
+      setSelectedContacts(new Set(contactsWithPhone.map(c => c.id)));
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="w-full gap-2">
+          <UserPlus className="h-4 w-4" />
+          Adicionar Contatos
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <Users className="h-5 w-5 text-primary" />
+            Adicionar Contatos à Fila
+          </DialogTitle>
+          <DialogDescription>
+            Adicione contatos para a campanha de discagem
+          </DialogDescription>
+        </DialogHeader>
+
+        <Tabs defaultValue="contacts">
+          <TabsList className="w-full grid grid-cols-3">
+            <TabsTrigger value="contacts">Contatos</TabsTrigger>
+            <TabsTrigger value="manual">Manual</TabsTrigger>
+            <TabsTrigger value="bulk">Em Massa</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="contacts" className="space-y-4 mt-4">
+            <div className="space-y-4">
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar por nome ou telefone..."
+                  className="pl-9"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+
+              <div className="flex items-center justify-between">
+                <Label className="text-xs text-muted-foreground">
+                  {contactsWithPhone.length} contatos encontrados
+                </Label>
+                <Button 
+                  type="button" 
+                  variant="ghost" 
+                  size="sm"
+                  className="h-8 text-xs"
+                  onClick={selectAllContacts}
+                >
+                  {selectedContacts.size === contactsWithPhone.length ? 'Desmarcar Todos' : 'Selecionar Todos'}
+                </Button>
+              </div>
+
+              {contactsWithPhone.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12 border rounded-lg bg-muted/30">
+                  <Users className="h-8 w-8 mb-2 opacity-30" />
+                  <p className="text-sm text-muted-foreground">Nenhum contato encontrado</p>
+                </div>
+              ) : (
+                <VirtualList
+                  items={contactsWithPhone}
+                  estimateSize={56}
+                  height="250px"
+                  className="border rounded-lg p-1"
+                  keyExtractor={(c) => c.id}
+                  renderItem={(contact) => (
+                    <div 
+                      className="flex items-center gap-3 p-2 rounded-md hover:bg-accent cursor-pointer transition-colors"
+                      onClick={() => toggleContact(contact.id)}
+                    >
+                      <Checkbox 
+                        checked={selectedContacts.has(contact.id)}
+                        onCheckedChange={() => toggleContact(contact.id)}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm truncate">{contact.name}</p>
+                        <p className="text-[10px] text-muted-foreground font-mono">{contact.phone}</p>
+                      </div>
+                    </div>
+                  )}
+                />
+              )}
+            </div>
+
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                Cancelar
+              </Button>
+              <Button 
+                onClick={handleAddFromContacts}
+                disabled={isSubmitting || selectedContacts.size === 0}
+                className="gap-2"
+              >
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Plus className="h-4 w-4" />
+                )}
+                Adicionar {selectedContacts.size} Contato(s)
+              </Button>
+            </DialogFooter>
+          </TabsContent>
+
+          <TabsContent value="manual" className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label htmlFor="manual_name">Nome (opcional)</Label>
+              <Input
+                id="manual_name"
+                value={manualEntry.name}
+                onChange={(e) => setManualEntry(prev => ({ ...prev, name: e.target.value }))}
+                placeholder="Nome do contato"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="manual_phone">Telefone</Label>
+              <Input
+                id="manual_phone"
+                value={manualEntry.phone}
+                onChange={(e) => setManualEntry(prev => ({ ...prev, phone: e.target.value }))}
+                placeholder="+55 11 99999-9999"
+              />
+            </div>
+
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                Cancelar
+              </Button>
+              <Button 
+                onClick={handleAddManual}
+                disabled={isSubmitting || !manualEntry.phone}
+                className="gap-2"
+              >
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Plus className="h-4 w-4" />
+                )}
+                Adicionar
+              </Button>
+            </DialogFooter>
+          </TabsContent>
+
+          <TabsContent value="bulk" className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label htmlFor="bulk_numbers" className="flex items-center gap-1">
+                <Upload className="h-3 w-3" />
+                Lista de Números
+              </Label>
+              <Textarea
+                id="bulk_numbers"
+                value={bulkNumbers}
+                onChange={(e) => setBulkNumbers(e.target.value)}
+                placeholder="Um número por linha. Formato: telefone, nome (opcional)&#10;&#10;Exemplo:&#10;11999998888, João Silva&#10;11888887777, Maria Santos&#10;11777776666"
+                rows={8}
+                className="font-mono text-sm"
+              />
+              <p className="text-xs text-muted-foreground">
+                {bulkNumbers.split('\n').filter(l => l.trim()).length} números detectados
+              </p>
+            </div>
+
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                Cancelar
+              </Button>
+              <Button 
+                onClick={handleAddBulk}
+                disabled={isSubmitting || !bulkNumbers.trim()}
+                className="gap-2"
+              >
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Upload className="h-4 w-4" />
+                )}
+                Importar
+              </Button>
+            </DialogFooter>
+          </TabsContent>
+        </Tabs>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
