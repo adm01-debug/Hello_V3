@@ -71,6 +71,20 @@ Medi cada gate localmente, com as dependências instaladas via `npm ci`:
 | `deno test` | Edge Functions | ⚠️ não verificado — Deno indisponível no ambiente de auditoria |
 | `security` | auditoria de dependências | ⚠️ **verde por construção**: `bun audit \|\| true` (`.github/workflows/ci.yml`) |
 
+> **Correção incorporada após a primeira redação deste documento.** A tabela acima mede cada gate *isoladamente*, no meu ambiente. Ela não explica **onde** o CI realmente morre — e a resposta muda o que precisa ser feito.
+>
+> Ao ler os logs da última execução na `main` (run `31532465470`, commit `9160623`), o pipeline **falha no primeiro guard**, muito antes de chegar a lint, type-check ou testes:
+> ```
+> ❌ safe-number codemod: 1 ocorrência(s) em 1 arquivo(s)
+>   • src/components/voice/overlay/usePhaseColors.ts (1 substituição)
+> ##[error]Process completed with exit code 1.
+> ```
+> Reproduzi localmente: `node scripts/codemod-safe-number.mjs --check` sai com código 1 por causa de **uma única linha** — `usePhaseColors.ts:9`, que usa `Number.parseFloat` onde o guard do próprio repositório exige `safeParseFloat`.
+>
+> **Consequência prática:** as 25 falhas de CI não são "a suíte está quebrada". São **uma linha** derrubando o pipeline no primeiro passo, há três semanas — e, por isso, os 4 testes que falham e os 2 erros de lint que medi **nunca chegaram a ser executados no CI**. Eles são problemas reais, mas estavam escondidos atrás deste.
+>
+> **Ressalva honesta:** a execução deste próprio PR (run `31973391673`) falhou em 4 segundos e o GitHub retorna `404` para os logs dos dois jobs, então **não sei** dizer onde ela morreu. Não afirmo que seja a mesma causa.
+
 ### 🔴 R3 — Painéis de saúde e performance com dados fabricados
 | Componente | Onde aparece | O que exibe |
 |---|---|---|
@@ -204,7 +218,7 @@ Esta auditoria foi executada por 16 lotes paralelos. **Relato de lote não foi a
 
 ### Barato e seguro — posso executar sem tocar em produção
 1. **Corrigir `src/pages/TopicDetection.tsx:100`** — mover `usePageTitle` para o topo do componente. Uma linha; fecha o último bloqueador de runtime da Onda 39.
-2. **Corrigir os 4 testes que falham** em `useSessionManager.coverage.test.tsx` e os 2 erros de lint (`usePhaseColors.ts:9`, `voice-preferences.test.ts:125`) — é o que separa o CI de ficar verde pela primeira vez em 3 semanas.
+2. **Destravar o CI — comece por uma linha.** `src/components/voice/overlay/usePhaseColors.ts:9` troca `Number.parseFloat` por `safeParseFloat` de `@/lib/safe-number`. É o que derruba o pipeline no primeiro guard e mantém tudo o mais sem execução. Depois disso, corrigir os 4 testes de `useSessionManager.coverage.test.tsx` e o segundo erro de lint (`voice-preferences.test.ts:125`), que só então passarão a ser exercitados.
 3. **Alinhar a porta do Playwright** (5173 → 8080) e apontar `testDir` para incluir `e2e/`, hoje sem runner.
 4. **Trocar `bun audit || true` por `bun audit`** no job `security`, que hoje é verde por construção.
 5. **Adicionar `.env` ao `.gitignore`** e remover os 17 scripts órfãos que carregam segredos — nenhum é chamado por nada.
