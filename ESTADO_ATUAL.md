@@ -83,7 +83,11 @@ Medi cada gate localmente, com as dependências instaladas via `npm ci`:
 >
 > **Consequência prática:** as 25 falhas de CI não são "a suíte está quebrada". São **uma linha** derrubando o pipeline no primeiro passo, há três semanas — e, por isso, os 4 testes que falham e os 2 erros de lint que medi **nunca chegaram a ser executados no CI**. Eles são problemas reais, mas estavam escondidos atrás deste.
 >
-> **Ressalva honesta:** a execução deste próprio PR (run `31973391673`) falhou em 4 segundos e o GitHub retorna `404` para os logs dos dois jobs, então **não sei** dizer onde ela morreu. Não afirmo que seja a mesma causa.
+> **Segundo modo de falha, distinto do primeiro.** As duas execuções disparadas por este PR (runs `31973391673` e `31973471456`) falharam em segundos, com `404` nos logs de **ambos** os jobs — inclusive o job `Security audit`, cujo único passo é `bun audit || true` e que, por construção, **não pode falhar por conteúdo**.
+>
+> Um job que não pode falhar falhando, sem produzir uma linha de log, é consistente com execuções que **não chegam a rodar** — o caso mais comum sendo limite de gasto/minutos do GitHub Actions em repositório privado, ou aprovação pendente de workflow. **Isto é inferência a partir da assinatura da falha, não fato verificado:** não tenho acesso à página de billing da conta para confirmar.
+>
+> **O que isso significa na prática:** há provavelmente **dois** problemas empilhados. Corrigir `usePhaseColors.ts:9` destrava o guard, mas se as execuções não estiverem começando, o CI seguirá vermelho. Vale checar o billing do Actions antes de investir em correções de código.
 
 ### 🔴 R3 — Painéis de saúde e performance com dados fabricados
 | Componente | Onde aparece | O que exibe |
