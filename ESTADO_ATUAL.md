@@ -120,6 +120,7 @@ Medi cada gate localmente, com as dependências instaladas via `npm ci`:
 ### 🟠 R7 — Bypass de RLS por construção em `search-calls`
 **Evidência:** `supabase/functions/search-calls/index.ts:28-33` cria o cliente com `SUPABASE_SERVICE_ROLE_KEY` e repassa `Authorization: authHeader || ''`. Não há checagem de autenticação nem retorno 401 em lugar algum do arquivo.
 **Efeito:** qualquer chamador que a alcance recebe leitura com papel de serviço sobre transcrições de chamadas — escalonamento horizontal mesmo para o papel mais baixo.
+**Verificado no arquivo inteiro (122 linhas):** não há `getUser()`, não há retorno 401, não há módulo de autenticação em `supabase/functions/_shared/` que ela pudesse importar. Ela desvia do padrão do próprio repositório — `verify-voice/index.ts:24-27` faz `supabase.auth.getUser()` e devolve 401.
 **Ressalva:** `supabase/config.toml` tem **uma única linha** (`project_id`) — nenhum `verify_jwt` está versionado para nenhuma função. Se a exposição é anônima ou apenas autenticada depende de configuração de plataforma que **não está no repositório** → `NAO_VERIFICADO`.
 
 ### 🟠 R8 — Fio de dados quebrado em métricas de espera (hold)
@@ -252,7 +253,12 @@ Esta auditoria foi executada por 16 lotes paralelos. **Relato de lote não foi a
 
 ## 5c. Auto-auditoria — erros encontrados na primeira versão deste documento
 
-Uma segunda passagem foi feita **contra este relatório**, incluindo dois revisores instruídos a refutá-lo. Ela encontrou seis erros meus. Os originais estão preservados acima onde não comprometem a leitura; os números foram corrigidos no corpo do texto.
+Uma segunda passagem foi feita **contra este relatório**, com dois revisores instruídos a assumir que cada afirmação estava errada até a evidência forçar o contrário. Ela encontrou seis erros meus. Os números foram corrigidos no corpo do texto; nada foi apagado sem registro.
+
+**Cobertura da revisão adversarial, declarada:**
+- **Seis afirmações sobre dado fabricado** (botão "Criar Dados", `PerformanceNarrative`, `SystemIntegrityDashboard`, "22 tabelas com RLS", `QueueTrendChart`, `setCallDbSession`) passaram por revisão adversarial completa: **3 confirmadas, 1 confirmada com atenuante de audiência, 2 exageradas. Nenhuma refutada.**
+- **Cinco afirmações de segurança e infraestrutura** (chave `service_role`, `search-calls`, `src/lib/security/`, `ActiveCallBar`, guard do CI) tiveram o revisor interrompido por reinício do ambiente. **Eu mesmo reproduzi as cinco**, em momentos distintos deste trabalho: os 7 scripts com JWT `service_role` decodificado; `src/lib/security/index.ts` sem nenhum importador; `setCall` chamado uma única vez com `null`; o guard `codemod-safe-number --check` saindo com código 1; e `search-calls/index.ts` — 122 linhas, **nenhuma** checagem de autenticação, sem módulo de auth em `_shared`, enquanto outras funções do repositório fazem `supabase.auth.getUser()` e devolvem 401 (`verify-voice/index.ts:24-27`). Este último desvia do padrão estabelecido pelo próprio repositório.
+- **Não passaram por revisão adversarial:** as tabelas de evidência dos 16 lotes em `docs/estado/`. Elas trazem centenas de linhas cuja verificação individual está fora do que consegui fazer; use-as como pistas com endereço, não como fatos verificados duas vezes.
 
 ### C1 — A tabela de contagem estava construída sobre a fonte errada
 **Era:** uma tabela por dimensão com números como "Componentes 283 ✅ / 29 🟨". **Problema:** eu a montei a partir dos **resumos em prosa** que cada lote escreveu sobre si mesmo, e esses resumos **divergem das tabelas de evidência dos próprios lotes**. Exemplos medidos: `F1` resumiu "46 ✅ / 13 🟨 / 7 ⬛" enquanto sua tabela tem 50/13/7; `P2` resumiu "39 ✅ / 26 🟨" e sua tabela tem 47/19; `H3` resumiu 68 ✅ e sua tabela tem 72.
