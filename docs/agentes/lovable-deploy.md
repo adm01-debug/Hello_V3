@@ -10,7 +10,8 @@ Ler quando for confirmar um deploy, mexer em `.lovable/`, CORS, auth OAuth, ou n
 | Plataforma que escreve no repo | **Lovable** (`gpt-engineer-app`) — commita direto na `main` |
 | Projeto Lovable | `e326811c-e59a-4850-bf9e-cfc9d6748662` (derivado da origem de preview em `supabase/functions/_shared/cors.ts:9`) |
 | URL de preview Lovable | `https://id-preview--e326811c-e59a-4850-bf9e-cfc9d6748662.lovable.app` |
-| Projeto Vercel | **existe**: `hello-v3`, `prj_i2sRUaJ5ORrWDPyhzdyZZkiRkDC8`, team `team_QyN41X0q8hrqhW80AwokbFLv` (criado em 2026-09-05) |
+| Projeto Vercel | **existe**: `hello-v3`, `prj_i2sRUaJ5ORrWDPyhzdyZZkiRkDC8`, team `team_QyN41X0q8hrqhW80AwokbFLv` (slug `juca1`, criado em 2026-09-05) |
+| GitHub App do Vercel | **instalado e ativo** — posta os checks `Vercel Preview Comments` e `Vercel Agent Review` em cada PR |
 | `homepage` do repo no GitHub | `https://hello-v3.vercel.app` |
 | Domínio de produção | **NÃO VERIFICADO** — ver abaixo |
 | Framework / build | Vite + React · `bun run build` (`vite build`) · saída `dist/` · dev em **8080** (`vite.config.ts:14`) |
@@ -25,7 +26,12 @@ Ler quando for confirmar um deploy, mexer em `.lovable/`, CORS, auth OAuth, ou n
 | Trilha | Evidência de que existe | O que falta para afirmar que é produção |
 |---|---|---|
 | **Lovable** | O app commita na `main` como `gpt-engineer-app[bot]`; `lovable-tagger` no `vite.config.ts`; a origem de preview está na allowlist de CORS das edges; `approve-password-reset/index.ts:101` monta o `redirectTo` em `.lovable.app` | abrir o preview e confirmar que serve a `main` |
-| **Vercel** | Projeto `hello-v3` aparece em `list_projects` (`prj_i2sRUaJ5ORrWDPyhzdyZZkiRkDC8`, team `team_QyN41X0q8hrqhW80AwokbFLv`) e `hello-v3.vercel.app` é o `homepage` do repo no GitHub | nenhum `vercel.json` no repo; o token Vercel desta sessão **não consegue ler o projeto** (`get_project` → 404, `list_deployments` → 403); nenhum deployment listado |
+| **Vercel** | O **GitHub App do Vercel está instalado e rodando**: os checks `Vercel Preview Comments` e `Vercel Agent Review` apareceram no head de uma PR em 2026-11-08. Projeto `hello-v3` em `list_projects` (`prj_i2sRUaJ5ORrWDPyhzdyZZkiRkDC8`, team `team_QyN41X0q8hrqhW80AwokbFLv` / `juca1`) e `hello-v3.vercel.app` como `homepage` do repo | nenhum `vercel.json` no repo; o token Vercel desta sessão **não consegue ler o projeto** (`get_project` → 404, `list_deployments` → 403), então não há como confirmar se existe deployment de produção |
+
+O App do Vercel **não** é um resíduo inerte: ele reage a cada PR. Trate um merge em `main` como capaz de
+disparar deploy de produção no Vercel, além do que o Lovable fizer. `Vercel Agent Review` hoje devolve
+`Review skipped because usage billing is not enabled for this team` — o review automático do Vercel está
+desligado por billing, não por configuração do repo.
 
 **O que foi tentado e falhou nesta sessão:** os dois hosts (`hello-v3.vercel.app` e o preview
 `.lovable.app`) são **bloqueados pela política de egress do ambiente de nuvem**

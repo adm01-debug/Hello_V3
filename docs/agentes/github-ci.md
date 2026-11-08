@@ -36,7 +36,8 @@ forma estranha.
 | `allow_auto_merge` | **`false`** | idem |
 | `delete_branch_on_merge` | **`false`** — apague a branch à mão depois do merge | idem |
 | Environments | nenhum declarado em `.github/workflows/ci.yml` | leitura do workflow |
-| Workflows | **1** arquivo: `.github/workflows/ci.yml` (85 linhas, 2 jobs) | `ls .github/workflows/` |
+| Workflows | **1** arquivo: `.github/workflows/ci.yml` (2 jobs: `quality`, `security`) | `ls .github/workflows/` |
+| Checks de app externo | **GitHub App do Vercel instalado**: `Vercel Preview Comments` e `Vercel Agent Review` rodam em cada PR (nenhum é required check) | `github_list_check_runs` no head de uma PR |
 
 Fatos do perímetro que importam:
 
@@ -67,12 +68,12 @@ A linha é `src/components/voice/overlay/usePhaseColors.ts:9` — usa `Number.pa
 **Uma linha derruba o pipeline inteiro desde julho** — e por isso os erros de lint e os testes vermelhos
 medidos em `ESTADO_ATUAL.md` nunca chegaram a ser executados no CI.
 
-**Segundo modo de falha, distinto:** as execuções de 2026-08-16 (`31973391673`, `31973471456`) falharam em
-segundos com `404` nos logs de **ambos** os jobs — inclusive o `Security audit`, cujo único passo é
-`bun audit || true` e que por construção não pode falhar por conteúdo. A assinatura é de execução que **não
-chega a rodar** (limite de minutos do Actions em repo privado, ou aprovação de workflow pendente). **Isto é
-inferência, não fato verificado** — exige a página de billing da conta. Consequência prática: corrigir
-`usePhaseColors.ts:9` destrava o guard, mas se as execuções não estiverem começando o CI segue vermelho.
+**Segundo modo de falha, observado em 2026-08-16 e aparentemente resolvido:** as execuções `31973391673` e
+`31973471456` falharam em segundos com `404` nos logs de **ambos** os jobs — inclusive o `Security audit`,
+cujo único passo é `bun audit || true` e que por construção não pode falhar por conteúdo. A assinatura era
+de execução que **não chegava a rodar** (limite de minutos do Actions em repo privado, ou aprovação
+pendente). **Em 2026-11-08 isso não se repetiu:** o push de uma PR disparou o run `42526433947` e os dois
+jobs entraram em execução normalmente. Logo o bloqueio efetivo hoje é só o guard do `usePhaseColors.ts:9`.
 
 ## Gate por gate — o que cada um realmente faz
 
