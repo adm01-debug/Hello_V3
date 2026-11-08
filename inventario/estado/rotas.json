@@ -1,0 +1,5091 @@
+{
+  "format_version": 1,
+  "fonte": "scripts/inventario/gerar-rotas.mjs (le src/routes/publicRoutes.tsx, src/routes/protectedRoutes.tsx, src/pages/ e os imports de cada pagina)",
+  "resumo": {
+    "rotas": 104,
+    "rotas_publicas": 11,
+    "rotas_protegidas": 93,
+    "paginas_orfas": 1,
+    "hooks_distintos": 180,
+    "problemas": 1
+  },
+  "rotas": [
+    {
+      "caminho": "*",
+      "componente": "NotFound",
+      "arquivo": "src/pages/NotFound.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 3,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/",
+      "componente": "PhoneDialer",
+      "arquivo": "src/pages/PhoneDialer.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 54,
+      "hooks": [
+        {
+          "nome": "useAuditLog",
+          "arquivo": "src/hooks/useAuditLog.ts"
+        },
+        {
+          "nome": "useAuth",
+          "arquivo": "src/hooks/useAuth.ts"
+        },
+        {
+          "nome": "useAuthActions",
+          "arquivo": "src/hooks/auth/useAuthActions.ts"
+        },
+        {
+          "nome": "useAuthProfile",
+          "arquivo": "src/hooks/auth/useAuthProfile.ts"
+        },
+        {
+          "nome": "useAuthSession",
+          "arquivo": "src/hooks/auth/useAuthSession.ts"
+        },
+        {
+          "nome": "useAuthState",
+          "arquivo": "src/hooks/auth/useAuthState.ts"
+        },
+        {
+          "nome": "useCallHistory",
+          "arquivo": "src/hooks/useCallHistory.ts"
+        },
+        {
+          "nome": "useCallTimers",
+          "arquivo": "src/hooks/useCallTimers.ts"
+        },
+        {
+          "nome": "useCallTransfer",
+          "arquivo": "src/hooks/useCallTransfer.ts"
+        },
+        {
+          "nome": "useDialerFavorites",
+          "arquivo": "src/hooks/useDialerFavorites.ts"
+        },
+        {
+          "nome": "useMultiChannelCall",
+          "arquivo": "src/hooks/useMultiChannelCall.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "usePersistedTagFilter",
+          "arquivo": "src/hooks/usePersistedTagFilter.ts"
+        },
+        {
+          "nome": "usePhaseColors",
+          "arquivo": "src/components/voice/overlay/usePhaseColors.ts"
+        },
+        {
+          "nome": "useQualityTrendAnalyzer",
+          "arquivo": "src/hooks/useQualityTrendAnalyzer.ts"
+        },
+        {
+          "nome": "useRingtoneSettings",
+          "arquivo": "src/hooks/useRingtoneSettings.ts"
+        },
+        {
+          "nome": "useSipCall",
+          "arquivo": "src/hooks/useSipCall.ts"
+        },
+        {
+          "nome": "useSyncHistory",
+          "arquivo": "src/hooks/useSyncHistory.ts"
+        },
+        {
+          "nome": "useTrunkUsageReporter",
+          "arquivo": "src/hooks/useTrunkUsageReporter.ts"
+        },
+        {
+          "nome": "useVoiceCommand",
+          "arquivo": "src/hooks/useVoiceCommand.ts"
+        },
+        {
+          "nome": "useVoicePreferences",
+          "arquivo": "src/hooks/useVoicePreferences.ts"
+        },
+        {
+          "nome": "useVoipAutoRemediation",
+          "arquivo": "src/hooks/useVoipAutoRemediation.ts"
+        },
+        {
+          "nome": "useVoipQualityMonitor",
+          "arquivo": "src/hooks/useVoipQualityMonitor.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "sip-config",
+        "voice-command",
+        "voice-transcribe"
+      ],
+      "rpcs": [
+        "get_call_history_with_summaries",
+        "log_audit_event",
+        "record_trunk_usage"
+      ],
+      "tabelas": [
+        "call_analyses",
+        "call_quality_metrics",
+        "call_summaries",
+        "call_transcriptions",
+        "dialer_favorites",
+        "hold_events",
+        "user_profiles",
+        "voip_quality_alerts"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/accounts",
+      "componente": "Accounts",
+      "arquivo": "src/pages/Accounts.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 6,
+      "hooks": [
+        {
+          "nome": "useAccounts",
+          "arquivo": "src/hooks/useAccounts.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "compute-account-health",
+        "detect-churn-risk"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "accounts"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/admin/data-export",
+      "componente": "DataExport",
+      "arquivo": "src/pages/admin/DataExport.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "useCreateExport",
+          "arquivo": "src/hooks/useDataLakeExports.ts"
+        },
+        {
+          "nome": "useDataLakeExports",
+          "arquivo": "src/hooks/useDataLakeExports.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [
+        "data-lake-exports"
+      ],
+      "edges": [
+        "export-data-lake"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "data_lake_exports"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/admin/database-health",
+      "componente": "DatabaseHealth",
+      "arquivo": "src/pages/admin/DatabaseHealth.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 10,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [
+        "check_idle_indexes",
+        "get_database_health_snapshot",
+        "get_top_slow_queries",
+        "log_index_drop_copy"
+      ],
+      "tabelas": [
+        "index_drop_audit"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/admin/extensions",
+      "componente": "ExtensionsAdmin",
+      "arquivo": "src/pages/admin/ExtensionsAdmin.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 21,
+      "hooks": [
+        {
+          "nome": "useExtensionAudit",
+          "arquivo": "src/hooks/useExtensionAudit.ts"
+        },
+        {
+          "nome": "useExtensionAuditHistory",
+          "arquivo": "src/hooks/useExtensionAuditHistory.ts"
+        },
+        {
+          "nome": "useExtensionsAdmin",
+          "arquivo": "src/hooks/useExtensionsAdmin.ts"
+        },
+        {
+          "nome": "useExtensionsOverview",
+          "arquivo": "src/hooks/useExtensionsOverview.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "usePageVisibility",
+          "arquivo": "src/hooks/usePageVisibility.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [
+        "log_audit_event"
+      ],
+      "tabelas": [
+        "agent_devices",
+        "agent_trunk_assignments",
+        "agents",
+        "audit_logs",
+        "call_sessions",
+        "user_profiles",
+        "voip_trunks"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/admin/security-alerts",
+      "componente": "SecurityAlerts",
+      "arquivo": "src/pages/admin/SecurityAlerts.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 30,
+      "hooks": [
+        {
+          "nome": "useAlertPresets",
+          "arquivo": "src/hooks/useAlertPresets.ts"
+        },
+        {
+          "nome": "useAlertsExport",
+          "arquivo": "src/hooks/useAlertsExport.ts"
+        },
+        {
+          "nome": "useDebouncedSearchParam",
+          "arquivo": "src/hooks/useDebouncedSearchParam.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useSecurityAlertNotifications",
+          "arquivo": "src/hooks/useSecurityAlertNotifications.ts"
+        },
+        {
+          "nome": "useTestWebhook",
+          "arquivo": "src/hooks/useTestWebhook.ts"
+        },
+        {
+          "nome": "useWebhookConfig",
+          "arquivo": "src/hooks/useWebhookConfig.ts"
+        },
+        {
+          "nome": "useWebhookHistory",
+          "arquivo": "src/hooks/useWebhookHistory.ts"
+        },
+        {
+          "nome": "useWebhookQueue",
+          "arquivo": "src/hooks/useWebhookQueue.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "notifications"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/admin/security-audit",
+      "componente": "SecurityAudit",
+      "arquivo": "src/pages/admin/SecurityDashboard.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "audit_logs"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/admin/slo",
+      "componente": "SloDashboard",
+      "arquivo": "src/pages/admin/SloDashboard.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [],
+      "buckets": [],
+      "edges": [
+        "health-check"
+      ],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/admin/voice-quality",
+      "componente": "VoiceQuality",
+      "arquivo": "src/pages/admin/VoiceQuality.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 1,
+      "hooks": [],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "call_quality_metrics"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/admin/voip-trunks",
+      "componente": "VoipTrunksAdmin",
+      "arquivo": "src/pages/admin/VoipTrunksAdmin.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 15,
+      "hooks": [
+        {
+          "nome": "useDeleteAssignment",
+          "arquivo": "src/hooks/useVoipTrunks.ts"
+        },
+        {
+          "nome": "useDeleteTrunk",
+          "arquivo": "src/hooks/useVoipTrunks.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useRunHealthCheck",
+          "arquivo": "src/hooks/useTrunkHealth.ts"
+        },
+        {
+          "nome": "useSaveAssignment",
+          "arquivo": "src/hooks/useVoipTrunks.ts"
+        },
+        {
+          "nome": "useSaveTrunk",
+          "arquivo": "src/hooks/useVoipTrunks.ts"
+        },
+        {
+          "nome": "useTestTrunk",
+          "arquivo": "src/hooks/useVoipTrunks.ts"
+        },
+        {
+          "nome": "useTrunkAssignments",
+          "arquivo": "src/hooks/useVoipTrunks.ts"
+        },
+        {
+          "nome": "useTrunkHealthHistory",
+          "arquivo": "src/hooks/useTrunkHealth.ts"
+        },
+        {
+          "nome": "useTrunkMetrics",
+          "arquivo": "src/hooks/useTrunkMetrics.ts"
+        },
+        {
+          "nome": "useTrunkRealtimeMetrics",
+          "arquivo": "src/hooks/useTrunkRealtimeMetrics.ts"
+        },
+        {
+          "nome": "useVoipMonitoringSettings",
+          "arquivo": "src/hooks/useVoipMonitoringSettings.ts"
+        },
+        {
+          "nome": "useVoipTrunks",
+          "arquivo": "src/hooks/useVoipTrunks.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "voip-trunks-healthcheck",
+        "voip-trunks-manage"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "agents",
+        "call_sessions",
+        "voip_monitoring_settings",
+        "voip_trunk_health_checks",
+        "voip_trunk_usage_metrics",
+        "voip_trunks"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/admin/webhook-health",
+      "componente": "WebhookHealth",
+      "arquivo": "src/pages/admin/WebhookHealth.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 10,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useWebhookHealthData",
+          "arquivo": "src/hooks/useWebhookHealthData.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "webhook_flush_metrics"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/agent-assist",
+      "componente": "AgentAssist",
+      "arquivo": "src/pages/AgentAssist.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 10,
+      "hooks": [
+        {
+          "nome": "useAgentAssistHistory",
+          "arquivo": "src/hooks/useLiveAssist.ts"
+        },
+        {
+          "nome": "useObjectionLibrary",
+          "arquivo": "src/hooks/useObjectionLibrary.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "analyze-live-utterance"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "live_assist_signals",
+        "objection_library"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/ai",
+      "componente": "AIAssistant",
+      "arquivo": "src/pages/AIAssistant.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "useLiveInsights",
+          "arquivo": "src/components/ai/live-call/useLiveInsights.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "analyze-call"
+      ],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/alert-history",
+      "componente": "AlertHistory",
+      "arquivo": "src/pages/AlertHistory.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "useAlertHistory",
+          "arquivo": "src/hooks/useAlertHistory.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "call_alerts"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/alerts",
+      "componente": "Alerts",
+      "arquivo": "src/pages/Alerts.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 10,
+      "hooks": [
+        {
+          "nome": "useAlerts",
+          "arquivo": "src/hooks/useAlerts.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "check-contact-alerts"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "call_alerts",
+        "call_sessions",
+        "contact_alerts"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/analytics",
+      "componente": "CallAnalytics",
+      "arquivo": "src/pages/CallAnalytics.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 13,
+      "hooks": [
+        {
+          "nome": "useCallAnalytics",
+          "arquivo": "src/hooks/useCallAnalytics.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "call_sessions",
+        "call_summaries"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/audit-logs",
+      "componente": "AuditLogs",
+      "arquivo": "src/pages/AuditLogs.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 4,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "call_control_audit_logs"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/battle-cards",
+      "componente": "BattleCards",
+      "arquivo": "src/pages/BattleCards.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "battle_card_triggers",
+        "battle_cards"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/blf",
+      "componente": "BlfBoard",
+      "arquivo": "src/pages/BlfBoard.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 9,
+      "hooks": [
+        {
+          "nome": "useBlfBoard",
+          "arquivo": "src/hooks/useBlfBoard.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "usePageVisibility",
+          "arquivo": "src/hooks/usePageVisibility.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "agents",
+        "call_sessions",
+        "parked_calls"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/blocked-access-logs",
+      "componente": "BlockedAccessLogs",
+      "arquivo": "src/pages/BlockedAccessLogs.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 6,
+      "hooks": [
+        {
+          "nome": "useBlockedAccessLogs",
+          "arquivo": "src/hooks/useBlockedAccessLogs.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "blocked_access_logs"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/cadences",
+      "componente": "Cadences",
+      "arquivo": "src/pages/Cadences.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 6,
+      "hooks": [
+        {
+          "nome": "useCadences",
+          "arquivo": "src/hooks/useCadences.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "cadence_enrollments",
+        "cadence_steps",
+        "cadences"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/call-flow-designer",
+      "componente": "CallFlowDesigner",
+      "arquivo": "src/pages/CallFlowDesigner.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "call_flows"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/call-history",
+      "componente": "CallHistory",
+      "arquivo": "src/pages/CallHistory.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 21,
+      "hooks": [
+        {
+          "nome": "useAuditLog",
+          "arquivo": "src/hooks/useAuditLog.ts"
+        },
+        {
+          "nome": "useCallHistory",
+          "arquivo": "src/hooks/useCallHistory.ts"
+        },
+        {
+          "nome": "useDebouncedSearchParam",
+          "arquivo": "src/hooks/useDebouncedSearchParam.ts"
+        },
+        {
+          "nome": "useKeyMoments",
+          "arquivo": "src/hooks/useKeyMoments.ts"
+        },
+        {
+          "nome": "useLiveSentiment",
+          "arquivo": "src/hooks/useLiveSentiment.ts"
+        },
+        {
+          "nome": "useMeetingSummary",
+          "arquivo": "src/hooks/useMeetingSummary.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useTalkRatio",
+          "arquivo": "src/hooks/useTalkRatio.ts"
+        }
+      ],
+      "buckets": [
+        "call-recordings"
+      ],
+      "edges": [
+        "analyze-talk-ratio",
+        "charge",
+        "detect-key-moments",
+        "generate-meeting-summary"
+      ],
+      "rpcs": [
+        "get_call_history_with_summaries",
+        "log_audit_event"
+      ],
+      "tabelas": [
+        "call_analyses",
+        "call_key_moments",
+        "call_recordings",
+        "call_summaries",
+        "call_transcriptions",
+        "coaching_timestamps",
+        "live_sentiment_snapshots",
+        "meeting_summaries"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/call-library",
+      "componente": "CallLibrary",
+      "arquivo": "src/pages/CallLibrary.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 9,
+      "hooks": [
+        {
+          "nome": "useCallSearch",
+          "arquivo": "src/hooks/useCallSearch.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "search-calls"
+      ],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/call-park",
+      "componente": "CallPark",
+      "arquivo": "src/pages/CallPark.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 14,
+      "hooks": [
+        {
+          "nome": "useAuth",
+          "arquivo": "src/hooks/useAuth.ts"
+        },
+        {
+          "nome": "useAuthActions",
+          "arquivo": "src/hooks/auth/useAuthActions.ts"
+        },
+        {
+          "nome": "useAuthProfile",
+          "arquivo": "src/hooks/auth/useAuthProfile.ts"
+        },
+        {
+          "nome": "useAuthSession",
+          "arquivo": "src/hooks/auth/useAuthSession.ts"
+        },
+        {
+          "nome": "useAuthState",
+          "arquivo": "src/hooks/auth/useAuthState.ts"
+        },
+        {
+          "nome": "useCallPark",
+          "arquivo": "src/hooks/useCallPark.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [
+        "expire_parked_calls"
+      ],
+      "tabelas": [
+        "call_park_orbits",
+        "parked_calls",
+        "user_profiles"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/call-queues",
+      "componente": "CallQueues",
+      "arquivo": "src/pages/CallQueues.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 17,
+      "hooks": [
+        {
+          "nome": "useAuth",
+          "arquivo": "src/hooks/useAuth.ts"
+        },
+        {
+          "nome": "useAuthActions",
+          "arquivo": "src/hooks/auth/useAuthActions.ts"
+        },
+        {
+          "nome": "useAuthProfile",
+          "arquivo": "src/hooks/auth/useAuthProfile.ts"
+        },
+        {
+          "nome": "useAuthSession",
+          "arquivo": "src/hooks/auth/useAuthSession.ts"
+        },
+        {
+          "nome": "useAuthState",
+          "arquivo": "src/hooks/auth/useAuthState.ts"
+        },
+        {
+          "nome": "useCallQueues",
+          "arquivo": "src/hooks/useCallQueues.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useQueueAudioPrompts",
+          "arquivo": "src/hooks/useQueueAudioPrompts.ts"
+        }
+      ],
+      "buckets": [
+        "queue-audio"
+      ],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "call_queue_members",
+        "call_queues",
+        "queue_audio_prompts",
+        "user_profiles"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/callbacks",
+      "componente": "Callbacks",
+      "arquivo": "src/pages/Callbacks.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useScheduledCallbacks",
+          "arquivo": "src/hooks/useScheduledCallbacks.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "scheduled_callbacks"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/calls",
+      "componente": "Calls",
+      "arquivo": "src/pages/Calls.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 31,
+      "hooks": [
+        {
+          "nome": "useAgentStatus",
+          "arquivo": "src/hooks/useAgentStatus.ts"
+        },
+        {
+          "nome": "useCallRecording",
+          "arquivo": "src/hooks/useCallRecording.ts"
+        },
+        {
+          "nome": "useCallTimers",
+          "arquivo": "src/hooks/useCallTimers.ts"
+        },
+        {
+          "nome": "useCallTransfer",
+          "arquivo": "src/hooks/useCallTransfer.ts"
+        },
+        {
+          "nome": "useConferenceRecording",
+          "arquivo": "src/hooks/useConferenceRecording.ts"
+        },
+        {
+          "nome": "useConversation",
+          "arquivo": "src/lib/elevenlabs-stub.ts"
+        },
+        {
+          "nome": "useHoldReminder",
+          "arquivo": "src/hooks/useHoldReminder.ts"
+        },
+        {
+          "nome": "useMultiChannelCall",
+          "arquivo": "src/hooks/useMultiChannelCall.ts"
+        },
+        {
+          "nome": "useNetworkMonitor",
+          "arquivo": "src/hooks/useNetworkMonitor.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useQualityTrendAnalyzer",
+          "arquivo": "src/hooks/useQualityTrendAnalyzer.ts"
+        },
+        {
+          "nome": "useSipCall",
+          "arquivo": "src/hooks/useSipCall.ts"
+        },
+        {
+          "nome": "useTrunkUsageReporter",
+          "arquivo": "src/hooks/useTrunkUsageReporter.ts"
+        },
+        {
+          "nome": "useVoiceCommand",
+          "arquivo": "src/hooks/useVoiceCommand.ts"
+        },
+        {
+          "nome": "useVoipAutoRemediation",
+          "arquivo": "src/hooks/useVoipAutoRemediation.ts"
+        },
+        {
+          "nome": "useVoipQualityMonitor",
+          "arquivo": "src/hooks/useVoipQualityMonitor.ts"
+        },
+        {
+          "nome": "useWavoipCall",
+          "arquivo": "src/hooks/useWavoipCall.ts"
+        }
+      ],
+      "buckets": [
+        "call-recordings"
+      ],
+      "edges": [
+        "elevenlabs-conversation-token",
+        "sip-config",
+        "voice-command",
+        "voice-transcribe",
+        "wavoip-call"
+      ],
+      "rpcs": [
+        "record_trunk_usage"
+      ],
+      "tabelas": [
+        "agents",
+        "call_quality_metrics",
+        "call_recordings",
+        "hold_events",
+        "voip_quality_alerts"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/coaching",
+      "componente": "Coaching",
+      "arquivo": "src/pages/Coaching.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 10,
+      "hooks": [
+        {
+          "nome": "useAgentStatus",
+          "arquivo": "src/hooks/useAgentStatus.ts"
+        },
+        {
+          "nome": "useAuditLog",
+          "arquivo": "src/hooks/useAuditLog.ts"
+        },
+        {
+          "nome": "useCoaching",
+          "arquivo": "src/hooks/useCoaching.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "generate-coaching",
+        "generate-coaching-plan"
+      ],
+      "rpcs": [
+        "log_audit_event"
+      ],
+      "tabelas": [
+        "agents",
+        "coaching_recommendations"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/compliance",
+      "componente": "Compliance",
+      "arquivo": "src/pages/Compliance.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 21,
+      "hooks": [
+        {
+          "nome": "useCallingHoursManager",
+          "arquivo": "src/components/compliance/calling-hours/useCallingHoursManager.ts"
+        },
+        {
+          "nome": "useDNCCompliance",
+          "arquivo": "src/hooks/useDNCCompliance.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [
+        "add_to_dnc",
+        "check_calling_hours",
+        "check_dnc"
+      ],
+      "tabelas": [
+        "calling_hours_config",
+        "compliance_settings",
+        "consent_history",
+        "dnc_import_logs",
+        "dnc_list",
+        "holidays"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/concurrency-conflicts",
+      "componente": "ConcurrencyConflicts",
+      "arquivo": "src/pages/ConcurrencyConflicts.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "useOptimisticLockConflicts",
+          "arquivo": "src/hooks/useOptimisticLockConflicts.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "optimistic_lock_conflicts"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/contacts",
+      "componente": "Contacts",
+      "arquivo": "src/pages/Contacts.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 24,
+      "hooks": [
+        {
+          "nome": "useAuditLog",
+          "arquivo": "src/hooks/useAuditLog.ts"
+        },
+        {
+          "nome": "useBitrix",
+          "arquivo": "src/hooks/useBitrix.ts"
+        },
+        {
+          "nome": "useBitrixSync",
+          "arquivo": "src/components/contacts/useBitrixSync.ts"
+        },
+        {
+          "nome": "useContacts",
+          "arquivo": "src/hooks/useContacts.ts"
+        },
+        {
+          "nome": "useDebouncedSearchParam",
+          "arquivo": "src/hooks/useDebouncedSearchParam.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "analyze-contact-profile",
+        "bitrix-api"
+      ],
+      "rpcs": [
+        "log_audit_event"
+      ],
+      "tabelas": [
+        "bitrix_departments",
+        "bitrix_users",
+        "contact_interactions",
+        "contacts",
+        "crm_sync_queue"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/contacts/insights",
+      "componente": "ContactInsights",
+      "arquivo": "src/pages/ContactInsights.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 9,
+      "hooks": [
+        {
+          "nome": "useContactInsights",
+          "arquivo": "src/hooks/useContactInsights.ts"
+        },
+        {
+          "nome": "useContacts",
+          "arquivo": "src/hooks/useContacts.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "contact_interactions",
+        "contacts"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/dashboard",
+      "componente": "Index",
+      "arquivo": "src/pages/Index.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 38,
+      "hooks": [
+        {
+          "nome": "useActiveCallsRealtime",
+          "arquivo": "src/hooks/useActiveCallsRealtime.ts"
+        },
+        {
+          "nome": "useAgentsListData",
+          "arquivo": "src/hooks/useDashboardData.ts"
+        },
+        {
+          "nome": "useAnimatedCounter",
+          "arquivo": "src/hooks/useAnimatedCounter.ts"
+        },
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useCallVolumeData",
+          "arquivo": "src/hooks/useDashboardData.ts"
+        },
+        {
+          "nome": "useCriticalAlertNotifications",
+          "arquivo": "src/hooks/useCriticalAlertNotifications.ts"
+        },
+        {
+          "nome": "useDashboardLayout",
+          "arquivo": "src/hooks/useDashboardLayout.ts"
+        },
+        {
+          "nome": "useDashboardStats",
+          "arquivo": "src/hooks/useDashboardData.ts"
+        },
+        {
+          "nome": "useHoldSoundAlert",
+          "arquivo": "src/hooks/useHoldSoundAlert.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useQueueStatsData",
+          "arquivo": "src/hooks/useDashboardData.ts"
+        },
+        {
+          "nome": "useRecentCallsData",
+          "arquivo": "src/hooks/useDashboardData.ts"
+        },
+        {
+          "nome": "useScheduledCallbacks",
+          "arquivo": "src/hooks/useScheduledCallbacks.ts"
+        },
+        {
+          "nome": "useSupervisorPanel",
+          "arquivo": "src/hooks/useSupervisorPanel.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [
+        "get_agents_with_active_calls",
+        "get_call_volume_stats",
+        "get_dashboard_stats",
+        "get_queue_stats"
+      ],
+      "tabelas": [
+        "barge_in_sessions",
+        "call_sessions",
+        "hold_alert_settings",
+        "hold_events",
+        "scheduled_callbacks",
+        "whisper_messages"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/deals",
+      "componente": "Deals",
+      "arquivo": "src/pages/Deals.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 8,
+      "hooks": [
+        {
+          "nome": "useDeals",
+          "arquivo": "src/hooks/useDeals.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "charge",
+        "compute-deal-health"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "deals"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/dialer",
+      "componente": "Dialer",
+      "arquivo": "src/pages/Dialer.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 20,
+      "hooks": [
+        {
+          "nome": "useContacts",
+          "arquivo": "src/hooks/useContacts.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "usePredictiveDialer",
+          "arquivo": "src/hooks/usePredictiveDialer.ts"
+        },
+        {
+          "nome": "useQualityTrendAnalyzer",
+          "arquivo": "src/hooks/useQualityTrendAnalyzer.ts"
+        },
+        {
+          "nome": "useSipCall",
+          "arquivo": "src/hooks/useSipCall.ts"
+        },
+        {
+          "nome": "useTrunkUsageReporter",
+          "arquivo": "src/hooks/useTrunkUsageReporter.ts"
+        },
+        {
+          "nome": "useVoipAutoRemediation",
+          "arquivo": "src/hooks/useVoipAutoRemediation.ts"
+        },
+        {
+          "nome": "useVoipQualityMonitor",
+          "arquivo": "src/hooks/useVoipQualityMonitor.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "sip-config"
+      ],
+      "rpcs": [
+        "record_trunk_usage"
+      ],
+      "tabelas": [
+        "call_quality_metrics",
+        "contact_interactions",
+        "contacts",
+        "dialer_campaigns",
+        "dialer_queue",
+        "voip_quality_alerts"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/dialer/predictive",
+      "componente": "PredictiveDialer",
+      "arquivo": "src/pages/PredictiveDialer.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 4,
+      "hooks": [
+        {
+          "nome": "useApplyPacingNow",
+          "arquivo": "src/hooks/usePredictivePacing.ts"
+        },
+        {
+          "nome": "useCampaignPacing",
+          "arquivo": "src/hooks/usePredictivePacing.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "dialer-pacing-tick"
+      ],
+      "rpcs": [
+        "calculate_predictive_pace"
+      ],
+      "tabelas": [
+        "dialer_campaigns"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/executive",
+      "componente": "ExecutiveDashboard",
+      "arquivo": "src/pages/ExecutiveDashboard.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 29,
+      "hooks": [
+        {
+          "nome": "useAgentAssistHistory",
+          "arquivo": "src/hooks/useLiveAssist.ts"
+        },
+        {
+          "nome": "useConversations",
+          "arquivo": "src/hooks/useConversations.ts"
+        },
+        {
+          "nome": "useDealForecast",
+          "arquivo": "src/hooks/useDealForecast.ts"
+        },
+        {
+          "nome": "useExecutiveDashboardData",
+          "arquivo": "src/hooks/useExecutiveDashboard.ts"
+        },
+        {
+          "nome": "useForecastVolume",
+          "arquivo": "src/hooks/useForecastVolume.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "usePendingActionItems",
+          "arquivo": "src/hooks/useMeetingSummary.ts"
+        },
+        {
+          "nome": "useSlaCompliance",
+          "arquivo": "src/hooks/useSLA.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "analyze-live-utterance",
+        "charge",
+        "enforce-sla",
+        "forecast-call-volume",
+        "forecast-deals",
+        "generate-meeting-summary"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "accounts",
+        "agent_goals",
+        "call_alerts",
+        "call_key_moments",
+        "call_sessions",
+        "call_summaries",
+        "call_translations",
+        "churn_risk_signals",
+        "consent_records",
+        "contact_engagement_patterns",
+        "conversation_messages",
+        "conversations",
+        "hold_events",
+        "live_assist_signals",
+        "meeting_summaries",
+        "renewals",
+        "scheduled_callbacks",
+        "sla_policies"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/external-recordings-import",
+      "componente": "ExternalRecordingsImport",
+      "arquivo": "src/pages/ExternalRecordingsImport.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "teams-fetch-recordings"
+      ],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/financial-impact",
+      "componente": "FinancialImpact",
+      "arquivo": "src/pages/FinancialImpact.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 9,
+      "hooks": [
+        {
+          "nome": "useAgentFinancialLeaderboard",
+          "arquivo": "src/hooks/useAgentFinancialLeaderboard.ts"
+        },
+        {
+          "nome": "useFinancialImpact",
+          "arquivo": "src/hooks/useFinancialImpact.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [
+        "get_agent_financial_leaderboard"
+      ],
+      "tabelas": [
+        "financial_impact_daily"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/forgot-password",
+      "componente": "ForgotPassword",
+      "arquivo": "src/pages/ForgotPassword.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 3,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "request-password-reset"
+      ],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/geo-blocking",
+      "componente": "GeoBlocking",
+      "arquivo": "src/pages/GeoBlocking.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "useGeoBlocking",
+          "arquivo": "src/hooks/useGeoBlocking.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "validate-geo"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "geo_access_logs",
+        "geo_restrictions",
+        "geo_settings"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/history",
+      "componente": "CallHistory",
+      "arquivo": "src/pages/CallHistory.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 21,
+      "hooks": [
+        {
+          "nome": "useAuditLog",
+          "arquivo": "src/hooks/useAuditLog.ts"
+        },
+        {
+          "nome": "useCallHistory",
+          "arquivo": "src/hooks/useCallHistory.ts"
+        },
+        {
+          "nome": "useDebouncedSearchParam",
+          "arquivo": "src/hooks/useDebouncedSearchParam.ts"
+        },
+        {
+          "nome": "useKeyMoments",
+          "arquivo": "src/hooks/useKeyMoments.ts"
+        },
+        {
+          "nome": "useLiveSentiment",
+          "arquivo": "src/hooks/useLiveSentiment.ts"
+        },
+        {
+          "nome": "useMeetingSummary",
+          "arquivo": "src/hooks/useMeetingSummary.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useTalkRatio",
+          "arquivo": "src/hooks/useTalkRatio.ts"
+        }
+      ],
+      "buckets": [
+        "call-recordings"
+      ],
+      "edges": [
+        "analyze-talk-ratio",
+        "charge",
+        "detect-key-moments",
+        "generate-meeting-summary"
+      ],
+      "rpcs": [
+        "get_call_history_with_summaries",
+        "log_audit_event"
+      ],
+      "tabelas": [
+        "call_analyses",
+        "call_key_moments",
+        "call_recordings",
+        "call_summaries",
+        "call_transcriptions",
+        "coaching_timestamps",
+        "live_sentiment_snapshots",
+        "meeting_summaries"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/hold-alerts",
+      "componente": "HoldAlerts",
+      "arquivo": "src/pages/HoldAlerts.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "call_alerts"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/hold-metrics",
+      "componente": "HoldMetrics",
+      "arquivo": "src/pages/HoldMetrics.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 4,
+      "hooks": [
+        {
+          "nome": "useHoldMetrics",
+          "arquivo": "src/hooks/useHoldMetrics.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "agents",
+        "call_sessions",
+        "hold_events"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/hold-settings",
+      "componente": "HoldAlertSettings",
+      "arquivo": "src/pages/HoldAlertSettings.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 4,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "hold_alert_settings"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/hot-desking",
+      "componente": "HotDesking",
+      "arquivo": "src/pages/HotDesking.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "hot_desking_stations"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/inbox",
+      "componente": "Inbox",
+      "arquivo": "src/pages/Inbox.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 8,
+      "hooks": [
+        {
+          "nome": "useConversationMessages",
+          "arquivo": "src/hooks/useConversations.ts"
+        },
+        {
+          "nome": "useConversations",
+          "arquivo": "src/hooks/useConversations.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useSendMessage",
+          "arquivo": "src/hooks/useConversations.ts"
+        },
+        {
+          "nome": "useUpdateConversation",
+          "arquivo": "src/hooks/useConversations.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "conversation_messages",
+        "conversations"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/ip-whitelist",
+      "componente": "IPWhitelist",
+      "arquivo": "src/pages/IPWhitelist.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useIPWhitelist",
+          "arquivo": "src/hooks/useIPWhitelist.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "blocked_access_logs",
+        "ip_whitelist",
+        "user_allowed_ips",
+        "user_ip_restrictions",
+        "user_profiles"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/knowledge",
+      "componente": "Knowledge",
+      "arquivo": "src/pages/Knowledge.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 8,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useKbArticles",
+          "arquivo": "src/hooks/useKnowledgeBase.ts"
+        },
+        {
+          "nome": "useKbCategories",
+          "arquivo": "src/hooks/useKnowledgeBase.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useUpsertArticle",
+          "arquivo": "src/hooks/useKnowledgeBase.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "embed-kb-article"
+      ],
+      "rpcs": [
+        "match_kb_articles"
+      ],
+      "tabelas": [
+        "kb_article_views",
+        "kb_articles",
+        "kb_categories"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/landing",
+      "componente": "Landing",
+      "arquivo": "src/pages/marketing/Landing.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/ldap-sync",
+      "componente": "LDAPSync",
+      "arquivo": "src/pages/LDAPSync.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/learning",
+      "componente": "Learning",
+      "arquivo": "src/pages/Learning.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useLearning",
+          "arquivo": "src/hooks/useLearning.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "learning_completions",
+        "learning_modules"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/login",
+      "componente": "Login",
+      "arquivo": "src/pages/Login.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 10,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useIPValidation",
+          "arquivo": "src/hooks/useIPValidation.ts"
+        },
+        {
+          "nome": "useLoginLockout",
+          "arquivo": "src/hooks/useLoginLockout.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useWebAuthn",
+          "arquivo": "src/hooks/useWebAuthn.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "charge",
+        "notify-blocked-ip",
+        "validate-ip",
+        "webauthn-authenticate"
+      ],
+      "rpcs": [
+        "check_login_lockout",
+        "record_failed_login",
+        "record_successful_login"
+      ],
+      "tabelas": [
+        "user_passkeys",
+        "user_profiles",
+        "webauthn_challenges"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/marketplace",
+      "componente": "Marketplace",
+      "arquivo": "src/pages/Marketplace.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/meeting-summaries",
+      "componente": "MeetingSummaries",
+      "arquivo": "src/pages/MeetingSummaries.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 11,
+      "hooks": [
+        {
+          "nome": "useDebouncedSearchParam",
+          "arquivo": "src/hooks/useDebouncedSearchParam.ts"
+        },
+        {
+          "nome": "useMeetingSummariesList",
+          "arquivo": "src/hooks/useMeetingSummary.ts"
+        },
+        {
+          "nome": "useMeetingSummary",
+          "arquivo": "src/hooks/useMeetingSummary.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "charge",
+        "generate-meeting-summary"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "meeting_summaries"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/multi-device-ring",
+      "componente": "MultiDeviceRing",
+      "arquivo": "src/pages/MultiDeviceRing.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 3,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useMultiDeviceRing",
+          "arquivo": "src/hooks/useMultiDeviceRing.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "agent_devices",
+        "agent_ring_settings"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/network-diagnostics",
+      "componente": "NetworkDiagnostics",
+      "arquivo": "src/pages/NetworkDiagnostics.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 36,
+      "hooks": [
+        {
+          "nome": "useAnomalyRemediation",
+          "arquivo": "src/hooks/useAnomalyRemediation.ts"
+        },
+        {
+          "nome": "useNetworkMonitor",
+          "arquivo": "src/hooks/useNetworkMonitor.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useVoipAnomalies",
+          "arquivo": "src/hooks/useVoipAnomalies.ts"
+        },
+        {
+          "nome": "useVoipCapacityRecommendations",
+          "arquivo": "src/hooks/useVoipCapacityRecommendations.ts"
+        },
+        {
+          "nome": "useVoipDiagnosticVoiceQA",
+          "arquivo": "src/hooks/useVoipDiagnosticVoiceQA.ts"
+        },
+        {
+          "nome": "useVoipExecutiveNarrative",
+          "arquivo": "src/hooks/useVoipExecutiveNarrative.ts"
+        },
+        {
+          "nome": "useVoipExecutiveSummary",
+          "arquivo": "src/hooks/useVoipExecutiveSummary.ts"
+        },
+        {
+          "nome": "useVoipQualityForecastFetch",
+          "arquivo": "src/hooks/useVoipQualityForecast.ts"
+        },
+        {
+          "nome": "useVoipRecommendationHistory",
+          "arquivo": "src/hooks/useVoipRecommendationHistory.ts"
+        },
+        {
+          "nome": "useVoipRecommendationInsights",
+          "arquivo": "src/hooks/useVoipRecommendationInsights.ts"
+        },
+        {
+          "nome": "useVoipRecommendations",
+          "arquivo": "src/hooks/useVoipRecommendations.ts"
+        },
+        {
+          "nome": "useVoipRecommendationSimulate",
+          "arquivo": "src/hooks/useVoipRecommendationSimulate.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "charge",
+        "voip-anomaly-detector",
+        "voip-anomaly-remediation",
+        "voip-capacity-forecast",
+        "voip-capacity-recommendations",
+        "voip-diagnostic-voice-qa",
+        "voip-executive-narrative",
+        "voip-executive-summary",
+        "voip-quality-forecast",
+        "voip-quality-heatmap",
+        "voip-recommendation-history",
+        "voip-recommendation-insights",
+        "voip-recommendation-simulate",
+        "voip-recommendations",
+        "voip-sla-report"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "call_quality_metrics",
+        "voip_quality_alerts",
+        "voip_recommendation_actions"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/notifications",
+      "componente": "NotificationCenter",
+      "arquivo": "src/pages/NotificationCenter.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 13,
+      "hooks": [
+        {
+          "nome": "useAuth",
+          "arquivo": "src/hooks/useAuth.ts"
+        },
+        {
+          "nome": "useAuthActions",
+          "arquivo": "src/hooks/auth/useAuthActions.ts"
+        },
+        {
+          "nome": "useAuthProfile",
+          "arquivo": "src/hooks/auth/useAuthProfile.ts"
+        },
+        {
+          "nome": "useAuthSession",
+          "arquivo": "src/hooks/auth/useAuthSession.ts"
+        },
+        {
+          "nome": "useAuthState",
+          "arquivo": "src/hooks/auth/useAuthState.ts"
+        },
+        {
+          "nome": "useNotificationCenter",
+          "arquivo": "src/components/notification-center/useNotificationCenter.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "notification_preferences",
+        "notifications",
+        "user_profiles"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/number-porting",
+      "componente": "NumberPorting",
+      "arquivo": "src/pages/NumberPorting.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 3,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "number_porting_requests"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/observability",
+      "componente": "ObservabilityDashboard",
+      "arquivo": "src/pages/ObservabilityDashboard.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 22,
+      "hooks": [
+        {
+          "nome": "useHealthCheck",
+          "arquivo": "src/hooks/useHealthCheck.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useQualityMetrics",
+          "arquivo": "src/hooks/useQualityMetrics.ts"
+        },
+        {
+          "nome": "useTrunkUsageMetrics",
+          "arquivo": "src/hooks/useQualityMetrics.ts"
+        },
+        {
+          "nome": "useVoipTrunks",
+          "arquivo": "src/hooks/useVoipTrunks.ts"
+        },
+        {
+          "nome": "useWebVitals",
+          "arquivo": "src/hooks/useWebVitals.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "charge",
+        "health-check",
+        "voip-load-test",
+        "voip-trunks-manage"
+      ],
+      "rpcs": [
+        "check_all_tables_rls_status"
+      ],
+      "tabelas": [
+        "agents",
+        "call_quality_metrics",
+        "voip_trunk_usage_metrics"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/onboarding",
+      "componente": "Onboarding",
+      "arquivo": "src/pages/Onboarding.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/outbound-compliance",
+      "componente": "OutboundCompliance",
+      "arquivo": "src/pages/OutboundCompliance.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 10,
+      "hooks": [
+        {
+          "nome": "useBestTimeToContact",
+          "arquivo": "src/hooks/useBestTimeToContact.ts"
+        },
+        {
+          "nome": "useCallScoring",
+          "arquivo": "src/hooks/useCallScoring.ts"
+        },
+        {
+          "nome": "useConsent",
+          "arquivo": "src/hooks/useConsent.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "charge",
+        "compute-best-time",
+        "record-consent",
+        "score-call-attempt"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "consent_records",
+        "contact_engagement_patterns"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/passkeys",
+      "componente": "Passkeys",
+      "arquivo": "src/pages/Passkeys.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useWebAuthn",
+          "arquivo": "src/hooks/useWebAuthn.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "webauthn-authenticate"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "user_passkeys",
+        "user_profiles",
+        "webauthn_challenges"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/password-reset-approval",
+      "componente": "PasswordResetApproval",
+      "arquivo": "src/pages/PasswordResetApproval.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 3,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "approve-password-reset"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "password_reset_requests"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/permissions",
+      "componente": "Permissions",
+      "arquivo": "src/pages/Permissions.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 3,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "permissions",
+        "role_permissions"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/pricing",
+      "componente": "Pricing",
+      "arquivo": "src/pages/marketing/Pricing.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/qr-provisioning",
+      "componente": "QRProvisioning",
+      "arquivo": "src/pages/QRProvisioning.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/queue-dashboard",
+      "componente": "QueueMetricsDashboard",
+      "arquivo": "src/pages/QueueMetricsDashboard.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 13,
+      "hooks": [
+        {
+          "nome": "useDashboardGoals",
+          "arquivo": "src/hooks/useDashboardGoals.ts"
+        },
+        {
+          "nome": "useGoalViolations",
+          "arquivo": "src/hooks/useGoalViolations.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useQueueMetrics",
+          "arquivo": "src/hooks/useQueueMetrics.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "check-goals"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "agents",
+        "call_sessions",
+        "dashboard_goals",
+        "goal_violations"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/queue-metrics-settings",
+      "componente": "QueueMetricsAlertSettings",
+      "arquivo": "src/pages/QueueMetricsAlertSettings.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 11,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useQueueMetricsSettings",
+          "arquivo": "src/components/queue-alerts/useQueueMetricsSettings.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "queue_metrics_settings"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/ranking",
+      "componente": "AgentRanking",
+      "arquivo": "src/pages/AgentRanking.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 19,
+      "hooks": [
+        {
+          "nome": "useAgentRanking",
+          "arquivo": "src/hooks/useAgentRanking.ts"
+        },
+        {
+          "nome": "useAgentStatus",
+          "arquivo": "src/hooks/useAgentStatus.ts"
+        },
+        {
+          "nome": "useGamification",
+          "arquivo": "src/hooks/useGamification.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "agent_badges",
+        "agent_goals",
+        "agent_weekly_stats",
+        "agents",
+        "badges",
+        "call_alerts",
+        "call_analyses",
+        "call_sessions",
+        "call_summaries"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/rate-limit",
+      "componente": "RateLimitDashboard",
+      "arquivo": "src/pages/RateLimitDashboard.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useRateLimitData",
+          "arquivo": "src/hooks/useRateLimitData.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "rate_limit_alerts",
+        "rate_limit_logs",
+        "rate_limit_settings"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/recordings",
+      "componente": "Recordings",
+      "arquivo": "src/pages/Recordings.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 9,
+      "hooks": [
+        {
+          "nome": "useAuditLog",
+          "arquivo": "src/hooks/useAuditLog.ts"
+        },
+        {
+          "nome": "useDebouncedSearchParam",
+          "arquivo": "src/hooks/useDebouncedSearchParam.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useRecordings",
+          "arquivo": "src/hooks/useRecordings.ts"
+        }
+      ],
+      "buckets": [
+        "call-recordings"
+      ],
+      "edges": [
+        "analyze-sentiment",
+        "transcribe-recording"
+      ],
+      "rpcs": [
+        "log_audit_event"
+      ],
+      "tabelas": [
+        "call_recordings"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/register",
+      "componente": "Register",
+      "arquivo": "src/pages/Register.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "usePasswordStrength",
+          "arquivo": "src/components/auth/PasswordStrength.tsx"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/renewals",
+      "componente": "Renewals",
+      "arquivo": "src/pages/Renewals.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 6,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useRenewals",
+          "arquivo": "src/hooks/useRenewals.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "renewals"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/reports",
+      "componente": "Reports",
+      "arquivo": "src/pages/Reports.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "useCallVolumeData",
+          "arquivo": "src/hooks/useDashboardData.ts"
+        },
+        {
+          "nome": "useDashboardStats",
+          "arquivo": "src/hooks/useDashboardData.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [
+        "get_agent_performance",
+        "get_agents_with_active_calls",
+        "get_call_volume_stats",
+        "get_dashboard_stats",
+        "get_queue_stats"
+      ],
+      "tabelas": [
+        "call_sessions"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/reset-password",
+      "componente": "ResetPassword",
+      "arquivo": "src/pages/ResetPassword.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/ring-groups",
+      "componente": "RingGroups",
+      "arquivo": "src/pages/RingGroups.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 14,
+      "hooks": [
+        {
+          "nome": "useAuth",
+          "arquivo": "src/hooks/useAuth.ts"
+        },
+        {
+          "nome": "useAuthActions",
+          "arquivo": "src/hooks/auth/useAuthActions.ts"
+        },
+        {
+          "nome": "useAuthProfile",
+          "arquivo": "src/hooks/auth/useAuthProfile.ts"
+        },
+        {
+          "nome": "useAuthSession",
+          "arquivo": "src/hooks/auth/useAuthSession.ts"
+        },
+        {
+          "nome": "useAuthState",
+          "arquivo": "src/hooks/auth/useAuthState.ts"
+        },
+        {
+          "nome": "useCallQueues",
+          "arquivo": "src/hooks/useCallQueues.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useRingGroups",
+          "arquivo": "src/hooks/useRingGroups.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "agents",
+        "call_queue_members",
+        "call_queues",
+        "ring_group_members",
+        "ring_groups",
+        "user_profiles"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/roles",
+      "componente": "Roles",
+      "arquivo": "src/pages/Roles.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 11,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useRoles",
+          "arquivo": "src/pages/roles/useRoles.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "audit_logs",
+        "user_profiles",
+        "user_roles"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/routing-rules",
+      "componente": "RoutingRules",
+      "arquivo": "src/pages/RoutingRules.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 8,
+      "hooks": [
+        {
+          "nome": "useDeleteRoutingRule",
+          "arquivo": "src/hooks/useRoutingRules.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useRoutingRules",
+          "arquivo": "src/hooks/useRoutingRules.ts"
+        },
+        {
+          "nome": "useUpsertRoutingRule",
+          "arquivo": "src/hooks/useRoutingRules.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "routing_rules"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/scheduling",
+      "componente": "Scheduling",
+      "arquivo": "src/pages/Scheduling.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 9,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useShifts",
+          "arquivo": "src/hooks/useShifts.ts"
+        },
+        {
+          "nome": "useTimeOff",
+          "arquivo": "src/hooks/useTimeOff.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "agent_shifts",
+        "shift_templates",
+        "time_off_requests"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/security",
+      "componente": "SecurityDashboard",
+      "arquivo": "src/pages/SecurityDashboard.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 9,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useDeviceDetection",
+          "arquivo": "src/hooks/useDeviceDetection.ts"
+        },
+        {
+          "nome": "useMFA",
+          "arquivo": "src/hooks/useMFA.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useSecurityDashboard",
+          "arquivo": "src/hooks/useSecurityDashboard.ts"
+        },
+        {
+          "nome": "useSecurityNotifications",
+          "arquivo": "src/hooks/useSecurityNotifications.ts"
+        },
+        {
+          "nome": "useSessionManager",
+          "arquivo": "src/hooks/useSessionManager.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "notify-new-device"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "active_sessions",
+        "blocked_access_logs",
+        "security_alerts",
+        "user_ip_restrictions",
+        "user_mfa_settings"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/security-monitoring",
+      "componente": "SecurityMonitoring",
+      "arquivo": "src/pages/SecurityMonitoring.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 11,
+      "hooks": [
+        {
+          "nome": "useAuth",
+          "arquivo": "src/hooks/useAuth.ts"
+        },
+        {
+          "nome": "useAuthActions",
+          "arquivo": "src/hooks/auth/useAuthActions.ts"
+        },
+        {
+          "nome": "useAuthProfile",
+          "arquivo": "src/hooks/auth/useAuthProfile.ts"
+        },
+        {
+          "nome": "useAuthSession",
+          "arquivo": "src/hooks/auth/useAuthSession.ts"
+        },
+        {
+          "nome": "useAuthState",
+          "arquivo": "src/hooks/auth/useAuthState.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "usePageVisibility",
+          "arquivo": "src/hooks/usePageVisibility.ts"
+        },
+        {
+          "nome": "useSecurityMonitoringData",
+          "arquivo": "src/hooks/useSecurityMonitoringData.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "audit_logs",
+        "login_attempts",
+        "security_alerts",
+        "user_profiles"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/security-report",
+      "componente": "SecurityReport",
+      "arquivo": "src/pages/SecurityReport.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 9,
+      "hooks": [
+        {
+          "nome": "useAuth",
+          "arquivo": "src/hooks/useAuth.ts"
+        },
+        {
+          "nome": "useAuthActions",
+          "arquivo": "src/hooks/auth/useAuthActions.ts"
+        },
+        {
+          "nome": "useAuthProfile",
+          "arquivo": "src/hooks/auth/useAuthProfile.ts"
+        },
+        {
+          "nome": "useAuthSession",
+          "arquivo": "src/hooks/auth/useAuthSession.ts"
+        },
+        {
+          "nome": "useAuthState",
+          "arquivo": "src/hooks/auth/useAuthState.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [
+        "check_all_tables_rls_status"
+      ],
+      "tabelas": [
+        "user_profiles"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/sessions",
+      "componente": "SessionManagement",
+      "arquivo": "src/pages/SessionManagement.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 8,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useDeviceDetection",
+          "arquivo": "src/hooks/useDeviceDetection.ts"
+        },
+        {
+          "nome": "useMFA",
+          "arquivo": "src/hooks/useMFA.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useReauth",
+          "arquivo": "src/hooks/useReauth.ts"
+        },
+        {
+          "nome": "useSessionManager",
+          "arquivo": "src/hooks/useSessionManager.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "notify-new-device"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "active_sessions",
+        "user_mfa_settings"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/settings",
+      "componente": "Settings",
+      "arquivo": "src/pages/Settings.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 14,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useBitrix",
+          "arquivo": "src/hooks/useBitrix.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useProfile",
+          "arquivo": "src/hooks/useProfile.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "bitrix-api"
+      ],
+      "rpcs": [
+        "log_audit_event"
+      ],
+      "tabelas": [
+        "audit_logs",
+        "bitrix_departments",
+        "bitrix_users",
+        "crm_sync_queue",
+        "system_settings",
+        "user_profiles"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/shift-swap-suggestions",
+      "componente": "ShiftSwapSuggestions",
+      "arquivo": "src/pages/ShiftSwapSuggestions.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "useGenerateSwapSuggestions",
+          "arquivo": "src/hooks/useShiftSwapSuggestions.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useShiftSwapSuggestions",
+          "arquivo": "src/hooks/useShiftSwapSuggestions.ts"
+        },
+        {
+          "nome": "useUpdateSwapSuggestion",
+          "arquivo": "src/hooks/useShiftSwapSuggestions.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "suggest-shift-swaps"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "shift_swap_suggestions"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/skills",
+      "componente": "Skills",
+      "arquivo": "src/pages/Skills.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useSkills",
+          "arquivo": "src/hooks/useSkills.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "agent_skills",
+        "skills"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/sla-policies",
+      "componente": "SLAPolicies",
+      "arquivo": "src/pages/SLAPolicies.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 8,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useSlaCompliance",
+          "arquivo": "src/hooks/useSLA.ts"
+        },
+        {
+          "nome": "useSlaPolicies",
+          "arquivo": "src/hooks/useSLA.ts"
+        },
+        {
+          "nome": "useUpsertSlaPolicy",
+          "arquivo": "src/hooks/useSLA.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "charge",
+        "enforce-sla"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "conversations",
+        "sla_policies"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/status",
+      "componente": "Status",
+      "arquivo": "src/pages/Status.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 3,
+      "hooks": [],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "voip_trunk_health_checks",
+        "webhook_flush_metrics"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/success-plans",
+      "componente": "SuccessPlans",
+      "arquivo": "src/pages/SuccessPlans.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 6,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useSuccessPlans",
+          "arquivo": "src/hooks/useSuccessPlans.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "success_plan_milestones",
+        "success_plans"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/toll-free-numbers",
+      "componente": "TollFreeNumbers",
+      "arquivo": "src/pages/TollFreeNumbers.tsx",
+      "protegida": true,
+      "papeis": [
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "toll_free_numbers"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/topic-detection",
+      "componente": "TopicDetection",
+      "arquivo": "src/pages/TopicDetection.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 3,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "manager_alerts",
+        "topic_detections",
+        "topic_trends"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/trackers",
+      "componente": "Trackers",
+      "arquivo": "src/pages/Trackers.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 6,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useTrackers",
+          "arquivo": "src/hooks/useTrackers.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "tracker_matches",
+        "trackers"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/translation-center",
+      "componente": "TranslationCenter",
+      "arquivo": "src/pages/TranslationCenter.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "call_translations",
+        "cultural_hints"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/two-factor-auth",
+      "componente": "TwoFactorAuth",
+      "arquivo": "src/pages/TwoFactorAuth.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 8,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useMFA",
+          "arquivo": "src/hooks/useMFA.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "user_mfa_settings"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/unauthorized",
+      "componente": "Unauthorized",
+      "arquivo": "src/pages/Unauthorized.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/verify-email",
+      "componente": "VerifyEmail",
+      "arquivo": "src/pages/VerifyEmail.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 3,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/video-conference",
+      "componente": "VideoConference",
+      "arquivo": "src/pages/VideoConference.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 4,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "video_conferences"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/virtual-fax",
+      "componente": "VirtualFax",
+      "arquivo": "src/pages/VirtualFax.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 4,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useVirtualFaxOcr",
+          "arquivo": "src/hooks/useVirtualFaxOcr.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "ocr-virtual-fax"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "virtual_fax"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/voice-security",
+      "componente": "VoiceSecurity",
+      "arquivo": "src/pages/VoiceSecurity.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 7,
+      "hooks": [
+        {
+          "nome": "useFraudSignals",
+          "arquivo": "src/hooks/useVoiceBiometrics.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useRedactCall",
+          "arquivo": "src/hooks/useVoiceBiometrics.ts"
+        },
+        {
+          "nome": "useVoicePrints",
+          "arquivo": "src/hooks/useVoiceBiometrics.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "charge",
+        "enroll-voice",
+        "redact-sensitive-audio",
+        "verify-voice"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "fraud_signals",
+        "voice_prints"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/voicemail",
+      "componente": "Voicemail",
+      "arquivo": "src/pages/Voicemail.tsx",
+      "protegida": true,
+      "papeis": [],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "useDebouncedSearchParam",
+          "arquivo": "src/hooks/useDebouncedSearchParam.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "voicemail_messages"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/vs/3cplus",
+      "componente": "VsThreeCPlus",
+      "arquivo": "src/pages/marketing/VsThreeCPlus.tsx",
+      "protegida": false,
+      "papeis": [],
+      "declarada_em": "src/routes/publicRoutes.tsx",
+      "arquivos_lidos": 2,
+      "hooks": [],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [],
+      "imports_quebrados": []
+    }
+  ],
+  "hooks": {
+    "useAccounts": {
+      "arquivo": "src/hooks/useAccounts.ts",
+      "rotas": [
+        "/accounts"
+      ]
+    },
+    "useActiveCallsRealtime": {
+      "arquivo": "src/hooks/useActiveCallsRealtime.ts",
+      "rotas": [
+        "/dashboard"
+      ]
+    },
+    "useAgentAssistHistory": {
+      "arquivo": "src/hooks/useLiveAssist.ts",
+      "rotas": [
+        "/agent-assist",
+        "/executive"
+      ]
+    },
+    "useAgentFinancialLeaderboard": {
+      "arquivo": "src/hooks/useAgentFinancialLeaderboard.ts",
+      "rotas": [
+        "/financial-impact"
+      ]
+    },
+    "useAgentRanking": {
+      "arquivo": "src/hooks/useAgentRanking.ts",
+      "rotas": [
+        "/ranking"
+      ]
+    },
+    "useAgentStatus": {
+      "arquivo": "src/hooks/useAgentStatus.ts",
+      "rotas": [
+        "/calls",
+        "/coaching",
+        "/ranking"
+      ]
+    },
+    "useAgentsListData": {
+      "arquivo": "src/hooks/useDashboardData.ts",
+      "rotas": [
+        "/dashboard"
+      ]
+    },
+    "useAlertHistory": {
+      "arquivo": "src/hooks/useAlertHistory.ts",
+      "rotas": [
+        "/alert-history"
+      ]
+    },
+    "useAlertPresets": {
+      "arquivo": "src/hooks/useAlertPresets.ts",
+      "rotas": [
+        "/admin/security-alerts"
+      ]
+    },
+    "useAlerts": {
+      "arquivo": "src/hooks/useAlerts.ts",
+      "rotas": [
+        "/alerts"
+      ]
+    },
+    "useAlertsExport": {
+      "arquivo": "src/hooks/useAlertsExport.ts",
+      "rotas": [
+        "/admin/security-alerts"
+      ]
+    },
+    "useAnimatedCounter": {
+      "arquivo": "src/hooks/useAnimatedCounter.ts",
+      "rotas": [
+        "/dashboard"
+      ]
+    },
+    "useAnomalyRemediation": {
+      "arquivo": "src/hooks/useAnomalyRemediation.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useApplyPacingNow": {
+      "arquivo": "src/hooks/usePredictivePacing.ts",
+      "rotas": [
+        "/dialer/predictive"
+      ]
+    },
+    "useAuditLog": {
+      "arquivo": "src/hooks/useAuditLog.ts",
+      "rotas": [
+        "/",
+        "/call-history",
+        "/coaching",
+        "/contacts",
+        "/history",
+        "/recordings"
+      ]
+    },
+    "useAuth": {
+      "arquivo": "src/hooks/useAuth.ts",
+      "rotas": [
+        "/",
+        "/call-park",
+        "/call-queues",
+        "/notifications",
+        "/ring-groups",
+        "/security-monitoring",
+        "/security-report"
+      ]
+    },
+    "useAuthActions": {
+      "arquivo": "src/hooks/auth/useAuthActions.ts",
+      "rotas": [
+        "/",
+        "/call-park",
+        "/call-queues",
+        "/notifications",
+        "/ring-groups",
+        "/security-monitoring",
+        "/security-report"
+      ]
+    },
+    "useAuthContext": {
+      "arquivo": "src/contexts/AuthContext.tsx",
+      "rotas": [
+        "/audit-logs",
+        "/dashboard",
+        "/hot-desking",
+        "/ip-whitelist",
+        "/knowledge",
+        "/learning",
+        "/login",
+        "/multi-device-ring",
+        "/passkeys",
+        "/password-reset-approval",
+        "/register",
+        "/roles",
+        "/security",
+        "/sessions",
+        "/settings",
+        "/two-factor-auth"
+      ]
+    },
+    "useAuthProfile": {
+      "arquivo": "src/hooks/auth/useAuthProfile.ts",
+      "rotas": [
+        "/",
+        "/call-park",
+        "/call-queues",
+        "/notifications",
+        "/ring-groups",
+        "/security-monitoring",
+        "/security-report"
+      ]
+    },
+    "useAuthSession": {
+      "arquivo": "src/hooks/auth/useAuthSession.ts",
+      "rotas": [
+        "/",
+        "/call-park",
+        "/call-queues",
+        "/notifications",
+        "/ring-groups",
+        "/security-monitoring",
+        "/security-report"
+      ]
+    },
+    "useAuthState": {
+      "arquivo": "src/hooks/auth/useAuthState.ts",
+      "rotas": [
+        "/",
+        "/call-park",
+        "/call-queues",
+        "/notifications",
+        "/ring-groups",
+        "/security-monitoring",
+        "/security-report"
+      ]
+    },
+    "useBestTimeToContact": {
+      "arquivo": "src/hooks/useBestTimeToContact.ts",
+      "rotas": [
+        "/outbound-compliance"
+      ]
+    },
+    "useBitrix": {
+      "arquivo": "src/hooks/useBitrix.ts",
+      "rotas": [
+        "/contacts",
+        "/settings"
+      ]
+    },
+    "useBitrixSync": {
+      "arquivo": "src/components/contacts/useBitrixSync.ts",
+      "rotas": [
+        "/contacts"
+      ]
+    },
+    "useBlfBoard": {
+      "arquivo": "src/hooks/useBlfBoard.ts",
+      "rotas": [
+        "/blf"
+      ]
+    },
+    "useBlockedAccessLogs": {
+      "arquivo": "src/hooks/useBlockedAccessLogs.ts",
+      "rotas": [
+        "/blocked-access-logs"
+      ]
+    },
+    "useCadences": {
+      "arquivo": "src/hooks/useCadences.ts",
+      "rotas": [
+        "/cadences"
+      ]
+    },
+    "useCallAnalytics": {
+      "arquivo": "src/hooks/useCallAnalytics.ts",
+      "rotas": [
+        "/analytics"
+      ]
+    },
+    "useCallHistory": {
+      "arquivo": "src/hooks/useCallHistory.ts",
+      "rotas": [
+        "/",
+        "/call-history",
+        "/history"
+      ]
+    },
+    "useCallPark": {
+      "arquivo": "src/hooks/useCallPark.ts",
+      "rotas": [
+        "/call-park"
+      ]
+    },
+    "useCallQueues": {
+      "arquivo": "src/hooks/useCallQueues.ts",
+      "rotas": [
+        "/call-queues",
+        "/ring-groups"
+      ]
+    },
+    "useCallRecording": {
+      "arquivo": "src/hooks/useCallRecording.ts",
+      "rotas": [
+        "/calls"
+      ]
+    },
+    "useCallScoring": {
+      "arquivo": "src/hooks/useCallScoring.ts",
+      "rotas": [
+        "/outbound-compliance"
+      ]
+    },
+    "useCallSearch": {
+      "arquivo": "src/hooks/useCallSearch.ts",
+      "rotas": [
+        "/call-library"
+      ]
+    },
+    "useCallTimers": {
+      "arquivo": "src/hooks/useCallTimers.ts",
+      "rotas": [
+        "/",
+        "/calls"
+      ]
+    },
+    "useCallTransfer": {
+      "arquivo": "src/hooks/useCallTransfer.ts",
+      "rotas": [
+        "/",
+        "/calls"
+      ]
+    },
+    "useCallVolumeData": {
+      "arquivo": "src/hooks/useDashboardData.ts",
+      "rotas": [
+        "/dashboard",
+        "/reports"
+      ]
+    },
+    "useCallingHoursManager": {
+      "arquivo": "src/components/compliance/calling-hours/useCallingHoursManager.ts",
+      "rotas": [
+        "/compliance"
+      ]
+    },
+    "useCampaignPacing": {
+      "arquivo": "src/hooks/usePredictivePacing.ts",
+      "rotas": [
+        "/dialer/predictive"
+      ]
+    },
+    "useCoaching": {
+      "arquivo": "src/hooks/useCoaching.ts",
+      "rotas": [
+        "/coaching"
+      ]
+    },
+    "useConferenceRecording": {
+      "arquivo": "src/hooks/useConferenceRecording.ts",
+      "rotas": [
+        "/calls"
+      ]
+    },
+    "useConsent": {
+      "arquivo": "src/hooks/useConsent.ts",
+      "rotas": [
+        "/outbound-compliance"
+      ]
+    },
+    "useContactInsights": {
+      "arquivo": "src/hooks/useContactInsights.ts",
+      "rotas": [
+        "/contacts/insights"
+      ]
+    },
+    "useContacts": {
+      "arquivo": "src/hooks/useContacts.ts",
+      "rotas": [
+        "/contacts",
+        "/contacts/insights",
+        "/dialer"
+      ]
+    },
+    "useConversation": {
+      "arquivo": "src/lib/elevenlabs-stub.ts",
+      "rotas": [
+        "/calls"
+      ]
+    },
+    "useConversationMessages": {
+      "arquivo": "src/hooks/useConversations.ts",
+      "rotas": [
+        "/inbox"
+      ]
+    },
+    "useConversations": {
+      "arquivo": "src/hooks/useConversations.ts",
+      "rotas": [
+        "/executive",
+        "/inbox"
+      ]
+    },
+    "useCreateExport": {
+      "arquivo": "src/hooks/useDataLakeExports.ts",
+      "rotas": [
+        "/admin/data-export"
+      ]
+    },
+    "useCriticalAlertNotifications": {
+      "arquivo": "src/hooks/useCriticalAlertNotifications.ts",
+      "rotas": [
+        "/dashboard"
+      ]
+    },
+    "useDNCCompliance": {
+      "arquivo": "src/hooks/useDNCCompliance.ts",
+      "rotas": [
+        "/compliance"
+      ]
+    },
+    "useDashboardGoals": {
+      "arquivo": "src/hooks/useDashboardGoals.ts",
+      "rotas": [
+        "/queue-dashboard"
+      ]
+    },
+    "useDashboardLayout": {
+      "arquivo": "src/hooks/useDashboardLayout.ts",
+      "rotas": [
+        "/dashboard"
+      ]
+    },
+    "useDashboardStats": {
+      "arquivo": "src/hooks/useDashboardData.ts",
+      "rotas": [
+        "/dashboard",
+        "/reports"
+      ]
+    },
+    "useDataLakeExports": {
+      "arquivo": "src/hooks/useDataLakeExports.ts",
+      "rotas": [
+        "/admin/data-export"
+      ]
+    },
+    "useDealForecast": {
+      "arquivo": "src/hooks/useDealForecast.ts",
+      "rotas": [
+        "/executive"
+      ]
+    },
+    "useDeals": {
+      "arquivo": "src/hooks/useDeals.ts",
+      "rotas": [
+        "/deals"
+      ]
+    },
+    "useDebouncedSearchParam": {
+      "arquivo": "src/hooks/useDebouncedSearchParam.ts",
+      "rotas": [
+        "/admin/security-alerts",
+        "/call-history",
+        "/contacts",
+        "/history",
+        "/meeting-summaries",
+        "/recordings",
+        "/voicemail"
+      ]
+    },
+    "useDeleteAssignment": {
+      "arquivo": "src/hooks/useVoipTrunks.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useDeleteRoutingRule": {
+      "arquivo": "src/hooks/useRoutingRules.ts",
+      "rotas": [
+        "/routing-rules"
+      ]
+    },
+    "useDeleteTrunk": {
+      "arquivo": "src/hooks/useVoipTrunks.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useDeviceDetection": {
+      "arquivo": "src/hooks/useDeviceDetection.ts",
+      "rotas": [
+        "/security",
+        "/sessions"
+      ]
+    },
+    "useDialerFavorites": {
+      "arquivo": "src/hooks/useDialerFavorites.ts",
+      "rotas": [
+        "/"
+      ]
+    },
+    "useExecutiveDashboardData": {
+      "arquivo": "src/hooks/useExecutiveDashboard.ts",
+      "rotas": [
+        "/executive"
+      ]
+    },
+    "useExtensionAudit": {
+      "arquivo": "src/hooks/useExtensionAudit.ts",
+      "rotas": [
+        "/admin/extensions"
+      ]
+    },
+    "useExtensionAuditHistory": {
+      "arquivo": "src/hooks/useExtensionAuditHistory.ts",
+      "rotas": [
+        "/admin/extensions"
+      ]
+    },
+    "useExtensionsAdmin": {
+      "arquivo": "src/hooks/useExtensionsAdmin.ts",
+      "rotas": [
+        "/admin/extensions"
+      ]
+    },
+    "useExtensionsOverview": {
+      "arquivo": "src/hooks/useExtensionsOverview.ts",
+      "rotas": [
+        "/admin/extensions"
+      ]
+    },
+    "useFinancialImpact": {
+      "arquivo": "src/hooks/useFinancialImpact.ts",
+      "rotas": [
+        "/financial-impact"
+      ]
+    },
+    "useForecastVolume": {
+      "arquivo": "src/hooks/useForecastVolume.ts",
+      "rotas": [
+        "/executive"
+      ]
+    },
+    "useFraudSignals": {
+      "arquivo": "src/hooks/useVoiceBiometrics.ts",
+      "rotas": [
+        "/voice-security"
+      ]
+    },
+    "useGamification": {
+      "arquivo": "src/hooks/useGamification.ts",
+      "rotas": [
+        "/ranking"
+      ]
+    },
+    "useGenerateSwapSuggestions": {
+      "arquivo": "src/hooks/useShiftSwapSuggestions.ts",
+      "rotas": [
+        "/shift-swap-suggestions"
+      ]
+    },
+    "useGeoBlocking": {
+      "arquivo": "src/hooks/useGeoBlocking.ts",
+      "rotas": [
+        "/geo-blocking"
+      ]
+    },
+    "useGoalViolations": {
+      "arquivo": "src/hooks/useGoalViolations.ts",
+      "rotas": [
+        "/queue-dashboard"
+      ]
+    },
+    "useHealthCheck": {
+      "arquivo": "src/hooks/useHealthCheck.ts",
+      "rotas": [
+        "/observability"
+      ]
+    },
+    "useHoldMetrics": {
+      "arquivo": "src/hooks/useHoldMetrics.ts",
+      "rotas": [
+        "/hold-metrics"
+      ]
+    },
+    "useHoldReminder": {
+      "arquivo": "src/hooks/useHoldReminder.ts",
+      "rotas": [
+        "/calls"
+      ]
+    },
+    "useHoldSoundAlert": {
+      "arquivo": "src/hooks/useHoldSoundAlert.ts",
+      "rotas": [
+        "/dashboard"
+      ]
+    },
+    "useIPValidation": {
+      "arquivo": "src/hooks/useIPValidation.ts",
+      "rotas": [
+        "/login"
+      ]
+    },
+    "useIPWhitelist": {
+      "arquivo": "src/hooks/useIPWhitelist.ts",
+      "rotas": [
+        "/ip-whitelist"
+      ]
+    },
+    "useKbArticles": {
+      "arquivo": "src/hooks/useKnowledgeBase.ts",
+      "rotas": [
+        "/knowledge"
+      ]
+    },
+    "useKbCategories": {
+      "arquivo": "src/hooks/useKnowledgeBase.ts",
+      "rotas": [
+        "/knowledge"
+      ]
+    },
+    "useKeyMoments": {
+      "arquivo": "src/hooks/useKeyMoments.ts",
+      "rotas": [
+        "/call-history",
+        "/history"
+      ]
+    },
+    "useLearning": {
+      "arquivo": "src/hooks/useLearning.ts",
+      "rotas": [
+        "/learning"
+      ]
+    },
+    "useLiveInsights": {
+      "arquivo": "src/components/ai/live-call/useLiveInsights.ts",
+      "rotas": [
+        "/ai"
+      ]
+    },
+    "useLiveSentiment": {
+      "arquivo": "src/hooks/useLiveSentiment.ts",
+      "rotas": [
+        "/call-history",
+        "/history"
+      ]
+    },
+    "useLoginLockout": {
+      "arquivo": "src/hooks/useLoginLockout.ts",
+      "rotas": [
+        "/login"
+      ]
+    },
+    "useMFA": {
+      "arquivo": "src/hooks/useMFA.ts",
+      "rotas": [
+        "/security",
+        "/sessions",
+        "/two-factor-auth"
+      ]
+    },
+    "useMeetingSummariesList": {
+      "arquivo": "src/hooks/useMeetingSummary.ts",
+      "rotas": [
+        "/meeting-summaries"
+      ]
+    },
+    "useMeetingSummary": {
+      "arquivo": "src/hooks/useMeetingSummary.ts",
+      "rotas": [
+        "/call-history",
+        "/history",
+        "/meeting-summaries"
+      ]
+    },
+    "useMultiChannelCall": {
+      "arquivo": "src/hooks/useMultiChannelCall.ts",
+      "rotas": [
+        "/",
+        "/calls"
+      ]
+    },
+    "useMultiDeviceRing": {
+      "arquivo": "src/hooks/useMultiDeviceRing.ts",
+      "rotas": [
+        "/multi-device-ring"
+      ]
+    },
+    "useNetworkMonitor": {
+      "arquivo": "src/hooks/useNetworkMonitor.ts",
+      "rotas": [
+        "/calls",
+        "/network-diagnostics"
+      ]
+    },
+    "useNotificationCenter": {
+      "arquivo": "src/components/notification-center/useNotificationCenter.ts",
+      "rotas": [
+        "/notifications"
+      ]
+    },
+    "useObjectionLibrary": {
+      "arquivo": "src/hooks/useObjectionLibrary.ts",
+      "rotas": [
+        "/agent-assist"
+      ]
+    },
+    "useOptimisticLockConflicts": {
+      "arquivo": "src/hooks/useOptimisticLockConflicts.ts",
+      "rotas": [
+        "/concurrency-conflicts"
+      ]
+    },
+    "usePageTitle": {
+      "arquivo": "src/hooks/usePageTitle.ts",
+      "rotas": [
+        "*",
+        "/",
+        "/accounts",
+        "/admin/data-export",
+        "/admin/database-health",
+        "/admin/extensions",
+        "/admin/security-alerts",
+        "/admin/voip-trunks",
+        "/admin/webhook-health",
+        "/agent-assist",
+        "/ai",
+        "/alert-history",
+        "/alerts",
+        "/analytics",
+        "/audit-logs",
+        "/battle-cards",
+        "/blf",
+        "/blocked-access-logs",
+        "/cadences",
+        "/call-flow-designer",
+        "/call-history",
+        "/call-library",
+        "/call-park",
+        "/call-queues",
+        "/callbacks",
+        "/calls",
+        "/coaching",
+        "/compliance",
+        "/concurrency-conflicts",
+        "/contacts",
+        "/contacts/insights",
+        "/dashboard",
+        "/deals",
+        "/dialer",
+        "/executive",
+        "/external-recordings-import",
+        "/financial-impact",
+        "/forgot-password",
+        "/geo-blocking",
+        "/history",
+        "/hold-alerts",
+        "/hold-metrics",
+        "/hold-settings",
+        "/hot-desking",
+        "/inbox",
+        "/ip-whitelist",
+        "/knowledge",
+        "/ldap-sync",
+        "/learning",
+        "/login",
+        "/meeting-summaries",
+        "/multi-device-ring",
+        "/network-diagnostics",
+        "/notifications",
+        "/number-porting",
+        "/observability",
+        "/onboarding",
+        "/outbound-compliance",
+        "/passkeys",
+        "/password-reset-approval",
+        "/permissions",
+        "/qr-provisioning",
+        "/queue-dashboard",
+        "/queue-metrics-settings",
+        "/ranking",
+        "/rate-limit",
+        "/recordings",
+        "/register",
+        "/renewals",
+        "/reports",
+        "/reset-password",
+        "/ring-groups",
+        "/roles",
+        "/routing-rules",
+        "/scheduling",
+        "/security",
+        "/security-monitoring",
+        "/security-report",
+        "/sessions",
+        "/settings",
+        "/shift-swap-suggestions",
+        "/skills",
+        "/sla-policies",
+        "/success-plans",
+        "/toll-free-numbers",
+        "/topic-detection",
+        "/trackers",
+        "/translation-center",
+        "/two-factor-auth",
+        "/unauthorized",
+        "/verify-email",
+        "/video-conference",
+        "/virtual-fax",
+        "/voice-security",
+        "/voicemail"
+      ]
+    },
+    "usePageVisibility": {
+      "arquivo": "src/hooks/usePageVisibility.ts",
+      "rotas": [
+        "/admin/extensions",
+        "/blf",
+        "/security-monitoring"
+      ]
+    },
+    "usePasswordStrength": {
+      "arquivo": "src/components/auth/PasswordStrength.tsx",
+      "rotas": [
+        "/register"
+      ]
+    },
+    "usePendingActionItems": {
+      "arquivo": "src/hooks/useMeetingSummary.ts",
+      "rotas": [
+        "/executive"
+      ]
+    },
+    "usePersistedTagFilter": {
+      "arquivo": "src/hooks/usePersistedTagFilter.ts",
+      "rotas": [
+        "/"
+      ]
+    },
+    "usePhaseColors": {
+      "arquivo": "src/components/voice/overlay/usePhaseColors.ts",
+      "rotas": [
+        "/"
+      ]
+    },
+    "usePredictiveDialer": {
+      "arquivo": "src/hooks/usePredictiveDialer.ts",
+      "rotas": [
+        "/dialer"
+      ]
+    },
+    "useProfile": {
+      "arquivo": "src/hooks/useProfile.ts",
+      "rotas": [
+        "/settings"
+      ]
+    },
+    "useQualityMetrics": {
+      "arquivo": "src/hooks/useQualityMetrics.ts",
+      "rotas": [
+        "/observability"
+      ]
+    },
+    "useQualityTrendAnalyzer": {
+      "arquivo": "src/hooks/useQualityTrendAnalyzer.ts",
+      "rotas": [
+        "/",
+        "/calls",
+        "/dialer"
+      ]
+    },
+    "useQueueAudioPrompts": {
+      "arquivo": "src/hooks/useQueueAudioPrompts.ts",
+      "rotas": [
+        "/call-queues"
+      ]
+    },
+    "useQueueMetrics": {
+      "arquivo": "src/hooks/useQueueMetrics.ts",
+      "rotas": [
+        "/queue-dashboard"
+      ]
+    },
+    "useQueueMetricsSettings": {
+      "arquivo": "src/components/queue-alerts/useQueueMetricsSettings.ts",
+      "rotas": [
+        "/queue-metrics-settings"
+      ]
+    },
+    "useQueueStatsData": {
+      "arquivo": "src/hooks/useDashboardData.ts",
+      "rotas": [
+        "/dashboard"
+      ]
+    },
+    "useRateLimitData": {
+      "arquivo": "src/hooks/useRateLimitData.ts",
+      "rotas": [
+        "/rate-limit"
+      ]
+    },
+    "useReauth": {
+      "arquivo": "src/hooks/useReauth.ts",
+      "rotas": [
+        "/sessions"
+      ]
+    },
+    "useRecentCallsData": {
+      "arquivo": "src/hooks/useDashboardData.ts",
+      "rotas": [
+        "/dashboard"
+      ]
+    },
+    "useRecordings": {
+      "arquivo": "src/hooks/useRecordings.ts",
+      "rotas": [
+        "/recordings"
+      ]
+    },
+    "useRedactCall": {
+      "arquivo": "src/hooks/useVoiceBiometrics.ts",
+      "rotas": [
+        "/voice-security"
+      ]
+    },
+    "useRenewals": {
+      "arquivo": "src/hooks/useRenewals.ts",
+      "rotas": [
+        "/renewals"
+      ]
+    },
+    "useRingGroups": {
+      "arquivo": "src/hooks/useRingGroups.ts",
+      "rotas": [
+        "/ring-groups"
+      ]
+    },
+    "useRingtoneSettings": {
+      "arquivo": "src/hooks/useRingtoneSettings.ts",
+      "rotas": [
+        "/"
+      ]
+    },
+    "useRoles": {
+      "arquivo": "src/pages/roles/useRoles.ts",
+      "rotas": [
+        "/roles"
+      ]
+    },
+    "useRoutingRules": {
+      "arquivo": "src/hooks/useRoutingRules.ts",
+      "rotas": [
+        "/routing-rules"
+      ]
+    },
+    "useRunHealthCheck": {
+      "arquivo": "src/hooks/useTrunkHealth.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useSaveAssignment": {
+      "arquivo": "src/hooks/useVoipTrunks.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useSaveTrunk": {
+      "arquivo": "src/hooks/useVoipTrunks.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useScheduledCallbacks": {
+      "arquivo": "src/hooks/useScheduledCallbacks.ts",
+      "rotas": [
+        "/callbacks",
+        "/dashboard"
+      ]
+    },
+    "useSecurityAlertNotifications": {
+      "arquivo": "src/hooks/useSecurityAlertNotifications.ts",
+      "rotas": [
+        "/admin/security-alerts"
+      ]
+    },
+    "useSecurityDashboard": {
+      "arquivo": "src/hooks/useSecurityDashboard.ts",
+      "rotas": [
+        "/security"
+      ]
+    },
+    "useSecurityMonitoringData": {
+      "arquivo": "src/hooks/useSecurityMonitoringData.ts",
+      "rotas": [
+        "/security-monitoring"
+      ]
+    },
+    "useSecurityNotifications": {
+      "arquivo": "src/hooks/useSecurityNotifications.ts",
+      "rotas": [
+        "/security"
+      ]
+    },
+    "useSendMessage": {
+      "arquivo": "src/hooks/useConversations.ts",
+      "rotas": [
+        "/inbox"
+      ]
+    },
+    "useSessionManager": {
+      "arquivo": "src/hooks/useSessionManager.ts",
+      "rotas": [
+        "/security",
+        "/sessions"
+      ]
+    },
+    "useShiftSwapSuggestions": {
+      "arquivo": "src/hooks/useShiftSwapSuggestions.ts",
+      "rotas": [
+        "/shift-swap-suggestions"
+      ]
+    },
+    "useShifts": {
+      "arquivo": "src/hooks/useShifts.ts",
+      "rotas": [
+        "/scheduling"
+      ]
+    },
+    "useSipCall": {
+      "arquivo": "src/hooks/useSipCall.ts",
+      "rotas": [
+        "/",
+        "/calls",
+        "/dialer"
+      ]
+    },
+    "useSkills": {
+      "arquivo": "src/hooks/useSkills.ts",
+      "rotas": [
+        "/skills"
+      ]
+    },
+    "useSlaCompliance": {
+      "arquivo": "src/hooks/useSLA.ts",
+      "rotas": [
+        "/executive",
+        "/sla-policies"
+      ]
+    },
+    "useSlaPolicies": {
+      "arquivo": "src/hooks/useSLA.ts",
+      "rotas": [
+        "/sla-policies"
+      ]
+    },
+    "useSuccessPlans": {
+      "arquivo": "src/hooks/useSuccessPlans.ts",
+      "rotas": [
+        "/success-plans"
+      ]
+    },
+    "useSupervisorPanel": {
+      "arquivo": "src/hooks/useSupervisorPanel.ts",
+      "rotas": [
+        "/dashboard"
+      ]
+    },
+    "useSyncHistory": {
+      "arquivo": "src/hooks/useSyncHistory.ts",
+      "rotas": [
+        "/"
+      ]
+    },
+    "useTalkRatio": {
+      "arquivo": "src/hooks/useTalkRatio.ts",
+      "rotas": [
+        "/call-history",
+        "/history"
+      ]
+    },
+    "useTestTrunk": {
+      "arquivo": "src/hooks/useVoipTrunks.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useTestWebhook": {
+      "arquivo": "src/hooks/useTestWebhook.ts",
+      "rotas": [
+        "/admin/security-alerts"
+      ]
+    },
+    "useTimeOff": {
+      "arquivo": "src/hooks/useTimeOff.ts",
+      "rotas": [
+        "/scheduling"
+      ]
+    },
+    "useTrackers": {
+      "arquivo": "src/hooks/useTrackers.ts",
+      "rotas": [
+        "/trackers"
+      ]
+    },
+    "useTrunkAssignments": {
+      "arquivo": "src/hooks/useVoipTrunks.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useTrunkHealthHistory": {
+      "arquivo": "src/hooks/useTrunkHealth.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useTrunkMetrics": {
+      "arquivo": "src/hooks/useTrunkMetrics.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useTrunkRealtimeMetrics": {
+      "arquivo": "src/hooks/useTrunkRealtimeMetrics.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useTrunkUsageMetrics": {
+      "arquivo": "src/hooks/useQualityMetrics.ts",
+      "rotas": [
+        "/observability"
+      ]
+    },
+    "useTrunkUsageReporter": {
+      "arquivo": "src/hooks/useTrunkUsageReporter.ts",
+      "rotas": [
+        "/",
+        "/calls",
+        "/dialer"
+      ]
+    },
+    "useUpdateConversation": {
+      "arquivo": "src/hooks/useConversations.ts",
+      "rotas": [
+        "/inbox"
+      ]
+    },
+    "useUpdateSwapSuggestion": {
+      "arquivo": "src/hooks/useShiftSwapSuggestions.ts",
+      "rotas": [
+        "/shift-swap-suggestions"
+      ]
+    },
+    "useUpsertArticle": {
+      "arquivo": "src/hooks/useKnowledgeBase.ts",
+      "rotas": [
+        "/knowledge"
+      ]
+    },
+    "useUpsertRoutingRule": {
+      "arquivo": "src/hooks/useRoutingRules.ts",
+      "rotas": [
+        "/routing-rules"
+      ]
+    },
+    "useUpsertSlaPolicy": {
+      "arquivo": "src/hooks/useSLA.ts",
+      "rotas": [
+        "/sla-policies"
+      ]
+    },
+    "useVirtualFaxOcr": {
+      "arquivo": "src/hooks/useVirtualFaxOcr.ts",
+      "rotas": [
+        "/virtual-fax"
+      ]
+    },
+    "useVoiceCommand": {
+      "arquivo": "src/hooks/useVoiceCommand.ts",
+      "rotas": [
+        "/",
+        "/calls"
+      ]
+    },
+    "useVoicePreferences": {
+      "arquivo": "src/hooks/useVoicePreferences.ts",
+      "rotas": [
+        "/"
+      ]
+    },
+    "useVoicePrints": {
+      "arquivo": "src/hooks/useVoiceBiometrics.ts",
+      "rotas": [
+        "/voice-security"
+      ]
+    },
+    "useVoipAnomalies": {
+      "arquivo": "src/hooks/useVoipAnomalies.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipAutoRemediation": {
+      "arquivo": "src/hooks/useVoipAutoRemediation.ts",
+      "rotas": [
+        "/",
+        "/calls",
+        "/dialer"
+      ]
+    },
+    "useVoipCapacityRecommendations": {
+      "arquivo": "src/hooks/useVoipCapacityRecommendations.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipDiagnosticVoiceQA": {
+      "arquivo": "src/hooks/useVoipDiagnosticVoiceQA.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipExecutiveNarrative": {
+      "arquivo": "src/hooks/useVoipExecutiveNarrative.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipExecutiveSummary": {
+      "arquivo": "src/hooks/useVoipExecutiveSummary.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipMonitoringSettings": {
+      "arquivo": "src/hooks/useVoipMonitoringSettings.ts",
+      "rotas": [
+        "/admin/voip-trunks"
+      ]
+    },
+    "useVoipQualityForecastFetch": {
+      "arquivo": "src/hooks/useVoipQualityForecast.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipQualityMonitor": {
+      "arquivo": "src/hooks/useVoipQualityMonitor.ts",
+      "rotas": [
+        "/",
+        "/calls",
+        "/dialer"
+      ]
+    },
+    "useVoipRecommendationHistory": {
+      "arquivo": "src/hooks/useVoipRecommendationHistory.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipRecommendationInsights": {
+      "arquivo": "src/hooks/useVoipRecommendationInsights.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipRecommendationSimulate": {
+      "arquivo": "src/hooks/useVoipRecommendationSimulate.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipRecommendations": {
+      "arquivo": "src/hooks/useVoipRecommendations.ts",
+      "rotas": [
+        "/network-diagnostics"
+      ]
+    },
+    "useVoipTrunks": {
+      "arquivo": "src/hooks/useVoipTrunks.ts",
+      "rotas": [
+        "/admin/voip-trunks",
+        "/observability"
+      ]
+    },
+    "useWavoipCall": {
+      "arquivo": "src/hooks/useWavoipCall.ts",
+      "rotas": [
+        "/calls"
+      ]
+    },
+    "useWebAuthn": {
+      "arquivo": "src/hooks/useWebAuthn.ts",
+      "rotas": [
+        "/login",
+        "/passkeys"
+      ]
+    },
+    "useWebVitals": {
+      "arquivo": "src/hooks/useWebVitals.ts",
+      "rotas": [
+        "/observability"
+      ]
+    },
+    "useWebhookConfig": {
+      "arquivo": "src/hooks/useWebhookConfig.ts",
+      "rotas": [
+        "/admin/security-alerts"
+      ]
+    },
+    "useWebhookHealthData": {
+      "arquivo": "src/hooks/useWebhookHealthData.ts",
+      "rotas": [
+        "/admin/webhook-health"
+      ]
+    },
+    "useWebhookHistory": {
+      "arquivo": "src/hooks/useWebhookHistory.ts",
+      "rotas": [
+        "/admin/security-alerts"
+      ]
+    },
+    "useWebhookQueue": {
+      "arquivo": "src/hooks/useWebhookQueue.ts",
+      "rotas": [
+        "/admin/security-alerts"
+      ]
+    }
+  },
+  "paginas_orfas": [
+    "src/pages/admin/SecurityAuditDashboard.tsx"
+  ],
+  "problemas": [
+    {
+      "tipo": "pagina_orfa",
+      "id": "src/pages/admin/SecurityAuditDashboard.tsx",
+      "detalhe": "arquivo em src/pages/ que nenhuma rota alcanca (nem direto, nem por import)"
+    }
+  ]
+}
