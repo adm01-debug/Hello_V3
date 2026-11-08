@@ -2,12 +2,17 @@
 
 Ler quando for confirmar um deploy, mexer em `.lovable/`, CORS, auth OAuth, ou no gateway de IA.
 
+**Atenção: há duas trilhas de publicação e qual delas serve produção é `NÃO VERIFICADO`** — ver
+"Duas trilhas" abaixo antes de afirmar que um deploy subiu.
+
 | O que | Valor |
 |---|---|
-| Plataforma de deploy | **Lovable** (`gpt-engineer-app`) — não há Vercel, Netlify nem Cloudflare neste repo |
+| Plataforma que escreve no repo | **Lovable** (`gpt-engineer-app`) — commita direto na `main` |
 | Projeto Lovable | `e326811c-e59a-4850-bf9e-cfc9d6748662` (derivado da origem de preview em `supabase/functions/_shared/cors.ts:9`) |
-| URL de preview | `https://id-preview--e326811c-e59a-4850-bf9e-cfc9d6748662.lovable.app` |
-| Domínio de produção | **NÃO VERIFICADO** — nenhum domínio próprio aparece no repositório; o único host de app é o preview acima |
+| URL de preview Lovable | `https://id-preview--e326811c-e59a-4850-bf9e-cfc9d6748662.lovable.app` |
+| Projeto Vercel | **existe**: `hello-v3`, `prj_i2sRUaJ5ORrWDPyhzdyZZkiRkDC8`, team `team_QyN41X0q8hrqhW80AwokbFLv` (criado em 2026-09-05) |
+| `homepage` do repo no GitHub | `https://hello-v3.vercel.app` |
+| Domínio de produção | **NÃO VERIFICADO** — ver abaixo |
 | Framework / build | Vite + React · `bun run build` (`vite build`) · saída `dist/` · dev em **8080** (`vite.config.ts:14`) |
 | Plugin de build | `lovable-tagger` ativo só em `mode === 'development'` (`vite.config.ts:14`) |
 | Gateway de IA | `https://ai.gateway.lovable.dev/v1/chat/completions` e `/v1/embeddings`, com `LOVABLE_API_KEY` |
@@ -15,10 +20,27 @@ Ler quando for confirmar um deploy, mexer em `.lovable/`, CORS, auth OAuth, ou n
 | Conector Microsoft | `https://connector-gateway.lovable.dev/microsoft` |
 | MCP do Lovable | **não existe** — confirmação de deploy é por `git log origin/main` + inspeção do app, não por API |
 
+## Duas trilhas de publicação — resolver antes de prometer deploy
+
+| Trilha | Evidência de que existe | O que falta para afirmar que é produção |
+|---|---|---|
+| **Lovable** | O app commita na `main` como `gpt-engineer-app[bot]`; `lovable-tagger` no `vite.config.ts`; a origem de preview está na allowlist de CORS das edges; `approve-password-reset/index.ts:101` monta o `redirectTo` em `.lovable.app` | abrir o preview e confirmar que serve a `main` |
+| **Vercel** | Projeto `hello-v3` aparece em `list_projects` (`prj_i2sRUaJ5ORrWDPyhzdyZZkiRkDC8`, team `team_QyN41X0q8hrqhW80AwokbFLv`) e `hello-v3.vercel.app` é o `homepage` do repo no GitHub | nenhum `vercel.json` no repo; o token Vercel desta sessão **não consegue ler o projeto** (`get_project` → 404, `list_deployments` → 403); nenhum deployment listado |
+
+**O que foi tentado e falhou nesta sessão:** os dois hosts (`hello-v3.vercel.app` e o preview
+`.lovable.app`) são **bloqueados pela política de egress do ambiente de nuvem**
+(`connect_rejected` no proxy, `curl` → `000`). Logo **não foi possível verificar qual das duas serve o
+usuário final**.
+
+**Regra prática:** depois de um merge, não escreva "deploy confirmado". Diga qual trilha você conferiu e
+como. Se precisar de certeza, peça ao dono: (a) o domínio de produção real e (b) acesso ao projeto Vercel
+`hello-v3` ou a confirmação de que ele é um shell não usado.
+
 ## Deploy e edge functions
 
-- **Front:** publicado pelo Lovable a partir da `main`. **Merge em `main` = produção.** Não há workflow de
-  deploy em `.github/workflows/` (há só `ci.yml`) — o deploy não é disparado pelo GitHub Actions.
+- **Front:** o repositório não tem workflow de deploy (`.github/workflows/` tem só `ci.yml`) — **o deploy
+  não é disparado pelo GitHub Actions**. Ele é disparado pela plataforma que estiver conectada à `main`,
+  logo **merge em `main` = produção** em qualquer das duas trilhas.
 - **O Lovable escreve na `main`.** Commits `gpt-engineer-app[bot]` ("Lovable update", "Visual edit in
   Lovable", "Work in progress") entram direto, sem PR e sem passar por CI verde. É uma segunda fonte de
   mudança no mesmo repo: **re-sync antes de editar** e nunca force-push em `main`.

@@ -75,7 +75,7 @@ Detalhe em `docs/agentes/<tema>.md`; divergiu da realidade → corrija no mesmo 
   produção; `.github/workflows/`, segredos, `.env*`; deleção de dado, arquitetura ou custo; conflito com PR
   de outro agente.
 - Conflito: rebase em `main`; `--force-with-lease` só na sua branch.
-- Merge = produção (o Lovable publica a partir da `main`): confira o deploy e reporte. CI vermelha → leia o
+- Merge = produção (a plataforma publica a partir da `main`): confira o deploy e reporte. CI vermelha → leia o
   resumo da falha antes de qualquer patch; do seu merge → `fix:` em branch nova na mesma sessão.
 - Fim: link da PR + estado.
 
@@ -96,7 +96,9 @@ Detalhe em `docs/agentes/<tema>.md`; divergiu da realidade → corrija no mesmo 
 
 ## Serviços
 - **Lovable** — `docs/agentes/lovable-deploy.md` antes de confirmar deploy, mexer em `.lovable/`, CORS, auth
-  OAuth ou dependência. É dono do deploy e commita na `main`; `_shared/cors.ts:20` libera **qualquer**
+  OAuth ou dependência. Commita direto na `main`; há **duas** trilhas de publicação (Lovable e um projeto
+  Vercel `hello-v3`) e qual serve produção é **NÃO VERIFICADO** — não prometa "deploy confirmado" sem
+  conferir a trilha certa. `_shared/cors.ts:20` libera **qualquer**
   `*.lovable.app`. `LOVABLE_API_KEY` (AI Gateway) é secret de edge, nunca no front.
 - **Edge Functions** — `docs/agentes/edge-functions.md` ao criar/alterar função em `supabase/functions/`.
   98 diretórios, 94 com `index.ts`; `supabase/config.toml` versiona **um só** `verify_jwt`, então a
