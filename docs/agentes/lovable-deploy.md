@@ -28,10 +28,30 @@ Ler quando for confirmar um deploy, mexer em `.lovable/`, CORS, auth OAuth, ou n
 | **Lovable** | O app commita na `main` como `gpt-engineer-app[bot]`; `lovable-tagger` no `vite.config.ts`; a origem de preview está na allowlist de CORS das edges; `approve-password-reset/index.ts:101` monta o `redirectTo` em `.lovable.app` | abrir o preview e confirmar que serve a `main` |
 | **Vercel** | O **GitHub App do Vercel está instalado e rodando**: os checks `Vercel Preview Comments` e `Vercel Agent Review` apareceram no head de uma PR em 2026-11-08. Projeto `hello-v3` em `list_projects` (`prj_i2sRUaJ5ORrWDPyhzdyZZkiRkDC8`, team `team_QyN41X0q8hrqhW80AwokbFLv` / `juca1`) e `hello-v3.vercel.app` como `homepage` do repo | nenhum `vercel.json` no repo; o token Vercel desta sessão **não consegue ler o projeto** (`get_project` → 404, `list_deployments` → 403), então não há como confirmar se existe deployment de produção |
 
-O App do Vercel **não** é um resíduo inerte: ele reage a cada PR. Trate um merge em `main` como capaz de
-disparar deploy de produção no Vercel, além do que o Lovable fizer. `Vercel Agent Review` hoje devolve
-`Review skipped because usage billing is not enabled for this team` — o review automático do Vercel está
-desligado por billing, não por configuração do repo.
+O App do Vercel **não** é um resíduo inerte: ele reage a cada PR e tenta deployar. Trate um merge em `main`
+como capaz de disparar deploy de produção no Vercel, além do que o Lovable fizer.
+
+### 🔴 A trilha Vercel bloqueia deployment por autor de commit
+
+Medido em 2026-11-08 na PR #7: os dois commit statuses do contexto `Vercel` ficaram vermelhos —
+`GitHub couldn’t verify an account for the commit.` e `Deployment was blocked` — e **nenhum build começou**.
+
+- **Causa:** o Vercel exige que o e-mail do **autor do commit** mapeie para uma conta do GitHub verificada e
+  conectada ao team `juca`. Commits autorados como `adm01-debug <comercial@aquarellaprint.com.br>` não
+  passam. Os commits da `main` escapam porque são do `gpt-engineer-app[bot]`, com e-mail
+  `…@users.noreply.github.com`, verificado por construção.
+- **Consequência:** enquanto esse mapeamento não existir, **todo** commit de agente com esse e-mail tem o
+  deployment bloqueado — incluindo o merge em `main`. Na prática, hoje **a trilha Vercel não publica nada
+  originado desta conta**, e um `Vercel` vermelho numa PR de agente não quer dizer que o código esteja errado.
+- **O que não fazer:** reescrever o autor do commit para um e-mail `@users.noreply.github.com` só para passar
+  pelo bloqueio. O controle existe para um administrador revisar o commit antes do deploy ("Review the commit
+  before changing settings"). Contorná-lo é decisão do dono.
+- **Quem resolve:** só o dono — verificar o e-mail de commit no GitHub e conectar a conta ao team do Vercel.
+  Da sessão de nuvem não há acesso: `get_project` → 404 e `list_deployments` → 403, então nem re-rodar o
+  deployment é possível.
+
+`Vercel Agent Review` devolve `Review skipped because usage billing is not enabled for this team` — o review
+automático do Vercel está desligado por billing do team, não por configuração do repo.
 
 **O que foi tentado e falhou nesta sessão:** os dois hosts (`hello-v3.vercel.app` e o preview
 `.lovable.app`) são **bloqueados pela política de egress do ambiente de nuvem**
