@@ -124,8 +124,8 @@ describe('ErrorBoundary: Compact mode', () => {
         <AlwaysThrows />
       </ErrorBoundary>
     );
-    expect(screen.getByText(/Erro ao carregar/)).toBeInTheDocument();
-    expect(screen.getByText(/"TestSection"/)).toBeInTheDocument();
+    expect(screen.getByText(/Erro ao carregar/u)).toBeInTheDocument();
+    expect(screen.getByText(/"TestSection"/u)).toBeInTheDocument();
   });
 
   it('compact mode shows error message', () => {
@@ -249,8 +249,8 @@ describe('SectionBoundary: Wrapper component', () => {
         <AlwaysThrows />
       </SectionBoundary>
     );
-    expect(screen.getByText(/Erro ao carregar/)).toBeInTheDocument();
-    expect(screen.getByText(/"BrokenWidget"/)).toBeInTheDocument();
+    expect(screen.getByText(/Erro ao carregar/u)).toBeInTheDocument();
+    expect(screen.getByText(/"BrokenWidget"/u)).toBeInTheDocument();
   });
 
   it('shows compact error UI (not full page)', () => {
