@@ -44,7 +44,7 @@ os **66** `index.ts` foram varridos com um script que extraiu, por arquivo e com
 | approve-password-reset | ✅ | [UI] `src/pages/PasswordResetApproval.tsx:56` | password_reset_requests, user_profiles, audit_logs | nenhuma | n/d (default) | SERVICE_ROLE, ANON | — (checa papel admin/supervisor `:46`) |
 | auto-scorecard | 🟨 | [CRON/trigger pg_net] `supabase/migrations/20260723114001_...sql:13` | call_sessions, call_summaries, call_scorecards, scorecard_* | Lovable AI `:84` | n/d (default) | LOVABLE_API_KEY, SERVICE_ROLE | **import inexistente** `npm:@supabase/supabase-js@2/cors` (`:3`); URL do trigger aponta para outro projeto (ver Achados graves) |
 | bitrix-api | ✅ | [UI] `src/hooks/useBitrix.ts:77`; [outra function] `supabase/functions/sync-crm-queue/index.ts:38` | nenhuma (proxy) | Bitrix24 webhook (`BITRIX_WEBHOOK_URL`) | n/d (default) | BITRIX_WEBHOOK_URL, ANON | segredo fora do `.env.example` |
-| chat-widget-session | 🟨 | **[NENHUM ENCONTRADO]** nos 5 padrões — endpoint público de widget anônimo | chat_sessions, conversations, conversation_messages, agents | nenhuma | n/d (default) | SERVICE_ROLE | service role + **sem auth nem rate-limit** (`:9-12`); nenhum embed/widget no repo que a chame |
+| chat-widget-session | 🟨 | **[NENHUM ENCONTRADO]** nos 5 padrões — endpoint público de widget anônimo | chat_sessions, conversations, conversation_messages, agents | nenhuma | n/d (default) | SERVICE_ROLE | service role, sem auth (intencional — anônimo por protocolo), **com rate-limit por IP** desde `fix:` PR #10 (`checkRateLimitDB`, `:10-17`); nenhum embed/widget no repo que a chame |
 | chatbot-respond | ✅ | [UI] `src/hooks/useChatbot.ts:22` | conversations, conversation_messages, bot_conversations, kb_articles, system_settings | Lovable AI `:102` | n/d (default) | LOVABLE_API_KEY, SERVICE_ROLE | service role sem checar quem chama (`:29-32`) |
 | check-alerts | ✅ | [UI] invoke dinâmico `src/components/settings/SystemMaintenancePanel.tsx:11` + `:24` | call_alerts | nenhuma | n/d (default) | SERVICE_ROLE, ANON | não valida papel admin |
 | check-contact-alerts | ✅ | [UI] `src/hooks/useAlerts.ts:104`, `src/hooks/useContactAlerts.ts:130` | contacts, contact_alerts | nenhuma | n/d (default) | SERVICE_ROLE, ANON | — |
@@ -138,7 +138,7 @@ Observação adicional: `supabase/functions/check-calling-hours/` e `supabase/fu
 
 2. **Service role sem qualquer checagem de identidade — 16 funções.** Criam o cliente com `SUPABASE_SERVICE_ROLE_KEY` (RLS totalmente bypassado) e não leem `Authorization` nem chamam `auth.getUser()`:
    `chat-widget-session:9-12`, `chatbot-respond:29-32`, `compute-account-health:13-24`, `data-lake-flush:14-17`, `detect-churn-risk:13-24`, `detect-key-moments:33-40`, `dialer-pacing-tick:11-16`, `email-inbound:38-41`, `embed-kb-article:13-16`, `enforce-sla:9-12`, `global-load-test:13-16`, `health-check:10-13`, `request-password-reset:10-12`, `rls-audit:9-11`, `send-survey:19-22`, `sync-crm-queue:9-12`, `teams-fetch-recordings:50-53`, `auto-scorecard:28-31`.
-   (Algumas são públicas por desenho — `request-password-reset`, `health-check`, `chat-widget-session` — mas nenhuma delas tem rate-limit.)
+   (Algumas são públicas por desenho — `request-password-reset`, `health-check`, `chat-widget-session` — mas só `chat-widget-session` tem rate-limit, desde a PR #10.)
 
 3. **Presença do header ≠ autenticação — 4 funções.** Verificam apenas se `Authorization` existe e seguem com service role, sem validar o JWT: `compute-deal-health:14-15`, `forecast-deals:13-14`, `score-call:13-14`, `search-calls:29-33`.
 
