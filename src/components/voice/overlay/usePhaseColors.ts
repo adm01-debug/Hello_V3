@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { safeParseFloat } from '@/lib/safe-number';
 
 /** Fases do assistente de voz (portado do design PROMO GIFTS). */
 export type VoicePhase = 'idle' | 'listening' | 'processing' | 'speaking' | 'error';
@@ -6,7 +7,7 @@ export type VoicePhase = 'idle' | 'listening' | 'processing' | 'speaking' | 'err
 function getThemeHSL(): [number, number, number] {
   if (typeof window === 'undefined') return [25, 95, 53];
   const raw = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
-  const parts = raw.split(/\s+/).map((s) => Number.parseFloat(s.replace('%', '')));
+  const parts = raw.split(/\s+/).map((s) => safeParseFloat(s.replace('%', '')));
   if (parts.length >= 3 && !parts.some((n) => Number.isNaN(n))) {
     return [parts[0], parts[1], parts[2]];
   }

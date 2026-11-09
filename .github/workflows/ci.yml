@@ -28,6 +28,11 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Guard • Integridade das instruções para agentes (AGENTS.md + docs/agentes/)
+        run: |
+          git fetch --no-tags --depth=1 origin main
+          AGENTS_MD_BASE=FETCH_HEAD node scripts/ci/check-claude-md-integrity.mjs
+
       - name: Guard • parseInt/parseFloat proibidos fora de safe-number.ts
         run: node scripts/codemod-safe-number.mjs --check
 

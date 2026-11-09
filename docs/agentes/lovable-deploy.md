@@ -1,0 +1,130 @@
+# Lovable e deploy — referência para agentes
+
+Ler quando for confirmar um deploy, mexer em `.lovable/`, CORS, auth OAuth, ou no gateway de IA.
+
+**Atenção: há duas trilhas de publicação e qual delas serve produção é `NÃO VERIFICADO`** — ver
+"Duas trilhas" abaixo antes de afirmar que um deploy subiu.
+
+| O que | Valor |
+|---|---|
+| Plataforma que escreve no repo | **Lovable** (`gpt-engineer-app`) — commita direto na `main` |
+| Projeto Lovable | `e326811c-e59a-4850-bf9e-cfc9d6748662` (derivado da origem de preview em `supabase/functions/_shared/cors.ts:9`) |
+| URL de preview Lovable | `https://id-preview--e326811c-e59a-4850-bf9e-cfc9d6748662.lovable.app` |
+| Projeto Vercel | **existe**: `hello-v3`, `prj_i2sRUaJ5ORrWDPyhzdyZZkiRkDC8`, team `team_QyN41X0q8hrqhW80AwokbFLv` (slug `juca1`, criado em 2026-09-05) |
+| GitHub App do Vercel | **instalado e ativo** — posta os checks `Vercel Preview Comments` e `Vercel Agent Review` em cada PR |
+| `homepage` do repo no GitHub | `https://hello-v3.vercel.app` |
+| Domínio de produção | **NÃO VERIFICADO** — ver abaixo |
+| Framework / build | Vite + React · `bun run build` (`vite build`) · saída `dist/` · dev em **8080** (`vite.config.ts:14`) |
+| Plugin de build | `lovable-tagger` ativo só em `mode === 'development'` (`vite.config.ts:14`) |
+| Gateway de IA | `https://ai.gateway.lovable.dev/v1/chat/completions` e `/v1/embeddings`, com `LOVABLE_API_KEY` |
+| Auth OAuth | `@lovable.dev/cloud-auth-js` via `src/integrations/lovable/index.ts` (arquivo **auto-gerado**, "Do not modify") |
+| Conector Microsoft | `https://connector-gateway.lovable.dev/microsoft` |
+| MCP do Lovable | **não existe** — confirmação de deploy é por `git log origin/main` + inspeção do app, não por API |
+
+## Duas trilhas de publicação — resolver antes de prometer deploy
+
+| Trilha | Evidência de que existe | O que falta para afirmar que é produção |
+|---|---|---|
+| **Lovable** | O app commita na `main` como `gpt-engineer-app[bot]`; `lovable-tagger` no `vite.config.ts`; a origem de preview está na allowlist de CORS das edges; `approve-password-reset/index.ts:101` monta o `redirectTo` em `.lovable.app` | abrir o preview e confirmar que serve a `main` |
+| **Vercel** | O **GitHub App do Vercel está instalado e rodando**: os checks `Vercel Preview Comments` e `Vercel Agent Review` apareceram no head de uma PR em 2026-11-08. Projeto `hello-v3` em `list_projects` (`prj_i2sRUaJ5ORrWDPyhzdyZZkiRkDC8`, team `team_QyN41X0q8hrqhW80AwokbFLv` / `juca1`) e `hello-v3.vercel.app` como `homepage` do repo | nenhum `vercel.json` no repo; o token Vercel desta sessão **não consegue ler o projeto** (`get_project` → 404, `list_deployments` → 403), então não há como confirmar se existe deployment de produção |
+
+O App do Vercel **não** é um resíduo inerte: ele reage a cada PR e tenta deployar. Trate um merge em `main`
+como capaz de disparar deploy de produção no Vercel, além do que o Lovable fizer.
+
+### 🔴 A trilha Vercel bloqueia deployment por autor de commit
+
+Medido em 2026-11-08 na PR #7: os dois commit statuses do contexto `Vercel` ficaram vermelhos —
+`GitHub couldn’t verify an account for the commit.` e `Deployment was blocked` — e **nenhum build começou**.
+
+- **Causa:** o Vercel exige que o e-mail do **autor do commit** mapeie para uma conta do GitHub verificada e
+  conectada ao team `juca`. Commits autorados como `adm01-debug <comercial@aquarellaprint.com.br>` não
+  passam. Os commits da `main` escapam porque são do `gpt-engineer-app[bot]`, com e-mail
+  `…@users.noreply.github.com`, verificado por construção.
+- **Consequência:** enquanto esse mapeamento não existir, **todo** commit de agente com esse e-mail tem o
+  deployment bloqueado — incluindo o merge em `main`. Na prática, hoje **a trilha Vercel não publica nada
+  originado desta conta**, e um `Vercel` vermelho numa PR de agente não quer dizer que o código esteja errado.
+- **O que não fazer:** reescrever o autor do commit para um e-mail `@users.noreply.github.com` só para passar
+  pelo bloqueio. O controle existe para um administrador revisar o commit antes do deploy ("Review the commit
+  before changing settings"). Contorná-lo é decisão do dono.
+- **Quem resolve:** só o dono — verificar o e-mail de commit no GitHub e conectar a conta ao team do Vercel.
+  Da sessão de nuvem não há acesso: `get_project` → 404 e `list_deployments` → 403, então nem re-rodar o
+  deployment é possível.
+
+`Vercel Agent Review` devolve `Review skipped because usage billing is not enabled for this team` — o review
+automático do Vercel está desligado por billing do team, não por configuração do repo.
+
+**O que foi tentado e falhou nesta sessão:** os dois hosts (`hello-v3.vercel.app` e o preview
+`.lovable.app`) são **bloqueados pela política de egress do ambiente de nuvem**
+(`connect_rejected` no proxy, `curl` → `000`). Logo **não foi possível verificar qual das duas serve o
+usuário final**.
+
+**Regra prática:** depois de um merge, não escreva "deploy confirmado". Diga qual trilha você conferiu e
+como. Se precisar de certeza, peça ao dono: (a) o domínio de produção real e (b) acesso ao projeto Vercel
+`hello-v3` ou a confirmação de que ele é um shell não usado.
+
+## Deploy e edge functions
+
+- **Front:** o repositório não tem workflow de deploy (`.github/workflows/` tem só `ci.yml`) — **o deploy
+  não é disparado pelo GitHub Actions**. Ele é disparado pela plataforma que estiver conectada à `main`,
+  logo **merge em `main` = produção** em qualquer das duas trilhas.
+- **O Lovable escreve na `main`.** Commits `gpt-engineer-app[bot]` ("Lovable update", "Visual edit in
+  Lovable", "Work in progress") entram direto, sem PR e sem passar por CI verde. É uma segunda fonte de
+  mudança no mesmo repo: **re-sync antes de editar** e nunca force-push em `main`.
+- **Edge functions:** **não há deploy automático versionado** — nenhum workflow publica
+  `supabase/functions/`. Como o deploy é feito (CLI do Supabase, painel ou integração do Lovable) **não está
+  no repositório**: `NÃO VERIFICADO`. Antes de afirmar que uma edge subiu, confirme no painel do Supabase;
+  não execute `supabase functions deploy` contra produção por iniciativa própria.
+- `src/integrations/lovable/index.ts` e `src/integrations/supabase/client.ts`/`types.ts` são **gerados**
+  ("This file is automatically generated. Do not edit it directly."). Mudança neles é sobrescrita na próxima
+  geração — corrija a origem, não o arquivo.
+
+## CORS — furo conhecido
+
+`supabase/functions/_shared/cors.ts`:
+
+- `:20-21` aceita **qualquer** `https://<algo>.lovable.app` por regex. Qualquer app hospedado nesse domínio
+  de terceiro recebe `Access-Control-Allow-Origin` refletido.
+- `:22` faz origem desconhecida **não ser bloqueada**: devolve `ALLOWED_ORIGINS[0]`, que é
+  `http://localhost:8086`.
+- `:4-8` deixa 5 origens de desenvolvimento (`localhost:8086/8081/5173/3000/8080`) na lista de produção.
+- `:35` exporta `corsHeaders` **depreciado**, avaliado sem `req` — devolve sempre `http://localhost:8086`.
+  Há 9 funções que ainda o importam.
+
+Ao criar edge function nova: use `buildCorsHeaders(req)`, nunca o `corsHeaders` depreciado. Estreitar a
+regex ou remover as origens de desenvolvimento muda o perímetro de produção — **chame o dono**.
+
+## Segredos do lado Lovable
+
+- `LOVABLE_API_KEY` — usada em **23 edge functions** (`Deno.env.get('LOVABLE_API_KEY')`). Secret de edge
+  function, **nunca** com prefixo `VITE_` e nunca no front.
+- Nenhum segredo de edge está documentado em `.env.example` (ver `mapa-repo.md` → o `.env.example` é ficção
+  herdada de um projeto Next.js). Secret novo de edge: `supabase secrets set` ou painel, e registre o **nome**
+  em `.env.example` sem valor.
+- `supabase/functions/approve-password-reset/index.ts:101` monta o `redirectTo` trocando `.supabase.co` por
+  `.lovable.app` na URL do projeto. Se o app ganhar domínio próprio, essa linha quebra o fluxo de reset de
+  senha — é o ponto a mudar, não o painel.
+- `supabase/functions/sip-config/index.ts:5` tem `Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "fallback-key"`:
+  falha **aberta** com segredo previsível em vez de falhar fechada. Não replique esse padrão.
+
+## `.lovable/` e `mem/` — o que são
+
+- `.lovable/plan.md` — plano da "onda" corrente escrito pelo Lovable. É intenção, não estado: a Onda 39
+  declara 8 páginas com o bug de hooks e **7 já foram corrigidas** (resta
+  `src/pages/TopicDetection.tsx:100`, onde `usePageTitle` é chamado dentro do subcomponente `TrendIcon`).
+- `.lovable/memory/**` (4 arquivos) e `mem/**` (44 arquivos) — memória de feature por onda, com descrição de
+  arquitetura por módulo. Útil para entender a intenção de um módulo antes de mexer; **não** é inventário de
+  estado. O inventário é `ESTADO_ATUAL.md` + `docs/estado/`.
+
+## Dependências e lockfile
+
+`bun.lock` fixa **143 URLs de tarball** em `europe-west1-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache`
+(Artifact Registry privado da Lovable), enquanto `package-lock.json` aponta `registry.npmjs.org` em 793
+entradas. Não há `.npmrc` nem `bunfig.toml` versionado.
+
+- O CI usa `bun install` (`ci.yml:29`), logo consome o `bun.lock`. Ambiente sem credencial para
+  `lovable-core-prod` (um fork, um runner novo) não instala pelo caminho oficial do projeto — em auditoria
+  anterior `bun install` recuperou 393 pacotes contra 503 do `npm ci`, faltando `fast-check`, `@dnd-kit/core`,
+  `jspdf`, `web-vitals` e `react-markdown`.
+- Três lockfiles coexistem (`bun.lock`, `bun.lockb`, `package-lock.json`), dois gerenciadores, dois
+  registries. **Ao adicionar dependência, atualize o lockfile que o CI usa (`bun.lock`) e avise na PR** que o
+  outro ficou divergente; consolidar para um só gerenciador é decisão do dono (toca CI).
