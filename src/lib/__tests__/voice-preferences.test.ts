@@ -122,6 +122,7 @@ describe('seleção de voz (PBT)', () => {
           result.length > 0 &&
           result.length <= MAX_VOICE_URI_LENGTH &&
           result === result.trim() &&
+          // eslint-disable-next-line no-control-regex
           !/[\u0000-\u001f\u007f]/.test(result)
         );
       }),
