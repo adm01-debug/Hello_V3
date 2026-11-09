@@ -124,8 +124,8 @@ describe('ErrorBoundary: Compact mode', () => {
         <AlwaysThrows />
       </ErrorBoundary>
     );
-    expect(screen.getByText(/Erro ao carregar/)).toBeInTheDocument();
-    expect(screen.getByText(/"TestSection"/)).toBeInTheDocument();
+    expect(screen.getByText('Erro ao carregar', {exact: false})).toBeInTheDocument();
+    expect(screen.getByText('"TestSection"', {exact: false})).toBeInTheDocument();
   });
 
   it('compact mode shows error message', () => {
@@ -186,7 +186,7 @@ describe('ErrorBoundary: Recovery via retry', () => {
   });
 
   it('retry button resets error state', () => {
-    const { rerender } = render(
+    render(
       <ErrorBoundary>
         <AlwaysThrows />
       </ErrorBoundary>
@@ -249,8 +249,8 @@ describe('SectionBoundary: Wrapper component', () => {
         <AlwaysThrows />
       </SectionBoundary>
     );
-    expect(screen.getByText(/Erro ao carregar/)).toBeInTheDocument();
-    expect(screen.getByText(/"BrokenWidget"/)).toBeInTheDocument();
+    expect(screen.getByText('Erro ao carregar', {exact: false})).toBeInTheDocument();
+    expect(screen.getByText('"BrokenWidget"', {exact: false})).toBeInTheDocument();
   });
 
   it('shows compact error UI (not full page)', () => {
@@ -272,7 +272,7 @@ describe('ErrorBoundary: Dashboard integration (Index.tsx)', () => {
   });
 
   it('imports SectionBoundary', () => {
-    expect(content).toContain("import { SectionBoundary }");
+    expect(content).toContain('import { SectionBoundary }');
   });
 
   it('wraps Statistics section', () => {
@@ -329,8 +329,8 @@ describe('ErrorBoundary: Component structure', () => {
   });
 
   it('uses logger for error reporting', () => {
-    expect(content).toContain("logger");
-    expect(content).toContain("log.error");
+    expect(content).toContain('logger');
+    expect(content).toContain('log.error');
   });
 
   it('SectionBoundary passes compact and section props', () => {
