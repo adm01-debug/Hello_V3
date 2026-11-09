@@ -4,7 +4,9 @@ import { useSessionManager } from '../useSessionManager';
 
 const fromBuilder = () => {
   const b: Record<string, unknown> = {};
-  b.insert = vi.fn(() => ({ select: vi.fn(() => ({ single: vi.fn().mockResolvedValue({ data: { id: 'sess1' }, error: null }) })) }));
+  const sessionResult = { select: vi.fn(() => ({ single: vi.fn().mockResolvedValue({ data: { id: 'sess1' }, error: null }) })) };
+  b.insert = vi.fn(() => sessionResult);
+  b.upsert = vi.fn(() => sessionResult);
   b.select = vi.fn(() => b);
   b.eq = vi.fn(() => b);
   b.neq = vi.fn(() => b);
