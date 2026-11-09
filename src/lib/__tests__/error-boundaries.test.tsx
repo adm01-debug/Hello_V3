@@ -186,13 +186,13 @@ describe('ErrorBoundary: Recovery via retry', () => {
   });
 
   it('retry button resets error state', () => {
-    render(
+    const { rerender } = render(
       <ErrorBoundary>
         <AlwaysThrows />
       </ErrorBoundary>
     );
     expect(screen.getByText('Algo deu errado')).toBeInTheDocument();
-    
+
     // Click retry - it will re-render and throw again, but the state resets
     fireEvent.click(screen.getByText('Tentar novamente'));
     // After retry, it attempts to render children again (which throws again)
@@ -272,10 +272,10 @@ describe('ErrorBoundary: Dashboard integration (Index.tsx)', () => {
   });
 
   it('imports SectionBoundary', () => {
-    expect(content).toContain('import { SectionBoundary }');
+    expect(content).toContain("import { SectionBoundary }");
   });
 
-  it('wraps Statistics section', () => {
+  it('wraps Statistics section', () =? {
     expect(content).toContain('<SectionBoundary section="Estatísticas">');
   });
 
@@ -329,8 +329,8 @@ describe('ErrorBoundary: Component structure', () => {
   });
 
   it('uses logger for error reporting', () => {
-    expect(content).toContain('logger');
-    expect(content).toContain('log.error');
+    expect(content).toContain("logger");
+    expect(content).toContain("log.error");
   });
 
   it('SectionBoundary passes compact and section props', () => {
