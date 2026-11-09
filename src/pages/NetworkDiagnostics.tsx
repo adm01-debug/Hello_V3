@@ -13,6 +13,7 @@ import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
 import { SlaReportCards } from '@/components/network/SlaReportCards';
 import { QualityAlertsCard } from '@/components/network/QualityAlertsCard';
+import { QualityAlertsSummaryCard } from '@/components/network/QualityAlertsSummaryCard';
 import { QualityHeatmap } from '@/components/network/QualityHeatmap';
 import { AgentQualityRanking } from '@/components/network/AgentQualityRanking';
 import { AnomalyDetectionCard } from '@/components/network/AnomalyDetectionCard';
@@ -252,6 +253,7 @@ const NetworkDiagnostics = () => {
         <div id="capacity-forecast"><CapacityForecastChart /></div>
 
         {/* Onda 12 — Alertas persistentes de qualidade */}
+        <div id="quality-alerts-summary"><QualityAlertsSummaryCard /></div>
         <div id="quality-alerts"><QualityAlertsCard /></div>
 
         {/* MOS chart */}
