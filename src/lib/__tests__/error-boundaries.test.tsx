@@ -275,7 +275,7 @@ describe('ErrorBoundary: Dashboard integration (Index.tsx)', () => {
     expect(content).toContain("import { SectionBoundary }");
   });
 
-  it('wraps Statistics section', () =? {
+  it('wraps Statistics section', () => {
     expect(content).toContain('<SectionBoundary section="Estatísticas">');
   });
 
