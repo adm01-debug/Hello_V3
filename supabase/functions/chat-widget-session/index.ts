@@ -1,11 +1,21 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
+import { checkRateLimitDB, getClientIp } from '../_shared/rate-limit.ts';
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
   try {
+    // Endpoint público e anônimo (widget de chat sem login): a única defesa contra abuso
+    // é por IP, já que não há usuário autenticado nem visitor_token antes do 'create'.
+    const rl = await checkRateLimitDB(getClientIp(req), 'chat-widget-session');
+    if (!rl.allowed) {
+      return new Response(JSON.stringify({ error: 'Limite excedido' }), {
+        status: 429, headers: { ...cors, 'Content-Type': 'application/json' },
+      });
+    }
+
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
