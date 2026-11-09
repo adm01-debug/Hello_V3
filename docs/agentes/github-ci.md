@@ -11,8 +11,7 @@ forma estranha.
   semântica, e confira depois que o arquivo remoto bate com o que você testou. Ele aceita `files` e `delete`
   no mesmo commit (1 commit atômico).
 - Commits: `<tipo>(<escopo>): <assunto>` com assunto ≥ 10 caracteres e sem ponto final, em PT-BR, imperativo.
-  **Não há hook `commit-msg` nem husky neste repo** — o padrão é cobrado por revisão. `infra` existe só como
-  tipo de **branch**; para o commit use `ci:` ou `chore:`.
+  **Não há hook `commit-msg` nem husky neste repo** — o padrão é cobrado por revisão. Os prefixos de branch válidos são `fix`, `feat`, `chore`, `docs` e `ci` (não há `infra` neste repo — use `ci:` ou `chore:` no commit e na branch).
 - Sessão na nuvem: o repo é **privado**, então leitura por `raw.githubusercontent.com` **não** funciona sem
   token, e `git push` volta 403 do proxy quando o repo não está entre as fontes autorizadas da sessão —
   escreva pelo MCP. Para listar PRs abertas com os arquivos que tocam numa chamada só, use `github_graphql`
@@ -79,23 +78,24 @@ jobs entraram em execução normalmente. Logo o bloqueio efetivo hoje é só o g
 
 | Gate | `ci.yml` | O que realmente faz | Veredito |
 |---|---|---|---|
-| Guard `codemod-safe-number --check` | `:31-32` | Hoje **0 ocorrências em `src/`** *se* `usePhaseColors.ts` for corrigido. Furos: `parseInt(x, 16)` sai com exit 0 e mensagem de sucesso **falsa** (`:136-141` + `:207-211` + `:224`); `computeSkipRanges` (`:75-84`) trata apóstrofo de JSX como abertura de string e engole código; escopo fixo em `src/` (`:30`), sem `scripts/`, `tests/`, `e2e/`; `Number(` não é verificado (124 usos em `src/`). Redundante com `eslint.config.js:31-41`. | 🟨 passa com buracos |
-| Guard `guard-edge-numeric --check` | `:34-35` | `Number.parseInt`/`Number.parseFloat` estão na **allowlist** (`:41-42`) contradizendo o próprio cabeçalho (`:9-11`) — a regra R2 está desarmada. Só varre arquivos chamados exatamente `index.ts` (`:53`) e **pula `_shared/` inteiro** (`:51`), onde `_shared/validate.ts:24` já viola R2. R1 só casa `z.number()` literal com `.finite(` imediato (`:118-122`). 27 supressões `// safe-numeric-ok` ativas. | 🟨 regra furada |
-| Lint | `:37-39` | `eslint.config.js:8` ignora **`supabase/**`** → as 98 edge functions **nunca são lintadas**; o glob `**/*.{ts,tsx}` não cobre `scripts/*.mjs` (19 scripts sem lint). | 🟨 cego para 2 diretórios |
-| Type-check | `:41-42` | `tsconfig.json:26` tem `"include": ["src"]` → `e2e/`, `tests/`, `scripts/` e os `*.config.ts` **nunca são type-checkados**. `tsconfig.app.json` e `tsconfig.node.json` existem e **não são referenciados** (sem `"references"`) — configs órfãs. | 🟨 parcial |
-| Unit tests (Vitest) | `:44-47` | Thresholds 75/75/70/75 são reais (`vitest.config.ts:28-33`), mas `coverage.include` (`:21`) mede só `src/lib/**` e `src/hooks/**` → os **473 arquivos de `components/` + `pages/` ficam fora** (~34% da superfície medida). `exclude` de `*.integration.*` é configuração morta (0 arquivos). | 🟨 threshold sobre 1/3 do código |
-| E2E Playwright | `:49-54` | **Não pode passar.** `playwright.config.ts:11,23` espera `http://localhost:5173`; `vite.config.ts:14` serve em **8080** → `webServer` dá timeout. `testDir: './tests/e2e'` (`:4`) deixa os **7 specs de `e2e/` sem runner nenhum**. `tests/e2e/auth.spec.ts:22` espera título `/Freight/i` e `index.html:6` declara `CallCenter Pro`. Credenciais (`E2E_ADMIN_EMAIL`/`E2E_ADMIN_PASSWORD`/`E2E_SUPABASE_SESSION_JSON`) não são injetadas — o único `env:` do passo é `CI: true`. | ⬛ quebrado |
-| Edge Function Tests (Deno) | `:56-61` | 40 arquivos de teste Deno existem e a descoberta padrão os pega. Mas **não há `deno.json` nem import map**: imports resolvem por URL remota a cada execução, sem lockfile — build não determinístico. | 🟨 sem hermeticidade |
-| Build | `:64-65` | Passa **porque `.env` está versionado**: `src/integrations/supabase/client.ts:8-12` lança exceção sem `VITE_SUPABASE_URL`/`VITE_SUPABASE_PUBLISHABLE_KEY`. | ✅ por motivo errado |
-| Job `security` | `:75-85` | `bun audit \|\| true` — o `\|\| true` anula o resultado: **verde por construção mesmo com CVE crítico**. Sem SAST, secret scanning, CodeQL ou verificação de licença. | ⬛ não valida nada |
+| Guard `check-claude-md-integrity` | `:31-34` | Exige 8 seções obrigatórias em `AGENTS.md` e barra o conjunto `AGENTS.md` + `CLAUDE.md` + `docs/agentes/*.md` encolher >30% ou qualquer arquivo vigiado >50%. Compara contra `origin/main` via `AGENTS_MD_BASE=FETCH_HEAD`. Hoje passa. | ✅ passa |
+| Guard `codemod-safe-number --check` | `:36-37` | Hoje **0 ocorrências em `src/`** *se* `usePhaseColors.ts` for corrigido. Furos: `parseInt(x, 16)` sai com exit 0 e mensagem de sucesso **falsa** (`:136-141` + `:207-211` + `:224`); `computeSkipRanges` (`:75-84`) trata apóstrofo de JSX como abertura de string e engole código; escopo fixo em `src/` (`:30`), sem `scripts/`, `tests/`, `e2e/`; `Number(` não é verificado (124 usos em `src/`). Redundante com `eslint.config.js:31-41`. | 🟨 passa com buracos |
+| Guard `guard-edge-numeric --check` | `:39-40` | `Number.parseInt`/`Number.parseFloat` estão na **allowlist** (`:41-42`) contradizendo o próprio cabeçalho (`:9-11`) — a regra R2 está desarmada. Só varre arquivos chamados exatamente `index.ts` (`:53`) e **pula `_shared/` inteiro** (`:51`), onde `_shared/validate.ts:24` já viola R2. R1 só casa `z.number()` literal com `.finite(` imediato (`:118-122`). 27 supressões `// safe-numeric-ok` ativas. | 🟨 regra furada |
+| Lint | `:42-44` | `eslint.config.js:8` ignora **`supabase/**`** → as 98 edge functions **nunca são lintadas**; o glob `**/*.{ts,tsx}` não cobre `scripts/*.mjs` (19 scripts sem lint). | 🟨 cego para 2 diretórios |
+| Type-check | `:46-47` | `tsconfig.json:26` tem `"include": ["src"]` → `e2e/`, `tests/`, `scripts/` e os `*.config.ts` **nunca são type-checkados**. `tsconfig.app.json` e `tsconfig.node.json` existem e **não são referenciados** (sem `"references"`) — configs órfãs. | 🟨 parcial |
+| Unit tests (Vitest) | `:49-52` | Thresholds 75/75/70/75 são reais (`vitest.config.ts:28-33`), mas `coverage.include` (`:21`) mede só `src/lib/**` e `src/hooks/**` → os **473 arquivos de `components/` + `pages/` ficam fora** (~34% da superfície medida). `exclude` de `*.integration.*` é configuração morta (0 arquivos). | 🟨 threshold sobre 1/3 do código |
+| E2E Playwright | `:54-59` | **Não pode passar.** `playwright.config.ts:11,23` espera `http://localhost:5173`; `vite.config.ts:14` serve em **8080** → `webServer` dá timeout. `testDir: './tests/e2e'` (`:4`) deixa os **7 specs de `e2e/` sem runner nenhum**. `tests/e2e/auth.spec.ts:22` espera título `/Freight/i` e `index.html:6` declara `CallCenter Pro`. Credenciais (`E2E_ADMIN_EMAIL`/`E2E_ADMIN_PASSWORD`/`E2E_SUPABASE_SESSION_JSON`) não são injetadas — o único `env:` do passo é `CI: true`. | ⬛ quebrado |
+| Edge Function Tests (Deno) | `:61-66` | 40 arquivos de teste Deno existem e a descoberta padrão os pega. Mas **não há `deno.json` nem import map**: imports resolvem por URL remota a cada execução, sem lockfile — build não determinístico. | 🟨 sem hermeticidade |
+| Build | `:69-70` | Passa **porque `.env` está versionado**: `src/integrations/supabase/client.ts:8-12` lança exceção sem `VITE_SUPABASE_URL`/`VITE_SUPABASE_PUBLISHABLE_KEY`. | ✅ por motivo errado |
+| Job `security` | `:80-90` | `bun audit \|\| true` — o `\|\| true` anula o resultado: **verde por construção mesmo com CVE crítico**. Sem SAST, secret scanning, CodeQL ou verificação de licença. | ⬛ não valida nada |
 
 ## Guards que você pode rodar antes da PR
 
-- `node scripts/codemod-safe-number.mjs --check` (o que derruba o CI hoje);
-- `node scripts/guard-edge-numeric.mjs --check` (se mexer em `supabase/functions/`);
 - `node scripts/ci/check-claude-md-integrity.mjs` (se mexer em `AGENTS.md` ou `docs/agentes/`: exige os
   cabeçalhos do `AGENTS.md` e barra o conjunto `AGENTS.md` + `CLAUDE.md` + `docs/agentes/*.md` encolher >30%,
   ou qualquer arquivo vigiado encolher >50%);
+- `node scripts/codemod-safe-number.mjs --check` (o que derruba o CI hoje);
+- `node scripts/guard-edge-numeric.mjs --check` (se mexer em `supabase/functions/`);
 - `bun run type-check`, `npx eslint <arquivos>`, `npx vitest run <caminho>` do que tocou.
 
 ## Ao mexer em `.github/workflows/`

@@ -113,11 +113,11 @@ Detalhe em `docs/agentes/<tema>.md`; divergiu da realidade → corrija no mesmo 
   Vitest + jsdom, Playwright (`tests/e2e/`), Tailwind + shadcn/ui. Node ≥ 20. O CI usa **bun**
   (`bun install`), mas há três lockfiles e o `bun.lock` fixa um registry privado da Lovable — leia
   `lovable-deploy.md` antes de mexer em dependência.
-- `bun run type-check` (cobre só `src/`); `npx eslint <arquivos>` (ignora `supabase/**` e `scripts/`);
+- `bun run type-check` (cobre só `src/`); `npx eslint <arquivos>` (ignora `supabase/**` e `scripts/`); 
   `npx vitest run <caminho>`; `deno test -A supabase/functions/`; `bun run dev` → **8080**, apontando para
   **produção**. `bunx playwright test` hoje **não sobe** (porta 5173 ≠ 8080).
-- Guards antes da PR: `node scripts/codemod-safe-number.mjs --check`,
-  `node scripts/guard-edge-numeric.mjs --check`, `node scripts/ci/check-claude-md-integrity.mjs`.
+- Guards antes da PR: `node scripts/ci/check-claude-md-integrity.mjs`,
+  `node scripts/codemod-safe-number.mjs --check`, `node scripts/guard-edge-numeric.mjs --check`.
 - **Proibido `parseInt`/`parseFloat`/`Number.parseInt`/`Number.parseFloat`** em `src/` — use
   `@/lib/safe-number`. É `error` no ESLint e o primeiro guard do CI.
 - Automação nova em `scripts/<nome>/` com README; nunca em `supabase/` (o CLI é dono) nem `src/` (entra no

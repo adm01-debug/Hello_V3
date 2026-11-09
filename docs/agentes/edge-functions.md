@@ -84,8 +84,9 @@ Sem eles o deploy degrada em silêncio (`wavoip-call:43` e `voice-command:46` re
 `voip-trunks-manage:7` cai no `"fallback-key"`). **Ao usar um secret novo, registre o nome em `.env.example`
 sem valor.**
 
-**Vazamento de convenção:** 8 funções leem `VITE_SUPABASE_URL` e 5 leem `VITE_SUPABASE_PUBLISHABLE_KEY` com
-`Deno.env.get` — variável de front usada no back. Em função nova use `SUPABASE_URL`/`SUPABASE_ANON_KEY`.
+**Padrão de teste legado:** 8 arquivos `__tests__/index.test.ts` leem `VITE_SUPABASE_URL` e 5 leem
+`VITE_SUPABASE_PUBLISHABLE_KEY` com `Deno.env.get` — isso ocorre **somente em arquivos de teste**, não em
+código de produção (`index.ts`). Em função nova **e em seus testes**, use `SUPABASE_URL`/`SUPABASE_ANON_KEY`.
 
 ## Testes Deno — limite
 

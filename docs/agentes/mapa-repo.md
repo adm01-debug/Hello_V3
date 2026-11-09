@@ -63,8 +63,8 @@ instala mais pacotes que `bun install` em ambiente sem credencial da Lovable.
 - E2E: `bunx playwright test`. **Hoje não sobe:** `playwright.config.ts:11,23` espera `localhost:5173` e
   `vite.config.ts:14` serve em **8080**.
 - edges: `deno test -A supabase/functions/` (sem `deno.json`, imports resolvem por URL remota).
-- guards do CI antes da PR: `node scripts/codemod-safe-number.mjs --check`,
-  `node scripts/guard-edge-numeric.mjs --check`, `node scripts/ci/check-claude-md-integrity.mjs`.
+- guards do CI antes da PR: `node scripts/ci/check-claude-md-integrity.mjs`,
+  `node scripts/codemod-safe-number.mjs --check`, `node scripts/guard-edge-numeric.mjs --check`.
 - dev server: `bun run dev` → `http://localhost:8080`. **Aponta para o banco de produção**
   (`src/integrations/supabase/client.ts` não tem desvio local) — confira antes de testar tela.
 - **Não há husky nem hook de git neste repo**: nada roda automaticamente antes do commit.
@@ -86,9 +86,9 @@ instala mais pacotes que `bun install` em ambiente sem credencial da Lovable.
 - **Tipagem:** `tsc --noEmit` passa com **0 erros** em ≈165 mil linhas, sem `any` disseminado.
 - **Suíte:** 3.272 de 3.276 testes passam; 233 dos 268 arquivos exercitam o alvo real, com testes de
   propriedade (`fast-check`) e fuzz.
-- **RLS/RBAC:** 714 policies sobre 162 tabelas; só 2 tabelas sem RLS, de controle interno
-  (`schema_migrations`, `migration_rollbacks`). Tabela de papéis separada, 22 rotas admin-only e 25
-  supervisor+admin, com guarda declarativa.
+- **RLS/RBAC:** 714 policies; 160 tabelas com `ENABLE ROW LEVEL SECURITY` nas migrations, 159 em `types.ts`
+  — fonte canônica em `docs/agentes/banco.md` §Estrutura. Sem RLS por design: `schema_migrations` e
+  `migration_rollbacks`. Tabela de papéis separada, 22 rotas admin-only e 25 supervisor+admin, com guarda declarativa.
 - **Concorrência:** locking otimista implementado e coberto por testes defensivos reais.
 - **Roteamento:** 100% lazy-loaded com code splitting; 103 de 129 páginas roteadas, 1 órfã real.
 - Os 4 testes vermelhos conhecidos estão em `src/hooks/__tests__/useSessionManager.coverage.test.tsx`
