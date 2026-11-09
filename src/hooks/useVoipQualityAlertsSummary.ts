@@ -24,13 +24,12 @@ export function useVoipQualityAlertsSummary(period: AlertsSummaryPeriod = 'week'
     queryKey: ['voip-quality-alerts-summary', period],
     queryFn: async () => {
       return await withTrace('voip.quality-alerts-summary', async () => {
-        const { data, error } = await supabase.functions.invoke('voip-quality-alerts-summary', {
-          method: 'GET',
-          headers: traceHeaders(),
-          body: undefined,
-          // @ts-expect-error supabase-js v2 aceita query
-          query: { period },
-        });
+        // supabase-js (FunctionsClient.invoke) não tem opção `query`: monta a querystring no
+        // próprio nome da function, que o cliente concatena direto na URL (`${url}/${functionName}`).
+        const { data, error } = await supabase.functions.invoke(
+          `voip-quality-alerts-summary?period=${encodeURIComponent(period)}`,
+          { method: 'GET', headers: traceHeaders(), body: undefined },
+        );
         if (error) {
           log.error('Falha ao carregar resumo de alertas de qualidade', error);
           throw error;

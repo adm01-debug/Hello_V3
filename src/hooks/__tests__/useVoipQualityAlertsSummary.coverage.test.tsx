@@ -37,18 +37,22 @@ describe('useVoipQualityAlertsSummary', () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data?.requestId).toBe('r1');
     expect(invokeMock).toHaveBeenCalledWith(
-      'voip-quality-alerts-summary',
-      expect.objectContaining({ method: 'GET', query: { period: 'week' } }),
+      'voip-quality-alerts-summary?period=week',
+      expect.objectContaining({ method: 'GET' }),
     );
   });
 
-  it('aceita período day e month', async () => {
+  it('aceita período day e month (querystring no nome da function, não em `query`)', async () => {
     invokeMock.mockResolvedValue({ data: { ...sample, period: 'day' }, error: null });
     const { result } = renderHook(() => useVoipQualityAlertsSummary('day'), { wrapper });
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    // supabase-js FunctionsClient.invoke não tem opção `query` — passá-la em `options` é
+    // descartada em silêncio pela lib real (confirmado lendo @supabase/functions-js instalado:
+    // o invoke só desestrutura headers/method/body/signal/timeout). O período tem que estar na
+    // própria string do nome da function, senão a edge function recebe sempre o default 'week'.
     expect(invokeMock).toHaveBeenCalledWith(
-      'voip-quality-alerts-summary',
-      expect.objectContaining({ query: { period: 'day' } }),
+      'voip-quality-alerts-summary?period=day',
+      expect.not.objectContaining({ query: expect.anything() }),
     );
   });
 
