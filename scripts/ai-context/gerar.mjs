@@ -581,6 +581,7 @@ const edges = secao('edges', () => {
     const dir = `${EDGE_DIR}/${name}`;
     if (!fs.statSync(abs(dir)).isDirectory() || name.startsWith('_')) continue;
     const entry = ['index.ts', 'index.js', 'main.ts', 'handler.ts', 'mod.ts'].map((e) => `${dir}/${e}`).find((p) => FILESET.has(p));
+    if (!entry) continue; // pasta sem entrypoint (ex.: só __tests__/) não é uma edge function de verdade
     const files = ALL.filter((f) => f.startsWith(dir + '/') && CODE_EXT.has(path.extname(f)) && !TEST_RE.test(f));
     const a = aggregate(files);
     const srcAll = files.map((f) => FILE.get(f)?.conteudo || '').join('\n');
