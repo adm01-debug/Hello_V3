@@ -19,6 +19,6 @@ test.describe('Dashboard and Critical Lists', () => {
     // Note: This would require a mocked session in a real CI environment
     await page.goto('/login');
     // For now, just verifying the page structure
-    await expect(page).toHaveTitle(/Freight/i);
+    await expect(page).toHaveTitle(/CallCenter Pro/i);
   });
 });
