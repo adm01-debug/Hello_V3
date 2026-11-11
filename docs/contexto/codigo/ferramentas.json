@@ -1,0 +1,921 @@
+{
+ "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
+ "format_version": 2,
+ "stack": {
+  "linguagens": [
+   "TypeScript (1158)",
+   "SQL (209)",
+   "Markdown (99)",
+   "JavaScript (27)",
+   "JSON (14)",
+   "Python (5)",
+   "YAML (3)",
+   "Shell (2)"
+  ],
+  "linguagem_principal": "TypeScript",
+  "framework": "React",
+  "backend_http": [],
+  "bundler": "Vite",
+  "roteador": "react-router",
+  "banco": "Supabase",
+  "testes": [
+   "vitest",
+   "playwright"
+  ],
+  "ui": [
+   "tailwind",
+   "radix/shadcn"
+  ],
+  "estado": [
+   "react-query"
+  ],
+  "gerenciador_pacotes": "bun",
+  "node": ">=20.0.0",
+  "python": null,
+  "deploy": [],
+  "monorepo": null,
+  "pastas_fonte": [
+   "src"
+  ]
+ },
+ "workspaces": [],
+ "package": {
+  "nome": "hello",
+  "versao": "2.0.0",
+  "scripts": {
+   "build": "vite build",
+   "build:dev": "vite build",
+   "contexto:banco": "python3 scripts/supabase_snapshot/snapshot.py",
+   "contexto:banco:test": "python3 scripts/supabase_snapshot/test_snapshot.py",
+   "contexto:ia": "node scripts/ai-context/gerar.mjs --out docs/contexto/codigo",
+   "contexto:ia:test": "node --test scripts/ai-context/gerar.unit.mjs",
+   "contexto:regras": "python3 scripts/regras_negocio/generate.py --repo . --out docs/contexto/regras --profile regras --schema-snapshot docs/contexto/supabase --index-path docs/contexto/00-INDEX.md --no-pointer",
+   "contexto:regras:test": "python3 scripts/regras_negocio/test_generate.py",
+   "dev": "vite",
+   "inventario:banco": "node scripts/inventario/gerar-banco.mjs",
+   "inventario:edges": "node scripts/inventario/gerar-repo.mjs",
+   "inventario:rotas": "node scripts/inventario/gerar-rotas.mjs",
+   "lint": "eslint .",
+   "lint:fix": "eslint . --fix",
+   "preview": "vite preview",
+   "type-check": "tsc --noEmit"
+  },
+  "dependencias": 82,
+  "dev_dependencias": 13,
+  "principais": {
+   "@supabase/supabase-js": "^2.98.0",
+   "@tanstack/react-query": "^5.90.21",
+   "@tanstack/react-virtual": "^3.13.20",
+   "date-fns": "^4.1.0",
+   "framer-motion": "^12.35.0",
+   "react": "^18.2.0",
+   "react-day-picker": "^9.14.0",
+   "react-dom": "^18.2.0",
+   "react-hook-form": "^7.71.2",
+   "react-is": "^19.2.4",
+   "react-markdown": "^10.1.0",
+   "react-resizable-panels": "^4.7.1",
+   "react-router-dom": "^7.13.1",
+   "recharts": "^3.7.0",
+   "tailwindcss": "^3.4.1",
+   "tailwindcss-animate": "^1.0.7",
+   "typescript": "^5.3.3",
+   "vite": "^7.3.1",
+   "vitest": "^4.1.0",
+   "zod": "^3.22.4"
+  },
+  "engines": {
+   "node": ">=20.0.0",
+   "npm": ">=10.0.0"
+  },
+  "packageManager": null
+ },
+ "python": {
+  "dependencias": [
+   "psycopg"
+  ]
+ },
+ "configs": [
+  ".editorconfig",
+  ".prettierrc",
+  "ai-context.config.json",
+  "components.json",
+  "deno.json",
+  "eslint.config.js",
+  "package.json",
+  "playwright.config.ts",
+  "postcss.config.js",
+  "supabase/config.toml",
+  "tailwind.config.ts",
+  "tsconfig.app.json",
+  "tsconfig.json",
+  "tsconfig.node.json",
+  "vite.config.ts",
+  "vitest.config.ts"
+ ],
+ "workflows": [
+  {
+   "arquivo": ".github/workflows/ci.yml",
+   "nome": "CI",
+   "gatilhos": [
+    "pull_request",
+    "push"
+   ],
+   "crons": [],
+   "branches": [
+    "main"
+   ],
+   "jobs": [
+    "quality",
+    "security"
+   ],
+   "permissoes": [],
+   "scripts_usados": [
+    "scripts/ci/check-claude-md-integrity.mjs",
+    "scripts/codemod-safe-number.mjs",
+    "scripts/guard-edge-numeric.mjs"
+   ],
+   "npm_scripts": [
+    "build",
+    "lint",
+    "type-check"
+   ],
+   "secrets": [],
+   "actions": [
+    "actions/checkout",
+    "actions/upload-artifact",
+    "oven-sh/setup-bun"
+   ]
+  },
+  {
+   "arquivo": ".github/workflows/contexto.yml",
+   "nome": "Contexto para agentes de IA (10 min)",
+   "gatilhos": [
+    "push",
+    "schedule",
+    "workflow_dispatch"
+   ],
+   "crons": [
+    "3-59/10 * * * *"
+   ],
+   "branches": [
+    "main"
+   ],
+   "jobs": [
+    "gate",
+    "codigo",
+    "banco",
+    "regras",
+    "publicar"
+   ],
+   "permissoes": [
+    "contents: read"
+   ],
+   "scripts_usados": [
+    "scripts/ai-context/gerar.mjs",
+    "scripts/regras_negocio/generate.py",
+    "scripts/regras_negocio/indice.py",
+    "scripts/supabase_snapshot/snapshot.py"
+   ],
+   "npm_scripts": [],
+   "secrets": [
+    "SUPABASE_ACCESS_TOKEN",
+    "SUPABASE_DB_URL"
+   ],
+   "actions": [
+    "actions/cache",
+    "actions/checkout",
+    "actions/download-artifact",
+    "actions/setup-node",
+    "actions/upload-artifact"
+   ]
+  },
+  {
+   "arquivo": ".github/workflows/inventario-estado-semanal.yml",
+   "nome": "Inventário do estado real (semanal)",
+   "gatilhos": [
+    "schedule",
+    "workflow_dispatch"
+   ],
+   "crons": [
+    "23 10 * * 1"
+   ],
+   "branches": [],
+   "jobs": [
+    "gerar"
+   ],
+   "permissoes": [
+    "contents: read"
+   ],
+   "scripts_usados": [
+    "scripts/inventario/gerar-banco.mjs",
+    "scripts/inventario/gerar-repo.mjs",
+    "scripts/inventario/gerar-rotas.mjs",
+    "scripts/inventario/mudou-conteudo.mjs"
+   ],
+   "npm_scripts": [],
+   "secrets": [
+    "SUPABASE_ACCESS_TOKEN"
+   ],
+   "actions": [
+    "actions/checkout",
+    "actions/github-script",
+    "actions/setup-node",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request"
+   ]
+  }
+ ],
+ "hooks_git": [],
+ "docs_raiz": [
+  {
+   "arquivo": ".github/SECURITY.md",
+   "titulo": "Security Policy",
+   "linhas": 35
+  },
+  {
+   "arquivo": "AGENTS.md",
+   "titulo": "AGENTS.md — Hello V3",
+   "linhas": 137
+  },
+  {
+   "arquivo": "CLAUDE.md",
+   "titulo": null,
+   "linhas": 2
+  },
+  {
+   "arquivo": "ESTADO_ATUAL.md",
+   "titulo": "Estado Atual do Sistema — Auditoria de Estado",
+   "linhas": 349
+  },
+  {
+   "arquivo": "README.md",
+   "titulo": "📞 Bitrix Call Connect - VoIP Enterprise & AI Intelligence",
+   "linhas": 79
+  },
+  {
+   "arquivo": "SYSTEM_FEATURES.md",
+   "titulo": "📋 Levantamento Completo de Funcionalidades do Sistema",
+   "linhas": 360
+  },
+  {
+   "arquivo": "docs/CONTEXTO-PARA-AGENTES.md",
+   "titulo": "Contexto para agentes de IA — leia ANTES de qualquer tarefa",
+   "linhas": 41
+  },
+  {
+   "arquivo": "docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md",
+   "titulo": "📊 Inventário Exaustivo de Funcionalidades e Roadmap - VoIP Enterprise",
+   "linhas": 63
+  }
+ ],
+ "docs_em_subpastas": [
+  {
+   "pasta": "docs/adr",
+   "arquivos_md": 53
+  },
+  {
+   "pasta": "docs/estado",
+   "arquivos_md": 18
+  },
+  {
+   "pasta": "docs/agentes",
+   "arquivos_md": 6
+  },
+  {
+   "pasta": "docs/audits",
+   "arquivos_md": 2
+  },
+  {
+   "pasta": "docs/contexto",
+   "arquivos_md": 2
+  },
+  {
+   "pasta": "docs/qa",
+   "arquivos_md": 2
+  },
+  {
+   "pasta": "docs/analises",
+   "arquivos_md": 1
+  },
+  {
+   "pasta": "docs/audit",
+   "arquivos_md": 1
+  },
+  {
+   "pasta": "docs/runbooks",
+   "arquivos_md": 1
+  }
+ ],
+ "changelog_topo": null,
+ "env": {
+  "declaradas_no_env_example": [
+   "ALLOWED_ORIGIN",
+   "CALLS_SERVICE_URL",
+   "CONTACTS_SERVICE_URL",
+   "DATABASE_URL",
+   "DB_CONNECTION_TIMEOUT",
+   "DB_HOST",
+   "DB_IDLE_TIMEOUT",
+   "DB_NAME",
+   "DB_PASSWORD",
+   "DB_POOL_MAX",
+   "DB_POOL_MIN",
+   "DB_PORT",
+   "DB_SSL",
+   "DB_USER",
+   "DD_API_KEY",
+   "DD_APP_KEY",
+   "EMAIL_FROM",
+   "EMAIL_SERVICE_API_KEY",
+   "FEATURE_ANALYTICS",
+   "FEATURE_BETA_FEATURES",
+   "FEATURE_NOTIFICATIONS",
+   "JOB_ENCRYPTION_KEY",
+   "JWT_EXPIRATION",
+   "JWT_SECRET",
+   "LOG_LEVEL",
+   "NEXT_PUBLIC_API_URL",
+   "NEXT_PUBLIC_APP_VERSION",
+   "NODE_ENV",
+   "PORT",
+   "RATE_LIMIT_MAX",
+   "RATE_LIMIT_WINDOW",
+   "REDIS_HOST",
+   "REDIS_PASSWORD",
+   "REDIS_PORT",
+   "REDIS_QUEUE_DB",
+   "SENTRY_DSN",
+   "SENTRY_ENVIRONMENT",
+   "STORAGE_ACCESS_KEY",
+   "STORAGE_BUCKET",
+   "STORAGE_REGION",
+   "STORAGE_SECRET_KEY",
+   "TEST_DATABASE_URL",
+   "TEST_REDIS_HOST",
+   "TEST_REDIS_PORT",
+   "VITE_SUPABASE_PROJECT_ID",
+   "VITE_SUPABASE_PUBLISHABLE_KEY",
+   "VITE_SUPABASE_URL"
+  ],
+  "usadas_no_front": [
+   "VITE_SUPABASE_PROJECT_ID",
+   "VITE_SUPABASE_PUBLISHABLE_KEY",
+   "VITE_SUPABASE_URL",
+   "VITE_TURN_CRED",
+   "VITE_TURN_URL",
+   "VITE_TURN_USER"
+  ],
+  "usadas_nas_edges": [
+   "ADMIN_EMAIL",
+   "BITRIX_WEBHOOK_URL",
+   "ELEVENLABS_AGENT_ID",
+   "ELEVENLABS_API_KEY",
+   "FROM_EMAIL",
+   "LOVABLE_API_KEY",
+   "MICROSOFT_TEAMS_API_KEY",
+   "RESEND_API_KEY",
+   "SIP_PASSWORD",
+   "SIP_SERVER",
+   "SIP_USERNAME",
+   "SUPABASE_ANON_KEY",
+   "SUPABASE_DB_URL",
+   "SUPABASE_SERVICE_ROLE_KEY",
+   "SUPABASE_URL",
+   "VITE_SUPABASE_PUBLISHABLE_KEY",
+   "VITE_SUPABASE_URL",
+   "WAVOIP_TOKEN"
+  ],
+  "usadas_no_python": [
+   "AI_CONTEXT_INDEX",
+   "AI_CONTEXT_MODEL",
+   "AI_CONTEXT_PROFILE",
+   "AI_CONTEXT_SCHEMA_SNAPSHOT",
+   "ANTHROPIC_API_KEY",
+   "CODE_SCAN_DIRS",
+   "GEN_TYPES",
+   "PGDUMP",
+   "PGDUMP_SCHEMAS",
+   "REPO_ROOT",
+   "SNAPSHOT_DIR",
+   "SNAPSHOT_EXCLUDE_SCHEMAS",
+   "SNAPSHOT_INCLUDE_SCHEMAS",
+   "SUPABASE_ACCESS_TOKEN",
+   "SUPABASE_DB_URL",
+   "SUPABASE_PROJECT_REF",
+   "SUPABASE_SNAPSHOT_PUBLICACAO"
+  ],
+  "usadas_mas_nao_declaradas": [
+   "VITE_TURN_CRED",
+   "VITE_TURN_URL",
+   "VITE_TURN_USER"
+  ],
+  "secrets_em_workflows": [
+   "SUPABASE_ACCESS_TOKEN",
+   "SUPABASE_DB_URL"
+  ]
+ },
+ "deploy": {
+  "alvos": [],
+  "dockerfiles": [],
+  "compose": [],
+  "vercel": null
+ },
+ "integracoes": {
+  "sdks": [
+   {
+    "pacote": "@tanstack/react-query",
+    "servico": "react-query",
+    "versao": "^5.90.21"
+   },
+   {
+    "pacote": "@supabase/supabase-js",
+    "servico": "Supabase",
+    "versao": "^2.98.0"
+   },
+   {
+    "pacote": "zod",
+    "servico": "zod",
+    "versao": "^3.22.4"
+   }
+  ],
+  "hosts_externos": [
+   {
+    "host": "ai.gateway.lovable.dev",
+    "arquivos": 20
+   },
+   {
+    "host": "cfmlmcdyjuotqobjapng.supabase.co",
+    "arquivos": 7
+   },
+   {
+    "host": "lovable.dev",
+    "arquivos": 6
+   },
+   {
+    "host": "example.supabase.co",
+    "arquivos": 5
+   },
+   {
+    "host": "api.elevenlabs.io",
+    "arquivos": 3
+   },
+   {
+    "host": "api.resend.com",
+    "arquivos": 3
+   },
+   {
+    "host": "ex.com",
+    "arquivos": 3
+   },
+   {
+    "host": "ipapi.co",
+    "arquivos": 3
+   },
+   {
+    "host": "mock.supabase.co",
+    "arquivos": 3
+   },
+   {
+    "host": "api.lovable.dev",
+    "arquivos": 2
+   },
+   {
+    "host": "exemplo.com",
+    "arquivos": 2
+   },
+   {
+    "host": "x.supabase.co",
+    "arquivos": 2
+   },
+   {
+    "host": "a.com",
+    "arquivos": 1
+   },
+   {
+    "host": "api.acme.io",
+    "arquivos": 1
+   },
+   {
+    "host": "api.ipify.org",
+    "arquivos": 1
+   },
+   {
+    "host": "api.pwnedpasswords.com",
+    "arquivos": 1
+   },
+   {
+    "host": "api.supabase.com",
+    "arquivos": 1
+   },
+   {
+    "host": "api.x.com",
+    "arquivos": 1
+   },
+   {
+    "host": "b.com",
+    "arquivos": 1
+   },
+   {
+    "host": "connector-gateway.lovable.dev",
+    "arquivos": 1
+   },
+   {
+    "host": "fonts.googleapis.com",
+    "arquivos": 1
+   },
+   {
+    "host": "fonts.gstatic.com",
+    "arquivos": 1
+   },
+   {
+    "host": "hook.site",
+    "arquivos": 1
+   },
+   {
+    "host": "id-preview--e326811c-e59a-4850-bf9e-cfc9d6748662.lovable.app",
+    "arquivos": 1
+   },
+   {
+    "host": "ip-api.com",
+    "arquivos": 1
+   },
+   {
+    "host": "meet.jit.si",
+    "arquivos": 1
+   },
+   {
+    "host": "seudominio.bitrix24.com.br",
+    "arquivos": 1
+   },
+   {
+    "host": "www.bitrix24.com.br",
+    "arquivos": 1
+   },
+   {
+    "host": "x.com",
+    "arquivos": 1
+   },
+   {
+    "host": "youtube.com",
+    "arquivos": 1
+   }
+  ],
+  "env_de_integracao": [
+   "BITRIX_WEBHOOK_URL",
+   "DD_API_KEY",
+   "ELEVENLABS_AGENT_ID",
+   "ELEVENLABS_API_KEY",
+   "EMAIL_SERVICE_API_KEY",
+   "JWT_SECRET",
+   "LOVABLE_API_KEY",
+   "MICROSOFT_TEAMS_API_KEY",
+   "REDIS_HOST",
+   "REDIS_PASSWORD",
+   "REDIS_PORT",
+   "REDIS_QUEUE_DB",
+   "RESEND_API_KEY",
+   "SENTRY_DSN",
+   "SENTRY_ENVIRONMENT",
+   "STORAGE_BUCKET",
+   "STORAGE_SECRET_KEY",
+   "TEST_REDIS_HOST",
+   "TEST_REDIS_PORT",
+   "WAVOIP_TOKEN"
+  ],
+  "webhooks_recebidos": [
+   "migrate-helper"
+  ],
+  "realtime": [
+   "active-calls-realtime",
+   "admin-security-alerts",
+   "agent-bargein-${agentName}",
+   "agent-whispers-${agentName}",
+   "agents-status",
+   "alerts_page_calls",
+   "alerts_page_contacts",
+   "audit-logs-realtime",
+   "badge-achievements",
+   "blf-board",
+   "blocked-access-notifications",
+   "call_alerts",
+   "coaching-updates",
+   "contact-alerts-changes",
+   "conversations-realtime",
+   "critical-alerts-notifications",
+   "crm-suggestions-${callSessionId}",
+   "crm-sync-queue-live",
+   "deals-rt",
+   "dialer-changes",
+   "dialer-filter-profile-${userId}",
+   "executive-dashboard-realtime",
+   "extensions-overview-realtime",
+   "goal-achievements",
+   "goal-violations",
+   "health-check-probe",
+   "hold-alerts-realtime",
+   "hold-sound-settings",
+   "hold-trend-realtime",
+   "live-assist-${callSessionId}",
+   "meeting-summary-${callSessionId}",
+   "messages-${conversationId}",
+   "notifications-${user.id}",
+   "queue-metrics",
+   "rate-limit-alerts",
+   "rate-limit-notifications",
+   "ringtone-profile-${userId}",
+   "scheduled-callbacks-changes",
+   "security-alerts-notifications",
+   "security-alerts-realtime",
+   "sentiment-${callSessionId}",
+   "supervisor-panel-updates",
+   "trunk-realtime",
+   "voip-failover-events",
+   "whisper-history-${selectedCall.id}"
+  ]
+ },
+ "permissoes": {
+  "papeis_no_codigo": [
+   {
+    "papel": "admin",
+    "ocorrencias": 32
+   },
+   {
+    "papel": "user",
+    "ocorrencias": 24
+   },
+   {
+    "papel": "system",
+    "ocorrencias": 18
+   },
+   {
+    "papel": "agent",
+    "ocorrencias": 15
+   },
+   {
+    "papel": "alert",
+    "ocorrencias": 7
+   },
+   {
+    "papel": "supervisor",
+    "ocorrencias": 6
+   },
+   {
+    "papel": "group",
+    "ocorrencias": 5
+   },
+   {
+    "papel": "status",
+    "ocorrencias": 5
+   },
+   {
+    "papel": "button",
+    "ocorrencias": 3
+   },
+   {
+    "papel": "img",
+    "ocorrencias": 3
+   },
+   {
+    "papel": "navigation",
+    "ocorrencias": 3
+   },
+   {
+    "papel": "viewer",
+    "ocorrencias": 3
+   },
+   {
+    "papel": "anon",
+    "ocorrencias": 2
+   },
+   {
+    "papel": "article",
+    "ocorrencias": 2
+   },
+   {
+    "papel": "customer",
+    "ocorrencias": 2
+   },
+   {
+    "papel": "dialog",
+    "ocorrencias": 2
+   },
+   {
+    "papel": "god",
+    "ocorrencias": 1
+   },
+   {
+    "papel": "link",
+    "ocorrencias": 1
+   },
+   {
+    "papel": "list",
+    "ocorrencias": 1
+   },
+   {
+    "papel": "presentation",
+    "ocorrencias": 1
+   },
+   {
+    "papel": "region",
+    "ocorrencias": 1
+   },
+   {
+    "papel": "searchbox",
+    "ocorrencias": 1
+   },
+   {
+    "papel": "separator",
+    "ocorrencias": 1
+   },
+   {
+    "papel": "string",
+    "ocorrencias": 1
+   },
+   {
+    "papel": "sup",
+    "ocorrencias": 1
+   },
+   {
+    "papel": "table",
+    "ocorrencias": 1
+   }
+  ],
+  "enums_de_papel": [
+   {
+    "enum": "app_role",
+    "valores": [
+     "admin",
+     "supervisor",
+     "agent",
+     "viewer"
+    ]
+   }
+  ],
+  "rpcs_de_autorizacao": [
+   "is_admin_user"
+  ],
+  "guards": [
+   "src/components/auth/ProtectedRoute.tsx"
+  ],
+  "rotas_protegidas": 0,
+  "rotas_publicas": [
+   "/",
+   "/*",
+   "/accounts",
+   "/admin/data-export",
+   "/admin/database-health",
+   "/admin/extensions",
+   "/admin/security-alerts",
+   "/admin/security-audit",
+   "/admin/slo",
+   "/admin/voice-quality",
+   "/admin/voip-trunks",
+   "/admin/webhook-health",
+   "/agent-assist",
+   "/ai",
+   "/alert-history",
+   "/alerts",
+   "/analytics",
+   "/audit-logs",
+   "/battle-cards",
+   "/blf",
+   "/blocked-access-logs",
+   "/cadences",
+   "/call-flow-designer",
+   "/call-history",
+   "/call-library",
+   "/call-park",
+   "/call-queues",
+   "/callbacks",
+   "/calls",
+   "/coaching",
+   "/compliance",
+   "/concurrency-conflicts",
+   "/contacts",
+   "/contacts/insights",
+   "/dashboard",
+   "/deals",
+   "/dialer",
+   "/dialer/predictive",
+   "/executive",
+   "/external-recordings-import",
+   "/financial-impact",
+   "/forgot-password",
+   "/geo-blocking",
+   "/history",
+   "/hold-alerts",
+   "/hold-metrics",
+   "/hold-settings",
+   "/hot-desking",
+   "/inbox",
+   "/ip-whitelist",
+   "/knowledge",
+   "/landing",
+   "/ldap-sync",
+   "/learning",
+   "/login",
+   "/marketplace",
+   "/meeting-summaries",
+   "/multi-device-ring",
+   "/network-diagnostics",
+   "/notifications",
+   "/number-porting",
+   "/observability",
+   "/onboarding",
+   "/outbound-compliance",
+   "/passkeys",
+   "/password-reset-approval",
+   "/permissions",
+   "/pricing",
+   "/qr-provisioning",
+   "/queue-dashboard",
+   "/queue-metrics-settings",
+   "/ranking",
+   "/rate-limit",
+   "/recordings",
+   "/register",
+   "/renewals",
+   "/reports",
+   "/reset-password",
+   "/ring-groups",
+   "/roles",
+   "/routing-rules",
+   "/scheduling",
+   "/security",
+   "/security-monitoring",
+   "/security-report",
+   "/sessions",
+   "/settings",
+   "/shift-swap-suggestions",
+   "/skills",
+   "/sla-policies",
+   "/status",
+   "/success-plans",
+   "/toll-free-numbers",
+   "/topic-detection",
+   "/trackers",
+   "/translation-center",
+   "/two-factor-auth",
+   "/unauthorized",
+   "/verify-email",
+   "/video-conference",
+   "/virtual-fax",
+   "/voice-security",
+   "/voicemail",
+   "/vs/3cplus"
+  ],
+  "menu_com_papeis": [],
+  "tabelas_sem_rls": [
+   "migration_rollbacks",
+   "schema_migrations"
+  ]
+ },
+ "feature_flags": {
+  "total": 3,
+  "flags": [
+   {
+    "flag": "FEATURE_X",
+    "arquivos": 1
+   },
+   {
+    "flag": "nova-tela",
+    "arquivos": 1
+   },
+   {
+    "flag": "novo-inbox",
+    "arquivos": 1
+   }
+  ],
+  "tabelas_de_flag": [
+   "agent_ring_settings",
+   "compliance_settings",
+   "geo_settings",
+   "hold_alert_settings",
+   "queue_metrics_settings",
+   "rate_limit_settings",
+   "system_settings",
+   "user_mfa_settings",
+   "voip_monitoring_settings"
+  ]
+ },
+ "providers": {
+  "entrada": "src/main.tsx",
+  "providers": [
+   "AchievementNotificationProvider",
+   "AuthProvider",
+   "BrowserRouter",
+   "ErrorBoundary",
+   "QueryClientProvider",
+   "ThemeProvider",
+   "TooltipProvider"
+  ]
+ },
+ "i18n": {
+  "arquivos": 1,
+  "idiomas": [
+   "en"
+  ],
+  "lib": []
+ }
+}

@@ -1,0 +1,4808 @@
+{
+ "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
+ "format_version": 2,
+ "total": 188,
+ "hooks": [
+  {
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "hooks_exportados": [
+    "useA",
+    "useB",
+    "useC",
+    "useX"
+   ],
+   "linhas": 173,
+   "dominio": null,
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "rpcs": [
+    "r1"
+   ],
+   "edges": [
+    "inexistente",
+    "other",
+    "tick"
+   ],
+   "hooks_internos": [
+    "useFeatureFlag"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/ai/live-call/useLiveInsights.ts",
+   "hooks_exportados": [
+    "useLiveInsights"
+   ],
+   "linhas": 142,
+   "dominio": "components/ai",
+   "tabelas": [
+    "live_sentiment_snapshots"
+   ],
+   "rpcs": [],
+   "edges": [
+    "realtime-analysis"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useRef",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/ai/LiveCallAnalysis.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/auth/PasswordStrength.tsx",
+   "hooks_exportados": [
+    "usePasswordStrength"
+   ],
+   "linhas": 276,
+   "dominio": "components/auth",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/pages/Register.tsx",
+    "src/pages/ResetPassword.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/calls/live-transcription/useLiveTranscription.ts",
+   "hooks_exportados": [
+    "useLiveTranscription"
+   ],
+   "linhas": 164,
+   "dominio": "components/calls",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voice-transcribe"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/calls/LiveTranscription.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/components/compliance/calling-hours/useCallingHoursManager.ts",
+   "hooks_exportados": [
+    "useCallingHoursManager"
+   ],
+   "linhas": 179,
+   "dominio": "components/compliance",
+   "tabelas": [
+    "calling_hours_config"
+   ],
+   "rpcs": [
+    "check_calling_hours"
+   ],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useMemo",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/compliance/CallingHoursConfig.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/contacts/useBitrixSync.ts",
+   "hooks_exportados": [
+    "useBitrixSync"
+   ],
+   "linhas": 64,
+   "dominio": "components/contacts",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useBitrix",
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Contacts.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/notification-center/useNotificationCenter.ts",
+   "hooks_exportados": [
+    "useNotificationCenter"
+   ],
+   "linhas": 123,
+   "dominio": "components/notification-center",
+   "tabelas": [
+    "notification_preferences",
+    "notifications"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/NotificationCenter.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/queue-alerts/useQueueMetricsSettings.ts",
+   "hooks_exportados": [
+    "useQueueMetricsSettings"
+   ],
+   "linhas": 57,
+   "dominio": "components/queue-alerts",
+   "tabelas": [
+    "queue_metrics_settings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/QueueMetricsAlertSettings.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/ui/form.tsx",
+   "hooks_exportados": [
+    "useFormField"
+   ],
+   "linhas": 130,
+   "dominio": "components/ui",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useContext",
+    "useFormContext",
+    "useId"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/contacts/CreateContactDialog.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/ui/keyboard-navigation.tsx",
+   "hooks_exportados": [
+    "useFocusTrap",
+    "useGlobalShortcuts",
+    "useKeyboardNavigation"
+   ],
+   "linhas": 282,
+   "dominio": "components/ui",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useRef"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/layout/AppLayout.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/ui/sidebar.tsx",
+   "hooks_exportados": [
+    "useSidebar"
+   ],
+   "linhas": 638,
+   "dominio": "components/ui",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useIsMobile",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/layout/AppLayout.tsx",
+    "src/components/layout/AppSidebar.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/ui/use-toast.ts",
+   "hooks_exportados": [
+    "useToast"
+   ],
+   "linhas": 4,
+   "dominio": "components/ui",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/components/voice/overlay/usePhaseColors.ts",
+   "hooks_exportados": [
+    "usePhaseColors"
+   ],
+   "linhas": 92,
+   "dominio": "components/voice",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useMemo"
+   ],
+   "canais_realtime": [],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/voice/VoiceAssistantDialog.tsx",
+    "src/components/voice/overlay/FloatingParticles.tsx",
+    "src/components/voice/overlay/VoiceOrb.tsx",
+    "src/components/voice/overlay/VoiceVisualEffects.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/contexts/AuthContext.tsx",
+   "hooks_exportados": [
+    "useAuthContext"
+   ],
+   "linhas": 47,
+   "dominio": "contexts",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuth",
+    "useContext"
+   ],
+   "canais_realtime": [],
+   "usado_por": 27,
+   "usado_por_arquivos": [
+    "src/App.tsx",
+    "src/components/auth/ProtectedRoute.tsx",
+    "src/components/auth/ReauthDialog.tsx",
+    "src/components/layout/AppSidebar.tsx",
+    "src/hooks/telemetry/useTelemetry.ts",
+    "src/hooks/useMFA.ts",
+    "src/hooks/useMultiDeviceRing.ts",
+    "src/hooks/usePermissions.ts",
+    "src/hooks/useProfile.ts",
+    "src/hooks/useReauth.ts",
+    "src/hooks/useSecurityNotifications.ts",
+    "src/hooks/useSessionManager.ts",
+    "src/hooks/useUnreadConflicts.ts",
+    "src/hooks/useWebAuthn.ts",
+    "src/pages/AuditLogs.tsx",
+    "src/pages/HotDesking.tsx",
+    "src/pages/IPWhitelist.tsx",
+    "src/pages/Index.tsx",
+    "src/pages/Knowledge.tsx",
+    "src/pages/Learning.tsx",
+    "src/pages/Login.tsx",
+    "src/pages/Passkeys.tsx",
+    "src/pages/PasswordResetApproval.tsx",
+    "src/pages/Register.tsx",
+    "src/pages/Roles.tsx",
+    "src/pages/SecurityDashboard.tsx",
+    "src/pages/admin/SecurityAuditDashboard.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/contexts/ThemeContext.tsx",
+   "hooks_exportados": [
+    "useTheme"
+   ],
+   "linhas": 63,
+   "dominio": "contexts",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useContext",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 3,
+   "usado_por_arquivos": [
+    "src/App.tsx",
+    "src/components/layout/CommandPalette.tsx",
+    "src/components/layout/ThemeToggle.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/auth/index.ts",
+   "hooks_exportados": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession"
+   ],
+   "linhas": 8,
+   "dominio": "hooks/auth",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/auth/useAuthActions.ts",
+   "hooks_exportados": [
+    "useAuthActions"
+   ],
+   "linhas": 87,
+   "dominio": "hooks/auth",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/hooks/auth/index.ts",
+    "src/hooks/useAuth.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/auth/useAuthProfile.ts",
+   "hooks_exportados": [
+    "useAuthProfile"
+   ],
+   "linhas": 25,
+   "dominio": "hooks/auth",
+   "tabelas": [
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/hooks/auth/index.ts",
+    "src/hooks/useAuth.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/auth/useAuthSession.ts",
+   "hooks_exportados": [
+    "useAuthSession"
+   ],
+   "linhas": 99,
+   "dominio": "hooks/auth",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useRef"
+   ],
+   "canais_realtime": [],
+   "usado_por": 3,
+   "usado_por_arquivos": [
+    "src/hooks/auth/index.ts",
+    "src/hooks/auth/useAuthActions.ts",
+    "src/hooks/useAuth.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/auth/useAuthState.ts",
+   "hooks_exportados": [
+    "useAuthState"
+   ],
+   "linhas": 34,
+   "dominio": "hooks/auth",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 5,
+   "usado_por_arquivos": [
+    "src/hooks/auth/index.ts",
+    "src/hooks/auth/useAuthActions.ts",
+    "src/hooks/auth/useAuthProfile.ts",
+    "src/hooks/auth/useAuthSession.ts",
+    "src/hooks/useAuth.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/telemetry/useTelemetry.ts",
+   "hooks_exportados": [
+    "useTelemetry"
+   ],
+   "linhas": 47,
+   "dominio": "hooks/telemetry",
+   "tabelas": [
+    "performance_metrics"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/layout/AppLayout.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/use-mobile.tsx",
+   "hooks_exportados": [
+    "useIsMobile"
+   ],
+   "linhas": 20,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/ui/sidebar.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/use-toast.ts",
+   "hooks_exportados": [
+    "useToast"
+   ],
+   "linhas": 187,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/ui/toaster.tsx",
+    "src/components/ui/use-toast.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAccounts.ts",
+   "hooks_exportados": [
+    "useAccounts"
+   ],
+   "linhas": 115,
+   "dominio": "hooks",
+   "tabelas": [
+    "accounts"
+   ],
+   "rpcs": [],
+   "edges": [
+    "compute-account-health",
+    "detect-churn-risk"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Accounts.tsx"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useAchievementNotifications.ts",
+   "hooks_exportados": [
+    "useAchievementNotifications"
+   ],
+   "linhas": 114,
+   "dominio": "hooks",
+   "tabelas": [
+    "agents",
+    "badges"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [
+    "badge-achievements",
+    "goal-achievements"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/gamification/AchievementNotificationProvider.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useActiveCallsRealtime.ts",
+   "hooks_exportados": [
+    "useActiveCallsRealtime"
+   ],
+   "linhas": 107,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_sessions",
+    "hold_events"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useHoldSoundAlert",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [
+    "active-calls-realtime"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/dashboard/ActiveCallsRealtime.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAdherence.ts",
+   "hooks_exportados": [
+    "useAdherence"
+   ],
+   "linhas": 24,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "compute-adherence"
+   ],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAgentFinancialLeaderboard.ts",
+   "hooks_exportados": [
+    "useAgentFinancialLeaderboard"
+   ],
+   "linhas": 55,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [
+    "get_agent_financial_leaderboard"
+   ],
+   "edges": [],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/financial/AgentFinancialLeaderboard.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useAgentRanking.ts",
+   "hooks_exportados": [
+    "useAgentRanking"
+   ],
+   "linhas": 315,
+   "dominio": "hooks",
+   "tabelas": [
+    "agent_goals",
+    "call_alerts",
+    "call_analyses",
+    "call_sessions",
+    "call_summaries"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 7,
+   "usado_por_arquivos": [
+    "src/components/ranking/AgentGoalsGrid.tsx",
+    "src/components/ranking/AgentPodium.tsx",
+    "src/components/ranking/AgentRankingTable.tsx",
+    "src/components/ranking/AgentSummaryStats.tsx",
+    "src/components/ranking/GoalsConfigDialog.tsx",
+    "src/components/ranking/PerformanceEvolutionChart.tsx",
+    "src/pages/AgentRanking.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAgentStatus.ts",
+   "hooks_exportados": [
+    "useAgentStatus"
+   ],
+   "linhas": 139,
+   "dominio": "hooks",
+   "tabelas": [
+    "agents"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "agents-status"
+   ],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/calls/UnifiedSoftphone.tsx",
+    "src/components/coaching/CoachingPanel.tsx",
+    "src/components/gamification/AchievementNotificationProvider.tsx",
+    "src/pages/AgentRanking.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAlertHistory.ts",
+   "hooks_exportados": [
+    "useAlertHistory"
+   ],
+   "linhas": 97,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_alerts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/AlertHistory.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAlertPresets.ts",
+   "hooks_exportados": [
+    "useAlertPresets"
+   ],
+   "linhas": 56,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/SecurityAlerts.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useAlerts.ts",
+   "hooks_exportados": [
+    "useAlerts"
+   ],
+   "linhas": 279,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_alerts",
+    "call_sessions",
+    "contact_alerts"
+   ],
+   "rpcs": [],
+   "edges": [
+    "check-contact-alerts"
+   ],
+   "hooks_internos": [
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "alerts_page_calls",
+    "alerts_page_contacts"
+   ],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/notifications/UnifiedNotificationDropdown.tsx",
+    "src/pages/Alerts.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAlertsExport.ts",
+   "hooks_exportados": [
+    "useAlertsExport"
+   ],
+   "linhas": 232,
+   "dominio": "hooks",
+   "tabelas": [
+    "notifications"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/SecurityAlerts.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAnimatedCounter.ts",
+   "hooks_exportados": [
+    "useAnimatedCounter"
+   ],
+   "linhas": 47,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useRef",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/dashboard/StatsCard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAnomalyRemediation.ts",
+   "hooks_exportados": [
+    "useAnomalyRemediation"
+   ],
+   "linhas": 68,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/network/AnomalyDetectionCard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAudioOutputDevices.ts",
+   "hooks_exportados": [
+    "useAudioOutputDevices"
+   ],
+   "linhas": 105,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/calls/AudioOutputSelector.tsx",
+    "src/components/calls/WebRTCCall.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAuditLog.ts",
+   "hooks_exportados": [
+    "useAuditLog"
+   ],
+   "linhas": 99,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [
+    "log_audit_event"
+   ],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/coaching/CoachingPanel.tsx",
+    "src/components/contacts/ContactDetailSheet.tsx",
+    "src/hooks/useCallHistory.ts",
+    "src/hooks/useRecordings.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAuth.ts",
+   "hooks_exportados": [
+    "useAuth"
+   ],
+   "linhas": 97,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useEffect",
+    "useMemo"
+   ],
+   "canais_realtime": [],
+   "usado_por": 11,
+   "usado_por_arquivos": [
+    "src/components/dialer/phone/SyncHistoryPanel.tsx",
+    "src/contexts/AuthContext.tsx",
+    "src/hooks/auth/index.ts",
+    "src/hooks/useNotifications.ts",
+    "src/pages/CallPark.tsx",
+    "src/pages/CallQueues.tsx",
+    "src/pages/NotificationCenter.tsx",
+    "src/pages/RingGroups.tsx",
+    "src/pages/SecurityMonitoring.tsx",
+    "src/pages/SecurityReport.tsx",
+    "src/routes/protectedRoutes.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useBattleCardDetection.ts",
+   "hooks_exportados": [
+    "useBattleCardDetection"
+   ],
+   "linhas": 74,
+   "dominio": "hooks",
+   "tabelas": [
+    "battle_card_triggers",
+    "battle_cards"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/calls/LiveTranscription.tsx",
+    "src/components/conversation-intelligence/BattleCardAlert.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useBestTimeToContact.ts",
+   "hooks_exportados": [
+    "useBestTimeToContact"
+   ],
+   "linhas": 84,
+   "dominio": "hooks",
+   "tabelas": [
+    "contact_engagement_patterns"
+   ],
+   "rpcs": [],
+   "edges": [
+    "compute-best-time"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/OutboundCompliance.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useBitrix.ts",
+   "hooks_exportados": [
+    "useBitrix"
+   ],
+   "linhas": 312,
+   "dominio": "hooks",
+   "tabelas": [
+    "bitrix_departments",
+    "bitrix_users",
+    "crm_sync_queue"
+   ],
+   "rpcs": [],
+   "edges": [
+    "bitrix-api"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/contacts/useBitrixSync.ts",
+    "src/components/settings/BitrixIntegration.tsx"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useBlfBoard.ts",
+   "hooks_exportados": [
+    "useBlfBoard"
+   ],
+   "linhas": 116,
+   "dominio": "hooks",
+   "tabelas": [
+    "agents",
+    "call_sessions",
+    "parked_calls"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useMemo",
+    "usePageVisibility",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "canais_realtime": [
+    "blf-board"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/BlfBoard.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useBlockedAccessLogs.ts",
+   "hooks_exportados": [
+    "useBlockedAccessLogs"
+   ],
+   "linhas": 129,
+   "dominio": "hooks",
+   "tabelas": [
+    "blocked_access_logs"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/BlockedAccessLogs.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCadences.ts",
+   "hooks_exportados": [
+    "useCadenceEnrollments",
+    "useCadences"
+   ],
+   "linhas": 103,
+   "dominio": "hooks",
+   "tabelas": [
+    "cadence_enrollments",
+    "cadence_steps",
+    "cadences"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Cadences.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCallAnalytics.ts",
+   "hooks_exportados": [
+    "useCallAnalytics"
+   ],
+   "linhas": 135,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_sessions",
+    "call_summaries"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/pages/CallAnalytics.tsx",
+    "src/pages/call-analytics/AnalyticsHeader.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCallHistory.ts",
+   "hooks_exportados": [
+    "useCallHistory"
+   ],
+   "linhas": 230,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_analyses",
+    "call_summaries",
+    "call_transcriptions"
+   ],
+   "rpcs": [
+    "get_call_history_with_summaries"
+   ],
+   "edges": [],
+   "hooks_internos": [
+    "useAuditLog",
+    "useEffect",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/call-history/CallDetailDialog.tsx",
+    "src/components/call-history/CallSessionsList.tsx",
+    "src/pages/CallHistory.tsx",
+    "src/pages/PhoneDialer.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCallPark.ts",
+   "hooks_exportados": [
+    "useCallPark"
+   ],
+   "linhas": 273,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_park_orbits",
+    "parked_calls"
+   ],
+   "rpcs": [
+    "expire_parked_calls"
+   ],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useMemo",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/CallPark.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useCallPlaylists.ts",
+   "hooks_exportados": [
+    "useCallPlaylists",
+    "usePlaylistItems"
+   ],
+   "linhas": 77,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_playlists",
+    "playlist_items"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCallQueues.ts",
+   "hooks_exportados": [
+    "useCallQueues"
+   ],
+   "linhas": 155,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_queue_members",
+    "call_queues"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/pages/CallQueues.tsx",
+    "src/pages/RingGroups.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useCallRecording.ts",
+   "hooks_exportados": [
+    "useCallRecording"
+   ],
+   "linhas": 88,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_recordings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/hooks/useConferenceRecording.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCallScoring.ts",
+   "hooks_exportados": [
+    "useCallScoring"
+   ],
+   "linhas": 39,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "score-call-attempt"
+   ],
+   "hooks_internos": [
+    "useMutation"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/OutboundCompliance.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCallSearch.ts",
+   "hooks_exportados": [
+    "useCallSearch"
+   ],
+   "linhas": 60,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "search-calls"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/CallLibrary.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCallSession.ts",
+   "hooks_exportados": [
+    "useCallSession"
+   ],
+   "linhas": 205,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_analyses",
+    "call_sessions",
+    "call_summaries",
+    "call_transcriptions",
+    "call_transcripts_searchable"
+   ],
+   "rpcs": [],
+   "edges": [
+    "analyze-talk-ratio",
+    "detect-key-moments",
+    "generate-meeting-summary"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/calls/ActiveCallBar.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCallTimers.ts",
+   "hooks_exportados": [
+    "useCallTimers"
+   ],
+   "linhas": 74,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCallTransfer.ts",
+   "hooks_exportados": [
+    "useCallTransfer"
+   ],
+   "linhas": 82,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useChatbot.ts",
+   "hooks_exportados": [
+    "useChatbot"
+   ],
+   "linhas": 39,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "chatbot-respond"
+   ],
+   "hooks_internos": [
+    "useMutation"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useChurnRisk.ts",
+   "hooks_exportados": [
+    "useChurnRisk"
+   ],
+   "linhas": 67,
+   "dominio": "hooks",
+   "tabelas": [
+    "churn_risk_signals"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCoaching.ts",
+   "hooks_exportados": [
+    "useCoaching"
+   ],
+   "linhas": 152,
+   "dominio": "hooks",
+   "tabelas": [
+    "coaching_recommendations"
+   ],
+   "rpcs": [],
+   "edges": [
+    "generate-coaching"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "coaching-updates"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/coaching/CoachingPanel.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCoachingAssignments.ts",
+   "hooks_exportados": [
+    "useCoachingAssignments"
+   ],
+   "linhas": 68,
+   "dominio": "hooks",
+   "tabelas": [
+    "coaching_assignments"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useComplianceRules.ts",
+   "hooks_exportados": [
+    "useComplianceRules"
+   ],
+   "linhas": 85,
+   "dominio": "hooks",
+   "tabelas": [
+    "compliance_rules"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useConferenceRecording.ts",
+   "hooks_exportados": [
+    "useConferenceRecording"
+   ],
+   "linhas": 52,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallRecording",
+    "useCallback",
+    "useEffect",
+    "useRef"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/calls/UnifiedSoftphone.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useConsent.ts",
+   "hooks_exportados": [
+    "useConsent"
+   ],
+   "linhas": 77,
+   "dominio": "hooks",
+   "tabelas": [
+    "consent_records"
+   ],
+   "rpcs": [],
+   "edges": [
+    "record-consent"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/OutboundCompliance.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useContactAlerts.ts",
+   "hooks_exportados": [
+    "useContactAlerts"
+   ],
+   "linhas": 190,
+   "dominio": "hooks",
+   "tabelas": [
+    "contact_alerts"
+   ],
+   "rpcs": [],
+   "edges": [
+    "check-contact-alerts"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "contact-alerts-changes"
+   ],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/contacts/ContactAlertsDropdown.tsx",
+    "src/components/notifications/UnifiedNotificationDropdown.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useContactInsights.ts",
+   "hooks_exportados": [
+    "useContactInsights"
+   ],
+   "linhas": 164,
+   "dominio": "hooks",
+   "tabelas": [
+    "contact_interactions"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useContacts",
+    "useEffect",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/ContactInsights.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useContacts.ts",
+   "hooks_exportados": [
+    "useContacts"
+   ],
+   "linhas": 372,
+   "dominio": "hooks",
+   "tabelas": [
+    "contact_interactions",
+    "contacts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 12,
+   "usado_por_arquivos": [
+    "src/components/calls/ActiveCallBar.tsx",
+    "src/components/contacts/ContactCard.tsx",
+    "src/components/contacts/ContactDetailSheet.tsx",
+    "src/components/contacts/ContactFilters.tsx",
+    "src/components/contacts/ContactGrid.tsx",
+    "src/components/contacts/ContactHistoryTab.tsx",
+    "src/components/contacts/CreateContactDialog.tsx",
+    "src/components/contacts/useBitrixSync.ts",
+    "src/components/dialer/AddContactsDialog.tsx",
+    "src/hooks/useContactInsights.ts",
+    "src/pages/ContactInsights.tsx",
+    "src/pages/Contacts.tsx"
+   ],
+   "coberto_por_testes": 3
+  },
+  {
+   "arquivo": "src/hooks/useConversations.ts",
+   "hooks_exportados": [
+    "useConversationMessages",
+    "useConversations",
+    "useSendMessage",
+    "useUpdateConversation"
+   ],
+   "linhas": 214,
+   "dominio": "hooks",
+   "tabelas": [
+    "conversation_messages",
+    "conversations"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [
+    "conversations-realtime",
+    "messages-${conversationId}"
+   ],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/executive/OmnichannelCard.tsx",
+    "src/pages/Inbox.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCriticalAlertNotifications.ts",
+   "hooks_exportados": [
+    "useCriticalAlertNotifications"
+   ],
+   "linhas": 165,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [
+    "critical-alerts-notifications"
+   ],
+   "usado_por": 3,
+   "usado_por_arquivos": [
+    "src/components/supervisor/AlertSoundSettings.tsx",
+    "src/components/supervisor/SoundProfileManager.tsx",
+    "src/hooks/useSupervisorPanel.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCrmFieldSuggestions.ts",
+   "hooks_exportados": [
+    "useCrmFieldSuggestions"
+   ],
+   "linhas": 139,
+   "dominio": "hooks",
+   "tabelas": [
+    "contacts",
+    "crm_field_suggestions"
+   ],
+   "rpcs": [],
+   "edges": [
+    "extract-crm-fields"
+   ],
+   "hooks_internos": [
+    "useEffect",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [
+    "crm-suggestions-${callSessionId}"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/calls/CrmSuggestionsCard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useCulturalHints.ts",
+   "hooks_exportados": [
+    "useCulturalHints"
+   ],
+   "linhas": 44,
+   "dominio": "hooks",
+   "tabelas": [
+    "cultural_hints"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/translation/LiveTranslationPanel.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useDashboardData.ts",
+   "hooks_exportados": [
+    "useAgentsListData",
+    "useCallVolumeData",
+    "useDashboardStats",
+    "useQueueStatsData",
+    "useRecentCallsData"
+   ],
+   "linhas": 122,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_sessions"
+   ],
+   "rpcs": [
+    "get_agents_with_active_calls",
+    "get_call_volume_stats",
+    "get_dashboard_stats",
+    "get_queue_stats"
+   ],
+   "edges": [],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 6,
+   "usado_por_arquivos": [
+    "src/components/dashboard/AgentsList.tsx",
+    "src/components/dashboard/CallVolumeChart.tsx",
+    "src/components/dashboard/QueueStatus.tsx",
+    "src/components/dashboard/RecentCalls.tsx",
+    "src/pages/Index.tsx",
+    "src/pages/Reports.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useDashboardGoals.ts",
+   "hooks_exportados": [
+    "useDashboardGoals"
+   ],
+   "linhas": 127,
+   "dominio": "hooks",
+   "tabelas": [
+    "dashboard_goals"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/dashboard/DashboardGoalsSettings.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useDashboardLayout.ts",
+   "hooks_exportados": [
+    "useDashboardLayout"
+   ],
+   "linhas": 68,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/dashboard/WidgetLibrary.tsx",
+    "src/pages/Index.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useDataLakeExports.ts",
+   "hooks_exportados": [
+    "useCreateExport",
+    "useDataLakeExports"
+   ],
+   "linhas": 67,
+   "dominio": "hooks",
+   "tabelas": [
+    "data_lake_exports"
+   ],
+   "rpcs": [],
+   "edges": [
+    "export-data-lake"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/DataExport.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useDealForecast.ts",
+   "hooks_exportados": [
+    "useDealForecast"
+   ],
+   "linhas": 39,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "forecast-deals"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/executive/ForecastCard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useDeals.ts",
+   "hooks_exportados": [
+    "useDeals"
+   ],
+   "linhas": 105,
+   "dominio": "hooks",
+   "tabelas": [
+    "deals"
+   ],
+   "rpcs": [],
+   "edges": [
+    "compute-deal-health"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "deals-rt"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Deals.tsx"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useDebouncedSearchParam.ts",
+   "hooks_exportados": [
+    "useDebouncedSearchParam"
+   ],
+   "linhas": 106,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useSearchParams"
+   ],
+   "canais_realtime": [],
+   "usado_por": 6,
+   "usado_por_arquivos": [
+    "src/pages/CallHistory.tsx",
+    "src/pages/Contacts.tsx",
+    "src/pages/MeetingSummaries.tsx",
+    "src/pages/Recordings.tsx",
+    "src/pages/Voicemail.tsx",
+    "src/pages/admin/SecurityAlerts.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useDeviceDetection.ts",
+   "hooks_exportados": [
+    "useDeviceDetection"
+   ],
+   "linhas": 159,
+   "dominio": "hooks",
+   "tabelas": [
+    "active_sessions"
+   ],
+   "rpcs": [],
+   "edges": [
+    "notify-new-device"
+   ],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/hooks/useSessionManager.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useDeviceLabel.ts",
+   "hooks_exportados": [
+    "useDeviceLabel"
+   ],
+   "linhas": 120,
+   "dominio": "hooks",
+   "tabelas": [
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/dialer/phone/DeviceNameSetting.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useDialerFavorites.ts",
+   "hooks_exportados": [
+    "useDialerFavorites"
+   ],
+   "linhas": 257,
+   "dominio": "hooks",
+   "tabelas": [
+    "dialer_favorites"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/PhoneDialer.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useDNCCompliance.ts",
+   "hooks_exportados": [
+    "useDNCCompliance"
+   ],
+   "linhas": 304,
+   "dominio": "hooks",
+   "tabelas": [
+    "calling_hours_config",
+    "compliance_settings",
+    "dnc_list"
+   ],
+   "rpcs": [
+    "add_to_dnc",
+    "check_calling_hours",
+    "check_dnc"
+   ],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useMutation",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/compliance/ComplianceSettings.tsx",
+    "src/components/compliance/DNCListManager.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useExecutiveDashboard.ts",
+   "hooks_exportados": [
+    "useExecutiveDashboardData"
+   ],
+   "linhas": 261,
+   "dominio": "hooks",
+   "tabelas": [
+    "agent_goals",
+    "call_alerts",
+    "call_sessions",
+    "call_summaries",
+    "hold_events"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "executive-dashboard-realtime"
+   ],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/executive/DashboardCharts.tsx",
+    "src/components/executive/GoalsComparisonSection.tsx",
+    "src/components/executive/KPICards.tsx",
+    "src/pages/ExecutiveDashboard.tsx"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useExtensionAudit.ts",
+   "hooks_exportados": [
+    "useExtensionAudit"
+   ],
+   "linhas": 43,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [
+    "log_audit_event"
+   ],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/admin/extensions/BulkAssignTrunkDialog.tsx",
+    "src/hooks/useExtensionsAdmin.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useExtensionAuditHistory.ts",
+   "hooks_exportados": [
+    "useExtensionAuditHistory"
+   ],
+   "linhas": 43,
+   "dominio": "hooks",
+   "tabelas": [
+    "audit_logs"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/admin/extensions/ExtensionAuditTimeline.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useExtensionsAdmin.ts",
+   "hooks_exportados": [
+    "useExtensionsAdmin"
+   ],
+   "linhas": 159,
+   "dominio": "hooks",
+   "tabelas": [
+    "agents"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useExtensionAudit",
+    "useExtensionsOverview",
+    "useMemo",
+    "useQueryClient",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/ExtensionsAdmin.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useExtensionsOverview.ts",
+   "hooks_exportados": [
+    "useExtensionsOverview"
+   ],
+   "linhas": 212,
+   "dominio": "hooks",
+   "tabelas": [
+    "agent_devices",
+    "agent_trunk_assignments",
+    "agents",
+    "call_sessions",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "usePageVisibility",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [
+    "extensions-overview-realtime"
+   ],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/admin/extensions/ExtensionDetailsDrawer.tsx",
+    "src/components/admin/extensions/ExtensionStatusBadge.tsx",
+    "src/components/admin/extensions/ExtensionsTable.tsx",
+    "src/hooks/useExtensionsAdmin.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useFinancialImpact.ts",
+   "hooks_exportados": [
+    "useFinancialImpact"
+   ],
+   "linhas": 131,
+   "dominio": "hooks",
+   "tabelas": [
+    "financial_impact_daily"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/FinancialImpact.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useForecastVolume.ts",
+   "hooks_exportados": [
+    "useForecastVolume"
+   ],
+   "linhas": 34,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "forecast-call-volume"
+   ],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/executive/VolumeForecastCard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useGamification.ts",
+   "hooks_exportados": [
+    "useGamification"
+   ],
+   "linhas": 309,
+   "dominio": "hooks",
+   "tabelas": [
+    "agent_badges",
+    "agent_weekly_stats",
+    "agents",
+    "badges"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 6,
+   "usado_por_arquivos": [
+    "src/components/gamification/AchievementCelebration.tsx",
+    "src/components/gamification/BadgeCard.tsx",
+    "src/components/gamification/BadgesShowcase.tsx",
+    "src/components/gamification/GamificationDashboard.tsx",
+    "src/hooks/useAchievementNotifications.ts",
+    "src/pages/AgentRanking.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useGeoBlocking.ts",
+   "hooks_exportados": [
+    "useGeoBlocking"
+   ],
+   "linhas": 129,
+   "dominio": "hooks",
+   "tabelas": [
+    "geo_access_logs",
+    "geo_restrictions",
+    "geo_settings"
+   ],
+   "rpcs": [],
+   "edges": [
+    "validate-geo"
+   ],
+   "hooks_internos": [
+    "useEffect",
+    "useMutation",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/GeoBlocking.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useGoalViolations.ts",
+   "hooks_exportados": [
+    "useGoalViolations"
+   ],
+   "linhas": 114,
+   "dominio": "hooks",
+   "tabelas": [
+    "goal_violations"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "goal-violations"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/dashboard/GoalViolationsHistory.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useHealthCheck.ts",
+   "hooks_exportados": [
+    "useHealthCheck"
+   ],
+   "linhas": 113,
+   "dominio": "hooks",
+   "tabelas": [
+    "agents"
+   ],
+   "rpcs": [],
+   "edges": [
+    "health-check"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [
+    "health-check-probe"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/ObservabilityDashboard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useHoldMetrics.ts",
+   "hooks_exportados": [
+    "useHoldMetrics"
+   ],
+   "linhas": 106,
+   "dominio": "hooks",
+   "tabelas": [
+    "agents",
+    "call_sessions",
+    "hold_events"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/HoldMetrics.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useHoldReminder.ts",
+   "hooks_exportados": [
+    "useHoldReminder"
+   ],
+   "linhas": 158,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/calls/ActiveCallsIndicator.tsx",
+    "src/components/calls/HoldReminderSettings.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useHoldSoundAlert.ts",
+   "hooks_exportados": [
+    "useHoldSoundAlert"
+   ],
+   "linhas": 160,
+   "dominio": "hooks",
+   "tabelas": [
+    "hold_alert_settings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "hold-sound-settings"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/hooks/useActiveCallsRealtime.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useIPValidation.ts",
+   "hooks_exportados": [
+    "useIPValidation"
+   ],
+   "linhas": 29,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "validate-ip"
+   ],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Login.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useIPWhitelist.ts",
+   "hooks_exportados": [
+    "useIPWhitelist"
+   ],
+   "linhas": 151,
+   "dominio": "hooks",
+   "tabelas": [
+    "blocked_access_logs",
+    "ip_whitelist",
+    "user_allowed_ips",
+    "user_ip_restrictions",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/IPWhitelist.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useKeyMoments.ts",
+   "hooks_exportados": [
+    "useKeyMoments"
+   ],
+   "linhas": 66,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_key_moments"
+   ],
+   "rpcs": [],
+   "edges": [
+    "detect-key-moments"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/call-history/CallDetailDialog.tsx",
+    "src/components/conversation-intelligence/KeyMomentsTimeline.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useKnowledgeBase.ts",
+   "hooks_exportados": [
+    "useKbArticle",
+    "useKbArticles",
+    "useKbCategories",
+    "useRecordKbView",
+    "useUpsertArticle"
+   ],
+   "linhas": 187,
+   "dominio": "hooks",
+   "tabelas": [
+    "kb_article_views",
+    "kb_articles",
+    "kb_categories"
+   ],
+   "rpcs": [
+    "match_kb_articles"
+   ],
+   "edges": [
+    "embed-kb-article"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Knowledge.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useLearning.ts",
+   "hooks_exportados": [
+    "useLearning"
+   ],
+   "linhas": 74,
+   "dominio": "hooks",
+   "tabelas": [
+    "learning_completions",
+    "learning_modules"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Learning.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useLiveAssist.ts",
+   "hooks_exportados": [
+    "useAgentAssistHistory",
+    "useLiveAssist"
+   ],
+   "linhas": 157,
+   "dominio": "hooks",
+   "tabelas": [
+    "live_assist_signals"
+   ],
+   "rpcs": [],
+   "edges": [
+    "analyze-live-utterance"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "canais_realtime": [
+    "live-assist-${callSessionId}"
+   ],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/calls/ActiveCallBar.tsx",
+    "src/components/calls/NextBestActionPanel.tsx",
+    "src/components/executive/AgentAssistDashboardCard.tsx",
+    "src/pages/AgentAssist.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useLiveSentiment.ts",
+   "hooks_exportados": [
+    "useLiveSentiment"
+   ],
+   "linhas": 51,
+   "dominio": "hooks",
+   "tabelas": [
+    "live_sentiment_snapshots"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [
+    "sentiment-${callSessionId}"
+   ],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/call-history/CallDetailDialog.tsx",
+    "src/components/conversation-intelligence/LiveSentimentGraph.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useLiveTranslation.ts",
+   "hooks_exportados": [
+    "useLiveTranslation"
+   ],
+   "linhas": 94,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "translate-utterance"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useRef",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/translation/LiveTranslationPanel.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useLoginLockout.ts",
+   "hooks_exportados": [
+    "useLoginLockout"
+   ],
+   "linhas": 115,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [
+    "check_login_lockout",
+    "record_failed_login",
+    "record_successful_login"
+   ],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Login.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useMeetingSummary.ts",
+   "hooks_exportados": [
+    "useAutoMeetingSummary",
+    "useMeetingSummariesList",
+    "useMeetingSummary",
+    "usePendingActionItems"
+   ],
+   "linhas": 260,
+   "dominio": "hooks",
+   "tabelas": [
+    "meeting_summaries"
+   ],
+   "rpcs": [],
+   "edges": [
+    "generate-meeting-summary"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [
+    "meeting-summary-${callSessionId}"
+   ],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/calls/MeetingSummaryCard.tsx",
+    "src/components/executive/MeetingSummaryDashboardCard.tsx",
+    "src/lib/meeting-summary-utils.ts",
+    "src/pages/MeetingSummaries.tsx"
+   ],
+   "coberto_por_testes": 3
+  },
+  {
+   "arquivo": "src/hooks/useMFA.ts",
+   "hooks_exportados": [
+    "useMFA"
+   ],
+   "linhas": 213,
+   "dominio": "hooks",
+   "tabelas": [
+    "user_mfa_settings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 3,
+   "usado_por_arquivos": [
+    "src/components/auth/ReauthDialog.tsx",
+    "src/hooks/useSecurityDashboard.ts",
+    "src/pages/TwoFactorAuth.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useMultiChannelCall.ts",
+   "hooks_exportados": [
+    "useMultiChannelCall"
+   ],
+   "linhas": 244,
+   "dominio": "hooks",
+   "tabelas": [
+    "hold_events"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallTimers",
+    "useCallTransfer",
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 16,
+   "usado_por_arquivos": [
+    "src/components/calls/ActiveCallsIndicator.tsx",
+    "src/components/calls/ConferenceSection.tsx",
+    "src/components/calls/HoldReminderSettings.tsx",
+    "src/components/calls/TransferCallDialog.tsx",
+    "src/components/calls/UnifiedSoftphone.tsx",
+    "src/components/calls/softphone/ActiveCallDisplay.tsx",
+    "src/components/calls/softphone/DialpadTab.tsx",
+    "src/components/calls/softphone/HeaderDropdowns.tsx",
+    "src/components/calls/softphone/TabContents.tsx",
+    "src/components/calls/softphone/constants.tsx",
+    "src/hooks/useCallTimers.ts",
+    "src/hooks/useCallTransfer.ts",
+    "src/hooks/useConferenceRecording.ts",
+    "src/hooks/useHoldReminder.ts",
+    "src/hooks/useMultiChannelCallConference.ts",
+    "src/pages/PhoneDialer.tsx"
+   ],
+   "coberto_por_testes": 6
+  },
+  {
+   "arquivo": "src/hooks/useMultiChannelCallConference.ts",
+   "hooks_exportados": [
+    "useMultiChannelCallConference"
+   ],
+   "linhas": 135,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useMultiDeviceRing.ts",
+   "hooks_exportados": [
+    "useMultiDeviceRing"
+   ],
+   "linhas": 85,
+   "dominio": "hooks",
+   "tabelas": [
+    "agent_devices",
+    "agent_ring_settings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useMutation",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/MultiDeviceRing.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useNetworkMonitor.ts",
+   "hooks_exportados": [
+    "useNetworkMonitor"
+   ],
+   "linhas": 141,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useRef"
+   ],
+   "canais_realtime": [],
+   "usado_por": 3,
+   "usado_por_arquivos": [
+    "src/components/calls/NetworkStatusBadge.tsx",
+    "src/components/network/NetworkStatusIndicator.tsx",
+    "src/pages/NetworkDiagnostics.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useNotifications.ts",
+   "hooks_exportados": [
+    "useNotifications"
+   ],
+   "linhas": 220,
+   "dominio": "hooks",
+   "tabelas": [
+    "notification_preferences",
+    "notifications"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuth",
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "notifications-${user.id}"
+   ],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useObjectionLibrary.ts",
+   "hooks_exportados": [
+    "useObjectionLibrary"
+   ],
+   "linhas": 96,
+   "dominio": "hooks",
+   "tabelas": [
+    "objection_library"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/AgentAssist.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useOptimisticLockConflicts.ts",
+   "hooks_exportados": [
+    "useOptimisticLockConflicts"
+   ],
+   "linhas": 96,
+   "dominio": "hooks",
+   "tabelas": [
+    "optimistic_lock_conflicts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/ConcurrencyConflicts.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/usePageTitle.ts",
+   "hooks_exportados": [
+    "usePageTitle"
+   ],
+   "linhas": 17,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 95,
+   "usado_por_arquivos": [
+    "src/pages/AIAssistant.tsx",
+    "src/pages/Accounts.tsx",
+    "src/pages/AgentAssist.tsx",
+    "src/pages/AgentRanking.tsx",
+    "src/pages/AlertHistory.tsx",
+    "src/pages/Alerts.tsx",
+    "src/pages/AuditLogs.tsx",
+    "src/pages/BattleCards.tsx",
+    "src/pages/BlfBoard.tsx",
+    "src/pages/BlockedAccessLogs.tsx",
+    "src/pages/Cadences.tsx",
+    "src/pages/CallAnalytics.tsx",
+    "src/pages/CallFlowDesigner.tsx",
+    "src/pages/CallHistory.tsx",
+    "src/pages/CallLibrary.tsx",
+    "src/pages/CallPark.tsx",
+    "src/pages/CallQueues.tsx",
+    "src/pages/Callbacks.tsx",
+    "src/pages/Calls.tsx",
+    "src/pages/Coaching.tsx",
+    "src/pages/Compliance.tsx",
+    "src/pages/ConcurrencyConflicts.tsx",
+    "src/pages/ContactInsights.tsx",
+    "src/pages/Contacts.tsx",
+    "src/pages/Deals.tsx",
+    "src/pages/Dialer.tsx",
+    "src/pages/ExecutiveDashboard.tsx",
+    "src/pages/ExternalRecordingsImport.tsx",
+    "src/pages/FinancialImpact.tsx",
+    "src/pages/ForgotPassword.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/usePageVisibility.ts",
+   "hooks_exportados": [
+    "usePageVisibility"
+   ],
+   "linhas": 30,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 3,
+   "usado_por_arquivos": [
+    "src/hooks/useBlfBoard.ts",
+    "src/hooks/useExtensionsOverview.ts",
+    "src/hooks/useSecurityMonitoringData.ts"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/usePermissions.ts",
+   "hooks_exportados": [
+    "usePermissions"
+   ],
+   "linhas": 101,
+   "dominio": "hooks",
+   "tabelas": [
+    "role_permissions",
+    "user_roles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/auth/PermissionGate.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/usePersistedTagFilter.ts",
+   "hooks_exportados": [
+    "usePersistedTagFilter"
+   ],
+   "linhas": 169,
+   "dominio": "hooks",
+   "tabelas": [
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [
+    "dialer-filter-profile-${userId}"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/dialer/phone/PhoneQuickAccess.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/usePredictiveDialer.ts",
+   "hooks_exportados": [
+    "usePredictiveDialer"
+   ],
+   "linhas": 307,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "dialer-changes"
+   ],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/dialer/AddContactsDialog.tsx",
+    "src/components/dialer/CreateCampaignDialog.tsx",
+    "src/components/dialer/DialerControlPanel.tsx",
+    "src/components/dialer/PredictiveDialerPanel.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/usePredictivePacing.ts",
+   "hooks_exportados": [
+    "useApplyPacingNow",
+    "useCampaignPacing"
+   ],
+   "linhas": 54,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [
+    "calculate_predictive_pace"
+   ],
+   "edges": [
+    "dialer-pacing-tick"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/PredictiveDialer.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useProfile.ts",
+   "hooks_exportados": [
+    "useProfile"
+   ],
+   "linhas": 71,
+   "dominio": "hooks",
+   "tabelas": [
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/settings/ProfileSettings.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useQualityAlerts.ts",
+   "hooks_exportados": [
+    "useQualityAlerts"
+   ],
+   "linhas": 24,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useQualityMetrics"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/layout/GlobalServices.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useQualityMetrics.ts",
+   "hooks_exportados": [
+    "useQualityMetrics",
+    "useTrunkUsageMetrics"
+   ],
+   "linhas": 57,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_quality_metrics",
+    "voip_trunk_usage_metrics"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/executive/RealtimeQualityDashboard.tsx",
+    "src/hooks/useQualityAlerts.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useQualityTrendAnalyzer.ts",
+   "hooks_exportados": [
+    "useQualityTrendAnalyzer"
+   ],
+   "linhas": 116,
+   "dominio": "hooks",
+   "tabelas": [
+    "voip_quality_alerts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useRef"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/hooks/useSipCall.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useQueueAudioPrompts.ts",
+   "hooks_exportados": [
+    "useQueueAudioPrompts"
+   ],
+   "linhas": 159,
+   "dominio": "hooks",
+   "tabelas": [
+    "queue_audio_prompts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/queues/QueueAudioLibrary.tsx",
+    "src/pages/CallQueues.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useQueueMetrics.ts",
+   "hooks_exportados": [
+    "useQueueMetrics"
+   ],
+   "linhas": 183,
+   "dominio": "hooks",
+   "tabelas": [
+    "agents",
+    "call_sessions",
+    "dashboard_goals"
+   ],
+   "rpcs": [],
+   "edges": [
+    "check-goals"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "queue-metrics"
+   ],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/queue/QueueGoalsTab.tsx",
+    "src/components/queue/QueueMetricsCards.tsx",
+    "src/components/queue/QueueRealtimeCharts.tsx",
+    "src/pages/QueueMetricsDashboard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useRateLimitData.ts",
+   "hooks_exportados": [
+    "useRateLimitData"
+   ],
+   "linhas": 139,
+   "dominio": "hooks",
+   "tabelas": [
+    "rate_limit_alerts",
+    "rate_limit_logs",
+    "rate_limit_settings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "rate-limit-alerts"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/RateLimitDashboard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useRealtimeHoldAlerts.ts",
+   "hooks_exportados": [
+    "useRealtimeHoldAlerts"
+   ],
+   "linhas": 275,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_alerts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "hold-alerts-realtime"
+   ],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/notifications/NotificationBell.tsx",
+    "src/components/notifications/UnifiedNotificationDropdown.tsx"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useReauth.ts",
+   "hooks_exportados": [
+    "useReauth"
+   ],
+   "linhas": 139,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/auth/ReauthDialog.tsx",
+    "src/pages/SessionManagement.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useRecordings.ts",
+   "hooks_exportados": [
+    "useRecordings"
+   ],
+   "linhas": 164,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_recordings"
+   ],
+   "rpcs": [],
+   "edges": [
+    "analyze-sentiment",
+    "transcribe-recording"
+   ],
+   "hooks_internos": [
+    "useAuditLog",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/recordings/TranscriptionDialog.tsx",
+    "src/pages/Recordings.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useRenewals.ts",
+   "hooks_exportados": [
+    "useRenewals"
+   ],
+   "linhas": 87,
+   "dominio": "hooks",
+   "tabelas": [
+    "renewals"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Renewals.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useRingGroups.ts",
+   "hooks_exportados": [
+    "useRingGroups"
+   ],
+   "linhas": 254,
+   "dominio": "hooks",
+   "tabelas": [
+    "agents",
+    "ring_group_members",
+    "ring_groups"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useMemo",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/ringgroups/RingGroupCard.tsx",
+    "src/pages/RingGroups.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useRingtoneSettings.ts",
+   "hooks_exportados": [
+    "useRingtoneSettings"
+   ],
+   "linhas": 284,
+   "dominio": "hooks",
+   "tabelas": [
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState",
+    "useSyncHistory"
+   ],
+   "canais_realtime": [
+    "ringtone-profile-${userId}"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/dialer/phone/RingtoneSettings.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useRoutingRules.ts",
+   "hooks_exportados": [
+    "useDeleteRoutingRule",
+    "useRoutingRules",
+    "useUpsertRoutingRule"
+   ],
+   "linhas": 78,
+   "dominio": "hooks",
+   "tabelas": [
+    "routing_rules"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/RoutingRules.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useScheduledCallbacks.ts",
+   "hooks_exportados": [
+    "useScheduledCallbacks"
+   ],
+   "linhas": 241,
+   "dominio": "hooks",
+   "tabelas": [
+    "scheduled_callbacks"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "scheduled-callbacks-changes"
+   ],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/callbacks/ScheduleCallbackDialog.tsx",
+    "src/components/callbacks/ScheduledCallbacksList.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useScorecards.ts",
+   "hooks_exportados": [
+    "useScorecards"
+   ],
+   "linhas": 89,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_scorecards",
+    "scorecard_criteria",
+    "scorecard_responses",
+    "scorecard_templates"
+   ],
+   "rpcs": [],
+   "edges": [
+    "score-call"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSecurityAlertNotifications.ts",
+   "hooks_exportados": [
+    "useSecurityAlertNotifications"
+   ],
+   "linhas": 226,
+   "dominio": "hooks",
+   "tabelas": [
+    "notifications"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useInfiniteQuery",
+    "useMemo",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [
+    "admin-security-alerts"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/SecurityAlerts.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useSecurityDashboard.ts",
+   "hooks_exportados": [
+    "useSecurityDashboard"
+   ],
+   "linhas": 88,
+   "dominio": "hooks",
+   "tabelas": [
+    "blocked_access_logs",
+    "security_alerts",
+    "user_ip_restrictions"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useMFA",
+    "useSessionManager",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/SecurityDashboard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSecurityMonitoringData.ts",
+   "hooks_exportados": [
+    "useSecurityMonitoringData"
+   ],
+   "linhas": 110,
+   "dominio": "hooks",
+   "tabelas": [
+    "audit_logs",
+    "security_alerts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "usePageVisibility",
+    "useState"
+   ],
+   "canais_realtime": [
+    "audit-logs-realtime",
+    "security-alerts-realtime"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/SecurityMonitoring.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSecurityNotifications.ts",
+   "hooks_exportados": [
+    "useSecurityNotifications"
+   ],
+   "linhas": 120,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "blocked-access-notifications",
+    "rate-limit-notifications",
+    "security-alerts-notifications"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/security/NotificationPermissionBanner.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSessionManager.ts",
+   "hooks_exportados": [
+    "useSessionManager"
+   ],
+   "linhas": 251,
+   "dominio": "hooks",
+   "tabelas": [
+    "active_sessions"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useCallback",
+    "useDeviceDetection",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/hooks/useSecurityDashboard.ts",
+    "src/pages/SessionManagement.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useShifts.ts",
+   "hooks_exportados": [
+    "useShifts"
+   ],
+   "linhas": 105,
+   "dominio": "hooks",
+   "tabelas": [
+    "agent_shifts",
+    "shift_templates"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Scheduling.tsx"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useShiftSwapSuggestions.ts",
+   "hooks_exportados": [
+    "useGenerateSwapSuggestions",
+    "useShiftSwapSuggestions",
+    "useUpdateSwapSuggestion"
+   ],
+   "linhas": 70,
+   "dominio": "hooks",
+   "tabelas": [
+    "shift_swap_suggestions"
+   ],
+   "rpcs": [],
+   "edges": [
+    "suggest-shift-swaps"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/ShiftSwapSuggestions.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useSipCall.ts",
+   "hooks_exportados": [
+    "useSipCall"
+   ],
+   "linhas": 412,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "sip-config"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useQualityTrendAnalyzer",
+    "useTrunkUsageReporter",
+    "useVoipAutoRemediation",
+    "useVoipQualityMonitor"
+   ],
+   "canais_realtime": [],
+   "usado_por": 5,
+   "usado_por_arquivos": [
+    "src/components/calls/SipConnectionStatus.tsx",
+    "src/components/calls/UnifiedSoftphone.tsx",
+    "src/components/dialer/DialerControlPanel.tsx",
+    "src/pages/Calls.tsx",
+    "src/pages/PhoneDialer.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSkills.ts",
+   "hooks_exportados": [
+    "useSkills"
+   ],
+   "linhas": 75,
+   "dominio": "hooks",
+   "tabelas": [
+    "agent_skills",
+    "skills"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Skills.tsx"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useSLA.ts",
+   "hooks_exportados": [
+    "useEnforceSla",
+    "useSlaCompliance",
+    "useSlaPolicies",
+    "useUpsertSlaPolicy"
+   ],
+   "linhas": 114,
+   "dominio": "hooks",
+   "tabelas": [
+    "conversations",
+    "sla_policies"
+   ],
+   "rpcs": [],
+   "edges": [
+    "enforce-sla"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/executive/OmnichannelCard.tsx",
+    "src/pages/SLAPolicies.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSuccessPlans.ts",
+   "hooks_exportados": [
+    "useSuccessPlans"
+   ],
+   "linhas": 102,
+   "dominio": "hooks",
+   "tabelas": [
+    "success_plan_milestones",
+    "success_plans"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/SuccessPlans.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSupervisorPanel.ts",
+   "hooks_exportados": [
+    "useSupervisorPanel"
+   ],
+   "linhas": 221,
+   "dominio": "hooks",
+   "tabelas": [
+    "barge_in_sessions",
+    "call_sessions",
+    "whisper_messages"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCriticalAlertNotifications",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [
+    "supervisor-panel-updates",
+    "whisper-history-${selectedCall.id}"
+   ],
+   "usado_por": 3,
+   "usado_por_arquivos": [
+    "src/components/supervisor/SupervisorPanel.tsx",
+    "src/components/supervisor/panel/QueueMetricsGrid.tsx",
+    "src/components/supervisor/panel/types.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSurveys.ts",
+   "hooks_exportados": [
+    "useSurveys"
+   ],
+   "linhas": 67,
+   "dominio": "hooks",
+   "tabelas": [
+    "survey_responses"
+   ],
+   "rpcs": [],
+   "edges": [
+    "send-survey"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 0,
+   "usado_por_arquivos": [],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSyncHistory.ts",
+   "hooks_exportados": [
+    "useSyncHistory"
+   ],
+   "linhas": 49,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 6,
+   "usado_por_arquivos": [
+    "src/components/dialer/phone/SyncHistoryPanel.tsx",
+    "src/hooks/useDeviceLabel.ts",
+    "src/hooks/useDialerFavorites.ts",
+    "src/hooks/usePersistedTagFilter.ts",
+    "src/hooks/useRingtoneSettings.ts",
+    "src/hooks/useVoicePreferences.ts"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useTalkRatio.ts",
+   "hooks_exportados": [
+    "useTalkRatio"
+   ],
+   "linhas": 48,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "analyze-talk-ratio"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/call-history/CallDetailDialog.tsx",
+    "src/components/conversation-intelligence/TalkRatioChart.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useTestWebhook.ts",
+   "hooks_exportados": [
+    "useTestWebhook"
+   ],
+   "linhas": 114,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/SecurityAlerts.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useTimeOff.ts",
+   "hooks_exportados": [
+    "useTimeOff"
+   ],
+   "linhas": 66,
+   "dominio": "hooks",
+   "tabelas": [
+    "time_off_requests"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Scheduling.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useTrackers.ts",
+   "hooks_exportados": [
+    "useTrackerMatches",
+    "useTrackers"
+   ],
+   "linhas": 79,
+   "dominio": "hooks",
+   "tabelas": [
+    "tracker_matches",
+    "trackers"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Trackers.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useTrunkFailoverMonitor.ts",
+   "hooks_exportados": [
+    "useTrunkFailoverMonitor"
+   ],
+   "linhas": 52,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect"
+   ],
+   "canais_realtime": [
+    "voip-failover-events"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/layout/GlobalServices.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useTrunkHealth.ts",
+   "hooks_exportados": [
+    "useRunHealthCheck",
+    "useTrunkHealthHistory"
+   ],
+   "linhas": 54,
+   "dominio": "hooks",
+   "tabelas": [
+    "voip_trunk_health_checks"
+   ],
+   "rpcs": [],
+   "edges": [
+    "voip-trunks-healthcheck"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/admin/voip/TrunkHealthHistoryDrawer.tsx",
+    "src/pages/admin/VoipTrunksAdmin.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useTrunkMetrics.ts",
+   "hooks_exportados": [
+    "useTrunkMetrics"
+   ],
+   "linhas": 98,
+   "dominio": "hooks",
+   "tabelas": [
+    "voip_trunk_usage_metrics",
+    "voip_trunks"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/admin/voip/TrunkMetricsTab.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useTrunkRealtimeMetrics.ts",
+   "hooks_exportados": [
+    "useTrunkRealtimeMetrics"
+   ],
+   "linhas": 75,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_sessions",
+    "voip_trunks"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useEffect",
+    "useMemo"
+   ],
+   "canais_realtime": [
+    "trunk-realtime"
+   ],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/VoipTrunksAdmin.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useTrunkUsageReporter.ts",
+   "hooks_exportados": [
+    "useTrunkUsageReporter"
+   ],
+   "linhas": 59,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [
+    "record_trunk_usage"
+   ],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/hooks/useSipCall.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useUnreadConflicts.ts",
+   "hooks_exportados": [
+    "useUnreadConflicts"
+   ],
+   "linhas": 35,
+   "dominio": "hooks",
+   "tabelas": [
+    "optimistic_lock_conflicts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/layout/AppSidebar.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVirtualFaxOcr.ts",
+   "hooks_exportados": [
+    "useVirtualFaxOcr"
+   ],
+   "linhas": 20,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "ocr-virtual-fax"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/VirtualFax.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useVoiceBiometrics.ts",
+   "hooks_exportados": [
+    "useFraudSignals",
+    "useLiveVoiceVerification",
+    "useRedactCall",
+    "useVoicePrints"
+   ],
+   "linhas": 203,
+   "dominio": "hooks",
+   "tabelas": [
+    "fraud_signals",
+    "voice_prints"
+   ],
+   "rpcs": [],
+   "edges": [
+    "enroll-voice",
+    "redact-sensitive-audio",
+    "verify-voice"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useMutation",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/VoiceSecurity.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoiceCommand.ts",
+   "hooks_exportados": [
+    "useVoiceCommand"
+   ],
+   "linhas": 83,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voice-command",
+    "voice-transcribe"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/calls/softphone/ActiveCallDisplay.tsx",
+    "src/components/voice/VoiceAssistantDialog.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoicePreferences.ts",
+   "hooks_exportados": [
+    "useVoicePreferences"
+   ],
+   "linhas": 199,
+   "dominio": "hooks",
+   "tabelas": [
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/dialer/phone/VoicePreferencesPanel.tsx",
+    "src/components/voice/VoiceAssistantDialog.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useVoipAnomalies.ts",
+   "hooks_exportados": [
+    "useVoipAnomalies"
+   ],
+   "linhas": 72,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/network/AnomalyDetectionCard.tsx",
+    "src/hooks/useAnomalyRemediation.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipAutoRemediation.ts",
+   "hooks_exportados": [
+    "useVoipAutoRemediation"
+   ],
+   "linhas": 58,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/hooks/useSipCall.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipCapacityRecommendations.ts",
+   "hooks_exportados": [
+    "useVoipCapacityRecommendations"
+   ],
+   "linhas": 42,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-capacity-recommendations"
+   ],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/network/QualityForecastCard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipDiagnosticVoiceQA.ts",
+   "hooks_exportados": [
+    "useVoipDiagnosticVoiceQA"
+   ],
+   "linhas": 46,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-diagnostic-voice-qa"
+   ],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/network/VoipVoiceQAPanel.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipExecutiveNarrative.ts",
+   "hooks_exportados": [
+    "useVoipExecutiveNarrative"
+   ],
+   "linhas": 55,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-executive-narrative"
+   ],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/network/ExecutiveSummaryDialog.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipExecutiveSummary.ts",
+   "hooks_exportados": [
+    "useVoipExecutiveSummary"
+   ],
+   "linhas": 69,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-executive-summary"
+   ],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/network/ExecutiveReportExport.tsx",
+    "src/components/network/VoipHealthScoreCard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipMonitoringSettings.ts",
+   "hooks_exportados": [
+    "useVoipMonitoringSettings"
+   ],
+   "linhas": 59,
+   "dominio": "hooks",
+   "tabelas": [
+    "voip_monitoring_settings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/admin/voip/VoipMonitoringSettingsDialog.tsx",
+    "src/pages/admin/VoipTrunksAdmin.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipQualityAlertsSummary.ts",
+   "hooks_exportados": [
+    "useVoipQualityAlertsSummary"
+   ],
+   "linhas": 49,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/network/QualityAlertsSummaryCard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipQualityForecast.ts",
+   "hooks_exportados": [
+    "useVoipQualityForecast",
+    "useVoipQualityForecastFetch"
+   ],
+   "linhas": 69,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-quality-forecast"
+   ],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/network/QualityForecastCard.tsx",
+    "src/hooks/useVoipCapacityRecommendations.ts"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipQualityMonitor.ts",
+   "hooks_exportados": [
+    "useVoipQualityMonitor"
+   ],
+   "linhas": 206,
+   "dominio": "hooks",
+   "tabelas": [
+    "call_quality_metrics"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useRef"
+   ],
+   "canais_realtime": [],
+   "usado_por": 6,
+   "usado_por_arquivos": [
+    "src/components/calls/CallQualityIndicator.tsx",
+    "src/components/calls/PostCallSummary.tsx",
+    "src/components/calls/VoipQualityIndicator.tsx",
+    "src/components/calls/WebRTCCall.tsx",
+    "src/components/calls/WebRTCMetricsPanel.tsx",
+    "src/hooks/useSipCall.ts"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useVoipRecommendationHistory.ts",
+   "hooks_exportados": [
+    "useVoipRecommendationHistory"
+   ],
+   "linhas": 71,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-recommendation-history"
+   ],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/network/RecommendationHistoryDrawer.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipRecommendationInsights.ts",
+   "hooks_exportados": [
+    "useVoipRecommendationInsights"
+   ],
+   "linhas": 51,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-recommendation-insights"
+   ],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/network/RecommendationInsightsCard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipRecommendations.ts",
+   "hooks_exportados": [
+    "useVoipRecommendations"
+   ],
+   "linhas": 72,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-recommendations"
+   ],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 3,
+   "usado_por_arquivos": [
+    "src/components/network/VoipRecommendationsPanel.tsx",
+    "src/components/network/WhatIfSimulatorDialog.tsx",
+    "src/pages/NetworkDiagnostics.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipRecommendationSimulate.ts",
+   "hooks_exportados": [
+    "useVoipRecommendationSimulate"
+   ],
+   "linhas": 55,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-recommendation-simulate"
+   ],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/network/WhatIfSimulatorDialog.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useVoipTrunks.ts",
+   "hooks_exportados": [
+    "useDeleteAssignment",
+    "useDeleteTrunk",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useVoipTrunks"
+   ],
+   "linhas": 134,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "voip-trunks-manage"
+   ],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/components/admin/voip/TrunkAssignmentsTab.tsx",
+    "src/components/admin/voip/VoipTrunkFormDrawer.tsx",
+    "src/components/executive/VoipInfrastructureTab.tsx",
+    "src/pages/admin/VoipTrunksAdmin.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useWavoipCall.ts",
+   "hooks_exportados": [
+    "useWavoipCall"
+   ],
+   "linhas": 222,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "wavoip-call"
+   ],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/calls/UnifiedSoftphone.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useWebAuthn.ts",
+   "hooks_exportados": [
+    "useWebAuthn"
+   ],
+   "linhas": 336,
+   "dominio": "hooks",
+   "tabelas": [
+    "user_passkeys",
+    "user_profiles",
+    "webauthn_challenges"
+   ],
+   "rpcs": [],
+   "edges": [
+    "webauthn-authenticate"
+   ],
+   "hooks_internos": [
+    "useAuthContext",
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/auth/PasskeyLogin.tsx",
+    "src/components/auth/PasskeyManager.tsx"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useWebhookConfig.ts",
+   "hooks_exportados": [
+    "useWebhookConfig"
+   ],
+   "linhas": 112,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/SecurityAlerts.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useWebhookHealthData.ts",
+   "hooks_exportados": [
+    "useWebhookHealthData"
+   ],
+   "linhas": 68,
+   "dominio": "hooks",
+   "tabelas": [
+    "webhook_flush_metrics"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useRef",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/WebhookHealth.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useWebhookHistory.ts",
+   "hooks_exportados": [
+    "useWebhookHistory"
+   ],
+   "linhas": 57,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/SecurityAlerts.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useWebhookQueue.ts",
+   "hooks_exportados": [
+    "useWebhookQueue"
+   ],
+   "linhas": 77,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/admin/SecurityAlerts.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useWebVitals.ts",
+   "hooks_exportados": [
+    "useWebVitals"
+   ],
+   "linhas": 21,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/ObservabilityDashboard.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useWhatsappRewrite.ts",
+   "hooks_exportados": [
+    "useWhatsappRewrite"
+   ],
+   "linhas": 75,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/whatsapp/WhatsappComposer.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/lib/elevenlabs-stub.ts",
+   "hooks_exportados": [
+    "useConversation"
+   ],
+   "linhas": 24,
+   "dominio": "lib",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/calls/UnifiedSoftphone.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/pages/roles/useRoles.ts",
+   "hooks_exportados": [
+    "useRoles"
+   ],
+   "linhas": 110,
+   "dominio": "pages/roles",
+   "tabelas": [
+    "user_profiles",
+    "user_roles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Roles.tsx"
+   ],
+   "coberto_por_testes": 1
+  }
+ ]
+}

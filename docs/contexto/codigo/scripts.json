@@ -1,0 +1,347 @@
+{
+ "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
+ "format_version": 2,
+ "total": 31,
+ "scripts": [
+  {
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "descricao": "Simulação de cenários do gerador: monta centenas de repositórios sintéticos (variantes de SQL, rotas, menus, edges, workflows, monorepo, Python, arquivos corrompidos, fuzz) e confere:",
+   "linhas": 173,
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/ai-context/gerar.mjs",
+   "descricao": "Gera o contexto de projeto para agentes de IA (padrão: inventario/ia/*). Zero dependências. Node >= 18. Genérico: funciona em qualquer repositório.",
+   "linhas": 925,
+   "env": [
+    "AI_CONTEXT_DIR",
+    "AI_CONTEXT_PUBLICACAO",
+    "AI_CONTEXT_ROOT"
+   ],
+   "npm_scripts": [
+    "contexto:ia"
+   ],
+   "workflows": [
+    "contexto.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/apply-call-volume-fix.mjs",
+   "descricao": null,
+   "linhas": 36,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/check-cfmlmc-db.mjs",
+   "descricao": null,
+   "linhas": 104,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/check-data.mjs",
+   "descricao": null,
+   "linhas": 71,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/check-rls.mjs",
+   "descricao": null,
+   "linhas": 80,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/ci/check-claude-md-integrity.mjs",
+   "descricao": "* Garante que as instrucoes para agentes nao foram apagadas ou esvaziadas por outra sessao",
+   "linhas": 123,
+   "env": [
+    "AGENTS_MD_BASE",
+    "CLAUDE_MD_BASE"
+   ],
+   "npm_scripts": [],
+   "workflows": [
+    "ci.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/clean-hold-events.mjs",
+   "descricao": null,
+   "linhas": 67,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/cleanup-and-count.mjs",
+   "descricao": null,
+   "linhas": 73,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/codemod-safe-number.mjs",
+   "descricao": "* Codemod: reescreve chamadas nativas de parseInt/parseFloat/Number.parseInt/Number.parseFloat",
+   "linhas": 231,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [
+    "ci.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/fix-get-call-volume-stats.sql",
+   "descricao": null,
+   "linhas": 43,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/fix-user-profile.mjs",
+   "descricao": null,
+   "linhas": 80,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/full-audit.sh",
+   "descricao": "1. Lint and Type-check Skip lint/type-check in this sandbox if it's too slow or noisy",
+   "linhas": 27,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/guard-edge-numeric.mjs",
+   "descricao": "* Guard: garante que Edge Functions Supabase usem schemas numéricos defensivos.",
+   "linhas": 207,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [
+    "ci.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/inspect-schema.mjs",
+   "descricao": null,
+   "linhas": 64,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/inventario/banco.sql",
+   "descricao": null,
+   "linhas": 166,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/inventario/gerar-banco.mjs",
+   "descricao": "* Inventario do banco oficial -> inventario/estado/banco.json (fonte de consulta dos agentes).",
+   "linhas": 334,
+   "env": [
+    "INVENTARIO_PERMITIR_OUTRO_PROJETO",
+    "SUPABASE_ACCESS_TOKEN",
+    "SUPABASE_API_URL",
+    "SUPABASE_PROJECT_REF"
+   ],
+   "npm_scripts": [
+    "inventario:banco"
+   ],
+   "workflows": [
+    "inventario-estado-semanal.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/inventario/gerar-repo.mjs",
+   "descricao": "Inventario gerado do lado do repositorio (sem acesso ao banco):  - edge functions: linhas, segredos lidos (Deno.env.get) e quem as invoca (src, migrations, outras edges, e2e, CI)",
+   "linhas": 81,
+   "env": [],
+   "npm_scripts": [
+    "inventario:edges"
+   ],
+   "workflows": [
+    "inventario-estado-semanal.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/inventario/gerar-rotas.mjs",
+   "descricao": "* Inventario das rotas do front -> inventario/estado/rotas.json (fonte de consulta dos agentes).",
+   "linhas": 332,
+   "env": [],
+   "npm_scripts": [
+    "inventario:rotas"
+   ],
+   "workflows": [
+    "inventario-estado-semanal.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/inventario/mudou-conteudo.mjs",
+   "descricao": "* O inventario mudou de verdade? Compara cada arquivo de inventario/estado/ com a versao do",
+   "linhas": 85,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [
+    "inventario-estado-semanal.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/regras_negocio/generate.py",
+   "descricao": null,
+   "linhas": 2138,
+   "env": [],
+   "npm_scripts": [
+    "contexto:regras",
+    "contexto:regras:test"
+   ],
+   "workflows": [
+    "contexto.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/regras_negocio/indice.py",
+   "descricao": null,
+   "linhas": 237,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [
+    "contexto.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/regras_negocio/publish.sh",
+   "descricao": "Publica docs/ai-context gerados: commit + push na branch padrão, ou PR quando a branch é protegida. Variáveis:",
+   "linhas": 195,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/supabase_snapshot/snapshot.py",
+   "descricao": "Somente leitura no banco (sessão read-only, statement_timeout, lock_timeout). Nunca grava linhas de tabelas, valores de segredos, chaves, senhas ou DSN.",
+   "linhas": 1791,
+   "env": [],
+   "npm_scripts": [
+    "contexto:banco",
+    "contexto:banco:test"
+   ],
+   "workflows": [
+    "contexto.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/test-api-direct.mjs",
+   "descricao": "Testa exatamente as chamadas que o frontend faz via supabase-js client 1. SELECT como ANON (sem login) - geralmente bloqueado por RLS",
+   "linhas": 31,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/test-auth-flow.mjs",
+   "descricao": "Simula login real do ti@promobrindes e testa queries do frontend",
+   "linhas": 66,
+   "env": [
+    "TI_PASSWORD"
+   ],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/test-authenticated-queries.mjs",
+   "descricao": "Login do ti@promobrindes (já confirmado) e teste das queries Como não tenho a senha do ti@promobrindes, vou usar um truque:",
+   "linhas": 95,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/test-call-volume-rpc.mjs",
+   "descricao": "1. Service role (bypassa RLS)",
+   "linhas": 47,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/test-dashboard-rpcs.mjs",
+   "descricao": null,
+   "linhas": 28,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/test-rls-access.mjs",
+   "descricao": "Teste via cliente postgres direto simulando o que o frontend faz via Supabase JS client",
+   "linhas": 77,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/test-validate-ip.mjs",
+   "descricao": "Test validate-ip com JWT válido de usuário autenticado 1. Tentar gerar magic link ou token anônimo de admin",
+   "linhas": 51,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  }
+ ]
+}

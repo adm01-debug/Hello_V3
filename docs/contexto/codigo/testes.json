@@ -1,0 +1,3364 @@
+{
+ "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
+ "format_version": 2,
+ "frameworks": [
+  "vitest",
+  "playwright"
+ ],
+ "total": 321,
+ "por_tipo": {
+  "contrato": 1,
+  "e2e": 12,
+  "pytest": 2,
+  "unit": 306
+ },
+ "onde_ficam": [
+  {
+   "padrao": "co-localizado (__tests__)",
+   "arquivos": 300
+  },
+  {
+   "padrao": "e2e/",
+   "arquivos": 7
+  },
+  {
+   "padrao": "outro",
+   "arquivos": 5
+  },
+  {
+   "padrao": "tests/",
+   "arquivos": 5
+  },
+  {
+   "padrao": "co-localizado (*.test)",
+   "arquivos": 4
+  }
+ ],
+ "arquivos": [
+  {
+   "arquivo": "e2e/calls.spec.ts",
+   "tipo": "e2e",
+   "linhas": 42,
+   "testa": [],
+   "casos": 5
+  },
+  {
+   "arquivo": "e2e/dashboard.spec.ts",
+   "tipo": "e2e",
+   "linhas": 46,
+   "testa": [],
+   "casos": 6
+  },
+  {
+   "arquivo": "e2e/extensions-management.spec.ts",
+   "tipo": "e2e",
+   "linhas": 16,
+   "testa": [],
+   "casos": 1
+  },
+  {
+   "arquivo": "e2e/login.spec.ts",
+   "tipo": "e2e",
+   "linhas": 43,
+   "testa": [],
+   "casos": 6
+  },
+  {
+   "arquivo": "e2e/observability.spec.ts",
+   "tipo": "e2e",
+   "linhas": 35,
+   "testa": [],
+   "casos": 4
+  },
+  {
+   "arquivo": "e2e/security-lockout.spec.ts",
+   "tipo": "e2e",
+   "linhas": 12,
+   "testa": [],
+   "casos": 1
+  },
+  {
+   "arquivo": "e2e/sip-flow.spec.ts",
+   "tipo": "e2e",
+   "linhas": 143,
+   "testa": [],
+   "casos": 8
+  },
+  {
+   "arquivo": "scripts/ai-context/gerar.unit.mjs",
+   "tipo": "unit",
+   "linhas": 361,
+   "testa": [
+    "src/components/auth/ProtectedRoute.tsx",
+    "src/hooks/useContacts.ts",
+    "src/pages/Login.tsx"
+   ],
+   "casos": 18
+  },
+  {
+   "arquivo": "scripts/regras_negocio/test_generate.py",
+   "tipo": "pytest",
+   "linhas": 164,
+   "testa": [],
+   "casos": 0
+  },
+  {
+   "arquivo": "scripts/supabase_snapshot/test_snapshot.py",
+   "tipo": "pytest",
+   "linhas": 878,
+   "testa": [],
+   "casos": 0
+  },
+  {
+   "arquivo": "src/__tests__/rls/audit-logs.test.ts",
+   "tipo": "unit",
+   "linhas": 52,
+   "testa": [],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/__tests__/rls/contacts.test.ts",
+   "tipo": "unit",
+   "linhas": 38,
+   "testa": [],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/__tests__/rls/deals.test.ts",
+   "tipo": "unit",
+   "linhas": 66,
+   "testa": [],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/__tests__/rls/learning-completions.test.ts",
+   "tipo": "unit",
+   "linhas": 48,
+   "testa": [],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/__tests__/rls/rate-limit-logs.test.ts",
+   "tipo": "unit",
+   "linhas": 51,
+   "testa": [],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/__tests__/rls/rls-policies.test.ts",
+   "tipo": "unit",
+   "linhas": 139,
+   "testa": [],
+   "casos": 14
+  },
+  {
+   "arquivo": "src/__tests__/rls/storage-recordings.test.ts",
+   "tipo": "unit",
+   "linhas": 56,
+   "testa": [],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/components/admin/extensions/__tests__/HealthScoreBadge.test.tsx",
+   "tipo": "unit",
+   "linhas": 45,
+   "testa": [
+    "src/components/admin/extensions/HealthScoreBadge.tsx"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
+   "tipo": "unit",
+   "linhas": 70,
+   "testa": [
+    "src/components/calls/AudioOutputSelector.tsx"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/components/calls/__tests__/PostCallSummary.test.tsx",
+   "tipo": "unit",
+   "linhas": 93,
+   "testa": [
+    "src/components/calls/PostCallSummary.tsx",
+    "src/hooks/useVoipQualityMonitor.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/components/calls/__tests__/WebRTCCall.test.tsx",
+   "tipo": "unit",
+   "linhas": 271,
+   "testa": [
+    "src/components/calls/WebRTCCall.tsx"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts",
+   "tipo": "unit",
+   "linhas": 151,
+   "testa": [
+    "src/components/calls/live-transcription/useLiveTranscription.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/components/dialer/phone/__tests__/phone-dialer.test.ts",
+   "tipo": "unit",
+   "linhas": 62,
+   "testa": [
+    "src/components/dialer/phone/phone-utils.ts",
+    "src/components/voice/voice-intent.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/components/executive/__tests__/OmnichannelCard.test.tsx",
+   "tipo": "unit",
+   "linhas": 55,
+   "testa": [
+    "src/components/executive/OmnichannelCard.tsx"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/components/ui/__tests__/search-input.test.tsx",
+   "tipo": "unit",
+   "linhas": 60,
+   "testa": [
+    "src/components/ui/search-input.tsx"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/use-mobile.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 46,
+   "testa": [
+    "src/hooks/use-mobile.tsx"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/use-toast.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 61,
+   "testa": [
+    "src/hooks/use-toast.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAccounts.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 132,
+   "testa": [
+    "src/hooks/useAccounts.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAccounts.test.ts",
+   "tipo": "unit",
+   "linhas": 63,
+   "testa": [
+    "src/hooks/useAccounts.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 125,
+   "testa": [
+    "src/hooks/useAchievementNotifications.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 79,
+   "testa": [
+    "src/hooks/useActiveCallsRealtime.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAdherence.test.tsx",
+   "tipo": "unit",
+   "linhas": 29,
+   "testa": [
+    "src/hooks/useAdherence.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 1
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 178,
+   "testa": [
+    "src/hooks/useAgentRanking.ts"
+   ],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAgentStatus.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 93,
+   "testa": [
+    "src/hooks/useAgentStatus.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAlertHistory.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 143,
+   "testa": [
+    "src/hooks/useAlertHistory.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAlerts.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 150,
+   "testa": [
+    "src/hooks/useAlerts.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAlertsExport.test.ts",
+   "tipo": "unit",
+   "linhas": 204,
+   "testa": [
+    "src/hooks/useAlertsExport.ts",
+    "src/lib/security-alerts-export.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAlertSoundAndNotifications.test.ts",
+   "tipo": "unit",
+   "linhas": 379,
+   "testa": [],
+   "casos": 57
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 70,
+   "testa": [
+    "src/hooks/useAnimatedCounter.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 75,
+   "testa": [
+    "src/hooks/useAnomalyRemediation.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAudioOutputDevices.test.tsx",
+   "tipo": "unit",
+   "linhas": 111,
+   "testa": [
+    "src/hooks/useAudioOutputDevices.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAuditLog.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 77,
+   "testa": [
+    "src/hooks/useAuditLog.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAuth.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 103,
+   "testa": [
+    "src/hooks/useAuth.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAuthAndDataIntegrity.test.ts",
+   "tipo": "unit",
+   "linhas": 374,
+   "testa": [],
+   "casos": 63
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useBattleCardDetection.test.ts",
+   "tipo": "unit",
+   "linhas": 76,
+   "testa": [
+    "src/hooks/useBattleCardDetection.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useBestTimeToContact.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 89,
+   "testa": [
+    "src/hooks/useBestTimeToContact.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useBitrix.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 247,
+   "testa": [
+    "src/hooks/useBitrix.ts"
+   ],
+   "casos": 16
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useBitrixAndWebAuthn.test.ts",
+   "tipo": "unit",
+   "linhas": 121,
+   "testa": [
+    "src/hooks/useBitrix.ts",
+    "src/hooks/useWebAuthn.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useBlockedAccessLogs.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 103,
+   "testa": [
+    "src/hooks/useBlockedAccessLogs.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useBusinessLogic.test.ts",
+   "tipo": "unit",
+   "linhas": 257,
+   "testa": [
+    "src/hooks/useRealtimeHoldAlerts.ts"
+   ],
+   "casos": 21
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCadences.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 68,
+   "testa": [
+    "src/hooks/useCadences.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallAnalytics.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 125,
+   "testa": [
+    "src/hooks/useCallAnalytics.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 187,
+   "testa": [
+    "src/hooks/useCallHistory.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallPlaylists.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 89,
+   "testa": [
+    "src/hooks/useCallPlaylists.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallRecording.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 150,
+   "testa": [
+    "src/hooks/useCallRecording.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallScoring.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 62,
+   "testa": [
+    "src/hooks/useCallScoring.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallSearch.test.ts",
+   "tipo": "unit",
+   "linhas": 61,
+   "testa": [
+    "src/hooks/useCallSearch.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallSession.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 167,
+   "testa": [
+    "src/hooks/useCallSession.ts"
+   ],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallSession.test.ts",
+   "tipo": "unit",
+   "linhas": 129,
+   "testa": [],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallTimers.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 118,
+   "testa": [
+    "src/hooks/useCallTimers.ts",
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 139,
+   "testa": [
+    "src/hooks/useCallTransfer.ts",
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useChatbot.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 81,
+   "testa": [
+    "src/hooks/useChatbot.ts",
+    "src/lib/logger.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useChurnRisk.test.ts",
+   "tipo": "unit",
+   "linhas": 40,
+   "testa": [
+    "src/hooks/useChurnRisk.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCoaching.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 124,
+   "testa": [
+    "src/hooks/useCoaching.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCoachingAndRecording.test.ts",
+   "tipo": "unit",
+   "linhas": 256,
+   "testa": [],
+   "casos": 34
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCoachingAssignments.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 116,
+   "testa": [
+    "src/hooks/useCoachingAssignments.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useComplianceRules.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 56,
+   "testa": [
+    "src/hooks/useComplianceRules.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useComprehensive.test.ts",
+   "tipo": "unit",
+   "linhas": 323,
+   "testa": [],
+   "casos": 44
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useConferenceRecording.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 114,
+   "testa": [
+    "src/hooks/useConferenceRecording.ts",
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useConsent.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 93,
+   "testa": [
+    "src/hooks/useConsent.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 320,
+   "testa": [
+    "src/hooks/useContactAlerts.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 16
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useContactInsights.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 128,
+   "testa": [
+    "src/hooks/useContactInsights.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useContacts.conflict.test.ts",
+   "tipo": "unit",
+   "linhas": 76,
+   "testa": [
+    "src/hooks/useContacts.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 1
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useContacts.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 162,
+   "testa": [
+    "src/hooks/useContacts.ts"
+   ],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useContactsAndCompliance.test.ts",
+   "tipo": "unit",
+   "linhas": 445,
+   "testa": [],
+   "casos": 58
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useConversations.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 181,
+   "testa": [
+    "src/hooks/useConversations.ts"
+   ],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCriticalAlertNotifications.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 138,
+   "testa": [
+    "src/hooks/useCriticalAlertNotifications.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCrmFieldSuggestions.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 260,
+   "testa": [
+    "src/hooks/useCrmFieldSuggestions.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 14
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useCulturalHints.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 68,
+   "testa": [
+    "src/hooks/useCulturalHints.ts",
+    "src/lib/logger.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDashboardData.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 119,
+   "testa": [
+    "src/hooks/useDashboardData.ts"
+   ],
+   "casos": 12
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDashboardGoals.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 143,
+   "testa": [
+    "src/hooks/useDashboardGoals.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDashboardLayout.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 71,
+   "testa": [
+    "src/hooks/useDashboardLayout.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDealForecast.test.ts",
+   "tipo": "unit",
+   "linhas": 38,
+   "testa": [
+    "src/hooks/useDealForecast.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDeals.conflict.test.ts",
+   "tipo": "unit",
+   "linhas": 56,
+   "testa": [
+    "src/hooks/useDeals.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 1
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDeals.test.ts",
+   "tipo": "unit",
+   "linhas": 61,
+   "testa": [
+    "src/hooks/useDeals.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDebouncedSearchParam.test.tsx",
+   "tipo": "unit",
+   "linhas": 123,
+   "testa": [
+    "src/hooks/useDebouncedSearchParam.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDeviceAndSecurity.test.ts",
+   "tipo": "unit",
+   "linhas": 434,
+   "testa": [],
+   "casos": 67
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDeviceDetection.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 76,
+   "testa": [
+    "src/hooks/useDeviceDetection.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 186,
+   "testa": [
+    "src/hooks/useDNCCompliance.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useEdgeFunctionIntegrity.test.ts",
+   "tipo": "unit",
+   "linhas": 266,
+   "testa": [],
+   "casos": 36
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useEdgeFunctions.test.ts",
+   "tipo": "unit",
+   "linhas": 291,
+   "testa": [],
+   "casos": 29
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 167,
+   "testa": [
+    "src/hooks/useExecutiveDashboard.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useExtensionAudit.scenarios.test.ts",
+   "tipo": "unit",
+   "linhas": 102,
+   "testa": [
+    "src/hooks/useExtensionAudit.ts",
+    "src/integrations/supabase/client.ts",
+    "src/lib/logger.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useExtensionAuditHistory.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 68,
+   "testa": [
+    "src/hooks/useExtensionAuditHistory.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useExtensionsOverview.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 131,
+   "testa": [
+    "src/hooks/useExtensionsOverview.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useExtensionsOverview.scenarios.test.ts",
+   "tipo": "unit",
+   "linhas": 136,
+   "testa": [
+    "src/lib/health-score.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useFinancialImpact.property.test.ts",
+   "tipo": "unit",
+   "linhas": 113,
+   "testa": [
+    "src/hooks/useFinancialImpact.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useForecastVolume.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 38,
+   "testa": [
+    "src/hooks/useForecastVolume.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useGamification.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 197,
+   "testa": [
+    "src/hooks/useGamification.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useGamificationAndCallbacks.test.ts",
+   "tipo": "unit",
+   "linhas": 319,
+   "testa": [],
+   "casos": 41
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useGeoBlocking.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 112,
+   "testa": [
+    "src/hooks/useGeoBlocking.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useGoalViolations.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 108,
+   "testa": [
+    "src/hooks/useGoalViolations.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useHealthCheck.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 91,
+   "testa": [
+    "src/hooks/useHealthCheck.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useHoldMetrics.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 73,
+   "testa": [
+    "src/hooks/useHoldMetrics.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 117,
+   "testa": [
+    "src/hooks/useHoldReminder.ts",
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useHoldReminder.test.ts",
+   "tipo": "unit",
+   "linhas": 264,
+   "testa": [],
+   "casos": 31
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useHoldSoundAlert.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 78,
+   "testa": [
+    "src/hooks/useHoldSoundAlert.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useIPValidation.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 37,
+   "testa": [
+    "src/hooks/useIPValidation.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useIPWhitelist.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 106,
+   "testa": [
+    "src/hooks/useIPWhitelist.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useKeyMoments.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 107,
+   "testa": [
+    "src/hooks/useKeyMoments.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 205,
+   "testa": [
+    "src/hooks/useKnowledgeBase.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 16
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useLearning.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 93,
+   "testa": [
+    "src/hooks/useLearning.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useLiveAssist.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 155,
+   "testa": [
+    "src/hooks/useLiveAssist.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useLiveSentiment.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 98,
+   "testa": [
+    "src/hooks/useLiveSentiment.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useLiveTranslation.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 153,
+   "testa": [
+    "src/hooks/useLiveTranslation.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useLoginLockout.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 101,
+   "testa": [
+    "src/hooks/useLoginLockout.ts",
+    "src/integrations/supabase/client.ts",
+    "src/lib/logger.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useLoginLockout.test.ts",
+   "tipo": "unit",
+   "linhas": 136,
+   "testa": [
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 11
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useMeetingSummary.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 134,
+   "testa": [
+    "src/hooks/useMeetingSummary.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useMeetingSummary.test.ts",
+   "tipo": "unit",
+   "linhas": 108,
+   "testa": [
+    "src/hooks/useMeetingSummary.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useMFA.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 127,
+   "testa": [
+    "src/hooks/useMFA.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useMFA.test.ts",
+   "tipo": "unit",
+   "linhas": 173,
+   "testa": [],
+   "casos": 28
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 292,
+   "testa": [
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useMultiChannelCall.test.ts",
+   "tipo": "unit",
+   "linhas": 208,
+   "testa": [],
+   "casos": 25
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 113,
+   "testa": [
+    "src/hooks/useMultiChannelCall.ts",
+    "src/hooks/useMultiChannelCallConference.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 83,
+   "testa": [
+    "src/hooks/useMultiDeviceRing.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useNetworkMonitor.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 62,
+   "testa": [
+    "src/hooks/useNetworkMonitor.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useNotifications.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 121,
+   "testa": [
+    "src/hooks/useNotifications.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useObjectionLibrary.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 94,
+   "testa": [
+    "src/hooks/useObjectionLibrary.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useOptimisticLockConflicts.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 80,
+   "testa": [
+    "src/hooks/useOptimisticLockConflicts.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/usePageTitle.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 27,
+   "testa": [
+    "src/hooks/usePageTitle.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/usePermissions.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 78,
+   "testa": [
+    "src/hooks/usePermissions.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 469,
+   "testa": [
+    "src/hooks/usePredictiveDialer.ts"
+   ],
+   "casos": 16
+  },
+  {
+   "arquivo": "src/hooks/__tests__/usePredictiveDialer.test.ts",
+   "tipo": "unit",
+   "linhas": 203,
+   "testa": [],
+   "casos": 22
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useProfile.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 81,
+   "testa": [
+    "src/hooks/useProfile.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useQualityAlerts.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 85,
+   "testa": [
+    "src/hooks/useQualityAlerts.ts",
+    "src/lib/logger.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useQualityMetrics.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 53,
+   "testa": [
+    "src/hooks/useQualityMetrics.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useQualityTrendAnalyzer.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 105,
+   "testa": [
+    "src/hooks/useQualityTrendAnalyzer.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 114,
+   "testa": [
+    "src/hooks/useQueueMetrics.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useRateLimitData.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 71,
+   "testa": [
+    "src/hooks/useRateLimitData.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useRealtimeHoldAlerts.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 116,
+   "testa": [
+    "src/hooks/useRealtimeHoldAlerts.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useReauth.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 143,
+   "testa": [
+    "src/hooks/useReauth.ts"
+   ],
+   "casos": 13
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useRecordings.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 210,
+   "testa": [
+    "src/hooks/useRecordings.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useRenewals.test.ts",
+   "tipo": "unit",
+   "linhas": 42,
+   "testa": [
+    "src/hooks/useRenewals.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useRoutingRules.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 62,
+   "testa": [
+    "src/hooks/useRoutingRules.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 194,
+   "testa": [
+    "src/hooks/useScheduledCallbacks.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useScorecards.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 110,
+   "testa": [
+    "src/hooks/useScorecards.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 159,
+   "testa": [
+    "src/hooks/useSecurityDashboard.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSecurityHardening.test.ts",
+   "tipo": "unit",
+   "linhas": 864,
+   "testa": [],
+   "casos": 77
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSecurityHooks.test.ts",
+   "tipo": "unit",
+   "linhas": 198,
+   "testa": [
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 12
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 140,
+   "testa": [
+    "src/hooks/useSecurityMonitoringData.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 95,
+   "testa": [
+    "src/hooks/useSecurityNotifications.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSessionAndAgent.test.ts",
+   "tipo": "unit",
+   "linhas": 210,
+   "testa": [],
+   "casos": 26
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSessionManager.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 114,
+   "testa": [
+    "src/hooks/useSessionManager.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useShifts.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 216,
+   "testa": [
+    "src/hooks/useShifts.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useShifts.test.tsx",
+   "tipo": "unit",
+   "linhas": 43,
+   "testa": [
+    "src/hooks/useShifts.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSipCall.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 195,
+   "testa": [
+    "src/hooks/useSipCall.ts"
+   ],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSkills.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 62,
+   "testa": [
+    "src/hooks/useSkills.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSkills.test.tsx",
+   "tipo": "unit",
+   "linhas": 31,
+   "testa": [
+    "src/hooks/useSkills.ts"
+   ],
+   "casos": 1
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSLA.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 163,
+   "testa": [
+    "src/hooks/useSLA.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 158,
+   "testa": [
+    "src/hooks/useSuccessPlans.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 255,
+   "testa": [
+    "src/hooks/useSupervisorPanel.ts"
+   ],
+   "casos": 13
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useSurveys.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 98,
+   "testa": [
+    "src/hooks/useSurveys.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useTalkRatio.test.ts",
+   "tipo": "unit",
+   "linhas": 45,
+   "testa": [
+    "src/hooks/useTalkRatio.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useTimeOff.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 97,
+   "testa": [
+    "src/hooks/useTimeOff.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useTrackers.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 123,
+   "testa": [
+    "src/hooks/useTrackers.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useTrunkFailoverMonitor.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 90,
+   "testa": [
+    "src/hooks/useTrunkFailoverMonitor.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useTrunkHealth.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 71,
+   "testa": [
+    "src/hooks/useTrunkHealth.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useTrunkMetrics.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 69,
+   "testa": [
+    "src/hooks/useTrunkMetrics.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useTrunkRealtimeMetrics.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 54,
+   "testa": [
+    "src/hooks/useTrunkRealtimeMetrics.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useTrunkUsageReporter.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 45,
+   "testa": [
+    "src/hooks/useTrunkUsageReporter.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useUncoveredHooks.test.ts",
+   "tipo": "unit",
+   "linhas": 700,
+   "testa": [],
+   "casos": 79
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useUnreadConflicts.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 82,
+   "testa": [
+    "src/hooks/useUnreadConflicts.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 201,
+   "testa": [
+    "src/hooks/useVoiceBiometrics.ts",
+    "src/integrations/supabase/client.ts"
+   ],
+   "casos": 13
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoiceCommand.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 87,
+   "testa": [
+    "src/hooks/useVoiceCommand.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 82,
+   "testa": [
+    "src/hooks/useVoipAnomalies.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipAutoRemediation.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 94,
+   "testa": [
+    "src/hooks/useVoipAutoRemediation.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipCapacityRecommendations.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 85,
+   "testa": [
+    "src/hooks/useVoipCapacityRecommendations.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 45,
+   "testa": [
+    "src/hooks/useVoipDiagnosticVoiceQA.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipExecutiveNarrative.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 51,
+   "testa": [
+    "src/hooks/useVoipExecutiveNarrative.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 44,
+   "testa": [
+    "src/hooks/useVoipExecutiveSummary.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipMonitoringSettings.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 85,
+   "testa": [
+    "src/hooks/useVoipMonitoringSettings.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 65,
+   "testa": [
+    "src/hooks/useVoipQualityAlertsSummary.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipQualityForecast.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 103,
+   "testa": [
+    "src/hooks/useVoipQualityForecast.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipQualityMonitor.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 108,
+   "testa": [
+    "src/hooks/useVoipQualityMonitor.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipRecommendationHistory.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 72,
+   "testa": [
+    "src/hooks/useVoipRecommendationHistory.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipRecommendationInsights.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 65,
+   "testa": [
+    "src/hooks/useVoipRecommendationInsights.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipRecommendations.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 85,
+   "testa": [
+    "src/hooks/useVoipRecommendations.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipRecommendationSimulate.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 90,
+   "testa": [
+    "src/hooks/useVoipRecommendationSimulate.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useVoipTrunks.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 129,
+   "testa": [
+    "src/hooks/useVoipTrunks.ts"
+   ],
+   "casos": 15
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useWavoipAndReauth.test.ts",
+   "tipo": "unit",
+   "linhas": 243,
+   "testa": [],
+   "casos": 34
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useWavoipCall.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 241,
+   "testa": [
+    "src/hooks/useWavoipCall.ts"
+   ],
+   "casos": 14
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 310,
+   "testa": [
+    "src/hooks/useWebAuthn.ts"
+   ],
+   "casos": 22
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useWebVitals.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 41,
+   "testa": [
+    "src/hooks/useWebVitals.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/auth/__tests__/useAuthActions.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 154,
+   "testa": [
+    "src/hooks/auth/useAuthActions.ts",
+    "src/hooks/auth/useAuthState.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/auth/__tests__/useAuthProfile.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 52,
+   "testa": [
+    "src/hooks/auth/useAuthProfile.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/auth/__tests__/useAuthSession.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 157,
+   "testa": [
+    "src/hooks/auth/useAuthSession.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/hooks/telemetry/__tests__/useTelemetry.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 92,
+   "testa": [
+    "src/hooks/telemetry/useTelemetry.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/lib/__tests__/accessibility-improvements.test.ts",
+   "tipo": "unit",
+   "linhas": 198,
+   "testa": [],
+   "casos": 29
+  },
+  {
+   "arquivo": "src/lib/__tests__/agent-assist-utils.test.ts",
+   "tipo": "unit",
+   "linhas": 141,
+   "testa": [
+    "src/lib/agent-assist-utils.ts"
+   ],
+   "casos": 18
+  },
+  {
+   "arquivo": "src/lib/__tests__/agent-assist.pbt.test.ts",
+   "tipo": "unit",
+   "linhas": 85,
+   "testa": [
+    "src/lib/agent-assist-utils.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/lib/__tests__/blf.test.ts",
+   "tipo": "unit",
+   "linhas": 306,
+   "testa": [
+    "src/lib/blf.ts"
+   ],
+   "casos": 17
+  },
+  {
+   "arquivo": "src/lib/__tests__/cache.stress.test.ts",
+   "tipo": "unit",
+   "linhas": 49,
+   "testa": [],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/lib/__tests__/call-park.test.ts",
+   "tipo": "unit",
+   "linhas": 319,
+   "testa": [
+    "src/lib/call-park.ts"
+   ],
+   "casos": 20
+  },
+  {
+   "arquivo": "src/lib/__tests__/call-queue.test.ts",
+   "tipo": "unit",
+   "linhas": 204,
+   "testa": [
+    "src/lib/call-queue.ts"
+   ],
+   "casos": 12
+  },
+  {
+   "arquivo": "src/lib/__tests__/csv-export.property.test.ts",
+   "tipo": "unit",
+   "linhas": 92,
+   "testa": [
+    "src/lib/export/index.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/__tests__/dashboard-integration.test.ts",
+   "tipo": "unit",
+   "linhas": 186,
+   "testa": [
+    "src/components/dashboard/CallVolumeChart.tsx",
+    "src/components/dashboard/StatsCard.tsx"
+   ],
+   "casos": 22
+  },
+  {
+   "arquivo": "src/lib/__tests__/device-identity.test.ts",
+   "tipo": "unit",
+   "linhas": 108,
+   "testa": [
+    "src/lib/device-identity.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/lib/__tests__/dialer-favorites-and-alert.test.ts",
+   "tipo": "unit",
+   "linhas": 239,
+   "testa": [
+    "src/lib/dialer-favorites-order.ts",
+    "src/lib/incoming-call-alert.ts"
+   ],
+   "casos": 17
+  },
+  {
+   "arquivo": "src/lib/__tests__/dialer-filter-storage.test.ts",
+   "tipo": "unit",
+   "linhas": 108,
+   "testa": [
+    "src/lib/dialer-favorite-tags.ts",
+    "src/lib/dialer-filter-storage.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/__tests__/dialer-tag-filter.test.ts",
+   "tipo": "unit",
+   "linhas": 111,
+   "testa": [
+    "src/lib/dialer-favorite-tags.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/__tests__/dialer-tags-and-ringtone.test.ts",
+   "tipo": "unit",
+   "linhas": 241,
+   "testa": [
+    "src/lib/dialer-favorite-tags.ts",
+    "src/lib/ringtone-presets.ts"
+   ],
+   "casos": 18
+  },
+  {
+   "arquivo": "src/lib/__tests__/edge-cases-stress.test.ts",
+   "tipo": "unit",
+   "linhas": 324,
+   "testa": [
+    "src/lib/mfa/index.ts",
+    "src/lib/notifications/index.ts",
+    "src/lib/password/index.ts",
+    "src/lib/security/input-sanitizer.ts",
+    "src/lib/security/rate-limiter.ts",
+    "src/lib/security/secrets-scanner.ts",
+    "src/lib/security/sql-sanitizer.ts"
+   ],
+   "casos": 48
+  },
+  {
+   "arquivo": "src/lib/__tests__/encryption-webauthn.test.ts",
+   "tipo": "unit",
+   "linhas": 154,
+   "testa": [
+    "src/lib/security/encryption.ts",
+    "src/lib/webauthn/webauthn-utils.ts"
+   ],
+   "casos": 21
+  },
+  {
+   "arquivo": "src/lib/__tests__/error-boundaries.test.tsx",
+   "tipo": "unit",
+   "linhas": 340,
+   "testa": [
+    "src/components/error-boundary/ErrorBoundary.tsx"
+   ],
+   "casos": 33
+  },
+  {
+   "arquivo": "src/lib/__tests__/error-tracking.test.ts",
+   "tipo": "unit",
+   "linhas": 167,
+   "testa": [
+    "src/lib/error-tracking.ts"
+   ],
+   "casos": 14
+  },
+  {
+   "arquivo": "src/lib/__tests__/executive-dashboard-utils.test.ts",
+   "tipo": "unit",
+   "linhas": 42,
+   "testa": [
+    "src/hooks/useExecutiveDashboard.ts"
+   ],
+   "casos": 11
+  },
+  {
+   "arquivo": "src/lib/__tests__/export-audit-notifications.test.ts",
+   "tipo": "unit",
+   "linhas": 345,
+   "testa": [
+    "src/lib/audit/index.ts",
+    "src/lib/export/index.ts",
+    "src/lib/notifications/index.ts",
+    "src/lib/safe-date.ts"
+   ],
+   "casos": 38
+  },
+  {
+   "arquivo": "src/lib/__tests__/favorite-sync-labels.test.ts",
+   "tipo": "unit",
+   "linhas": 39,
+   "testa": [
+    "src/lib/favorite-sync-labels.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/lib/__tests__/fixes-exhaustive.test.ts",
+   "tipo": "unit",
+   "linhas": 506,
+   "testa": [
+    "src/lib/security/jwt-handler.ts",
+    "src/lib/web-vitals.ts"
+   ],
+   "casos": 48
+  },
+  {
+   "arquivo": "src/lib/__tests__/guard-edge-numeric.test.ts",
+   "tipo": "unit",
+   "linhas": 193,
+   "testa": [],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/lib/__tests__/hash-endpoint.test.ts",
+   "tipo": "unit",
+   "linhas": 51,
+   "testa": [
+    "src/lib/security-alerts-webhook-queue.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/lib/__tests__/health-score.property.test.ts",
+   "tipo": "unit",
+   "linhas": 84,
+   "testa": [
+    "src/lib/health-score.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/__tests__/holdReminderSounds.coverage.test.tsx",
+   "tipo": "unit",
+   "linhas": 103,
+   "testa": [
+    "src/lib/holdReminderSounds.ts"
+   ],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/lib/__tests__/language-detection.test.ts",
+   "tipo": "unit",
+   "linhas": 46,
+   "testa": [
+    "src/lib/language-detection.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/lib/__tests__/logger.test.ts",
+   "tipo": "unit",
+   "linhas": 158,
+   "testa": [
+    "src/lib/logger.ts"
+   ],
+   "casos": 16
+  },
+  {
+   "arquivo": "src/lib/__tests__/meeting-summary-utils.test.ts",
+   "tipo": "unit",
+   "linhas": 117,
+   "testa": [
+    "src/hooks/useMeetingSummary.ts",
+    "src/lib/meeting-summary-utils.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/lib/__tests__/mock-data-integrity.test.ts",
+   "tipo": "unit",
+   "linhas": 340,
+   "testa": [
+    "src/data/mockData.ts",
+    "src/lib/utils.ts"
+   ],
+   "casos": 49
+  },
+  {
+   "arquivo": "src/lib/__tests__/outbound-scoring.test.ts",
+   "tipo": "unit",
+   "linhas": 64,
+   "testa": [
+    "src/lib/outbound-scoring.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/lib/__tests__/performance-optimizations.test.ts",
+   "tipo": "unit",
+   "linhas": 160,
+   "testa": [],
+   "casos": 19
+  },
+  {
+   "arquivo": "src/lib/__tests__/phone-normalization.property.test.ts",
+   "tipo": "unit",
+   "linhas": 82,
+   "testa": [
+    "src/lib/phone-normalization.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/lib/__tests__/predictive-pace.property.test.ts",
+   "tipo": "unit",
+   "linhas": 68,
+   "testa": [
+    "src/lib/dialer/predictive-pace.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/lib/__tests__/queue-audio.test.ts",
+   "tipo": "unit",
+   "linhas": 279,
+   "testa": [
+    "src/lib/queue-audio.ts"
+   ],
+   "casos": 16
+  },
+  {
+   "arquivo": "src/lib/__tests__/ring-group.test.ts",
+   "tipo": "unit",
+   "linhas": 213,
+   "testa": [
+    "src/lib/ring-group.ts"
+   ],
+   "casos": 16
+  },
+  {
+   "arquivo": "src/lib/__tests__/safe-date.test.ts",
+   "tipo": "unit",
+   "linhas": 128,
+   "testa": [
+    "src/lib/safe-date.ts"
+   ],
+   "casos": 12
+  },
+  {
+   "arquivo": "src/lib/__tests__/safe-number.instrumentation.test.ts",
+   "tipo": "unit",
+   "linhas": 77,
+   "testa": [
+    "src/lib/logger.ts",
+    "src/lib/safe-number.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/__tests__/safe-number.test.ts",
+   "tipo": "unit",
+   "linhas": 133,
+   "testa": [
+    "src/lib/safe-number.ts"
+   ],
+   "casos": 12
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-advanced.test.ts",
+   "tipo": "unit",
+   "linhas": 264,
+   "testa": [
+    "src/lib/security/api-key-rotation.ts",
+    "src/lib/security/csrf-token.ts",
+    "src/lib/security/rate-limiter.ts",
+    "src/lib/security/secrets-scanner.ts",
+    "src/lib/security/security-headers-validator.ts"
+   ],
+   "casos": 36
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-alerts-presets.test.ts",
+   "tipo": "unit",
+   "linhas": 137,
+   "testa": [
+    "src/lib/security-alerts-presets.ts"
+   ],
+   "casos": 13
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-alerts-webhook-history.property.test.ts",
+   "tipo": "unit",
+   "linhas": 166,
+   "testa": [
+    "src/lib/security-alerts-webhook-history.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts",
+   "tipo": "unit",
+   "linhas": 162,
+   "testa": [
+    "src/lib/security-alerts-webhook-queue.ts",
+    "src/lib/security-alerts-webhook.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-alerts-webhook-queue.test.ts",
+   "tipo": "unit",
+   "linhas": 112,
+   "testa": [
+    "src/lib/security-alerts-webhook-queue.ts",
+    "src/lib/security-alerts-webhook.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-alerts-webhook-validation.property.test.ts",
+   "tipo": "unit",
+   "linhas": 191,
+   "testa": [
+    "src/lib/security-alerts-webhook-validation.ts",
+    "src/lib/security-alerts-webhook.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-alerts-webhook-validation.test.ts",
+   "tipo": "unit",
+   "linhas": 95,
+   "testa": [
+    "src/lib/security-alerts-webhook-validation.ts"
+   ],
+   "casos": 11
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-alerts-webhook.property.test.ts",
+   "tipo": "unit",
+   "linhas": 194,
+   "testa": [
+    "src/lib/security-alerts-webhook.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-alerts-webhook.test.ts",
+   "tipo": "unit",
+   "linhas": 198,
+   "testa": [
+    "src/lib/security-alerts-webhook.ts"
+   ],
+   "casos": 11
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-infrastructure.test.ts",
+   "tipo": "unit",
+   "linhas": 298,
+   "testa": [
+    "src/lib/security/content-security-policy.ts",
+    "src/lib/security/cors-config.ts",
+    "src/lib/security/helmet-config.ts",
+    "src/lib/security/hsts-headers.ts",
+    "src/lib/security/https-enforcer.ts",
+    "src/lib/security/jwt-handler.ts",
+    "src/lib/security/penetration-test-reporter.ts"
+   ],
+   "casos": 40
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-observability.test.ts",
+   "tipo": "unit",
+   "linhas": 272,
+   "testa": [
+    "src/lib/logger.ts"
+   ],
+   "casos": 28
+  },
+  {
+   "arquivo": "src/lib/__tests__/security-sanitizers.test.ts",
+   "tipo": "unit",
+   "linhas": 204,
+   "testa": [
+    "src/lib/security/input-sanitizer.ts",
+    "src/lib/security/sql-sanitizer.ts",
+    "src/lib/security/xss-prevention.ts"
+   ],
+   "casos": 78
+  },
+  {
+   "arquivo": "src/lib/__tests__/softphone-utils.test.ts",
+   "tipo": "unit",
+   "linhas": 65,
+   "testa": [
+    "src/components/calls/softphone/constants.tsx"
+   ],
+   "casos": 14
+  },
+  {
+   "arquivo": "src/lib/__tests__/sync-history.test.ts",
+   "tipo": "unit",
+   "linhas": 194,
+   "testa": [
+    "src/lib/sync-history.ts"
+   ],
+   "casos": 11
+  },
+  {
+   "arquivo": "src/lib/__tests__/tag-filter-label.test.ts",
+   "tipo": "unit",
+   "linhas": 30,
+   "testa": [
+    "src/lib/dialer-favorite-tags.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/lib/__tests__/talkRatio.test.ts",
+   "tipo": "unit",
+   "linhas": 59,
+   "testa": [
+    "src/lib/talkRatio.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/__tests__/tracing.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 113,
+   "testa": [
+    "src/lib/tracing.ts"
+   ],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/lib/__tests__/utilities-comprehensive.test.ts",
+   "tipo": "unit",
+   "linhas": 238,
+   "testa": [
+    "src/lib/export/index.ts",
+    "src/lib/mfa/index.ts",
+    "src/lib/notifications/index.ts",
+    "src/lib/password/index.ts",
+    "src/lib/safe-date.ts",
+    "src/lib/session/index.ts"
+   ],
+   "casos": 35
+  },
+  {
+   "arquivo": "src/lib/__tests__/utils.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 66,
+   "testa": [
+    "src/lib/utils.ts"
+   ],
+   "casos": 11
+  },
+  {
+   "arquivo": "src/lib/__tests__/utils.test.ts",
+   "tipo": "unit",
+   "linhas": 42,
+   "testa": [
+    "src/lib/utils.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/lib/__tests__/validation-schemas.test.ts",
+   "tipo": "unit",
+   "linhas": 237,
+   "testa": [
+    "src/lib/validation/schemas.ts"
+   ],
+   "casos": 50
+  },
+  {
+   "arquivo": "src/lib/__tests__/voice-biometrics.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 143,
+   "testa": [
+    "src/lib/voice-biometrics.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/lib/__tests__/voice-command-history.test.ts",
+   "tipo": "unit",
+   "linhas": 97,
+   "testa": [
+    "src/lib/voice-command-history.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/lib/__tests__/voice-preferences.test.ts",
+   "tipo": "unit",
+   "linhas": 173,
+   "testa": [
+    "src/lib/voice-command-history.ts",
+    "src/lib/voice-preferences.ts"
+   ],
+   "casos": 13
+  },
+  {
+   "arquivo": "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 88,
+   "testa": [
+    "src/lib/voipProactiveSnapshot.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 187,
+   "testa": [
+    "src/lib/voipRecommendationCoaching.ts"
+   ],
+   "casos": 12
+  },
+  {
+   "arquivo": "src/lib/__tests__/web-vitals.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 97,
+   "testa": [
+    "src/lib/web-vitals.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/lib/__tests__/webhook-health-and-export.simulation.test.ts",
+   "tipo": "unit",
+   "linhas": 405,
+   "testa": [
+    "src/lib/security-alerts-export.ts",
+    "src/lib/webhook-health-utils.ts"
+   ],
+   "casos": 23
+  },
+  {
+   "arquivo": "src/lib/__tests__/webhook-health-utils.test.ts",
+   "tipo": "unit",
+   "linhas": 147,
+   "testa": [
+    "src/lib/webhook-health-utils.ts"
+   ],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/lib/__tests__/webrtc-config.test.ts",
+   "tipo": "unit",
+   "linhas": 65,
+   "testa": [
+    "src/lib/webrtc-config.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/lib/audit/__tests__/index.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 68,
+   "testa": [
+    "src/integrations/supabase/client.ts",
+    "src/lib/audit/index.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/lib/export/__tests__/index.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 50,
+   "testa": [
+    "src/lib/export/index.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/lib/mfa/__tests__/index.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 67,
+   "testa": [
+    "src/integrations/supabase/client.ts",
+    "src/lib/mfa/index.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/notifications/__tests__/index.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 100,
+   "testa": [
+    "src/lib/notifications/index.ts"
+   ],
+   "casos": 10
+  },
+  {
+   "arquivo": "src/lib/security/__tests__/encryption.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 58,
+   "testa": [
+    "src/lib/security/encryption.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/lib/security/__tests__/helmet-config.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 56,
+   "testa": [
+    "src/lib/security/helmet-config.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/security/__tests__/hsts-headers.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 116,
+   "testa": [
+    "src/lib/security/hsts-headers.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "src/lib/security/__tests__/https-enforcer.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 73,
+   "testa": [
+    "src/lib/security/https-enforcer.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "src/lib/security/__tests__/security-headers-validator.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 79,
+   "testa": [
+    "src/lib/security/security-headers-validator.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/lib/session/__tests__/index.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 68,
+   "testa": [
+    "src/lib/session/index.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "src/lib/validation/__tests__/zod-schemas.property.test.ts",
+   "tipo": "unit",
+   "linhas": 119,
+   "testa": [
+    "src/lib/validation/schemas.ts"
+   ],
+   "casos": 12
+  },
+  {
+   "arquivo": "src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts",
+   "tipo": "unit",
+   "linhas": 187,
+   "testa": [
+    "src/lib/webauthn/webauthn-utils.ts"
+   ],
+   "casos": 14
+  },
+  {
+   "arquivo": "src/pages/roles/__tests__/useRoles.test.ts",
+   "tipo": "unit",
+   "linhas": 171,
+   "testa": [
+    "src/pages/roles/useRoles.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "src/test/__mocks__/supabase.ts",
+   "tipo": "unit",
+   "linhas": 71,
+   "testa": [],
+   "casos": 0
+  },
+  {
+   "arquivo": "src/test/setup.ts",
+   "tipo": "unit",
+   "linhas": 88,
+   "testa": [],
+   "casos": 0
+  },
+  {
+   "arquivo": "supabase/functions/__tests__/optimistic-lock.test.ts",
+   "tipo": "unit",
+   "linhas": 77,
+   "testa": [],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/_shared/__tests__/resilience.test.ts",
+   "tipo": "unit",
+   "linhas": 162,
+   "testa": [
+    "supabase/functions/_shared/resilience.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
+   "tipo": "unit",
+   "linhas": 135,
+   "testa": [
+    "supabase/functions/_shared/resilience.ts"
+   ],
+   "casos": 7
+  },
+  {
+   "arquivo": "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
+   "tipo": "unit",
+   "linhas": 57,
+   "testa": [
+    "supabase/functions/_shared/validator.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "supabase/functions/analyze-call/__tests__/integration_test.ts",
+   "tipo": "unit",
+   "linhas": 39,
+   "testa": [
+    "supabase/functions/analyze-call/schema.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "supabase/functions/analyze-call/__tests__/schema_test.ts",
+   "tipo": "unit",
+   "linhas": 94,
+   "testa": [
+    "supabase/functions/_shared/validator.ts",
+    "supabase/functions/analyze-call/schema.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
+   "tipo": "unit",
+   "linhas": 38,
+   "testa": [
+    "supabase/functions/analyze-call/schema.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "supabase/functions/bitrix-api/index.test.ts",
+   "tipo": "unit",
+   "linhas": 45,
+   "testa": [
+    "supabase/functions/bitrix-api/index.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 59,
+   "testa": [],
+   "casos": 6
+  },
+  {
+   "arquivo": "supabase/functions/check-dnc/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 71,
+   "testa": [],
+   "casos": 6
+  },
+  {
+   "arquivo": "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 83,
+   "testa": [],
+   "casos": 7
+  },
+  {
+   "arquivo": "supabase/functions/cleanup-lock-conflicts/index.test.ts",
+   "tipo": "unit",
+   "linhas": 29,
+   "testa": [],
+   "casos": 2
+  },
+  {
+   "arquivo": "supabase/functions/compute-deal-health/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 67,
+   "testa": [],
+   "casos": 9
+  },
+  {
+   "arquivo": "supabase/functions/enforce-sla/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 66,
+   "testa": [],
+   "casos": 6
+  },
+  {
+   "arquivo": "supabase/functions/health-check/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 30,
+   "testa": [
+    "supabase/functions/health-check/index.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 59,
+   "testa": [],
+   "casos": 7
+  },
+  {
+   "arquivo": "supabase/functions/translate-utterance/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 56,
+   "testa": [],
+   "casos": 7
+  },
+  {
+   "arquivo": "supabase/functions/validate-ip/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 69,
+   "testa": [
+    "supabase/functions/_shared/cors.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "supabase/functions/voip-anomaly-detector/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 44,
+   "testa": [
+    "supabase/functions/voip-anomaly-detector/index.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 29,
+   "testa": [
+    "supabase/functions/voip-anomaly-remediation/index.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/voip-capacity-forecast/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 45,
+   "testa": [
+    "supabase/functions/voip-capacity-forecast/index.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/voip-capacity-recommendations/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 35,
+   "testa": [
+    "supabase/functions/voip-capacity-recommendations/index.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 41,
+   "testa": [],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/voip-executive-narrative/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 30,
+   "testa": [],
+   "casos": 3
+  },
+  {
+   "arquivo": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 41,
+   "testa": [
+    "supabase/functions/voip-executive-summary/index.ts"
+   ],
+   "casos": 8
+  },
+  {
+   "arquivo": "supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 41,
+   "testa": [],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/voip-quality-forecast/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 42,
+   "testa": [
+    "supabase/functions/voip-quality-forecast/index.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/voip-quality-heatmap/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 42,
+   "testa": [],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/voip-recommendation-history/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 66,
+   "testa": [
+    "supabase/functions/voip-recommendation-history/index.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/voip-recommendation-insights/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 117,
+   "testa": [
+    "supabase/functions/voip-recommendation-insights/index.ts"
+   ],
+   "casos": 9
+  },
+  {
+   "arquivo": "supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 73,
+   "testa": [
+    "supabase/functions/voip-recommendation-simulate/index.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "supabase/functions/voip-recommendations/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 55,
+   "testa": [
+    "supabase/functions/voip-recommendations/index.ts"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/voip-sla-report/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 57,
+   "testa": [],
+   "casos": 6
+  },
+  {
+   "arquivo": "supabase/functions/voip-trunks-healthcheck/index.test.ts",
+   "tipo": "unit",
+   "linhas": 39,
+   "testa": [
+    "supabase/functions/voip-trunks-healthcheck/index.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "supabase/functions/whatsapp-inbound/contract.test.ts",
+   "tipo": "contrato",
+   "linhas": 66,
+   "testa": [
+    "supabase/functions/whatsapp-inbound/schema.ts"
+   ],
+   "casos": 6
+  },
+  {
+   "arquivo": "tests/e2e/auth.spec.ts",
+   "tipo": "e2e",
+   "linhas": 25,
+   "testa": [],
+   "casos": 3
+  },
+  {
+   "arquivo": "tests/e2e/helpers/adminSession.ts",
+   "tipo": "e2e",
+   "linhas": 81,
+   "testa": [],
+   "casos": 0
+  },
+  {
+   "arquivo": "tests/e2e/performance.spec.ts",
+   "tipo": "e2e",
+   "linhas": 37,
+   "testa": [],
+   "casos": 2
+  },
+  {
+   "arquivo": "tests/e2e/webhook-audit-ndjson.spec.ts",
+   "tipo": "e2e",
+   "linhas": 104,
+   "testa": [],
+   "casos": 3
+  },
+  {
+   "arquivo": "tests/e2e/workflow.spec.ts",
+   "tipo": "e2e",
+   "linhas": 28,
+   "testa": [],
+   "casos": 1
+  }
+ ],
+ "sql": [],
+ "cobertura_por_arquivo": {
+  "src/components/admin/extensions/HealthScoreBadge.tsx": 1,
+  "src/components/auth/ProtectedRoute.tsx": 1,
+  "src/components/calls/AudioOutputSelector.tsx": 1,
+  "src/components/calls/PostCallSummary.tsx": 1,
+  "src/components/calls/WebRTCCall.tsx": 1,
+  "src/components/calls/live-transcription/useLiveTranscription.ts": 1,
+  "src/components/calls/softphone/constants.tsx": 1,
+  "src/components/dashboard/CallVolumeChart.tsx": 1,
+  "src/components/dashboard/StatsCard.tsx": 1,
+  "src/components/dialer/phone/phone-utils.ts": 1,
+  "src/components/error-boundary/ErrorBoundary.tsx": 1,
+  "src/components/executive/OmnichannelCard.tsx": 1,
+  "src/components/ui/search-input.tsx": 1,
+  "src/components/voice/voice-intent.ts": 1,
+  "src/data/mockData.ts": 1,
+  "src/hooks/auth/useAuthActions.ts": 1,
+  "src/hooks/auth/useAuthProfile.ts": 1,
+  "src/hooks/auth/useAuthSession.ts": 1,
+  "src/hooks/auth/useAuthState.ts": 1,
+  "src/hooks/telemetry/useTelemetry.ts": 1,
+  "src/hooks/use-mobile.tsx": 1,
+  "src/hooks/use-toast.ts": 1,
+  "src/hooks/useAccounts.ts": 2,
+  "src/hooks/useAchievementNotifications.ts": 1,
+  "src/hooks/useActiveCallsRealtime.ts": 1,
+  "src/hooks/useAdherence.ts": 1,
+  "src/hooks/useAgentRanking.ts": 1,
+  "src/hooks/useAgentStatus.ts": 1,
+  "src/hooks/useAlertHistory.ts": 1,
+  "src/hooks/useAlerts.ts": 1,
+  "src/hooks/useAlertsExport.ts": 1,
+  "src/hooks/useAnimatedCounter.ts": 1,
+  "src/hooks/useAnomalyRemediation.ts": 1,
+  "src/hooks/useAudioOutputDevices.ts": 1,
+  "src/hooks/useAuditLog.ts": 1,
+  "src/hooks/useAuth.ts": 1,
+  "src/hooks/useBattleCardDetection.ts": 1,
+  "src/hooks/useBestTimeToContact.ts": 1,
+  "src/hooks/useBitrix.ts": 2,
+  "src/hooks/useBlockedAccessLogs.ts": 1,
+  "src/hooks/useCadences.ts": 1,
+  "src/hooks/useCallAnalytics.ts": 1,
+  "src/hooks/useCallHistory.ts": 1,
+  "src/hooks/useCallPlaylists.ts": 1,
+  "src/hooks/useCallRecording.ts": 1,
+  "src/hooks/useCallScoring.ts": 1,
+  "src/hooks/useCallSearch.ts": 1,
+  "src/hooks/useCallSession.ts": 1,
+  "src/hooks/useCallTimers.ts": 1,
+  "src/hooks/useCallTransfer.ts": 1,
+  "src/hooks/useChatbot.ts": 1,
+  "src/hooks/useChurnRisk.ts": 1,
+  "src/hooks/useCoaching.ts": 1,
+  "src/hooks/useCoachingAssignments.ts": 1,
+  "src/hooks/useComplianceRules.ts": 1,
+  "src/hooks/useConferenceRecording.ts": 1,
+  "src/hooks/useConsent.ts": 1,
+  "src/hooks/useContactAlerts.ts": 1,
+  "src/hooks/useContactInsights.ts": 1,
+  "src/hooks/useContacts.ts": 3,
+  "src/hooks/useConversations.ts": 1,
+  "src/hooks/useCriticalAlertNotifications.ts": 1,
+  "src/hooks/useCrmFieldSuggestions.ts": 1,
+  "src/hooks/useCulturalHints.ts": 1,
+  "src/hooks/useDNCCompliance.ts": 1,
+  "src/hooks/useDashboardData.ts": 1,
+  "src/hooks/useDashboardGoals.ts": 1,
+  "src/hooks/useDashboardLayout.ts": 1,
+  "src/hooks/useDealForecast.ts": 1,
+  "src/hooks/useDeals.ts": 2,
+  "src/hooks/useDebouncedSearchParam.ts": 1,
+  "src/hooks/useDeviceDetection.ts": 1,
+  "src/hooks/useExecutiveDashboard.ts": 2,
+  "src/hooks/useExtensionAudit.ts": 1,
+  "src/hooks/useExtensionAuditHistory.ts": 1,
+  "src/hooks/useExtensionsOverview.ts": 1,
+  "src/hooks/useFinancialImpact.ts": 1,
+  "src/hooks/useForecastVolume.ts": 1,
+  "src/hooks/useGamification.ts": 1,
+  "src/hooks/useGeoBlocking.ts": 1,
+  "src/hooks/useGoalViolations.ts": 1,
+  "src/hooks/useHealthCheck.ts": 1,
+  "src/hooks/useHoldMetrics.ts": 1,
+  "src/hooks/useHoldReminder.ts": 1,
+  "src/hooks/useHoldSoundAlert.ts": 1,
+  "src/hooks/useIPValidation.ts": 1,
+  "src/hooks/useIPWhitelist.ts": 1,
+  "src/hooks/useKeyMoments.ts": 1,
+  "src/hooks/useKnowledgeBase.ts": 1,
+  "src/hooks/useLearning.ts": 1,
+  "src/hooks/useLiveAssist.ts": 1,
+  "src/hooks/useLiveSentiment.ts": 1,
+  "src/hooks/useLiveTranslation.ts": 1,
+  "src/hooks/useLoginLockout.ts": 1,
+  "src/hooks/useMFA.ts": 1,
+  "src/hooks/useMeetingSummary.ts": 3,
+  "src/hooks/useMultiChannelCall.ts": 6,
+  "src/hooks/useMultiChannelCallConference.ts": 1,
+  "src/hooks/useMultiDeviceRing.ts": 1,
+  "src/hooks/useNetworkMonitor.ts": 1,
+  "src/hooks/useNotifications.ts": 1,
+  "src/hooks/useObjectionLibrary.ts": 1,
+  "src/hooks/useOptimisticLockConflicts.ts": 1,
+  "src/hooks/usePageTitle.ts": 1,
+  "src/hooks/usePermissions.ts": 1,
+  "src/hooks/usePredictiveDialer.ts": 1,
+  "src/hooks/useProfile.ts": 1,
+  "src/hooks/useQualityAlerts.ts": 1,
+  "src/hooks/useQualityMetrics.ts": 1,
+  "src/hooks/useQualityTrendAnalyzer.ts": 1,
+  "src/hooks/useQueueMetrics.ts": 1,
+  "src/hooks/useRateLimitData.ts": 1,
+  "src/hooks/useRealtimeHoldAlerts.ts": 2,
+  "src/hooks/useReauth.ts": 1,
+  "src/hooks/useRecordings.ts": 1,
+  "src/hooks/useRenewals.ts": 1,
+  "src/hooks/useRoutingRules.ts": 1,
+  "src/hooks/useSLA.ts": 1,
+  "src/hooks/useScheduledCallbacks.ts": 1,
+  "src/hooks/useScorecards.ts": 1,
+  "src/hooks/useSecurityDashboard.ts": 1,
+  "src/hooks/useSecurityMonitoringData.ts": 1,
+  "src/hooks/useSecurityNotifications.ts": 1,
+  "src/hooks/useSessionManager.ts": 1,
+  "src/hooks/useShifts.ts": 2,
+  "src/hooks/useSipCall.ts": 1,
+  "src/hooks/useSkills.ts": 2,
+  "src/hooks/useSuccessPlans.ts": 1,
+  "src/hooks/useSupervisorPanel.ts": 1,
+  "src/hooks/useSurveys.ts": 1,
+  "src/hooks/useTalkRatio.ts": 1,
+  "src/hooks/useTimeOff.ts": 1,
+  "src/hooks/useTrackers.ts": 1,
+  "src/hooks/useTrunkFailoverMonitor.ts": 1,
+  "src/hooks/useTrunkHealth.ts": 1,
+  "src/hooks/useTrunkMetrics.ts": 1,
+  "src/hooks/useTrunkRealtimeMetrics.ts": 1,
+  "src/hooks/useTrunkUsageReporter.ts": 1,
+  "src/hooks/useUnreadConflicts.ts": 1,
+  "src/hooks/useVoiceBiometrics.ts": 1,
+  "src/hooks/useVoiceCommand.ts": 1,
+  "src/hooks/useVoipAnomalies.ts": 1,
+  "src/hooks/useVoipAutoRemediation.ts": 1,
+  "src/hooks/useVoipCapacityRecommendations.ts": 1,
+  "src/hooks/useVoipDiagnosticVoiceQA.ts": 1,
+  "src/hooks/useVoipExecutiveNarrative.ts": 1,
+  "src/hooks/useVoipExecutiveSummary.ts": 1,
+  "src/hooks/useVoipMonitoringSettings.ts": 1,
+  "src/hooks/useVoipQualityAlertsSummary.ts": 1,
+  "src/hooks/useVoipQualityForecast.ts": 1,
+  "src/hooks/useVoipQualityMonitor.ts": 2,
+  "src/hooks/useVoipRecommendationHistory.ts": 1,
+  "src/hooks/useVoipRecommendationInsights.ts": 1,
+  "src/hooks/useVoipRecommendationSimulate.ts": 1,
+  "src/hooks/useVoipRecommendations.ts": 1,
+  "src/hooks/useVoipTrunks.ts": 1,
+  "src/hooks/useWavoipCall.ts": 1,
+  "src/hooks/useWebAuthn.ts": 2,
+  "src/hooks/useWebVitals.ts": 1,
+  "src/integrations/supabase/client.ts": 29,
+  "src/lib/agent-assist-utils.ts": 2,
+  "src/lib/audit/index.ts": 2,
+  "src/lib/blf.ts": 1,
+  "src/lib/call-park.ts": 1,
+  "src/lib/call-queue.ts": 1,
+  "src/lib/device-identity.ts": 1,
+  "src/lib/dialer-favorite-tags.ts": 4,
+  "src/lib/dialer-favorites-order.ts": 1,
+  "src/lib/dialer-filter-storage.ts": 1,
+  "src/lib/dialer/predictive-pace.ts": 1,
+  "src/lib/error-tracking.ts": 1,
+  "src/lib/export/index.ts": 4,
+  "src/lib/favorite-sync-labels.ts": 1,
+  "src/lib/health-score.ts": 2,
+  "src/lib/holdReminderSounds.ts": 1,
+  "src/lib/incoming-call-alert.ts": 1,
+  "src/lib/language-detection.ts": 1,
+  "src/lib/logger.ts": 8,
+  "src/lib/meeting-summary-utils.ts": 1,
+  "src/lib/mfa/index.ts": 3,
+  "src/lib/notifications/index.ts": 4,
+  "src/lib/outbound-scoring.ts": 1,
+  "src/lib/password/index.ts": 2,
+  "src/lib/phone-normalization.ts": 1,
+  "src/lib/queue-audio.ts": 1,
+  "src/lib/ring-group.ts": 1,
+  "src/lib/ringtone-presets.ts": 1,
+  "src/lib/safe-date.ts": 3,
+  "src/lib/safe-number.ts": 2,
+  "src/lib/security-alerts-export.ts": 2,
+  "src/lib/security-alerts-presets.ts": 1,
+  "src/lib/security-alerts-webhook-history.ts": 1,
+  "src/lib/security-alerts-webhook-queue.ts": 3,
+  "src/lib/security-alerts-webhook-validation.ts": 2,
+  "src/lib/security-alerts-webhook.ts": 5,
+  "src/lib/security/api-key-rotation.ts": 1,
+  "src/lib/security/content-security-policy.ts": 1,
+  "src/lib/security/cors-config.ts": 1,
+  "src/lib/security/csrf-token.ts": 1,
+  "src/lib/security/encryption.ts": 2,
+  "src/lib/security/helmet-config.ts": 2,
+  "src/lib/security/hsts-headers.ts": 2,
+  "src/lib/security/https-enforcer.ts": 2,
+  "src/lib/security/input-sanitizer.ts": 2,
+  "src/lib/security/jwt-handler.ts": 2,
+  "src/lib/security/penetration-test-reporter.ts": 1,
+  "src/lib/security/rate-limiter.ts": 2,
+  "src/lib/security/secrets-scanner.ts": 2,
+  "src/lib/security/security-headers-validator.ts": 2,
+  "src/lib/security/sql-sanitizer.ts": 2,
+  "src/lib/security/xss-prevention.ts": 1,
+  "src/lib/session/index.ts": 2,
+  "src/lib/sync-history.ts": 1,
+  "src/lib/talkRatio.ts": 1,
+  "src/lib/tracing.ts": 1,
+  "src/lib/utils.ts": 3,
+  "src/lib/validation/schemas.ts": 2,
+  "src/lib/voice-biometrics.ts": 1,
+  "src/lib/voice-command-history.ts": 2,
+  "src/lib/voice-preferences.ts": 1,
+  "src/lib/voipProactiveSnapshot.ts": 1,
+  "src/lib/voipRecommendationCoaching.ts": 1,
+  "src/lib/web-vitals.ts": 2,
+  "src/lib/webauthn/webauthn-utils.ts": 2,
+  "src/lib/webhook-health-utils.ts": 2,
+  "src/lib/webrtc-config.ts": 1,
+  "src/pages/Login.tsx": 1,
+  "src/pages/roles/useRoles.ts": 1,
+  "supabase/functions/_shared/cors.ts": 1,
+  "supabase/functions/_shared/resilience.ts": 2,
+  "supabase/functions/_shared/validator.ts": 2,
+  "supabase/functions/analyze-call/schema.ts": 3,
+  "supabase/functions/bitrix-api/index.ts": 1,
+  "supabase/functions/health-check/index.ts": 1,
+  "supabase/functions/voip-anomaly-detector/index.ts": 1,
+  "supabase/functions/voip-anomaly-remediation/index.ts": 1,
+  "supabase/functions/voip-capacity-forecast/index.ts": 1,
+  "supabase/functions/voip-capacity-recommendations/index.ts": 1,
+  "supabase/functions/voip-executive-summary/index.ts": 1,
+  "supabase/functions/voip-quality-forecast/index.ts": 1,
+  "supabase/functions/voip-recommendation-history/index.ts": 1,
+  "supabase/functions/voip-recommendation-insights/index.ts": 1,
+  "supabase/functions/voip-recommendation-simulate/index.ts": 1,
+  "supabase/functions/voip-recommendations/index.ts": 1,
+  "supabase/functions/voip-trunks-healthcheck/index.ts": 1,
+  "supabase/functions/whatsapp-inbound/schema.ts": 1
+ },
+ "sem_teste": {
+  "telas": [
+   "src/pages/AIAssistant.tsx",
+   "src/pages/Accounts.tsx",
+   "src/pages/AgentAssist.tsx",
+   "src/pages/AgentRanking.tsx",
+   "src/pages/AlertHistory.tsx",
+   "src/pages/Alerts.tsx",
+   "src/pages/AuditLogs.tsx",
+   "src/pages/BattleCards.tsx",
+   "src/pages/BlfBoard.tsx",
+   "src/pages/BlockedAccessLogs.tsx",
+   "src/pages/Cadences.tsx",
+   "src/pages/CallAnalytics.tsx",
+   "src/pages/CallFlowDesigner.tsx",
+   "src/pages/CallHistory.tsx",
+   "src/pages/CallLibrary.tsx",
+   "src/pages/CallPark.tsx",
+   "src/pages/CallQueues.tsx",
+   "src/pages/Callbacks.tsx",
+   "src/pages/Calls.tsx",
+   "src/pages/Coaching.tsx",
+   "src/pages/Compliance.tsx",
+   "src/pages/ConcurrencyConflicts.tsx",
+   "src/pages/ContactInsights.tsx",
+   "src/pages/Contacts.tsx",
+   "src/pages/Deals.tsx",
+   "src/pages/Dialer.tsx",
+   "src/pages/ExecutiveDashboard.tsx",
+   "src/pages/ExternalRecordingsImport.tsx",
+   "src/pages/FinancialImpact.tsx",
+   "src/pages/ForgotPassword.tsx",
+   "src/pages/GeoBlocking.tsx",
+   "src/pages/HoldAlertSettings.tsx",
+   "src/pages/HoldAlerts.tsx",
+   "src/pages/HoldMetrics.tsx",
+   "src/pages/HotDesking.tsx",
+   "src/pages/IPWhitelist.tsx",
+   "src/pages/Inbox.tsx",
+   "src/pages/Index.tsx",
+   "src/pages/Knowledge.tsx",
+   "src/pages/LDAPSync.tsx",
+   "src/pages/Learning.tsx",
+   "src/pages/Marketplace.tsx",
+   "src/pages/MeetingSummaries.tsx",
+   "src/pages/MultiDeviceRing.tsx",
+   "src/pages/NetworkDiagnostics.tsx",
+   "src/pages/NotFound.tsx",
+   "src/pages/NotificationCenter.tsx",
+   "src/pages/NumberPorting.tsx",
+   "src/pages/ObservabilityDashboard.tsx",
+   "src/pages/Onboarding.tsx",
+   "src/pages/OutboundCompliance.tsx",
+   "src/pages/Passkeys.tsx",
+   "src/pages/PasswordResetApproval.tsx",
+   "src/pages/Permissions.tsx",
+   "src/pages/PhoneDialer.tsx",
+   "src/pages/PredictiveDialer.tsx",
+   "src/pages/QRProvisioning.tsx",
+   "src/pages/QueueMetricsAlertSettings.tsx",
+   "src/pages/QueueMetricsDashboard.tsx",
+   "src/pages/RateLimitDashboard.tsx",
+   "src/pages/Recordings.tsx",
+   "src/pages/Register.tsx",
+   "src/pages/Renewals.tsx",
+   "src/pages/Reports.tsx",
+   "src/pages/ResetPassword.tsx",
+   "src/pages/RingGroups.tsx",
+   "src/pages/Roles.tsx",
+   "src/pages/RoutingRules.tsx",
+   "src/pages/SLAPolicies.tsx",
+   "src/pages/Scheduling.tsx",
+   "src/pages/SecurityDashboard.tsx",
+   "src/pages/SecurityMonitoring.tsx",
+   "src/pages/SecurityReport.tsx",
+   "src/pages/SessionManagement.tsx",
+   "src/pages/Settings.tsx",
+   "src/pages/ShiftSwapSuggestions.tsx",
+   "src/pages/Skills.tsx",
+   "src/pages/Status.tsx",
+   "src/pages/SuccessPlans.tsx",
+   "src/pages/TollFreeNumbers.tsx",
+   "src/pages/TopicDetection.tsx",
+   "src/pages/Trackers.tsx",
+   "src/pages/TranslationCenter.tsx",
+   "src/pages/TwoFactorAuth.tsx",
+   "src/pages/Unauthorized.tsx",
+   "src/pages/VerifyEmail.tsx",
+   "src/pages/VideoConference.tsx",
+   "src/pages/VirtualFax.tsx",
+   "src/pages/VoiceSecurity.tsx",
+   "src/pages/Voicemail.tsx",
+   "src/pages/admin/DataExport.tsx",
+   "src/pages/admin/DatabaseHealth.tsx",
+   "src/pages/admin/ExtensionsAdmin.tsx",
+   "src/pages/admin/SecurityAlerts.tsx",
+   "src/pages/admin/SecurityDashboard.tsx",
+   "src/pages/admin/SloDashboard.tsx",
+   "src/pages/admin/VoiceQuality.tsx",
+   "src/pages/admin/VoipTrunksAdmin.tsx",
+   "src/pages/admin/WebhookHealth.tsx",
+   "src/pages/marketing/Landing.tsx",
+   "src/pages/marketing/Pricing.tsx",
+   "src/pages/marketing/VsThreeCPlus.tsx"
+  ],
+  "hooks": [
+   "scripts/ai-context/cenarios.mjs",
+   "src/components/ai/live-call/useLiveInsights.ts",
+   "src/components/auth/PasswordStrength.tsx",
+   "src/components/compliance/calling-hours/useCallingHoursManager.ts",
+   "src/components/contacts/useBitrixSync.ts",
+   "src/components/notification-center/useNotificationCenter.ts",
+   "src/components/queue-alerts/useQueueMetricsSettings.ts",
+   "src/components/ui/form.tsx",
+   "src/components/ui/keyboard-navigation.tsx",
+   "src/components/ui/sidebar.tsx",
+   "src/components/ui/use-toast.ts",
+   "src/components/voice/overlay/usePhaseColors.ts",
+   "src/contexts/AuthContext.tsx",
+   "src/contexts/ThemeContext.tsx",
+   "src/hooks/auth/index.ts",
+   "src/hooks/useAgentFinancialLeaderboard.ts",
+   "src/hooks/useAlertPresets.ts",
+   "src/hooks/useBlfBoard.ts",
+   "src/hooks/useCallPark.ts",
+   "src/hooks/useCallQueues.ts",
+   "src/hooks/useDataLakeExports.ts",
+   "src/hooks/useDeviceLabel.ts",
+   "src/hooks/useDialerFavorites.ts",
+   "src/hooks/useExtensionsAdmin.ts",
+   "src/hooks/usePageVisibility.ts",
+   "src/hooks/usePersistedTagFilter.ts",
+   "src/hooks/usePredictivePacing.ts",
+   "src/hooks/useQueueAudioPrompts.ts",
+   "src/hooks/useRingGroups.ts",
+   "src/hooks/useRingtoneSettings.ts",
+   "src/hooks/useSecurityAlertNotifications.ts",
+   "src/hooks/useShiftSwapSuggestions.ts",
+   "src/hooks/useSyncHistory.ts",
+   "src/hooks/useTestWebhook.ts",
+   "src/hooks/useVirtualFaxOcr.ts",
+   "src/hooks/useVoicePreferences.ts",
+   "src/hooks/useWebhookConfig.ts",
+   "src/hooks/useWebhookHealthData.ts",
+   "src/hooks/useWebhookHistory.ts",
+   "src/hooks/useWebhookQueue.ts",
+   "src/hooks/useWhatsappRewrite.ts",
+   "src/lib/elevenlabs-stub.ts"
+  ],
+  "edges": [
+   "analyze-contact-profile",
+   "analyze-live-utterance",
+   "analyze-sentiment",
+   "analyze-talk-ratio",
+   "approve-password-reset",
+   "auto-scorecard",
+   "chat-widget-session",
+   "chatbot-respond",
+   "check-alerts",
+   "check-contact-alerts",
+   "check-goals",
+   "check-hold-alerts",
+   "compute-account-health",
+   "compute-adherence",
+   "compute-best-time",
+   "data-lake-flush",
+   "database-backup",
+   "database-cleanup",
+   "detect-churn-risk",
+   "detect-key-moments",
+   "dialer-pacing-tick",
+   "elevenlabs-conversation-token",
+   "email-inbound",
+   "embed-kb-article",
+   "enroll-voice",
+   "export-data-lake",
+   "extract-crm-fields",
+   "forecast-call-volume",
+   "forecast-deals",
+   "fuzz-test-runner",
+   "generate-coaching",
+   "generate-coaching-plan",
+   "generate-coaching-track",
+   "generate-meeting-summary",
+   "generate-summary",
+   "global-load-test",
+   "migrate-helper",
+   "notify-blocked-ip",
+   "notify-new-device",
+   "ocr-virtual-fax",
+   "process-digest",
+   "realtime-analysis",
+   "record-consent",
+   "redact-sensitive-audio",
+   "request-password-reset",
+   "rls-audit",
+   "score-call",
+   "search-calls",
+   "send-notification",
+   "send-survey",
+   "sip-config",
+   "suggest-shift-swaps",
+   "sync-crm-queue",
+   "teams-fetch-recordings",
+   "transcribe-recording",
+   "translate-summary",
+   "validate-geo",
+   "verify-voice",
+   "voice-command",
+   "voice-transcribe",
+   "voip-failover-notifier",
+   "voip-load-test",
+   "voip-trunks-manage",
+   "wavoip-call",
+   "webauthn-authenticate",
+   "webhook-handler",
+   "whatsapp-rewrite"
+  ],
+  "servicos": []
+ }
+}

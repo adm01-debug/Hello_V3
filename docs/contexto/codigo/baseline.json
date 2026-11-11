@@ -1,0 +1,778 @@
+{
+ "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
+ "format_version": 2,
+ "git": {
+  "commit": "5db3c07f3902ff71c61952f398f801d33deb5d20",
+  "branch": "main",
+  "data_commit": "2026-11-11T14:22:40-03:00",
+  "remote": "https://github.com/adm01-debug/Hello_V3",
+  "ultimos_commits": [
+   {
+    "sha": "5db3c07",
+    "data": "2026-11-11",
+    "assunto": "Pipeline autônomo de contexto para agentes de IA (portado do Zapp Web V2) (#8)"
+   },
+   {
+    "sha": "bb41eec",
+    "data": "2026-11-09",
+    "assunto": "feat(network): integra voip-quality-alerts-summary ao dashboard"
+   },
+   {
+    "sha": "2b05cbb",
+    "data": "2026-11-09",
+    "assunto": "fix(chat-widget-session): aplica rate limit por IP no endpoint anônimo"
+   },
+   {
+    "sha": "fc37442",
+    "data": "2026-11-09",
+    "assunto": "fix(e2e): bun run build + vite preview para webServer do Playwright (#17)"
+   },
+   {
+    "sha": "48f56b4",
+    "data": "2026-11-08",
+    "assunto": "fix(tests): mock upsert + eslint disable no-control-regex — desbloqueia CI global"
+   },
+   {
+    "sha": "7484809",
+    "data": "2026-11-08",
+    "assunto": "feat(ci): deno.json com import map — testes Deno herméticos"
+   },
+   {
+    "sha": "510d039",
+    "data": "2026-11-08",
+    "assunto": "fix(voice): substitui Number.parseFloat por safeParseFloat em usePhaseColors"
+   },
+   {
+    "sha": "a5a156e",
+    "data": "2026-11-08",
+    "assunto": "docs(agentes): replica e corrige documentação de agentes do Zapp Web V2"
+   },
+   {
+    "sha": "7307a87",
+    "data": "2026-08-28",
+    "assunto": "Visual edit in Lovable"
+   },
+   {
+    "sha": "4ffdc29",
+    "data": "2026-08-19",
+    "assunto": "Lovable update"
+   },
+   {
+    "sha": "85b17eb",
+    "data": "2026-08-19",
+    "assunto": "Work in progress"
+   },
+   {
+    "sha": "7a75199",
+    "data": "2026-08-18",
+    "assunto": "chore(hermes): adiciona .hermes.md (regras da casa Hermes)"
+   },
+   {
+    "sha": "b38875e",
+    "data": "2026-08-18",
+    "assunto": "chore(agents): adiciona AGENTS.md padrao (contexto multi-agente)"
+   },
+   {
+    "sha": "057e597",
+    "data": "2026-08-18",
+    "assunto": "Merge pull request #6 from adm01-debug/claude/system-status-features-boms0f"
+   },
+   {
+    "sha": "96e389d",
+    "data": "2026-08-16",
+    "assunto": "docs: declara a cobertura da revisão adversarial no ESTADO_ATUAL.md"
+   },
+   {
+    "sha": "a0827ce",
+    "data": "2026-08-16",
+    "assunto": "docs: auto-auditoria do ESTADO_ATUAL.md — corrige 6 erros próprios"
+   },
+   {
+    "sha": "24501d8",
+    "data": "2026-08-16",
+    "assunto": "docs: registra segundo modo de falha do CI (execuções que não iniciam)"
+   },
+   {
+    "sha": "35c8668",
+    "data": "2026-08-16",
+    "assunto": "docs: precisa o diagnóstico do CI vermelho no ESTADO_ATUAL.md"
+   },
+   {
+    "sha": "e63bf6f",
+    "data": "2026-08-16",
+    "assunto": "docs: auditoria de estado do sistema (ESTADO_ATUAL.md + docs/estado/)"
+   },
+   {
+    "sha": "9160623",
+    "data": "2026-08-11",
+    "assunto": "security: remove migrate-helper edge function (exposes service_role key)"
+   },
+   {
+    "sha": "61f71f1",
+    "data": "2026-08-05",
+    "assunto": "merge: master para main"
+   },
+   {
+    "sha": "9422246",
+    "data": "2026-08-05",
+    "assunto": "feat: Migração Banco Lovable para Supabase Hello - V3"
+   },
+   {
+    "sha": "2f065da",
+    "data": "2026-08-01",
+    "assunto": "Visual edit in Lovable"
+   },
+   {
+    "sha": "11c5cd0",
+    "data": "2026-07-27",
+    "assunto": "Implement BLF real-time panel"
+   },
+   {
+    "sha": "cbca424",
+    "data": "2026-07-27",
+    "assunto": "Changes"
+   }
+  ],
+  "arquivos_mudados_7d": 55,
+  "pastas_mais_mudadas_30d": [
+   {
+    "pasta": ".agents/skills/hello-v3",
+    "mudancas": 2
+   },
+   {
+    "pasta": "AGENTS.md",
+    "mudancas": 2
+   },
+   {
+    "pasta": "docs/contexto/regras",
+    "mudancas": 2
+   },
+   {
+    "pasta": "src/hooks/__tests__",
+    "mudancas": 2
+   },
+   {
+    "pasta": ".claude/skills/hello-v3",
+    "mudancas": 1
+   },
+   {
+    "pasta": ".github/workflows/ci.yml",
+    "mudancas": 1
+   },
+   {
+    "pasta": ".github/workflows/contexto.yml",
+    "mudancas": 1
+   },
+   {
+    "pasta": ".github/workflows/inventario-estado-semanal.yml",
+    "mudancas": 1
+   },
+   {
+    "pasta": ".gitignore",
+    "mudancas": 1
+   },
+   {
+    "pasta": ".hermes.md",
+    "mudancas": 1
+   },
+   {
+    "pasta": "CLAUDE.md",
+    "mudancas": 1
+   },
+   {
+    "pasta": "ai-context.config.json",
+    "mudancas": 1
+   },
+   {
+    "pasta": "deno.json",
+    "mudancas": 1
+   },
+   {
+    "pasta": "docs/CONTEXTO-PARA-AGENTES.md",
+    "mudancas": 1
+   },
+   {
+    "pasta": "docs/agentes/banco.md",
+    "mudancas": 1
+   }
+  ],
+  "arquivos_mais_mudados_90d": [
+   {
+    "arquivo": "ESTADO_ATUAL.md",
+    "mudancas": 5
+   },
+   {
+    "arquivo": "AGENTS.md",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "docs/estado/edge-functions-parte1.md",
+    "mudancas": 2
+   },
+   {
+    "arquivo": ".claude/skills/hello-v3/SKILL.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 1
+   },
+   {
+    "arquivo": ".github/workflows/contexto.yml",
+    "mudancas": 1
+   },
+   {
+    "arquivo": ".github/workflows/inventario-estado-semanal.yml",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "CLAUDE.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "ai-context.config.json",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "deno.json",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/CONTEXTO-PARA-AGENTES.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/agentes/banco.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/agentes/edge-functions.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/agentes/github-ci.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/agentes/lovable-deploy.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/agentes/mapa-repo.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/agentes/telefonia-voip.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/contexto/regras/manual/README.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/contexto/regras/manual/TEMPLATE-regras-de-negocio.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/estado/componentes-parte1.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/estado/componentes-parte2.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/estado/componentes-parte3.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/estado/componentes-parte4.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/estado/dados-schema-migrations.md",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "docs/estado/edge-functions-parte2.md",
+    "mudancas": 1
+   }
+  ],
+  "autores_30d": [
+   {
+    "autor": "adm01-debug",
+    "commits": 8
+   }
+  ]
+ },
+ "contagens": {
+  "arquivos_total": 1529,
+  "arquivos_codigo": 1189,
+  "linhas_codigo": 163135,
+  "rotas": 104,
+  "rotas_http_backend": 12,
+  "vistas_por_id": 0,
+  "itens_menu": 79,
+  "modulos": 75,
+  "componentes": 441,
+  "hooks": 188,
+  "edge_functions": 94,
+  "tabelas": 171,
+  "migrations": 207,
+  "cron_jobs": 7,
+  "testes": 321,
+  "workflows": 3,
+  "scripts": 31,
+  "docs_md": 99
+ },
+ "por_pasta": {
+  "e2e/calls.spec.ts": {
+   "arquivos": 1,
+   "linhas": 42
+  },
+  "e2e/dashboard.spec.ts": {
+   "arquivos": 1,
+   "linhas": 46
+  },
+  "e2e/extensions-management.spec.ts": {
+   "arquivos": 1,
+   "linhas": 16
+  },
+  "e2e/login.spec.ts": {
+   "arquivos": 1,
+   "linhas": 43
+  },
+  "e2e/observability.spec.ts": {
+   "arquivos": 1,
+   "linhas": 35
+  },
+  "e2e/security-lockout.spec.ts": {
+   "arquivos": 1,
+   "linhas": 12
+  },
+  "e2e/sip-flow.spec.ts": {
+   "arquivos": 1,
+   "linhas": 143
+  },
+  "eslint.config.js": {
+   "arquivos": 1,
+   "linhas": 53
+  },
+  "playwright.config.ts": {
+   "arquivos": 1,
+   "linhas": 28
+  },
+  "postcss.config.js": {
+   "arquivos": 1,
+   "linhas": 7
+  },
+  "scripts/ai-context": {
+   "arquivos": 3,
+   "linhas": 1459
+  },
+  "scripts/apply-call-volume-fix.mjs": {
+   "arquivos": 1,
+   "linhas": 36
+  },
+  "scripts/check-cfmlmc-db.mjs": {
+   "arquivos": 1,
+   "linhas": 104
+  },
+  "scripts/check-data.mjs": {
+   "arquivos": 1,
+   "linhas": 71
+  },
+  "scripts/check-rls.mjs": {
+   "arquivos": 1,
+   "linhas": 80
+  },
+  "scripts/ci": {
+   "arquivos": 1,
+   "linhas": 123
+  },
+  "scripts/clean-hold-events.mjs": {
+   "arquivos": 1,
+   "linhas": 67
+  },
+  "scripts/cleanup-and-count.mjs": {
+   "arquivos": 1,
+   "linhas": 73
+  },
+  "scripts/codemod-safe-number.mjs": {
+   "arquivos": 1,
+   "linhas": 231
+  },
+  "scripts/fix-user-profile.mjs": {
+   "arquivos": 1,
+   "linhas": 80
+  },
+  "scripts/guard-edge-numeric.mjs": {
+   "arquivos": 1,
+   "linhas": 207
+  },
+  "scripts/inspect-schema.mjs": {
+   "arquivos": 1,
+   "linhas": 64
+  },
+  "scripts/inventario": {
+   "arquivos": 4,
+   "linhas": 832
+  },
+  "scripts/regras_negocio": {
+   "arquivos": 3,
+   "linhas": 2539
+  },
+  "scripts/supabase_snapshot": {
+   "arquivos": 2,
+   "linhas": 2669
+  },
+  "scripts/test-api-direct.mjs": {
+   "arquivos": 1,
+   "linhas": 31
+  },
+  "scripts/test-auth-flow.mjs": {
+   "arquivos": 1,
+   "linhas": 66
+  },
+  "scripts/test-authenticated-queries.mjs": {
+   "arquivos": 1,
+   "linhas": 95
+  },
+  "scripts/test-call-volume-rpc.mjs": {
+   "arquivos": 1,
+   "linhas": 47
+  },
+  "scripts/test-dashboard-rpcs.mjs": {
+   "arquivos": 1,
+   "linhas": 28
+  },
+  "scripts/test-rls-access.mjs": {
+   "arquivos": 1,
+   "linhas": 77
+  },
+  "scripts/test-validate-ip.mjs": {
+   "arquivos": 1,
+   "linhas": 51
+  },
+  "src/App.tsx": {
+   "arquivos": 1,
+   "linhas": 107
+  },
+  "src/__tests__": {
+   "arquivos": 7,
+   "linhas": 450
+  },
+  "src/components": {
+   "arquivos": 344,
+   "linhas": 41414
+  },
+  "src/contexts": {
+   "arquivos": 2,
+   "linhas": 110
+  },
+  "src/data": {
+   "arquivos": 1,
+   "linhas": 312
+  },
+  "src/hooks": {
+   "arquivos": 345,
+   "linhas": 44646
+  },
+  "src/integrations": {
+   "arquivos": 3,
+   "linhas": 7847
+  },
+  "src/lib": {
+   "arquivos": 157,
+   "linhas": 20548
+  },
+  "src/main.tsx": {
+   "arquivos": 1,
+   "linhas": 44
+  },
+  "src/pages": {
+   "arquivos": 130,
+   "linhas": 20773
+  },
+  "src/routes": {
+   "arquivos": 2,
+   "linhas": 236
+  },
+  "src/test": {
+   "arquivos": 2,
+   "linhas": 159
+  },
+  "supabase/functions": {
+   "arquivos": 146,
+   "linhas": 16432
+  },
+  "tailwind.config.ts": {
+   "arquivos": 1,
+   "linhas": 232
+  },
+  "tests/e2e": {
+   "arquivos": 5,
+   "linhas": 275
+  },
+  "vite.config.ts": {
+   "arquivos": 1,
+   "linhas": 54
+  },
+  "vitest.config.ts": {
+   "arquivos": 1,
+   "linhas": 41
+  }
+ },
+ "maiores_arquivos": [
+  {
+   "arquivo": "src/integrations/supabase/types.ts",
+   "linhas": 7788
+  },
+  {
+   "arquivo": "scripts/regras_negocio/generate.py",
+   "linhas": 2138
+  },
+  {
+   "arquivo": "scripts/supabase_snapshot/snapshot.py",
+   "linhas": 1791
+  },
+  {
+   "arquivo": "scripts/ai-context/gerar.mjs",
+   "linhas": 925
+  },
+  {
+   "arquivo": "src/components/ui/sidebar.tsx",
+   "linhas": 638
+  },
+  {
+   "arquivo": "src/components/voice/VoiceAssistantDialog.tsx",
+   "linhas": 551
+  },
+  {
+   "arquivo": "src/hooks/useSipCall.ts",
+   "linhas": 412
+  },
+  {
+   "arquivo": "src/components/queues/QueueFormDialog.tsx",
+   "linhas": 396
+  },
+  {
+   "arquivo": "src/components/ai/AICallAnalysis.tsx",
+   "linhas": 388
+  },
+  {
+   "arquivo": "src/pages/marketing/Landing.tsx",
+   "linhas": 383
+  },
+  {
+   "arquivo": "src/components/calls/ActiveCallBar.tsx",
+   "linhas": 380
+  },
+  {
+   "arquivo": "src/components/coaching/CoachingPanel.tsx",
+   "linhas": 376
+  },
+  {
+   "arquivo": "src/components/calls/WebRTCCall.tsx",
+   "linhas": 372
+  },
+  {
+   "arquivo": "src/hooks/useContacts.ts",
+   "linhas": 372
+  },
+  {
+   "arquivo": "src/pages/TopicDetection.tsx",
+   "linhas": 371
+  },
+  {
+   "arquivo": "src/components/callbacks/ScheduledCallbacksList.tsx",
+   "linhas": 370
+  },
+  {
+   "arquivo": "src/lib/security-alerts-webhook.ts",
+   "linhas": 359
+  },
+  {
+   "arquivo": "src/pages/CallFlowDesigner.tsx",
+   "linhas": 355
+  },
+  {
+   "arquivo": "src/pages/QRProvisioning.tsx",
+   "linhas": 352
+  },
+  {
+   "arquivo": "src/components/dialer/phone/PhoneQuickAccess.tsx",
+   "linhas": 346
+  },
+  {
+   "arquivo": "src/lib/blf.ts",
+   "linhas": 345
+  },
+  {
+   "arquivo": "src/pages/Contacts.tsx",
+   "linhas": 345
+  },
+  {
+   "arquivo": "src/pages/Inbox.tsx",
+   "linhas": 345
+  },
+  {
+   "arquivo": "src/components/alerts/AlertsTrendChart.tsx",
+   "linhas": 343
+  },
+  {
+   "arquivo": "src/pages/NetworkDiagnostics.tsx",
+   "linhas": 339
+  }
+ ],
+ "qualidade": {
+  "any": 9,
+  "console_log": 181,
+  "ts_ignore": 0,
+  "eslint_disable": 1,
+  "todos": 5,
+  "arquivos_acima_500_linhas": 6
+ },
+ "todos": [
+  {
+   "arquivo": "scripts/ai-context/gerar.mjs",
+   "linha": 188,
+   "tipo": "TODO",
+   "texto": "|FIXME|HACK|XXX)\\b[:\\s-]*([^\\n]{0,100})/.exec(line); if (m) todos.push({ linha: ln, tipo: m[1], text"
+  },
+  {
+   "arquivo": "scripts/ai-context/gerar.mjs",
+   "linha": 222,
+   "tipo": "TODO",
+   "texto": "|FIXME|HACK|XXX)\\b[:\\s-]*([^\\n]{0,100})/.exec(l); return m ? { linha: i + 1, tipo: m[1], texto: m[2]"
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useGamification.coverage.test.tsx",
+   "linha": 131,
+   "tipo": "XXX",
+   "texto": "', message: 'fail' } }] });"
+  },
+  {
+   "arquivo": "supabase/functions/ocr-virtual-fax/index.ts",
+   "linha": 59,
+   "tipo": "TODO",
+   "texto": "o texto do documento fornecido em português. Preserve quebras de linha. Sem comentários.' },"
+  },
+  {
+   "arquivo": "scripts/regras_negocio/generate.py",
+   "linha": 570,
+   "tipo": "TODO",
+   "texto": "\", \"http\", \"import\")) and \"://\" not in c:"
+  }
+ ],
+ "alertas": {
+  "rotas_sem_arquivo": [],
+  "componentes_ambiguos": [],
+  "menu_sem_destino": [],
+  "edges_orfas": [
+   "chat-widget-session",
+   "check-alerts",
+   "check-hold-alerts",
+   "check-queue-metrics",
+   "cleanup-lock-conflicts",
+   "database-backup",
+   "database-cleanup",
+   "email-inbound",
+   "fuzz-test-runner",
+   "generate-coaching-track",
+   "global-load-test",
+   "process-digest",
+   "rls-audit",
+   "sync-crm-queue",
+   "translate-summary",
+   "voip-anomaly-detector",
+   "voip-anomaly-remediation",
+   "voip-quality-alerts-summary",
+   "webhook-handler",
+   "whatsapp-inbound",
+   "whatsapp-rewrite"
+  ],
+  "edges_chamadas_sem_pasta": [],
+  "tabelas_sem_rls": [
+   "migration_rollbacks",
+   "schema_migrations"
+  ],
+  "tabelas_usadas_sem_definicao": [
+   "agent_status_history",
+   "pg_class",
+   "pg_policies"
+  ],
+  "tabelas_com_drift_migration_vs_types": [
+   "agents",
+   "blocked_access_logs",
+   "call_control_audit_logs",
+   "call_quality_metrics",
+   "call_sessions",
+   "contacts",
+   "system_settings",
+   "user_profiles",
+   "voip_trunk_usage_metrics"
+  ],
+  "rpcs_sem_definicao": [
+   "check_db_policies",
+   "get_table_policies"
+  ],
+  "componentes_orfaos": [
+   "src/components/alerts/AlertsDropdown.tsx",
+   "src/components/calls/WebRTCCall.tsx",
+   "src/components/contacts/ContactAlertsDropdown.tsx",
+   "src/components/gamification/GamificationDashboard.tsx",
+   "src/components/notifications/NotificationBell.tsx",
+   "src/components/SearchInput.tsx",
+   "src/components/translation/LiveTranslationPanel.tsx",
+   "src/components/ui/animations.tsx",
+   "src/components/ui/breadcrumb.tsx",
+   "src/components/ui/carousel.tsx",
+   "src/components/ui/chart.tsx",
+   "src/components/ui/context-menu.tsx",
+   "src/components/ui/drawer.tsx",
+   "src/components/ui/hover-card.tsx",
+   "src/components/ui/input-otp.tsx",
+   "src/components/ui/menubar.tsx",
+   "src/components/ui/navigation-menu.tsx",
+   "src/components/ui/pagination.tsx",
+   "src/components/ui/resizable.tsx",
+   "src/components/whatsapp/WhatsappComposer.tsx"
+  ],
+  "componentes_com_nome_duplicado": [
+   "KpiCards",
+   "SearchInput",
+   "SecurityDashboard",
+   "Skeleton",
+   "Toaster"
+  ],
+  "scripts_orfaos": [],
+  "env_usadas_nao_declaradas": [
+   "VITE_TURN_CRED",
+   "VITE_TURN_URL",
+   "VITE_TURN_USER"
+  ],
+  "ciclos_de_import": 1,
+  "possiveis_segredos_no_codigo": [
+   "scripts/ai-context/cenarios.mjs:102",
+   "scripts/check-data.mjs:2",
+   "scripts/test-api-direct.mjs:3",
+   "scripts/test-api-direct.mjs:4",
+   "scripts/test-auth-flow.mjs:3",
+   "scripts/test-auth-flow.mjs:33",
+   "scripts/test-authenticated-queries.mjs:3",
+   "scripts/test-authenticated-queries.mjs:7",
+   "scripts/test-call-volume-rpc.mjs:2",
+   "scripts/test-call-volume-rpc.mjs:3",
+   "scripts/test-dashboard-rpcs.mjs:2",
+   "scripts/test-dashboard-rpcs.mjs:3",
+   "scripts/test-rls-access.mjs:3",
+   "scripts/test-validate-ip.mjs:3",
+   "scripts/test-validate-ip.mjs:42",
+   "src/lib/__tests__/security-advanced.test.ts:203",
+   "src/lib/__tests__/security-advanced.test.ts:208",
+   "src/lib/__tests__/security-advanced.test.ts:213"
+  ]
+ },
+ "erros_do_gerador": []
+}

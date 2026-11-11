@@ -1,0 +1,84 @@
+{
+ "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
+ "format_version": 2,
+ "onde_ficam": {
+  "telas": [
+   "src/pages (103)"
+  ],
+  "componentes": [
+   "src/components (313)",
+   "src/pages (125)",
+   "src/contexts (2)"
+  ],
+  "hooks": [
+   "src/hooks (171)",
+   "src/components (12)",
+   "src/contexts (2)"
+  ],
+  "servicos_logica": [
+   "src/lib (76)",
+   "src/integrations (3)",
+   "scripts/regras_negocio (2)"
+  ],
+  "testes": [
+   "co-localizado (__tests__) (300)",
+   "e2e/ (7)",
+   "outro (5)"
+  ],
+  "edge_functions": "supabase/functions",
+  "migrations": "supabase/migrations",
+  "scripts": [
+   "scripts/inventario (5)",
+   "scripts/regras_negocio (3)",
+   "scripts/ai-context (2)"
+  ],
+  "docs": [
+   "(raiz) (5)",
+   "docs (2)",
+   ".github (1)"
+  ]
+ },
+ "nomenclatura": {
+  "componentes": "PascalCase (88%)",
+  "hooks": "use + PascalCase",
+  "servicos": "kebab-case (70%)",
+  "edge_functions": "kebab-case (100%)",
+  "tabelas": "snake_case (89%)"
+ },
+ "barrels_index": 17,
+ "extensao_componentes": [
+  ".tsx (441)"
+ ],
+ "alias_imports": {
+  "(raiz)": {
+   "@/": "src/",
+   "~/": "src/"
+  }
+ },
+ "commits": {
+  "convencao": "livre",
+  "exemplos": [
+   "Pipeline autônomo de contexto para agentes de IA (portado do Zapp Web V2) (#8)",
+   "feat(network): integra voip-quality-alerts-summary ao dashboard",
+   "fix(chat-widget-session): aplica rate limit por IP no endpoint anônimo",
+   "fix(e2e): bun run build + vite preview para webServer do Playwright (#17)",
+   "fix(tests): mock upsert + eslint disable no-control-regex — desbloqueia CI global"
+  ]
+ },
+ "pr_template": null,
+ "codeowners": null,
+ "contributing": null,
+ "instrucoes_agentes": [
+  "AGENTS.md",
+  "CLAUDE.md"
+ ],
+ "typescript": {
+  "strict": true,
+  "noImplicitAny": true,
+  "tsconfigs": [
+   "tsconfig.app.json",
+   "tsconfig.json",
+   "tsconfig.node.json"
+  ]
+ }
+}

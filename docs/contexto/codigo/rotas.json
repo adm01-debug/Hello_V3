@@ -1,0 +1,5684 @@
+{
+ "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
+ "format_version": 2,
+ "resumo": {
+  "urls": 104,
+  "rotas_http_backend": 12,
+  "vistas_por_id": 0,
+  "itens_menu": 79,
+  "lazy": 103
+ },
+ "urls": [
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/",
+   "componente": "PhoneDialer",
+   "arquivo": "src/pages/PhoneDialer.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuditLog",
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallHistory",
+    "useCallTimers",
+    "useCallTransfer",
+    "useCallback",
+    "useDeviceLabel",
+    "useDialerFavorites",
+    "useEffect",
+    "useId",
+    "useMemo",
+    "useMultiChannelCall",
+    "useMutation",
+    "useNavigate",
+    "usePageTitle",
+    "usePersistedTagFilter",
+    "usePhaseColors",
+    "useQualityTrendAnalyzer",
+    "useQuery",
+    "useQueryClient",
+    "useRef",
+    "useRingtoneSettings",
+    "useSipCall",
+    "useState",
+    "useSyncHistory",
+    "useTrunkUsageReporter",
+    "useVoiceCommand",
+    "useVoicePreferences",
+    "useVoipAutoRemediation",
+    "useVoipQualityMonitor"
+   ],
+   "hooks_locais": [
+    "useAuditLog",
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallHistory",
+    "useCallTimers",
+    "useCallTransfer",
+    "useDeviceLabel",
+    "useDialerFavorites",
+    "useMultiChannelCall",
+    "usePageTitle",
+    "usePersistedTagFilter",
+    "usePhaseColors",
+    "useQualityTrendAnalyzer",
+    "useRingtoneSettings",
+    "useSipCall",
+    "useSyncHistory",
+    "useTrunkUsageReporter",
+    "useVoiceCommand",
+    "useVoicePreferences",
+    "useVoipAutoRemediation",
+    "useVoipQualityMonitor"
+   ],
+   "tabelas": [
+    "call_analyses",
+    "call_quality_metrics",
+    "call_summaries",
+    "call_transcriptions",
+    "dialer_favorites",
+    "hold_events",
+    "user_profiles",
+    "voip_quality_alerts"
+   ],
+   "rpcs": [
+    "get_call_history_with_summaries",
+    "log_audit_event",
+    "record_trunk_usage"
+   ],
+   "edges": [
+    "sip-config",
+    "voice-command",
+    "voice-transcribe"
+   ],
+   "canais_realtime": [
+    "dialer-filter-profile-${userId}",
+    "ringtone-profile-${userId}"
+   ],
+   "flags": [],
+   "papeis": [
+    "button",
+    "dialog",
+    "group",
+    "status",
+    "user"
+   ],
+   "arquivos_puxados": 67
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/*",
+   "componente": "NotFound",
+   "arquivo": "src/pages/NotFound.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useLocation",
+    "usePageTitle"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 2
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/accounts",
+   "componente": "Accounts",
+   "arquivo": "src/pages/Accounts.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAccounts",
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAccounts",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "accounts"
+   ],
+   "rpcs": [],
+   "edges": [
+    "compute-account-health",
+    "detect-churn-risk"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 12
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/data-export",
+   "componente": "DataExport",
+   "arquivo": "src/pages/admin/DataExport.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCreateExport",
+    "useDataLakeExports",
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQueryClient"
+   ],
+   "hooks_locais": [
+    "useCreateExport",
+    "useDataLakeExports",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "data_lake_exports"
+   ],
+   "rpcs": [],
+   "edges": [
+    "export-data-lake"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 14
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/database-health",
+   "componente": "DatabaseHealth",
+   "arquivo": "src/pages/admin/DatabaseHealth.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useQuery"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "index_drop_audit"
+   ],
+   "rpcs": [
+    "check_idle_indexes",
+    "get_database_health_snapshot",
+    "get_top_slow_queries",
+    "log_index_drop_copy"
+   ],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 16
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/extensions",
+   "componente": "ExtensionsAdmin",
+   "arquivo": "src/pages/admin/ExtensionsAdmin.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "useExtensionAudit",
+    "useExtensionAuditHistory",
+    "useExtensionsAdmin",
+    "useExtensionsOverview",
+    "useMemo",
+    "useNavigate",
+    "usePageTitle",
+    "usePageVisibility",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useExtensionAudit",
+    "useExtensionAuditHistory",
+    "useExtensionsAdmin",
+    "useExtensionsOverview",
+    "usePageTitle",
+    "usePageVisibility"
+   ],
+   "tabelas": [
+    "agent_devices",
+    "agent_trunk_assignments",
+    "agents",
+    "audit_logs",
+    "call_sessions",
+    "user_profiles",
+    "voip_trunks"
+   ],
+   "rpcs": [
+    "log_audit_event"
+   ],
+   "edges": [],
+   "canais_realtime": [
+    "extensions-overview-realtime"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 36
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/security-alerts",
+   "componente": "SecurityAlerts",
+   "arquivo": "src/pages/admin/SecurityAlerts.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAlertPresets",
+    "useAlertsExport",
+    "useCallback",
+    "useDebouncedSearchParam",
+    "useEffect",
+    "useInfiniteQuery",
+    "useMemo",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useSearchParams",
+    "useSecurityAlertNotifications",
+    "useState",
+    "useTestWebhook",
+    "useVirtualizer",
+    "useWebhookConfig",
+    "useWebhookHistory",
+    "useWebhookQueue"
+   ],
+   "hooks_locais": [
+    "useAlertPresets",
+    "useAlertsExport",
+    "useDebouncedSearchParam",
+    "usePageTitle",
+    "useSecurityAlertNotifications",
+    "useTestWebhook",
+    "useWebhookConfig",
+    "useWebhookHistory",
+    "useWebhookQueue"
+   ],
+   "tabelas": [
+    "notifications"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [
+    "admin-security-alerts"
+   ],
+   "flags": [],
+   "papeis": [
+    "alert",
+    "button"
+   ],
+   "arquivos_puxados": 40
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/security-audit",
+   "componente": "SecurityAudit",
+   "arquivo": "src/pages/admin/SecurityDashboard.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useState"
+   ],
+   "hooks_locais": [],
+   "tabelas": [
+    "audit_logs"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 9
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/slo",
+   "componente": "SloDashboard",
+   "arquivo": "src/pages/admin/SloDashboard.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useQuery"
+   ],
+   "hooks_locais": [],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "health-check"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 7
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/voice-quality",
+   "componente": "VoiceQuality",
+   "arquivo": "src/pages/admin/VoiceQuality.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useQuery"
+   ],
+   "hooks_locais": [],
+   "tabelas": [
+    "call_quality_metrics"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 6
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/voip-trunks",
+   "componente": "VoipTrunksAdmin",
+   "arquivo": "src/pages/admin/VoipTrunksAdmin.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useDeleteAssignment",
+    "useDeleteTrunk",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRunHealthCheck",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useState",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useTrunkHealthHistory",
+    "useTrunkMetrics",
+    "useTrunkRealtimeMetrics",
+    "useVoipMonitoringSettings",
+    "useVoipTrunks"
+   ],
+   "hooks_locais": [
+    "useDeleteAssignment",
+    "useDeleteTrunk",
+    "usePageTitle",
+    "useRunHealthCheck",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useTrunkHealthHistory",
+    "useTrunkMetrics",
+    "useTrunkRealtimeMetrics",
+    "useVoipMonitoringSettings",
+    "useVoipTrunks"
+   ],
+   "tabelas": [
+    "agents",
+    "call_sessions",
+    "voip_monitoring_settings",
+    "voip_trunk_health_checks",
+    "voip_trunk_usage_metrics",
+    "voip_trunks"
+   ],
+   "rpcs": [],
+   "edges": [
+    "voip-trunks-healthcheck",
+    "voip-trunks-manage"
+   ],
+   "canais_realtime": [
+    "trunk-realtime"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 29
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/webhook-health",
+   "componente": "WebhookHealth",
+   "arquivo": "src/pages/admin/WebhookHealth.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useRef",
+    "useState",
+    "useWebhookHealthData"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useWebhookHealthData"
+   ],
+   "tabelas": [
+    "webhook_flush_metrics"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "group",
+    "img"
+   ],
+   "arquivos_puxados": 14
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/agent-assist",
+   "componente": "AgentAssist",
+   "arquivo": "src/pages/AgentAssist.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAgentAssistHistory",
+    "useCallback",
+    "useEffect",
+    "useLiveAssist",
+    "useMemo",
+    "useMutation",
+    "useObjectionLibrary",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAgentAssistHistory",
+    "useLiveAssist",
+    "useObjectionLibrary",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "live_assist_signals",
+    "objection_library"
+   ],
+   "rpcs": [],
+   "edges": [
+    "analyze-live-utterance"
+   ],
+   "canais_realtime": [
+    "live-assist-${callSessionId}"
+   ],
+   "flags": [],
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 17
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/ai",
+   "componente": "AIAssistant",
+   "arquivo": "src/pages/AIAssistant.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "useLiveInsights",
+    "usePageTitle",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useLiveInsights",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "live_sentiment_snapshots"
+   ],
+   "rpcs": [],
+   "edges": [
+    "analyze-call",
+    "realtime-analysis"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 19
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/alert-history",
+   "componente": "AlertHistory",
+   "arquivo": "src/pages/AlertHistory.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAlertHistory",
+    "useCallback",
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAlertHistory",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "call_alerts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 15
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/alerts",
+   "componente": "Alerts",
+   "arquivo": "src/pages/Alerts.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAlerts",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAlerts",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "call_alerts",
+    "call_sessions",
+    "contact_alerts"
+   ],
+   "rpcs": [],
+   "edges": [
+    "check-contact-alerts"
+   ],
+   "canais_realtime": [
+    "alerts_page_calls",
+    "alerts_page_contacts"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 19
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/analytics",
+   "componente": "CallAnalytics",
+   "arquivo": "src/pages/CallAnalytics.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallAnalytics",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useCallAnalytics",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "call_sessions",
+    "call_summaries"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 18
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/audit-logs",
+   "componente": "AuditLogs",
+   "arquivo": "src/pages/AuditLogs.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "useNavigate",
+    "usePageTitle",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "call_control_audit_logs",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "admin"
+   ],
+   "arquivos_puxados": 20
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/battle-cards",
+   "componente": "BattleCards",
+   "arquivo": "src/pages/BattleCards.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "battle_card_triggers",
+    "battle_cards"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 12
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/blf",
+   "componente": "BlfBoard",
+   "arquivo": "src/pages/BlfBoard.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useBlfBoard",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "usePageVisibility",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useBlfBoard",
+    "usePageTitle",
+    "usePageVisibility"
+   ],
+   "tabelas": [
+    "agents",
+    "call_sessions",
+    "parked_calls"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [
+    "blf-board"
+   ],
+   "flags": [],
+   "papeis": [
+    "alert"
+   ],
+   "arquivos_puxados": 16
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/blocked-access-logs",
+   "componente": "BlockedAccessLogs",
+   "arquivo": "src/pages/BlockedAccessLogs.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useBlockedAccessLogs",
+    "useCallback",
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useBlockedAccessLogs",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "blocked_access_logs"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 14
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/cadences",
+   "componente": "Cadences",
+   "arquivo": "src/pages/Cadences.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCadenceEnrollments",
+    "useCadences",
+    "useCallback",
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useCadenceEnrollments",
+    "useCadences",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "cadence_enrollments",
+    "cadence_steps",
+    "cadences"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 15
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/call-flow-designer",
+   "componente": "CallFlowDesigner",
+   "arquivo": "src/pages/CallFlowDesigner.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "call_flows"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 12
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/call-history",
+   "componente": "CallHistory",
+   "arquivo": "src/pages/CallHistory.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuditLog",
+    "useAutoMeetingSummary",
+    "useCallHistory",
+    "useCallback",
+    "useDebouncedSearchParam",
+    "useEffect",
+    "useKeyMoments",
+    "useLiveSentiment",
+    "useMeetingSummariesList",
+    "useMeetingSummary",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "usePendingActionItems",
+    "useQuery",
+    "useQueryClient",
+    "useSearchParams",
+    "useState",
+    "useTalkRatio",
+    "useVirtualizer"
+   ],
+   "hooks_locais": [
+    "useAuditLog",
+    "useAutoMeetingSummary",
+    "useCallHistory",
+    "useDebouncedSearchParam",
+    "useKeyMoments",
+    "useLiveSentiment",
+    "useMeetingSummariesList",
+    "useMeetingSummary",
+    "usePageTitle",
+    "usePendingActionItems",
+    "useTalkRatio"
+   ],
+   "tabelas": [
+    "call_analyses",
+    "call_key_moments",
+    "call_recordings",
+    "call_summaries",
+    "call_transcriptions",
+    "coaching_timestamps",
+    "live_sentiment_snapshots",
+    "meeting_summaries"
+   ],
+   "rpcs": [
+    "get_call_history_with_summaries",
+    "log_audit_event"
+   ],
+   "edges": [
+    "analyze-talk-ratio",
+    "detect-key-moments",
+    "generate-meeting-summary"
+   ],
+   "canais_realtime": [
+    "meeting-summary-${callSessionId}",
+    "sentiment-${callSessionId}"
+   ],
+   "flags": [],
+   "papeis": [
+    "button",
+    "searchbox"
+   ],
+   "arquivos_puxados": 38
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/call-library",
+   "componente": "CallLibrary",
+   "arquivo": "src/pages/CallLibrary.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallSearch",
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useCallSearch",
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "search-calls"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 17
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/call-park",
+   "componente": "CallPark",
+   "arquivo": "src/pages/CallPark.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallPark",
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallPark",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "call_park_orbits",
+    "parked_calls",
+    "user_profiles"
+   ],
+   "rpcs": [
+    "expire_parked_calls"
+   ],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "admin",
+    "alert"
+   ],
+   "arquivos_puxados": 27
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/call-queues",
+   "componente": "CallQueues",
+   "arquivo": "src/pages/CallQueues.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallQueues",
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useQueueAudioPrompts",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallQueues",
+    "usePageTitle",
+    "useQueueAudioPrompts"
+   ],
+   "tabelas": [
+    "call_queue_members",
+    "call_queues",
+    "queue_audio_prompts",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "admin",
+    "alert"
+   ],
+   "arquivos_puxados": 30
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/callbacks",
+   "componente": "Callbacks",
+   "arquivo": "src/pages/Callbacks.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "usePageTitle",
+    "useScheduledCallbacks",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useScheduledCallbacks"
+   ],
+   "tabelas": [
+    "scheduled_callbacks"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [
+    "scheduled-callbacks-changes"
+   ],
+   "flags": [],
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 22
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/calls",
+   "componente": "Calls",
+   "arquivo": "src/pages/Calls.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAgentStatus",
+    "useCallRecording",
+    "useCallTimers",
+    "useCallTransfer",
+    "useCallback",
+    "useConferenceRecording",
+    "useContext",
+    "useConversation",
+    "useEffect",
+    "useHoldReminder",
+    "useMultiChannelCall",
+    "useNetworkMonitor",
+    "usePageTitle",
+    "useQualityTrendAnalyzer",
+    "useRef",
+    "useSipCall",
+    "useState",
+    "useTrunkUsageReporter",
+    "useVoiceCommand",
+    "useVoipAutoRemediation",
+    "useVoipQualityMonitor",
+    "useWavoipCall"
+   ],
+   "hooks_locais": [
+    "useAgentStatus",
+    "useCallRecording",
+    "useCallTimers",
+    "useCallTransfer",
+    "useConferenceRecording",
+    "useConversation",
+    "useHoldReminder",
+    "useMultiChannelCall",
+    "useNetworkMonitor",
+    "usePageTitle",
+    "useQualityTrendAnalyzer",
+    "useSipCall",
+    "useTrunkUsageReporter",
+    "useVoiceCommand",
+    "useVoipAutoRemediation",
+    "useVoipQualityMonitor",
+    "useWavoipCall"
+   ],
+   "tabelas": [
+    "agents",
+    "call_quality_metrics",
+    "call_recordings",
+    "hold_events",
+    "voip_quality_alerts"
+   ],
+   "rpcs": [
+    "record_trunk_usage"
+   ],
+   "edges": [
+    "elevenlabs-conversation-token",
+    "sip-config",
+    "voice-command",
+    "voice-transcribe",
+    "wavoip-call"
+   ],
+   "canais_realtime": [
+    "agents-status"
+   ],
+   "flags": [],
+   "papeis": [
+    "user"
+   ],
+   "arquivos_puxados": 51
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/coaching",
+   "componente": "Coaching",
+   "arquivo": "src/pages/Coaching.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAgentStatus",
+    "useAuditLog",
+    "useCallback",
+    "useCoaching",
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAgentStatus",
+    "useAuditLog",
+    "useCoaching",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "agents",
+    "coaching_recommendations"
+   ],
+   "rpcs": [
+    "log_audit_event"
+   ],
+   "edges": [
+    "generate-coaching",
+    "generate-coaching-plan"
+   ],
+   "canais_realtime": [
+    "agents-status",
+    "coaching-updates"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 19
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/compliance",
+   "componente": "Compliance",
+   "arquivo": "src/pages/Compliance.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useCallingHoursManager",
+    "useDNCCompliance",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useCallingHoursManager",
+    "useDNCCompliance",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "calling_hours_config",
+    "compliance_settings",
+    "consent_history",
+    "dnc_import_logs",
+    "dnc_list",
+    "holidays"
+   ],
+   "rpcs": [
+    "add_to_dnc",
+    "check_calling_hours",
+    "check_dnc"
+   ],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 37
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/concurrency-conflicts",
+   "componente": "ConcurrencyConflicts",
+   "arquivo": "src/pages/ConcurrencyConflicts.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useOptimisticLockConflicts",
+    "usePageTitle"
+   ],
+   "hooks_locais": [
+    "useOptimisticLockConflicts",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "optimistic_lock_conflicts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 11
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/contacts",
+   "componente": "Contacts",
+   "arquivo": "src/pages/Contacts.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuditLog",
+    "useBitrix",
+    "useBitrixSync",
+    "useCallback",
+    "useContacts",
+    "useContext",
+    "useDebouncedSearchParam",
+    "useEffect",
+    "useFormContext",
+    "useFormField",
+    "useId",
+    "useMemo",
+    "usePageTitle",
+    "useSearchParams",
+    "useState",
+    "useVirtualizer"
+   ],
+   "hooks_locais": [
+    "useAuditLog",
+    "useBitrix",
+    "useBitrixSync",
+    "useContacts",
+    "useDebouncedSearchParam",
+    "useFormField",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "bitrix_departments",
+    "bitrix_users",
+    "contact_interactions",
+    "contacts",
+    "crm_sync_queue"
+   ],
+   "rpcs": [
+    "log_audit_event"
+   ],
+   "edges": [
+    "analyze-contact-profile",
+    "bitrix-api"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "searchbox"
+   ],
+   "arquivos_puxados": 42
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/contacts/insights",
+   "componente": "ContactInsights",
+   "arquivo": "src/pages/ContactInsights.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useContactInsights",
+    "useContacts",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useContactInsights",
+    "useContacts",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "contact_interactions",
+    "contacts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 16
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/dashboard",
+   "componente": "Index",
+   "arquivo": "src/pages/Index.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useActiveCallsRealtime",
+    "useAgentsListData",
+    "useAnimatedCounter",
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallVolumeData",
+    "useCallback",
+    "useContext",
+    "useCriticalAlertNotifications",
+    "useDashboardLayout",
+    "useDashboardStats",
+    "useEffect",
+    "useHoldSoundAlert",
+    "useMemo",
+    "usePageTitle",
+    "useQueryClient",
+    "useQueueStatsData",
+    "useRecentCallsData",
+    "useRef",
+    "useScheduledCallbacks",
+    "useSensor",
+    "useSensors",
+    "useSortable",
+    "useState",
+    "useSupervisorPanel"
+   ],
+   "hooks_locais": [
+    "useActiveCallsRealtime",
+    "useAgentsListData",
+    "useAnimatedCounter",
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallVolumeData",
+    "useCriticalAlertNotifications",
+    "useDashboardLayout",
+    "useDashboardStats",
+    "useHoldSoundAlert",
+    "usePageTitle",
+    "useQueueStatsData",
+    "useRecentCallsData",
+    "useScheduledCallbacks",
+    "useSupervisorPanel"
+   ],
+   "tabelas": [
+    "barge_in_sessions",
+    "call_sessions",
+    "hold_alert_settings",
+    "hold_events",
+    "scheduled_callbacks",
+    "user_profiles",
+    "whisper_messages"
+   ],
+   "rpcs": [
+    "get_agents_with_active_calls",
+    "get_call_volume_stats",
+    "get_dashboard_stats",
+    "get_queue_stats"
+   ],
+   "edges": [],
+   "canais_realtime": [
+    "active-calls-realtime",
+    "agent-bargein-${agentName}",
+    "agent-whispers-${agentName}",
+    "critical-alerts-notifications",
+    "hold-sound-settings",
+    "hold-trend-realtime",
+    "scheduled-callbacks-changes",
+    "supervisor-panel-updates",
+    "whisper-history-${selectedCall.id}"
+   ],
+   "flags": [],
+   "papeis": [
+    "alert",
+    "article",
+    "img",
+    "status"
+   ],
+   "arquivos_puxados": 68
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/deals",
+   "componente": "Deals",
+   "arquivo": "src/pages/Deals.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useDeals",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useDeals",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "deals"
+   ],
+   "rpcs": [],
+   "edges": [
+    "compute-deal-health"
+   ],
+   "canais_realtime": [
+    "deals-rt"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 16
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/dialer",
+   "componente": "Dialer",
+   "arquivo": "src/pages/Dialer.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useContacts",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "usePredictiveDialer",
+    "useQualityTrendAnalyzer",
+    "useRef",
+    "useSipCall",
+    "useState",
+    "useTrunkUsageReporter",
+    "useVirtualizer",
+    "useVoipAutoRemediation",
+    "useVoipQualityMonitor"
+   ],
+   "hooks_locais": [
+    "useContacts",
+    "usePageTitle",
+    "usePredictiveDialer",
+    "useQualityTrendAnalyzer",
+    "useSipCall",
+    "useTrunkUsageReporter",
+    "useVoipAutoRemediation",
+    "useVoipQualityMonitor"
+   ],
+   "tabelas": [
+    "call_quality_metrics",
+    "contact_interactions",
+    "contacts",
+    "dialer_campaigns",
+    "dialer_queue",
+    "voip_quality_alerts"
+   ],
+   "rpcs": [
+    "record_trunk_usage"
+   ],
+   "edges": [
+    "sip-config"
+   ],
+   "canais_realtime": [
+    "dialer-changes"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 37
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/dialer/predictive",
+   "componente": "PredictiveDialer",
+   "arquivo": "src/pages/PredictiveDialer.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useApplyPacingNow",
+    "useCampaignPacing",
+    "useEffect",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "hooks_locais": [
+    "useApplyPacingNow",
+    "useCampaignPacing"
+   ],
+   "tabelas": [
+    "dialer_campaigns"
+   ],
+   "rpcs": [
+    "calculate_predictive_pace"
+   ],
+   "edges": [
+    "dialer-pacing-tick"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 10
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/executive",
+   "componente": "ExecutiveDashboard",
+   "arquivo": "src/pages/ExecutiveDashboard.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAgentAssistHistory",
+    "useAutoMeetingSummary",
+    "useCallback",
+    "useConversationMessages",
+    "useConversations",
+    "useDealForecast",
+    "useEffect",
+    "useEnforceSla",
+    "useExecutiveDashboardData",
+    "useForecastVolume",
+    "useLiveAssist",
+    "useMeetingSummariesList",
+    "useMeetingSummary",
+    "useMemo",
+    "useMutation",
+    "useNavigate",
+    "usePageTitle",
+    "usePendingActionItems",
+    "useQuery",
+    "useQueryClient",
+    "useSendMessage",
+    "useSlaCompliance",
+    "useSlaPolicies",
+    "useState",
+    "useUpdateConversation",
+    "useUpsertSlaPolicy"
+   ],
+   "hooks_locais": [
+    "useAgentAssistHistory",
+    "useAutoMeetingSummary",
+    "useConversationMessages",
+    "useConversations",
+    "useDealForecast",
+    "useEnforceSla",
+    "useExecutiveDashboardData",
+    "useForecastVolume",
+    "useLiveAssist",
+    "useMeetingSummariesList",
+    "useMeetingSummary",
+    "usePageTitle",
+    "usePendingActionItems",
+    "useSendMessage",
+    "useSlaCompliance",
+    "useSlaPolicies",
+    "useUpdateConversation",
+    "useUpsertSlaPolicy"
+   ],
+   "tabelas": [
+    "accounts",
+    "agent_goals",
+    "call_alerts",
+    "call_key_moments",
+    "call_sessions",
+    "call_summaries",
+    "call_translations",
+    "churn_risk_signals",
+    "consent_records",
+    "contact_engagement_patterns",
+    "conversation_messages",
+    "conversations",
+    "hold_events",
+    "live_assist_signals",
+    "meeting_summaries",
+    "renewals",
+    "scheduled_callbacks",
+    "sla_policies"
+   ],
+   "rpcs": [],
+   "edges": [
+    "analyze-live-utterance",
+    "enforce-sla",
+    "forecast-call-volume",
+    "forecast-deals",
+    "generate-meeting-summary"
+   ],
+   "canais_realtime": [
+    "conversations-realtime",
+    "executive-dashboard-realtime",
+    "live-assist-${callSessionId}",
+    "meeting-summary-${callSessionId}",
+    "messages-${conversationId}"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 37
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/external-recordings-import",
+   "componente": "ExternalRecordingsImport",
+   "arquivo": "src/pages/ExternalRecordingsImport.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "teams-fetch-recordings"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 8
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/financial-impact",
+   "componente": "FinancialImpact",
+   "arquivo": "src/pages/FinancialImpact.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAgentFinancialLeaderboard",
+    "useEffect",
+    "useFinancialImpact",
+    "usePageTitle"
+   ],
+   "hooks_locais": [
+    "useAgentFinancialLeaderboard",
+    "useFinancialImpact",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "financial_impact_daily"
+   ],
+   "rpcs": [
+    "get_agent_financial_leaderboard"
+   ],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 14
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/forgot-password",
+   "componente": "ForgotPassword",
+   "arquivo": "src/pages/ForgotPassword.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [
+    "request-password-reset"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "alert"
+   ],
+   "arquivos_puxados": 10
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/geo-blocking",
+   "componente": "GeoBlocking",
+   "arquivo": "src/pages/GeoBlocking.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useGeoBlocking",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useGeoBlocking",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "geo_access_logs",
+    "geo_restrictions",
+    "geo_settings"
+   ],
+   "rpcs": [],
+   "edges": [
+    "validate-geo"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 15
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/history",
+   "componente": "CallHistory",
+   "arquivo": "src/pages/CallHistory.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuditLog",
+    "useAutoMeetingSummary",
+    "useCallHistory",
+    "useCallback",
+    "useDebouncedSearchParam",
+    "useEffect",
+    "useKeyMoments",
+    "useLiveSentiment",
+    "useMeetingSummariesList",
+    "useMeetingSummary",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "usePendingActionItems",
+    "useQuery",
+    "useQueryClient",
+    "useSearchParams",
+    "useState",
+    "useTalkRatio",
+    "useVirtualizer"
+   ],
+   "hooks_locais": [
+    "useAuditLog",
+    "useAutoMeetingSummary",
+    "useCallHistory",
+    "useDebouncedSearchParam",
+    "useKeyMoments",
+    "useLiveSentiment",
+    "useMeetingSummariesList",
+    "useMeetingSummary",
+    "usePageTitle",
+    "usePendingActionItems",
+    "useTalkRatio"
+   ],
+   "tabelas": [
+    "call_analyses",
+    "call_key_moments",
+    "call_recordings",
+    "call_summaries",
+    "call_transcriptions",
+    "coaching_timestamps",
+    "live_sentiment_snapshots",
+    "meeting_summaries"
+   ],
+   "rpcs": [
+    "get_call_history_with_summaries",
+    "log_audit_event"
+   ],
+   "edges": [
+    "analyze-talk-ratio",
+    "detect-key-moments",
+    "generate-meeting-summary"
+   ],
+   "canais_realtime": [
+    "meeting-summary-${callSessionId}",
+    "sentiment-${callSessionId}"
+   ],
+   "flags": [],
+   "papeis": [
+    "button",
+    "searchbox"
+   ],
+   "arquivos_puxados": 38
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/hold-alerts",
+   "componente": "HoldAlerts",
+   "arquivo": "src/pages/HoldAlerts.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useQuery"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "call_alerts"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 17
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/hold-metrics",
+   "componente": "HoldMetrics",
+   "arquivo": "src/pages/HoldMetrics.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useHoldMetrics",
+    "usePageTitle",
+    "useQuery"
+   ],
+   "hooks_locais": [
+    "useHoldMetrics",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "agents",
+    "call_sessions",
+    "hold_events"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 10
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/hold-settings",
+   "componente": "HoldAlertSettings",
+   "arquivo": "src/pages/HoldAlertSettings.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "hold_alert_settings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 11
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/hot-desking",
+   "componente": "HotDesking",
+   "arquivo": "src/pages/HotDesking.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRef"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "hot_desking_stations",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 14
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/inbox",
+   "componente": "Inbox",
+   "arquivo": "src/pages/Inbox.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useConversationMessages",
+    "useConversations",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useSendMessage",
+    "useState",
+    "useUpdateConversation"
+   ],
+   "hooks_locais": [
+    "useConversationMessages",
+    "useConversations",
+    "usePageTitle",
+    "useSendMessage",
+    "useUpdateConversation"
+   ],
+   "tabelas": [
+    "conversation_messages",
+    "conversations"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [
+    "conversations-realtime",
+    "messages-${conversationId}"
+   ],
+   "flags": [],
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 18
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/ip-whitelist",
+   "componente": "IPWhitelist",
+   "arquivo": "src/pages/IPWhitelist.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useIPWhitelist",
+    "useMemo",
+    "usePageTitle",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useIPWhitelist",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "blocked_access_logs",
+    "ip_whitelist",
+    "user_allowed_ips",
+    "user_ip_restrictions",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "admin"
+   ],
+   "arquivos_puxados": 22
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/knowledge",
+   "componente": "Knowledge",
+   "arquivo": "src/pages/Knowledge.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useKbArticle",
+    "useKbArticles",
+    "useKbCategories",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRecordKbView",
+    "useRef",
+    "useState",
+    "useUpsertArticle"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useKbArticle",
+    "useKbArticles",
+    "useKbCategories",
+    "usePageTitle",
+    "useRecordKbView",
+    "useUpsertArticle"
+   ],
+   "tabelas": [
+    "kb_article_views",
+    "kb_articles",
+    "kb_categories",
+    "user_profiles"
+   ],
+   "rpcs": [
+    "match_kb_articles"
+   ],
+   "edges": [
+    "embed-kb-article"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "admin",
+    "status",
+    "supervisor"
+   ],
+   "arquivos_puxados": 25
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/landing",
+   "componente": "Landing",
+   "arquivo": "src/pages/marketing/Landing.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useEffect"
+   ],
+   "hooks_locais": [],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 5
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/ldap-sync",
+   "componente": "LDAPSync",
+   "arquivo": "src/pages/LDAPSync.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 17
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/learning",
+   "componente": "Learning",
+   "arquivo": "src/pages/Learning.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useLearning",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRef"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useLearning",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "learning_completions",
+    "learning_modules",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 17
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/login",
+   "componente": "Login",
+   "arquivo": "src/pages/Login.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useIPValidation",
+    "useLocation",
+    "useLoginLockout",
+    "useMemo",
+    "useNavigate",
+    "usePageTitle",
+    "useRef",
+    "useState",
+    "useWebAuthn"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useIPValidation",
+    "useLoginLockout",
+    "usePageTitle",
+    "useWebAuthn"
+   ],
+   "tabelas": [
+    "user_passkeys",
+    "user_profiles",
+    "webauthn_challenges"
+   ],
+   "rpcs": [
+    "check_login_lockout",
+    "record_failed_login",
+    "record_successful_login"
+   ],
+   "edges": [
+    "notify-blocked-ip",
+    "validate-ip",
+    "webauthn-authenticate"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "alert"
+   ],
+   "arquivos_puxados": 24
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/marketplace",
+   "componente": "Marketplace",
+   "arquivo": "src/pages/Marketplace.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useEffect"
+   ],
+   "hooks_locais": [],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 5
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/meeting-summaries",
+   "componente": "MeetingSummaries",
+   "arquivo": "src/pages/MeetingSummaries.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAutoMeetingSummary",
+    "useCallback",
+    "useDebouncedSearchParam",
+    "useEffect",
+    "useMeetingSummariesList",
+    "useMeetingSummary",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "usePendingActionItems",
+    "useQuery",
+    "useQueryClient",
+    "useSearchParams",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAutoMeetingSummary",
+    "useDebouncedSearchParam",
+    "useMeetingSummariesList",
+    "useMeetingSummary",
+    "usePageTitle",
+    "usePendingActionItems"
+   ],
+   "tabelas": [
+    "meeting_summaries"
+   ],
+   "rpcs": [],
+   "edges": [
+    "generate-meeting-summary"
+   ],
+   "canais_realtime": [
+    "meeting-summary-${callSessionId}"
+   ],
+   "flags": [],
+   "papeis": [
+    "searchbox",
+    "status"
+   ],
+   "arquivos_puxados": 22
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/multi-device-ring",
+   "componente": "MultiDeviceRing",
+   "arquivo": "src/pages/MultiDeviceRing.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "useMultiDeviceRing",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useMultiDeviceRing",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "agent_devices",
+    "agent_ring_settings",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 22
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/network-diagnostics",
+   "componente": "NetworkDiagnostics",
+   "arquivo": "src/pages/NetworkDiagnostics.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAnomalyRemediation",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "useNavigate",
+    "useNetworkMonitor",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRef",
+    "useState",
+    "useVoipAnomalies",
+    "useVoipCapacityRecommendations",
+    "useVoipDiagnosticVoiceQA",
+    "useVoipExecutiveNarrative",
+    "useVoipExecutiveSummary",
+    "useVoipQualityAlertsSummary",
+    "useVoipQualityForecast",
+    "useVoipQualityForecastFetch",
+    "useVoipRecommendationHistory",
+    "useVoipRecommendationInsights",
+    "useVoipRecommendationSimulate",
+    "useVoipRecommendations"
+   ],
+   "hooks_locais": [
+    "useAnomalyRemediation",
+    "useNetworkMonitor",
+    "usePageTitle",
+    "useVoipAnomalies",
+    "useVoipCapacityRecommendations",
+    "useVoipDiagnosticVoiceQA",
+    "useVoipExecutiveNarrative",
+    "useVoipExecutiveSummary",
+    "useVoipQualityAlertsSummary",
+    "useVoipQualityForecast",
+    "useVoipQualityForecastFetch",
+    "useVoipRecommendationHistory",
+    "useVoipRecommendationInsights",
+    "useVoipRecommendationSimulate",
+    "useVoipRecommendations"
+   ],
+   "tabelas": [
+    "call_quality_metrics",
+    "voip_quality_alerts",
+    "voip_recommendation_actions"
+   ],
+   "rpcs": [],
+   "edges": [
+    "voip-capacity-forecast",
+    "voip-capacity-recommendations",
+    "voip-diagnostic-voice-qa",
+    "voip-executive-narrative",
+    "voip-executive-summary",
+    "voip-quality-forecast",
+    "voip-quality-heatmap",
+    "voip-recommendation-history",
+    "voip-recommendation-insights",
+    "voip-recommendation-simulate",
+    "voip-recommendations",
+    "voip-sla-report"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 56
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/notifications",
+   "componente": "NotificationCenter",
+   "arquivo": "src/pages/NotificationCenter.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "useNotificationCenter",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useNotificationCenter",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "notification_preferences",
+    "notifications",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 24
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/number-porting",
+   "componente": "NumberPorting",
+   "arquivo": "src/pages/NumberPorting.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "number_porting_requests"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 11
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/observability",
+   "componente": "ObservabilityDashboard",
+   "arquivo": "src/pages/ObservabilityDashboard.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useDeleteAssignment",
+    "useDeleteTrunk",
+    "useEffect",
+    "useHealthCheck",
+    "useMutation",
+    "usePageTitle",
+    "useQualityMetrics",
+    "useQuery",
+    "useQueryClient",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useState",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useTrunkUsageMetrics",
+    "useVoipTrunks",
+    "useWebVitals"
+   ],
+   "hooks_locais": [
+    "useDeleteAssignment",
+    "useDeleteTrunk",
+    "useHealthCheck",
+    "usePageTitle",
+    "useQualityMetrics",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useTrunkUsageMetrics",
+    "useVoipTrunks",
+    "useWebVitals"
+   ],
+   "tabelas": [
+    "agents",
+    "call_quality_metrics",
+    "voip_trunk_usage_metrics"
+   ],
+   "rpcs": [
+    "check_all_tables_rls_status"
+   ],
+   "edges": [
+    "health-check",
+    "voip-load-test",
+    "voip-trunks-manage"
+   ],
+   "canais_realtime": [
+    "health-check-probe"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 31
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/onboarding",
+   "componente": "Onboarding",
+   "arquivo": "src/pages/Onboarding.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 6
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/outbound-compliance",
+   "componente": "OutboundCompliance",
+   "arquivo": "src/pages/OutboundCompliance.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useBestTimeToContact",
+    "useCallScoring",
+    "useConsent",
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useBestTimeToContact",
+    "useCallScoring",
+    "useConsent",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "consent_records",
+    "contact_engagement_patterns"
+   ],
+   "rpcs": [],
+   "edges": [
+    "compute-best-time",
+    "record-consent",
+    "score-call-attempt"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 20
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/passkeys",
+   "componente": "Passkeys",
+   "arquivo": "src/pages/Passkeys.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useRef",
+    "useState",
+    "useWebAuthn"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "usePageTitle",
+    "useWebAuthn"
+   ],
+   "tabelas": [
+    "user_passkeys",
+    "user_profiles",
+    "webauthn_challenges"
+   ],
+   "rpcs": [],
+   "edges": [
+    "webauthn-authenticate"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "alert"
+   ],
+   "arquivos_puxados": 23
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/password-reset-approval",
+   "componente": "PasswordResetApproval",
+   "arquivo": "src/pages/PasswordResetApproval.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "password_reset_requests",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [
+    "approve-password-reset"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 18
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/permissions",
+   "componente": "Permissions",
+   "arquivo": "src/pages/Permissions.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "permissions",
+    "role_permissions"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "admin"
+   ],
+   "arquivos_puxados": 11
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/pricing",
+   "componente": "Pricing",
+   "arquivo": "src/pages/marketing/Pricing.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useEffect"
+   ],
+   "hooks_locais": [],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 5
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/qr-provisioning",
+   "componente": "QRProvisioning",
+   "arquivo": "src/pages/QRProvisioning.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 10
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/queue-dashboard",
+   "componente": "QueueMetricsDashboard",
+   "arquivo": "src/pages/QueueMetricsDashboard.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useDashboardGoals",
+    "useEffect",
+    "useGoalViolations",
+    "usePageTitle",
+    "useQueueMetrics",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useDashboardGoals",
+    "useGoalViolations",
+    "usePageTitle",
+    "useQueueMetrics"
+   ],
+   "tabelas": [
+    "agents",
+    "call_sessions",
+    "dashboard_goals",
+    "goal_violations"
+   ],
+   "rpcs": [],
+   "edges": [
+    "check-goals"
+   ],
+   "canais_realtime": [
+    "goal-violations",
+    "queue-metrics"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 26
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/queue-metrics-settings",
+   "componente": "QueueMetricsAlertSettings",
+   "arquivo": "src/pages/QueueMetricsAlertSettings.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "usePageTitle",
+    "useQueueMetricsSettings",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useQueueMetricsSettings"
+   ],
+   "tabelas": [
+    "queue_metrics_settings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 21
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/ranking",
+   "componente": "AgentRanking",
+   "arquivo": "src/pages/AgentRanking.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAgentRanking",
+    "useAgentStatus",
+    "useCallback",
+    "useEffect",
+    "useGamification",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAgentRanking",
+    "useAgentStatus",
+    "useGamification",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "agent_badges",
+    "agent_goals",
+    "agent_weekly_stats",
+    "agents",
+    "badges",
+    "call_alerts",
+    "call_analyses",
+    "call_sessions",
+    "call_summaries"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [
+    "agents-status"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 32
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/rate-limit",
+   "componente": "RateLimitDashboard",
+   "arquivo": "src/pages/RateLimitDashboard.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "usePageTitle",
+    "useRateLimitData",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useRateLimitData"
+   ],
+   "tabelas": [
+    "rate_limit_alerts",
+    "rate_limit_logs",
+    "rate_limit_settings"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [
+    "rate-limit-alerts"
+   ],
+   "flags": [],
+   "papeis": [
+    "alert"
+   ],
+   "arquivos_puxados": 14
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/recordings",
+   "componente": "Recordings",
+   "arquivo": "src/pages/Recordings.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuditLog",
+    "useCallback",
+    "useDebouncedSearchParam",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useRecordings",
+    "useSearchParams",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuditLog",
+    "useDebouncedSearchParam",
+    "usePageTitle",
+    "useRecordings"
+   ],
+   "tabelas": [
+    "call_recordings"
+   ],
+   "rpcs": [
+    "log_audit_event"
+   ],
+   "edges": [
+    "analyze-sentiment",
+    "transcribe-recording"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "searchbox"
+   ],
+   "arquivos_puxados": 21
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/register",
+   "componente": "Register",
+   "arquivo": "src/pages/Register.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "useNavigate",
+    "usePageTitle",
+    "usePasswordStrength",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "usePageTitle",
+    "usePasswordStrength"
+   ],
+   "tabelas": [
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 16
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/renewals",
+   "componente": "Renewals",
+   "arquivo": "src/pages/Renewals.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useRenewals",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useRenewals"
+   ],
+   "tabelas": [
+    "renewals"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 9
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/reports",
+   "componente": "Reports",
+   "arquivo": "src/pages/Reports.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAgentsListData",
+    "useCallVolumeData",
+    "useDashboardStats",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useQuery",
+    "useQueueStatsData",
+    "useRecentCallsData"
+   ],
+   "hooks_locais": [
+    "useAgentsListData",
+    "useCallVolumeData",
+    "useDashboardStats",
+    "usePageTitle",
+    "useQueueStatsData",
+    "useRecentCallsData"
+   ],
+   "tabelas": [
+    "call_sessions"
+   ],
+   "rpcs": [
+    "get_agent_performance",
+    "get_agents_with_active_calls",
+    "get_call_volume_stats",
+    "get_dashboard_stats",
+    "get_queue_stats"
+   ],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 11
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/reset-password",
+   "componente": "ResetPassword",
+   "arquivo": "src/pages/ResetPassword.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMemo",
+    "useNavigate",
+    "usePageTitle",
+    "usePasswordStrength",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "usePasswordStrength"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "alert"
+   ],
+   "arquivos_puxados": 11
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/ring-groups",
+   "componente": "RingGroups",
+   "arquivo": "src/pages/RingGroups.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallQueues",
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRef",
+    "useRingGroups",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallQueues",
+    "usePageTitle",
+    "useRingGroups"
+   ],
+   "tabelas": [
+    "agents",
+    "call_queue_members",
+    "call_queues",
+    "ring_group_members",
+    "ring_groups",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "admin",
+    "alert"
+   ],
+   "arquivos_puxados": 28
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/roles",
+   "componente": "Roles",
+   "arquivo": "src/pages/Roles.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "usePageTitle",
+    "useRef",
+    "useRoles",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "usePageTitle",
+    "useRoles"
+   ],
+   "tabelas": [
+    "audit_logs",
+    "user_profiles",
+    "user_roles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "admin",
+    "agent",
+    "string",
+    "supervisor",
+    "viewer"
+   ],
+   "arquivos_puxados": 27
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/routing-rules",
+   "componente": "RoutingRules",
+   "arquivo": "src/pages/RoutingRules.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useDeleteRoutingRule",
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRoutingRules",
+    "useUpsertRoutingRule"
+   ],
+   "hooks_locais": [
+    "useDeleteRoutingRule",
+    "usePageTitle",
+    "useRoutingRules",
+    "useUpsertRoutingRule"
+   ],
+   "tabelas": [
+    "routing_rules"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 17
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/scheduling",
+   "componente": "Scheduling",
+   "arquivo": "src/pages/Scheduling.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useShifts",
+    "useState",
+    "useTimeOff"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useShifts",
+    "useTimeOff"
+   ],
+   "tabelas": [
+    "agent_shifts",
+    "shift_templates",
+    "time_off_requests"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 18
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/security",
+   "componente": "SecurityDashboard",
+   "arquivo": "src/pages/SecurityDashboard.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useDeviceDetection",
+    "useEffect",
+    "useMFA",
+    "useMemo",
+    "useNavigate",
+    "usePageTitle",
+    "useRef",
+    "useSecurityDashboard",
+    "useSecurityNotifications",
+    "useSessionManager",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useDeviceDetection",
+    "useMFA",
+    "usePageTitle",
+    "useSecurityDashboard",
+    "useSecurityNotifications",
+    "useSessionManager"
+   ],
+   "tabelas": [
+    "active_sessions",
+    "blocked_access_logs",
+    "security_alerts",
+    "user_ip_restrictions",
+    "user_mfa_settings",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [
+    "notify-new-device"
+   ],
+   "canais_realtime": [
+    "blocked-access-notifications",
+    "rate-limit-notifications",
+    "security-alerts-notifications"
+   ],
+   "flags": [],
+   "papeis": [
+    "alert"
+   ],
+   "arquivos_puxados": 23
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/security-monitoring",
+   "componente": "SecurityMonitoring",
+   "arquivo": "src/pages/SecurityMonitoring.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "useNavigate",
+    "usePageTitle",
+    "usePageVisibility",
+    "useQuery",
+    "useRef",
+    "useSecurityMonitoringData",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "usePageTitle",
+    "usePageVisibility",
+    "useSecurityMonitoringData"
+   ],
+   "tabelas": [
+    "audit_logs",
+    "login_attempts",
+    "security_alerts",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [
+    "audit-logs-realtime",
+    "security-alerts-realtime"
+   ],
+   "flags": [],
+   "papeis": [
+    "admin"
+   ],
+   "arquivos_puxados": 19
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/security-report",
+   "componente": "SecurityReport",
+   "arquivo": "src/pages/SecurityReport.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "useNavigate",
+    "usePageTitle",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "user_profiles"
+   ],
+   "rpcs": [
+    "check_all_tables_rls_status"
+   ],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "admin"
+   ],
+   "arquivos_puxados": 16
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/sessions",
+   "componente": "SessionManagement",
+   "arquivo": "src/pages/SessionManagement.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useDeviceDetection",
+    "useEffect",
+    "useMFA",
+    "useMemo",
+    "usePageTitle",
+    "useReauth",
+    "useRef",
+    "useSessionManager",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useDeviceDetection",
+    "useMFA",
+    "usePageTitle",
+    "useReauth",
+    "useSessionManager"
+   ],
+   "tabelas": [
+    "active_sessions",
+    "user_mfa_settings",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [
+    "notify-new-device"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "alert"
+   ],
+   "arquivos_puxados": 26
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/settings",
+   "componente": "Settings",
+   "arquivo": "src/pages/Settings.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useBitrix",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "useNavigate",
+    "usePageTitle",
+    "useProfile",
+    "useQuery",
+    "useQueryClient",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useBitrix",
+    "usePageTitle",
+    "useProfile"
+   ],
+   "tabelas": [
+    "audit_logs",
+    "bitrix_departments",
+    "bitrix_users",
+    "crm_sync_queue",
+    "system_settings",
+    "user_profiles"
+   ],
+   "rpcs": [
+    "log_audit_event"
+   ],
+   "edges": [
+    "bitrix-api"
+   ],
+   "canais_realtime": [
+    "crm-sync-queue-live"
+   ],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 33
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/shift-swap-suggestions",
+   "componente": "ShiftSwapSuggestions",
+   "arquivo": "src/pages/ShiftSwapSuggestions.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useGenerateSwapSuggestions",
+    "useMutation",
+    "usePageTitle",
+    "useQueryClient",
+    "useShiftSwapSuggestions",
+    "useUpdateSwapSuggestion"
+   ],
+   "hooks_locais": [
+    "useGenerateSwapSuggestions",
+    "usePageTitle",
+    "useShiftSwapSuggestions",
+    "useUpdateSwapSuggestion"
+   ],
+   "tabelas": [
+    "shift_swap_suggestions"
+   ],
+   "rpcs": [],
+   "edges": [
+    "suggest-shift-swaps"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 13
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/skills",
+   "componente": "Skills",
+   "arquivo": "src/pages/Skills.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useSkills",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useSkills"
+   ],
+   "tabelas": [
+    "agent_skills",
+    "skills"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 15
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/sla-policies",
+   "componente": "SLAPolicies",
+   "arquivo": "src/pages/SLAPolicies.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useEnforceSla",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useSlaCompliance",
+    "useSlaPolicies",
+    "useUpsertSlaPolicy"
+   ],
+   "hooks_locais": [
+    "useEnforceSla",
+    "usePageTitle",
+    "useSlaCompliance",
+    "useSlaPolicies",
+    "useUpsertSlaPolicy"
+   ],
+   "tabelas": [
+    "conversations",
+    "sla_policies"
+   ],
+   "rpcs": [],
+   "edges": [
+    "enforce-sla"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 17
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/status",
+   "componente": "Status",
+   "arquivo": "src/pages/Status.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useState"
+   ],
+   "hooks_locais": [],
+   "tabelas": [
+    "voip_trunk_health_checks",
+    "webhook_flush_metrics"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 7
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/success-plans",
+   "componente": "SuccessPlans",
+   "arquivo": "src/pages/SuccessPlans.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "usePageTitle",
+    "useState",
+    "useSuccessPlans"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useSuccessPlans"
+   ],
+   "tabelas": [
+    "success_plan_milestones",
+    "success_plans"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 11
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/toll-free-numbers",
+   "componente": "TollFreeNumbers",
+   "arquivo": "src/pages/TollFreeNumbers.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useQuery"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "toll_free_numbers"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 6
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/topic-detection",
+   "componente": "TopicDetection",
+   "arquivo": "src/pages/TopicDetection.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "manager_alerts",
+    "topic_detections",
+    "topic_trends"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 12
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/trackers",
+   "componente": "Trackers",
+   "arquivo": "src/pages/Trackers.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "usePageTitle",
+    "useState",
+    "useTrackerMatches",
+    "useTrackers"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useTrackerMatches",
+    "useTrackers"
+   ],
+   "tabelas": [
+    "tracker_matches",
+    "trackers"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 16
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/translation-center",
+   "componente": "TranslationCenter",
+   "arquivo": "src/pages/TranslationCenter.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "call_translations",
+    "cultural_hints"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 12
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/two-factor-auth",
+   "componente": "TwoFactorAuth",
+   "arquivo": "src/pages/TwoFactorAuth.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMFA",
+    "useMemo",
+    "usePageTitle",
+    "useRef",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useMFA",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "user_mfa_settings",
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "alert"
+   ],
+   "arquivos_puxados": 23
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/unauthorized",
+   "componente": "Unauthorized",
+   "arquivo": "src/pages/Unauthorized.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "usePageTitle"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 3
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/verify-email",
+   "componente": "VerifyEmail",
+   "arquivo": "src/pages/VerifyEmail.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useNavigate",
+    "usePageTitle",
+    "useSearchParams",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 7
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/video-conference",
+   "componente": "VideoConference",
+   "arquivo": "src/pages/VideoConference.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "video_conferences"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 12
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/virtual-fax",
+   "componente": "VirtualFax",
+   "arquivo": "src/pages/VirtualFax.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useState",
+    "useVirtualFaxOcr"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useVirtualFaxOcr"
+   ],
+   "tabelas": [
+    "virtual_fax"
+   ],
+   "rpcs": [],
+   "edges": [
+    "ocr-virtual-fax"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 12
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/voice-security",
+   "componente": "VoiceSecurity",
+   "arquivo": "src/pages/VoiceSecurity.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "useFraudSignals",
+    "useLiveVoiceVerification",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useRedactCall",
+    "useState",
+    "useVoicePrints"
+   ],
+   "hooks_locais": [
+    "useFraudSignals",
+    "useLiveVoiceVerification",
+    "usePageTitle",
+    "useRedactCall",
+    "useVoicePrints"
+   ],
+   "tabelas": [
+    "fraud_signals",
+    "voice_prints"
+   ],
+   "rpcs": [],
+   "edges": [
+    "enroll-voice",
+    "redact-sensitive-audio",
+    "verify-voice"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 15
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/voicemail",
+   "componente": "Voicemail",
+   "arquivo": "src/pages/Voicemail.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useDebouncedSearchParam",
+    "useEffect",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useSearchParams"
+   ],
+   "hooks_locais": [
+    "useDebouncedSearchParam",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "voicemail_messages"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "searchbox"
+   ],
+   "arquivos_puxados": 11
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/vs/3cplus",
+   "componente": "VsThreeCPlus",
+   "arquivo": "src/pages/marketing/VsThreeCPlus.tsx",
+   "definida_em": "src/routes/publicRoutes.tsx",
+   "hooks": [
+    "useEffect"
+   ],
+   "hooks_locais": [],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 5
+  }
+ ],
+ "rotas_http_backend": [
+  {
+   "metodo": "GET",
+   "caminho": "/{t}",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "GET",
+   "caminho": "/a",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "GET",
+   "caminho": "/a",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "POST",
+   "caminho": "/b",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "POST",
+   "caminho": "/b",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "DELETE",
+   "caminho": "/c",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "PUT",
+   "caminho": "/d",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "GET",
+   "caminho": "/items",
+   "arquivo": "scripts/ai-context/gerar.unit.mjs",
+   "tabelas": [
+    "contacts",
+    "dashboard_table",
+    "emails",
+    "fixture_table",
+    "ghost_table",
+    "payments",
+    "runtime_table",
+    "tools_runtime"
+   ],
+   "env": [
+    "DB_URL",
+    "RESEND_API_KEY",
+    "VITE_ANON",
+    "VITE_SUPABASE_URL"
+   ]
+  },
+  {
+   "metodo": "GET",
+   "caminho": "/u",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "GET",
+   "caminho": "/users",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "POST",
+   "caminho": "/users/:id",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  },
+  {
+   "metodo": "GET",
+   "caminho": "/x",
+   "arquivo": "scripts/ai-context/cenarios.mjs",
+   "tabelas": [
+    "a",
+    "fantasma",
+    "so_teste",
+    "t",
+    "t1",
+    "tx"
+   ],
+   "env": [
+    "A",
+    "K",
+    "NODE_ENV",
+    "SCRIPT_ONLY",
+    "SRK",
+    "SUPABASE_URL",
+    "VITE_A",
+    "VITE_C",
+    "VITE_FEATURE_X",
+    "X"
+   ]
+  }
+ ],
+ "vistas": [],
+ "menu": [
+  {
+   "rotulo": "Acessos Bloqueados",
+   "destino": "/blocked-access-logs",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/BlockedAccessLogs.tsx"
+  },
+  {
+   "rotulo": "Agent Assist",
+   "destino": "/agent-assist",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/AgentAssist.tsx"
+  },
+  {
+   "rotulo": "Alertas",
+   "destino": "/alerts",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Alerts.tsx"
+  },
+  {
+   "rotulo": "Alertas de Espera",
+   "destino": "/hold-alerts",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/HoldAlerts.tsx"
+  },
+  {
+   "rotulo": "Alertas de Fila",
+   "destino": "/queue-metrics-settings",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/QueueMetricsAlertSettings.tsx"
+  },
+  {
+   "rotulo": "Alertas de Hold",
+   "destino": "/hold-settings",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/HoldAlertSettings.tsx"
+  },
+  {
+   "rotulo": "Analytics",
+   "destino": "/analytics",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/CallAnalytics.tsx"
+  },
+  {
+   "rotulo": "Aprendizagem",
+   "destino": "/learning",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Learning.tsx"
+  },
+  {
+   "rotulo": "Assistente IA",
+   "destino": "/ai",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/AIAssistant.tsx"
+  },
+  {
+   "rotulo": "Autenticação 2FA",
+   "destino": "/two-factor-auth",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/TwoFactorAuth.tsx"
+  },
+  {
+   "rotulo": "Base de Conhecimento",
+   "destino": "/knowledge",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Knowledge.tsx"
+  },
+  {
+   "rotulo": "Battle Cards",
+   "destino": "/battle-cards",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/BattleCards.tsx"
+  },
+  {
+   "rotulo": "Biblioteca de Calls",
+   "destino": "/call-library",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/CallLibrary.tsx"
+  },
+  {
+   "rotulo": "Bloqueio Geográfico",
+   "destino": "/geo-blocking",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/GeoBlocking.tsx"
+  },
+  {
+   "rotulo": "Caixa de Entrada",
+   "destino": "/inbox",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Inbox.tsx"
+  },
+  {
+   "rotulo": "Call Flow Designer",
+   "destino": "/call-flow-designer",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/CallFlowDesigner.tsx"
+  },
+  {
+   "rotulo": "Callbacks",
+   "destino": "/callbacks",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Callbacks.tsx"
+  },
+  {
+   "rotulo": "Central de Segurança",
+   "destino": "/security",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/SecurityDashboard.tsx"
+  },
+  {
+   "rotulo": "Chamadas",
+   "destino": "/calls",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/MobileBottomNav.tsx",
+   "resolve_para": "src/pages/Calls.tsx"
+  },
+  {
+   "rotulo": "Coaching IA",
+   "destino": "/coaching",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Coaching.tsx"
+  },
+  {
+   "rotulo": "Compliance",
+   "destino": "/compliance",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Compliance.tsx"
+  },
+  {
+   "rotulo": "Config",
+   "destino": "/settings",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/MobileBottomNav.tsx",
+   "resolve_para": "src/pages/Settings.tsx"
+  },
+  {
+   "rotulo": "Configurações",
+   "destino": "/settings",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Settings.tsx"
+  },
+  {
+   "rotulo": "Conflitos de Concorrência",
+   "destino": "/concurrency-conflicts",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/ConcurrencyConflicts.tsx"
+  },
+  {
+   "rotulo": "Contatos",
+   "destino": "/contacts",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/MobileBottomNav.tsx",
+   "resolve_para": "src/pages/Contacts.tsx"
+  },
+  {
+   "rotulo": "Correio de Voz",
+   "destino": "/voicemail",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Voicemail.tsx"
+  },
+  {
+   "rotulo": "Dashboard",
+   "destino": "/dashboard",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Index.tsx"
+  },
+  {
+   "rotulo": "Dashboard",
+   "destino": "/",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/MobileBottomNav.tsx",
+   "resolve_para": "src/pages/PhoneDialer.tsx"
+  },
+  {
+   "rotulo": "Detecção de Temas",
+   "destino": "/topic-detection",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/TopicDetection.tsx"
+  },
+  {
+   "rotulo": "Diagnóstico de Rede",
+   "destino": "/network-diagnostics",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/NetworkDiagnostics.tsx"
+  },
+  {
+   "rotulo": "Discador",
+   "destino": "/",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/PhoneDialer.tsx"
+  },
+  {
+   "rotulo": "Discador Preditivo",
+   "destino": "/dialer",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Dialer.tsx"
+  },
+  {
+   "rotulo": "Escala & Turnos",
+   "destino": "/scheduling",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Scheduling.tsx"
+  },
+  {
+   "rotulo": "Estacionamento",
+   "destino": "/call-park",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/CallPark.tsx"
+  },
+  {
+   "rotulo": "Executivo",
+   "destino": "/executive",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/ExecutiveDashboard.tsx"
+  },
+  {
+   "rotulo": "Exportação Data Lake",
+   "destino": "/admin/data-export",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/DataExport.tsx"
+  },
+  {
+   "rotulo": "Fax Virtual",
+   "destino": "/virtual-fax",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/VirtualFax.tsx"
+  },
+  {
+   "rotulo": "Filas de Atendimento",
+   "destino": "/call-queues",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/CallQueues.tsx"
+  },
+  {
+   "rotulo": "Gamificação",
+   "destino": "/ranking",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/AgentRanking.tsx"
+  },
+  {
+   "rotulo": "Gravações",
+   "destino": "/recordings",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Recordings.tsx"
+  },
+  {
+   "rotulo": "Grupos de Toque",
+   "destino": "/ring-groups",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/RingGroups.tsx"
+  },
+  {
+   "rotulo": "Habilidades",
+   "destino": "/skills",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Skills.tsx"
+  },
+  {
+   "rotulo": "Histórico",
+   "destino": "/history",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/MobileBottomNav.tsx",
+   "resolve_para": "src/pages/CallHistory.tsx"
+  },
+  {
+   "rotulo": "Histórico Alertas",
+   "destino": "/alert-history",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/AlertHistory.tsx"
+  },
+  {
+   "rotulo": "Histórico Completo",
+   "destino": "/history",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/CallHistory.tsx"
+  },
+  {
+   "rotulo": "Hot Desking",
+   "destino": "/hot-desking",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/HotDesking.tsx"
+  },
+  {
+   "rotulo": "Impacto Financeiro",
+   "destino": "/financial-impact",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/FinancialImpact.tsx"
+  },
+  {
+   "rotulo": "Importar Gravações",
+   "destino": "/external-recordings-import",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/ExternalRecordingsImport.tsx"
+  },
+  {
+   "rotulo": "Insights",
+   "destino": "/contacts/insights",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/ContactInsights.tsx"
+  },
+  {
+   "rotulo": "LDAP Sync",
+   "destino": "/ldap-sync",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/LDAPSync.tsx"
+  },
+  {
+   "rotulo": "Linhas VoIP",
+   "destino": "/admin/voip-trunks",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/VoipTrunksAdmin.tsx"
+  },
+  {
+   "rotulo": "Logs de Auditoria",
+   "destino": "/audit-logs",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/AuditLogs.tsx"
+  },
+  {
+   "rotulo": "Métricas de Espera",
+   "destino": "/hold-metrics",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/HoldMetrics.tsx"
+  },
+  {
+   "rotulo": "Métricas Fila",
+   "destino": "/queue-dashboard",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/QueueMetricsDashboard.tsx"
+  },
+  {
+   "rotulo": "Monitoramento",
+   "destino": "/security-monitoring",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/SecurityMonitoring.tsx"
+  },
+  {
+   "rotulo": "Multi-device Ring",
+   "destino": "/multi-device-ring",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/MultiDeviceRing.tsx"
+  },
+  {
+   "rotulo": "Notificações",
+   "destino": "/notifications",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/NotificationCenter.tsx"
+  },
+  {
+   "rotulo": "Números 0800",
+   "destino": "/toll-free-numbers",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/TollFreeNumbers.tsx"
+  },
+  {
+   "rotulo": "Observabilidade",
+   "destino": "/observability",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/ObservabilityDashboard.tsx"
+  },
+  {
+   "rotulo": "Outbound Compliance",
+   "destino": "/outbound-compliance",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/OutboundCompliance.tsx"
+  },
+  {
+   "rotulo": "Painel BLF",
+   "destino": "/blf",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/BlfBoard.tsx"
+  },
+  {
+   "rotulo": "Passkeys",
+   "destino": "/passkeys",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Passkeys.tsx"
+  },
+  {
+   "rotulo": "Políticas SLA",
+   "destino": "/sla-policies",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/SLAPolicies.tsx"
+  },
+  {
+   "rotulo": "Portabilidade",
+   "destino": "/number-porting",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/NumberPorting.tsx"
+  },
+  {
+   "rotulo": "QR Provisioning",
+   "destino": "/qr-provisioning",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/QRProvisioning.tsx"
+  },
+  {
+   "rotulo": "Ramais",
+   "destino": "/admin/extensions",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/ExtensionsAdmin.tsx"
+  },
+  {
+   "rotulo": "Rate Limit",
+   "destino": "/rate-limit",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/RateLimitDashboard.tsx"
+  },
+  {
+   "rotulo": "Regras de Roteamento",
+   "destino": "/routing-rules",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/RoutingRules.tsx"
+  },
+  {
+   "rotulo": "Relatório Segurança",
+   "destino": "/security-report",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/SecurityReport.tsx"
+  },
+  {
+   "rotulo": "Relatórios",
+   "destino": "/reports",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Reports.tsx"
+  },
+  {
+   "rotulo": "Reset de Senha",
+   "destino": "/password-reset-approval",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/PasswordResetApproval.tsx"
+  },
+  {
+   "rotulo": "Resumos IA",
+   "destino": "/meeting-summaries",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/MeetingSummaries.tsx"
+  },
+  {
+   "rotulo": "Roles & Permissões",
+   "destino": "/roles",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Roles.tsx"
+  },
+  {
+   "rotulo": "Sessões Ativas",
+   "destino": "/sessions",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/SessionManagement.tsx"
+  },
+  {
+   "rotulo": "Sugestões de Escala IA",
+   "destino": "/shift-swap-suggestions",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/ShiftSwapSuggestions.tsx"
+  },
+  {
+   "rotulo": "Tradução Multilíngue",
+   "destino": "/translation-center",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/TranslationCenter.tsx"
+  },
+  {
+   "rotulo": "Videoconferência",
+   "destino": "/video-conference",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/VideoConference.tsx"
+  },
+  {
+   "rotulo": "Voice Security",
+   "destino": "/voice-security",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/VoiceSecurity.tsx"
+  },
+  {
+   "rotulo": "Whitelist IPs",
+   "destino": "/ip-whitelist",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/IPWhitelist.tsx"
+  }
+ ],
+ "lazy": {
+  "AIAssistant": "src/pages/AIAssistant.tsx",
+  "Accounts": "src/pages/Accounts.tsx",
+  "AgentAssist": "src/pages/AgentAssist.tsx",
+  "AgentRanking": "src/pages/AgentRanking.tsx",
+  "AlertHistory": "src/pages/AlertHistory.tsx",
+  "Alerts": "src/pages/Alerts.tsx",
+  "AuditLogs": "src/pages/AuditLogs.tsx",
+  "BattleCards": "src/pages/BattleCards.tsx",
+  "BlfBoard": "src/pages/BlfBoard.tsx",
+  "BlockedAccessLogs": "src/pages/BlockedAccessLogs.tsx",
+  "Cadences": "src/pages/Cadences.tsx",
+  "CallAnalytics": "src/pages/CallAnalytics.tsx",
+  "CallFlowDesigner": "src/pages/CallFlowDesigner.tsx",
+  "CallHistory": "src/pages/CallHistory.tsx",
+  "CallLibrary": "src/pages/CallLibrary.tsx",
+  "CallPark": "src/pages/CallPark.tsx",
+  "CallQueues": "src/pages/CallQueues.tsx",
+  "Callbacks": "src/pages/Callbacks.tsx",
+  "Calls": "src/pages/Calls.tsx",
+  "Coaching": "src/pages/Coaching.tsx",
+  "Compliance": "src/pages/Compliance.tsx",
+  "ConcurrencyConflicts": "src/pages/ConcurrencyConflicts.tsx",
+  "ContactInsights": "src/pages/ContactInsights.tsx",
+  "Contacts": "src/pages/Contacts.tsx",
+  "DataExport": "src/pages/admin/DataExport.tsx",
+  "DatabaseHealth": "src/pages/admin/DatabaseHealth.tsx",
+  "Deals": "src/pages/Deals.tsx",
+  "Dialer": "src/pages/Dialer.tsx",
+  "ExecutiveDashboard": "src/pages/ExecutiveDashboard.tsx",
+  "ExtensionsAdmin": "src/pages/admin/ExtensionsAdmin.tsx",
+  "ExternalRecordingsImport": "src/pages/ExternalRecordingsImport.tsx",
+  "FinancialImpact": "src/pages/FinancialImpact.tsx",
+  "ForgotPassword": "src/pages/ForgotPassword.tsx",
+  "GeoBlocking": "src/pages/GeoBlocking.tsx",
+  "HoldAlertSettings": "src/pages/HoldAlertSettings.tsx",
+  "HoldAlerts": "src/pages/HoldAlerts.tsx",
+  "HoldMetrics": "src/pages/HoldMetrics.tsx",
+  "HotDesking": "src/pages/HotDesking.tsx",
+  "IPWhitelist": "src/pages/IPWhitelist.tsx",
+  "Inbox": "src/pages/Inbox.tsx",
+  "Index": "src/pages/Index.tsx",
+  "Knowledge": "src/pages/Knowledge.tsx",
+  "LDAPSync": "src/pages/LDAPSync.tsx",
+  "Landing": "src/pages/marketing/Landing.tsx",
+  "Learning": "src/pages/Learning.tsx",
+  "Login": "src/pages/Login.tsx",
+  "Marketplace": "src/pages/Marketplace.tsx",
+  "MeetingSummaries": "src/pages/MeetingSummaries.tsx",
+  "MultiDeviceRing": "src/pages/MultiDeviceRing.tsx",
+  "NetworkDiagnostics": "src/pages/NetworkDiagnostics.tsx",
+  "NotFound": "src/pages/NotFound.tsx",
+  "NotificationCenter": "src/pages/NotificationCenter.tsx",
+  "NumberPorting": "src/pages/NumberPorting.tsx",
+  "ObservabilityDashboard": "src/pages/ObservabilityDashboard.tsx",
+  "Onboarding": "src/pages/Onboarding.tsx",
+  "OutboundCompliance": "src/pages/OutboundCompliance.tsx",
+  "Passkeys": "src/pages/Passkeys.tsx",
+  "PasswordResetApproval": "src/pages/PasswordResetApproval.tsx",
+  "Permissions": "src/pages/Permissions.tsx",
+  "PhoneDialer": "src/pages/PhoneDialer.tsx",
+  "PredictiveDialer": "src/pages/PredictiveDialer.tsx",
+  "Pricing": "src/pages/marketing/Pricing.tsx",
+  "QRProvisioning": "src/pages/QRProvisioning.tsx",
+  "QueueMetricsAlertSettings": "src/pages/QueueMetricsAlertSettings.tsx",
+  "QueueMetricsDashboard": "src/pages/QueueMetricsDashboard.tsx",
+  "RateLimitDashboard": "src/pages/RateLimitDashboard.tsx",
+  "Recordings": "src/pages/Recordings.tsx",
+  "Register": "src/pages/Register.tsx",
+  "Renewals": "src/pages/Renewals.tsx",
+  "Reports": "src/pages/Reports.tsx",
+  "ResetPassword": "src/pages/ResetPassword.tsx",
+  "RingGroups": "src/pages/RingGroups.tsx",
+  "Roles": "src/pages/Roles.tsx",
+  "RoutingRules": "src/pages/RoutingRules.tsx",
+  "SLAPolicies": "src/pages/SLAPolicies.tsx",
+  "Scheduling": "src/pages/Scheduling.tsx",
+  "SecurityAlerts": "src/pages/admin/SecurityAlerts.tsx",
+  "SecurityAudit": "src/pages/admin/SecurityDashboard.tsx",
+  "SecurityDashboard": "src/pages/SecurityDashboard.tsx",
+  "SecurityMonitoring": "src/pages/SecurityMonitoring.tsx",
+  "SecurityReport": "src/pages/SecurityReport.tsx",
+  "SessionManagement": "src/pages/SessionManagement.tsx",
+  "Settings": "src/pages/Settings.tsx",
+  "ShiftSwapSuggestions": "src/pages/ShiftSwapSuggestions.tsx",
+  "Skills": "src/pages/Skills.tsx",
+  "SloDashboard": "src/pages/admin/SloDashboard.tsx",
+  "Status": "src/pages/Status.tsx",
+  "SuccessPlans": "src/pages/SuccessPlans.tsx",
+  "TollFreeNumbers": "src/pages/TollFreeNumbers.tsx",
+  "TopicDetection": "src/pages/TopicDetection.tsx",
+  "Trackers": "src/pages/Trackers.tsx",
+  "TranslationCenter": "src/pages/TranslationCenter.tsx",
+  "TwoFactorAuth": "src/pages/TwoFactorAuth.tsx",
+  "Unauthorized": "src/pages/Unauthorized.tsx",
+  "VerifyEmail": "src/pages/VerifyEmail.tsx",
+  "VideoConference": "src/pages/VideoConference.tsx",
+  "VirtualFax": "src/pages/VirtualFax.tsx",
+  "VoiceQuality": "src/pages/admin/VoiceQuality.tsx",
+  "VoiceSecurity": "src/pages/VoiceSecurity.tsx",
+  "Voicemail": "src/pages/Voicemail.tsx",
+  "VoipTrunksAdmin": "src/pages/admin/VoipTrunksAdmin.tsx",
+  "VsThreeCPlus": "src/pages/marketing/VsThreeCPlus.tsx",
+  "WebhookHealth": "src/pages/admin/WebhookHealth.tsx"
+ }
+}
