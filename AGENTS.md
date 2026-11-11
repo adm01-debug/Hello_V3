@@ -126,6 +126,7 @@ Detalhe em `docs/agentes/<tema>.md`; divergiu da realidade → corrija no mesmo 
 ## Onde olhar primeiro
 | Precisa de | Leia |
 |---|---|
+| Estado real do projeto (rotas, banco, regras) atualizado automaticamente | **`docs/CONTEXTO-PARA-AGENTES.md`** — leia ANTES de levantar qualquer coisa |
 | O que está quebrado, com evidência `arquivo:linha` | **`ESTADO_ATUAL.md`** |
 | Pendências com status honesto (🔴/🟡/🟢/⚪) | `docs/audits/pendencias-2026-07.md` — o doc mais confiável do repo |
 | Onde fica cada coisa, comandos, qualidade dos testes | `docs/agentes/mapa-repo.md` |
