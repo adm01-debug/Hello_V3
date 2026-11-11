@@ -53,46 +53,33 @@ describe('Performance: React.memo wrapping', () => {
   });
 });
 
-describe('Performance: Vite bundle splitting (manualChunks)', () => {
+describe('Performance: Vite bundle splitting (automatic code-splitting)', () => {
   let viteConfig: string;
 
   beforeAll(() => {
     viteConfig = readSrc('vite.config.ts');
   });
 
-  it('vite.config.ts has manualChunks configuration', () => {
-    expect(viteConfig).toContain('manualChunks');
-  });
-
-  const expectedChunks = [
-    { name: 'vendor-react', deps: ['react', 'react-dom', 'scheduler'] },
-    { name: 'vendor-router', deps: ['react-router'] },
-    { name: 'vendor-radix', deps: ['@radix-ui'] },
-    { name: 'vendor-charts', deps: ['recharts'] },
-    { name: 'vendor-query', deps: ['@tanstack/react-query'] },
-    { name: 'vendor-supabase', deps: ['@supabase'] },
-    { name: 'vendor-date', deps: ['date-fns'] },
-    { name: 'vendor-zod', deps: ['zod'] },
-  ];
-
-
-  expectedChunks.forEach(({ name, deps }) => {
-    it(`defines chunk "${name}"`, () => {
-      expect(viteConfig).toMatch(new RegExp(`['"\`]${name}['"\`]`));
-    });
-
-    deps.forEach((dep) => {
-      it(`chunk "${name}" includes "${dep}"`, () => {
-        // aceita literal, regex ou grupo alternado dentro do manualChunks
-        expect(viteConfig).toContain(dep);
-      });
-    });
-  });
-
-  it('has build.rollupOptions.output structure', () => {
+  it('em Vite automatic code-splitting, sem manualChunks', () => {
     expect(viteConfig).toContain('build:');
-    expect(viteConfig).toContain('rollupOptions:');
-    expect(viteConfig).toContain('output:');
+    expect(viteConfig).not.toContain('manualChunks');
+    expect(viteConfig).not.toContain('rollupOptions:');
+  });
+
+  it('não define chunks vendor explícitos', () => {
+    const vendorChunks = ['vendor-react', 'vendor-router', 'vendor-radix', 'vendor-charts', 'vendor-query', 'vendor-supabase', 'vendor-date', 'vendor-zod'];
+    for (const chunk of vendorChunks) {
+      expect(viteConfig).not.toContain(chunk);
+    }
+  });
+
+  it('evita duplicar React no runtime (regressão do manualChunks circular)', () => {
+    // O manualChunks antigo isolava react/react-dom em 'vendor-react', que era
+    // importado de volta por 'vendor-radix', gerando 2 instâncias de React e
+    // React.forwardRef undefined (SPA em branco). Sem manualChunks o Vite
+    // resolve React em um único grafo.
+    expect(viteConfig).not.toContain('vendor-react');
+    expect(viteConfig).not.toContain('manualChunks');
   });
 });
 
