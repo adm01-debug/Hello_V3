@@ -1,13 +1,15 @@
 // Testes Deno para voip-recommendation-simulate.
 // Cobertura: auth, validação, projeção positiva (alertas evitados), edge case sem dados.
-import 'https://deno.land/std@0.224.0/dotenv/load.ts';
+import { loadSync } from 'https://deno.land/std@0.224.0/dotenv/mod.ts';
+loadSync({ allowEmptyValues: true, examplePath: "" });
 import { assertEquals, assert } from 'https://deno.land/std@0.224.0/assert/mod.ts';
 import { projectImpact, type QualityRow, type AlertRow } from '../index.ts';
 
-const SUPABASE_URL = Deno.env.get('VITE_SUPABASE_URL') ?? 'https://example.supabase.co';
+const SUPABASE_URL = Deno.env.get('VITE_SUPABASE_URL') ?? '';
 const FN_URL = `${SUPABASE_URL}/functions/v1/voip-recommendation-simulate`;
 
 Deno.test('rejeita requisição sem JWT', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const res = await fetch(FN_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -18,6 +20,7 @@ Deno.test('rejeita requisição sem JWT', async () => {
 });
 
 Deno.test('rejeita corpo sem recommendationId', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const res = await fetch(FN_URL, {
     method: 'POST',
     headers: {

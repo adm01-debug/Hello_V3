@@ -53,6 +53,7 @@ Deno.test("score-call-attempt: thresholds de recommendation", () => {
 });
 
 Deno.test("score-call-attempt: region_code default = BR", () => {
-  const region_code = undefined ?? "BR";
-  assertEquals(region_code, "BR");
+  const region_code: string | undefined = undefined;
+  const resolved_region_code = region_code ?? "BR";
+  assertEquals(resolved_region_code, "BR");
 });

@@ -2,10 +2,13 @@
  import { handler } from "./index.ts";
  
  Deno.test("bitrix-api: CORS handling", async () => {
-   const req = new Request("http://localhost", { method: "OPTIONS" });
-   const res = await handler(req);
+   const req = new Request("http://localhost", {
+    method: "OPTIONS",
+    headers: { Origin: "http://localhost:8086" },
+  });
+  const res = await handler(req);
    assertEquals(res.status, 200);
-   assertEquals(res.headers.get("Access-Control-Allow-Origin"), "*");
+   assertEquals(res.headers.get("Access-Control-Allow-Origin"), "http://localhost:8086");
  });
  
  Deno.test("bitrix-api: returns 401 if no Authorization header", async () => {

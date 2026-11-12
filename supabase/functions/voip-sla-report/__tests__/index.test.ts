@@ -1,5 +1,6 @@
 // Testes Deno para voip-sla-report
-import 'https://deno.land/std@0.224.0/dotenv/load.ts';
+import { loadSync } from 'https://deno.land/std@0.224.0/dotenv/mod.ts';
+loadSync({ allowEmptyValues: true, examplePath: "" });
 import { assertEquals, assertExists } from 'https://deno.land/std@0.224.0/assert/mod.ts';
 
 const SUPABASE_URL = Deno.env.get('VITE_SUPABASE_URL') ?? Deno.env.get('SUPABASE_URL') ?? '';
@@ -17,23 +18,27 @@ async function call(opts: { period?: string; auth?: string | null } = {}) {
 }
 
 Deno.test('voip-sla-report: exige Authorization', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const r = await call({ auth: null });
   assertEquals(r.status, 401);
   assertEquals(r.body.error, 'Unauthorized');
 });
 
 Deno.test('voip-sla-report: rejeita token inválido', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const r = await call({ auth: 'Bearer invalid.jwt.token' });
   assertEquals(r.status, 401);
 });
 
 Deno.test('voip-sla-report: rejeita period inválido', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const r = await call({ period: 'year' });
   // 401 (sem JWT válido) ou 400 — aceitamos ambos pois auth roda antes
   assertEquals([400, 401].includes(r.status), true);
 });
 
 Deno.test('voip-sla-report: aceita period=day/week/month na shape', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   for (const p of ['day', 'week', 'month']) {
     const r = await call({ period: p });
     assertEquals([200, 401].includes(r.status), true);
@@ -41,11 +46,13 @@ Deno.test('voip-sla-report: aceita period=day/week/month na shape', async () => 
 });
 
 Deno.test('voip-sla-report: responde com x-request-id', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const r = await call({ auth: null });
   assertExists(r.headers.get('x-request-id'));
 });
 
 Deno.test('voip-sla-report: CORS preflight responde 200/204', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const res = await fetch(FN_URL, {
     method: 'OPTIONS',
     headers: { Origin: 'https://lovable.dev', 'Access-Control-Request-Method': 'GET' },

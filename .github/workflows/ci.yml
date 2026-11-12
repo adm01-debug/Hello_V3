@@ -13,7 +13,7 @@ concurrency:
 jobs:
   quality:
     name: Lint • Type-check • Test • Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     steps:
@@ -53,10 +53,13 @@ jobs:
 
       - name: E2E tests (Playwright)
         run: |
+          echo 'Acquire::ForceIPv4 "true";' | sudo tee /etc/apt/apt.conf.d/99force-ipv4 > /dev/null
           bunx playwright install chromium --with-deps
           bunx playwright test
         env:
           CI: true
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
       - name: Edge Function Tests (Deno)
         run: |
@@ -79,7 +82,7 @@ jobs:
 
   security:
     name: Security audit
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4

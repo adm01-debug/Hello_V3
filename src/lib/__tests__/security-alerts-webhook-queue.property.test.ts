@@ -24,7 +24,16 @@ import {
   hashEndpoint,
   loadWebhookQueue,
 } from "@/lib/security-alerts-webhook-queue";
-import type { WebhookExportPayload } from "@/lib/security-alerts-webhook";
+import type { SendExportWebhookResult, WebhookExportPayload } from "@/lib/security-alerts-webhook";
+
+// O retry/backoff real (jitter) do sendExportWebhook deixa os mocks de fetch
+// lentos e não-determinísticos. Mockamos só o envio para testar a lógica pura
+// da fila (o retry tem suíte própria em security-alerts-webhook.test.ts).
+const { sendExportWebhookMock } = vi.hoisted(() => ({ sendExportWebhookMock: vi.fn<() => Promise<SendExportWebhookResult>>() }));
+vi.mock("@/lib/security-alerts-webhook", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/security-alerts-webhook")>();
+  return { ...actual, sendExportWebhook: sendExportWebhookMock };
+});
 
 const SEED = 20260713;
 
@@ -41,10 +50,21 @@ function payload(overrides: Partial<WebhookExportPayload> = {}): WebhookExportPa
   };
 }
 
+function okResult(status = 200): SendExportWebhookResult {
+  return {
+    ok: status >= 200 && status < 300,
+    status,
+    attempts: 1,
+    request_id: "req-test",
+    attempts_detail: [],
+  };
+}
+
 beforeEach(() => {
   localStorage.clear();
   clearWebhookQueue();
-  vi.restoreAllMocks();
+  vi.clearAllMocks();
+  sendExportWebhookMock.mockResolvedValue(okResult(200));
 });
 
 afterEach(() => {
@@ -102,7 +122,7 @@ describe("security-alerts-webhook-queue — property-based (fast-check)", () => 
         for (let i = 0; i < n; i++) {
           enqueueWebhook(`https://ok.example.com/${i}`, payload({ filename: `ok${i}.csv` }), false);
         }
-        vi.stubGlobal("fetch", vi.fn(async () => new Response("ok", { status: 200 })));
+        sendExportWebhookMock.mockResolvedValue(okResult(200));
         const r = await flushWebhookQueue();
         expect(r.pending_before).toBe(n);
         expect(r.sent).toBe(n);
@@ -111,7 +131,6 @@ describe("security-alerts-webhook-queue — property-based (fast-check)", () => 
         expect(r.duration_ms).toBeGreaterThanOrEqual(0);
         expect(r.endpoint_hash).toMatch(/^[0-9a-f]{12}$/);
         expect(loadWebhookQueue()).toEqual([]);
-        vi.unstubAllGlobals();
       }),
       { seed: SEED, numRuns: 20 },
     );
@@ -124,7 +143,7 @@ describe("security-alerts-webhook-queue — property-based (fast-check)", () => 
         for (let i = 0; i < n; i++) {
           enqueueWebhook(`https://fail.example.com/${i}`, payload({ filename: `f${i}.csv` }), false);
         }
-        vi.stubGlobal("fetch", vi.fn(async () => new Response("nope", { status: 500 })));
+        sendExportWebhookMock.mockResolvedValue(okResult(500));
         const r = await flushWebhookQueue();
         expect(r.pending_before).toBe(n);
         expect(r.sent).toBe(0);
@@ -137,7 +156,6 @@ describe("security-alerts-webhook-queue — property-based (fast-check)", () => 
           expect(item.lastError).toBeTruthy();
           expect(item.lastTriedAt).toBeTruthy();
         }
-        vi.unstubAllGlobals();
       }),
       { seed: SEED, numRuns: 15 },
     );
@@ -148,14 +166,13 @@ describe("security-alerts-webhook-queue — property-based (fast-check)", () => 
     for (let i = 0; i < 3; i++) {
       enqueueWebhook(`https://ok.example.com/${i}`, payload({ filename: `c${i}.csv` }), false);
     }
-    const fetchMock = vi.fn(async () => new Response("ok", { status: 200 }));
-    vi.stubGlobal("fetch", fetchMock);
+    sendExportWebhookMock.mockResolvedValue(okResult(200));
 
     const [a, b] = await Promise.all([flushWebhookQueue(), flushWebhookQueue()]);
     // Um dos dois deve ter processado tudo; o outro é no-op.
     const totalSent = a.sent + b.sent;
     expect(totalSent).toBe(3);
-    expect(fetchMock).toHaveBeenCalledTimes(3);
+    expect(sendExportWebhookMock).toHaveBeenCalledTimes(3);
     expect(loadWebhookQueue()).toEqual([]);
   }, 15000);
 });

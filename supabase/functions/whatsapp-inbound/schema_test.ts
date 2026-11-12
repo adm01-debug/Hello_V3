@@ -26,6 +26,8 @@ Deno.test("WhatsAppInboundV2Schema versioning", () => {
   const v2Data = {
     from: "5511999998888",
     message: "Version 2 test",
+    message_id: "msg_v2_001",
+    timestamp: "2024-01-01T12:00:00Z",
     client_id: "550e8400-e29b-41d4-a716-446655440000",
     metadata: {
       custom_field: "test"

@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { seedAdminSession } from './helpers/adminSession';
+import { shouldSkipNoSession } from './helpers/skipGuard';
 
 /**
  * Cobre o fluxo de auditoria do webhook de exportação em Segurança > Alertas:
@@ -71,8 +72,8 @@ test.describe('Webhook — auditoria e download NDJSON', () => {
     const seeded = await seedAdminSession(context, page);
     await page.goto('/admin/security-alerts');
 
-    if (!seeded && /\/(auth|login)/.test(page.url())) {
-      test.skip(true, 'Rota protegida — configure E2E_ADMIN_EMAIL/PASSWORD para executar.');
+    if (await shouldSkipNoSession(page, seeded)) {
+          test.skip(true, 'Rota protegida — configure E2E_ADMIN_EMAIL/PASSWORD/SESSION_JSON para executar.');
       return;
     }
 

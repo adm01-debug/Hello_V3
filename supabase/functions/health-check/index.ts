@@ -2,7 +2,7 @@
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
-Deno.serve(async (req) => {
+export const handler = async (req: Request): Promise<Response> => {
   const corsHeaders = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
@@ -76,7 +76,9 @@ Deno.serve(async (req) => {
       status: 500,
     });
   }
-});
+};
+
+Deno.serve(handler);
 
 function percentile(nums: number[], p: number): number {
   if (nums.length === 0) return 0;

@@ -258,14 +258,17 @@ describe('Observability: Vite config optimizations', () => {
     expect(content).toContain('build:');
   });
 
-  it('uses rollup manual chunks', () => {
-    expect(content).toContain('manualChunks');
+  it('delegates chunking to Vite automatic code-splitting (no manualChunks)', () => {
+      expect(content).not.toContain('manualChunks');
   });
 
-  it('separates vendor bundles', () => {
-    expect(content).toContain('vendor-react');
-    expect(content).toContain('vendor-radix');
-    expect(content).toContain('vendor-charts');
+    it('avoids the vendor-react split that duplicated React at runtime', () => {
+      // O antigo 'manualChunks' isolava react/react-dom num chunk 'vendor-react'
+      // importado de volta por 'vendor-radix', gerando 2 instâncias de React
+      // (React.forwardRef undefined, SPA em branco). Vite deve resolver em um
+      // único gráfico de dependências.
+      expect(content).not.toContain('vendor-react');
+      expect(content).not.toContain('manualChunks');
   });
 
 });

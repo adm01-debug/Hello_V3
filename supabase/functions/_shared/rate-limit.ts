@@ -44,7 +44,7 @@ export async function checkRateLimitDB(
         is_blocked: true,
         block_reason: data.reason || 'Rate limit exceeded',
         request_count: data.remaining === 0 ? 1 : 0 // heuristic
-      }).catch(err => console.error('[rate-limit] Log insert failed:', err));
+      }).then(() => {}, (err) => console.error('[rate-limit] Log insert failed:', err));
     }
 
     return {

@@ -1,6 +1,7 @@
 // Testes Deno para voip-recommendation-insights.
 // Cobertura: auth, validação de período, cálculo de heatmap, efetividade.
-import 'https://deno.land/std@0.224.0/dotenv/load.ts';
+import { loadSync } from 'https://deno.land/std@0.224.0/dotenv/mod.ts';
+loadSync({ allowEmptyValues: true, examplePath: "" });
 import { assertEquals, assert } from 'https://deno.land/std@0.224.0/assert/mod.ts';
 import {
   buildHeatmap,
@@ -12,10 +13,11 @@ import {
   type QualityRow,
 } from '../index.ts';
 
-const SUPABASE_URL = Deno.env.get('VITE_SUPABASE_URL') ?? 'https://example.supabase.co';
+const SUPABASE_URL = Deno.env.get('VITE_SUPABASE_URL') ?? '';
 const FN_URL = `${SUPABASE_URL}/functions/v1/voip-recommendation-insights`;
 
 Deno.test('rejeita requisição sem JWT', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const res = await fetch(`${FN_URL}?period=week`);
   await res.text();
   assert(res.status === 401 || res.status === 404 || res.status === 0,
@@ -23,6 +25,7 @@ Deno.test('rejeita requisição sem JWT', async () => {
 });
 
 Deno.test('rejeita período inválido (validação oneOf)', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const res = await fetch(`${FN_URL}?period=year`, {
     headers: { Authorization: 'Bearer invalid-token-for-validation-test' },
   });
