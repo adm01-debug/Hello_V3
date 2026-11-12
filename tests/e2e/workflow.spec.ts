@@ -1,17 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { seedAdminSession } from './helpers/adminSession';
+import { shouldSkipNoSession } from './helpers/skipGuard';
 
 test.describe('Complete User Workflow', () => {
   test('should allow user to view dashboard and search calls', async ({ page, context }) => {
-    // Tenta seedar uma sessão admin real (via E2E_ADMIN_EMAIL/PASSWORD ou
-    // E2E_SUPABASE_SESSION_JSON). Se indisponível, o teste é auto-skipped.
     const seeded = await seedAdminSession(context, page);
-
     // 1. Visit Home/Dashboard
     await page.goto('/');
 
-    if (!seeded && /\/(auth|login)/.test(page.url())) {
-      test.skip(true, 'Rota protegida — configure E2E_ADMIN_EMAIL/PASSWORD para executar.');
+    if (await shouldSkipNoSession(page, seeded)) {
+          test.skip(true, 'Rota protegida — configure E2E_ADMIN_EMAIL/PASSWORD/SESSION_JSON para executar.');
       return;
     }
 

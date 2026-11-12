@@ -28,6 +28,6 @@ test.describe('Dashboard and Critical Lists', () => {
     }
 
     // For now, just verifying the page structure
-    await expect(page).toHaveTitle(/Freight/i);
+    await expect(page).toHaveTitle(/CallCenter Pro/i);
   });
 });
