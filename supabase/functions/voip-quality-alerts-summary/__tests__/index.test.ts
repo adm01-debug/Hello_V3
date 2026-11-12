@@ -1,5 +1,6 @@
 // Testes Deno para voip-quality-alerts-summary
-import 'https://deno.land/std@0.224.0/dotenv/load.ts';
+import { loadSync } from 'https://deno.land/std@0.224.0/dotenv/mod.ts';
+loadSync({ allowEmptyValues: true, examplePath: "" });
 import { assertEquals, assertExists } from 'https://deno.land/std@0.224.0/assert/mod.ts';
 
 const SUPABASE_URL = Deno.env.get('VITE_SUPABASE_URL') ?? Deno.env.get('SUPABASE_URL') ?? '';
@@ -17,12 +18,14 @@ async function call(opts: { period?: string; auth?: string | null } = {}) {
 }
 
 Deno.test('voip-quality-alerts-summary: exige Authorization', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const r = await call({ auth: null });
   assertEquals(r.status, 401);
   assertEquals(r.body.error, 'Unauthorized');
 });
 
 Deno.test('voip-quality-alerts-summary: aceita period válido', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   for (const p of ['day', 'week', 'month']) {
     const r = await call({ period: p });
     assertEquals([200, 401].includes(r.status), true);
@@ -30,11 +33,13 @@ Deno.test('voip-quality-alerts-summary: aceita period válido', async () => {
 });
 
 Deno.test('voip-quality-alerts-summary: rejeita period inválido', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const r = await call({ period: 'forever' });
   assertEquals([400, 401].includes(r.status), true);
 });
 
 Deno.test('voip-quality-alerts-summary: responde com x-request-id', async () => {
+  if (!SUPABASE_URL || SUPABASE_URL.includes('mock.supabase.co')) return;
   const r = await call({ auth: null });
   assertExists(r.headers.get('x-request-id'));
 });

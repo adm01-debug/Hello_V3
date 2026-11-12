@@ -14,8 +14,10 @@ export const WhatsAppInboundV1Schema = z.object({
   })).optional()
 });
 
-// V2 Schema (Future proofing/Example)
-export const WhatsAppInboundV2Schema = WhatsAppInboundV1Schema.extend({
+// V2 exige identificadores de mensagem (message_id/timestamp) - contrato de integracao
+export const WhatsAppInboundV2Schema = WhatsAppInboundV1Schema.omit({ message_id: true, timestamp: true }).extend({
+  message_id: z.string().min(1, "O campo 'message_id' e obrigatorio no V2"),
+  timestamp: z.string().datetime(),
   metadata: z.record(z.unknown()).optional(),
   client_id: z.string().uuid().optional()
 });
