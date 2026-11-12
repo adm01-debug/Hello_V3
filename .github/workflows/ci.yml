@@ -53,6 +53,7 @@ jobs:
 
       - name: E2E tests (Playwright)
         run: |
+          echo 'Acquire::ForceIPv4 "true";' | sudo tee /etc/apt/apt.conf.d/99force-ipv4 > /dev/null
           bunx playwright install chromium --with-deps
           bunx playwright test
         env:
