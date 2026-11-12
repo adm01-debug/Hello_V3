@@ -103,10 +103,7 @@ jobs:
 
             - main de origem: `${{ github.sha }}`
             - run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          add-paths: |
-            inventario/estado/banco.json
-            inventario/estado/rotas.json
-            inventario/estado/edges.json
+          add-paths: inventario/estado/
 
       # PR aberto com GITHUB_TOKEN não dispara workflows: os checks nascem em action_required.
       # Mesmo destravamento do types-sync.yml (provado no run 36134562996), restrito à branch deste PR.
