@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "bc47e27e4963dae47cca45cfa3c18298c076c74a",
+  "commit": "0335da926d13ba74bf873b8c48bfd5f94a29bdf1",
   "branch": "main",
-  "data_commit": "2026-11-12T10:08:06-03:00",
+  "data_commit": "2026-11-12T18:01:12Z",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "0335da9",
+    "data": "2026-11-12",
+    "assunto": "chore: inventario do estado real [auto] (#23)"
+   },
    {
     "sha": "bc47e27",
     "data": "2026-11-12",
@@ -126,11 +131,6 @@
     "sha": "2f065da",
     "data": "2026-08-01",
     "assunto": "Visual edit in Lovable"
-   },
-   {
-    "sha": "11c5cd0",
-    "data": "2026-07-27",
-    "assunto": "Implement BLF real-time panel"
    }
   ],
   "arquivos_mudados_7d": 81,
@@ -153,6 +153,14 @@
    },
    {
     "pasta": "docs/contexto/regras",
+    "mudancas": 2
+   },
+   {
+    "pasta": "inventario/estado/edges.json",
+    "mudancas": 2
+   },
+   {
+    "pasta": "inventario/estado/rotas.json",
     "mudancas": 2
    },
    {
@@ -186,14 +194,6 @@
    {
     "pasta": ".gitignore",
     "mudancas": 1
-   },
-   {
-    "pasta": ".hermes.md",
-    "mudancas": 1
-   },
-   {
-    "pasta": "CLAUDE.md",
-    "mudancas": 1
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -211,6 +211,14 @@
    },
    {
     "arquivo": "docs/estado/edge-functions-parte1.md",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "inventario/estado/edges.json",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "inventario/estado/rotas.json",
     "mudancas": 2
    },
    {
@@ -288,20 +296,16 @@
    {
     "arquivo": "docs/estado/componentes-parte2.md",
     "mudancas": 1
-   },
-   {
-    "arquivo": "docs/estado/componentes-parte3.md",
-    "mudancas": 1
-   },
-   {
-    "arquivo": "docs/estado/componentes-parte4.md",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
     "commits": 9
+   },
+   {
+    "autor": "github-actions[bot]",
+    "commits": 1
    }
   ]
  },

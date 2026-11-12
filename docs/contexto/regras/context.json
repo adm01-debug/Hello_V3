@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "bc47e27e4963dae47cca45cfa3c18298c076c74a",
+  "sha": "0335da926d13ba74bf873b8c48bfd5f94a29bdf1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-12 14:20 UTC",
+  "generated_at": "2026-11-12 22:06 UTC",
   "files_total": 1996,
   "code_files": 1406,
   "code_lines": 177563
@@ -117464,10 +117464,20 @@
   }
  },
  "git": {
-  "sha": "bc47e27e4963dae47cca45cfa3c18298c076c74a",
+  "sha": "0335da926d13ba74bf873b8c48bfd5f94a29bdf1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "0335da9",
+    "date": "2026-11-12",
+    "author": "github-actions[bot]",
+    "subject": "chore: inventario do estado real [auto] (#23)",
+    "files": [
+     "inventario/estado/edges.json",
+     "inventario/estado/rotas.json"
+    ]
+   },
    {
     "sha": "bc47e27",
     "date": "2026-11-12",
@@ -119814,16 +119824,6 @@
      "src/components/layout/CommandPalette.tsx",
      "src/routes/protectedRoutes.tsx"
     ]
-   },
-   {
-    "sha": "38aaa15",
-    "date": "2026-07-27",
-    "author": "gpt-engineer-app[bot]",
-    "subject": "Changes",
-    "files": [
-     "src/lib/__tests__/blf.test.ts",
-     "src/pages/BlfBoard.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -119864,6 +119864,14 @@
     3
    ],
    [
+    "inventario/estado/edges.json",
+    2
+   ],
+   [
+    "inventario/estado/rotas.json",
+    2
+   ],
+   [
     "src/lib/__tests__/performance-optimizations.test.ts",
     2
    ],
@@ -119897,14 +119905,6 @@
    ],
    [
     "supabase/functions/cleanup-lock-conflicts/index.test.ts",
-    2
-   ],
-   [
-    "supabase/functions/health-check/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/score-call-attempt/__tests__/index.test.ts",
     2
    ]
   ]
