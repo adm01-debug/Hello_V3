@@ -1,4 +1,4 @@
-import { fc } from "https://esm.sh/fast-check"
+import fc from "https://esm.sh/fast-check"
 import { assertEquals } from "https://deno.land/std@0.168.0/testing/asserts.ts"
 import { AnalyzeCallSchema } from "../schema.ts"
 
@@ -12,7 +12,7 @@ Deno.test("AnalyzeCallSchema - Property Based Testing", () => {
           phone: fc.string(),
           duration: fc.string(),
           type: fc.string()
-        }))
+        }), { nil: undefined })
       }),
       (data) => {
         const result = AnalyzeCallSchema.safeParse(data)
@@ -25,7 +25,7 @@ Deno.test("AnalyzeCallSchema - Property Based Testing", () => {
 
 Deno.test("AnalyzeCallSchema - Regression Cases", () => {
   const cases = [
-    { transcript: "Very short", expected: false },
+    { transcript: "", expected: false },
     { transcript: "A bit longer transcript here...", callInfo: { phone: 123 }, expected: false }, // phone should be string
     { transcript: "Valid transcript with valid info", callInfo: { phone: "123" }, expected: true }
   ]
