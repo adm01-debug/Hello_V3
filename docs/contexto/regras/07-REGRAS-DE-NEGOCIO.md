@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5db3c07f39` · branch `main` · 2026-11-11 17:26 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `bc47e27e49` · branch `main` · 2026-11-12 14:20 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2415,7 +2415,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/functions/export-data-lake/index.ts` |
 
-## K. Testes como especificação (3925 testes em 314 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3924 testes em 314 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2456,8 +2456,8 @@ _nenhum item encontrado_
 | `src/lib/__tests__/call-park.test.ts` | 25 | call-park :: clampInt · nunca lança e respeita a faixa · tolera símbolos, objetos sem primitivo e NaN · call-park :: normalizeOrbitDraft … |
 | `src/hooks/__tests__/useWebAuthn.coverage.test.tsx` | 23 | useWebAuthn · loads passkeys and reports support on mount · handles loadPasskeys error path · does not load when no user … |
 | `src/lib/__tests__/dialer-tags-and-ringtone.test.ts` | 23 | normalizeTag · sempre devolve null ou string válida para o CHECK do banco · é idempotente · rejeita entradas não textuais e vazias … |
-| `src/lib/__tests__/performance-optimizations.test.ts` | 23 | Performance: React.memo wrapping · ${name} is wrapped with React.memo · ${name} imports memo from react · ${name} exports as named export with memo … |
 | `src/lib/__tests__/queue-audio.test.ts` | 23 | queue-audio :: clampNumber · nunca lança e respeita a faixa para qualquer entrada · tolera símbolos e objetos sem conversão primitiva · queue-audio :: sanitizeFileName … |
+| `src/lib/__tests__/performance-optimizations.test.ts` | 22 | Performance: React.memo wrapping · ${name} is wrapped with React.memo · ${name} imports memo from react · ${name} exports as named export with memo … |
 | `src/lib/__tests__/ring-group.test.ts` | 22 | sanitizeExtension · sempre produz null ou uma string aceita pelo CHECK do banco · descarta caracteres inválidos preservando os válidos · clampInt … |
 | `src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx` | 21 | useKbCategories · returns published categories · surfaces a query error · useKbArticles … |
 | `src/lib/__tests__/blf.test.ts` | 21 | blf: helpers puros · safeText normaliza tipos inesperados · agentKey ignora acentos, caixa e espaços múltiplos · maskPhone preserva no máximo os 4 últimos dígitos … |

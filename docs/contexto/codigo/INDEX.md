@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `5db3c07f3902ff71c61952f398f801d33deb5d20` (2026-11-11T14:22:40-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `bc47e27e4963dae47cca45cfa3c18298c076c74a` (2026-11-12T10:08:06-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1158), SQL (209), Markdown (99), JavaScript (27), JSON (14), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1159), SQL (209), Markdown (99), JavaScript (27), JSON (14), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1529 |
-| arquivos_codigo | 1189 |
-| linhas_codigo | 163135 |
+| arquivos_total | 1531 |
+| arquivos_codigo | 1190 |
+| linhas_codigo | 163212 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 171 |
 | migrations | 207 |
 | cron_jobs | 7 |
-| testes | 321 |
+| testes | 322 |
 | workflows | 3 |
 | scripts | 31 |
 | docs_md | 99 |
@@ -58,7 +58,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - componentes: src/components (313), src/pages (125), src/contexts (2)
 - hooks: src/hooks (171), src/components (12), src/contexts (2)
 - servicos_logica: src/lib (76), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (300), e2e/ (7), outro (5)
+- testes: co-localizado (__tests__) (300), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (5), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -331,7 +331,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Integrações externas
 - SDKs: Supabase, react-query, zod
-- hosts mais citados: ai.gateway.lovable.dev, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, example.supabase.co, api.elevenlabs.io, api.resend.com, ex.com, ipapi.co, mock.supabase.co, api.lovable.dev, exemplo.com, x.supabase.co, a.com, api.acme.io, api.ipify.org
+- hosts mais citados: ai.gateway.lovable.dev, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, api.lovable.dev, exemplo.com, x.supabase.co, a.com, api.acme.io, api.ipify.org
 - webhooks recebidos: migrate-helper
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, DD_API_KEY, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, LOVABLE_API_KEY, MICROSOFT_TEAMS_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
@@ -359,27 +359,27 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8798 nós · 23505 arestas · 675 comunidades · grafo do commit `5db3c07f`
-- comunidades maiores: lucide-react (304), vitest (197), react (178), protectedRoutes.tsx (171), logger.ts (163), client.ts (159), useAuthContext (128), ref_https (117), cn (111), safe-date.ts (105), react-router-dom (105), snapshot.py (102)
+- 8801 nós · 23526 arestas · 667 comunidades · grafo do commit `bc47e27e`
+- comunidades maiores: card.tsx (290), vitest (200), protectedRoutes.tsx (155), logger.ts (147), react (141), client.ts (140), usePageTitle (128), cn (116), safe-date.ts (107), lucide-react (106), useAuthContext (102), ref_https (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - ESTADO_ATUAL.md (5)
 - AGENTS.md (3)
+- .github/workflows/ci.yml (2)
 - docs/estado/edge-functions-parte1.md (2)
+- vite.config.ts (2)
 - .claude/skills/hello-v3/SKILL.md (1)
-- .github/workflows/ci.yml (1)
 - .github/workflows/contexto.yml (1)
 - .github/workflows/inventario-estado-semanal.yml (1)
 - CLAUDE.md (1)
 - ai-context.config.json (1)
 - deno.json (1)
+- deno.lock (1)
 - docs/CONTEXTO-PARA-AGENTES.md (1)
 - docs/agentes/banco.md (1)
 - docs/agentes/edge-functions.md (1)
-- docs/agentes/github-ci.md (1)
-- docs/agentes/lovable-deploy.md (1)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -417,6 +417,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-12 `bc47e27` fix(ci): integra PRs 18/19/20 - CI 100% verde
 - 2026-11-11 `5db3c07` Pipeline autônomo de contexto para agentes de IA (portado do Zapp Web V2) (#8)
 - 2026-11-09 `bb41eec` feat(network): integra voip-quality-alerts-summary ao dashboard
 - 2026-11-09 `2b05cbb` fix(chat-widget-session): aplica rate limit por IP no endpoint anônimo
@@ -431,7 +432,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-08-18 `7a75199` chore(hermes): adiciona .hermes.md (regras da casa Hermes)
 - 2026-08-18 `b38875e` chore(agents): adiciona AGENTS.md padrao (contexto multi-agente)
 - 2026-08-18 `057e597` Merge pull request #6 from adm01-debug/claude/system-status-features-boms0f
-- 2026-08-16 `96e389d` docs: declara a cobertura da revisão adversarial no ESTADO_ATUAL.md
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

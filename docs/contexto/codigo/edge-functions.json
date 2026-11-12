@@ -1442,7 +1442,7 @@
    "nome": "health-check",
    "entrada": "supabase/functions/health-check/index.ts",
    "arquivos": 1,
-   "linhas": 87,
+   "linhas": 89,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3123,7 +3123,7 @@
    "nome": "whatsapp-inbound",
    "entrada": "supabase/functions/whatsapp-inbound/index.ts",
    "arquivos": 3,
-   "linhas": 226,
+   "linhas": 230,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",

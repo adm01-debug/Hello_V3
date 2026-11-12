@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1158)",
+   "TypeScript (1159)",
    "SQL (209)",
    "Markdown (99)",
    "JavaScript (27)",
@@ -140,7 +140,10 @@
     "lint",
     "type-check"
    ],
-   "secrets": [],
+   "secrets": [
+    "VITE_SUPABASE_PUBLISHABLE_KEY",
+    "VITE_SUPABASE_URL"
+   ],
    "actions": [
     "actions/checkout",
     "actions/upload-artifact",
@@ -412,7 +415,9 @@
   ],
   "secrets_em_workflows": [
    "SUPABASE_ACCESS_TOKEN",
-   "SUPABASE_DB_URL"
+   "SUPABASE_DB_URL",
+   "VITE_SUPABASE_PUBLISHABLE_KEY",
+   "VITE_SUPABASE_URL"
   ]
  },
  "deploy": {
@@ -453,10 +458,6 @@
     "arquivos": 6
    },
    {
-    "host": "example.supabase.co",
-    "arquivos": 5
-   },
-   {
     "host": "api.elevenlabs.io",
     "arquivos": 3
    },
@@ -466,6 +467,10 @@
    },
    {
     "host": "ex.com",
+    "arquivos": 3
+   },
+   {
+    "host": "example.supabase.co",
     "arquivos": 3
    },
    {

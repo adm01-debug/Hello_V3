@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "5db3c07f3902ff71c61952f398f801d33deb5d20",
+  "sha": "bc47e27e4963dae47cca45cfa3c18298c076c74a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-11 17:26 UTC",
-  "files_total": 1995,
-  "code_files": 1405,
-  "code_lines": 177486
+  "generated_at": "2026-11-12 14:20 UTC",
+  "files_total": 1996,
+  "code_files": 1406,
+  "code_lines": 177563
  },
  "version": "1.3.2",
- "facts_hash": "90733fa2a5660492",
+ "facts_hash": "087fcc8266151706",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -155,7 +155,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 594,
-   ".ts": 564,
+   ".ts": 565,
    ".sql": 209,
    ".mjs": 25,
    ".js": 8,
@@ -31534,7 +31534,7 @@
   {
    "module": "(raiz)",
    "files": 6,
-   "lines": 415,
+   "lines": 393,
    "tables": [],
    "exports": [
     "eslint.config.js: tseslint",
@@ -32342,7 +32342,7 @@
   {
    "module": "src/lib",
    "files": 157,
-   "lines": 20548,
+   "lines": 20559,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -32739,7 +32739,7 @@
   {
    "module": "supabase/functions",
    "files": 146,
-   "lines": 16432,
+   "lines": 16456,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -32841,6 +32841,7 @@
     "validator.ts: ValidationError, StandardErrorResponse, createErrorResponse, validateBody",
     "voice-utils.ts: VoiceFeatures, cosineSimilarity, averageEmbeddings, verifyVerdict, REDACTION_PATTERNS, RedactionMatch",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
+    "index.ts: handler",
     "index.ts: detectAnomalies",
     "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
     "index.ts: ForecastDay, HistoryDay, buildHistory, forecastNextDays",
@@ -33046,11 +33047,12 @@
   },
   {
    "module": "tests",
-   "files": 5,
-   "lines": 275,
+   "files": 6,
+   "lines": 339,
    "tables": [],
    "exports": [
-    "adminSession.ts: SeedAdminSessionOptions, seedAdminSession"
+    "adminSession.ts: SeedAdminSessionOptions, seedAdminSession",
+    "skipGuard.ts: shouldSkipNoSession, hasAdminCredentials"
    ],
    "docs": [],
    "deps": [
@@ -33062,7 +33064,8 @@
     "tests/e2e/performance.spec.ts",
     "tests/e2e/webhook-audit-ndjson.spec.ts",
     "tests/e2e/workflow.spec.ts",
-    "tests/e2e/helpers/adminSession.ts"
+    "tests/e2e/helpers/adminSession.ts",
+    "tests/e2e/helpers/skipGuard.ts"
    ]
   }
  ],
@@ -35736,16 +35739,19 @@
     "scripts/ai-context/gerar.unit.mjs"
    ],
    "E2E_ADMIN_EMAIL": [
-    "tests/e2e/helpers/adminSession.ts"
+    "tests/e2e/helpers/adminSession.ts",
+    "tests/e2e/helpers/skipGuard.ts"
    ],
    "E2E_ADMIN_PASSWORD": [
-    "tests/e2e/helpers/adminSession.ts"
+    "tests/e2e/helpers/adminSession.ts",
+    "tests/e2e/helpers/skipGuard.ts"
    ],
    "E2E_SUPABASE_ANON_KEY": [
     "tests/e2e/helpers/adminSession.ts"
    ],
    "E2E_SUPABASE_SESSION_JSON": [
-    "tests/e2e/helpers/adminSession.ts"
+    "tests/e2e/helpers/adminSession.ts",
+    "tests/e2e/helpers/skipGuard.ts"
    ],
    "E2E_SUPABASE_URL": [
     "tests/e2e/helpers/adminSession.ts"
@@ -65858,23 +65864,19 @@
    },
    {
     "file": "src/lib/__tests__/performance-optimizations.test.ts",
-    "name": "Performance: Vite bundle splitting (manualChunks)"
+    "name": "Performance: Vite bundle splitting (automatic code-splitting)"
    },
    {
     "file": "src/lib/__tests__/performance-optimizations.test.ts",
-    "name": "vite.config.ts has manualChunks configuration"
+    "name": "em Vite automatic code-splitting, sem manualChunks"
    },
    {
     "file": "src/lib/__tests__/performance-optimizations.test.ts",
-    "name": "defines chunk "
+    "name": "não define chunks vendor explícitos"
    },
    {
     "file": "src/lib/__tests__/performance-optimizations.test.ts",
-    "name": "chunk "
-   },
-   {
-    "file": "src/lib/__tests__/performance-optimizations.test.ts",
-    "name": "has build.rollupOptions.output structure"
+    "name": "evita duplicar React no runtime (regressão do manualChunks circular)"
    },
    {
     "file": "src/lib/__tests__/performance-optimizations.test.ts",
@@ -67114,11 +67116,11 @@
    },
    {
     "file": "src/lib/__tests__/security-observability.test.ts",
-    "name": "uses rollup manual chunks"
+    "name": "delegates chunking to Vite automatic code-splitting (no manualChunks)"
    },
    {
     "file": "src/lib/__tests__/security-observability.test.ts",
-    "name": "separates vendor bundles"
+    "name": "avoids the vendor-react split that duplicated React at runtime"
    },
    {
     "file": "src/lib/__tests__/security-sanitizers.test.ts",
@@ -85521,7 +85523,7 @@
   },
   "vite.config.ts": {
    "path": "vite.config.ts",
-   "lines": 54,
+   "lines": 32,
    "exports": [
     "default defineConfig"
    ]
@@ -105787,7 +105789,7 @@
   },
   "src/lib/__tests__/performance-optimizations.test.ts": {
    "path": "src/lib/__tests__/performance-optimizations.test.ts",
-   "lines": 160,
+   "lines": 147,
    "is_test": true,
    "tests": [
     "Performance: React.memo wrapping",
@@ -105797,11 +105799,10 @@
     "StatsCard memo uses named function for DevTools",
     "TrendIndicator memo uses named function for DevTools",
     "CallVolumeChart memo uses named function for DevTools",
-    "Performance: Vite bundle splitting (manualChunks)",
-    "vite.config.ts has manualChunks configuration",
-    "defines chunk ",
-    "chunk ",
-    "has build.rollupOptions.output structure",
+    "Performance: Vite bundle splitting (automatic code-splitting)",
+    "em Vite automatic code-splitting, sem manualChunks",
+    "não define chunks vendor explícitos",
+    "evita duplicar React no runtime (regressão do manualChunks circular)",
     "Performance: Dashboard formatDuration utility",
     "formats 0 seconds as 0:00",
     "formats 60 seconds as 1:00",
@@ -105903,8 +105904,11 @@
   },
   "src/lib/__tests__/safe-date.test.ts": {
    "path": "src/lib/__tests__/safe-date.test.ts",
-   "lines": 128,
+   "lines": 132,
    "is_test": true,
+   "rule_comments": [
+    "8640000000000ms = limite seguro de Date.toISOString() (ano 275760);"
+   ],
    "doc": "Simulação massiva (PBT + cenários hostis) para `safe-date`. Cobre entradas nulas, strings arbitrárias, números fora do range de Date, timezones exóticos e máscaras diversas — garantindo que a função nunca lance `RangeError: Invalid time value`.",
    "tests": [
     "safe-date · entradas hostis nunca lançam",
@@ -106068,7 +106072,7 @@
   },
   "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts": {
    "path": "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts",
-   "lines": 162,
+   "lines": 179,
    "is_test": true,
    "params": [
     {
@@ -106263,8 +106267,11 @@
   },
   "src/lib/__tests__/security-observability.test.ts": {
    "path": "src/lib/__tests__/security-observability.test.ts",
-   "lines": 272,
+   "lines": 275,
    "is_test": true,
+   "rule_comments": [
+    "(React.forwardRef undefined, SPA em branco). Vite deve resolver em um"
+   ],
    "tests": [
     "Security: Logger PII masking (comprehensive)",
     "masks ",
@@ -106299,8 +106306,8 @@
     "exports getErrorReports returning a copy",
     "Observability: Vite config optimizations",
     "has production build optimization",
-    "uses rollup manual chunks",
-    "separates vendor bundles"
+    "delegates chunking to Vite automatic code-splitting (no manualChunks)",
+    "avoids the vendor-react split that duplicated React at runtime"
    ]
   },
   "src/lib/__tests__/security-sanitizers.test.ts": {
@@ -110914,26 +110921,15 @@
   },
   "supabase/functions/_shared/__tests__/validate.fuzz.test.ts": {
    "path": "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
-   "lines": 57,
+   "lines": 39,
    "is_test": true,
    "zod": [
     {
      "name": "baseSchema",
      "kind": "object",
-     "body": "{ id: z.string().uuid(), timestamp: z.string().datetime(), data: z.record(z.unknown()) }",
+     "body": "{ id: z.string().uuid(), timestamp: z.string().datetime(), data: z.record(z.string(), z.unknown()) }",
      "refines": [],
      "chain": []
-    }
-   ],
-   "rule_comments": [
-    "If it validates, it MUST match the schema",
-    "Validation failure is expected for random data"
-   ],
-   "calc_fns": [
-    {
-     "name": "validationError",
-     "params": "(",
-     "body": "try { validatePayload(baseSchema, payload) return null } catch (e) { return e }"
     }
    ],
    "tests": [
@@ -111019,7 +111015,7 @@
   },
   "supabase/functions/analyze-call/__tests__/schema.property.test.ts": {
    "path": "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
-   "lines": 38,
+   "lines": 37,
    "is_test": true,
    "tests": [
     "AnalyzeCallSchema - Property Based Testing",
@@ -111437,7 +111433,7 @@
   },
   "supabase/functions/bitrix-api/index.test.ts": {
    "path": "supabase/functions/bitrix-api/index.test.ts",
-   "lines": 45,
+   "lines": 48,
    "is_test": true,
    "tests": [
     "bitrix-api: CORS handling",
@@ -112049,7 +112045,7 @@
   },
   "supabase/functions/cleanup-lock-conflicts/index.test.ts": {
    "path": "supabase/functions/cleanup-lock-conflicts/index.test.ts",
-   "lines": 29,
+   "lines": 30,
    "is_test": true,
    "env": [
     "SUPABASE_URL",
@@ -113716,7 +113712,10 @@
   },
   "supabase/functions/health-check/index.ts": {
    "path": "supabase/functions/health-check/index.ts",
-   "lines": 87,
+   "lines": 89,
+   "exports": [
+    "const handler"
+   ],
    "tables": [
     {
      "table": "voip_trunk_health_checks",
@@ -114227,7 +114226,7 @@
   },
   "supabase/functions/score-call-attempt/__tests__/index.test.ts": {
    "path": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
-   "lines": 59,
+   "lines": 60,
    "is_test": true,
    "rule_comments": [
     "Valida: auth, validação Zod-like, branch DNC=block, fora de horário (multiplica por 0.1),"
@@ -115163,7 +115162,7 @@
   },
   "supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts": {
    "path": "supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts",
-   "lines": 41,
+   "lines": 46,
    "is_test": true,
    "env": [
     "SUPABASE_ANON_KEY",
@@ -115257,7 +115256,7 @@
   },
   "supabase/functions/voip-executive-narrative/__tests__/index.test.ts": {
    "path": "supabase/functions/voip-executive-narrative/__tests__/index.test.ts",
-   "lines": 30,
+   "lines": 34,
    "is_test": true,
    "env": [
     "SUPABASE_ANON_KEY",
@@ -115480,7 +115479,7 @@
   },
   "supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts": {
    "path": "supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts",
-   "lines": 41,
+   "lines": 46,
    "is_test": true,
    "env": [
     "SUPABASE_ANON_KEY",
@@ -115584,7 +115583,7 @@
   },
   "supabase/functions/voip-quality-heatmap/__tests__/index.test.ts": {
    "path": "supabase/functions/voip-quality-heatmap/__tests__/index.test.ts",
-   "lines": 42,
+   "lines": 47,
    "is_test": true,
    "env": [
     "VITE_SUPABASE_PUBLISHABLE_KEY",
@@ -115743,7 +115742,7 @@
   },
   "supabase/functions/voip-recommendation-insights/__tests__/index.test.ts": {
    "path": "supabase/functions/voip-recommendation-insights/__tests__/index.test.ts",
-   "lines": 117,
+   "lines": 120,
    "is_test": true,
    "env": [
     "VITE_SUPABASE_URL"
@@ -115831,7 +115830,7 @@
   },
   "supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts": {
    "path": "supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts",
-   "lines": 73,
+   "lines": 76,
    "is_test": true,
    "env": [
     "VITE_SUPABASE_URL"
@@ -115985,7 +115984,7 @@
   },
   "supabase/functions/voip-sla-report/__tests__/index.test.ts": {
    "path": "supabase/functions/voip-sla-report/__tests__/index.test.ts",
-   "lines": 57,
+   "lines": 64,
    "is_test": true,
    "env": [
     "SUPABASE_ANON_KEY",
@@ -116375,7 +116374,7 @@
   },
   "supabase/functions/whatsapp-inbound/schema.ts": {
    "path": "supabase/functions/whatsapp-inbound/schema.ts",
-   "lines": 25,
+   "lines": 27,
    "exports": [
     "const WhatsAppInboundV1Schema",
     "const WhatsAppInboundV2Schema",
@@ -116394,7 +116393,7 @@
   },
   "supabase/functions/whatsapp-inbound/schema_test.ts": {
    "path": "supabase/functions/whatsapp-inbound/schema_test.ts",
-   "lines": 62,
+   "lines": 64,
    "status_values": [
     {
      "field": "type",
@@ -117372,7 +117371,7 @@
   },
   "tests/e2e/auth.spec.ts": {
    "path": "tests/e2e/auth.spec.ts",
-   "lines": 25,
+   "lines": 34,
    "is_test": true,
    "tests": [
     "Authentication Flow",
@@ -117384,7 +117383,7 @@
   },
   "tests/e2e/performance.spec.ts": {
    "path": "tests/e2e/performance.spec.ts",
-   "lines": 37,
+   "lines": 51,
    "is_test": true,
    "temporal": [
     "await page.waitForSelector('.call-item', { timeout: 5000 }).catch(() => {});"
@@ -117398,7 +117397,7 @@
   },
   "tests/e2e/webhook-audit-ndjson.spec.ts": {
    "path": "tests/e2e/webhook-audit-ndjson.spec.ts",
-   "lines": 104,
+   "lines": 105,
    "is_test": true,
    "tests": [
     "Webhook — auditoria e download NDJSON",
@@ -117407,7 +117406,7 @@
   },
   "tests/e2e/workflow.spec.ts": {
    "path": "tests/e2e/workflow.spec.ts",
-   "lines": 28,
+   "lines": 36,
    "is_test": true,
    "tests": [
     "Complete User Workflow",
@@ -117435,13 +117434,76 @@
    "rule_comments": [
     "3. Sem credenciais utilizáveis, retorna `false` — o teste chamador deve `test.skip()`."
    ]
+  },
+  "tests/e2e/helpers/skipGuard.ts": {
+   "path": "tests/e2e/helpers/skipGuard.ts",
+   "lines": 32,
+   "is_test": true,
+   "exports": [
+    "function shouldSkipNoSession",
+    "function hasAdminCredentials"
+   ],
+   "env": [
+    "E2E_ADMIN_EMAIL",
+    "E2E_ADMIN_PASSWORD",
+    "E2E_SUPABASE_SESSION_JSON"
+   ],
+   "rule_comments": [
+    "* Decide se o spec deve ser pulado por falta de sessão admin real."
+   ],
+   "calc_fns": [
+    {
+     "name": "shouldSkipNoSession",
+     "params": "page: Page, seeded: boolean",
+     "body": "if (seeded) return false; const redirectedToLogin = await page .waitForURL(/(\\/login|\\/auth)/, { timeout: 5000 }) .then(() => true) .catch(() => false); return redirectedToLogin || /^\\/(login|auth)/.test(new URL(page.url()).pathname);"
+    }
+   ],
+   "temporal": [
+    ".waitForURL(/(\\/login|\\/auth)/, { timeout: 5000 })"
+   ]
   }
  },
  "git": {
-  "sha": "5db3c07f3902ff71c61952f398f801d33deb5d20",
+  "sha": "bc47e27e4963dae47cca45cfa3c18298c076c74a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "bc47e27",
+    "date": "2026-11-12",
+    "author": "adm01-debug",
+    "subject": "fix(ci): integra PRs 18/19/20 - CI 100% verde",
+    "files": [
+     ".github/workflows/ci.yml",
+     "deno.lock",
+     "src/lib/__tests__/performance-optimizations.test.ts",
+     "src/lib/__tests__/safe-date.test.ts",
+     "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts",
+     "src/lib/__tests__/security-observability.test.ts",
+     "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
+     "supabase/functions/_shared/rate-limit.ts",
+     "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
+     "supabase/functions/bitrix-api/index.test.ts",
+     "supabase/functions/cleanup-lock-conflicts/index.test.ts",
+     "supabase/functions/health-check/index.ts",
+     "supabase/functions/score-call-attempt/__tests__/index.test.ts",
+     "supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts",
+     "supabase/functions/voip-executive-narrative/__tests__/index.test.ts",
+     "supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts",
+     "supabase/functions/voip-quality-heatmap/__tests__/index.test.ts",
+     "supabase/functions/voip-recommendation-insights/__tests__/index.test.ts",
+     "supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts",
+     "supabase/functions/voip-sla-report/__tests__/index.test.ts",
+     "supabase/functions/whatsapp-inbound/schema.ts",
+     "supabase/functions/whatsapp-inbound/schema_test.ts",
+     "tests/e2e/auth.spec.ts",
+     "tests/e2e/helpers/skipGuard.ts",
+     "tests/e2e/performance.spec.ts",
+     "tests/e2e/webhook-audit-ndjson.spec.ts",
+     "tests/e2e/workflow.spec.ts",
+     "vite.config.ts"
+    ]
+   },
    {
     "sha": "5db3c07",
     "date": "2026-11-11",
@@ -119762,15 +119824,6 @@
      "src/lib/__tests__/blf.test.ts",
      "src/pages/BlfBoard.tsx"
     ]
-   },
-   {
-    "sha": "265b6b3",
-    "date": "2026-07-27",
-    "author": "gpt-engineer-app[bot]",
-    "subject": "Changes",
-    "files": [
-     "src/components/blf/BlfSummaryBar.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -119781,6 +119834,14 @@
    [
     "supabase/functions/migrate-helper/index.ts",
     4
+   ],
+   [
+    ".github/workflows/ci.yml",
+    3
+   ],
+   [
+    "vite.config.ts",
+    3
    ],
    [
     "AGENTS.md",
@@ -119803,55 +119864,47 @@
     3
    ],
    [
-    ".gitignore",
+    "src/lib/__tests__/performance-optimizations.test.ts",
     2
    ],
    [
-    "package.json",
+    "src/lib/__tests__/safe-date.test.ts",
     2
    ],
    [
-    "src/pages/NetworkDiagnostics.tsx",
+    "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts",
     2
    ],
    [
-    "docs/estado/edge-functions-parte1.md",
+    "src/lib/__tests__/security-observability.test.ts",
     2
    ],
    [
-    "supabase/functions/chat-widget-session/index.ts",
+    "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
     2
    ],
    [
-    "playwright.config.ts",
+    "supabase/functions/_shared/rate-limit.ts",
     2
    ],
    [
-    "vite.config.ts",
+    "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
     2
    ],
    [
-    "src/hooks/__tests__/useSessionManager.coverage.test.tsx",
+    "supabase/functions/bitrix-api/index.test.ts",
     2
    ],
    [
-    "src/lib/__tests__/voice-preferences.test.ts",
+    "supabase/functions/cleanup-lock-conflicts/index.test.ts",
     2
    ],
    [
-    "src/components/voice/overlay/usePhaseColors.ts",
+    "supabase/functions/health-check/index.ts",
     2
    ],
    [
-    ".github/workflows/ci.yml",
-    2
-   ],
-   [
-    ".hermes.md",
-    2
-   ],
-   [
-    ".env",
+    "supabase/functions/score-call-attempt/__tests__/index.test.ts",
     2
    ]
   ]

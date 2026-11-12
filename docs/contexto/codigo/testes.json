@@ -5,10 +5,10 @@
   "vitest",
   "playwright"
  ],
- "total": 321,
+ "total": 322,
  "por_tipo": {
   "contrato": 1,
-  "e2e": 12,
+  "e2e": 13,
   "pytest": 2,
   "unit": 306
  },
@@ -22,11 +22,11 @@
    "arquivos": 7
   },
   {
-   "padrao": "outro",
-   "arquivos": 5
+   "padrao": "tests/",
+   "arquivos": 6
   },
   {
-   "padrao": "tests/",
+   "padrao": "outro",
    "arquivos": 5
   },
   {
@@ -2075,9 +2075,9 @@
   {
    "arquivo": "src/lib/__tests__/performance-optimizations.test.ts",
    "tipo": "unit",
-   "linhas": 160,
+   "linhas": 147,
    "testa": [],
-   "casos": 19
+   "casos": 18
   },
   {
    "arquivo": "src/lib/__tests__/phone-normalization.property.test.ts",
@@ -2118,7 +2118,7 @@
   {
    "arquivo": "src/lib/__tests__/safe-date.test.ts",
    "tipo": "unit",
-   "linhas": 128,
+   "linhas": 132,
    "testa": [
     "src/lib/safe-date.ts"
    ],
@@ -2177,7 +2177,7 @@
   {
    "arquivo": "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts",
    "tipo": "unit",
-   "linhas": 162,
+   "linhas": 179,
    "testa": [
     "src/lib/security-alerts-webhook-queue.ts",
     "src/lib/security-alerts-webhook.ts"
@@ -2249,7 +2249,7 @@
   {
    "arquivo": "src/lib/__tests__/security-observability.test.ts",
    "tipo": "unit",
-   "linhas": 272,
+   "linhas": 275,
    "testa": [
     "src/lib/logger.ts"
    ],
@@ -2596,10 +2596,8 @@
   {
    "arquivo": "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
    "tipo": "unit",
-   "linhas": 57,
-   "testa": [
-    "supabase/functions/_shared/validator.ts"
-   ],
+   "linhas": 39,
+   "testa": [],
    "casos": 2
   },
   {
@@ -2624,7 +2622,7 @@
   {
    "arquivo": "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
    "tipo": "unit",
-   "linhas": 38,
+   "linhas": 37,
    "testa": [
     "supabase/functions/analyze-call/schema.ts"
    ],
@@ -2633,7 +2631,7 @@
   {
    "arquivo": "supabase/functions/bitrix-api/index.test.ts",
    "tipo": "unit",
-   "linhas": 45,
+   "linhas": 48,
    "testa": [
     "supabase/functions/bitrix-api/index.ts"
    ],
@@ -2663,7 +2661,7 @@
   {
    "arquivo": "supabase/functions/cleanup-lock-conflicts/index.test.ts",
    "tipo": "unit",
-   "linhas": 29,
+   "linhas": 30,
    "testa": [],
    "casos": 2
   },
@@ -2693,7 +2691,7 @@
   {
    "arquivo": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 59,
+   "linhas": 60,
    "testa": [],
    "casos": 7
   },
@@ -2752,14 +2750,14 @@
   {
    "arquivo": "supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 41,
+   "linhas": 46,
    "testa": [],
    "casos": 4
   },
   {
    "arquivo": "supabase/functions/voip-executive-narrative/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 30,
+   "linhas": 34,
    "testa": [],
    "casos": 3
   },
@@ -2775,7 +2773,7 @@
   {
    "arquivo": "supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 41,
+   "linhas": 46,
    "testa": [],
    "casos": 4
   },
@@ -2791,7 +2789,7 @@
   {
    "arquivo": "supabase/functions/voip-quality-heatmap/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 42,
+   "linhas": 47,
    "testa": [],
    "casos": 4
   },
@@ -2807,7 +2805,7 @@
   {
    "arquivo": "supabase/functions/voip-recommendation-insights/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 117,
+   "linhas": 120,
    "testa": [
     "supabase/functions/voip-recommendation-insights/index.ts"
    ],
@@ -2816,7 +2814,7 @@
   {
    "arquivo": "supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 73,
+   "linhas": 76,
    "testa": [
     "supabase/functions/voip-recommendation-simulate/index.ts"
    ],
@@ -2834,7 +2832,7 @@
   {
    "arquivo": "supabase/functions/voip-sla-report/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 57,
+   "linhas": 64,
    "testa": [],
    "casos": 6
   },
@@ -2859,9 +2857,9 @@
   {
    "arquivo": "tests/e2e/auth.spec.ts",
    "tipo": "e2e",
-   "linhas": 25,
+   "linhas": 34,
    "testa": [],
-   "casos": 3
+   "casos": 5
   },
   {
    "arquivo": "tests/e2e/helpers/adminSession.ts",
@@ -2871,25 +2869,32 @@
    "casos": 0
   },
   {
+   "arquivo": "tests/e2e/helpers/skipGuard.ts",
+   "tipo": "e2e",
+   "linhas": 32,
+   "testa": [],
+   "casos": 1
+  },
+  {
    "arquivo": "tests/e2e/performance.spec.ts",
    "tipo": "e2e",
-   "linhas": 37,
+   "linhas": 51,
    "testa": [],
-   "casos": 2
+   "casos": 4
   },
   {
    "arquivo": "tests/e2e/webhook-audit-ndjson.spec.ts",
    "tipo": "e2e",
-   "linhas": 104,
+   "linhas": 105,
    "testa": [],
-   "casos": 3
+   "casos": 2
   },
   {
    "arquivo": "tests/e2e/workflow.spec.ts",
    "tipo": "e2e",
-   "linhas": 28,
+   "linhas": 36,
    "testa": [],
-   "casos": 1
+   "casos": 2
   }
  ],
  "sql": [],
@@ -3124,7 +3129,7 @@
   "src/pages/roles/useRoles.ts": 1,
   "supabase/functions/_shared/cors.ts": 1,
   "supabase/functions/_shared/resilience.ts": 2,
-  "supabase/functions/_shared/validator.ts": 2,
+  "supabase/functions/_shared/validator.ts": 1,
   "supabase/functions/analyze-call/schema.ts": 3,
   "supabase/functions/bitrix-api/index.ts": 1,
   "supabase/functions/health-check/index.ts": 1,

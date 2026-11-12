@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "5db3c07f3902ff71c61952f398f801d33deb5d20",
+  "commit": "bc47e27e4963dae47cca45cfa3c18298c076c74a",
   "branch": "main",
-  "data_commit": "2026-11-11T14:22:40-03:00",
+  "data_commit": "2026-11-12T10:08:06-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "bc47e27",
+    "data": "2026-11-12",
+    "assunto": "fix(ci): integra PRs 18/19/20 - CI 100% verde"
+   },
    {
     "sha": "5db3c07",
     "data": "2026-11-11",
@@ -126,17 +131,20 @@
     "sha": "11c5cd0",
     "data": "2026-07-27",
     "assunto": "Implement BLF real-time panel"
-   },
-   {
-    "sha": "cbca424",
-    "data": "2026-07-27",
-    "assunto": "Changes"
    }
   ],
-  "arquivos_mudados_7d": 55,
+  "arquivos_mudados_7d": 81,
   "pastas_mais_mudadas_30d": [
    {
+    "pasta": "src/lib/__tests__",
+    "mudancas": 5
+   },
+   {
     "pasta": ".agents/skills/hello-v3",
+    "mudancas": 2
+   },
+   {
+    "pasta": ".github/workflows/ci.yml",
     "mudancas": 2
    },
    {
@@ -152,11 +160,19 @@
     "mudancas": 2
    },
    {
-    "pasta": ".claude/skills/hello-v3",
-    "mudancas": 1
+    "pasta": "supabase/functions/_shared",
+    "mudancas": 2
    },
    {
-    "pasta": ".github/workflows/ci.yml",
+    "pasta": "supabase/functions/whatsapp-inbound",
+    "mudancas": 2
+   },
+   {
+    "pasta": "vite.config.ts",
+    "mudancas": 2
+   },
+   {
+    "pasta": ".claude/skills/hello-v3",
     "mudancas": 1
    },
    {
@@ -178,22 +194,6 @@
    {
     "pasta": "CLAUDE.md",
     "mudancas": 1
-   },
-   {
-    "pasta": "ai-context.config.json",
-    "mudancas": 1
-   },
-   {
-    "pasta": "deno.json",
-    "mudancas": 1
-   },
-   {
-    "pasta": "docs/CONTEXTO-PARA-AGENTES.md",
-    "mudancas": 1
-   },
-   {
-    "pasta": "docs/agentes/banco.md",
-    "mudancas": 1
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -206,15 +206,19 @@
     "mudancas": 3
    },
    {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 2
+   },
+   {
     "arquivo": "docs/estado/edge-functions-parte1.md",
     "mudancas": 2
    },
    {
-    "arquivo": ".claude/skills/hello-v3/SKILL.md",
-    "mudancas": 1
+    "arquivo": "vite.config.ts",
+    "mudancas": 2
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
+    "arquivo": ".claude/skills/hello-v3/SKILL.md",
     "mudancas": 1
    },
    {
@@ -235,6 +239,10 @@
    },
    {
     "arquivo": "deno.json",
+    "mudancas": 1
+   },
+   {
+    "arquivo": "deno.lock",
     "mudancas": 1
    },
    {
@@ -288,27 +296,19 @@
    {
     "arquivo": "docs/estado/componentes-parte4.md",
     "mudancas": 1
-   },
-   {
-    "arquivo": "docs/estado/dados-schema-migrations.md",
-    "mudancas": 1
-   },
-   {
-    "arquivo": "docs/estado/edge-functions-parte2.md",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 8
+    "commits": 9
    }
   ]
  },
  "contagens": {
-  "arquivos_total": 1529,
-  "arquivos_codigo": 1189,
-  "linhas_codigo": 163135,
+  "arquivos_total": 1531,
+  "arquivos_codigo": 1190,
+  "linhas_codigo": 163212,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -320,7 +320,7 @@
   "tabelas": 171,
   "migrations": 207,
   "cron_jobs": 7,
-  "testes": 321,
+  "testes": 322,
   "workflows": 3,
   "scripts": 31,
   "docs_md": 99
@@ -484,7 +484,7 @@
   },
   "src/lib": {
    "arquivos": 157,
-   "linhas": 20548
+   "linhas": 20559
   },
   "src/main.tsx": {
    "arquivos": 1,
@@ -504,19 +504,19 @@
   },
   "supabase/functions": {
    "arquivos": 146,
-   "linhas": 16432
+   "linhas": 16456
   },
   "tailwind.config.ts": {
    "arquivos": 1,
    "linhas": 232
   },
   "tests/e2e": {
-   "arquivos": 5,
-   "linhas": 275
+   "arquivos": 6,
+   "linhas": 339
   },
   "vite.config.ts": {
    "arquivos": 1,
-   "linhas": 54
+   "linhas": 32
   },
   "vitest.config.ts": {
    "arquivos": 1,
