@@ -87,7 +87,11 @@ describe("safe-date · wrappers auxiliares nunca lançam", () => {
     fc.constant(Infinity),
     fc.constant(-Infinity),
     fc.double(),
-    fc.date().map((d) => d.toISOString()),
+    // 8640000000000ms = limite seguro de Date.toISOString() (ano 275760);
+    // fc.date() pode gerar datas além disso e lançar dentro do gerador.
+    fc
+      .integer({ min: 0, max: 8640000000000 })
+      .map((ms) => new Date(ms).toISOString()),
   );
 
   it("PBT: safeFormatDistanceToNow tolera qualquer entrada", () => {
