@@ -6,7 +6,7 @@
     "rotas_publicas": 11,
     "rotas_protegidas": 93,
     "paginas_orfas": 1,
-    "hooks_distintos": 180,
+    "hooks_distintos": 181,
     "problemas": 1
   },
   "rotas": [
@@ -37,7 +37,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 54,
+      "arquivos_lidos": 55,
       "hooks": [
         {
           "nome": "useAuditLog",
@@ -2248,7 +2248,7 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 36,
+      "arquivos_lidos": 38,
       "hooks": [
         {
           "nome": "useAnomalyRemediation",
@@ -2281,6 +2281,10 @@
         {
           "nome": "useVoipExecutiveSummary",
           "arquivo": "src/hooks/useVoipExecutiveSummary.ts"
+        },
+        {
+          "nome": "useVoipQualityAlertsSummary",
+          "arquivo": "src/hooks/useVoipQualityAlertsSummary.ts"
         },
         {
           "nome": "useVoipQualityForecastFetch",
@@ -4987,6 +4991,12 @@
       "arquivo": "src/hooks/useVoipMonitoringSettings.ts",
       "rotas": [
         "/admin/voip-trunks"
+      ]
+    },
+    "useVoipQualityAlertsSummary": {
+      "arquivo": "src/hooks/useVoipQualityAlertsSummary.ts",
+      "rotas": [
+        "/network-diagnostics"
       ]
     },
     "useVoipQualityForecastFetch": {
