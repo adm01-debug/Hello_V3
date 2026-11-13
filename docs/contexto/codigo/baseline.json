@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "cf8f7fc70fb6e7c09a6aac66650fdba70d438460",
+  "commit": "fece2f32f54706fbde131dba5af10b59606fba9a",
   "branch": "main",
-  "data_commit": "2026-11-13T10:26:44-03:00",
+  "data_commit": "2026-11-13T14:00:42Z",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "fece2f3",
+    "data": "2026-11-13",
+    "assunto": "chore: inventario do estado real [auto] (#27)"
+   },
    {
     "sha": "cf8f7fc",
     "data": "2026-11-13",
@@ -126,18 +131,17 @@
     "sha": "35c8668",
     "data": "2026-08-16",
     "assunto": "docs: precisa o diagnóstico do CI vermelho no ESTADO_ATUAL.md"
-   },
-   {
-    "sha": "e63bf6f",
-    "data": "2026-08-16",
-    "assunto": "docs: auditoria de estado do sistema (ESTADO_ATUAL.md + docs/estado/)"
    }
   ],
-  "arquivos_mudados_7d": 81,
+  "arquivos_mudados_7d": 82,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/lib/__tests__",
     "mudancas": 5
+   },
+   {
+    "pasta": "inventario/estado/edges.json",
+    "mudancas": 3
    },
    {
     "pasta": ".agents/skills/hello-v3",
@@ -161,10 +165,6 @@
    },
    {
     "pasta": "docs/contexto/regras",
-    "mudancas": 2
-   },
-   {
-    "pasta": "inventario/estado/edges.json",
     "mudancas": 2
    },
    {
@@ -206,6 +206,10 @@
     "mudancas": 3
    },
    {
+    "arquivo": "inventario/estado/edges.json",
+    "mudancas": 3
+   },
+   {
     "arquivo": ".github/workflows/ci.yml",
     "mudancas": 2
    },
@@ -219,10 +223,6 @@
    },
    {
     "arquivo": "docs/estado/edge-functions-parte1.md",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "inventario/estado/edges.json",
     "mudancas": 2
    },
    {
@@ -305,12 +305,12 @@
    },
    {
     "autor": "github-actions[bot]",
-    "commits": 1
+    "commits": 2
    }
   ]
  },
  "contagens": {
-  "arquivos_total": 1531,
+  "arquivos_total": 1532,
   "arquivos_codigo": 1190,
   "linhas_codigo": 163224,
   "rotas": 104,

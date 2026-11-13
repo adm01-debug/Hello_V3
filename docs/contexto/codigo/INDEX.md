@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `cf8f7fc70fb6e7c09a6aac66650fdba70d438460` (2026-11-13T10:26:44-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `fece2f32f54706fbde131dba5af10b59606fba9a` (2026-11-13T14:00:42Z).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1159), SQL (209), Markdown (99), JavaScript (27), JSON (14), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1159), SQL (209), Markdown (99), JavaScript (27), JSON (15), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,7 +34,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1531 |
+| arquivos_total | 1532 |
 | arquivos_codigo | 1190 |
 | linhas_codigo | 163224 |
 | rotas | 104 |
@@ -359,7 +359,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8801 nós · 23526 arestas · 667 comunidades · grafo do commit `cf8f7fc7`
+- 8801 nós · 23526 arestas · 667 comunidades · grafo do commit `fece2f32`
 - comunidades maiores: card.tsx (290), vitest (200), protectedRoutes.tsx (155), logger.ts (147), react (141), client.ts (140), usePageTitle (128), cn (116), safe-date.ts (107), lucide-react (106), useAuthContext (102), ref_https (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -367,11 +367,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Hotspots (arquivos mais alterados, 90 dias)
 - ESTADO_ATUAL.md (5)
 - AGENTS.md (3)
+- inventario/estado/edges.json (3)
 - .github/workflows/ci.yml (2)
 - .github/workflows/contexto.yml (2)
 - .github/workflows/inventario-estado-semanal.yml (2)
 - docs/estado/edge-functions-parte1.md (2)
-- inventario/estado/edges.json (2)
 - inventario/estado/rotas.json (2)
 - scripts/inventario/banco.sql (2)
 - scripts/inventario/gerar-banco.mjs (2)
@@ -417,6 +417,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-13 `fece2f3` chore: inventario do estado real [auto] (#27)
 - 2026-11-13 `cf8f7fc` fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)
 - 2026-11-13 `4e40e57` infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)
 - 2026-11-13 `650143f` fix: test_snapshot.py lê arquivos gerados com UTF-8 explícito (#24)
@@ -431,7 +432,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-08 `7484809` feat(ci): deno.json com import map — testes Deno herméticos
 - 2026-11-08 `510d039` fix(voice): substitui Number.parseFloat por safeParseFloat em usePhaseColors
 - 2026-11-08 `a5a156e` docs(agentes): replica e corrige documentação de agentes do Zapp Web V2
-- 2026-08-28 `7307a87` Visual edit in Lovable
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
