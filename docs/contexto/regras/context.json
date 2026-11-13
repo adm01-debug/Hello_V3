@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "650143f9083f5582c9751b575b44637f34916279",
+  "sha": "4e40e57836cc99fc04327dc45790297c0f1baf41",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-13 11:12 UTC",
+  "generated_at": "2026-11-13 12:35 UTC",
   "files_total": 1996,
   "code_files": 1406,
   "code_lines": 177563
@@ -117464,10 +117464,19 @@
   }
  },
  "git": {
-  "sha": "650143f9083f5582c9751b575b44637f34916279",
+  "sha": "4e40e57836cc99fc04327dc45790297c0f1baf41",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4e40e57",
+    "date": "2026-11-13",
+    "author": "adm01-debug",
+    "subject": "infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)",
+    "files": [
+     ".github/workflows/contexto.yml"
+    ]
+   },
    {
     "sha": "650143f",
     "date": "2026-11-13",
@@ -119812,15 +119821,6 @@
     "files": [
      ".lovable/memory/voip/painel-blf-ramais.md"
     ]
-   },
-   {
-    "sha": "e41cd99",
-    "date": "2026-07-27",
-    "author": "gpt-engineer-app[bot]",
-    "subject": "Changes",
-    "files": [
-     "src/routes/protectedRoutes.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -119847,6 +119847,10 @@
    [
     "supabase/config.toml",
     3
+   ],
+   [
+    ".github/workflows/contexto.yml",
+    2
    ],
    [
     "scripts/supabase_snapshot/test_snapshot.py",
@@ -119898,10 +119902,6 @@
    ],
    [
     "supabase/functions/cleanup-lock-conflicts/index.test.ts",
-    2
-   ],
-   [
-    "supabase/functions/health-check/index.ts",
     2
    ]
   ]

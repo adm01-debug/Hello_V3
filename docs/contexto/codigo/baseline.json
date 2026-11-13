@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "650143f9083f5582c9751b575b44637f34916279",
+  "commit": "4e40e57836cc99fc04327dc45790297c0f1baf41",
   "branch": "main",
-  "data_commit": "2026-11-13T07:41:40-03:00",
+  "data_commit": "2026-11-13T08:57:34-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4e40e57",
+    "data": "2026-11-13",
+    "assunto": "infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)"
+   },
    {
     "sha": "650143f",
     "data": "2026-11-13",
@@ -126,11 +131,6 @@
     "sha": "9160623",
     "data": "2026-08-11",
     "assunto": "security: remove migrate-helper edge function (exposes service_role key)"
-   },
-   {
-    "sha": "61f71f1",
-    "data": "2026-08-05",
-    "assunto": "merge: master para main"
    }
   ],
   "arquivos_mudados_7d": 81,
@@ -145,6 +145,10 @@
    },
    {
     "pasta": ".github/workflows/ci.yml",
+    "mudancas": 2
+   },
+   {
+    "pasta": ".github/workflows/contexto.yml",
     "mudancas": 2
    },
    {
@@ -190,10 +194,6 @@
    {
     "pasta": ".claude/skills/hello-v3",
     "mudancas": 1
-   },
-   {
-    "pasta": ".github/workflows/contexto.yml",
-    "mudancas": 1
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -207,6 +207,10 @@
    },
    {
     "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 2
+   },
+   {
+    "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 2
    },
    {
@@ -235,10 +239,6 @@
    },
    {
     "arquivo": ".claude/skills/hello-v3/SKILL.md",
-    "mudancas": 1
-   },
-   {
-    "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 1
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 11
+    "commits": 12
    },
    {
     "autor": "github-actions[bot]",
