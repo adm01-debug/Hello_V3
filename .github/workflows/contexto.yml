@@ -248,7 +248,7 @@ jobs:
       - name: Guard — nenhum segredo na saída
         if: env.SNAPSHOT_SKIPPED != '1'
         run: |
-          if grep -rIEl 'eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}|sb_secret_|sb_publishable_|postgres(ql)?://[^ ]*:[^ @]+@' "$SNAPSHOT_DIR"; then
+          if grep -rIPl 'eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}|sb_secret_|sb_publishable_|postgres(ql)?://[^ ]*:(?!\[REDACTED\][@])[^ @]+@' "$SNAPSHOT_DIR"; then
             echo "::error::Possível segredo detectado no snapshot — publicação abortada"; exit 1
           fi
 
