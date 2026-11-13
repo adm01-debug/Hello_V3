@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "livre",
   "exemplos": [
+   "fix: test_snapshot.py lê arquivos gerados com UTF-8 explícito (#24)",
    "fix(ci): inventario nao quebra sem banco.json (add-paths varre o diretorio) (#22)",
    "chore: inventario do estado real [auto] (#23)",
    "fix(ci): integra PRs 18/19/20 - CI 100% verde",
-   "Pipeline autônomo de contexto para agentes de IA (portado do Zapp Web V2) (#8)",
-   "feat(network): integra voip-quality-alerts-summary ao dashboard"
+   "Pipeline autônomo de contexto para agentes de IA (portado do Zapp Web V2) (#8)"
   ]
  },
  "pr_template": null,

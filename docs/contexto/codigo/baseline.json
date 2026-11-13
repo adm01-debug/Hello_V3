@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "f8c3c37941aaa3292dbc8422f6aa43902e853771",
+  "commit": "650143f9083f5582c9751b575b44637f34916279",
   "branch": "main",
-  "data_commit": "2026-11-12T19:23:12-03:00",
+  "data_commit": "2026-11-13T07:41:40-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "650143f",
+    "data": "2026-11-13",
+    "assunto": "fix: test_snapshot.py lê arquivos gerados com UTF-8 explícito (#24)"
+   },
    {
     "sha": "f8c3c37",
     "data": "2026-11-12",
@@ -126,11 +131,6 @@
     "sha": "61f71f1",
     "data": "2026-08-05",
     "assunto": "merge: master para main"
-   },
-   {
-    "sha": "9422246",
-    "data": "2026-08-05",
-    "assunto": "feat: Migração Banco Lovable para Supabase Hello - V3"
    }
   ],
   "arquivos_mudados_7d": 81,
@@ -168,6 +168,10 @@
     "mudancas": 2
    },
    {
+    "pasta": "scripts/supabase_snapshot/test_snapshot.py",
+    "mudancas": 2
+   },
+   {
     "pasta": "src/hooks/__tests__",
     "mudancas": 2
    },
@@ -189,10 +193,6 @@
    },
    {
     "pasta": ".github/workflows/contexto.yml",
-    "mudancas": 1
-   },
-   {
-    "pasta": ".gitignore",
     "mudancas": 1
    }
   ],
@@ -223,6 +223,10 @@
    },
    {
     "arquivo": "inventario/estado/rotas.json",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "scripts/supabase_snapshot/test_snapshot.py",
     "mudancas": 2
    },
    {
@@ -292,16 +296,12 @@
    {
     "arquivo": "docs/estado/componentes-parte1.md",
     "mudancas": 1
-   },
-   {
-    "arquivo": "docs/estado/componentes-parte2.md",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 10
+    "commits": 11
    },
    {
     "autor": "github-actions[bot]",

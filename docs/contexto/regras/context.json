@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "f8c3c37941aaa3292dbc8422f6aa43902e853771",
+  "sha": "650143f9083f5582c9751b575b44637f34916279",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-12 23:26 UTC",
+  "generated_at": "2026-11-13 11:12 UTC",
   "files_total": 1996,
   "code_files": 1406,
   "code_lines": 177563
@@ -117464,10 +117464,19 @@
   }
  },
  "git": {
-  "sha": "f8c3c37941aaa3292dbc8422f6aa43902e853771",
+  "sha": "650143f9083f5582c9751b575b44637f34916279",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "650143f",
+    "date": "2026-11-13",
+    "author": "adm01-debug",
+    "subject": "fix: test_snapshot.py lê arquivos gerados com UTF-8 explícito (#24)",
+    "files": [
+     "scripts/supabase_snapshot/test_snapshot.py"
+    ]
+   },
    {
     "sha": "f8c3c37",
     "date": "2026-11-12",
@@ -119812,16 +119821,6 @@
     "files": [
      "src/routes/protectedRoutes.tsx"
     ]
-   },
-   {
-    "sha": "f470968",
-    "date": "2026-07-27",
-    "author": "gpt-engineer-app[bot]",
-    "subject": "Changes",
-    "files": [
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -119848,6 +119847,10 @@
    [
     "supabase/config.toml",
     3
+   ],
+   [
+    "scripts/supabase_snapshot/test_snapshot.py",
+    2
    ],
    [
     ".github/workflows/inventario-estado-semanal.yml",
@@ -119899,10 +119902,6 @@
    ],
    [
     "supabase/functions/health-check/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/score-call-attempt/__tests__/index.test.ts",
     2
    ]
   ]
