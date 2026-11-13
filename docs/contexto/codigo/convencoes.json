@@ -34,7 +34,7 @@
   ],
   "docs": [
    "(raiz) (5)",
-   "docs (2)",
+   "docs (3)",
    ".github (1)"
   ]
  },
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "livre",
   "exemplos": [
+   "chore: docs: relatorio de prod-readiness com inventario de funcionalidades (#30)",
    "fix: guard de segredo do contexto ignora senha ja redigida (#29)",
    "fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)",
    "chore: inventario do estado real [auto] (#27)",
-   "fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)",
-   "infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)"
+   "fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)"
   ]
  },
  "pr_template": null,

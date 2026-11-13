@@ -1,10 +1,10 @@
 {
  "meta": {
-  "sha": "75a5df15c14330831b1074b021ef46f800a27180",
+  "sha": "4060612d79270999e2ed6ca8dc344ba7936dd733",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-13 22:27 UTC",
-  "files_total": 1997,
+  "generated_at": "2026-11-13 23:16 UTC",
+  "files_total": 1998,
   "code_files": 1406,
   "code_lines": 177591
  },
@@ -117464,10 +117464,19 @@
   }
  },
  "git": {
-  "sha": "75a5df15c14330831b1074b021ef46f800a27180",
+  "sha": "4060612d79270999e2ed6ca8dc344ba7936dd733",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4060612",
+    "date": "2026-11-13",
+    "author": "adm01-debug",
+    "subject": "chore: docs: relatorio de prod-readiness com inventario de funcionalidades (#30)",
+    "files": [
+     "docs/prod-readiness.md"
+    ]
+   },
    {
     "sha": "75a5df1",
     "date": "2026-11-13",
@@ -117823,13 +117832,6 @@
      "supabase/functions/migrate-helper/index.ts",
      "supabase/functions/migrate-helper/index_test.ts"
     ]
-   },
-   {
-    "sha": "61f71f1",
-    "date": "2026-08-05",
-    "author": "adm01-debug",
-    "subject": "merge: master para main",
-    "files": []
    }
   ],
   "hot_files": [
@@ -117898,6 +117900,10 @@
     2
    ],
    [
+    "docs/prod-readiness.md",
+    1
+   ],
+   [
     "inventario/estado/banco.json",
     1
    ],
@@ -117907,10 +117913,6 @@
    ],
    [
     "src/lib/__tests__/performance-optimizations.test.ts",
-    1
-   ],
-   [
-    "src/lib/__tests__/safe-date.test.ts",
     1
    ]
   ]

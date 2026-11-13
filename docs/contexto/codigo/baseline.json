@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "75a5df15c14330831b1074b021ef46f800a27180",
+  "commit": "4060612d79270999e2ed6ca8dc344ba7936dd733",
   "branch": "main",
-  "data_commit": "2026-11-13T18:03:12-03:00",
+  "data_commit": "2026-11-13T19:30:52-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4060612",
+    "data": "2026-11-13",
+    "assunto": "chore: docs: relatorio de prod-readiness com inventario de funcionalidades (#30)"
+   },
    {
     "sha": "75a5df1",
     "data": "2026-11-13",
@@ -126,14 +131,9 @@
     "sha": "96e389d",
     "data": "2026-08-16",
     "assunto": "docs: declara a cobertura da revisão adversarial no ESTADO_ATUAL.md"
-   },
-   {
-    "sha": "a0827ce",
-    "data": "2026-08-16",
-    "assunto": "docs: auto-auditoria do ESTADO_ATUAL.md — corrige 6 erros próprios"
    }
   ],
-  "arquivos_mudados_7d": 82,
+  "arquivos_mudados_7d": 83,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/lib/__tests__",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 15
+    "commits": 16
    },
    {
     "autor": "github-actions[bot]",
@@ -310,7 +310,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1532,
+  "arquivos_total": 1533,
   "arquivos_codigo": 1190,
   "linhas_codigo": 163240,
   "rotas": 104,
@@ -327,7 +327,7 @@
   "testes": 322,
   "workflows": 3,
   "scripts": 31,
-  "docs_md": 99
+  "docs_md": 100
  },
  "por_pasta": {
   "e2e/calls.spec.ts": {

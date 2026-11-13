@@ -207,7 +207,7 @@ _nenhum_
 | postgres | 2 | ~264.9k | 132452.35 | `SELECT count(*) FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM information_schema.role_table_grants g WHERE g.table_` |
 | postgres | 2 | ~263k | 131503.84 | `SELECT table_schema, table_name, column_name, grantee, privilege_type FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM` |
 | postgres | 1 | ~117.3k | 117288.34 | `SELECT table_schema, table_name, column_name, grantee, privilege_type FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND table_schema NOT IN ($16,$1` |
-| postgres | 8 | ~42.5k | 5315.73 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
+| postgres | 9 | ~47.8k | 5314.33 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
 | authenticator | ~20 | ~17.3k | 1020.49 | `SELECT name FROM pg_timezone_names` |
 | postgres | 1 | ~11.8k | 11813.21 | `WITH vp AS ( SELECT pr_c.grantee, pr_c.prtype, a.attname, pr_c.relname, pr_c.relnamespace FROM (SELECT c.oid, c.relname, c.relnamespace, (aclexplode(COALESCE(c.relacl, acldefault($1, c.relowner)))).grantee AS grantee, (a` |
 | postgres | ~80 | ~8.2k | 109.43 | `UPDATE public.user_profiles SET full_name = $1 \|\| ( COALESCE( NULLIF(regexp_replace(full_name, $2, $3, $4), $5), $6 )::integer + $7 )::text WHERE id = $8` |
@@ -217,8 +217,8 @@ _nenhum_
 | postgres | 1 | ~4.6k | 4553.59 | `with page as ( select c.oid, c.relname, c.relrowsecurity, c.relforcerowsecurity, c.relreplident, nc.nspname as schema, -- Computed once here so the final select can reference it for both the -- raw byte count and pg_size` |
 | authenticator | ~20 | ~3.4k | 187.69 | `WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $2), oid) AS base_type FROM pg_type UNIO` |
 | service_role | ~300 | ~2.2k | 7.36 | `WITH pgrst_source AS (SELECT pgrst_call.pgrst_scalar FROM (SELECT $1 AS json_data) pgrst_payload, LATERAL (SELECT "query" FROM json_to_record(pgrst_payload.json_data) AS _("query" text) LIMIT $4) pgrst_body , LATERAL (SE` |
+| postgres | ~10 | ~2.1k | 164.26 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
 | postgres | ~10 | ~2.1k | 163.71 | `with f as ( -- CTE with sane arg_modes, arg_names, and arg_types. -- All three are always of the same length. -- All three include all args, including OUT and TABLE args. with functions as ( select *, -- proargmodes is n` |
-| postgres | ~10 | ~2k | 166.75 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
 
 
 ## Conexões
@@ -261,7 +261,7 @@ _nenhum_
       "connected_cluster": 0,
       "db_connected": false,
       "healthy": true,
-      "node": "realtime@2600:1f18:67fc:ac00:1b73:fa1a:af98:a453",
+      "node": "realtime@2600:1f18:67fc:ac01:37a7:9928:63ab:f997",
       "region": "us-east-1",
       "replication_connected": false
     },

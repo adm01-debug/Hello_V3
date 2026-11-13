@@ -5,7 +5,7 @@
   "linguagens": [
    "TypeScript (1159)",
    "SQL (209)",
-   "Markdown (99)",
+   "Markdown (100)",
    "JavaScript (27)",
    "JSON (15)",
    "Python (5)",
@@ -270,6 +270,11 @@
    "arquivo": "docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md",
    "titulo": "📊 Inventário Exaustivo de Funcionalidades e Roadmap - VoIP Enterprise",
    "linhas": 63
+  },
+  {
+   "arquivo": "docs/prod-readiness.md",
+   "titulo": null,
+   "linhas": 90
   }
  ],
  "docs_em_subpastas": [

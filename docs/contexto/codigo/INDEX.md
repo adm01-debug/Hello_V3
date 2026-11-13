@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `75a5df15c14330831b1074b021ef46f800a27180` (2026-11-13T18:03:12-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `4060612d79270999e2ed6ca8dc344ba7936dd733` (2026-11-13T19:30:52-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1159), SQL (209), Markdown (99), JavaScript (27), JSON (15), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1159), SQL (209), Markdown (100), JavaScript (27), JSON (15), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,7 +34,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1532 |
+| arquivos_total | 1533 |
 | arquivos_codigo | 1190 |
 | linhas_codigo | 163240 |
 | rotas | 104 |
@@ -51,7 +51,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | testes | 322 |
 | workflows | 3 |
 | scripts | 31 |
-| docs_md | 99 |
+| docs_md | 100 |
 
 ## Onde ficam as coisas
 - telas: src/pages (103)
@@ -62,7 +62,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (5), scripts/regras_negocio (3), scripts/ai-context (2)
-- docs: (raiz) (5), docs (2), .github (1)
+- docs: (raiz) (5), docs (3), .github (1)
 - nomenclatura: {"componentes":"PascalCase (88%)","hooks":"use + PascalCase","servicos":"kebab-case (70%)","edge_functions":"kebab-case (100%)","tabelas":"snake_case (89%)"}
 - instruções para agentes no repo: AGENTS.md, CLAUDE.md
 
@@ -359,7 +359,10 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- não gerado neste run. uvx --from "graphifyy[sql]" graphify update .  (ou: bun run graph:update); saída em graphify-out/ — graph.json e graph.html NÃO são versionados (dezenas de MB); use `graphify query/path/explain` localmente
+- 8812 nós · 23536 arestas · 678 comunidades · grafo do commit `4060612d`
+- comunidades maiores: lucide-react (257), badge.tsx (185), react (179), client.ts (162), traceHeaders (152), protectedRoutes.tsx (129), usePageTitle (120), vitest (112), cn (111), snapshot.py (102), @tanstack/react-query (90), gerar.mjs (84)
+- símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
+- consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - ESTADO_ATUAL.md (5)
@@ -410,10 +413,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `SYSTEM_FEATURES.md` — 📋 Levantamento Completo de Funcionalidades do Sistema (360 linhas)
 - `docs/CONTEXTO-PARA-AGENTES.md` — Contexto para agentes de IA — leia ANTES de qualquer tarefa (41 linhas)
 - `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` — 📊 Inventário Exaustivo de Funcionalidades e Roadmap - VoIP Enterprise (63 linhas)
+- `docs/prod-readiness.md` (90 linhas)
 - subpastas de docs/: docs/adr (53), docs/estado (18), docs/agentes (6), docs/audits (2), docs/contexto (2), docs/qa (2), docs/analises (1), docs/audit (1), docs/runbooks (1)
 
 
 ## Últimos commits
+- 2026-11-13 `4060612` chore: docs: relatorio de prod-readiness com inventario de funcionalidades (#30)
 - 2026-11-13 `75a5df1` fix: guard de segredo do contexto ignora senha ja redigida (#29)
 - 2026-11-13 `8ed39f4` fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)
 - 2026-11-13 `fece2f3` chore: inventario do estado real [auto] (#27)
@@ -428,7 +433,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-09 `2b05cbb` fix(chat-widget-session): aplica rate limit por IP no endpoint anônimo
 - 2026-11-09 `fc37442` fix(e2e): bun run build + vite preview para webServer do Playwright (#17)
 - 2026-11-08 `48f56b4` fix(tests): mock upsert + eslint disable no-control-regex — desbloqueia CI global
-- 2026-11-08 `7484809` feat(ci): deno.json com import map — testes Deno herméticos
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
