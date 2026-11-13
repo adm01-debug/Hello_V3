@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `fece2f32f54706fbde131dba5af10b59606fba9a` (2026-11-13T14:00:42Z).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `8ed39f466cb419f174b555c971d28912c85cb765` (2026-11-13T13:29:00-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1532 |
 | arquivos_codigo | 1190 |
-| linhas_codigo | 163224 |
+| linhas_codigo | 163240 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -359,7 +359,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8801 nós · 23526 arestas · 667 comunidades · grafo do commit `fece2f32`
+- 8801 nós · 23526 arestas · 667 comunidades · grafo do commit `8ed39f46`
 - comunidades maiores: card.tsx (290), vitest (200), protectedRoutes.tsx (155), logger.ts (147), react (141), client.ts (140), usePageTitle (128), cn (116), safe-date.ts (107), lucide-react (106), useAuthContext (102), ref_https (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -375,11 +375,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - inventario/estado/rotas.json (2)
 - scripts/inventario/banco.sql (2)
 - scripts/inventario/gerar-banco.mjs (2)
+- scripts/supabase_snapshot/snapshot.py (2)
 - scripts/supabase_snapshot/test_snapshot.py (2)
 - vite.config.ts (2)
 - .claude/skills/hello-v3/SKILL.md (1)
 - CLAUDE.md (1)
-- ai-context.config.json (1)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -417,6 +417,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-13 `8ed39f4` fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)
 - 2026-11-13 `fece2f3` chore: inventario do estado real [auto] (#27)
 - 2026-11-13 `cf8f7fc` fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)
 - 2026-11-13 `4e40e57` infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)
@@ -431,7 +432,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-08 `48f56b4` fix(tests): mock upsert + eslint disable no-control-regex — desbloqueia CI global
 - 2026-11-08 `7484809` feat(ci): deno.json com import map — testes Deno herméticos
 - 2026-11-08 `510d039` fix(voice): substitui Number.parseFloat por safeParseFloat em usePhaseColors
-- 2026-11-08 `a5a156e` docs(agentes): replica e corrige documentação de agentes do Zapp Web V2
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

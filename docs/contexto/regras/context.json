@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "fece2f32f54706fbde131dba5af10b59606fba9a",
+  "sha": "8ed39f466cb419f174b555c971d28912c85cb765",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-13 14:54 UTC",
+  "generated_at": "2026-11-13 19:39 UTC",
   "files_total": 1997,
   "code_files": 1406,
-  "code_lines": 177575
+  "code_lines": 177591
  },
  "version": "1.3.2",
- "facts_hash": "e1db4392b44a901f",
+ "facts_hash": "6d58af138fbbd772",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31619,7 +31619,7 @@
   {
    "module": "scripts",
    "files": 32,
-   "lines": 9251,
+   "lines": 9267,
    "tables": [
     "a",
     "contacts",
@@ -86630,7 +86630,7 @@
   },
   "scripts/supabase_snapshot/snapshot.py": {
    "path": "scripts/supabase_snapshot/snapshot.py",
-   "lines": 1791,
+   "lines": 1807,
    "exports": [
     "def env_int",
     "def log",
@@ -117464,10 +117464,19 @@
   }
  },
  "git": {
-  "sha": "fece2f32f54706fbde131dba5af10b59606fba9a",
+  "sha": "8ed39f466cb419f174b555c971d28912c85cb765",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "8ed39f4",
+    "date": "2026-11-13",
+    "author": "adm01-debug",
+    "subject": "fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)",
+    "files": [
+     "scripts/supabase_snapshot/snapshot.py"
+    ]
+   },
    {
     "sha": "fece2f3",
     "date": "2026-11-13",
@@ -119816,25 +119825,12 @@
      "vite.config.ts",
      "vitest.config.ts"
     ]
-   },
-   {
-    "sha": "2f065da",
-    "date": "2026-08-01",
-    "author": "gpt-engineer-app[bot]",
-    "subject": "Visual edit in Lovable",
-    "files": [
-     "supabase/functions/migrate-helper/index.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "ESTADO_ATUAL.md",
     5
-   ],
-   [
-    "supabase/functions/migrate-helper/index.ts",
-    4
    ],
    [
     "inventario/estado/edges.json",
@@ -119855,6 +119851,14 @@
    [
     "supabase/config.toml",
     3
+   ],
+   [
+    "supabase/functions/migrate-helper/index.ts",
+    3
+   ],
+   [
+    "scripts/supabase_snapshot/snapshot.py",
+    2
    ],
    [
     "scripts/inventario/banco.sql",
@@ -119902,10 +119906,6 @@
    ],
    [
     "supabase/functions/_shared/rate-limit.ts",
-    2
-   ],
-   [
-    "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
     2
    ]
   ]

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "fece2f32f54706fbde131dba5af10b59606fba9a",
+  "commit": "8ed39f466cb419f174b555c971d28912c85cb765",
   "branch": "main",
-  "data_commit": "2026-11-13T14:00:42Z",
+  "data_commit": "2026-11-13T13:29:00-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8ed39f4",
+    "data": "2026-11-13",
+    "assunto": "fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)"
+   },
    {
     "sha": "fece2f3",
     "data": "2026-11-13",
@@ -126,11 +131,6 @@
     "sha": "24501d8",
     "data": "2026-08-16",
     "assunto": "docs: registra segundo modo de falha do CI (execuções que não iniciam)"
-   },
-   {
-    "sha": "35c8668",
-    "data": "2026-08-16",
-    "assunto": "docs: precisa o diagnóstico do CI vermelho no ESTADO_ATUAL.md"
    }
   ],
   "arquivos_mudados_7d": 82,
@@ -180,6 +180,10 @@
     "mudancas": 2
    },
    {
+    "pasta": "scripts/supabase_snapshot/snapshot.py",
+    "mudancas": 2
+   },
+   {
     "pasta": "scripts/supabase_snapshot/test_snapshot.py",
     "mudancas": 2
    },
@@ -189,10 +193,6 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 2
-   },
-   {
-    "pasta": "supabase/functions/whatsapp-inbound",
     "mudancas": 2
    }
   ],
@@ -235,6 +235,10 @@
    },
    {
     "arquivo": "scripts/inventario/gerar-banco.mjs",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "scripts/supabase_snapshot/snapshot.py",
     "mudancas": 2
    },
    {
@@ -292,16 +296,12 @@
    {
     "arquivo": "docs/agentes/telefonia-voip.md",
     "mudancas": 1
-   },
-   {
-    "arquivo": "docs/contexto/regras/manual/README.md",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 13
+    "commits": 14
    },
    {
     "autor": "github-actions[bot]",
@@ -312,7 +312,7 @@
  "contagens": {
   "arquivos_total": 1532,
   "arquivos_codigo": 1190,
-  "linhas_codigo": 163224,
+  "linhas_codigo": 163240,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -428,7 +428,7 @@
   },
   "scripts/supabase_snapshot": {
    "arquivos": 2,
-   "linhas": 2669
+   "linhas": 2685
   },
   "scripts/test-api-direct.mjs": {
    "arquivos": 1,
@@ -538,7 +538,7 @@
   },
   {
    "arquivo": "scripts/supabase_snapshot/snapshot.py",
-   "linhas": 1791
+   "linhas": 1807
   },
   {
    "arquivo": "scripts/ai-context/gerar.mjs",
