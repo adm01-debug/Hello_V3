@@ -1,0 +1,3161 @@
+{
+  "alertas": [
+    {
+      "detalhe": [
+        "update-contact-name-daily (100% em 7d)"
+      ],
+      "tipo": "cron_falhando"
+    },
+    {
+      "detalhe": [
+        "Tronco Principal Teste"
+      ],
+      "tipo": "telefonia_tronco_sem_health_check"
+    }
+  ],
+  "cron": {
+    "config": {
+      "cron.max_running_jobs": "32",
+      "cron.use_background_workers": "off",
+      "max_worker_processes": "6"
+    },
+    "historico": {
+      "bytes": 147456,
+      "linhas": 158,
+      "mais_antigo": "2026-08-06T09:00:00Z",
+      "mais_de_7_dias": 144
+    },
+    "horas_paradas_7d": [],
+    "jobs": [
+      {
+        "agenda": "0 9 * * *",
+        "ativo": true,
+        "chama": [],
+        "duracao_max_s_7d": null,
+        "execucoes_24h": 1,
+        "execucoes_7d": 7,
+        "falhas_24h": 1,
+        "falhas_7d": 7,
+        "nome": "update-contact-name-daily",
+        "startup_timeout_7d": 0,
+        "taxa_falha_7d_pct": 100,
+        "ultima_falha": "2026-11-13T09:00:00Z"
+      },
+      {
+        "agenda": "0 9 * * *",
+        "ativo": true,
+        "chama": [],
+        "duracao_max_s_7d": 0,
+        "execucoes_24h": 1,
+        "execucoes_7d": 7,
+        "falhas_24h": 0,
+        "falhas_7d": 0,
+        "nome": "update-user-profile-fullname-daily",
+        "startup_timeout_7d": 0,
+        "taxa_falha_7d_pct": 0,
+        "ultima_falha": null
+      }
+    ]
+  },
+  "edge_functions": {
+    "no_repo": 94,
+    "no_repo_sem_deploy": [],
+    "publicadas": [
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "analyze-call",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "analyze-contact-profile",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "analyze-live-utterance",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "analyze-sentiment",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "analyze-talk-ratio",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "approve-password-reset",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "auto-scorecard",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "bitrix-api",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "chat-widget-session",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "chatbot-respond",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "check-alerts",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "check-contact-alerts",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "check-goals",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "check-hold-alerts",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "check-queue-metrics",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "cleanup-lock-conflicts",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "compute-account-health",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "compute-adherence",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 4
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "compute-best-time",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "compute-deal-health",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 4
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "data-lake-flush",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "database-backup",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "database-cleanup",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "detect-churn-risk",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "detect-key-moments",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "dialer-pacing-tick",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "elevenlabs-conversation-token",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "email-inbound",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "embed-kb-article",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "enforce-sla",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "enroll-voice",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "export-data-lake",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "extract-crm-fields",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "forecast-call-volume",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 5
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "forecast-deals",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 7
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "fuzz-test-runner",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 4
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "generate-coaching",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "generate-coaching-plan",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "generate-coaching-track",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "generate-meeting-summary",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "generate-summary",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "global-load-test",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 4
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "health-check",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 7
+      },
+      {
+        "atualizada_em": "2026-08-05T13:12Z",
+        "slug": "migrate-helper",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 8
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "notify-blocked-ip",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "notify-new-device",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "ocr-virtual-fax",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "process-digest",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "realtime-analysis",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "record-consent",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "redact-sensitive-audio",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "request-password-reset",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "rls-audit",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "score-call",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 4
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "score-call-attempt",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "search-calls",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "send-notification",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "send-survey",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "sip-config",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "suggest-shift-swaps",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "sync-crm-queue",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "teams-fetch-recordings",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "transcribe-recording",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "translate-summary",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "translate-utterance",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "validate-geo",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "validate-ip",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 4
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "verify-voice",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voice-command",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voice-transcribe",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-anomaly-detector",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-anomaly-remediation",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-capacity-forecast",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-capacity-recommendations",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-diagnostic-voice-qa",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-executive-narrative",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-executive-summary",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-failover-notifier",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-load-test",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 4
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-quality-alerts-summary",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-quality-forecast",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:51Z",
+        "slug": "voip-quality-heatmap",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 4
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-recommendation-history",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-recommendation-insights",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-recommendation-simulate",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-recommendations",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:51Z",
+        "slug": "voip-sla-report",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 4
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-trunks-healthcheck",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "voip-trunks-manage",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "wavoip-call",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "webauthn-authenticate",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "webhook-handler",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "whatsapp-inbound",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      },
+      {
+        "atualizada_em": "2026-08-05T12:22Z",
+        "slug": "whatsapp-rewrite",
+        "status": "ACTIVE",
+        "verify_jwt": false,
+        "versao": 3
+      }
+    ],
+    "publicadas_sem_codigo_no_repo": []
+  },
+  "fonte": "scripts/inventario/banco.sql + GET /functions + .from() em src/ e supabase/functions/ (scripts/inventario/gerar-banco.mjs)",
+  "format_version": 1,
+  "medido_em": "2026-11-13T14:00:20Z",
+  "resumo": {
+    "cron_ativos": 2,
+    "cron_jobs": 2,
+    "funcoes_public": 228,
+    "ledger_registros": 82,
+    "ledger_versao_max": "20260831180000",
+    "max_connections": 60,
+    "policies": 442,
+    "postgres": "17.6",
+    "tabelas_public": 159,
+    "tabelas_sem_rls": 0,
+    "tamanho_bytes": 24775827,
+    "triggers_public": 104,
+    "views_public": 1
+  },
+  "tabelas": [
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "account_journey_history",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 81920,
+      "citada_no_banco": true,
+      "linhas": 1,
+      "linhas_exatas": true,
+      "nome": "account_lockouts",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "accounts",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 2,
+      "uso_no_codigo": {
+        "edges": 3,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 81920,
+      "citada_no_banco": false,
+      "linhas": 1,
+      "linhas_exatas": true,
+      "nome": "active_sessions",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 9
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "agent_badges",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "agent_devices",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 5
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "agent_goals",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "agent_ring_settings",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "agent_shifts",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "agent_skills",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "agent_trunk_assignments",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 2,
+      "uso_no_codigo": {
+        "edges": 7,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "agent_weekly_stats",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 6
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": true,
+      "linhas": 1,
+      "linhas_exatas": true,
+      "nome": "agents",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 3,
+      "uso_no_codigo": {
+        "edges": 6,
+        "src": 13
+      }
+    },
+    {
+      "bytes": 385024,
+      "citada_no_banco": true,
+      "linhas": 212,
+      "linhas_exatas": true,
+      "nome": "audit_logs",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": true,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 6,
+        "src": 6
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "badges",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "barge_in_sessions",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "battle_card_triggers",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "battle_cards",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 5
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "bitrix_departments",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "bitrix_users",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "blocked_access_logs",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "bot_conversations",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 57344,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "cadence_enrollments",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "cadence_steps",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "cadences",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 2,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_alerts",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 7,
+        "src": 18
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_analyses",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 262144,
+      "citada_no_banco": true,
+      "linhas": 79,
+      "linhas_exatas": true,
+      "nome": "call_control_audit_logs",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 3,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_flows",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_key_moments",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 5,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 65536,
+      "citada_no_banco": true,
+      "linhas": 1,
+      "linhas_exatas": true,
+      "nome": "call_park_orbits",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_playlists",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 131072,
+      "citada_no_banco": true,
+      "linhas": 4,
+      "linhas_exatas": true,
+      "nome": "call_quality_metrics",
+      "policies": 6,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 12,
+        "src": 7
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_queue_members",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 73728,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_queues",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 3,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 5
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_recordings",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 5
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_scorecards",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 4,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 180224,
+      "citada_no_banco": true,
+      "linhas": 51,
+      "linhas_exatas": true,
+      "nome": "call_sessions",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 22,
+        "src": 26
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_summaries",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 8,
+        "src": 7
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_transcriptions",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 4,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 57344,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_transcripts_searchable",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "call_translations",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "calling_hours_config",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 6
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "chat_sessions",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 5,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "churn_risk_signals",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 4,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "coaching_assignments",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "coaching_recommendations",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "coaching_timestamps",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "compliance_rules",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "compliance_settings",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "consent_history",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "consent_records",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "contact_alerts",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 13
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "contact_engagement_patterns",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "contact_interactions",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 131072,
+      "citada_no_banco": false,
+      "linhas": 51,
+      "linhas_exatas": true,
+      "nome": "contacts",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 3,
+      "uso_no_codigo": {
+        "edges": 7,
+        "src": 6
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "conversation_messages",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 6,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 65536,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "conversations",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 14,
+        "src": 5
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "crm_field_suggestions",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "crm_sync_queue",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 4,
+        "src": 6
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "cultural_hints",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "customer_journey_stages",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "dashboard_goals",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 6
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 9,
+      "linhas_exatas": true,
+      "nome": "data_lake_exports",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 8,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "deal_revenue_snapshots",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 98304,
+      "citada_no_banco": true,
+      "linhas": 50,
+      "linhas_exatas": true,
+      "nome": "deals",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 2,
+      "uso_no_codigo": {
+        "edges": 3,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "dialer_campaigns",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 8
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "dialer_favorites",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 5
+      }
+    },
+    {
+      "bytes": 57344,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "dialer_queue",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 6
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "dnc_import_logs",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "dnc_list",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "email_tickets",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "email_verification_tokens",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "fraud_signals",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 81920,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "geo_access_logs",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "geo_restrictions",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 1,
+      "linhas_exatas": true,
+      "nome": "geo_settings",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "goal_violations",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 8192,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "hold_alert_settings",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 81920,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "hold_events",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 7
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "holidays",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "hot_desking_stations",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 57344,
+      "citada_no_banco": true,
+      "linhas": 36,
+      "linhas_exatas": true,
+      "nome": "index_drop_audit",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "ip_whitelist",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "kb_article_history",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "kb_article_views",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 73728,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "kb_articles",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 2,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "kb_categories",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "learning_completions",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "learning_modules",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "live_assist_signals",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "live_sentiment_snapshots",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 114688,
+      "citada_no_banco": true,
+      "linhas": 4,
+      "linhas_exatas": true,
+      "nome": "login_attempts",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "manager_alerts",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 73728,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "meeting_summaries",
+      "policies": 7,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 7,
+        "src": 5
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "notification_preferences",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 131072,
+      "citada_no_banco": true,
+      "linhas": 1,
+      "linhas_exatas": true,
+      "nome": "notifications",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 6,
+        "src": 12
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "number_porting_requests",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "objection_library",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 81920,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "optimistic_lock_conflicts",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 57344,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "parked_calls",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "password_reset_requests",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 5,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "password_reset_tokens",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 1048576,
+      "citada_no_banco": true,
+      "linhas": 1437,
+      "linhas_exatas": true,
+      "nome": "performance_metrics",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "permissions",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "playlist_items",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "queue_audio_prompts",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 8192,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "queue_metrics_settings",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "queue_skill_requirements",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "rate_limit_alerts",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 147456,
+      "citada_no_banco": true,
+      "linhas": 1,
+      "linhas_exatas": true,
+      "nome": "rate_limit_logs",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "rate_limit_settings",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "redaction_log",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "renewals",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "ring_group_members",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "ring_groups",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 2,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 5
+      }
+    },
+    {
+      "bytes": 65536,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "rls_audit_logs",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "role_permissions",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "routing_rules",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "scheduled_callbacks",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 8
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "scorecard_criteria",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "scorecard_responses",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "scorecard_templates",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "security_alerts",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 57344,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "shift_swap_suggestions",
+      "policies": 1,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "shift_templates",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "skills",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "sla_policies",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "success_plan_milestones",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "success_plans",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 2,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 49152,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "survey_responses",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "surveys",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 1,
+      "linhas_exatas": true,
+      "nome": "system_settings",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "time_off_requests",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "toll_free_numbers",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "topic_detections",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "topic_trends",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "tracker_matches",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "trackers",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "user_allowed_ips",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "user_ip_restrictions",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "user_mfa_settings",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "user_passkeys",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 7
+      }
+    },
+    {
+      "bytes": 81920,
+      "citada_no_banco": true,
+      "linhas": 2,
+      "linhas_exatas": true,
+      "nome": "user_profiles",
+      "policies": 6,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 4,
+      "uso_no_codigo": {
+        "edges": 8,
+        "src": 17
+      }
+    },
+    {
+      "bytes": 90112,
+      "citada_no_banco": true,
+      "linhas": 2,
+      "linhas_exatas": true,
+      "nome": "user_roles",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 3,
+      "uso_no_codigo": {
+        "edges": 3,
+        "src": 5
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "video_conferences",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "virtual_fax",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "voice_prints",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 5,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "voicemail_messages",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 8192,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "voip_monitoring_settings",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "voip_quality_alerts",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 6,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "voip_recommendation_actions",
+      "policies": 3,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 6,
+        "src": 1
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "voip_trunk_health_checks",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 2,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 163840,
+      "citada_no_banco": true,
+      "linhas": 3,
+      "linhas_exatas": true,
+      "nome": "voip_trunk_usage_metrics",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 65536,
+      "citada_no_banco": true,
+      "linhas": 1,
+      "linhas_exatas": true,
+      "nome": "voip_trunks",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 3,
+      "uso_no_codigo": {
+        "edges": 11,
+        "src": 3
+      }
+    },
+    {
+      "bytes": 32768,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "webauthn_challenges",
+      "policies": 5,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 2
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "webhook_flush_metrics",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 1,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 4
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "webhook_secrets",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 1,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 24576,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "whisper_messages",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 5
+      }
+    }
+  ],
+  "tabelas_orfas": {
+    "criterio": "0 linhas + nao citada em funcao/view do banco + nenhum .from() em src/ ou supabase/functions/",
+    "lista": [
+      "account_journey_history",
+      "customer_journey_stages",
+      "email_verification_tokens",
+      "password_reset_tokens",
+      "queue_skill_requirements"
+    ]
+  },
+  "telefonia": {
+    "chamadas_7d": 0,
+    "gravacoes_7d": 0,
+    "troncos": [
+      {
+        "ativo": true,
+        "atualizado_em": "2026-05-15T17:08:49Z",
+        "failovers": 0,
+        "health_latencia_ms": null,
+        "health_status": null,
+        "max_canais": 10,
+        "nome": "Tronco Principal Teste",
+        "prioridade": 1,
+        "provedor": "generic",
+        "servidor_sip": "sip.exemplo.com",
+        "transporte": "udp",
+        "ultimo_failover": null,
+        "ultimo_health_check": null
+      }
+    ]
+  }
+}
