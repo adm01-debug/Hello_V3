@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4e40e57836` · branch `main` · 2026-11-13 12:35 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `cf8f7fc70f` · branch `main` · 2026-11-13 13:51 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2076,7 +2076,7 @@ _nenhum item encontrado_
 | Management API ${caminho} respondeu HTTP ${res.status} | `scripts/inventario/gerar-banco.mjs` |
 | SUPABASE_PROJECT_REF=${ref} nao e o banco oficial (${PROJETO_OFICIAL}). | `scripts/inventario/gerar-banco.mjs` |
 | a resposta nao parece ser do banco oficial: ${comuns} tabelas em comum com o manifesto  | `scripts/inventario/gerar-banco.mjs` |
-| a resposta nao parece ser do banco oficial: ledger com ${registros} registros e maior versao ${max};  | `scripts/inventario/gerar-banco.mjs` |
+| a resposta nao parece ser do banco oficial: maior versao do ledger ${max} e menor que o limite  | `scripts/inventario/gerar-banco.mjs` |
 | a resposta nao traz resumo.ledger_versao_max/ledger_registros; rode o banco.sql atual. | `scripts/inventario/gerar-banco.mjs` |
 | a saida tem algo com cara de credencial; nada foi gravado. Revise banco.sql. | `scripts/inventario/gerar-banco.mjs` |
 | entrada sem as chaves: ${faltando.join( | `scripts/inventario/gerar-banco.mjs` |

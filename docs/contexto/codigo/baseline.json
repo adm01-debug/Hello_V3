@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4e40e57836cc99fc04327dc45790297c0f1baf41",
+  "commit": "cf8f7fc70fb6e7c09a6aac66650fdba70d438460",
   "branch": "main",
-  "data_commit": "2026-11-13T08:57:34-03:00",
+  "data_commit": "2026-11-13T10:26:44-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "cf8f7fc",
+    "data": "2026-11-13",
+    "assunto": "fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)"
+   },
    {
     "sha": "4e40e57",
     "data": "2026-11-13",
@@ -126,11 +131,6 @@
     "sha": "e63bf6f",
     "data": "2026-08-16",
     "assunto": "docs: auditoria de estado do sistema (ESTADO_ATUAL.md + docs/estado/)"
-   },
-   {
-    "sha": "9160623",
-    "data": "2026-08-11",
-    "assunto": "security: remove migrate-helper edge function (exposes service_role key)"
    }
   ],
   "arquivos_mudados_7d": 81,
@@ -172,6 +172,14 @@
     "mudancas": 2
    },
    {
+    "pasta": "scripts/inventario/banco.sql",
+    "mudancas": 2
+   },
+   {
+    "pasta": "scripts/inventario/gerar-banco.mjs",
+    "mudancas": 2
+   },
+   {
     "pasta": "scripts/supabase_snapshot/test_snapshot.py",
     "mudancas": 2
    },
@@ -186,14 +194,6 @@
    {
     "pasta": "supabase/functions/whatsapp-inbound",
     "mudancas": 2
-   },
-   {
-    "pasta": "vite.config.ts",
-    "mudancas": 2
-   },
-   {
-    "pasta": ".claude/skills/hello-v3",
-    "mudancas": 1
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -227,6 +227,14 @@
    },
    {
     "arquivo": "inventario/estado/rotas.json",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "scripts/inventario/banco.sql",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "scripts/inventario/gerar-banco.mjs",
     "mudancas": 2
    },
    {
@@ -288,20 +296,12 @@
    {
     "arquivo": "docs/contexto/regras/manual/README.md",
     "mudancas": 1
-   },
-   {
-    "arquivo": "docs/contexto/regras/manual/TEMPLATE-regras-de-negocio.md",
-    "mudancas": 1
-   },
-   {
-    "arquivo": "docs/estado/componentes-parte1.md",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 12
+    "commits": 13
    },
    {
     "autor": "github-actions[bot]",
@@ -312,7 +312,7 @@
  "contagens": {
   "arquivos_total": 1531,
   "arquivos_codigo": 1190,
-  "linhas_codigo": 163212,
+  "linhas_codigo": 163224,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -420,7 +420,7 @@
   },
   "scripts/inventario": {
    "arquivos": 4,
-   "linhas": 832
+   "linhas": 844
   },
   "scripts/regras_negocio": {
    "arquivos": 3,
@@ -605,6 +605,10 @@
    "linhas": 352
   },
   {
+   "arquivo": "scripts/inventario/gerar-banco.mjs",
+   "linhas": 346
+  },
+  {
    "arquivo": "src/components/dialer/phone/PhoneQuickAccess.tsx",
    "linhas": 346
   },
@@ -623,10 +627,6 @@
   {
    "arquivo": "src/components/alerts/AlertsTrendChart.tsx",
    "linhas": 343
-  },
-  {
-   "arquivo": "src/pages/NetworkDiagnostics.tsx",
-   "linhas": 339
   }
  ],
  "qualidade": {

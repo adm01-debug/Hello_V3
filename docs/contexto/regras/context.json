@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "4e40e57836cc99fc04327dc45790297c0f1baf41",
+  "sha": "cf8f7fc70fb6e7c09a6aac66650fdba70d438460",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-13 12:35 UTC",
+  "generated_at": "2026-11-13 13:51 UTC",
   "files_total": 1996,
   "code_files": 1406,
-  "code_lines": 177563
+  "code_lines": 177575
  },
  "version": "1.3.2",
- "facts_hash": "087fcc8266151706",
+ "facts_hash": "e1db4392b44a901f",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31619,7 +31619,7 @@
   {
    "module": "scripts",
    "files": 32,
-   "lines": 9239,
+   "lines": 9251,
    "tables": [
     "a",
     "contacts",
@@ -38041,7 +38041,7 @@
    },
    {
     "file": "scripts/inventario/gerar-banco.mjs",
-    "msg": "a resposta nao parece ser do banco oficial: ledger com ${registros} registros e maior versao ${max}; "
+    "msg": "a resposta nao parece ser do banco oficial: maior versao do ledger ${max} e menor que o limite "
    },
    {
     "file": "scripts/inventario/gerar-banco.mjs",
@@ -86341,7 +86341,7 @@
   },
   "scripts/inventario/gerar-banco.mjs": {
    "path": "scripts/inventario/gerar-banco.mjs",
-   "lines": 334,
+   "lines": 346,
    "exports": [
     "const PROJETO_OFICIAL",
     "const LIMIARES",
@@ -86380,7 +86380,7 @@
     "Management API ${caminho} respondeu HTTP ${res.status}",
     "SUPABASE_PROJECT_REF=${ref} nao e o banco oficial (${PROJETO_OFICIAL}).",
     "a resposta nao parece ser do banco oficial: ${comuns} tabelas em comum com o manifesto ",
-    "a resposta nao parece ser do banco oficial: ledger com ${registros} registros e maior versao ${max}; ",
+    "a resposta nao parece ser do banco oficial: maior versao do ledger ${max} e menor que o limite ",
     "a resposta nao traz resumo.ledger_versao_max/ledger_registros; rode o banco.sql atual.",
     "a saida tem algo com cara de credencial; nada foi gravado. Revise banco.sql.",
     "entrada sem as chaves: ${faltando.join(",
@@ -117464,10 +117464,20 @@
   }
  },
  "git": {
-  "sha": "4e40e57836cc99fc04327dc45790297c0f1baf41",
+  "sha": "cf8f7fc70fb6e7c09a6aac66650fdba70d438460",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "cf8f7fc",
+    "date": "2026-11-13",
+    "author": "adm01-debug",
+    "subject": "fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)",
+    "files": [
+     "scripts/inventario/banco.sql",
+     "scripts/inventario/gerar-banco.mjs"
+    ]
+   },
    {
     "sha": "4e40e57",
     "date": "2026-11-13",
@@ -119812,15 +119822,6 @@
     "author": "gpt-engineer-app[bot]",
     "subject": "Implement BLF real-time panel",
     "files": []
-   },
-   {
-    "sha": "cbca424",
-    "date": "2026-07-27",
-    "author": "gpt-engineer-app[bot]",
-    "subject": "Changes",
-    "files": [
-     ".lovable/memory/voip/painel-blf-ramais.md"
-    ]
    }
   ],
   "hot_files": [
@@ -119847,6 +119848,14 @@
    [
     "supabase/config.toml",
     3
+   ],
+   [
+    "scripts/inventario/banco.sql",
+    2
+   ],
+   [
+    "scripts/inventario/gerar-banco.mjs",
+    2
    ],
    [
     ".github/workflows/contexto.yml",
@@ -119894,14 +119903,6 @@
    ],
    [
     "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
-    2
-   ],
-   [
-    "supabase/functions/bitrix-api/index.test.ts",
-    2
-   ],
-   [
-    "supabase/functions/cleanup-lock-conflicts/index.test.ts",
     2
    ]
   ]
