@@ -101,7 +101,7 @@ export function contarUsoNoCodigo(raiz, nomes) {
  * .sql de supabase/migrations/) confere tambem o ledger: um banco irmao com quase as mesmas tabelas
  * (ex.: o antigo do Lovable) passa no criterio das tabelas, mas nao tem as migrations recentes.
  */
-export const LEDGER_TOLERANCIA = { versoesRecentes: 20, registrosPct: 10 };
+export const LEDGER_TOLERANCIA = { versoesRecentes: 20 };
 export function conferirOrigem(dado, tabelasManifesto, versoesRepo = null) {
   const resposta = new Set(dado.tabelas.map((t) => t.nome));
   const manifesto = new Set(tabelasManifesto);
@@ -119,15 +119,20 @@ export function conferirOrigem(dado, tabelasManifesto, versoesRepo = null) {
   if (!max || !Number.isFinite(registros)) {
     throw new Error('a resposta nao traz resumo.ledger_versao_max/ledger_registros; rode o banco.sql atual.');
   }
+  // O ledger de migrations (auth.schema_migrations) só registra migrations aplicadas via CLI do
+  // Supabase. Boa parte do histórico deste repo entrou por dashboard/Lovable e nunca foi
+  // registrada ali, então comparar a contagem total (registros x migrations do repo) sempre
+  // falha mesmo sendo o banco oficial. A prova forte do ledger é o topo: o banco tem que estar
+  // ao menos tão atualizado quanto a Nª migration mais recente do repo (uma cópia irmã não teria
+  // as migrations recentes).
   const recentes = [...versoesRepo].sort().reverse();
   const limite = recentes[Math.min(LEDGER_TOLERANCIA.versoesRecentes, recentes.length) - 1];
-  const difPct = Math.abs(registros - versoesRepo.length) * 100 / versoesRepo.length;
-  if (String(max) < limite || difPct > LEDGER_TOLERANCIA.registrosPct) {
-    throw new Error(`a resposta nao parece ser do banco oficial: ledger com ${registros} registros e maior versao ${max}; `
-      + `o repo tem ${versoesRepo.length} migrations e a ${LEDGER_TOLERANCIA.versoesRecentes}a mais recente e ${limite}. `
+  if (String(max) < limite) {
+    throw new Error(`a resposta nao parece ser do banco oficial: maior versao do ledger ${max} e menor que o limite `
+      + `(${LEDGER_TOLERANCIA.versoesRecentes}a mais recente do repo ${limite}). `
       + 'Confira se o MCP usado e o MCP oficial do projeto Hello_V3 (cfmlmcdyjuotqobjapng).');
   }
-  return { ...origem, ledger_registros: registros, migrations_no_repo: versoesRepo.length };
+  return { ...origem, ledger_registros: registros, migrations_no_repo: versoesRepo.length, ledger_versao_max: max };
 }
 
 /** Versoes (prefixo numerico) dos .sql de supabase/migrations/ (sem _foreign/ e _superseded/). */
@@ -143,7 +148,14 @@ export const TYPES_TS = 'src/integrations/supabase/types.ts';
 export function tabelasDeTypesTs(texto) {
   const i = texto.indexOf('Tables: {');
   if (i < 0) return [];
-  const fim = texto.indexOf('\n      Views:', i);
+  // O bloco Tables termina na chave de fechamento do schema `public` (4 espaços), antes de
+  // `Views:` (ou `Functions:`, se o arquivo não tiver Views). A âncora com 6 espaços
+  // (`\n      Views:`) não casava e o parser lia até o fim do arquivo, contando funções
+  // (Functions/Enums/CompositeTypes) como tabelas.
+  const fimViews = texto.indexOf('\n    Views: {', i);
+  const fimFunctions = texto.indexOf('\n    Functions: {', i);
+  let fim = fimViews > 0 ? fimViews : fimFunctions;
+  if (fim <= 0) fim = texto.indexOf('\n    }', i);
   const bloco = texto.slice(i, fim > 0 ? fim : undefined);
   return [...bloco.matchAll(/\n      ([a-z][A-Za-z0-9_]*): \{/g)].map((m) => m[1]).sort();
 }
