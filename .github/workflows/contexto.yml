@@ -192,6 +192,11 @@ jobs:
         run: |
           python3 -m pip install --quiet --break-system-packages --only-binary :all: -r scripts/supabase_snapshot/requirements.txt
 
+      - name: Regressão — suíte offline do snapshot (unittest, sem banco)
+        # test_snapshot.py mocka o banco; roda offline em qualquer OS. Não depende do secret
+        # SUPABASE_DB_URL: valida o produtor mesmo quando a coleta é pulada.
+        run: python3 -m unittest discover -s scripts/supabase_snapshot -p 'test_*.py'
+
       - name: Recuperar snapshot anterior da branch contexto (CHANGELOG precisa do estado anterior)
         env:
           FORCE: ${{ inputs.force }}
