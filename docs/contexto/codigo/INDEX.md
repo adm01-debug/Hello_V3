@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `8ed39f466cb419f174b555c971d28912c85cb765` (2026-11-13T13:29:00-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `75a5df15c14330831b1074b021ef46f800a27180` (2026-11-13T18:03:12-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -359,17 +359,14 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8801 nós · 23526 arestas · 667 comunidades · grafo do commit `8ed39f46`
-- comunidades maiores: card.tsx (290), vitest (200), protectedRoutes.tsx (155), logger.ts (147), react (141), client.ts (140), usePageTitle (128), cn (116), safe-date.ts (107), lucide-react (106), useAuthContext (102), ref_https (102)
-- símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
-- consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
+- não gerado neste run. uvx --from "graphifyy[sql]" graphify update .  (ou: bun run graph:update); saída em graphify-out/ — graph.json e graph.html NÃO são versionados (dezenas de MB); use `graphify query/path/explain` localmente
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - ESTADO_ATUAL.md (5)
+- .github/workflows/contexto.yml (3)
 - AGENTS.md (3)
 - inventario/estado/edges.json (3)
 - .github/workflows/ci.yml (2)
-- .github/workflows/contexto.yml (2)
 - .github/workflows/inventario-estado-semanal.yml (2)
 - docs/estado/edge-functions-parte1.md (2)
 - inventario/estado/rotas.json (2)
@@ -417,6 +414,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-13 `75a5df1` fix: guard de segredo do contexto ignora senha ja redigida (#29)
 - 2026-11-13 `8ed39f4` fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)
 - 2026-11-13 `fece2f3` chore: inventario do estado real [auto] (#27)
 - 2026-11-13 `cf8f7fc` fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)
@@ -431,7 +429,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-09 `fc37442` fix(e2e): bun run build + vite preview para webServer do Playwright (#17)
 - 2026-11-08 `48f56b4` fix(tests): mock upsert + eslint disable no-control-regex — desbloqueia CI global
 - 2026-11-08 `7484809` feat(ci): deno.json com import map — testes Deno herméticos
-- 2026-11-08 `510d039` fix(voice): substitui Number.parseFloat por safeParseFloat em usePhaseColors
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

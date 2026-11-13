@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "8ed39f466cb419f174b555c971d28912c85cb765",
+  "commit": "75a5df15c14330831b1074b021ef46f800a27180",
   "branch": "main",
-  "data_commit": "2026-11-13T13:29:00-03:00",
+  "data_commit": "2026-11-13T18:03:12-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "75a5df1",
+    "data": "2026-11-13",
+    "assunto": "fix: guard de segredo do contexto ignora senha ja redigida (#29)"
+   },
    {
     "sha": "8ed39f4",
     "data": "2026-11-13",
@@ -126,11 +131,6 @@
     "sha": "a0827ce",
     "data": "2026-08-16",
     "assunto": "docs: auto-auditoria do ESTADO_ATUAL.md — corrige 6 erros próprios"
-   },
-   {
-    "sha": "24501d8",
-    "data": "2026-08-16",
-    "assunto": "docs: registra segundo modo de falha do CI (execuções que não iniciam)"
    }
   ],
   "arquivos_mudados_7d": 82,
@@ -138,6 +138,10 @@
    {
     "pasta": "src/lib/__tests__",
     "mudancas": 5
+   },
+   {
+    "pasta": ".github/workflows/contexto.yml",
+    "mudancas": 3
    },
    {
     "pasta": "inventario/estado/edges.json",
@@ -149,10 +153,6 @@
    },
    {
     "pasta": ".github/workflows/ci.yml",
-    "mudancas": 2
-   },
-   {
-    "pasta": ".github/workflows/contexto.yml",
     "mudancas": 2
    },
    {
@@ -202,6 +202,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": ".github/workflows/contexto.yml",
+    "mudancas": 3
+   },
+   {
     "arquivo": "AGENTS.md",
     "mudancas": 3
    },
@@ -211,10 +215,6 @@
    },
    {
     "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 2
-   },
-   {
-    "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 2
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 14
+    "commits": 15
    },
    {
     "autor": "github-actions[bot]",

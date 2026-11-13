@@ -1,6 +1,6 @@
 # CONTEXTO PARA AGENTES DE IA — ÍNDICE ÚNICO
 
-> Gerado automaticamente por indice.py · 2026-11-13 20:05 UTC · HEAD `8ed39f466c` · Não edite à mão.
+> Gerado automaticamente por indice.py · 2026-11-13 22:43 UTC · HEAD `75a5df15c1` · Não edite à mão.
 
 Um sistema, três fontes de verdade, três produtores independentes. **Leia este arquivo e vá direto à fonte certa.** Cada fato tem um dono: se duas fontes discordarem, vale o dono.
 
@@ -8,9 +8,9 @@ Um sistema, três fontes de verdade, três produtores independentes. **Leia este
 
 | Preciso de… | Fonte (dona do fato) | Onde ler | Estado |
 |---|---|---|---|
-| Regras que não podem ser quebradas: RLS por operação, estados e transições, validações, fórmulas, prazos, erros de negócio, testes como especificação, inconsistências código×schema (NÃO VERIFICADO) e regras humanas (`manual/`) | **regras de negócio** | `docs/contexto/regras/07-REGRAS-DE-NEGOCIO.md` | ok · 26 min atrás |
-| Tabelas, colunas, RLS/políticas, funções, triggers, cron, storage, lints — **como está em produção agora** | **banco real** | `docs/contexto/supabase/` (ainda não existe — o produtor não rodou) | ainda não gerado |
-| Rotas, telas, módulos, hooks, edge functions, grafo de dependências, testes, scripts, convenções | **código** | `docs/contexto/codigo/INDEX.md` | ok · 28 min atrás |
+| Regras que não podem ser quebradas: RLS por operação, estados e transições, validações, fórmulas, prazos, erros de negócio, testes como especificação, inconsistências código×schema (NÃO VERIFICADO) e regras humanas (`manual/`) | **regras de negócio** | `docs/contexto/regras/07-REGRAS-DE-NEGOCIO.md` | ok · 16 min atrás |
+| Tabelas, colunas, RLS/políticas, funções, triggers, cron, storage, lints — **como está em produção agora** | **banco real** | `docs/contexto/supabase/README.md` | parcial · 17 min atrás · ⚠️ 1 erro(s) de coleta no manifest (erros); 1 seção(ões) com erro em errors.md |
+| Rotas, telas, módulos, hooks, edge functions, grafo de dependências, testes, scripts, convenções | **código** | `docs/contexto/codigo/INDEX.md` | ok · 17 min atrás |
 
 ## Ordem de leitura antes de qualquer tarefa ou planejamento
 
@@ -26,9 +26,94 @@ Um sistema, três fontes de verdade, três produtores independentes. **Leia este
 - Item listado como **NÃO VERIFICADO** ou **inconsistência** em qualquer fonte: confirme na fonte dona antes de assumir.
 - Nada aqui é editado à mão. Para registrar uma regra que só o negócio sabe, escreva em `manual/` da fonte de regras.
 
+<details><summary>Arquivos de <b>banco real</b> (`docs/contexto/supabase/`)</summary>
+
+- `docs/contexto/supabase/CHANGELOG.md`
+- `docs/contexto/supabase/README.md`
+- `docs/contexto/supabase/auth.md`
+- `docs/contexto/supabase/cron-runs.md`
+- `docs/contexto/supabase/cron.md`
+- `docs/contexto/supabase/edge-functions.md`
+- `docs/contexto/supabase/edge-functions/analyze-call/README.md`
+- `docs/contexto/supabase/edge-functions/analyze-contact-profile/README.md`
+- `docs/contexto/supabase/edge-functions/analyze-live-utterance/README.md`
+- `docs/contexto/supabase/edge-functions/analyze-sentiment/README.md`
+- `docs/contexto/supabase/edge-functions/analyze-talk-ratio/README.md`
+- `docs/contexto/supabase/edge-functions/approve-password-reset/README.md`
+- `docs/contexto/supabase/edge-functions/auto-scorecard/README.md`
+- `docs/contexto/supabase/edge-functions/bitrix-api/README.md`
+- `docs/contexto/supabase/edge-functions/chat-widget-session/README.md`
+- `docs/contexto/supabase/edge-functions/chatbot-respond/README.md`
+- `docs/contexto/supabase/edge-functions/check-alerts/README.md`
+- `docs/contexto/supabase/edge-functions/check-contact-alerts/README.md`
+- `docs/contexto/supabase/edge-functions/check-goals/README.md`
+- `docs/contexto/supabase/edge-functions/check-hold-alerts/README.md`
+- `docs/contexto/supabase/edge-functions/check-queue-metrics/README.md`
+- `docs/contexto/supabase/edge-functions/cleanup-lock-conflicts/README.md`
+- `docs/contexto/supabase/edge-functions/compute-account-health/README.md`
+- `docs/contexto/supabase/edge-functions/compute-adherence/README.md`
+- `docs/contexto/supabase/edge-functions/compute-best-time/README.md`
+- `docs/contexto/supabase/edge-functions/compute-deal-health/README.md`
+- `docs/contexto/supabase/edge-functions/data-lake-flush/README.md`
+- `docs/contexto/supabase/edge-functions/database-backup/README.md`
+- `docs/contexto/supabase/edge-functions/database-cleanup/README.md`
+- `docs/contexto/supabase/edge-functions/detect-churn-risk/README.md`
+- `docs/contexto/supabase/edge-functions/detect-key-moments/README.md`
+- `docs/contexto/supabase/edge-functions/dialer-pacing-tick/README.md`
+- `docs/contexto/supabase/edge-functions/elevenlabs-conversation-token/README.md`
+- `docs/contexto/supabase/edge-functions/email-inbound/README.md`
+- `docs/contexto/supabase/edge-functions/embed-kb-article/README.md`
+- `docs/contexto/supabase/edge-functions/enforce-sla/README.md`
+- `docs/contexto/supabase/edge-functions/enroll-voice/README.md`
+- `docs/contexto/supabase/edge-functions/export-data-lake/README.md`
+- `docs/contexto/supabase/edge-functions/extract-crm-fields/README.md`
+- `docs/contexto/supabase/edge-functions/forecast-call-volume/README.md`
+- `docs/contexto/supabase/edge-functions/forecast-deals/README.md`
+- `docs/contexto/supabase/edge-functions/fuzz-test-runner/README.md`
+- `docs/contexto/supabase/edge-functions/generate-coaching-plan/README.md`
+- `docs/contexto/supabase/edge-functions/generate-coaching-track/README.md`
+- `docs/contexto/supabase/edge-functions/generate-coaching/README.md`
+- `docs/contexto/supabase/edge-functions/generate-meeting-summary/README.md`
+- `docs/contexto/supabase/edge-functions/generate-summary/README.md`
+- `docs/contexto/supabase/edge-functions/global-load-test/README.md`
+- `docs/contexto/supabase/edge-functions/health-check/README.md`
+- `docs/contexto/supabase/edge-functions/migrate-helper/README.md`
+- `docs/contexto/supabase/edge-functions/notify-blocked-ip/README.md`
+- `docs/contexto/supabase/edge-functions/notify-new-device/README.md`
+- `docs/contexto/supabase/edge-functions/ocr-virtual-fax/README.md`
+- `docs/contexto/supabase/edge-functions/process-digest/README.md`
+- `docs/contexto/supabase/edge-functions/realtime-analysis/README.md`
+- `docs/contexto/supabase/edge-functions/record-consent/README.md`
+- `docs/contexto/supabase/edge-functions/redact-sensitive-audio/README.md`
+- `docs/contexto/supabase/edge-functions/request-password-reset/README.md`
+- `docs/contexto/supabase/edge-functions/rls-audit/README.md`
+- `docs/contexto/supabase/edge-functions/score-call-attempt/README.md`
+- `docs/contexto/supabase/edge-functions/score-call/README.md`
+- `docs/contexto/supabase/edge-functions/search-calls/README.md`
+- `docs/contexto/supabase/edge-functions/send-notification/README.md`
+- `docs/contexto/supabase/edge-functions/send-survey/README.md`
+- `docs/contexto/supabase/edge-functions/sip-config/README.md`
+- `docs/contexto/supabase/edge-functions/suggest-shift-swaps/README.md`
+- `docs/contexto/supabase/edge-functions/sync-crm-queue/README.md`
+- `docs/contexto/supabase/edge-functions/teams-fetch-recordings/README.md`
+- `docs/contexto/supabase/edge-functions/transcribe-recording/README.md`
+- `docs/contexto/supabase/edge-functions/translate-summary/README.md`
+- `docs/contexto/supabase/edge-functions/translate-utterance/README.md`
+- `docs/contexto/supabase/edge-functions/validate-geo/README.md`
+- `docs/contexto/supabase/edge-functions/validate-ip/README.md`
+- `docs/contexto/supabase/edge-functions/verify-voice/README.md`
+- `docs/contexto/supabase/edge-functions/voice-command/README.md`
+- `docs/contexto/supabase/edge-functions/voice-transcribe/README.md`
+- `docs/contexto/supabase/edge-functions/voip-anomaly-detector/README.md`
+- `docs/contexto/supabase/edge-functions/voip-anomaly-remediation/README.md`
+- `docs/contexto/supabase/edge-functions/voip-capacity-forecast/README.md`
+- `docs/contexto/supabase/edge-functions/voip-capacity-recommendations/README.md`
+- … +207
+
+</details>
+
 <details><summary>Arquivos de <b>código</b> (`docs/contexto/codigo/`)</summary>
 
-- `docs/contexto/codigo/GRAPH_REPORT.md`
 - `docs/contexto/codigo/INDEX.md`
 - `docs/contexto/codigo/banco.json`
 - `docs/contexto/codigo/baseline.json`
