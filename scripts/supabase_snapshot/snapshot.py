@@ -609,12 +609,28 @@ def get_grants(conn):
         WHERE grantee NOT IN ({sys_roles}) AND ({excluded_sql('table_schema')} OR table_schema IN ('storage'))
         GROUP BY 1, 2, 3 ORDER BY 1, 2, 3""")
     columns = q(conn, f"""
-        SELECT table_schema AS schema, table_name AS "table", column_name AS "column", grantee,
+            SELECT schema, "table", column_name, grantee,
                string_agg(privilege_type, ', ' ORDER BY privilege_type) AS privileges
-        FROM information_schema.column_privileges cp
-        WHERE grantee NOT IN ({sys_roles}) AND {excluded_sql('table_schema')}
+            FROM (
+                SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name,
+                       COALESCE(g.rolname, 'PUBLIC') AS grantee, x.prtype AS privilege_type
+                FROM pg_class c
+                JOIN pg_namespace n ON n.oid = c.relnamespace
+                JOIN pg_attribute a ON a.attrelid = c.oid AND a.attnum > 0 AND NOT a.attisdropped
+                CROSS JOIN LATERAL (
+                    SELECT (aclexplode(COALESCE(c.relacl, acldefault('r', c.relowner)))).grantee AS grantee,
+                           (aclexplode(COALESCE(c.relacl, acldefault('r', c.relowner)))).privilege_type AS prtype
+                    UNION ALL
+                    SELECT (aclexplode(COALESCE(a.attacl, acldefault('c', c.relowner)))).grantee,
+                           (aclexplode(COALESCE(a.attacl, acldefault('c', c.relowner)))).privilege_type
+                ) x
+                LEFT JOIN pg_roles g ON g.oid = x.grantee
+                WHERE c.relkind IN ('r', 'v', 'f', 'p')
+                  AND x.prtype IN ('INSERT', 'SELECT', 'UPDATE', 'REFERENCES')
+            ) cp
+            WHERE cp.grantee NOT IN ({sys_roles}) AND {excluded_sql('cp.schema')}
           AND NOT EXISTS (SELECT 1 FROM information_schema.role_table_grants g
-                          WHERE g.table_schema = cp.table_schema AND g.table_name = cp.table_name
+                              WHERE g.table_schema = cp.schema AND g.table_name = cp."table"
                             AND g.grantee = cp.grantee AND g.privilege_type = cp.privilege_type)
         GROUP BY 1, 2, 3, 4 ORDER BY 1, 2, 3, 4""")
     sequences = q(conn, f"""
