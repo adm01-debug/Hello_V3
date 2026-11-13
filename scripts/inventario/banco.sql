@@ -80,8 +80,8 @@ SELECT jsonb_build_object(
     'triggers_public', (SELECT coalesce(sum(g.n), 0) FROM gatilhos g JOIN tabelas t ON t.oid = g.oid),
     'cron_jobs', (SELECT count(*) FROM cron.job),
     'cron_ativos', (SELECT count(*) FROM cron.job WHERE active),
-    'ledger_registros', (SELECT count(*) FROM supabase_migrations.schema_migrations),
-    'ledger_versao_max', (SELECT max(version) FROM supabase_migrations.schema_migrations),
+    'ledger_registros', (SELECT count(*) FROM auth.schema_migrations),
+    'ledger_versao_max', (SELECT max(version) FROM auth.schema_migrations),
     'max_connections', current_setting('max_connections')::int,
     'tamanho_bytes', pg_database_size(current_database())
   ),
