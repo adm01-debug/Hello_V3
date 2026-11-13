@@ -158,8 +158,8 @@ class SnapshotSQLRecoveryTests(SnapshotFixture):
 
     def test_successful_collection_writes_full_sql_with_compact_metadata(self):
         self.assertEqual(self.collect(), 0)
-        self.assertEqual(self.function_sql().read_text().strip(), function()["definition"])
-        self.assertEqual(self.migration_sql().read_text().strip(), "\n\n".join(migration()["statements"]))
+        self.assertEqual(self.function_sql().read_text(encoding="utf-8").strip(), function()["definition"])
+        self.assertEqual(self.migration_sql().read_text(encoding="utf-8").strip(), "\n\n".join(migration()["statements"]))
         metadata = self.metadata()
         self.assertIsNone(metadata["db"]["functions"][0]["definition"])
         self.assertEqual(metadata["db"]["migrations"][0]["statements"], 2)
@@ -184,9 +184,9 @@ class SnapshotSQLRecoveryTests(SnapshotFixture):
             self.assertEqual(set(metadata["carried"]), {"functions", "migrations"})
             self.assertEqual(self.error_sections(), {"functions", "migrations"})
             for name in ("functions", "migrations"):
-                self.assertIn("versão anterior", (self.out / f"{name}.md").read_text())
+                self.assertIn("versão anterior", (self.out / f"{name}.md").read_text(encoding="utf-8"))
             for name in ("functions.md", "README.md"):
-                document = (self.out / name).read_text()
+                document = (self.out / name).read_text(encoding="utf-8")
                 self.assertIn("| código do repo | coleta atual |", document)
                 self.assertIn("| outras funções | coleta anterior; corpos SQL não atualizados |", document)
 
@@ -196,7 +196,7 @@ class SnapshotSQLRecoveryTests(SnapshotFixture):
         statements = ["ALTER TABLE public.demo_table ADD COLUMN name text;"]
         self.assertEqual(self.collect(failures={"functions"}, migrations=[migration(statements=statements)]), 0)
         self.assertEqual(self.function_sql().read_bytes(), old_function)
-        self.assertEqual(self.migration_sql().read_text().strip(), statements[0])
+        self.assertEqual(self.migration_sql().read_text(encoding="utf-8").strip(), statements[0])
         self.assertEqual(self.metadata()["carried"], ["functions"])
 
     def test_failed_migrations_allow_healthy_functions_to_update(self):
@@ -204,7 +204,7 @@ class SnapshotSQLRecoveryTests(SnapshotFixture):
         old_migration = self.migration_sql().read_bytes()
         changed = function(value=2)
         self.assertEqual(self.collect(failures={"migrations"}, functions=[changed]), 0)
-        self.assertEqual(self.function_sql().read_text().strip(), changed["definition"])
+        self.assertEqual(self.function_sql().read_text(encoding="utf-8").strip(), changed["definition"])
         self.assertEqual(self.migration_sql().read_bytes(), old_migration)
         self.assertEqual(self.metadata()["carried"], ["migrations"])
 
@@ -220,11 +220,11 @@ class SnapshotSQLRecoveryTests(SnapshotFixture):
         self.assertEqual(self.collect(functions=[changed], migrations=[migration(statements=statements)]), 0)
         self.assertFalse(self.function_sql("obsolete").exists())
         self.assertFalse(self.migration_sql("20260102000000", "obsolete").exists())
-        self.assertEqual(self.function_sql().read_text().strip(), changed["definition"])
-        self.assertEqual(self.migration_sql().read_text().strip(), statements[0])
+        self.assertEqual(self.function_sql().read_text(encoding="utf-8").strip(), changed["definition"])
+        self.assertEqual(self.migration_sql().read_text(encoding="utf-8").strip(), statements[0])
         self.assertEqual(self.metadata()["carried"], [])
         self.assertEqual(self.metadata()["errors"], [])
-        self.assertNotIn("versão anterior", (self.out / "functions.md").read_text())
+        self.assertNotIn("versão anterior", (self.out / "functions.md").read_text(encoding="utf-8"))
 
     def test_missing_previous_sql_is_reported_without_fake_content_or_links(self):
         self.collect()
@@ -238,7 +238,7 @@ class SnapshotSQLRecoveryTests(SnapshotFixture):
         self.assertEqual(self.metadata()["db"]["migrations"], original_migrations)
         self.assertTrue({"functions.sql", "migrations.sql"}.issubset(self.error_sections()))
         for name in ("functions", "migrations"):
-            document = (self.out / f"{name}.md").read_text()
+            document = (self.out / f"{name}.md").read_text(encoding="utf-8")
             self.assertIn("SQL indisponível", document)
             self.assertNotIn(f"]({name}/", document)
 
@@ -249,18 +249,18 @@ class SnapshotSQLRecoveryTests(SnapshotFixture):
         self.assertEqual(self.metadata()["carried"], [])
         self.assertEqual(self.error_sections(), {"functions", "migrations"})
         for name in ("functions", "migrations"):
-            document = (self.out / f"{name}.md").read_text()
+            document = (self.out / f"{name}.md").read_text(encoding="utf-8")
             self.assertIn("Coleta indisponível", document)
             self.assertNotIn("_nenhum_", document)
-            self.assertIn(f"| {name} | n/d |", (self.out / "README.md").read_text())
+            self.assertIn(f"| {name} | n/d |", (self.out / "README.md").read_text(encoding="utf-8"))
 
     def test_successful_empty_sections_are_not_reported_as_collection_failures(self):
         self.assertEqual(self.collect(functions=[], migrations=[]), 0)
         self.assertEqual(self.metadata()["errors"], [])
         self.assertEqual(self.metadata()["carried"], [])
         for name in ("functions", "migrations"):
-            self.assertIn("_nenhum_", (self.out / f"{name}.md").read_text())
-            self.assertIn(f"| {name} | 0 |", (self.out / "README.md").read_text())
+            self.assertIn("_nenhum_", (self.out / f"{name}.md").read_text(encoding="utf-8"))
+            self.assertIn(f"| {name} | 0 |", (self.out / "README.md").read_text(encoding="utf-8"))
 
     def test_aggregate_and_window_without_sql_remain_healthy_catalog_entries(self):
         entries = [{**function(f"demo_{kind}"), "kind": kind, "definition": None} for kind in ("aggregate", "window")]
@@ -269,7 +269,7 @@ class SnapshotSQLRecoveryTests(SnapshotFixture):
         self.assertEqual([f["kind"] for f in self.metadata()["db"]["functions"]], ["aggregate", "window"])
         for entry in entries:
             self.assertFalse(self.function_sql(entry["name"]).exists())
-        document = (self.out / "functions.md").read_text()
+        document = (self.out / "functions.md").read_text(encoding="utf-8")
         self.assertIn("SQL não coletado para este tipo", document)
         self.assertNotIn("](functions/", document)
         self.assertEqual(self.collect(failures={"functions"}), 0)
@@ -307,7 +307,7 @@ class SnapshotFailureMatrixTests(SnapshotFixture):
             self.assertEqual(metadata["carried"], [section] if history != "none" else [])
             self.assertIn(section, self.error_sections())
             self.assertEqual(f"{section}.sql" in self.error_sections(), history == "metadata_only")
-            document = (self.out / f"{section}.md").read_text()
+            document = (self.out / f"{section}.md").read_text(encoding="utf-8")
             if history == "complete":
                 for relative, contents in sql_before.items():
                     self.assertEqual((self.out / relative).read_bytes(), contents)
@@ -318,18 +318,18 @@ class SnapshotFailureMatrixTests(SnapshotFixture):
                 self.assertNotIn(f"]({section}/", document)
                 self.assertIn("SQL indisponível" if history == "metadata_only" else "Coleta indisponível", document)
             if history == "none":
-                self.assertIn(f"| {section} | n/d |", (self.out / "README.md").read_text())
+                self.assertIn(f"| {section} | n/d |", (self.out / "README.md").read_text(encoding="utf-8"))
             else:
-                self.assertIn(f"| {section} | 2 |", (self.out / "README.md").read_text())
+                self.assertIn(f"| {section} | 2 |", (self.out / "README.md").read_text(encoding="utf-8"))
                 # Falha da coleta não pode transformar registros conhecidos em remoções.
                 changes = self.snapshot.diff_fingerprints(
                     self.snapshot.fingerprints({"db": {section: structural_records(previous)}}),
                     self.snapshot.fingerprints({"db": {section: structural_records(metadata["db"][section])}}))
                 self.assertEqual(changes, [])
             if section == "functions":
-                self.assertEqual(self.migration_sql().read_text().strip(), changed_statement)
+                self.assertEqual(self.migration_sql().read_text(encoding="utf-8").strip(), changed_statement)
             else:
-                self.assertEqual(self.function_sql().read_text().strip(), changed_function["definition"])
+                self.assertEqual(self.function_sql().read_text(encoding="utf-8").strip(), changed_function["definition"])
 
         self.source_files = [("src/recovered.ts", "supabase.rpc('demo')")]
         final_function = function(value=99)
@@ -342,7 +342,7 @@ class SnapshotFailureMatrixTests(SnapshotFixture):
         self.assertEqual(metadata["carried"], [])
         self.assertFalse(self.function_sql("obsolete").exists())
         self.assertFalse(self.migration_sql("20260102000000", "obsolete").exists())
-        document = (self.out / f"{section}.md").read_text()
+        document = (self.out / f"{section}.md").read_text(encoding="utf-8")
         self.assertNotIn("versão anterior", document)
         self.assertNotIn("SQL indisponível", document)
         if recovery == "empty":
@@ -350,10 +350,10 @@ class SnapshotFailureMatrixTests(SnapshotFixture):
             self.assertFalse((self.out / section).exists())
             self.assertIn("_nenhum_", document)
         elif section == "functions":
-            self.assertEqual(self.function_sql().read_text().strip(), final_function["definition"])
+            self.assertEqual(self.function_sql().read_text(encoding="utf-8").strip(), final_function["definition"])
             self.assertEqual(metadata["db"][section][0]["callers"]["code"], [{"file": "src/recovered.ts", "hits": 1}])
         else:
-            self.assertEqual(self.migration_sql().read_text().strip(), final_statement)
+            self.assertEqual(self.migration_sql().read_text(encoding="utf-8").strip(), final_statement)
             self.assertEqual(metadata["db"][section][0]["statements"], 1)
 
 
@@ -807,7 +807,7 @@ class SnapshotDBStatsTests(SnapshotFixture):
         stats, _, errors = self.stats(failure="missing", auth_error=True)
         self.assert_core_metrics(stats, True)
         self.snapshot.render_stats({"db_stats": stats}, {}, {})
-        rendered = json.loads((self.out / "stats.json").read_text())["db"]["db_stats"]
+        rendered = json.loads((self.out / "stats.json").read_text(encoding="utf-8"))["db"]["db_stats"]
         self.assertEqual(rendered["database_bytes"], 123456)
         self.assertEqual(rendered["queues"][0]["queue_name"], "fixture")
         self.assertNotIn("top_queries", rendered)
