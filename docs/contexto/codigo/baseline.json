@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0335da926d13ba74bf873b8c48bfd5f94a29bdf1",
+  "commit": "f8c3c37941aaa3292dbc8422f6aa43902e853771",
   "branch": "main",
-  "data_commit": "2026-11-12T18:01:12Z",
+  "data_commit": "2026-11-12T19:23:12-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f8c3c37",
+    "data": "2026-11-12",
+    "assunto": "fix(ci): inventario nao quebra sem banco.json (add-paths varre o diretorio) (#22)"
+   },
    {
     "sha": "0335da9",
     "data": "2026-11-12",
@@ -126,11 +131,6 @@
     "sha": "9422246",
     "data": "2026-08-05",
     "assunto": "feat: Migração Banco Lovable para Supabase Hello - V3"
-   },
-   {
-    "sha": "2f065da",
-    "data": "2026-08-01",
-    "assunto": "Visual edit in Lovable"
    }
   ],
   "arquivos_mudados_7d": 81,
@@ -145,6 +145,10 @@
    },
    {
     "pasta": ".github/workflows/ci.yml",
+    "mudancas": 2
+   },
+   {
+    "pasta": ".github/workflows/inventario-estado-semanal.yml",
     "mudancas": 2
    },
    {
@@ -188,10 +192,6 @@
     "mudancas": 1
    },
    {
-    "pasta": ".github/workflows/inventario-estado-semanal.yml",
-    "mudancas": 1
-   },
-   {
     "pasta": ".gitignore",
     "mudancas": 1
    }
@@ -207,6 +207,10 @@
    },
    {
     "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 2
+   },
+   {
+    "arquivo": ".github/workflows/inventario-estado-semanal.yml",
     "mudancas": 2
    },
    {
@@ -231,10 +235,6 @@
    },
    {
     "arquivo": ".github/workflows/contexto.yml",
-    "mudancas": 1
-   },
-   {
-    "arquivo": ".github/workflows/inventario-estado-semanal.yml",
     "mudancas": 1
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 9
+    "commits": 10
    },
    {
     "autor": "github-actions[bot]",

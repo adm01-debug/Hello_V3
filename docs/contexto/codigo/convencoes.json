@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "livre",
   "exemplos": [
+   "fix(ci): inventario nao quebra sem banco.json (add-paths varre o diretorio) (#22)",
    "chore: inventario do estado real [auto] (#23)",
    "fix(ci): integra PRs 18/19/20 - CI 100% verde",
    "Pipeline autônomo de contexto para agentes de IA (portado do Zapp Web V2) (#8)",
-   "feat(network): integra voip-quality-alerts-summary ao dashboard",
-   "fix(chat-widget-session): aplica rate limit por IP no endpoint anônimo"
+   "feat(network): integra voip-quality-alerts-summary ao dashboard"
   ]
  },
  "pr_template": null,

@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "0335da926d13ba74bf873b8c48bfd5f94a29bdf1",
+  "sha": "f8c3c37941aaa3292dbc8422f6aa43902e853771",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-12 22:06 UTC",
+  "generated_at": "2026-11-12 23:26 UTC",
   "files_total": 1996,
   "code_files": 1406,
   "code_lines": 177563
@@ -117464,10 +117464,19 @@
   }
  },
  "git": {
-  "sha": "0335da926d13ba74bf873b8c48bfd5f94a29bdf1",
+  "sha": "f8c3c37941aaa3292dbc8422f6aa43902e853771",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "f8c3c37",
+    "date": "2026-11-12",
+    "author": "adm01-debug",
+    "subject": "fix(ci): inventario nao quebra sem banco.json (add-paths varre o diretorio) (#22)",
+    "files": [
+     ".github/workflows/inventario-estado-semanal.yml"
+    ]
+   },
    {
     "sha": "0335da9",
     "date": "2026-11-12",
@@ -119813,17 +119822,6 @@
      "src/components/layout/AppSidebar.tsx",
      "src/components/layout/CommandPalette.tsx"
     ]
-   },
-   {
-    "sha": "5dd515e",
-    "date": "2026-07-27",
-    "author": "gpt-engineer-app[bot]",
-    "subject": "Changes",
-    "files": [
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx",
-     "src/routes/protectedRoutes.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -119852,16 +119850,8 @@
     3
    ],
    [
-    "src/components/layout/AppSidebar.tsx",
-    3
-   ],
-   [
-    "src/components/layout/CommandPalette.tsx",
-    3
-   ],
-   [
-    "src/routes/protectedRoutes.tsx",
-    3
+    ".github/workflows/inventario-estado-semanal.yml",
+    2
    ],
    [
     "inventario/estado/edges.json",
@@ -119905,6 +119895,14 @@
    ],
    [
     "supabase/functions/cleanup-lock-conflicts/index.test.ts",
+    2
+   ],
+   [
+    "supabase/functions/health-check/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/score-call-attempt/__tests__/index.test.ts",
     2
    ]
   ]

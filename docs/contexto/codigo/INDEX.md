@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `0335da926d13ba74bf873b8c48bfd5f94a29bdf1` (2026-11-12T18:01:12Z).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `f8c3c37941aaa3292dbc8422f6aa43902e853771` (2026-11-12T19:23:12-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -359,7 +359,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8801 nós · 23526 arestas · 667 comunidades · grafo do commit `0335da92`
+- 8801 nós · 23526 arestas · 667 comunidades · grafo do commit `f8c3c379`
 - comunidades maiores: card.tsx (290), vitest (200), protectedRoutes.tsx (155), logger.ts (147), react (141), client.ts (140), usePageTitle (128), cn (116), safe-date.ts (107), lucide-react (106), useAuthContext (102), ref_https (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -368,13 +368,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - ESTADO_ATUAL.md (5)
 - AGENTS.md (3)
 - .github/workflows/ci.yml (2)
+- .github/workflows/inventario-estado-semanal.yml (2)
 - docs/estado/edge-functions-parte1.md (2)
 - inventario/estado/edges.json (2)
 - inventario/estado/rotas.json (2)
 - vite.config.ts (2)
 - .claude/skills/hello-v3/SKILL.md (1)
 - .github/workflows/contexto.yml (1)
-- .github/workflows/inventario-estado-semanal.yml (1)
 - CLAUDE.md (1)
 - ai-context.config.json (1)
 - deno.json (1)
@@ -417,6 +417,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-12 `f8c3c37` fix(ci): inventario nao quebra sem banco.json (add-paths varre o diretorio) (#22)
 - 2026-11-12 `0335da9` chore: inventario do estado real [auto] (#23)
 - 2026-11-12 `bc47e27` fix(ci): integra PRs 18/19/20 - CI 100% verde
 - 2026-11-11 `5db3c07` Pipeline autônomo de contexto para agentes de IA (portado do Zapp Web V2) (#8)
@@ -431,7 +432,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-08-19 `4ffdc29` Lovable update
 - 2026-08-19 `85b17eb` Work in progress
 - 2026-08-18 `7a75199` chore(hermes): adiciona .hermes.md (regras da casa Hermes)
-- 2026-08-18 `b38875e` chore(agents): adiciona AGENTS.md padrao (contexto multi-agente)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
