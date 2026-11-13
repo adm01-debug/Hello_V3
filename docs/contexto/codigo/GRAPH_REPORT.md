@@ -1,7 +1,7 @@
 # Graph Report - Hello_V3  (2026-11-13)
 
 ## Corpus Check
-- 1571 files · ~1,088,087 words
+- 1571 files · ~1,088,104 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 21 file(s) not represented in the graph (top: (none) 11, .css 3, .lock 2)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4060612d`
+- Built from commit: `feeb6788`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -1475,7 +1475,7 @@ Nodes (9): Arquitetura de roteamento, Achados graves, Cobertura, Integrações d
 
 ### Community 213 - "prod-readiness.md"
 Cohesion: 0.18
-Nodes (10): 1. Estado global, 2. Pipeline de contexto (destrave desta sessão), 3.1 Rotas / telas (fonte:, 3.2 Edge functions (fonte: supabase/functions/), 3.3 Banco de dados (fonte: anco.json na branch contexto), 3.4 Trabalhos / integrações, 3. Inventário de funcionalidades (linha de base "sem perda"), 4. Qualidade de código (req 5) (+2 more)
+Nodes (10): 1. Estado global, 2. Pipeline de contexto (destrave desta sessão), 3.1 Rotas / telas (fonte: `rotas.json` + `src/routes/*.tsx`), 3.2 Edge functions (fonte: `supabase/functions/`), 3.3 Banco de dados (fonte: `banco.json` na branch `contexto` + `supabase/migrations`), 3.4 Workflows / integrações, 3. Inventário de funcionalidades (linha de base "sem perda"), 4. Qualidade de código (req 5) (+2 more)
 
 ### Community 214 - "Onda 37 — Relatório Massivo de Testes (Property-Based + Fuzz + Cenários Reais)"
 Cohesion: 0.18

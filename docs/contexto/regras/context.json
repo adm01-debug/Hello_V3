@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "4060612d79270999e2ed6ca8dc344ba7936dd733",
+  "sha": "feeb6788bac936272b2cf4e67bdc5805580abb9e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-13 23:16 UTC",
+  "generated_at": "2026-11-13 23:48 UTC",
   "files_total": 1998,
   "code_files": 1406,
   "code_lines": 177591
@@ -117464,10 +117464,19 @@
   }
  },
  "git": {
-  "sha": "4060612d79270999e2ed6ca8dc344ba7936dd733",
+  "sha": "feeb6788bac936272b2cf4e67bdc5805580abb9e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "feeb678",
+    "date": "2026-11-13",
+    "author": "adm01-debug",
+    "subject": "chore: docs: atualiza prod-readiness com publicacao do contexto e RLS vivo (#31)",
+    "files": [
+     "docs/prod-readiness.md"
+    ]
+   },
    {
     "sha": "4060612",
     "date": "2026-11-13",
@@ -117821,17 +117830,6 @@
      "docs/estado/paginas-parte1.md",
      "docs/estado/paginas-parte2.md"
     ]
-   },
-   {
-    "sha": "9160623",
-    "date": "2026-08-11",
-    "author": "Joaquim (via Claude Code VPS)",
-    "subject": "security: remove migrate-helper edge function (exposes service_role key)",
-    "files": [
-     "supabase/config.toml",
-     "supabase/functions/migrate-helper/index.ts",
-     "supabase/functions/migrate-helper/index_test.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -117850,6 +117848,10 @@
    [
     "AGENTS.md",
     3
+   ],
+   [
+    "docs/prod-readiness.md",
+    2
    ],
    [
     "scripts/supabase_snapshot/snapshot.py",
@@ -117892,18 +117894,6 @@
     2
    ],
    [
-    "supabase/config.toml",
-    2
-   ],
-   [
-    "supabase/functions/migrate-helper/index.ts",
-    2
-   ],
-   [
-    "docs/prod-readiness.md",
-    1
-   ],
-   [
     "inventario/estado/banco.json",
     1
    ],
@@ -117913,6 +117903,14 @@
    ],
    [
     "src/lib/__tests__/performance-optimizations.test.ts",
+    1
+   ],
+   [
+    "src/lib/__tests__/safe-date.test.ts",
+    1
+   ],
+   [
+    "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts",
     1
    ]
   ]

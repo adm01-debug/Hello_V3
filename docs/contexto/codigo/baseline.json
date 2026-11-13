@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4060612d79270999e2ed6ca8dc344ba7936dd733",
+  "commit": "feeb6788bac936272b2cf4e67bdc5805580abb9e",
   "branch": "main",
-  "data_commit": "2026-11-13T19:30:52-03:00",
+  "data_commit": "2026-11-13T20:19:59-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "feeb678",
+    "data": "2026-11-13",
+    "assunto": "chore: docs: atualiza prod-readiness com publicacao do contexto e RLS vivo (#31)"
+   },
    {
     "sha": "4060612",
     "data": "2026-11-13",
@@ -126,11 +131,6 @@
     "sha": "057e597",
     "data": "2026-08-18",
     "assunto": "Merge pull request #6 from adm01-debug/claude/system-status-features-boms0f"
-   },
-   {
-    "sha": "96e389d",
-    "data": "2026-08-16",
-    "assunto": "docs: declara a cobertura da revisão adversarial no ESTADO_ATUAL.md"
    }
   ],
   "arquivos_mudados_7d": 83,
@@ -168,6 +168,10 @@
     "mudancas": 2
    },
    {
+    "pasta": "docs/prod-readiness.md",
+    "mudancas": 2
+   },
+   {
     "pasta": "inventario/estado/rotas.json",
     "mudancas": 2
    },
@@ -189,10 +193,6 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 2
-   },
-   {
-    "pasta": "supabase/functions/_shared",
     "mudancas": 2
    }
   ],
@@ -223,6 +223,10 @@
    },
    {
     "arquivo": "docs/estado/edge-functions-parte1.md",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "docs/prod-readiness.md",
     "mudancas": 2
    },
    {
@@ -292,16 +296,12 @@
    {
     "arquivo": "docs/agentes/mapa-repo.md",
     "mudancas": 1
-   },
-   {
-    "arquivo": "docs/agentes/telefonia-voip.md",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 16
+    "commits": 17
    },
    {
     "autor": "github-actions[bot]",

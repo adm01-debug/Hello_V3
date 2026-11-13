@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `4060612d79270999e2ed6ca8dc344ba7936dd733` (2026-11-13T19:30:52-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `feeb6788bac936272b2cf4e67bdc5805580abb9e` (2026-11-13T20:19:59-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -359,7 +359,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8812 nós · 23536 arestas · 678 comunidades · grafo do commit `4060612d`
+- 8812 nós · 23536 arestas · 678 comunidades · grafo do commit `feeb6788`
 - comunidades maiores: lucide-react (257), badge.tsx (185), react (179), client.ts (162), traceHeaders (152), protectedRoutes.tsx (129), usePageTitle (120), vitest (112), cn (111), snapshot.py (102), @tanstack/react-query (90), gerar.mjs (84)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -372,6 +372,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - .github/workflows/ci.yml (2)
 - .github/workflows/inventario-estado-semanal.yml (2)
 - docs/estado/edge-functions-parte1.md (2)
+- docs/prod-readiness.md (2)
 - inventario/estado/rotas.json (2)
 - scripts/inventario/banco.sql (2)
 - scripts/inventario/gerar-banco.mjs (2)
@@ -379,7 +380,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - scripts/supabase_snapshot/test_snapshot.py (2)
 - vite.config.ts (2)
 - .claude/skills/hello-v3/SKILL.md (1)
-- CLAUDE.md (1)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -413,11 +413,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `SYSTEM_FEATURES.md` — 📋 Levantamento Completo de Funcionalidades do Sistema (360 linhas)
 - `docs/CONTEXTO-PARA-AGENTES.md` — Contexto para agentes de IA — leia ANTES de qualquer tarefa (41 linhas)
 - `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` — 📊 Inventário Exaustivo de Funcionalidades e Roadmap - VoIP Enterprise (63 linhas)
-- `docs/prod-readiness.md` (90 linhas)
+- `docs/prod-readiness.md` (92 linhas)
 - subpastas de docs/: docs/adr (53), docs/estado (18), docs/agentes (6), docs/audits (2), docs/contexto (2), docs/qa (2), docs/analises (1), docs/audit (1), docs/runbooks (1)
 
 
 ## Últimos commits
+- 2026-11-13 `feeb678` chore: docs: atualiza prod-readiness com publicacao do contexto e RLS vivo (#31)
 - 2026-11-13 `4060612` chore: docs: relatorio de prod-readiness com inventario de funcionalidades (#30)
 - 2026-11-13 `75a5df1` fix: guard de segredo do contexto ignora senha ja redigida (#29)
 - 2026-11-13 `8ed39f4` fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)
@@ -432,7 +433,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-09 `bb41eec` feat(network): integra voip-quality-alerts-summary ao dashboard
 - 2026-11-09 `2b05cbb` fix(chat-widget-session): aplica rate limit por IP no endpoint anônimo
 - 2026-11-09 `fc37442` fix(e2e): bun run build + vite preview para webServer do Playwright (#17)
-- 2026-11-08 `48f56b4` fix(tests): mock upsert + eslint disable no-control-regex — desbloqueia CI global
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
