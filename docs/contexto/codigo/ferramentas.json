@@ -4,7 +4,7 @@
  "stack": {
   "linguagens": [
    "TypeScript (1159)",
-   "SQL (209)",
+   "SQL (212)",
    "Markdown (100)",
    "JavaScript (27)",
    "JSON (15)",
@@ -239,7 +239,7 @@
   {
    "arquivo": "AGENTS.md",
    "titulo": "AGENTS.md — Hello V3",
-   "linhas": 137
+   "linhas": 138
   },
   {
    "arquivo": "CLAUDE.md",

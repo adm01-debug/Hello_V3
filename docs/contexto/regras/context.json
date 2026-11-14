@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "4b6df34dd8a8db0ecb175e43600ed1cc98fdaf3e",
+  "sha": "2c8b481bb6135731f6781dfbcb90abc47e81ae17",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-14 02:46 UTC",
-  "files_total": 1998,
-  "code_files": 1406,
-  "code_lines": 177591
+  "generated_at": "2026-11-14 13:39 UTC",
+  "files_total": 2001,
+  "code_files": 1409,
+  "code_lines": 177673
  },
  "version": "1.3.2",
- "facts_hash": "6d58af138fbbd772",
+ "facts_hash": "b6148e7474bc259b",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -156,7 +156,7 @@
   "languages": {
    ".tsx": 594,
    ".ts": 565,
-   ".sql": 209,
+   ".sql": 212,
    ".mjs": 25,
    ".js": 8,
    ".py": 5
@@ -21647,10 +21647,10 @@
     "args": "",
     "returns": "TRIGGER",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql",
+    "src": "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
     "security_definer": true,
     "search_path": true,
-    "body": "DECLARE v_url TEXT := 'https://dyibdjwuoibwwpidgsxu.supabase.co/functions/v1/auto-scorecard'; v_key TEXT := '[REDACTED].1YEbYV4udwr7bP4rjd5DVK4ErFWJPNld0KWp-jH-f0o'; BEGIN IF NEW.summary IS NULL OR length(NEW.summary) < 20 THEN RETURN NEW; END IF; PERFORM net.http_post( url := v_url, headers := jsonb_build_object('Content-Type', 'application/json', 'Authorization', 'Bearer ' || v_key), body := jsonb_build_object('call_session_id', NEW.call_session_id) ); RETURN NEW; EXCEPTION WHEN OTHERS THEN RAISE WARNING 'auto-scorecard enqueue failed: %', SQLERRM; RETURN NEW; END;",
+    "body": "DECLARE v_url TEXT := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/auto-scorecard'; v_key TEXT := '[REDACTED].3vn9Pm5G3kKPKJrDAjUVgh5gXhYgawgKiM3bFstFEAk'; BEGIN IF NEW.summary IS NULL OR length(NEW.summary) < 20 THEN RETURN NEW; END IF; PERFORM net.http_post( url := v_url, headers := jsonb_build_object('Content-Type', 'application/json', 'Authorization', 'Bearer ' || v_key), body := jsonb_build_object('call_session_id', NEW.call_session_id) ); RETURN NEW; EXCEPTION WHEN OTHERS THEN RAISE WARNING 'auto-scorecard enqueue failed: %', SQLERRM; RETURN NEW; END;",
     "raises": [],
     "tables": []
    },
@@ -25385,6 +25385,12 @@
     "schedule": "0 3 * * *",
     "body": "SELECT net.http_post( url := 'https://dyibdjwuoibwwpidgsxu.supabase.co/functions/v1/data-lake-flush', headers := jsonb_build_object( 'Content-Type', 'application/json', 'Authorization', 'Bearer [REDACTED].1YEbYV4udwr7bP4rjd5DVK4ErFWJPNld0KWp-jH-f0o' ), body := jsonb_build_object('trigger', 'cron') ) …",
     "src": "supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql"
+   },
+   {
+    "job": "data-lake-flush-daily",
+    "schedule": "0 3 * * *",
+    "body": "SELECT net.http_post( url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush', headers := jsonb_build_object( 'Content-Type', 'application/json', 'Authorization', 'Bearer [REDACTED].3vn9Pm5G3kKPKJrDAjUVgh5gXhYgawgKiM3bFstFEAk' ), body := jsonb_build_object('trigger', 'cron') ) …",
+    "src": "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql"
    }
   ],
   "views": {
@@ -25617,6 +25623,9 @@
    "supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql",
    "supabase/migrations/20260726202240_6938071f-1811-40eb-89c4-336a42768f7d.sql",
    "supabase/migrations/20260805130000_fix_user_profiles_recursion.sql",
+   "supabase/migrations/20261114090555_39ac6717-4796-4514-bcee-c3a00c1dfd6d.sql",
+   "supabase/migrations/20261114090556_f32993dc-8788-4c44-8082-b2e52a7463cb.sql",
+   "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
    "src/integrations/supabase/types.ts"
   ],
   "rls": {
@@ -32955,8 +32964,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 207,
-   "lines": 13536,
+   "files": 210,
+   "lines": 13618,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -77735,10 +77744,10 @@
     "args": "",
     "returns": "TRIGGER",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql",
+    "src": "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
     "security_definer": true,
     "search_path": true,
-    "body": "DECLARE v_url TEXT := 'https://dyibdjwuoibwwpidgsxu.supabase.co/functions/v1/auto-scorecard'; v_key TEXT := '[REDACTED].1YEbYV4udwr7bP4rjd5DVK4ErFWJPNld0KWp-jH-f0o'; BEGIN IF NEW.summary IS NULL OR length(NEW.summary) < 20 THEN RETURN NEW; END IF; PERFORM net.http_post( url := v_url, headers := jsonb_build_object('Content-Type', 'application/json', 'Authorization', 'Bearer ' || v_key), body := jsonb_build_object('call_session_id', NEW.call_session_id) ); RETURN NEW; EXCEPTION WHEN OTHERS THEN RAISE WARNING 'auto-scorecard enqueue failed: %', SQLERRM; RETURN NEW; END;",
+    "body": "DECLARE v_url TEXT := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/auto-scorecard'; v_key TEXT := '[REDACTED].3vn9Pm5G3kKPKJrDAjUVgh5gXhYgawgKiM3bFstFEAk'; BEGIN IF NEW.summary IS NULL OR length(NEW.summary) < 20 THEN RETURN NEW; END IF; PERFORM net.http_post( url := v_url, headers := jsonb_build_object('Content-Type', 'application/json', 'Authorization', 'Bearer ' || v_key), body := jsonb_build_object('call_session_id', NEW.call_session_id) ); RETURN NEW; EXCEPTION WHEN OTHERS THEN RAISE WARNING 'auto-scorecard enqueue failed: %', SQLERRM; RETURN NEW; END;",
     "raises": [],
     "tables": []
    },
@@ -82798,7 +82807,8 @@
    "supabase/migrations/20260726195450_0ffeebc4-7139-4dfa-8465-d41d8193ea38.sql",
    "supabase/migrations/20260726200037_ddb39a7d-1e45-4c97-be01-1923e0caea6d.sql",
    "supabase/migrations/20260726201157_da4cb47a-5f61-4783-9786-eb99a7ee6bfc.sql",
-   "supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql"
+   "supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql",
+   "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql"
   ],
   "security_definer_fns": [
    "add_to_dnc",
@@ -117369,6 +117379,19 @@
    "path": "supabase/migrations/20260805130000_fix_user_profiles_recursion.sql",
    "lines": 53
   },
+  "supabase/migrations/20261114090555_39ac6717-4796-4514-bcee-c3a00c1dfd6d.sql": {
+   "path": "supabase/migrations/20261114090555_39ac6717-4796-4514-bcee-c3a00c1dfd6d.sql",
+   "lines": 9
+  },
+  "supabase/migrations/20261114090556_f32993dc-8788-4c44-8082-b2e52a7463cb.sql": {
+   "path": "supabase/migrations/20261114090556_f32993dc-8788-4c44-8082-b2e52a7463cb.sql",
+   "lines": 20
+  },
+  "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql": {
+   "path": "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
+   "lines": 53,
+   "uses_service_role": true
+  },
   "tests/e2e/auth.spec.ts": {
    "path": "tests/e2e/auth.spec.ts",
    "lines": 34,
@@ -117464,10 +117487,47 @@
   }
  },
  "git": {
-  "sha": "4b6df34dd8a8db0ecb175e43600ed1cc98fdaf3e",
+  "sha": "2c8b481bb6135731f6781dfbcb90abc47e81ae17",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "2c8b481",
+    "date": "2026-11-14",
+    "author": "adm01-debug",
+    "subject": "fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)",
+    "files": [
+     ".env",
+     "AGENTS.md",
+     "ESTADO_ATUAL.md",
+     "docs/agentes/banco.md",
+     "docs/estado/dados-schema-migrations.md",
+     "docs/estado/edge-functions-parte1.md",
+     "docs/estado/funcionalidades-planejadas.md",
+     "docs/estado/integracoes.md",
+     "docs/prod-readiness.md",
+     "inventario/estado/README.md",
+     "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql"
+    ]
+   },
+   {
+    "sha": "1a3c93f",
+    "date": "2026-11-14",
+    "author": "adm01-debug",
+    "subject": "fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)",
+    "files": [
+     "supabase/migrations/20261114090556_f32993dc-8788-4c44-8082-b2e52a7463cb.sql"
+    ]
+   },
+   {
+    "sha": "42f17da",
+    "date": "2026-11-14",
+    "author": "adm01-debug",
+    "subject": "fix: aplica security_invoker na view financial_impact_daily (#34)",
+    "files": [
+     "supabase/migrations/20261114090555_39ac6717-4796-4514-bcee-c3a00c1dfd6d.sql"
+    ]
+   },
    {
     "sha": "4b6df34",
     "date": "2026-11-13",
@@ -117785,38 +117845,15 @@
     "author": "adm01-debug",
     "subject": "Merge pull request #6 from adm01-debug/claude/system-status-features-boms0f",
     "files": []
-   },
-   {
-    "sha": "96e389d",
-    "date": "2026-08-16",
-    "author": "Claude",
-    "subject": "docs: declara a cobertura da revisão adversarial no ESTADO_ATUAL.md",
-    "files": [
-     "ESTADO_ATUAL.md"
-    ]
-   },
-   {
-    "sha": "a0827ce",
-    "date": "2026-08-16",
-    "author": "Claude",
-    "subject": "docs: auto-auditoria do ESTADO_ATUAL.md — corrige 6 erros próprios",
-    "files": [
-     "ESTADO_ATUAL.md"
-    ]
-   },
-   {
-    "sha": "24501d8",
-    "date": "2026-08-16",
-    "author": "Claude",
-    "subject": "docs: registra segundo modo de falha do CI (execuções que não iniciam)",
-    "files": [
-     "ESTADO_ATUAL.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/prod-readiness.md",
+    5
+   ],
+   [
+    "AGENTS.md",
     4
    ],
    [
@@ -117828,12 +117865,20 @@
     3
    ],
    [
-    "AGENTS.md",
-    3
+    ".env",
+    2
    ],
    [
-    "ESTADO_ATUAL.md",
-    3
+    "docs/agentes/banco.md",
+    2
+   ],
+   [
+    "docs/estado/edge-functions-parte1.md",
+    2
+   ],
+   [
+    "inventario/estado/README.md",
+    2
    ],
    [
     "scripts/supabase_snapshot/snapshot.py",
@@ -117872,27 +117917,15 @@
     2
    ],
    [
-    "inventario/estado/banco.json",
+    "ESTADO_ATUAL.md",
     1
    ],
    [
-    "deno.lock",
+    "docs/estado/dados-schema-migrations.md",
     1
    ],
    [
-    "src/lib/__tests__/performance-optimizations.test.ts",
-    1
-   ],
-   [
-    "src/lib/__tests__/safe-date.test.ts",
-    1
-   ],
-   [
-    "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts",
-    1
-   ],
-   [
-    "src/lib/__tests__/security-observability.test.ts",
+    "docs/estado/funcionalidades-planejadas.md",
     1
    ]
   ]

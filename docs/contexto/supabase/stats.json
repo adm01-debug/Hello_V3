@@ -34,8 +34,8 @@
           "connected_cluster": 0,
           "db_connected": false,
           "healthy": true,
-          "node": "realtime@2600:1f1c:c90:ad01:acc8:b2aa:a113:f42",
-          "region": "us-west-1",
+          "node": "realtime@2600:1f18:67fc:ac00:8426:34a9:e6f6:1269",
+          "region": "us-east-1",
           "replication_connected": false
         },
         "name": "realtime",
@@ -132,7 +132,7 @@
       },
       "connections": [
         {
-          "n": 2,
+          "n": 1,
           "state": "idle",
           "usename": "authenticator"
         },
@@ -173,12 +173,12 @@
       "storage": [],
       "top_queries": [
         {
-          "calls": 68,
-          "mean_ms": 5357.9,
+          "calls": 69,
+          "mean_ms": 5357.46,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 364337
+          "total_ms": 369665
         },
         {
           "calls": 2,
@@ -221,12 +221,12 @@
           "total_ms": 11813
         },
         {
-          "calls": 72,
-          "mean_ms": 154.81,
+          "calls": 73,
+          "mean_ms": 156.68,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 576,
-          "total_ms": 11146
+          "rows": 584,
+          "total_ms": 11438
         },
         {
           "calls": 76,
@@ -269,12 +269,12 @@
           "total_ms": 4554
         },
         {
-          "calls": 72,
-          "mean_ms": 61.45,
+          "calls": 73,
+          "mean_ms": 61.27,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 124560,
-          "total_ms": 4424
+          "rows": 126290,
+          "total_ms": 4473
         },
         {
           "calls": 20,
@@ -285,12 +285,12 @@
           "total_ms": 3545
         },
         {
-          "calls": 72,
-          "mean_ms": 48.35,
+          "calls": 73,
+          "mean_ms": 48.34,
           "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
           "role": "postgres",
-          "rows": 3888,
-          "total_ms": 3481
+          "rows": 3942,
+          "total_ms": 3529
         }
       ]
     },
@@ -4963,7 +4963,7 @@
         "last_autovacuum": null,
         "name": "call_sessions",
         "schema": "public",
-        "seq_scan": 24,
+        "seq_scan": 25,
         "total_bytes": 180224
       },
       {
@@ -5015,7 +5015,7 @@
         "last_autovacuum": null,
         "name": "contacts",
         "schema": "public",
-        "seq_scan": 12,
+        "seq_scan": 13,
         "total_bytes": 131072
       },
       {
@@ -5054,7 +5054,7 @@
         "last_autovacuum": null,
         "name": "deals",
         "schema": "public",
-        "seq_scan": 18,
+        "seq_scan": 19,
         "total_bytes": 98304
       },
       {

@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `4b6df34dd8a8db0ecb175e43600ed1cc98fdaf3e` (2026-11-13T23:02:36-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `2c8b481bb6135731f6781dfbcb90abc47e81ae17` (2026-11-14T10:01:12-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1159), SQL (209), Markdown (100), JavaScript (27), JSON (15), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1159), SQL (212), Markdown (100), JavaScript (27), JSON (15), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,7 +34,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1533 |
+| arquivos_total | 1536 |
 | arquivos_codigo | 1190 |
 | linhas_codigo | 163240 |
 | rotas | 104 |
@@ -46,7 +46,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | hooks | 188 |
 | edge_functions | 94 |
 | tabelas | 171 |
-| migrations | 207 |
+| migrations | 210 |
 | cron_jobs | 7 |
 | testes | 322 |
 | workflows | 3 |
@@ -322,7 +322,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Cron jobs (pg_cron / vercel)
 - `daily-cleanup-old-logs` 15 3 * * * (20260711185006_44492a26-e136-43de-93b9-066bed1b40a8.sql)
-- `data-lake-flush-daily` 0 3 * * * → edge data-lake-flush (20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql)
+- `data-lake-flush-daily` 0 3 * * * → edge data-lake-flush (20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql)
 - `quarterly-reset-index-stats` 0 6 1 1,4,7,10 * (20260712115343_8332dd3d-29a2-4017-954c-edc625f7029b.sql)
 - `weekly-bloat-monitor` 0 5 * * 0 (20260712110237_ae094d69-c026-433d-b7b1-232eb615e4cd.sql)
 - `weekly-idle-index-monitor` 30 5 * * 0 (20260712112627_4ad8101d-5e02-4b1c-a570-f8338fc90f70.sql)
@@ -359,27 +359,27 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8812 nós · 23536 arestas · 678 comunidades · grafo do commit `4b6df34d`
-- comunidades maiores: lucide-react (257), badge.tsx (185), react (179), client.ts (162), traceHeaders (152), protectedRoutes.tsx (129), usePageTitle (120), vitest (112), cn (111), snapshot.py (102), @tanstack/react-query (90), gerar.mjs (84)
+- 8816 nós · 23537 arestas · 663 comunidades · grafo do commit `2c8b481b`
+- comunidades maiores: lucide-react (260), vitest (189), react (151), badge.tsx (148), traceHeaders (139), protectedRoutes.tsx (125), useAuthContext (122), cn (113), tabs.tsx (112), select.tsx (112), snapshot.py (102), ref_https (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- ESTADO_ATUAL.md (5)
-- docs/prod-readiness.md (4)
+- ESTADO_ATUAL.md (6)
+- docs/prod-readiness.md (5)
+- AGENTS.md (4)
 - .github/workflows/contexto.yml (3)
-- AGENTS.md (3)
+- docs/estado/edge-functions-parte1.md (3)
 - inventario/estado/edges.json (3)
 - .github/workflows/ci.yml (2)
 - .github/workflows/inventario-estado-semanal.yml (2)
-- docs/estado/edge-functions-parte1.md (2)
+- docs/agentes/banco.md (2)
+- docs/estado/dados-schema-migrations.md (2)
+- docs/estado/funcionalidades-planejadas.md (2)
+- docs/estado/integracoes.md (2)
+- inventario/estado/README.md (2)
 - inventario/estado/rotas.json (2)
 - scripts/inventario/banco.sql (2)
-- scripts/inventario/gerar-banco.mjs (2)
-- scripts/supabase_snapshot/snapshot.py (2)
-- scripts/supabase_snapshot/test_snapshot.py (2)
-- vite.config.ts (2)
-- .claude/skills/hello-v3/SKILL.md (1)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -406,7 +406,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Documentos (raiz e docs/)
 - `.github/SECURITY.md` — Security Policy (35 linhas)
-- `AGENTS.md` — AGENTS.md — Hello V3 (137 linhas)
+- `AGENTS.md` — AGENTS.md — Hello V3 (138 linhas)
 - `CLAUDE.md` (2 linhas)
 - `ESTADO_ATUAL.md` — Estado Atual do Sistema — Auditoria de Estado (349 linhas)
 - `README.md` — 📞 Bitrix Call Connect - VoIP Enterprise & AI Intelligence (79 linhas)
@@ -418,6 +418,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-14 `2c8b481` fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)
+- 2026-11-14 `1a3c93f` fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)
+- 2026-11-14 `42f17da` fix: aplica security_invoker na view financial_impact_daily (#34)
 - 2026-11-13 `4b6df34` chore: fecha relatorio de prod-readiness na main final 25e39c4 (#33)
 - 2026-11-13 `25e39c4` chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)
 - 2026-11-13 `feeb678` chore: docs: atualiza prod-readiness com publicacao do contexto e RLS vivo (#31)
@@ -430,9 +433,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-13 `650143f` fix: test_snapshot.py lê arquivos gerados com UTF-8 explícito (#24)
 - 2026-11-12 `f8c3c37` fix(ci): inventario nao quebra sem banco.json (add-paths varre o diretorio) (#22)
 - 2026-11-12 `0335da9` chore: inventario do estado real [auto] (#23)
-- 2026-11-12 `bc47e27` fix(ci): integra PRs 18/19/20 - CI 100% verde
-- 2026-11-11 `5db3c07` Pipeline autônomo de contexto para agentes de IA (portado do Zapp Web V2) (#8)
-- 2026-11-09 `bb41eec` feat(network): integra voip-quality-alerts-summary ao dashboard
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -2,11 +2,26 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4b6df34dd8a8db0ecb175e43600ed1cc98fdaf3e",
+  "commit": "2c8b481bb6135731f6781dfbcb90abc47e81ae17",
   "branch": "main",
-  "data_commit": "2026-11-13T23:02:36-03:00",
+  "data_commit": "2026-11-14T10:01:12-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "2c8b481",
+    "data": "2026-11-14",
+    "assunto": "fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)"
+   },
+   {
+    "sha": "1a3c93f",
+    "data": "2026-11-14",
+    "assunto": "fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)"
+   },
+   {
+    "sha": "42f17da",
+    "data": "2026-11-14",
+    "assunto": "fix: aplica security_invoker na view financial_impact_daily (#34)"
+   },
    {
     "sha": "4b6df34",
     "data": "2026-11-13",
@@ -116,35 +131,24 @@
     "sha": "7307a87",
     "data": "2026-08-28",
     "assunto": "Visual edit in Lovable"
-   },
-   {
-    "sha": "4ffdc29",
-    "data": "2026-08-19",
-    "assunto": "Lovable update"
-   },
-   {
-    "sha": "85b17eb",
-    "data": "2026-08-19",
-    "assunto": "Work in progress"
-   },
-   {
-    "sha": "7a75199",
-    "data": "2026-08-18",
-    "assunto": "chore(hermes): adiciona .hermes.md (regras da casa Hermes)"
    }
   ],
-  "arquivos_mudados_7d": 83,
+  "arquivos_mudados_7d": 91,
   "pastas_mais_mudadas_30d": [
+   {
+    "pasta": "docs/prod-readiness.md",
+    "mudancas": 5
+   },
    {
     "pasta": "src/lib/__tests__",
     "mudancas": 5
    },
    {
-    "pasta": "docs/prod-readiness.md",
-    "mudancas": 4
+    "pasta": ".github/workflows/contexto.yml",
+    "mudancas": 3
    },
    {
-    "pasta": ".github/workflows/contexto.yml",
+    "pasta": "AGENTS.md",
     "mudancas": 3
    },
    {
@@ -164,11 +168,19 @@
     "mudancas": 2
    },
    {
-    "pasta": "AGENTS.md",
+    "pasta": "docs/agentes/banco.md",
     "mudancas": 2
    },
    {
     "pasta": "docs/contexto/regras",
+    "mudancas": 2
+   },
+   {
+    "pasta": "docs/estado/edge-functions-parte1.md",
+    "mudancas": 2
+   },
+   {
+    "pasta": "inventario/estado/README.md",
     "mudancas": 2
    },
    {
@@ -182,27 +194,19 @@
    {
     "pasta": "scripts/inventario/gerar-banco.mjs",
     "mudancas": 2
-   },
-   {
-    "pasta": "scripts/supabase_snapshot/snapshot.py",
-    "mudancas": 2
-   },
-   {
-    "pasta": "scripts/supabase_snapshot/test_snapshot.py",
-    "mudancas": 2
-   },
-   {
-    "pasta": "src/hooks/__tests__",
-    "mudancas": 2
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "ESTADO_ATUAL.md",
-    "mudancas": 5
+    "mudancas": 6
    },
    {
     "arquivo": "docs/prod-readiness.md",
+    "mudancas": 5
+   },
+   {
+    "arquivo": "AGENTS.md",
     "mudancas": 4
    },
    {
@@ -210,7 +214,7 @@
     "mudancas": 3
    },
    {
-    "arquivo": "AGENTS.md",
+    "arquivo": "docs/estado/edge-functions-parte1.md",
     "mudancas": 3
    },
    {
@@ -226,7 +230,23 @@
     "mudancas": 2
    },
    {
-    "arquivo": "docs/estado/edge-functions-parte1.md",
+    "arquivo": "docs/agentes/banco.md",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "docs/estado/dados-schema-migrations.md",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "docs/estado/integracoes.md",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "inventario/estado/README.md",
     "mudancas": 2
    },
    {
@@ -276,32 +296,12 @@
    {
     "arquivo": "docs/CONTEXTO-PARA-AGENTES.md",
     "mudancas": 1
-   },
-   {
-    "arquivo": "docs/agentes/banco.md",
-    "mudancas": 1
-   },
-   {
-    "arquivo": "docs/agentes/edge-functions.md",
-    "mudancas": 1
-   },
-   {
-    "arquivo": "docs/agentes/github-ci.md",
-    "mudancas": 1
-   },
-   {
-    "arquivo": "docs/agentes/lovable-deploy.md",
-    "mudancas": 1
-   },
-   {
-    "arquivo": "docs/agentes/mapa-repo.md",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 19
+    "commits": 22
    },
    {
     "autor": "github-actions[bot]",
@@ -310,7 +310,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1533,
+  "arquivos_total": 1536,
   "arquivos_codigo": 1190,
   "linhas_codigo": 163240,
   "rotas": 104,
@@ -322,7 +322,7 @@
   "hooks": 188,
   "edge_functions": 94,
   "tabelas": 171,
-  "migrations": 207,
+  "migrations": 210,
   "cron_jobs": 7,
   "testes": 322,
   "workflows": 3,
