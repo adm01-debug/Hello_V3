@@ -23,7 +23,7 @@
 | Fix query de grants (PR #28) | **OK** | `snapshot.py` usa `aclexplode` (~608-629); local 6.3s vs 131.5s, paridade 1952 rows, 109 unittests. Squash `8ed39f4` |
 | Fix guard de segredos (PR #29) | **OK** | `contexto.yml:251` `grep -rIPl '(?!\[REDACTED\]@)'`; ignora senha já redigida. Squash `75a5df1` |
 | Secrets `SUPABASE_DB_URL`/`SUPABASE_ACCESS_TOKEN` | **OK** | gravados no repo (projeto `cfmlmcdyjuotqobjapng`, região us-east-2) |
-| Publicar `docs/contexto/supabase/` na branch `contexto` | **OK** | run `43513925340` (Contexto, head=75a5df1) = success → commit `64841581` na branch `contexto`, com `docs/contexto/supabase/` completo (grants.md, policies.md, tables.md, lints.md, snapshot.json etc.) |
+| Publicar `docs/contexto/supabase/` na branch `contexto` | **OK** | run `43527196190` (Contexto, head=feeb678) = success → commit `cd84c6a` na branch `contexto`, com `docs/contexto/supabase/` completo (grants.md, policies.md, tables.md, lints.md, snapshot.json etc.) |
 
 ---
 
@@ -89,3 +89,4 @@
 
 ---
 _Relatório automático — evidências: check-runs/deployments via API do GitHub; catálogo via branch `contexto` (commit 64841581); código na main `4060612d`._
+
