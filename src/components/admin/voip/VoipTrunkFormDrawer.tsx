@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { z } from 'zod';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,20 +8,7 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Save, X } from 'lucide-react';
 import { useSaveTrunk, type VoipTrunk, type VoipProvider } from '@/hooks/useVoipTrunks';
-
-const schema = z.object({
-  name: z.string().trim().min(1, 'Nome obrigatório').max(100),
-  provider: z.enum(['nvoip', 'directcall', 'totalvoice', 'generic', 'wavoip']),
-  sip_server: z.string().trim().min(1, 'Servidor obrigatório').max(255),
-  sip_username: z.string().trim().min(1, 'Usuário obrigatório').max(100),
-  sip_password: z.string().min(0).max(255).optional(),
-  sip_realm: z.string().max(255).optional(),
-  transport: z.enum(['wss', 'tcp', 'udp']),
-  max_channels: z.coerce.number().min(1).max(1000),
-  priority: z.coerce.number().min(0).max(9999),
-  is_active: z.boolean(),
-  notes: z.string().max(500).optional(),
-});
+import { voipTrunkSchema, zodFormErrors } from '@/lib/schema';
 
 interface Props {
   open: boolean;
@@ -57,11 +43,9 @@ export function VoipTrunkFormDrawer({ open, onOpenChange, trunk }: Props) {
   }, [trunk, open]);
 
   const handleSubmit = () => {
-    const parsed = schema.safeParse(form);
+    const parsed = voipTrunkSchema.safeParse(form);
     if (!parsed.success) {
-      const errs: Record<string, string> = {};
-      parsed.error.issues.forEach(i => { errs[i.path[0] as string] = i.message; });
-      setErrors(errs);
+      setErrors(zodFormErrors(parsed));
       return;
     }
     const payload: Record<string, unknown> = { ...parsed.data };
