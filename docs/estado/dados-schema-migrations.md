@@ -373,14 +373,9 @@ existe no repositório.
 | `weekly-bloat-monitor` | `0 5 * * 0` | SQL: `SELECT public.notify_bloat_hotspots();` | `supabase/migrations/20260712110237_ae094d69-c026-433d-b7b1-232eb615e4cd.sql:107-111` |
 | `weekly-idle-index-monitor` | `30 5 * * 0` | SQL: `SELECT public.notify_idle_indexes();` | `supabase/migrations/20260712112627_4ad8101d-5e02-4b1c-a570-f8338fc90f70.sql:93-97` |
 | `quarterly-reset-index-stats` | `0 6 1 1,4,7,10 *` | SQL: `SELECT public.reset_public_index_stats();` | `supabase/migrations/20260712115343_8332dd3d-29a2-4017-954c-edc625f7029b.sql:105-109` |
-| `data-lake-flush-daily` | `0 3 * * *` | **Edge function** via `net.http_post` → `https://dyibdjwuoibwwpidgsxu.supabase.co/functions/v1/data-lake-flush`, body `{'trigger':'cron'}` | `supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql:46-57` |
+| `data-lake-flush-daily` | `0 3 * * *` | **Edge function** via `net.http_post` → `https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush`, body `{'trigger':'cron'}` | migration `20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8` (corrigida; antiga `20260723114001_…:46-57` apontava para `dyibdjwuoibwwpidgsxu`) |
 
-**Achado crítico neste bloco:** o job `data-lake-flush-daily` carrega um **JWT anon completo
-hardcoded** no header `Authorization` (`supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql:53`),
-e a mesma chave aparece de novo numa variável da própria migration
-(`...20260723114001_...:14`, `v_key TEXT := 'eyJhbGciOi...'`). O `ref` do projeto
-(`dyibdjwuoibwwpidgsxu`) também está fixo na URL — a migration não é portável entre ambientes,
-e o segredo está versionado em git em texto claro.
+**Correção aplicada:** a migration `20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8` reaponta o cron e o trigger para o projeto oficial `cfmlmcdyjuotqobjapng` e substitui a chave anon hardcoded pela chave anon atual do projeto (a antiga expirava e pertence ao ref morto). Aguarda aplicação no banco (PR de DDL — regra 8).
 
 ## DRIFT types.ts × migrations
 
@@ -637,8 +632,12 @@ e **não têm `CREATE TABLE` em nenhuma das 207 migrations**. Pior: 8 migrations
 **G2 — Segredo de produção versionado em texto claro (severidade: crítica).**
 `supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql:14` e `:53` contêm
 um JWT anon completo e o `ref` do projeto (`dyibdjwuoibwwpidgsxu`) hardcoded no job cron
-`data-lake-flush-daily`. Está no histórico do git; rotacionar a chave não remove o vazamento,
+`data-lake-flush-daily`. **Está no histórico do git**; rotacionar a chave não remove o vazamento,
 e a migration não roda em nenhum outro ambiente.
+**Correção:** a migration `20261114090557_…` substitui o bloco hardcoded pela chave anon do projeto
+oficial `cfmlmcdyjuotqobjapng` (também versionada em `.env`, mantendo apenas em repositórios privados
+de confiança; service_role nunca é usada em SQL). O vazamento histórico permanece — a chave do projeto
+morto não protege nada ativo.
 
 **G3 — Políticas `USING (true)` sobreviventes em tabelas de dados pessoais e de credenciais
 (severidade: alta).** `contacts`, `call_records`, `queue_items` e `agents` mantêm

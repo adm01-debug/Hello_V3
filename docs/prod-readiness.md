@@ -77,7 +77,7 @@
 1. **Cron `update-contact-name-daily` falha diariamente** — `cron-runs.md`: `OPTIMISTIC_LOCK_CONFLICT` (registro alterado por outro usuário) em 11/12/13 nov. Causa raiz não corrigida nesta sessão (fora de escopo).
 2. **Lint ALTA `view_security_definer` em `public.financial_impact_daily`** — `lints.md`: view sem `security_invoker` executa como owner e ignora RLS das tabelas base. Correção = DDL/migration em produção (regra 8 → PR sem merge).
 3. **Erro no manifest: custom-hostname** — `manifest.json`: `HTTP 400 em /projects/cfmlmcdyjuotqobjapng/custom-hostname`. Config de domínio, não bloqueia app.
-4. **Projeto morto `dyibdjwuoibwwpidgsxu.supabase.co`** — apontado em `.env` versionado, cron `data-lake-flush` e docs, mas DNS não resolve; produção usa `cfmlmcdyjuotqobjapng`. Fora de escopo (mudança de arquitetura/dado).
+4. **Projeto morto `dyibdjwuoibwwpidgsxu.supabase.co`** — apontava em `.env` versionado, cron `data-lake-flush` e docs. Corrigido na migration `20261114090557_…` + `.env` (aguarda aplicação no banco — regra 8).
 
 ---
 

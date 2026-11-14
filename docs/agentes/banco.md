@@ -53,10 +53,9 @@ Resumo das regras no `AGENTS.md`; aqui está o detalhe.
 ### Bancos que NÃO são deste projeto (não escrever neles)
 
 - **`dyibdjwuoibwwpidgsxu`** — projeto Supabase anterior (migração "Banco Lovable → Supabase Hello - V3").
-  **Não é o banco atual.** Os **dois únicos** endereços de edge function em todas as 207 migrations apontam
-  para ele: `supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql:13`
-  (`/functions/v1/auto-scorecard`) e `:50` (`/functions/v1/data-lake-flush`). A mesma migration embute o JWT
-  `anon` de produção em `:14` e `:53`. Decidir entre reapontar e remover é do dono.
+  **Não é o banco atual.** Os endereços de edge function que apontavam para ele (migration
+  `20260723114001_…:13/:50`) foram reapontados para `cfmlmcdyjuotqobjapng` — ver migration
+  `20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8` (aguarda aplicação).
 - `pgxfvjmuubtbowutlide` e `doufsxqlfjyuvxuezpln` — bancos de **outros sistemas**, alcançáveis pelos MCPs
   desta sessão. Nunca aplicar migration neles a partir deste repo.
 

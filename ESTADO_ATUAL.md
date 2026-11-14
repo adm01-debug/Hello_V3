@@ -113,9 +113,9 @@ Medi cada gate localmente, com as dependências instaladas via `npm ci`:
 **Evidência:** `geo_settings`, `geo_restrictions` e `geo_access_logs` existem em `src/integrations/supabase/types.ts:3666,3711,3744` (portanto, existem no ambiente real) e são usadas em produção por `src/hooks/useGeoBlocking.ts:35,44,53` e `supabase/functions/validate-geo/`. **Nenhuma migration as cria** (`grep "CREATE TABLE.*geo_"` → vazio). Cinco migrations executam `DROP POLICY IF EXISTS … ON public.geo_*`, que aborta contra relação inexistente.
 **Consequência:** um `supabase db reset` a partir do Git não reproduz o ambiente. Não há caminho versionado de volta ao estado atual do banco.
 
-### 🟠 R6 — Cron jobs apontando para outro projeto Supabase
-**Evidência:** `supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql:13` e `:50` fixam `https://dyibdjwuoibwwpidgsxu.supabase.co/functions/v1/auto-scorecard` e `/data-lake-flush`, enquanto o projeto declarado é `cfmlmcdyjuotqobjapng`. A mesma migration embute o JWT `anon` de produção nas linhas `:14` e `:53`.
-**Leitura:** resíduo da migração de projeto ("feat: Migração Banco Lovable para Supabase Hello - V3", commit `9422246`). Os dois únicos agendamentos automáticos do repositório apontam para um projeto que não é este.
+### 🟠 R6 — Cron jobs apontando para outro projeto Supabase (corrigido)
+**Evidência (antes):** `supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql:13` e `:50` fixavam `https://dyibdjwuoibwwpidgsxu.supabase.co/functions/v1/auto-scorecard` e `/data-lake-flush`.
+**Correção:** `20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8` recria a função do trigger e o cron apontando para `cfmlmcdyjuotqobjapng`, e o `.env` versionado foi atualizado. Requer aplicação no banco (PR aguardando).
 
 ### 🟠 R7 — Bypass de RLS por construção em `search-calls`
 **Evidência:** `supabase/functions/search-calls/index.ts:28-33` cria o cliente com `SUPABASE_SERVICE_ROLE_KEY` e repassa `Authorization: authHeader || ''`. Não há checagem de autenticação nem retorno 401 em lugar algum do arquivo.
@@ -305,7 +305,7 @@ O `Math.random()` é real e sem qualquer fallback (`:23-24`), e o componente imp
 11. **Rotacionar a chave `service_role`** do projeto `cfmlmcdyjuotqobjapng` — está no histórico do Git; remover os arquivos não revoga a chave. **Decisão e execução são suas.**
 12. **Remover os dois botões de fabricação de dados** — "Criar Dados" em `/ranking` (`AgentRanking.tsx:47`) e "Criar Testes" (`CallAlertsList.tsx:63`) — ou restringi-los a `admin` fora de produção. Decidir também se os dados já inseridos precisam ser identificados e expurgados.
 13. **Escrever a migration ausente das tabelas `geo_*`** a partir do schema real — exige ler o banco, que não tenho como acessar.
-14. **Decidir o destino dos cron jobs** que apontam para `dyibdjwuoibwwpidgsxu`: reapontar para o projeto correto ou remover.
+14. **Aplicar no banco a migration `20261114090557_…`** que reaponta trigger e cron de `dyibdjwuoibwwpidgsxu` para `cfmlmcdyjuotqobjapng` (PR de DDL sem merge — regra 8).
 15. **Adicionar checagem de autenticação em `search-calls`** e versionar `verify_jwt` por função em `supabase/config.toml`.
 16. **Ligar `setCallDbSession`** no fluxo de chamada para consertar a cadeia de métricas de hold — precisa de decisão sobre os dados históricos já gravados nulos.
 17. **Decidir sobre as 16 unidades dormentes:** ativar (dar-lhes consumidor) ou remover, com as tabelas correspondentes.

@@ -35,7 +35,7 @@ regere o arquivo (comandos abaixo) em vez de corrigir à mão.
   produção (`supabase/schema-manifest.json`, ou as tabelas de `src/integrations/supabase/types.ts`, gerado
   pelo Supabase) **e** o ledger bater com `supabase/migrations/`: maior versão aplicada entre as 20 migrations mais recentes do
   repo (ou à frente) e quantidade de registros a até 10 % da de arquivos. Barra resposta colada de outro banco
-  (ex.: MCP errado ou o projeto `dyibdjwuoibwwpidgsxu` citado em migration antiga).
+  (ex.: MCP errado ou o projeto antigo `dyibdjwuoibwwpidgsxu`, já reapontado para `cfmlmcdyjuotqobjapng` na migration `20261114090557_…`).
 - O PR semanal (`inventario-estado-semanal.yml`) só abre quando algo estrutural mudou de verdade:
   tabela nova/apagada, alerta novo, RLS/policy, contagem real de linhas de tabela, tela/rota, edge etc.
   `medido_em`/`gerado_em` sozinhos não abrem PR, e a telemetria viva do cron/telefonia também não

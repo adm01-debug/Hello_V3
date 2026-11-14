@@ -60,7 +60,7 @@ Extraídos de `Deno.env.get(...)` em `supabase/functions/`:
 | Integração | Ressalva medida |
 |---|---|
 | **Wavoip** | `wavoip-call` exige `WAVOIP_TOKEN` e **nunca o usa**; as respostas são constantes. `useWavoipCall.ts:125-135` marca a chamada como ativa via `setTimeout(2000)`, não por evento — a UI mostra "atendida" sem atendimento. |
-| **Data Lake (BigQuery/Snowflake)** | Edges `data-lake-flush` e `export-data-lake` existem, mas o cron de `data-lake-flush` aponta para **outro projeto Supabase** (`dyibdjwuoibwwpidgsxu`, migration `20260723114001_…:50`). |
+| **Data Lake (BigQuery/Snowflake)** | Edges `data-lake-flush` e `export-data-lake` existem; cron reapontado para `cfmlmcdyjuotqobjapng` (migration `20261114090557_…`, aguarda aplicação). |
 | **WhatsApp** | `whatsapp-inbound` existe; injeção de filtro PostgREST em `:41`; o composer da UI (`WhatsappComposer.tsx`) tem **zero importadores**. |
 | **Chat widget / e-mail entrante** | `chat-widget-session` e `email-inbound` são webhooks públicos sem registro de origem no repositório. |
 | **Lovable Cloud Auth** | `@lovable.dev/cloud-auth-js` importado em `src/integrations/lovable/index.ts` (38 linhas). |
