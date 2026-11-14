@@ -105,9 +105,11 @@ jobs:
           fi
           # banco muda sem push: coleta no agendamento e no dispatch, nunca no push
           banco=true; [ "$EVENT_NAME" = "push" ] && banco=false
-          echo "codigo=$codigo" >> "$GITHUB_OUTPUT"
-          echo "regras=$regras" >> "$GITHUB_OUTPUT"
-          echo "banco=$banco" >> "$GITHUB_OUTPUT"
+          {
+            echo "codigo=$codigo"
+            echo "regras=$regras"
+            echo "banco=$banco"
+          } >> "$GITHUB_OUTPUT"
           echo "head=$head codigo=$codigo (último $last_codigo) regras=$regras (último $last_regras) banco=$banco"
 
   codigo:

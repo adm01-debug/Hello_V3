@@ -38,3 +38,15 @@ Quando `overall != operational`, `health-check` emite:
 - `health-check` (edge function pública) — consolida SLIs e deriva o status.
 - Logs JSON em edge functions (`_shared/observability.ts`): `logInfo/logError/logRequest/withRequestLog`.
 - Runbook de incidentes em `docs/runbooks/incident-response.md`.
+
+## Como ler os logs em produção
+
+As edge functions emitem JSON de uma linha (`logInfo/logError/logRequest`). O CLI do Supabase **não** tem
+subcomando de leitura de logs; o acesso é pelo dashboard:
+
+- **Dashboard → Edge Functions → <função> → Logs** — filtra por função (origem destinatária dos eventos).
+- Filtro sugerido: `event == "request" || event == "slo_violation"` para ver requests e alertas de SLO.
+- Logs ficam retidos conforme o plano do projeto (retenção do Logflare).
+
+Não há necessidade de infra extra: a saída já é estruturada e consumível por qualquer agregador que
+leia o stream de logs do projeto (ex.: Logflare direto, se configurado no dashboard).
