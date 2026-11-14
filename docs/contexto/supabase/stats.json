@@ -34,7 +34,7 @@
           "connected_cluster": 0,
           "db_connected": false,
           "healthy": true,
-          "node": "realtime@2600:1f18:67fc:ac00:8426:34a9:e6f6:1269",
+          "node": "realtime@2600:1f18:67fc:ac02:90a5:694a:bde1:9b5d",
           "region": "us-east-1",
           "replication_connected": false
         },
@@ -194,12 +194,12 @@
           "total_ms": 263008
         },
         {
-          "calls": 30,
-          "mean_ms": 5360.09,
+          "calls": 35,
+          "mean_ms": 5348.24,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 160803
+          "total_ms": 187188
         },
         {
           "calls": 1,
@@ -242,6 +242,14 @@
           "total_ms": 6150
         },
         {
+          "calls": 39,
+          "mean_ms": 157,
+          "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
+          "role": "postgres",
+          "rows": 312,
+          "total_ms": 6123
+        },
+        {
           "calls": 20,
           "mean_ms": 304.54,
           "query": "SELECT e.name, n.nspname AS schema, e.default_version, x.extversion AS installed_version, e.comment, ev.schema AS default_version_schema FROM pg_available_extensions e LEFT JOIN pg_extension x ON e.name = x.extname LEFT ",
@@ -256,14 +264,6 @@
           "role": "postgres",
           "rows": 0,
           "total_ms": 5561
-        },
-        {
-          "calls": 34,
-          "mean_ms": 160.26,
-          "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
-          "role": "postgres",
-          "rows": 272,
-          "total_ms": 5449
         },
         {
           "calls": 1,
@@ -282,12 +282,12 @@
           "total_ms": 3378
         },
         {
-          "calls": 34,
-          "mean_ms": 69.88,
+          "calls": 39,
+          "mean_ms": 66.79,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 58820,
-          "total_ms": 2376
+          "rows": 67470,
+          "total_ms": 2605
         },
         {
           "calls": 299,
