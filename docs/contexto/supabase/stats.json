@@ -34,8 +34,8 @@
           "connected_cluster": 0,
           "db_connected": false,
           "healthy": true,
-          "node": "realtime@2600:1f1c:c90:ad00:a7ad:eff8:263:7a7d",
-          "region": "us-west-1",
+          "node": "realtime@2600:1f18:67fc:ac01:b898:955b:2faf:dffe",
+          "region": "us-east-1",
           "replication_connected": false
         },
         "name": "realtime",
@@ -197,12 +197,12 @@
           "total_ms": 117288
         },
         {
-          "calls": 14,
-          "mean_ms": 5337.52,
+          "calls": 16,
+          "mean_ms": 5359.38,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 74725
+          "total_ms": 85750
         },
         {
           "calls": 17,
@@ -261,20 +261,20 @@
           "total_ms": 4554
         },
         {
+          "calls": 20,
+          "mean_ms": 183.49,
+          "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
+          "role": "postgres",
+          "rows": 160,
+          "total_ms": 3670
+        },
+        {
           "calls": 18,
           "mean_ms": 187.69,
           "query": "WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $2), oid) AS base_type FROM pg_type UNIO",
           "role": "authenticator",
           "rows": 3630,
           "total_ms": 3378
-        },
-        {
-          "calls": 18,
-          "mean_ms": 171.55,
-          "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
-          "role": "postgres",
-          "rows": 144,
-          "total_ms": 3088
         },
         {
           "calls": 299,
