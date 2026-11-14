@@ -25,9 +25,10 @@ O manifest também informa `erros` e `carried`; uma coleta recente pode ser parc
 Seu timestamp não entra em `snapshot.json` nem nos fingerprints: consultar um banco sem mudanças
 renova o frescor sem inventar uma alteração estrutural no `CHANGELOG.md`.
 
-Neste repo `schema.sql` e `types.ts` estão desligados (`PGDUMP=false`, `GEN_TYPES=false` no workflow):
-o `pg_dump` do runner pode ser mais antigo que o servidor e o `types.ts` já é versionado em
-`src/integrations/supabase/types.ts`.
+Neste repo `schema.sql` fica desligado (`PGDUMP=false` no workflow): o `pg_dump` do runner pode ser mais
+antigo que o servidor. Já o `types.ts` sai do versionado em `src/integrations/supabase/types.ts`
+(`TYPES_TS_SRC`, default do snapshot quando `GEN_TYPES=false`): sem custo de `npx` no runner e sempre
+refletindo a fonte de verdade do código.
 
 ## Secret necessário
 
@@ -108,6 +109,7 @@ grant usage on schema cron, vault, storage, auth, supabase_migrations to snapsho
 | `SNAPSHOT_DIR` | `docs/supabase` (no workflow: `docs/contexto/supabase`) | pasta de saída |
 | `PGDUMP_SCHEMAS` | `public` | schemas do `schema.sql`, separados por vírgula |
 | `GEN_TYPES` | `true` | gera `types.ts` via `npx supabase gen types` |
+| `TYPES_TS_SRC` | `src/integrations/supabase/types.ts` | `types.ts` versionado copiado quando `GEN_TYPES=false` ou o CLI falha (vazio desliga) |
 | `PGDUMP` | `true` | gera `schema.sql` via `pg_dump` (exige pg_dump >= versão do servidor) |
 | `SNAPSHOT_EXCLUDE_SCHEMAS` | vazio | schemas extras a ignorar na introspecção |
 | `SNAPSHOT_INCLUDE_SCHEMAS` | vazio | schemas internos do Supabase a forçar inclusão |

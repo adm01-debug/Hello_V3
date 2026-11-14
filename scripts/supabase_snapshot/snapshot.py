@@ -27,6 +27,8 @@ Variáveis de ambiente:
   SNAPSHOT_INCLUDE_SCHEMAS   schemas internos do Supabase a FORÇAR inclusão (ex.: "graphql_public")
   PGDUMP_SCHEMAS             (default "public") schemas do pg_dump --schema-only
   GEN_TYPES                  (default "true") gera types.ts via supabase CLI (npx)
+    TYPES_TS_SRC               (default "src/integrations/supabase/types.ts") types.ts versionado no repo;
+                               copiado para a saída quando GEN_TYPES=false ou o CLI falha (vazio desliga)
   PGDUMP                     (default "true") gera schema.sql via pg_dump (exige pg_dump >= versão do servidor)
   CRON_RUNS_PER_JOB          (default 3) últimas execuções por job do pg_cron
   STAT_STATEMENTS_TOP        (default 15) consultas mais custosas em stats.md (0 desliga)
@@ -83,6 +85,7 @@ OUT = pathlib.Path(os.environ.get("SNAPSHOT_DIR", "docs/supabase")).resolve()
 PGDUMP_SCHEMAS = [s.strip() for s in os.environ.get("PGDUMP_SCHEMAS", "public").split(",") if s.strip()]
 GEN_TYPES = os.environ.get("GEN_TYPES", "true").lower() in ("1", "true", "yes")
 PGDUMP = os.environ.get("PGDUMP", "true").lower() in ("1", "true", "yes")
+TYPES_TS_SRC = os.environ.get("TYPES_TS_SRC", "src/integrations/supabase/types.ts").strip()
 CRON_RUNS_PER_JOB = env_int("CRON_RUNS_PER_JOB", 3, 0)
 STAT_STATEMENTS_TOP = env_int("STAT_STATEMENTS_TOP", 15, 0)
 # Raiz do repositório para cruzar "quem chama cada função no código". Vazio = desliga.
@@ -1667,7 +1670,7 @@ def render_readme(snap: dict, api_: dict, caller_sources: dict[str, str] | None 
         "| `tables.md` / `tables/` | índice e um arquivo por tabela; `tables/_supabase_internal_triggers.md` = triggers em auth/storage |",
         "| `relationships.md` | todas as FKs + diagrama ER (Mermaid) |",
         "| `schema.sql` | DDL completo (pg_dump --schema-only, schemas: " + ", ".join(PGDUMP_SCHEMAS) + ") |" if PGDUMP else "| `schema.sql` | desligado neste repo (PGDUMP=false) |",
-        "| `types.ts` | tipos TypeScript gerados pelo supabase CLI |" if GEN_TYPES else "| `types.ts` | desligado neste repo (GEN_TYPES=false) |",
+        "| `types.ts` | tipos TypeScript (supabase CLI quando GEN_TYPES=true; senão, copiado do versionado " + TYPES_TS_SRC + ") |",
         "| `lints.md` | RLS faltando, security definer sem search_path, views sem security_invoker, FK sem índice, RPC anon… |",
         "| `policies.md` | todas as policies RLS (incl. storage e realtime) |",
         "| `functions.md` / `functions/` | funções/procedures com corpo SQL e quem pode executar via RPC |",
@@ -1756,6 +1759,16 @@ def main() -> int:
     if types_ts is None and GEN_TYPES and (OUT / "types.ts").exists():
         types_ts = (OUT / "types.ts").read_text(encoding="utf-8")
         CARRIED.append("types.ts")
+    # Fallback determinístico: o types.ts versionado no repo (fonte de verdade do código).
+    # Vale para GEN_TYPES=false (CI sem npx) e para quando a geração via CLI falha.
+    if types_ts is None and TYPES_TS_SRC and REPO_ROOT:
+        types_src = REPO_ROOT / TYPES_TS_SRC
+        if types_src.exists():
+            types_ts = types_src.read_text(encoding="utf-8")
+            CARRIED.append(TYPES_TS_SRC)
+            log(f"types.ts: copiado do versionado ({TYPES_TS_SRC})")
+        else:
+            record_error("gen_types", f"TYPES_TS_SRC {TYPES_TS_SRC} não encontrado — types.ts ausente")
 
     preserved = {"CHANGELOG.md", "edge-functions", "snapshot.json", ".gitattributes", OUTPUT_MARKER}
     preserved.update(name for name in ("functions", "migrations") if name in CARRIED)
