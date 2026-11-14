@@ -27,7 +27,7 @@ export default function VideoConference() {
      if (conf.status === 'ended') return;
      
      if (conf.status === 'active' && conf.meeting_url) {
-       window.open(conf.meeting_url, '_blank');
+       window.open(conf.meeting_url, '_blank', 'noopener,noreferrer');
        return;
      }
  
@@ -49,7 +49,7 @@ export default function VideoConference() {
        
        queryClient.invalidateQueries({ queryKey: ['video-conferences'] });
        toast.success('Reunião iniciada!');
-       window.open(meetingUrl, '_blank');
+       window.open(meetingUrl, '_blank', 'noopener,noreferrer');
      } catch (error) {
        logger.error('Error starting meeting:', error);
        toast.error('Erro ao iniciar reunião');

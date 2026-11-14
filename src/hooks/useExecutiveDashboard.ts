@@ -113,17 +113,24 @@ export function useExecutiveDashboardData(period: PeriodType) {
 
     let sessionsQuery = supabase.from('call_sessions').select('*');
     if (period !== 'all') sessionsQuery = sessionsQuery.gte('created_at', dateFilter.toISOString());
-    const { data: sessions } = await sessionsQuery;
+    const { data: sessions, error: sessionsError } = await sessionsQuery;
 
-    const { data: summaries } = await supabase.from('call_summaries').select('*');
-    const { data: alerts } = await supabase.from('call_alerts').select('*').eq('is_read', false);
-    const { data: agentGoals } = await supabase.from('agent_goals').select('*');
+        const { data: summaries, error: summariesError } = await supabase.from('call_summaries').select('*');
+        const { data: alerts, error: alertsError } = await supabase.from('call_alerts').select('*').eq('is_read', false);
+        const { data: agentGoals, error: agentGoalsError } = await supabase.from('agent_goals').select('*');
 
     let holdQuery = supabase.from('hold_events').select('*');
     if (period !== 'all') holdQuery = holdQuery.gte('created_at', dateFilter.toISOString());
-    const { data: holdEvents } = await holdQuery;
+        const { data: holdEvents, error: holdError } = await holdQuery;
 
     if (!sessions) { setIsLoading(false); return; }
+
+    const errMsg = (sessionsError ?? summariesError ?? alertsError ?? agentGoalsError ?? holdError)?.message;
+    if (errMsg) {
+      console.error('[ExecutiveDashboard] erro ao carregar métricas:', errMsg);
+      setIsLoading(false);
+      return;
+    }
 
     const sessionIds = new Set(sessions.map(s => s.id));
     const filteredSummaries = summaries?.filter(s => sessionIds.has(s.call_session_id)) ?? [];

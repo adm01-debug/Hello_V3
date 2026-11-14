@@ -31,6 +31,10 @@ export function useTrunkRealtimeMetrics() {
         supabase.from('call_sessions').select('id, status').eq('status', 'active'),
         supabase.from('voip_trunks').select('id, name, max_channels, last_health_latency_ms, last_health_status')
       ]);
+          if (callsRes.error || trunksRes.error) {
+                  console.error('[TrunkRealtimeMetrics] erro ao carregar dados:', callsRes.error?.message ?? trunksRes.error?.message);
+                  return;
+                }
       if (callsRes.data) setActiveCalls(callsRes.data);
       if (trunksRes.data) setTrunks(trunksRes.data);
     };
