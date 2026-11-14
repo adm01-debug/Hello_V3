@@ -34,8 +34,8 @@
           "connected_cluster": 0,
           "db_connected": false,
           "healthy": true,
-          "node": "realtime@2600:1f1c:c90:ad01:df03:4854:4067:cd7c",
-          "region": "us-west-1",
+          "node": "realtime@2600:1f18:67fc:ac02:bc7a:1add:d7e7:f8a2",
+          "region": "us-east-1",
           "replication_connected": false
         },
         "name": "realtime",
@@ -137,7 +137,7 @@
           "usename": "authenticator"
         },
         {
-          "n": 2,
+          "n": 1,
           "state": "idle",
           "usename": "pgbouncer"
         },
@@ -160,11 +160,6 @@
           "n": 1,
           "state": null,
           "usename": "supabase_admin"
-        },
-        {
-          "n": 1,
-          "state": "idle",
-          "usename": "supabase_storage_admin"
         }
       ],
       "database_bytes": 24775827,
@@ -194,20 +189,20 @@
           "total_ms": 263008
         },
         {
+          "calls": 25,
+          "mean_ms": 5354.37,
+          "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
+          "role": "postgres",
+          "rows": 0,
+          "total_ms": 133859
+        },
+        {
           "calls": 1,
           "mean_ms": 117288.34,
           "query": "SELECT table_schema, table_name, column_name, grantee, privilege_type FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND table_schema NOT IN ($16,$1",
           "role": "postgres",
           "rows": 0,
           "total_ms": 117288
-        },
-        {
-          "calls": 21,
-          "mean_ms": 5354.39,
-          "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
-          "role": "postgres",
-          "rows": 0,
-          "total_ms": 112442
         },
         {
           "calls": 17,
@@ -258,20 +253,20 @@
           "total_ms": 5561
         },
         {
+          "calls": 29,
+          "mean_ms": 168.24,
+          "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
+          "role": "postgres",
+          "rows": 232,
+          "total_ms": 4879
+        },
+        {
           "calls": 1,
           "mean_ms": 4553.59,
           "query": "with page as ( select c.oid, c.relname, c.relrowsecurity, c.relforcerowsecurity, c.relreplident, nc.nspname as schema, -- Computed once here so the final select can reference it for both the -- raw byte count and pg_size",
           "role": "postgres",
           "rows": 100,
           "total_ms": 4554
-        },
-        {
-          "calls": 25,
-          "mean_ms": 173.75,
-          "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
-          "role": "postgres",
-          "rows": 200,
-          "total_ms": 4344
         },
         {
           "calls": 18,
@@ -290,12 +285,12 @@
           "total_ms": 2202
         },
         {
-          "calls": 13,
-          "mean_ms": 163.71,
-          "query": "with f as ( -- CTE with sane arg_modes, arg_names, and arg_types. -- All three are always of the same length. -- All three include all args, including OUT and TABLE args. with functions as ( select *, -- proargmodes is n",
+          "calls": 29,
+          "mean_ms": 74.05,
+          "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 4329,
-          "total_ms": 2128
+          "rows": 50170,
+          "total_ms": 2147
         }
       ]
     },
