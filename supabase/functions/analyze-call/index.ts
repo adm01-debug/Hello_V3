@@ -4,7 +4,7 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validateBody, createErrorResponse } from "../_shared/validator.ts";
 import { AnalyzeCallSchema } from "./schema.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
-import { trackMetric } from "../_shared/observability.ts";
+import { trackMetric, withRequestLog, logError } from "../_shared/observability.ts";
 import { verifyWebhookSignature } from "../_shared/hmac.ts";
 
 interface AnalysisResult {
@@ -17,7 +17,7 @@ interface AnalysisResult {
   agentPerformance: { clarity: number; empathy: number; resolution: number };
 }
 
-serve(async (req) => {
+serve(withRequestLog('analyze-call', async (req) => {
   const cors = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
@@ -138,9 +138,9 @@ ${transcript.slice(0, 10000)}`;
       headers: { ...cors, 'Content-Type': 'application/json' } 
     });
   } catch (error) {
-    console.error('analyze-call error:', error);
+    logError('request_failed', error, { fn: 'analyze-call' });
     return createErrorResponse('Erro interno', 'INTERNAL_ERROR', undefined, 500, cors);
   }
-});
+}));
 
 
