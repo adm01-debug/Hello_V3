@@ -29,7 +29,7 @@ Origem: `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` §2 e `docs/audits/pendencias-
 | **Virtual Fax v2** (OCR via Gemini) | 🔴 Pendente (D2) | Edge function `ocr-virtual-fax/index.ts` **existe e chama a IA de verdade** (`:59`); falta a interface de gestão descrita | 🟨 **IMPLEMENTADO_PARCIAL** |
 | **AI-Driven Shift Management** | 🔴 Pendente (D3) | Edge `suggest-shift-swaps` existe; `useAdherence` existe mas é **órfão** (zero consumidores) | 🟨 **IMPLEMENTADO_PARCIAL** |
 | **Coaching Automático** (sentimento → trilhas) | 🔴 Pendente (D4) | Edges `generate-coaching`, `generate-coaching-plan`, `generate-coaching-track` existem; `generate-coaching-track` **sem chamador**; `useCoachingAssignments` **órfão** | 🟨 **IMPLEMENTADO_PARCIAL** |
-| **Data Lake connector** (BigQuery/Snowflake) | 🔴 Pendente (D5) | Edges `data-lake-flush` e `export-data-lake` existem; o cron de `data-lake-flush` aponta para **outro projeto Supabase** (`dyibdjwuoibwwpidgsxu`, migration `20260723114001_…:50`) | 🟨 **IMPLEMENTADO_PARCIAL** (fio quebrado) |
+| **Data Lake connector** (BigQuery/Snowflake) | 🟡 Pendente (D5) | Edges `data-lake-flush` e `export-data-lake` existem; cron reapontado para `cfmlmcdyjuotqobjapng` (migration `20261114090557_…`) | 🟡 **IMPLEMENTADO_PARCIAL** (fio corrigido; aguarda aplicação) |
 | **Financial Impact Dashboard** | Listado como futuro | Rota `/financial-impact` **existe e está ativa**; hook `useFinancialImpact` com teste de propriedade | ✅ **IMPLEMENTADO_TOTAL** (código) / `NAO_VERIFICADO` em uso real |
 
 **Padrão observado:** quase tudo do "roadmap futuro" já tem backend construído. O que falta, consistentemente, é o **último fio** — o consumidor na UI ou o gatilho. É o oposto do padrão usual de roadmap.

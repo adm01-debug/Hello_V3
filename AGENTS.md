@@ -81,8 +81,9 @@ Detalhe em `docs/agentes/<tema>.md`; divergiu da realidade → corrija no mesmo 
 
 ## Banco — ler `docs/agentes/banco.md` antes de SQL, migration ou deploy
 - Oficial: Supabase Cloud **`cfmlmcdyjuotqobjapng`** ("Hello - V3", `supabase/config.toml:1`).
-- **NÃO escrever em `dyibdjwuoibwwpidgsxu`** — projeto anterior, ainda citado pelos 2 únicos cron jobs com
-  HTTP do repo (`20260723114001_…:13,50`). Resíduo de migração, não o banco atual.
+- **NÃO escrever em `dyibdjwuoibwwpidgsxu`** — projeto anterior. Resíduo corrigido: trigger `trigger_auto_scorecard`,
+  cron `data-lake-flush-daily` e `.env` foram reapontados para `cfmlmcdyjuotqobjapng` na migration
+  `20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8`. Escreva sempre no projeto oficial acima.
 - **Não há MCP de SQL para este banco nesta sessão** e o host é bloqueado pela rede do ambiente de nuvem
   (`curl` → `000`). Os MCPs Supabase carregados apontam para outros sistemas — confira qual carregou antes de
   rodar SQL. Logo todo veredito sobre runtime do banco (dados, RLS efetiva, `pg_cron`, migrations aplicadas)

@@ -174,12 +174,12 @@ const supabase = createClient(supabaseUrl, serviceKey, {
 ```
 O `|| ''` faz o PostgREST cair para a `apikey` de service role, e a busca full-text em `call_transcripts_searchable` e `call_key_moments` passa a devolver **transcrições de todas as chamadas de todos os agentes**. Não há nenhum `return 401` — a função nunca rejeita a ausência do header.
 
-**G3 — Cron/trigger de produção apontam para um projeto Supabase diferente do configurado.**
-`supabase/config.toml` declara `project_id = "cfmlmcdyjuotqobjapng"` e `.env:3` confirma `VITE_SUPABASE_URL="https://cfmlmcdyjuotqobjapng.supabase.co"`. Mas os dois únicos gatilhos automatizados do repositório usam outro ref:
-- `supabase/migrations/20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3.sql:13` → `https://dyibdjwuoibwwpidgsxu.supabase.co/functions/v1/auto-scorecard`
-- `supabase/migrations/20260723114001_...sql:50` → `https://dyibdjwuoibwwpidgsxu.supabase.co/functions/v1/data-lake-flush`
-
-Ou seja, o trigger de scorecard automático e o cron diário de data lake (03:00 UTC, `:46-48`) chamam um projeto que não é o deste repositório — os dois únicos gatilhos automáticos do lote estão, na prática, quebrados ou vazando chamadas para outro ambiente.
+**G3 (corrigido) — Cron/trigger de produção apontavam para um projeto Supabase diferente do configurado.**
+`supabase/config.toml` declara `project_id = "cfmlmcdyjuotqobjapng"`. Os gatilhos usavam outro ref na migration
+`20260723114001_…:13/:50` → `https://dyibdjwuoibwwpidgsxu.supabase.co/...`. A migration
+`20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8` recria a função `trigger_auto_scorecard` e o cron
+`data-lake-flush-daily` apontando para `cfmlmcdyjuotqobjapng` (aguarda aplicação — regra 8). O `.env` versionado
+também foi atualizado para o projeto oficial.
 
 **G4 (secundário, mas sistêmico) — 4 funções importam um módulo que não existe.**
 `npm:@supabase/supabase-js@2/cors` não é um subpath exportado pelo `@supabase/supabase-js`. Ocorre em `dialer-pacing-tick/index.ts:2`, `generate-coaching-plan/index.ts:2`, `data-lake-flush/index.ts:3`, `auto-scorecard/index.ts:3`. Deno resolve imports em runtime: essas 4 funções tendem a falhar no boot. Não foi possível executar `deno check` para confirmar (Deno não instalado neste ambiente).
