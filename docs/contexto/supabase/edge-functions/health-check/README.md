@@ -4,9 +4,9 @@
 |---|---|
 | nome | health-check |
 | status | ACTIVE |
-| versão | 8 |
+| versão | 9 |
 | verify_jwt | não |
-| entrypoint | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_1296a813-59d7-4ad4-8af9-e8c0d898ea09_7/source/supabase/functions/health-check/index.ts |
+| entrypoint | file:///mnt/c/Users/JOAQUI~1/AppData/Local/Temp/hv3x/supabase/functions/health-check/index.ts |
 | import_map |  |
 | URL | https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/health-check |
 | fonte no repo | `supabase/functions/health-check/` |

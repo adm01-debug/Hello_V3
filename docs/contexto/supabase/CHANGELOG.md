@@ -2,6 +2,10 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-14 13:58 UTC
+
+- **edge functions** alterado (3): `analyze-call`, `data-lake-flush`, `health-check`
+
 ## 2026-11-14 13:15 UTC
 
 - **cron jobs** adicionado (1): `4:data-lake-flush-daily`

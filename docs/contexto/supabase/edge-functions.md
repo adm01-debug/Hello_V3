@@ -4,7 +4,7 @@ URL base: `https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/<slug>`. Metada
 
 | slug | nome | status | versão | verify_jwt | entrypoint |
 |---|---|---|---|---|---|
-| analyze-call | analyze-call | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_427cc99f-c356-485e-9f76-5b6b974e28e8_3/source/supabase/functions/analyze-call/index.ts |
+| analyze-call | analyze-call | ACTIVE | 5 | não | file:///mnt/c/Users/JOAQUI~1/AppData/Local/Temp/hv3x/supabase/functions/analyze-call/index.ts |
 | analyze-contact-profile | analyze-contact-profile | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_76dca568-5482-4b2f-bb0e-0668f5e509db_3/source/supabase/functions/analyze-contact-profile/index.ts |
 | analyze-live-utterance | analyze-live-utterance | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_4ba83365-7619-4a20-9918-7122f22ef5b0_3/source/supabase/functions/analyze-live-utterance/index.ts |
 | analyze-sentiment | analyze-sentiment | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_411ff927-228c-49c4-aa24-0a0daac30eb4_3/source/supabase/functions/analyze-sentiment/index.ts |
@@ -24,7 +24,7 @@ URL base: `https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/<slug>`. Metada
 | compute-adherence | compute-adherence | ACTIVE | 5 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_fd0df46d-b3bd-44b7-87f4-57eb14144152_4/source/supabase/functions/compute-adherence/index.ts |
 | compute-best-time | compute-best-time | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_6c726ff7-3d73-4c23-87bd-f0a835c03ab0_3/source/supabase/functions/compute-best-time/index.ts |
 | compute-deal-health | compute-deal-health | ACTIVE | 5 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_6a4181f8-c58b-47a6-92d7-890fd2ebd095_4/source/supabase/functions/compute-deal-health/index.ts |
-| data-lake-flush | data-lake-flush | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_cafe7966-084c-4d40-956c-27c7855f5ca1_3/source/supabase/functions/data-lake-flush/index.ts |
+| data-lake-flush | data-lake-flush | ACTIVE | 5 | não | file:///mnt/c/Users/JOAQUI~1/AppData/Local/Temp/hv3x/supabase/functions/data-lake-flush/index.ts |
 | database-backup | database-backup | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_a9d4c0a6-3c61-4795-b322-64cc86fd716f_3/source/supabase/functions/database-backup/index.ts |
 | database-cleanup | database-cleanup | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_cb8db897-5fda-4f1c-8f8d-8354952e8c19_3/source/supabase/functions/database-cleanup/index.ts |
 | detect-churn-risk | detect-churn-risk | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_60ed82ef-ffcc-4361-b018-1a3691dce8a5_3/source/supabase/functions/detect-churn-risk/index.ts |
@@ -46,7 +46,7 @@ URL base: `https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/<slug>`. Metada
 | generate-meeting-summary | generate-meeting-summary | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_5a4861ff-bb2f-4a5a-8709-1a2c2480f7dc_3/source/supabase/functions/generate-meeting-summary/index.ts |
 | generate-summary | generate-summary | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_dfe32647-1950-4c1e-a9d2-472f27145852_3/source/supabase/functions/generate-summary/index.ts |
 | global-load-test | global-load-test | ACTIVE | 5 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_9004f841-6c04-4fb7-907f-71a2c2157a7a_4/source/supabase/functions/global-load-test/index.ts |
-| health-check | health-check | ACTIVE | 8 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_1296a813-59d7-4ad4-8af9-e8c0d898ea09_7/source/supabase/functions/health-check/index.ts |
+| health-check | health-check | ACTIVE | 9 | não | file:///mnt/c/Users/JOAQUI~1/AppData/Local/Temp/hv3x/supabase/functions/health-check/index.ts |
 | migrate-helper | migrate-helper | ACTIVE | 9 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_e5e1321d-c956-421d-b0a1-ce28046e0f1d_8/source/supabase/functions/migrate-helper/index.ts |
 | notify-blocked-ip | notify-blocked-ip | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_5304a965-e00b-4f2d-b13f-3974a5aee69c_3/source/supabase/functions/notify-blocked-ip/index.ts |
 | notify-new-device | notify-new-device | ACTIVE | 4 | não | file:///tmp/user_fn_cfmlmcdyjuotqobjapng_16e40799-6e93-48ce-855c-54c3425ad7bc_3/source/supabase/functions/notify-new-device/index.ts |

@@ -34,7 +34,7 @@
           "connected_cluster": 0,
           "db_connected": false,
           "healthy": true,
-          "node": "realtime@2600:1f18:67fc:ac00:8426:34a9:e6f6:1269",
+          "node": "realtime@2600:1f18:67fc:ac01:52f5:e676:a4b5:2dd5",
           "region": "us-east-1",
           "replication_connected": false
         },
@@ -132,7 +132,7 @@
       },
       "connections": [
         {
-          "n": 1,
+          "n": 3,
           "state": "idle",
           "usename": "authenticator"
         },
@@ -173,12 +173,12 @@
       "storage": [],
       "top_queries": [
         {
-          "calls": 69,
-          "mean_ms": 5357.46,
+          "calls": 70,
+          "mean_ms": 5359.52,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 369665
+          "total_ms": 375166
         },
         {
           "calls": 2,
@@ -221,12 +221,12 @@
           "total_ms": 11813
         },
         {
-          "calls": 73,
-          "mean_ms": 156.68,
+          "calls": 74,
+          "mean_ms": 156.42,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 584,
-          "total_ms": 11438
+          "rows": 592,
+          "total_ms": 11575
         },
         {
           "calls": 76,
@@ -269,12 +269,20 @@
           "total_ms": 4554
         },
         {
-          "calls": 73,
-          "mean_ms": 61.27,
+          "calls": 74,
+          "mean_ms": 61.13,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 126290,
-          "total_ms": 4473
+          "rows": 128020,
+          "total_ms": 4523
+        },
+        {
+          "calls": 74,
+          "mean_ms": 48.36,
+          "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
+          "role": "postgres",
+          "rows": 3996,
+          "total_ms": 3579
         },
         {
           "calls": 20,
@@ -283,14 +291,6 @@
           "role": "authenticator",
           "rows": 4042,
           "total_ms": 3545
-        },
-        {
-          "calls": 73,
-          "mean_ms": 48.34,
-          "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
-          "role": "postgres",
-          "rows": 3942,
-          "total_ms": 3529
         }
       ]
     },
@@ -4845,7 +4845,7 @@
         "is_primary": false,
         "is_unique": false,
         "name": "idx_webhook_flush_metrics_created_at",
-        "scans": 0,
+        "scans": 9,
         "schema": "public",
         "table": "webhook_flush_metrics"
       },
@@ -5776,7 +5776,7 @@
         "dead_rows": 0,
         "est_rows": 0,
         "heap_bytes": 0,
-        "idx_scan": 0,
+        "idx_scan": 9,
         "index_bytes": 32768,
         "last_autoanalyze": null,
         "last_autovacuum": null,
@@ -6263,7 +6263,7 @@
         "last_autovacuum": null,
         "name": "voip_trunk_health_checks",
         "schema": "public",
-        "seq_scan": 10,
+        "seq_scan": 19,
         "total_bytes": 32768
       },
       {
