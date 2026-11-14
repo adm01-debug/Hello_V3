@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `d67d0f40017eee263e42f1ab309262d38d766142` (2026-11-14T10:46:01-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a8985a2d464c287f031918f8c492923d78cd72c0` (2026-11-14T11:04:52-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1540 |
 | arquivos_codigo | 1193 |
-| linhas_codigo | 163343 |
+| linhas_codigo | 163375 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -360,18 +360,20 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8837 nós · 23587 arestas · 668 comunidades · grafo do commit `d67d0f40`
-- comunidades maiores: lucide-react (271), react (229), client.ts (201), traceHeaders (163), safe-date.ts (160), protectedRoutes.tsx (144), vitest (139), useAuthContext (120), cn (113), AuditLogs.tsx (107), Tabela de funcionalidades (106), snapshot.py (102)
+- 8841 nós · 23596 arestas · 686 comunidades · grafo do commit `a8985a2d`
+- comunidades maiores: lucide-react (284), client.ts (187), react (183), @tanstack/react-query (162), vitest (155), protectedRoutes.tsx (127), badge.tsx (117), PredictiveDialerPanel.tsx (116), usePageTitle (113), cn (107), snapshot.py (102), ref_https (98)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - ESTADO_ATUAL.md (6)
 - docs/prod-readiness.md (5)
+- .github/workflows/contexto.yml (4)
 - AGENTS.md (4)
-- .github/workflows/contexto.yml (3)
 - docs/estado/edge-functions-parte1.md (3)
 - inventario/estado/edges.json (3)
+- scripts/supabase_snapshot/snapshot.py (3)
+- scripts/supabase_snapshot/test_snapshot.py (3)
 - .github/workflows/ci.yml (2)
 - .github/workflows/inventario-estado-semanal.yml (2)
 - docs/agentes/banco.md (2)
@@ -379,8 +381,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - docs/estado/funcionalidades-planejadas.md (2)
 - docs/estado/integracoes.md (2)
 - inventario/estado/README.md (2)
-- inventario/estado/rotas.json (2)
-- scripts/inventario/banco.sql (2)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -419,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-14 `a8985a2` feat: (#38)
 - 2026-11-14 `d67d0f4` feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)
 - 2026-11-14 `f53ee94` feat: wrapper zod central (zodFormErrors + schemas de auth/voip) e migra os forms para ele (#37)
 - 2026-11-14 `2c8b481` fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)
@@ -433,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-13 `fece2f3` chore: inventario do estado real [auto] (#27)
 - 2026-11-13 `cf8f7fc` fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)
 - 2026-11-13 `4e40e57` infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)
-- 2026-11-13 `650143f` fix: test_snapshot.py lê arquivos gerados com UTF-8 explícito (#24)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

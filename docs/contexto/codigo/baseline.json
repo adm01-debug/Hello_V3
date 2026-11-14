@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d67d0f40017eee263e42f1ab309262d38d766142",
+  "commit": "a8985a2d464c287f031918f8c492923d78cd72c0",
   "branch": "main",
-  "data_commit": "2026-11-14T10:46:01-03:00",
+  "data_commit": "2026-11-14T11:04:52-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a8985a2",
+    "data": "2026-11-14",
+    "assunto": "feat: (#38)"
+   },
    {
     "sha": "d67d0f4",
     "data": "2026-11-14",
@@ -126,11 +131,6 @@
     "sha": "7484809",
     "data": "2026-11-08",
     "assunto": "feat(ci): deno.json com import map — testes Deno herméticos"
-   },
-   {
-    "sha": "510d039",
-    "data": "2026-11-08",
-    "assunto": "fix(voice): substitui Number.parseFloat por safeParseFloat em usePhaseColors"
    }
   ],
   "arquivos_mudados_7d": 101,
@@ -145,7 +145,7 @@
    },
    {
     "pasta": ".github/workflows/contexto.yml",
-    "mudancas": 3
+    "mudancas": 4
    },
    {
     "pasta": "AGENTS.md",
@@ -153,6 +153,14 @@
    },
    {
     "pasta": "inventario/estado/edges.json",
+    "mudancas": 3
+   },
+   {
+    "pasta": "scripts/supabase_snapshot/snapshot.py",
+    "mudancas": 3
+   },
+   {
+    "pasta": "scripts/supabase_snapshot/test_snapshot.py",
     "mudancas": 3
    },
    {
@@ -186,14 +194,6 @@
    {
     "pasta": "inventario/estado/README.md",
     "mudancas": 2
-   },
-   {
-    "pasta": "inventario/estado/rotas.json",
-    "mudancas": 2
-   },
-   {
-    "pasta": "scripts/inventario/banco.sql",
-    "mudancas": 2
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -206,12 +206,12 @@
     "mudancas": 5
    },
    {
-    "arquivo": "AGENTS.md",
+    "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 4
    },
    {
-    "arquivo": ".github/workflows/contexto.yml",
-    "mudancas": 3
+    "arquivo": "AGENTS.md",
+    "mudancas": 4
    },
    {
     "arquivo": "docs/estado/edge-functions-parte1.md",
@@ -219,6 +219,14 @@
    },
    {
     "arquivo": "inventario/estado/edges.json",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "scripts/supabase_snapshot/snapshot.py",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "scripts/supabase_snapshot/test_snapshot.py",
     "mudancas": 3
    },
    {
@@ -262,11 +270,7 @@
     "mudancas": 2
    },
    {
-    "arquivo": "scripts/supabase_snapshot/snapshot.py",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "scripts/supabase_snapshot/test_snapshot.py",
+    "arquivo": "scripts/supabase_snapshot/README.md",
     "mudancas": 2
    },
    {
@@ -292,16 +296,12 @@
    {
     "arquivo": "deno.json",
     "mudancas": 1
-   },
-   {
-    "arquivo": "deno.lock",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 24
+    "commits": 25
    },
    {
     "autor": "github-actions[bot]",
@@ -312,7 +312,7 @@
  "contagens": {
   "arquivos_total": 1540,
   "arquivos_codigo": 1193,
-  "linhas_codigo": 163343,
+  "linhas_codigo": 163375,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -428,7 +428,7 @@
   },
   "scripts/supabase_snapshot": {
    "arquivos": 2,
-   "linhas": 2685
+   "linhas": 2717
   },
   "scripts/test-api-direct.mjs": {
    "arquivos": 1,
@@ -538,7 +538,7 @@
   },
   {
    "arquivo": "scripts/supabase_snapshot/snapshot.py",
-   "linhas": 1807
+   "linhas": 1820
   },
   {
    "arquivo": "scripts/ai-context/gerar.mjs",

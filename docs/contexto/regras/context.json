@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "d67d0f40017eee263e42f1ab309262d38d766142",
+  "sha": "a8985a2d464c287f031918f8c492923d78cd72c0",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-14 13:54 UTC",
+  "generated_at": "2026-11-14 14:07 UTC",
   "files_total": 2005,
   "code_files": 1412,
-  "code_lines": 177776
+  "code_lines": 177808
  },
  "version": "1.3.2",
- "facts_hash": "6cf8796aca7216f0",
+ "facts_hash": "599205013bb8abcd",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31632,7 +31632,7 @@
   {
    "module": "scripts",
    "files": 32,
-   "lines": 9267,
+   "lines": 9299,
    "tables": [
     "a",
     "contacts",
@@ -36135,6 +36135,9 @@
    ],
    "TI_PASSWORD": [
     "scripts/test-auth-flow.mjs"
+   ],
+   "TYPES_TS_SRC": [
+    "scripts/supabase_snapshot/snapshot.py"
    ],
    "VITE_A": [
     "scripts/ai-context/cenarios.mjs"
@@ -86684,7 +86687,7 @@
   },
   "scripts/supabase_snapshot/snapshot.py": {
    "path": "scripts/supabase_snapshot/snapshot.py",
-   "lines": 1807,
+   "lines": 1820,
    "exports": [
     "def env_int",
     "def log",
@@ -86763,7 +86766,8 @@
     "SUPABASE_ACCESS_TOKEN",
     "SUPABASE_DB_URL",
     "SUPABASE_PROJECT_REF",
-    "SUPABASE_SNAPSHOT_PUBLICACAO"
+    "SUPABASE_SNAPSHOT_PUBLICACAO",
+    "TYPES_TS_SRC"
    ],
    "server_routes": [
     {
@@ -86807,7 +86811,7 @@
   },
   "scripts/supabase_snapshot/test_snapshot.py": {
    "path": "scripts/supabase_snapshot/test_snapshot.py",
-   "lines": 878,
+   "lines": 897,
    "exports": [
     "class OfflineConnection",
     "def function",
@@ -86823,7 +86827,8 @@
     "def source_freshness_case",
     "class SnapshotDBStatsTests",
     "class SnapshotConfigurationTests",
-    "def db_stats_case"
+    "def db_stats_case",
+    "class SnapshotTypesFallbackTests"
    ],
    "rpc": [
     "demo"
@@ -117586,10 +117591,22 @@
   }
  },
  "git": {
-  "sha": "d67d0f40017eee263e42f1ab309262d38d766142",
+  "sha": "a8985a2d464c287f031918f8c492923d78cd72c0",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a8985a2",
+    "date": "2026-11-14",
+    "author": "adm01-debug",
+    "subject": "feat: (#38)",
+    "files": [
+     ".github/workflows/contexto.yml",
+     "scripts/supabase_snapshot/README.md",
+     "scripts/supabase_snapshot/snapshot.py",
+     "scripts/supabase_snapshot/test_snapshot.py"
+    ]
+   },
    {
     "sha": "d67d0f4",
     "date": "2026-11-14",
@@ -117946,15 +117963,6 @@
     "files": [
      ".env"
     ]
-   },
-   {
-    "sha": "7a75199",
-    "date": "2026-08-18",
-    "author": "adm01-debug",
-    "subject": "chore(hermes): adiciona .hermes.md (regras da casa Hermes)",
-    "files": [
-     ".hermes.md"
-    ]
    }
   ],
   "hot_files": [
@@ -117963,16 +117971,28 @@
     5
    ],
    [
-    "AGENTS.md",
+    ".github/workflows/contexto.yml",
+    4
+   ],
+   [
+    "scripts/supabase_snapshot/snapshot.py",
     3
    ],
    [
-    ".github/workflows/contexto.yml",
+    "scripts/supabase_snapshot/test_snapshot.py",
+    3
+   ],
+   [
+    "AGENTS.md",
     3
    ],
    [
     "inventario/estado/edges.json",
     3
+   ],
+   [
+    "scripts/supabase_snapshot/README.md",
+    2
    ],
    [
     "supabase/functions/health-check/index.ts",
@@ -117995,19 +118015,11 @@
     2
    ],
    [
-    "scripts/supabase_snapshot/snapshot.py",
-    2
-   ],
-   [
     "scripts/inventario/banco.sql",
     2
    ],
    [
     "scripts/inventario/gerar-banco.mjs",
-    2
-   ],
-   [
-    "scripts/supabase_snapshot/test_snapshot.py",
     2
    ],
    [
@@ -118024,10 +118036,6 @@
    ],
    [
     "vite.config.ts",
-    2
-   ],
-   [
-    ".hermes.md",
     2
    ],
    [

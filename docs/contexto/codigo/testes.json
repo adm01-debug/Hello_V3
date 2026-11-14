@@ -105,7 +105,7 @@
   {
    "arquivo": "scripts/supabase_snapshot/test_snapshot.py",
    "tipo": "pytest",
-   "linhas": 878,
+   "linhas": 897,
    "testa": [],
    "casos": 0
   },

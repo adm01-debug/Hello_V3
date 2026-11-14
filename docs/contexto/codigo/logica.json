@@ -196,7 +196,7 @@
     "valid_previous_snapshot",
     "write"
    ],
-   "linhas": 1807,
+   "linhas": 1820,
    "tabelas": [],
    "rpcs": [],
    "edges": [],
@@ -212,7 +212,8 @@
     "SUPABASE_ACCESS_TOKEN",
     "SUPABASE_DB_URL",
     "SUPABASE_PROJECT_REF",
-    "SUPABASE_SNAPSHOT_PUBLICACAO"
+    "SUPABASE_SNAPSHOT_PUBLICACAO",
+    "TYPES_TS_SRC"
    ],
    "externos": [
     "__future__",
