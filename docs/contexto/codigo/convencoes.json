@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: fecha relatorio de prod-readiness na main final 25e39c4 (#33)",
    "chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)",
    "chore: docs: atualiza prod-readiness com publicacao do contexto e RLS vivo (#31)",
    "chore: docs: relatorio de prod-readiness com inventario de funcionalidades (#30)",
-   "fix: guard de segredo do contexto ignora senha ja redigida (#29)",
-   "fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)"
+   "fix: guard de segredo do contexto ignora senha ja redigida (#29)"
   ]
  },
  "pr_template": null,

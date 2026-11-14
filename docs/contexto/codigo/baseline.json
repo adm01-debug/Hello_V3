@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "25e39c4051cda012845241dcfa1a52dd21b6b538",
+  "commit": "4b6df34dd8a8db0ecb175e43600ed1cc98fdaf3e",
   "branch": "main",
-  "data_commit": "2026-11-13T21:38:57-03:00",
+  "data_commit": "2026-11-13T23:02:36-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4b6df34",
+    "data": "2026-11-13",
+    "assunto": "chore: fecha relatorio de prod-readiness na main final 25e39c4 (#33)"
+   },
    {
     "sha": "25e39c4",
     "data": "2026-11-13",
@@ -126,11 +131,6 @@
     "sha": "7a75199",
     "data": "2026-08-18",
     "assunto": "chore(hermes): adiciona .hermes.md (regras da casa Hermes)"
-   },
-   {
-    "sha": "b38875e",
-    "data": "2026-08-18",
-    "assunto": "chore(agents): adiciona AGENTS.md padrao (contexto multi-agente)"
    }
   ],
   "arquivos_mudados_7d": 83,
@@ -140,11 +140,11 @@
     "mudancas": 5
    },
    {
-    "pasta": ".github/workflows/contexto.yml",
-    "mudancas": 3
+    "pasta": "docs/prod-readiness.md",
+    "mudancas": 4
    },
    {
-    "pasta": "docs/prod-readiness.md",
+    "pasta": ".github/workflows/contexto.yml",
     "mudancas": 3
    },
    {
@@ -202,15 +202,15 @@
     "mudancas": 5
    },
    {
+    "arquivo": "docs/prod-readiness.md",
+    "mudancas": 4
+   },
+   {
     "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 3
    },
    {
     "arquivo": "AGENTS.md",
-    "mudancas": 3
-   },
-   {
-    "arquivo": "docs/prod-readiness.md",
     "mudancas": 3
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 18
+    "commits": 19
    },
    {
     "autor": "github-actions[bot]",
