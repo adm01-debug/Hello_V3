@@ -31,13 +31,20 @@ export function useBattleCardDetection(active: boolean) {
   useEffect(() => {
     if (!active) return;
     (async () => {
-      const [{ data: cardsData }, { data: trigsData }] = await Promise.all([
+          const [cardsResult, trigsResult] = await Promise.all([
         supabase.from('battle_cards').select('*').eq('is_active', true),
         supabase.from('battle_card_triggers').select('*').eq('is_active', true),
       ]);
-      setCards((cardsData || []) as unknown as BattleCard[]);
-      setTriggers((trigsData || []) as unknown as Trigger[]);
-      log.info('Battle cards loaded', { count: cardsData?.length || 0 });
+          if (cardsResult.error || trigsResult.error) {
+            log.error('Falha ao carregar battle cards', {
+              cardsError: cardsResult.error?.message ?? null,
+              trigsError: trigsResult.error?.message ?? null,
+            });
+            return;
+          }
+          setCards((cardsResult.data || []) as unknown as BattleCard[]);
+          setTriggers((trigsResult.data || []) as unknown as Trigger[]);
+          log.info('Battle cards loaded', { count: cardsResult.data?.length || 0 });
     })();
   }, [active]);
 
