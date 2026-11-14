@@ -8,24 +8,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
 import { Loader2, Lock, CheckCircle, Phone, Eye, EyeOff, ShieldCheck } from 'lucide-react';
-import { z } from 'zod';
 import { PasswordStrength } from '@/components/auth/PasswordStrength';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { resetPasswordSchema, zodFormErrors } from '@/lib/schema';
 
-const passwordSchema = z.object({
-  password: z.string()
-    .min(8, 'Senha deve ter no mínimo 8 caracteres')
-    .max(128, 'Senha muito longa')
-    .regex(/[A-Z]/, 'Senha deve conter pelo menos uma letra maiúscula')
-    .regex(/[a-z]/, 'Senha deve conter pelo menos uma letra minúscula')
-    .regex(/[0-9]/, 'Senha deve conter pelo menos um número')
-    .regex(/[^A-Za-z0-9]/, 'Senha deve conter pelo menos um caractere especial'),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: 'As senhas não coincidem',
-  path: ['confirmPassword'],
-});
 
 export default function ResetPassword() {
   usePageTitle('Redefinir Senha');
@@ -63,15 +50,9 @@ export default function ResetPassword() {
     e.preventDefault();
     setErrors({});
     
-    const validation = passwordSchema.safeParse({ password, confirmPassword });
+    const validation = resetPasswordSchema.safeParse({ password, confirmPassword });
     if (!validation.success) {
-      const newErrors: Record<string, string> = {};
-      validation.error.errors.forEach((err) => {
-        if (err.path[0]) {
-          newErrors[err.path[0] as string] = err.message;
-        }
-      });
-      setErrors(newErrors);
+      setErrors(zodFormErrors(validation));
       return;
     }
     

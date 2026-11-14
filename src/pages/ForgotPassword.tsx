@@ -8,11 +8,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
 import { Loader2, Mail, ArrowLeft, CheckCircle, Phone, ShieldCheck } from 'lucide-react';
-import { z } from 'zod';
 import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { loginEmailSchema } from '@/lib/schema';
 
-const emailSchema = z.string().email('Email inválido').max(255, 'Email muito longo');
 
 export default function ForgotPassword() {
   usePageTitle('Recuperar Senha');
@@ -27,7 +26,7 @@ export default function ForgotPassword() {
     setError('');
     
     // Validar email
-    const validation = emailSchema.safeParse(email);
+    const validation = loginEmailSchema.safeParse(email);
     if (!validation.success) {
       setError(validation.error.errors[0].message);
       return;
