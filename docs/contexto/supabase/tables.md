@@ -77,6 +77,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.dnc_list](tables/public/dnc_list.md) | table | sim | 2 | 11 | não |  |
 | [public.email_tickets](tables/public/email_tickets.md) | table | sim | 3 | 14 | não |  |
 | [public.email_verification_tokens](tables/public/email_verification_tokens.md) | table | sim | 4 | 7 | não |  |
+| [public.entity_versions](tables/public/entity_versions.md) | table | sim | 2 | 8 | não |  |
 | [public.fraud_signals](tables/public/fraud_signals.md) | table | sim | 3 | 14 | não |  |
 | [public.geo_access_logs](tables/public/geo_access_logs.md) | table | sim | 3 | 12 | não |  |
 | [public.geo_restrictions](tables/public/geo_restrictions.md) | table | sim | 2 | 8 | não |  |
@@ -99,6 +100,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.login_attempts](tables/public/login_attempts.md) | table | sim | 5 | 6 | não |  |
 | [public.manager_alerts](tables/public/manager_alerts.md) | table | sim | 2 | 11 | não |  |
 | [public.meeting_summaries](tables/public/meeting_summaries.md) | table | sim | 7 | 24 | não |  |
+| [public.migration_rollbacks](tables/public/migration_rollbacks.md) | table | sim | 0 | 5 | não |  |
 | [public.notification_preferences](tables/public/notification_preferences.md) | table | sim | 3 | 13 | não |  |
 | [public.notifications](tables/public/notifications.md) | table | sim | 4 | 18 | não |  |
 | [public.number_porting_requests](tables/public/number_porting_requests.md) | table | sim | 2 | 14 | não |  |
@@ -123,7 +125,9 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.rls_audit_logs](tables/public/rls_audit_logs.md) | table | sim | 1 | 7 | não |  |
 | [public.role_permissions](tables/public/role_permissions.md) | table | sim | 2 | 4 | não |  |
 | [public.routing_rules](tables/public/routing_rules.md) | table | sim | 2 | 13 | não |  |
+| [public.saved_filters](tables/public/saved_filters.md) | table | sim | 4 | 8 | não | Filtros salvos por usuários para diferentes entidades |
 | [public.scheduled_callbacks](tables/public/scheduled_callbacks.md) | table | sim | 4 | 13 | não |  |
+| [public.schema_migrations](tables/public/schema_migrations.md) | table | sim | 0 | 7 | não |  |
 | [public.scorecard_criteria](tables/public/scorecard_criteria.md) | table | sim | 2 | 8 | não |  |
 | [public.scorecard_responses](tables/public/scorecard_responses.md) | table | sim | 2 | 6 | não |  |
 | [public.scorecard_templates](tables/public/scorecard_templates.md) | table | sim | 2 | 7 | não |  |

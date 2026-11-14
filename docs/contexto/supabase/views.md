@@ -41,3 +41,31 @@ WITH calls_daily AS (
      FULL JOIN revenue_daily r ON c.day = r.day
   ORDER BY (COALESCE(c.day, r.day)) DESC;
 ```
+
+## public.migration_status (view)
+
+| campo | valor |
+|---|---|
+| owner | postgres |
+| security_invoker | não |
+| opções |  |
+| depende de | public.migration_rollbacks, public.schema_migrations |
+| populada | n/a |
+| comentário |  |
+
+
+```sql
+SELECT sm.version,
+    sm.name,
+    sm.applied_at,
+    sm.applied_by,
+    sm.execution_time_ms,
+    sm.success,
+        CASE
+            WHEN mr.id IS NOT NULL THEN 'Rolled Back'::text
+            ELSE 'Applied'::text
+        END AS status
+   FROM schema_migrations sm
+     LEFT JOIN migration_rollbacks mr ON sm.version::text = mr.version::text
+  ORDER BY sm.version DESC;
+```

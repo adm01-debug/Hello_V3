@@ -6,8 +6,8 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 
 | métrica | valor |
 |---|---|
-| tamanho | 23.6 MB |
-| schema public | 7.8 MB |
+| tamanho | 23.9 MB |
+| schema public | 7.9 MB |
 
 
 ## Tabelas (ordenadas por tamanho)
@@ -44,6 +44,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.dialer_queue | 0 | 56.0 KB | 0 B | 48.0 KB | 0 | ~10 | 0 |  |
 | public.index_drop_audit | ~40 | 56.0 KB | 8.0 KB | 40.0 KB | 0 | ~10 | 0 |  |
 | public.parked_calls | 0 | 56.0 KB | 0 B | 48.0 KB | 0 | ~10 | 0 |  |
+| public.saved_filters | 0 | 56.0 KB | 0 B | 48.0 KB | 0 | 6 | 0 |  |
 | public.shift_swap_suggestions | 0 | 56.0 KB | 0 B | 48.0 KB | 0 | ~10 | 0 |  |
 | public.accounts | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~10 | 1 |  |
 | public.agents | 1 | 48.0 KB | 8.0 KB | 32.0 KB | 0 | ~10 | 0 |  |
@@ -71,6 +72,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.crm_field_suggestions | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 1 |  |
 | public.dialer_favorites | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 1 |  |
 | public.email_tickets | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 0 |  |
+| public.entity_versions | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | 4 | 0 |  |
 | public.fraud_signals | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 1 |  |
 | public.kb_article_views | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 0 |  |
 | public.learning_completions | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 0 |  |
@@ -161,7 +163,9 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.dnc_import_logs | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
 | public.hot_desking_stations | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
 | public.learning_modules | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 1 |  |
+| public.migration_rollbacks | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | 1 | 0 |  |
 | public.number_porting_requests | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
+| public.schema_migrations | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | 1 | 0 |  |
 | public.scorecard_templates | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
 | public.security_alerts | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
 | public.shift_templates | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
@@ -204,27 +208,27 @@ _nenhum_
 ## Consultas mais custosas (pg_stat_statements, desde o último reset)
 | role | chamadas (~) | total ms (~) | média ms | query |
 |---|---|---|---|---|
-| postgres | ~70 | ~375.2k | 5359.52 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
+| postgres | ~70 | ~380.7k | 5362.21 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
 | postgres | 2 | ~264.9k | 132452.35 | `SELECT count(*) FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM information_schema.role_table_grants g WHERE g.table_` |
 | postgres | 2 | ~263k | 131503.84 | `SELECT table_schema, table_name, column_name, grantee, privilege_type FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM` |
 | postgres | 1 | ~117.3k | 117288.34 | `SELECT table_schema, table_name, column_name, grantee, privilege_type FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND table_schema NOT IN ($16,$1` |
-| authenticator | ~20 | ~18.2k | 959.49 | `SELECT name FROM pg_timezone_names` |
+| authenticator | ~20 | ~20k | 951.42 | `SELECT name FROM pg_timezone_names` |
+| postgres | ~80 | ~11.9k | 158.34 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
 | postgres | 1 | ~11.8k | 11813.21 | `WITH vp AS ( SELECT pr_c.grantee, pr_c.prtype, a.attname, pr_c.relname, pr_c.relnamespace FROM (SELECT c.oid, c.relname, c.relnamespace, (aclexplode(COALESCE(c.relacl, acldefault($1, c.relowner)))).grantee AS grantee, (a` |
-| postgres | ~70 | ~11.6k | 156.42 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
 | postgres | ~80 | ~8.2k | 108.45 | `UPDATE public.user_profiles SET full_name = $1 \|\| ( COALESCE( NULLIF(regexp_replace(full_name, $2, $3, $4), $5), $6 )::integer + $7 )::text WHERE id = $8` |
 | postgres | 1 | ~6.2k | 6150.10 | `WITH vp AS ( SELECT pr_c.grantee, pr_c.prtype, a.attname, pr_c.relname, pr_c.relnamespace FROM (SELECT c.oid, c.relname, c.relnamespace, (aclexplode(COALESCE(c.relacl, acldefault($1, c.relowner)))).grantee AS grantee, (a` |
 | postgres | ~20 | ~6.1k | 304.54 | `SELECT e.name, n.nspname AS schema, e.default_version, x.extversion AS installed_version, e.comment, ev.schema AS default_version_schema FROM pg_available_extensions e LEFT JOIN pg_extension x ON e.name = x.extname LEFT ` |
 | postgres | 1 | ~5.6k | 5561.18 | `WITH vp AS ( SELECT pr_c.grantee, pr_c.prtype, a.attname, pr_c.relname, pr_c.relnamespace FROM (SELECT c.oid, c.relname, c.relnamespace, (aclexplode(COALESCE(c.relacl, acldefault($1, c.relowner)))).grantee AS grantee, (a` |
+| postgres | ~80 | ~4.7k | 63.06 | `SELECT n.nspname AS schema, c.relname AS "table", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS "default", NULLIF(` |
 | postgres | 1 | ~4.6k | 4553.59 | `with page as ( select c.oid, c.relname, c.relrowsecurity, c.relforcerowsecurity, c.relreplident, nc.nspname as schema, -- Computed once here so the final select can reference it for both the -- raw byte count and pg_size` |
-| postgres | ~70 | ~4.5k | 61.13 | `SELECT n.nspname AS schema, c.relname AS "table", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS "default", NULLIF(` |
-| postgres | ~70 | ~3.6k | 48.36 | `SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3` |
-| authenticator | ~20 | ~3.5k | 177.23 | `WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $2), oid) AS base_type FROM pg_type UNIO` |
+| authenticator | ~20 | ~3.7k | 169.49 | `WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $2), oid) AS base_type FROM pg_type UNIO` |
+| postgres | ~80 | ~3.6k | 48.35 | `SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3` |
 
 
 ## Conexões
 | usuário | estado | n |
 |---|---|---|
-| authenticator | idle | 3 |
+| authenticator | idle | 2 |
 | pgbouncer | idle | 1 |
 | postgres | active | 1 |
 | postgres | idle | 1 |
@@ -261,7 +265,7 @@ _nenhum_
       "connected_cluster": 0,
       "db_connected": false,
       "healthy": true,
-      "node": "realtime@2600:1f18:67fc:ac01:52f5:e676:a4b5:2dd5",
+      "node": "realtime@2600:1f18:67fc:ac01:5e:cc43:a683:4bd",
       "region": "us-east-1",
       "replication_connected": false
     },

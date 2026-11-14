@@ -286,7 +286,7 @@
         "is_default": true,
         "name": "main",
         "persistent": false,
-        "status": "FUNCTIONS_DEPLOYED"
+        "status": "MIGRATIONS_FAILED"
       }
     ],
     "custom_hostname": null,
@@ -1520,7 +1520,9 @@
     },
     "url": "https://cfmlmcdyjuotqobjapng.supabase.co"
   },
-  "carried": [],
+  "carried": [
+    "src/integrations/supabase/types.ts"
+  ],
   "db": {
     "columns": [
       {
@@ -12289,6 +12291,110 @@
       },
       {
         "comment": null,
+        "default": "gen_random_uuid()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "id",
+        "nullable": false,
+        "position": 1,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "entity_type",
+        "nullable": false,
+        "position": 2,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "entity_id",
+        "nullable": false,
+        "position": 3,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "version_number",
+        "nullable": false,
+        "position": 4,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": "'{}'::jsonb",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "data",
+        "nullable": false,
+        "position": 5,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "jsonb"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "changed_by",
+        "nullable": true,
+        "position": 6,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": "now()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "changed_at",
+        "nullable": false,
+        "position": 7,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "change_summary",
+        "nullable": true,
+        "position": 8,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "text"
+      },
+      {
+        "comment": null,
         "default": null,
         "generated": null,
         "identity": null,
@@ -15289,6 +15395,162 @@
         "schema": "public",
         "table": "meeting_summaries",
         "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": "nextval('migration_rollbacks_id_seq'::regclass)",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "id",
+        "nullable": false,
+        "position": 1,
+        "schema": "public",
+        "table": "migration_rollbacks",
+        "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "version",
+        "nullable": false,
+        "position": 2,
+        "schema": "public",
+        "table": "migration_rollbacks",
+        "type": "character varying(255)"
+      },
+      {
+        "comment": null,
+        "default": "CURRENT_TIMESTAMP",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "rolled_back_at",
+        "nullable": true,
+        "position": 3,
+        "schema": "public",
+        "table": "migration_rollbacks",
+        "type": "timestamp without time zone"
+      },
+      {
+        "comment": null,
+        "default": "CURRENT_USER",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "rolled_back_by",
+        "nullable": true,
+        "position": 4,
+        "schema": "public",
+        "table": "migration_rollbacks",
+        "type": "character varying(255)"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "reason",
+        "nullable": true,
+        "position": 5,
+        "schema": "public",
+        "table": "migration_rollbacks",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "version",
+        "nullable": true,
+        "position": 1,
+        "schema": "public",
+        "table": "migration_status",
+        "type": "character varying(255)"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "name",
+        "nullable": true,
+        "position": 2,
+        "schema": "public",
+        "table": "migration_status",
+        "type": "character varying(255)"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "applied_at",
+        "nullable": true,
+        "position": 3,
+        "schema": "public",
+        "table": "migration_status",
+        "type": "timestamp without time zone"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "applied_by",
+        "nullable": true,
+        "position": 4,
+        "schema": "public",
+        "table": "migration_status",
+        "type": "character varying(255)"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "execution_time_ms",
+        "nullable": true,
+        "position": 5,
+        "schema": "public",
+        "table": "migration_status",
+        "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "success",
+        "nullable": true,
+        "position": 6,
+        "schema": "public",
+        "table": "migration_status",
+        "type": "boolean"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "status",
+        "nullable": true,
+        "position": 7,
+        "schema": "public",
+        "table": "migration_status",
+        "type": "text"
       },
       {
         "comment": null,
@@ -18615,6 +18877,110 @@
         "nullable": false,
         "position": 1,
         "schema": "public",
+        "table": "saved_filters",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "user_id",
+        "nullable": false,
+        "position": 2,
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "uuid"
+      },
+      {
+        "comment": "Tipo de entidade (ex: produtos, pedidos, colaboradores)",
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "entity_type",
+        "nullable": false,
+        "position": 3,
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "name",
+        "nullable": false,
+        "position": 4,
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "text"
+      },
+      {
+        "comment": "Configuração do filtro em JSON",
+        "default": "'{}'::jsonb",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "filters",
+        "nullable": false,
+        "position": 5,
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "jsonb"
+      },
+      {
+        "comment": "Se true, este filtro é aplicado automaticamente ao abrir a página",
+        "default": "false",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "is_default",
+        "nullable": false,
+        "position": 6,
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "boolean"
+      },
+      {
+        "comment": null,
+        "default": "now()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "created_at",
+        "nullable": false,
+        "position": 7,
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": "now()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "updated_at",
+        "nullable": false,
+        "position": 8,
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": "gen_random_uuid()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "id",
+        "nullable": false,
+        "position": 1,
+        "schema": "public",
         "table": "scheduled_callbacks",
         "type": "uuid"
       },
@@ -18773,6 +19139,97 @@
         "schema": "public",
         "table": "scheduled_callbacks",
         "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "version",
+        "nullable": false,
+        "position": 1,
+        "schema": "public",
+        "table": "schema_migrations",
+        "type": "character varying(255)"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "name",
+        "nullable": false,
+        "position": 2,
+        "schema": "public",
+        "table": "schema_migrations",
+        "type": "character varying(255)"
+      },
+      {
+        "comment": null,
+        "default": "CURRENT_TIMESTAMP",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "applied_at",
+        "nullable": true,
+        "position": 3,
+        "schema": "public",
+        "table": "schema_migrations",
+        "type": "timestamp without time zone"
+      },
+      {
+        "comment": null,
+        "default": "CURRENT_USER",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "applied_by",
+        "nullable": true,
+        "position": 4,
+        "schema": "public",
+        "table": "schema_migrations",
+        "type": "character varying(255)"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "checksum",
+        "nullable": true,
+        "position": 5,
+        "schema": "public",
+        "table": "schema_migrations",
+        "type": "character varying(64)"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "execution_time_ms",
+        "nullable": true,
+        "position": 6,
+        "schema": "public",
+        "table": "schema_migrations",
+        "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": "true",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "success",
+        "nullable": true,
+        "position": 7,
+        "schema": "public",
+        "table": "schema_migrations",
+        "type": "boolean"
       },
       {
         "comment": null,
@@ -27566,6 +28023,61 @@
       },
       {
         "columns": [
+          "changed_by"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (changed_by) REFERENCES auth.users(id)",
+        "name": "entity_versions_changed_by_fkey",
+        "on_delete": "NO ACTION",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "auth",
+        "ref_table": "users",
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "deferrable": false,
+        "definition": "PRIMARY KEY (id)",
+        "name": "entity_versions_pkey",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "entity_type",
+          "entity_id",
+          "version_number"
+        ],
+        "deferrable": false,
+        "definition": "UNIQUE (entity_type, entity_id, version_number)",
+        "name": "unique_entity_version",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "entity_versions",
+        "type": "UNIQUE",
+        "validated": true
+      },
+      {
+        "columns": [
           "call_session_id"
         ],
         "deferrable": false,
@@ -28479,6 +28991,23 @@
         "schema": "public",
         "table": "meeting_summaries",
         "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "deferrable": false,
+        "definition": "PRIMARY KEY (id)",
+        "name": "migration_rollbacks_pkey",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "migration_rollbacks",
+        "type": "PRIMARY KEY",
         "validated": true
       },
       {
@@ -29763,6 +30292,61 @@
       },
       {
         "columns": [
+          "id"
+        ],
+        "deferrable": false,
+        "definition": "PRIMARY KEY (id)",
+        "name": "saved_filters_pkey",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "user_id"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+        "name": "saved_filters_user_id_fkey",
+        "on_delete": "CASCADE",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "auth",
+        "ref_table": "users",
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "user_id",
+          "entity_type",
+          "name"
+        ],
+        "deferrable": false,
+        "definition": "UNIQUE (user_id, entity_type, name)",
+        "name": "unique_filter_name_per_user_entity",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "saved_filters",
+        "type": "UNIQUE",
+        "validated": true
+      },
+      {
+        "columns": [
           "contact_id"
         ],
         "deferrable": false,
@@ -29794,6 +30378,23 @@
         "ref_table": null,
         "schema": "public",
         "table": "scheduled_callbacks",
+        "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "version"
+        ],
+        "deferrable": false,
+        "definition": "PRIMARY KEY (version)",
+        "name": "schema_migrations_pkey",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "schema_migrations",
         "type": "PRIMARY KEY",
         "validated": true
       },
@@ -31693,6 +32294,34 @@
         "volatility": "volatile"
       },
       {
+        "args": "p_version character varying, p_name character varying, p_checksum character varying",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [],
+          "db": [],
+          "triggers": [],
+          "views": []
+        },
+        "comment": null,
+        "config": null,
+        "definition": null,
+        "definition_sha": "b14592543b252a09",
+        "execute_api_roles": "anon, authenticated, service_role",
+        "execute_public": true,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "apply_migration",
+        "owner": "postgres",
+        "returns": "boolean",
+        "schema": "public",
+        "security_definer": false,
+        "strict": false,
+        "volatility": "volatile"
+      },
+      {
         "args": "",
         "callers": {
           "code": [
@@ -32571,6 +33200,41 @@
         "returns": "trigger",
         "schema": "public",
         "security_definer": true,
+        "strict": false,
+        "volatility": "volatile"
+      },
+      {
+        "args": "",
+        "callers": {
+          "code": [
+            {
+              "file": "supabase/migrations/20241231000000_saved_filters.sql",
+              "hits": 1
+            }
+          ],
+          "code_total_files": 1,
+          "cron": [],
+          "db": [],
+          "triggers": [
+            "public.saved_filters.trigger_single_default_filter"
+          ],
+          "views": []
+        },
+        "comment": null,
+        "config": null,
+        "definition": null,
+        "definition_sha": "c59d1ee1f00d9203",
+        "execute_api_roles": "anon, authenticated, service_role",
+        "execute_public": true,
+        "is_trigger_fn": true,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "ensure_single_default_filter",
+        "owner": "postgres",
+        "returns": "trigger",
+        "schema": "public",
+        "security_definer": false,
         "strict": false,
         "volatility": "volatile"
       },
@@ -34792,6 +35456,34 @@
         "volatility": "volatile"
       },
       {
+        "args": "p_version character varying, p_reason text",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [],
+          "db": [],
+          "triggers": [],
+          "views": []
+        },
+        "comment": null,
+        "config": null,
+        "definition": null,
+        "definition_sha": "9a412cc800017fa4",
+        "execute_api_roles": "anon, authenticated, service_role",
+        "execute_public": true,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "rollback_migration",
+        "owner": "postgres",
+        "returns": "boolean",
+        "schema": "public",
+        "security_definer": false,
+        "strict": false,
+        "volatility": "volatile"
+      },
+      {
         "args": "",
         "callers": {
           "code": [],
@@ -34929,6 +35621,41 @@
         "language": "plpgsql",
         "leakproof": false,
         "name": "update_kb_article_search_vector",
+        "owner": "postgres",
+        "returns": "trigger",
+        "schema": "public",
+        "security_definer": false,
+        "strict": false,
+        "volatility": "volatile"
+      },
+      {
+        "args": "",
+        "callers": {
+          "code": [
+            {
+              "file": "supabase/migrations/20241231000000_saved_filters.sql",
+              "hits": 1
+            }
+          ],
+          "code_total_files": 1,
+          "cron": [],
+          "db": [],
+          "triggers": [
+            "public.saved_filters.trigger_saved_filters_updated_at"
+          ],
+          "views": []
+        },
+        "comment": null,
+        "config": null,
+        "definition": null,
+        "definition_sha": "b6ce9036bc45dc51",
+        "execute_api_roles": "anon, authenticated, service_role",
+        "execute_public": true,
+        "is_trigger_fn": true,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "update_saved_filters_updated_at",
         "owner": "postgres",
         "returns": "trigger",
         "schema": "public",
@@ -35770,7 +36497,26 @@
           "schema": "storage"
         }
       ],
-      "sequences": [],
+      "sequences": [
+        {
+          "grantee": "anon",
+          "privileges": "USAGE, SELECT, UPDATE",
+          "schema": "public",
+          "sequence": "migration_rollbacks_id_seq"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "USAGE, SELECT, UPDATE",
+          "schema": "public",
+          "sequence": "migration_rollbacks_id_seq"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "USAGE, SELECT, UPDATE",
+          "schema": "public",
+          "sequence": "migration_rollbacks_id_seq"
+        }
+      ],
       "tables": [
         {
           "grantee": "anon",
@@ -37090,6 +37836,24 @@
           "grantee": "anon",
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
+          "table": "entity_versions"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "entity_versions"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "entity_versions"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
           "table": "financial_impact_daily"
         },
         {
@@ -37499,6 +38263,42 @@
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
           "table": "meeting_summaries"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "migration_rollbacks"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "migration_rollbacks"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "migration_rollbacks"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "migration_status"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "migration_status"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "migration_status"
         },
         {
           "grantee": "anon",
@@ -37936,6 +38736,24 @@
           "grantee": "anon",
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
+          "table": "saved_filters"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "saved_filters"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "saved_filters"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
           "table": "scheduled_callbacks"
         },
         {
@@ -37949,6 +38767,24 @@
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
           "table": "scheduled_callbacks"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "schema_migrations"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "schema_migrations"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "schema_migrations"
         },
         {
           "grantee": "anon",
@@ -42369,6 +43205,65 @@
         "columns": [
           "id"
         ],
+        "definition": "CREATE UNIQUE INDEX entity_versions_pkey ON public.entity_versions USING btree (id)",
+        "is_primary": true,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "entity_versions_pkey",
+        "predicate": null,
+        "schema": "public",
+        "table": "entity_versions"
+      },
+      {
+        "columns": [
+          "changed_at"
+        ],
+        "definition": "CREATE INDEX idx_versions_date ON public.entity_versions USING btree (changed_at DESC)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_versions_date",
+        "predicate": null,
+        "schema": "public",
+        "table": "entity_versions"
+      },
+      {
+        "columns": [
+          "entity_type",
+          "entity_id"
+        ],
+        "definition": "CREATE INDEX idx_versions_entity ON public.entity_versions USING btree (entity_type, entity_id)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_versions_entity",
+        "predicate": null,
+        "schema": "public",
+        "table": "entity_versions"
+      },
+      {
+        "columns": [
+          "entity_type",
+          "entity_id",
+          "version_number"
+        ],
+        "definition": "CREATE UNIQUE INDEX unique_entity_version ON public.entity_versions USING btree (entity_type, entity_id, version_number)",
+        "is_primary": false,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "unique_entity_version",
+        "predicate": null,
+        "schema": "public",
+        "table": "entity_versions"
+      },
+      {
+        "columns": [
+          "id"
+        ],
         "definition": "CREATE UNIQUE INDEX fraud_signals_pkey ON public.fraud_signals USING btree (id)",
         "is_primary": true,
         "is_unique": true,
@@ -43366,6 +44261,20 @@
         "predicate": null,
         "schema": "public",
         "table": "meeting_summaries"
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "definition": "CREATE UNIQUE INDEX migration_rollbacks_pkey ON public.migration_rollbacks USING btree (id)",
+        "is_primary": true,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "migration_rollbacks_pkey",
+        "predicate": null,
+        "schema": "public",
+        "table": "migration_rollbacks"
       },
       {
         "columns": [
@@ -44491,6 +45400,95 @@
       },
       {
         "columns": [
+          "user_id",
+          "entity_type",
+          "is_default"
+        ],
+        "definition": "CREATE INDEX idx_saved_filters_default ON public.saved_filters USING btree (user_id, entity_type, is_default) WHERE (is_default = true)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_saved_filters_default",
+        "predicate": "(is_default = true)",
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "columns": [
+          "entity_type"
+        ],
+        "definition": "CREATE INDEX idx_saved_filters_entity_type ON public.saved_filters USING btree (entity_type)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_saved_filters_entity_type",
+        "predicate": null,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "columns": [
+          "user_id",
+          "entity_type"
+        ],
+        "definition": "CREATE INDEX idx_saved_filters_user_entity ON public.saved_filters USING btree (user_id, entity_type)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_saved_filters_user_entity",
+        "predicate": null,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "columns": [
+          "user_id"
+        ],
+        "definition": "CREATE INDEX idx_saved_filters_user_id ON public.saved_filters USING btree (user_id)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_saved_filters_user_id",
+        "predicate": null,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "definition": "CREATE UNIQUE INDEX saved_filters_pkey ON public.saved_filters USING btree (id)",
+        "is_primary": true,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "saved_filters_pkey",
+        "predicate": null,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "columns": [
+          "user_id",
+          "entity_type",
+          "name"
+        ],
+        "definition": "CREATE UNIQUE INDEX unique_filter_name_per_user_entity ON public.saved_filters USING btree (user_id, entity_type, name)",
+        "is_primary": false,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "unique_filter_name_per_user_entity",
+        "predicate": null,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "columns": [
           "contact_id"
         ],
         "definition": "CREATE INDEX idx_scheduled_callbacks_contact_id ON public.scheduled_callbacks USING btree (contact_id)",
@@ -44559,6 +45557,20 @@
         "predicate": null,
         "schema": "public",
         "table": "scheduled_callbacks"
+      },
+      {
+        "columns": [
+          "version"
+        ],
+        "definition": "CREATE UNIQUE INDEX schema_migrations_pkey ON public.schema_migrations USING btree (version)",
+        "is_primary": true,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "schema_migrations_pkey",
+        "predicate": null,
+        "schema": "public",
+        "table": "schema_migrations"
       },
       {
         "columns": [
@@ -46046,6 +47058,24 @@
     ],
     "lints": [
       {
+        "code": "view_security_definer",
+        "detail": "View em public sem security_invoker: executa como owner e ignora RLS das tabelas base.",
+        "object": "public.migration_status",
+        "severity": "ALTA"
+      },
+      {
+        "code": "rls_no_policies",
+        "detail": "RLS ligado sem policies: inacessível via API (só service_role).",
+        "object": "public.migration_rollbacks",
+        "severity": "MÉDIA"
+      },
+      {
+        "code": "rls_no_policies",
+        "detail": "RLS ligado sem policies: inacessível via API (só service_role).",
+        "object": "public.schema_migrations",
+        "severity": "MÉDIA"
+      },
+      {
         "code": "extension_in_public",
         "detail": "Extensão instalada no schema public (recomendado: schema extensions).",
         "object": "pg_trgm",
@@ -46061,6 +47091,12 @@
         "code": "fk_without_index",
         "detail": "FK sem índice nas colunas ['moh_prompt_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
         "object": "public.call_park_orbits.call_park_orbits_moh_prompt_id_fkey",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "fk_without_index",
+        "detail": "FK sem índice nas colunas ['changed_by']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
+        "object": "public.entity_versions.entity_versions_changed_by_fkey",
         "severity": "BAIXA"
       },
       {
@@ -46084,6 +47120,12 @@
       {
         "code": "policy_auth_fn_not_wrapped",
         "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
+        "object": "public.entity_versions.Users can insert versions",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "policy_auth_fn_not_wrapped",
+        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
         "object": "public.parked_calls.parked_calls_insert_self",
         "severity": "BAIXA"
       },
@@ -46091,6 +47133,30 @@
         "code": "policy_auth_fn_not_wrapped",
         "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
         "object": "public.parked_calls.parked_calls_update_retrieve",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "policy_auth_fn_not_wrapped",
+        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
+        "object": "public.saved_filters.Users can delete own filters",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "policy_auth_fn_not_wrapped",
+        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
+        "object": "public.saved_filters.Users can insert own filters",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "policy_auth_fn_not_wrapped",
+        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
+        "object": "public.saved_filters.Users can update own filters",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "policy_auth_fn_not_wrapped",
+        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
+        "object": "public.saved_filters.Users can view own filters",
         "severity": "BAIXA"
       },
       {
@@ -46442,7 +47508,26 @@
         "severity": "INFO"
       }
     ],
-    "migrations": [],
+    "migrations": [
+      {
+        "name": "saved_filters",
+        "statements": 20,
+        "statements_sha": "e88ae61725799838",
+        "version": "20241231000000"
+      },
+      {
+        "name": "entity_versions",
+        "statements": 6,
+        "statements_sha": "05d26feeb7d3d00a",
+        "version": "20241231000001"
+      },
+      {
+        "name": "versioning",
+        "statements": 7,
+        "statements_sha": "dd6c543f075e168a",
+        "version": "20250101000000"
+      }
+    ],
     "policies": [
       {
         "cmd": "INSERT",
@@ -48929,6 +50014,30 @@
         "with_check": null
       },
       {
+        "cmd": "INSERT",
+        "name": "Users can insert versions",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "entity_versions",
+        "using": null,
+        "with_check": "((auth.uid() = changed_by) OR (changed_by IS NULL))"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "Users can view versions",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "entity_versions",
+        "using": "true",
+        "with_check": null
+      },
+      {
         "cmd": "SELECT",
         "name": "Admins and supervisors view all fraud signals",
         "permissive": "PERMISSIVE",
@@ -50330,6 +51439,54 @@
         "schema": "public",
         "table": "routing_rules",
         "using": "is_admin_or_supervisor()",
+        "with_check": null
+      },
+      {
+        "cmd": "DELETE",
+        "name": "Users can delete own filters",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "saved_filters",
+        "using": "(auth.uid() = user_id)",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "name": "Users can insert own filters",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "saved_filters",
+        "using": null,
+        "with_check": "(auth.uid() = user_id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "name": "Users can update own filters",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "saved_filters",
+        "using": "(auth.uid() = user_id)",
+        "with_check": "(auth.uid() = user_id)"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "Users can view own filters",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "saved_filters",
+        "using": "(auth.uid() = user_id)",
         "with_check": null
       },
       {
@@ -52047,7 +53204,17 @@
         "usage_api_roles": "anon, authenticated, service_role"
       }
     ],
-    "sequences": [],
+    "sequences": [
+      {
+        "cycle": false,
+        "data_type": "integer",
+        "increment": 1,
+        "name": "migration_rollbacks_id_seq",
+        "owned_by": "public.migration_rollbacks.id",
+        "schema": "public",
+        "start_value": 1
+      }
+    ],
     "server": {
       "database": "postgres",
       "default_transaction_isolation": "read committed",
@@ -53200,6 +54367,21 @@
         "from_extension": false,
         "is_partition": false,
         "kind": "table",
+        "name": "entity_versions",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
+        "comment": null,
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
         "name": "fraud_signals",
         "owner": "postgres",
         "parent": null,
@@ -53516,6 +54698,21 @@
         "is_partition": false,
         "kind": "table",
         "name": "meeting_summaries",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
+        "comment": null,
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
+        "name": "migration_rollbacks",
         "owner": "postgres",
         "parent": null,
         "partition_bound": null,
@@ -53886,11 +55083,41 @@
         "schema": "public"
       },
       {
+        "comment": "Filtros salvos por usuários para diferentes entidades",
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
+        "name": "saved_filters",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
         "comment": null,
         "from_extension": false,
         "is_partition": false,
         "kind": "table",
         "name": "scheduled_callbacks",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
+        "comment": null,
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
+        "name": "schema_migrations",
         "owner": "postgres",
         "parent": null,
         "partition_bound": null,
@@ -55313,6 +56540,28 @@
         "timing": "BEFORE"
       },
       {
+        "definition": "CREATE TRIGGER trigger_saved_filters_updated_at BEFORE UPDATE ON saved_filters FOR EACH ROW EXECUTE FUNCTION update_saved_filters_updated_at()",
+        "events": "UPDATE",
+        "function": "public.update_saved_filters_updated_at",
+        "level": "ROW",
+        "name": "trigger_saved_filters_updated_at",
+        "schema": "public",
+        "status": "enabled",
+        "table": "saved_filters",
+        "timing": "BEFORE"
+      },
+      {
+        "definition": "CREATE TRIGGER trigger_single_default_filter BEFORE INSERT OR UPDATE OF is_default ON saved_filters FOR EACH ROW WHEN (new.is_default = true) EXECUTE FUNCTION ensure_single_default_filter()",
+        "events": "INSERT OR UPDATE",
+        "function": "public.ensure_single_default_filter",
+        "level": "ROW",
+        "name": "trigger_single_default_filter",
+        "schema": "public",
+        "status": "enabled",
+        "table": "saved_filters",
+        "timing": "BEFORE"
+      },
+      {
         "definition": "CREATE TRIGGER update_scheduled_callbacks_updated_at BEFORE UPDATE ON scheduled_callbacks FOR EACH ROW EXECUTE FUNCTION update_updated_at_column()",
         "events": "UPDATE",
         "function": "public.update_updated_at_column",
@@ -55798,6 +57047,21 @@
         "populated": null,
         "schema": "public",
         "security_invoker": true
+      },
+      {
+        "comment": null,
+        "definition": " SELECT sm.version,\n    sm.name,\n    sm.applied_at,\n    sm.applied_by,\n    sm.execution_time_ms,\n    sm.success,\n        CASE\n            WHEN mr.id IS NOT NULL THEN 'Rolled Back'::text\n            ELSE 'Applied'::text\n        END AS status\n   FROM schema_migrations sm\n     LEFT JOIN migration_rollbacks mr ON sm.version::text = mr.version::text\n  ORDER BY sm.version DESC;",
+        "depends_on": [
+          "public.migration_rollbacks",
+          "public.schema_migrations"
+        ],
+        "kind": "view",
+        "name": "migration_status",
+        "options": null,
+        "owner": "postgres",
+        "populated": null,
+        "schema": "public",
+        "security_invoker": false
       }
     ],
     "webhooks": []

@@ -1,5 +1,7 @@
 {
-  "carried": [],
+  "carried": [
+    "src/integrations/supabase/types.ts"
+  ],
   "entrada": "README.md",
   "erros": [
     {
@@ -7,7 +9,7 @@
       "section": "api.custom_hostname"
     }
   ],
-  "gerado_em": "2026-11-14T13:58:04Z",
+  "gerado_em": "2026-11-14T14:27:14Z",
   "gerador": "scripts/supabase_snapshot/snapshot.py",
   "produtor": "supabase-snapshot"
 }

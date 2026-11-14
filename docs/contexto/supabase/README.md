@@ -19,23 +19,23 @@ Gerado automaticamente a cada 10 min pelo workflow `contexto` (job `banco`). **N
 
 | categoria | quantidade |
 |---|---|
-| tabelas | 159 |
-| colunas | 1730 |
-| views | 1 |
-| functions | 83 |
-| triggers | 115 |
-| policies (RLS) | 442 |
-| índices | 513 |
+| tabelas | 163 |
+| colunas | 1765 |
+| views | 2 |
+| functions | 87 |
+| triggers | 117 |
+| policies (RLS) | 448 |
+| índices | 525 |
 | tipos/enums | 2 |
 | extensões | 8 |
 | cron jobs | 1 |
 | filas pgmq | 0 |
-| migrations | 0 |
+| migrations | 3 |
 | buckets | 4 |
 | edge functions | 94 |
 | webhooks | 0 |
-| lints ALTA | 0 |
-| lints total | 66 |
+| lints ALTA | 1 |
+| lints total | 75 |
 
 ## Estado das fontes do mapa de referências
 
@@ -72,7 +72,7 @@ Cada fonte é atualizada independentemente; referências anteriores não comprov
 | `tables.md` / `tables/` | índice e um arquivo por tabela; `tables/_supabase_internal_triggers.md` = triggers em auth/storage |
 | `relationships.md` | todas as FKs + diagrama ER (Mermaid) |
 | `schema.sql` | desligado neste repo (PGDUMP=false) |
-| `types.ts` | desligado neste repo (GEN_TYPES=false) |
+| `types.ts` | tipos TypeScript (supabase CLI quando GEN_TYPES=true; senão, copiado do versionado src/integrations/supabase/types.ts) |
 | `lints.md` | RLS faltando, security definer sem search_path, views sem security_invoker, FK sem índice, RPC anon… |
 | `policies.md` | todas as policies RLS (incl. storage e realtime) |
 | `functions.md` / `functions/` | funções/procedures com corpo SQL e quem pode executar via RPC |
@@ -90,6 +90,8 @@ Cada fonte é atualizada independentemente; referências anteriores não comprov
 | `errors.md` | seções que falharam na última coleta |
 
 ## ⚠️ Problemas na última coleta
+
+Seções reaproveitadas da coleta anterior: `src/integrations/supabase/types.ts`.
 
 | seção | erro |
 |---|---|

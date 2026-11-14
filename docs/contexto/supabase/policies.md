@@ -212,6 +212,8 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.email_verification_tokens | Deny update email_verification_tokens | UPDATE | PERMISSIVE | authenticated |  | `false` |
 | public.email_verification_tokens | Users can delete own verification tokens | DELETE | PERMISSIVE | authenticated | `((( SELECT auth.uid() AS uid) = user_id) OR is_admin_user(( SELECT auth.uid() AS uid)))` |  |
 | public.email_verification_tokens | Users can view own verification tokens | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` |  |
+| public.entity_versions | Users can insert versions | INSERT | PERMISSIVE | public |  | `((auth.uid() = changed_by) OR (changed_by IS NULL))` |
+| public.entity_versions | Users can view versions | SELECT | PERMISSIVE | public | `true` |  |
 | public.fraud_signals | Admins and supervisors view all fraud signals | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
 | public.fraud_signals | Admins manage fraud signals | ALL | PERMISSIVE | public | `is_admin_user(( SELECT auth.uid() AS uid))` | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | public.fraud_signals | Agents view fraud signals on own calls | SELECT | PERMISSIVE | public | `(agent_name = get_user_agent_name())` |  |
@@ -329,6 +331,10 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.role_permissions | Authenticated users can view role_permissions | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.routing_rules | Admin manage routing rules | ALL | PERMISSIVE | public | `is_admin_user(( SELECT auth.uid() AS uid))` | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | public.routing_rules | Admin/Supervisor view routing rules | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
+| public.saved_filters | Users can delete own filters | DELETE | PERMISSIVE | public | `(auth.uid() = user_id)` |  |
+| public.saved_filters | Users can insert own filters | INSERT | PERMISSIVE | public |  | `(auth.uid() = user_id)` |
+| public.saved_filters | Users can update own filters | UPDATE | PERMISSIVE | public | `(auth.uid() = user_id)` | `(auth.uid() = user_id)` |
+| public.saved_filters | Users can view own filters | SELECT | PERMISSIVE | public | `(auth.uid() = user_id)` |  |
 | public.scheduled_callbacks | Admins can delete scheduled_callbacks | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.scheduled_callbacks | Role-based update scheduled_callbacks | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (assigned_agent = get_user_agent_name()) OR (created_by = get_user_agent_name()))` |  |
 | public.scheduled_callbacks | Role-based view scheduled_callbacks | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (assigned_agent = get_user_agent_name()))` |  |

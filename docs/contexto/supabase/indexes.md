@@ -257,6 +257,10 @@ Uso e tamanho em `stats.md`.
 | public.email_verification_tokens | email_verification_tokens_pkey | btree | id | sim | sim |  |
 | public.email_verification_tokens | email_verification_tokens_token_key | btree | token | sim | sim |  |
 | public.email_verification_tokens | idx_email_verification_tokens_user_id | btree | user_id | não | sim |  |
+| public.entity_versions | entity_versions_pkey | btree | id | sim | sim |  |
+| public.entity_versions | idx_versions_date | btree | changed_at | não | sim |  |
+| public.entity_versions | idx_versions_entity | btree | entity_type, entity_id | não | sim |  |
+| public.entity_versions | unique_entity_version | btree | entity_type, entity_id, version_number | sim | sim |  |
 | public.fraud_signals | fraud_signals_pkey | btree | id | sim | sim |  |
 | public.fraud_signals | idx_fraud_signals_call_session_id | btree | call_session_id | não | sim |  |
 | public.fraud_signals | idx_fraud_signals_severity | btree | severity, created_at | não | sim |  |
@@ -328,6 +332,7 @@ Uso e tamanho em `stats.md`.
 | public.meeting_summaries | idx_meeting_summaries_session | btree | call_session_id | sim | sim |  |
 | public.meeting_summaries | idx_meeting_summaries_status | btree | status | não | sim |  |
 | public.meeting_summaries | meeting_summaries_pkey | btree | id | sim | sim |  |
+| public.migration_rollbacks | migration_rollbacks_pkey | btree | id | sim | sim |  |
 | public.notification_preferences | notification_preferences_pkey | btree | id | sim | sim |  |
 | public.notification_preferences | notification_preferences_user_id_key | btree | user_id | sim | sim |  |
 | public.notifications | idx_notifications_category | btree | category | não | sim |  |
@@ -407,11 +412,18 @@ Uso e tamanho em `stats.md`.
 | public.role_permissions | role_permissions_role_permission_id_key | btree | role, permission_id | sim | sim |  |
 | public.routing_rules | idx_routing_rules_active_priority | btree | is_active, priority | não | sim | `(is_active = true)` |
 | public.routing_rules | routing_rules_pkey | btree | id | sim | sim |  |
+| public.saved_filters | idx_saved_filters_default | btree | user_id, entity_type, is_default | não | sim | `(is_default = true)` |
+| public.saved_filters | idx_saved_filters_entity_type | btree | entity_type | não | sim |  |
+| public.saved_filters | idx_saved_filters_user_entity | btree | user_id, entity_type | não | sim |  |
+| public.saved_filters | idx_saved_filters_user_id | btree | user_id | não | sim |  |
+| public.saved_filters | saved_filters_pkey | btree | id | sim | sim |  |
+| public.saved_filters | unique_filter_name_per_user_entity | btree | user_id, entity_type, name | sim | sim |  |
 | public.scheduled_callbacks | idx_scheduled_callbacks_contact_id | btree | contact_id | não | sim |  |
 | public.scheduled_callbacks | idx_scheduled_callbacks_pending | btree | assigned_agent, scheduled_at | não | sim | `(status = 'pending'::text)` |
 | public.scheduled_callbacks | idx_scheduled_callbacks_scheduled_at | btree | scheduled_at | não | sim |  |
 | public.scheduled_callbacks | idx_scheduled_callbacks_status | btree | status | não | sim |  |
 | public.scheduled_callbacks | scheduled_callbacks_pkey | btree | id | sim | sim |  |
+| public.schema_migrations | schema_migrations_pkey | btree | version | sim | sim |  |
 | public.scorecard_criteria | idx_scorecard_criteria_template_id | btree | template_id | não | sim |  |
 | public.scorecard_criteria | scorecard_criteria_pkey | btree | id | sim | sim |  |
 | public.scorecard_responses | idx_scorecard_responses_criterion_id | btree | criterion_id | não | sim |  |

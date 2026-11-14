@@ -65,6 +65,7 @@
 | public.dialer_queue | contact_id | public.contacts | id | SET NULL | NO ACTION |
 | public.email_tickets | conversation_id | public.conversations | id | CASCADE | NO ACTION |
 | public.email_verification_tokens | user_id | auth.users | id | CASCADE | NO ACTION |
+| public.entity_versions | changed_by | auth.users | id | NO ACTION | NO ACTION |
 | public.fraud_signals | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
 | public.goal_violations | goal_id | public.dashboard_goals | id | CASCADE | NO ACTION |
 | public.hold_events | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
@@ -98,6 +99,7 @@
 | public.ring_group_members | agent_id | public.agents | id | CASCADE | NO ACTION |
 | public.ring_group_members | group_id | public.ring_groups | id | CASCADE | NO ACTION |
 | public.role_permissions | permission_id | public.permissions | id | CASCADE | NO ACTION |
+| public.saved_filters | user_id | auth.users | id | CASCADE | NO ACTION |
 | public.scheduled_callbacks | contact_id | public.contacts | id | SET NULL | NO ACTION |
 | public.scorecard_criteria | template_id | public.scorecard_templates | id | CASCADE | NO ACTION |
 | public.scorecard_responses | criterion_id | public.scorecard_criteria | id | CASCADE | NO ACTION |

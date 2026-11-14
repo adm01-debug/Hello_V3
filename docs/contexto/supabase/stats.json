@@ -34,7 +34,7 @@
           "connected_cluster": 0,
           "db_connected": false,
           "healthy": true,
-          "node": "realtime@2600:1f18:67fc:ac01:52f5:e676:a4b5:2dd5",
+          "node": "realtime@2600:1f18:67fc:ac01:5e:cc43:a683:4bd",
           "region": "us-east-1",
           "replication_connected": false
         },
@@ -132,7 +132,7 @@
       },
       "connections": [
         {
-          "n": 3,
+          "n": 2,
           "state": "idle",
           "usename": "authenticator"
         },
@@ -162,23 +162,23 @@
           "usename": "supabase_admin"
         }
       ],
-      "database_bytes": 24775827,
+      "database_bytes": 25046163,
       "queues": [],
       "schema_bytes": [
         {
-          "bytes": 8142848,
+          "bytes": 8273920,
           "schema": "public"
         }
       ],
       "storage": [],
       "top_queries": [
         {
-          "calls": 70,
-          "mean_ms": 5359.52,
+          "calls": 71,
+          "mean_ms": 5362.21,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 375166
+          "total_ms": 380717
         },
         {
           "calls": 2,
@@ -205,12 +205,20 @@
           "total_ms": 117288
         },
         {
-          "calls": 19,
-          "mean_ms": 959.49,
+          "calls": 21,
+          "mean_ms": 951.42,
           "query": "SELECT name FROM pg_timezone_names",
           "role": "authenticator",
-          "rows": 22724,
-          "total_ms": 18230
+          "rows": 25116,
+          "total_ms": 19980
+        },
+        {
+          "calls": 75,
+          "mean_ms": 158.34,
+          "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
+          "role": "postgres",
+          "rows": 600,
+          "total_ms": 11875
         },
         {
           "calls": 1,
@@ -219,14 +227,6 @@
           "role": "postgres",
           "rows": 5190,
           "total_ms": 11813
-        },
-        {
-          "calls": 74,
-          "mean_ms": 156.42,
-          "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
-          "role": "postgres",
-          "rows": 592,
-          "total_ms": 11575
         },
         {
           "calls": 76,
@@ -261,6 +261,14 @@
           "total_ms": 5561
         },
         {
+          "calls": 75,
+          "mean_ms": 63.06,
+          "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
+          "role": "postgres",
+          "rows": 129785,
+          "total_ms": 4729
+        },
+        {
           "calls": 1,
           "mean_ms": 4553.59,
           "query": "with page as ( select c.oid, c.relname, c.relrowsecurity, c.relforcerowsecurity, c.relreplident, nc.nspname as schema, -- Computed once here so the final select can reference it for both the -- raw byte count and pg_size",
@@ -269,28 +277,20 @@
           "total_ms": 4554
         },
         {
-          "calls": 74,
-          "mean_ms": 61.13,
-          "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
-          "role": "postgres",
-          "rows": 128020,
-          "total_ms": 4523
-        },
-        {
-          "calls": 74,
-          "mean_ms": 48.36,
-          "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
-          "role": "postgres",
-          "rows": 3996,
-          "total_ms": 3579
-        },
-        {
-          "calls": 20,
-          "mean_ms": 177.23,
+          "calls": 22,
+          "mean_ms": 169.49,
           "query": "WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $2), oid) AS base_type FROM pg_type UNIO",
           "role": "authenticator",
-          "rows": 4042,
-          "total_ms": 3545
+          "rows": 4466,
+          "total_ms": 3729
+        },
+        {
+          "calls": 75,
+          "mean_ms": 48.35,
+          "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
+          "role": "postgres",
+          "rows": 4050,
+          "total_ms": 3626
         }
       ]
     },
@@ -2576,6 +2576,42 @@
         "bytes": 8192,
         "is_primary": true,
         "is_unique": true,
+        "name": "entity_versions_pkey",
+        "scans": 0,
+        "schema": "public",
+        "table": "entity_versions"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": false,
+        "is_unique": false,
+        "name": "idx_versions_date",
+        "scans": 0,
+        "schema": "public",
+        "table": "entity_versions"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": false,
+        "is_unique": false,
+        "name": "idx_versions_entity",
+        "scans": 0,
+        "schema": "public",
+        "table": "entity_versions"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": false,
+        "is_unique": true,
+        "name": "unique_entity_version",
+        "scans": 0,
+        "schema": "public",
+        "table": "entity_versions"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": true,
+        "is_unique": true,
         "name": "fraud_signals_pkey",
         "scans": 1,
         "schema": "public",
@@ -3210,6 +3246,15 @@
         "scans": 0,
         "schema": "public",
         "table": "meeting_summaries"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": true,
+        "is_unique": true,
+        "name": "migration_rollbacks_pkey",
+        "scans": 0,
+        "schema": "public",
+        "table": "migration_rollbacks"
       },
       {
         "bytes": 8192,
@@ -3926,6 +3971,60 @@
         "bytes": 8192,
         "is_primary": false,
         "is_unique": false,
+        "name": "idx_saved_filters_default",
+        "scans": 0,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": false,
+        "is_unique": false,
+        "name": "idx_saved_filters_entity_type",
+        "scans": 0,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": false,
+        "is_unique": false,
+        "name": "idx_saved_filters_user_entity",
+        "scans": 0,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": false,
+        "is_unique": false,
+        "name": "idx_saved_filters_user_id",
+        "scans": 0,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": true,
+        "is_unique": true,
+        "name": "saved_filters_pkey",
+        "scans": 0,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": false,
+        "is_unique": true,
+        "name": "unique_filter_name_per_user_entity",
+        "scans": 0,
+        "schema": "public",
+        "table": "saved_filters"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": false,
+        "is_unique": false,
         "name": "idx_scheduled_callbacks_contact_id",
         "scans": 0,
         "schema": "public",
@@ -3966,6 +4065,15 @@
         "scans": 0,
         "schema": "public",
         "table": "scheduled_callbacks"
+      },
+      {
+        "bytes": 8192,
+        "is_primary": true,
+        "is_unique": true,
+        "name": "schema_migrations_pkey",
+        "scans": 0,
+        "schema": "public",
+        "table": "schema_migrations"
       },
       {
         "bytes": 8192,
@@ -5312,6 +5420,19 @@
         "index_bytes": 49152,
         "last_autoanalyze": null,
         "last_autovacuum": null,
+        "name": "saved_filters",
+        "schema": "public",
+        "seq_scan": 6,
+        "total_bytes": 57344
+      },
+      {
+        "dead_rows": 0,
+        "est_rows": 0,
+        "heap_bytes": 0,
+        "idx_scan": 0,
+        "index_bytes": 49152,
+        "last_autoanalyze": null,
+        "last_autovacuum": null,
         "name": "shift_swap_suggestions",
         "schema": "public",
         "seq_scan": 10,
@@ -5653,6 +5774,19 @@
         "name": "email_tickets",
         "schema": "public",
         "seq_scan": 10,
+        "total_bytes": 40960
+      },
+      {
+        "dead_rows": 0,
+        "est_rows": 0,
+        "heap_bytes": 0,
+        "idx_scan": 0,
+        "index_bytes": 32768,
+        "last_autoanalyze": null,
+        "last_autovacuum": null,
+        "name": "entity_versions",
+        "schema": "public",
+        "seq_scan": 4,
         "total_bytes": 40960
       },
       {
@@ -6833,9 +6967,35 @@
         "index_bytes": 8192,
         "last_autoanalyze": null,
         "last_autovacuum": null,
+        "name": "migration_rollbacks",
+        "schema": "public",
+        "seq_scan": 1,
+        "total_bytes": 16384
+      },
+      {
+        "dead_rows": 0,
+        "est_rows": 0,
+        "heap_bytes": 0,
+        "idx_scan": 0,
+        "index_bytes": 8192,
+        "last_autoanalyze": null,
+        "last_autovacuum": null,
         "name": "number_porting_requests",
         "schema": "public",
         "seq_scan": 10,
+        "total_bytes": 16384
+      },
+      {
+        "dead_rows": 0,
+        "est_rows": 0,
+        "heap_bytes": 0,
+        "idx_scan": 0,
+        "index_bytes": 8192,
+        "last_autoanalyze": null,
+        "last_autovacuum": null,
+        "name": "schema_migrations",
+        "schema": "public",
+        "seq_scan": 1,
         "total_bytes": 16384
       },
       {
