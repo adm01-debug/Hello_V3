@@ -61,6 +61,11 @@ export const handler = async (req: Request): Promise<Response> => {
       ? 'degraded'
       : 'operational';
 
+    if (overall !== 'operational') {
+      // SLO violado: alerta estruturado consumível por Supabase Logs/webhook.
+      logError('slo_violation_' + overall, new Error('downtime >= threshold'), { components });
+    }
+
     return new Response(JSON.stringify({
       status: overall,
       components,
