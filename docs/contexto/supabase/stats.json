@@ -59,6 +59,15 @@
   "db": {
     "cron_runs": [
       {
+        "end_time": "2026-11-14T09:00:00.209518+00:00",
+        "jobid": 1,
+        "return_message": "ERROR:  OPTIMISTIC_LOCK_CONFLICT\nHINT:  Registro alterado por outro usuário. Recarregue antes de salvar.\nCONTEXT:  PL/pgSQL function enforce_optimistic_lock() line 20 at RAISE\n",
+        "runid": 160,
+        "seconds": 0.02,
+        "start_time": "2026-11-14T09:00:00.190150+00:00",
+        "status": "failed"
+      },
+      {
         "end_time": "2026-11-13T09:00:00.316307+00:00",
         "jobid": 1,
         "return_message": "ERROR:  OPTIMISTIC_LOCK_CONFLICT\nHINT:  Registro alterado por outro usuário. Recarregue antes de salvar.\nCONTEXT:  PL/pgSQL function enforce_optimistic_lock() line 20 at RAISE\n",
@@ -77,13 +86,13 @@
         "status": "failed"
       },
       {
-        "end_time": "2026-11-11T09:00:00.355444+00:00",
-        "jobid": 1,
-        "return_message": "ERROR:  OPTIMISTIC_LOCK_CONFLICT\nHINT:  Registro alterado por outro usuário. Recarregue antes de salvar.\nCONTEXT:  PL/pgSQL function enforce_optimistic_lock() line 20 at RAISE\n",
-        "runid": 154,
-        "seconds": 0.13,
-        "start_time": "2026-11-11T09:00:00.230390+00:00",
-        "status": "failed"
+        "end_time": "2026-11-14T09:00:00.228340+00:00",
+        "jobid": 2,
+        "return_message": "UPDATE 1",
+        "runid": 159,
+        "seconds": 0.04,
+        "start_time": "2026-11-14T09:00:00.187359+00:00",
+        "status": "succeeded"
       },
       {
         "end_time": "2026-11-13T09:00:00.376021+00:00",
@@ -101,15 +110,6 @@
         "runid": 155,
         "seconds": 0.17,
         "start_time": "2026-11-12T09:00:00.217067+00:00",
-        "status": "succeeded"
-      },
-      {
-        "end_time": "2026-11-11T09:00:00.411771+00:00",
-        "jobid": 2,
-        "return_message": "UPDATE 1",
-        "runid": 153,
-        "seconds": 0.18,
-        "start_time": "2026-11-11T09:00:00.231641+00:00",
         "status": "succeeded"
       }
     ],
@@ -178,6 +178,14 @@
       "storage": [],
       "top_queries": [
         {
+          "calls": 51,
+          "mean_ms": 5358.04,
+          "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
+          "role": "postgres",
+          "rows": 0,
+          "total_ms": 273260
+        },
+        {
           "calls": 2,
           "mean_ms": 132452.35,
           "query": "SELECT count(*) FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM information_schema.role_table_grants g WHERE g.table_",
@@ -192,14 +200,6 @@
           "role": "postgres",
           "rows": 3904,
           "total_ms": 263008
-        },
-        {
-          "calls": 45,
-          "mean_ms": 5350.97,
-          "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
-          "role": "postgres",
-          "rows": 0,
-          "total_ms": 240793
         },
         {
           "calls": 1,
@@ -226,20 +226,20 @@
           "total_ms": 11813
         },
         {
-          "calls": 75,
-          "mean_ms": 109.43,
-          "query": "UPDATE public.user_profiles SET full_name = $1 || ( COALESCE( NULLIF(regexp_replace(full_name, $2, $3, $4), $5), $6 )::integer + $7 )::text WHERE id = $8",
-          "role": "postgres",
-          "rows": 75,
-          "total_ms": 8207
-        },
-        {
-          "calls": 49,
-          "mean_ms": 154.17,
+          "calls": 55,
+          "mean_ms": 152.36,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 392,
-          "total_ms": 7554
+          "rows": 440,
+          "total_ms": 8380
+        },
+        {
+          "calls": 76,
+          "mean_ms": 108.45,
+          "query": "UPDATE public.user_profiles SET full_name = $1 || ( COALESCE( NULLIF(regexp_replace(full_name, $2, $3, $4), $5), $6 )::integer + $7 )::text WHERE id = $8",
+          "role": "postgres",
+          "rows": 76,
+          "total_ms": 8243
         },
         {
           "calls": 1,
@@ -274,6 +274,14 @@
           "total_ms": 4554
         },
         {
+          "calls": 55,
+          "mean_ms": 61.95,
+          "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
+          "role": "postgres",
+          "rows": 95150,
+          "total_ms": 3407
+        },
+        {
           "calls": 18,
           "mean_ms": 187.69,
           "query": "WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $2), oid) AS base_type FROM pg_type UNIO",
@@ -282,20 +290,12 @@
           "total_ms": 3378
         },
         {
-          "calls": 49,
-          "mean_ms": 63.29,
-          "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
-          "role": "postgres",
-          "rows": 84770,
-          "total_ms": 3101
-        },
-        {
-          "calls": 49,
-          "mean_ms": 48.36,
+          "calls": 55,
+          "mean_ms": 48.37,
           "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
           "role": "postgres",
-          "rows": 2646,
-          "total_ms": 2370
+          "rows": 2970,
+          "total_ms": 2660
         }
       ]
     },
@@ -2024,7 +2024,7 @@
         "is_primary": true,
         "is_unique": true,
         "name": "contacts_pkey",
-        "scans": 76,
+        "scans": 77,
         "schema": "public",
         "table": "contacts"
       },
@@ -5014,7 +5014,7 @@
         "dead_rows": 0,
         "est_rows": 50,
         "heap_bytes": 16384,
-        "idx_scan": 76,
+        "idx_scan": 77,
         "index_bytes": 81920,
         "last_autoanalyze": null,
         "last_autovacuum": null,
@@ -5128,7 +5128,7 @@
         "total_bytes": 81920
       },
       {
-        "dead_rows": 24,
+        "dead_rows": 25,
         "est_rows": 0,
         "heap_bytes": 8192,
         "idx_scan": 51,
@@ -5137,11 +5137,11 @@
         "last_autovacuum": "2026-10-20T09:00:10.619479+00:00",
         "name": "optimistic_lock_conflicts",
         "schema": "public",
-        "seq_scan": 34,
+        "seq_scan": 35,
         "total_bytes": 81920
       },
       {
-        "dead_rows": 24,
+        "dead_rows": 25,
         "est_rows": 2,
         "heap_bytes": 8192,
         "idx_scan": 0,
@@ -5150,7 +5150,7 @@
         "last_autovacuum": "2026-10-20T09:00:10.621943+00:00",
         "name": "user_profiles",
         "schema": "public",
-        "seq_scan": 94,
+        "seq_scan": 95,
         "total_bytes": 81920
       },
       {
