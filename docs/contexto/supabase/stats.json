@@ -34,7 +34,7 @@
           "connected_cluster": 0,
           "db_connected": false,
           "healthy": true,
-          "node": "realtime@2600:1f18:67fc:ac00:8426:34a9:e6f6:1269",
+          "node": "realtime@2600:1f18:67fc:ac02:7f:9daf:df94:eee1",
           "region": "us-east-1",
           "replication_connected": false
         },
@@ -197,12 +197,12 @@
           "total_ms": 117288
         },
         {
-          "calls": 11,
-          "mean_ms": 5319.4,
+          "calls": 13,
+          "mean_ms": 5320.42,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 58513
+          "total_ms": 69165
         },
         {
           "calls": 17,
@@ -269,12 +269,12 @@
           "total_ms": 3378
         },
         {
-          "calls": 15,
-          "mean_ms": 167.95,
+          "calls": 17,
+          "mean_ms": 164.16,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 120,
-          "total_ms": 2519
+          "rows": 136,
+          "total_ms": 2791
         },
         {
           "calls": 299,
