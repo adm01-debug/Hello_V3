@@ -34,8 +34,8 @@
           "connected_cluster": 0,
           "db_connected": false,
           "healthy": true,
-          "node": "realtime@2600:1f1c:c90:ad00:bbd2:8fef:3b07:60b3",
-          "region": "us-west-1",
+          "node": "realtime@2600:1f18:67fc:ac00:86bf:e206:1da0:f3ae",
+          "region": "us-east-1",
           "replication_connected": false
         },
         "name": "realtime",
@@ -194,12 +194,12 @@
           "total_ms": 263008
         },
         {
-          "calls": 40,
-          "mean_ms": 5358.12,
+          "calls": 45,
+          "mean_ms": 5350.97,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 214325
+          "total_ms": 240793
         },
         {
           "calls": 1,
@@ -234,12 +234,12 @@
           "total_ms": 8207
         },
         {
-          "calls": 44,
-          "mean_ms": 156.33,
+          "calls": 49,
+          "mean_ms": 154.17,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 352,
-          "total_ms": 6879
+          "rows": 392,
+          "total_ms": 7554
         },
         {
           "calls": 1,
@@ -282,20 +282,20 @@
           "total_ms": 3378
         },
         {
-          "calls": 44,
-          "mean_ms": 65.01,
+          "calls": 49,
+          "mean_ms": 63.29,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 76120,
-          "total_ms": 2861
+          "rows": 84770,
+          "total_ms": 3101
         },
         {
-          "calls": 299,
-          "mean_ms": 7.36,
-          "query": "WITH pgrst_source AS (SELECT pgrst_call.pgrst_scalar FROM (SELECT $1 AS json_data) pgrst_payload, LATERAL (SELECT \"query\" FROM json_to_record(pgrst_payload.json_data) AS _(\"query\" text) LIMIT $4) pgrst_body , LATERAL (SE",
-          "role": "service_role",
-          "rows": 299,
-          "total_ms": 2202
+          "calls": 49,
+          "mean_ms": 48.36,
+          "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
+          "role": "postgres",
+          "rows": 2646,
+          "total_ms": 2370
         }
       ]
     },
