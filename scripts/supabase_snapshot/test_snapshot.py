@@ -873,5 +873,24 @@ for _auth_error in (False, True):
                 db_stats_case("exercise_recovery", _auth_error, _empty))
 
 
+class SnapshotTypesFallbackTests(SnapshotFixture):
+    """O types.ts versionado no repo vira a saída quando GEN_TYPES=false ou o CLI falha."""
+
+    def test_versioned_types_are_copied_when_gen_types_off(self):
+        root = pathlib.Path(self.temp.name)
+        self.snapshot.REPO_ROOT = root
+        versioned = root / "src" / "integrations" / "supabase" / "types.ts"
+        versioned.parent.mkdir(parents=True)
+        versioned.write_text("export type Database = {};\n", encoding="utf-8")
+        self.assertEqual(self.collect(), 0)
+        self.assertEqual((self.out / "types.ts").read_text(encoding="utf-8"), "export type Database = {};\n")
+
+    def test_missing_versioned_types_is_recorded_as_error(self):
+        root = pathlib.Path(self.temp.name)
+        self.snapshot.REPO_ROOT = root
+        self.collect()
+        self.assertIn("gen_types", self.error_sections())
+
+
 if __name__ == "__main__":
     unittest.main()

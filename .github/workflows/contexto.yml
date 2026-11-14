@@ -178,7 +178,7 @@ jobs:
     env:
       SNAPSHOT_DIR: docs/contexto/supabase
       # schema.sql exigiria pg_dump da versão do servidor (o runner tem o client 16);
-      # types.ts já é versionado em src/integrations/supabase/types.ts.
+      # types.ts vem do versionado em src/integrations/supabase/types.ts (TYPES_TS_SRC).
       PGDUMP: 'false'
       GEN_TYPES: 'false'
     steps:
