@@ -1,6 +1,6 @@
 ﻿# Prod Readiness — adm01-debug/Hello_V3
 
-> Relatório de prontidão de produção gerado em 2026-11-13 sobre a main `4060612d` (docs #30 + squash dos PRs #28/#29).
+> Relatório de prontidão de produção gerado em 2026-11-13 sobre a main final `25e39c40` (squash das PRs #28→#32). Última atualização 2026-11-13 22:56 local.
 > Formato: cada funcionalidade com **OK** (prova ao lado) ou **BLOQUEADO** (erro exato + o que falta). Zero itens "não verificado".
 
 ---
@@ -9,10 +9,11 @@
 
 | Critério | Estado | Evidência |
 |---|---|---|
-| CI na main | **OK** | check-runs de `75a5df1` e `4060612d`: `Lint • Type-check • Test • Build` = success; `Security audit` = success |
-| Deploy produção | **OK** | deployment Production `7778038501` sha=4060612d → status `success` (2026-11-13T22:31Z) |
-| PRs abertas | 0 | consulta 2026-11-13 22:35Z |
-| Baseline testes | **OK** | CI reporta Test success; nenhum teste removido ou afrouxado no diff dos PRs |
+| CI na main | **OK** | check-runs de `75a5df1`, `4060612d`, `feeb678` e `25e39c4` (final): `Lint • Type-check • Test • Build` = success; `Security audit` = success (run `43535599150`, head `25e39c4`) |
+| Deploy produção | **OK** | deployments Production: `7778038501` sha=4060612d, `7778849478` sha=feeb678, `7779947391` sha=25e39c4 → todos `success` |
+| PRs abertas | 0 | consulta 2026-11-13 22:53Z |
+| Baseline testes | **OK** | CI reporta Test success em todos os merges; nenhum teste removido ou afrouxado no diff dos PRs |
+| Smoke HTTP (home) | **OK** | `https://hello-v3.vercel.app/` → HTTP 200, `<title>CallCenter Pro – Gestão Inteligente de Call Center</title>` (2026-11-13) |
 
 ---
 
@@ -23,7 +24,7 @@
 | Fix query de grants (PR #28) | **OK** | `snapshot.py` usa `aclexplode` (~608-629); local 6.3s vs 131.5s, paridade 1952 rows, 109 unittests. Squash `8ed39f4` |
 | Fix guard de segredos (PR #29) | **OK** | `contexto.yml:251` `grep -rIPl '(?!\[REDACTED\]@)'`; ignora senha já redigida. Squash `75a5df1` |
 | Secrets `SUPABASE_DB_URL`/`SUPABASE_ACCESS_TOKEN` | **OK** | gravados no repo (projeto `cfmlmcdyjuotqobjapng`, região us-east-2) |
-| Publicar `docs/contexto/supabase/` na branch `contexto` | **OK** | run `43527196190` (Contexto, head=feeb678) = success → commit `cd84c6a` na branch `contexto`, com `docs/contexto/supabase/` completo (grants.md, policies.md, tables.md, lints.md, snapshot.json etc.) |
+| Publicar `docs/contexto/supabase/` na branch `contexto` | **OK** | provado fim-a-fim em 4 heads: run `43513925340` (head 75a5df1) → commit `64841581`; run `43530608132`/`43527196190` (head feeb678) → commits `0fd1ede`/`cd84c6a`; run `43539268796` (head 25e39c4, head final) = **success** → commit `bf2780e` na branch `contexto`, com `docs/contexto/supabase/` completo (grants.md, policies.md, tables.md, lints.md, snapshot.json etc.) |
 
 ---
 
@@ -84,9 +85,12 @@
 - **PR #28** — rewrite da query de grants (`snapshot.py` via `aclexplode`): 131.5s → 6.3s, paridade 1952 rows, 109 unittests. Squash `8ed39f4`.
 - **PR #29** — guard de segredo ignora senha redigida (`contexto.yml:251` com lookahead). Squash `75a5df1`.
 - **PR #30** — cria `docs/prod-readiness.md` (inventário completo). Squash `4060612d`.
+- **PR #31** — atualiza relatório c/ BLOQUEADOs (cron `OPTIMISTIC_LOCK_CONFLICT`, lint `view_security_definer`, manifest custom-hostname 400, projeto morto). Squash `feeb678`.
+- **PR #32** — evidência de publicação mais recente. Squash `25e39c4`.
+- **PR #33** — fecha relatório final: main `25e39c4`, publicação `bf2780e`, smoke HTTP 200.
 - Merges via REST (`PUT /pulls/N/merge` squash); branches apagadas.
-- CI verde + deploy Production success em `75a5df1` e `4060612d`.
+- CI verde + deploy Production success em `75a5df1`, `4060612d`, `feeb678` e `25e39c4`.
 
 ---
-_Relatório automático — evidências: check-runs/deployments via API do GitHub; catálogo via branch `contexto` (commit 64841581); código na main `4060612d`._
+_Relatório automático — evidências: check-runs/deployments via API do GitHub; catálogo via branch `contexto` (commit bf2780e); código na main `25e39c4`._
 
