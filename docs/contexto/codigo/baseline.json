@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "feeb6788bac936272b2cf4e67bdc5805580abb9e",
+  "commit": "25e39c4051cda012845241dcfa1a52dd21b6b538",
   "branch": "main",
-  "data_commit": "2026-11-13T20:19:59-03:00",
+  "data_commit": "2026-11-13T21:38:57-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "25e39c4",
+    "data": "2026-11-13",
+    "assunto": "chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)"
+   },
    {
     "sha": "feeb678",
     "data": "2026-11-13",
@@ -126,11 +131,6 @@
     "sha": "b38875e",
     "data": "2026-08-18",
     "assunto": "chore(agents): adiciona AGENTS.md padrao (contexto multi-agente)"
-   },
-   {
-    "sha": "057e597",
-    "data": "2026-08-18",
-    "assunto": "Merge pull request #6 from adm01-debug/claude/system-status-features-boms0f"
    }
   ],
   "arquivos_mudados_7d": 83,
@@ -141,6 +141,10 @@
    },
    {
     "pasta": ".github/workflows/contexto.yml",
+    "mudancas": 3
+   },
+   {
+    "pasta": "docs/prod-readiness.md",
     "mudancas": 3
    },
    {
@@ -165,10 +169,6 @@
    },
    {
     "pasta": "docs/contexto/regras",
-    "mudancas": 2
-   },
-   {
-    "pasta": "docs/prod-readiness.md",
     "mudancas": 2
    },
    {
@@ -210,6 +210,10 @@
     "mudancas": 3
    },
    {
+    "arquivo": "docs/prod-readiness.md",
+    "mudancas": 3
+   },
+   {
     "arquivo": "inventario/estado/edges.json",
     "mudancas": 3
    },
@@ -223,10 +227,6 @@
    },
    {
     "arquivo": "docs/estado/edge-functions-parte1.md",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "docs/prod-readiness.md",
     "mudancas": 2
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 17
+    "commits": 18
    },
    {
     "autor": "github-actions[bot]",

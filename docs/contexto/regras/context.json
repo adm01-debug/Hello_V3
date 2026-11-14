@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "feeb6788bac936272b2cf4e67bdc5805580abb9e",
+  "sha": "25e39c4051cda012845241dcfa1a52dd21b6b538",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-13 23:48 UTC",
+  "generated_at": "2026-11-14 01:33 UTC",
   "files_total": 1998,
   "code_files": 1406,
   "code_lines": 177591
@@ -117464,10 +117464,19 @@
   }
  },
  "git": {
-  "sha": "feeb6788bac936272b2cf4e67bdc5805580abb9e",
+  "sha": "25e39c4051cda012845241dcfa1a52dd21b6b538",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "25e39c4",
+    "date": "2026-11-13",
+    "author": "adm01-debug",
+    "subject": "chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)",
+    "files": [
+     "docs/prod-readiness.md"
+    ]
+   },
    {
     "sha": "feeb678",
     "date": "2026-11-13",
@@ -117803,39 +117812,16 @@
     "files": [
      "ESTADO_ATUAL.md"
     ]
-   },
-   {
-    "sha": "e63bf6f",
-    "date": "2026-08-16",
-    "author": "Claude",
-    "subject": "docs: auditoria de estado do sistema (ESTADO_ATUAL.md + docs/estado/)",
-    "files": [
-     "ESTADO_ATUAL.md",
-     "docs/estado/componentes-parte1.md",
-     "docs/estado/componentes-parte2.md",
-     "docs/estado/componentes-parte3.md",
-     "docs/estado/componentes-parte4.md",
-     "docs/estado/dados-schema-migrations.md",
-     "docs/estado/edge-functions-parte1.md",
-     "docs/estado/edge-functions-parte2.md",
-     "docs/estado/funcionalidades-planejadas.md",
-     "docs/estado/hooks-parte1.md",
-     "docs/estado/hooks-parte2.md",
-     "docs/estado/hooks-parte3.md",
-     "docs/estado/hooks-parte4.md",
-     "docs/estado/infra-ci-rotas-integracoes.md",
-     "docs/estado/integracoes.md",
-     "docs/estado/lib-parte1.md",
-     "docs/estado/lib-parte2.md",
-     "docs/estado/paginas-parte1.md",
-     "docs/estado/paginas-parte2.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "ESTADO_ATUAL.md",
-    5
+    4
+   ],
+   [
+    "docs/prod-readiness.md",
+    3
    ],
    [
     ".github/workflows/contexto.yml",
@@ -117848,10 +117834,6 @@
    [
     "AGENTS.md",
     3
-   ],
-   [
-    "docs/prod-readiness.md",
-    2
    ],
    [
     "scripts/supabase_snapshot/snapshot.py",
@@ -117886,10 +117868,6 @@
     2
    ],
    [
-    "docs/estado/edge-functions-parte1.md",
-    2
-   ],
-   [
     ".hermes.md",
     2
    ],
@@ -117911,6 +117889,10 @@
    ],
    [
     "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts",
+    1
+   ],
+   [
+    "src/lib/__tests__/security-observability.test.ts",
     1
    ]
   ]
