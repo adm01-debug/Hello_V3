@@ -1,6 +1,7 @@
 // Health check consolidado — endpoint público retornando status dos componentes
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { withRequestLog, logError } from '../_shared/observability.ts';
 
 export const handler = async (req: Request): Promise<Response> => {
   const corsHeaders = buildCorsHeaders(req);
@@ -71,6 +72,7 @@ export const handler = async (req: Request): Promise<Response> => {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
+    logError('health_check_failed', err);
     return new Response(JSON.stringify({ status: 'unknown', error: message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
@@ -78,7 +80,7 @@ export const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-Deno.serve(handler);
+Deno.serve(withRequestLog('health-check', handler));
 
 function percentile(nums: number[], p: number): number {
   if (nums.length === 0) return 0;

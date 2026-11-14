@@ -2,12 +2,13 @@
 // Invocado por cron diário (03:00 UTC) ou manualmente por admin.
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { withRequestLog, logError } from '../_shared/observability.ts';
 
 type Dataset = 'call_sessions' | 'call_summaries' | 'deals';
 const DATASETS: Dataset[] = ['call_sessions', 'call_summaries', 'deals'];
 const PAGE_SIZE = 1000;
 
-Deno.serve(async (req) => {
+Deno.serve(withRequestLog('data-lake-flush', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
@@ -29,10 +30,10 @@ Deno.serve(async (req) => {
     return json({ status: 'ok', results, ran_at: new Date().toISOString() });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    console.error('[data-lake-flush] error:', message);
+    logError('flush_failed', err, { fn: 'data-lake-flush' });
     return json({ error: message }, 500);
   }
-});
+}));
 
 async function flushDataset(
   supabase: ReturnType<typeof createClient>,
