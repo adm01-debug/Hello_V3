@@ -5,7 +5,7 @@ CREATE OR REPLACE FUNCTION public.trigger_auto_scorecard()
  SET search_path TO 'public'
 AS $function$
 DECLARE
-  v_url TEXT := 'https://dyibdjwuoibwwpidgsxu.supabase.co/functions/v1/auto-scorecard';
+  v_url TEXT := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/auto-scorecard';
   v_key TEXT := '[REDACTED_JWT]';
 BEGIN
   IF NEW.summary IS NULL OR length(NEW.summary) < 20 THEN
@@ -19,7 +19,6 @@ BEGIN
   );
   RETURN NEW;
 EXCEPTION WHEN OTHERS THEN
-  -- Nunca bloqueia insert em call_summaries por falha assíncrona
   RAISE WARNING 'auto-scorecard enqueue failed: %', SQLERRM;
   RETURN NEW;
 END;

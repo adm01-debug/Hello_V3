@@ -6,8 +6,8 @@
 | campo | valor |
 |---|---|
 | owner | postgres |
-| security_invoker | não |
-| opções |  |
+| security_invoker | sim |
+| opções | security_invoker=true |
 | depende de | public.call_sessions, public.deals |
 | populada | n/a |
 | comentário |  |

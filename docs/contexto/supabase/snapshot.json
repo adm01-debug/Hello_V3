@@ -31592,20 +31592,11 @@
       "jobs": [
         {
           "active": true,
-          "command": "\r\n    UPDATE public.contacts\r\n    SET \r\n      name = 'teste abner ' || (\r\n        COALESCE(\r\n          NULLIF(regexp_replace(name, '^teste abner\\s*', '', 'i'), ''),\r\n          '0'\r\n        )::integer + 1\r\n      )::text,\r\n      version = version + 1\r\n    WHERE id = '0699edd7-cb5f-4ab1-b3ec-55237edb3118'\r\n  ",
+          "command": "SELECT net.http_post(\r\n      url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush',\r\n      headers := jsonb_build_object(\r\n        'Content-Type', 'application/json',\r\n        'Authorization', 'Bearer [REDACTED_JWT]'\r\n      ),\r\n      body := jsonb_build_object('trigger', 'cron')\r\n    );",
           "database": "postgres",
-          "jobid": 1,
-          "jobname": "update-contact-name-daily",
-          "schedule": "0 9 * * *",
-          "username": "postgres"
-        },
-        {
-          "active": true,
-          "command": "\r\n    UPDATE public.user_profiles\r\n    SET \r\n      full_name = 'Abner Pereira ' || (\r\n        COALESCE(\r\n          NULLIF(regexp_replace(full_name, '^Abner Pereira\\s*', '', 'i'), ''),\r\n          '0'\r\n        )::integer + 1\r\n      )::text\r\n    WHERE id = '7c353029-0585-46b3-8a0b-f8f3fb3a578a'\r\n  ",
-          "database": "postgres",
-          "jobid": 2,
-          "jobname": "update-user-profile-fullname-daily",
-          "schedule": "0 9 * * *",
+          "jobid": 4,
+          "jobname": "data-lake-flush-daily",
+          "schedule": "0 3 * * *",
           "username": "postgres"
         }
       ]
@@ -34889,7 +34880,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "1c85aa4c98b851e5",
+        "definition_sha": "a220b20d2d71ee18",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": true,
@@ -46055,12 +46046,6 @@
     ],
     "lints": [
       {
-        "code": "view_security_definer",
-        "detail": "View em public sem security_invoker: executa como owner e ignora RLS das tabelas base.",
-        "object": "public.financial_impact_daily",
-        "severity": "ALTA"
-      },
-      {
         "code": "extension_in_public",
         "detail": "Extensão instalada no schema public (recomendado: schema extensions).",
         "object": "pg_trgm",
@@ -55806,11 +55791,13 @@
         ],
         "kind": "view",
         "name": "financial_impact_daily",
-        "options": null,
+        "options": [
+          "security_invoker=true"
+        ],
         "owner": "postgres",
         "populated": null,
         "schema": "public",
-        "security_invoker": false
+        "security_invoker": true
       }
     ],
     "webhooks": []

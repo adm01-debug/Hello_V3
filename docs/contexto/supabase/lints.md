@@ -4,7 +4,6 @@ Verificações objetivas feitas no catálogo. Um agente deve ler isto antes de p
 
 | severidade | código | objeto | detalhe |
 |---|---|---|---|
-| ALTA | view_security_definer | public.financial_impact_daily | View em public sem security_invoker: executa como owner e ignora RLS das tabelas base. |
 | BAIXA | extension_in_public | pg_trgm | Extensão instalada no schema public (recomendado: schema extensions). |
 | BAIXA | extension_in_public | vector | Extensão instalada no schema public (recomendado: schema extensions). |
 | BAIXA | fk_without_index | public.call_park_orbits.call_park_orbits_moh_prompt_id_fkey | FK sem índice nas colunas ['moh_prompt_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
