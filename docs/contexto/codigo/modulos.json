@@ -68,7 +68,7 @@
    "modulo": "components/admin",
    "arquivos": 23,
    "testes": 1,
-   "linhas": 2188,
+   "linhas": 2172,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -149,8 +149,7 @@
     "lucide-react",
     "react-router-dom",
     "recharts",
-    "sonner",
-    "zod"
+    "sonner"
    ]
   },
   {
@@ -3868,6 +3867,7 @@
     "contexts",
     "hooks/auth",
     "lib",
+    "lib/validation",
     "pages",
     "pages/admin",
     "pages/call-analytics",
@@ -4184,9 +4184,9 @@
   },
   {
    "modulo": "lib",
-   "arquivos": 46,
+   "arquivos": 47,
    "testes": 0,
-   "linhas": 6259,
+   "linhas": 6295,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4233,6 +4233,8 @@
     "useDealForecast",
     "useDeals",
     "useDebouncedSearchParam",
+    "useDeleteAssignment",
+    "useDeleteTrunk",
     "useDeviceLabel",
     "useDialerFavorites",
     "useEnforceSla",
@@ -4271,6 +4273,8 @@
     "useRenewals",
     "useRingGroups",
     "useRingtoneSettings",
+    "useSaveAssignment",
+    "useSaveTrunk",
     "useScheduledCallbacks",
     "useSendMessage",
     "useSipCall",
@@ -4279,6 +4283,8 @@
     "useSupervisorPanel",
     "useSyncHistory",
     "useTalkRatio",
+    "useTestTrunk",
+    "useTrunkAssignments",
     "useTrunkUsageReporter",
     "useUpdateConversation",
     "useUpsertArticle",
@@ -4287,6 +4293,7 @@
     "useVoicePreferences",
     "useVoipAutoRemediation",
     "useVoipQualityMonitor",
+    "useVoipTrunks",
     "useWavoipCall"
    ],
    "hooks_definidos": [
@@ -4318,6 +4325,7 @@
     "transcribe-recording",
     "voice-command",
     "voice-transcribe",
+    "voip-trunks-manage",
     "wavoip-call"
    ],
    "tabelas": [
@@ -4509,16 +4517,19 @@
    "depende_de_modulos": [
     "hooks",
     "integrations/supabase",
+    "lib/validation",
     "pages"
    ],
    "pacotes_externos": [
+    "@hookform/resolvers",
     "clsx",
     "date-fns",
     "jspdf",
     "jspdf-autotable",
     "papaparse",
     "sonner",
-    "tailwind-merge"
+    "tailwind-merge",
+    "zod"
    ]
   },
   {
@@ -4856,21 +4867,34 @@
   },
   {
    "modulo": "lib/validation",
-   "arquivos": 3,
+   "arquivos": 5,
    "testes": 1,
-   "linhas": 295,
+   "linhas": 349,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
    "componentes": 0,
-   "hooks_locais": [],
+   "hooks_locais": [
+    "useDeleteAssignment",
+    "useDeleteTrunk",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useVoipTrunks"
+   ],
    "hooks_definidos": [],
-   "edges": [],
+   "edges": [
+    "voip-trunks-manage"
+   ],
    "tabelas": [],
    "rpcs": [],
    "buckets": [],
    "canais_realtime": [],
-   "env": [],
+   "env": [
+    "VITE_SUPABASE_PUBLISHABLE_KEY",
+    "VITE_SUPABASE_URL"
+   ],
    "flags": [],
    "papeis": [],
    "diretos": {
@@ -4880,9 +4904,11 @@
    },
    "importado_por_outros_modulos": [
     "components/contacts",
-    "hooks"
+    "hooks",
+    "lib"
    ],
    "depende_de_modulos": [
+    "hooks",
     "lib"
    ],
    "pacotes_externos": [
@@ -4924,7 +4950,7 @@
    "modulo": "pages",
    "arquivos": 91,
    "testes": 0,
-   "linhas": 16288,
+   "linhas": 16268,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5651,8 +5677,7 @@
     "qrcode.react",
     "react-router-dom",
     "recharts",
-    "sonner",
-    "zod"
+    "sonner"
    ]
   },
   {

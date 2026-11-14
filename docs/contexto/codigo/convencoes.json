@@ -16,7 +16,7 @@
    "src/contexts (2)"
   ],
   "servicos_logica": [
-   "src/lib (76)",
+   "src/lib (79)",
    "src/integrations (3)",
    "scripts/regras_negocio (2)"
   ],
@@ -41,7 +41,7 @@
  "nomenclatura": {
   "componentes": "PascalCase (88%)",
   "hooks": "use + PascalCase",
-  "servicos": "kebab-case (70%)",
+  "servicos": "kebab-case (69%)",
   "edge_functions": "kebab-case (100%)",
   "tabelas": "snake_case (89%)"
  },
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)",
+   "feat: wrapper zod central (zodFormErrors + schemas de auth/voip) e migra os forms para ele (#37)",
    "fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)",
    "fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)",
-   "fix: aplica security_invoker na view financial_impact_daily (#34)",
-   "chore: fecha relatorio de prod-readiness na main final 25e39c4 (#33)",
-   "chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)"
+   "fix: aplica security_invoker na view financial_impact_daily (#34)"
   ]
  },
  "pr_template": null,

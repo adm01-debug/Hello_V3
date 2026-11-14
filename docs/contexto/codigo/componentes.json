@@ -310,7 +310,7 @@
     "VoipTrunkFormDrawer"
    ],
    "export_default": null,
-   "linhas": 173,
+   "linhas": 157,
    "dominio": "components/admin",
    "hooks_locais": [
     "useSaveTrunk"
@@ -5897,7 +5897,7 @@
     "ForgotPassword"
    ],
    "export_default": "ForgotPassword",
-   "linhas": 200,
+   "linhas": 199,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
@@ -6602,7 +6602,7 @@
     "ResetPassword"
    ],
    "export_default": "ResetPassword",
-   "linhas": 288,
+   "linhas": 269,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"

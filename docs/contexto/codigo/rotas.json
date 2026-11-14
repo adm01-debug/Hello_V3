@@ -505,7 +505,7 @@
    ],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 29
+   "arquivos_puxados": 35
   },
   {
    "protegida": false,
@@ -1911,24 +1911,42 @@
    "arquivo": "src/pages/ForgotPassword.tsx",
    "definida_em": "src/routes/publicRoutes.tsx",
    "hooks": [
+    "useDeleteAssignment",
+    "useDeleteTrunk",
     "useEffect",
+    "useMutation",
     "usePageTitle",
-    "useState"
+    "useQuery",
+    "useQueryClient",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useState",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useVoipTrunks"
    ],
    "hooks_locais": [
-    "usePageTitle"
+    "useDeleteAssignment",
+    "useDeleteTrunk",
+    "usePageTitle",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useVoipTrunks"
    ],
    "tabelas": [],
    "rpcs": [],
    "edges": [
-    "request-password-reset"
+    "request-password-reset",
+    "voip-trunks-manage"
    ],
    "canais_realtime": [],
    "flags": [],
    "papeis": [
     "alert"
    ],
-   "arquivos_puxados": 10
+   "arquivos_puxados": 17
   },
   {
    "protegida": false,
@@ -3472,26 +3490,45 @@
    "arquivo": "src/pages/ResetPassword.tsx",
    "definida_em": "src/routes/publicRoutes.tsx",
    "hooks": [
+    "useDeleteAssignment",
+    "useDeleteTrunk",
     "useEffect",
     "useMemo",
+    "useMutation",
     "useNavigate",
     "usePageTitle",
     "usePasswordStrength",
-    "useState"
+    "useQuery",
+    "useQueryClient",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useState",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useVoipTrunks"
    ],
    "hooks_locais": [
+    "useDeleteAssignment",
+    "useDeleteTrunk",
     "usePageTitle",
-    "usePasswordStrength"
+    "usePasswordStrength",
+    "useSaveAssignment",
+    "useSaveTrunk",
+    "useTestTrunk",
+    "useTrunkAssignments",
+    "useVoipTrunks"
    ],
    "tabelas": [],
    "rpcs": [],
-   "edges": [],
+   "edges": [
+    "voip-trunks-manage"
+   ],
    "canais_realtime": [],
    "flags": [],
    "papeis": [
     "alert"
    ],
-   "arquivos_puxados": 11
+   "arquivos_puxados": 18
   },
   {
    "protegida": false,

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `2c8b481bb6` · branch `main` · 2026-11-14 13:39 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d67d0f4001` · branch `main` · 2026-11-14 13:54 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1140,10 +1140,6 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 
 ### F.1 Schemas Zod
 
-- **schema** (`src/components/admin/voip/VoipTrunkFormDrawer.tsx`, z.object):
-  ```ts
-  { name: z.string().trim().min(1, 'Nome obrigatório').max(100), provider: z.enum(['nvoip', 'directcall', 'totalvoice', 'generic', 'wavoip']), sip_server: z.string().trim().min(1, 'Servidor obrigatório').max(255), sip_username: z.string().trim().min(1, 'Usuário obrigatório').max(100), sip_password: z.string().min(0).max(255).optional(), sip_realm: z.string().max(255).optional(), transport: z.enum(['wss', 'tcp', 'udp']), max_channels: z.coerce.number().min(1).max(1000), priority: z.coerce.number().min(0).max(9999), is_active: z.boolean(), notes: z.string().max(500).optional(), }
-  ```
 - **timeSchema** (`src/components/compliance/calling-hours/types.ts`, z.string):
   ```ts
   
@@ -1158,6 +1154,19 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
   { region_code: z .string() .trim() .min(2, 'Código com mínimo 2 caracteres') .max(10, 'Código com máximo 10 caracteres') .regex(/^[A-Za-z0-9_-]+$/, 'Use apenas letras, números, _ ou -') .transform((v) => v.toUpperCase()), region_name: z.string().trim().min(2, 'Nome obrigatório').max(80), timezone: z.string().trim().min(3, 'Timezone obrigatório').max(64), weekday_start: timeSchema, weekday_end: timeSchema, saturday_start: optionalTime, saturday_end: optionalTime, sunday_allowed: z.boolean(), sunday_start: optionalTime, sunday_end: optionalTime, holidays_allowed: z.boolean(), is_active: z.boolean(), }
   ```
   - Regras cruzadas (refine): “Fim dos dias úteis deve ser após o início”
+- **loginEmailSchema** (`src/lib/validation/auth.ts`, z.string):
+  ```ts
+  
+  ```
+- **passwordFieldSchema** (`src/lib/validation/auth.ts`, z.string):
+  ```ts
+  
+  ```
+- **resetPasswordSchema** (`src/lib/validation/auth.ts`, z.object, encadeia refine):
+  ```ts
+  { password: passwordFieldSchema, confirmPassword: z.string(), }
+  ```
+  - Regras cruzadas (refine): “As senhas não coincidem”
 - **contactInputSchema** (`src/lib/validation/contact-schema.ts`, z.object):
   ```ts
   { name: z .string({ required_error: 'Nome é obrigatório' }) .trim() .min(1, 'Nome é obrigatório') .max(120, 'Nome deve ter no máximo 120 caracteres'), phone: z .string() .trim() .max(20, 'Telefone deve ter no máximo 20 caracteres') .optional() .or(z.literal('')) .transform((v) => (v && v.length > 0 ? v : undefined)) .refine( (v) => { if (!v) return true; // aceita E.164 ou BR normalizável if (isE164(v)) return true; return normalizeBrPhone(v) !== null || stripNonDigits(v).length >= 8; }, { message: 'Telefone inválido' } ), email: z .string() .trim() .max(254, 'Email muito longo') .email('Email inválido') .optional() .or(z.literal('')) .transform((v) => (v && v.length > 0 ? v.toLowerCase() : undefined)), company: optionalTrimmed(120), position: optionalTrimmed(120), notes: optionalTrimmed(2 …
@@ -1240,15 +1249,14 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
   { fullName: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres').max(100), email: z.string().email('Email inválido'), password: z.string().min(8, 'Senha deve ter no mínimo 8 caracteres'), confirmPassword: z.string(), }
   ```
   - Regras cruzadas (refine): “Senhas não conferem”
-- **emailSchema** (`src/pages/ForgotPassword.tsx`, z.string):
+- **voipProviderSchema** (`src/lib/validation/voip-trunk.ts`, z.enum):
   ```ts
-  
+  ['nvoip', 'directcall', 'totalvoice', 'generic', 'wavoip']
   ```
-- **passwordSchema** (`src/pages/ResetPassword.tsx`, z.object, encadeia refine):
+- **voipTrunkSchema** (`src/lib/validation/voip-trunk.ts`, z.object):
   ```ts
-  { password: z.string() .min(8, 'Senha deve ter no mínimo 8 caracteres') .max(128, 'Senha muito longa') .regex(/[A-Z]/, 'Senha deve conter pelo menos uma letra maiúscula') .regex(/[a-z]/, 'Senha deve conter pelo menos uma letra minúscula') .regex(/[0-9]/, 'Senha deve conter pelo menos um número') .regex(/[^A-Za-z0-9]/, 'Senha deve conter pelo menos um caractere especial'), confirmPassword: z.string(), }
+  { name: z.string().trim().min(1, 'Nome obrigatório').max(100), provider: voipProviderSchema, sip_server: z.string().trim().min(1, 'Servidor obrigatório').max(255), sip_username: z.string().trim().min(1, 'Usuário obrigatório').max(100), sip_password: z.string().min(0).max(255).optional(), sip_realm: z.string().max(255).optional(), transport: z.enum(['wss', 'tcp', 'udp']), max_channels: z.coerce.number().min(1).max(1000), priority: z.coerce.number().min(0).max(9999), is_active: z.boolean(), notes: z.string().max(500).optional(), }
   ```
-  - Regras cruzadas (refine): “As senhas não coincidem”
 - **BitrixActionSchema** (`supabase/functions/_shared/external-payload-schemas.ts`, z.enum):
   ```ts
   [ "get_contacts", "get_leads", "create_lead", "update_lead", "get_deals", "create_call", "register_call", "finish_call", "get_user", "get_users", "get_departments", ]
@@ -2907,6 +2915,11 @@ _nenhum item encontrado_
 | * Erros de negócio que o banco também rejeitaria — antecipados na UI | `src/lib/ring-group.ts` |
 | * Tempo máximo de toque antes de cair na ação de "ninguém atendeu". | `src/lib/ring-group.ts` |
 | subscriber isolado, nunca deve derrubar o helper */ } | `src/lib/safe-number.ts` |
+| * Wrapper central de validação Zod. | `src/lib/schema.ts` |
+| from '@/lib/validation/schemas'; | `src/lib/schema.ts` |
+| from '@/lib/validation/contact-schema'; | `src/lib/schema.ts` |
+| from '@/lib/validation/voip-trunk'; | `src/lib/schema.ts` |
+| from '@/lib/validation/auth'; | `src/lib/schema.ts` |
 | Mantém no máximo MAX_ENTRIES entradas ordenadas do mais recente ao mais antigo. | `src/lib/security-alerts-webhook-history.ts` |
 | * Extrai apenas headers da allowlist (case-insensitive) para persistência segura. */ | `src/lib/security-alerts-webhook-history.ts` |
 | * Validação centralizada da configuração do webhook de exportação. | `src/lib/security-alerts-webhook-validation.ts` |
@@ -2920,6 +2933,7 @@ _nenhum item encontrado_
 | * Retorna true se a chamada deve ser bloqueada (circuito aberto). */ | `src/lib/bitrix/circuit-breaker.ts` |
 | property-based testing (Onda D4). Deve espelhar 1:1 a lógica em produção. | `src/lib/dialer/predictive-pace.ts` |
 | * Zod schemas for runtime validation of API responses and form inputs. | `src/lib/validation/schemas.ts` |
+| Extraído do componente para a camada central de validação. | `src/lib/validation/voip-trunk.ts` |
 | Gesto do usuário: momento válido para pedir permissão de notificação. | `src/pages/PhoneDialer.tsx` |
 | ').order('created_at', { ascending: false }).limit(100); | `src/pages/SecurityMonitoring.tsx` |
 | ').order('created_at', { ascending: false }).limit(200), | `src/pages/TranslationCenter.tsx` |

@@ -137,7 +137,8 @@
    "src/components/ui/sheet.tsx",
    "src/components/ui/switch.tsx",
    "src/components/ui/textarea.tsx",
-   "src/hooks/useVoipTrunks.ts"
+   "src/hooks/useVoipTrunks.ts",
+   "src/lib/schema.ts"
   ],
   "src/components/admin/webhook-health/EndpointList.tsx": [
    "src/components/admin/EndpointSparkline.tsx",
@@ -2936,6 +2937,12 @@
   "src/lib/safe-number.ts": [
    "src/lib/logger.ts"
   ],
+  "src/lib/schema.ts": [
+   "src/lib/validation/auth.ts",
+   "src/lib/validation/contact-schema.ts",
+   "src/lib/validation/schemas.ts",
+   "src/lib/validation/voip-trunk.ts"
+  ],
   "src/lib/security-alerts-export.ts": [
    "src/lib/safe-date.ts"
   ],
@@ -2985,6 +2992,9 @@
   ],
   "src/lib/validation/schemas.ts": [
    "src/lib/logger.ts"
+  ],
+  "src/lib/validation/voip-trunk.ts": [
+   "src/hooks/useVoipTrunks.ts"
   ],
   "src/lib/voice-preferences.ts": [
    "src/lib/voice-command-history.ts"
@@ -3355,7 +3365,8 @@
    "src/components/ui/label.tsx",
    "src/hooks/usePageTitle.ts",
    "src/integrations/supabase/client.ts",
-   "src/lib/logger.ts"
+   "src/lib/logger.ts",
+   "src/lib/schema.ts"
   ],
   "src/pages/GeoBlocking.tsx": [
    "src/components/ui/badge.tsx",
@@ -3816,7 +3827,8 @@
    "src/components/ui/label.tsx",
    "src/hooks/usePageTitle.ts",
    "src/integrations/supabase/client.ts",
-   "src/lib/logger.ts"
+   "src/lib/logger.ts",
+   "src/lib/schema.ts"
   ],
   "src/pages/RingGroups.tsx": [
    "src/components/ringgroups/RingGroupCard.tsx",
@@ -4572,6 +4584,9 @@
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
+  "supabase/functions/data-lake-flush/index.ts": [
+   "supabase/functions/_shared/observability.ts"
+  ],
   "supabase/functions/database-backup/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
@@ -4630,7 +4645,8 @@
    "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/health-check/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/observability.ts"
   ],
   "supabase/functions/notify-blocked-ip/index.ts": [
    "supabase/functions/_shared/cors.ts"

@@ -3,9 +3,9 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1159)",
+   "TypeScript (1162)",
    "SQL (212)",
-   "Markdown (100)",
+   "Markdown (101)",
    "JavaScript (27)",
    "JSON (15)",
    "Python (5)",
@@ -308,6 +308,10 @@
   },
   {
    "pasta": "docs/audit",
+   "arquivos_md": 1
+  },
+  {
+   "pasta": "docs/observabilidade",
    "arquivos_md": 1
   },
   {

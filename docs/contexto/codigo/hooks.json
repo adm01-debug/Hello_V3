@@ -4567,11 +4567,12 @@
     "useQueryClient"
    ],
    "canais_realtime": [],
-   "usado_por": 4,
+   "usado_por": 5,
    "usado_por_arquivos": [
     "src/components/admin/voip/TrunkAssignmentsTab.tsx",
     "src/components/admin/voip/VoipTrunkFormDrawer.tsx",
     "src/components/executive/VoipInfrastructureTab.tsx",
+    "src/lib/validation/voip-trunk.ts",
     "src/pages/admin/VoipTrunksAdmin.tsx"
    ],
    "coberto_por_testes": 1

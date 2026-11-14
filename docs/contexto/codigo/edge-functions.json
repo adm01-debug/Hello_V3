@@ -710,7 +710,7 @@
    "nome": "data-lake-flush",
    "entrada": "supabase/functions/data-lake-flush/index.ts",
    "arquivos": 1,
-   "linhas": 134,
+   "linhas": 135,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -726,7 +726,9 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [],
-   "usa_shared": [],
+   "usa_shared": [
+    "observability.ts"
+   ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": true,
@@ -1442,7 +1444,7 @@
    "nome": "health-check",
    "entrada": "supabase/functions/health-check/index.ts",
    "arquivos": 1,
-   "linhas": 89,
+   "linhas": 96,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1460,7 +1462,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "observability.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useHealthCheck.ts",

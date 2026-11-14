@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "2c8b481bb6135731f6781dfbcb90abc47e81ae17",
+  "commit": "d67d0f40017eee263e42f1ab309262d38d766142",
   "branch": "main",
-  "data_commit": "2026-11-14T10:01:12-03:00",
+  "data_commit": "2026-11-14T10:46:01-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d67d0f4",
+    "data": "2026-11-14",
+    "assunto": "feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)"
+   },
+   {
+    "sha": "f53ee94",
+    "data": "2026-11-14",
+    "assunto": "feat: wrapper zod central (zodFormErrors + schemas de auth/voip) e migra os forms para ele (#37)"
+   },
    {
     "sha": "2c8b481",
     "data": "2026-11-14",
@@ -121,19 +131,9 @@
     "sha": "510d039",
     "data": "2026-11-08",
     "assunto": "fix(voice): substitui Number.parseFloat por safeParseFloat em usePhaseColors"
-   },
-   {
-    "sha": "a5a156e",
-    "data": "2026-11-08",
-    "assunto": "docs(agentes): replica e corrige documentação de agentes do Zapp Web V2"
-   },
-   {
-    "sha": "7307a87",
-    "data": "2026-08-28",
-    "assunto": "Visual edit in Lovable"
    }
   ],
-  "arquivos_mudados_7d": 91,
+  "arquivos_mudados_7d": 101,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "docs/prod-readiness.md",
@@ -153,6 +153,10 @@
    },
    {
     "pasta": "inventario/estado/edges.json",
+    "mudancas": 3
+   },
+   {
+    "pasta": "supabase/functions/_shared",
     "mudancas": 3
    },
    {
@@ -189,10 +193,6 @@
    },
    {
     "pasta": "scripts/inventario/banco.sql",
-    "mudancas": 2
-   },
-   {
-    "pasta": "scripts/inventario/gerar-banco.mjs",
     "mudancas": 2
    }
   ],
@@ -270,6 +270,10 @@
     "mudancas": 2
    },
    {
+    "arquivo": "supabase/functions/health-check/index.ts",
+    "mudancas": 2
+   },
+   {
     "arquivo": "vite.config.ts",
     "mudancas": 2
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "deno.lock",
     "mudancas": 1
-   },
-   {
-    "arquivo": "docs/CONTEXTO-PARA-AGENTES.md",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 22
+    "commits": 24
    },
    {
     "autor": "github-actions[bot]",
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1536,
-  "arquivos_codigo": 1190,
-  "linhas_codigo": 163240,
+  "arquivos_total": 1540,
+  "arquivos_codigo": 1193,
+  "linhas_codigo": 163343,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -327,7 +327,7 @@
   "testes": 322,
   "workflows": 3,
   "scripts": 31,
-  "docs_md": 100
+  "docs_md": 101
  },
  "por_pasta": {
   "e2e/calls.spec.ts": {
@@ -468,7 +468,7 @@
   },
   "src/components": {
    "arquivos": 344,
-   "linhas": 41414
+   "linhas": 41398
   },
   "src/contexts": {
    "arquivos": 2,
@@ -487,8 +487,8 @@
    "linhas": 7847
   },
   "src/lib": {
-   "arquivos": 157,
-   "linhas": 20559
+   "arquivos": 160,
+   "linhas": 20649
   },
   "src/main.tsx": {
    "arquivos": 1,
@@ -496,7 +496,7 @@
   },
   "src/pages": {
    "arquivos": 130,
-   "linhas": 20773
+   "linhas": 20753
   },
   "src/routes": {
    "arquivos": 2,
@@ -508,7 +508,7 @@
   },
   "supabase/functions": {
    "arquivos": 146,
-   "linhas": 16456
+   "linhas": 16505
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -631,7 +631,7 @@
  ],
  "qualidade": {
   "any": 9,
-  "console_log": 181,
+  "console_log": 182,
   "ts_ignore": 0,
   "eslint_disable": 1,
   "todos": 5,

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "2c8b481bb6135731f6781dfbcb90abc47e81ae17",
+  "sha": "d67d0f40017eee263e42f1ab309262d38d766142",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-14 13:39 UTC",
-  "files_total": 2001,
-  "code_files": 1409,
-  "code_lines": 177673
+  "generated_at": "2026-11-14 13:54 UTC",
+  "files_total": 2005,
+  "code_files": 1412,
+  "code_lines": 177776
  },
  "version": "1.3.2",
- "facts_hash": "b6148e7474bc259b",
+ "facts_hash": "6cf8796aca7216f0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -155,7 +155,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 594,
-   ".ts": 565,
+   ".ts": 568,
    ".sql": 212,
    ".mjs": 25,
    ".js": 8,
@@ -27191,9 +27191,11 @@
     "file": "src/pages/ForgotPassword.tsx",
     "component": "ForgotPassword",
     "tables_transitive": [],
-    "invokes_transitive": [],
+    "invokes_transitive": [
+     "voip-trunks-manage"
+    ],
     "rpc_transitive": [],
-    "deps_count": 10
+    "deps_count": 17
    },
    {
     "path": "",
@@ -27658,9 +27660,11 @@
     "file": "src/pages/ResetPassword.tsx",
     "component": "ResetPassword",
     "tables_transitive": [],
-    "invokes_transitive": [],
+    "invokes_transitive": [
+     "voip-trunks-manage"
+    ],
     "rpc_transitive": [],
-    "deps_count": 11
+    "deps_count": 18
    },
    {
     "path": "",
@@ -31799,7 +31803,7 @@
   {
    "module": "src/components",
    "files": 344,
-   "lines": 41414,
+   "lines": 41398,
    "tables": [
     "accounts",
     "agent_goals",
@@ -32350,8 +32354,8 @@
   },
   {
    "module": "src/lib",
-   "files": 157,
-   "lines": 20559,
+   "files": 160,
+   "lines": 20649,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -32385,6 +32389,7 @@
     "route-prefetch.ts: prefetchRoute, prefetchHandlers",
     "safe-date.ts: safeFormatDate, safeFormatDatePtBR, safeFormatDistanceToNow, safeToLocaleString, safeToLocaleDateString, safeToLocaleTimeString",
     "safe-number.ts: SafeNumberRejectionReason, SafeNumberRejection, SafeNumberOptions, onSafeNumberRejection, getSafeNumberMetrics, resetSafeNumberMetrics",
+    "schema.ts: zodFormErrors",
     "security-alerts-export.ts: ExportableAlert, exportAlertsToCsv, exportAlertsToPdf",
     "security-alerts-presets.ts: AlertFilterPreset, loadPresets, addPreset, removePreset",
     "security-alerts-webhook-history.ts: WebhookAttemptDetail, WebhookHistoryEntry, loadWebhookHistory, appendWebhookHistory, clearWebhookHistory, truncateResponseSnippet",
@@ -32397,8 +32402,7 @@
     "tracing.ts: getTraceId, getTraceOperation, traceHeaders, withTrace, startTrace, endTrace",
     "voice-biometrics.ts: ExtractedFeatures, captureVoiceSample, isValidEmbedding, VOICE_VECTOR_DIM",
     "voice-command-history.ts: MAX_HISTORY_ENTRIES, MAX_COMMAND_LENGTH, VoiceCommandEntry, sanitizeCommand, loadCommandHistory, pushCommandHistory",
-    "voice-preferences.ts: MIN_TTS_RATE, MAX_TTS_RATE, TTS_RATE_STEPS, clampTtsRate, nextTtsRate, formatTtsRate",
-    "voice-speech.ts: SpeakOptions, isSpeechSupported, listVoices, onVoicesChanged, cancelSpeech, speak"
+    "voice-preferences.ts: MIN_TTS_RATE, MAX_TTS_RATE, TTS_RATE_STEPS, clampTtsRate, nextTtsRate, formatTtsRate"
    ],
    "docs": [
     "agent-assist-utils.ts: Utilitários puros para Real-Time Agent Assist. Sem efeitos colaterais — fáceis de testar.",
@@ -32409,6 +32413,7 @@
     "dialer-favorite-tags.ts: Etiquetas (grupos) dos favoritos do discador. Lógica pura e defensiva: o banco impõe `char_length(btrim(tag)) BETWEEN 1 AND 24` e `tag = btrim(tag)`, então a normalização aqui é a mesma regra aplicada antes de qualquer escrita — evitando erro 23514 (violação de CHECK) no cliente."
    ],
    "deps": [
+    "@hookform/resolvers",
     "@tanstack/react-query",
     "@testing-library/react",
     "clsx",
@@ -32463,6 +32468,7 @@
     "src/lib/route-prefetch.ts",
     "src/lib/safe-date.ts",
     "src/lib/safe-number.ts",
+    "src/lib/schema.ts",
     "src/lib/security-alerts-export.ts",
     "src/lib/security-alerts-presets.ts",
     "src/lib/security-alerts-webhook-history.ts",
@@ -32515,14 +32521,13 @@
     "src/lib/__tests__/mock-data-integrity.test.ts",
     "src/lib/__tests__/outbound-scoring.test.ts",
     "src/lib/__tests__/performance-optimizations.test.ts",
-    "src/lib/__tests__/phone-normalization.property.test.ts",
-    "src/lib/__tests__/predictive-pace.property.test.ts"
+    "src/lib/__tests__/phone-normalization.property.test.ts"
    ]
   },
   {
    "module": "src/pages",
    "files": 130,
-   "lines": 20773,
+   "lines": 20753,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -32612,8 +32617,7 @@
     "react-router-dom",
     "recharts",
     "sonner",
-    "vitest",
-    "zod"
+    "vitest"
    ],
    "imports_modules": [
     "src/components",
@@ -32748,7 +32752,7 @@
   {
    "module": "supabase/functions",
    "files": 146,
-   "lines": 16456,
+   "lines": 16505,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -32843,7 +32847,7 @@
     "external-payload-schemas.ts: BitrixActionSchema, BitrixAction, BitrixRequestSchema, BitrixRequest, paramsSchemaFor, WebhookEventSchema",
     "hmac.ts: verifyWebhookSignature",
     "numeric-schemas.ts: finiteNumber, finiteInt, nonNegativeInt, positiveInt, percent, latitude",
-    "observability.ts: trackMetric, logStructuredError",
+    "observability.ts: logInfo, logError, logRequest, withRequestLog, trackMetric, logStructuredError",
     "rate-limit.ts: RateLimitResult, checkRateLimitDB, getClientIp",
     "resilience.ts: CircuitState, CircuitBreakerOptions, getCircuitState, resetCircuit, _resetAllCircuits, CircuitOpenError",
     "validate.ts: string, uuid, number, boolean, optional, array",
@@ -32870,7 +32874,7 @@
     "optimistic-lock.test.ts: Teste defensivo do trigger enforce_optimistic_lock via SQL direto. Executado com: deno test --allow-net --allow-env supabase/functions/__tests__/optimistic-lock.test.ts Requer SUPABASE_DB_URL apontando para um banco com a migration aplicada. Em CI sem DB, o teste é pulado (skip) — não falha o pipeli …",
     "cors.ts: Centralized CORS configuration for all Edge Functions Restrict to known origins in production; fallback to first allowed origin",
     "external-payload-schemas.ts: Schemas Zod para payloads externos (Bitrix24 + webhooks genéricos). Toda propriedade numérica usa `.finite()` (do `numeric-schemas.ts`) para bloquear NaN/Infinity que corromperiam cálculos downstream e poderiam burlar validações SQL. Strings recebem `.max()` para conter payloads hostis; enums restri …",
-    "observability.ts: Mock observability system (Sentry/Prometheus)",
+    "observability.ts: Observabilidade estruturada para edge functions (JSON em 1 linha). Logs parseáveis por ferramentas de observabilidade (Supabase Logs, Logflare).",
     "rate-limit.ts: Database-backed rate limiter for edge functions Uses the public.check_rate_limit() DB function for persistence across cold starts",
     "resilience.ts: Resilience utilities for external API calls. - Retry with exponential backoff + jitter - Circuit breaker per key (CLOSED → OPEN → HALF_OPEN) Pure, deterministic (accepts injectable clock + rng for testing)."
    ],
@@ -37026,14 +37030,6 @@
  "rules": {
   "validation_schemas": [
    {
-    "file": "src/components/admin/voip/VoipTrunkFormDrawer.tsx",
-    "name": "schema",
-    "kind": "object",
-    "body": "{ name: z.string().trim().min(1, 'Nome obrigatório').max(100), provider: z.enum(['nvoip', 'directcall', 'totalvoice', 'generic', 'wavoip']), sip_server: z.string().trim().min(1, 'Servidor obrigatório').max(255), sip_username: z.string().trim().min(1, 'Usuário obrigatório').max(100), sip_password: z.string().min(0).max(255).optional(), sip_realm: z.string().max(255).optional(), transport: z.enum(['wss', 'tcp', 'udp']), max_channels: z.coerce.number().min(1).max(1000), priority: z.coerce.number().min(0).max(9999), is_active: z.boolean(), notes: z.string().max(500).optional(), }",
-    "refines": [],
-    "chain": []
-   },
-   {
     "file": "src/components/compliance/calling-hours/types.ts",
     "name": "timeSchema",
     "kind": "string",
@@ -37066,6 +37062,34 @@
     ],
     "chain": [
      "superRefine"
+    ]
+   },
+   {
+    "file": "src/lib/validation/auth.ts",
+    "name": "loginEmailSchema",
+    "kind": "string",
+    "body": "",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "src/lib/validation/auth.ts",
+    "name": "passwordFieldSchema",
+    "kind": "string",
+    "body": "",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "src/lib/validation/auth.ts",
+    "name": "resetPasswordSchema",
+    "kind": "object",
+    "body": "{ password: passwordFieldSchema, confirmPassword: z.string(), }",
+    "refines": [
+     "As senhas não coincidem"
+    ],
+    "chain": [
+     "refine"
     ]
    },
    {
@@ -37235,24 +37259,20 @@
     ]
    },
    {
-    "file": "src/pages/ForgotPassword.tsx",
-    "name": "emailSchema",
-    "kind": "string",
-    "body": "",
+    "file": "src/lib/validation/voip-trunk.ts",
+    "name": "voipProviderSchema",
+    "kind": "enum",
+    "body": "['nvoip', 'directcall', 'totalvoice', 'generic', 'wavoip']",
     "refines": [],
     "chain": []
    },
    {
-    "file": "src/pages/ResetPassword.tsx",
-    "name": "passwordSchema",
+    "file": "src/lib/validation/voip-trunk.ts",
+    "name": "voipTrunkSchema",
     "kind": "object",
-    "body": "{ password: z.string() .min(8, 'Senha deve ter no mínimo 8 caracteres') .max(128, 'Senha muito longa') .regex(/[A-Z]/, 'Senha deve conter pelo menos uma letra maiúscula') .regex(/[a-z]/, 'Senha deve conter pelo menos uma letra minúscula') .regex(/[0-9]/, 'Senha deve conter pelo menos um número') .regex(/[^A-Za-z0-9]/, 'Senha deve conter pelo menos um caractere especial'), confirmPassword: z.string(), }",
-    "refines": [
-     "As senhas não coincidem"
-    ],
-    "chain": [
-     "refine"
-    ]
+    "body": "{ name: z.string().trim().min(1, 'Nome obrigatório').max(100), provider: voipProviderSchema, sip_server: z.string().trim().min(1, 'Servidor obrigatório').max(255), sip_username: z.string().trim().min(1, 'Usuário obrigatório').max(100), sip_password: z.string().min(0).max(255).optional(), sip_realm: z.string().max(255).optional(), transport: z.enum(['wss', 'tcp', 'udp']), max_channels: z.coerce.number().min(1).max(1000), priority: z.coerce.number().min(0).max(9999), is_active: z.boolean(), notes: z.string().max(500).optional(), }",
+    "refines": [],
+    "chain": []
    },
    {
     "file": "supabase/functions/_shared/external-payload-schemas.ts",
@@ -40329,6 +40349,26 @@
     "text": "subscriber isolado, nunca deve derrubar o helper */ }"
    },
    {
+    "file": "src/lib/schema.ts",
+    "text": "* Wrapper central de validação Zod."
+   },
+   {
+    "file": "src/lib/schema.ts",
+    "text": "from '@/lib/validation/schemas';"
+   },
+   {
+    "file": "src/lib/schema.ts",
+    "text": "from '@/lib/validation/contact-schema';"
+   },
+   {
+    "file": "src/lib/schema.ts",
+    "text": "from '@/lib/validation/voip-trunk';"
+   },
+   {
+    "file": "src/lib/schema.ts",
+    "text": "from '@/lib/validation/auth';"
+   },
+   {
     "file": "src/lib/security-alerts-webhook-history.ts",
     "text": "Mantém no máximo MAX_ENTRIES entradas ordenadas do mais recente ao mais antigo."
    },
@@ -40379,6 +40419,10 @@
    {
     "file": "src/lib/validation/schemas.ts",
     "text": "* Zod schemas for runtime validation of API responses and form inputs."
+   },
+   {
+    "file": "src/lib/validation/voip-trunk.ts",
+    "text": "Extraído do componente para a camada central de validação."
    },
    {
     "file": "src/pages/PhoneDialer.tsx",
@@ -87304,18 +87348,9 @@
   },
   "src/components/admin/voip/VoipTrunkFormDrawer.tsx": {
    "path": "src/components/admin/voip/VoipTrunkFormDrawer.tsx",
-   "lines": 173,
+   "lines": 157,
    "exports": [
     "function VoipTrunkFormDrawer"
-   ],
-   "zod": [
-    {
-     "name": "schema",
-     "kind": "object",
-     "body": "{ name: z.string().trim().min(1, 'Nome obrigatório').max(100), provider: z.enum(['nvoip', 'directcall', 'totalvoice', 'generic', 'wavoip']), sip_server: z.string().trim().min(1, 'Servidor obrigatório').max(255), sip_username: z.string().trim().min(1, 'Usuário obrigatório').max(100), sip_password: z.string().min(0).max(255).optional(), sip_realm: z.string().max(255).optional(), transport: z.enum(['wss', 'tcp', 'udp']), max_channels: z.coerce.number().min(1).max(1000), priority: z.coerce.number().min(0).max(9999), is_active: z.boolean(), notes: z.string().max(500).optional(), }",
-     "refines": [],
-     "chain": []
-    }
    ],
    "html_constraints": [
     {
@@ -104168,6 +104203,21 @@
     "subscriber isolado, nunca deve derrubar o helper */ }"
    ]
   },
+  "src/lib/schema.ts": {
+   "path": "src/lib/schema.ts",
+   "lines": 36,
+   "exports": [
+    "function zodFormErrors"
+   ],
+   "rule_comments": [
+    "* Wrapper central de validação Zod.",
+    "from '@/lib/validation/schemas';",
+    "from '@/lib/validation/contact-schema';",
+    "from '@/lib/validation/voip-trunk';",
+    "from '@/lib/validation/auth';"
+   ],
+   "doc": "Wrapper central de validação Zod. Ponto único para: schemas canônicos, resolver do React Hook Form, e extração padronizada de erros de formulário (Record<string, string>). Uso em forms RHF: import { zodResolver } from '@/lib/schema'; const form = useForm({ resolver: zodResolver(someSchema) }); Uso e …"
+  },
   "src/lib/security-alerts-export.ts": {
    "path": "src/lib/security-alerts-export.ts",
    "lines": 99,
@@ -107607,6 +107657,44 @@
     "getSessionTimeout returns 30 minutes"
    ]
   },
+  "src/lib/validation/auth.ts": {
+   "path": "src/lib/validation/auth.ts",
+   "lines": 29,
+   "exports": [
+    "const loginEmailSchema",
+    "const passwordFieldSchema",
+    "const resetPasswordSchema",
+    "type ResetPasswordInput"
+   ],
+   "zod": [
+    {
+     "name": "loginEmailSchema",
+     "kind": "string",
+     "body": "",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "passwordFieldSchema",
+     "kind": "string",
+     "body": "",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "resetPasswordSchema",
+     "kind": "object",
+     "body": "{ password: passwordFieldSchema, confirmPassword: z.string(), }",
+     "refines": [
+      "As senhas não coincidem"
+     ],
+     "chain": [
+      "refine"
+     ]
+    }
+   ],
+   "doc": "Schemas Zod para fluxos de autenticação (login, reset, recuperação). Centraliza definições que antes ficavam inline em páginas, com mensagens PT-BR."
+  },
   "src/lib/validation/contact-schema.ts": {
    "path": "src/lib/validation/contact-schema.ts",
    "lines": 86,
@@ -107815,6 +107903,35 @@
     "* Zod schemas for runtime validation of API responses and form inputs."
    ],
    "doc": "Zod schemas for runtime validation of API responses and form inputs. Single source of truth for data shapes across frontend boundaries."
+  },
+  "src/lib/validation/voip-trunk.ts": {
+   "path": "src/lib/validation/voip-trunk.ts",
+   "lines": 25,
+   "exports": [
+    "const voipProviderSchema",
+    "const voipTrunkSchema",
+    "type VoipTrunkInput"
+   ],
+   "zod": [
+    {
+     "name": "voipProviderSchema",
+     "kind": "enum",
+     "body": "['nvoip', 'directcall', 'totalvoice', 'generic', 'wavoip']",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "voipTrunkSchema",
+     "kind": "object",
+     "body": "{ name: z.string().trim().min(1, 'Nome obrigatório').max(100), provider: voipProviderSchema, sip_server: z.string().trim().min(1, 'Servidor obrigatório').max(255), sip_username: z.string().trim().min(1, 'Usuário obrigatório').max(100), sip_password: z.string().min(0).max(255).optional(), sip_realm: z.string().max(255).optional(), transport: z.enum(['wss', 'tcp', 'udp']), max_channels: z.coerce.number().min(1).max(1000), priority: z.coerce.number().min(0).max(9999), is_active: z.boolean(), notes: z.string().max(500).optional(), }",
+     "refines": [],
+     "chain": []
+    }
+   ],
+   "rule_comments": [
+    "Extraído do componente para a camada central de validação."
+   ],
+   "doc": "Schema Zod para o formulário de linhas VoIP (VoipTrunkFormDrawer). Extraído do componente para a camada central de validação."
   },
   "src/lib/validation/__tests__/zod-schemas.property.test.ts": {
    "path": "src/lib/validation/__tests__/zod-schemas.property.test.ts",
@@ -108335,7 +108452,7 @@
   },
   "src/pages/ForgotPassword.tsx": {
    "path": "src/pages/ForgotPassword.tsx",
-   "lines": 200,
+   "lines": 199,
    "exports": [
     "function ForgotPassword"
    ],
@@ -108346,15 +108463,6 @@
     ";\nimport { toast } from ",
     "Erro ao solicitar redefinição",
     "Erro inesperado"
-   ],
-   "zod": [
-    {
-     "name": "emailSchema",
-     "kind": "string",
-     "body": "",
-     "refines": [],
-     "chain": []
-    }
    ],
    "html_constraints": [
     {
@@ -109140,7 +109248,7 @@
   },
   "src/pages/ResetPassword.tsx": {
    "path": "src/pages/ResetPassword.tsx",
-   "lines": 288,
+   "lines": 269,
    "exports": [
     "function ResetPassword"
    ],
@@ -109151,19 +109259,6 @@
     ";\nimport { toast } from ",
     "Erro ao redefinir senha",
     "Erro inesperado"
-   ],
-   "zod": [
-    {
-     "name": "passwordSchema",
-     "kind": "object",
-     "body": "{ password: z.string() .min(8, 'Senha deve ter no mínimo 8 caracteres') .max(128, 'Senha muito longa') .regex(/[A-Z]/, 'Senha deve conter pelo menos uma letra maiúscula') .regex(/[a-z]/, 'Senha deve conter pelo menos uma letra minúscula') .regex(/[0-9]/, 'Senha deve conter pelo menos um número') .regex(/[^A-Za-z0-9]/, 'Senha deve conter pelo menos um caractere especial'), confirmPassword: z.string(), }",
-     "refines": [
-      "As senhas não coincidem"
-     ],
-     "chain": [
-      "refine"
-     ]
-    }
    ],
    "temporal": [
     "setTimeout(() => { navigate('/login'); }, 3000);"
@@ -110708,12 +110803,16 @@
   },
   "supabase/functions/_shared/observability.ts": {
    "path": "supabase/functions/_shared/observability.ts",
-   "lines": 26,
+   "lines": 67,
    "exports": [
+    "function logInfo",
+    "function logError",
+    "function logRequest",
+    "function withRequestLog",
     "function trackMetric",
     "function logStructuredError"
    ],
-   "doc": "Mock observability system (Sentry/Prometheus)"
+   "doc": "Observabilidade estruturada para edge functions (JSON em 1 linha). Logs parseáveis por ferramentas de observabilidade (Supabase Logs, Logflare)."
   },
   "supabase/functions/_shared/rate-limit.ts": {
    "path": "supabase/functions/_shared/rate-limit.ts",
@@ -112348,7 +112447,7 @@
   },
   "supabase/functions/data-lake-flush/index.ts": {
    "path": "supabase/functions/data-lake-flush/index.ts",
-   "lines": 134,
+   "lines": 135,
    "tables": [
     {
      "table": "data_lake_exports",
@@ -113722,7 +113821,7 @@
   },
   "supabase/functions/health-check/index.ts": {
    "path": "supabase/functions/health-check/index.ts",
-   "lines": 89,
+   "lines": 96,
    "exports": [
     "const handler"
    ],
@@ -117487,10 +117586,37 @@
   }
  },
  "git": {
-  "sha": "2c8b481bb6135731f6781dfbcb90abc47e81ae17",
+  "sha": "d67d0f40017eee263e42f1ab309262d38d766142",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "d67d0f4",
+    "date": "2026-11-14",
+    "author": "adm01-debug",
+    "subject": "feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)",
+    "files": [
+     "docs/observabilidade/SLI_SLO.md",
+     "supabase/functions/_shared/observability.ts",
+     "supabase/functions/analyze-call/index.ts",
+     "supabase/functions/data-lake-flush/index.ts",
+     "supabase/functions/health-check/index.ts"
+    ]
+   },
+   {
+    "sha": "f53ee94",
+    "date": "2026-11-14",
+    "author": "adm01-debug",
+    "subject": "feat: wrapper zod central (zodFormErrors + schemas de auth/voip) e migra os forms para ele (#37)",
+    "files": [
+     "src/components/admin/voip/VoipTrunkFormDrawer.tsx",
+     "src/lib/schema.ts",
+     "src/lib/validation/auth.ts",
+     "src/lib/validation/voip-trunk.ts",
+     "src/pages/ForgotPassword.tsx",
+     "src/pages/ResetPassword.tsx"
+    ]
+   },
    {
     "sha": "2c8b481",
     "date": "2026-11-14",
@@ -117829,22 +117955,6 @@
     "files": [
      ".hermes.md"
     ]
-   },
-   {
-    "sha": "b38875e",
-    "date": "2026-08-18",
-    "author": "adm01-debug",
-    "subject": "chore(agents): adiciona AGENTS.md padrao (contexto multi-agente)",
-    "files": [
-     "AGENTS.md"
-    ]
-   },
-   {
-    "sha": "057e597",
-    "date": "2026-08-18",
-    "author": "adm01-debug",
-    "subject": "Merge pull request #6 from adm01-debug/claude/system-status-features-boms0f",
-    "files": []
    }
   ],
   "hot_files": [
@@ -117854,7 +117964,7 @@
    ],
    [
     "AGENTS.md",
-    4
+    3
    ],
    [
     ".github/workflows/contexto.yml",
@@ -117863,6 +117973,10 @@
    [
     "inventario/estado/edges.json",
     3
+   ],
+   [
+    "supabase/functions/health-check/index.ts",
+    2
    ],
    [
     ".env",
@@ -117917,15 +118031,11 @@
     2
    ],
    [
-    "ESTADO_ATUAL.md",
+    "docs/observabilidade/SLI_SLO.md",
     1
    ],
    [
-    "docs/estado/dados-schema-migrations.md",
-    1
-   ],
-   [
-    "docs/estado/funcionalidades-planejadas.md",
+    "supabase/functions/_shared/observability.ts",
     1
    ]
   ]
