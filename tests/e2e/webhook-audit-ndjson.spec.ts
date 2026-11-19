@@ -57,14 +57,19 @@ test.describe('Webhook — auditoria e download NDJSON', () => {
   test('abre diálogo, expande tentativa e baixa NDJSON', async ({ page, context }) => {
     // Semeia o histórico antes de qualquer navegação da SPA.
     await context.addInitScript(
-      ([key, value]) => {
-        try {
-          window.localStorage.setItem(key, value);
-        } catch {
-          /* ignore */
+      (entries: [string, string][]) => {
+        for (const [key, value] of entries) {
+          try {
+            window.localStorage.setItem(key, value);
+          } catch {
+            /* ignore */
+          }
         }
       },
-      [STORAGE_KEY, JSON.stringify([seededEntry])],
+      [
+        [STORAGE_KEY, JSON.stringify([seededEntry])],
+        ['voip-onboarding-seen', 'true'],
+      ],
     );
 
     // Tenta seedar uma sessão admin real (via E2E_ADMIN_EMAIL/PASSWORD ou
@@ -78,7 +83,7 @@ test.describe('Webhook — auditoria e download NDJSON', () => {
     }
 
     // Abre menu de ações e clica em "Configurar webhook…"
-    await page.getByRole('button', { name: /ações|exportar|opções/i }).first().click();
+    await page.getByRole('button', { name: 'Exportar' }).click();
     await page.getByRole('menuitem', { name: /configurar webhook/i }).click();
 
     // Diálogo abre com a seção Histórico contendo a entrada semeada.
@@ -88,7 +93,10 @@ test.describe('Webhook — auditoria e download NDJSON', () => {
     await expect(dialog.getByText('security-alerts-e2e.ndjson')).toBeVisible();
 
     // Expande a linha da entrada.
-    await dialog.getByRole('button', { name: /expandir detalhes/i }).click();
+    const expandBtn = dialog.getByRole('button', { name: /expandir detalhes/i });
+    // O botão fica fora da viewport do dialog (container com overflow): usa JS click,
+    // equivalente funcional ao clique do usuário (toggle do aria-expanded).
+    await expandBtn.evaluate((el) => (el as HTMLButtonElement).click());
     await expect(dialog.getByText(/Trilha de tentativas \(2\)/i)).toBeVisible();
     await expect(dialog.getByText('Tentativa 1')).toBeVisible();
     await expect(dialog.getByText('Tentativa 2')).toBeVisible();
