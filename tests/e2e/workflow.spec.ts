@@ -6,7 +6,7 @@ test.describe('Complete User Workflow', () => {
   test('should allow user to view dashboard and search calls', async ({ page, context }) => {
     const seeded = await seedAdminSession(context, page);
     // 1. Visit Home/Dashboard
-    await page.goto('/');
+    await page.goto('/dashboard');
 
     if (await shouldSkipNoSession(page, seeded)) {
           test.skip(true, 'Rota protegida — configure E2E_ADMIN_EMAIL/PASSWORD/SESSION_JSON para executar.');
@@ -14,15 +14,10 @@ test.describe('Complete User Workflow', () => {
     }
 
     // 2. Check for critical elements
-    const stats = page.locator('.stats-card');
-    // Stats might be empty initially, but the container should be there
-    
-    // 3. Search for a call (Scenario)
-    const searchInput = page.locator('input[placeholder*="Pesquisar"]');
-    if (await searchInput.isVisible()) {
-      await searchInput.fill('12345');
-      await page.keyboard.press('Enter');
-    }
+    const stats = page.locator('main[aria-label="Dashboard principal"]');
+    await expect(stats).toBeVisible();
+    const statCards = page.locator('[role="article"]');
+    await expect(statCards.first()).toBeVisible();
     
     // 4. Navigate to Audit
     await page.goto('/admin/security-audit');
