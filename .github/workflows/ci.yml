@@ -79,13 +79,16 @@ jobs:
           echo '=== NETWORK CHECKS (runner -> Supabase) ==='
           echo 'SUPABASE_URL:' ${VITE_SUPABASE_URL:-UNSET}
           bun -e '
+            const crypto = await import("node:crypto");
             const url = process.env.VITE_SUPABASE_URL, key = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
             const email = process.env.E2E_ADMIN_EMAIL, pass = process.env.E2E_ADMIN_PASSWORD;
+            const h = (s) => crypto.createHash("sha256").update(s || "").digest("hex").slice(0, 8);
+            console.log("CRED email_len=" + (email||"").length, "hash=" + h(email), "pass_len=" + (pass||"").length, "hash=" + h(pass));
             (async () => {
               const t0 = Date.now();
               const lr = await fetch(url + "/auth/v1/token?grant_type=password", { method: "POST", headers: { apikey: key, "content-type": "application/json" }, body: JSON.stringify({ email, password: pass }) });
               const lj = await lr.json();
-              console.log("LOGIN", lr.status, (Date.now() - t0) + "ms", lj.error || "ok");
+              console.log("LOGIN", lr.status, (Date.now() - t0) + "ms", JSON.stringify({ err: lj.error, code: lj.error_code, desc: lj.error_description, msg: lj.msg }).slice(0, 250));
               if (!lj.access_token) return;
               const tok = lj.access_token;
               const t1 = Date.now();
