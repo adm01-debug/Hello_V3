@@ -2,9 +2,27 @@
   "alertas": [
     {
       "detalhe": [
-        "update-contact-name-daily (100% em 7d)"
+        "migration_rollbacks",
+        "schema_migrations"
+      ],
+      "tipo": "rls_sem_policy"
+    },
+    {
+      "detalhe": [
+        "data-lake-flush-daily (100% em 7d)"
       ],
       "tipo": "cron_falhando"
+    },
+    {
+      "detalhe": [
+        "2026-11-15T03:00Z",
+        "2026-11-16T03:00Z",
+        "2026-11-17T03:00Z",
+        "2026-11-18T03:00Z",
+        "2026-11-19T03:00Z",
+        "2026-11-20T03:00Z"
+      ],
+      "tipo": "cron_parado"
     },
     {
       "detalhe": [
@@ -20,725 +38,737 @@
       "max_worker_processes": "6"
     },
     "historico": {
-      "bytes": 147456,
-      "linhas": 158,
+      "bytes": 155648,
+      "linhas": 166,
       "mais_antigo": "2026-08-06T09:00:00Z",
-      "mais_de_7_dias": 144
+      "mais_de_7_dias": 158
     },
-    "horas_paradas_7d": [],
-    "jobs": [
+    "horas_paradas_7d": [
       {
-        "agenda": "0 9 * * *",
-        "ativo": true,
-        "chama": [],
-        "duracao_max_s_7d": null,
-        "execucoes_24h": 1,
-        "execucoes_7d": 7,
-        "falhas_24h": 1,
-        "falhas_7d": 7,
-        "nome": "update-contact-name-daily",
-        "startup_timeout_7d": 0,
-        "taxa_falha_7d_pct": 100,
-        "ultima_falha": "2026-11-13T09:00:00Z"
+        "execucoes": 1,
+        "falhas": 1,
+        "hora": "2026-11-15T03:00Z"
       },
       {
-        "agenda": "0 9 * * *",
+        "execucoes": 1,
+        "falhas": 1,
+        "hora": "2026-11-16T03:00Z"
+      },
+      {
+        "execucoes": 1,
+        "falhas": 1,
+        "hora": "2026-11-17T03:00Z"
+      },
+      {
+        "execucoes": 1,
+        "falhas": 1,
+        "hora": "2026-11-18T03:00Z"
+      },
+      {
+        "execucoes": 1,
+        "falhas": 1,
+        "hora": "2026-11-19T03:00Z"
+      },
+      {
+        "execucoes": 1,
+        "falhas": 1,
+        "hora": "2026-11-20T03:00Z"
+      }
+    ],
+    "jobs": [
+      {
+        "agenda": "0 3 * * *",
         "ativo": true,
-        "chama": [],
-        "duracao_max_s_7d": 0,
+        "chama": [
+          "net.http_post"
+        ],
+        "duracao_max_s_7d": null,
         "execucoes_24h": 1,
-        "execucoes_7d": 7,
-        "falhas_24h": 0,
-        "falhas_7d": 0,
-        "nome": "update-user-profile-fullname-daily",
+        "execucoes_7d": 6,
+        "falhas_24h": 1,
+        "falhas_7d": 6,
+        "nome": "data-lake-flush-daily",
         "startup_timeout_7d": 0,
-        "taxa_falha_7d_pct": 0,
-        "ultima_falha": null
+        "taxa_falha_7d_pct": 100,
+        "ultima_falha": "2026-11-20T03:00:00Z"
       }
     ]
   },
   "edge_functions": {
-    "no_repo": 94,
+    "no_repo": 93,
     "no_repo_sem_deploy": [],
     "publicadas": [
       {
-        "atualizada_em": "2026-08-05T12:22Z",
+        "atualizada_em": "2026-11-14T13:52Z",
         "slug": "analyze-call",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 7
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "analyze-contact-profile",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "analyze-live-utterance",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "analyze-sentiment",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "analyze-talk-ratio",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "approve-password-reset",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "auto-scorecard",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "bitrix-api",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "chat-widget-session",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "chatbot-respond",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "check-alerts",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "check-contact-alerts",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "check-goals",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "check-hold-alerts",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "check-queue-metrics",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "cleanup-lock-conflicts",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "compute-account-health",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "compute-adherence",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 4
+        "versao": 7
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "compute-best-time",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "compute-deal-health",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 4
+        "versao": 7
       },
       {
-        "atualizada_em": "2026-08-05T12:22Z",
+        "atualizada_em": "2026-11-14T13:53Z",
         "slug": "data-lake-flush",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 7
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "database-backup",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "database-cleanup",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "detect-churn-risk",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "detect-key-moments",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "dialer-pacing-tick",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "elevenlabs-conversation-token",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "email-inbound",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "embed-kb-article",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "enforce-sla",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "enroll-voice",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "export-data-lake",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "extract-crm-fields",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "forecast-call-volume",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 5
+        "versao": 8
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "forecast-deals",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 7
+        "versao": 10
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "fuzz-test-runner",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 4
+        "versao": 7
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "generate-coaching",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "generate-coaching-plan",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "generate-coaching-track",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "generate-meeting-summary",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "generate-summary",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "global-load-test",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 4
-      },
-      {
-        "atualizada_em": "2026-08-05T12:22Z",
-        "slug": "health-check",
-        "status": "ACTIVE",
-        "verify_jwt": false,
         "versao": 7
       },
       {
-        "atualizada_em": "2026-08-05T13:12Z",
-        "slug": "migrate-helper",
+        "atualizada_em": "2026-11-14T13:53Z",
+        "slug": "health-check",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 8
+        "versao": 11
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "notify-blocked-ip",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "notify-new-device",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "ocr-virtual-fax",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "process-digest",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "realtime-analysis",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "record-consent",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "redact-sensitive-audio",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "request-password-reset",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "rls-audit",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "score-call",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 4
+        "versao": 7
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "score-call-attempt",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "search-calls",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "send-notification",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "send-survey",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "sip-config",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "suggest-shift-swaps",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "sync-crm-queue",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "teams-fetch-recordings",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "transcribe-recording",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "translate-summary",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "translate-utterance",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "validate-geo",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "validate-ip",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 4
+        "versao": 7
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "verify-voice",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voice-command",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voice-transcribe",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-anomaly-detector",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-anomaly-remediation",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-capacity-forecast",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-capacity-recommendations",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-diagnostic-voice-qa",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-executive-narrative",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-executive-summary",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-failover-notifier",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-load-test",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 4
+        "versao": 7
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-quality-alerts-summary",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-quality-forecast",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:51Z",
         "slug": "voip-quality-heatmap",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 4
+        "versao": 7
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-recommendation-history",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-recommendation-insights",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-recommendation-simulate",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-recommendations",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:51Z",
         "slug": "voip-sla-report",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 4
+        "versao": 7
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-trunks-healthcheck",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "voip-trunks-manage",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "wavoip-call",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "webauthn-authenticate",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "webhook-handler",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "whatsapp-inbound",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       },
       {
         "atualizada_em": "2026-08-05T12:22Z",
         "slug": "whatsapp-rewrite",
         "status": "ACTIVE",
         "verify_jwt": false,
-        "versao": 3
+        "versao": 6
       }
     ],
     "publicadas_sem_codigo_no_repo": []
   },
   "fonte": "scripts/inventario/banco.sql + GET /functions + .from() em src/ e supabase/functions/ (scripts/inventario/gerar-banco.mjs)",
   "format_version": 1,
-  "medido_em": "2026-11-13T14:00:20Z",
+  "medido_em": "2026-11-20T18:21:37Z",
   "resumo": {
-    "cron_ativos": 2,
-    "cron_jobs": 2,
-    "funcoes_public": 228,
-    "ledger_registros": 82,
-    "ledger_versao_max": "20260831180000",
+    "cron_ativos": 1,
+    "cron_jobs": 1,
+    "funcoes_public": 232,
+    "ledger_registros": 84,
+    "ledger_versao_max": "20261030120000",
     "max_connections": 60,
-    "policies": 442,
+    "policies": 448,
     "postgres": "17.6",
-    "tabelas_public": 159,
+    "tabelas_public": 163,
     "tabelas_sem_rls": 0,
-    "tamanho_bytes": 24775827,
-    "triggers_public": 104,
-    "views_public": 1
+    "tamanho_bytes": 26102931,
+    "triggers_public": 106,
+    "views_public": 2
   },
   "tabelas": [
     {
@@ -939,7 +969,7 @@
     {
       "bytes": 385024,
       "citada_no_banco": true,
-      "linhas": 212,
+      "linhas": 213,
       "linhas_exatas": true,
       "nome": "audit_logs",
       "policies": 4,
@@ -1149,7 +1179,7 @@
     {
       "bytes": 262144,
       "citada_no_banco": true,
-      "linhas": 79,
+      "linhas": 81,
       "linhas_exatas": true,
       "nome": "call_control_audit_logs",
       "policies": 4,
@@ -1841,6 +1871,21 @@
       "citada_no_banco": false,
       "linhas": 0,
       "linhas_exatas": true,
+      "nome": "entity_versions",
+      "policies": 2,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
+      "bytes": 40960,
+      "citada_no_banco": false,
+      "linhas": 0,
+      "linhas_exatas": true,
       "nome": "fraud_signals",
       "policies": 3,
       "rls": true,
@@ -2167,6 +2212,21 @@
       }
     },
     {
+      "bytes": 16384,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "migration_rollbacks",
+      "policies": 0,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
       "bytes": 24576,
       "citada_no_banco": false,
       "linhas": 0,
@@ -2287,9 +2347,9 @@
       }
     },
     {
-      "bytes": 1048576,
+      "bytes": 1114112,
       "citada_no_banco": true,
-      "linhas": 1437,
+      "linhas": 2021,
       "linhas_exatas": true,
       "nome": "performance_metrics",
       "policies": 2,
@@ -2392,9 +2452,9 @@
       }
     },
     {
-      "bytes": 147456,
+      "bytes": 319488,
       "citada_no_banco": true,
-      "linhas": 1,
+      "linhas": 292,
       "linhas_exatas": true,
       "nome": "rate_limit_logs",
       "policies": 2,
@@ -2527,6 +2587,21 @@
       }
     },
     {
+      "bytes": 57344,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "saved_filters",
+      "policies": 4,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 2,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
+      }
+    },
+    {
       "bytes": 49152,
       "citada_no_banco": false,
       "linhas": 0,
@@ -2539,6 +2614,21 @@
       "uso_no_codigo": {
         "edges": 0,
         "src": 8
+      }
+    },
+    {
+      "bytes": 16384,
+      "citada_no_banco": true,
+      "linhas": 0,
+      "linhas_exatas": true,
+      "nome": "schema_migrations",
+      "policies": 0,
+      "rls": true,
+      "rls_forcado": false,
+      "triggers": 0,
+      "uso_no_codigo": {
+        "edges": 0,
+        "src": 0
       }
     },
     {
@@ -2889,7 +2979,7 @@
     {
       "bytes": 81920,
       "citada_no_banco": true,
-      "linhas": 2,
+      "linhas": 3,
       "linhas_exatas": true,
       "nome": "user_profiles",
       "policies": 6,
@@ -3133,6 +3223,7 @@
       "account_journey_history",
       "customer_journey_stages",
       "email_verification_tokens",
+      "entity_versions",
       "password_reset_tokens",
       "queue_skill_requirements"
     ]
