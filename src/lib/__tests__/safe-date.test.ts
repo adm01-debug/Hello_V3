@@ -66,7 +66,7 @@ describe("safe-date · entradas hostis nunca lançam", () => {
   });
 
   it("aceita instância de Date válida e inválida", () => {
-    expect(safeFormatDate(new Date("2025-01-01T00:00:00Z"), "yyyy")).toBe("2025");
+    expect(safeFormatDate(new Date(2025, 0, 1), "yyyy")).toBe("2025");
     expect(safeFormatDate(new Date("garbage"), "yyyy")).toBe("—");
   });
 

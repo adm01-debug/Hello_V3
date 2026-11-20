@@ -22,7 +22,7 @@ const GUARD = join(process.cwd(), "scripts/guard-edge-numeric.mjs");
 
 function runGuard(dir: string): { code: number; out: string } {
   try {
-    const out = execSync(`node ${GUARD} --check`, {
+    const out = execSync(`node "${GUARD}" --check`, {
       cwd: dir,
       encoding: "utf8",
       stdio: ["ignore", "pipe", "pipe"],
