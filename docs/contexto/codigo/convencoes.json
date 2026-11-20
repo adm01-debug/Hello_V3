@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (300)",
+   "co-localizado (__tests__) (301)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)",
    "feat: concluir funcionalidades planejadas (wiring IA composer + fix hook TopicDetection) (#53)",
    "infra: escopa job CI ao environment e2e (#52)",
    "chore: remove .env e coverage do versionamento (#51)",
-   "fix: remove segredos service_role e postgres literais dos scripts de diagnostico (#50)",
-   "fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)"
+   "fix: remove segredos service_role e postgres literais dos scripts de diagnostico (#50)"
   ]
  },
  "pr_template": null,

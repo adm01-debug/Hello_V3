@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "25b35e55c186b669cd3345af87851132a8e8e2f5",
+  "sha": "ea6e3dcb2e3c6843a9427f572a8fcf70b6f1dcb0",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 14:04 UTC",
-  "files_total": 1598,
-  "code_files": 1406,
-  "code_lines": 177323
+  "generated_at": "2026-11-20 14:33 UTC",
+  "files_total": 1599,
+  "code_files": 1407,
+  "code_lines": 177400
  },
  "version": "1.3.2",
- "facts_hash": "c2d1ba5ad5e6e791",
+ "facts_hash": "5cfae14a75f11d23",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 594,
+   ".tsx": 595,
    ".ts": 568,
    ".sql": 212,
    ".mjs": 25,
@@ -32029,8 +32029,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 345,
-   "lines": 44664,
+   "files": 346,
+   "lines": 44741,
    "tables": [
     "accounts",
     "active_sessions",
@@ -63281,6 +63281,38 @@
    {
     "file": "src/hooks/__tests__/useWebVitals.coverage.test.tsx",
     "name": "clears interval on unmount"
+   },
+   {
+    "file": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+    "name": "useWhatsappRewrite"
+   },
+   {
+    "file": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+    "name": "invokes whatsapp-rewrite e retorna o texto reescrito"
+   },
+   {
+    "file": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+    "name": "usa tone e context informados"
+   },
+   {
+    "file": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+    "name": "retorna null sem invocar quando a mensagem é vazia"
+   },
+   {
+    "file": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+    "name": "retorna null quando o invoke devolve error"
+   },
+   {
+    "file": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+    "name": "retorna null quando a resposta tem campo error"
+   },
+   {
+    "file": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+    "name": "retorna null quando a resposta é inválida (sem rewritten)"
+   },
+   {
+    "file": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+    "name": "retorna null e não lança quando o invoke lança exceção"
    },
    {
     "file": "src/hooks/auth/__tests__/useAuthActions.coverage.test.tsx",
@@ -103373,6 +103405,24 @@
     "clears interval on unmount"
    ]
   },
+  "src/hooks/__tests__/useWhatsappRewrite.test.tsx": {
+   "path": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+   "lines": 77,
+   "is_test": true,
+   "tests": [
+    "useWhatsappRewrite",
+    "invokes whatsapp-rewrite e retorna o texto reescrito",
+    "usa tone e context informados",
+    "retorna null sem invocar quando a mensagem é vazia",
+    "retorna null quando o invoke devolve error",
+    "retorna null quando a resposta tem campo error",
+    "retorna null quando a resposta é inválida (sem rewritten)",
+    "retorna null e não lança quando o invoke lança exceção"
+   ],
+   "side_effects": [
+    "invoke("
+   ]
+  },
   "src/hooks/auth/index.ts": {
    "path": "src/hooks/auth/index.ts",
    "lines": 8
@@ -117819,10 +117869,19 @@
   }
  },
  "git": {
-  "sha": "25b35e55c186b669cd3345af87851132a8e8e2f5",
+  "sha": "ea6e3dcb2e3c6843a9427f572a8fcf70b6f1dcb0",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ea6e3dc",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)",
+    "files": [
+     "src/hooks/__tests__/useWhatsappRewrite.test.tsx"
+    ]
+   },
    {
     "sha": "25b35e5",
     "date": "2026-11-20",
@@ -118618,16 +118677,6 @@
     "files": [
      ".github/workflows/inventario-estado-semanal.yml"
     ]
-   },
-   {
-    "sha": "0335da9",
-    "date": "2026-11-12",
-    "author": "github-actions[bot]",
-    "subject": "chore: inventario do estado real [auto] (#23)",
-    "files": [
-     "inventario/estado/edges.json",
-     "inventario/estado/rotas.json"
-    ]
    }
   ],
   "hot_files": [
@@ -118660,8 +118709,8 @@
     2
    ],
    [
-    "inventario/estado/edges.json",
-    2
+    "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
+    1
    ],
    [
     "docs/pendencias/WIRING-01-permissiongate.md",

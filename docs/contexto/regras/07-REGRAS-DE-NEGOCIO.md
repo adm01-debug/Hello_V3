@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `25b35e55c1` · branch `main` · 2026-11-20 14:04 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ea6e3dcb2e` · branch `main` · 2026-11-20 14:33 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2423,7 +2423,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/functions/export-data-lake/index.ts` |
 
-## K. Testes como especificação (3924 testes em 314 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3932 testes em 315 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2567,6 +2567,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx` | 8 | useSecurityNotifications · detects support and initial permission · requestPermission granted path · requestPermission denied path … |
 | `src/hooks/__tests__/useSessionManager.coverage.test.tsx` | 8 | useSessionManager · loads sessions and creates current session · revokes a non-current session · revokes the current session and signs out … |
 | `src/hooks/__tests__/useVoipQualityMonitor.coverage.test.tsx` | 8 | useVoipQualityMonitor · returns unknown state when no peer connection · collects stats and computes MOS for a good connection · uses candidate-pair RTT fallback and tolerates packet loss … |
+| `src/hooks/__tests__/useWhatsappRewrite.test.tsx` | 8 | useWhatsappRewrite · invokes whatsapp-rewrite e retorna o texto reescrito · usa tone e context informados · retorna null sem invocar quando a mensagem é vazia … |
 | `src/lib/__tests__/outbound-scoring.test.ts` | 8 | outbound-scoring · bloqueia números em DNC com score 0 · penaliza fortemente fora do horário permitido · aplica score base sem histórico suficiente … |
 | `src/lib/__tests__/phone-normalization.property.test.ts` | 8 | phone-normalization — property-based (1000+ runs) · stripNonDigits preserva apenas dígitos (e + inicial) · normalizeBrPhone aceita 10-11 dígitos crus e prefixa +55 · normalizeBrPhone rejeita strings não numéricas longas … |
 | `src/lib/__tests__/security-alerts-webhook-queue.test.ts` | 8 | security-alerts-webhook-queue · enqueues and loads items · caps queue at 50 entries · notifies subscribers on change … |
@@ -2726,8 +2727,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/tag-filter-label.test.ts` | 3 | formatTagFilterLabel · mapeia sentinelas para rótulos legíveis · nunca lança e sempre devolve string não vazia (PBT) |
 | `supabase/functions/analyze-call/__tests__/integration_test.ts` | 3 | analyze-call integration: validate v1 flow · analyze-call integration: reject invalid v2 flow (missing transcript) · analyze-call integration: validate character limits |
 | `supabase/functions/bitrix-api/index.test.ts` | 3 | bitrix-api: CORS handling · bitrix-api: returns 401 if no Authorization header · bitrix-api: handles get_user when not configured |
-| `supabase/functions/voip-capacity-recommendations/__tests__/index.test.ts` | 3 | buildRecommendations — vazio quando não há risco · buildRecommendations — gera add_agents para risco de volume · buildRecommendations — gera shift_codec + pause_campaign + preheat para MOS crítico |
-| … +14 linhas — lista completa em `context.json` | | |
+| … +15 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

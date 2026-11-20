@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "25b35e55c186b669cd3345af87851132a8e8e2f5",
+  "commit": "ea6e3dcb2e3c6843a9427f572a8fcf70b6f1dcb0",
   "branch": "main",
-  "data_commit": "2026-11-20T11:03:52-03:00",
+  "data_commit": "2026-11-20T11:33:16-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ea6e3dc",
+    "data": "2026-11-20",
+    "assunto": "test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)"
+   },
    {
     "sha": "25b35e5",
     "data": "2026-11-20",
@@ -126,14 +131,9 @@
     "sha": "8ed39f4",
     "data": "2026-11-13",
     "assunto": "fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)"
-   },
-   {
-    "sha": "fece2f3",
-    "data": "2026-11-13",
-    "assunto": "chore: inventario do estado real [auto] (#27)"
    }
   ],
-  "arquivos_mudados_7d": 545,
+  "arquivos_mudados_7d": 546,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -168,6 +168,10 @@
     "mudancas": 5
    },
    {
+    "pasta": "src/hooks/__tests__",
+    "mudancas": 4
+   },
+   {
     "pasta": "AGENTS.md",
     "mudancas": 3
    },
@@ -185,10 +189,6 @@
    },
    {
     "pasta": "scripts/supabase_snapshot/test_snapshot.py",
-    "mudancas": 3
-   },
-   {
-    "pasta": "src/hooks/__tests__",
     "mudancas": 3
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 37
+    "commits": 38
    },
    {
     "autor": "github-actions[bot]",
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1551,
-  "arquivos_codigo": 1193,
-  "linhas_codigo": 163494,
+  "arquivos_total": 1552,
+  "arquivos_codigo": 1194,
+  "linhas_codigo": 163571,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -324,7 +324,7 @@
   "tabelas": 171,
   "migrations": 210,
   "cron_jobs": 7,
-  "testes": 322,
+  "testes": 323,
   "workflows": 3,
   "scripts": 31,
   "docs_md": 111
@@ -479,8 +479,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 345,
-   "linhas": 44664
+   "arquivos": 346,
+   "linhas": 44741
   },
   "src/integrations": {
    "arquivos": 3,
