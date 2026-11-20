@@ -29,17 +29,10 @@
         "status": "ACTIVE_HEALTHY"
       },
       {
-        "healthy": true,
-        "info": {
-          "connected_cluster": 0,
-          "db_connected": false,
-          "healthy": true,
-          "node": "realtime@2600:1f18:67fc:ac00:1769:41f3:2b55:b51d",
-          "region": "us-east-1",
-          "replication_connected": false
-        },
+        "error": "Service health check failed",
+        "healthy": false,
         "name": "realtime",
-        "status": "ACTIVE_HEALTHY"
+        "status": "UNHEALTHY"
       },
       {
         "healthy": true,
@@ -182,12 +175,12 @@
       "storage": [],
       "top_queries": [
         {
-          "calls": 84,
-          "mean_ms": 5385.25,
+          "calls": 86,
+          "mean_ms": 5388.21,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 452361
+          "total_ms": 463386
         },
         {
           "calls": 2,
@@ -222,12 +215,12 @@
           "total_ms": 35944
         },
         {
-          "calls": 88,
-          "mean_ms": 169.5,
+          "calls": 90,
+          "mean_ms": 168.77,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 704,
-          "total_ms": 14916
+          "rows": 720,
+          "total_ms": 15190
         },
         {
           "calls": 1,
@@ -254,12 +247,12 @@
           "total_ms": 7062
         },
         {
-          "calls": 88,
-          "mean_ms": 75.85,
+          "calls": 90,
+          "mean_ms": 76.91,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 152730,
-          "total_ms": 6675
+          "rows": 156260,
+          "total_ms": 6922
         },
         {
           "calls": 1,
@@ -294,12 +287,12 @@
           "total_ms": 4554
         },
         {
-          "calls": 88,
-          "mean_ms": 48.15,
+          "calls": 90,
+          "mean_ms": 48.26,
           "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
           "role": "postgres",
-          "rows": 4752,
-          "total_ms": 4237
+          "rows": 4860,
+          "total_ms": 4343
         }
       ]
     },
