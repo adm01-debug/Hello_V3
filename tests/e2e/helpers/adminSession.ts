@@ -33,13 +33,17 @@ export async function seedAdminSession(
   if (!supabaseUrl || !publishableKey || !projectRef) return false;
 
   const storageKey = `sb-${projectRef}-auth-token`;
-  let sessionJson = process.env.E2E_SUPABASE_SESSION_JSON;
+  let sessionJson: string | undefined;
 
-  if (!sessionJson) {
-    const email = process.env.E2E_ADMIN_EMAIL;
-    const password = process.env.E2E_ADMIN_PASSWORD;
-    if (!email || !password) return false;
-
+  // Prefere o login vivo por email/senha: a sessao pre-mintada
+  // (E2E_SUPABASE_SESSION_JSON) expira em ~1h e, expirada, faz o app
+  // redirecionar para /login. O login por credenciais devolve sempre um
+  // access_token novo, mantendo o CI estavel sem re-mintar secret.
+  const email = process.env.E2E_ADMIN_EMAIL;
+  const password = process.env.E2E_ADMIN_PASSWORD;
+  // Sessao pre-mintada como fallback (expira ~1h, nao usar como base).
+  const preMintedSession = process.env.E2E_SUPABASE_SESSION_JSON;
+  if (email && password) {
     try {
       const res = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
         method: 'POST',
@@ -50,12 +54,13 @@ export async function seedAdminSession(
         },
         body: JSON.stringify({ email, password }),
       });
-      if (!res.ok) return false;
-      sessionJson = await res.text();
+      if (res.ok) sessionJson = await res.text();
     } catch {
-      return false;
+      /* tenta a sessao pre-mintada abaixo */
     }
   }
+  if (!sessionJson) sessionJson = preMintedSession;
+  if (!sessionJson) return false;
 
   const origin = opts.origin ?? 'http://localhost:5173';
   // Precisa estabelecer o origin antes de escrever no localStorage.
