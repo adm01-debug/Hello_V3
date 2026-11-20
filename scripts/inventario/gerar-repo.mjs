@@ -7,8 +7,9 @@
 import { readdirSync, readFileSync, existsSync, writeFileSync, mkdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const RAIZ = new URL('../../', import.meta.url).pathname;
+const RAIZ = fileURLToPath(new URL('../../', import.meta.url));
 const FDIR = join(RAIZ, 'supabase/functions');
 const OUT = join(RAIZ, 'inventario/estado');
 mkdirSync(OUT, { recursive: true });
