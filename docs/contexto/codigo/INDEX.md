@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `6ffab7ad0863b079021fe7d6f0695968d069b049` (2026-11-20T14:47:07-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `72f3935afe0c9d865c0dd0288c4b30046ff8a4fd` (2026-11-20T15:09:13-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1551 |
 | arquivos_codigo | 1193 |
-| linhas_codigo | 163536 |
+| linhas_codigo | 163537 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -359,8 +359,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:102, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8845 nós · 23558 arestas · 693 comunidades · grafo do commit `6ffab7ad`
-- comunidades maiores: client.ts (210), vitest (176), card.tsx (172), protectedRoutes.tsx (162), traceHeaders (160), CardContent (154), react (131), Tabela de funcionalidades (127), @tanstack/react-query (120), lucide-react (118), NetworkDiagnostics.tsx (116), cn (109)
+- 8846 nós · 23560 arestas · 679 comunidades · grafo do commit `72f3935a`
+- comunidades maiores: lucide-react (256), client.ts (211), button.tsx (201), usePageTitle (193), badge.tsx (166), vitest (166), traceHeaders (154), @tanstack/react-query (135), safe-date.ts (119), cn (108), Tabela de funcionalidades (107), ref_https (101)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -368,7 +368,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - .github/workflows/contexto.yml (6)
 - .github/workflows/ci.yml (5)
 - docs/prod-readiness.md (5)
-- inventario/estado/edges.json (4)
+- inventario/estado/edges.json (5)
 - AGENTS.md (3)
 - scripts/supabase_snapshot/snapshot.py (3)
 - scripts/supabase_snapshot/test_snapshot.py (3)
@@ -418,6 +418,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-20 `72f3935` fix: sanitiza path com fileURLToPath no gerador de inventario (#58)
 - 2026-11-20 `6ffab7a` chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)
 - 2026-11-20 `ce6fee5` chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)
 - 2026-11-20 `c98548c` chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)
@@ -432,7 +433,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-19 `5994943` fix: usePhaseColors preserva NaN em CSS var inválida (fallback do safeParseFloat) (#44)
 - 2026-11-19 `82934f8` infra: SPA rewrites no Vercel (rotas client-side sem 404) (#43)
 - 2026-11-14 `bd4186d` fix: trata erro nas queries dos 3 hooks e adiciona noopener no video conference (#41)
-- 2026-11-14 `9375146` chore: contexto agendado de 10 min para 1x/hora (#42)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

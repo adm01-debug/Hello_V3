@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "6ffab7ad0863b079021fe7d6f0695968d069b049",
+  "sha": "72f3935afe0c9d865c0dd0288c4b30046ff8a4fd",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 17:47 UTC",
+  "generated_at": "2026-11-20 18:16 UTC",
   "files_total": 1598,
   "code_files": 1406,
-  "code_lines": 177365
+  "code_lines": 177366
  },
  "version": "1.3.2",
- "facts_hash": "e8637f4a3d8224e0",
+ "facts_hash": "020d062a87a233fe",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31585,7 +31585,7 @@
   {
    "module": "scripts",
    "files": 32,
-   "lines": 9355,
+   "lines": 9356,
    "tables": [
     "a",
     "contacts",
@@ -86675,7 +86675,7 @@
   },
   "scripts/inventario/gerar-repo.mjs": {
    "path": "scripts/inventario/gerar-repo.mjs",
-   "lines": 81,
+   "lines": 82,
    "tables": [
     {
      "table": "tabela",
@@ -117814,10 +117814,20 @@
   }
  },
  "git": {
-  "sha": "6ffab7ad0863b079021fe7d6f0695968d069b049",
+  "sha": "72f3935afe0c9d865c0dd0288c4b30046ff8a4fd",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "72f3935",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "fix: sanitiza path com fileURLToPath no gerador de inventario (#58)",
+    "files": [
+     "inventario/estado/edges.json",
+     "scripts/inventario/gerar-repo.mjs"
+    ]
+   },
    {
     "sha": "6ffab7a",
     "date": "2026-11-20",
@@ -118618,16 +118628,6 @@
      "inventario/estado/banco.json",
      "inventario/estado/edges.json"
     ]
-   },
-   {
-    "sha": "cf8f7fc",
-    "date": "2026-11-13",
-    "author": "adm01-debug",
-    "subject": "fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)",
-    "files": [
-     "scripts/inventario/banco.sql",
-     "scripts/inventario/gerar-banco.mjs"
-    ]
    }
   ],
   "hot_files": [
@@ -118640,16 +118640,16 @@
     4
    ],
    [
+    "inventario/estado/edges.json",
+    3
+   ],
+   [
     "supabase/functions/migrate-helper/index.ts",
     3
    ],
    [
     ".github/workflows/ci.yml",
     3
-   ],
-   [
-    "inventario/estado/edges.json",
-    2
    ],
    [
     "supabase/functions/migrate-helper/index.test.ts",
@@ -118666,6 +118666,10 @@
    [
     "scripts/supabase_snapshot/snapshot.py",
     2
+   ],
+   [
+    "scripts/inventario/gerar-repo.mjs",
+    1
    ],
    [
     "docs/agentes/edge-functions.md",
@@ -118705,10 +118709,6 @@
    ],
    [
     "docs/pendencias/WIRING-06-hooks-orfaos.md",
-    1
-   ],
-   [
-    "docs/pendencias/_linha-de-base.md",
     1
    ]
   ]

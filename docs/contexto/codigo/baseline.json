@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6ffab7ad0863b079021fe7d6f0695968d069b049",
+  "commit": "72f3935afe0c9d865c0dd0288c4b30046ff8a4fd",
   "branch": "main",
-  "data_commit": "2026-11-20T14:47:07-03:00",
+  "data_commit": "2026-11-20T15:09:13-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "72f3935",
+    "data": "2026-11-20",
+    "assunto": "fix: sanitiza path com fileURLToPath no gerador de inventario (#58)"
+   },
    {
     "sha": "6ffab7a",
     "data": "2026-11-20",
@@ -126,14 +131,9 @@
     "sha": "25e39c4",
     "data": "2026-11-13",
     "assunto": "chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)"
-   },
-   {
-    "sha": "feeb678",
-    "data": "2026-11-13",
-    "assunto": "chore: docs: atualiza prod-readiness com publicacao do contexto e RLS vivo (#31)"
    }
   ],
-  "arquivos_mudados_7d": 552,
+  "arquivos_mudados_7d": 553,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -168,12 +168,12 @@
     "mudancas": 5
    },
    {
-    "pasta": "supabase/functions/migrate-helper",
+    "pasta": "inventario/estado/edges.json",
     "mudancas": 5
    },
    {
-    "pasta": "inventario/estado/edges.json",
-    "mudancas": 4
+    "pasta": "supabase/functions/migrate-helper",
+    "mudancas": 5
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -211,7 +211,7 @@
    },
    {
     "arquivo": "inventario/estado/edges.json",
-    "mudancas": 4
+    "mudancas": 5
    },
    {
     "arquivo": "AGENTS.md",
@@ -266,6 +266,10 @@
     "mudancas": 2
    },
    {
+    "arquivo": "scripts/inventario/gerar-repo.mjs",
+    "mudancas": 2
+   },
+   {
     "arquivo": "scripts/supabase_snapshot/README.md",
     "mudancas": 2
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "tests/e2e/webhook-audit-ndjson.spec.ts",
     "mudancas": 2
-   },
-   {
-    "arquivo": "tests/e2e/workflow.spec.ts",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 41
+    "commits": 42
    },
    {
     "autor": "github-actions[bot]",
@@ -312,7 +312,7 @@
  "contagens": {
   "arquivos_total": 1551,
   "arquivos_codigo": 1193,
-  "linhas_codigo": 163536,
+  "linhas_codigo": 163537,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -420,7 +420,7 @@
   },
   "scripts/inventario": {
    "arquivos": 4,
-   "linhas": 844
+   "linhas": 845
   },
   "scripts/regras_negocio": {
    "arquivos": 3,
