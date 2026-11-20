@@ -12,6 +12,18 @@ dist
 dist-ssr
 *.local
 
+# Secrets locais — nunca versionar
+.env
+.env.local
+.env.*.local
+
+# Cobertura gerada por vitest --coverage (ci.yml roda --coverage; artefato, não fonte)
+coverage/
+covout/
+
+# Supabase local link artifacts — regenerados por `supabase link`
+supabase/.temp/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
