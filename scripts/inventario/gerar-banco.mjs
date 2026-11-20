@@ -231,7 +231,13 @@ export function montarInventario(dado, uso, edges = compararEdges(null, [])) {
   // cima, rolbypassrls). Pode ser de proposito (tabela so-interna), mas hoje fica invisivel: nem
   // tabela_sem_rls (tem RLS) nem nenhum outro alerta aponta — inclusive tabela vazia hoje (ex. um
   // cofre de credencial ainda sem linha) merece o aviso do mesmo jeito.
-  const rlsSemPolicy = tabelas.filter((t) => t.rls && t.policies === 0).map((t) => t.nome);
+  // Tabelas internas do migrador custom (versioning.sql) tem RLS on sem policy de proposito:
+    // acessadas so via service_role (bypass RLS), nunca por authenticated/anon. Incluir na
+    // allowlist evita alarme falso a cada geracao de inventario.
+    const RLS_SEM_POLICY_ESPERADO = new Set(['schema_migrations', 'migration_rollbacks']);
+    const rlsSemPolicy = tabelas
+      .filter((t) => t.rls && t.policies === 0 && !RLS_SEM_POLICY_ESPERADO.has(t.nome))
+      .map((t) => t.nome);
   if (rlsSemPolicy.length) alertas.push({ tipo: 'rls_sem_policy', detalhe: rlsSemPolicy });
   const cronRuim = dado.cron.jobs
     .filter((j) => j.ativo && j.taxa_falha_7d_pct >= LIMIARES.taxaFalhaCronPct)
