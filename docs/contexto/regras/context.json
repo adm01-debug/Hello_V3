@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "91e0da8854494b6c5a1bf808791319c4d332715f",
+  "sha": "25b35e55c186b669cd3345af87851132a8e8e2f5",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 11:48 UTC",
-  "files_total": 1588,
+  "generated_at": "2026-11-20 14:04 UTC",
+  "files_total": 1598,
   "code_files": 1406,
-  "code_lines": 177308
+  "code_lines": 177323
  },
  "version": "1.3.2",
- "facts_hash": "31fdd5e5a84952d8",
+ "facts_hash": "c2d1ba5ad5e6e791",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -27283,7 +27283,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 18
+    "deps_count": 19
    },
    {
     "path": "",
@@ -32506,7 +32506,7 @@
   {
    "module": "src/pages",
    "files": 130,
-   "lines": 20753,
+   "lines": 20768,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -108812,7 +108812,7 @@
   },
   "src/pages/Inbox.tsx": {
    "path": "src/pages/Inbox.tsx",
-   "lines": 345,
+   "lines": 361,
    "exports": [
     "function Inbox"
    ],
@@ -109876,7 +109876,7 @@
   },
   "src/pages/TopicDetection.tsx": {
    "path": "src/pages/TopicDetection.tsx",
-   "lines": 371,
+   "lines": 370,
    "exports": [
     "function TopicDetection"
    ],
@@ -117819,10 +117819,30 @@
   }
  },
  "git": {
-  "sha": "91e0da8854494b6c5a1bf808791319c4d332715f",
+  "sha": "25b35e55c186b669cd3345af87851132a8e8e2f5",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "25b35e5",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "feat: concluir funcionalidades planejadas (wiring IA composer + fix hook TopicDetection) (#53)",
+    "files": [
+     "docs/pendencias/WIRING-01-permissiongate.md",
+     "docs/pendencias/WIRING-02-livetranslationpanel.md",
+     "docs/pendencias/WIRING-03-whatsappcomposer.md",
+     "docs/pendencias/WIRING-04-gamificationdashboard.md",
+     "docs/pendencias/WIRING-05-securityauditdashboard.md",
+     "docs/pendencias/WIRING-06-hooks-orfaos.md",
+     "docs/pendencias/_linha-de-base.md",
+     "docs/pendencias/_ordem.md",
+     "docs/pendencias/_relatorio.md",
+     "docs/pendencias/_verificado-banco.md",
+     "src/pages/Inbox.tsx",
+     "src/pages/TopicDetection.tsx"
+    ]
+   },
    {
     "sha": "91e0da8",
     "date": "2026-11-20",
@@ -118608,42 +118628,6 @@
      "inventario/estado/edges.json",
      "inventario/estado/rotas.json"
     ]
-   },
-   {
-    "sha": "bc47e27",
-    "date": "2026-11-12",
-    "author": "adm01-debug",
-    "subject": "fix(ci): integra PRs 18/19/20 - CI 100% verde",
-    "files": [
-     ".github/workflows/ci.yml",
-     "deno.lock",
-     "src/lib/__tests__/performance-optimizations.test.ts",
-     "src/lib/__tests__/safe-date.test.ts",
-     "src/lib/__tests__/security-alerts-webhook-queue.property.test.ts",
-     "src/lib/__tests__/security-observability.test.ts",
-     "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
-     "supabase/functions/_shared/rate-limit.ts",
-     "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
-     "supabase/functions/bitrix-api/index.test.ts",
-     "supabase/functions/cleanup-lock-conflicts/index.test.ts",
-     "supabase/functions/health-check/index.ts",
-     "supabase/functions/score-call-attempt/__tests__/index.test.ts",
-     "supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts",
-     "supabase/functions/voip-executive-narrative/__tests__/index.test.ts",
-     "supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts",
-     "supabase/functions/voip-quality-heatmap/__tests__/index.test.ts",
-     "supabase/functions/voip-recommendation-insights/__tests__/index.test.ts",
-     "supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts",
-     "supabase/functions/voip-sla-report/__tests__/index.test.ts",
-     "supabase/functions/whatsapp-inbound/schema.ts",
-     "supabase/functions/whatsapp-inbound/schema_test.ts",
-     "tests/e2e/auth.spec.ts",
-     "tests/e2e/helpers/skipGuard.ts",
-     "tests/e2e/performance.spec.ts",
-     "tests/e2e/webhook-audit-ndjson.spec.ts",
-     "tests/e2e/workflow.spec.ts",
-     "vite.config.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -118657,26 +118641,10 @@
    ],
    [
     ".github/workflows/ci.yml",
-    4
+    3
    ],
    [
     ".env",
-    2
-   ],
-   [
-    "src/lib/__tests__/safe-date.test.ts",
-    2
-   ],
-   [
-    "tests/e2e/performance.spec.ts",
-    2
-   ],
-   [
-    "tests/e2e/webhook-audit-ndjson.spec.ts",
-    2
-   ],
-   [
-    "tests/e2e/workflow.spec.ts",
     2
    ],
    [
@@ -118692,39 +118660,55 @@
     2
    ],
    [
-    "supabase/functions/health-check/index.ts",
-    2
-   ],
-   [
     "inventario/estado/edges.json",
     2
    ],
    [
-    ".gitignore",
+    "docs/pendencias/WIRING-01-permissiongate.md",
     1
    ],
    [
-    "coverage/base.css",
+    "docs/pendencias/WIRING-02-livetranslationpanel.md",
     1
    ],
    [
-    "coverage/block-navigation.js",
+    "docs/pendencias/WIRING-03-whatsappcomposer.md",
     1
    ],
    [
-    "coverage/favicon.png",
+    "docs/pendencias/WIRING-04-gamificationdashboard.md",
     1
    ],
    [
-    "coverage/index.html",
+    "docs/pendencias/WIRING-05-securityauditdashboard.md",
     1
    ],
    [
-    "coverage/lcov-report/base.css",
+    "docs/pendencias/WIRING-06-hooks-orfaos.md",
     1
    ],
    [
-    "coverage/lcov-report/block-navigation.js",
+    "docs/pendencias/_linha-de-base.md",
+    1
+   ],
+   [
+    "docs/pendencias/_ordem.md",
+    1
+   ],
+   [
+    "docs/pendencias/_relatorio.md",
+    1
+   ],
+   [
+    "docs/pendencias/_verificado-banco.md",
+    1
+   ],
+   [
+    "src/pages/Inbox.tsx",
+    1
+   ],
+   [
+    "src/pages/TopicDetection.tsx",
     1
    ]
   ]

@@ -2214,6 +2214,7 @@
    "arquivo": "src/pages/Inbox.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
+    "useCallback",
     "useConversationMessages",
     "useConversations",
     "useEffect",
@@ -2224,14 +2225,16 @@
     "useQueryClient",
     "useSendMessage",
     "useState",
-    "useUpdateConversation"
+    "useUpdateConversation",
+    "useWhatsappRewrite"
    ],
    "hooks_locais": [
     "useConversationMessages",
     "useConversations",
     "usePageTitle",
     "useSendMessage",
-    "useUpdateConversation"
+    "useUpdateConversation",
+    "useWhatsappRewrite"
    ],
    "tabelas": [
     "conversation_messages",
@@ -2247,7 +2250,7 @@
    "papeis": [
     "status"
    ],
-   "arquivos_puxados": 18
+   "arquivos_puxados": 19
   },
   {
    "protegida": false,

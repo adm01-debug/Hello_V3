@@ -1509,7 +1509,8 @@
     "useVoicePreferences",
     "useVoipAutoRemediation",
     "useVoipQualityMonitor",
-    "useWavoipCall"
+    "useWavoipCall",
+    "useWhatsappRewrite"
    ],
    "hooks_definidos": [],
    "edges": [
@@ -4294,7 +4295,8 @@
     "useVoipAutoRemediation",
     "useVoipQualityMonitor",
     "useVoipTrunks",
-    "useWavoipCall"
+    "useWavoipCall",
+    "useWhatsappRewrite"
    ],
    "hooks_definidos": [
     "useConversation"
@@ -4950,7 +4952,7 @@
    "modulo": "pages",
    "arquivos": 91,
    "testes": 0,
-   "linhas": 16268,
+   "linhas": 16283,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5298,7 +5300,8 @@
     "useVoipTrunks",
     "useWavoipCall",
     "useWebAuthn",
-    "useWebVitals"
+    "useWebVitals",
+    "useWhatsappRewrite"
    ],
    "hooks_definidos": [],
    "edges": [
@@ -6214,7 +6217,8 @@
     "useWebhookConfig",
     "useWebhookHealthData",
     "useWebhookHistory",
-    "useWebhookQueue"
+    "useWebhookQueue",
+    "useWhatsappRewrite"
    ],
    "hooks_definidos": [],
    "edges": [

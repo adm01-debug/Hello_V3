@@ -6004,14 +6004,15 @@
     "Inbox"
    ],
    "export_default": "Inbox",
-   "linhas": 345,
+   "linhas": 361,
    "dominio": "pages",
    "hooks_locais": [
     "useConversationMessages",
     "useConversations",
     "usePageTitle",
     "useSendMessage",
-    "useUpdateConversation"
+    "useUpdateConversation",
+    "useWhatsappRewrite"
    ],
    "tabelas": [],
    "edges": [],
@@ -6946,7 +6947,7 @@
     "TopicDetection"
    ],
    "export_default": "TopicDetection",
-   "linhas": 371,
+   "linhas": 370,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
