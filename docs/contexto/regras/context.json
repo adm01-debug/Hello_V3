@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "72f3935afe0c9d865c0dd0288c4b30046ff8a4fd",
+  "sha": "f1054684e375cc2736ae65bfda483c0dbe55fd60",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 18:16 UTC",
+  "generated_at": "2026-11-20 18:31 UTC",
   "files_total": 1598,
   "code_files": 1406,
-  "code_lines": 177366
+  "code_lines": 177368
  },
  "version": "1.3.2",
- "facts_hash": "020d062a87a233fe",
+ "facts_hash": "e33c841c668bccec",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31585,7 +31585,7 @@
   {
    "module": "scripts",
    "files": 32,
-   "lines": 9356,
+   "lines": 9358,
    "tables": [
     "a",
     "contacts",
@@ -86151,7 +86151,7 @@
   },
   "scripts/ai-context/cenarios.mjs": {
    "path": "scripts/ai-context/cenarios.mjs",
-   "lines": 173,
+   "lines": 174,
    "tables": [
     {
      "table": "t",
@@ -86433,7 +86433,7 @@
   },
   "scripts/ai-context/gerar.unit.mjs": {
    "path": "scripts/ai-context/gerar.unit.mjs",
-   "lines": 361,
+   "lines": 362,
    "exports": [
     "function AppRoutes",
     "function useContacts"
@@ -117814,10 +117814,21 @@
   }
  },
  "git": {
-  "sha": "72f3935afe0c9d865c0dd0288c4b30046ff8a4fd",
+  "sha": "f1054684e375cc2736ae65bfda483c0dbe55fd60",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "f105468",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)",
+    "files": [
+     "inventario/estado/banco.json",
+     "scripts/ai-context/cenarios.mjs",
+     "scripts/ai-context/gerar.unit.mjs"
+    ]
+   },
    {
     "sha": "72f3935",
     "date": "2026-11-20",
@@ -118618,16 +118629,6 @@
     "files": [
      "scripts/supabase_snapshot/snapshot.py"
     ]
-   },
-   {
-    "sha": "fece2f3",
-    "date": "2026-11-13",
-    "author": "github-actions[bot]",
-    "subject": "chore: inventario do estado real [auto] (#27)",
-    "files": [
-     "inventario/estado/banco.json",
-     "inventario/estado/edges.json"
-    ]
    }
   ],
   "hot_files": [
@@ -118640,16 +118641,16 @@
     4
    ],
    [
-    "inventario/estado/edges.json",
-    3
-   ],
-   [
     "supabase/functions/migrate-helper/index.ts",
     3
    ],
    [
     ".github/workflows/ci.yml",
     3
+   ],
+   [
+    "inventario/estado/edges.json",
+    2
    ],
    [
     "supabase/functions/migrate-helper/index.test.ts",
@@ -118666,6 +118667,18 @@
    [
     "scripts/supabase_snapshot/snapshot.py",
     2
+   ],
+   [
+    "inventario/estado/banco.json",
+    1
+   ],
+   [
+    "scripts/ai-context/cenarios.mjs",
+    1
+   ],
+   [
+    "scripts/ai-context/gerar.unit.mjs",
+    1
    ],
    [
     "scripts/inventario/gerar-repo.mjs",
@@ -118697,18 +118710,6 @@
    ],
    [
     "docs/pendencias/WIRING-03-whatsappcomposer.md",
-    1
-   ],
-   [
-    "docs/pendencias/WIRING-04-gamificationdashboard.md",
-    1
-   ],
-   [
-    "docs/pendencias/WIRING-05-securityauditdashboard.md",
-    1
-   ],
-   [
-    "docs/pendencias/WIRING-06-hooks-orfaos.md",
     1
    ]
   ]

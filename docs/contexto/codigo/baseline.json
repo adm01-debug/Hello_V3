@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "72f3935afe0c9d865c0dd0288c4b30046ff8a4fd",
+  "commit": "f1054684e375cc2736ae65bfda483c0dbe55fd60",
   "branch": "main",
-  "data_commit": "2026-11-20T15:09:13-03:00",
+  "data_commit": "2026-11-20T15:30:57-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f105468",
+    "data": "2026-11-20",
+    "assunto": "fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)"
+   },
    {
     "sha": "72f3935",
     "data": "2026-11-20",
@@ -126,14 +131,9 @@
     "sha": "4b6df34",
     "data": "2026-11-13",
     "assunto": "chore: fecha relatorio de prod-readiness na main final 25e39c4 (#33)"
-   },
-   {
-    "sha": "25e39c4",
-    "data": "2026-11-13",
-    "assunto": "chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)"
    }
   ],
-  "arquivos_mudados_7d": 553,
+  "arquivos_mudados_7d": 556,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -254,7 +254,19 @@
     "mudancas": 2
    },
    {
+    "arquivo": "inventario/estado/banco.json",
+    "mudancas": 2
+   },
+   {
     "arquivo": "inventario/estado/rotas.json",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "scripts/ai-context/cenarios.mjs",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "scripts/ai-context/gerar.unit.mjs",
     "mudancas": 2
    },
    {
@@ -284,24 +296,12 @@
    {
     "arquivo": "supabase/config.toml",
     "mudancas": 2
-   },
-   {
-    "arquivo": "supabase/functions/health-check/index.ts",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "tests/e2e/performance.spec.ts",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "tests/e2e/webhook-audit-ndjson.spec.ts",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 42
+    "commits": 43
    },
    {
     "autor": "github-actions[bot]",
@@ -312,7 +312,7 @@
  "contagens": {
   "arquivos_total": 1551,
   "arquivos_codigo": 1193,
-  "linhas_codigo": 163537,
+  "linhas_codigo": 163539,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -372,7 +372,7 @@
   },
   "scripts/ai-context": {
    "arquivos": 3,
-   "linhas": 1459
+   "linhas": 1461
   },
   "scripts/apply-call-volume-fix.mjs": {
    "arquivos": 1,
@@ -758,7 +758,7 @@
   ],
   "ciclos_de_import": 1,
   "possiveis_segredos_no_codigo": [
-   "scripts/ai-context/cenarios.mjs:102",
+   "scripts/ai-context/cenarios.mjs:103",
    "src/lib/__tests__/security-advanced.test.ts:203",
    "src/lib/__tests__/security-advanced.test.ts:208",
    "src/lib/__tests__/security-advanced.test.ts:213"

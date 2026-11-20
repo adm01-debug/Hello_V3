@@ -87,7 +87,7 @@
   {
    "arquivo": "scripts/ai-context/gerar.unit.mjs",
    "tipo": "unit",
-   "linhas": 361,
+   "linhas": 362,
    "testa": [
     "src/components/auth/ProtectedRoute.tsx",
     "src/hooks/useContacts.ts",

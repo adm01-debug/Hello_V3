@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)",
    "fix: sanitiza path com fileURLToPath no gerador de inventario (#58)",
    "chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)",
    "chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)",
-   "chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)",
-   "test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)"
+   "chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)"
   ]
  },
  "pr_template": null,
