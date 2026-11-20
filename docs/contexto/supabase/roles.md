@@ -14,6 +14,7 @@
 | supabase_admin | sim | sim | sim | sim | sim | -1 | search_path="$user", public, auth, extensions, log_statement=none, statement_timeout=0 |  |
 | supabase_auth_admin | não | sim | não | sim | não | -1 | search_path=auth, idle_in_transaction_session_timeout=60000, log_statement=none |  |
 | supabase_etl_admin | não | sim | sim | não | não | -1 |  | pg_monitor, pg_read_all_data, supabase_privileged_role |
+| supabase_functions_admin | não | sim | não | sim | não | -1 |  |  |
 | supabase_privileged_role | não | não | não | não | não | -1 |  |  |
 | supabase_read_only_user | não | sim | sim | não | não | -1 | default_transaction_read_only=on | pg_monitor, pg_read_all_data |
 | supabase_realtime_admin | não | não | não | não | não | -1 | search_path=public, extensions, realtime | anon, authenticated, service_role |

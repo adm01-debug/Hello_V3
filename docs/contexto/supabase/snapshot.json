@@ -26051,7 +26051,7 @@
           "dataset"
         ],
         "deferrable": false,
-        "definition": "CHECK (dataset = ANY (ARRAY['call_sessions'::text, 'deals'::text, 'contacts'::text, 'audit_logs'::text]))",
+        "definition": "CHECK (dataset = ANY (ARRAY['call_sessions'::text, 'deals'::text, 'contacts'::text, 'audit_logs'::text, 'call_summaries'::text]))",
         "name": "data_lake_exports_dataset_check",
         "on_delete": null,
         "on_update": null,
@@ -30705,6 +30705,12 @@
         "name": "pg_cron",
         "schema": "pg_catalog",
         "version": "1.6.4"
+      },
+      {
+        "available_version": "0.20.4",
+        "name": "pg_net",
+        "schema": "extensions",
+        "version": "0.20.4"
       },
       {
         "available_version": "1.11",
@@ -51614,6 +51620,18 @@
           "supabase_privileged_role"
         ],
         "name": "supabase_etl_admin",
+        "superuser": false
+      },
+      {
+        "bypass_rls": false,
+        "config": null,
+        "conn_limit": -1,
+        "create_db": false,
+        "create_role": true,
+        "inherit": false,
+        "login": true,
+        "member_of": [],
+        "name": "supabase_functions_admin",
         "superuser": false
       },
       {

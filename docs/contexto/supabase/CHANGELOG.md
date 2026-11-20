@@ -2,6 +2,12 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-20 19:11 UTC
+
+- **constraints** alterado (1): `public.data_lake_exports.data_lake_exports_dataset_check`
+- **extensions** adicionado (1): `pg_net`
+- **roles** adicionado (1): `supabase_functions_admin`
+
 ## 2026-11-20 12:18 UTC
 
 - **config: auth_config** removido (1): `auth_config`

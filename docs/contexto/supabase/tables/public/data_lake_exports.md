@@ -35,7 +35,7 @@
 
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
-| data_lake_exports_dataset_check | CHECK | `CHECK (dataset = ANY (ARRAY['call_sessions'::text, 'deals'::text, 'contacts'::text, 'audit_logs'::text]))` |  |  | sim |
+| data_lake_exports_dataset_check | CHECK | `CHECK (dataset = ANY (ARRAY['call_sessions'::text, 'deals'::text, 'contacts'::text, 'audit_logs'::text, 'call_summaries'::text]))` |  |  | sim |
 | data_lake_exports_format_check | CHECK | `CHECK (format = ANY (ARRAY['csv'::text, 'ndjson'::text, 'parquet'::text]))` |  |  | sim |
 | data_lake_exports_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
 | data_lake_exports_status_check | CHECK | `CHECK (status = ANY (ARRAY['pending'::text, 'processing'::text, 'completed'::text, 'failed'::text]))` |  |  | sim |

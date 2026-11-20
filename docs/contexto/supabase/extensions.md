@@ -3,6 +3,7 @@
 | extensão | versão instalada | versão disponível | schema |
 |---|---|---|---|
 | pg_cron | 1.6.4 | 1.6.4 | pg_catalog |
+| pg_net | 0.20.4 | 0.20.4 | extensions |
 | pg_stat_statements | 1.11 | 1.11 | extensions |
 | pg_trgm | 1.6 | 1.6 | public |
 | pgcrypto | 1.3 | 1.3 | extensions |
