@@ -1,17 +1,24 @@
 import { Client } from 'pg';
 
-const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNmbWxtY2R5anVvdHFvYmphcG5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5MDk0MTR9.YvMKFvpz0kH-GPMgi-oEUrt0ZCqICuY7AAcoEt8Cpolc';
+const ANON_KEY = process.env.SUPABASE_ANON_KEY ?? (() => { throw new Error('Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.'); })();
 
 // Teste via cliente postgres direto simulando o que o frontend faz via Supabase JS client
-const client = new Client({
-  host: 'db.cfmlmcdyjuotqobjapng.supabase.co',
-  port: 5432,
-  database: 'postgres',
-  user: 'postgres',
-  password: 'NuvBjdU1gazbMYHr',
-  ssl: { rejectUnauthorized: false },
-  connectionTimeoutMillis: 15000,
-});
+const clientConfig = (() => {
+  if (process.env.SUPABASE_DB_URL) return { connectionString: process.env.SUPABASE_DB_URL, ssl: { rejectUnauthorized: false }, connectionTimeoutMillis: 15000 };
+  const password = process.env.DB_PASSWORD;
+  if (!password) throw new Error('Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente.');
+  return {
+    host: process.env.DB_HOST ?? 'db.cfmlmcdyjuotqobjapng.supabase.co',
+    port: Number(process.env.DB_PORT ?? 5432),
+    database: process.env.DB_NAME ?? 'postgres',
+    user: process.env.DB_USER ?? 'postgres',
+    password,
+    ssl: { rejectUnauthorized: false },
+    connectionTimeoutMillis: 15000,
+  };
+})();
+
+const client = new Client(clientConfig);
 
 async function main() {
   try {
