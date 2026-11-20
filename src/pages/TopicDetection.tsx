@@ -44,6 +44,7 @@ interface ManagerAlert {
 export default function TopicDetection() {
   const queryClient = useQueryClient();
   const [detectionSearch, setDetectionSearch] = useState('');
+  usePageTitle('Detecção de Temas');
 
   const { data: trends = [] } = useQuery({
     queryKey: ['topic-trends'],
@@ -97,8 +98,6 @@ export default function TopicDetection() {
   const unresolvedAlerts = alerts.filter(a => !a.is_resolved);
 
   const TrendIcon = ({ dir }: { dir: string }) => {
-  usePageTitle('Detecção de Temas');
-
     if (dir === 'up') return <TrendingUp className="h-4 w-4 text-destructive" />;
     if (dir === 'down') return <TrendingDown className="h-4 w-4 text-success" />;
     return <Minus className="h-4 w-4 text-muted-foreground" />;
