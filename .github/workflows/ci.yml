@@ -15,6 +15,7 @@ jobs:
     name: Lint • Type-check • Test • Build
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    environment: e2e
 
     steps:
       - name: Checkout
