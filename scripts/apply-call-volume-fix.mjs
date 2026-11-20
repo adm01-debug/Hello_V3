@@ -3,15 +3,22 @@ import { Client } from 'pg';
 
 const sql = readFileSync('d:\\Projetos\\hello-v3-main\\scripts\\fix-get-call-volume-stats.sql', 'utf8');
 
-const client = new Client({
-  host: 'db.cfmlmcdyjuotqobjapng.supabase.co',
-  port: 5432,
-  database: 'postgres',
-  user: 'postgres',
-  password: 'NuvBjdU1gazbMYHr',
-  ssl: { rejectUnauthorized: false },
-  connectionTimeoutMillis: 15000,
-});
+const clientConfig = (() => {
+  if (process.env.SUPABASE_DB_URL) return { connectionString: process.env.SUPABASE_DB_URL, ssl: { rejectUnauthorized: false }, connectionTimeoutMillis: 15000 };
+  const password = process.env.DB_PASSWORD;
+  if (!password) throw new Error('Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente.');
+  return {
+    host: process.env.DB_HOST ?? 'db.cfmlmcdyjuotqobjapng.supabase.co',
+    port: Number(process.env.DB_PORT ?? 5432),
+    database: process.env.DB_NAME ?? 'postgres',
+    user: process.env.DB_USER ?? 'postgres',
+    password,
+    ssl: { rejectUnauthorized: false },
+    connectionTimeoutMillis: 15000,
+  };
+})();
+
+const client = new Client(clientConfig);
 
 async function main() {
   try {
