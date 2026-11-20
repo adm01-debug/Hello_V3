@@ -2,6 +2,16 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-20 12:18 UTC
+
+- **config: auth_config** removido (1): `auth_config`
+- **config: network_restrictions** removido (1): `network_restrictions`
+- **config: pooler_config** removido (1): `pooler_config`
+- **config: postgres_config** removido (1): `postgres_config`
+- **config: postgrest_config** removido (1): `postgrest_config`
+- **config: storage_config** removido (1): `storage_config`
+- **edge functions** removido (94): `analyze-call`, `analyze-contact-profile`, `analyze-live-utterance`, `analyze-sentiment`, `analyze-talk-ratio`, `approve-password-reset`, `auto-scorecard`, `bitrix-api`, `chat-widget-session`, `chatbot-respond`, `check-alerts`, `check-contact-alerts`, `check-goals`, `check-hold-alerts`, `check-queue-metrics`, `cleanup-lock-conflicts`, `compute-account-health`, `compute-adherence`, `compute-best-time`, `compute-deal-health`, `data-lake-flush`, `database-backup`, `database-cleanup`, `detect-churn-risk`, `detect-key-moments`, `dialer-pacing-tick`, `elevenlabs-conversation-token`, `email-inbound`, `embed-kb-article`, `enforce-sla`, `enroll-voice`, `export-data-lake`, `extract-crm-fields`, `forecast-call-volume`, `forecast-deals`, `fuzz-test-runner`, `generate-coaching`, `generate-coaching-plan`, `generate-coaching-track`, `generate-meeting-summary` … (+54)
+
 ## 2026-11-20 11:04 UTC
 
 - Snapshot inicial.

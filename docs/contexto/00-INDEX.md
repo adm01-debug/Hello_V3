@@ -1,6 +1,6 @@
 # CONTEXTO PARA AGENTES DE IA — ÍNDICE ÚNICO
 
-> Gerado automaticamente por indice.py · 2026-11-20 11:49 UTC · HEAD `91e0da8854` · Não edite à mão.
+> Gerado automaticamente por indice.py · 2026-11-20 12:18 UTC · HEAD `91e0da8854` · Não edite à mão.
 
 Um sistema, três fontes de verdade, três produtores independentes. **Leia este arquivo e vá direto à fonte certa.** Cada fato tem um dono: se duas fontes discordarem, vale o dono.
 
@@ -8,9 +8,9 @@ Um sistema, três fontes de verdade, três produtores independentes. **Leia este
 
 | Preciso de… | Fonte (dona do fato) | Onde ler | Estado |
 |---|---|---|---|
-| Regras que não podem ser quebradas: RLS por operação, estados e transições, validações, fórmulas, prazos, erros de negócio, testes como especificação, inconsistências código×schema (NÃO VERIFICADO) e regras humanas (`manual/`) | **regras de negócio** | `docs/contexto/regras/07-REGRAS-DE-NEGOCIO.md` | ok · 1 min atrás |
-| Tabelas, colunas, RLS/políticas, funções, triggers, cron, storage, lints — **como está em produção agora** | **banco real** | `docs/contexto/supabase/README.md` | parcial · 45 min atrás · ⚠️ 1 erro(s) de coleta no manifest (erros); seções reaproveitadas da coleta anterior; 1 seção(ões) com erro em errors.md |
-| Rotas, telas, módulos, hooks, edge functions, grafo de dependências, testes, scripts, convenções | **código** | `docs/contexto/codigo/INDEX.md` | ok · 0 min atrás |
+| Regras que não podem ser quebradas: RLS por operação, estados e transições, validações, fórmulas, prazos, erros de negócio, testes como especificação, inconsistências código×schema (NÃO VERIFICADO) e regras humanas (`manual/`) | **regras de negócio** | `docs/contexto/regras/07-REGRAS-DE-NEGOCIO.md` | ok · 30 min atrás |
+| Tabelas, colunas, RLS/políticas, funções, triggers, cron, storage, lints — **como está em produção agora** | **banco real** | `docs/contexto/supabase/README.md` | parcial · 0 min atrás · ⚠️ 14 erro(s) de coleta no manifest (erros); seções reaproveitadas da coleta anterior; 14 seção(ões) com erro em errors.md |
+| Rotas, telas, módulos, hooks, edge functions, grafo de dependências, testes, scripts, convenções | **código** | `docs/contexto/codigo/INDEX.md` | ok · 29 min atrás |
 
 ## Ordem de leitura antes de qualquer tarefa ou planejamento
 
@@ -34,81 +34,81 @@ Um sistema, três fontes de verdade, três produtores independentes. **Leia este
 - `docs/contexto/supabase/cron-runs.md`
 - `docs/contexto/supabase/cron.md`
 - `docs/contexto/supabase/edge-functions.md`
-- `docs/contexto/supabase/edge-functions/analyze-call/README.md`
-- `docs/contexto/supabase/edge-functions/analyze-contact-profile/README.md`
-- `docs/contexto/supabase/edge-functions/analyze-live-utterance/README.md`
-- `docs/contexto/supabase/edge-functions/analyze-sentiment/README.md`
-- `docs/contexto/supabase/edge-functions/analyze-talk-ratio/README.md`
-- `docs/contexto/supabase/edge-functions/approve-password-reset/README.md`
-- `docs/contexto/supabase/edge-functions/auto-scorecard/README.md`
-- `docs/contexto/supabase/edge-functions/bitrix-api/README.md`
-- `docs/contexto/supabase/edge-functions/chat-widget-session/README.md`
-- `docs/contexto/supabase/edge-functions/chatbot-respond/README.md`
-- `docs/contexto/supabase/edge-functions/check-alerts/README.md`
-- `docs/contexto/supabase/edge-functions/check-contact-alerts/README.md`
-- `docs/contexto/supabase/edge-functions/check-goals/README.md`
-- `docs/contexto/supabase/edge-functions/check-hold-alerts/README.md`
-- `docs/contexto/supabase/edge-functions/check-queue-metrics/README.md`
-- `docs/contexto/supabase/edge-functions/cleanup-lock-conflicts/README.md`
-- `docs/contexto/supabase/edge-functions/compute-account-health/README.md`
-- `docs/contexto/supabase/edge-functions/compute-adherence/README.md`
-- `docs/contexto/supabase/edge-functions/compute-best-time/README.md`
-- `docs/contexto/supabase/edge-functions/compute-deal-health/README.md`
-- `docs/contexto/supabase/edge-functions/data-lake-flush/README.md`
-- `docs/contexto/supabase/edge-functions/database-backup/README.md`
-- `docs/contexto/supabase/edge-functions/database-cleanup/README.md`
-- `docs/contexto/supabase/edge-functions/detect-churn-risk/README.md`
-- `docs/contexto/supabase/edge-functions/detect-key-moments/README.md`
-- `docs/contexto/supabase/edge-functions/dialer-pacing-tick/README.md`
-- `docs/contexto/supabase/edge-functions/elevenlabs-conversation-token/README.md`
-- `docs/contexto/supabase/edge-functions/email-inbound/README.md`
-- `docs/contexto/supabase/edge-functions/embed-kb-article/README.md`
-- `docs/contexto/supabase/edge-functions/enforce-sla/README.md`
-- `docs/contexto/supabase/edge-functions/enroll-voice/README.md`
-- `docs/contexto/supabase/edge-functions/export-data-lake/README.md`
-- `docs/contexto/supabase/edge-functions/extract-crm-fields/README.md`
-- `docs/contexto/supabase/edge-functions/forecast-call-volume/README.md`
-- `docs/contexto/supabase/edge-functions/forecast-deals/README.md`
-- `docs/contexto/supabase/edge-functions/fuzz-test-runner/README.md`
-- `docs/contexto/supabase/edge-functions/generate-coaching-plan/README.md`
-- `docs/contexto/supabase/edge-functions/generate-coaching-track/README.md`
-- `docs/contexto/supabase/edge-functions/generate-coaching/README.md`
-- `docs/contexto/supabase/edge-functions/generate-meeting-summary/README.md`
-- `docs/contexto/supabase/edge-functions/generate-summary/README.md`
-- `docs/contexto/supabase/edge-functions/global-load-test/README.md`
-- `docs/contexto/supabase/edge-functions/health-check/README.md`
-- `docs/contexto/supabase/edge-functions/migrate-helper/README.md`
-- `docs/contexto/supabase/edge-functions/notify-blocked-ip/README.md`
-- `docs/contexto/supabase/edge-functions/notify-new-device/README.md`
-- `docs/contexto/supabase/edge-functions/ocr-virtual-fax/README.md`
-- `docs/contexto/supabase/edge-functions/process-digest/README.md`
-- `docs/contexto/supabase/edge-functions/realtime-analysis/README.md`
-- `docs/contexto/supabase/edge-functions/record-consent/README.md`
-- `docs/contexto/supabase/edge-functions/redact-sensitive-audio/README.md`
-- `docs/contexto/supabase/edge-functions/request-password-reset/README.md`
-- `docs/contexto/supabase/edge-functions/rls-audit/README.md`
-- `docs/contexto/supabase/edge-functions/score-call-attempt/README.md`
-- `docs/contexto/supabase/edge-functions/score-call/README.md`
-- `docs/contexto/supabase/edge-functions/search-calls/README.md`
-- `docs/contexto/supabase/edge-functions/send-notification/README.md`
-- `docs/contexto/supabase/edge-functions/send-survey/README.md`
-- `docs/contexto/supabase/edge-functions/sip-config/README.md`
-- `docs/contexto/supabase/edge-functions/suggest-shift-swaps/README.md`
-- `docs/contexto/supabase/edge-functions/sync-crm-queue/README.md`
-- `docs/contexto/supabase/edge-functions/teams-fetch-recordings/README.md`
-- `docs/contexto/supabase/edge-functions/transcribe-recording/README.md`
-- `docs/contexto/supabase/edge-functions/translate-summary/README.md`
-- `docs/contexto/supabase/edge-functions/translate-utterance/README.md`
-- `docs/contexto/supabase/edge-functions/validate-geo/README.md`
-- `docs/contexto/supabase/edge-functions/validate-ip/README.md`
-- `docs/contexto/supabase/edge-functions/verify-voice/README.md`
-- `docs/contexto/supabase/edge-functions/voice-command/README.md`
-- `docs/contexto/supabase/edge-functions/voice-transcribe/README.md`
-- `docs/contexto/supabase/edge-functions/voip-anomaly-detector/README.md`
-- `docs/contexto/supabase/edge-functions/voip-anomaly-remediation/README.md`
-- `docs/contexto/supabase/edge-functions/voip-capacity-forecast/README.md`
-- `docs/contexto/supabase/edge-functions/voip-capacity-recommendations/README.md`
-- … +211
+- `docs/contexto/supabase/errors.md`
+- `docs/contexto/supabase/extensions.md`
+- `docs/contexto/supabase/foreign-servers.md`
+- `docs/contexto/supabase/functions.md`
+- `docs/contexto/supabase/grants.md`
+- `docs/contexto/supabase/indexes.md`
+- `docs/contexto/supabase/lints.md`
+- `docs/contexto/supabase/manifest.json`
+- `docs/contexto/supabase/migrations.md`
+- `docs/contexto/supabase/policies.md`
+- `docs/contexto/supabase/project-config.md`
+- `docs/contexto/supabase/queues.md`
+- `docs/contexto/supabase/realtime.md`
+- `docs/contexto/supabase/relationships.md`
+- `docs/contexto/supabase/roles.md`
+- `docs/contexto/supabase/schemas.md`
+- `docs/contexto/supabase/sequences.md`
+- `docs/contexto/supabase/snapshot.json`
+- `docs/contexto/supabase/stats.json`
+- `docs/contexto/supabase/stats.md`
+- `docs/contexto/supabase/storage.md`
+- `docs/contexto/supabase/tables.md`
+- `docs/contexto/supabase/tables/_supabase_internal_triggers.md`
+- `docs/contexto/supabase/tables/public/account_journey_history.md`
+- `docs/contexto/supabase/tables/public/account_lockouts.md`
+- `docs/contexto/supabase/tables/public/accounts.md`
+- `docs/contexto/supabase/tables/public/active_sessions.md`
+- `docs/contexto/supabase/tables/public/agent_badges.md`
+- `docs/contexto/supabase/tables/public/agent_devices.md`
+- `docs/contexto/supabase/tables/public/agent_goals.md`
+- `docs/contexto/supabase/tables/public/agent_ring_settings.md`
+- `docs/contexto/supabase/tables/public/agent_shifts.md`
+- `docs/contexto/supabase/tables/public/agent_skills.md`
+- `docs/contexto/supabase/tables/public/agent_trunk_assignments.md`
+- `docs/contexto/supabase/tables/public/agent_weekly_stats.md`
+- `docs/contexto/supabase/tables/public/agents.md`
+- `docs/contexto/supabase/tables/public/audit_logs.md`
+- `docs/contexto/supabase/tables/public/badges.md`
+- `docs/contexto/supabase/tables/public/barge_in_sessions.md`
+- `docs/contexto/supabase/tables/public/battle_card_triggers.md`
+- `docs/contexto/supabase/tables/public/battle_cards.md`
+- `docs/contexto/supabase/tables/public/bitrix_departments.md`
+- `docs/contexto/supabase/tables/public/bitrix_users.md`
+- `docs/contexto/supabase/tables/public/blocked_access_logs.md`
+- `docs/contexto/supabase/tables/public/bot_conversations.md`
+- `docs/contexto/supabase/tables/public/cadence_enrollments.md`
+- `docs/contexto/supabase/tables/public/cadence_steps.md`
+- `docs/contexto/supabase/tables/public/cadences.md`
+- `docs/contexto/supabase/tables/public/call_alerts.md`
+- `docs/contexto/supabase/tables/public/call_analyses.md`
+- `docs/contexto/supabase/tables/public/call_control_audit_logs.md`
+- `docs/contexto/supabase/tables/public/call_flows.md`
+- `docs/contexto/supabase/tables/public/call_key_moments.md`
+- `docs/contexto/supabase/tables/public/call_park_orbits.md`
+- `docs/contexto/supabase/tables/public/call_playlists.md`
+- `docs/contexto/supabase/tables/public/call_quality_metrics.md`
+- `docs/contexto/supabase/tables/public/call_queue_members.md`
+- `docs/contexto/supabase/tables/public/call_queues.md`
+- `docs/contexto/supabase/tables/public/call_recordings.md`
+- `docs/contexto/supabase/tables/public/call_scorecards.md`
+- `docs/contexto/supabase/tables/public/call_sessions.md`
+- `docs/contexto/supabase/tables/public/call_summaries.md`
+- `docs/contexto/supabase/tables/public/call_transcriptions.md`
+- `docs/contexto/supabase/tables/public/call_transcripts_searchable.md`
+- `docs/contexto/supabase/tables/public/call_translations.md`
+- `docs/contexto/supabase/tables/public/calling_hours_config.md`
+- `docs/contexto/supabase/tables/public/chat_sessions.md`
+- `docs/contexto/supabase/tables/public/churn_risk_signals.md`
+- `docs/contexto/supabase/tables/public/coaching_assignments.md`
+- `docs/contexto/supabase/tables/public/coaching_recommendations.md`
+- `docs/contexto/supabase/tables/public/coaching_timestamps.md`
+- `docs/contexto/supabase/tables/public/compliance_rules.md`
+- `docs/contexto/supabase/tables/public/compliance_settings.md`
+- `docs/contexto/supabase/tables/public/consent_history.md`
+- … +117
 
 </details>
 
