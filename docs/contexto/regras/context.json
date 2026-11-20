@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "2fcd5ba1c4ce4ac0d6deec88ccd17b716dede2fa",
+  "sha": "1cfbfcfbf178933305c79ec24d74f2ac470ba963",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 00:41 UTC",
+  "generated_at": "2026-11-20 03:16 UTC",
   "files_total": 2006,
   "code_files": 1412,
-  "code_lines": 177851
+  "code_lines": 177856
  },
  "version": "1.3.2",
- "facts_hash": "569eb98258b161ef",
+ "facts_hash": "58947336a374a3f5",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33065,7 +33065,7 @@
   {
    "module": "tests",
    "files": 6,
-   "lines": 364,
+   "lines": 369,
    "tables": [],
    "exports": [
     "adminSession.ts: SeedAdminSessionOptions, seedAdminSession",
@@ -117563,7 +117563,7 @@
   },
   "tests/e2e/helpers/adminSession.ts": {
    "path": "tests/e2e/helpers/adminSession.ts",
-   "lines": 81,
+   "lines": 86,
    "is_test": true,
    "exports": [
     "interface SeedAdminSessionOptions",
@@ -117580,7 +117580,9 @@
     "VITE_SUPABASE_URL"
    ],
    "rule_comments": [
-    "3. Sem credenciais utilizáveis, retorna `false` — o teste chamador deve `test.skip()`."
+    "3. Sem credenciais utilizáveis, retorna `false` — o teste chamador deve `test.skip()`.",
+    "(E2E_SUPABASE_SESSION_JSON) expira em ~1h e, expirada, faz o app",
+    "Sessao pre-mintada como fallback (expira ~1h, nao usar como base)."
    ]
   },
   "tests/e2e/helpers/skipGuard.ts": {
@@ -117612,10 +117614,19 @@
   }
  },
  "git": {
-  "sha": "2fcd5ba1c4ce4ac0d6deec88ccd17b716dede2fa",
+  "sha": "1cfbfcfbf178933305c79ec24d74f2ac470ba963",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "1cfbfcf",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)",
+    "files": [
+     "tests/e2e/helpers/adminSession.ts"
+    ]
+   },
    {
     "sha": "2fcd5ba",
     "date": "2026-11-19",
@@ -117969,16 +117980,6 @@
     "files": [
      "docs/estado/edge-functions-parte1.md",
      "supabase/functions/chat-widget-session/index.ts"
-    ]
-   },
-   {
-    "sha": "fc37442",
-    "date": "2026-11-09",
-    "author": "adm01-debug",
-    "subject": "fix(e2e): bun run build + vite preview para webServer do Playwright (#17)",
-    "files": [
-     "playwright.config.ts",
-     "vite.config.ts"
     ]
    }
   ],

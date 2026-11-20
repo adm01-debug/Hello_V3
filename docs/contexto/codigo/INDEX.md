@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `2fcd5ba1c4ce4ac0d6deec88ccd17b716dede2fa` (2026-11-19T21:14:30-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `1cfbfcfbf178933305c79ec24d74f2ac470ba963` (2026-11-20T00:09:21-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1541 |
 | arquivos_codigo | 1193 |
-| linhas_codigo | 163418 |
+| linhas_codigo | 163423 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -360,7 +360,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8844 nós · 23598 arestas · 682 comunidades · grafo do commit `2fcd5ba1`
+- 8844 nós · 23598 arestas · 682 comunidades · grafo do commit `1cfbfcfb`
 - comunidades maiores: card.tsx (307), client.ts (190), button.tsx (184), safe-date.ts (172), lucide-react (151), vitest (139), snapshot.py (102), @tanstack/react-query (101), ref_https (101), cn (99), protectedRoutes.tsx (85), dependencies (83)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -419,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-20 `1cfbfcf` fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)
 - 2026-11-19 `2fcd5ba` fix: torna testes vitest robustos a timezone e path com espaço (#46)
 - 2026-11-19 `f3cc8f6` fix: corrige selectors e ativa E2E autenticado (#45)
 - 2026-11-19 `5994943` fix: usePhaseColors preserva NaN em CSS var inválida (fallback do safeParseFloat) (#44)
@@ -433,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-14 `1a3c93f` fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)
 - 2026-11-14 `42f17da` fix: aplica security_invoker na view financial_impact_daily (#34)
 - 2026-11-13 `4b6df34` chore: fecha relatorio de prod-readiness na main final 25e39c4 (#33)
-- 2026-11-13 `25e39c4` chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "2fcd5ba1c4ce4ac0d6deec88ccd17b716dede2fa",
+  "commit": "1cfbfcfbf178933305c79ec24d74f2ac470ba963",
   "branch": "main",
-  "data_commit": "2026-11-19T21:14:30-03:00",
+  "data_commit": "2026-11-20T00:09:21-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "1cfbfcf",
+    "data": "2026-11-20",
+    "assunto": "fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)"
+   },
    {
     "sha": "2fcd5ba",
     "data": "2026-11-19",
@@ -126,14 +131,9 @@
     "sha": "f8c3c37",
     "data": "2026-11-12",
     "assunto": "fix(ci): inventario nao quebra sem banco.json (add-paths varre o diretorio) (#22)"
-   },
-   {
-    "sha": "0335da9",
-    "data": "2026-11-12",
-    "assunto": "chore: inventario do estado real [auto] (#23)"
    }
   ],
-  "arquivos_mudados_7d": 45,
+  "arquivos_mudados_7d": 46,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/lib/__tests__",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 32
+    "commits": 33
    },
    {
     "autor": "github-actions[bot]",
@@ -312,7 +312,7 @@
  "contagens": {
   "arquivos_total": 1541,
   "arquivos_codigo": 1193,
-  "linhas_codigo": 163418,
+  "linhas_codigo": 163423,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -516,7 +516,7 @@
   },
   "tests/e2e": {
    "arquivos": 6,
-   "linhas": 364
+   "linhas": 369
   },
   "vite.config.ts": {
    "arquivos": 1,

@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)",
    "fix: torna testes vitest robustos a timezone e path com espaço (#46)",
    "fix: corrige selectors e ativa E2E autenticado (#45)",
    "fix: usePhaseColors preserva NaN em CSS var inválida (fallback do safeParseFloat) (#44)",
-   "infra: SPA rewrites no Vercel (rotas client-side sem 404) (#43)",
-   "fix: trata erro nas queries dos 3 hooks e adiciona noopener no video conference (#41)"
+   "infra: SPA rewrites no Vercel (rotas client-side sem 404) (#43)"
   ]
  },
  "pr_template": null,

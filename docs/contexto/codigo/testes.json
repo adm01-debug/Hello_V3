@@ -2864,7 +2864,7 @@
   {
    "arquivo": "tests/e2e/helpers/adminSession.ts",
    "tipo": "e2e",
-   "linhas": 81,
+   "linhas": 86,
    "testa": [],
    "casos": 0
   },
