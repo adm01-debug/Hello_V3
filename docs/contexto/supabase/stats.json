@@ -32,11 +32,11 @@
         "healthy": true,
         "info": {
           "connected_cluster": 0,
-          "db_connected": true,
+          "db_connected": false,
           "healthy": true,
-          "node": "realtime@2600:1f18:67fc:ac01:ec13:807a:afb7:9cc1",
-          "region": "us-east-1",
-          "replication_connected": true
+          "node": "realtime@2600:1f1c:c90:ad01:2825:4b69:733f:afd",
+          "region": "us-west-1",
+          "replication_connected": false
         },
         "name": "realtime",
         "status": "ACTIVE_HEALTHY"
@@ -141,12 +141,12 @@
       },
       "connections": [
         {
-          "n": 9,
+          "n": 1,
           "state": "idle",
           "usename": "authenticator"
         },
         {
-          "n": 2,
+          "n": 1,
           "state": "idle",
           "usename": "pgbouncer"
         },
@@ -161,12 +161,7 @@
           "usename": "postgres"
         },
         {
-          "n": 1,
-          "state": "active",
-          "usename": "supabase_admin"
-        },
-        {
-          "n": 8,
+          "n": 2,
           "state": "idle",
           "usename": "supabase_admin"
         },
@@ -174,11 +169,6 @@
           "n": 1,
           "state": null,
           "usename": "supabase_admin"
-        },
-        {
-          "n": 1,
-          "state": "idle",
-          "usename": "supabase_storage_admin"
         }
       ],
       "database_bytes": 25652371,
@@ -192,12 +182,12 @@
       "storage": [],
       "top_queries": [
         {
-          "calls": 81,
-          "mean_ms": 5382.17,
+          "calls": 83,
+          "mean_ms": 5384.61,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 435956
+          "total_ms": 446923
         },
         {
           "calls": 2,
@@ -232,12 +222,12 @@
           "total_ms": 35944
         },
         {
-          "calls": 85,
-          "mean_ms": 168.79,
+          "calls": 87,
+          "mean_ms": 168.03,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 680,
-          "total_ms": 14347
+          "rows": 696,
+          "total_ms": 14619
         },
         {
           "calls": 1,
@@ -264,20 +254,20 @@
           "total_ms": 7062
         },
         {
+          "calls": 87,
+          "mean_ms": 74.64,
+          "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
+          "role": "postgres",
+          "rows": 150965,
+          "total_ms": 6494
+        },
+        {
           "calls": 1,
           "mean_ms": 6150.1,
           "query": "WITH vp AS ( SELECT pr_c.grantee, pr_c.prtype, a.attname, pr_c.relname, pr_c.relnamespace FROM (SELECT c.oid, c.relname, c.relnamespace, (aclexplode(COALESCE(c.relacl, acldefault($1, c.relowner)))).grantee AS grantee, (a",
           "role": "postgres",
           "rows": 1952,
           "total_ms": 6150
-        },
-        {
-          "calls": 85,
-          "mean_ms": 72.31,
-          "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
-          "role": "postgres",
-          "rows": 147435,
-          "total_ms": 6146
         },
         {
           "calls": 20,
@@ -304,12 +294,12 @@
           "total_ms": 4554
         },
         {
-          "calls": 85,
-          "mean_ms": 48.25,
+          "calls": 87,
+          "mean_ms": 48.19,
           "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
           "role": "postgres",
-          "rows": 4590,
-          "total_ms": 4101
+          "rows": 4698,
+          "total_ms": 4193
         }
       ]
     },
