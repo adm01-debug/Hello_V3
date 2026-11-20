@@ -64,47 +64,6 @@ jobs:
           E2E_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD }}
           E2E_SUPABASE_SESSION_JSON: ${{ secrets.E2E_SUPABASE_SESSION_JSON }}
 
-      - name: E2E diagnostic dump (temp)
-        if: always()
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
-          E2E_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL }}
-          E2E_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD }}
-        run: |
-          echo '=== PLAYWRIGHT ERROR CONTEXTS ==='
-          find test-results -name 'error-context.md' -print -exec cat {} \; 2>/dev/null || true
-          echo '=== TEST RESULTS TREE ==='
-          find test-results -maxdepth 2 -type f | head -100
-          echo '=== NETWORK CHECKS (runner -> Supabase) ==='
-          echo 'SUPABASE_URL:' ${VITE_SUPABASE_URL:-UNSET}
-          bun -e '
-            const crypto = await import("node:crypto");
-            const url = process.env.VITE_SUPABASE_URL, key = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-            const email = process.env.E2E_ADMIN_EMAIL, pass = process.env.E2E_ADMIN_PASSWORD;
-            const h = (s) => crypto.createHash("sha256").update(s || "").digest("hex").slice(0, 8);
-            console.log("CRED email_len=" + (email||"").length, "hash=" + h(email), "pass_len=" + (pass||"").length, "hash=" + h(pass));
-            console.log("URL_HOST=" + new URL(url).host, "KEY_HASH=" + h(key));
-            (async () => {
-              const t0 = Date.now();
-              const lr = await fetch(url + "/auth/v1/token?grant_type=password", { method: "POST", headers: { apikey: key, "content-type": "application/json" }, body: JSON.stringify({ email, password: pass }) });
-              const raw = await lr.text();
-              console.log("LOGIN", lr.status, (Date.now() - t0) + "ms", "BODY=" + raw.slice(0, 300), "CT=" + lr.headers.get("content-type"));
-              let lj = {};
-              try { lj = JSON.parse(raw); } catch {}
-              if (!lj.access_token) return;
-              const tok = lj.access_token;
-              const t1 = Date.now();
-              const pr = await fetch(url + "/rest/v1/user_profiles?id=eq." + lj.user.id, { headers: { apikey: key, Authorization: "Bearer " + tok } });
-              const pj = await pr.json();
-              console.log("PROFILE", pr.status, (Date.now() - t1) + "ms", JSON.stringify({ count: Array.isArray(pj) ? pj.length : "?", first: pj[0] ? { role: pj[0].role, id: (pj[0].id || "").slice(0, 8) } : pj }));
-              const t2 = Date.now();
-              const rr = await fetch(url + "/rest/v1/rpc/get_dashboard_stats", { method: "POST", headers: { apikey: key, Authorization: "Bearer " + tok, "content-type": "application/json" }, body: "{}" });
-              const rj = await rr.json();
-              console.log("RPC", rr.status, (Date.now() - t2) + "ms", JSON.stringify(rj).slice(0, 150));
-            })().catch(e => console.log("ERR", e.message));
-          '
-
       - name: Edge Function Tests (Deno)
         run: |
           curl -fsSL https://deno.land/install.sh | sh
