@@ -263,7 +263,14 @@
    "arquivo": "src/pages/admin/ExtensionsAdmin.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
     "useCallback",
+    "useContext",
     "useEffect",
     "useExtensionAudit",
     "useExtensionAuditHistory",
@@ -273,17 +280,26 @@
     "useNavigate",
     "usePageTitle",
     "usePageVisibility",
+    "usePermissions",
     "useQuery",
     "useQueryClient",
+    "useRef",
     "useState"
    ],
    "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
     "useExtensionAudit",
     "useExtensionAuditHistory",
     "useExtensionsAdmin",
     "useExtensionsOverview",
     "usePageTitle",
-    "usePageVisibility"
+    "usePageVisibility",
+    "usePermissions"
    ],
    "tabelas": [
     "agent_devices",
@@ -291,7 +307,9 @@
     "agents",
     "audit_logs",
     "call_sessions",
+    "role_permissions",
     "user_profiles",
+    "user_roles",
     "voip_trunks"
    ],
    "rpcs": [
@@ -303,7 +321,7 @@
    ],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 36
+   "arquivos_puxados": 44
   },
   {
    "protegida": false,
@@ -371,22 +389,47 @@
    "tipo": "tela",
    "caminho": "/admin/security-audit",
    "componente": "SecurityAudit",
-   "arquivo": "src/pages/admin/SecurityDashboard.tsx",
+   "arquivo": "src/pages/admin/SecurityAuditDashboard.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useCallback",
+    "useContext",
     "useEffect",
+    "useMemo",
+    "useNavigate",
+    "usePageTitle",
+    "useRef",
     "useState"
    ],
-   "hooks_locais": [],
+   "hooks_locais": [
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "usePageTitle"
+   ],
    "tabelas": [
-    "audit_logs"
+    "audit_logs",
+    "rls_audit_logs",
+    "user_profiles",
+    "webhook_flush_metrics"
    ],
    "rpcs": [],
    "edges": [],
    "canais_realtime": [],
    "flags": [],
-   "papeis": [],
-   "arquivos_puxados": 9
+   "papeis": [
+    "admin"
+   ],
+   "arquivos_puxados": 21
   },
   {
    "protegida": false,
@@ -2250,7 +2293,7 @@
    "papeis": [
     "status"
    ],
-   "arquivos_puxados": 19
+   "arquivos_puxados": 21
   },
   {
    "protegida": false,
@@ -5694,7 +5737,7 @@
   "SLAPolicies": "src/pages/SLAPolicies.tsx",
   "Scheduling": "src/pages/Scheduling.tsx",
   "SecurityAlerts": "src/pages/admin/SecurityAlerts.tsx",
-  "SecurityAudit": "src/pages/admin/SecurityDashboard.tsx",
+  "SecurityAudit": "src/pages/admin/SecurityAuditDashboard.tsx",
   "SecurityDashboard": "src/pages/SecurityDashboard.tsx",
   "SecurityMonitoring": "src/pages/SecurityMonitoring.tsx",
   "SecurityReport": "src/pages/SecurityReport.tsx",

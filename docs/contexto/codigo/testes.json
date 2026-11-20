@@ -3252,7 +3252,7 @@
    "src/pages/admin/DatabaseHealth.tsx",
    "src/pages/admin/ExtensionsAdmin.tsx",
    "src/pages/admin/SecurityAlerts.tsx",
-   "src/pages/admin/SecurityDashboard.tsx",
+   "src/pages/admin/SecurityAuditDashboard.tsx",
    "src/pages/admin/SloDashboard.tsx",
    "src/pages/admin/VoiceQuality.tsx",
    "src/pages/admin/VoipTrunksAdmin.tsx",

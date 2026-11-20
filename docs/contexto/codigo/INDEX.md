@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `68850f6e9a340ad11add473cc5ee3ff1840d1606` (2026-11-20T15:59:48-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `51ac7dd85bb5a6bbe5b46e3cc6bac86834946dd3` (2026-11-20T16:31:36-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1552 |
 | arquivos_codigo | 1193 |
-| linhas_codigo | 163545 |
+| linhas_codigo | 163555 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -97,7 +97,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
 | pages | 76 | 92 | 91 | 174 | 59 | 128 |
-| pages/admin | 3 | 9 | 17 | 35 | 4 | 16 |
+| pages/admin | 3 | 9 | 17 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
 | pages/roles | 0 | 0 | 6 | 1 | 0 | 3 |
@@ -110,7 +110,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `/admin/database-health` [tela] → src/pages/admin/DatabaseHealth.tsx
 - `/admin/extensions` [tela] → src/pages/admin/ExtensionsAdmin.tsx
 - `/admin/security-alerts` [tela] → src/pages/admin/SecurityAlerts.tsx
-- `/admin/security-audit` [tela] → src/pages/admin/SecurityDashboard.tsx
+- `/admin/security-audit` [tela] → src/pages/admin/SecurityAuditDashboard.tsx
 - `/admin/slo` [tela] → src/pages/admin/SloDashboard.tsx
 - `/admin/voice-quality` [tela] → src/pages/admin/VoiceQuality.tsx
 - `/admin/voip-trunks` [tela] → src/pages/admin/VoipTrunksAdmin.tsx
@@ -351,7 +351,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - tabelas_usadas_sem_definicao: 3 — ex.: agent_status_history, pg_class, pg_policies
 - tabelas_com_drift_migration_vs_types: 9 — ex.: agents, blocked_access_logs, call_control_audit_logs
 - rpcs_sem_definicao: 2 — ex.: check_db_policies, get_table_policies
-- componentes_orfaos: 20 — ex.: src/components/alerts/AlertsDropdown.tsx, src/components/calls/WebRTCCall.tsx, src/components/contacts/ContactAlertsDropdown.tsx
+- componentes_orfaos: 19 — ex.: src/components/alerts/AlertsDropdown.tsx, src/components/calls/WebRTCCall.tsx, src/components/contacts/ContactAlertsDropdown.tsx
 - componentes_com_nome_duplicado: 5 — ex.: KpiCards, SearchInput, SecurityDashboard
 - scripts_orfaos: 0
 - env_usadas_nao_declaradas: 3 — ex.: VITE_TURN_CRED, VITE_TURN_URL, VITE_TURN_USER
@@ -359,8 +359,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8848 nós · 23562 arestas · 684 comunidades · grafo do commit `68850f6e`
-- comunidades maiores: lucide-react (249), client.ts (245), vitest (179), button.tsx (177), @tanstack/react-query (172), usePageTitle (165), safe-date.ts (119), usePageTitle.ts (115), useAuthContext (113), Tabela de funcionalidades (109), ref_https (101), snapshot.py (100)
+- 8849 nós · 23570 arestas · 683 comunidades · grafo do commit `51ac7dd8`
+- comunidades maiores: card.tsx (217), vitest (199), usePageTitle (184), react (178), client.ts (170), traceHeaders (148), utils.ts (139), lucide-react (133), safeFormatDistanceToNow (124), cn (119), gerar.mjs (104), useAuthContext (99)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -379,7 +379,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - docs/agentes/edge-functions.md (2)
 - docs/estado/edge-functions-parte1.md (2)
 - docs/observabilidade/SLI_SLO.md (2)
-- inventario/estado/README.md (2)
+- docs/pendencias/WIRING-01-permissiongate.md (2)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -418,6 +418,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-20 `51ac7dd` feat: wiring dos componentes orfaos no frontend (#61)
 - 2026-11-20 `68850f6` fix: cron data-lake-flush falhava por constraint de dataset sem call_summaries (#60)
 - 2026-11-20 `f105468` fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)
 - 2026-11-20 `72f3935` fix: sanitiza path com fileURLToPath no gerador de inventario (#58)
@@ -432,7 +433,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-20 `1cfbfcf` fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)
 - 2026-11-19 `2fcd5ba` fix: torna testes vitest robustos a timezone e path com espaço (#46)
 - 2026-11-19 `f3cc8f6` fix: corrige selectors e ativa E2E autenticado (#45)
-- 2026-11-19 `5994943` fix: usePhaseColors preserva NaN em CSS var inválida (fallback do safeParseFloat) (#44)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

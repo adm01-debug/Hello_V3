@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "total": 441,
- "orfaos": 20,
+ "orfaos": 19,
  "nomes_duplicados": {
   "KpiCards": [
    "src/components/admin/webhook-health/KpiCards.tsx",
@@ -4995,8 +4995,8 @@
    ],
    "tabelas": [],
    "edges": [],
-   "usado_por": 0,
-   "orfao": true
+   "usado_por": 1,
+   "orfao": false
   },
   {
    "arquivo": "src/contexts/AuthContext.tsx",
@@ -5178,7 +5178,7 @@
     "ExtensionsAdmin"
    ],
    "export_default": "ExtensionsAdmin",
-   "linhas": 199,
+   "linhas": 213,
    "dominio": "pages/admin",
    "hooks_locais": [
     "useExtensionsAdmin",
@@ -5231,7 +5231,7 @@
     "webhook_flush_metrics"
    ],
    "edges": [],
-   "usado_por": 0,
+   "usado_por": 1,
    "orfao": false
   },
   {
@@ -5247,7 +5247,7 @@
     "audit_logs"
    ],
    "edges": [],
-   "usado_por": 1,
+   "usado_por": 0,
    "orfao": false
   },
   {
@@ -6004,15 +6004,14 @@
     "Inbox"
    ],
    "export_default": "Inbox",
-   "linhas": 361,
+   "linhas": 357,
    "dominio": "pages",
    "hooks_locais": [
     "useConversationMessages",
     "useConversations",
     "usePageTitle",
     "useSendMessage",
-    "useUpdateConversation",
-    "useWhatsappRewrite"
+    "useUpdateConversation"
    ],
    "tabelas": [],
    "edges": [],

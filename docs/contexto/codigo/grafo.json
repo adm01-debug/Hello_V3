@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 870,
- "arestas": 3363,
+ "arestas": 3364,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -181,7 +181,6 @@
  "orfaos": [
   "src/components/SearchInput.tsx",
   "src/components/alerts/AlertsDropdown.tsx",
-  "src/components/auth/PermissionGate.tsx",
   "src/components/calls/WebRTCCall.tsx",
   "src/components/contacts/ContactAlertsDropdown.tsx",
   "src/components/gamification/GamificationDashboard.tsx",
@@ -202,7 +201,6 @@
   "src/components/ui/pagination.tsx",
   "src/components/ui/resizable.tsx",
   "src/components/ui/use-toast.ts",
-  "src/components/whatsapp/WhatsappComposer.tsx",
   "src/data/mockData.ts",
   "src/hooks/auth/index.ts",
   "src/hooks/useAdherence.ts",
@@ -246,7 +244,7 @@
   },
   {
    "modulo": "pages",
-   "depende_de": 46,
+   "depende_de": 47,
    "importado_por": 2
   },
   {
@@ -260,14 +258,14 @@
    "importado_por": 2
   },
   {
+   "modulo": "pages/admin",
+   "depende_de": 9,
+   "importado_por": 1
+  },
+  {
    "modulo": "components/calls",
    "depende_de": 6,
    "importado_por": 3
-  },
-  {
-   "modulo": "pages/admin",
-   "depende_de": 8,
-   "importado_por": 1
   },
   {
    "modulo": "components/admin",
@@ -295,6 +293,11 @@
    "importado_por": 6
   },
   {
+   "modulo": "components/auth",
+   "depende_de": 4,
+   "importado_por": 2
+  },
+  {
    "modulo": "components/contacts",
    "depende_de": 5,
    "importado_por": 1
@@ -313,11 +316,6 @@
    "modulo": "components/ai",
    "depende_de": 3,
    "importado_por": 2
-  },
-  {
-   "modulo": "components/auth",
-   "depende_de": 4,
-   "importado_por": 1
   },
   {
    "modulo": "components/coaching",

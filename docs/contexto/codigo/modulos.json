@@ -360,7 +360,8 @@
     "rpcs": []
    },
    "importado_por_outros_modulos": [
-    "pages"
+    "pages",
+    "pages/admin"
    ],
    "depende_de_modulos": [
     "components/ui",
@@ -2867,7 +2868,9 @@
     "tabelas": [],
     "rpcs": []
    },
-   "importado_por_outros_modulos": [],
+   "importado_por_outros_modulos": [
+    "pages"
+   ],
    "depende_de_modulos": [
     "components/ui",
     "hooks"
@@ -4952,7 +4955,7 @@
    "modulo": "pages",
    "arquivos": 91,
    "testes": 0,
-   "linhas": 16283,
+   "linhas": 16279,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5658,6 +5661,7 @@
     "components/supervisor",
     "components/ui",
     "components/voice",
+    "components/whatsapp",
     "contexts",
     "hooks",
     "integrations/lovable",
@@ -5687,7 +5691,7 @@
    "modulo": "pages/admin",
    "arquivos": 17,
    "testes": 0,
-   "linhas": 2227,
+   "linhas": 2241,
    "itens_menu": [
     "Exportação Data Lake",
     "Linhas VoIP",
@@ -5726,6 +5730,7 @@
     "useExtensionsOverview",
     "usePageTitle",
     "usePageVisibility",
+    "usePermissions",
     "useRunHealthCheck",
     "useSaveAssignment",
     "useSaveTrunk",
@@ -5761,7 +5766,9 @@
     "index_drop_audit",
     "notifications",
     "rls_audit_logs",
+    "role_permissions",
     "user_profiles",
+    "user_roles",
     "voip_monitoring_settings",
     "voip_trunk_health_checks",
     "voip_trunk_usage_metrics",
@@ -5819,6 +5826,7 @@
    ],
    "depende_de_modulos": [
     "components/admin",
+    "components/auth",
     "components/layout",
     "components/security-alerts",
     "components/ui",
@@ -6134,6 +6142,7 @@
     "usePageVisibility",
     "usePasswordStrength",
     "usePendingActionItems",
+    "usePermissions",
     "usePersistedTagFilter",
     "usePhaseColors",
     "usePredictiveDialer",
@@ -6382,6 +6391,7 @@
     "renewals",
     "ring_group_members",
     "ring_groups",
+    "rls_audit_logs",
     "role_permissions",
     "routing_rules",
     "scheduled_callbacks",

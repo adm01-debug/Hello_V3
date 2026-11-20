@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: wiring dos componentes orfaos no frontend (#61)",
    "fix: cron data-lake-flush falhava por constraint de dataset sem call_summaries (#60)",
    "fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)",
    "fix: sanitiza path com fileURLToPath no gerador de inventario (#58)",
-   "chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)",
-   "chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)"
+   "chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)"
   ]
  },
  "pr_template": null,

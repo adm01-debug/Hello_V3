@@ -4756,10 +4756,9 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 2,
+   "usado_por": 1,
    "usado_por_arquivos": [
-    "src/components/whatsapp/WhatsappComposer.tsx",
-    "src/pages/Inbox.tsx"
+    "src/components/whatsapp/WhatsappComposer.tsx"
    ],
    "coberto_por_testes": 1
   },
