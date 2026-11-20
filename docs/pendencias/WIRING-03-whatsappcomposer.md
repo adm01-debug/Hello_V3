@@ -4,4 +4,4 @@
 - **O que falta:** decidir se o WhatsappComposer substitui o composer atual do Inbox (exige verificar se faz mais que o existente).
 - **Camadas:** UI.
 - **Critério de aceite:** component integrado ao /inbox ou DESCARTADO se redundante.
-- **Estado:** AGUARDANDO HUMANO — exige comparar com o composer atual do Inbox e decidir substituição sem regressão.
+- **Estado:** CONCLUÍDO (2026-11-20). `WhatsappComposer` integrado ao `ConversationThread` do `/inbox` **somente para `channel === 'whatsapp'`** (via `useConversations`, tabela `conversations`), substituindo o botão fixo "Melhorar com IA" (tom fixo 'profissional') pelo composer com seletor de 4 tons (profissional/amigável/conciso/empático) + botão Enviar. Canais não-whatsapp mantêm textarea/nota interna originais (sem regressão). `conversations` = 0 linhas hoje → empty state domina; `context` = `conversation.subject`. Verificado por type-check/lint.

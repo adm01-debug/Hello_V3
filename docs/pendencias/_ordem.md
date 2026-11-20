@@ -15,6 +15,13 @@
 5. **WIRING-05 — SecurityAuditDashboard sem rota** — `src/pages/admin/SecurityAuditDashboard.tsx`, 0 importadores; rota `/admin/security-audit` aponta p/ `SecurityDashboard`.
 6. **WIRING-06 — Hooks órfãos** — useAdherence, useChurnRisk, useCallPlaylists, useCoachingAssignments, useComplianceRules, useSurveys (0 consumidores).
 
+## Estado de wiring em 20/11 (branch claude/feat-wiring-frontend-20261120-1622 → PR)
+- **WIRING-01 CONCLUÍDO** — PermissionGate aplicado ao botão "Offline" de `admin/ExtensionsAdmin` (fallback = comportamento atual).
+- **WIRING-03 CONCLUÍDO** — WhatsappComposer integrado ao Inbox (canal whatsapp); demais canais preservados.
+- **WIRING-05 CONCLUÍDO** — rota `/admin/security-audit` agora serve SecurityAuditDashboard (superset; recharts já instalada).
+- **WIRING-02 DESCARTADO** — call_sessions só `completed` (0 ativas); `/translation-center` já tem página própria; call_translations vazia.
+- **WIRING-04 / WIRING-06 AGUARDANDO DADOS** — tabelas de gamificação/surveys/coaching/churn/playlists/compliance = 0 linhas (ver `_verificado-banco.md`); wirear = fachada.
+
 ### Itens OBSOLETOS (documento defasado — já ligados nesta semana)
 - Rotas/menu §6: /accounts, /cadences, /deals, /onboarding, /permissions, /dialer/predictive, /inbox, /financial-impact, /shift-swap-suggestions — todos já no AppSidebar + protectedRoutes.
 

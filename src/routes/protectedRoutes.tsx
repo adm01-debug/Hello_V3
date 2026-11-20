@@ -82,7 +82,7 @@ const SLAPolicies = lazy(() => import("@/pages/SLAPolicies"));
 const ConcurrencyConflicts = lazy(() => import("@/pages/ConcurrencyConflicts"));
 const VoipTrunksAdmin = lazy(() => import("@/pages/admin/VoipTrunksAdmin"));
 const ExtensionsAdmin = lazy(() => import("@/pages/admin/ExtensionsAdmin"));
-const SecurityAudit = lazy(() => import("@/pages/admin/SecurityDashboard"));
+const SecurityAudit = lazy(() => import("@/pages/admin/SecurityAuditDashboard"));
 const FinancialImpact = lazy(() => import("@/pages/FinancialImpact"));
 const ShiftSwapSuggestions = lazy(() => import("@/pages/ShiftSwapSuggestions"));
 const DataExport = lazy(() => import("@/pages/admin/DataExport"));

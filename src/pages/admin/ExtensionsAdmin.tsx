@@ -8,6 +8,7 @@ import {
   PowerOff, QrCode, Smartphone, Users2, Download,
 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { PermissionGate } from '@/components/auth/PermissionGate';
 import { useExtensionsAdmin, type ExtensionOverview } from '@/hooks/useExtensionsAdmin';
 import { ExtensionDetailsDrawer } from '@/components/admin/extensions/ExtensionDetailsDrawer';
 import { BulkAssignTrunkDialog } from '@/components/admin/extensions/BulkAssignTrunkDialog';
@@ -98,16 +99,29 @@ export default function ExtensionsAdmin() {
                   <div className="flex gap-2">
                     {admin.selectedIds.size > 0 && (
                       <div className="flex items-center gap-2 animate-in fade-in slide-in-from-right-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={admin.handleBulkOffline}
-                          disabled={admin.bulkOffline}
-                          className="gap-2 text-destructive border-destructive/20 hover:bg-destructive/10"
-                        >
-                          {admin.bulkOffline ? <Loader2 className="h-3 w-3 animate-spin" /> : <PowerOff className="h-3 w-3" />}
-                          Offline ({admin.selectedIds.size})
-                        </Button>
+                        <PermissionGate module="extensions" action="bulk-offline" fallback={
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={admin.handleBulkOffline}
+                            disabled={admin.bulkOffline}
+                            className="gap-2 text-destructive border-destructive/20 hover:bg-destructive/10"
+                          >
+                            {admin.bulkOffline ? <Loader2 className="h-3 w-3 animate-spin" /> : <PowerOff className="h-3 w-3" />}
+                            Offline ({admin.selectedIds.size})
+                          </Button>
+                        }>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={admin.handleBulkOffline}
+                            disabled={admin.bulkOffline}
+                            className="gap-2 text-destructive border-destructive/20 hover:bg-destructive/10"
+                          >
+                            {admin.bulkOffline ? <Loader2 className="h-3 w-3 animate-spin" /> : <PowerOff className="h-3 w-3" />}
+                            Offline ({admin.selectedIds.size})
+                          </Button>
+                        </PermissionGate>
                         <Button variant="outline" size="sm" onClick={() => setBulkTrunkOpen(true)} className="gap-2">
                           <Network className="h-3 w-3" /> Alterar Trunk ({admin.selectedIds.size})
                         </Button>
