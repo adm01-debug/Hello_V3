@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1cfbfcfbf1` · branch `main` · 2026-11-20 11:04 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b3d9f80baa` · branch `main` · 2026-11-20 11:41 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2079,6 +2079,28 @@ _nenhum item encontrado_
 
 | Mensagem | Arquivo |
 |---|---|
+| Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/apply-call-volume-fix.mjs` |
+| Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/check-cfmlmc-db.mjs` |
+| Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente. | `scripts/check-data.mjs` |
+| Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/check-rls.mjs` |
+| Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/clean-hold-events.mjs` |
+| Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/cleanup-and-count.mjs` |
+| Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/fix-user-profile.mjs` |
+| Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/inspect-schema.mjs` |
+| Credencial ausente: defina SUPABASE_ANON_KEY no ambiente. | `scripts/test-api-direct.mjs` |
+| Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente. | `scripts/test-api-direct.mjs` |
+| Credencial ausente: defina SUPABASE_ANON_KEY no ambiente. | `scripts/test-auth-flow.mjs` |
+| Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente. | `scripts/test-auth-flow.mjs` |
+| Credencial ausente: defina SUPABASE_ANON_KEY no ambiente. | `scripts/test-authenticated-queries.mjs` |
+| Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente. | `scripts/test-authenticated-queries.mjs` |
+| Credencial ausente: defina SUPABASE_ANON_KEY no ambiente. | `scripts/test-call-volume-rpc.mjs` |
+| Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente. | `scripts/test-call-volume-rpc.mjs` |
+| Credencial ausente: defina SUPABASE_ANON_KEY no ambiente. | `scripts/test-dashboard-rpcs.mjs` |
+| Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente. | `scripts/test-dashboard-rpcs.mjs` |
+| Credencial ausente: defina SUPABASE_ANON_KEY no ambiente. | `scripts/test-rls-access.mjs` |
+| Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/test-rls-access.mjs` |
+| Credencial ausente: defina SUPABASE_ANON_KEY no ambiente. | `scripts/test-validate-ip.mjs` |
+| Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente. | `scripts/test-validate-ip.mjs` |
 | ${msg}: esperado ${JSON.stringify(b)} obtido ${JSON.stringify(a)} | `scripts/ai-context/cenarios.mjs` |
 | --entrada exige o caminho do arquivo com a resposta do banco.sql | `scripts/inventario/gerar-banco.mjs` |
 | Management API ${caminho} respondeu HTTP ${res.status} | `scripts/inventario/gerar-banco.mjs` |
@@ -2357,29 +2379,7 @@ _nenhum item encontrado_
 | Nenhuma chamada recebida pendente | `src/hooks/useSipCall.ts` |
 | Não foi possível conectar ao servidor SIP | `src/hooks/useSipCall.ts` |
 | Registro SIP falhou: ${cause} | `src/hooks/useSipCall.ts` |
-| SIP não registrado. Tente reconectar. | `src/hooks/useSipCall.ts` |
-| Servidor SIP não disponível | `src/hooks/useSipCall.ts` |
-| Erro ao atualizar | `src/hooks/useSkills.ts` |
-| Erro ao criar habilidade | `src/hooks/useSkills.ts` |
-| Falha ao atualizar marco | `src/hooks/useSuccessPlans.ts` |
-| Falha ao criar plano | `src/hooks/useSuccessPlans.ts` |
-| Erro ao enviar whisper | `src/hooks/useSupervisorPanel.ts` |
-| Erro ao iniciar barge-in | `src/hooks/useSupervisorPanel.ts` |
-| Erro ao sair da chamada | `src/hooks/useSupervisorPanel.ts` |
-| Selecione uma chamada e digite uma mensagem | `src/hooks/useSupervisorPanel.ts` |
-| Selecione uma chamada primeiro | `src/hooks/useSupervisorPanel.ts` |
-| Falha ao carregar respostas | `src/hooks/useSurveys.ts` |
-| Falha ao enviar pesquisa | `src/hooks/useSurveys.ts` |
-| Corrija os parâmetros de retry antes de testar. | `src/hooks/useTestWebhook.ts` |
-| Segredo: ${validation.errors.secret} | `src/hooks/useTestWebhook.ts` |
-| Webhook falhou${retryNote}: ${result.error ??  | `src/hooks/useTestWebhook.ts` |
-| Erro ao revisar | `src/hooks/useTimeOff.ts` |
-| Erro ao solicitar folga | `src/hooks/useTimeOff.ts` |
-| Erro ao criar tracker | `src/hooks/useTrackers.ts` |
-| Failover Automático Realizado | `src/hooks/useTrunkFailoverMonitor.ts` |
-| Falha no health check | `src/hooks/useTrunkHealth.ts` |
-| Falha ao redatar transcrição | `src/hooks/useVoiceBiometrics.ts` |
-| … +183 linhas — lista completa em `context.json` | |
+| … +205 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 

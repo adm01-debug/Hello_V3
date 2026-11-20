@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "1cfbfcfbf178933305c79ec24d74f2ac470ba963",
+  "commit": "b3d9f80baab64867316518e2ac681e400f35eb76",
   "branch": "main",
-  "data_commit": "2026-11-20T00:09:21-03:00",
+  "data_commit": "2026-11-20T08:36:01-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "b3d9f80",
+    "data": "2026-11-20",
+    "assunto": "fix: remove segredos service_role e postgres literais dos scripts de diagnostico (#50)"
+   },
    {
     "sha": "1cfbfcf",
     "data": "2026-11-20",
@@ -126,14 +131,9 @@
     "sha": "650143f",
     "data": "2026-11-13",
     "assunto": "fix: test_snapshot.py lê arquivos gerados com UTF-8 explícito (#24)"
-   },
-   {
-    "sha": "f8c3c37",
-    "data": "2026-11-12",
-    "assunto": "fix(ci): inventario nao quebra sem banco.json (add-paths varre o diretorio) (#22)"
    }
   ],
-  "arquivos_mudados_7d": 46,
+  "arquivos_mudados_7d": 62,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/lib/__tests__",
@@ -294,14 +294,14 @@
     "mudancas": 1
    },
    {
-    "arquivo": "CLAUDE.md",
+    "arquivo": ".env.example",
     "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 33
+    "commits": 34
    },
    {
     "autor": "github-actions[bot]",
@@ -312,7 +312,7 @@
  "contagens": {
   "arquivos_total": 1541,
   "arquivos_codigo": 1193,
-  "linhas_codigo": 163423,
+  "linhas_codigo": 163479,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -376,11 +376,11 @@
   },
   "scripts/apply-call-volume-fix.mjs": {
    "arquivos": 1,
-   "linhas": 36
+   "linhas": 43
   },
   "scripts/check-cfmlmc-db.mjs": {
    "arquivos": 1,
-   "linhas": 104
+   "linhas": 111
   },
   "scripts/check-data.mjs": {
    "arquivos": 1,
@@ -388,7 +388,7 @@
   },
   "scripts/check-rls.mjs": {
    "arquivos": 1,
-   "linhas": 80
+   "linhas": 87
   },
   "scripts/ci": {
    "arquivos": 1,
@@ -396,11 +396,11 @@
   },
   "scripts/clean-hold-events.mjs": {
    "arquivos": 1,
-   "linhas": 67
+   "linhas": 74
   },
   "scripts/cleanup-and-count.mjs": {
    "arquivos": 1,
-   "linhas": 73
+   "linhas": 80
   },
   "scripts/codemod-safe-number.mjs": {
    "arquivos": 1,
@@ -408,7 +408,7 @@
   },
   "scripts/fix-user-profile.mjs": {
    "arquivos": 1,
-   "linhas": 80
+   "linhas": 87
   },
   "scripts/guard-edge-numeric.mjs": {
    "arquivos": 1,
@@ -416,7 +416,7 @@
   },
   "scripts/inspect-schema.mjs": {
    "arquivos": 1,
-   "linhas": 64
+   "linhas": 71
   },
   "scripts/inventario": {
    "arquivos": 4,
@@ -452,7 +452,7 @@
   },
   "scripts/test-rls-access.mjs": {
    "arquivos": 1,
-   "linhas": 77
+   "linhas": 84
   },
   "scripts/test-validate-ip.mjs": {
    "arquivos": 1,
@@ -759,20 +759,6 @@
   "ciclos_de_import": 1,
   "possiveis_segredos_no_codigo": [
    "scripts/ai-context/cenarios.mjs:102",
-   "scripts/check-data.mjs:2",
-   "scripts/test-api-direct.mjs:3",
-   "scripts/test-api-direct.mjs:4",
-   "scripts/test-auth-flow.mjs:3",
-   "scripts/test-auth-flow.mjs:33",
-   "scripts/test-authenticated-queries.mjs:3",
-   "scripts/test-authenticated-queries.mjs:7",
-   "scripts/test-call-volume-rpc.mjs:2",
-   "scripts/test-call-volume-rpc.mjs:3",
-   "scripts/test-dashboard-rpcs.mjs:2",
-   "scripts/test-dashboard-rpcs.mjs:3",
-   "scripts/test-rls-access.mjs:3",
-   "scripts/test-validate-ip.mjs:3",
-   "scripts/test-validate-ip.mjs:42",
    "src/lib/__tests__/security-advanced.test.ts:203",
    "src/lib/__tests__/security-advanced.test.ts:208",
    "src/lib/__tests__/security-advanced.test.ts:213"

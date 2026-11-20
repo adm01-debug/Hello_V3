@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `1cfbfcfbf178933305c79ec24d74f2ac470ba963` (2026-11-20T00:09:21-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b3d9f80baab64867316518e2ac681e400f35eb76` (2026-11-20T08:36:01-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1541 |
 | arquivos_codigo | 1193 |
-| linhas_codigo | 163423 |
+| linhas_codigo | 163479 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -357,10 +357,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - scripts_orfaos: 0
 - env_usadas_nao_declaradas: 3 — ex.: VITE_TURN_CRED, VITE_TURN_URL, VITE_TURN_USER
 - ciclos_de_import: 1
-- possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
+- possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:102, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- não gerado neste run. uvx --from "graphifyy[sql]" graphify update .  (ou: bun run graph:update); saída em graphify-out/ — graph.json e graph.html NÃO são versionados (dezenas de MB); use `graphify query/path/explain` localmente
+- 8852 nós · 23606 arestas · 673 comunidades · grafo do commit `b3d9f80b`
+- comunidades maiores: react (170), badge.tsx (166), button.tsx (146), CardHeader (135), Card (130), vitest (129), lucide-react (126), cn (108), gerar.mjs (106), @tanstack/react-query (105), snapshot.py (102), ref_https (101)
+- símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
+- consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - .github/workflows/contexto.yml (6)
@@ -416,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-20 `b3d9f80` fix: remove segredos service_role e postgres literais dos scripts de diagnostico (#50)
 - 2026-11-20 `1cfbfcf` fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)
 - 2026-11-19 `2fcd5ba` fix: torna testes vitest robustos a timezone e path com espaço (#46)
 - 2026-11-19 `f3cc8f6` fix: corrige selectors e ativa E2E autenticado (#45)
@@ -430,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-14 `2c8b481` fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)
 - 2026-11-14 `1a3c93f` fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)
 - 2026-11-14 `42f17da` fix: aplica security_invoker na view financial_impact_daily (#34)
-- 2026-11-13 `4b6df34` chore: fecha relatorio de prod-readiness na main final 25e39c4 (#33)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

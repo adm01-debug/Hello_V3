@@ -43,8 +43,15 @@
   {
    "arquivo": "scripts/apply-call-volume-fix.mjs",
    "descricao": null,
-   "linhas": 36,
-   "env": [],
+   "linhas": 43,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -52,8 +59,15 @@
   {
    "arquivo": "scripts/check-cfmlmc-db.mjs",
    "descricao": null,
-   "linhas": 104,
-   "env": [],
+   "linhas": 111,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -62,7 +76,10 @@
    "arquivo": "scripts/check-data.mjs",
    "descricao": null,
    "linhas": 71,
-   "env": [],
+   "env": [
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -70,8 +87,15 @@
   {
    "arquivo": "scripts/check-rls.mjs",
    "descricao": null,
-   "linhas": 80,
-   "env": [],
+   "linhas": 87,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -93,8 +117,15 @@
   {
    "arquivo": "scripts/clean-hold-events.mjs",
    "descricao": null,
-   "linhas": 67,
-   "env": [],
+   "linhas": 74,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -102,8 +133,15 @@
   {
    "arquivo": "scripts/cleanup-and-count.mjs",
    "descricao": null,
-   "linhas": 73,
-   "env": [],
+   "linhas": 80,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -131,8 +169,15 @@
   {
    "arquivo": "scripts/fix-user-profile.mjs",
    "descricao": null,
-   "linhas": 80,
-   "env": [],
+   "linhas": 87,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -160,8 +205,15 @@
   {
    "arquivo": "scripts/inspect-schema.mjs",
    "descricao": null,
-   "linhas": 64,
-   "env": [],
+   "linhas": 71,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -282,7 +334,11 @@
    "arquivo": "scripts/test-api-direct.mjs",
    "descricao": "Testa exatamente as chamadas que o frontend faz via supabase-js client 1. SELECT como ANON (sem login) - geralmente bloqueado por RLS",
    "linhas": 31,
-   "env": [],
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -292,6 +348,9 @@
    "descricao": "Simula login real do ti@promobrindes e testa queries do frontend",
    "linhas": 66,
    "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL",
     "TI_PASSWORD"
    ],
    "npm_scripts": [],
@@ -302,7 +361,11 @@
    "arquivo": "scripts/test-authenticated-queries.mjs",
    "descricao": "Login do ti@promobrindes (já confirmado) e teste das queries Como não tenho a senha do ti@promobrindes, vou usar um truque:",
    "linhas": 95,
-   "env": [],
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -311,7 +374,11 @@
    "arquivo": "scripts/test-call-volume-rpc.mjs",
    "descricao": "1. Service role (bypassa RLS)",
    "linhas": 47,
-   "env": [],
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -320,7 +387,11 @@
    "arquivo": "scripts/test-dashboard-rpcs.mjs",
    "descricao": null,
    "linhas": 28,
-   "env": [],
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -328,8 +399,16 @@
   {
    "arquivo": "scripts/test-rls-access.mjs",
    "descricao": "Teste via cliente postgres direto simulando o que o frontend faz via Supabase JS client",
-   "linhas": 77,
-   "env": [],
+   "linhas": 84,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_DB_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false
@@ -338,7 +417,11 @@
    "arquivo": "scripts/test-validate-ip.mjs",
    "descricao": "Test validate-ip com JWT válido de usuário autenticado 1. Tentar gerar magic link ou token anônimo de admin",
    "linhas": 51,
-   "env": [],
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
    "npm_scripts": [],
    "workflows": [],
    "orfao": false

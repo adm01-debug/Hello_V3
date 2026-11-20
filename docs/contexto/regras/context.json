@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "1cfbfcfbf178933305c79ec24d74f2ac470ba963",
+  "sha": "b3d9f80baab64867316518e2ac681e400f35eb76",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 11:04 UTC",
+  "generated_at": "2026-11-20 11:41 UTC",
   "files_total": 2006,
   "code_files": 1412,
-  "code_lines": 177856
+  "code_lines": 177912
  },
  "version": "1.3.2",
- "facts_hash": "58947336a374a3f5",
+ "facts_hash": "05ba87f732a63b3d",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31636,7 +31636,7 @@
   {
    "module": "scripts",
    "files": 32,
-   "lines": 9299,
+   "lines": 9355,
    "tables": [
     "a",
     "contacts",
@@ -35752,8 +35752,58 @@
    "CODE_SCAN_DIRS": [
     "scripts/supabase_snapshot/snapshot.py"
    ],
+   "DB_HOST": [
+    "scripts/apply-call-volume-fix.mjs",
+    "scripts/check-cfmlmc-db.mjs",
+    "scripts/check-rls.mjs",
+    "scripts/clean-hold-events.mjs",
+    "scripts/cleanup-and-count.mjs",
+    "scripts/fix-user-profile.mjs",
+    "scripts/inspect-schema.mjs",
+    "scripts/test-rls-access.mjs"
+   ],
+   "DB_NAME": [
+    "scripts/apply-call-volume-fix.mjs",
+    "scripts/check-cfmlmc-db.mjs",
+    "scripts/check-rls.mjs",
+    "scripts/clean-hold-events.mjs",
+    "scripts/cleanup-and-count.mjs",
+    "scripts/fix-user-profile.mjs",
+    "scripts/inspect-schema.mjs",
+    "scripts/test-rls-access.mjs"
+   ],
+   "DB_PASSWORD": [
+    "scripts/apply-call-volume-fix.mjs",
+    "scripts/check-cfmlmc-db.mjs",
+    "scripts/check-rls.mjs",
+    "scripts/clean-hold-events.mjs",
+    "scripts/cleanup-and-count.mjs",
+    "scripts/fix-user-profile.mjs",
+    "scripts/inspect-schema.mjs",
+    "scripts/test-rls-access.mjs"
+   ],
+   "DB_PORT": [
+    "scripts/apply-call-volume-fix.mjs",
+    "scripts/check-cfmlmc-db.mjs",
+    "scripts/check-rls.mjs",
+    "scripts/clean-hold-events.mjs",
+    "scripts/cleanup-and-count.mjs",
+    "scripts/fix-user-profile.mjs",
+    "scripts/inspect-schema.mjs",
+    "scripts/test-rls-access.mjs"
+   ],
    "DB_URL": [
     "scripts/ai-context/gerar.unit.mjs"
+   ],
+   "DB_USER": [
+    "scripts/apply-call-volume-fix.mjs",
+    "scripts/check-cfmlmc-db.mjs",
+    "scripts/check-rls.mjs",
+    "scripts/clean-hold-events.mjs",
+    "scripts/cleanup-and-count.mjs",
+    "scripts/fix-user-profile.mjs",
+    "scripts/inspect-schema.mjs",
+    "scripts/test-rls-access.mjs"
    ],
    "E2E_ADMIN_EMAIL": [
     "tests/e2e/helpers/adminSession.ts",
@@ -35875,6 +35925,13 @@
     "scripts/supabase_snapshot/snapshot.py"
    ],
    "SUPABASE_ANON_KEY": [
+    "scripts/test-api-direct.mjs",
+    "scripts/test-auth-flow.mjs",
+    "scripts/test-authenticated-queries.mjs",
+    "scripts/test-call-volume-rpc.mjs",
+    "scripts/test-dashboard-rpcs.mjs",
+    "scripts/test-rls-access.mjs",
+    "scripts/test-validate-ip.mjs",
     "supabase/functions/analyze-call/index.ts",
     "supabase/functions/analyze-contact-profile/index.ts",
     "supabase/functions/analyze-live-utterance/index.ts",
@@ -35944,7 +36001,15 @@
     "scripts/inventario/gerar-banco.mjs"
    ],
    "SUPABASE_DB_URL": [
+    "scripts/apply-call-volume-fix.mjs",
+    "scripts/check-cfmlmc-db.mjs",
+    "scripts/check-rls.mjs",
+    "scripts/clean-hold-events.mjs",
+    "scripts/cleanup-and-count.mjs",
+    "scripts/fix-user-profile.mjs",
+    "scripts/inspect-schema.mjs",
     "scripts/supabase_snapshot/snapshot.py",
+    "scripts/test-rls-access.mjs",
     "supabase/functions/__tests__/optimistic-lock.test.ts",
     "supabase/functions/migrate-helper/index.ts"
    ],
@@ -35953,6 +36018,13 @@
     "scripts/supabase_snapshot/snapshot.py"
    ],
    "SUPABASE_SERVICE_ROLE_KEY": [
+    "scripts/check-data.mjs",
+    "scripts/test-api-direct.mjs",
+    "scripts/test-auth-flow.mjs",
+    "scripts/test-authenticated-queries.mjs",
+    "scripts/test-call-volume-rpc.mjs",
+    "scripts/test-dashboard-rpcs.mjs",
+    "scripts/test-validate-ip.mjs",
     "supabase/functions/_shared/hmac.ts",
     "supabase/functions/_shared/rate-limit.ts",
     "supabase/functions/_shared/validator.ts",
@@ -36026,6 +36098,13 @@
    ],
    "SUPABASE_URL": [
     "scripts/ai-context/cenarios.mjs",
+    "scripts/check-data.mjs",
+    "scripts/test-api-direct.mjs",
+    "scripts/test-auth-flow.mjs",
+    "scripts/test-authenticated-queries.mjs",
+    "scripts/test-call-volume-rpc.mjs",
+    "scripts/test-dashboard-rpcs.mjs",
+    "scripts/test-validate-ip.mjs",
     "supabase/functions/_shared/hmac.ts",
     "supabase/functions/_shared/rate-limit.ts",
     "supabase/functions/_shared/validator.ts",
@@ -38061,6 +38140,94 @@
    }
   ],
   "error_messages": [
+   {
+    "file": "scripts/apply-call-volume-fix.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   },
+   {
+    "file": "scripts/check-cfmlmc-db.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   },
+   {
+    "file": "scripts/check-data.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   },
+   {
+    "file": "scripts/check-rls.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   },
+   {
+    "file": "scripts/clean-hold-events.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   },
+   {
+    "file": "scripts/cleanup-and-count.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   },
+   {
+    "file": "scripts/fix-user-profile.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   },
+   {
+    "file": "scripts/inspect-schema.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   },
+   {
+    "file": "scripts/test-api-direct.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-api-direct.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-auth-flow.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-auth-flow.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-authenticated-queries.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-authenticated-queries.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-call-volume-rpc.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-call-volume-rpc.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-dashboard-rpcs.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-dashboard-rpcs.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-rls-access.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-rls-access.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   },
+   {
+    "file": "scripts/test-validate-ip.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente."
+   },
+   {
+    "file": "scripts/test-validate-ip.mjs",
+    "msg": "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   },
    {
     "file": "scripts/ai-context/cenarios.mjs",
     "msg": "${msg}: esperado ${JSON.stringify(b)} obtido ${JSON.stringify(a)}"
@@ -82772,9 +82939,13 @@
    "scripts/inventario/gerar-banco.mjs",
    "scripts/regras_negocio/generate.py",
    "scripts/supabase_snapshot/snapshot.py",
+   "scripts/test-api-direct.mjs",
    "scripts/test-auth-flow.mjs",
    "scripts/test-authenticated-queries.mjs",
+   "scripts/test-call-volume-rpc.mjs",
+   "scripts/test-dashboard-rpcs.mjs",
    "scripts/test-rls-access.mjs",
+   "scripts/test-validate-ip.mjs",
    "supabase/functions/_shared/hmac.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/validator.ts",
@@ -85813,15 +85984,44 @@
   },
   "scripts/apply-call-volume-fix.mjs": {
    "path": "scripts/apply-call-volume-fix.mjs",
-   "lines": 36
+   "lines": 43,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   ]
   },
   "scripts/check-cfmlmc-db.mjs": {
    "path": "scripts/check-cfmlmc-db.mjs",
-   "lines": 104
+   "lines": 111,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   ]
   },
   "scripts/check-data.mjs": {
    "path": "scripts/check-data.mjs",
    "lines": 71,
+   "env": [
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   ],
    "temporal": [
     "const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();"
    ],
@@ -85829,19 +86029,52 @@
   },
   "scripts/check-rls.mjs": {
    "path": "scripts/check-rls.mjs",
-   "lines": 80,
+   "lines": 87,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   ],
    "uses_service_role": true
   },
   "scripts/clean-hold-events.mjs": {
    "path": "scripts/clean-hold-events.mjs",
-   "lines": 67,
+   "lines": 74,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   ],
    "temporal": [
     "WHERE ended_at IS NULL AND started_at < now() - interval '1 hour'"
    ]
   },
   "scripts/cleanup-and-count.mjs": {
    "path": "scripts/cleanup-and-count.mjs",
-   "lines": 73
+   "lines": 80,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   ]
   },
   "scripts/codemod-safe-number.mjs": {
    "path": "scripts/codemod-safe-number.mjs",
@@ -85875,7 +86108,18 @@
   },
   "scripts/fix-user-profile.mjs": {
    "path": "scripts/fix-user-profile.mjs",
-   "lines": 80
+   "lines": 87,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   ]
   },
   "scripts/guard-edge-numeric.mjs": {
    "path": "scripts/guard-edge-numeric.mjs",
@@ -85900,24 +86144,52 @@
   },
   "scripts/inspect-schema.mjs": {
    "path": "scripts/inspect-schema.mjs",
-   "lines": 64
+   "lines": 71,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_DB_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   ]
   },
   "scripts/test-api-direct.mjs": {
    "path": "scripts/test-api-direct.mjs",
    "lines": 31,
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.",
+    "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   ],
    "rule_comments": [
     "&limit=3`, headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` } },",
     "(anon)', url: `${SUPABASE_URL}/rest/v1/deals?select=*&limit=3`, headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` } },",
     "(anon)', url: `${SUPABASE_URL}/rest/v1/agents?select=*&limit=3`, headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` } },",
     "(anon)', url: `${SUPABASE_URL}/rest/v1/call_sessions?select=*&limit=3`, headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` } },"
    ],
-   "doc": "Testa exatamente as chamadas que o frontend faz via supabase-js client"
+   "doc": "Testa exatamente as chamadas que o frontend faz via supabase-js client",
+   "uses_service_role": true
   },
   "scripts/test-auth-flow.mjs": {
    "path": "scripts/test-auth-flow.mjs",
    "lines": 66,
    "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL",
     "TI_PASSWORD"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.",
+    "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
    ],
    "doc": "Simula login real do ti@promobrindes e testa queries do frontend",
    "uses_service_role": true
@@ -85925,32 +86197,84 @@
   "scripts/test-authenticated-queries.mjs": {
    "path": "scripts/test-authenticated-queries.mjs",
    "lines": 95,
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.",
+    "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   ],
    "doc": "Login do ti@promobrindes (já confirmado) e teste das queries",
    "uses_service_role": true
   },
   "scripts/test-call-volume-rpc.mjs": {
    "path": "scripts/test-call-volume-rpc.mjs",
    "lines": 47,
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.",
+    "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   ],
    "rule_comments": [
     "2. Anon (deve falhar - sem grant)"
-   ]
+   ],
+   "uses_service_role": true
   },
   "scripts/test-dashboard-rpcs.mjs": {
    "path": "scripts/test-dashboard-rpcs.mjs",
-   "lines": 28
+   "lines": 28,
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.",
+    "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   ],
+   "uses_service_role": true
   },
   "scripts/test-rls-access.mjs": {
    "path": "scripts/test-rls-access.mjs",
-   "lines": 77,
+   "lines": 84,
+   "env": [
+    "DB_HOST",
+    "DB_NAME",
+    "DB_PASSWORD",
+    "DB_PORT",
+    "DB_USER",
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_DB_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.",
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   ],
    "uses_service_role": true
   },
   "scripts/test-validate-ip.mjs": {
    "path": "scripts/test-validate-ip.mjs",
    "lines": 51,
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "errors": [
+    "Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.",
+    "Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente."
+   ],
    "rule_comments": [
     "&limit=0`, {"
    ],
-   "doc": "Test validate-ip com JWT válido de usuário autenticado"
+   "doc": "Test validate-ip com JWT válido de usuário autenticado",
+   "uses_service_role": true
   },
   "scripts/ai-context/cenarios.mjs": {
    "path": "scripts/ai-context/cenarios.mjs",
@@ -117614,10 +117938,34 @@
   }
  },
  "git": {
-  "sha": "1cfbfcfbf178933305c79ec24d74f2ac470ba963",
+  "sha": "b3d9f80baab64867316518e2ac681e400f35eb76",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "b3d9f80",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "fix: remove segredos service_role e postgres literais dos scripts de diagnostico (#50)",
+    "files": [
+     ".env.example",
+     "scripts/apply-call-volume-fix.mjs",
+     "scripts/check-cfmlmc-db.mjs",
+     "scripts/check-data.mjs",
+     "scripts/check-rls.mjs",
+     "scripts/clean-hold-events.mjs",
+     "scripts/cleanup-and-count.mjs",
+     "scripts/fix-user-profile.mjs",
+     "scripts/inspect-schema.mjs",
+     "scripts/test-api-direct.mjs",
+     "scripts/test-auth-flow.mjs",
+     "scripts/test-authenticated-queries.mjs",
+     "scripts/test-call-volume-rpc.mjs",
+     "scripts/test-dashboard-rpcs.mjs",
+     "scripts/test-rls-access.mjs",
+     "scripts/test-validate-ip.mjs"
+    ]
+   },
    {
     "sha": "1cfbfcf",
     "date": "2026-11-20",
@@ -117971,16 +118319,6 @@
      "src/hooks/useVoipQualityAlertsSummary.ts",
      "src/pages/NetworkDiagnostics.tsx"
     ]
-   },
-   {
-    "sha": "2b05cbb",
-    "date": "2026-11-09",
-    "author": "adm01-debug",
-    "subject": "fix(chat-widget-session): aplica rate limit por IP no endpoint anônimo",
-    "files": [
-     "docs/estado/edge-functions-parte1.md",
-     "supabase/functions/chat-widget-session/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -118041,10 +118379,6 @@
     2
    ],
    [
-    "docs/estado/edge-functions-parte1.md",
-    2
-   ],
-   [
     "inventario/estado/README.md",
     2
    ],
@@ -118063,6 +118397,10 @@
    [
     "inventario/estado/rotas.json",
     2
+   ],
+   [
+    ".env.example",
+    1
    ]
   ]
  }

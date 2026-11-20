@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1cfbfcfbf1` · branch `main` · 2026-11-20 11:04 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b3d9f80baa` · branch `main` · 2026-11-20 11:41 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -185,7 +185,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 101 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 105 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -194,9 +194,13 @@
 - `scripts/inventario/gerar-banco.mjs`
 - `scripts/regras_negocio/generate.py`
 - `scripts/supabase_snapshot/snapshot.py`
+- `scripts/test-api-direct.mjs`
 - `scripts/test-auth-flow.mjs`
 - `scripts/test-authenticated-queries.mjs`
+- `scripts/test-call-volume-rpc.mjs`
+- `scripts/test-dashboard-rpcs.mjs`
 - `scripts/test-rls-access.mjs`
+- `scripts/test-validate-ip.mjs`
 - `supabase/functions/_shared/hmac.ts`
 - `supabase/functions/_shared/rate-limit.ts`
 - `supabase/functions/_shared/validator.ts`
