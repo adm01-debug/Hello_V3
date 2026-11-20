@@ -12,9 +12,7 @@ const cors = {
 
 export const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
-  const ACCESS_KEY =
-    Deno.env.get("MIGRATE_HELPER_ACCESS_KEY") ??
-    "f7301733c3924c23a783d14b33b9b5612819f9d11f7d2df7";
+  const ACCESS_KEY = Deno.env.get("MIGRATE_HELPER_ACCESS_KEY");
   const key = req.headers.get("x-access-key");
   if (key !== ACCESS_KEY) return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401, headers: { ...cors, "Content-Type": "application/json" } });
 
