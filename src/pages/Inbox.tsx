@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Inbox as InboxIcon, MessageCircle, Mail, MessageSquare, Phone, Smartphone, Send, Filter, Tag, AlertTriangle } from 'lucide-react';
+import { Inbox as InboxIcon, MessageCircle, Mail, MessageSquare, Phone, Smartphone, Send, Filter, Tag, AlertTriangle, Sparkles, Loader2 } from 'lucide-react';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 import { Card } from '@/components/ui/card';
@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { EmptyState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useWhatsappRewrite } from '@/hooks/useWhatsappRewrite';
 import {
   useConversations,
   useConversationMessages,
@@ -259,6 +260,7 @@ interface ThreadProps {
 
 function ConversationThread({ conversation, messages, draft, setDraft, isPrivateNote, setIsPrivateNote, onSend, sending, onResolve }: ThreadProps) {
   const Icon = channelIcons[conversation.channel];
+  const { rewrite: rewriteWhatsapp, loading: rewritingWhatsapp } = useWhatsappRewrite();
   return (
     <>
       <div className="border-b border-border/40 p-3 flex items-center justify-between">
@@ -323,6 +325,20 @@ function ConversationThread({ conversation, messages, draft, setDraft, isPrivate
           >
             {isPrivateNote ? '📝 Nota interna' : 'Resposta pública'}
           </Button>
+          {conversation.channel === 'whatsapp' && (
+            <Button
+              size="sm"
+              variant="secondary"
+              disabled={!draft.trim() || rewritingWhatsapp}
+              onClick={async () => {
+                const improved = await rewriteWhatsapp(draft, 'profissional', conversation.subject || undefined);
+                if (improved) setDraft(improved);
+              }}
+            >
+              {rewritingWhatsapp ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+              Melhorar com IA
+            </Button>
+          )}
         </div>
         <div className="flex gap-2">
           <Textarea
