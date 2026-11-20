@@ -11,13 +11,12 @@ ou autenticação de edge.
 | Com `index.ts` (deployáveis) | **94** |
 | Sem `index.ts` | `check-calling-hours` e `check-dnc` — **só têm `__tests__/`**; a lógica vive como RPC no banco (`score-call-attempt/index.ts` chama `rpc('check_calling_hours')` e `rpc('check_dnc')`) |
 | Arquivos de teste Deno | **40** (`*.test.ts` / `*_test.ts`, em `__tests__/` ou ao lado) |
-| `verify_jwt` versionado | **1 só**: `[functions.migrate-helper] verify_jwt = false` (`supabase/config.toml:3-4`) |
+| `verify_jwt` versionado | **0** — nenhuma função declara `verify_jwt = false` no repo |
 | Funções que chamam `auth.getUser()` | **57** de 94 |
 | Funções que criam cliente com `SUPABASE_SERVICE_ROLE_KEY` | **64** de 94 |
 
-**O `supabase/config.toml` tem 4 linhas.** Como só uma função declara `verify_jwt`, **a exposição real das
-outras 93 não está no repositório** — depende de configuração de plataforma. Qualquer afirmação do tipo
-"essa função é anônima" ou "essa função exige JWT" para as 93 é **`NÃO VERIFICADO`** sem olhar o painel do
+**O `supabase/config.toml` está enxuto (1 linha).** Como nenhuma função declara `verify_jwt` no repo, **a configuração real das funções de produção não está no repositório** — depende de configuração de plataforma. Qualquer afirmação do tipo
+"essa função é anônima" ou "essa função exige JWT" para as demais é **`NÃO VERIFICADO`** sem olhar o painel do
 Supabase. Ao criar função nova, **versione o `verify_jwt` dela** em `supabase/config.toml`.
 
 ## `_shared/` — o que existe antes de você escrever de novo
