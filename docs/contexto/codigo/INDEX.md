@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ea6e3dcb2e3c6843a9427f572a8fcf70b6f1dcb0` (2026-11-20T11:33:16-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c98548cd3e434df5ca0eba0f71e120dbd5e34df4` (2026-11-20T13:47:28-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1163), SQL (212), Markdown (111), JavaScript (27), JSON (16), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1164), SQL (212), Markdown (111), JavaScript (27), JSON (16), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1552 |
-| arquivos_codigo | 1194 |
-| linhas_codigo | 163571 |
+| arquivos_total | 1553 |
+| arquivos_codigo | 1195 |
+| linhas_codigo | 163624 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 171 |
 | migrations | 210 |
 | cron_jobs | 7 |
-| testes | 323 |
+| testes | 324 |
 | workflows | 3 |
 | scripts | 31 |
 | docs_md | 111 |
@@ -332,7 +332,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Integrações externas
 - SDKs: Supabase, react-query, zod
-- hosts mais citados: ai.gateway.lovable.dev, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, api.lovable.dev, exemplo.com, x.supabase.co, a.com, api.acme.io, api.ipify.org
+- hosts mais citados: ai.gateway.lovable.dev, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, mock.supabase.co, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, api.lovable.dev, exemplo.com, x.supabase.co, a.com, api.acme.io, api.ipify.org
 - webhooks recebidos: migrate-helper
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, DD_API_KEY, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, LOVABLE_API_KEY, MICROSOFT_TEAMS_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
@@ -360,8 +360,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:102, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8847 nós · 23559 arestas · 691 comunidades · grafo do commit `ea6e3dcb`
-- comunidades maiores: lucide-react (289), protectedRoutes.tsx (203), client.ts (188), react (187), traceHeaders (163), badge.tsx (155), usePageTitle (128), Logger (123), Tabela de funcionalidades (111), @tanstack/react-query (107), vitest (107), cn (102)
+- 8849 nós · 23564 arestas · 685 comunidades · grafo do commit `c98548cd`
+- comunidades maiores: lucide-react (238), client.ts (197), react (181), protectedRoutes.tsx (167), vitest (158), badge.tsx (148), cn (120), safe-date.ts (105), @tanstack/react-query (105), snapshot.py (102), ref_https (101), usePageTitle (97)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -419,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-20 `c98548c` chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)
 - 2026-11-20 `ea6e3dc` test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)
 - 2026-11-20 `25b35e5` feat: concluir funcionalidades planejadas (wiring IA composer + fix hook TopicDetection) (#53)
 - 2026-11-20 `91e0da8` infra: escopa job CI ao environment e2e (#52)
@@ -433,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-14 `9375146` chore: contexto agendado de 10 min para 1x/hora (#42)
 - 2026-11-14 `9e7657f` chore: saneia SC2129 no contexto.yml e documenta leitura de logs em producao (#40)
 - 2026-11-14 `a8985a2` feat: (#38)
-- 2026-11-14 `d67d0f4` feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

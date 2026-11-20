@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ea6e3dcb2e` · branch `main` · 2026-11-20 14:33 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c98548cd3e` · branch `main` · 2026-11-20 16:48 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2423,7 +2423,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/functions/export-data-lake/index.ts` |
 
-## K. Testes como especificação (3932 testes em 315 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3937 testes em 316 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2679,6 +2679,7 @@ _nenhum item encontrado_
 | `src/lib/export/__tests__/index.coverage.test.ts` | 5 | export/index · exportToCSV downloads with BOM and formatting · exportToCSV no-ops on empty data · exportToJSON downloads … |
 | `src/lib/security/__tests__/encryption.coverage.test.ts` | 5 | encryption (coverage) · round-trips encrypt/decrypt with a generated key · hashData returns base64 string with real crypto · arrayBufferToBase64 and base64ToArrayBuffer are inverse operations … |
 | `src/lib/security/__tests__/security-headers-validator.coverage.test.ts` | 5 | security-headers-validator · returns all headers present when fetch succeeds · returns all headers absent when fetch rejects · handles a mixed set of present/absent headers … |
+| `supabase/functions/migrate-helper/index.test.ts` | 5 | migrate-helper: 401 sem x-access-key · migrate-helper: 401 com chave errada · migrate-helper: 200 em ping com chave válida · migrate-helper: action inexistente devolve 400 … |
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
@@ -2726,8 +2727,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/agent-assist.pbt.test.ts` | 3 | Agent Assist PBT (Property-Based Testing) · rankSignals: priority always dominates confidence · matchesKeywords: handles composite keywords regardless of order |
 | `src/lib/__tests__/tag-filter-label.test.ts` | 3 | formatTagFilterLabel · mapeia sentinelas para rótulos legíveis · nunca lança e sempre devolve string não vazia (PBT) |
 | `supabase/functions/analyze-call/__tests__/integration_test.ts` | 3 | analyze-call integration: validate v1 flow · analyze-call integration: reject invalid v2 flow (missing transcript) · analyze-call integration: validate character limits |
-| `supabase/functions/bitrix-api/index.test.ts` | 3 | bitrix-api: CORS handling · bitrix-api: returns 401 if no Authorization header · bitrix-api: handles get_user when not configured |
-| … +15 linhas — lista completa em `context.json` | | |
+| … +16 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

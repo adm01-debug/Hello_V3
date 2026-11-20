@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ea6e3dcb2e3c6843a9427f572a8fcf70b6f1dcb0",
+  "sha": "c98548cd3e434df5ca0eba0f71e120dbd5e34df4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 14:33 UTC",
-  "files_total": 1599,
-  "code_files": 1407,
-  "code_lines": 177400
+  "generated_at": "2026-11-20 16:48 UTC",
+  "files_total": 1600,
+  "code_files": 1408,
+  "code_lines": 177453
  },
  "version": "1.3.2",
- "facts_hash": "5cfae14a75f11d23",
+ "facts_hash": "351d9963d2c9e67c",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 595,
-   ".ts": 568,
+   ".ts": 569,
    ".sql": 212,
    ".mjs": 25,
    ".py": 5,
@@ -29104,6 +29104,7 @@
     "auth": "PÚBLICA (verify_jwt=false em config.toml)",
     "tables": [],
     "env": [
+     "MIGRATE_HELPER_ACCESS_KEY",
      "SUPABASE_DB_URL",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
@@ -32730,8 +32731,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 146,
-   "lines": 16505,
+   "files": 147,
+   "lines": 16558,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -32833,6 +32834,7 @@
     "validator.ts: ValidationError, StandardErrorResponse, createErrorResponse, validateBody",
     "voice-utils.ts: VoiceFeatures, cosineSimilarity, averageEmbeddings, verifyVerdict, REDACTION_PATTERNS, RedactionMatch",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
+    "index.ts: handler",
     "index.ts: handler",
     "index.ts: detectAnomalies",
     "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
@@ -32936,13 +32938,13 @@
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
     "supabase/functions/health-check/__tests__/index.test.ts",
+    "supabase/functions/migrate-helper/index.test.ts",
     "supabase/functions/migrate-helper/index.ts",
     "supabase/functions/notify-blocked-ip/index.ts",
     "supabase/functions/notify-new-device/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/process-digest/index.ts",
-    "supabase/functions/realtime-analysis/index.ts",
-    "supabase/functions/record-consent/index.ts"
+    "supabase/functions/realtime-analysis/index.ts"
    ]
   },
   {
@@ -35847,6 +35849,9 @@
    ],
    "MICROSOFT_TEAMS_API_KEY": [
     "supabase/functions/teams-fetch-recordings/index.ts"
+   ],
+   "MIGRATE_HELPER_ACCESS_KEY": [
+    "supabase/functions/migrate-helper/index.ts"
    ],
    "NODE_ENV": [
     "scripts/ai-context/cenarios.mjs"
@@ -69553,6 +69558,26 @@
    {
     "file": "supabase/functions/health-check/__tests__/index.test.ts",
     "name": "health-check: returns health status"
+   },
+   {
+    "file": "supabase/functions/migrate-helper/index.test.ts",
+    "name": "migrate-helper: 401 sem x-access-key"
+   },
+   {
+    "file": "supabase/functions/migrate-helper/index.test.ts",
+    "name": "migrate-helper: 401 com chave errada"
+   },
+   {
+    "file": "supabase/functions/migrate-helper/index.test.ts",
+    "name": "migrate-helper: 200 em ping com chave válida"
+   },
+   {
+    "file": "supabase/functions/migrate-helper/index.test.ts",
+    "name": "migrate-helper: action inexistente devolve 400"
+   },
+   {
+    "file": "supabase/functions/migrate-helper/index.test.ts",
+    "name": "migrate-helper: OPTIONS devolve CORS"
    },
    {
     "file": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
@@ -114170,10 +114195,26 @@
    ],
    "uses_service_role": true
   },
+  "supabase/functions/migrate-helper/index.test.ts": {
+   "path": "supabase/functions/migrate-helper/index.test.ts",
+   "lines": 44,
+   "is_test": true,
+   "tests": [
+    "migrate-helper: 401 sem x-access-key",
+    "migrate-helper: 401 com chave errada",
+    "migrate-helper: 200 em ping com chave válida",
+    "migrate-helper: action inexistente devolve 400",
+    "migrate-helper: OPTIONS devolve CORS"
+   ]
+  },
   "supabase/functions/migrate-helper/index.ts": {
    "path": "supabase/functions/migrate-helper/index.ts",
-   "lines": 35,
+   "lines": 44,
+   "exports": [
+    "const handler"
+   ],
    "env": [
+    "MIGRATE_HELPER_ACCESS_KEY",
     "SUPABASE_DB_URL",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -117869,10 +117910,20 @@
   }
  },
  "git": {
-  "sha": "ea6e3dcb2e3c6843a9427f572a8fcf70b6f1dcb0",
+  "sha": "c98548cd3e434df5ca0eba0f71e120dbd5e34df4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "c98548c",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)",
+    "files": [
+     "supabase/functions/migrate-helper/index.test.ts",
+     "supabase/functions/migrate-helper/index.ts"
+    ]
+   },
    {
     "sha": "ea6e3dc",
     "date": "2026-11-20",
@@ -118668,15 +118719,6 @@
     "files": [
      "scripts/supabase_snapshot/test_snapshot.py"
     ]
-   },
-   {
-    "sha": "f8c3c37",
-    "date": "2026-11-12",
-    "author": "adm01-debug",
-    "subject": "fix(ci): inventario nao quebra sem banco.json (add-paths varre o diretorio) (#22)",
-    "files": [
-     ".github/workflows/inventario-estado-semanal.yml"
-    ]
    }
   ],
   "hot_files": [
@@ -118707,6 +118749,14 @@
    [
     "scripts/supabase_snapshot/test_snapshot.py",
     2
+   ],
+   [
+    "supabase/functions/migrate-helper/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/migrate-helper/index.ts",
+    1
    ],
    [
     "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
@@ -118750,14 +118800,6 @@
    ],
    [
     "docs/pendencias/_verificado-banco.md",
-    1
-   ],
-   [
-    "src/pages/Inbox.tsx",
-    1
-   ],
-   [
-    "src/pages/TopicDetection.tsx",
     1
    ]
   ]

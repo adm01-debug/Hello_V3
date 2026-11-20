@@ -1478,7 +1478,7 @@
    "nome": "migrate-helper",
    "entrada": "supabase/functions/migrate-helper/index.ts",
    "arquivos": 1,
-   "linhas": 35,
+   "linhas": 44,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -1486,6 +1486,7 @@
    "tabelas": [],
    "rpcs": [],
    "env": [
+    "MIGRATE_HELPER_ACCESS_KEY",
     "SUPABASE_DB_URL",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -1498,7 +1499,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "notify-blocked-ip",

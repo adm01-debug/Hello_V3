@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ea6e3dcb2e3c6843a9427f572a8fcf70b6f1dcb0",
+  "commit": "c98548cd3e434df5ca0eba0f71e120dbd5e34df4",
   "branch": "main",
-  "data_commit": "2026-11-20T11:33:16-03:00",
+  "data_commit": "2026-11-20T13:47:28-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c98548c",
+    "data": "2026-11-20",
+    "assunto": "chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)"
+   },
    {
     "sha": "ea6e3dc",
     "data": "2026-11-20",
@@ -126,14 +131,9 @@
     "sha": "75a5df1",
     "data": "2026-11-13",
     "assunto": "fix: guard de segredo do contexto ignora senha ja redigida (#29)"
-   },
-   {
-    "sha": "8ed39f4",
-    "data": "2026-11-13",
-    "assunto": "fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)"
    }
   ],
-  "arquivos_mudados_7d": 546,
+  "arquivos_mudados_7d": 548,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -274,6 +274,10 @@
     "mudancas": 2
    },
    {
+    "arquivo": "supabase/functions/migrate-helper/index.ts",
+    "mudancas": 2
+   },
+   {
     "arquivo": "tests/e2e/performance.spec.ts",
     "mudancas": 2
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": ".claude/skills/hello-v3/SKILL.md",
     "mudancas": 1
-   },
-   {
-    "arquivo": ".env.example",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 38
+    "commits": 39
    },
    {
     "autor": "github-actions[bot]",
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1552,
-  "arquivos_codigo": 1194,
-  "linhas_codigo": 163571,
+  "arquivos_total": 1553,
+  "arquivos_codigo": 1195,
+  "linhas_codigo": 163624,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -324,7 +324,7 @@
   "tabelas": 171,
   "migrations": 210,
   "cron_jobs": 7,
-  "testes": 323,
+  "testes": 324,
   "workflows": 3,
   "scripts": 31,
   "docs_md": 111
@@ -507,8 +507,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 146,
-   "linhas": 16505
+   "arquivos": 147,
+   "linhas": 16558
   },
   "tailwind.config.ts": {
    "arquivos": 1,

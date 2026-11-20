@@ -5,12 +5,12 @@
   "vitest",
   "playwright"
  ],
- "total": 323,
+ "total": 324,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 307
+  "unit": 308
  },
  "onde_ficam": [
   {
@@ -26,12 +26,12 @@
    "arquivos": 6
   },
   {
-   "padrao": "outro",
+   "padrao": "co-localizado (*.test)",
    "arquivos": 5
   },
   {
-   "padrao": "co-localizado (*.test)",
-   "arquivos": 4
+   "padrao": "outro",
+   "arquivos": 5
   }
  ],
  "arquivos": [
@@ -2698,6 +2698,15 @@
    "casos": 2
   },
   {
+   "arquivo": "supabase/functions/migrate-helper/index.test.ts",
+   "tipo": "unit",
+   "linhas": 44,
+   "testa": [
+    "supabase/functions/migrate-helper/index.ts"
+   ],
+   "casos": 5
+  },
+  {
    "arquivo": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
    "tipo": "unit",
    "linhas": 60,
@@ -3143,6 +3152,7 @@
   "supabase/functions/analyze-call/schema.ts": 3,
   "supabase/functions/bitrix-api/index.ts": 1,
   "supabase/functions/health-check/index.ts": 1,
+  "supabase/functions/migrate-helper/index.ts": 1,
   "supabase/functions/voip-anomaly-detector/index.ts": 1,
   "supabase/functions/voip-anomaly-remediation/index.ts": 1,
   "supabase/functions/voip-capacity-forecast/index.ts": 1,
@@ -3341,7 +3351,6 @@
    "generate-meeting-summary",
    "generate-summary",
    "global-load-test",
-   "migrate-helper",
    "notify-blocked-ip",
    "notify-new-device",
    "ocr-virtual-fax",
