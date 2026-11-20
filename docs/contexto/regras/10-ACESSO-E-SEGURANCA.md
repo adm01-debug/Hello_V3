@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ce6fee58ad` · branch `main` · 2026-11-20 17:10 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6ffab7ad08` · branch `main` · 2026-11-20 17:47 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -185,7 +185,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 105 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 104 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -239,7 +239,6 @@
 - `supabase/functions/global-load-test/index.ts`
 - `supabase/functions/health-check/__tests__/index.test.ts`
 - `supabase/functions/health-check/index.ts`
-- `supabase/functions/migrate-helper/index.ts`
 - `supabase/functions/ocr-virtual-fax/index.ts`
 - `supabase/functions/process-digest/index.ts`
 - `supabase/functions/record-consent/index.ts`
@@ -371,7 +370,7 @@
 
 ## Edge functions públicas (sem JWT — qualquer um chama)
 
-- `migrate-helper`
+_nenhuma declarada em config.toml_
 
 ## Rotas protegidas no front
 

@@ -2,10 +2,8 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "pasta": "supabase/functions",
- "total": 94,
- "verify_jwt_false": [
-  "migrate-helper"
- ],
+ "total": 93,
+ "verify_jwt_false": [],
  "shared": [
   "supabase/functions/_shared/__tests__/resilience.test.ts",
   "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
@@ -1469,33 +1467,6 @@
     "src/hooks/useHealthCheck.ts",
     "src/pages/admin/SloDashboard.tsx"
    ],
-   "chamada_por_edges": [],
-   "chamada_por_sql_ou_cron": false,
-   "orfa": false,
-   "testes": 1
-  },
-  {
-   "nome": "migrate-helper",
-   "entrada": "supabase/functions/migrate-helper/index.ts",
-   "arquivos": 1,
-   "linhas": 42,
-   "verify_jwt": false,
-   "metodos": [
-    "OPTIONS"
-   ],
-   "tabelas": [],
-   "rpcs": [],
-   "env": [
-    "MIGRATE_HELPER_ACCESS_KEY",
-    "SUPABASE_DB_URL",
-    "SUPABASE_SERVICE_ROLE_KEY",
-    "SUPABASE_URL"
-   ],
-   "buckets": [],
-   "chama_edges": [],
-   "hosts_externos": [],
-   "usa_shared": [],
-   "chamada_pelo_front": [],
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,

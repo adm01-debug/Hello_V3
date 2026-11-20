@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1164)",
+   "TypeScript (1162)",
    "SQL (212)",
    "Markdown (111)",
    "JavaScript (27)",
@@ -400,7 +400,6 @@
    "FROM_EMAIL",
    "LOVABLE_API_KEY",
    "MICROSOFT_TEAMS_API_KEY",
-   "MIGRATE_HELPER_ACCESS_KEY",
    "RESEND_API_KEY",
    "SIP_PASSWORD",
    "SIP_SERVER",
@@ -496,10 +495,6 @@
     "arquivos": 6
    },
    {
-    "host": "mock.supabase.co",
-    "arquivos": 4
-   },
-   {
     "host": "api.elevenlabs.io",
     "arquivos": 3
    },
@@ -517,6 +512,10 @@
    },
    {
     "host": "ipapi.co",
+    "arquivos": 3
+   },
+   {
+    "host": "mock.supabase.co",
     "arquivos": 3
    },
    {
@@ -626,9 +625,7 @@
    "TEST_REDIS_PORT",
    "WAVOIP_TOKEN"
   ],
-  "webhooks_recebidos": [
-   "migrate-helper"
-  ],
+  "webhooks_recebidos": [],
   "realtime": [
    "active-calls-realtime",
    "admin-security-alerts",

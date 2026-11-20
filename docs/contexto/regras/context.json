@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ce6fee58add89645cab45287441742e54f3edbaa",
+  "sha": "6ffab7ad0863b079021fe7d6f0695968d069b049",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 17:10 UTC",
-  "files_total": 1600,
-  "code_files": 1408,
-  "code_lines": 177451
+  "generated_at": "2026-11-20 17:47 UTC",
+  "files_total": 1598,
+  "code_files": 1406,
+  "code_lines": 177365
  },
  "version": "1.3.2",
- "facts_hash": "96caa6f179bef48b",
+ "facts_hash": "e8637f4a3d8224e0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 595,
-   ".ts": 569,
+   ".ts": 567,
    ".sql": 212,
    ".mjs": 25,
    ".py": 5,
@@ -167,9 +167,7 @@
   },
   "monorepo_packages": [],
   "supabase_config": {
-   "functions_no_jwt": [
-    "migrate-helper"
-   ],
+   "functions_no_jwt": [],
    "auth": {}
   },
   "name": "hello",
@@ -29096,31 +29094,6 @@
     "idempotency": false
    },
    {
-    "name": "migrate-helper",
-    "file": "supabase/functions/migrate-helper/index.ts",
-    "methods": [
-     "OPTIONS"
-    ],
-    "auth": "PÚBLICA (verify_jwt=false em config.toml)",
-    "tables": [],
-    "env": [
-     "MIGRATE_HELPER_ACCESS_KEY",
-     "SUPABASE_DB_URL",
-     "SUPABASE_SERVICE_ROLE_KEY",
-     "SUPABASE_URL"
-    ],
-    "external": [],
-    "invokes": [],
-    "doc": "Edge function temporária para migração de banco. Cole em: Cloud > Edge Functions > migrate-helper > View code Após a migração, remova esta função.",
-    "errors": [
-     "unauthorized",
-     "unknown_action"
-    ],
-    "side_effects": [],
-    "webhook_events": [],
-    "idempotency": false
-   },
-   {
     "name": "notify-blocked-ip",
     "file": "supabase/functions/notify-blocked-ip/index.ts",
     "methods": [
@@ -32731,8 +32704,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 147,
-   "lines": 16556,
+   "files": 145,
+   "lines": 16470,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -32834,7 +32807,6 @@
     "validator.ts: ValidationError, StandardErrorResponse, createErrorResponse, validateBody",
     "voice-utils.ts: VoiceFeatures, cosineSimilarity, averageEmbeddings, verifyVerdict, REDACTION_PATTERNS, RedactionMatch",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
-    "index.ts: handler",
     "index.ts: handler",
     "index.ts: detectAnomalies",
     "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
@@ -32938,13 +32910,13 @@
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
     "supabase/functions/health-check/__tests__/index.test.ts",
-    "supabase/functions/migrate-helper/index.test.ts",
-    "supabase/functions/migrate-helper/index.ts",
     "supabase/functions/notify-blocked-ip/index.ts",
     "supabase/functions/notify-new-device/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/process-digest/index.ts",
-    "supabase/functions/realtime-analysis/index.ts"
+    "supabase/functions/realtime-analysis/index.ts",
+    "supabase/functions/record-consent/index.ts",
+    "supabase/functions/redact-sensitive-audio/index.ts"
    ]
   },
   {
@@ -35850,9 +35822,6 @@
    "MICROSOFT_TEAMS_API_KEY": [
     "supabase/functions/teams-fetch-recordings/index.ts"
    ],
-   "MIGRATE_HELPER_ACCESS_KEY": [
-    "supabase/functions/migrate-helper/index.ts"
-   ],
    "NODE_ENV": [
     "scripts/ai-context/cenarios.mjs"
    ],
@@ -35990,8 +35959,7 @@
     "scripts/inspect-schema.mjs",
     "scripts/supabase_snapshot/snapshot.py",
     "scripts/test-rls-access.mjs",
-    "supabase/functions/__tests__/optimistic-lock.test.ts",
-    "supabase/functions/migrate-helper/index.ts"
+    "supabase/functions/__tests__/optimistic-lock.test.ts"
    ],
    "SUPABASE_PROJECT_REF": [
     "scripts/inventario/gerar-banco.mjs",
@@ -36042,7 +36010,6 @@
     "supabase/functions/generate-meeting-summary/index.ts",
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
-    "supabase/functions/migrate-helper/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/process-digest/index.ts",
     "supabase/functions/record-consent/index.ts",
@@ -36131,7 +36098,6 @@
     "supabase/functions/generate-summary/index.ts",
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
-    "supabase/functions/migrate-helper/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/process-digest/index.ts",
     "supabase/functions/realtime-analysis/index.ts",
@@ -39907,14 +39873,6 @@
    {
     "file": "supabase/functions/generate-summary/index.ts",
     "msg": "Não autorizado"
-   },
-   {
-    "file": "supabase/functions/migrate-helper/index.ts",
-    "msg": "unauthorized"
-   },
-   {
-    "file": "supabase/functions/migrate-helper/index.ts",
-    "msg": "unknown_action"
    },
    {
     "file": "supabase/functions/ocr-virtual-fax/index.ts",
@@ -69560,26 +69518,6 @@
     "name": "health-check: returns health status"
    },
    {
-    "file": "supabase/functions/migrate-helper/index.test.ts",
-    "name": "migrate-helper: 401 sem x-access-key"
-   },
-   {
-    "file": "supabase/functions/migrate-helper/index.test.ts",
-    "name": "migrate-helper: 401 com chave errada"
-   },
-   {
-    "file": "supabase/functions/migrate-helper/index.test.ts",
-    "name": "migrate-helper: 200 em ping com chave válida"
-   },
-   {
-    "file": "supabase/functions/migrate-helper/index.test.ts",
-    "name": "migrate-helper: action inexistente devolve 400"
-   },
-   {
-    "file": "supabase/functions/migrate-helper/index.test.ts",
-    "name": "migrate-helper: OPTIONS devolve CORS"
-   },
-   {
     "file": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
     "name": "score-call-attempt: 401 sem Authorization"
    },
@@ -82982,7 +82920,6 @@
    "supabase/functions/global-load-test/index.ts",
    "supabase/functions/health-check/__tests__/index.test.ts",
    "supabase/functions/health-check/index.ts",
-   "supabase/functions/migrate-helper/index.ts",
    "supabase/functions/ocr-virtual-fax/index.ts",
    "supabase/functions/process-digest/index.ts",
    "supabase/functions/record-consent/index.ts",
@@ -83111,9 +83048,7 @@
    "validate_parked_call",
    "validate_queue_audio_slots"
   ],
-  "public_functions": [
-   "migrate-helper"
-  ],
+  "public_functions": [],
   "auth_config": {},
   "grants": [
    {
@@ -114195,37 +114130,6 @@
    ],
    "uses_service_role": true
   },
-  "supabase/functions/migrate-helper/index.test.ts": {
-   "path": "supabase/functions/migrate-helper/index.test.ts",
-   "lines": 44,
-   "is_test": true,
-   "tests": [
-    "migrate-helper: 401 sem x-access-key",
-    "migrate-helper: 401 com chave errada",
-    "migrate-helper: 200 em ping com chave válida",
-    "migrate-helper: action inexistente devolve 400",
-    "migrate-helper: OPTIONS devolve CORS"
-   ]
-  },
-  "supabase/functions/migrate-helper/index.ts": {
-   "path": "supabase/functions/migrate-helper/index.ts",
-   "lines": 42,
-   "exports": [
-    "const handler"
-   ],
-   "env": [
-    "MIGRATE_HELPER_ACCESS_KEY",
-    "SUPABASE_DB_URL",
-    "SUPABASE_SERVICE_ROLE_KEY",
-    "SUPABASE_URL"
-   ],
-   "errors": [
-    "unauthorized",
-    "unknown_action"
-   ],
-   "doc": "Edge function temporária para migração de banco. Cole em: Cloud > Edge Functions > migrate-helper > View code Após a migração, remova esta função.",
-   "uses_service_role": true
-  },
   "supabase/functions/notify-blocked-ip/index.ts": {
    "path": "supabase/functions/notify-blocked-ip/index.ts",
    "lines": 102,
@@ -117910,10 +117814,23 @@
   }
  },
  "git": {
-  "sha": "ce6fee58add89645cab45287441742e54f3edbaa",
+  "sha": "6ffab7ad0863b079021fe7d6f0695968d069b049",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "6ffab7a",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)",
+    "files": [
+     "docs/agentes/edge-functions.md",
+     "inventario/estado/edges.json",
+     "supabase/config.toml",
+     "supabase/functions/migrate-helper/index.test.ts",
+     "supabase/functions/migrate-helper/index.ts"
+    ]
+   },
    {
     "sha": "ce6fee5",
     "date": "2026-11-20",
@@ -118711,32 +118628,31 @@
      "scripts/inventario/banco.sql",
      "scripts/inventario/gerar-banco.mjs"
     ]
-   },
-   {
-    "sha": "4e40e57",
-    "date": "2026-11-13",
-    "author": "adm01-debug",
-    "subject": "infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)",
-    "files": [
-     ".github/workflows/contexto.yml"
-    ]
    }
   ],
   "hot_files": [
    [
-    ".github/workflows/contexto.yml",
+    "docs/prod-readiness.md",
     5
    ],
    [
-    "docs/prod-readiness.md",
-    5
+    ".github/workflows/contexto.yml",
+    4
+   ],
+   [
+    "supabase/functions/migrate-helper/index.ts",
+    3
    ],
    [
     ".github/workflows/ci.yml",
     3
    ],
    [
-    "supabase/functions/migrate-helper/index.ts",
+    "inventario/estado/edges.json",
+    2
+   ],
+   [
+    "supabase/functions/migrate-helper/index.test.ts",
     2
    ],
    [
@@ -118752,11 +118668,15 @@
     2
    ],
    [
-    "deno.lock",
+    "docs/agentes/edge-functions.md",
     1
    ],
    [
-    "supabase/functions/migrate-helper/index.test.ts",
+    "supabase/config.toml",
+    1
+   ],
+   [
+    "deno.lock",
     1
    ],
    [
@@ -118789,18 +118709,6 @@
    ],
    [
     "docs/pendencias/_linha-de-base.md",
-    1
-   ],
-   [
-    "docs/pendencias/_ordem.md",
-    1
-   ],
-   [
-    "docs/pendencias/_relatorio.md",
-    1
-   ],
-   [
-    "docs/pendencias/_verificado-banco.md",
     1
    ]
   ]
