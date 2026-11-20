@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "b3d9f80baab64867316518e2ac681e400f35eb76",
+  "commit": "18f694879e4b341ea77351ac4bf54cefa61c226f",
   "branch": "main",
-  "data_commit": "2026-11-20T08:36:01-03:00",
+  "data_commit": "2026-11-20T08:45:42-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "18f6948",
+    "data": "2026-11-20",
+    "assunto": "chore: remove .env e coverage do versionamento (#51)"
+   },
    {
     "sha": "b3d9f80",
     "data": "2026-11-20",
@@ -126,15 +131,22 @@
     "sha": "4e40e57",
     "data": "2026-11-13",
     "assunto": "infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)"
-   },
-   {
-    "sha": "650143f",
-    "data": "2026-11-13",
-    "assunto": "fix: test_snapshot.py lê arquivos gerados com UTF-8 explícito (#24)"
    }
   ],
-  "arquivos_mudados_7d": 62,
+  "arquivos_mudados_7d": 537,
   "pastas_mais_mudadas_30d": [
+   {
+    "pasta": "covout/lcov-report/hooks",
+    "mudancas": 143
+   },
+   {
+    "pasta": "covout/lcov-report/lib",
+    "mudancas": 55
+   },
+   {
+    "pasta": "covout/lib/security",
+    "mudancas": 18
+   },
    {
     "pasta": "src/lib/__tests__",
     "mudancas": 7
@@ -144,15 +156,23 @@
     "mudancas": 6
    },
    {
+    "pasta": "covout/hooks/auth",
+    "mudancas": 6
+   },
+   {
     "pasta": "docs/prod-readiness.md",
     "mudancas": 5
    },
    {
     "pasta": ".github/workflows/ci.yml",
-    "mudancas": 3
+    "mudancas": 4
    },
    {
     "pasta": "AGENTS.md",
+    "mudancas": 3
+   },
+   {
+    "pasta": "covout/lib/validation",
     "mudancas": 3
    },
    {
@@ -174,26 +194,6 @@
    {
     "pasta": "supabase/functions/_shared",
     "mudancas": 3
-   },
-   {
-    "pasta": ".agents/skills/hello-v3",
-    "mudancas": 2
-   },
-   {
-    "pasta": ".github/workflows/inventario-estado-semanal.yml",
-    "mudancas": 2
-   },
-   {
-    "pasta": "docs/agentes/banco.md",
-    "mudancas": 2
-   },
-   {
-    "pasta": "docs/contexto/regras",
-    "mudancas": 2
-   },
-   {
-    "pasta": "docs/estado/edge-functions-parte1.md",
-    "mudancas": 2
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -207,7 +207,7 @@
    },
    {
     "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 3
+    "mudancas": 4
    },
    {
     "arquivo": "AGENTS.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 34
+    "commits": 35
    },
    {
     "autor": "github-actions[bot]",

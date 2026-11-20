@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b3d9f80baa` · branch `main` · 2026-11-20 11:41 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `18f694879e` · branch `main` · 2026-11-20 11:46 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -835,83 +835,6 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 
 | Campo | Valor | Uso | Onde |
 |---|---|---|---|
-| `type` | `ADD_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
-| `type` | `DISMISS_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
-| `type` | `REMOVE_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
-| `type` | `UPDATE_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
-| `type` | `action` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
-| `type` | `agent` | escreve | `src/hooks/useMultiChannelCall.ts` |
-| `type` | `alert` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
-| `type` | `all` | escreve | `src/pages/admin/SecurityDashboard.tsx` |
-| `type` | `announcement` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `array` | escreve | `supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
-| `type` | `authentication` | escreve | `src/hooks/useWebAuthn.ts` |
-| `type` | `avg_handle_time` | compara | `supabase/functions/check-goals/index.ts` |
-| `type` | `avg_wait_time` | compara | `supabase/functions/check-goals/index.ts` |
-| `type` | `away_too_long` | escreve | `supabase/functions/compute-adherence/index.ts` |
-| `type` | `boolean` | escreve | `supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
-| `type` | `buying_signal` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
-| `type` | `candidate-pair` | compara | `src/hooks/useVoipQualityMonitor.ts` |
-| `type` | `coaching` | escreve | `src/components/call-history/CallDetailDialog.tsx` |
-| `type` | `critical` | compara | `src/hooks/useHoldSoundAlert.ts` |
-| `type` | `digest` | escreve | `supabase/functions/process-digest/index.ts` |
-| `type` | `email` | compara | `src/pages/VerifyEmail.tsx` |
-| `type` | `error` | compara, escreve | `src/components/observability/ErrorsTab.tsx`<br>`src/lib/error-tracking.ts` |
-| `type` | `event` | escreve | `src/lib/web-vitals.ts` |
-| `type` | `first-input` | escreve | `src/lib/web-vitals.ts` |
-| `type` | `function` | escreve | `supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
-| `type` | `hangup` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `image` | escreve | `supabase/functions/whatsapp-inbound/schema_test.ts` |
-| `type` | `image_url` | escreve | `supabase/functions/ocr-virtual-fax/index.ts` |
-| `type` | `in1h` | compara, escreve | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
-| `type` | `in3h` | compara | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
-| `type` | `inbound` | escreve | `supabase/functions/analyze-call/analyze-call_test.ts` |
-| `type` | `inbound-rtp` | compara | `src/hooks/useVoipQualityMonitor.ts` |
-| `type` | `incoming` | compara, escreve | `src/components/ai/AICallAnalysis.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/data/mockData.ts` |
-| `type` | `info` | escreve | `supabase/functions/generate-coaching-track/index.ts` |
-| `type` | `json_object` | escreve | `supabase/functions/auto-scorecard/index.ts`<br>`supabase/functions/detect-key-moments/index.ts`<br>`supabase/functions/generate-coaching/index.ts`<br>`supabase/functions/translate-summary/index.ts` |
-| `type` | `layout-shift` | escreve | `src/lib/web-vitals.ts` |
-| `type` | `low_engagement` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
-| `type` | `magiclink` | escreve | `supabase/functions/webauthn-authenticate/index.ts` |
-| `type` | `menu` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `metric` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
-| `type` | `moment` | compara, escreve | `src/components/call-history/CallDetailDialog.tsx`<br>`src/components/conversation-intelligence/CallPlayerWithTranscript.tsx` |
-| `type` | `network-error` | escreve | `src/hooks/useContacts.ts` |
-| `type` | `nextWeek` | compara | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
-| `type` | `number` | compara, escreve | `covout/lcov-report/sorter.js`<br>`covout/sorter.js`<br>`supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
-| `type` | `object` | escreve | `supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
-| `type` | `outbound` | escreve | `supabase/functions/analyze-call/analyze-call_test.ts` |
-| `type` | `outgoing` | escreve | `src/data/mockData.ts` |
-| `type` | `phone` | compara, escreve | `src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx` |
-| `type` | `positive` | escreve | `supabase/functions/detect-key-moments/index.ts` |
-| `type` | `public-key` | escreve | `src/lib/webauthn/webauthn-utils.ts` |
-| `type` | `queue` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `react-component` | escreve | `src/components/error-boundary/ErrorBoundary.tsx` |
-| `type` | `recommendation` | escreve | `src/hooks/useVoipDiagnosticVoiceQA.ts`<br>`supabase/functions/voip-diagnostic-voice-qa/index.ts` |
-| `type` | `recovery` | escreve | `supabase/functions/approve-password-reset/index.ts` |
-| `type` | `registration` | escreve | `src/hooks/useWebAuthn.ts` |
-| `type` | `remote-inbound-rtp` | compara | `src/hooks/useVoipQualityMonitor.ts` |
-| `type` | `revoke` | compara, escreve | `src/pages/SessionManagement.tsx` |
-| `type` | `revoke_all` | compara, escreve | `src/pages/SessionManagement.tsx` |
-| `type` | `ring_group` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `security_critical` | compara | `src/pages/admin/SecurityDashboard.tsx` |
-| `type` | `sentiment_negative` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
-| `type` | `signup` | escreve | `src/pages/VerifyEmail.tsx` |
-| `type` | `sla_breach` | escreve | `supabase/functions/enforce-sla/index.ts` |
-| `type` | `spring` | escreve | `src/components/layout/OnboardingWizard.tsx`<br>`src/components/voice/VoiceAssistantDialog.tsx`<br>`src/components/voice/overlay/VoiceOrb.tsx` |
-| `type` | `start` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `string` | compara, escreve | `src/lib/queue-audio.ts`<br>`supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/detect-key-moments/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
-| `type` | `text` | escreve | `supabase/functions/ocr-virtual-fax/index.ts` |
-| `type` | `time_check` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `tomorrow` | compara | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
-| `type` | `totp` | compara, escreve | `src/components/auth/ReauthDialog.tsx`<br>`src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx`<br>`src/pages/two-factor/DevicesCard.tsx` |
-| `type` | `transfer` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `unhandled-rejection` | escreve | `src/lib/error-tracking.ts` |
-| `type` | `validation_error` | compara | `src/pages/admin/SecurityDashboard.tsx` |
-| `type` | `vip_inactive` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
-| `type` | `voicemail` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `warning` | compara, escreve | `src/hooks/useHoldSoundAlert.ts`<br>`supabase/functions/voip-failover-notifier/index.ts` |
-| `type` | `websearch` | escreve | `src/hooks/useKnowledgeBase.ts`<br>`supabase/functions/chatbot-respond/index.ts` |
 | `last_health_status` | `healthy` | compara, escreve, filtra | `src/components/admin/extensions/BulkAssignTrunkDialog.tsx`<br>`src/components/executive/VoipInfrastructureTab.tsx`<br>`supabase/functions/voip-trunks-healthcheck/index.ts` |
 | `last_health_status` | `offline` | compara | `src/pages/admin/VoipTrunksAdmin.tsx`<br>`supabase/functions/sip-config/index.ts` |
 | `status` | `Ativo` | escreve | `src/components/executive/SecurityAuditCard.tsx` |
@@ -1007,6 +930,83 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `waiting` | compara | `src/hooks/useQueueMetrics.ts` |
 | `status` | `warning` | compara | `src/components/queue/QueueGoalsTab.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`supabase/functions/check-goals/index.ts` |
 | `status` | `won` | compara | `src/hooks/useRenewals.ts` |
+| `type` | `ADD_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
+| `type` | `DISMISS_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
+| `type` | `REMOVE_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
+| `type` | `UPDATE_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
+| `type` | `action` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
+| `type` | `agent` | escreve | `src/hooks/useMultiChannelCall.ts` |
+| `type` | `alert` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
+| `type` | `all` | escreve | `src/pages/admin/SecurityDashboard.tsx` |
+| `type` | `announcement` | escreve | `src/pages/CallFlowDesigner.tsx` |
+| `type` | `array` | escreve | `supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
+| `type` | `authentication` | escreve | `src/hooks/useWebAuthn.ts` |
+| `type` | `avg_handle_time` | compara | `supabase/functions/check-goals/index.ts` |
+| `type` | `avg_wait_time` | compara | `supabase/functions/check-goals/index.ts` |
+| `type` | `away_too_long` | escreve | `supabase/functions/compute-adherence/index.ts` |
+| `type` | `boolean` | escreve | `supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
+| `type` | `buying_signal` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
+| `type` | `candidate-pair` | compara | `src/hooks/useVoipQualityMonitor.ts` |
+| `type` | `coaching` | escreve | `src/components/call-history/CallDetailDialog.tsx` |
+| `type` | `critical` | compara | `src/hooks/useHoldSoundAlert.ts` |
+| `type` | `digest` | escreve | `supabase/functions/process-digest/index.ts` |
+| `type` | `email` | compara | `src/pages/VerifyEmail.tsx` |
+| `type` | `error` | compara, escreve | `src/components/observability/ErrorsTab.tsx`<br>`src/lib/error-tracking.ts` |
+| `type` | `event` | escreve | `src/lib/web-vitals.ts` |
+| `type` | `first-input` | escreve | `src/lib/web-vitals.ts` |
+| `type` | `function` | escreve | `supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
+| `type` | `hangup` | escreve | `src/pages/CallFlowDesigner.tsx` |
+| `type` | `image` | escreve | `supabase/functions/whatsapp-inbound/schema_test.ts` |
+| `type` | `image_url` | escreve | `supabase/functions/ocr-virtual-fax/index.ts` |
+| `type` | `in1h` | compara, escreve | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
+| `type` | `in3h` | compara | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
+| `type` | `inbound` | escreve | `supabase/functions/analyze-call/analyze-call_test.ts` |
+| `type` | `inbound-rtp` | compara | `src/hooks/useVoipQualityMonitor.ts` |
+| `type` | `incoming` | compara, escreve | `src/components/ai/AICallAnalysis.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/data/mockData.ts` |
+| `type` | `info` | escreve | `supabase/functions/generate-coaching-track/index.ts` |
+| `type` | `json_object` | escreve | `supabase/functions/auto-scorecard/index.ts`<br>`supabase/functions/detect-key-moments/index.ts`<br>`supabase/functions/generate-coaching/index.ts`<br>`supabase/functions/translate-summary/index.ts` |
+| `type` | `layout-shift` | escreve | `src/lib/web-vitals.ts` |
+| `type` | `low_engagement` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
+| `type` | `magiclink` | escreve | `supabase/functions/webauthn-authenticate/index.ts` |
+| `type` | `menu` | escreve | `src/pages/CallFlowDesigner.tsx` |
+| `type` | `metric` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
+| `type` | `moment` | compara, escreve | `src/components/call-history/CallDetailDialog.tsx`<br>`src/components/conversation-intelligence/CallPlayerWithTranscript.tsx` |
+| `type` | `network-error` | escreve | `src/hooks/useContacts.ts` |
+| `type` | `nextWeek` | compara | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
+| `type` | `number` | escreve | `supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
+| `type` | `object` | escreve | `supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
+| `type` | `outbound` | escreve | `supabase/functions/analyze-call/analyze-call_test.ts` |
+| `type` | `outgoing` | escreve | `src/data/mockData.ts` |
+| `type` | `phone` | compara, escreve | `src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx` |
+| `type` | `positive` | escreve | `supabase/functions/detect-key-moments/index.ts` |
+| `type` | `public-key` | escreve | `src/lib/webauthn/webauthn-utils.ts` |
+| `type` | `queue` | escreve | `src/pages/CallFlowDesigner.tsx` |
+| `type` | `react-component` | escreve | `src/components/error-boundary/ErrorBoundary.tsx` |
+| `type` | `recommendation` | escreve | `src/hooks/useVoipDiagnosticVoiceQA.ts`<br>`supabase/functions/voip-diagnostic-voice-qa/index.ts` |
+| `type` | `recovery` | escreve | `supabase/functions/approve-password-reset/index.ts` |
+| `type` | `registration` | escreve | `src/hooks/useWebAuthn.ts` |
+| `type` | `remote-inbound-rtp` | compara | `src/hooks/useVoipQualityMonitor.ts` |
+| `type` | `revoke` | compara, escreve | `src/pages/SessionManagement.tsx` |
+| `type` | `revoke_all` | compara, escreve | `src/pages/SessionManagement.tsx` |
+| `type` | `ring_group` | escreve | `src/pages/CallFlowDesigner.tsx` |
+| `type` | `security_critical` | compara | `src/pages/admin/SecurityDashboard.tsx` |
+| `type` | `sentiment_negative` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
+| `type` | `signup` | escreve | `src/pages/VerifyEmail.tsx` |
+| `type` | `sla_breach` | escreve | `supabase/functions/enforce-sla/index.ts` |
+| `type` | `spring` | escreve | `src/components/layout/OnboardingWizard.tsx`<br>`src/components/voice/VoiceAssistantDialog.tsx`<br>`src/components/voice/overlay/VoiceOrb.tsx` |
+| `type` | `start` | escreve | `src/pages/CallFlowDesigner.tsx` |
+| `type` | `string` | compara, escreve | `src/lib/queue-audio.ts`<br>`supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/detect-key-moments/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
+| `type` | `text` | escreve | `supabase/functions/ocr-virtual-fax/index.ts` |
+| `type` | `time_check` | escreve | `src/pages/CallFlowDesigner.tsx` |
+| `type` | `tomorrow` | compara | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
+| `type` | `totp` | compara, escreve | `src/components/auth/ReauthDialog.tsx`<br>`src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx`<br>`src/pages/two-factor/DevicesCard.tsx` |
+| `type` | `transfer` | escreve | `src/pages/CallFlowDesigner.tsx` |
+| `type` | `unhandled-rejection` | escreve | `src/lib/error-tracking.ts` |
+| `type` | `validation_error` | compara | `src/pages/admin/SecurityDashboard.tsx` |
+| `type` | `vip_inactive` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
+| `type` | `voicemail` | escreve | `src/pages/CallFlowDesigner.tsx` |
+| `type` | `warning` | compara, escreve | `src/hooks/useHoldSoundAlert.ts`<br>`supabase/functions/voip-failover-notifier/index.ts` |
+| `type` | `websearch` | escreve | `src/hooks/useKnowledgeBase.ts`<br>`supabase/functions/chatbot-respond/index.ts` |
 | `state` | `CLOSED` | escreve | `supabase/functions/_shared/resilience.ts` |
 | `state` | `HALF_OPEN` | compara | `supabase/functions/_shared/resilience.ts` |
 | `state` | `OPEN` | compara | `supabase/functions/_shared/resilience.ts` |
@@ -2737,8 +2737,6 @@ _nenhum item encontrado_
 
 | Chamada | Arquivo |
 |---|---|
-| `.add('highlighted'` | `covout/block-navigation.js` |
-| `.add('highlighted'` | `covout/lcov-report/block-navigation.js` |
 | `notify` | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `invoke(` | `src/components/calls/ActiveCallBar.tsx` |
 | `notifyOnDegrade` | `src/components/calls/CallQualityIndicator.tsx` |
