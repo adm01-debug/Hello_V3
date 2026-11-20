@@ -64,6 +64,19 @@ jobs:
           E2E_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD }}
           E2E_SUPABASE_SESSION_JSON: ${{ secrets.E2E_SUPABASE_SESSION_JSON }}
 
+      - name: E2E diagnostic dump (temp)
+        if: always()
+        run: |
+          echo '=== PLAYWRIGHT ERROR CONTEXTS ==='
+          find test-results -name 'error-context.md' -print -exec cat {} \; 2>/dev/null || true
+          echo '=== TEST RESULTS TREE ==='
+          find test-results -maxdepth 2 -type f | head -100
+          echo '=== WORKFLOW SPEC FULL ==='
+          find test-results -path '*workflow*' -name '*.md' -exec cat {} \; 2>/dev/null || true
+          echo '=== NETWORK CHECKS ==='
+          echo 'SUPABASE_URL set?'; [ -n "$VITE_SUPABASE_URL" ] && echo yes || echo no
+          echo 'PUBLISHABLE set?'; [ -n "$VITE_SUPABASE_PUBLISHABLE_KEY" ] && echo yes || echo no
+
       - name: Edge Function Tests (Deno)
         run: |
           curl -fsSL https://deno.land/install.sh | sh
