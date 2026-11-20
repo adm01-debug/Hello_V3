@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "f1054684e375cc2736ae65bfda483c0dbe55fd60",
+  "sha": "68850f6e9a340ad11add473cc5ee3ff1840d1606",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 18:31 UTC",
-  "files_total": 1598,
-  "code_files": 1406,
-  "code_lines": 177368
+  "generated_at": "2026-11-20 19:00 UTC",
+  "files_total": 1599,
+  "code_files": 1407,
+  "code_lines": 177384
  },
  "version": "1.3.2",
- "facts_hash": "e33c841c668bccec",
+ "facts_hash": "6d2b178b68845829",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -160,7 +160,7 @@
   "languages": {
    ".tsx": 595,
    ".ts": 567,
-   ".sql": 212,
+   ".sql": 213,
    ".mjs": 25,
    ".py": 5,
    ".js": 2
@@ -25628,6 +25628,7 @@
    "supabase/migrations/20261114090555_39ac6717-4796-4514-bcee-c3a00c1dfd6d.sql",
    "supabase/migrations/20261114090556_f32993dc-8788-4c44-8082-b2e52a7463cb.sql",
    "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
+   "supabase/migrations/20261120154610_fix-data-lake-exports-call-summaries.sql",
    "src/integrations/supabase/types.ts"
   ],
   "rls": {
@@ -31585,7 +31586,7 @@
   {
    "module": "scripts",
    "files": 32,
-   "lines": 9358,
+   "lines": 9364,
    "tables": [
     "a",
     "contacts",
@@ -32921,8 +32922,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 210,
-   "lines": 13618,
+   "files": 211,
+   "lines": 13628,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -86605,7 +86606,7 @@
   },
   "scripts/inventario/gerar-banco.mjs": {
    "path": "scripts/inventario/gerar-banco.mjs",
-   "lines": 346,
+   "lines": 352,
    "exports": [
     "const PROJETO_OFICIAL",
     "const LIMIARES",
@@ -117706,6 +117707,10 @@
    "lines": 53,
    "uses_service_role": true
   },
+  "supabase/migrations/20261120154610_fix-data-lake-exports-call-summaries.sql": {
+   "path": "supabase/migrations/20261120154610_fix-data-lake-exports-call-summaries.sql",
+   "lines": 10
+  },
   "tests/e2e/auth.spec.ts": {
    "path": "tests/e2e/auth.spec.ts",
    "lines": 34,
@@ -117814,10 +117819,20 @@
   }
  },
  "git": {
-  "sha": "f1054684e375cc2736ae65bfda483c0dbe55fd60",
+  "sha": "68850f6e9a340ad11add473cc5ee3ff1840d1606",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "68850f6",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "fix: cron data-lake-flush falhava por constraint de dataset sem call_summaries (#60)",
+    "files": [
+     "scripts/inventario/gerar-banco.mjs",
+     "supabase/migrations/20261120154610_fix-data-lake-exports-call-summaries.sql"
+    ]
+   },
    {
     "sha": "f105468",
     "date": "2026-11-20",
@@ -118620,15 +118635,6 @@
     "files": [
      ".github/workflows/contexto.yml"
     ]
-   },
-   {
-    "sha": "8ed39f4",
-    "date": "2026-11-13",
-    "author": "adm01-debug",
-    "subject": "fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)",
-    "files": [
-     "scripts/supabase_snapshot/snapshot.py"
-    ]
    }
   ],
   "hot_files": [
@@ -118665,8 +118671,12 @@
     2
    ],
    [
-    "scripts/supabase_snapshot/snapshot.py",
-    2
+    "scripts/inventario/gerar-banco.mjs",
+    1
+   ],
+   [
+    "supabase/migrations/20261120154610_fix-data-lake-exports-call-summaries.sql",
+    1
    ],
    [
     "inventario/estado/banco.json",
@@ -118706,10 +118716,6 @@
    ],
    [
     "docs/pendencias/WIRING-02-livetranslationpanel.md",
-    1
-   ],
-   [
-    "docs/pendencias/WIRING-03-whatsappcomposer.md",
     1
    ]
   ]
