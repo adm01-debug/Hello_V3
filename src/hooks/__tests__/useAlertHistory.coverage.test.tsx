@@ -117,7 +117,7 @@ describe('useAlertHistory', () => {
     await waitFor(() => expect(r.current.loading).toBe(false));
 
     await act(async () => {
-      r.current.setDateRange({ from: new Date('2024-01-01'), to: new Date('2024-01-31') });
+      r.current.setDateRange({ from: new Date(2024, 0, 1), to: new Date(2024, 0, 31) });
     });
     await waitFor(() => expect(r.current.loading).toBe(false));
     expect(r.current.dateRange.from.getFullYear()).toBe(2024);
