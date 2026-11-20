@@ -1478,7 +1478,7 @@
    "nome": "migrate-helper",
    "entrada": "supabase/functions/migrate-helper/index.ts",
    "arquivos": 1,
-   "linhas": 44,
+   "linhas": 42,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"

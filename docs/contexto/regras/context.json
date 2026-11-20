@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "c98548cd3e434df5ca0eba0f71e120dbd5e34df4",
+  "sha": "ce6fee58add89645cab45287441742e54f3edbaa",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 16:48 UTC",
+  "generated_at": "2026-11-20 17:10 UTC",
   "files_total": 1600,
   "code_files": 1408,
-  "code_lines": 177453
+  "code_lines": 177451
  },
  "version": "1.3.2",
- "facts_hash": "351d9963d2c9e67c",
+ "facts_hash": "96caa6f179bef48b",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -32732,7 +32732,7 @@
   {
    "module": "supabase/functions",
    "files": 147,
-   "lines": 16558,
+   "lines": 16556,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -114209,7 +114209,7 @@
   },
   "supabase/functions/migrate-helper/index.ts": {
    "path": "supabase/functions/migrate-helper/index.ts",
-   "lines": 44,
+   "lines": 42,
    "exports": [
     "const handler"
    ],
@@ -117910,10 +117910,20 @@
   }
  },
  "git": {
-  "sha": "c98548cd3e434df5ca0eba0f71e120dbd5e34df4",
+  "sha": "ce6fee58add89645cab45287441742e54f3edbaa",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ce6fee5",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)",
+    "files": [
+     "deno.lock",
+     "supabase/functions/migrate-helper/index.ts"
+    ]
+   },
    {
     "sha": "c98548c",
     "date": "2026-11-20",
@@ -118710,15 +118720,6 @@
     "files": [
      ".github/workflows/contexto.yml"
     ]
-   },
-   {
-    "sha": "650143f",
-    "date": "2026-11-13",
-    "author": "adm01-debug",
-    "subject": "fix: test_snapshot.py lê arquivos gerados com UTF-8 explícito (#24)",
-    "files": [
-     "scripts/supabase_snapshot/test_snapshot.py"
-    ]
    }
   ],
   "hot_files": [
@@ -118735,6 +118736,10 @@
     3
    ],
    [
+    "supabase/functions/migrate-helper/index.ts",
+    2
+   ],
+   [
     ".env",
     2
    ],
@@ -118747,15 +118752,11 @@
     2
    ],
    [
-    "scripts/supabase_snapshot/test_snapshot.py",
-    2
-   ],
-   [
-    "supabase/functions/migrate-helper/index.test.ts",
+    "deno.lock",
     1
    ],
    [
-    "supabase/functions/migrate-helper/index.ts",
+    "supabase/functions/migrate-helper/index.test.ts",
     1
    ],
    [

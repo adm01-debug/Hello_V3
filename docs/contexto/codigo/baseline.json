@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "c98548cd3e434df5ca0eba0f71e120dbd5e34df4",
+  "commit": "ce6fee58add89645cab45287441742e54f3edbaa",
   "branch": "main",
-  "data_commit": "2026-11-20T13:47:28-03:00",
+  "data_commit": "2026-11-20T14:09:32-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ce6fee5",
+    "data": "2026-11-20",
+    "assunto": "chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)"
+   },
    {
     "sha": "c98548c",
     "data": "2026-11-20",
@@ -126,14 +131,9 @@
     "sha": "4060612",
     "data": "2026-11-13",
     "assunto": "chore: docs: relatorio de prod-readiness com inventario de funcionalidades (#30)"
-   },
-   {
-    "sha": "75a5df1",
-    "data": "2026-11-13",
-    "assunto": "fix: guard de segredo do contexto ignora senha ja redigida (#29)"
    }
   ],
-  "arquivos_mudados_7d": 548,
+  "arquivos_mudados_7d": 549,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -226,7 +226,15 @@
     "mudancas": 3
    },
    {
+    "arquivo": "supabase/functions/migrate-helper/index.ts",
+    "mudancas": 3
+   },
+   {
     "arquivo": ".github/workflows/inventario-estado-semanal.yml",
+    "mudancas": 2
+   },
+   {
+    "arquivo": "deno.lock",
     "mudancas": 2
    },
    {
@@ -274,10 +282,6 @@
     "mudancas": 2
    },
    {
-    "arquivo": "supabase/functions/migrate-helper/index.ts",
-    "mudancas": 2
-   },
-   {
     "arquivo": "tests/e2e/performance.spec.ts",
     "mudancas": 2
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "vite.config.ts",
     "mudancas": 2
-   },
-   {
-    "arquivo": ".claude/skills/hello-v3/SKILL.md",
-    "mudancas": 1
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 39
+    "commits": 40
    },
    {
     "autor": "github-actions[bot]",
@@ -312,7 +312,7 @@
  "contagens": {
   "arquivos_total": 1553,
   "arquivos_codigo": 1195,
-  "linhas_codigo": 163624,
+  "linhas_codigo": 163622,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -508,7 +508,7 @@
   },
   "supabase/functions": {
    "arquivos": 147,
-   "linhas": 16558
+   "linhas": 16556
   },
   "tailwind.config.ts": {
    "arquivos": 1,

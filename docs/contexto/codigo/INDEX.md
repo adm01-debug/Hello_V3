@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c98548cd3e434df5ca0eba0f71e120dbd5e34df4` (2026-11-20T13:47:28-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ce6fee58add89645cab45287441742e54f3edbaa` (2026-11-20T14:09:32-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1553 |
 | arquivos_codigo | 1195 |
-| linhas_codigo | 163624 |
+| linhas_codigo | 163622 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -360,7 +360,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:102, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8849 nós · 23564 arestas · 685 comunidades · grafo do commit `c98548cd`
+- 8849 nós · 23564 arestas · 685 comunidades · grafo do commit `ce6fee58`
 - comunidades maiores: lucide-react (238), client.ts (197), react (181), protectedRoutes.tsx (167), vitest (158), badge.tsx (148), cn (120), safe-date.ts (105), @tanstack/react-query (105), snapshot.py (102), ref_https (101), usePageTitle (97)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -373,14 +373,14 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - inventario/estado/edges.json (3)
 - scripts/supabase_snapshot/snapshot.py (3)
 - scripts/supabase_snapshot/test_snapshot.py (3)
+- supabase/functions/migrate-helper/index.ts (3)
 - .github/workflows/inventario-estado-semanal.yml (2)
+- deno.lock (2)
 - docs/agentes/banco.md (2)
 - docs/estado/edge-functions-parte1.md (2)
 - docs/observabilidade/SLI_SLO.md (2)
 - inventario/estado/README.md (2)
 - inventario/estado/rotas.json (2)
-- scripts/inventario/banco.sql (2)
-- scripts/inventario/gerar-banco.mjs (2)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -419,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-20 `ce6fee5` chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)
 - 2026-11-20 `c98548c` chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)
 - 2026-11-20 `ea6e3dc` test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)
 - 2026-11-20 `25b35e5` feat: concluir funcionalidades planejadas (wiring IA composer + fix hook TopicDetection) (#53)
@@ -433,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-14 `bd4186d` fix: trata erro nas queries dos 3 hooks e adiciona noopener no video conference (#41)
 - 2026-11-14 `9375146` chore: contexto agendado de 10 min para 1x/hora (#42)
 - 2026-11-14 `9e7657f` chore: saneia SC2129 no contexto.yml e documenta leitura de logs em producao (#40)
-- 2026-11-14 `a8985a2` feat: (#38)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

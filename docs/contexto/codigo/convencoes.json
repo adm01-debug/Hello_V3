@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)",
    "chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)",
    "test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)",
    "feat: concluir funcionalidades planejadas (wiring IA composer + fix hook TopicDetection) (#53)",
-   "infra: escopa job CI ao environment e2e (#52)",
-   "chore: remove .env e coverage do versionamento (#51)"
+   "infra: escopa job CI ao environment e2e (#52)"
   ]
  },
  "pr_template": null,
