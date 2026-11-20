@@ -2,6 +2,10 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-20 00:38 UTC
+
+- **realtime** adicionado (5): `supabase_realtime_messages_publication:realtime.messages_2026_11_18`, `supabase_realtime_messages_publication:realtime.messages_2026_11_19`, `supabase_realtime_messages_publication:realtime.messages_2026_11_20`, `supabase_realtime_messages_publication:realtime.messages_2026_11_21`, `supabase_realtime_messages_publication:realtime.messages_2026_11_22`
+
 ## 2026-11-14 14:27 UTC
 
 - **colunas** adicionado (35): `public.entity_versions.change_summary`, `public.entity_versions.changed_at`, `public.entity_versions.changed_by`, `public.entity_versions.data`, `public.entity_versions.entity_id`, `public.entity_versions.entity_type`, `public.entity_versions.id`, `public.entity_versions.version_number`, `public.migration_rollbacks.id`, `public.migration_rollbacks.reason`, `public.migration_rollbacks.rolled_back_at`, `public.migration_rollbacks.rolled_back_by`, `public.migration_rollbacks.version`, `public.migration_status.applied_at`, `public.migration_status.applied_by`, `public.migration_status.execution_time_ms`, `public.migration_status.name`, `public.migration_status.status`, `public.migration_status.success`, `public.migration_status.version`, `public.saved_filters.created_at`, `public.saved_filters.entity_type`, `public.saved_filters.filters`, `public.saved_filters.id`, `public.saved_filters.is_default`, `public.saved_filters.name`, `public.saved_filters.updated_at`, `public.saved_filters.user_id`, `public.schema_migrations.applied_at`, `public.schema_migrations.applied_by`, `public.schema_migrations.checksum`, `public.schema_migrations.execution_time_ms`, `public.schema_migrations.name`, `public.schema_migrations.success`, `public.schema_migrations.version`

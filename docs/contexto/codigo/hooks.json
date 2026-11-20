@@ -976,7 +976,7 @@
    "hooks_exportados": [
     "useBattleCardDetection"
    ],
-   "linhas": 74,
+   "linhas": 81,
    "dominio": "hooks",
    "tabelas": [
     "battle_card_triggers",
@@ -2069,7 +2069,7 @@
    "hooks_exportados": [
     "useExecutiveDashboardData"
    ],
-   "linhas": 261,
+   "linhas": 268,
    "dominio": "hooks",
    "tabelas": [
     "agent_goals",
@@ -4070,7 +4070,7 @@
    "hooks_exportados": [
     "useTrunkRealtimeMetrics"
    ],
-   "linhas": 75,
+   "linhas": 79,
    "dominio": "hooks",
    "tabelas": [
     "call_sessions",

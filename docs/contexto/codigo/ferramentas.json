@@ -7,7 +7,7 @@
    "SQL (212)",
    "Markdown (101)",
    "JavaScript (27)",
-   "JSON (15)",
+   "JSON (16)",
    "Python (5)",
    "YAML (3)",
    "Shell (2)"
@@ -32,7 +32,9 @@
   "gerenciador_pacotes": "bun",
   "node": ">=20.0.0",
   "python": null,
-  "deploy": [],
+  "deploy": [
+   "vercel"
+  ],
   "monorepo": null,
   "pastas_fonte": [
    "src"
@@ -110,6 +112,7 @@
   "tsconfig.app.json",
   "tsconfig.json",
   "tsconfig.node.json",
+  "vercel.json",
   "vite.config.ts",
   "vitest.config.ts"
  ],
@@ -141,6 +144,9 @@
     "type-check"
    ],
    "secrets": [
+    "E2E_ADMIN_EMAIL",
+    "E2E_ADMIN_PASSWORD",
+    "E2E_SUPABASE_SESSION_JSON",
     "VITE_SUPABASE_PUBLISHABLE_KEY",
     "VITE_SUPABASE_URL"
    ],
@@ -159,7 +165,7 @@
     "workflow_dispatch"
    ],
    "crons": [
-    "3-59/10 * * * *"
+    "3 * * * *"
    ],
    "branches": [
     "main"
@@ -424,6 +430,9 @@
    "VITE_TURN_USER"
   ],
   "secrets_em_workflows": [
+   "E2E_ADMIN_EMAIL",
+   "E2E_ADMIN_PASSWORD",
+   "E2E_SUPABASE_SESSION_JSON",
    "SUPABASE_ACCESS_TOKEN",
    "SUPABASE_DB_URL",
    "VITE_SUPABASE_PUBLISHABLE_KEY",
@@ -431,10 +440,20 @@
   ]
  },
  "deploy": {
-  "alvos": [],
+  "alvos": [
+   "vercel"
+  ],
   "dockerfiles": [],
   "compose": [],
-  "vercel": null
+  "vercel": {
+   "framework": null,
+   "build": null,
+   "rewrites": 1,
+   "redirects": 0,
+   "headers": 0,
+   "ignore_command": null,
+   "crons": []
+  }
  },
  "integracoes": {
   "sdks": [
@@ -684,6 +703,10 @@
     "ocorrencias": 5
    },
    {
+    "papel": "article",
+    "ocorrencias": 3
+   },
+   {
     "papel": "button",
     "ocorrencias": 3
    },
@@ -704,10 +727,6 @@
     "ocorrencias": 2
    },
    {
-    "papel": "article",
-    "ocorrencias": 2
-   },
-   {
     "papel": "customer",
     "ocorrencias": 2
    },
@@ -721,10 +740,6 @@
    },
    {
     "papel": "link",
-    "ocorrencias": 1
-   },
-   {
-    "papel": "list",
     "ocorrencias": 1
    },
    {

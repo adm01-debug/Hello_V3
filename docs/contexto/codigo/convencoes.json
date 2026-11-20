@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
-   "feat: (#38)",
-   "feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)",
-   "feat: wrapper zod central (zodFormErrors + schemas de auth/voip) e migra os forms para ele (#37)",
-   "fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)",
-   "fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)"
+   "fix: torna testes vitest robustos a timezone e path com espaço (#46)",
+   "fix: corrige selectors e ativa E2E autenticado (#45)",
+   "fix: usePhaseColors preserva NaN em CSS var inválida (fallback do safeParseFloat) (#44)",
+   "infra: SPA rewrites no Vercel (rotas client-side sem 404) (#43)",
+   "fix: trata erro nas queries dos 3 hooks e adiciona noopener no video conference (#41)"
   ]
  },
  "pr_template": null,

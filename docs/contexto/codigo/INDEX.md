@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a8985a2d464c287f031918f8c492923d78cd72c0` (2026-11-14T11:04:52-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `2fcd5ba1c4ce4ac0d6deec88ccd17b716dede2fa` (2026-11-19T21:14:30-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1162), SQL (212), Markdown (101), JavaScript (27), JSON (15), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1162), SQL (212), Markdown (101), JavaScript (27), JSON (16), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -27,16 +27,16 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - gerenciador_pacotes: bun
 - node: >=20.0.0
 - python: n/d
-- deploy: n/d
+- deploy: vercel
 - monorepo: n/d
 - pastas_fonte: src
 
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1540 |
+| arquivos_total | 1541 |
 | arquivos_codigo | 1193 |
-| linhas_codigo | 163375 |
+| linhas_codigo | 163418 |
 | rotas | 104 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -337,7 +337,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, DD_API_KEY, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, LOVABLE_API_KEY, MICROSOFT_TEAMS_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
 ## Permissões / papéis
-- papéis no código: admin (32), user (24), system (18), agent (15), alert (7), supervisor (6), group (5), status (5), button (3), img (3), navigation (3), viewer (3), anon (2), article (2), customer (2), dialog (2), god (1), link (1), list (1), presentation (1), region (1), searchbox (1), separator (1), string (1), sup (1), table (1)
+- papéis no código: admin (32), user (24), system (18), agent (15), alert (7), supervisor (6), group (5), status (5), article (3), button (3), img (3), navigation (3), viewer (3), anon (2), customer (2), dialog (2), god (1), link (1), presentation (1), region (1), searchbox (1), separator (1), string (1), sup (1), table (1)
 - enums de papel: app_role: admin|supervisor|agent|viewer
 - guards: src/components/auth/ProtectedRoute.tsx · rotas protegidas: 0 · públicas: /, /*, /accounts, /admin/data-export, /admin/database-health, /admin/extensions, /admin/security-alerts, /admin/security-audit, /admin/slo, /admin/voice-quality, /admin/voip-trunks, /admin/webhook-health, /agent-assist, /ai, /alert-history, /alerts, /analytics, /audit-logs, /battle-cards, /blf, /blocked-access-logs, /cadences, /call-flow-designer, /call-history, /call-library, /call-park, /call-queues, /callbacks, /calls, /coaching, /compliance, /concurrency-conflicts, /contacts, /contacts/insights, /dashboard, /deals, /dialer, /dialer/predictive, /executive, /external-recordings-import, /financial-impact, /forgot-password, /geo-blocking, /history, /hold-alerts, /hold-metrics, /hold-settings, /hot-desking, /inbox, /ip-whitelist, /knowledge, /landing, /ldap-sync, /learning, /login, /marketplace, /meeting-summaries, /multi-device-ring, /network-diagnostics, /notifications, /number-porting, /observability, /onboarding, /outbound-compliance, /passkeys, /password-reset-approval, /permissions, /pricing, /qr-provisioning, /queue-dashboard, /queue-metrics-settings, /ranking, /rate-limit, /recordings, /register, /renewals, /reports, /reset-password, /ring-groups, /roles, /routing-rules, /scheduling, /security, /security-monitoring, /security-report, /sessions, /settings, /shift-swap-suggestions, /skills, /sla-policies, /status, /success-plans, /toll-free-numbers, /topic-detection, /trackers, /translation-center, /two-factor-auth, /unauthorized, /verify-email, /video-conference, /virtual-fax, /voice-security, /voicemail, /vs/3cplus
 - feature flags: FEATURE_X, nova-tela, novo-inbox
@@ -360,31 +360,31 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 18 — ex.: scripts/ai-context/cenarios.mjs:102, scripts/check-data.mjs:2, scripts/test-api-direct.mjs:3
 
 ## Grafo de código (graphify)
-- 8841 nós · 23596 arestas · 686 comunidades · grafo do commit `a8985a2d`
-- comunidades maiores: lucide-react (284), client.ts (187), react (183), @tanstack/react-query (162), vitest (155), protectedRoutes.tsx (127), badge.tsx (117), PredictiveDialerPanel.tsx (116), usePageTitle (113), cn (107), snapshot.py (102), ref_https (98)
+- 8844 nós · 23598 arestas · 682 comunidades · grafo do commit `2fcd5ba1`
+- comunidades maiores: card.tsx (307), client.ts (190), button.tsx (184), safe-date.ts (172), lucide-react (151), vitest (139), snapshot.py (102), @tanstack/react-query (101), ref_https (101), cn (99), protectedRoutes.tsx (85), dependencies (83)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- ESTADO_ATUAL.md (6)
+- .github/workflows/contexto.yml (6)
 - docs/prod-readiness.md (5)
-- .github/workflows/contexto.yml (4)
-- AGENTS.md (4)
-- docs/estado/edge-functions-parte1.md (3)
+- .github/workflows/ci.yml (3)
+- AGENTS.md (3)
 - inventario/estado/edges.json (3)
 - scripts/supabase_snapshot/snapshot.py (3)
 - scripts/supabase_snapshot/test_snapshot.py (3)
-- .github/workflows/ci.yml (2)
 - .github/workflows/inventario-estado-semanal.yml (2)
 - docs/agentes/banco.md (2)
-- docs/estado/dados-schema-migrations.md (2)
-- docs/estado/funcionalidades-planejadas.md (2)
-- docs/estado/integracoes.md (2)
+- docs/estado/edge-functions-parte1.md (2)
+- docs/observabilidade/SLI_SLO.md (2)
 - inventario/estado/README.md (2)
+- inventario/estado/rotas.json (2)
+- scripts/inventario/banco.sql (2)
+- scripts/inventario/gerar-banco.mjs (2)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
-- `contexto.yml` — Contexto para agentes de IA (10 min) (push, schedule, workflow_dispatch; cron 3-59/10 * * * *)
+- `contexto.yml` — Contexto para agentes de IA (10 min) (push, schedule, workflow_dispatch; cron 3 * * * *)
 - `inventario-estado-semanal.yml` — Inventário do estado real (semanal) (schedule, workflow_dispatch; cron 23 10 * * 1)
 
 ## Scripts npm
@@ -419,6 +419,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-19 `2fcd5ba` fix: torna testes vitest robustos a timezone e path com espaço (#46)
+- 2026-11-19 `f3cc8f6` fix: corrige selectors e ativa E2E autenticado (#45)
+- 2026-11-19 `5994943` fix: usePhaseColors preserva NaN em CSS var inválida (fallback do safeParseFloat) (#44)
+- 2026-11-19 `82934f8` infra: SPA rewrites no Vercel (rotas client-side sem 404) (#43)
+- 2026-11-14 `bd4186d` fix: trata erro nas queries dos 3 hooks e adiciona noopener no video conference (#41)
+- 2026-11-14 `9375146` chore: contexto agendado de 10 min para 1x/hora (#42)
+- 2026-11-14 `9e7657f` chore: saneia SC2129 no contexto.yml e documenta leitura de logs em producao (#40)
 - 2026-11-14 `a8985a2` feat: (#38)
 - 2026-11-14 `d67d0f4` feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)
 - 2026-11-14 `f53ee94` feat: wrapper zod central (zodFormErrors + schemas de auth/voip) e migra os forms para ele (#37)
@@ -427,13 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-14 `42f17da` fix: aplica security_invoker na view financial_impact_daily (#34)
 - 2026-11-13 `4b6df34` chore: fecha relatorio de prod-readiness na main final 25e39c4 (#33)
 - 2026-11-13 `25e39c4` chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)
-- 2026-11-13 `feeb678` chore: docs: atualiza prod-readiness com publicacao do contexto e RLS vivo (#31)
-- 2026-11-13 `4060612` chore: docs: relatorio de prod-readiness com inventario de funcionalidades (#30)
-- 2026-11-13 `75a5df1` fix: guard de segredo do contexto ignora senha ja redigida (#29)
-- 2026-11-13 `8ed39f4` fix(snapshot): reescreve query de grants via aclexplode (remove timeout de 2min) (#28)
-- 2026-11-13 `fece2f3` chore: inventario do estado real [auto] (#27)
-- 2026-11-13 `cf8f7fc` fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)
-- 2026-11-13 `4e40e57` infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -2878,21 +2878,21 @@
   {
    "arquivo": "tests/e2e/performance.spec.ts",
    "tipo": "e2e",
-   "linhas": 51,
+   "linhas": 73,
    "testa": [],
-   "casos": 4
+   "casos": 6
   },
   {
    "arquivo": "tests/e2e/webhook-audit-ndjson.spec.ts",
    "tipo": "e2e",
-   "linhas": 105,
+   "linhas": 113,
    "testa": [],
    "casos": 2
   },
   {
    "arquivo": "tests/e2e/workflow.spec.ts",
    "tipo": "e2e",
-   "linhas": 36,
+   "linhas": 31,
    "testa": [],
    "casos": 2
   }
