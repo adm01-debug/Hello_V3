@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "18f694879e4b341ea77351ac4bf54cefa61c226f",
+  "commit": "91e0da8854494b6c5a1bf808791319c4d332715f",
   "branch": "main",
-  "data_commit": "2026-11-20T08:45:42-03:00",
+  "data_commit": "2026-11-20T08:45:46-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "91e0da8",
+    "data": "2026-11-20",
+    "assunto": "infra: escopa job CI ao environment e2e (#52)"
+   },
    {
     "sha": "18f6948",
     "data": "2026-11-20",
@@ -126,11 +131,6 @@
     "sha": "cf8f7fc",
     "data": "2026-11-13",
     "assunto": "fix: inventario usa auth.schema_migrations e parser do types.ts nao conta funcoes (#26)"
-   },
-   {
-    "sha": "4e40e57",
-    "data": "2026-11-13",
-    "assunto": "infra: job banco do contexto roda suíte offline do snapshot (unittest) (#25)"
    }
   ],
   "arquivos_mudados_7d": 537,
@@ -160,12 +160,12 @@
     "mudancas": 6
    },
    {
-    "pasta": "docs/prod-readiness.md",
+    "pasta": ".github/workflows/ci.yml",
     "mudancas": 5
    },
    {
-    "pasta": ".github/workflows/ci.yml",
-    "mudancas": 4
+    "pasta": "docs/prod-readiness.md",
+    "mudancas": 5
    },
    {
     "pasta": "AGENTS.md",
@@ -202,12 +202,12 @@
     "mudancas": 6
    },
    {
-    "arquivo": "docs/prod-readiness.md",
+    "arquivo": ".github/workflows/ci.yml",
     "mudancas": 5
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 4
+    "arquivo": "docs/prod-readiness.md",
+    "mudancas": 5
    },
    {
     "arquivo": "AGENTS.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 35
+    "commits": 36
    },
    {
     "autor": "github-actions[bot]",

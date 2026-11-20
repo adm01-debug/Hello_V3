@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `18f694879e4b341ea77351ac4bf54cefa61c226f` (2026-11-20T08:45:42-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `91e0da8854494b6c5a1bf808791319c4d332715f` (2026-11-20T08:45:46-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -360,15 +360,15 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:102, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8812 nós · 23526 arestas · 691 comunidades · grafo do commit `18f69487`
+- 8812 nós · 23526 arestas · 691 comunidades · grafo do commit `91e0da88`
 - comunidades maiores: lucide-react (292), react (219), client.ts (170), traceHeaders (163), usePageTitle.ts (147), useAuthContext (119), vitest (113), cn (111), usePageTitle (106), snapshot.py (102), badge.tsx (99), ref_https (98)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - .github/workflows/contexto.yml (6)
+- .github/workflows/ci.yml (5)
 - docs/prod-readiness.md (5)
-- .github/workflows/ci.yml (4)
 - AGENTS.md (3)
 - inventario/estado/edges.json (3)
 - scripts/supabase_snapshot/snapshot.py (3)
@@ -419,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-20 `91e0da8` infra: escopa job CI ao environment e2e (#52)
 - 2026-11-20 `18f6948` chore: remove .env e coverage do versionamento (#51)
 - 2026-11-20 `b3d9f80` fix: remove segredos service_role e postgres literais dos scripts de diagnostico (#50)
 - 2026-11-20 `1cfbfcf` fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)
@@ -433,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-14 `d67d0f4` feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)
 - 2026-11-14 `f53ee94` feat: wrapper zod central (zodFormErrors + schemas de auth/voip) e migra os forms para ele (#37)
 - 2026-11-14 `2c8b481` fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)
-- 2026-11-14 `1a3c93f` fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

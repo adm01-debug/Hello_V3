@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "18f694879e4b341ea77351ac4bf54cefa61c226f",
+  "sha": "91e0da8854494b6c5a1bf808791319c4d332715f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 11:46 UTC",
+  "generated_at": "2026-11-20 11:48 UTC",
   "files_total": 1588,
   "code_files": 1406,
   "code_lines": 177308
@@ -117819,10 +117819,19 @@
   }
  },
  "git": {
-  "sha": "18f694879e4b341ea77351ac4bf54cefa61c226f",
+  "sha": "91e0da8854494b6c5a1bf808791319c4d332715f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "91e0da8",
+    "date": "2026-11-20",
+    "author": "adm01-debug",
+    "subject": "infra: escopa job CI ao environment e2e (#52)",
+    "files": [
+     ".github/workflows/ci.yml"
+    ]
+   },
    {
     "sha": "18f6948",
     "date": "2026-11-20",
@@ -118635,50 +118644,12 @@
      "tests/e2e/workflow.spec.ts",
      "vite.config.ts"
     ]
-   },
-   {
-    "sha": "5db3c07",
-    "date": "2026-11-11",
-    "author": "adm01-debug",
-    "subject": "Pipeline autônomo de contexto para agentes de IA (portado do Zapp Web V2) (#8)",
-    "files": [
-     ".github/workflows/contexto.yml",
-     ".github/workflows/inventario-estado-semanal.yml",
-     ".gitignore",
-     "AGENTS.md",
-     "ai-context.config.json",
-     "docs/CONTEXTO-PARA-AGENTES.md",
-     "docs/contexto/regras/manual/README.md",
-     "docs/contexto/regras/manual/TEMPLATE-regras-de-negocio.md",
-     "inventario/estado/README.md",
-     "inventario/estado/edges.json",
-     "inventario/estado/rotas.json",
-     "package.json",
-     "scripts/ai-context/README.md",
-     "scripts/ai-context/cenarios.mjs",
-     "scripts/ai-context/gerar.mjs",
-     "scripts/ai-context/gerar.unit.mjs",
-     "scripts/inventario/banco.sql",
-     "scripts/inventario/gerar-banco.mjs",
-     "scripts/inventario/gerar-repo.mjs",
-     "scripts/inventario/gerar-rotas.mjs",
-     "scripts/inventario/mudou-conteudo.mjs",
-     "scripts/regras_negocio/README.md",
-     "scripts/regras_negocio/generate.py",
-     "scripts/regras_negocio/indice.py",
-     "scripts/regras_negocio/publish.sh",
-     "scripts/regras_negocio/test_generate.py",
-     "scripts/supabase_snapshot/README.md",
-     "scripts/supabase_snapshot/requirements.txt",
-     "scripts/supabase_snapshot/snapshot.py",
-     "scripts/supabase_snapshot/test_snapshot.py"
-    ]
    }
   ],
   "hot_files": [
    [
     ".github/workflows/contexto.yml",
-    6
+    5
    ],
    [
     "docs/prod-readiness.md",
@@ -118686,26 +118657,10 @@
    ],
    [
     ".github/workflows/ci.yml",
-    3
-   ],
-   [
-    "scripts/supabase_snapshot/snapshot.py",
-    3
-   ],
-   [
-    "scripts/supabase_snapshot/test_snapshot.py",
-    3
-   ],
-   [
-    "inventario/estado/edges.json",
-    3
+    4
    ],
    [
     ".env",
-    2
-   ],
-   [
-    ".gitignore",
     2
    ],
    [
@@ -118729,7 +118684,11 @@
     2
    ],
    [
-    "scripts/supabase_snapshot/README.md",
+    "scripts/supabase_snapshot/snapshot.py",
+    2
+   ],
+   [
+    "scripts/supabase_snapshot/test_snapshot.py",
     2
    ],
    [
@@ -118737,24 +118696,36 @@
     2
    ],
    [
-    "AGENTS.md",
+    "inventario/estado/edges.json",
     2
    ],
    [
-    "inventario/estado/README.md",
-    2
+    ".gitignore",
+    1
    ],
    [
-    "scripts/inventario/banco.sql",
-    2
+    "coverage/base.css",
+    1
    ],
    [
-    "scripts/inventario/gerar-banco.mjs",
-    2
+    "coverage/block-navigation.js",
+    1
    ],
    [
-    ".github/workflows/inventario-estado-semanal.yml",
-    2
+    "coverage/favicon.png",
+    1
+   ],
+   [
+    "coverage/index.html",
+    1
+   ],
+   [
+    "coverage/lcov-report/base.css",
+    1
+   ],
+   [
+    "coverage/lcov-report/block-navigation.js",
+    1
    ]
   ]
  }
