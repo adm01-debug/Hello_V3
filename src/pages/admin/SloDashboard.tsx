@@ -7,11 +7,24 @@ import { Badge } from '@/components/ui/badge';
 import { Gauge, Activity, Clock, AlertCircle } from 'lucide-react';
 
 import { safeToLocaleString } from "@/lib/safe-date";
+interface ErrorBudget {
+  status: 'healthy' | 'warning' | 'exhausted' | 'unknown';
+  remaining_pct: number;
+  burn_rate: number;
+  tolerance_pct: number;
+}
+
 interface HealthResponse {
   status: 'operational' | 'degraded' | 'outage' | 'unknown';
   components: {
-    trunks: { status: string; uptime_pct: number; checks_15min: number };
-    webhooks: { status: string; error_rate_pct: number; p95_latency_ms: number; attempts_15min: number };
+    trunks: { status: string; uptime_pct: number; checks_15min: number; error_budget?: ErrorBudget };
+    webhooks: {
+      status: string;
+      error_rate_pct: number;
+      p95_latency_ms: number;
+      attempts_15min: number;
+      error_budget?: ErrorBudget;
+    };
     database: { status: string };
   };
   checked_at: string;
@@ -106,6 +119,31 @@ export default function SloDashboard() {
           <p className="text-xs text-muted-foreground">
             Última verificação: {safeToLocaleString(data.checked_at, 'pt-BR')}
           </p>
+
+          {(data.components.trunks.error_budget || data.components.webhooks.error_budget) && (
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium flex items-center gap-2">
+                  <Gauge className="h-4 w-4" />
+                  Error budget · janela de 15 min
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-xs text-muted-foreground">
+                  Quanto da margem de falha já foi consumido. <strong>Burn rate 1×</strong> significa que o
+                  orçamento acaba no fim da janela; acima de 1× o SLO estoura antes.
+                </p>
+                <BudgetRow
+                  label="Trunks VoIP"
+                  budget={data.components.trunks.error_budget}
+                />
+                <BudgetRow
+                  label="Webhooks"
+                  budget={data.components.webhooks.error_budget}
+                />
+              </CardContent>
+            </Card>
+          )}
         </>
       )}
     </div>
@@ -139,6 +177,44 @@ function SloCard(props: {
       </CardContent>
     </Card>
   );
+}
+
+function BudgetRow({ label, budget }: { label: string; budget?: ErrorBudget }) {
+  if (!budget) {
+    return (
+      <div className="flex items-center justify-between text-sm">
+        <span className="text-muted-foreground">{label}</span>
+        <Badge variant="outline">sem dados</Badge>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-1">
+      <div className="flex items-center justify-between text-sm">
+        <span className="font-medium">{label}</span>
+        <span className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground">
+            {budget.remaining_pct.toFixed(1)}% restante
+          </span>
+          <BudgetBadge status={budget.status} burnRate={budget.burn_rate} />
+        </span>
+      </div>
+      <Progress value={Math.max(0, Math.min(100, budget.remaining_pct))} />
+      <p className="text-xs text-muted-foreground">
+        burn {budget.burn_rate.toFixed(2)}× · tolerância {budget.tolerance_pct}%
+      </p>
+    </div>
+  );
+}
+
+function BudgetBadge({ status, burnRate }: { status: ErrorBudget['status']; burnRate: number }) {
+  if (status === 'exhausted') {
+    return <Badge variant="destructive">{burnRate.toFixed(1)}× esgotado</Badge>;
+  }
+  if (status === 'warning') return <Badge variant="secondary">{burnRate.toFixed(1)}× atenção</Badge>;
+  if (status === 'healthy') return <Badge>{burnRate.toFixed(1)}× saudável</Badge>;
+  return <Badge variant="outline">amostra insuficiente</Badge>;
 }
 
 function StatusBadge({ status }: { status: string }) {

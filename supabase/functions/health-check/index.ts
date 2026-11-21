@@ -2,6 +2,7 @@
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { withRequestLog, logError } from '../_shared/observability.ts';
+import { budget } from './slo-budget.ts';
 
 export const handler = async (req: Request): Promise<Response> => {
   const corsHeaders = buildCorsHeaders(req);
@@ -40,17 +41,30 @@ export const handler = async (req: Request): Promise<Response> => {
       : 0;
     const webhookP95Latency = percentile(webhooks.map((w) => w.duration_ms ?? 0), 0.95);
 
+    const trunkBudget = budget({
+      total: trunkTotal,
+      bad: trunkTotal - trunkReachable,
+      targetPct: 99,
+    });
+    const webhookBudget = budget({
+      total: webhookSent + webhookFailed,
+      bad: webhookFailed,
+      targetPct: 99,
+    });
+
     const components = {
       trunks: {
         status: trunkUptimePct >= 99 ? 'operational' : trunkUptimePct >= 95 ? 'degraded' : 'outage',
         uptime_pct: Number(trunkUptimePct.toFixed(2)),
         checks_15min: trunkTotal,
+        error_budget: trunkBudget,
       },
       webhooks: {
         status: webhookErrorRate < 1 ? 'operational' : webhookErrorRate < 5 ? 'degraded' : 'outage',
         error_rate_pct: Number(webhookErrorRate.toFixed(2)),
         p95_latency_ms: Math.round(webhookP95Latency),
         attempts_15min: webhookSent + webhookFailed,
+        error_budget: webhookBudget,
       },
       database: { status: 'operational' },
     };
@@ -61,9 +75,21 @@ export const handler = async (req: Request): Promise<Response> => {
       ? 'degraded'
       : 'operational';
 
+    // Budget esgotado alerta mesmo com status ainda dentro do limite: e o sinal
+    // antecipado de que o SLO vai estourar antes do fim da janela.
+    const exhausted = [
+      ['trunks', trunkBudget],
+      ['webhooks', webhookBudget],
+    ].filter(([, b]) => (b as { status: string }).status === 'exhausted');
+
     if (overall !== 'operational') {
       // SLO violado: alerta estruturado consumível por Supabase Logs/webhook.
       logError('slo_violation_' + overall, new Error('downtime >= threshold'), { components });
+    } else if (exhausted.length > 0) {
+      logError('slo_budget_exhausted', new Error('error budget exhausted'), {
+        exhausted: exhausted.map(([name]) => name),
+        components,
+      });
     }
 
     return new Response(JSON.stringify({

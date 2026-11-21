@@ -33,6 +33,32 @@ Quando `overall != operational`, `health-check` emite:
 {"level":"error","event":"slo_violation_<degraded|outage>","ts":"...","error":"downtime >= threshold","components":{...}}
 ```
 
+## Error budget
+
+Cada componente expõe um bloco `error_budget` calculado a partir do SLI da janela de 15 min:
+
+| Campo | Significado |
+|---|---|
+| `remaining_pct` | quanto da tolerância de falha ainda resta (100 = nada consumido) |
+| `burn_rate` | velocidade de consumo. `1` = exatamente no ritmo que estoura o SLO no fim da janela; `5` = estoura 5× mais rápido |
+| `tolerance_pct` | tolerância usada, em percentual (0,1 para alvo 99,9%) |
+| `status` | `healthy` (burn < 0,5) · `warning` (0,5 ≤ burn < 1) · `exhausted` (burn ≥ 1) · `unknown` (< 10 amostras) |
+
+`remaining_pct` e `burn_rate` medem coisas diferentes: o primeiro é o estado acumulado, o segundo é a
+tendência. Um pico curto zera o budget sem indicar tendência; burn rate alto indica que o SLO vai estourar
+antes do fim da janela.
+
+Quando um budget está `exhausted` mas o status geral ainda é `operational`, o `health-check` emite:
+
+```
+{"level":"error","event":"slo_budget_exhausted","error":"error budget exhausted","exhausted":["trunks"],"components":{...}}
+```
+
+É o alerta antecipado — o SLO ainda não foi violado, mas a margem acabou.
+
+Cálculo em `supabase/functions/health-check/slo-budget.ts`, testes em `__tests__/slo-budget_test.ts`
+(11 casos: limites exatos, amostra insuficiente, valores não finitos, alvo de 100%).
+
 ## Instrumentação existente
 
 - `health-check` (edge function pública) — consolida SLIs e deriva o status.
