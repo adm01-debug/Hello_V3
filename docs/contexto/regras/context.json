@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a40abd0591423cace0a4c462b2bf4596b1f14ed7",
+  "sha": "92533c9a9b4265d1b25ed51943376f3dde7eb359",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 15:23 UTC",
+  "generated_at": "2026-11-21 15:47 UTC",
   "files_total": 1607,
   "code_files": 1413,
-  "code_lines": 177825
+  "code_lines": 177975
  },
  "version": "1.3.2",
- "facts_hash": "fe82243126e823ab",
+ "facts_hash": "33f31e811608c4f9",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -21913,174 +21913,6 @@
     "src": "supabase/migrations/20250102000000_hello_production.sql"
    },
    {
-    "name": "idx_calls_user_started_at",
-    "table": "calls",
-    "columns": "user_id, started_at DESC",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_calls_status_user",
-    "table": "calls",
-    "columns": "status, user_id",
-    "unique": false,
-    "where": "WHERE status IN ('active', 'ringing')",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_calls_date_range",
-    "table": "calls",
-    "columns": "started_at DESC",
-    "unique": false,
-    "where": "WHERE started_at > CURRENT_DATE - INTERVAL '90 days'",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_calls_failed",
-    "table": "calls",
-    "columns": "user_id, started_at DESC",
-    "unique": false,
-    "where": "WHERE status = 'failed'",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_calls_analytics",
-    "table": "calls",
-    "columns": "user_id, status, started_at DESC, duration",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_contacts_name_search",
-    "table": "contacts",
-    "columns": "to_tsvector('english', name",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_contacts_user_name",
-    "table": "contacts",
-    "columns": "user_id, name",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_contacts_phone",
-    "table": "contacts",
-    "columns": "phone",
-    "unique": false,
-    "where": "WHERE phone IS NOT NULL",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_contacts_email",
-    "table": "contacts",
-    "columns": "email",
-    "unique": false,
-    "where": "WHERE email IS NOT NULL",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_contacts_recent",
-    "table": "contacts",
-    "columns": "user_id, created_at DESC",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_transcriptions_call",
-    "table": "transcriptions",
-    "columns": "call_id, created_at",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_transcriptions_text_search",
-    "table": "transcriptions",
-    "columns": "to_tsvector('english', text",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_transcriptions_confidence",
-    "table": "transcriptions",
-    "columns": "call_id, confidence DESC",
-    "unique": false,
-    "where": "WHERE confidence > 0.8",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_users_email_unique",
-    "table": "users",
-    "columns": "email",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_users_active",
-    "table": "users",
-    "columns": "created_at DESC",
-    "unique": false,
-    "where": "WHERE deleted_at IS NULL",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_users_role",
-    "table": "users",
-    "columns": "role",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_audit_user_timestamp",
-    "table": "audit_logs",
-    "columns": "user_id, timestamp DESC",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_audit_action_timestamp",
-    "table": "audit_logs",
-    "columns": "action, timestamp DESC",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_audit_critical",
-    "table": "audit_logs",
-    "columns": "timestamp DESC, severity",
-    "unique": false,
-    "where": "WHERE severity = 'critical'",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_audit_failures",
-    "table": "audit_logs",
-    "columns": "user_id, timestamp DESC",
-    "unique": false,
-    "where": "WHERE success = FALSE",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
-    "name": "idx_calls_contact_user",
-    "table": "calls",
-    "columns": "contact_id, user_id, started_at DESC",
-    "unique": false,
-    "where": "",
-    "src": "supabase/migrations/20250102000000_performance_indexes.sql"
-   },
-   {
     "name": "idx_queries_duration",
     "table": "pg_stat_statements",
     "columns": "mean_time DESC",
@@ -25401,11 +25233,11 @@
     "src": "supabase/migrations/20250101000000_versioning.sql"
    },
    "index_usage": {
-    "body": "SELECT schemaname, tablename, indexname, idx_scan AS index_scans, idx_tup_read AS tuples_read, idx_tup_fetch AS tuples_fetched, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes ORDER BY idx_scan DESC",
+    "body": "SELECT schemaname, relname AS tablename, indexrelname AS indexname, idx_scan AS index_scans, idx_tup_read AS tuples_read, idx_tup_fetch AS tuples_fetched, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes ORDER BY idx_scan DESC",
     "src": "supabase/migrations/20250102000000_performance_indexes.sql"
    },
    "unused_indexes": {
-    "body": "SELECT schemaname, tablename, indexname, idx_scan, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes WHERE idx_scan = 0 AND indexrelname NOT LIKE 'pk_%' AND indexrelname NOT LIKE '%_pkey' ORDER BY pg_relation_size(indexrelid) DESC",
+    "body": "SELECT schemaname, relname AS tablename, indexrelname AS indexname, idx_scan, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes WHERE idx_scan = 0 AND indexrelname NOT LIKE 'pk_%' AND indexrelname NOT LIKE '%_pkey' ORDER BY pg_relation_size(indexrelid) DESC",
     "src": "supabase/migrations/20250102000000_performance_indexes.sql"
    },
    "slow_queries": {
@@ -32954,7 +32786,7 @@
   {
    "module": "supabase/migrations",
    "files": 211,
-   "lines": 13630,
+   "lines": 13780,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -78264,11 +78096,11 @@
     "src": "supabase/migrations/20250101000000_versioning.sql"
    },
    "index_usage": {
-    "body": "SELECT schemaname, tablename, indexname, idx_scan AS index_scans, idx_tup_read AS tuples_read, idx_tup_fetch AS tuples_fetched, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes ORDER BY idx_scan DESC",
+    "body": "SELECT schemaname, relname AS tablename, indexrelname AS indexname, idx_scan AS index_scans, idx_tup_read AS tuples_read, idx_tup_fetch AS tuples_fetched, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes ORDER BY idx_scan DESC",
     "src": "supabase/migrations/20250102000000_performance_indexes.sql"
    },
    "unused_indexes": {
-    "body": "SELECT schemaname, tablename, indexname, idx_scan, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes WHERE idx_scan = 0 AND indexrelname NOT LIKE 'pk_%' AND indexrelname NOT LIKE '%_pkey' ORDER BY pg_relation_size(indexrelid) DESC",
+    "body": "SELECT schemaname, relname AS tablename, indexrelname AS indexname, idx_scan, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes WHERE idx_scan = 0 AND indexrelname NOT LIKE 'pk_%' AND indexrelname NOT LIKE '%_pkey' ORDER BY pg_relation_size(indexrelid) DESC",
     "src": "supabase/migrations/20250102000000_performance_indexes.sql"
    },
    "slow_queries": {
@@ -116812,7 +116644,7 @@
   },
   "supabase/migrations/20250102000000_performance_indexes.sql": {
    "path": "supabase/migrations/20250102000000_performance_indexes.sql",
-   "lines": 168
+   "lines": 318
   },
   "supabase/migrations/20250103000000_triggers.sql": {
    "path": "supabase/migrations/20250103000000_triggers.sql",
@@ -117859,10 +117691,28 @@
   }
  },
  "git": {
-  "sha": "a40abd0591423cace0a4c462b2bf4596b1f14ed7",
+  "sha": "92533c9a9b4265d1b25ed51943376f3dde7eb359",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "92533c9",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix: adiciona guards de tabela/coluna no performance_indexes para Supabase Preview (#66)",
+    "files": [
+     "supabase/migrations/20250102000000_performance_indexes.sql"
+    ]
+   },
+   {
+    "sha": "67a43aa",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "chore: docs - chatbot e traducao ao vivo marcados como wireados (#71)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "a40abd0",
     "date": "2026-11-21",
@@ -118682,25 +118532,6 @@
      "src/hooks/useTrunkRealtimeMetrics.ts",
      "src/pages/VideoConference.tsx"
     ]
-   },
-   {
-    "sha": "9375146",
-    "date": "2026-11-14",
-    "author": "adm01-debug",
-    "subject": "chore: contexto agendado de 10 min para 1x/hora (#42)",
-    "files": [
-     ".github/workflows/contexto.yml"
-    ]
-   },
-   {
-    "sha": "9e7657f",
-    "date": "2026-11-14",
-    "author": "adm01-debug",
-    "subject": "chore: saneia SC2129 no contexto.yml e documenta leitura de logs em producao (#40)",
-    "files": [
-     ".github/workflows/contexto.yml",
-     "docs/observabilidade/SLI_SLO.md"
-    ]
    }
   ],
   "hot_files": [
@@ -118719,6 +118550,14 @@
    [
     ".github/workflows/ci.yml",
     3
+   ],
+   [
+    "supabase/migrations/20250102000000_performance_indexes.sql",
+    2
+   ],
+   [
+    "docs/estado/funcionalidades-planejadas.md",
+    2
    ],
    [
     "src/components/layout/AppSidebar.tsx",
@@ -118773,15 +118612,7 @@
     2
    ],
    [
-    ".github/workflows/contexto.yml",
-    2
-   ],
-   [
     "src/pages/Calls.tsx",
-    1
-   ],
-   [
-    "docs/estado/funcionalidades-planejadas.md",
     1
    ]
   ]

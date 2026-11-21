@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a40abd0591423cace0a4c462b2bf4596b1f14ed7",
+  "commit": "92533c9a9b4265d1b25ed51943376f3dde7eb359",
   "branch": "main",
-  "data_commit": "2026-11-21T12:22:55-03:00",
+  "data_commit": "2026-11-21T12:47:24-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "92533c9",
+    "data": "2026-11-21",
+    "assunto": "fix: adiciona guards de tabela/coluna no performance_indexes para Supabase Preview (#66)"
+   },
+   {
+    "sha": "67a43aa",
+    "data": "2026-11-21",
+    "assunto": "chore: docs - chatbot e traducao ao vivo marcados como wireados (#71)"
+   },
    {
     "sha": "a40abd0",
     "data": "2026-11-21",
@@ -121,16 +131,6 @@
     "sha": "1cfbfcf",
     "data": "2026-11-20",
     "assunto": "fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)"
-   },
-   {
-    "sha": "2fcd5ba",
-    "data": "2026-11-19",
-    "assunto": "fix: torna testes vitest robustos a timezone e path com espaço (#46)"
-   },
-   {
-    "sha": "f3cc8f6",
-    "data": "2026-11-19",
-    "assunto": "fix: corrige selectors e ativa E2E autenticado (#45)"
    }
   ],
   "arquivos_mudados_7d": 577,
@@ -188,11 +188,11 @@
     "mudancas": 3
    },
    {
-    "pasta": "docs/pendencias/_ordem.md",
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 3
    },
    {
-    "pasta": "scripts/inventario/gerar-banco.mjs",
+    "pasta": "docs/pendencias/_ordem.md",
     "mudancas": 3
    }
   ],
@@ -215,6 +215,10 @@
    },
    {
     "arquivo": "AGENTS.md",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 3
    },
    {
@@ -262,10 +266,6 @@
     "mudancas": 2
    },
    {
-    "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 2
-   },
-   {
     "arquivo": "docs/observabilidade/SLI_SLO.md",
     "mudancas": 2
    },
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 53
+    "commits": 55
    },
    {
     "autor": "Joaquim Ataides",
@@ -325,7 +325,7 @@
   "componentes": 447,
   "hooks": 188,
   "edge_functions": 93,
-  "tabelas": 171,
+  "tabelas": 169,
   "migrations": 211,
   "cron_jobs": 7,
   "testes": 323,

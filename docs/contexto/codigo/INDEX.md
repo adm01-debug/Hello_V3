@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a40abd0591423cace0a4c462b2bf4596b1f14ed7` (2026-11-21T12:22:55-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `92533c9a9b4265d1b25ed51943376f3dde7eb359` (2026-11-21T12:47:24-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -45,7 +45,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | componentes | 447 |
 | hooks | 188 |
 | edge_functions | 93 |
-| tabelas | 171 |
+| tabelas | 169 |
 | migrations | 211 |
 | cron_jobs | 7 |
 | testes | 323 |
@@ -63,7 +63,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - migrations: supabase/migrations
 - scripts: scripts/inventario (5), scripts/regras_negocio (3), scripts/ai-context (2)
 - docs: (raiz) (5), docs (3), .github (1)
-- nomenclatura: {"componentes":"PascalCase (88%)","hooks":"use + PascalCase","servicos":"kebab-case (69%)","edge_functions":"kebab-case (100%)","tabelas":"snake_case (89%)"}
+- nomenclatura: {"componentes":"PascalCase (88%)","hooks":"use + PascalCase","servicos":"kebab-case (69%)","edge_functions":"kebab-case (100%)","tabelas":"snake_case (90%)"}
 - instruções para agentes no repo: AGENTS.md, CLAUDE.md
 
 ## Módulos (menu → domínio)
@@ -360,8 +360,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8882 nós · 23722 arestas · 677 comunidades · grafo do commit `a40abd05`
-- comunidades maiores: lucide-react (297), client.ts (197), vitest (180), usePageTitle (146), utils.ts (144), react (144), traceHeaders (142), select.tsx (134), useAuthContext (123), cn (108), snapshot.py (102), ref_https (98)
+- 8857 nós · 23680 arestas · 712 comunidades · grafo do commit `92533c9a`
+- comunidades maiores: lucide-react (242), client.ts (221), usePageTitle (195), @tanstack/react-query (193), react (139), vitest (114), select.tsx (108), useAuthContext (105), cn (103), snapshot.py (102), NetworkDiagnostics.tsx (96), dependencies (83)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -371,6 +371,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
 - AGENTS.md (3)
+- docs/estado/funcionalidades-planejadas.md (3)
 - docs/pendencias/_ordem.md (3)
 - scripts/inventario/gerar-banco.mjs (3)
 - scripts/supabase_snapshot/snapshot.py (3)
@@ -380,7 +381,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - .github/workflows/inventario-estado-semanal.yml (2)
 - deno.lock (2)
 - docs/agentes/banco.md (2)
-- docs/agentes/edge-functions.md (2)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -419,6 +419,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `92533c9` fix: adiciona guards de tabela/coluna no performance_indexes para Supabase Preview (#66)
+- 2026-11-21 `67a43aa` chore: docs - chatbot e traducao ao vivo marcados como wireados (#71)
 - 2026-11-21 `a40abd0` feat: botao responder com IA no inbox via useChatbot (#70)
 - 2026-11-21 `723ff66` feat: wirea traducao em tempo real na chamada e auditoria de seguranca no menu (#69)
 - 2026-11-21 `587daff` chore(docs): reflete wiring WIRING-04/06 na doc de funcionalidades planejadas (#68)
@@ -432,8 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-20 `51ac7dd` feat: wiring dos componentes orfaos no frontend (#61)
 - 2026-11-20 `68850f6` fix: cron data-lake-flush falhava por constraint de dataset sem call_summaries (#60)
 - 2026-11-20 `f105468` fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)
-- 2026-11-20 `72f3935` fix: sanitiza path com fileURLToPath no gerador de inventario (#58)
-- 2026-11-20 `6ffab7a` chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

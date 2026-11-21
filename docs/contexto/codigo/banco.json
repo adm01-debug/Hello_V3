@@ -11,7 +11,7 @@
  "migrations": 211,
  "seeds": [],
  "avisos": [
-  "14 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
+  "40 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
  ],
  "extensoes": [
   "pg_cron",
@@ -2838,21 +2838,6 @@
    ],
    "indices": [
     {
-     "nome": "idx_audit_action_timestamp",
-     "colunas": "action, timestamp DESC",
-     "unico": false
-    },
-    {
-     "nome": "idx_audit_critical",
-     "colunas": "timestamp DESC, severity",
-     "unico": false
-    },
-    {
-     "nome": "idx_audit_failures",
-     "colunas": "user_id, timestamp DESC",
-     "unico": false
-    },
-    {
      "nome": "idx_audit_logs_action",
      "colunas": "action",
      "unico": false
@@ -2885,11 +2870,6 @@
     {
      "nome": "idx_audit_logs_user_id",
      "colunas": "user_id",
-     "unico": false
-    },
-    {
-     "nome": "idx_audit_user_timestamp",
-     "colunas": "user_id, timestamp DESC",
      "unico": false
     }
    ],
@@ -7152,55 +7132,6 @@
    "sem_rls": false,
    "nao_usada": false
   },
-  "calls": {
-   "colunas": {},
-   "rls": false,
-   "policies": [],
-   "indices": [
-    {
-     "nome": "idx_calls_analytics",
-     "colunas": "user_id, status, started_at DESC, duration",
-     "unico": false
-    },
-    {
-     "nome": "idx_calls_contact_user",
-     "colunas": "contact_id, user_id, started_at DESC",
-     "unico": false
-    },
-    {
-     "nome": "idx_calls_date_range",
-     "colunas": "started_at DESC",
-     "unico": false
-    },
-    {
-     "nome": "idx_calls_failed",
-     "colunas": "user_id, started_at DESC",
-     "unico": false
-    },
-    {
-     "nome": "idx_calls_status_user",
-     "colunas": "status, user_id",
-     "unico": false
-    },
-    {
-     "nome": "idx_calls_user_started_at",
-     "colunas": "user_id, started_at DESC",
-     "unico": false
-    }
-   ],
-   "fks": [],
-   "criada_em": null,
-   "usada_no_front": 0,
-   "usada_em_edges": [],
-   "triggers": [
-    "calculate_call_duration_trigger",
-    "calls_audit_trigger",
-    "calls_update_timestamp",
-    "prevent_active_call_deletion_trigger"
-   ],
-   "sem_rls": false,
-   "nao_usada": true
-  },
   "chat_sessions": {
    "colunas": {
     "conversation_id": {
@@ -9287,23 +9218,8 @@
      "unico": false
     },
     {
-     "nome": "idx_contacts_name_search",
-     "colunas": "to_tsvector('english', name",
-     "unico": false
-    },
-    {
      "nome": "idx_contacts_phone",
      "colunas": "phone",
-     "unico": false
-    },
-    {
-     "nome": "idx_contacts_recent",
-     "colunas": "user_id, created_at DESC",
-     "unico": false
-    },
-    {
-     "nome": "idx_contacts_user_name",
-     "colunas": "user_id, name",
      "unico": false
     }
    ],
@@ -21038,35 +20954,6 @@
    "sem_rls": false,
    "nao_usada": false
   },
-  "transcriptions": {
-   "colunas": {},
-   "rls": false,
-   "policies": [],
-   "indices": [
-    {
-     "nome": "idx_transcriptions_call",
-     "colunas": "call_id, created_at",
-     "unico": false
-    },
-    {
-     "nome": "idx_transcriptions_confidence",
-     "colunas": "call_id, confidence DESC",
-     "unico": false
-    },
-    {
-     "nome": "idx_transcriptions_text_search",
-     "colunas": "to_tsvector('english', text",
-     "unico": false
-    }
-   ],
-   "fks": [],
-   "criada_em": null,
-   "usada_no_front": 0,
-   "usada_em_edges": [],
-   "triggers": [],
-   "sem_rls": false,
-   "nao_usada": true
-  },
   "user_allowed_ips": {
    "colunas": {
     "created_at": {
@@ -21932,23 +21819,7 @@
    },
    "rls": false,
    "policies": [],
-   "indices": [
-    {
-     "nome": "idx_users_active",
-     "colunas": "created_at DESC",
-     "unico": false
-    },
-    {
-     "nome": "idx_users_email_unique",
-     "colunas": "email",
-     "unico": false
-    },
-    {
-     "nome": "idx_users_role",
-     "colunas": "role",
-     "unico": false
-    }
-   ],
+   "indices": [],
    "fks": [],
    "criada_em": "scripts/ai-context/cenarios.mjs",
    "usada_no_front": 0,
