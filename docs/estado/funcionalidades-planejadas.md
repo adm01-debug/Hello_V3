@@ -42,7 +42,7 @@ Origem: `docs/audits/pendencias-2026-07.md`. Reverifiquei os itens verificáveis
 
 | ID | Item | Status declarado | Medição desta auditoria |
 |---|---|---|---|
-| A5 | Reauth centralizado (Context + HMAC) | 🔴 | `useReauth.ts` existe; não reverificado em profundidade |
+| A5 | Reauth centralizado (Context + HMAC) | 🟢 | `ReauthContext.tsx` (provider único + grant HMAC-SHA256 em `sessionStorage`, TTL 5 min, `withReauth` executa a ação pendente); `ReauthDialog` global em `App.tsx`; gate aplicado em revogar sessão, desativar MFA e registrar/remover passkey |
 | B1 | Particionar tabelas de alto volume (`pg_partman`) | 🔴 | Confirmado pendente: nenhuma extensão `pg_partman` entre as 5 declaradas |
 | B2 | Script CI `scripts/audit-edge-functions.ts` | 🔴 | **Confirmado ausente** — o arquivo não existe |
 | B5 | Retry idempotente `whatsapp-inbound` | 🔴 | Confirmado pendente |

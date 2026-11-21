@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
  import { GlobalServices } from "@/components/layout/GlobalServices";
 import { AchievementNotificationProvider } from "@/components/gamification/AchievementNotificationProvider";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ReauthProvider } from "@/contexts/ReauthContext";
+import { ReauthDialog } from "@/components/auth/ReauthDialog";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { SkeletonDashboard } from "@/components/ui/skeleton-loader";
@@ -47,6 +49,7 @@ const App = () => (
         <BrowserRouter>
           <ThemeProvider>
             <AuthProvider>
+              <ReauthProvider>
               <Routes>
                 {/* Public routes */}
                 {publicRoutes.map(({ path, element: Element }) => (
@@ -95,6 +98,8 @@ const App = () => (
                   }
                 />
               </Routes>
+              <ReauthDialog />
+              </ReauthProvider>
             </AuthProvider>
           </ThemeProvider>
         </BrowserRouter>

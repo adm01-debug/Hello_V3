@@ -12,7 +12,7 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 | A2 | `REVOKE EXECUTE` em ~69 funções `SECURITY DEFINER` (lint 0028/0029) | 🟢 | Migração 2026-07-15: `REVOKE ALL` de `PUBLIC`/`anon` em 62 funções; `authenticated` mantido apenas em RPCs de cliente (checagens de papel, dashboards, DNC, rate-limit). Warnings 0029 remanescentes referem-se às funções intencionalmente expostas a `authenticated`. |
 | A3 | Refatorar `SecurityAlerts.tsx` (1.560 linhas) | ⚪ | Já reduzido para 251 linhas em ondas anteriores (Header/Filters/Timeline/Drawer/Toolbar/KpiStrip extraídos). |
 | A4 | Refatorar demais arquivos >400 linhas | 🟡 | **WebhookHealth ✅** (559→155). **ExtensionsAdmin ✅** (510→198). **ObservabilityDashboard ✅** (482→140). **DNCListManager ✅** (456→94). **LDAPSync ✅** (437→121; extraídos `LDAPConfigTab`, `LDAPMappingTab`, `LDAPLogsTab`, `types`). Próximos: QueueMetricsAlertSettings (430) → NotificationCenter (420). |
-| A5 | Reauth centralizado (Context + sessionStorage + HMAC) | 🔴 | Ver `useReauth.ts`. |
+| A5 | Reauth centralizado (Context + sessionStorage + HMAC) | 🟢 | `src/contexts/ReauthContext.tsx` — provider único, grant assinado (HMAC-SHA256) em `sessionStorage` com TTL 5 min, reidratação no mount, `withReauth` executa a ação pendente após verificar. `useReauth` é fachada. `ReauthDialog` montado uma vez em `App.tsx`. Gates: revogar sessões (`SessionManagement`), desativar MFA (`TwoFactorAuth`), registrar/remover passkey (`PasskeyManager`). Cobertura: `useReauth.coverage.test.tsx` (13) + `useReauth.grant.test.tsx` (9, HMAC real via `node:crypto.webcrypto`). |
 
 ## Bloco B — 🟠 Importante (Dados / Integrações / CI)
 

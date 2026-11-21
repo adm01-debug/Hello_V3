@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { useSessionManager } from '@/hooks/useSessionManager';
 import { useReauth } from '@/hooks/useReauth';
-import { ReauthDialog } from '@/components/auth/ReauthDialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -64,39 +62,22 @@ export default function SessionManagement() {
     revokeAllOtherSessions,
     sessionDurationHours,
   } = useSessionManager();
-  const { requestReauth, isRequired, cancelReauth } = useReauth();
-  
-  const [pendingAction, setPendingAction] = useState<{
-    type: 'revoke' | 'revoke_all';
-    sessionId?: string;
-  } | null>(null);
+  const { withReauth } = useReauth();
 
   const handleRevokeSession = (sessionId: string) => {
     if (sessionId === currentSessionId) {
       revokeSession(sessionId);
     } else {
-      setPendingAction({ type: 'revoke', sessionId });
-      requestReauth('revoke_sessions');
+      void withReauth('revoke_sessions', async () => {
+        await revokeSession(sessionId);
+      });
     }
   };
 
   const handleRevokeAll = () => {
-    setPendingAction({ type: 'revoke_all' });
-    requestReauth('revoke_sessions');
-  };
-
-  const handleReauthSuccess = () => {
-    if (pendingAction?.type === 'revoke' && pendingAction.sessionId) {
-      revokeSession(pendingAction.sessionId);
-    } else if (pendingAction?.type === 'revoke_all') {
-      revokeAllOtherSessions();
-    }
-    setPendingAction(null);
-  };
-
-  const handleReauthCancel = () => {
-    setPendingAction(null);
-    cancelReauth();
+    void withReauth('revoke_sessions', async () => {
+      await revokeAllOtherSessions();
+    });
   };
 
   const otherSessions = sessions.filter(s => s.id !== currentSessionId);
@@ -278,14 +259,6 @@ export default function SessionManagement() {
           )}
         </CardContent>
       </Card>
-
-      <ReauthDialog
-        open={isRequired}
-        onOpenChange={(open) => !open && handleReauthCancel()}
-        onSuccess={handleReauthSuccess}
-        title="Confirme sua identidade"
-        description="Para revogar sessões, confirme sua identidade."
-      />
     </div>
   );
 }

@@ -42,6 +42,7 @@ import {
 import { ptBR } from 'date-fns/locale';
 
 import { safeFormatDistanceToNow } from "@/lib/safe-date";
+import { useReauth } from '@/hooks/useReauth';
 export function PasskeyManager() {
   const {
     passkeys,
@@ -54,6 +55,7 @@ export function PasskeyManager() {
     removePasskey,
     renamePasskey,
   } = useWebAuthn();
+  const { withReauth } = useReauth();
 
   const [newPasskeyName, setNewPasskeyName] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -61,11 +63,19 @@ export function PasskeyManager() {
   const [showAddDialog, setShowAddDialog] = useState(false);
 
   const handleRegister = async () => {
-    const success = await registerPasskey(newPasskeyName || undefined);
-    if (success) {
-      setNewPasskeyName('');
-      setShowAddDialog(false);
-    }
+    void withReauth('configure_mfa', async () => {
+      const success = await registerPasskey(newPasskeyName || undefined);
+      if (success) {
+        setNewPasskeyName('');
+        setShowAddDialog(false);
+      }
+    });
+  };
+
+  const handleRemove = async (passkeyId: string) => {
+    void withReauth('configure_mfa', async () => {
+      await removePasskey(passkeyId);
+    });
   };
 
   const handleRename = async (id: string) => {
@@ -289,7 +299,7 @@ export function PasskeyManager() {
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancelar</AlertDialogCancel>
                           <AlertDialogAction
-                            onClick={() => removePasskey(passkey.id)}
+                            onClick={() => handleRemove(passkey.id)}
                             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                           >
                             Remover
