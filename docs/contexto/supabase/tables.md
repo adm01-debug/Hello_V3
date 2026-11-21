@@ -16,7 +16,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.agent_skills](tables/public/agent_skills.md) | table | sim | 2 | 8 | não |  |
 | [public.agent_trunk_assignments](tables/public/agent_trunk_assignments.md) | table | sim | 2 | 8 | não |  |
 | [public.agent_weekly_stats](tables/public/agent_weekly_stats.md) | table | sim | 2 | 11 | não |  |
-| [public.agents](tables/public/agents.md) | table | sim | 3 | 10 | não |  |
+| [public.agents](tables/public/agents.md) | table | sim | 4 | 10 | não |  |
 | [public.audit_logs](tables/public/audit_logs.md) | table | sim | 4 | 11 | não |  |
 | [public.badges](tables/public/badges.md) | table | sim | 2 | 10 | não |  |
 | [public.barge_in_sessions](tables/public/barge_in_sessions.md) | table | sim | 2 | 8 | não |  |
@@ -40,6 +40,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.call_queue_members](tables/public/call_queue_members.md) | table | sim | 2 | 7 | não |  |
 | [public.call_queues](tables/public/call_queues.md) | table | sim | 2 | 25 | não |  |
 | [public.call_recordings](tables/public/call_recordings.md) | table | sim | 3 | 10 | não |  |
+| [public.call_records](tables/public/call_records.md) | table | sim | 1 | 13 | não |  |
 | [public.call_scorecards](tables/public/call_scorecards.md) | table | sim | 2 | 13 | não |  |
 | [public.call_sessions](tables/public/call_sessions.md) | table | sim | 5 | 14 | não |  |
 | [public.call_summaries](tables/public/call_summaries.md) | table | sim | 3 | 10 | não |  |
@@ -59,7 +60,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.contact_alerts](tables/public/contact_alerts.md) | table | sim | 4 | 12 | não |  |
 | [public.contact_engagement_patterns](tables/public/contact_engagement_patterns.md) | table | sim | 2 | 15 | não |  |
 | [public.contact_interactions](tables/public/contact_interactions.md) | table | sim | 3 | 13 | não |  |
-| [public.contacts](tables/public/contacts.md) | table | sim | 4 | 16 | não |  |
+| [public.contacts](tables/public/contacts.md) | table | sim | 5 | 17 | não |  |
 | [public.conversation_messages](tables/public/conversation_messages.md) | table | sim | 5 | 13 | não |  |
 | [public.conversations](tables/public/conversations.md) | table | sim | 5 | 21 | não |  |
 | [public.crm_field_suggestions](tables/public/crm_field_suggestions.md) | table | sim | 4 | 14 | não |  |
@@ -113,6 +114,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.permissions](tables/public/permissions.md) | table | sim | 2 | 6 | não |  |
 | [public.playlist_items](tables/public/playlist_items.md) | table | sim | 2 | 7 | não |  |
 | [public.queue_audio_prompts](tables/public/queue_audio_prompts.md) | table | sim | 2 | 12 | não |  |
+| [public.queue_items](tables/public/queue_items.md) | table | sim | 1 | 10 | não |  |
 | [public.queue_metrics_settings](tables/public/queue_metrics_settings.md) | table | sim | 2 | 11 | não |  |
 | [public.queue_skill_requirements](tables/public/queue_skill_requirements.md) | table | sim | 2 | 6 | não |  |
 | [public.rate_limit_alerts](tables/public/rate_limit_alerts.md) | table | sim | 3 | 11 | não |  |

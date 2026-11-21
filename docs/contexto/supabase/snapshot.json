@@ -4738,6 +4738,175 @@
         "nullable": false,
         "position": 1,
         "schema": "public",
+        "table": "call_records",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "contact_id",
+        "nullable": true,
+        "position": 2,
+        "schema": "public",
+        "table": "call_records",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "contact_name",
+        "nullable": false,
+        "position": 3,
+        "schema": "public",
+        "table": "call_records",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "contact_phone",
+        "nullable": false,
+        "position": 4,
+        "schema": "public",
+        "table": "call_records",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "type",
+        "nullable": false,
+        "position": 5,
+        "schema": "public",
+        "table": "call_records",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "status",
+        "nullable": false,
+        "position": 6,
+        "schema": "public",
+        "table": "call_records",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": "0",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "duration",
+        "nullable": true,
+        "position": 7,
+        "schema": "public",
+        "table": "call_records",
+        "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": "now()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "timestamp",
+        "nullable": false,
+        "position": 8,
+        "schema": "public",
+        "table": "call_records",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "recording_url",
+        "nullable": true,
+        "position": 9,
+        "schema": "public",
+        "table": "call_records",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "transcription",
+        "nullable": true,
+        "position": 10,
+        "schema": "public",
+        "table": "call_records",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "notes",
+        "nullable": true,
+        "position": 11,
+        "schema": "public",
+        "table": "call_records",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "agent_id",
+        "nullable": true,
+        "position": 12,
+        "schema": "public",
+        "table": "call_records",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "agent_name",
+        "nullable": true,
+        "position": 13,
+        "schema": "public",
+        "table": "call_records",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": "gen_random_uuid()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "id",
+        "nullable": false,
+        "position": 1,
+        "schema": "public",
         "table": "call_scorecards",
         "type": "uuid"
       },
@@ -7951,6 +8120,19 @@
         "schema": "public",
         "table": "contacts",
         "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": "false",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "favorite",
+        "nullable": true,
+        "position": 17,
+        "schema": "public",
+        "table": "contacts",
+        "type": "boolean"
       },
       {
         "comment": null,
@@ -15854,6 +16036,136 @@
         "position": 12,
         "schema": "public",
         "table": "queue_audio_prompts",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": "gen_random_uuid()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "id",
+        "nullable": false,
+        "position": 1,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "contact_name",
+        "nullable": false,
+        "position": 2,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "contact_phone",
+        "nullable": false,
+        "position": 3,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": "0",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "wait_time",
+        "nullable": true,
+        "position": 4,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": "0",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "priority",
+        "nullable": true,
+        "position": 5,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "agent_assigned",
+        "nullable": true,
+        "position": 6,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": "'waiting'::text",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "status",
+        "nullable": false,
+        "position": 7,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": "'general'::text",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "queue_type",
+        "nullable": true,
+        "position": 8,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "metadata",
+        "nullable": true,
+        "position": 9,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "jsonb"
+      },
+      {
+        "comment": null,
+        "default": "now()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "created_at",
+        "nullable": false,
+        "position": 10,
+        "schema": "public",
+        "table": "queue_items",
         "type": "timestamp with time zone"
       },
       {
@@ -24757,6 +25069,76 @@
       },
       {
         "columns": [
+          "contact_id"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE SET NULL",
+        "name": "call_records_contact_id_fkey",
+        "on_delete": "SET NULL",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "public",
+        "ref_table": "contacts",
+        "schema": "public",
+        "table": "call_records",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "deferrable": false,
+        "definition": "PRIMARY KEY (id)",
+        "name": "call_records_pkey",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "call_records",
+        "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "status"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (status = ANY (ARRAY['completed'::text, 'missed'::text, 'voicemail'::text, 'busy'::text, 'no_answer'::text]))",
+        "name": "call_records_status_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "call_records",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
+          "type"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (type = ANY (ARRAY['incoming'::text, 'outgoing'::text, 'missed'::text]))",
+        "name": "call_records_type_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "call_records",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
           "call_session_id"
         ],
         "deferrable": false,
@@ -28118,6 +28500,40 @@
         "schema": "public",
         "table": "queue_audio_prompts",
         "type": "UNIQUE",
+        "validated": true
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "deferrable": false,
+        "definition": "PRIMARY KEY (id)",
+        "name": "queue_items_pkey",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "status"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (status = ANY (ARRAY['waiting'::text, 'in_progress'::text, 'completed'::text, 'abandoned'::text]))",
+        "name": "queue_items_status_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "queue_items",
+        "type": "CHECK",
         "validated": true
       },
       {
@@ -35673,6 +36089,24 @@
           "grantee": "anon",
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
+          "table": "call_records"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "call_records"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "call_records"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
           "table": "call_scorecards"
         },
         {
@@ -37018,6 +37452,24 @@
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
           "table": "queue_audio_prompts"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "queue_items"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "queue_items"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "queue_items"
         },
         {
           "grantee": "anon",
@@ -39759,6 +40211,48 @@
         "columns": [
           "id"
         ],
+        "definition": "CREATE UNIQUE INDEX call_records_pkey ON public.call_records USING btree (id)",
+        "is_primary": true,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "call_records_pkey",
+        "predicate": null,
+        "schema": "public",
+        "table": "call_records"
+      },
+      {
+        "columns": [
+          "contact_id"
+        ],
+        "definition": "CREATE INDEX idx_calls_contact ON public.call_records USING btree (contact_id)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_calls_contact",
+        "predicate": null,
+        "schema": "public",
+        "table": "call_records"
+      },
+      {
+        "columns": [
+          "timestamp"
+        ],
+        "definition": "CREATE INDEX idx_calls_timestamp ON public.call_records USING btree (\"timestamp\" DESC)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_calls_timestamp",
+        "predicate": null,
+        "schema": "public",
+        "table": "call_records"
+      },
+      {
+        "columns": [
+          "id"
+        ],
         "definition": "CREATE UNIQUE INDEX call_scorecards_pkey ON public.call_scorecards USING btree (id)",
         "is_primary": true,
         "is_unique": true,
@@ -40879,6 +41373,20 @@
         "method": "btree",
         "name": "idx_contacts_external_id",
         "predicate": null,
+        "schema": "public",
+        "table": "contacts"
+      },
+      {
+        "columns": [
+          "favorite"
+        ],
+        "definition": "CREATE INDEX idx_contacts_favorite ON public.contacts USING btree (favorite) WHERE (favorite = true)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_contacts_favorite",
+        "predicate": "(favorite = true)",
         "schema": "public",
         "table": "contacts"
       },
@@ -43377,6 +43885,34 @@
         "predicate": null,
         "schema": "public",
         "table": "queue_audio_prompts"
+      },
+      {
+        "columns": [
+          "status"
+        ],
+        "definition": "CREATE INDEX idx_queue_status ON public.queue_items USING btree (status)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_queue_status",
+        "predicate": null,
+        "schema": "public",
+        "table": "queue_items"
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "definition": "CREATE UNIQUE INDEX queue_items_pkey ON public.queue_items USING btree (id)",
+        "is_primary": true,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "queue_items_pkey",
+        "predicate": null,
+        "schema": "public",
+        "table": "queue_items"
       },
       {
         "columns": [
@@ -46029,6 +46565,12 @@
         "statements": 7,
         "statements_sha": "dd6c543f075e168a",
         "version": "20250101000000"
+      },
+      {
+        "name": "hello_production",
+        "statements": 18,
+        "statements_sha": "f26996a02a122e0d",
+        "version": "20250102000000"
       }
     ],
     "policies": [
@@ -46450,6 +46992,18 @@
         "schema": "public",
         "table": "agents",
         "using": "(is_admin_or_supervisor() OR (id = get_user_agent_id()))",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "name": "Allow all",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "agents",
+        "using": "true",
         "with_check": null
       },
       {
@@ -47245,6 +47799,18 @@
         "with_check": "(is_admin_or_supervisor() OR (EXISTS ( SELECT 1\n   FROM call_sessions cs\n  WHERE ((cs.id = call_recordings.call_session_id) AND (cs.agent_name = get_user_agent_name())))))"
       },
       {
+        "cmd": "ALL",
+        "name": "Allow all",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "call_records",
+        "using": "true",
+        "with_check": null
+      },
+      {
         "cmd": "SELECT",
         "name": "Agents view own scorecards",
         "permissive": "PERMISSIVE",
@@ -47938,6 +48504,18 @@
         "schema": "public",
         "table": "contacts",
         "using": "is_admin_or_supervisor()",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "name": "Allow all",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "contacts",
+        "using": "true",
         "with_check": null
       },
       {
@@ -49655,6 +50233,18 @@
         "table": "queue_audio_prompts",
         "using": "is_admin_or_supervisor()",
         "with_check": "is_admin_or_supervisor()"
+      },
+      {
+        "cmd": "ALL",
+        "name": "Allow all",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "public"
+        ],
+        "schema": "public",
+        "table": "queue_items",
+        "using": "true",
+        "with_check": null
       },
       {
         "cmd": "ALL",
@@ -52332,6 +52922,21 @@
         "from_extension": false,
         "is_partition": false,
         "kind": "table",
+        "name": "call_records",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
+        "comment": null,
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
         "name": "call_scorecards",
         "owner": "postgres",
         "parent": null,
@@ -53413,6 +54018,21 @@
         "is_partition": false,
         "kind": "table",
         "name": "queue_audio_prompts",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
+        "comment": null,
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
+        "name": "queue_items",
         "owner": "postgres",
         "parent": null,
         "partition_bound": null,

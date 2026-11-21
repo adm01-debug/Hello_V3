@@ -2,6 +2,16 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-21 14:12 UTC
+
+- **colunas** adicionado (24): `public.call_records.agent_id`, `public.call_records.agent_name`, `public.call_records.contact_id`, `public.call_records.contact_name`, `public.call_records.contact_phone`, `public.call_records.duration`, `public.call_records.id`, `public.call_records.notes`, `public.call_records.recording_url`, `public.call_records.status`, `public.call_records.timestamp`, `public.call_records.transcription`, `public.call_records.type`, `public.contacts.favorite`, `public.queue_items.agent_assigned`, `public.queue_items.contact_name`, `public.queue_items.contact_phone`, `public.queue_items.created_at`, `public.queue_items.id`, `public.queue_items.metadata`, `public.queue_items.priority`, `public.queue_items.queue_type`, `public.queue_items.status`, `public.queue_items.wait_time`
+- **constraints** adicionado (6): `public.call_records.call_records_contact_id_fkey`, `public.call_records.call_records_pkey`, `public.call_records.call_records_status_check`, `public.call_records.call_records_type_check`, `public.queue_items.queue_items_pkey`, `public.queue_items.queue_items_status_check`
+- **grants** adicionado (6): `public.call_records:anon`, `public.call_records:authenticated`, `public.call_records:service_role`, `public.queue_items:anon`, `public.queue_items:authenticated`, `public.queue_items:service_role`
+- **indexes** adicionado (6): `public.call_records_pkey`, `public.idx_calls_contact`, `public.idx_calls_timestamp`, `public.idx_contacts_favorite`, `public.idx_queue_status`, `public.queue_items_pkey`
+- **migrations** adicionado (1): `20250102000000_hello_production`
+- **policies (RLS)** adicionado (4): `public.agents.Allow all`, `public.call_records.Allow all`, `public.contacts.Allow all`, `public.queue_items.Allow all`
+- **tabelas** adicionado (2): `public.call_records`, `public.queue_items`
+
 ## 2026-11-21 12:17 UTC
 
 - **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_24`

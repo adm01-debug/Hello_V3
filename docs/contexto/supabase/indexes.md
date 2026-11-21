@@ -119,6 +119,9 @@ Uso e tamanho em `stats.md`.
 | public.call_recordings | call_recordings_pkey | btree | id | sim | sim |  |
 | public.call_recordings | idx_call_recordings_call_session_id | btree | call_session_id | não | sim |  |
 | public.call_recordings | idx_call_recordings_source | btree | source | não | sim |  |
+| public.call_records | call_records_pkey | btree | id | sim | sim |  |
+| public.call_records | idx_calls_contact | btree | contact_id | não | sim |  |
+| public.call_records | idx_calls_timestamp | btree | timestamp | não | sim |  |
 | public.call_scorecards | call_scorecards_pkey | btree | id | sim | sim |  |
 | public.call_scorecards | idx_call_scorecards_call_session_id | btree | call_session_id | não | sim |  |
 | public.call_scorecards | idx_call_scorecards_template_id | btree | template_id | não | sim |  |
@@ -199,6 +202,7 @@ Uso e tamanho em `stats.md`.
 | public.contacts | idx_contacts_account_id | btree | account_id | não | sim |  |
 | public.contacts | idx_contacts_email | btree | email | não | sim |  |
 | public.contacts | idx_contacts_external_id | btree | external_id | não | sim |  |
+| public.contacts | idx_contacts_favorite | btree | favorite | não | sim | `(favorite = true)` |
 | public.contacts | idx_contacts_phone | btree | phone | não | sim |  |
 | public.conversation_messages | conversation_messages_pkey | btree | id | sim | sim |  |
 | public.conversation_messages | idx_conversation_messages_conversation_id | btree | conversation_id | não | sim |  |
@@ -375,6 +379,8 @@ Uso e tamanho em `stats.md`.
 | public.queue_audio_prompts | idx_queue_audio_prompts_kind_active | btree | kind, is_active | não | sim |  |
 | public.queue_audio_prompts | queue_audio_prompts_pkey | btree | id | sim | sim |  |
 | public.queue_audio_prompts | queue_audio_prompts_unique_name | btree | name | sim | sim |  |
+| public.queue_items | idx_queue_status | btree | status | não | sim |  |
+| public.queue_items | queue_items_pkey | btree | id | sim | sim |  |
 | public.queue_metrics_settings | queue_metrics_settings_pkey | btree | id | sim | sim |  |
 | public.queue_skill_requirements | idx_queue_skill_requirements_skill_id | btree | skill_id | não | sim |  |
 | public.queue_skill_requirements | queue_skill_requirements_pkey | btree | id | sim | sim |  |

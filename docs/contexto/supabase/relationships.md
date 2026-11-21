@@ -34,6 +34,7 @@
 | public.call_queues | overflow_queue_id | public.call_queues | id | SET NULL | NO ACTION |
 | public.call_queues | periodic_prompt_id | public.queue_audio_prompts | id | SET NULL | NO ACTION |
 | public.call_recordings | call_session_id | public.call_sessions | id | SET NULL | NO ACTION |
+| public.call_records | contact_id | public.contacts | id | SET NULL | NO ACTION |
 | public.call_scorecards | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
 | public.call_scorecards | template_id | public.scorecard_templates | id | RESTRICT | NO ACTION |
 | public.call_sessions | contact_id | public.contacts | id | SET NULL | NO ACTION |

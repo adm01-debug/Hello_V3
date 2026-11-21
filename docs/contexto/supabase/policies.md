@@ -40,6 +40,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.agent_weekly_stats | Role-based view agent_weekly_stats | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_id = get_user_agent_id()))` |  |
 | public.agents | Admins can manage agents | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.agents | Agents can view own record, admins/supervisors view all | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (id = get_user_agent_id()))` |  |
+| public.agents | Allow all | ALL | PERMISSIVE | public | `true` |  |
 | public.agents | Users can view agents | SELECT | PERMISSIVE | public | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.audit_logs | Admins can view audit_logs | SELECT | PERMISSIVE | authenticated | `(get_user_role() = 'admin'::text)` |  |
 | public.audit_logs | Block direct delete audit_logs | DELETE | PERMISSIVE | authenticated | `false` |  |
@@ -106,6 +107,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.call_recordings | Admins can manage call_recordings | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.call_recordings | Strict isolation: Agents view own recordings | SELECT | PERMISSIVE | public | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = call_recordings.call_session_id) AND (cs.agent_name = get_user_agent_name())))))` |  |
 | public.call_recordings | Validated insert call_recordings | INSERT | PERMISSIVE | authenticated |  | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = call_recordings.call_session_id) AND (cs.agent_name = get_user_agent_name())))))` |
+| public.call_records | Allow all | ALL | PERMISSIVE | public | `true` |  |
 | public.call_scorecards | Agents view own scorecards | SELECT | PERMISSIVE | public | `((agent_name = get_user_agent_name()) OR is_admin_or_supervisor())` |  |
 | public.call_scorecards | Supervisors manage scorecards | ALL | PERMISSIVE | public | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.call_sessions | Admins can delete call_sessions | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
@@ -164,6 +166,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.contact_interactions | Agents can insert own interactions | INSERT | PERMISSIVE | authenticated |  | `(is_admin_or_supervisor() OR is_active_agent(agent_name))` |
 | public.contact_interactions | Role-based view contact_interactions | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR ((agent_name = get_user_agent_name()) AND is_active_agent(agent_name)))` |  |
 | public.contacts | Admins can delete contacts | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
+| public.contacts | Allow all | ALL | PERMISSIVE | public | `true` |  |
 | public.contacts | Role-based update contacts | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM contact_interactions ci   WHERE ((ci.contact_id = contacts.id) AND (ci.agent_name = get_user_agent_name())))))` |  |
 | public.contacts | Role-based view contacts | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM contact_interactions ci   WHERE ((ci.contact_id = contacts.id) AND (ci.agent_name = get_user_agent_name())))) OR (EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.contact_id = contacts.id) AND (cs.agent_name = get_user_agent_name())))))` |  |
 | public.contacts | Supervisors can insert contacts | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
@@ -307,6 +310,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.playlist_items | View items of accessible playlists | SELECT | PERMISSIVE | public | `(EXISTS ( SELECT 1    FROM call_playlists p   WHERE ((p.id = playlist_items.playlist_id) AND (is_admin_or_supervisor() OR (p.owner_agent_name = get_user_agent_name()) OR (p.is_shared = true)))))` |  |
 | public.queue_audio_prompts | queue_audio_prompts_select_authenticated | SELECT | PERMISSIVE | authenticated | `true` |  |
 | public.queue_audio_prompts | queue_audio_prompts_write_staff | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
+| public.queue_items | Allow all | ALL | PERMISSIVE | public | `true` |  |
 | public.queue_metrics_settings | Admins can manage queue_metrics_settings | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.queue_metrics_settings | Authenticated users can view queue_metrics_settings | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.queue_skill_requirements | Admin/supervisor manage queue requirements | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |

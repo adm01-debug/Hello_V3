@@ -6,7 +6,7 @@
 | owner | postgres |
 | RLS habilitado | sim |
 | RLS forçado (owner) | não |
-| policies | 4 |
+| policies | 5 |
 | realtime (publication) | não |
 | replica identity | default |
 | vem de extensão | não |
@@ -32,6 +32,7 @@
 | 14 | `updated_at` | `timestamp with time zone` | não | `now()` |  |  |
 | 15 | `account_id` | `uuid` | sim |  |  |  |
 | 16 | `version` | `integer` | não | `1` |  |  |
+| 17 | `favorite` | `boolean` | sim | `false` |  |  |
 
 
 ## Constraints
@@ -47,6 +48,7 @@
 | tabela | constraint | colunas | on delete |
 |---|---|---|---|
 | public.cadence_enrollments | cadence_enrollments_contact_id_fkey | contact_id | CASCADE |
+| public.call_records | call_records_contact_id_fkey | contact_id | SET NULL |
 | public.call_sessions | call_sessions_contact_id_fkey | contact_id | SET NULL |
 | public.consent_history | consent_history_contact_id_fkey | contact_id | CASCADE |
 | public.consent_records | consent_records_contact_id_fkey | contact_id | CASCADE |
@@ -69,6 +71,7 @@
 | idx_contacts_account_id | btree | account_id | não | sim |  | `CREATE INDEX idx_contacts_account_id ON public.contacts USING btree (account_id)` |
 | idx_contacts_email | btree | email | não | sim |  | `CREATE INDEX idx_contacts_email ON public.contacts USING btree (email)` |
 | idx_contacts_external_id | btree | external_id | não | sim |  | `CREATE INDEX idx_contacts_external_id ON public.contacts USING btree (external_id)` |
+| idx_contacts_favorite | btree | favorite | não | sim | `(favorite = true)` | `CREATE INDEX idx_contacts_favorite ON public.contacts USING btree (favorite) WHERE (favorite = true)` |
 | idx_contacts_phone | btree | phone | não | sim |  | `CREATE INDEX idx_contacts_phone ON public.contacts USING btree (phone)` |
 
 
@@ -82,6 +85,16 @@
 | tipo | PERMISSIVE |
 | roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
+| WITH CHECK |  |
+
+### `Allow all`
+
+| campo | valor |
+|---|---|
+| comando | ALL |
+| tipo | PERMISSIVE |
+| roles | public |
+| USING | `true` |
 | WITH CHECK |  |
 
 ### `Role-based update contacts`
