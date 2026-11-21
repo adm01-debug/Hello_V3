@@ -20,7 +20,7 @@
 - **WIRING-03 CONCLUÍDO** — WhatsappComposer integrado ao Inbox (canal whatsapp); demais canais preservados.
 - **WIRING-05 CONCLUÍDO** — rota `/admin/security-audit` agora serve SecurityAuditDashboard (superset; recharts já instalada).
 - **WIRING-02 DESCARTADO** — call_sessions só `completed` (0 ativas); `/translation-center` já tem página própria; call_translations vazia.
-- **WIRING-04 / WIRING-06 AGUARDANDO DADOS** — tabelas de gamificação/surveys/coaching/churn/playlists/compliance = 0 linhas (ver `_verificado-banco.md`); wirear = fachada.
+- **WIRING-04 / WIRING-06 AGUARDANDO WIRING** — tabelas alimentadas em 20/11 (seed aplicado: surveys=2, survey_responses=6, coaching_assignments=4, churn_risk_signals=5, call_playlists=2+3, compliance_rules=6, badges=6, agent_badges=3, agent_goals=1, agent_weekly_stats=4; ver _verificado-banco.md). Wirear os hooks agora é acionável numa PR futura.
 
 ### Itens OBSOLETOS (documento defasado — já ligados nesta semana)
 - Rotas/menu §6: /accounts, /cadences, /deals, /onboarding, /permissions, /dialer/predictive, /inbox, /financial-impact, /shift-swap-suggestions — todos já no AppSidebar + protectedRoutes.
@@ -30,3 +30,4 @@
 
 ### Itens que dependem de banco (bloqueados por 401)
 - Qualquer item com migration, edge function deploy ou verificação de dados reais.
+- **SecurityDashboard antigo REMOVIDO (21/11)** — src/pages/admin/SecurityDashboard.tsx (148 l.) excluído; SecurityAuditDashboard (313 l.) já cobre audit_logs + rls_audit_logs + webhook_flush_metrics (superset). Rota /admin/security-audit inalterada. Typecheck/lint/build OK.
