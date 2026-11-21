@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-11-21T21:40:53.391Z",
+  "limits": {
+    "*": {
+      "raw_kb": 1200,
+      "gzip_kb": 380
+    },
+    "index.js": {
+      "gzip_kb": 346,
+      "raw_kb": 1141
+    },
+    "jspdf.es.min.js": {
+      "gzip_kb": 136,
+      "raw_kb": 415
+    },
+    "CartesianChart.js": {
+      "gzip_kb": 108,
+      "raw_kb": 352
+    },
+    "NetworkDiagnostics.js": {
+      "gzip_kb": 66,
+      "raw_kb": 228
+    },
+    "useSipCall.js": {
+      "gzip_kb": 66,
+      "raw_kb": 281
+    },
+    "index.es.js": {
+      "gzip_kb": 57,
+      "raw_kb": 171
+    },
+    "html2canvas.esm.js": {
+      "gzip_kb": 51,
+      "raw_kb": 216
+    },
+    "SecurityAlerts.js": {
+      "gzip_kb": 39,
+      "raw_kb": 118
+    },
+    "Index.js": {
+      "gzip_kb": 36,
+      "raw_kb": 124
+    },
+    "PhoneDialer.js": {
+      "gzip_kb": 28,
+      "raw_kb": 90
+    },
+    "index.css": {
+      "gzip_kb": 25,
+      "raw_kb": 165
+    },
+    "Contacts.js": {
+      "gzip_kb": 24,
+      "raw_kb": 74
+    },
+    "Calls.js": {
+      "gzip_kb": 18,
+      "raw_kb": 66
+    },
+    "calendar.js": {
+      "gzip_kb": 17,
+      "raw_kb": 54
+    },
+    "Compliance.js": {
+      "gzip_kb": 13,
+      "raw_kb": 53
+    },
+    "ExecutiveDashboard.js": {
+      "gzip_kb": 13,
+      "raw_kb": 50
+    },
+    "ExtensionsAdmin.js": {
+      "gzip_kb": 13,
+      "raw_kb": 43
+    },
+    "CallHistory.js": {
+      "gzip_kb": 11,
+      "raw_kb": 40
+    },
+    "purify.es.js": {
+      "gzip_kb": 10,
+      "raw_kb": 25
+    },
+    "QRProvisioning.js": {
+      "gzip_kb": 10,
+      "raw_kb": 27
+    }
+  }
+}

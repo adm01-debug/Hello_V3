@@ -7,6 +7,7 @@ import {
   paramsSchemaFor,
 } from "../_shared/external-payload-schemas.ts";
 import { parseNumericSafely } from "../_shared/numeric-schemas.ts";
+import { assertSafeOutboundUrl, SsrfBlockedError } from "../_shared/allowed-hosts.ts";
 
 
 interface BitrixRequest {
@@ -167,6 +168,19 @@ function buildWebhookBaseUrl(rawWebhookUrl: string | undefined): URL | null {
     }
 
     const url = new URL(endpoint, webhookBaseUrl).toString();
+    try {
+      // Webhook do Bitrix é configurado por admin; ainda assim, bloqueia loopback,
+      // metadata de nuvem e domínios internos.
+      assertSafeOutboundUrl(url, { allowPrivate: true });
+    } catch (ssrfError) {
+      if (ssrfError instanceof SsrfBlockedError) {
+        return new Response(
+          JSON.stringify({ error: ssrfError.message, code: ssrfError.code }),
+          { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
+        );
+      }
+      throw ssrfError;
+    }
 
     const controller = new AbortController();
     const timeoutMs = 12000;

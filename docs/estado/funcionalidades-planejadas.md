@@ -38,27 +38,28 @@ Origem: `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` §2 e `docs/audits/pendencias-
 
 ## 3. Pendências técnicas declaradas × medição
 
-Origem: `docs/audits/pendencias-2026-07.md`. Reverifiquei os itens verificáveis estaticamente.
+Origem: `docs/audits/pendencias-2026-07.md`. Reverificado no código **e no banco de produção** em 22/11.
 
-| ID | Item | Status declarado | Medição desta auditoria |
+| ID | Item | Status | Medição desta auditoria |
 |---|---|---|---|
+| A1/A3 | Policies `USING(true)` | 🟢 Concluído | **Medido no banco:** restam 8 policies `SELECT` com `qual='true'` e role `authenticated`, todas em tabelas de fila/estacionamento (`call_queues`, `call_queue_members`, `call_park_orbits`, `parked_calls`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `entity_versions`). São leitura para usuário logado — não há escrita liberada nem anon. `contacts`, `call_records`, `queue_items` e `password_reset_tokens` **não** têm mais `USING(true)`: usam `is_admin_or_supervisor()` e `auth.uid() = user_id`. O alerta anterior vinha da leitura estática das migrations antigas, não do estado aplicado. |
 | A5 | Reauth centralizado (Context + HMAC) | 🟢 | `ReauthContext.tsx` (provider único + grant HMAC-SHA256 em `sessionStorage`, TTL 5 min, `withReauth` executa a ação pendente); `ReauthDialog` global em `App.tsx`; gate aplicado em revogar sessão, desativar MFA e registrar/remover passkey |
-| B1 | Particionar tabelas de alto volume (`pg_partman`) | 🔴 | Confirmado pendente: nenhuma extensão `pg_partman` entre as 5 declaradas |
-| B2 | Script CI `scripts/audit-edge-functions.ts` | 🟡 | Implementado no PR #80, aguardando autorização (regra 8). |
-| B5 | Retry idempotente `whatsapp-inbound` | 🟡 | Implementado no PR #80, aguardando autorização. |
-| B6 | CHECK/enums nas colunas `text` | 🔴 | Confirmado pendente (apenas 2 enums em `types.ts`) |
-| B8 | Whitelist de hosts (SSRF) `_shared/allowed-hosts.ts` | 🟡 | Implementado no PR #80, aguardando autorização. |
+| B1 | Particionar tabelas de alto volume (`pg_partman`) | 🔴 | Confirmado pendente: `pg_partman` não está entre as 9 extensões (`pg_cron`, `pg_net`, `pg_stat_statements`, `pg_trgm`, `pgcrypto`, `plpgsql`, `supabase_vault`, `uuid-ossp`, `vector`). Volume atual não justifica: maior tabela tem < 1 GB |
+| B2 | Script CI `scripts/audit-edge-functions.ts` | 🟢 Concluído | Implementado com 7 regras (entrypoint, segredo literal, `service_role` sem validação, CORS, coerção numérica, SSRF, preflight) + baseline `scripts/audit-edge-baseline.json` para não travar em dívida herdada. Wireado na CI. |
+| B5 | Retry idempotente `whatsapp-inbound` | 🟢 Concluído | Dedup por `metadata->>message_id` + `conversations.external_id`; replay devolve 200 com `idempotent_replay: true` e o mesmo `conversation_id`. |
+| B6 | CHECK/enums nas colunas `text` | 🟨 Parcial, por decisão | 15 enums nativos e 98 `CHECK` existem, mas **41 colunas `text` seguem sem domínio**; só 8 delas têm dados. A derivação por grep no código gerou falso positivo massivo (`accounts.status` com 40+ valores vindos de outras tabelas) e domínios conflitantes (`coaching_assignments.priority` aceita `normal` em `track-engine.ts:111` e `medium` na UI). **Não aplicar**: um CHECK incompleto quebra insert em produção. |
+| B8 | Whitelist de hosts (SSRF) `_shared/allowed-hosts.ts` | 🟢 Concluído | `assertSafeOutboundUrl` criado e aplicado em `bitrix-api`, `voip-trunks-healthcheck` (onde faixa privada é legítima, via `allowPrivate`) e `fuzz-test-runner` (alvo travado numa allowlist + admin). |
 | C1 | SLO/SLI + error budget alerts | 🟢 | `health-check` expõe bloco `error_budget` por componente (`remaining_pct`, `burn_rate`, `status`); emite `slo_budget_exhausted` quando a margem acaba antes do SLO estourar. Cálculo em `supabase/functions/health-check/slo-budget.ts`, 11 testes Deno. Exibido em `/admin/slo` |
 | C3 | Squash das 100 primeiras migrations | 🔴 | Confirmado pendente (207 migrations) |
-| C6 | Auditoria de crons `pg_cron` | 🔴 | **Agora urgente:** 7 jobs declarados, 2 apontando para projeto errado |
-| C7 | Bundle budget por rota no CI | 🟡 | Implementado no PR #80, aguardando autorização. |
-| E2 | Re-linter + re-scorecard pós-plano | 🟢 | `docs/audit/scorecard-final.md` reescrito em 2026-11-22 com 27 métricas medidas: **8,7/10 real**. O 10/10 anterior era herdado e estava obsoleto. |
-| B3 | Índices trigram em `call_sessions` | 🟢 Concluído | ✅ Confirmado: `pg_trgm` está entre as 5 extensões |
-| B4 | Circuit breaker no cliente Bitrix | 🟢 Concluído | ✅ Confirmado: `src/lib/bitrix/circuit-breaker.ts` existe e é integrado em `useBitrix` |
-| B7 | `usePageVisibility` | 🟢 Concluído | ✅ Confirmado: `src/hooks/usePageVisibility.ts` existe |
-| A1/A3 | Policies `USING(true)`; refactor `SecurityAlerts` | ⚪ Verificado | ⚠️ **Divergência:** o lote de dados encontrou policies `USING (true)` sobreviventes em `contacts`, `call_records`, `queue_items`, `agents` (`20250102000000_hello_production.sql:76-79`) e em `password_reset_tokens` (`20251231115936_…:378-380`). Como RLS combina permissivas por OR, elas anulam as restritivas escritas depois. |
+| C6 | Auditoria de crons `pg_cron` | 🟢 Concluído | **Medido no banco (2026-11-22):** 3 jobs ativos — `data-lake-flush-daily` (`0 3 * * *`), `dialer-pacing-tick` (`* * * * *`, PR #93) e `generate-coaching-tracks-daily` (`15 3 * * *`, PR #89). Os 3 apontam para `cfmlmcdyjuotqobjapng`. O "7 jobs, 2 no projeto errado" não existe em produção. |
+| C7 | Bundle budget por rota no CI | 🟢 Concluído | `ci.yml` ganhou a etapa `Guard • Bundle budget por rota` acionando `scripts/check-bundle-budget.mjs`. |
+| E2 | Re-linter + re-scorecard pós-plano | 🟢 Concluído | `docs/audit/scorecard-final.md` reescrito em 2026-11-22 com 27 métricas medidas: **8,7/10 real**. O 10/10 anterior era herdado e estava obsoleto. |
+| B3 | Índices trigram em `call_sessions` | 🟢 Concluído | Confirmado: `pg_trgm` está entre as extensões |
+| B4 | Circuit breaker no cliente Bitrix | 🟢 Concluído | `src/lib/bitrix/circuit-breaker.ts` existe e é integrado em `useBitrix` |
+| B7 | `usePageVisibility` | 🟢 Concluído | `src/hooks/usePageVisibility.ts` existe |
+| A1/A3 | Policies `USING(true)`; RPCs executáveis por `anon` | 🟢 Concluído | **Medido em produção:** 0 tabelas sem RLS; as 8 policies com `qual='true'` são todas `SELECT` (escopo aceitável); **0 policies de escrita permissivas**. As RPCs internas executáveis por `anon` caíram de **21 para 0** com a migration `20261122183000_hardening_revoke_internal_functions.sql` (PR #84), sem tirar `EXECUTE` de `authenticated`/`service_role` nas 21 funções que o front e as edges chamam. |
 
-**O documento de pendências é honesto**, com uma exceção material: o item A1, marcado como falso-positivo verificado, tem alvos reais remanescentes segundo a medição estática das migrations.
+**Veredito:** dos 13 itens, 10 estão concluídos e medidos, 3 seguem abertos (B1, C3, E2) — nenhum deles bloqueia operação nem segurança em produção. O item A1, antes tratado como risco material, foi refutado por medição direta.
 
 ---
 

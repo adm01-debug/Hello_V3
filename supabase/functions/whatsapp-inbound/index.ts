@@ -1,7 +1,10 @@
+// edge-public-ok — webhook do provedor de WhatsApp; autenticidade garantida pelo
+// contrato de payload versionado (v1/v2), não por JWT de usuário.
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validateBody, createErrorResponse } from '../_shared/validator.ts';
 import { WhatsAppInboundV1Schema, WhatsAppInboundV2Schema } from './schema.ts';
+import { detectReplay, normalizePhone } from './idempotency.ts';
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -30,9 +33,46 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
+    // Idempotência: provedores de WhatsApp reentregam a mesma mensagem quando não
+    // recebem 200. Sem esta checagem cada retry duplicaria a mensagem na conversa.
+    const externalMessageId = 'message_id' in body ? body.message_id : undefined;
+
+    let replaySource: { id: string; conversation_id: string } | null = null;
+    if (externalMessageId) {
+      const { data: alreadyStored, error: dedupError } = await supabase
+        .from('conversation_messages')
+        .select('id, conversation_id')
+        .eq('metadata->>message_id', externalMessageId)
+        .limit(1)
+        .maybeSingle();
+
+      // Erro de dedup não pode derrubar a entrega: registra e segue.
+      if (dedupError) console.error('whatsapp-inbound dedup error:', dedupError);
+      else replaySource = alreadyStored ?? null;
+    }
+
+    let conversationByExternalId: { id: string } | null = null;
+    if (!replaySource && externalMessageId) {
+      const { data: convByExternalId } = await supabase
+        .from('conversations')
+        .select('id')
+        .eq('channel', 'whatsapp')
+        .eq('external_id', externalMessageId)
+        .maybeSingle();
+      conversationByExternalId = convByExternalId ?? null;
+    }
+
+    const replay = detectReplay(version, replaySource, conversationByExternalId);
+    if (replay) {
+      return new Response(JSON.stringify(replay), {
+        status: 200,
+        headers: { ...cors, 'Content-Type': 'application/json' },
+      });
+    }
+
     const fromPhone = 'from' in body ? body.from : '';
     const messageContent = 'message' in body ? body.message : '';
-    const normalizedPhone = fromPhone.replace(/[^0-9]/g, '');
+    const normalizedPhone = normalizePhone(fromPhone);
 
     // Encontrar contato existente por telefone
     const { data: contact } = await supabase
@@ -40,6 +80,7 @@ Deno.serve(async (req) => {
       .select('id')
       .or(`phone.eq.${fromPhone},phone.eq.${normalizedPhone}`)
       .maybeSingle();
+
 
     // Procurar conversa aberta deste contato no canal whatsapp
     let conversationId: string | null = null;
