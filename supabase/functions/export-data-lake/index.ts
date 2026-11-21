@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 
-type Dataset = 'call_sessions' | 'deals' | 'contacts' | 'audit_logs';
+type Dataset = 'call_sessions' | 'call_summaries' | 'deals' | 'contacts' | 'audit_logs';
 type Format = 'csv' | 'ndjson' | 'parquet';
 
 function toCsv(rows: Record<string, unknown>[]): string {
@@ -41,7 +41,7 @@ serve(async (req) => {
     const dataset = body.dataset as Dataset;
     const format = (body.format as Format) ?? 'ndjson';
     const since = typeof body.since === 'string' ? body.since : null;
-    const validDatasets: Dataset[] = ['call_sessions', 'deals', 'contacts', 'audit_logs'];
+    const validDatasets: Dataset[] = ['call_sessions', 'call_summaries', 'deals', 'contacts', 'audit_logs'];
     const validFormats: Format[] = ['csv', 'ndjson', 'parquet'];
 
     if (!validDatasets.includes(dataset) || !validFormats.includes(format)) {

@@ -48,6 +48,7 @@ export default function DataExport() {
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="call_sessions">Chamadas</SelectItem>
+                  <SelectItem value="call_summaries">Resumos de chamada (transcrições)</SelectItem>
                   <SelectItem value="deals">Deals</SelectItem>
                   <SelectItem value="contacts">Contatos</SelectItem>
                   <SelectItem value="audit_logs">Logs de auditoria</SelectItem>
