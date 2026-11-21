@@ -61,6 +61,8 @@ CREATE TABLE IF NOT EXISTS public.agents (
 );
 
 -- Índices
+-- Garante coluna favoritos em contatos (defensivo / preview idempotente)
+ALTER TABLE public.contacts ADD COLUMN IF NOT EXISTS favorite BOOLEAN DEFAULT FALSE;
 CREATE INDEX IF NOT EXISTS idx_contacts_phone ON public.contacts(phone);
 CREATE INDEX IF NOT EXISTS idx_contacts_favorite ON public.contacts(favorite) WHERE favorite = true;
 CREATE INDEX IF NOT EXISTS idx_calls_timestamp ON public.call_records(timestamp DESC);
