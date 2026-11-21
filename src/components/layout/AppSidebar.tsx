@@ -1,7 +1,7 @@
 import { 
   CircleParking,
   LayoutGrid,
-  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Clock as ClockIcon, Wifi, Gamepad2,
+  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Clock as ClockIcon, Wifi, Gamepad2, Building2, Handshake, RefreshCw, Target,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -29,6 +29,15 @@ const mainNavItems = [
   { title: 'Contatos', url: '/contacts', icon: Users },
   { title: 'Insights', url: '/contacts/insights', icon: Brain },
    { title: 'Histórico Completo', url: '/history', icon: Clock },
+];
+
+const crmNavItems = [
+  { title: 'Contas', url: '/accounts', icon: Building2 },
+  { title: 'Negócios', url: '/deals', icon: Handshake },
+  { title: 'Cadências', url: '/cadences', icon: ListChecks },
+  { title: 'Trackers', url: '/trackers', icon: Tag },
+  { title: 'Renovações', url: '/renewals', icon: RefreshCw },
+  { title: 'Planos de Sucesso', url: '/success-plans', icon: Target },
 ];
 
 const toolsNavItems = [
@@ -243,7 +252,7 @@ function useFavorites() {
   return { favorites, toggle };
 }
 
-const allItems = [...mainNavItems, ...omnichannelNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems];
+const allItems = [...mainNavItems, ...crmNavItems, ...omnichannelNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems];
 
 export function AppSidebar() {
   const { state } = useSidebar();
@@ -297,6 +306,7 @@ export function AppSidebar() {
         )}
 
         <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="CRM" items={crmNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Atendimento" items={omnichannelNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />

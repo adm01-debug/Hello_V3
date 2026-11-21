@@ -12,7 +12,7 @@ import {
  import {
   CircleParking,
   LayoutGrid,
-  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi, RefreshCw, Moon, Sun, LogOut,
+  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi, RefreshCw, Moon, Sun, LogOut, Building2, Handshake, Target,
  } from 'lucide-react';
  import { useQueryClient } from '@tanstack/react-query';
  import { useTheme } from '@/contexts/ThemeContext';
@@ -29,6 +29,12 @@ const allRoutes = [
   { title: 'Contatos', url: '/contacts', icon: Users, group: 'Principal' },
   { title: 'Insights de Contatos', url: '/contacts/insights', icon: Brain, group: 'Principal' },
   { title: 'Histórico', url: '/history', icon: Clock, group: 'Principal' },
+  { title: 'Contas', url: '/accounts', icon: Building2, group: 'CRM' },
+  { title: 'Negócios', url: '/deals', icon: Handshake, group: 'CRM' },
+  { title: 'Cadências', url: '/cadences', icon: ListChecks, group: 'CRM' },
+  { title: 'Trackers', url: '/trackers', icon: Tag, group: 'CRM' },
+  { title: 'Renovações', url: '/renewals', icon: RefreshCw, group: 'CRM' },
+  { title: 'Planos de Sucesso', url: '/success-plans', icon: Target, group: 'CRM' },
   { title: 'Caixa de Entrada Omnichannel', url: '/inbox', icon: InboxIcon, group: 'Atendimento' },
   { title: 'Base de Conhecimento', url: '/knowledge', icon: BookOpen, group: 'Atendimento' },
   { title: 'Regras de Roteamento', url: '/routing-rules', icon: GitBranch, group: 'Atendimento' },
