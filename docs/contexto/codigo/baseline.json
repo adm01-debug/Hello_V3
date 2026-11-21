@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "587dafffe19c07231fb93f984dbfc06a75961fb2",
+  "commit": "723ff66aae0b6b473141901299c2fc881a5eba3f",
   "branch": "main",
-  "data_commit": "2026-11-21T11:53:42-03:00",
+  "data_commit": "2026-11-21T12:14:10-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "723ff66",
+    "data": "2026-11-21",
+    "assunto": "feat: wirea traducao em tempo real na chamada e auditoria de seguranca no menu (#69)"
+   },
    {
     "sha": "587daff",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "5994943",
     "data": "2026-11-19",
     "assunto": "fix: usePhaseColors preserva NaN em CSS var inválida (fallback do safeParseFloat) (#44)"
-   },
-   {
-    "sha": "82934f8",
-    "data": "2026-11-19",
-    "assunto": "infra: SPA rewrites no Vercel (rotas client-side sem 404) (#43)"
    }
   ],
-  "arquivos_mudados_7d": 576,
+  "arquivos_mudados_7d": 577,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 51
+    "commits": 52
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,11 +316,11 @@
  "contagens": {
   "arquivos_total": 1560,
   "arquivos_codigo": 1199,
-  "linhas_codigo": 163952,
+  "linhas_codigo": 163959,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 80,
+  "itens_menu": 81,
   "modulos": 78,
   "componentes": 447,
   "hooks": 188,
@@ -472,7 +472,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41884
+   "linhas": 41885
   },
   "src/contexts": {
    "arquivos": 2,
@@ -500,7 +500,7 @@
   },
   "src/pages": {
    "arquivos": 130,
-   "linhas": 20687
+   "linhas": 20693
   },
   "src/routes": {
    "arquivos": 2,
@@ -731,7 +731,6 @@
    "src/components/contacts/ContactAlertsDropdown.tsx",
    "src/components/notifications/NotificationBell.tsx",
    "src/components/SearchInput.tsx",
-   "src/components/translation/LiveTranslationPanel.tsx",
    "src/components/ui/animations.tsx",
    "src/components/ui/breadcrumb.tsx",
    "src/components/ui/carousel.tsx",

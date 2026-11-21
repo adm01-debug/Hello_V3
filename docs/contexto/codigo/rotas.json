@@ -5,7 +5,7 @@
   "urls": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 80,
+  "itens_menu": 81,
   "lazy": 104
  },
  "urls": [
@@ -1284,8 +1284,10 @@
     "useConferenceRecording",
     "useContext",
     "useConversation",
+    "useCulturalHints",
     "useEffect",
     "useHoldReminder",
+    "useLiveTranslation",
     "useMultiChannelCall",
     "useNetworkMonitor",
     "usePageTitle",
@@ -1306,7 +1308,9 @@
     "useCallTransfer",
     "useConferenceRecording",
     "useConversation",
+    "useCulturalHints",
     "useHoldReminder",
+    "useLiveTranslation",
     "useMultiChannelCall",
     "useNetworkMonitor",
     "usePageTitle",
@@ -1322,6 +1326,7 @@
     "agents",
     "call_quality_metrics",
     "call_recordings",
+    "cultural_hints",
     "hold_events",
     "voip_quality_alerts"
    ],
@@ -1331,6 +1336,7 @@
    "edges": [
     "elevenlabs-conversation-token",
     "sip-config",
+    "translate-utterance",
     "voice-command",
     "voice-transcribe",
     "wavoip-call"
@@ -1340,9 +1346,10 @@
    ],
    "flags": [],
    "papeis": [
+    "alert",
     "user"
    ],
-   "arquivos_puxados": 51
+   "arquivos_puxados": 57
   },
   {
    "protegida": false,
@@ -5088,6 +5095,15 @@
    "papeis_nao_resolvidos": null,
    "definido_em": "src/components/layout/AppSidebar.tsx",
    "resolve_para": "src/pages/AIAssistant.tsx"
+  },
+  {
+   "rotulo": "Auditoria de Segurança",
+   "destino": "/admin/security-audit",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/SecurityAuditDashboard.tsx"
   },
   {
    "rotulo": "Autenticação 2FA",

@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 876,
- "arestas": 3407,
+ "arestas": 3408,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -185,7 +185,6 @@
   "src/components/contacts/ContactAlertsDropdown.tsx",
   "src/components/lazy/LazyComponent.tsx",
   "src/components/notifications/NotificationBell.tsx",
-  "src/components/translation/LiveTranslationPanel.tsx",
   "src/components/ui/animations.tsx",
   "src/components/ui/aspect-ratio.tsx",
   "src/components/ui/breadcrumb.tsx",
@@ -231,14 +230,14 @@
    "importado_por": 49
   },
   {
+   "modulo": "pages",
+   "depende_de": 51,
+   "importado_por": 2
+  },
+  {
    "modulo": "components/ui",
    "depende_de": 2,
    "importado_por": 50
-  },
-  {
-   "modulo": "pages",
-   "depende_de": 50,
-   "importado_por": 2
   },
   {
    "modulo": "integrations/supabase",

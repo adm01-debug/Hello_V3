@@ -3299,6 +3299,7 @@
    "src/components/calls/NetworkStatusBadge.tsx",
    "src/components/calls/SipConnectionStatus.tsx",
    "src/components/calls/UnifiedSoftphone.tsx",
+   "src/components/translation/LiveTranslationPanel.tsx",
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/card.tsx",

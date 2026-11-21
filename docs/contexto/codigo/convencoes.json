@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: wirea traducao em tempo real na chamada e auditoria de seguranca no menu (#69)",
    "chore(docs): reflete wiring WIRING-04/06 na doc de funcionalidades planejadas (#68)",
    "feat: wirea WIRING-04 e 06 (hooks de contexto e gamificação na UI) (#67)",
    "fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)",
-   "fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)",
-   "feat: migra edge functions chat do gateway Lovable para Open Router (#63)"
+   "fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)"
   ]
  },
  "pr_template": null,

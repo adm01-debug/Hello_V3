@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "total": 447,
- "orfaos": 18,
+ "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
    "src/components/admin/webhook-health/KpiCards.tsx",
@@ -2633,7 +2633,7 @@
     "AppSidebar"
    ],
    "export_default": null,
-   "linhas": 336,
+   "linhas": 337,
    "dominio": "components/layout",
    "hooks_locais": [
     "useAuthContext",
@@ -4014,8 +4014,8 @@
    ],
    "tabelas": [],
    "edges": [],
-   "usado_por": 0,
-   "orfao": true
+   "usado_por": 1,
+   "orfao": false
   },
   {
    "arquivo": "src/components/ui/accordion.tsx",
@@ -5787,7 +5787,7 @@
     "Calls"
    ],
    "export_default": "Calls",
-   "linhas": 205,
+   "linhas": 211,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
