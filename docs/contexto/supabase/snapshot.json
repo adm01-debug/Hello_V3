@@ -12348,6 +12348,97 @@
       },
       {
         "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "schemaname",
+        "nullable": true,
+        "position": 1,
+        "schema": "public",
+        "table": "index_usage",
+        "type": "name"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "tablename",
+        "nullable": true,
+        "position": 2,
+        "schema": "public",
+        "table": "index_usage",
+        "type": "name"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "indexname",
+        "nullable": true,
+        "position": 3,
+        "schema": "public",
+        "table": "index_usage",
+        "type": "name"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "index_scans",
+        "nullable": true,
+        "position": 4,
+        "schema": "public",
+        "table": "index_usage",
+        "type": "bigint"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "tuples_read",
+        "nullable": true,
+        "position": 5,
+        "schema": "public",
+        "table": "index_usage",
+        "type": "bigint"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "tuples_fetched",
+        "nullable": true,
+        "position": 6,
+        "schema": "public",
+        "table": "index_usage",
+        "type": "bigint"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "index_size",
+        "nullable": true,
+        "position": 7,
+        "schema": "public",
+        "table": "index_usage",
+        "type": "text"
+      },
+      {
+        "comment": null,
         "default": "gen_random_uuid()",
         "generated": null,
         "identity": null,
@@ -20535,6 +20626,71 @@
         "schema": "public",
         "table": "trackers",
         "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "schemaname",
+        "nullable": true,
+        "position": 1,
+        "schema": "public",
+        "table": "unused_indexes",
+        "type": "name"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "tablename",
+        "nullable": true,
+        "position": 2,
+        "schema": "public",
+        "table": "unused_indexes",
+        "type": "name"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "indexname",
+        "nullable": true,
+        "position": 3,
+        "schema": "public",
+        "table": "unused_indexes",
+        "type": "name"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "idx_scan",
+        "nullable": true,
+        "position": 4,
+        "schema": "public",
+        "table": "unused_indexes",
+        "type": "bigint"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "index_size",
+        "nullable": true,
+        "position": 5,
+        "schema": "public",
+        "table": "unused_indexes",
+        "type": "text"
       },
       {
         "comment": null,
@@ -36993,6 +37149,24 @@
           "grantee": "anon",
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
+          "table": "index_usage"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "index_usage"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "index_usage"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
           "table": "ip_whitelist"
         },
         {
@@ -38086,6 +38260,24 @@
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
           "table": "trackers"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "unused_indexes"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "unused_indexes"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "unused_indexes"
         },
         {
           "grantee": "anon",
@@ -39198,6 +39390,21 @@
       },
       {
         "columns": [
+          "action",
+          "created_at"
+        ],
+        "definition": "CREATE INDEX idx_audit_action_timestamp ON public.audit_logs USING btree (action, created_at DESC)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_audit_action_timestamp",
+        "predicate": null,
+        "schema": "public",
+        "table": "audit_logs"
+      },
+      {
+        "columns": [
           "action"
         ],
         "definition": "CREATE INDEX idx_audit_logs_action ON public.audit_logs USING btree (action)",
@@ -39292,6 +39499,21 @@
         "is_valid": true,
         "method": "btree",
         "name": "idx_audit_logs_user_id",
+        "predicate": null,
+        "schema": "public",
+        "table": "audit_logs"
+      },
+      {
+        "columns": [
+          "user_id",
+          "created_at"
+        ],
+        "definition": "CREATE INDEX idx_audit_user_timestamp ON public.audit_logs USING btree (user_id, created_at DESC)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_audit_user_timestamp",
         "predicate": null,
         "schema": "public",
         "table": "audit_logs"
@@ -41391,6 +41613,18 @@
         "method": "btree",
         "name": "idx_contacts_favorite",
         "predicate": "(favorite = true)",
+        "schema": "public",
+        "table": "contacts"
+      },
+      {
+        "columns": [],
+        "definition": "CREATE INDEX idx_contacts_name_search ON public.contacts USING gin (to_tsvector('english'::regconfig, name))",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "gin",
+        "name": "idx_contacts_name_search",
+        "predicate": null,
         "schema": "public",
         "table": "contacts"
       },
@@ -46103,7 +46337,19 @@
       {
         "code": "view_security_definer",
         "detail": "View em public sem security_invoker: executa como owner e ignora RLS das tabelas base.",
+        "object": "public.index_usage",
+        "severity": "ALTA"
+      },
+      {
+        "code": "view_security_definer",
+        "detail": "View em public sem security_invoker: executa como owner e ignora RLS das tabelas base.",
         "object": "public.migration_status",
+        "severity": "ALTA"
+      },
+      {
+        "code": "view_security_definer",
+        "detail": "View em public sem security_invoker: executa como owner e ignora RLS das tabelas base.",
+        "object": "public.unused_indexes",
         "severity": "ALTA"
       },
       {
@@ -56199,6 +56445,20 @@
       },
       {
         "comment": null,
+        "definition": " SELECT schemaname,\n    relname AS tablename,\n    indexrelname AS indexname,\n    idx_scan AS index_scans,\n    idx_tup_read AS tuples_read,\n    idx_tup_fetch AS tuples_fetched,\n    pg_size_pretty(pg_relation_size(indexrelid::regclass)) AS index_size\n   FROM pg_stat_user_indexes\n  ORDER BY idx_scan DESC;",
+        "depends_on": [
+          "pg_catalog.pg_stat_user_indexes"
+        ],
+        "kind": "view",
+        "name": "index_usage",
+        "options": null,
+        "owner": "postgres",
+        "populated": null,
+        "schema": "public",
+        "security_invoker": false
+      },
+      {
+        "comment": null,
         "definition": " SELECT sm.version,\n    sm.name,\n    sm.applied_at,\n    sm.applied_by,\n    sm.execution_time_ms,\n    sm.success,\n        CASE\n            WHEN mr.id IS NOT NULL THEN 'Rolled Back'::text\n            ELSE 'Applied'::text\n        END AS status\n   FROM schema_migrations sm\n     LEFT JOIN migration_rollbacks mr ON sm.version::text = mr.version::text\n  ORDER BY sm.version DESC;",
         "depends_on": [
           "public.migration_rollbacks",
@@ -56206,6 +56466,20 @@
         ],
         "kind": "view",
         "name": "migration_status",
+        "options": null,
+        "owner": "postgres",
+        "populated": null,
+        "schema": "public",
+        "security_invoker": false
+      },
+      {
+        "comment": null,
+        "definition": " SELECT schemaname,\n    relname AS tablename,\n    indexrelname AS indexname,\n    idx_scan,\n    pg_size_pretty(pg_relation_size(indexrelid::regclass)) AS index_size\n   FROM pg_stat_user_indexes\n  WHERE idx_scan = 0 AND indexrelname !~~ 'pk_%'::text AND indexrelname !~~ '%_pkey'::text\n  ORDER BY (pg_relation_size(indexrelid::regclass)) DESC;",
+        "depends_on": [
+          "pg_catalog.pg_stat_user_indexes"
+        ],
+        "kind": "view",
+        "name": "unused_indexes",
         "options": null,
         "owner": "postgres",
         "populated": null,

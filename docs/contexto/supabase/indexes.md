@@ -47,6 +47,7 @@ Uso e tamanho em `stats.md`.
 | public.agents | agents_extension_key | btree | extension | sim | sim |  |
 | public.agents | agents_pkey | btree | id | sim | sim |  |
 | public.audit_logs | audit_logs_pkey | btree | id | sim | sim |  |
+| public.audit_logs | idx_audit_action_timestamp | btree | action, created_at | não | sim |  |
 | public.audit_logs | idx_audit_logs_action | btree | action | não | sim |  |
 | public.audit_logs | idx_audit_logs_created_at | btree | created_at | não | sim |  |
 | public.audit_logs | idx_audit_logs_created_brin | brin | created_at | não | sim |  |
@@ -54,6 +55,7 @@ Uso e tamanho em `stats.md`.
 | public.audit_logs | idx_audit_logs_resource_type_created | btree | resource_type, created_at | não | sim |  |
 | public.audit_logs | idx_audit_logs_user_date | btree | user_id, created_at | não | sim |  |
 | public.audit_logs | idx_audit_logs_user_id | btree | user_id | não | sim |  |
+| public.audit_logs | idx_audit_user_timestamp | btree | user_id, created_at | não | sim |  |
 | public.badges | badges_pkey | btree | id | sim | sim |  |
 | public.barge_in_sessions | barge_in_sessions_pkey | btree | id | sim | sim |  |
 | public.barge_in_sessions | idx_barge_in_sessions_call_session_id | btree | call_session_id | não | sim |  |
@@ -203,6 +205,7 @@ Uso e tamanho em `stats.md`.
 | public.contacts | idx_contacts_email | btree | email | não | sim |  |
 | public.contacts | idx_contacts_external_id | btree | external_id | não | sim |  |
 | public.contacts | idx_contacts_favorite | btree | favorite | não | sim | `(favorite = true)` |
+| public.contacts | idx_contacts_name_search | gin |  | não | sim |  |
 | public.contacts | idx_contacts_phone | btree | phone | não | sim |  |
 | public.conversation_messages | conversation_messages_pkey | btree | id | sim | sim |  |
 | public.conversation_messages | idx_conversation_messages_conversation_id | btree | conversation_id | não | sim |  |

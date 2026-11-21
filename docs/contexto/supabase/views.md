@@ -42,6 +42,30 @@ WITH calls_daily AS (
   ORDER BY (COALESCE(c.day, r.day)) DESC;
 ```
 
+## public.index_usage (view)
+
+| campo | valor |
+|---|---|
+| owner | postgres |
+| security_invoker | não |
+| opções |  |
+| depende de | pg_catalog.pg_stat_user_indexes |
+| populada | n/a |
+| comentário |  |
+
+
+```sql
+SELECT schemaname,
+    relname AS tablename,
+    indexrelname AS indexname,
+    idx_scan AS index_scans,
+    idx_tup_read AS tuples_read,
+    idx_tup_fetch AS tuples_fetched,
+    pg_size_pretty(pg_relation_size(indexrelid::regclass)) AS index_size
+   FROM pg_stat_user_indexes
+  ORDER BY idx_scan DESC;
+```
+
 ## public.migration_status (view)
 
 | campo | valor |
@@ -68,4 +92,27 @@ SELECT sm.version,
    FROM schema_migrations sm
      LEFT JOIN migration_rollbacks mr ON sm.version::text = mr.version::text
   ORDER BY sm.version DESC;
+```
+
+## public.unused_indexes (view)
+
+| campo | valor |
+|---|---|
+| owner | postgres |
+| security_invoker | não |
+| opções |  |
+| depende de | pg_catalog.pg_stat_user_indexes |
+| populada | n/a |
+| comentário |  |
+
+
+```sql
+SELECT schemaname,
+    relname AS tablename,
+    indexrelname AS indexname,
+    idx_scan,
+    pg_size_pretty(pg_relation_size(indexrelid::regclass)) AS index_size
+   FROM pg_stat_user_indexes
+  WHERE idx_scan = 0 AND indexrelname !~~ 'pk_%'::text AND indexrelname !~~ '%_pkey'::text
+  ORDER BY (pg_relation_size(indexrelid::regclass)) DESC;
 ```

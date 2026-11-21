@@ -42,6 +42,7 @@
 | nome | método | colunas | único | válido | predicado | definição |
 |---|---|---|---|---|---|---|
 | audit_logs_pkey | btree | id | sim | sim |  | `CREATE UNIQUE INDEX audit_logs_pkey ON public.audit_logs USING btree (id)` |
+| idx_audit_action_timestamp | btree | action, created_at | não | sim |  | `CREATE INDEX idx_audit_action_timestamp ON public.audit_logs USING btree (action, created_at DESC)` |
 | idx_audit_logs_action | btree | action | não | sim |  | `CREATE INDEX idx_audit_logs_action ON public.audit_logs USING btree (action)` |
 | idx_audit_logs_created_at | btree | created_at | não | sim |  | `CREATE INDEX idx_audit_logs_created_at ON public.audit_logs USING btree (created_at DESC)` |
 | idx_audit_logs_created_brin | brin | created_at | não | sim |  | `CREATE INDEX idx_audit_logs_created_brin ON public.audit_logs USING brin (created_at) WITH (pages_per_range='32')` |
@@ -49,6 +50,7 @@
 | idx_audit_logs_resource_type_created | btree | resource_type, created_at | não | sim |  | `CREATE INDEX idx_audit_logs_resource_type_created ON public.audit_logs USING btree (resource_type, created_at DESC)` |
 | idx_audit_logs_user_date | btree | user_id, created_at | não | sim |  | `CREATE INDEX idx_audit_logs_user_date ON public.audit_logs USING btree (user_id, created_at DESC)` |
 | idx_audit_logs_user_id | btree | user_id | não | sim |  | `CREATE INDEX idx_audit_logs_user_id ON public.audit_logs USING btree (user_id)` |
+| idx_audit_user_timestamp | btree | user_id, created_at | não | sim |  | `CREATE INDEX idx_audit_user_timestamp ON public.audit_logs USING btree (user_id, created_at DESC)` |
 
 
 ## Policies (RLS)

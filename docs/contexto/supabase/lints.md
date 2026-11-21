@@ -4,7 +4,9 @@ Verificações objetivas feitas no catálogo. Um agente deve ler isto antes de p
 
 | severidade | código | objeto | detalhe |
 |---|---|---|---|
+| ALTA | view_security_definer | public.index_usage | View em public sem security_invoker: executa como owner e ignora RLS das tabelas base. |
 | ALTA | view_security_definer | public.migration_status | View em public sem security_invoker: executa como owner e ignora RLS das tabelas base. |
+| ALTA | view_security_definer | public.unused_indexes | View em public sem security_invoker: executa como owner e ignora RLS das tabelas base. |
 | MÉDIA | rls_no_policies | public.migration_rollbacks | RLS ligado sem policies: inacessível via API (só service_role). |
 | MÉDIA | rls_no_policies | public.schema_migrations | RLS ligado sem policies: inacessível via API (só service_role). |
 | BAIXA | extension_in_public | pg_trgm | Extensão instalada no schema public (recomendado: schema extensions). |

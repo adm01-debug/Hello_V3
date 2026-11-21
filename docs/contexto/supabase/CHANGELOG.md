@@ -2,6 +2,14 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-21 23:11 UTC
+
+- **colunas** adicionado (12): `public.index_usage.index_scans`, `public.index_usage.index_size`, `public.index_usage.indexname`, `public.index_usage.schemaname`, `public.index_usage.tablename`, `public.index_usage.tuples_fetched`, `public.index_usage.tuples_read`, `public.unused_indexes.idx_scan`, `public.unused_indexes.index_size`, `public.unused_indexes.indexname`, `public.unused_indexes.schemaname`, `public.unused_indexes.tablename`
+- **grants** adicionado (6): `public.index_usage:anon`, `public.index_usage:authenticated`, `public.index_usage:service_role`, `public.unused_indexes:anon`, `public.unused_indexes:authenticated`, `public.unused_indexes:service_role`
+- **indexes** adicionado (3): `public.idx_audit_action_timestamp`, `public.idx_audit_user_timestamp`, `public.idx_contacts_name_search`
+- **lints** adicionado (2): `view_security_definer:public.index_usage`, `view_security_definer:public.unused_indexes`
+- **views** adicionado (2): `public.index_usage`, `public.unused_indexes`
+
 ## 2026-11-21 22:11 UTC
 
 - **functions** alterado (1): `public.is_admin_user(_user_id uuid)`
