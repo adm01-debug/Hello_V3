@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UnifiedSoftphone } from '@/components/calls/UnifiedSoftphone';
 import { NetworkStatusBadge } from '@/components/calls/NetworkStatusBadge';
 import { SipConnectionStatus } from '@/components/calls/SipConnectionStatus';
+import { LiveTranslationPanel } from '@/components/translation/LiveTranslationPanel';
 import { useSipCall } from '@/hooks/useSipCall';
 import { toast } from 'sonner';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -59,6 +60,11 @@ const Calls = () => {
 
         {/* Painel de Informações */}
         <div className="space-y-6">
+          {/* Tradução em tempo real durante chamada */}
+          {sip.isInCall && (
+            <LiveTranslationPanel callSessionId={sip.callId ?? undefined} />
+          )}
+
           {/* Stats rápidas */}
           <Card>
             <CardHeader className="pb-3">

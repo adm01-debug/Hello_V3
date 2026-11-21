@@ -85,6 +85,7 @@ const securityNavItems = [
   { title: 'Acessos Bloqueados', url: '/blocked-access-logs', icon: Shield },
   { title: 'Rate Limit', url: '/rate-limit', icon: AlertTriangle },
   { title: 'Observabilidade', url: '/observability', icon: Activity },
+  { title: 'Auditoria de Segurança', url: '/admin/security-audit', icon: Eye },
   { title: 'Diagnóstico de Rede', url: '/network-diagnostics', icon: Wifi },
   { title: 'Conflitos de Concorrência', url: '/concurrency-conflicts', icon: AlertTriangle },
 ];
