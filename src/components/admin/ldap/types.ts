@@ -1,4 +1,4 @@
-export interface LDAPConfig {
+﻿export interface LDAPConfig {
   serverUrl: string;
   port: string;
   baseDn: string;
@@ -45,38 +45,3 @@ export const DEFAULT_LDAP_CONFIG: LDAPConfig = {
     position: 'title',
   },
 };
-
-export const MOCK_SYNC_LOGS: SyncLog[] = [
-  {
-    id: '1',
-    timestamp: new Date().toISOString(),
-    status: 'success',
-    contactsSynced: 245,
-    contactsCreated: 12,
-    contactsUpdated: 233,
-    contactsFailed: 0,
-    duration: '4.2s',
-  },
-  {
-    id: '2',
-    timestamp: new Date(Date.now() - 3600000).toISOString(),
-    status: 'partial',
-    contactsSynced: 240,
-    contactsCreated: 5,
-    contactsUpdated: 230,
-    contactsFailed: 5,
-    duration: '5.1s',
-    error: '5 contatos com DN inválido',
-  },
-  {
-    id: '3',
-    timestamp: new Date(Date.now() - 7200000).toISOString(),
-    status: 'error',
-    contactsSynced: 0,
-    contactsCreated: 0,
-    contactsUpdated: 0,
-    contactsFailed: 0,
-    duration: '0.3s',
-    error: 'Falha na conexão com servidor LDAP',
-  },
-];

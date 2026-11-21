@@ -47,6 +47,7 @@ export function useSupervisorPanel() {
   const [whisperMessage, setWhisperMessage] = useState('');
   const [whisperHistory, setWhisperHistory] = useState<WhisperMessage[]>([]);
   const [activeBargeIn, setActiveBargeIn] = useState<BargeInSession | null>(null);
+  const [activeListen, setActiveListen] = useState<BargeInSession | null>(null);
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showTrendChart, setShowTrendChart] = useState(false);
@@ -190,6 +191,47 @@ export function useSupervisorPanel() {
     else { setActiveBargeIn(null); toast.info('Você saiu da conferência'); }
   };
 
+  const startListening = async () => {
+    if (!selectedCall || !selectedCall.agent_name) { toast.error('Selecione uma chamada primeiro'); return; }
+    if (activeListen) return;
+    const { data, error } = await supabase.from('barge_in_sessions').insert({
+      call_session_id: selectedCall.id, supervisor_name: supervisorName,
+      agent_name: selectedCall.agent_name, status: 'listening',
+    }).select('id, call_session_id, supervisor_name, agent_name, status, started_at').maybeSingle();
+    if (error) {
+      logger.error('Error starting listen session:', error);
+      toast.error('Erro ao registrar sessão de escuta');
+      return;
+    }
+    await supabase.from('call_control_audit_logs').insert({
+      call_session_id: selectedCall.id,
+      event_type: 'listen_start',
+      source: 'supervisor_panel',
+      details: { supervisor: supervisorName, agent: selectedCall.agent_name },
+    });
+    if (data) setActiveListen(data as BargeInSession);
+    toast.success(`Escuta registrada na chamada de ${selectedCall.agent_name}`);
+  };
+
+  const stopListening = async () => {
+    if (!activeListen) return;
+    const { error } = await supabase.from('barge_in_sessions')
+      .update({ status: 'ended', ended_at: new Date().toISOString() })
+      .eq('id', activeListen.id);
+    if (error) {
+      toast.error('Erro ao encerrar sessão de escuta');
+      return;
+    }
+    await supabase.from('call_control_audit_logs').insert({
+      call_session_id: activeListen.call_session_id,
+      event_type: 'listen_stop',
+      source: 'supervisor_panel',
+      details: { supervisor: supervisorName, agent: activeListen.agent_name },
+    });
+    setActiveListen(null);
+    toast.info('Sessão de escuta encerrada');
+  };
+
   const formatTime = (dateStr: string) => safeToLocaleTimeString(dateStr, 'pt-BR', { hour: '2-digit', minute: '2-digit' });
 
    const isCallInBargeIn = (callId: string) => activeBargeIn?.call_session_id === callId;
@@ -203,6 +245,7 @@ export function useSupervisorPanel() {
     activeCalls, selectedCall, setSelectedCall,
     whisperMessage, setWhisperMessage, whisperHistory,
     activeBargeIn, sending, loading,
+    activeListen, startListening, stopListening,
     showTrendChart, setShowTrendChart,
     soundEnabled, soundConfig, queueMetrics,
     handleSoundEnabledChange, handleSoundConfigChange, handleEnableSound,

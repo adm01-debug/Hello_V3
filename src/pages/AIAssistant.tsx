@@ -68,7 +68,7 @@ const AIAssistant = () => {
           <TabsList className="bg-card/60 backdrop-blur-sm border border-border/30">
             <TabsTrigger value="simulation" className="gap-2 data-[state=active]:shadow-[0_0_10px_hsl(var(--primary)/0.2)]">
               <PlayCircle className="h-4 w-4" />
-              Simulação ao Vivo
+              Demo de Transcrição
             </TabsTrigger>
             <TabsTrigger value="analysis" className="gap-2 data-[state=active]:shadow-[0_0_10px_hsl(var(--primary)/0.2)]">
               <Bot className="h-4 w-4" />

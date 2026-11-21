@@ -111,18 +111,20 @@ Além disso: rota duplicada `/history` + `/call-history`, com rótulos contradit
 
 ---
 
-## 7. Módulos que existem apenas como fachada
+## 7. Módulos que existiam apenas como fachada — status após 21/11
 
-Diferente de "dormente": aqui há UI completa e navegável que **simula** o comportamento.
+Diferente de "dormente": aqui havia UI completa e navegável que **simulava** o comportamento. Os seis foram tratados um a um nesta rodada: três viraram funcionais, três foram declarados honestamente na interface.
 
-| Módulo | Evidência | Classificação |
-|---|---|---|
-| **Sincronização LDAP** | `src/pages/LDAPSync.tsx:31-35` — "teste de conexão" é `setTimeout`; `:42-50` — toast literal "245 contatos atualizados"; histórico vem de `MOCK_SYNC_LOGS` em `admin/ldap/types.ts:49-82`. Zero Supabase. Está no menu, sob papel `admin`. | 🟦 |
-| **Escuta silenciosa** | `panel/CallActionTabs.tsx:34-46` — apenas texto e um Badge afirmando "Áudio recebido pelo canal SIP"; sem botão, handler ou API. As abas Whisper e Barge-in ao lado **persistem de verdade**. | 🟦 |
-| **Canal WebRTC do softphone** | `src/lib/elevenlabs-stub.ts:13-18` — `startSession` emite um `logger.warn` e chama `onConnect()` imediatamente, disparando `updateCallStatus('active')` e `toast.success('Conectado')` em `UnifiedSoftphone.tsx:57`. | 🟨 |
-| **Zoom / Google Meet** | Botões rotulados "Em breve" (a integração Teams ao lado é real) | 🟦 |
-| **Simulação de chamada (IA)** | Aba padrão de `/ai` usa diálogo hardcoded (`CallSimulation.tsx:25-38`) | 🟦 |
-| **Marketplace** | Catálogo estático (`:29`) | 🟦 |
+| Módulo | Antes | Agora | Status |
+|---|---|---|---|
+| **Sincronização LDAP** | `setTimeout` como "teste de conexão", toast fixo "245 contatos atualizados", histórico vindo de `MOCK_SYNC_LOGS`. | Edge real `supabase/functions/ldap-sync/index.ts` (ações `get-config`, `save-config`, `test-connection`, `list-logs`, `sync`, `encrypt-password`; bind + `client.search` via `ldapts@9.3.1`, upsert em `contacts` por `external_id` com `source:'ldap'`, logs em `audit_logs`). UI consome via `src/hooks/useLDAPSync.ts`; `MOCK_SYNC_LOGS` removido. | ✅ Funcional (requer servidor LDAP acessível e secrets) |
+| **Escuta silenciosa** | Apenas texto + Badge "Áudio recebido pelo canal SIP", sem handler. | `useSupervisorPanel` ganhou `startListening`/`stopListening`: grava sessão em `barge_in_sessions` (`status: 'listening'` → `ended` + `ended_at`) e audita em `call_control_audit_logs` (`listen_start`/`listen_stop`). Aba "Escuta" tem botões reais e avisa que o áudio depende de SIPREC/fork de mídia no PBX. | ✅ Registro funcional; áudio depende do PBX |
+| **Canal WebRTC do softphone** | `startSession` chamava `onConnect()` sempre, disparando `toast.success('Conectado')` sem conexão. | `elevenlabs-stub.ts` agora chama `onError` com mensagem explícita e retorna `false`; `UnifiedSoftphone` exibe `error.message`. Sem falso positivo. | ✅ Honesto (canal continua indisponível sem `@elevenlabs/react`) |
+| **Zoom / Google Meet** | Botões "Em breve". | Inalterado — dependem de OAuth/app registration externos. | 🟨 Declarado |
+| **Simulação de chamada (IA)** | Rótulo "tempo real". | Rótulo "demonstração"; aba "Demo de Transcrição". É demonstrativo por desenho. | 🟨 Declarado |
+| **Marketplace** | Catálogo estático; LDAP marcado `disponivel` e data-lake `roadmap` (invertido). | LDAP → `beta` (requer servidor LDAP); data-lake → `disponivel` (fluxo provado). | ✅ Corrigido |
+
+**Nota:** `check-dnc` e `check-calling-hours` **não** são Edge Functions faltantes — nunca tiveram `index.ts`; a lógica é RPC no banco (`rpc('check_dnc')` chamada por `score-call-attempt`) e está registrada em `docs/agentes/edge-functions.md`.
 
 ---
 
@@ -130,5 +132,5 @@ Diferente de "dormente": aqui há UI completa e navegável que **simula** o comp
 
 - **Nada relevante do que foi planejado está "não começado".** Para praticamente todo item de roadmap existe backend construído.
 - **O gargalo era de ligação, não de construção:** 16 unidades completas sem consumidor, 7 Edge Functions sem gatilho, 6 rotas sem link de menu. **Resolvido em 21/11:** WIRING-01/03/05 CONCLUÍDOS; WIRING-02 DESCARTADO (sem chamadas ativas); WIRING-04/06 wireados (gamificação, surveys, churn, playlists, compliance, coaching com dados reais); `generate-coaching-track` reescrita contra schema real e wireada via botão em `/coaching` (PR #74). Restam 6 edges órfãs legítimas/ferramentas (`cleanup-lock-conflicts`, `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`) sem consumidor no fluxo do produto.
-- **Seis módulos são fachada declarável** — existem, navegam, e não fazem o que a tela diz.
+- **Seis módulos deixaram de ser fachada** — três ganharam função real (LDAP, escuta, Marketplace) e três foram rotulados honestamente (WebRTC indisponível, Zoom/Meet em breve, simulação declarada como demonstração). Ver §7.
 - **A documentação de conclusão (`SYSTEM_FEATURES.md`, ADRs) não deve ser usada para decidir nada** enquanto não for reconciliada: ela marca 100% de conclusão sobre um sistema com 16 features dormentes e 6 fachadas.

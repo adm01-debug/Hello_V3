@@ -1,55 +1,21 @@
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+﻿import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
-import { FolderSync, Clock, Users, RefreshCw, Play, Settings2, Database } from 'lucide-react';
-import { toast } from 'sonner';
+import { FolderSync, Clock, Users, RefreshCw, Play, Settings2, Database, Save } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
-import {
-  DEFAULT_LDAP_CONFIG,
-  MOCK_SYNC_LOGS,
-  type LDAPConfig,
-} from '@/components/admin/ldap/types';
+import { useLDAPSync } from '@/hooks/useLDAPSync';
 import { LDAPConfigTab } from '@/components/admin/ldap/LDAPConfigTab';
 import { LDAPMappingTab } from '@/components/admin/ldap/LDAPMappingTab';
 import { LDAPLogsTab } from '@/components/admin/ldap/LDAPLogsTab';
 
 export default function LDAPSync() {
   usePageTitle('LDAP Sync');
-  const [config, setConfig] = useState<LDAPConfig>(DEFAULT_LDAP_CONFIG);
-  const [syncing, setSyncing] = useState(false);
-  const [syncProgress, setSyncProgress] = useState(0);
-  const [testing, setTesting] = useState(false);
-  const [logs] = useState(MOCK_SYNC_LOGS);
-
-  const handleTestConnection = async () => {
-    if (!config.serverUrl || !config.baseDn) {
-      toast.error('Preencha servidor e Base DN');
-      return;
-    }
-    setTesting(true);
-    await new Promise(r => setTimeout(r, 2000));
-    setTesting(false);
-    toast.success('Conexão LDAP testada com sucesso!');
-  };
-
-  const handleSync = async () => {
-    if (!config.serverUrl) {
-      toast.error('Configure o servidor LDAP primeiro');
-      return;
-    }
-    setSyncing(true);
-    setSyncProgress(0);
-    for (let i = 0; i <= 100; i += 10) {
-      await new Promise(r => setTimeout(r, 300));
-      setSyncProgress(i);
-    }
-    setSyncing(false);
-    setSyncProgress(100);
-    toast.success('Sincronização concluída! 245 contatos atualizados.');
-  };
+  const {
+    config, setConfig, logs, loading, saving, testing, syncing, lastResult,
+    save, testConnection, runSync,
+  } = useLDAPSync();
 
   return (
     <div className="space-y-6">
@@ -68,7 +34,16 @@ export default function LDAPSync() {
             <Database className="h-3.5 w-3.5" />
             Active Directory / OpenLDAP
           </Badge>
-          <Button onClick={handleSync} disabled={syncing} className="gap-2">
+          <Button
+            variant="outline"
+            onClick={() => void save()}
+            disabled={saving || loading}
+            className="gap-2"
+          >
+            {saving ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+            Salvar
+          </Button>
+          <Button onClick={() => void runSync()} disabled={syncing || loading} className="gap-2">
             {syncing ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4" />}
             {syncing ? 'Sincronizando...' : 'Sincronizar Agora'}
           </Button>
@@ -81,11 +56,27 @@ export default function LDAPSync() {
             <div className="flex items-center gap-4">
               <RefreshCw className="h-5 w-5 animate-spin text-primary" />
               <div className="flex-1">
-                <p className="text-sm font-medium">Sincronizando contatos...</p>
-                <Progress value={syncProgress} className="mt-2 h-2" />
+                <p className="text-sm font-medium">Consultando diretório e aplicando contatos...</p>
+                <Progress value={undefined} className="mt-2 h-2" />
               </div>
-              <span className="text-sm text-muted-foreground">{syncProgress}%</span>
             </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {lastResult && !syncing && (
+        <Card>
+          <CardContent className="p-4 text-sm">
+            {lastResult.ok ? (
+              <p>
+                Última execução: <strong>{lastResult.synced ?? 0}</strong> contato(s) —
+                {' '}{lastResult.created ?? 0} criado(s), {lastResult.updated ?? 0} atualizado(s)
+                {lastResult.failed ? `, ${lastResult.failed} falha(s)` : ''}
+                {' '}em {((lastResult.durationMs ?? 0) / 1000).toFixed(1)}s.
+              </p>
+            ) : (
+              <p className="text-destructive">Última execução falhou: {lastResult.error}</p>
+            )}
           </CardContent>
         </Card>
       )}
@@ -107,7 +98,15 @@ export default function LDAPSync() {
         </TabsList>
 
         <TabsContent value="config">
-          <LDAPConfigTab config={config} setConfig={setConfig} testing={testing} onTest={handleTestConnection} />
+          <LDAPConfigTab
+            config={config}
+            setConfig={setConfig}
+            testing={testing}
+            loading={loading}
+            saving={saving}
+            onTest={() => void testConnection()}
+            onSave={() => void save()}
+          />
         </TabsContent>
         <TabsContent value="mapping">
           <LDAPMappingTab config={config} setConfig={setConfig} />

@@ -32,15 +32,30 @@ export function CallActionTabs({ s }: { s: SupervisorPanelState }) {
       </TabsList>
 
       <TabsContent value="listen" className="space-y-3 mt-3">
-        <div className="p-4 rounded-lg border bg-muted/30 text-center">
+          <div className="p-4 rounded-lg border bg-muted/30 text-center">
           <Headphones className="h-10 w-10 mx-auto mb-3 text-primary opacity-60" />
           <h4 className="font-medium mb-1">Modo Escuta silenciosa</h4>
           <p className="text-xs text-muted-foreground mb-4">
-            Ouça a chamada em tempo real sem que agente ou cliente saibam. Ideal para QA e coaching passivo.
+            Registra a sessão de escuta da chamada para auditoria. O áudio chega pelo canal SIP do
+            supervisor e depende de o seu PBX permitir monitoramento (SIPREC ou fork de mídia).
           </p>
-          <Badge variant="secondary" className="gap-1">
-            <Radio className="h-3 w-3" /> Áudio recebido pelo canal SIP do supervisor
-          </Badge>
+          <p className="text-xs text-muted-foreground mb-4 rounded-md border border-warning/40 bg-warning/10 px-3 py-2">
+            Sem permissão de monitoramento no trunk, o registro é criado mas nenhum áudio é recebido.
+          </p>
+          {s.activeListen ? (
+            <div className="space-y-2">
+              <Badge variant="default" className="gap-1">
+                <Radio className="h-3 w-3" /> Escuta ativa
+              </Badge>
+              <Button variant="destructive" size="sm" className="w-full gap-2" onClick={() => void s.stopListening()}>
+                <PhoneOff className="h-4 w-4" /> Encerrar escuta
+              </Button>
+            </div>
+          ) : (
+            <Button size="sm" className="w-full gap-2" onClick={() => void s.startListening()}>
+              <Headphones className="h-4 w-4" /> Iniciar escuta
+            </Button>
+          )}
           <CallMeta s={s} />
         </div>
       </TabsContent>
