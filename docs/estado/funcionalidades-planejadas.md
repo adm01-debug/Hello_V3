@@ -25,11 +25,11 @@ Origem: `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` §2 e `docs/audits/pendencias-
 
 | Item planejado | Status declarado | Medição | Classificação |
 |---|---|---|---|
-| **Unified Inbox** (WhatsApp + SMS + Voz em timeline única) | 🔴 Pendente (D1) | Peças existem e estão **desconectadas**: `src/components/whatsapp/WhatsappComposer.tsx` (106 linhas) tem **zero importadores**; edge `whatsapp-inbound` existe; não há rota `/inbox` | 🟦 **SUGERIDO_OU_INICIADO** |
-| **Virtual Fax v2** (OCR via Gemini) | 🔴 Pendente (D2) | Edge function `ocr-virtual-fax/index.ts` **existe e chama a IA de verdade** (`:59`); falta a interface de gestão descrita | 🟨 **IMPLEMENTADO_PARCIAL** |
+| **Unified Inbox** (WhatsApp + SMS + Voz em timeline única) | ✅ **Implementado (D1)** | Rota `/inbox` ativa (`protectedRoutes.tsx:156`); `WhatsappComposer` importado em `Inbox.tsx` (canal whatsapp, 4 tons + envio, WIRING-03); edge `whatsapp-inbound` existe | 🟩 **IMPLEMENTADO** (aguarda dados reais: `conversations`=0) |
+| **Virtual Fax v2** (OCR via Gemini) | ✅ **Implementado (D2)** | Rota `/virtual-fax` ativa (`protectedRoutes.tsx:137`); página `VirtualFax.tsx` usa `useVirtualFaxOcr`; edge `ocr-virtual-fax` chama IA real | 🟩 **IMPLEMENTADO** |
 | **AI-Driven Shift Management** | 🔴 Pendente (D3) | Edge `suggest-shift-swaps` existe; `useAdherence` wireado na aba **Aderência** de `/scheduling` (PR #67) | 🟩 **IMPLEMENTADO_TOTAL** (fio ligado) |
 | **Coaching Automático** (sentimento → trilhas) | 🟢 **Implementado (D4)** | Edges `generate-coaching`, `generate-coaching-plan`, `generate-coaching-track` wireadas; `generate-coaching-track` reescrita contra schema real (`call_summaries.agent_performance_score`/`customer_satisfaction` 0-5, `coaching_assignments.agent_name`/`title`/`description`/`priority`/`status`) e testada (8 testes); botão **"Gerar trilhas automáticas"** em `/coaching` (guard `coaching.manage`) | 🟩 **IMPLEMENTADO** |
-| **Data Lake connector** (BigQuery/Snowflake) | 🟡 Pendente (D5) | Edges `data-lake-flush` e `export-data-lake` existem; cron reapontado para `cfmlmcdyjuotqobjapng` (migration `20261114090557_…`) | 🟡 **IMPLEMENTADO_PARCIAL** (fio corrigido; aguarda aplicação) |
+| **Data Lake connector** (BigQuery/Snowflake) | 🟡 Parcial (D5) | Edges `data-lake-flush` e `export-data-lake` existem; cron reapontado para `cfmlmcdyjuotqobjapng` (migration `20261114090557_…`); flush validado no run 21/11 03:00Z (`1 row`, `succeeded`) | 🟡 **IMPLEMENTADO_PARCIAL** (dados de origem vazios; aguarda `call_summaries` populada) |
 | **Financial Impact Dashboard** | Listado como futuro | Rota `/financial-impact` **existe e está ativa**; hook `useFinancialImpact` com teste de propriedade | ✅ **IMPLEMENTADO_TOTAL** (código) / `NAO_VERIFICADO` em uso real |
 
 **Padrão observado:** quase tudo do "roadmap futuro" já tem backend construído. O que falta, consistentemente, é o **último fio** — o consumidor na UI ou o gatilho. É o oposto do padrão usual de roadmap.
@@ -129,6 +129,6 @@ Diferente de "dormente": aqui há UI completa e navegável que **simula** o comp
 ## 8. Resumo: o que responder ao dono
 
 - **Nada relevante do que foi planejado está "não começado".** Para praticamente todo item de roadmap existe backend construído.
-- **O gargalo é de ligação, não de construção:** 16 unidades completas sem consumidor, 7 Edge Functions sem gatilho, 6 rotas sem link de menu. PR #67 wireou 7 hooks órfãos (WIRING-04/06). PR #67 wireou 7 hooks órfãos (WIRING-04/06).
+- **O gargalo era de ligação, não de construção:** 16 unidades completas sem consumidor, 7 Edge Functions sem gatilho, 6 rotas sem link de menu. **Resolvido em 21/11:** WIRING-01/03/05 CONCLUÍDOS; WIRING-02 DESCARTADO (sem chamadas ativas); WIRING-04/06 wireados (gamificação, surveys, churn, playlists, compliance, coaching com dados reais); `generate-coaching-track` reescrita contra schema real e wireada via botão em `/coaching` (PR #74). Restam 6 edges órfãs legítimas/ferramentas (`cleanup-lock-conflicts`, `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`) sem consumidor no fluxo do produto.
 - **Seis módulos são fachada declarável** — existem, navegam, e não fazem o que a tela diz.
 - **A documentação de conclusão (`SYSTEM_FEATURES.md`, ADRs) não deve ser usada para decidir nada** enquanto não for reconciliada: ela marca 100% de conclusão sobre um sistema com 16 features dormentes e 6 fachadas.
