@@ -6,7 +6,7 @@
 | owner | postgres |
 | RLS habilitado | sim |
 | RLS forçado (owner) | não |
-| policies | 4 |
+| policies | 3 |
 | realtime (publication) | não |
 | replica identity | default |
 | vem de extensão | não |
@@ -80,16 +80,6 @@
 | tipo | PERMISSIVE |
 | roles | authenticated |
 | USING | `(is_admin_or_supervisor() OR (id = get_user_agent_id()))` |
-| WITH CHECK |  |
-
-### `Allow all`
-
-| campo | valor |
-|---|---|
-| comando | ALL |
-| tipo | PERMISSIVE |
-| roles | public |
-| USING | `true` |
 | WITH CHECK |  |
 
 ### `Users can view agents`

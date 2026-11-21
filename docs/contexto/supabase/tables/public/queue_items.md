@@ -6,7 +6,7 @@
 | owner | postgres |
 | RLS habilitado | sim |
 | RLS forçado (owner) | não |
-| policies | 1 |
+| policies | 2 |
 | realtime (publication) | não |
 | replica identity | default |
 | vem de extensão | não |
@@ -46,14 +46,24 @@
 
 ## Policies (RLS)
 
-### `Allow all`
+### `Admins can manage queue_items`
 
 | campo | valor |
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
-| USING | `true` |
+| roles | authenticated |
+| USING | `is_admin_or_supervisor()` |
+| WITH CHECK | `is_admin_or_supervisor()` |
+
+### `Admins can view queue_items`
+
+| campo | valor |
+|---|---|
+| comando | SELECT |
+| tipo | PERMISSIVE |
+| roles | authenticated |
+| USING | `is_admin_or_supervisor()` |
 | WITH CHECK |  |
 
 

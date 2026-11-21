@@ -46571,6 +46571,11 @@
         "statements": 18,
         "statements_sha": "f26996a02a122e0d",
         "version": "20250102000000"
+      },
+      {
+        "name": "fix_rls_allow_all",
+        "statements": [],
+        "version": "20261121125200"
       }
     ],
     "policies": [
@@ -46992,18 +46997,6 @@
         "schema": "public",
         "table": "agents",
         "using": "(is_admin_or_supervisor() OR (id = get_user_agent_id()))",
-        "with_check": null
-      },
-      {
-        "cmd": "ALL",
-        "name": "Allow all",
-        "permissive": "PERMISSIVE",
-        "roles": [
-          "public"
-        ],
-        "schema": "public",
-        "table": "agents",
-        "using": "true",
         "with_check": null
       },
       {
@@ -47800,14 +47793,26 @@
       },
       {
         "cmd": "ALL",
-        "name": "Allow all",
+        "name": "Admins can manage call_records",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_records",
-        "using": "true",
+        "using": "is_admin_or_supervisor()",
+        "with_check": "is_admin_or_supervisor()"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "Admins can view call_records",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "call_records",
+        "using": "is_admin_or_supervisor()",
         "with_check": null
       },
       {
@@ -48504,18 +48509,6 @@
         "schema": "public",
         "table": "contacts",
         "using": "is_admin_or_supervisor()",
-        "with_check": null
-      },
-      {
-        "cmd": "ALL",
-        "name": "Allow all",
-        "permissive": "PERMISSIVE",
-        "roles": [
-          "public"
-        ],
-        "schema": "public",
-        "table": "contacts",
-        "using": "true",
         "with_check": null
       },
       {
@@ -50236,14 +50229,26 @@
       },
       {
         "cmd": "ALL",
-        "name": "Allow all",
+        "name": "Admins can manage queue_items",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "queue_items",
-        "using": "true",
+        "using": "is_admin_or_supervisor()",
+        "with_check": "is_admin_or_supervisor()"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "Admins can view queue_items",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "queue_items",
+        "using": "is_admin_or_supervisor()",
         "with_check": null
       },
       {

@@ -6,7 +6,7 @@
 | owner | postgres |
 | RLS habilitado | sim |
 | RLS forçado (owner) | não |
-| policies | 5 |
+| policies | 4 |
 | realtime (publication) | não |
 | replica identity | default |
 | vem de extensão | não |
@@ -85,16 +85,6 @@
 | tipo | PERMISSIVE |
 | roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
-| WITH CHECK |  |
-
-### `Allow all`
-
-| campo | valor |
-|---|---|
-| comando | ALL |
-| tipo | PERMISSIVE |
-| roles | public |
-| USING | `true` |
 | WITH CHECK |  |
 
 ### `Role-based update contacts`

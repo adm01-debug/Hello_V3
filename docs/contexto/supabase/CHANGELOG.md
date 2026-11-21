@@ -2,6 +2,12 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-21 20:12 UTC
+
+- **migrations** adicionado (1): `20261121125200_fix_rls_allow_all`
+- **policies (RLS)** adicionado (4): `public.call_records.Admins can manage call_records`, `public.call_records.Admins can view call_records`, `public.queue_items.Admins can manage queue_items`, `public.queue_items.Admins can view queue_items`
+- **policies (RLS)** removido (4): `public.agents.Allow all`, `public.call_records.Allow all`, `public.contacts.Allow all`, `public.queue_items.Allow all`
+
 ## 2026-11-21 16:12 UTC
 
 - **functions** alterado (1): `public.is_admin_or_supervisor()`
