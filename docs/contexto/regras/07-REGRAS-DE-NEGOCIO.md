@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `409f79f8b8` · branch `main` · 2026-11-21 21:28 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8ee9f60daf` · branch `main` · 2026-11-21 22:37 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -985,8 +985,6 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `type` | `recovery` | escreve | `supabase/functions/approve-password-reset/index.ts` |
 | `type` | `registration` | escreve | `src/hooks/useWebAuthn.ts` |
 | `type` | `remote-inbound-rtp` | compara | `src/hooks/useVoipQualityMonitor.ts` |
-| `type` | `revoke` | compara, escreve | `src/pages/SessionManagement.tsx` |
-| `type` | `revoke_all` | compara, escreve | `src/pages/SessionManagement.tsx` |
 | `type` | `ring_group` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `sentiment_negative` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
 | `type` | `signup` | escreve | `src/pages/VerifyEmail.tsx` |
@@ -1056,6 +1054,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | VoiceAction | dial \| hangup \| mute \| unmute \| redial \| history \| none | `src/components/voice/voice-intent.ts` |
 | VoicePhase | idle \| listening \| processing \| speaking \| error | `src/components/voice/overlay/usePhaseColors.ts` |
 | UserRole | admin \| supervisor \| agent \| viewer | `src/contexts/AuthContext.tsx` |
+| ReauthAction | change_password \| change_email \| configure_mfa \| admin_action \| delete_account \| export_data \| revoke_sessions | `src/contexts/ReauthContext.tsx` |
 | ThemeMode | light \| dark | `src/contexts/ThemeContext.tsx` |
 | ThemeSkin | default \| midnight \| ocean \| sunset \| forest | `src/contexts/ThemeContext.tsx` |
 | AgentStatus | available \| busy \| away \| offline | `src/hooks/useAgentStatus.ts` |
@@ -1706,6 +1705,8 @@ _nenhum item encontrado_
 | `SIDEBAR_WIDTH_MOBILE` | `"18rem"` | `src/components/ui/sidebar.tsx` |
 | `CONNECTION_DIST` | `120` | `src/components/voice/overlay/FloatingParticles.tsx` |
 | `SIZE` | `220` | `src/components/voice/overlay/VoiceOrb.tsx` |
+| `REAUTH_TIMEOUT_MS` | `5` | `src/contexts/ReauthContext.tsx` |
+| `UNSIGNED` | `"unsigned"` | `src/contexts/ReauthContext.tsx` |
 | `MOBILE_BREAKPOINT` | `768` | `src/hooks/use-mobile.tsx` |
 | `TOAST_LIMIT` | `1` | `src/hooks/use-toast.ts` |
 | `TOAST_REMOVE_DELAY` | `1000000` | `src/hooks/use-toast.ts` |
@@ -1724,7 +1725,6 @@ _nenhum item encontrado_
 | `LATENCY_OK` | `150` | `src/hooks/useNetworkMonitor.ts` |
 | `LATENCY_UNSTABLE` | `400` | `src/hooks/useNetworkMonitor.ts` |
 | `BUCKET` | `'queue-audio'` | `src/hooks/useQueueAudioPrompts.ts` |
-| `REAUTH_TIMEOUT_MS` | `5` | `src/hooks/useReauth.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `SESSION_DURATION_HOURS` | `24` | `src/hooks/useSessionManager.ts` |
@@ -1829,6 +1829,7 @@ _nenhum item encontrado_
 | `const timer = setTimeout(() => setOpen(true), 2000);` | `src/components/layout/OnboardingWizard.tsx` |
 | `window.setTimeout(() => finish(0), 5000);` | `src/components/queues/QueueAudioLibrary.tsx` |
 | `const timer = window.setTimeout(() => setBootingTimedOut(true), 10000);` | `src/components/voice/VoiceAssistantDialog.tsx` |
+| `export const REAUTH_TIMEOUT_MS = 5 * 60 * 1000;` | `src/contexts/ReauthContext.tsx` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useAgentFinancialLeaderboard.ts` |
 | `const startDate = subDays(endDate, 6);` | `src/hooks/useAgentRanking.ts` |
 | `ended_at: status === 'completed' ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000 + durationSeconds * 1000).toISOString() : null,` | `src/hooks/useAgentRanking.ts` |
@@ -1868,7 +1869,6 @@ _nenhum item encontrado_
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useQueueAudioPrompts.ts` |
 | `const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();` | `src/hooks/useQueueMetrics.ts` |
 | `setTimeout(() => notification.close(), 10000);` | `src/hooks/useRealtimeHoldAlerts.ts` |
-| `const REAUTH_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutos` | `src/hooks/useReauth.ts` |
 | `gcTime: 30 * 60 * 1000,` | `src/hooks/useRingGroups.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useRingGroups.ts` |
 | `const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();` | `src/hooks/useSLA.ts` |
@@ -2203,6 +2203,7 @@ _nenhum item encontrado_
 | useFormField should be used within <FormField> | `src/components/ui/form.tsx` |
 | useSidebar must be used within a SidebarProvider. | `src/components/ui/sidebar.tsx` |
 | useAuthContext must be used within an AuthProvider | `src/contexts/AuthContext.tsx` |
+| useReauthContext must be used within a ReauthProvider | `src/contexts/ReauthContext.tsx` |
 | useTheme must be used within ThemeProvider | `src/contexts/ThemeContext.tsx` |
 | Falha ao atualizar conta | `src/hooks/useAccounts.ts` |
 | Falha ao carregar contas | `src/hooks/useAccounts.ts` |
@@ -2383,8 +2384,7 @@ _nenhum item encontrado_
 | Chamada encerrada: ${e.cause} | `src/hooks/useSipCall.ts` |
 | Chamada falhou: ${cause} | `src/hooks/useSipCall.ts` |
 | Falha ao atender a chamada | `src/hooks/useSipCall.ts` |
-| Já existe uma chamada em andamento | `src/hooks/useSipCall.ts` |
-| … +208 linhas — lista completa em `context.json` | |
+| … +209 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2428,7 +2428,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/functions/export-data-lake/index.ts` |
 
-## K. Testes como especificação (3932 testes em 315 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3942 testes em 316 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2527,6 +2527,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useLiveTranslation.coverage.test.tsx` | 10 | useLiveTranslation · returns initial state · does nothing without callSessionId or empty text · queues short utterances below minWords without invoking … |
 | `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 10 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
 | `src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx` | 10 | useMultiChannelCallConference · startConference requires at least 2 calls · starts, adds, removes, toggles recording and ends conference · removeFromConference auto-ends when below 2 participants … |
+| `src/hooks/__tests__/useReauth.grant.test.tsx` | 10 | Reauth grant persistido (HMAC) · grava grant assinado no sessionStorage apos verificar · rehidrata lastVerified em nova montagem (nao exige reauth) · descarta grant com assinatura invalida … |
 | `src/hooks/__tests__/useTrackers.coverage.test.tsx` | 10 | useTrackers · loads trackers on mount (success) · logs error when load fails · createTracker success path … |
 | `src/hooks/auth/__tests__/useAuthActions.coverage.test.tsx` | 10 | useAuthActions · signIn success returns data and loads profile · signIn returns supabase error branch · signIn catch branch when request throws … |
 | `src/lib/__tests__/hash-endpoint.test.ts` | 10 | hashEndpoint · gera hash de exatamente 12 caracteres hexadecimais · é determinístico (mesma URL → mesmo hash) · diferencia URLs quase idênticas (path) … |
@@ -2731,8 +2732,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/agent-assist.pbt.test.ts` | 3 | Agent Assist PBT (Property-Based Testing) · rankSignals: priority always dominates confidence · matchesKeywords: handles composite keywords regardless of order |
 | `src/lib/__tests__/tag-filter-label.test.ts` | 3 | formatTagFilterLabel · mapeia sentinelas para rótulos legíveis · nunca lança e sempre devolve string não vazia (PBT) |
 | `supabase/functions/analyze-call/__tests__/integration_test.ts` | 3 | analyze-call integration: validate v1 flow · analyze-call integration: reject invalid v2 flow (missing transcript) · analyze-call integration: validate character limits |
-| `supabase/functions/bitrix-api/index.test.ts` | 3 | bitrix-api: CORS handling · bitrix-api: returns 401 if no Authorization header · bitrix-api: handles get_user when not configured |
-| … +15 linhas — lista completa em `context.json` | | |
+| … +16 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

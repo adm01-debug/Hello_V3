@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "409f79f8b8462a6f974e265c7c1cc834d05026d7",
+  "commit": "8ee9f60daf23bc4b86e1d6bed4bffdc2f8009f80",
   "branch": "main",
-  "data_commit": "2026-11-21T18:27:48-03:00",
+  "data_commit": "2026-11-21T19:36:40-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8ee9f60",
+    "data": "2026-11-21",
+    "assunto": "feat: centraliza reauth em Context com grant HMAC persistido (#81)"
+   },
    {
     "sha": "409f79f",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "72f3935",
     "data": "2026-11-20",
     "assunto": "fix: sanitiza path com fileURLToPath no gerador de inventario (#58)"
-   },
-   {
-    "sha": "6ffab7a",
-    "data": "2026-11-20",
-    "assunto": "chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)"
    }
   ],
-  "arquivos_mudados_7d": 591,
+  "arquivos_mudados_7d": 601,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 8
+    "mudancas": 9
    },
    {
     "pasta": "src/components/layout",
@@ -165,6 +165,10 @@
    },
    {
     "pasta": "covout/hooks/auth",
+    "mudancas": 6
+   },
+   {
+    "pasta": "src/hooks/__tests__",
     "mudancas": 6
    },
    {
@@ -188,10 +192,6 @@
     "mudancas": 4
    },
    {
-    "pasta": "src/hooks/__tests__",
-    "mudancas": 4
-   },
-   {
     "pasta": "AGENTS.md",
     "mudancas": 3
    }
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 8
+    "mudancas": 9
    },
    {
     "arquivo": ".github/workflows/contexto.yml",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 63
+    "commits": 64
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,21 +314,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1566,
-  "arquivos_codigo": 1204,
-  "linhas_codigo": 164887,
+  "arquivos_total": 1568,
+  "arquivos_codigo": 1206,
+  "linhas_codigo": 165306,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 94,
   "modulos": 78,
-  "componentes": 447,
-  "hooks": 190,
+  "componentes": 448,
+  "hooks": 191,
   "edge_functions": 94,
   "tabelas": 169,
   "migrations": 212,
   "cron_jobs": 7,
-  "testes": 323,
+  "testes": 324,
   "workflows": 3,
   "scripts": 31,
   "docs_md": 113
@@ -464,7 +464,7 @@
   },
   "src/App.tsx": {
    "arquivos": 1,
-   "linhas": 107
+   "linhas": 112
   },
   "src/__tests__": {
    "arquivos": 7,
@@ -472,19 +472,19 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41955
+   "linhas": 41983
   },
   "src/contexts": {
-   "arquivos": 2,
-   "linhas": 110
+   "arquivos": 3,
+   "linhas": 464
   },
   "src/data": {
    "arquivos": 1,
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 348,
-   "linhas": 45012
+   "arquivos": 349,
+   "linhas": 45067
   },
   "src/integrations": {
    "arquivos": 3,
@@ -500,7 +500,7 @@
   },
   "src/pages": {
    "arquivos": 130,
-   "linhas": 20717
+   "linhas": 20694
   },
   "src/routes": {
    "arquivos": 2,
@@ -617,6 +617,10 @@
    "linhas": 355
   },
   {
+   "arquivo": "src/contexts/ReauthContext.tsx",
+   "linhas": 354
+  },
+  {
    "arquivo": "scripts/inventario/gerar-banco.mjs",
    "linhas": 352
   },
@@ -627,10 +631,6 @@
   {
    "arquivo": "src/components/dialer/phone/PhoneQuickAccess.tsx",
    "linhas": 346
-  },
-  {
-   "arquivo": "src/lib/blf.ts",
-   "linhas": 345
   }
  ],
  "qualidade": {

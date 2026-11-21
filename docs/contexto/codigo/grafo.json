@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 881,
- "arestas": 3420,
+ "nos": 882,
+ "arestas": 3425,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -22,7 +22,7 @@
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 193
+   "importado_por": 194
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -220,14 +220,14 @@
  ],
  "modulos_mais_acoplados": [
   {
+   "modulo": "lib",
+   "depende_de": 4,
+   "importado_por": 50
+  },
+  {
    "modulo": "hooks",
    "depende_de": 13,
    "importado_por": 40
-  },
-  {
-   "modulo": "lib",
-   "depende_de": 4,
-   "importado_por": 49
   },
   {
    "modulo": "pages",
@@ -242,7 +242,7 @@
   {
    "modulo": "integrations/supabase",
    "depende_de": 0,
-   "importado_por": 33
+   "importado_por": 34
   },
   {
    "modulo": "components/layout",
@@ -258,6 +258,11 @@
    "modulo": "components/calls",
    "depende_de": 6,
    "importado_por": 3
+  },
+  {
+   "modulo": "contexts",
+   "depende_de": 3,
+   "importado_por": 6
   },
   {
    "modulo": "components/admin",
@@ -283,11 +288,6 @@
    "modulo": "components/network",
    "depende_de": 5,
    "importado_por": 2
-  },
-  {
-   "modulo": "contexts",
-   "depende_de": 1,
-   "importado_por": 6
   },
   {
    "modulo": "components/coaching",

@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `409f79f8b8` · branch `main` · 2026-11-21 21:28 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8ee9f60daf` · branch `main` · 2026-11-21 22:37 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -188,6 +188,7 @@
 | `VoiceAction` (TS) | dial \| hangup \| mute \| unmute \| redial \| history \| none |  | `src/components/voice/voice-intent.ts` |
 | `VoicePhase` (TS) | idle \| listening \| processing \| speaking \| error |  | `src/components/voice/overlay/usePhaseColors.ts` |
 | `UserRole` (TS) | admin \| supervisor \| agent \| viewer |  | `src/contexts/AuthContext.tsx` |
+| `ReauthAction` (TS) | change_password \| change_email \| configure_mfa \| admin_action \| delete_account \| export_data \| revoke_sessions |  | `src/contexts/ReauthContext.tsx` |
 | `ThemeMode` (TS) | light \| dark |  | `src/contexts/ThemeContext.tsx` |
 | `ThemeSkin` (TS) | default \| midnight \| ocean \| sunset \| forest |  | `src/contexts/ThemeContext.tsx` |
 | `AgentStatus` (TS) | available \| busy \| away \| offline |  | `src/hooks/useAgentStatus.ts` |

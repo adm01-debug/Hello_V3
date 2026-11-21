@@ -8,12 +8,12 @@
   "componentes": [
    "src/components (319)",
    "src/pages (125)",
-   "src/contexts (2)"
+   "src/contexts (3)"
   ],
   "hooks": [
    "src/hooks (173)",
    "src/components (12)",
-   "src/contexts (2)"
+   "src/contexts (3)"
   ],
   "servicos_logica": [
    "src/lib (79)",
@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (301)",
+   "co-localizado (__tests__) (302)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -47,7 +47,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (447)"
+  ".tsx (448)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: centraliza reauth em Context com grant HMAC persistido (#81)",
    "fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)",
    "feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)",
    "feat: (#77)",
-   "feat: (#76)",
-   "docs: (#75)"
+   "feat: (#76)"
   ]
  },
  "pr_template": null,

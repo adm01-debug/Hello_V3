@@ -354,7 +354,7 @@
    "modulo": "components/auth",
    "arquivos": 7,
    "testes": 0,
-   "linhas": 1034,
+   "linhas": 1062,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -370,6 +370,7 @@
     "usePasswordStrength",
     "usePermissions",
     "useReauth",
+    "useReauthContext",
     "useWebAuthn"
    ],
    "hooks_definidos": [
@@ -3054,13 +3055,13 @@
   },
   {
    "modulo": "contexts",
-   "arquivos": 2,
+   "arquivos": 3,
    "testes": 0,
-   "linhas": 110,
+   "linhas": 464,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 2,
+   "componentes": 3,
    "hooks_locais": [
     "useAuth",
     "useAuthActions",
@@ -3068,10 +3069,12 @@
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
+    "useReauthContext",
     "useTheme"
    ],
    "hooks_definidos": [
     "useAuthContext",
+    "useReauthContext",
     "useTheme"
    ],
    "edges": [],
@@ -3101,7 +3104,9 @@
     "pages/admin"
    ],
    "depende_de_modulos": [
-    "hooks"
+    "hooks",
+    "integrations/supabase",
+    "lib"
    ],
    "pacotes_externos": [
     "@supabase/supabase-js"
@@ -3139,7 +3144,7 @@
    "modulo": "hooks",
    "arquivos": 167,
    "testes": 0,
-   "linhas": 20678,
+   "linhas": 20552,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3276,6 +3281,7 @@
     "useRateLimitData",
     "useRealtimeHoldAlerts",
     "useReauth",
+    "useReauthContext",
     "useRecentCallsData",
     "useRecordKbView",
     "useRecordings",
@@ -4090,7 +4096,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 169,
+   "testes": 170,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -4352,6 +4358,7 @@
     "components/queue-alerts",
     "components/settings",
     "components/supervisor",
+    "contexts",
     "hooks",
     "hooks/auth",
     "hooks/predictive-dialer",
@@ -4711,6 +4718,7 @@
     "components/translation",
     "components/ui",
     "components/voice",
+    "contexts",
     "hooks",
     "hooks/auth",
     "hooks/telemetry",
@@ -5158,7 +5166,7 @@
    "modulo": "pages",
    "arquivos": 92,
    "testes": 0,
-   "linhas": 16367,
+   "linhas": 16344,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5469,6 +5477,7 @@
     "useQueueStatsData",
     "useRateLimitData",
     "useReauth",
+    "useReauthContext",
     "useRecentCallsData",
     "useRecordKbView",
     "useRecordings",
@@ -6413,6 +6422,7 @@
     "useQueueStatsData",
     "useRateLimitData",
     "useReauth",
+    "useReauthContext",
     "useRecentCallsData",
     "useRecordKbView",
     "useRecordings",

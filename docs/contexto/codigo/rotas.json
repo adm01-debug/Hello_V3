@@ -3126,6 +3126,8 @@
     "useEffect",
     "useMemo",
     "usePageTitle",
+    "useReauth",
+    "useReauthContext",
     "useRef",
     "useState",
     "useWebAuthn"
@@ -3138,6 +3140,8 @@
     "useAuthSession",
     "useAuthState",
     "usePageTitle",
+    "useReauth",
+    "useReauthContext",
     "useWebAuthn"
    ],
    "tabelas": [
@@ -3154,7 +3158,7 @@
    "papeis": [
     "alert"
    ],
-   "arquivos_puxados": 23
+   "arquivos_puxados": 25
   },
   {
    "protegida": false,
@@ -4060,10 +4064,10 @@
     "useContext",
     "useDeviceDetection",
     "useEffect",
-    "useMFA",
     "useMemo",
     "usePageTitle",
     "useReauth",
+    "useReauthContext",
     "useRef",
     "useSessionManager",
     "useState"
@@ -4076,14 +4080,13 @@
     "useAuthSession",
     "useAuthState",
     "useDeviceDetection",
-    "useMFA",
     "usePageTitle",
     "useReauth",
+    "useReauthContext",
     "useSessionManager"
    ],
    "tabelas": [
     "active_sessions",
-    "user_mfa_settings",
     "user_profiles"
    ],
    "rpcs": [],
@@ -4095,7 +4098,7 @@
    "papeis": [
     "alert"
    ],
-   "arquivos_puxados": 26
+   "arquivos_puxados": 21
   },
   {
    "protegida": false,
@@ -4492,6 +4495,8 @@
     "useMFA",
     "useMemo",
     "usePageTitle",
+    "useReauth",
+    "useReauthContext",
     "useRef",
     "useState"
    ],
@@ -4503,7 +4508,9 @@
     "useAuthSession",
     "useAuthState",
     "useMFA",
-    "usePageTitle"
+    "usePageTitle",
+    "useReauth",
+    "useReauthContext"
    ],
    "tabelas": [
     "user_mfa_settings",
@@ -4516,7 +4523,7 @@
    "papeis": [
     "alert"
    ],
-   "arquivos_puxados": 23
+   "arquivos_puxados": 25
   },
   {
    "protegida": false,

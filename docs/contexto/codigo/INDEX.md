@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `409f79f8b8462a6f974e265c7c1cc834d05026d7` (2026-11-21T18:27:48-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `8ee9f60daf23bc4b86e1d6bed4bffdc2f8009f80` (2026-11-21T19:36:40-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1173), SQL (214), Markdown (113), JavaScript (27), JSON (16), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1175), SQL (214), Markdown (113), JavaScript (27), JSON (16), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,31 +34,31 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1566 |
-| arquivos_codigo | 1204 |
-| linhas_codigo | 164887 |
+| arquivos_total | 1568 |
+| arquivos_codigo | 1206 |
+| linhas_codigo | 165306 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
 | itens_menu | 94 |
 | modulos | 78 |
-| componentes | 447 |
-| hooks | 190 |
+| componentes | 448 |
+| hooks | 191 |
 | edge_functions | 94 |
 | tabelas | 169 |
 | migrations | 212 |
 | cron_jobs | 7 |
-| testes | 323 |
+| testes | 324 |
 | workflows | 3 |
 | scripts | 31 |
 | docs_md | 113 |
 
 ## Onde ficam as coisas
 - telas: src/pages (104)
-- componentes: src/components (319), src/pages (125), src/contexts (2)
-- hooks: src/hooks (173), src/components (12), src/contexts (2)
+- componentes: src/components (319), src/pages (125), src/contexts (3)
+- hooks: src/hooks (173), src/components (12), src/contexts (3)
 - servicos_logica: src/lib (79), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (301), e2e/ (7), tests/ (6)
+- testes: co-localizado (__tests__) (302), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (5), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -72,7 +72,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/admin | 0 | 0 | 23 | 15 | 2 | 10 |
 | components/ai | 0 | 0 | 7 | 1 | 2 | 1 |
 | components/alerts | 0 | 0 | 5 | 0 | 0 | 3 |
-| components/auth | 0 | 0 | 7 | 11 | 1 | 6 |
+| components/auth | 0 | 0 | 7 | 12 | 1 | 6 |
 | components/calls | 0 | 0 | 27 | 29 | 12 | 19 |
 | components/compliance | 0 | 0 | 17 | 3 | 0 | 7 |
 | components/contacts | 0 | 0 | 11 | 6 | 3 | 6 |
@@ -91,12 +91,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/supervisor | 0 | 0 | 11 | 2 | 0 | 4 |
 | components/ui | 0 | 0 | 56 | 7 | 0 | 0 |
 | components/voice | 0 | 0 | 7 | 4 | 2 | 1 |
-| hooks | 0 | 0 | 167 | 207 | 56 | 122 |
+| hooks | 0 | 0 | 167 | 208 | 56 | 122 |
 | hooks/auth | 0 | 0 | 5 | 5 | 0 | 1 |
 | lib | 0 | 0 | 47 | 111 | 30 | 66 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
-| pages | 86 | 93 | 92 | 187 | 65 | 133 |
+| pages | 86 | 93 | 92 | 188 | 65 | 133 |
 | pages/admin | 8 | 9 | 16 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
@@ -361,13 +361,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8899 nós · 23761 arestas · 685 comunidades · grafo do commit `409f79f8`
-- comunidades maiores: lucide-react (227), utils.ts (204), usePageTitle (185), react (180), vitest (167), traceHeaders (166), Card (158), client.ts (145), sonner (142), useAuthContext (142), cn (112), snapshot.py (100)
+- 8922 nós · 23832 arestas · 720 comunidades · grafo do commit `8ee9f60d`
+- comunidades maiores: lucide-react (333), protectedRoutes.tsx (202), client.ts (189), react (181), traceHeaders (160), vitest (156), usePageTitle (142), sonner (115), Tabela de funcionalidades (108), cn (103), ref_https (99), generate.py (91)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/estado/funcionalidades-planejadas.md (8)
+- docs/estado/funcionalidades-planejadas.md (9)
 - .github/workflows/contexto.yml (6)
 - .github/workflows/ci.yml (5)
 - docs/prod-readiness.md (5)
@@ -420,6 +420,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `8ee9f60` feat: centraliza reauth em Context com grant HMAC persistido (#81)
 - 2026-11-21 `409f79f` fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)
 - 2026-11-21 `c96ef1b` feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)
 - 2026-11-21 `ee5082d` feat: (#77)
@@ -434,7 +435,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `723ff66` feat: wirea traducao em tempo real na chamada e auditoria de seguranca no menu (#69)
 - 2026-11-21 `587daff` chore(docs): reflete wiring WIRING-04/06 na doc de funcionalidades planejadas (#68)
 - 2026-11-21 `592732e` feat: wirea WIRING-04 e 06 (hooks de contexto e gamificação na UI) (#67)
-- 2026-11-21 `7569241` fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

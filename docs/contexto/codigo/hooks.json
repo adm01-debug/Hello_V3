@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 190,
+ "total": 191,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -343,12 +343,12 @@
     "src/components/auth/ProtectedRoute.tsx",
     "src/components/auth/ReauthDialog.tsx",
     "src/components/layout/AppSidebar.tsx",
+    "src/contexts/ReauthContext.tsx",
     "src/hooks/telemetry/useTelemetry.ts",
     "src/hooks/useMFA.ts",
     "src/hooks/useMultiDeviceRing.ts",
     "src/hooks/usePermissions.ts",
     "src/hooks/useProfile.ts",
-    "src/hooks/useReauth.ts",
     "src/hooks/useSecurityNotifications.ts",
     "src/hooks/useSessionManager.ts",
     "src/hooks/useUnreadConflicts.ts",
@@ -368,6 +368,31 @@
     "src/pages/admin/SecurityAuditDashboard.tsx"
    ],
    "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/contexts/ReauthContext.tsx",
+   "hooks_exportados": [
+    "useReauthContext"
+   ],
+   "linhas": 354,
+   "dominio": "contexts",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/App.tsx",
+    "src/hooks/useReauth.ts"
+   ],
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/contexts/ThemeContext.tsx",
@@ -3364,23 +3389,23 @@
    "hooks_exportados": [
     "useReauth"
    ],
-   "linhas": 139,
+   "linhas": 13,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
    "edges": [],
    "hooks_internos": [
-    "useAuthContext",
-    "useCallback",
-    "useState"
+    "useReauthContext"
    ],
    "canais_realtime": [],
-   "usado_por": 2,
+   "usado_por": 4,
    "usado_por_arquivos": [
+    "src/components/auth/PasskeyManager.tsx",
     "src/components/auth/ReauthDialog.tsx",
-    "src/pages/SessionManagement.tsx"
+    "src/pages/SessionManagement.tsx",
+    "src/pages/TwoFactorAuth.tsx"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useRecordings.ts",

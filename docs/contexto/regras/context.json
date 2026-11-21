@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "409f79f8b8462a6f974e265c7c1cc834d05026d7",
+  "sha": "8ee9f60daf23bc4b86e1d6bed4bffdc2f8009f80",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 21:28 UTC",
-  "files_total": 1613,
-  "code_files": 1419,
-  "code_lines": 178910
+  "generated_at": "2026-11-21 22:37 UTC",
+  "files_total": 1615,
+  "code_files": 1421,
+  "code_lines": 179329
  },
  "version": "1.3.2",
- "facts_hash": "b598d9b6f799684f",
+ "facts_hash": "5be06e93eeecd739",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 601,
+   ".tsx": 603,
    ".ts": 572,
    ".sql": 214,
    ".mjs": 25,
@@ -27362,7 +27362,7 @@
      "webauthn-authenticate"
     ],
     "rpc_transitive": [],
-    "deps_count": 23
+    "deps_count": 25
    },
    {
     "path": "",
@@ -27655,14 +27655,13 @@
     "component": "SessionManagement",
     "tables_transitive": [
      "active_sessions",
-     "user_mfa_settings",
      "user_profiles"
     ],
     "invokes_transitive": [
      "notify-new-device"
     ],
     "rpc_transitive": [],
-    "deps_count": 26
+    "deps_count": 21
    },
    {
     "path": "",
@@ -27779,7 +27778,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 23
+    "deps_count": 25
    },
    {
     "path": "",
@@ -30587,6 +30586,10 @@
     "file": "src/contexts/AuthContext.tsx"
    },
    {
+    "name": "useReauthContext",
+    "file": "src/contexts/ReauthContext.tsx"
+   },
+   {
     "name": "useTheme",
     "file": "src/contexts/ThemeContext.tsx"
    },
@@ -31600,7 +31603,7 @@
   {
    "module": "src",
    "files": 3,
-   "lines": 153,
+   "lines": 158,
    "tables": [
     "webhook_flush_metrics"
    ],
@@ -31662,7 +31665,7 @@
   {
    "module": "src/components",
    "files": 350,
-   "lines": 41955,
+   "lines": 41983,
    "tables": [
     "accounts",
     "agent_goals",
@@ -31869,15 +31872,17 @@
   },
   {
    "module": "src/contexts",
-   "files": 2,
-   "lines": 110,
+   "files": 3,
+   "lines": 464,
    "tables": [],
    "exports": [
     "AuthContext.tsx: UserRole, UserProfile, AuthProvider, useAuthContext",
+    "ReauthContext.tsx: ReauthAction, REAUTH_TIMEOUT_MS, REAUTH_GRANT_TTL_MS, VerificationGrant, ReauthProvider, useReauthContext",
     "ThemeContext.tsx: ThemeMode, ThemeSkin, ThemeProvider, useTheme"
    ],
    "docs": [
     "AuthContext.tsx: eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule",
+    "ReauthContext.tsx: eslint-disable react-refresh/only-export-components -- provider and hook deliberately share this module",
     "ThemeContext.tsx: eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule"
    ],
    "deps": [
@@ -31885,10 +31890,13 @@
     "react"
    ],
    "imports_modules": [
-    "src/hooks"
+    "src/hooks",
+    "src/integrations",
+    "src/lib"
    ],
    "file_list": [
     "src/contexts/AuthContext.tsx",
+    "src/contexts/ReauthContext.tsx",
     "src/contexts/ThemeContext.tsx"
    ]
   },
@@ -31909,8 +31917,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 348,
-   "lines": 45012,
+   "files": 349,
+   "lines": 45067,
    "tables": [
     "accounts",
     "active_sessions",
@@ -32092,6 +32100,7 @@
     "fast-check",
     "jssip",
     "lucide-react",
+    "node:crypto",
     "react",
     "react-router-dom",
     "sonner",
@@ -32387,7 +32396,7 @@
   {
    "module": "src/pages",
    "files": 130,
-   "lines": 20717,
+   "lines": 20694,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -37608,6 +37617,11 @@
     "values": "admin | supervisor | agent | viewer"
    },
    {
+    "file": "src/contexts/ReauthContext.tsx",
+    "name": "ReauthAction",
+    "values": "change_password | change_email | configure_mfa | admin_action | delete_account | export_data | revoke_sessions"
+   },
+   {
     "file": "src/contexts/ThemeContext.tsx",
     "name": "ThemeMode",
     "values": "light | dark"
@@ -38464,6 +38478,10 @@
    {
     "file": "src/contexts/AuthContext.tsx",
     "msg": "useAuthContext must be used within an AuthProvider"
+   },
+   {
+    "file": "src/contexts/ReauthContext.tsx",
+    "msg": "useReauthContext must be used within a ReauthProvider"
    },
    {
     "file": "src/contexts/ThemeContext.tsx",
@@ -47354,6 +47372,16 @@
     "value": "220"
    },
    {
+    "file": "src/contexts/ReauthContext.tsx",
+    "name": "REAUTH_TIMEOUT_MS",
+    "value": "5"
+   },
+   {
+    "file": "src/contexts/ReauthContext.tsx",
+    "name": "UNSIGNED",
+    "value": "\"unsigned\""
+   },
+   {
     "file": "src/hooks/use-mobile.tsx",
     "name": "MOBILE_BREAKPOINT",
     "value": "768"
@@ -47442,11 +47470,6 @@
     "file": "src/hooks/useQueueAudioPrompts.ts",
     "name": "BUCKET",
     "value": "'queue-audio'"
-   },
-   {
-    "file": "src/hooks/useReauth.ts",
-    "name": "REAUTH_TIMEOUT_MS",
-    "value": "5"
    },
    {
     "file": "src/hooks/useSecurityAlertNotifications.ts",
@@ -51286,36 +51309,6 @@
     "kind": "compara"
    },
    {
-    "file": "src/pages/SessionManagement.tsx",
-    "field": "type",
-    "value": "revoke",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/pages/SessionManagement.tsx",
-    "field": "type",
-    "value": "revoke",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/pages/SessionManagement.tsx",
-    "field": "type",
-    "value": "revoke_all",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/pages/SessionManagement.tsx",
-    "field": "type",
-    "value": "revoke",
-    "kind": "compara"
-   },
-   {
-    "file": "src/pages/SessionManagement.tsx",
-    "field": "type",
-    "value": "revoke_all",
-    "kind": "compara"
-   },
-   {
     "file": "src/pages/ShiftSwapSuggestions.tsx",
     "field": "status",
     "value": "rejected",
@@ -53504,6 +53497,10 @@
     "line": "const timer = window.setTimeout(() => setBootingTimedOut(true), 10000);"
    },
    {
+    "file": "src/contexts/ReauthContext.tsx",
+    "line": "export const REAUTH_TIMEOUT_MS = 5 * 60 * 1000;"
+   },
+   {
     "file": "src/hooks/useAgentFinancialLeaderboard.ts",
     "line": "staleTime: 5 * 60 * 1000,"
    },
@@ -53658,10 +53655,6 @@
    {
     "file": "src/hooks/useRealtimeHoldAlerts.ts",
     "line": "setTimeout(() => notification.close(), 10000);"
-   },
-   {
-    "file": "src/hooks/useReauth.ts",
-    "line": "const REAUTH_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutos"
    },
    {
     "file": "src/hooks/useRingGroups.ts",
@@ -60826,6 +60819,46 @@
    {
     "file": "src/hooks/__tests__/useReauth.coverage.test.tsx",
     "name": "withReauth dispara reauth e retorna null quando necessário"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "Reauth grant persistido (HMAC)"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "grava grant assinado no sessionStorage apos verificar"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "rehidrata lastVerified em nova montagem (nao exige reauth)"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "descarta grant com assinatura invalida"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "descarta grant expirado"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "ignora grant de outro usuario"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "executa callback pendente apos verificar com sucesso"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "cancelar limpa callback pendente (nao executa depois)"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "grant permite segunda acao sensivel sem pedir reauth de novo"
+   },
+   {
+    "file": "src/hooks/__tests__/useReauth.grant.test.tsx",
+    "name": "grant de sessao anterior sobrevive a re-render do provider"
    },
    {
     "file": "src/hooks/__tests__/useRecordings.coverage.test.tsx",
@@ -79869,14 +79902,6 @@
      "hangup": [
       "escreve:src/pages/CallFlowDesigner.tsx"
      ],
-     "revoke": [
-      "compara:src/pages/SessionManagement.tsx",
-      "escreve:src/pages/SessionManagement.tsx"
-     ],
-     "revoke_all": [
-      "compara:src/pages/SessionManagement.tsx",
-      "escreve:src/pages/SessionManagement.tsx"
-     ],
      "signup": [
       "escreve:src/pages/VerifyEmail.tsx"
      ],
@@ -86990,7 +87015,7 @@
   },
   "src/App.tsx": {
    "path": "src/App.tsx",
-   "lines": 107,
+   "lines": 112,
    "exports": [
     "default App"
    ],
@@ -87813,7 +87838,7 @@
   },
   "src/components/auth/PasskeyManager.tsx": {
    "path": "src/components/auth/PasskeyManager.tsx",
-   "lines": 310,
+   "lines": 320,
    "exports": [
     "function PasskeyManager"
    ],
@@ -87859,7 +87884,7 @@
   },
   "src/components/auth/ReauthDialog.tsx": {
    "path": "src/components/auth/ReauthDialog.tsx",
-   "lines": 214,
+   "lines": 232,
    "exports": [
     "function ReauthDialog"
    ],
@@ -92313,6 +92338,44 @@
    "doc": "eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule",
    "hooks": [
     "useAuthContext"
+   ]
+  },
+  "src/contexts/ReauthContext.tsx": {
+   "path": "src/contexts/ReauthContext.tsx",
+   "lines": 354,
+   "exports": [
+    "type ReauthAction",
+    "const REAUTH_TIMEOUT_MS",
+    "const REAUTH_GRANT_TTL_MS",
+    "interface VerificationGrant",
+    "function ReauthProvider",
+    "function useReauthContext"
+   ],
+   "errors": [
+    "useReauthContext must be used within a ReauthProvider"
+   ],
+   "enums": [
+    {
+     "name": "ReauthAction",
+     "values": "change_password | change_email | configure_mfa | admin_action | delete_account | export_data | revoke_sessions"
+    }
+   ],
+   "params": [
+    {
+     "name": "REAUTH_TIMEOUT_MS",
+     "value": "5"
+    },
+    {
+     "name": "UNSIGNED",
+     "value": "\"unsigned\""
+    }
+   ],
+   "doc": "eslint-disable react-refresh/only-export-components -- provider and hook deliberately share this module",
+   "hooks": [
+    "useReauthContext"
+   ],
+   "temporal": [
+    "export const REAUTH_TIMEOUT_MS = 5 * 60 * 1000;"
    ]
   },
   "src/contexts/ThemeContext.tsx": {
@@ -97283,21 +97346,12 @@
   },
   "src/hooks/useReauth.ts": {
    "path": "src/hooks/useReauth.ts",
-   "lines": 139,
+   "lines": 13,
    "exports": [
     "function useReauth"
    ],
-   "params": [
-    {
-     "name": "REAUTH_TIMEOUT_MS",
-     "value": "5"
-    }
-   ],
    "hooks": [
     "useReauth"
-   ],
-   "temporal": [
-    "const REAUTH_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutos"
    ]
   },
   "src/hooks/useRecordings.ts": {
@@ -102209,7 +102263,7 @@
   },
   "src/hooks/__tests__/useReauth.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useReauth.coverage.test.tsx",
-   "lines": 143,
+   "lines": 157,
    "is_test": true,
    "tests": [
     "useReauth",
@@ -102226,6 +102280,23 @@
     "cancelReauth limpa estado",
     "withReauth executa callback quando não precisa reauth",
     "withReauth dispara reauth e retorna null quando necessário"
+   ]
+  },
+  "src/hooks/__tests__/useReauth.grant.test.tsx": {
+   "path": "src/hooks/__tests__/useReauth.grant.test.tsx",
+   "lines": 167,
+   "is_test": true,
+   "tests": [
+    "Reauth grant persistido (HMAC)",
+    "grava grant assinado no sessionStorage apos verificar",
+    "rehidrata lastVerified em nova montagem (nao exige reauth)",
+    "descarta grant com assinatura invalida",
+    "descarta grant expirado",
+    "ignora grant de outro usuario",
+    "executa callback pendente apos verificar com sucesso",
+    "cancelar limpa callback pendente (nao executa depois)",
+    "grant permite segunda acao sensivel sem pedir reauth de novo",
+    "grant de sessao anterior sobrevive a re-render do provider"
    ]
   },
   "src/hooks/__tests__/useRecordings.coverage.test.tsx": {
@@ -109721,39 +109792,12 @@
   },
   "src/pages/SessionManagement.tsx": {
    "path": "src/pages/SessionManagement.tsx",
-   "lines": 292,
+   "lines": 265,
    "exports": [
     "function SessionManagement"
    ],
    "errors": [
     ";\nimport { Separator } from "
-   ],
-   "status_values": [
-    {
-     "field": "type",
-     "value": "revoke",
-     "kind": "escreve"
-    },
-    {
-     "field": "type",
-     "value": "revoke",
-     "kind": "escreve"
-    },
-    {
-     "field": "type",
-     "value": "revoke_all",
-     "kind": "escreve"
-    },
-    {
-     "field": "type",
-     "value": "revoke",
-     "kind": "compara"
-    },
-    {
-     "field": "type",
-     "value": "revoke_all",
-     "kind": "compara"
-    }
    ]
   },
   "src/pages/Settings.tsx": {
@@ -109995,7 +110039,7 @@
   },
   "src/pages/TwoFactorAuth.tsx": {
    "path": "src/pages/TwoFactorAuth.tsx",
-   "lines": 223,
+   "lines": 227,
    "exports": [
     "function TwoFactorAuth"
    ],
@@ -117973,10 +118017,29 @@
   }
  },
  "git": {
-  "sha": "409f79f8b8462a6f974e265c7c1cc834d05026d7",
+  "sha": "8ee9f60daf23bc4b86e1d6bed4bffdc2f8009f80",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "8ee9f60",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: centraliza reauth em Context com grant HMAC persistido (#81)",
+    "files": [
+     "docs/audits/pendencias-2026-07.md",
+     "docs/estado/funcionalidades-planejadas.md",
+     "src/App.tsx",
+     "src/components/auth/PasskeyManager.tsx",
+     "src/components/auth/ReauthDialog.tsx",
+     "src/contexts/ReauthContext.tsx",
+     "src/hooks/__tests__/useReauth.coverage.test.tsx",
+     "src/hooks/__tests__/useReauth.grant.test.tsx",
+     "src/hooks/useReauth.ts",
+     "src/pages/SessionManagement.tsx",
+     "src/pages/TwoFactorAuth.tsx"
+    ]
+   },
    {
     "sha": "409f79f",
     "date": "2026-11-21",
@@ -118331,21 +118394,12 @@
      "src/pages/Inbox.tsx",
      "src/pages/TopicDetection.tsx"
     ]
-   },
-   {
-    "sha": "91e0da8",
-    "date": "2026-11-20",
-    "author": "adm01-debug",
-    "subject": "infra: escopa job CI ao environment e2e (#52)",
-    "files": [
-     ".github/workflows/ci.yml"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    7
+    8
    ],
    [
     "src/components/layout/AppSidebar.tsx",

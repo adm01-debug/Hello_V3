@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 447,
+ "total": 448,
  "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
@@ -28,7 +28,7 @@
     "App"
    ],
    "export_default": "App",
-   "linhas": 107,
+   "linhas": 112,
    "dominio": null,
    "hooks_locais": [],
    "tabelas": [],
@@ -622,9 +622,10 @@
     "PasskeyManager"
    ],
    "export_default": null,
-   "linhas": 310,
+   "linhas": 320,
    "dominio": "components/auth",
    "hooks_locais": [
+    "useReauth",
     "useWebAuthn"
    ],
    "tabelas": [],
@@ -670,7 +671,7 @@
     "ReauthDialog"
    ],
    "export_default": null,
-   "linhas": 214,
+   "linhas": 232,
    "dominio": "components/auth",
    "hooks_locais": [
     "useAuthContext",
@@ -5112,6 +5113,27 @@
    "orfao": false
   },
   {
+   "arquivo": "src/contexts/ReauthContext.tsx",
+   "exports": [
+    "REAUTH_GRANT_TTL_MS",
+    "REAUTH_TIMEOUT_MS",
+    "ReauthAction",
+    "ReauthProvider",
+    "VerificationGrant"
+   ],
+   "export_default": null,
+   "linhas": 354,
+   "dominio": "contexts",
+   "hooks_locais": [
+    "useAuthContext",
+    "useReauthContext"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 2,
+   "orfao": false
+  },
+  {
    "arquivo": "src/contexts/ThemeContext.tsx",
    "exports": [
     "ThemeMode",
@@ -6901,7 +6923,7 @@
     "SessionManagement"
    ],
    "export_default": "SessionManagement",
-   "linhas": 292,
+   "linhas": 265,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
@@ -7154,11 +7176,12 @@
     "TwoFactorAuth"
    ],
    "export_default": "TwoFactorAuth",
-   "linhas": 223,
+   "linhas": 227,
    "dominio": "pages",
    "hooks_locais": [
     "useMFA",
-    "usePageTitle"
+    "usePageTitle",
+    "useReauth"
    ],
    "tabelas": [],
    "edges": [],
