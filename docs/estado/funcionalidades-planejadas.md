@@ -27,8 +27,8 @@ Origem: `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` §2 e `docs/audits/pendencias-
 |---|---|---|---|
 | **Unified Inbox** (WhatsApp + SMS + Voz em timeline única) | 🔴 Pendente (D1) | Peças existem e estão **desconectadas**: `src/components/whatsapp/WhatsappComposer.tsx` (106 linhas) tem **zero importadores**; edge `whatsapp-inbound` existe; não há rota `/inbox` | 🟦 **SUGERIDO_OU_INICIADO** |
 | **Virtual Fax v2** (OCR via Gemini) | 🔴 Pendente (D2) | Edge function `ocr-virtual-fax/index.ts` **existe e chama a IA de verdade** (`:59`); falta a interface de gestão descrita | 🟨 **IMPLEMENTADO_PARCIAL** |
-| **AI-Driven Shift Management** | 🔴 Pendente (D3) | Edge `suggest-shift-swaps` existe; `useAdherence` existe mas é **órfão** (zero consumidores) | 🟨 **IMPLEMENTADO_PARCIAL** |
-| **Coaching Automático** (sentimento → trilhas) | 🔴 Pendente (D4) | Edges `generate-coaching`, `generate-coaching-plan`, `generate-coaching-track` existem; `generate-coaching-track` **sem chamador**; `useCoachingAssignments` **órfão** | 🟨 **IMPLEMENTADO_PARCIAL** |
+| **AI-Driven Shift Management** | 🔴 Pendente (D3) | Edge `suggest-shift-swaps` existe; `useAdherence` wireado na aba **Aderência** de `/scheduling` (PR #67) | 🟩 **IMPLEMENTADO_TOTAL** (fio ligado) |
+| **Coaching Automático** (sentimento → trilhas) | 🔴 Pendente (D4) | Edges `generate-coaching`, `generate-coaching-plan`, `generate-coaching-track` existem; `generate-coaching-track` **sem chamador**; `useCoachingAssignments` wireado em `/coaching` (PR #67) | 🟨 **IMPLEMENTADO_PARCIAL** (falta conector do track) |
 | **Data Lake connector** (BigQuery/Snowflake) | 🟡 Pendente (D5) | Edges `data-lake-flush` e `export-data-lake` existem; cron reapontado para `cfmlmcdyjuotqobjapng` (migration `20261114090557_…`) | 🟡 **IMPLEMENTADO_PARCIAL** (fio corrigido; aguarda aplicação) |
 | **Financial Impact Dashboard** | Listado como futuro | Rota `/financial-impact` **existe e está ativa**; hook `useFinancialImpact` com teste de propriedade | ✅ **IMPLEMENTADO_TOTAL** (código) / `NAO_VERIFICADO` em uso real |
 
@@ -80,20 +80,20 @@ São o caso mais claro de "planejado, construído e nunca ligado". Todas confirm
 
 | Funcionalidade | O que existe | O que falta | Classificação |
 |---|---|---|---|
-| Aderência a escala | `useAdherence.ts`, edge `compute-adherence`, tabelas | Consumidor na UI | 🟦 |
+| Aderência a escala | `useAdherence.ts`, edge `compute-adherence`, tabelas | ✅ Wireado: aba **Aderência** em `/scheduling` (PR #67) | 🟩 |
 | Chatbot | `useChatbot.ts`, edge `chatbot-respond` | Consumidor na UI | 🟦 |
-| Risco de churn | `useChurnRisk.ts`, edge `detect-churn-risk` | Consumidor na UI | 🟦 |
-| Playlists de chamada | `useCallPlaylists.ts` + `usePlaylistItems` | Consumidor na UI | 🟦 |
-| Atribuições de coaching | `useCoachingAssignments.ts` | Consumidor na UI | 🟦 |
-| Regras de compliance | `useComplianceRules.ts` | Consumidor na UI | 🟦 |
+| Risco de churn | `useChurnRisk.ts`, edge `detect-churn-risk` | ✅ Wireado: card **Sinais de Churn Ativos** em `/accounts` (PR #67) | 🟩 |
+| Playlists de chamada | `useCallPlaylists.ts` + `usePlaylistItems` | ✅ Wireado: aba **Playlists** em `/call-library` (PR #67) | 🟩 |
+| Atribuições de coaching | `useCoachingAssignments.ts` | ✅ Wireado: em `/coaching` (PR #67) | 🟩 |
+| Regras de compliance | `useComplianceRules.ts` | ✅ Wireado: aba **Regras** em `/compliance` (PR #67) | 🟩 |
 | Scorecards | `useScorecards.ts` + 4 tabelas + edge `score-call` | Substituído por `useCallScoring`; deixa 4 tabelas sem leitor | ⬛ |
-| Pesquisas (surveys) | `useSurveys.ts` + edge `send-survey` | Nenhuma UI | ⬛ |
+| Pesquisas (surveys) | `useSurveys.ts` + edge `send-survey` | ✅ Wireado: aba **Pesquisas** em `/call-library` (PR #67) | 🟩 |
 | Notificações (versão antiga) | `useNotifications.ts` (219 linhas) | Substituído por `useNotificationCenter` | ⬛ |
 | Conferência multicanal | `useMultiChannelCallConference.ts` | Duplicata inline em `useMultiChannelCall.ts:189-238` | ⬛ |
 | Tradução ao vivo | `translation/LiveTranslationPanel.tsx` (125 linhas) | Zero importadores | ⬛ |
 | Composer de WhatsApp | `whatsapp/WhatsappComposer.tsx` (106 linhas) | Zero importadores | ⬛ |
 | Gate de permissões granular | `auth/PermissionGate.tsx` — citado no `README.md` como recurso ativo | Zero importadores | ⬛ |
-| Dashboard de gamificação | `gamification/GamificationDashboard.tsx` | Zero importadores | ⬛ |
+| Dashboard de gamificação | `gamification/GamificationDashboard.tsx` | ✅ Wireado: rota `/gamification` + menu **Gamificação IA** (PR #67) | 🟩 |
 | Auditoria de segurança (admin) | `pages/admin/SecurityAuditDashboard.tsx` (313 linhas) | Sem rota registrada | ⬛ |
 | Cadeia WebRTC alternativa | `calls/WebRTCCall.tsx` + 4 filhos (~880 linhas) | Só referenciada por testes | ⬛ |
 
@@ -129,6 +129,6 @@ Diferente de "dormente": aqui há UI completa e navegável que **simula** o comp
 ## 8. Resumo: o que responder ao dono
 
 - **Nada relevante do que foi planejado está "não começado".** Para praticamente todo item de roadmap existe backend construído.
-- **O gargalo é de ligação, não de construção:** 16 unidades completas sem consumidor, 7 Edge Functions sem gatilho, 6 rotas sem link de menu.
+- **O gargalo é de ligação, não de construção:** 16 unidades completas sem consumidor, 7 Edge Functions sem gatilho, 6 rotas sem link de menu. PR #67 wireou 7 hooks órfãos (WIRING-04/06). PR #67 wireou 7 hooks órfãos (WIRING-04/06).
 - **Seis módulos são fachada declarável** — existem, navegam, e não fazem o que a tela diz.
 - **A documentação de conclusão (`SYSTEM_FEATURES.md`, ADRs) não deve ser usada para decidir nada** enquanto não for reconciliada: ela marca 100% de conclusão sobre um sistema com 16 features dormentes e 6 fachadas.
