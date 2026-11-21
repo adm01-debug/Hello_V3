@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ce4911ded4ea34af1d0afc83ca4b5dc8fa6d15d3",
+  "commit": "ffaedf6268208659e2e7690a304171bdeec1d173",
   "branch": "main",
-  "data_commit": "2026-11-21T08:44:07-03:00",
+  "data_commit": "2026-11-21T08:50:59-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ffaedf6",
+    "data": "2026-11-21",
+    "assunto": "docs: relatorio atualizado (seed, PR #62, validação O2O)"
+   },
+   {
+    "sha": "ea386b1",
+    "data": "2026-11-21",
+    "assunto": "docs: regras de negocio verificadas e achados fora de escopo"
+   },
    {
     "sha": "ce4911de",
     "data": "2026-11-21",
@@ -121,19 +131,9 @@
     "sha": "d67d0f4",
     "data": "2026-11-14",
     "assunto": "feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)"
-   },
-   {
-    "sha": "f53ee94",
-    "data": "2026-11-14",
-    "assunto": "feat: wrapper zod central (zodFormErrors + schemas de auth/voip) e migra os forms para ele (#37)"
-   },
-   {
-    "sha": "2c8b481",
-    "data": "2026-11-14",
-    "assunto": "fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)"
    }
   ],
-  "arquivos_mudados_7d": 561,
+  "arquivos_mudados_7d": 563,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -282,6 +282,10 @@
     "mudancas": 2
    },
    {
+    "arquivo": "docs/pendencias/_relatorio.md",
+    "mudancas": 2
+   },
+   {
     "arquivo": "docs/pendencias/_verificado-banco.md",
     "mudancas": 2
    },
@@ -292,10 +296,6 @@
    {
     "arquivo": "inventario/estado/banco.json",
     "mudancas": 2
-   },
-   {
-    "arquivo": "inventario/estado/rotas.json",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
@@ -304,13 +304,17 @@
     "commits": 46
    },
    {
+    "autor": "Joaquim Ataides",
+    "commits": 2
+   },
+   {
     "autor": "github-actions[bot]",
     "commits": 2
    }
   ]
  },
  "contagens": {
-  "arquivos_total": 1551,
+  "arquivos_total": 1553,
   "arquivos_codigo": 1192,
   "linhas_codigo": 163406,
   "rotas": 104,
@@ -327,7 +331,7 @@
   "testes": 323,
   "workflows": 3,
   "scripts": 31,
-  "docs_md": 111
+  "docs_md": 113
  },
  "por_pasta": {
   "e2e/calls.spec.ts": {

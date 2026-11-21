@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ce4911ded4ea34af1d0afc83ca4b5dc8fa6d15d3` (2026-11-21T08:44:07-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ffaedf6268208659e2e7690a304171bdeec1d173` (2026-11-21T08:50:59-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1161), SQL (213), Markdown (111), JavaScript (27), JSON (16), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1161), SQL (213), Markdown (113), JavaScript (27), JSON (16), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,7 +34,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1551 |
+| arquivos_total | 1553 |
 | arquivos_codigo | 1192 |
 | linhas_codigo | 163406 |
 | rotas | 104 |
@@ -51,7 +51,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | testes | 323 |
 | workflows | 3 |
 | scripts | 31 |
-| docs_md | 111 |
+| docs_md | 113 |
 
 ## Onde ficam as coisas
 - telas: src/pages (103)
@@ -359,8 +359,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8848 nós · 23540 arestas · 672 comunidades · grafo do commit `ce4911de`
-- comunidades maiores: lucide-react (303), react (195), client.ts (187), traceHeaders (179), vitest (169), utils.ts (167), Tabela de funcionalidades (130), safe-date.ts (122), usePageTitle.ts (110), gerar.mjs (104), usePageTitle (103), cn (103)
+- 8863 nós · 23556 arestas · 681 comunidades · grafo do commit `ffaedf62`
+- comunidades maiores: card.tsx (301), react (245), vitest (232), button.tsx (226), protectedRoutes.tsx (167), traceHeaders (160), lucide-react (138), safe-date.ts (135), cn (107), ref_https (101), Tabela de funcionalidades (100), UnifiedSoftphone.tsx (99)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -414,10 +414,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `docs/CONTEXTO-PARA-AGENTES.md` — Contexto para agentes de IA — leia ANTES de qualquer tarefa (41 linhas)
 - `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` — 📊 Inventário Exaustivo de Funcionalidades e Roadmap - VoIP Enterprise (63 linhas)
 - `docs/prod-readiness.md` (97 linhas)
-- subpastas de docs/: docs/adr (53), docs/estado (18), docs/pendencias (10), docs/agentes (6), docs/audits (2), docs/contexto (2), docs/qa (2), docs/analises (1), docs/audit (1), docs/observabilidade (1), docs/runbooks (1)
+- subpastas de docs/: docs/adr (53), docs/estado (18), docs/pendencias (12), docs/agentes (6), docs/audits (2), docs/contexto (2), docs/qa (2), docs/analises (1), docs/audit (1), docs/observabilidade (1), docs/runbooks (1)
 
 
 ## Últimos commits
+- 2026-11-21 `ffaedf6` docs: relatorio atualizado (seed, PR #62, validação O2O)
+- 2026-11-21 `ea386b1` docs: regras de negocio verificadas e achados fora de escopo
 - 2026-11-21 `ce4911de` docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)
 - 2026-11-20 `51ac7dd` feat: wiring dos componentes orfaos no frontend (#61)
 - 2026-11-20 `68850f6` fix: cron data-lake-flush falhava por constraint de dataset sem call_summaries (#60)
@@ -431,8 +433,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-20 `91e0da8` infra: escopa job CI ao environment e2e (#52)
 - 2026-11-20 `18f6948` chore: remove .env e coverage do versionamento (#51)
 - 2026-11-20 `b3d9f80` fix: remove segredos service_role e postgres literais dos scripts de diagnostico (#50)
-- 2026-11-20 `1cfbfcf` fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)
-- 2026-11-19 `2fcd5ba` fix: torna testes vitest robustos a timezone e path com espaço (#46)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

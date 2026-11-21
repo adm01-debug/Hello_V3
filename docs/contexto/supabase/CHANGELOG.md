@@ -2,6 +2,10 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-21 12:17 UTC
+
+- **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_24`
+
 ## 2026-11-20 19:11 UTC
 
 - **constraints** alterado (1): `public.data_lake_exports.data_lake_exports_dataset_check`

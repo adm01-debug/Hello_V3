@@ -1,10 +1,10 @@
 {
  "meta": {
-  "sha": "ce4911ded4ea34af1d0afc83ca4b5dc8fa6d15d3",
+  "sha": "ffaedf6268208659e2e7690a304171bdeec1d173",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 11:44 UTC",
-  "files_total": 1598,
+  "generated_at": "2026-11-21 12:17 UTC",
+  "files_total": 1600,
   "code_files": 1406,
   "code_lines": 177245
  },
@@ -117754,10 +117754,29 @@
   }
  },
  "git": {
-  "sha": "ce4911ded4ea34af1d0afc83ca4b5dc8fa6d15d3",
+  "sha": "ffaedf6268208659e2e7690a304171bdeec1d173",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ffaedf6",
+    "date": "2026-11-21",
+    "author": "Joaquim Ataides",
+    "subject": "docs: relatorio atualizado (seed, PR #62, validação O2O)",
+    "files": [
+     "docs/pendencias/_relatorio.md"
+    ]
+   },
+   {
+    "sha": "ea386b1",
+    "date": "2026-11-21",
+    "author": "Joaquim Ataides",
+    "subject": "docs: regras de negocio verificadas e achados fora de escopo",
+    "files": [
+     "docs/pendencias/_achados.md",
+     "docs/pendencias/_regras-de-negocio.md"
+    ]
+   },
    {
     "sha": "ce4911d",
     "date": "2026-11-21",
@@ -118563,31 +118582,9 @@
     "files": [
      "docs/prod-readiness.md"
     ]
-   },
-   {
-    "sha": "25e39c4",
-    "date": "2026-11-13",
-    "author": "adm01-debug",
-    "subject": "chore: docs: atualiza evidencia da publicacao do contexto para snapshot mais recente (#32)",
-    "files": [
-     "docs/prod-readiness.md"
-    ]
-   },
-   {
-    "sha": "feeb678",
-    "date": "2026-11-13",
-    "author": "adm01-debug",
-    "subject": "chore: docs: atualiza prod-readiness com publicacao do contexto e RLS vivo (#31)",
-    "files": [
-     "docs/prod-readiness.md"
-    ]
    }
   ],
   "hot_files": [
-   [
-    "docs/prod-readiness.md",
-    4
-   ],
    [
     "docs/pendencias/_ordem.md",
     3
@@ -118603,6 +118600,10 @@
    [
     ".github/workflows/contexto.yml",
     3
+   ],
+   [
+    "docs/pendencias/_relatorio.md",
+    2
    ],
    [
     "docs/pendencias/_verificado-banco.md",
@@ -118653,15 +118654,15 @@
     2
    ],
    [
-    "src/pages/admin/SecurityDashboard.tsx",
+    "docs/prod-readiness.md",
+    2
+   ],
+   [
+    "docs/pendencias/_achados.md",
     1
    ],
    [
-    "src/pages/admin/ExtensionsAdmin.tsx",
-    1
-   ],
-   [
-    "src/routes/protectedRoutes.tsx",
+    "docs/pendencias/_regras-de-negocio.md",
     1
    ]
   ]
