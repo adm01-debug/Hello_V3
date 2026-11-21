@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "b2f65d72620d100131308d984e5db086457823f2",
+  "commit": "ee5082dd8568026a59f0491c3284aff8084bc3bf",
   "branch": "main",
-  "data_commit": "2026-11-21T16:52:42-03:00",
+  "data_commit": "2026-11-21T17:36:37-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ee5082d",
+    "data": "2026-11-21",
+    "assunto": "feat: (#77)"
+   },
    {
     "sha": "b2f65d7",
     "data": "2026-11-21",
@@ -126,11 +131,6 @@
     "sha": "c98548c",
     "data": "2026-11-20",
     "assunto": "chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)"
-   },
-   {
-    "sha": "ea6e3dc",
-    "data": "2026-11-20",
-    "assunto": "test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)"
    }
   ],
   "arquivos_mudados_7d": 577,
@@ -164,6 +164,10 @@
     "mudancas": 6
    },
    {
+    "pasta": "src/components/layout",
+    "mudancas": 6
+   },
+   {
     "pasta": ".github/workflows/ci.yml",
     "mudancas": 5
    },
@@ -178,10 +182,6 @@
    {
     "pasta": "supabase/functions/migrate-helper",
     "mudancas": 5
-   },
-   {
-    "pasta": "src/components/layout",
-    "mudancas": 4
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -218,6 +218,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "src/components/layout/AppSidebar.tsx",
+    "mudancas": 4
+   },
+   {
     "arquivo": "AGENTS.md",
     "mudancas": 3
    },
@@ -235,10 +239,6 @@
    },
    {
     "arquivo": "scripts/supabase_snapshot/test_snapshot.py",
-    "mudancas": 3
-   },
-   {
-    "arquivo": "src/components/layout/AppSidebar.tsx",
     "mudancas": 3
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 60
+    "commits": 61
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,11 +316,11 @@
  "contagens": {
   "arquivos_total": 1564,
   "arquivos_codigo": 1202,
-  "linhas_codigo": 164270,
+  "linhas_codigo": 164286,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 87,
+  "itens_menu": 93,
   "modulos": 78,
   "componentes": 447,
   "hooks": 189,
@@ -472,7 +472,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41930
+   "linhas": 41946
   },
   "src/contexts": {
    "arquivos": 2,
@@ -605,6 +605,10 @@
    "linhas": 359
   },
   {
+   "arquivo": "src/components/layout/AppSidebar.tsx",
+   "linhas": 357
+  },
+  {
    "arquivo": "src/pages/CallFlowDesigner.tsx",
    "linhas": 355
   },
@@ -615,10 +619,6 @@
   {
    "arquivo": "src/pages/QRProvisioning.tsx",
    "linhas": 352
-  },
-  {
-   "arquivo": "src/components/layout/AppSidebar.tsx",
-   "linhas": 347
   },
   {
    "arquivo": "src/components/dialer/phone/PhoneQuickAccess.tsx",

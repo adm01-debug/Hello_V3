@@ -5,7 +5,7 @@
   "urls": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 87,
+  "itens_menu": 93,
   "lazy": 104
  },
  "urls": [
@@ -5097,6 +5097,15 @@
    "resolve_para": "src/pages/HoldAlertSettings.tsx"
   },
   {
+   "rotulo": "Alertas de Segurança",
+   "destino": "/admin/security-alerts",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/SecurityAlerts.tsx"
+  },
+  {
    "rotulo": "Analytics",
    "destino": "/analytics",
    "grupo": null,
@@ -5356,6 +5365,15 @@
    "papeis_nao_resolvidos": null,
    "definido_em": "src/components/layout/AppSidebar.tsx",
    "resolve_para": "src/pages/Dialer.tsx"
+  },
+  {
+   "rotulo": "Discador Preditivo",
+   "destino": "/dialer/predictive",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/PredictiveDialer.tsx"
   },
   {
    "rotulo": "Escala & Turnos",
@@ -5646,6 +5664,15 @@
    "resolve_para": "src/pages/Passkeys.tsx"
   },
   {
+   "rotulo": "Permissões",
+   "destino": "/permissions",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Permissions.tsx"
+  },
+  {
    "rotulo": "Planos de Sucesso",
    "destino": "/success-plans",
    "grupo": null,
@@ -5763,6 +5790,24 @@
    "resolve_para": "src/pages/Roles.tsx"
   },
   {
+   "rotulo": "Saúde de Webhooks",
+   "destino": "/admin/webhook-health",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/WebhookHealth.tsx"
+  },
+  {
+   "rotulo": "Saúde do Banco",
+   "destino": "/admin/database-health",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/DatabaseHealth.tsx"
+  },
+  {
    "rotulo": "Sessões Ativas",
    "destino": "/sessions",
    "grupo": null,
@@ -5770,6 +5815,15 @@
    "papeis_nao_resolvidos": null,
    "definido_em": "src/components/layout/AppSidebar.tsx",
    "resolve_para": "src/pages/SessionManagement.tsx"
+  },
+  {
+   "rotulo": "SLO",
+   "destino": "/admin/slo",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/SloDashboard.tsx"
   },
   {
    "rotulo": "Sugestões de Escala IA",

@@ -1502,7 +1502,7 @@
    "modulo": "components/layout",
    "arquivos": 9,
    "testes": 0,
-   "linhas": 985,
+   "linhas": 1001,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5185,6 +5185,7 @@
     "Diagnóstico de Rede",
     "Discador",
     "Discador Preditivo",
+    "Discador Preditivo",
     "Escala & Turnos",
     "Estacionamento",
     "Executivo",
@@ -5215,6 +5216,7 @@
     "Outbound Compliance",
     "Painel BLF",
     "Passkeys",
+    "Permissões",
     "Planos de Sucesso",
     "Políticas SLA",
     "Portabilidade",
@@ -5921,10 +5923,14 @@
    "testes": 0,
    "linhas": 2092,
    "itens_menu": [
+    "Alertas de Segurança",
     "Auditoria de Segurança",
     "Exportação Data Lake",
     "Linhas VoIP",
-    "Ramais"
+    "Ramais",
+    "Saúde de Webhooks",
+    "Saúde do Banco",
+    "SLO"
    ],
    "telas": [
     "/admin/data-export",

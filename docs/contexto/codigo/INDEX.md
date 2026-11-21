@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b2f65d72620d100131308d984e5db086457823f2` (2026-11-21T16:52:42-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ee5082dd8568026a59f0491c3284aff8084bc3bf` (2026-11-21T17:36:37-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,11 +36,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1564 |
 | arquivos_codigo | 1202 |
-| linhas_codigo | 164270 |
+| linhas_codigo | 164286 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
-| itens_menu | 87 |
+| itens_menu | 93 |
 | modulos | 78 |
 | componentes | 447 |
 | hooks | 189 |
@@ -96,8 +96,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | lib | 0 | 0 | 47 | 111 | 30 | 65 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
-| pages | 83 | 93 | 92 | 186 | 64 | 133 |
-| pages/admin | 4 | 9 | 16 | 36 | 4 | 18 |
+| pages | 85 | 93 | 92 | 186 | 64 | 133 |
+| pages/admin | 8 | 9 | 16 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
 | pages/roles | 0 | 0 | 6 | 1 | 0 | 3 |
@@ -360,8 +360,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8880 nós · 23727 arestas · 694 comunidades · grafo do commit `b2f65d72`
-- comunidades maiores: lucide-react (276), react (161), traceHeaders (154), usePageTitle (140), sonner (137), safe-date.ts (133), utils.ts (129), vitest (122), cn (109), @tanstack/react-query (104), client.ts (102), protectedRoutes.tsx (99)
+- 8881 nós · 23728 arestas · 686 comunidades · grafo do commit `ee5082dd`
+- comunidades maiores: lucide-react (288), react (235), client.ts (210), @tanstack/react-query (191), usePageTitle (181), vitest (160), utils.ts (138), badge.tsx (133), cn (108), snapshot.py (102), Tabela de funcionalidades (91), useAuthContext (89)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -371,12 +371,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - .github/workflows/ci.yml (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
+- src/components/layout/AppSidebar.tsx (4)
 - AGENTS.md (3)
 - docs/pendencias/_ordem.md (3)
 - scripts/inventario/gerar-banco.mjs (3)
 - scripts/supabase_snapshot/snapshot.py (3)
 - scripts/supabase_snapshot/test_snapshot.py (3)
-- src/components/layout/AppSidebar.tsx (3)
 - src/pages/Inbox.tsx (3)
 - .env.example (2)
 - .github/workflows/inventario-estado-semanal.yml (2)
@@ -419,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `ee5082d` feat: (#77)
 - 2026-11-21 `b2f65d7` feat: (#76)
 - 2026-11-21 `6308708` docs: (#75)
 - 2026-11-21 `d9528b5` fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)
@@ -433,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `7569241` fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)
 - 2026-11-21 `7d28bde` fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)
 - 2026-11-21 `c2d7efe` feat: migra edge functions chat do gateway Lovable para Open Router (#63)
-- 2026-11-21 `ffaedf6` docs: relatorio atualizado (seed, PR #62, validação O2O)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

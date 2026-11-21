@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "b2f65d72620d100131308d984e5db086457823f2",
+  "sha": "ee5082dd8568026a59f0491c3284aff8084bc3bf",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 19:53 UTC",
+  "generated_at": "2026-11-21 20:37 UTC",
   "files_total": 1611,
   "code_files": 1417,
-  "code_lines": 178293
+  "code_lines": 178309
  },
  "version": "1.3.2",
- "facts_hash": "678558c5ca6adad4",
+ "facts_hash": "b39943a1b5a82d03",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31626,7 +31626,7 @@
   {
    "module": "src/components",
    "files": 350,
-   "lines": 41930,
+   "lines": 41946,
    "tables": [
     "accounts",
     "agent_goals",
@@ -90230,7 +90230,7 @@
   },
   "src/components/layout/AppSidebar.tsx": {
    "path": "src/components/layout/AppSidebar.tsx",
-   "lines": 347,
+   "lines": 357,
    "exports": [
     "function AppSidebar"
    ],
@@ -90252,7 +90252,7 @@
   },
   "src/components/layout/CommandPalette.tsx": {
    "path": "src/components/layout/CommandPalette.tsx",
-   "lines": 196,
+   "lines": 202,
    "exports": [
     "function CommandPalette"
    ],
@@ -117758,10 +117758,20 @@
   }
  },
  "git": {
-  "sha": "b2f65d72620d100131308d984e5db086457823f2",
+  "sha": "ee5082dd8568026a59f0491c3284aff8084bc3bf",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ee5082d",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: (#77)",
+    "files": [
+     "src/components/layout/AppSidebar.tsx",
+     "src/components/layout/CommandPalette.tsx"
+    ]
+   },
    {
     "sha": "b2f65d7",
     "date": "2026-11-21",
@@ -118588,15 +118598,6 @@
      "scripts/test-rls-access.mjs",
      "scripts/test-validate-ip.mjs"
     ]
-   },
-   {
-    "sha": "1cfbfcf",
-    "date": "2026-11-20",
-    "author": "adm01-debug",
-    "subject": "fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)",
-    "files": [
-     "tests/e2e/helpers/adminSession.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -118606,7 +118607,7 @@
    ],
    [
     "src/components/layout/AppSidebar.tsx",
-    3
+    4
    ],
    [
     "src/pages/Inbox.tsx",
@@ -118619,6 +118620,10 @@
    [
     "supabase/functions/migrate-helper/index.ts",
     3
+   ],
+   [
+    "src/components/layout/CommandPalette.tsx",
+    2
    ],
    [
     "src/components/coaching/CoachingAssignmentsPanel.tsx",
@@ -118674,10 +118679,6 @@
    ],
    [
     "supabase/functions/migrate-helper/index.test.ts",
-    2
-   ],
-   [
-    ".github/workflows/ci.yml",
     2
    ]
   ]
