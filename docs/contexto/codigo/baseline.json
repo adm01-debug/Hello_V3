@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "7569241fbb3840b0c4db081067337047ca070f42",
+  "commit": "592732efa58dd4aa95f3b002ee2ea93a4c00765c",
   "branch": "main",
-  "data_commit": "2026-11-21T10:35:33-03:00",
+  "data_commit": "2026-11-21T11:37:58-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "592732e",
+    "data": "2026-11-21",
+    "assunto": "feat: wirea WIRING-04 e 06 (hooks de contexto e gamificação na UI) (#67)"
+   },
    {
     "sha": "7569241",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "bd4186d",
     "data": "2026-11-14",
     "assunto": "fix: trata erro nas queries dos 3 hooks e adiciona noopener no video conference (#41)"
-   },
-   {
-    "sha": "9375146",
-    "data": "2026-11-14",
-    "assunto": "chore: contexto agendado de 10 min para 1x/hora (#42)"
    }
   ],
-  "arquivos_mudados_7d": 568,
+  "arquivos_mudados_7d": 575,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 49
+    "commits": 50
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,15 +314,15 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1553,
-  "arquivos_codigo": 1192,
-  "linhas_codigo": 163406,
-  "rotas": 104,
+  "arquivos_total": 1560,
+  "arquivos_codigo": 1199,
+  "linhas_codigo": 163952,
+  "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 79,
-  "modulos": 75,
-  "componentes": 440,
+  "itens_menu": 80,
+  "modulos": 78,
+  "componentes": 447,
   "hooks": 188,
   "edge_functions": 93,
   "tabelas": 171,
@@ -471,8 +471,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 344,
-   "linhas": 41398
+   "arquivos": 350,
+   "linhas": 41884
   },
   "src/contexts": {
    "arquivos": 2,
@@ -499,12 +499,12 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 129,
-   "linhas": 20629
+   "arquivos": 130,
+   "linhas": 20687
   },
   "src/routes": {
    "arquivos": 2,
-   "linhas": 236
+   "linhas": 238
   },
   "src/test": {
    "arquivos": 2,
@@ -729,7 +729,6 @@
    "src/components/alerts/AlertsDropdown.tsx",
    "src/components/calls/WebRTCCall.tsx",
    "src/components/contacts/ContactAlertsDropdown.tsx",
-   "src/components/gamification/GamificationDashboard.tsx",
    "src/components/notifications/NotificationBell.tsx",
    "src/components/SearchInput.tsx",
    "src/components/translation/LiveTranslationPanel.tsx",

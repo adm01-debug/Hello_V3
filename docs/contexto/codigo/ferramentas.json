@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1161)",
+   "TypeScript (1168)",
    "SQL (213)",
    "Markdown (113)",
    "JavaScript (27)",
@@ -841,6 +841,7 @@
    "/external-recordings-import",
    "/financial-impact",
    "/forgot-password",
+   "/gamification",
    "/geo-blocking",
    "/history",
    "/hold-alerts",

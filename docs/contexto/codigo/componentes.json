@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 440,
- "orfaos": 19,
+ "total": 447,
+ "orfaos": 18,
  "nomes_duplicados": {
   "KpiCards": [
    "src/components/admin/webhook-health/KpiCards.tsx",
@@ -31,6 +31,22 @@
    "linhas": 107,
    "dominio": null,
    "hooks_locais": [],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/accounts/ChurnSignalsPanel.tsx",
+   "exports": [
+    "ChurnSignalsPanel"
+   ],
+   "export_default": null,
+   "linhas": 72,
+   "dominio": "components/accounts",
+   "hooks_locais": [
+    "useChurnRisk"
+   ],
    "tabelas": [],
    "edges": [],
    "usado_por": 1,
@@ -731,6 +747,39 @@
    "orfao": false
   },
   {
+   "arquivo": "src/components/call-library/CallPlaylistsPanel.tsx",
+   "exports": [
+    "CallPlaylistsPanel"
+   ],
+   "export_default": null,
+   "linhas": 96,
+   "dominio": "components/call-library",
+   "hooks_locais": [
+    "useCallPlaylists",
+    "usePlaylistItems"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/call-library/SurveysPanel.tsx",
+   "exports": [
+    "SurveysPanel"
+   ],
+   "export_default": null,
+   "linhas": 91,
+   "dominio": "components/call-library",
+   "hooks_locais": [
+    "useSurveys"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
    "arquivo": "src/components/callbacks/ScheduleCallbackDialog.tsx",
    "exports": [
     "ScheduleCallbackDialog"
@@ -1138,6 +1187,22 @@
    "orfao": false
   },
   {
+   "arquivo": "src/components/coaching/CoachingAssignmentsPanel.tsx",
+   "exports": [
+    "CoachingAssignmentsPanel"
+   ],
+   "export_default": null,
+   "linhas": 75,
+   "dominio": "components/coaching",
+   "hooks_locais": [
+    "useCoachingAssignments"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
    "arquivo": "src/components/coaching/CoachingCopilotCard.tsx",
    "exports": [
     "CoachingCopilotCard"
@@ -1223,6 +1288,22 @@
    "dominio": "components/compliance",
    "hooks_locais": [
     "useCallingHoursManager"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/compliance/ComplianceRulesPanel.tsx",
+   "exports": [
+    "ComplianceRulesPanel"
+   ],
+   "export_default": null,
+   "linhas": 101,
+   "dominio": "components/compliance",
+   "hooks_locais": [
+    "useComplianceRules"
    ],
    "tabelas": [],
    "edges": [],
@@ -2466,8 +2547,8 @@
    ],
    "tabelas": [],
    "edges": [],
-   "usado_por": 0,
-   "orfao": true
+   "usado_por": 1,
+   "orfao": false
   },
   {
    "arquivo": "src/components/gamification/WeeklyRanking.tsx",
@@ -2552,7 +2633,7 @@
     "AppSidebar"
    ],
    "export_default": null,
-   "linhas": 335,
+   "linhas": 336,
    "dominio": "components/layout",
    "hooks_locais": [
     "useAuthContext",
@@ -2605,7 +2686,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 17,
+   "usado_por": 18,
    "orfao": false
   },
   {
@@ -2619,7 +2700,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 22,
+   "usado_por": 23,
    "orfao": false
   },
   {
@@ -3493,6 +3574,22 @@
    "orfao": false
   },
   {
+   "arquivo": "src/components/scheduling/AdherencePanel.tsx",
+   "exports": [
+    "AdherencePanel"
+   ],
+   "export_default": null,
+   "linhas": 50,
+   "dominio": "components/scheduling",
+   "hooks_locais": [
+    "useAdherence"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
    "arquivo": "src/components/SearchInput.tsx",
    "exports": [
     "SearchInput"
@@ -4019,7 +4116,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 201,
+   "usado_por": 207,
    "orfao": false
   },
   {
@@ -4069,7 +4166,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 239,
+   "usado_por": 244,
    "orfao": false
   },
   {
@@ -4104,7 +4201,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 229,
+   "usado_por": 235,
    "orfao": false
   },
   {
@@ -4371,7 +4468,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 89,
+   "usado_por": 93,
    "orfao": false
   },
   {
@@ -4404,7 +4501,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 66,
+   "usado_por": 67,
    "orfao": false
   },
   {
@@ -4504,7 +4601,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 29,
+   "usado_por": 30,
    "orfao": false
   },
   {
@@ -4588,7 +4685,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 69,
+   "usado_por": 70,
    "orfao": false
   },
   {
@@ -4704,7 +4801,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 55,
+   "usado_por": 61,
    "orfao": false
   },
   {
@@ -5037,7 +5134,7 @@
     "Accounts"
    ],
    "export_default": "Accounts",
-   "linhas": 129,
+   "linhas": 139,
    "dominio": "pages",
    "hooks_locais": [
     "useAccounts",
@@ -5636,7 +5733,7 @@
     "CallLibrary"
    ],
    "export_default": "CallLibrary",
-   "linhas": 223,
+   "linhas": 243,
    "dominio": "pages",
    "hooks_locais": [
     "useCallSearch",
@@ -5707,7 +5804,7 @@
     "Coaching"
    ],
    "export_default": "Coaching",
-   "linhas": 16,
+   "linhas": 18,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
@@ -5723,7 +5820,7 @@
     "CompliancePage"
    ],
    "export_default": "CompliancePage",
-   "linhas": 66,
+   "linhas": 72,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
@@ -5886,6 +5983,22 @@
    "edges": [
     "request-password-reset"
    ],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/pages/Gamification.tsx",
+   "exports": [
+    "Gamification"
+   ],
+   "export_default": "Gamification",
+   "linhas": 15,
+   "dominio": "pages",
+   "hooks_locais": [
+    "usePageTitle"
+   ],
+   "tabelas": [],
+   "edges": [],
    "usado_por": 1,
    "orfao": false
   },
@@ -6712,7 +6825,7 @@
     "Scheduling"
    ],
    "export_default": "Scheduling",
-   "linhas": 167,
+   "linhas": 172,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",

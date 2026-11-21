@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 869,
- "arestas": 3356,
+ "nos": 876,
+ "arestas": 3407,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -10,15 +10,15 @@
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 239
+   "importado_por": 244
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 229
+   "importado_por": 235
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 201
+   "importado_por": 207
   },
   {
    "arquivo": "src/lib/logger.ts",
@@ -30,15 +30,15 @@
   },
   {
    "arquivo": "src/lib/safe-date.ts",
-   "importado_por": 102
+   "importado_por": 106
   },
   {
    "arquivo": "src/hooks/usePageTitle.ts",
-   "importado_por": 96
+   "importado_por": 97
   },
   {
    "arquivo": "src/components/ui/input.tsx",
-   "importado_por": 89
+   "importado_por": 93
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
@@ -46,15 +46,15 @@
   },
   {
    "arquivo": "src/components/ui/select.tsx",
-   "importado_por": 69
+   "importado_por": 70
   },
   {
    "arquivo": "src/components/ui/label.tsx",
-   "importado_por": 66
+   "importado_por": 67
   },
   {
    "arquivo": "src/components/ui/skeleton.tsx",
-   "importado_por": 55
+   "importado_por": 61
   },
   {
    "arquivo": "src/components/ui/scroll-area.tsx",
@@ -69,12 +69,12 @@
    "importado_por": 47
   },
   {
-   "arquivo": "src/components/ui/switch.tsx",
+   "arquivo": "src/components/ui/progress.tsx",
    "importado_por": 30
   },
   {
-   "arquivo": "src/components/ui/progress.tsx",
-   "importado_por": 29
+   "arquivo": "src/components/ui/switch.tsx",
+   "importado_por": 30
   },
   {
    "arquivo": "supabase/functions/_shared/validate.ts",
@@ -93,16 +93,16 @@
    "importado_por": 24
   },
   {
+   "arquivo": "src/components/layout/NeonPageLayout.tsx",
+   "importado_por": 23
+  },
+  {
    "arquivo": "src/components/ui/textarea.tsx",
    "importado_por": 23
   },
   {
    "arquivo": "src/lib/tracing.ts",
    "importado_por": 23
-  },
-  {
-   "arquivo": "src/components/layout/NeonPageLayout.tsx",
-   "importado_por": 22
   },
   {
    "arquivo": "src/hooks/useMultiChannelCall.ts",
@@ -118,7 +118,7 @@
   },
   {
    "arquivo": "src/components/layout/NeonPageHeader.tsx",
-   "importado_por": 17
+   "importado_por": 18
   },
   {
    "arquivo": "src/integrations/supabase/types.ts",
@@ -183,7 +183,6 @@
   "src/components/alerts/AlertsDropdown.tsx",
   "src/components/calls/WebRTCCall.tsx",
   "src/components/contacts/ContactAlertsDropdown.tsx",
-  "src/components/gamification/GamificationDashboard.tsx",
   "src/components/lazy/LazyComponent.tsx",
   "src/components/notifications/NotificationBell.tsx",
   "src/components/translation/LiveTranslationPanel.tsx",
@@ -203,16 +202,10 @@
   "src/components/ui/use-toast.ts",
   "src/data/mockData.ts",
   "src/hooks/auth/index.ts",
-  "src/hooks/useAdherence.ts",
-  "src/hooks/useCallPlaylists.ts",
   "src/hooks/useChatbot.ts",
-  "src/hooks/useChurnRisk.ts",
-  "src/hooks/useCoachingAssignments.ts",
-  "src/hooks/useComplianceRules.ts",
   "src/hooks/useMultiChannelCallConference.ts",
   "src/hooks/useNotifications.ts",
   "src/hooks/useScorecards.ts",
-  "src/hooks/useSurveys.ts",
   "src/lib/audit/index.ts",
   "src/lib/dialer/predictive-pace.ts",
   "src/lib/meeting-summary-utils.ts",
@@ -228,23 +221,23 @@
  ],
  "modulos_mais_acoplados": [
   {
-   "modulo": "lib",
-   "depende_de": 4,
-   "importado_por": 47
-  },
-  {
    "modulo": "hooks",
    "depende_de": 13,
-   "importado_por": 37
+   "importado_por": 40
+  },
+  {
+   "modulo": "lib",
+   "depende_de": 4,
+   "importado_por": 49
   },
   {
    "modulo": "components/ui",
    "depende_de": 2,
-   "importado_por": 47
+   "importado_por": 50
   },
   {
    "modulo": "pages",
-   "depende_de": 47,
+   "depende_de": 50,
    "importado_por": 2
   },
   {

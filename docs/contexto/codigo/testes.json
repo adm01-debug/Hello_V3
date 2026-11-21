@@ -3188,6 +3188,7 @@
    "src/pages/ExternalRecordingsImport.tsx",
    "src/pages/FinancialImpact.tsx",
    "src/pages/ForgotPassword.tsx",
+   "src/pages/Gamification.tsx",
    "src/pages/GeoBlocking.tsx",
    "src/pages/HoldAlertSettings.tsx",
    "src/pages/HoldAlerts.tsx",

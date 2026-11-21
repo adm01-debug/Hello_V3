@@ -65,6 +65,49 @@
    ]
   },
   {
+   "modulo": "components/accounts",
+   "arquivos": 1,
+   "testes": 0,
+   "linhas": 72,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 1,
+   "hooks_locais": [
+    "useChurnRisk"
+   ],
+   "hooks_definidos": [],
+   "edges": [],
+   "tabelas": [
+    "churn_risk_signals"
+   ],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [
+    "VITE_SUPABASE_PUBLISHABLE_KEY",
+    "VITE_SUPABASE_URL"
+   ],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [
+    "pages"
+   ],
+   "depende_de_modulos": [
+    "components/ui",
+    "hooks",
+    "lib"
+   ],
+   "pacotes_externos": [
+    "lucide-react"
+   ]
+  },
+  {
    "modulo": "components/admin",
    "arquivos": 23,
    "testes": 1,
@@ -490,6 +533,55 @@
    ]
   },
   {
+   "modulo": "components/call-library",
+   "arquivos": 2,
+   "testes": 0,
+   "linhas": 187,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 2,
+   "hooks_locais": [
+    "useCallPlaylists",
+    "usePlaylistItems",
+    "useSurveys"
+   ],
+   "hooks_definidos": [],
+   "edges": [
+    "send-survey"
+   ],
+   "tabelas": [
+    "call_playlists",
+    "playlist_items",
+    "survey_responses"
+   ],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [
+    "VITE_SUPABASE_PUBLISHABLE_KEY",
+    "VITE_SUPABASE_URL"
+   ],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [
+    "pages"
+   ],
+   "depende_de_modulos": [
+    "components/ui",
+    "hooks",
+    "lib"
+   ],
+   "pacotes_externos": [
+    "lucide-react"
+   ]
+  },
+  {
    "modulo": "components/callbacks",
    "arquivos": 2,
    "testes": 0,
@@ -672,17 +764,18 @@
   },
   {
    "modulo": "components/coaching",
-   "arquivos": 2,
+   "arquivos": 3,
    "testes": 0,
-   "linhas": 473,
+   "linhas": 548,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 2,
+   "componentes": 3,
    "hooks_locais": [
     "useAgentStatus",
     "useAuditLog",
-    "useCoaching"
+    "useCoaching",
+    "useCoachingAssignments"
    ],
    "hooks_definidos": [],
    "edges": [
@@ -691,6 +784,7 @@
    ],
    "tabelas": [
     "agents",
+    "coaching_assignments",
     "coaching_recommendations"
    ],
    "rpcs": [
@@ -731,15 +825,16 @@
   },
   {
    "modulo": "components/compliance",
-   "arquivos": 16,
+   "arquivos": 17,
    "testes": 0,
-   "linhas": 1921,
+   "linhas": 2022,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 13,
+   "componentes": 14,
    "hooks_locais": [
     "useCallingHoursManager",
+    "useComplianceRules",
     "useDNCCompliance"
    ],
    "hooks_definidos": [
@@ -748,6 +843,7 @@
    "edges": [],
    "tabelas": [
     "calling_hours_config",
+    "compliance_rules",
     "compliance_settings",
     "consent_history",
     "dnc_import_logs",
@@ -1392,7 +1488,7 @@
    "modulo": "components/layout",
    "arquivos": 9,
    "testes": 0,
-   "linhas": 967,
+   "linhas": 968,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1427,7 +1523,9 @@
     "useCallTimers",
     "useCallTransfer",
     "useCallVolumeData",
+    "useChurnRisk",
     "useCoaching",
+    "useCoachingAssignments",
     "useConferenceRecording",
     "useContactInsights",
     "useContacts",
@@ -1571,6 +1669,7 @@
     "call_transcripts_searchable",
     "call_translations",
     "churn_risk_signals",
+    "coaching_assignments",
     "coaching_recommendations",
     "coaching_timestamps",
     "consent_records",
@@ -2372,6 +2471,48 @@
    ]
   },
   {
+   "modulo": "components/scheduling",
+   "arquivos": 1,
+   "testes": 0,
+   "linhas": 50,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 1,
+   "hooks_locais": [
+    "useAdherence"
+   ],
+   "hooks_definidos": [],
+   "edges": [
+    "compute-adherence"
+   ],
+   "tabelas": [],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [
+    "VITE_SUPABASE_PUBLISHABLE_KEY",
+    "VITE_SUPABASE_URL"
+   ],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [
+    "pages"
+   ],
+   "depende_de_modulos": [
+    "components/ui",
+    "hooks"
+   ],
+   "pacotes_externos": [
+    "lucide-react"
+   ]
+  },
+  {
    "modulo": "components/security",
    "arquivos": 1,
    "testes": 0,
@@ -2690,6 +2831,7 @@
    },
    "importado_por_outros_modulos": [
     "components",
+    "components/accounts",
     "components/admin",
     "components/agent",
     "components/ai",
@@ -2697,6 +2839,7 @@
     "components/auth",
     "components/blf",
     "components/call-history",
+    "components/call-library",
     "components/callbacks",
     "components/calls",
     "components/coaching",
@@ -2723,6 +2866,7 @@
     "components/ranking",
     "components/recordings",
     "components/ringgroups",
+    "components/scheduling",
     "components/security",
     "components/security-alerts",
     "components/settings",
@@ -3839,9 +3983,11 @@
     ]
    },
    "importado_por_outros_modulos": [
+    "components/accounts",
     "components/admin",
     "components/auth",
     "components/call-history",
+    "components/call-library",
     "components/callbacks",
     "components/calls",
     "components/coaching",
@@ -3861,6 +4007,7 @@
     "components/ranking",
     "components/recordings",
     "components/ringgroups",
+    "components/scheduling",
     "components/security",
     "components/settings",
     "components/supervisor",
@@ -4223,7 +4370,9 @@
     "useCallTimers",
     "useCallTransfer",
     "useCallVolumeData",
+    "useChurnRisk",
     "useCoaching",
+    "useCoachingAssignments",
     "useConferenceRecording",
     "useContactInsights",
     "useContacts",
@@ -4357,6 +4506,7 @@
     "call_transcriptions",
     "call_translations",
     "churn_risk_signals",
+    "coaching_assignments",
     "coaching_recommendations",
     "coaching_timestamps",
     "consent_records",
@@ -4472,6 +4622,7 @@
    },
    "importado_por_outros_modulos": [
     "components",
+    "components/accounts",
     "components/admin",
     "components/agent",
     "components/ai",
@@ -4479,6 +4630,7 @@
     "components/auth",
     "components/blf",
     "components/call-history",
+    "components/call-library",
     "components/callbacks",
     "components/calls",
     "components/coaching",
@@ -4953,9 +5105,9 @@
   },
   {
    "modulo": "pages",
-   "arquivos": 91,
+   "arquivos": 92,
    "testes": 0,
-   "linhas": 16279,
+   "linhas": 16337,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -4995,6 +5147,7 @@
     "Fax Virtual",
     "Filas de Atendimento",
     "Gamificação",
+    "Gamificação IA",
     "Gravações",
     "Grupos de Toque",
     "Habilidades",
@@ -5068,6 +5221,7 @@
     "/external-recordings-import",
     "/financial-impact",
     "/forgot-password",
+    "/gamification",
     "/geo-blocking",
     "/history",
     "/hold-alerts",
@@ -5129,10 +5283,11 @@
     "/voicemail"
    ],
    "rotas_http": [],
-   "componentes": 91,
+   "componentes": 92,
    "hooks_locais": [
     "useAccounts",
     "useActiveCallsRealtime",
+    "useAdherence",
     "useAgentAssistHistory",
     "useAgentFinancialLeaderboard",
     "useAgentRanking",
@@ -5161,6 +5316,7 @@
     "useCallAnalytics",
     "useCallHistory",
     "useCallPark",
+    "useCallPlaylists",
     "useCallQueues",
     "useCallRecording",
     "useCallScoring",
@@ -5170,7 +5326,10 @@
     "useCallVolumeData",
     "useCallingHoursManager",
     "useCampaignPacing",
+    "useChurnRisk",
     "useCoaching",
+    "useCoachingAssignments",
+    "useComplianceRules",
     "useConferenceRecording",
     "useConsent",
     "useContactInsights",
@@ -5233,6 +5392,7 @@
     "usePendingActionItems",
     "usePersistedTagFilter",
     "usePhaseColors",
+    "usePlaylistItems",
     "usePredictiveDialer",
     "useProfile",
     "useQualityMetrics",
@@ -5268,6 +5428,7 @@
     "useSlaPolicies",
     "useSuccessPlans",
     "useSupervisorPanel",
+    "useSurveys",
     "useSyncHistory",
     "useTalkRatio",
     "useTestTrunk",
@@ -5318,6 +5479,7 @@
     "check-contact-alerts",
     "check-goals",
     "compute-account-health",
+    "compute-adherence",
     "compute-best-time",
     "compute-deal-health",
     "detect-churn-risk",
@@ -5342,6 +5504,7 @@
     "request-password-reset",
     "score-call-attempt",
     "search-calls",
+    "send-survey",
     "sip-config",
     "suggest-shift-swaps",
     "teams-fetch-recordings",
@@ -5396,6 +5559,7 @@
     "call_flows",
     "call_key_moments",
     "call_park_orbits",
+    "call_playlists",
     "call_quality_metrics",
     "call_queue_members",
     "call_queues",
@@ -5406,8 +5570,10 @@
     "call_translations",
     "calling_hours_config",
     "churn_risk_signals",
+    "coaching_assignments",
     "coaching_recommendations",
     "coaching_timestamps",
+    "compliance_rules",
     "compliance_settings",
     "consent_history",
     "consent_records",
@@ -5455,6 +5621,7 @@
     "parked_calls",
     "password_reset_requests",
     "permissions",
+    "playlist_items",
     "queue_audio_prompts",
     "queue_metrics_settings",
     "rate_limit_alerts",
@@ -5473,6 +5640,7 @@
     "sla_policies",
     "success_plan_milestones",
     "success_plans",
+    "survey_responses",
     "system_settings",
     "time_off_requests",
     "toll_free_numbers",
@@ -5625,6 +5793,7 @@
     "routes"
    ],
    "depende_de_modulos": [
+    "components/accounts",
     "components/admin",
     "components/agent",
     "components/ai",
@@ -5632,6 +5801,7 @@
     "components/auth",
     "components/blf",
     "components/call-history",
+    "components/call-library",
     "components/callbacks",
     "components/calls",
     "components/coaching",
@@ -5656,6 +5826,7 @@
     "components/ranking",
     "components/recordings",
     "components/ringgroups",
+    "components/scheduling",
     "components/security",
     "components/settings",
     "components/supervisor",
@@ -6028,7 +6199,7 @@
    "modulo": "routes",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 236,
+   "linhas": 238,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -6036,6 +6207,7 @@
    "hooks_locais": [
     "useAccounts",
     "useActiveCallsRealtime",
+    "useAdherence",
     "useAgentAssistHistory",
     "useAgentFinancialLeaderboard",
     "useAgentRanking",
@@ -6066,6 +6238,7 @@
     "useCallAnalytics",
     "useCallHistory",
     "useCallPark",
+    "useCallPlaylists",
     "useCallQueues",
     "useCallRecording",
     "useCallScoring",
@@ -6075,7 +6248,10 @@
     "useCallVolumeData",
     "useCallingHoursManager",
     "useCampaignPacing",
+    "useChurnRisk",
     "useCoaching",
+    "useCoachingAssignments",
+    "useComplianceRules",
     "useConferenceRecording",
     "useConsent",
     "useContactInsights",
@@ -6145,6 +6321,7 @@
     "usePermissions",
     "usePersistedTagFilter",
     "usePhaseColors",
+    "usePlaylistItems",
     "usePredictiveDialer",
     "useProfile",
     "useQualityMetrics",
@@ -6182,6 +6359,7 @@
     "useSlaPolicies",
     "useSuccessPlans",
     "useSupervisorPanel",
+    "useSurveys",
     "useSyncHistory",
     "useTalkRatio",
     "useTestTrunk",
@@ -6241,6 +6419,7 @@
     "check-contact-alerts",
     "check-goals",
     "compute-account-health",
+    "compute-adherence",
     "compute-best-time",
     "compute-deal-health",
     "detect-churn-risk",
@@ -6266,6 +6445,7 @@
     "request-password-reset",
     "score-call-attempt",
     "search-calls",
+    "send-survey",
     "sip-config",
     "suggest-shift-swaps",
     "teams-fetch-recordings",
@@ -6322,6 +6502,7 @@
     "call_flows",
     "call_key_moments",
     "call_park_orbits",
+    "call_playlists",
     "call_quality_metrics",
     "call_queue_members",
     "call_queues",
@@ -6332,8 +6513,10 @@
     "call_translations",
     "calling_hours_config",
     "churn_risk_signals",
+    "coaching_assignments",
     "coaching_recommendations",
     "coaching_timestamps",
+    "compliance_rules",
     "compliance_settings",
     "consent_history",
     "consent_records",
@@ -6383,6 +6566,7 @@
     "parked_calls",
     "password_reset_requests",
     "permissions",
+    "playlist_items",
     "queue_audio_prompts",
     "queue_metrics_settings",
     "rate_limit_alerts",
@@ -6402,6 +6586,7 @@
     "sla_policies",
     "success_plan_milestones",
     "success_plans",
+    "survey_responses",
     "system_settings",
     "time_off_requests",
     "toll_free_numbers",

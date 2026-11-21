@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "7569241fbb3840b0c4db081067337047ca070f42",
+  "sha": "592732efa58dd4aa95f3b002ee2ea93a4c00765c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 13:36 UTC",
-  "files_total": 1600,
-  "code_files": 1406,
-  "code_lines": 177247
+  "generated_at": "2026-11-21 14:38 UTC",
+  "files_total": 1607,
+  "code_files": 1413,
+  "code_lines": 177793
  },
  "version": "1.3.2",
- "facts_hash": "f9c30bb0bf7eecdd",
+ "facts_hash": "bdbddd6feb25c6d7",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 594,
+   ".tsx": 601,
    ".ts": 567,
    ".sql": 213,
    ".mjs": 25,
@@ -26772,14 +26772,15 @@
     "file": "src/pages/Accounts.tsx",
     "component": "Accounts",
     "tables_transitive": [
-     "accounts"
+     "accounts",
+     "churn_risk_signals"
     ],
     "invokes_transitive": [
      "compute-account-health",
      "detect-churn-risk"
     ],
     "rpc_transitive": [],
-    "deps_count": 12
+    "deps_count": 16
    },
    {
     "path": "",
@@ -26948,12 +26949,17 @@
     "path": "",
     "file": "src/pages/CallLibrary.tsx",
     "component": "CallLibrary",
-    "tables_transitive": [],
+    "tables_transitive": [
+     "call_playlists",
+     "playlist_items",
+     "survey_responses"
+    ],
     "invokes_transitive": [
-     "search-calls"
+     "search-calls",
+     "send-survey"
     ],
     "rpc_transitive": [],
-    "deps_count": 17
+    "deps_count": 22
    },
    {
     "path": "",
@@ -27024,6 +27030,7 @@
     "component": "Coaching",
     "tables_transitive": [
      "agents",
+     "coaching_assignments",
      "coaching_recommendations"
     ],
     "invokes_transitive": [
@@ -27033,7 +27040,7 @@
     "rpc_transitive": [
      "log_audit_event"
     ],
-    "deps_count": 19
+    "deps_count": 21
    },
    {
     "path": "",
@@ -27041,6 +27048,7 @@
     "component": "Compliance",
     "tables_transitive": [
      "calling_hours_config",
+     "compliance_rules",
      "compliance_settings",
      "consent_history",
      "dnc_import_logs",
@@ -27053,7 +27061,7 @@
      "check_calling_hours",
      "check_dnc"
     ],
-    "deps_count": 37
+    "deps_count": 40
    },
    {
     "path": "",
@@ -27199,6 +27207,21 @@
     ],
     "rpc_transitive": [],
     "deps_count": 17
+   },
+   {
+    "path": "",
+    "file": "src/pages/Gamification.tsx",
+    "component": "Gamification",
+    "tables_transitive": [
+     "agent_badges",
+     "agent_goals",
+     "agent_weekly_stats",
+     "agents",
+     "badges"
+    ],
+    "invokes_transitive": [],
+    "rpc_transitive": [],
+    "deps_count": 20
    },
    {
     "path": "",
@@ -27733,9 +27756,11 @@
      "shift_templates",
      "time_off_requests"
     ],
-    "invokes_transitive": [],
+    "invokes_transitive": [
+     "compute-adherence"
+    ],
     "rpc_transitive": [],
-    "deps_count": 18
+    "deps_count": 22
    },
    {
     "path": "",
@@ -30635,7 +30660,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 344,
+  "components_count": 350,
   "hooks": [
    {
     "name": "useContacts",
@@ -31756,8 +31781,8 @@
   },
   {
    "module": "src/components",
-   "files": 344,
-   "lines": 41398,
+   "files": 350,
+   "lines": 41884,
    "tables": [
     "accounts",
     "agent_goals",
@@ -31798,6 +31823,7 @@
    ],
    "exports": [
     "SearchInput.tsx: SearchInput",
+    "ChurnSignalsPanel.tsx: ChurnSignalsPanel",
     "EndpointSparkline.tsx: EndpointSparkline",
     "BulkActionsBar.tsx: BulkActionsBarProps, BulkActionsBar",
     "BulkAssignTrunkDialog.tsx: BulkAssignTrunkDialog",
@@ -31835,8 +31861,7 @@
     "AlertsTrendChart.tsx: AlertsTrendChart",
     "CallAlertsList.tsx: CallAlertsList",
     "ContactAlertsList.tsx: ContactAlertsList",
-    "LoginBranding.tsx: LoginBranding",
-    "PasskeyLogin.tsx: PasskeyLogin"
+    "LoginBranding.tsx: LoginBranding"
    ],
    "docs": [
     "SearchInput.tsx: Componente de Input de Busca @module components/SearchInput",
@@ -31881,6 +31906,7 @@
    ],
    "file_list": [
     "src/components/SearchInput.tsx",
+    "src/components/accounts/ChurnSignalsPanel.tsx",
     "src/components/admin/EndpointSparkline.tsx",
     "src/components/admin/extensions/BulkActionsBar.tsx",
     "src/components/admin/extensions/BulkAssignTrunkDialog.tsx",
@@ -31930,6 +31956,8 @@
     "src/components/blf/BlfSummaryBar.tsx",
     "src/components/call-history/CallDetailDialog.tsx",
     "src/components/call-history/CallSessionsList.tsx",
+    "src/components/call-library/CallPlaylistsPanel.tsx",
+    "src/components/call-library/SurveysPanel.tsx",
     "src/components/callbacks/ScheduleCallbackDialog.tsx",
     "src/components/callbacks/ScheduledCallbacksList.tsx",
     "src/components/calls/ActiveCallBar.tsx",
@@ -31956,10 +31984,7 @@
     "src/components/calls/live-transcription/TranscriptList.tsx",
     "src/components/calls/live-transcription/TranscriptionHeader.tsx",
     "src/components/calls/live-transcription/types.ts",
-    "src/components/calls/live-transcription/useLiveTranscription.ts",
-    "src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts",
-    "src/components/calls/softphone/ActiveCallDisplay.tsx",
-    "src/components/calls/softphone/DialpadTab.tsx"
+    "src/components/calls/live-transcription/useLiveTranscription.ts"
    ]
   },
   {
@@ -32480,8 +32505,8 @@
   },
   {
    "module": "src/pages",
-   "files": 129,
-   "lines": 20629,
+   "files": 130,
+   "lines": 20687,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -32545,6 +32570,7 @@
     "ExternalRecordingsImport.tsx: ExternalRecordingsImport",
     "FinancialImpact.tsx: FinancialImpact",
     "ForgotPassword.tsx: ForgotPassword",
+    "Gamification.tsx: Gamification",
     "GeoBlocking.tsx: GeoBlocking",
     "HoldAlerts.tsx: HoldAlerts",
     "HoldMetrics.tsx: HoldMetrics",
@@ -32553,8 +32579,7 @@
     "Inbox.tsx: Inbox",
     "Index.tsx: Index",
     "Knowledge.tsx: Knowledge",
-    "LDAPSync.tsx: LDAPSync",
-    "Learning.tsx: Learning"
+    "LDAPSync.tsx: LDAPSync"
    ],
    "docs": [],
    "deps": [
@@ -32611,6 +32636,7 @@
     "src/pages/ExternalRecordingsImport.tsx",
     "src/pages/FinancialImpact.tsx",
     "src/pages/ForgotPassword.tsx",
+    "src/pages/Gamification.tsx",
     "src/pages/GeoBlocking.tsx",
     "src/pages/HoldAlertSettings.tsx",
     "src/pages/HoldAlerts.tsx",
@@ -32659,14 +32685,13 @@
     "src/pages/Settings.tsx",
     "src/pages/ShiftSwapSuggestions.tsx",
     "src/pages/Skills.tsx",
-    "src/pages/Status.tsx",
-    "src/pages/SuccessPlans.tsx"
+    "src/pages/Status.tsx"
    ]
   },
   {
    "module": "src/routes",
    "files": 2,
-   "lines": 236,
+   "lines": 238,
    "tables": [],
    "exports": [
     "protectedRoutes.tsx: RouteConfig, protectedRoutes",
@@ -48511,6 +48536,18 @@
     "file": "src/components/calls/softphone/HeaderDropdowns.tsx",
     "field": "status",
     "value": "away",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/coaching/CoachingAssignmentsPanel.tsx",
+    "field": "status",
+    "value": "completed",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/coaching/CoachingAssignmentsPanel.tsx",
+    "field": "status",
+    "value": "completed",
     "kind": "compara"
    },
    {
@@ -79239,6 +79276,7 @@
      "completed": [
       "compara:src/components/call-history/CallSessionsList.tsx",
       "compara:src/components/callbacks/ScheduledCallbacksList.tsx",
+      "compara:src/components/coaching/CoachingAssignmentsPanel.tsx",
       "compara:src/components/coaching/CoachingPanel.tsx",
       "compara:src/components/dashboard/RecentCalls.tsx",
       "compara:src/components/dialer/PredictiveDialerPanel.tsx",
@@ -87239,6 +87277,13 @@
    ],
    "doc": "Componente de Input de Busca @module components/SearchInput"
   },
+  "src/components/accounts/ChurnSignalsPanel.tsx": {
+   "path": "src/components/accounts/ChurnSignalsPanel.tsx",
+   "lines": 72,
+   "exports": [
+    "function ChurnSignalsPanel"
+   ]
+  },
   "src/components/admin/EndpointSparkline.tsx": {
    "path": "src/components/admin/EndpointSparkline.tsx",
    "lines": 82,
@@ -88018,6 +88063,20 @@
      "value": "completed",
      "kind": "compara"
     }
+   ]
+  },
+  "src/components/call-library/CallPlaylistsPanel.tsx": {
+   "path": "src/components/call-library/CallPlaylistsPanel.tsx",
+   "lines": 96,
+   "exports": [
+    "function CallPlaylistsPanel"
+   ]
+  },
+  "src/components/call-library/SurveysPanel.tsx": {
+   "path": "src/components/call-library/SurveysPanel.tsx",
+   "lines": 91,
+   "exports": [
+    "function SurveysPanel"
    ]
   },
   "src/components/callbacks/ScheduleCallbackDialog.tsx": {
@@ -88814,6 +88873,25 @@
     "function getInitials"
    ]
   },
+  "src/components/coaching/CoachingAssignmentsPanel.tsx": {
+   "path": "src/components/coaching/CoachingAssignmentsPanel.tsx",
+   "lines": 75,
+   "exports": [
+    "function CoachingAssignmentsPanel"
+   ],
+   "status_values": [
+    {
+     "field": "status",
+     "value": "completed",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "completed",
+     "kind": "compara"
+    }
+   ]
+  },
   "src/components/coaching/CoachingCopilotCard.tsx": {
    "path": "src/components/coaching/CoachingCopilotCard.tsx",
    "lines": 97,
@@ -88869,6 +88947,13 @@
    "lines": 97,
    "exports": [
     "function CallingHoursConfig"
+   ]
+  },
+  "src/components/compliance/ComplianceRulesPanel.tsx": {
+   "path": "src/components/compliance/ComplianceRulesPanel.tsx",
+   "lines": 101,
+   "exports": [
+    "function ComplianceRulesPanel"
    ]
   },
   "src/components/compliance/ComplianceSettings.tsx": {
@@ -90311,7 +90396,7 @@
   },
   "src/components/layout/AppSidebar.tsx": {
    "path": "src/components/layout/AppSidebar.tsx",
-   "lines": 335,
+   "lines": 336,
    "exports": [
     "function AppSidebar"
    ],
@@ -91374,6 +91459,13 @@
      "field": "ring-group-target",
      "rules": "max"
     }
+   ]
+  },
+  "src/components/scheduling/AdherencePanel.tsx": {
+   "path": "src/components/scheduling/AdherencePanel.tsx",
+   "lines": 50,
+   "exports": [
+    "function AdherencePanel"
    ]
   },
   "src/components/security/NotificationPermissionBanner.tsx": {
@@ -108238,7 +108330,7 @@
   },
   "src/pages/Accounts.tsx": {
    "path": "src/pages/Accounts.tsx",
-   "lines": 129,
+   "lines": 139,
    "exports": [
     "function Accounts"
    ]
@@ -108488,7 +108580,7 @@
   },
   "src/pages/CallLibrary.tsx": {
    "path": "src/pages/CallLibrary.tsx",
-   "lines": 223,
+   "lines": 243,
    "exports": [
     "function CallLibrary"
    ],
@@ -108542,14 +108634,14 @@
   },
   "src/pages/Coaching.tsx": {
    "path": "src/pages/Coaching.tsx",
-   "lines": 16,
+   "lines": 18,
    "exports": [
     "function Coaching"
    ]
   },
   "src/pages/Compliance.tsx": {
    "path": "src/pages/Compliance.tsx",
-   "lines": 66,
+   "lines": 72,
    "exports": [
     "function CompliancePage"
    ]
@@ -108671,6 +108763,13 @@
    ],
    "side_effects": [
     "invoke("
+   ]
+  },
+  "src/pages/Gamification.tsx": {
+   "path": "src/pages/Gamification.tsx",
+   "lines": 15,
+   "exports": [
+    "function Gamification"
    ]
   },
   "src/pages/GeoBlocking.tsx": {
@@ -109496,7 +109595,7 @@
   },
   "src/pages/Scheduling.tsx": {
    "path": "src/pages/Scheduling.tsx",
-   "lines": 167,
+   "lines": 172,
    "exports": [
     "function Scheduling"
    ],
@@ -110792,7 +110891,7 @@
   },
   "src/routes/protectedRoutes.tsx": {
    "path": "src/routes/protectedRoutes.tsx",
-   "lines": 205,
+   "lines": 207,
    "exports": [
     "interface RouteConfig",
     "const protectedRoutes"
@@ -117754,10 +117853,32 @@
   }
  },
  "git": {
-  "sha": "7569241fbb3840b0c4db081067337047ca070f42",
+  "sha": "592732efa58dd4aa95f3b002ee2ea93a4c00765c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "592732e",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: wirea WIRING-04 e 06 (hooks de contexto e gamificação na UI) (#67)",
+    "files": [
+     "src/components/accounts/ChurnSignalsPanel.tsx",
+     "src/components/call-library/CallPlaylistsPanel.tsx",
+     "src/components/call-library/SurveysPanel.tsx",
+     "src/components/coaching/CoachingAssignmentsPanel.tsx",
+     "src/components/compliance/ComplianceRulesPanel.tsx",
+     "src/components/layout/AppSidebar.tsx",
+     "src/components/scheduling/AdherencePanel.tsx",
+     "src/pages/Accounts.tsx",
+     "src/pages/CallLibrary.tsx",
+     "src/pages/Coaching.tsx",
+     "src/pages/Compliance.tsx",
+     "src/pages/Gamification.tsx",
+     "src/pages/Scheduling.tsx",
+     "src/routes/protectedRoutes.tsx"
+    ]
+   },
    {
     "sha": "7569241",
     "date": "2026-11-21",
@@ -118585,25 +118706,6 @@
      "src/pages/ForgotPassword.tsx",
      "src/pages/ResetPassword.tsx"
     ]
-   },
-   {
-    "sha": "2c8b481",
-    "date": "2026-11-14",
-    "author": "adm01-debug",
-    "subject": "fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)",
-    "files": [
-     ".env",
-     "AGENTS.md",
-     "ESTADO_ATUAL.md",
-     "docs/agentes/banco.md",
-     "docs/estado/dados-schema-migrations.md",
-     "docs/estado/edge-functions-parte1.md",
-     "docs/estado/funcionalidades-planejadas.md",
-     "docs/estado/integracoes.md",
-     "docs/prod-readiness.md",
-     "inventario/estado/README.md",
-     "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -118622,6 +118724,10 @@
    [
     ".github/workflows/contexto.yml",
     3
+   ],
+   [
+    "src/routes/protectedRoutes.tsx",
+    2
    ],
    [
     ".env.example",
@@ -118676,15 +118782,11 @@
     2
    ],
    [
-    ".env",
-    2
-   ],
-   [
     "docs/observabilidade/SLI_SLO.md",
     2
    ],
    [
-    "supabase/migrations/20250102000000_performance_indexes.sql",
+    "src/components/accounts/ChurnSignalsPanel.tsx",
     1
    ]
   ]

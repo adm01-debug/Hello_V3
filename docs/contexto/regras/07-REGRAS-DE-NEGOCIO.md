@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `7569241fbb` · branch `main` · 2026-11-21 13:36 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `592732efa5` · branch `main` · 2026-11-21 14:38 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -862,7 +862,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `calling` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `cancelled` | escreve | `src/hooks/useScheduledCallbacks.ts` |
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
-| `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +29 |
+| `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +30 |
 | `status` | `conference` | escreve | `src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
 | `status` | `connected` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>… +3 |

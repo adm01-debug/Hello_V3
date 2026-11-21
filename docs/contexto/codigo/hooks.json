@@ -662,8 +662,10 @@
     "useQuery"
    ],
    "canais_realtime": [],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/scheduling/AdherencePanel.tsx"
+   ],
    "coberto_por_testes": 1
   },
   {
@@ -1239,8 +1241,10 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/call-library/CallPlaylistsPanel.tsx"
+   ],
    "coberto_por_testes": 1
   },
   {
@@ -1447,8 +1451,10 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/accounts/ChurnSignalsPanel.tsx"
+   ],
    "coberto_por_testes": 1
   },
   {
@@ -1497,8 +1503,10 @@
     "useQueryClient"
    ],
    "canais_realtime": [],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/coaching/CoachingAssignmentsPanel.tsx"
+   ],
    "coberto_por_testes": 1
   },
   {
@@ -1519,8 +1527,10 @@
     "useQueryClient"
    ],
    "canais_realtime": [],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/compliance/ComplianceRulesPanel.tsx"
+   ],
    "coberto_por_testes": 1
   },
   {
@@ -2930,7 +2940,7 @@
     "useEffect"
    ],
    "canais_realtime": [],
-   "usado_por": 95,
+   "usado_por": 96,
    "usado_por_arquivos": [
     "src/pages/AIAssistant.tsx",
     "src/pages/Accounts.tsx",
@@ -3867,8 +3877,10 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/call-library/SurveysPanel.tsx"
+   ],
    "coberto_por_testes": 1
   },
   {

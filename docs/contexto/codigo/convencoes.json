@@ -3,11 +3,11 @@
  "format_version": 2,
  "onde_ficam": {
   "telas": [
-   "src/pages (103)"
+   "src/pages (104)"
   ],
   "componentes": [
-   "src/components (313)",
-   "src/pages (124)",
+   "src/components (319)",
+   "src/pages (125)",
    "src/contexts (2)"
   ],
   "hooks": [
@@ -47,7 +47,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (440)"
+  ".tsx (447)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: wirea WIRING-04 e 06 (hooks de contexto e gamificação na UI) (#67)",
    "fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)",
    "fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)",
    "feat: migra edge functions chat do gateway Lovable para Open Router (#63)",
-   "docs: relatorio atualizado (seed, PR #62, validação O2O)",
-   "docs: regras de negocio verificadas e achados fora de escopo"
+   "docs: relatorio atualizado (seed, PR #62, validação O2O)"
   ]
  },
  "pr_template": null,

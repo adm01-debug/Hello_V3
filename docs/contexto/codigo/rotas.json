@@ -2,11 +2,11 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "resumo": {
-  "urls": 104,
+  "urls": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 79,
-  "lazy": 103
+  "itens_menu": 80,
+  "lazy": 104
  },
  "urls": [
   {
@@ -157,6 +157,7 @@
    "hooks": [
     "useAccounts",
     "useCallback",
+    "useChurnRisk",
     "useEffect",
     "useMemo",
     "usePageTitle",
@@ -164,10 +165,12 @@
    ],
    "hooks_locais": [
     "useAccounts",
+    "useChurnRisk",
     "usePageTitle"
    ],
    "tabelas": [
-    "accounts"
+    "accounts",
+    "churn_risk_signals"
    ],
    "rpcs": [],
    "edges": [
@@ -177,7 +180,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 12
+   "arquivos_puxados": 16
   },
   {
    "protegida": false,
@@ -1084,26 +1087,37 @@
    "arquivo": "src/pages/CallLibrary.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
+    "useCallPlaylists",
     "useCallSearch",
     "useCallback",
     "useEffect",
     "useMemo",
     "usePageTitle",
-    "useState"
+    "usePlaylistItems",
+    "useState",
+    "useSurveys"
    ],
    "hooks_locais": [
+    "useCallPlaylists",
     "useCallSearch",
-    "usePageTitle"
+    "usePageTitle",
+    "usePlaylistItems",
+    "useSurveys"
    ],
-   "tabelas": [],
+   "tabelas": [
+    "call_playlists",
+    "playlist_items",
+    "survey_responses"
+   ],
    "rpcs": [],
    "edges": [
-    "search-calls"
+    "search-calls",
+    "send-survey"
    ],
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 17
+   "arquivos_puxados": 22
   },
   {
    "protegida": false,
@@ -1346,19 +1360,24 @@
     "useAuditLog",
     "useCallback",
     "useCoaching",
+    "useCoachingAssignments",
     "useEffect",
     "useMutation",
     "usePageTitle",
+    "useQuery",
+    "useQueryClient",
     "useState"
    ],
    "hooks_locais": [
     "useAgentStatus",
     "useAuditLog",
     "useCoaching",
+    "useCoachingAssignments",
     "usePageTitle"
    ],
    "tabelas": [
     "agents",
+    "coaching_assignments",
     "coaching_recommendations"
    ],
    "rpcs": [
@@ -1374,7 +1393,7 @@
    ],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 19
+   "arquivos_puxados": 21
   },
   {
    "protegida": false,
@@ -1390,6 +1409,7 @@
    "hooks": [
     "useCallback",
     "useCallingHoursManager",
+    "useComplianceRules",
     "useDNCCompliance",
     "useEffect",
     "useMemo",
@@ -1401,11 +1421,13 @@
    ],
    "hooks_locais": [
     "useCallingHoursManager",
+    "useComplianceRules",
     "useDNCCompliance",
     "usePageTitle"
    ],
    "tabelas": [
     "calling_hours_config",
+    "compliance_rules",
     "compliance_settings",
     "consent_history",
     "dnc_import_logs",
@@ -1423,7 +1445,7 @@
    "papeis": [
     "status"
    ],
-   "arquivos_puxados": 37
+   "arquivos_puxados": 40
   },
   {
    "protegida": false,
@@ -1990,6 +2012,41 @@
     "alert"
    ],
    "arquivos_puxados": 17
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/gamification",
+   "componente": "Gamification",
+   "arquivo": "src/pages/Gamification.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useGamification",
+    "usePageTitle",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useGamification",
+    "usePageTitle"
+   ],
+   "tabelas": [
+    "agent_badges",
+    "agent_goals",
+    "agent_weekly_stats",
+    "agents",
+    "badges"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 20
   },
   {
    "protegida": false,
@@ -3739,6 +3796,7 @@
    "arquivo": "src/pages/Scheduling.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
+    "useAdherence",
     "useEffect",
     "useMutation",
     "usePageTitle",
@@ -3749,6 +3807,7 @@
     "useTimeOff"
    ],
    "hooks_locais": [
+    "useAdherence",
     "usePageTitle",
     "useShifts",
     "useTimeOff"
@@ -3759,11 +3818,13 @@
     "time_off_requests"
    ],
    "rpcs": [],
-   "edges": [],
+   "edges": [
+    "compute-adherence"
+   ],
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 18
+   "arquivos_puxados": 22
   },
   {
    "protegida": false,
@@ -5299,6 +5360,15 @@
    "resolve_para": "src/pages/AgentRanking.tsx"
   },
   {
+   "rotulo": "Gamificação IA",
+   "destino": "/gamification",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Gamification.tsx"
+  },
+  {
    "rotulo": "Gravações",
    "destino": "/recordings",
    "grupo": null,
@@ -5693,6 +5763,7 @@
   "ExternalRecordingsImport": "src/pages/ExternalRecordingsImport.tsx",
   "FinancialImpact": "src/pages/FinancialImpact.tsx",
   "ForgotPassword": "src/pages/ForgotPassword.tsx",
+  "Gamification": "src/pages/Gamification.tsx",
   "GeoBlocking": "src/pages/GeoBlocking.tsx",
   "HoldAlertSettings": "src/pages/HoldAlertSettings.tsx",
   "HoldAlerts": "src/pages/HoldAlerts.tsx",
