@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `92533c9a9b` · branch `main` · 2026-11-21 15:47 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e534879514` · branch `main` · 2026-11-21 16:08 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -17,10 +17,6 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `saved_filters` | Users can delete own filters | DELETE | public | permissive | `auth.uid() = user_id` |  |
 | `entity_versions` | Users can view versions | SELECT | public | permissive | `true` |  |
 | `entity_versions` | Users can insert versions | INSERT | public | permissive |  | `auth.uid() = changed_by OR changed_by IS NULL` |
-| `contacts` | Allow all | ALL | public | permissive | `true` |  |
-| `call_records` | Allow all | ALL | public | permissive | `true` |  |
-| `queue_items` | Allow all | ALL | public | permissive | `true` |  |
-| `agents` | Allow all | ALL | public | permissive | `true` |  |
 | `call_alerts` | Allow public read on call_alerts | SELECT | public | permissive | `true` |  |
 | `call_alerts` | Allow public insert on call_alerts | INSERT | public | permissive |  | `true` |
 | `call_alerts` | Allow public update on call_alerts | UPDATE | public | permissive | `true` |  |
@@ -311,6 +307,10 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `trackers` | Supervisors manage trackers | ALL | public | permissive | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | `tracker_matches` | Agents view own matches | SELECT | public | permissive | `agent_name = get_user_agent_name() OR is_admin_or_supervisor()` |  |
 | `tracker_matches` | Supervisors manage matches | ALL | public | permissive | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
+| `call_playlists` | Owners update playlists | UPDATE | public | permissive | `owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()` | `owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()` |
+| `call_playlists` | Owners delete playlists | DELETE | public | permissive | `owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()` |  |
+| `playlist_items` | View items of accessible playlists | SELECT | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (is_admin_or_supervisor() OR p.owner_agent_name = get_user_agent_name() OR p.is_shared = true))` |  |
+| `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | … +222 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)

@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "92533c9a9b4265d1b25ed51943376f3dde7eb359",
+  "commit": "e53487951420e7afe5d6c1a6b812b17967850522",
   "branch": "main",
-  "data_commit": "2026-11-21T12:47:24-03:00",
+  "data_commit": "2026-11-21T13:08:19-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "e534879",
+    "data": "2026-11-21",
+    "assunto": "fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)"
+   },
+   {
+    "sha": "468450f",
+    "data": "2026-11-21",
+    "assunto": "chore(docs): marca PermissionGate como wireado (PR #61) (#73)"
+   },
    {
     "sha": "92533c9",
     "data": "2026-11-21",
@@ -121,19 +131,9 @@
     "sha": "18f6948",
     "data": "2026-11-20",
     "assunto": "chore: remove .env e coverage do versionamento (#51)"
-   },
-   {
-    "sha": "b3d9f80",
-    "data": "2026-11-20",
-    "assunto": "fix: remove segredos service_role e postgres literais dos scripts de diagnostico (#50)"
-   },
-   {
-    "sha": "1cfbfcf",
-    "data": "2026-11-20",
-    "assunto": "fix: prefere login vivo por email/senha no seed E2E antes da sessao pre-mintada (#48)"
    }
   ],
-  "arquivos_mudados_7d": 577,
+  "arquivos_mudados_7d": 578,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -176,6 +176,10 @@
     "mudancas": 5
    },
    {
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 4
+   },
+   {
     "pasta": "src/hooks/__tests__",
     "mudancas": 4
    },
@@ -185,10 +189,6 @@
    },
    {
     "pasta": "covout/lib/validation",
-    "mudancas": 3
-   },
-   {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 3
    },
    {
@@ -214,11 +214,11 @@
     "mudancas": 5
    },
    {
-    "arquivo": "AGENTS.md",
-    "mudancas": 3
+    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 4
    },
    {
-    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "arquivo": "AGENTS.md",
     "mudancas": 3
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 55
+    "commits": 57
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,7 +314,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1560,
+  "arquivos_total": 1561,
   "arquivos_codigo": 1199,
   "linhas_codigo": 163984,
   "rotas": 105,
@@ -326,7 +326,7 @@
   "hooks": 188,
   "edge_functions": 93,
   "tabelas": 169,
-  "migrations": 211,
+  "migrations": 212,
   "cron_jobs": 7,
   "testes": 323,
   "workflows": 3,

@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)",
+   "chore(docs): marca PermissionGate como wireado (PR #61) (#73)",
    "fix: adiciona guards de tabela/coluna no performance_indexes para Supabase Preview (#66)",
    "chore: docs - chatbot e traducao ao vivo marcados como wireados (#71)",
-   "feat: botao responder com IA no inbox via useChatbot (#70)",
-   "feat: wirea traducao em tempo real na chamada e auditoria de seguranca no menu (#69)",
-   "chore(docs): reflete wiring WIRING-04/06 na doc de funcionalidades planejadas (#68)"
+   "feat: botao responder com IA no inbox via useChatbot (#70)"
   ]
  },
  "pr_template": null,

@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 211,
+ "migrations": 212,
  "seeds": [],
  "avisos": [
   "40 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -2671,12 +2671,6 @@
     {
      "nome": "Agents can view own record, admins/supervisors view all",
      "comando": "select",
-     "para": "public",
-     "tipo": "permissive"
-    },
-    {
-     "nome": "Allow all",
-     "comando": "all",
      "para": "public",
      "tipo": "permissive"
     },
@@ -5965,9 +5959,15 @@
    "rls": true,
    "policies": [
     {
-     "nome": "Allow all",
+     "nome": "Admins can manage call_records",
      "comando": "all",
-     "para": "public",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Admins can view call_records",
+     "comando": "select",
+     "para": "authenticated",
      "tipo": "permissive"
     }
    ],
@@ -9168,12 +9168,6 @@
     {
      "nome": "Admins can delete contacts",
      "comando": "delete",
-     "para": "public",
-     "tipo": "permissive"
-    },
-    {
-     "nome": "Allow all",
-     "comando": "all",
      "para": "public",
      "tipo": "permissive"
     },
@@ -16594,9 +16588,15 @@
    "rls": true,
    "policies": [
     {
-     "nome": "Allow all",
+     "nome": "Admins can manage queue_items",
      "comando": "all",
-     "para": "public",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Admins can view queue_items",
+     "comando": "select",
+     "para": "authenticated",
      "tipo": "permissive"
     }
    ],

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "92533c9a9b4265d1b25ed51943376f3dde7eb359",
+  "sha": "e53487951420e7afe5d6c1a6b812b17967850522",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 15:47 UTC",
-  "files_total": 1607,
-  "code_files": 1413,
-  "code_lines": 177975
+  "generated_at": "2026-11-21 16:08 UTC",
+  "files_total": 1608,
+  "code_files": 1414,
+  "code_lines": 178007
  },
  "version": "1.3.2",
- "facts_hash": "33f31e811608c4f9",
+ "facts_hash": "060802d18950f3e2",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -160,7 +160,7 @@
   "languages": {
    ".tsx": 601,
    ".ts": 567,
-   ".sql": 213,
+   ".sql": 214,
    ".mjs": 25,
    ".py": 5,
    ".js": 2
@@ -14242,46 +14242,6 @@
     "src": "supabase/migrations/20241231000001_entity_versions.sql"
    },
    {
-    "name": "Allow all",
-    "table": "contacts",
-    "cmd": "ALL",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20250102000000_hello_production.sql"
-   },
-   {
-    "name": "Allow all",
-    "table": "call_records",
-    "cmd": "ALL",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20250102000000_hello_production.sql"
-   },
-   {
-    "name": "Allow all",
-    "table": "queue_items",
-    "cmd": "ALL",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20250102000000_hello_production.sql"
-   },
-   {
-    "name": "Allow all",
-    "table": "agents",
-    "cmd": "ALL",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20250102000000_hello_production.sql"
-   },
-   {
     "name": "Allow public read on call_alerts",
     "table": "call_alerts",
     "cmd": "SELECT",
@@ -19400,6 +19360,46 @@
     "using": "public.is_admin_user(auth.uid())",
     "check": "public.is_admin_user(auth.uid())",
     "src": "supabase/migrations/20260805130000_fix_user_profiles_recursion.sql"
+   },
+   {
+    "name": "Admins can manage call_records",
+    "table": "call_records",
+    "cmd": "ALL",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "public.is_admin_or_supervisor()",
+    "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
+   },
+   {
+    "name": "Admins can view call_records",
+    "table": "call_records",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "",
+    "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
+   },
+   {
+    "name": "Admins can manage queue_items",
+    "table": "queue_items",
+    "cmd": "ALL",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "public.is_admin_or_supervisor()",
+    "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
+   },
+   {
+    "name": "Admins can view queue_items",
+    "table": "queue_items",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "",
+    "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
    }
   ],
   "triggers": [
@@ -25461,6 +25461,7 @@
    "supabase/migrations/20261114090556_f32993dc-8788-4c44-8082-b2e52a7463cb.sql",
    "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
    "supabase/migrations/20261120154610_fix-data-lake-exports-call-summaries.sql",
+   "supabase/migrations/20261121125200_fix_rls_allow_all.sql",
    "src/integrations/supabase/types.ts"
   ],
   "rls": {
@@ -32785,8 +32786,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 211,
-   "lines": 13780,
+   "files": 212,
+   "lines": 13812,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -70356,46 +70357,6 @@
     "src": "supabase/migrations/20241231000001_entity_versions.sql"
    },
    {
-    "name": "Allow all",
-    "table": "contacts",
-    "cmd": "ALL",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20250102000000_hello_production.sql"
-   },
-   {
-    "name": "Allow all",
-    "table": "call_records",
-    "cmd": "ALL",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20250102000000_hello_production.sql"
-   },
-   {
-    "name": "Allow all",
-    "table": "queue_items",
-    "cmd": "ALL",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20250102000000_hello_production.sql"
-   },
-   {
-    "name": "Allow all",
-    "table": "agents",
-    "cmd": "ALL",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20250102000000_hello_production.sql"
-   },
-   {
     "name": "Allow public read on call_alerts",
     "table": "call_alerts",
     "cmd": "SELECT",
@@ -75514,6 +75475,46 @@
     "using": "public.is_admin_user(auth.uid())",
     "check": "public.is_admin_user(auth.uid())",
     "src": "supabase/migrations/20260805130000_fix_user_profiles_recursion.sql"
+   },
+   {
+    "name": "Admins can manage call_records",
+    "table": "call_records",
+    "cmd": "ALL",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "public.is_admin_or_supervisor()",
+    "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
+   },
+   {
+    "name": "Admins can view call_records",
+    "table": "call_records",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "",
+    "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
+   },
+   {
+    "name": "Admins can manage queue_items",
+    "table": "queue_items",
+    "cmd": "ALL",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "public.is_admin_or_supervisor()",
+    "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
+   },
+   {
+    "name": "Admins can view queue_items",
+    "table": "queue_items",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "",
+    "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
    }
   ],
   "db_triggers": [
@@ -80273,23 +80274,19 @@
     "rls": "enabled",
     "SELECT": [
      "public: true",
-     "public: true",
      "public: public.is_admin_or_supervisor()",
      "public: is_admin_or_supervisor() OR id = get_user_agent_id()",
      "public: auth.uid() IS NOT NULL"
     ],
     "INSERT": [
      "public: true",
-     "public: true",
      "public: public.is_admin_or_supervisor()"
     ],
     "UPDATE": [
      "public: true",
-     "public: true",
      "public: public.is_admin_or_supervisor()"
     ],
     "DELETE": [
-     "public: true",
      "public: public.is_admin_or_supervisor()"
     ]
    },
@@ -80668,16 +80665,17 @@
    "call_records": {
     "rls": "enabled",
     "SELECT": [
-     "public: true"
+     "authenticated: public.is_admin_or_supervisor()",
+     "authenticated: public.is_admin_or_supervisor()"
     ],
     "INSERT": [
-     "public: true"
+     "authenticated: public.is_admin_or_supervisor()"
     ],
     "UPDATE": [
-     "public: true"
+     "authenticated: public.is_admin_or_supervisor()"
     ],
     "DELETE": [
-     "public: true"
+     "authenticated: public.is_admin_or_supervisor()"
     ]
    },
    "call_scorecards": {
@@ -80989,21 +80987,17 @@
     "rls": "enabled",
     "SELECT": [
      "public: true",
-     "public: true",
      "public: is_admin_or_supervisor() OR EXISTS ( SELECT 1 FROM public.contact_interactions ci WHERE ci.contact_id = contacts.id AND ci.agent_nam"
     ],
     "INSERT": [
-     "public: true",
      "public: true",
      "public: is_admin_or_supervisor()"
     ],
     "UPDATE": [
      "public: true",
-     "public: true",
      "public: is_admin_or_supervisor() OR EXISTS ( SELECT 1 FROM public.contact_interactions ci WHERE ci.contact_id = contacts.id AND ci.agent_nam"
     ],
     "DELETE": [
-     "public: true",
      "public: true",
      "public: public.is_admin_or_supervisor()"
     ]
@@ -81807,16 +81801,17 @@
    "queue_items": {
     "rls": "enabled",
     "SELECT": [
-     "public: true"
+     "authenticated: public.is_admin_or_supervisor()",
+     "authenticated: public.is_admin_or_supervisor()"
     ],
     "INSERT": [
-     "public: true"
+     "authenticated: public.is_admin_or_supervisor()"
     ],
     "UPDATE": [
-     "public: true"
+     "authenticated: public.is_admin_or_supervisor()"
     ],
     "DELETE": [
-     "public: true"
+     "authenticated: public.is_admin_or_supervisor()"
     ]
    },
    "queue_metrics_settings": {
@@ -117583,6 +117578,10 @@
    "path": "supabase/migrations/20261120154610_fix-data-lake-exports-call-summaries.sql",
    "lines": 10
   },
+  "supabase/migrations/20261121125200_fix_rls_allow_all.sql": {
+   "path": "supabase/migrations/20261121125200_fix_rls_allow_all.sql",
+   "lines": 32
+  },
   "tests/e2e/auth.spec.ts": {
    "path": "tests/e2e/auth.spec.ts",
    "lines": 34,
@@ -117691,10 +117690,28 @@
   }
  },
  "git": {
-  "sha": "92533c9a9b4265d1b25ed51943376f3dde7eb359",
+  "sha": "e53487951420e7afe5d6c1a6b812b17967850522",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e534879",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)",
+    "files": [
+     "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
+    ]
+   },
+   {
+    "sha": "468450f",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "chore(docs): marca PermissionGate como wireado (PR #61) (#73)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "92533c9",
     "date": "2026-11-21",
@@ -118511,30 +118528,13 @@
     "files": [
      "src/components/voice/overlay/usePhaseColors.ts"
     ]
-   },
-   {
-    "sha": "82934f8",
-    "date": "2026-11-19",
-    "author": "adm01-debug",
-    "subject": "infra: SPA rewrites no Vercel (rotas client-side sem 404) (#43)",
-    "files": [
-     "vercel.json"
-    ]
-   },
-   {
-    "sha": "bd4186d",
-    "date": "2026-11-14",
-    "author": "adm01-debug",
-    "subject": "fix: trata erro nas queries dos 3 hooks e adiciona noopener no video conference (#41)",
-    "files": [
-     "src/hooks/useBattleCardDetection.ts",
-     "src/hooks/useExecutiveDashboard.ts",
-     "src/hooks/useTrunkRealtimeMetrics.ts",
-     "src/pages/VideoConference.tsx"
-    ]
    }
   ],
   "hot_files": [
+   [
+    "docs/estado/funcionalidades-planejadas.md",
+    3
+   ],
    [
     "src/pages/Inbox.tsx",
     3
@@ -118553,10 +118553,6 @@
    ],
    [
     "supabase/migrations/20250102000000_performance_indexes.sql",
-    2
-   ],
-   [
-    "docs/estado/funcionalidades-planejadas.md",
     2
    ],
    [
@@ -118612,7 +118608,7 @@
     2
    ],
    [
-    "src/pages/Calls.tsx",
+    "supabase/migrations/20261121125200_fix_rls_allow_all.sql",
     1
    ]
   ]
