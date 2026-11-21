@@ -33458,6 +33458,10 @@
         "callers": {
           "code": [
             {
+              "file": "supabase/functions/ldap-sync/index.ts",
+              "hits": 1
+            },
+            {
               "file": "supabase/functions/voip-trunks-healthcheck/index.ts",
               "hits": 1
             },
@@ -33542,7 +33546,7 @@
               "hits": 3
             }
           ],
-          "code_total_files": 21,
+          "code_total_files": 22,
           "cron": [],
           "db": [
             "public.prevent_role_escalation"
