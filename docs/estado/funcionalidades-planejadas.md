@@ -48,7 +48,7 @@ Origem: `docs/audits/pendencias-2026-07.md`. Reverifiquei os itens verificáveis
 | B5 | Retry idempotente `whatsapp-inbound` | 🔴 | Confirmado pendente |
 | B6 | CHECK/enums nas colunas `text` | 🔴 | Confirmado pendente (apenas 2 enums em `types.ts`) |
 | B8 | Whitelist de hosts (SSRF) `_shared/allowed-hosts.ts` | 🔴 | **Confirmado ausente** |
-| C1 | SLO/SLI + error budget alerts | 🔴 | Confirmado pendente |
+| C1 | SLO/SLI + error budget alerts | 🟢 | `health-check` expõe bloco `error_budget` por componente (`remaining_pct`, `burn_rate`, `status`); emite `slo_budget_exhausted` quando a margem acaba antes do SLO estourar. Cálculo em `supabase/functions/health-check/slo-budget.ts`, 11 testes Deno. Exibido em `/admin/slo` |
 | C3 | Squash das 100 primeiras migrations | 🔴 | Confirmado pendente (207 migrations) |
 | C6 | Auditoria de crons `pg_cron` | 🔴 | **Agora urgente:** 7 jobs declarados, 2 apontando para projeto errado |
 | C7 | Bundle budget por rota no CI | 🔴 | Confirmado ausente do `ci.yml` |

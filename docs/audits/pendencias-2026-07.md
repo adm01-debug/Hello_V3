@@ -31,7 +31,7 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 
 | Item | Descrição | Status | Nota |
 | ---- | --------- | ------ | ---- |
-| C1 | SLO/SLI + error budget alerts | 🔴 | Cron 15 min → `notifications`. |
+| C1 | SLO/SLI + error budget alerts | 🟢 | `health-check` calcula `error_budget` (burn rate, remaining, status) por componente e emite `slo_budget_exhausted` antes do SLO estourar. `slo-budget.ts` + 11 testes Deno. Visível em `/admin/slo`. |
 | C2 | Lifecycle `call-recordings` (cold/delete >180 d) | 🔴 | Job Deno agendado. |
 | C3 | Squash das 100 primeiras migrations | 🔴 | `20250101000000_initial_squashed.sql`. |
 | C4 | Contratos Deno para 88 edges restantes | 🔴 | Gerar a partir de schemas Zod. |
