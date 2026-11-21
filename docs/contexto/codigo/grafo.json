@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 876,
- "arestas": 3408,
+ "arestas": 3409,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -201,7 +201,6 @@
   "src/components/ui/use-toast.ts",
   "src/data/mockData.ts",
   "src/hooks/auth/index.ts",
-  "src/hooks/useChatbot.ts",
   "src/hooks/useMultiChannelCallConference.ts",
   "src/hooks/useNotifications.ts",
   "src/hooks/useScorecards.ts",

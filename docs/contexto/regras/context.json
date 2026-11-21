@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "723ff66aae0b6b473141901299c2fc881a5eba3f",
+  "sha": "a40abd0591423cace0a4c462b2bf4596b1f14ed7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 15:14 UTC",
+  "generated_at": "2026-11-21 15:23 UTC",
   "files_total": 1607,
   "code_files": 1413,
-  "code_lines": 177800
+  "code_lines": 177825
  },
  "version": "1.3.2",
- "facts_hash": "280e9347aa7c252e",
+ "facts_hash": "fe82243126e823ab",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -27306,9 +27306,12 @@
      "conversation_messages",
      "conversations"
     ],
-    "invokes_transitive": [],
+    "invokes_transitive": [
+     "charge",
+     "chatbot-respond"
+    ],
     "rpc_transitive": [],
-    "deps_count": 21
+    "deps_count": 23
    },
    {
     "path": "",
@@ -32509,7 +32512,7 @@
   {
    "module": "src/pages",
    "files": 130,
-   "lines": 20693,
+   "lines": 20718,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -108893,7 +108896,7 @@
   },
   "src/pages/Inbox.tsx": {
    "path": "src/pages/Inbox.tsx",
-   "lines": 357,
+   "lines": 382,
    "exports": [
     "function Inbox"
    ],
@@ -117856,10 +117859,19 @@
   }
  },
  "git": {
-  "sha": "723ff66aae0b6b473141901299c2fc881a5eba3f",
+  "sha": "a40abd0591423cace0a4c462b2bf4596b1f14ed7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a40abd0",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: botao responder com IA no inbox via useChatbot (#70)",
+    "files": [
+     "src/pages/Inbox.tsx"
+    ]
+   },
    {
     "sha": "723ff66",
     "date": "2026-11-21",
@@ -118689,21 +118701,13 @@
      ".github/workflows/contexto.yml",
      "docs/observabilidade/SLI_SLO.md"
     ]
-   },
-   {
-    "sha": "a8985a2",
-    "date": "2026-11-14",
-    "author": "adm01-debug",
-    "subject": "feat: (#38)",
-    "files": [
-     ".github/workflows/contexto.yml",
-     "scripts/supabase_snapshot/README.md",
-     "scripts/supabase_snapshot/snapshot.py",
-     "scripts/supabase_snapshot/test_snapshot.py"
-    ]
    }
   ],
   "hot_files": [
+   [
+    "src/pages/Inbox.tsx",
+    3
+   ],
    [
     "docs/pendencias/_ordem.md",
     3
@@ -118714,10 +118718,6 @@
    ],
    [
     ".github/workflows/ci.yml",
-    3
-   ],
-   [
-    ".github/workflows/contexto.yml",
     3
    ],
    [
@@ -118765,15 +118765,15 @@
     2
    ],
    [
-    "src/pages/Inbox.tsx",
-    2
-   ],
-   [
     "inventario/estado/edges.json",
     2
    ],
    [
     "supabase/functions/migrate-helper/index.test.ts",
+    2
+   ],
+   [
+    ".github/workflows/contexto.yml",
     2
    ],
    [

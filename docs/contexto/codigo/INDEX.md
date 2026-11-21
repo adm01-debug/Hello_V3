@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `723ff66aae0b6b473141901299c2fc881a5eba3f` (2026-11-21T12:14:10-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a40abd0591423cace0a4c462b2bf4596b1f14ed7` (2026-11-21T12:22:55-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1560 |
 | arquivos_codigo | 1199 |
-| linhas_codigo | 163959 |
+| linhas_codigo | 163984 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -81,7 +81,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/dialer | 0 | 0 | 16 | 17 | 1 | 7 |
 | components/executive | 0 | 0 | 18 | 26 | 6 | 20 |
 | components/gamification | 0 | 0 | 7 | 3 | 0 | 5 |
-| components/layout | 0 | 0 | 9 | 118 | 29 | 70 |
+| components/layout | 0 | 0 | 9 | 119 | 30 | 70 |
 | components/network | 0 | 0 | 17 | 14 | 12 | 3 |
 | components/observability | 0 | 0 | 6 | 0 | 0 | 0 |
 | components/queue-alerts | 0 | 0 | 8 | 1 | 0 | 1 |
@@ -93,10 +93,10 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/voice | 0 | 0 | 7 | 4 | 2 | 1 |
 | hooks | 0 | 0 | 165 | 205 | 54 | 121 |
 | hooks/auth | 0 | 0 | 5 | 5 | 0 | 1 |
-| lib | 0 | 0 | 47 | 108 | 28 | 63 |
+| lib | 0 | 0 | 47 | 109 | 29 | 63 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
-| pages | 77 | 93 | 92 | 183 | 62 | 133 |
+| pages | 77 | 93 | 92 | 184 | 63 | 133 |
 | pages/admin | 4 | 9 | 16 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
@@ -360,8 +360,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8882 nós · 23719 arestas · 681 comunidades · grafo do commit `723ff66a`
-- comunidades maiores: lucide-react (263), client.ts (230), badge.tsx (209), usePageTitle (195), traceHeaders (168), react (139), vitest (138), select.tsx (128), useAuthContext (115), cn (115), @tanstack/react-query (107), snapshot.py (102)
+- 8882 nós · 23722 arestas · 677 comunidades · grafo do commit `a40abd05`
+- comunidades maiores: lucide-react (297), client.ts (197), vitest (180), usePageTitle (146), utils.ts (144), react (144), traceHeaders (142), select.tsx (134), useAuthContext (123), cn (108), snapshot.py (102), ref_https (98)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -375,12 +375,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - scripts/inventario/gerar-banco.mjs (3)
 - scripts/supabase_snapshot/snapshot.py (3)
 - scripts/supabase_snapshot/test_snapshot.py (3)
+- src/pages/Inbox.tsx (3)
 - .env.example (2)
 - .github/workflows/inventario-estado-semanal.yml (2)
 - deno.lock (2)
 - docs/agentes/banco.md (2)
 - docs/agentes/edge-functions.md (2)
-- docs/estado/edge-functions-parte1.md (2)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -419,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `a40abd0` feat: botao responder com IA no inbox via useChatbot (#70)
 - 2026-11-21 `723ff66` feat: wirea traducao em tempo real na chamada e auditoria de seguranca no menu (#69)
 - 2026-11-21 `587daff` chore(docs): reflete wiring WIRING-04/06 na doc de funcionalidades planejadas (#68)
 - 2026-11-21 `592732e` feat: wirea WIRING-04 e 06 (hooks de contexto e gamificação na UI) (#67)
@@ -433,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-20 `f105468` fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)
 - 2026-11-20 `72f3935` fix: sanitiza path com fileURLToPath no gerador de inventario (#58)
 - 2026-11-20 `6ffab7a` chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)
-- 2026-11-20 `ce6fee5` chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

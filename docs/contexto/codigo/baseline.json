@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "723ff66aae0b6b473141901299c2fc881a5eba3f",
+  "commit": "a40abd0591423cace0a4c462b2bf4596b1f14ed7",
   "branch": "main",
-  "data_commit": "2026-11-21T12:14:10-03:00",
+  "data_commit": "2026-11-21T12:22:55-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a40abd0",
+    "data": "2026-11-21",
+    "assunto": "feat: botao responder com IA no inbox via useChatbot (#70)"
+   },
    {
     "sha": "723ff66",
     "data": "2026-11-21",
@@ -126,11 +131,6 @@
     "sha": "f3cc8f6",
     "data": "2026-11-19",
     "assunto": "fix: corrige selectors e ativa E2E autenticado (#45)"
-   },
-   {
-    "sha": "5994943",
-    "data": "2026-11-19",
-    "assunto": "fix: usePhaseColors preserva NaN em CSS var inválida (fallback do safeParseFloat) (#44)"
    }
   ],
   "arquivos_mudados_7d": 577,
@@ -234,6 +234,10 @@
     "mudancas": 3
    },
    {
+    "arquivo": "src/pages/Inbox.tsx",
+    "mudancas": 3
+   },
+   {
     "arquivo": ".env.example",
     "mudancas": 2
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "docs/pendencias/_relatorio.md",
     "mudancas": 2
-   },
-   {
-    "arquivo": "docs/pendencias/_verificado-banco.md",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 52
+    "commits": 53
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1560,
   "arquivos_codigo": 1199,
-  "linhas_codigo": 163959,
+  "linhas_codigo": 163984,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -500,7 +500,7 @@
   },
   "src/pages": {
    "arquivos": 130,
-   "linhas": 20693
+   "linhas": 20718
   },
   "src/routes": {
    "arquivos": 2,
@@ -573,6 +573,10 @@
    "linhas": 383
   },
   {
+   "arquivo": "src/pages/Inbox.tsx",
+   "linhas": 382
+  },
+  {
    "arquivo": "src/components/calls/ActiveCallBar.tsx",
    "linhas": 380
   },
@@ -599,10 +603,6 @@
   {
    "arquivo": "src/lib/security-alerts-webhook.ts",
    "linhas": 359
-  },
-  {
-   "arquivo": "src/pages/Inbox.tsx",
-   "linhas": 357
   },
   {
    "arquivo": "src/pages/CallFlowDesigner.tsx",

@@ -6097,9 +6097,10 @@
     "Inbox"
    ],
    "export_default": "Inbox",
-   "linhas": 357,
+   "linhas": 382,
    "dominio": "pages",
    "hooks_locais": [
+    "useChatbot",
     "useConversationMessages",
     "useConversations",
     "usePageTitle",

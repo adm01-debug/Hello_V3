@@ -1429,8 +1429,10 @@
     "useMutation"
    ],
    "canais_realtime": [],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Inbox.tsx"
+   ],
    "coberto_por_testes": 1
   },
   {

@@ -2322,6 +2322,7 @@
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
     "useCallback",
+    "useChatbot",
     "useConversationMessages",
     "useConversations",
     "useEffect",
@@ -2336,6 +2337,7 @@
     "useWhatsappRewrite"
    ],
    "hooks_locais": [
+    "useChatbot",
     "useConversationMessages",
     "useConversations",
     "usePageTitle",
@@ -2348,7 +2350,9 @@
     "conversations"
    ],
    "rpcs": [],
-   "edges": [],
+   "edges": [
+    "chatbot-respond"
+   ],
    "canais_realtime": [
     "conversations-realtime",
     "messages-${conversationId}"
@@ -2357,7 +2361,7 @@
    "papeis": [
     "status"
    ],
-   "arquivos_puxados": 21
+   "arquivos_puxados": 23
   },
   {
    "protegida": false,
