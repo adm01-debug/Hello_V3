@@ -24,6 +24,15 @@
         "status": "succeeded"
       },
       {
+        "end_time": "2026-11-21T03:00:00.243911+00:00",
+        "jobid": 4,
+        "return_message": "1 row",
+        "runid": 168,
+        "seconds": 0.02,
+        "start_time": "2026-11-21T03:00:00.223059+00:00",
+        "status": "succeeded"
+      },
+      {
         "end_time": "2026-11-20T03:00:00.252343+00:00",
         "jobid": 4,
         "return_message": "ERROR:  schema \"net\" does not exist\nLINE 1: SELECT net.http_post(\n               ^\n",
@@ -39,15 +48,6 @@
         "runid": 165,
         "seconds": 0,
         "start_time": "2026-11-19T03:00:00.213090+00:00",
-        "status": "failed"
-      },
-      {
-        "end_time": "2026-11-18T03:00:00.224107+00:00",
-        "jobid": 4,
-        "return_message": "ERROR:  schema \"net\" does not exist\nLINE 1: SELECT net.http_post(\n               ^\n",
-        "runid": 164,
-        "seconds": 0,
-        "start_time": "2026-11-18T03:00:00.222082+00:00",
         "status": "failed"
       }
     ],
@@ -111,12 +111,12 @@
       "storage": [],
       "top_queries": [
         {
-          "calls": 105,
-          "mean_ms": 5415.66,
+          "calls": 107,
+          "mean_ms": 5418.78,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 568644
+          "total_ms": 579809
         },
         {
           "calls": 2,
@@ -151,12 +151,12 @@
           "total_ms": 48301
         },
         {
-          "calls": 109,
-          "mean_ms": 182.14,
+          "calls": 111,
+          "mean_ms": 183.95,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 880,
-          "total_ms": 19853
+          "rows": 898,
+          "total_ms": 20419
         },
         {
           "calls": 1,
@@ -175,12 +175,12 @@
           "total_ms": 10996
         },
         {
-          "calls": 109,
-          "mean_ms": 94.94,
+          "calls": 111,
+          "mean_ms": 95.43,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 189795,
-          "total_ms": 10348
+          "rows": 193325,
+          "total_ms": 10593
         },
         {
           "calls": 76,
@@ -223,12 +223,12 @@
           "total_ms": 5561
         },
         {
-          "calls": 109,
-          "mean_ms": 47.78,
+          "calls": 111,
+          "mean_ms": 47.75,
           "query": "SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3",
           "role": "postgres",
-          "rows": 5886,
-          "total_ms": 5208
+          "rows": 5994,
+          "total_ms": 5300
         }
       ]
     },
@@ -5022,7 +5022,7 @@
         "last_autovacuum": null,
         "name": "call_sessions",
         "schema": "public",
-        "seq_scan": 270,
+        "seq_scan": 271,
         "total_bytes": 180224
       },
       {
@@ -5100,7 +5100,7 @@
         "last_autovacuum": null,
         "name": "deals",
         "schema": "public",
-        "seq_scan": 35,
+        "seq_scan": 36,
         "total_bytes": 98304
       },
       {
@@ -5468,7 +5468,7 @@
         "total_bytes": 49152
       },
       {
-        "dead_rows": 24,
+        "dead_rows": 27,
         "est_rows": 1,
         "heap_bytes": 8192,
         "idx_scan": 0,
@@ -5477,7 +5477,7 @@
         "last_autovacuum": null,
         "name": "data_lake_exports",
         "schema": "public",
-        "seq_scan": 54,
+        "seq_scan": 60,
         "total_bytes": 49152
       },
       {
@@ -6452,7 +6452,7 @@
         "last_autovacuum": null,
         "name": "call_summaries",
         "schema": "public",
-        "seq_scan": 17,
+        "seq_scan": 18,
         "total_bytes": 24576
       },
       {
