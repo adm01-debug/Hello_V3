@@ -115,8 +115,8 @@ serve(async (req) => {
     };
 
     // Use Lovable AI for analysis
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) {
+    const openRouterApiKey = Deno.env.get('OPENROUTER_API_KEY');
+    if (!openRouterApiKey) {
       return new Response(JSON.stringify({ error: 'Serviço indisponível' }), {
         status: 503,
         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
@@ -181,10 +181,10 @@ Gere recomendações de coaching no formato JSON:
 Gere 3 recomendações e até 6 feedbacks com timestamp (apenas se houver transcrição). Caso não haja transcrição, retorne timestamped_feedback como [].`;
 
     const { resilientFetch } = await import('../_shared/resilience.ts');
-    const aiResponse = await resilientFetch('ai-gateway-coaching', 'https://api.lovable.dev/v1/chat/completions', {
+    const aiResponse = await resilientFetch('ai-gateway-coaching', 'https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
+        'Authorization': `Bearer ${openRouterApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

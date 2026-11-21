@@ -56,8 +56,8 @@ Deno.serve(async (req) => {
     const avgPerf = avg(summaries.map((s) => s.agent_performance_score ?? 0));
     const avgSat = avg(summaries.map((s) => s.customer_satisfaction ?? 0));
 
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) return json({ error: 'AI key missing' }, 500);
+    const OPENROUTER_API_KEY = Deno.env.get('OPENROUTER_API_KEY');
+    if (!OPENROUTER_API_KEY) return json({ error: 'AI key missing' }, 500);
 
     const prompt = `Você é um coach de vendas sênior. Baseado nas últimas ${summaries.length} chamadas do agente "${agent_name}" (performance média: ${avgPerf.toFixed(1)}/5, CSAT médio: ${avgSat.toFixed(1)}/5), gere um plano semanal de coaching em português (PT-BR) com:
 1. Diagnóstico curto (2-3 pontos fortes, 2-3 pontos a melhorar)
@@ -69,10 +69,10 @@ ${summaries.slice(0, 10).map((s, i) => `${i + 1}. ${s.summary?.slice(0, 300)}`).
 
 Responda em Markdown estruturado, tom motivador e direto.`;
 
-    const aiRes = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const aiRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

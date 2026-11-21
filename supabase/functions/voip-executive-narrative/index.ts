@@ -6,7 +6,7 @@ import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, oneOf, optional } from '../_shared/validate.ts';
 
 const PERIOD_DAYS: Record<string, number> = { week: 7, month: 30 };
-const AI_GATEWAY = 'https://ai.gateway.lovable.dev/v1/chat/completions';
+const AI_GATEWAY = 'https://openrouter.ai/api/v1/chat/completions';
 const MODEL = 'google/gemini-2.5-flash';
 
 export interface ExecKpis {
@@ -109,7 +109,7 @@ Deno.serve(async (req) => {
       criticalAlerts, appliedActions, effectivenessPct,
     };
 
-    const apiKey = Deno.env.get('LOVABLE_API_KEY');
+    const apiKey = Deno.env.get('OPENROUTER_API_KEY');
     if (!apiKey) {
       return new Response(JSON.stringify({ error: 'AI gateway não configurado', requestId }), { status: 500, headers });
     }

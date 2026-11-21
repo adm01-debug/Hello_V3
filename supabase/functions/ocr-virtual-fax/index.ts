@@ -14,9 +14,9 @@ serve(async (req) => {
     const url = Deno.env.get('SUPABASE_URL')!;
     const anon = Deno.env.get('SUPABASE_ANON_KEY')!;
     const service = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const lovableKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableKey) {
-      return new Response(JSON.stringify({ error: 'LOVABLE_API_KEY não configurada' }), { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
+    const openRouterKey = Deno.env.get('OPENROUTER_API_KEY');
+    if (!openRouterKey) {
+      return new Response(JSON.stringify({ error: 'OPENROUTER_API_KEY não configurada' }), { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
     }
 
     const supabase = createClient(url, anon, { global: { headers: { Authorization: authHeader } } });
@@ -50,9 +50,9 @@ serve(async (req) => {
     const mime = file.type || 'application/pdf';
 
     // Chama Lovable AI Gateway (Gemini vision)
-    const aiResp = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const aiResp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${lovableKey}`, 'Content-Type': 'application/json' },
+      headers: { 'Authorization': `Bearer ${openRouterKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
         messages: [

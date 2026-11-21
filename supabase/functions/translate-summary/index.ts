@@ -53,7 +53,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const apiKey = Deno.env.get('LOVABLE_API_KEY');
+    const apiKey = Deno.env.get('OPENROUTER_API_KEY');
     const payload = {
       summary: summary.summary,
       main_topics: summary.main_topics,
@@ -68,7 +68,7 @@ Deno.serve(async (req) => {
     try {
       aiRes = await resilientFetch(
         'lovable-ai:translate-summary',
-        'https://ai.gateway.lovable.dev/v1/chat/completions',
+        'https://openrouter.ai/api/v1/chat/completions',
         {
           method: 'POST',
           headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
