@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Inbox as InboxIcon, MessageCircle, Mail, MessageSquare, Phone, Smartphone, Send, Filter, Tag, AlertTriangle } from 'lucide-react';
+import { Inbox as InboxIcon, MessageCircle, Mail, MessageSquare, Phone, Smartphone, Send, Filter, Tag, AlertTriangle, Sparkles, Loader2 } from 'lucide-react';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 import { Card } from '@/components/ui/card';
@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { EmptyState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useChatbot } from '@/hooks/useChatbot';
 import { WhatsappComposer } from '@/components/whatsapp/WhatsappComposer';
 import {
   useConversations,
@@ -69,6 +70,7 @@ export default function Inbox() {
   const { data: messages = [] } = useConversationMessages(selectedId);
   const sendMessage = useSendMessage();
   const updateConv = useUpdateConversation();
+  const chatbot = useChatbot();
 
   const filteredConversations = useMemo(() => {
     if (!search) return conversations;
@@ -96,6 +98,16 @@ export default function Inbox() {
           setDraft('');
           setIsPrivateNote(false);
         },
+      }
+    );
+  };
+
+  const handleAiRespond = () => {
+    if (!selectedId || !draft.trim()) return;
+    chatbot.mutate(
+      { conversationId: selectedId, userMessage: draft.trim() },
+      {
+        onSuccess: () => setDraft(''),
       }
     );
   };
@@ -232,6 +244,8 @@ export default function Inbox() {
               setIsPrivateNote={setIsPrivateNote}
               onSend={handleSend}
               sending={sendMessage.isPending}
+              onAiRespond={handleAiRespond}
+              aiPending={chatbot.isPending}
               onResolve={() =>
                 updateConv.mutate({
                   id: selected.id,
@@ -255,10 +269,12 @@ interface ThreadProps {
   setIsPrivateNote: (v: boolean) => void;
   onSend: () => void;
   sending: boolean;
+  onAiRespond: () => void;
+  aiPending: boolean;
   onResolve: () => void;
 }
 
-function ConversationThread({ conversation, messages, draft, setDraft, isPrivateNote, setIsPrivateNote, onSend, sending, onResolve }: ThreadProps) {
+function ConversationThread({ conversation, messages, draft, setDraft, isPrivateNote, setIsPrivateNote, onSend, sending, onAiRespond, aiPending, onResolve }: ThreadProps) {
   const Icon = channelIcons[conversation.channel];
   return (
     <>
@@ -273,6 +289,15 @@ function ConversationThread({ conversation, messages, draft, setDraft, isPrivate
           </div>
         </div>
         <div className="flex gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={onAiRespond}
+            disabled={!draft.trim() || sending || aiPending}
+          >
+            {aiPending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : <Sparkles className="h-3.5 w-3.5 mr-1" />}
+            {aiPending ? 'IA respondendo…' : 'Responder com IA'}
+          </Button>
           {conversation.status !== 'resolved' && (
             <Button size="sm" variant="outline" onClick={onResolve}>
               Resolver
