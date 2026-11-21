@@ -81,7 +81,7 @@ São o caso mais claro de "planejado, construído e nunca ligado". Todas confirm
 | Funcionalidade | O que existe | O que falta | Classificação |
 |---|---|---|---|
 | Aderência a escala | `useAdherence.ts`, edge `compute-adherence`, tabelas | ✅ Wireado: aba **Aderência** em `/scheduling` (PR #67) | 🟩 |
-| Chatbot | `useChatbot.ts`, edge `chatbot-respond` | Consumidor na UI | 🟦 |
+| Chatbot | `useChatbot.ts`, edge `chatbot-respond` | ✅ Wireado: botão **Responder com IA** em `/inbox` (PR #70) | 🟩 |
 | Risco de churn | `useChurnRisk.ts`, edge `detect-churn-risk` | ✅ Wireado: card **Sinais de Churn Ativos** em `/accounts` (PR #67) | 🟩 |
 | Playlists de chamada | `useCallPlaylists.ts` + `usePlaylistItems` | ✅ Wireado: aba **Playlists** em `/call-library` (PR #67) | 🟩 |
 | Atribuições de coaching | `useCoachingAssignments.ts` | ✅ Wireado: em `/coaching` (PR #67) | 🟩 |
@@ -90,7 +90,7 @@ São o caso mais claro de "planejado, construído e nunca ligado". Todas confirm
 | Pesquisas (surveys) | `useSurveys.ts` + edge `send-survey` | ✅ Wireado: aba **Pesquisas** em `/call-library` (PR #67) | 🟩 |
 | Notificações (versão antiga) | `useNotifications.ts` (219 linhas) | Substituído por `useNotificationCenter` | ⬛ |
 | Conferência multicanal | `useMultiChannelCallConference.ts` | Duplicata inline em `useMultiChannelCall.ts:189-238` | ⬛ |
-| Tradução ao vivo | `translation/LiveTranslationPanel.tsx` (125 linhas) | Zero importadores | ⬛ |
+| Tradução ao vivo | `translation/LiveTranslationPanel.tsx` (125 linhas) | ✅ Wireado: painel em chamada ativa em `/calls` (PR #69) | 🟩 |
 | Composer de WhatsApp | `whatsapp/WhatsappComposer.tsx` (106 linhas) | Zero importadores | ⬛ |
 | Gate de permissões granular | `auth/PermissionGate.tsx` — citado no `README.md` como recurso ativo | Zero importadores | ⬛ |
 | Dashboard de gamificação | `gamification/GamificationDashboard.tsx` | ✅ Wireado: rota `/gamification` + menu **Gamificação IA** (PR #67) | 🟩 |
