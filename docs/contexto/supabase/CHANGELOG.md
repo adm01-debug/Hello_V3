@@ -2,6 +2,10 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-21 16:12 UTC
+
+- **functions** alterado (1): `public.is_admin_or_supervisor()`
+
 ## 2026-11-21 14:12 UTC
 
 - **colunas** adicionado (24): `public.call_records.agent_id`, `public.call_records.agent_name`, `public.call_records.contact_id`, `public.call_records.contact_name`, `public.call_records.contact_phone`, `public.call_records.duration`, `public.call_records.id`, `public.call_records.notes`, `public.call_records.recording_url`, `public.call_records.status`, `public.call_records.timestamp`, `public.call_records.transcription`, `public.call_records.type`, `public.contacts.favorite`, `public.queue_items.agent_assigned`, `public.queue_items.contact_name`, `public.queue_items.contact_phone`, `public.queue_items.created_at`, `public.queue_items.id`, `public.queue_items.metadata`, `public.queue_items.priority`, `public.queue_items.queue_type`, `public.queue_items.status`, `public.queue_items.wait_time`
