@@ -185,9 +185,10 @@ END $$;
 DO $$
 BEGIN
     IF to_regclass('audit_logs') IS NOT NULL
-       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='user_id') THEN
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='user_id')
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='created_at') THEN
         EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_audit_user_timestamp 
-ON audit_logs (user_id, timestamp DESC);$stmt$;
+ON audit_logs (user_id, created_at DESC);$stmt$;
     END IF;
 END $$;
 
@@ -195,9 +196,10 @@ END $$;
 DO $$
 BEGIN
     IF to_regclass('audit_logs') IS NOT NULL
-       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='action') THEN
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='action')
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='created_at') THEN
         EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_audit_action_timestamp 
-ON audit_logs (action, timestamp DESC);$stmt$;
+ON audit_logs (action, created_at DESC);$stmt$;
     END IF;
 END $$;
 
@@ -205,9 +207,10 @@ END $$;
 DO $$
 BEGIN
     IF to_regclass('audit_logs') IS NOT NULL
-       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='severity') THEN
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='severity')
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='created_at') THEN
         EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_audit_critical 
-ON audit_logs (timestamp DESC, severity) 
+ON audit_logs (created_at DESC, severity) 
 WHERE severity = 'critical';$stmt$;
     END IF;
 END $$;
@@ -216,9 +219,11 @@ END $$;
 DO $$
 BEGIN
     IF to_regclass('audit_logs') IS NOT NULL
-       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='user_id') THEN
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='user_id')
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='success')
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='created_at') THEN
         EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_audit_failures 
-ON audit_logs (user_id, timestamp DESC) 
+ON audit_logs (user_id, created_at DESC) 
 WHERE success = FALSE;$stmt$;
     END IF;
 END $$;
