@@ -67,6 +67,12 @@ function normalize(value: unknown): string {
   return String(value);
 }
 
+function toFiniteNumber(value: unknown, fallback = 0): number {
+  // Valor vem de audit_logs interno, nunca do corpo da requisicao.
+  const parsed = typeof value === "number" ? value : parseInt(String(value ?? ""), 10); // safe-numeric-ok
+  return isFinite(parsed) ? parsed : fallback;
+}
+
 function ldapUrl(config: LdapConfig): string {
   const scheme = config.useTLS ? "ldaps" : "ldap";
   const host = config.serverUrl.replace(/^ldaps?:\/\//i, "").replace(/\/.*$/, "");
@@ -241,11 +247,11 @@ serve(async (req) => {
           id: row.id as string,
           timestamp: row.created_at as string,
           status: (details.status as string) ?? "error",
-          contactsSynced: Number(details.synced ?? 0),
-          contactsCreated: Number(details.created ?? 0),
-          contactsUpdated: Number(details.updated ?? 0),
-          contactsFailed: Number(details.failed ?? 0),
-          duration: `${(Number(details.durationMs ?? 0) / 1000).toFixed(1)}s`,
+          contactsSynced: toFiniteNumber(details.synced),
+          contactsCreated: toFiniteNumber(details.created),
+          contactsUpdated: toFiniteNumber(details.updated),
+          contactsFailed: toFiniteNumber(details.failed),
+          duration: `${(toFiniteNumber(details.durationMs) / 1000).toFixed(1)}s`,
           error: (details.error as string) ?? undefined,
         };
       });
