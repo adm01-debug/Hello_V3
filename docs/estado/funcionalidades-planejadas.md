@@ -28,7 +28,7 @@ Origem: `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` §2 e `docs/audits/pendencias-
 | **Unified Inbox** (WhatsApp + SMS + Voz em timeline única) | 🔴 Pendente (D1) | Peças existem e estão **desconectadas**: `src/components/whatsapp/WhatsappComposer.tsx` (106 linhas) tem **zero importadores**; edge `whatsapp-inbound` existe; não há rota `/inbox` | 🟦 **SUGERIDO_OU_INICIADO** |
 | **Virtual Fax v2** (OCR via Gemini) | 🔴 Pendente (D2) | Edge function `ocr-virtual-fax/index.ts` **existe e chama a IA de verdade** (`:59`); falta a interface de gestão descrita | 🟨 **IMPLEMENTADO_PARCIAL** |
 | **AI-Driven Shift Management** | 🔴 Pendente (D3) | Edge `suggest-shift-swaps` existe; `useAdherence` wireado na aba **Aderência** de `/scheduling` (PR #67) | 🟩 **IMPLEMENTADO_TOTAL** (fio ligado) |
-| **Coaching Automático** (sentimento → trilhas) | 🔴 Pendente (D4) | Edges `generate-coaching`, `generate-coaching-plan`, `generate-coaching-track` existem; `generate-coaching-track` **sem chamador**; `useCoachingAssignments` wireado em `/coaching` (PR #67) | 🟨 **IMPLEMENTADO_PARCIAL** (falta conector do track) |
+| **Coaching Automático** (sentimento → trilhas) | 🟢 **Implementado (D4)** | Edges `generate-coaching`, `generate-coaching-plan`, `generate-coaching-track` wireadas; `generate-coaching-track` reescrita contra schema real (`call_summaries.agent_performance_score`/`customer_satisfaction` 0-5, `coaching_assignments.agent_name`/`title`/`description`/`priority`/`status`) e testada (8 testes); botão **"Gerar trilhas automáticas"** em `/coaching` (guard `coaching.manage`) | 🟩 **IMPLEMENTADO** |
 | **Data Lake connector** (BigQuery/Snowflake) | 🟡 Pendente (D5) | Edges `data-lake-flush` e `export-data-lake` existem; cron reapontado para `cfmlmcdyjuotqobjapng` (migration `20261114090557_…`) | 🟡 **IMPLEMENTADO_PARCIAL** (fio corrigido; aguarda aplicação) |
 | **Financial Impact Dashboard** | Listado como futuro | Rota `/financial-impact` **existe e está ativa**; hook `useFinancialImpact` com teste de propriedade | ✅ **IMPLEMENTADO_TOTAL** (código) / `NAO_VERIFICADO` em uso real |
 
@@ -97,7 +97,7 @@ São o caso mais claro de "planejado, construído e nunca ligado". Todas confirm
 | Auditoria de segurança (admin) | `pages/admin/SecurityAuditDashboard.tsx` (313 linhas) | Sem rota registrada | ⬛ |
 | Cadeia WebRTC alternativa | `calls/WebRTCCall.tsx` + 4 filhos (~880 linhas) | Só referenciada por testes | ⬛ |
 
-**7 Edge Functions sem chamador identificado:** `cleanup-lock-conflicts`, `fuzz-test-runner`, `generate-coaching-track`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`.
+**6 Edge Functions sem chamador identificado:** `cleanup-lock-conflicts`, `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`. (`generate-coaching-track` agora wireada via botão em `/coaching`.)
 **2 Edge Functions com testes mas sem `index.ts`:** `check-calling-hours/`, `check-dnc/`.
 
 ---
