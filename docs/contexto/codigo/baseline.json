@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "c96ef1baa47e7af57be3e79a356528f1dbfeb8a8",
+  "commit": "409f79f8b8462a6f974e265c7c1cc834d05026d7",
   "branch": "main",
-  "data_commit": "2026-11-21T18:10:51-03:00",
+  "data_commit": "2026-11-21T18:27:48-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "409f79f",
+    "data": "2026-11-21",
+    "assunto": "fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)"
+   },
    {
     "sha": "c96ef1b",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "6ffab7a",
     "data": "2026-11-20",
     "assunto": "chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)"
-   },
-   {
-    "sha": "ce6fee5",
-    "data": "2026-11-20",
-    "assunto": "chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)"
    }
   ],
-  "arquivos_mudados_7d": 590,
+  "arquivos_mudados_7d": 591,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -149,7 +149,11 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 7
+    "mudancas": 8
+   },
+   {
+    "pasta": "src/components/layout",
+    "mudancas": 8
    },
    {
     "pasta": "src/lib/__tests__",
@@ -161,10 +165,6 @@
    },
    {
     "pasta": "covout/hooks/auth",
-    "mudancas": 6
-   },
-   {
-    "pasta": "src/components/layout",
     "mudancas": 6
    },
    {
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 7
+    "mudancas": 8
    },
    {
     "arquivo": ".github/workflows/contexto.yml",
@@ -219,7 +219,7 @@
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
-    "mudancas": 4
+    "mudancas": 5
    },
    {
     "arquivo": "AGENTS.md",
@@ -246,7 +246,15 @@
     "mudancas": 3
    },
    {
+    "arquivo": "src/components/layout/CommandPalette.tsx",
+    "mudancas": 3
+   },
+   {
     "arquivo": "src/pages/Inbox.tsx",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 3
    },
    {
@@ -288,20 +296,12 @@
    {
     "arquivo": "docs/pendencias/WIRING-04-gamificationdashboard.md",
     "mudancas": 2
-   },
-   {
-    "arquivo": "docs/pendencias/WIRING-05-securityauditdashboard.md",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "docs/pendencias/WIRING-06-hooks-orfaos.md",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 62
+    "commits": 63
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,11 +316,11 @@
  "contagens": {
   "arquivos_total": 1566,
   "arquivos_codigo": 1204,
-  "linhas_codigo": 164884,
+  "linhas_codigo": 164887,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 93,
+  "itens_menu": 94,
   "modulos": 78,
   "componentes": 447,
   "hooks": 190,
@@ -472,7 +472,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41953
+   "linhas": 41955
   },
   "src/contexts": {
    "arquivos": 2,
@@ -492,7 +492,7 @@
   },
   "src/lib": {
    "arquivos": 160,
-   "linhas": 20654
+   "linhas": 20655
   },
   "src/main.tsx": {
    "arquivos": 1,
@@ -610,7 +610,7 @@
   },
   {
    "arquivo": "src/components/layout/AppSidebar.tsx",
-   "linhas": 357
+   "linhas": 358
   },
   {
    "arquivo": "src/pages/CallFlowDesigner.tsx",

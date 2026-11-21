@@ -2987,6 +2987,7 @@
    "src/pages/Index.tsx",
    "src/pages/Knowledge.tsx",
    "src/pages/MeetingSummaries.tsx",
+   "src/pages/Onboarding.tsx",
    "src/pages/PhoneDialer.tsx",
    "src/pages/QueueMetricsDashboard.tsx",
    "src/pages/Recordings.tsx",

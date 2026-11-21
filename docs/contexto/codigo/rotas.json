@@ -5,7 +5,7 @@
   "urls": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 93,
+  "itens_menu": 94,
   "lazy": 104
  },
  "urls": [
@@ -5641,6 +5641,15 @@
    "papeis_nao_resolvidos": null,
    "definido_em": "src/components/layout/AppSidebar.tsx",
    "resolve_para": "src/pages/ObservabilityDashboard.tsx"
+  },
+  {
+   "rotulo": "Onboarding",
+   "destino": "/onboarding",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Onboarding.tsx"
   },
   {
    "rotulo": "Outbound Compliance",

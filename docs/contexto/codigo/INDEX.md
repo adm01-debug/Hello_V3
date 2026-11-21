@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c96ef1baa47e7af57be3e79a356528f1dbfeb8a8` (2026-11-21T18:10:51-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `409f79f8b8462a6f974e265c7c1cc834d05026d7` (2026-11-21T18:27:48-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,11 +36,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1566 |
 | arquivos_codigo | 1204 |
-| linhas_codigo | 164884 |
+| linhas_codigo | 164887 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
-| itens_menu | 93 |
+| itens_menu | 94 |
 | modulos | 78 |
 | componentes | 447 |
 | hooks | 190 |
@@ -96,7 +96,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | lib | 0 | 0 | 47 | 111 | 30 | 66 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
-| pages | 85 | 93 | 92 | 187 | 65 | 133 |
+| pages | 86 | 93 | 92 | 187 | 65 | 133 |
 | pages/admin | 8 | 9 | 16 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
@@ -361,27 +361,27 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8899 nós · 23759 arestas · 687 comunidades · grafo do commit `c96ef1ba`
-- comunidades maiores: lucide-react (270), usePageTitle (231), vitest (203), client.ts (176), logger.ts (168), react (161), badge.tsx (126), utils.ts (120), cn (111), UnifiedSoftphone.tsx (108), snapshot.py (100), Tabela de funcionalidades (96)
+- 8899 nós · 23761 arestas · 685 comunidades · grafo do commit `409f79f8`
+- comunidades maiores: lucide-react (227), utils.ts (204), usePageTitle (185), react (180), vitest (167), traceHeaders (166), Card (158), client.ts (145), sonner (142), useAuthContext (142), cn (112), snapshot.py (100)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/estado/funcionalidades-planejadas.md (7)
+- docs/estado/funcionalidades-planejadas.md (8)
 - .github/workflows/contexto.yml (6)
 - .github/workflows/ci.yml (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
-- src/components/layout/AppSidebar.tsx (4)
+- src/components/layout/AppSidebar.tsx (5)
 - AGENTS.md (3)
 - deno.lock (3)
 - docs/pendencias/_ordem.md (3)
 - scripts/inventario/gerar-banco.mjs (3)
 - scripts/supabase_snapshot/snapshot.py (3)
 - scripts/supabase_snapshot/test_snapshot.py (3)
+- src/components/layout/CommandPalette.tsx (3)
 - src/pages/Inbox.tsx (3)
-- .env.example (2)
-- .github/workflows/inventario-estado-semanal.yml (2)
+- src/routes/protectedRoutes.tsx (3)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -420,6 +420,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `409f79f` fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)
 - 2026-11-21 `c96ef1b` feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)
 - 2026-11-21 `ee5082d` feat: (#77)
 - 2026-11-21 `b2f65d7` feat: (#76)
@@ -434,7 +435,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `587daff` chore(docs): reflete wiring WIRING-04/06 na doc de funcionalidades planejadas (#68)
 - 2026-11-21 `592732e` feat: wirea WIRING-04 e 06 (hooks de contexto e gamificação na UI) (#67)
 - 2026-11-21 `7569241` fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)
-- 2026-11-21 `7d28bde` fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

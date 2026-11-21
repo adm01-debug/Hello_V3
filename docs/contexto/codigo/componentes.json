@@ -2634,7 +2634,7 @@
     "AppSidebar"
    ],
    "export_default": null,
-   "linhas": 357,
+   "linhas": 358,
    "dominio": "components/layout",
    "hooks_locais": [
     "useAuthContext",
@@ -2652,7 +2652,7 @@
     "CommandPalette"
    ],
    "export_default": null,
-   "linhas": 202,
+   "linhas": 203,
    "dominio": "components/layout",
    "hooks_locais": [
     "useTheme"
@@ -6436,7 +6436,7 @@
    ],
    "tabelas": [],
    "edges": [],
-   "usado_por": 1,
+   "usado_por": 2,
    "orfao": false
   },
   {
