@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "8ee9f60daf23bc4b86e1d6bed4bffdc2f8009f80",
+  "sha": "f8ba359bfe7367946988fdef6c36f649a33cbc0e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 22:37 UTC",
-  "files_total": 1615,
-  "code_files": 1421,
-  "code_lines": 179329
+  "generated_at": "2026-11-21 23:02 UTC",
+  "files_total": 1617,
+  "code_files": 1423,
+  "code_lines": 179580
  },
  "version": "1.3.2",
- "facts_hash": "5be06e93eeecd739",
+ "facts_hash": "507803e88eb68440",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 603,
-   ".ts": 572,
+   ".ts": 574,
    ".sql": 214,
    ".mjs": 25,
    ".py": 5,
@@ -32396,7 +32396,7 @@
   {
    "module": "src/pages",
    "files": 130,
-   "lines": 20694,
+   "lines": 20770,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -32620,8 +32620,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 148,
-   "lines": 17027,
+   "files": 150,
+   "lines": 17202,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -32723,6 +32723,7 @@
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
     "index.ts: handler",
+    "slo-budget.ts: BudgetStatus, BudgetInput, BudgetResult, budget",
     "index.ts: detectAnomalies",
     "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
     "index.ts: ForecastDay, HistoryDay, buildHistory, forecastNextDays",
@@ -32826,12 +32827,12 @@
     "supabase/functions/generate-summary/index.ts",
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
+    "supabase/functions/health-check/slo-budget.ts",
     "supabase/functions/health-check/__tests__/index.test.ts",
+    "supabase/functions/health-check/__tests__/slo-budget_test.ts",
     "supabase/functions/ldap-sync/index.ts",
     "supabase/functions/notify-blocked-ip/index.ts",
-    "supabase/functions/notify-new-device/index.ts",
-    "supabase/functions/ocr-virtual-fax/index.ts",
-    "supabase/functions/process-digest/index.ts"
+    "supabase/functions/notify-new-device/index.ts"
    ]
   },
   {
@@ -37977,6 +37978,11 @@
     "values": "CLOSED | OPEN | HALF_OPEN"
    },
    {
+    "file": "supabase/functions/health-check/slo-budget.ts",
+    "name": "BudgetStatus",
+    "values": "healthy | warning | exhausted | unknown"
+   },
+   {
     "file": "supabase/functions/voip-anomaly-remediation/index.ts",
     "name": "AnomalyKind",
     "values": "spike | drift | outage"
@@ -40570,6 +40576,14 @@
    {
     "file": "supabase/functions/generate-coaching-track/index.ts",
     "text": "Rate-limit: uma trilha aberta por agente (evita duplicar)."
+   },
+   {
+    "file": "supabase/functions/health-check/index.ts",
+    "text": "Budget esgotado alerta mesmo com status ainda dentro do limite: e o sinal"
+   },
+   {
+    "file": "supabase/functions/health-check/slo-budget.ts",
+    "text": "que uma tendencia: burn_rate de 1 e o alvo, nao o limite."
    },
    {
     "file": "supabase/functions/notify-blocked-ip/index.ts",
@@ -47797,6 +47811,11 @@
     "value": "14"
    },
    {
+    "file": "supabase/functions/health-check/slo-budget.ts",
+    "name": "DEFAULT_MIN_SAMPLES",
+    "value": "10"
+   },
+   {
     "file": "supabase/functions/ldap-sync/index.ts",
     "name": "MAX_ENTRIES",
     "value": "5000"
@@ -51587,8 +51606,32 @@
    {
     "file": "src/pages/admin/SloDashboard.tsx",
     "field": "status",
+    "value": "healthy",
+    "kind": "escreve"
+   },
+   {
+    "file": "src/pages/admin/SloDashboard.tsx",
+    "field": "status",
     "value": "operational",
     "kind": "escreve"
+   },
+   {
+    "file": "src/pages/admin/SloDashboard.tsx",
+    "field": "status",
+    "value": "exhausted",
+    "kind": "compara"
+   },
+   {
+    "file": "src/pages/admin/SloDashboard.tsx",
+    "field": "status",
+    "value": "warning",
+    "kind": "compara"
+   },
+   {
+    "file": "src/pages/admin/SloDashboard.tsx",
+    "field": "status",
+    "value": "healthy",
+    "kind": "compara"
    },
    {
     "file": "src/pages/admin/SloDashboard.tsx",
@@ -52671,6 +52714,18 @@
     "kind": "compara"
    },
    {
+    "file": "supabase/functions/health-check/index.ts",
+    "field": "status",
+    "value": "exhausted",
+    "kind": "compara"
+   },
+   {
+    "file": "supabase/functions/health-check/slo-budget.ts",
+    "field": "status",
+    "value": "unknown",
+    "kind": "escreve"
+   },
+   {
     "file": "supabase/functions/ldap-sync/index.ts",
     "field": "status",
     "value": "success",
@@ -53361,6 +53416,12 @@
     "name": "computeWeaknesses",
     "params": "stat: AgentStat",
     "body": "const avgPerf = stat.perfSum / stat.count; const avgSat = stat.satSum / stat.count; const weaknesses: Weakness[] = []; if (avgPerf < SCORE_THRESHOLD) weaknesses.push({ key: \"performance\", label: \"desempenho geral\", avg: avgPerf }); if (avgSat < SCORE_THRESHOLD) weaknesses.push({ key: \"satisfacao\", label: \"satisfação do cliente\", avg: avgSat }); return weaknesses;"
+   },
+   {
+    "file": "supabase/functions/health-check/slo-budget.ts",
+    "name": "round",
+    "params": "n: number",
+    "body": "return Math.round(n * 10000) / 10000;"
    },
    {
     "file": "supabase/functions/voip-anomaly-detector/index.ts",
@@ -54161,6 +54222,10 @@
    {
     "file": "supabase/functions/forecast-deals/index.ts",
     "line": "const composite = (prob * 0.7) + (health * 0.3);"
+   },
+   {
+    "file": "supabase/functions/health-check/slo-budget.ts",
+    "line": "// Alvo de 100%: qualquer falha esgota o budget."
    },
    {
     "file": "supabase/functions/score-call-attempt/index.ts",
@@ -69517,6 +69582,50 @@
     "name": "health-check: returns health status"
    },
    {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - sem falhas mantem o budget intacto"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - falha igual a tolerancia zera o budget"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - falha acima da tolerancia escala o burn rate"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - metade da tolerancia entra em warning"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - consumo baixo permanece healthy"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - sem amostras nao divide por zero"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - respeita a janela minima de amostras"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - bad acima de total e truncado"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - bad negativo vira zero"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - alvo de 100% esgota com qualquer falha"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    "name": "budget - total nao finito vira unknown"
+   },
+   {
     "file": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
     "name": "score-call-attempt: 401 sem Authorization"
    },
@@ -79513,7 +79622,9 @@
       "compara:src/components/executive/VoipInfrastructureTab.tsx",
       "compara:src/components/observability/HealthTab.tsx",
       "compara:src/hooks/useHealthCheck.ts",
-      "escreve:src/hooks/useHealthCheck.ts"
+      "compara:src/pages/admin/SloDashboard.tsx",
+      "escreve:src/hooks/useHealthCheck.ts",
+      "escreve:src/pages/admin/SloDashboard.tsx"
      ],
      "degraded": [
       "compara:src/components/executive/VoipInfrastructureTab.tsx",
@@ -79562,6 +79673,7 @@
       "compara:src/components/queue/QueueGoalsTab.tsx",
       "compara:src/hooks/useQueueMetrics.ts",
       "compara:src/pages/QueueMetricsDashboard.tsx",
+      "compara:src/pages/admin/SloDashboard.tsx",
       "compara:supabase/functions/check-goals/index.ts"
      ],
      "voicemail": [
@@ -79705,6 +79817,10 @@
       "escreve:src/pages/admin/SloDashboard.tsx",
       "escreve:supabase/functions/health-check/index.ts"
      ],
+     "exhausted": [
+      "compara:src/pages/admin/SloDashboard.tsx",
+      "compara:supabase/functions/health-check/index.ts"
+     ],
      "outage": [
       "compara:src/pages/admin/SloDashboard.tsx",
       "compara:supabase/functions/health-check/index.ts"
@@ -79722,7 +79838,8 @@
       "escreve:supabase/functions/check-goals/index.ts"
      ],
      "unknown": [
-      "escreve:supabase/functions/health-check/index.ts"
+      "escreve:supabase/functions/health-check/index.ts",
+      "escreve:supabase/functions/health-check/slo-budget.ts"
      ],
      "fulfilled": [
       "compara:supabase/functions/health-check/index.ts"
@@ -110444,7 +110561,7 @@
   },
   "src/pages/admin/SloDashboard.tsx": {
    "path": "src/pages/admin/SloDashboard.tsx",
-   "lines": 166,
+   "lines": 242,
    "exports": [
     "function SloDashboard"
    ],
@@ -110454,8 +110571,28 @@
    "status_values": [
     {
      "field": "status",
+     "value": "healthy",
+     "kind": "escreve"
+    },
+    {
+     "field": "status",
      "value": "operational",
      "kind": "escreve"
+    },
+    {
+     "field": "status",
+     "value": "exhausted",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "warning",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "healthy",
+     "kind": "compara"
     },
     {
      "field": "status",
@@ -114149,7 +114286,7 @@
   },
   "supabase/functions/health-check/index.ts": {
    "path": "supabase/functions/health-check/index.ts",
-   "lines": 96,
+   "lines": 122,
    "exports": [
     "const handler"
    ],
@@ -114210,13 +114347,64 @@
      "field": "status",
      "value": "degraded",
      "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "exhausted",
+     "kind": "compara"
     }
+   ],
+   "rule_comments": [
+    "Budget esgotado alerta mesmo com status ainda dentro do limite: e o sinal"
    ],
    "doc": "Health check consolidado — endpoint público retornando status dos componentes",
    "temporal": [
     "const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();"
    ],
    "uses_service_role": true
+  },
+  "supabase/functions/health-check/slo-budget.ts": {
+   "path": "supabase/functions/health-check/slo-budget.ts",
+   "lines": 83,
+   "exports": [
+    "type BudgetStatus",
+    "interface BudgetInput",
+    "interface BudgetResult",
+    "function budget"
+   ],
+   "enums": [
+    {
+     "name": "BudgetStatus",
+     "values": "healthy | warning | exhausted | unknown"
+    }
+   ],
+   "params": [
+    {
+     "name": "DEFAULT_MIN_SAMPLES",
+     "value": "10"
+    }
+   ],
+   "status_values": [
+    {
+     "field": "status",
+     "value": "unknown",
+     "kind": "escreve"
+    }
+   ],
+   "rule_comments": [
+    "que uma tendencia: burn_rate de 1 e o alvo, nao o limite."
+   ],
+   "doc": "Calculo de error budget a partir de um SLI de proporcao. Duas grandezas independentes: - remaining_pct: quanto da tolerancia de falha ainda resta na janela (100 = nada consumido). - burn_rate: velocidade de consumo da tolerancia. 1 = consumindo exatamente o previsto para a janela inteira; > 1 = vai …",
+   "calc_fns": [
+    {
+     "name": "round",
+     "params": "n: number",
+     "body": "return Math.round(n * 10000) / 10000;"
+    }
+   ],
+   "percents": [
+    "// Alvo de 100%: qualquer falha esgota o budget."
+   ]
   },
   "supabase/functions/health-check/__tests__/index.test.ts": {
    "path": "supabase/functions/health-check/__tests__/index.test.ts",
@@ -114227,6 +114415,24 @@
     "health-check: returns health status"
    ],
    "uses_service_role": true
+  },
+  "supabase/functions/health-check/__tests__/slo-budget_test.ts": {
+   "path": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+   "lines": 66,
+   "is_test": true,
+   "tests": [
+    "budget - sem falhas mantem o budget intacto",
+    "budget - falha igual a tolerancia zera o budget",
+    "budget - falha acima da tolerancia escala o burn rate",
+    "budget - metade da tolerancia entra em warning",
+    "budget - consumo baixo permanece healthy",
+    "budget - sem amostras nao divide por zero",
+    "budget - respeita a janela minima de amostras",
+    "budget - bad acima de total e truncado",
+    "budget - bad negativo vira zero",
+    "budget - alvo de 100% esgota com qualquer falha",
+    "budget - total nao finito vira unknown"
+   ]
   },
   "supabase/functions/ldap-sync/index.ts": {
    "path": "supabase/functions/ldap-sync/index.ts",
@@ -118017,10 +118223,25 @@
   }
  },
  "git": {
-  "sha": "8ee9f60daf23bc4b86e1d6bed4bffdc2f8009f80",
+  "sha": "f8ba359bfe7367946988fdef6c36f649a33cbc0e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "f8ba359",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: error budget por componente no health-check (C1) (#83)",
+    "files": [
+     "docs/audits/pendencias-2026-07.md",
+     "docs/estado/funcionalidades-planejadas.md",
+     "docs/observabilidade/SLI_SLO.md",
+     "src/pages/admin/SloDashboard.tsx",
+     "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+     "supabase/functions/health-check/index.ts",
+     "supabase/functions/health-check/slo-budget.ts"
+    ]
+   },
    {
     "sha": "8ee9f60",
     "date": "2026-11-21",
@@ -118374,32 +118595,12 @@
     "files": [
      "src/hooks/__tests__/useWhatsappRewrite.test.tsx"
     ]
-   },
-   {
-    "sha": "25b35e5",
-    "date": "2026-11-20",
-    "author": "adm01-debug",
-    "subject": "feat: concluir funcionalidades planejadas (wiring IA composer + fix hook TopicDetection) (#53)",
-    "files": [
-     "docs/pendencias/WIRING-01-permissiongate.md",
-     "docs/pendencias/WIRING-02-livetranslationpanel.md",
-     "docs/pendencias/WIRING-03-whatsappcomposer.md",
-     "docs/pendencias/WIRING-04-gamificationdashboard.md",
-     "docs/pendencias/WIRING-05-securityauditdashboard.md",
-     "docs/pendencias/WIRING-06-hooks-orfaos.md",
-     "docs/pendencias/_linha-de-base.md",
-     "docs/pendencias/_ordem.md",
-     "docs/pendencias/_relatorio.md",
-     "docs/pendencias/_verificado-banco.md",
-     "src/pages/Inbox.tsx",
-     "src/pages/TopicDetection.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    8
+    9
    ],
    [
     "src/components/layout/AppSidebar.tsx",
@@ -118414,16 +118615,12 @@
     3
    ],
    [
-    "src/pages/Inbox.tsx",
-    3
-   ],
-   [
-    "docs/pendencias/_ordem.md",
-    3
-   ],
-   [
     "supabase/functions/migrate-helper/index.ts",
     3
+   ],
+   [
+    "docs/audits/pendencias-2026-07.md",
+    2
    ],
    [
     "deno.lock",
@@ -118438,35 +118635,11 @@
     2
    ],
    [
-    "docs/pendencias/_relatorio.md",
+    "src/pages/Inbox.tsx",
     2
    ],
    [
-    "docs/pendencias/_verificado-banco.md",
-    2
-   ],
-   [
-    "docs/pendencias/WIRING-01-permissiongate.md",
-    2
-   ],
-   [
-    "docs/pendencias/WIRING-02-livetranslationpanel.md",
-    2
-   ],
-   [
-    "docs/pendencias/WIRING-03-whatsappcomposer.md",
-    2
-   ],
-   [
-    "docs/pendencias/WIRING-04-gamificationdashboard.md",
-    2
-   ],
-   [
-    "docs/pendencias/WIRING-05-securityauditdashboard.md",
-    2
-   ],
-   [
-    "docs/pendencias/WIRING-06-hooks-orfaos.md",
+    "docs/pendencias/_ordem.md",
     2
    ],
    [
@@ -118476,6 +118649,34 @@
    [
     "supabase/functions/migrate-helper/index.test.ts",
     2
+   ],
+   [
+    "docs/observabilidade/SLI_SLO.md",
+    1
+   ],
+   [
+    "src/pages/admin/SloDashboard.tsx",
+    1
+   ],
+   [
+    "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+    1
+   ],
+   [
+    "supabase/functions/health-check/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/health-check/slo-budget.ts",
+    1
+   ],
+   [
+    "src/App.tsx",
+    1
+   ],
+   [
+    "src/components/auth/PasskeyManager.tsx",
+    1
    ]
   ]
  }

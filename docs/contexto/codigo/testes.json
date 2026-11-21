@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 324,
+ "total": 325,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 308
+  "unit": 309
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 302
+   "arquivos": 303
   },
   {
    "padrao": "e2e/",
@@ -2709,6 +2709,15 @@
    "casos": 2
   },
   {
+   "arquivo": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
+   "tipo": "unit",
+   "linhas": 66,
+   "testa": [
+    "supabase/functions/health-check/slo-budget.ts"
+   ],
+   "casos": 11
+  },
+  {
    "arquivo": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
    "tipo": "unit",
    "linhas": 60,
@@ -3155,6 +3164,7 @@
   "supabase/functions/analyze-call/schema.ts": 3,
   "supabase/functions/bitrix-api/index.ts": 1,
   "supabase/functions/health-check/index.ts": 1,
+  "supabase/functions/health-check/slo-budget.ts": 1,
   "supabase/functions/voip-anomaly-detector/index.ts": 1,
   "supabase/functions/voip-anomaly-remediation/index.ts": 1,
   "supabase/functions/voip-capacity-forecast/index.ts": 1,

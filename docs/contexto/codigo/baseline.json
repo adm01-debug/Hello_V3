@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "8ee9f60daf23bc4b86e1d6bed4bffdc2f8009f80",
+  "commit": "f8ba359bfe7367946988fdef6c36f649a33cbc0e",
   "branch": "main",
-  "data_commit": "2026-11-21T19:36:40-03:00",
+  "data_commit": "2026-11-21T20:01:09-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f8ba359",
+    "data": "2026-11-21",
+    "assunto": "feat: error budget por componente no health-check (C1) (#83)"
+   },
    {
     "sha": "8ee9f60",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "f105468",
     "data": "2026-11-20",
     "assunto": "fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)"
-   },
-   {
-    "sha": "72f3935",
-    "data": "2026-11-20",
-    "assunto": "fix: sanitiza path com fileURLToPath no gerador de inventario (#58)"
    }
   ],
-  "arquivos_mudados_7d": 601,
+  "arquivos_mudados_7d": 606,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 9
+    "mudancas": 10
    },
    {
     "pasta": "src/components/layout",
@@ -184,22 +184,22 @@
     "mudancas": 5
    },
    {
+    "pasta": "supabase/functions/health-check",
+    "mudancas": 5
+   },
+   {
     "pasta": "supabase/functions/migrate-helper",
     "mudancas": 5
    },
    {
     "pasta": "src/components/admin",
     "mudancas": 4
-   },
-   {
-    "pasta": "AGENTS.md",
-    "mudancas": 3
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 9
+    "mudancas": 10
    },
    {
     "arquivo": ".github/workflows/contexto.yml",
@@ -227,6 +227,10 @@
    },
    {
     "arquivo": "deno.lock",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "docs/observabilidade/SLI_SLO.md",
     "mudancas": 3
    },
    {
@@ -258,6 +262,10 @@
     "mudancas": 3
    },
    {
+    "arquivo": "supabase/functions/health-check/index.ts",
+    "mudancas": 3
+   },
+   {
     "arquivo": ".env.example",
     "mudancas": 2
    },
@@ -274,11 +282,11 @@
     "mudancas": 2
    },
    {
-    "arquivo": "docs/estado/edge-functions-parte1.md",
+    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 2
    },
    {
-    "arquivo": "docs/observabilidade/SLI_SLO.md",
+    "arquivo": "docs/estado/edge-functions-parte1.md",
     "mudancas": 2
    },
    {
@@ -288,20 +296,12 @@
    {
     "arquivo": "docs/pendencias/WIRING-02-livetranslationpanel.md",
     "mudancas": 2
-   },
-   {
-    "arquivo": "docs/pendencias/WIRING-03-whatsappcomposer.md",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "docs/pendencias/WIRING-04-gamificationdashboard.md",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 64
+    "commits": 65
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1568,
-  "arquivos_codigo": 1206,
-  "linhas_codigo": 165306,
+  "arquivos_total": 1570,
+  "arquivos_codigo": 1208,
+  "linhas_codigo": 165557,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 212,
   "cron_jobs": 7,
-  "testes": 324,
+  "testes": 325,
   "workflows": 3,
   "scripts": 31,
   "docs_md": 113
@@ -500,7 +500,7 @@
   },
   "src/pages": {
    "arquivos": 130,
-   "linhas": 20694
+   "linhas": 20770
   },
   "src/routes": {
    "arquivos": 2,
@@ -511,8 +511,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 148,
-   "linhas": 17027
+   "arquivos": 150,
+   "linhas": 17202
   },
   "tailwind.config.ts": {
    "arquivos": 1,

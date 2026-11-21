@@ -4728,7 +4728,8 @@
   ],
   "supabase/functions/health-check/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/observability.ts"
+   "supabase/functions/_shared/observability.ts",
+   "supabase/functions/health-check/slo-budget.ts"
   ],
   "supabase/functions/ldap-sync/index.ts": [
    "supabase/functions/_shared/cors.ts"

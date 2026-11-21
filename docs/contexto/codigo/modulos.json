@@ -5942,7 +5942,7 @@
    "modulo": "pages/admin",
    "arquivos": 16,
    "testes": 0,
-   "linhas": 2092,
+   "linhas": 2168,
    "itens_menu": [
     "Alertas de Segurança",
     "Auditoria de Segurança",

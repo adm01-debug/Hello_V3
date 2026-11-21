@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8ee9f60daf` · branch `main` · 2026-11-21 22:37 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f8ba359bfe` · branch `main` · 2026-11-21 23:02 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -260,6 +260,7 @@
 | `NotificationSeverity` (TS) | info \| warning \| critical |  | `src/lib/notifications/index.ts` |
 | `Severity` (TS) | critical \| high \| medium \| low \| info |  | `src/lib/security/penetration-test-reporter.ts` |
 | `CircuitState` (TS) | CLOSED \| OPEN \| HALF_OPEN |  | `supabase/functions/_shared/resilience.ts` |
+| `BudgetStatus` (TS) | healthy \| warning \| exhausted \| unknown |  | `supabase/functions/health-check/slo-budget.ts` |
 | `AnomalyKind` (TS) | spike \| drift \| outage |  | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | `AnomalyMetric` (TS) | mos \| jitter \| volume |  | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | `RecommendationCategory` (TS) | capacity \| quality \| infra \| process |  | `supabase/functions/voip-recommendations/index.ts` |

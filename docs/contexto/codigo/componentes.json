@@ -5356,7 +5356,7 @@
     "SloDashboard"
    ],
    "export_default": "SloDashboard",
-   "linhas": 166,
+   "linhas": 242,
    "dominio": "pages/admin",
    "hooks_locais": [],
    "tabelas": [],

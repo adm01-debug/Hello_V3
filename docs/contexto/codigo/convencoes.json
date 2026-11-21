@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (302)",
+   "co-localizado (__tests__) (303)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: error budget por componente no health-check (C1) (#83)",
    "feat: centraliza reauth em Context com grant HMAC persistido (#81)",
    "fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)",
    "feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)",
-   "feat: (#77)",
-   "feat: (#76)"
+   "feat: (#77)"
   ]
  },
  "pr_template": null,

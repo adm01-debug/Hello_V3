@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8ee9f60daf` · branch `main` · 2026-11-21 22:37 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f8ba359bfe` · branch `main` · 2026-11-21 23:02 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -876,12 +876,13 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `draft` | escreve | `src/hooks/useKnowledgeBase.ts`<br>`src/hooks/useScorecards.ts`<br>`src/pages/Knowledge.tsx`<br>`supabase/functions/score-call/index.ts` |
 | `status` | `ended` | compara, escreve | `src/components/calls/WebRTCCall.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>… +2 |
 | `status` | `error` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>`src/pages/VerifyEmail.tsx` |
+| `status` | `exhausted` | compara | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
 | `status` | `expired` | compara, escreve | `src/pages/PasswordResetApproval.tsx`<br>`src/pages/VerifyEmail.tsx`<br>`supabase/functions/approve-password-reset/index.ts` |
 | `status` | `failed` | compara, escreve | `src/components/calls/MeetingSummaryCard.tsx`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/lib/bitrix/sync-log.ts`<br>`src/pages/VirtualFax.tsx`<br>`supabase/functions/compute-best-time/index.ts`<br>… +4 |
 | `status` | `fulfilled` | compara | `supabase/functions/health-check/index.ts` |
 | `status` | `future` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `generating` | compara, escreve | `src/components/calls/MeetingSummaryCard.tsx`<br>`src/hooks/useMeetingSummary.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
-| `status` | `healthy` | compara, escreve | `src/components/executive/VoipInfrastructureTab.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts` |
+| `status` | `healthy` | compara, escreve | `src/components/executive/VoipInfrastructureTab.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/pages/admin/SloDashboard.tsx` |
 | `status` | `idle` | compara | `src/components/calls/WebRTCCall.tsx` |
 | `status` | `implemented` | compara, escreve | `src/lib/security-report-data.ts`<br>`src/pages/SecurityReport.tsx` |
 | `status` | `in_negotiation` | compara | `src/hooks/useRenewals.ts` |
@@ -923,12 +924,12 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `today` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `tomorrow` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `transferring` | escreve | `src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
-| `status` | `unknown` | escreve | `supabase/functions/health-check/index.ts` |
+| `status` | `unknown` | escreve | `supabase/functions/health-check/index.ts`<br>`supabase/functions/health-check/slo-budget.ts` |
 | `status` | `unstable` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
 | `status` | `verified` | compara, escreve | `src/components/auth/ReauthDialog.tsx`<br>`src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx`<br>`src/pages/two-factor/DevicesCard.tsx` |
 | `status` | `voicemail` | escreve | `src/data/mockData.ts` |
 | `status` | `waiting` | compara | `src/hooks/useQueueMetrics.ts` |
-| `status` | `warning` | compara | `src/components/queue/QueueGoalsTab.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`supabase/functions/check-goals/index.ts` |
+| `status` | `warning` | compara | `src/components/queue/QueueGoalsTab.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/check-goals/index.ts` |
 | `status` | `won` | compara | `src/hooks/useRenewals.ts` |
 | `type` | `ADD_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
 | `type` | `DISMISS_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
@@ -1126,6 +1127,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | NotificationSeverity | info \| warning \| critical | `src/lib/notifications/index.ts` |
 | Severity | critical \| high \| medium \| low \| info | `src/lib/security/penetration-test-reporter.ts` |
 | CircuitState | CLOSED \| OPEN \| HALF_OPEN | `supabase/functions/_shared/resilience.ts` |
+| BudgetStatus | healthy \| warning \| exhausted \| unknown | `supabase/functions/health-check/slo-budget.ts` |
 | AnomalyKind | spike \| drift \| outage | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | AnomalyMetric | mos \| jitter \| volume | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | RecommendationCategory | capacity \| quality \| infra \| process | `supabase/functions/voip-recommendations/index.ts` |
@@ -1599,6 +1601,10 @@ _nenhum item encontrado_
   ```
   const avgPerf = stat.perfSum / stat.count; const avgSat = stat.satSum / stat.count; const weaknesses: Weakness[] = []; if (avgPerf < SCORE_THRESHOLD) weaknesses.push({ key: "performance", label: "desempenho geral", avg: avgPerf }); if (avgSat < SCORE_THRESHOLD) weaknesses.push({ key: "satisfacao", label: "satisfação do cliente", avg: avgSat }); return weaknesses;
   ```
+- **round(n: number)** — `supabase/functions/health-check/slo-budget.ts`
+  ```
+  return Math.round(n * 10000) / 10000;
+  ```
 - **zScore(observed: number, mu: number, sigma: number)** — `supabase/functions/voip-anomaly-detector/index.ts`
   ```
   if (sigma === 0) return 0; return (observed - mu) / sigma;
@@ -1676,6 +1682,7 @@ _nenhum item encontrado_
 | `satScore * 0.15 + probabilityScore * 0.15` | `supabase/functions/compute-deal-health/index.ts` |
 | `const TARGET_SL = 0.8; // 80% atendidas em 30s` | `supabase/functions/forecast-call-volume/index.ts` |
 | `const composite = (prob * 0.7) + (health * 0.3);` | `supabase/functions/forecast-deals/index.ts` |
+| `// Alvo de 100%: qualquer falha esgota o budget.` | `supabase/functions/health-check/slo-budget.ts` |
 | `score = 0.3 + pattern.answer_rate * 0.4;` | `supabase/functions/score-call-attempt/index.ts` |
 | `// 0% alertas = 100, 10%+ = 0` | `supabase/functions/voip-executive-summary/index.ts` |
 | `// linear entre 60% e 100% do cap` | `supabase/functions/voip-executive-summary/index.ts` |
@@ -1790,6 +1797,7 @@ _nenhum item encontrado_
 | `SCORE_THRESHOLD` | `3.0` | `supabase/functions/generate-coaching-track/track-engine.ts` |
 | `MIN_SAMPLES` | `3` | `supabase/functions/generate-coaching-track/track-engine.ts` |
 | `WINDOW_DAYS` | `14` | `supabase/functions/generate-coaching-track/track-engine.ts` |
+| `DEFAULT_MIN_SAMPLES` | `10` | `supabase/functions/health-check/slo-budget.ts` |
 | `MAX_ENTRIES` | `5000` | `supabase/functions/ldap-sync/index.ts` |
 | `LDAP_TIMEOUT_MS` | `15000` | `supabase/functions/ldap-sync/index.ts` |
 | `CONCURRENT_CAP` | `3` | `supabase/functions/voip-capacity-forecast/index.ts` |
@@ -2428,7 +2436,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/functions/export-data-lake/index.ts` |
 
-## K. Testes como especificação (3942 testes em 316 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3953 testes em 317 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2521,6 +2529,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/holdReminderSounds.coverage.test.tsx` | 11 | holdReminderSounds · createNotificationSound plays two oscillators (timer branch) · createUrgentSound plays three beeps over time · formatHoldTime formats both branches … |
 | `src/lib/__tests__/tracing.coverage.test.ts` | 11 | tracing (coverage) · exports header name constants · returns undefined trace id/operation when no scope is active · withTrace generates id, sets operation, and clears on success … |
 | `src/lib/__tests__/voice-biometrics.coverage.test.ts` | 11 | voice-biometrics: isValidEmbedding · accepts an array of correct dimension with finite numbers · rejects non-arrays · rejects wrong-length arrays … |
+| `supabase/functions/health-check/__tests__/slo-budget_test.ts` | 11 | budget - sem falhas mantem o budget intacto · budget - falha igual a tolerancia zera o budget · budget - falha acima da tolerancia escala o burn rate · budget - metade da tolerancia entra em warning … |
 | `src/components/dialer/phone/__tests__/phone-dialer.test.ts` | 10 | phone-utils · sanitiza entrada removendo caracteres inválidos · formata número BR no display · valida se o número é discável … |
 | `src/hooks/__tests__/useDashboardGoals.coverage.test.tsx` | 10 | useDashboardGoals · fetches goals on mount · handles fetch error · opens dialog for new and for editing … |
 | `src/hooks/__tests__/useGamification.coverage.test.tsx` | 10 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
@@ -2731,8 +2740,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipRecommendationSimulate.coverage.test.tsx` | 3 | useVoipRecommendationSimulate · simulates a recommendation successfully · throws when invoke returns an error |
 | `src/lib/__tests__/agent-assist.pbt.test.ts` | 3 | Agent Assist PBT (Property-Based Testing) · rankSignals: priority always dominates confidence · matchesKeywords: handles composite keywords regardless of order |
 | `src/lib/__tests__/tag-filter-label.test.ts` | 3 | formatTagFilterLabel · mapeia sentinelas para rótulos legíveis · nunca lança e sempre devolve string não vazia (PBT) |
-| `supabase/functions/analyze-call/__tests__/integration_test.ts` | 3 | analyze-call integration: validate v1 flow · analyze-call integration: reject invalid v2 flow (missing transcript) · analyze-call integration: validate character limits |
-| … +16 linhas — lista completa em `context.json` | | |
+| … +17 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2961,6 +2969,8 @@ _nenhum item encontrado_
 | ').limit(50000); | `supabase/functions/export-data-lake/index.ts` |
 | Somente supervisor/admin podem disparar geração em massa. | `supabase/functions/generate-coaching-track/index.ts` |
 | Rate-limit: uma trilha aberta por agente (evita duplicar). | `supabase/functions/generate-coaching-track/index.ts` |
+| Budget esgotado alerta mesmo com status ainda dentro do limite: e o sinal | `supabase/functions/health-check/index.ts` |
+| que uma tendencia: burn_rate de 1 e o alvo, nao o limite. | `supabase/functions/health-check/slo-budget.ts` |
 | Input validation | `supabase/functions/notify-blocked-ip/index.ts` |
 | Input validation | `supabase/functions/notify-new-device/index.ts` |
 | Na verdade, vamos apenas rodar uma query SQL via RPC customizado ou direto se permitido. | `supabase/functions/rls-audit/index.ts` |

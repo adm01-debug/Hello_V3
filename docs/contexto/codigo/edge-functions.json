@@ -1441,8 +1441,8 @@
   {
    "nome": "health-check",
    "entrada": "supabase/functions/health-check/index.ts",
-   "arquivos": 1,
-   "linhas": 96,
+   "arquivos": 2,
+   "linhas": 205,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1470,7 +1470,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 1
+   "testes": 2
   },
   {
    "nome": "ldap-sync",
