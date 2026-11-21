@@ -17,9 +17,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, Lock, Shield, Smartphone } from 'lucide-react';
 
 interface ReauthDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: () => void;
+  /** Controlado externamente; ausente = segue o estado global do ReauthProvider. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onSuccess?: () => void;
   title?: string;
   description?: string;
 }
@@ -32,24 +33,34 @@ export function ReauthDialog({
   description = 'Para continuar, confirme sua identidade.',
 }: ReauthDialogProps) {
   const { user } = useAuthContext();
-  const { verifyWithPassword, verifyWithMFA, isVerifying } = useReauth();
+  const { verifyWithPassword, verifyWithMFA, isVerifying, isRequired, cancelReauth } = useReauth();
   const { factors, hasActiveMFA } = useMFA();
-  
+
+  const isControlled = open !== undefined;
+  const dialogOpen = isControlled ? open : isRequired;
+
   const [password, setPassword] = useState('');
   const [mfaCode, setMfaCode] = useState('');
   const [selectedFactor, setSelectedFactor] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const verifiedFactors = factors.filter(f => f.status === 'verified');
+  const verifiedFactors = factors.filter((f) => f.status === 'verified');
+
+  const finish = (success: boolean) => {
+    setPassword('');
+    setMfaCode('');
+    setSelectedFactor(null);
+    if (!success) return;
+    setError(null);
+    if (isControlled) onOpenChange?.(false);
+    onSuccess?.();
+  };
 
   const handlePasswordSubmit = async () => {
     setError(null);
     const success = await verifyWithPassword(password);
-    
     if (success) {
-      setPassword('');
-      onSuccess();
-      onOpenChange(false);
+      finish(true);
     } else {
       setError('Senha incorreta');
     }
@@ -63,12 +74,8 @@ export function ReauthDialog({
 
     setError(null);
     const success = await verifyWithMFA(selectedFactor, mfaCode);
-    
     if (success) {
-      setMfaCode('');
-      setSelectedFactor(null);
-      onSuccess();
-      onOpenChange(false);
+      finish(true);
     } else {
       setError('Código inválido');
     }
@@ -79,11 +86,26 @@ export function ReauthDialog({
     setMfaCode('');
     setSelectedFactor(null);
     setError(null);
-    onOpenChange(false);
+    if (isControlled) {
+      onOpenChange?.(false);
+    } else {
+      cancelReauth();
+    }
   };
 
+  if (!user) return null;
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={dialogOpen}
+      onOpenChange={(next) => {
+        if (next) {
+          if (isControlled) onOpenChange?.(true);
+          return;
+        }
+        handleCancel();
+      }}
+    >
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
@@ -119,8 +141,8 @@ export function ReauthDialog({
                 />
               </div>
               {error && <p className="text-sm text-destructive">{error}</p>}
-              <Button 
-                onClick={handlePasswordSubmit} 
+              <Button
+                onClick={handlePasswordSubmit}
                 disabled={!password || isVerifying}
                 className="w-full"
               >
@@ -166,8 +188,8 @@ export function ReauthDialog({
                 />
               </div>
               {error && <p className="text-sm text-destructive">{error}</p>}
-              <Button 
-                onClick={handleMFASubmit} 
+              <Button
+                onClick={handleMFASubmit}
                 disabled={mfaCode.length !== 6 || isVerifying}
                 className="w-full"
               >
@@ -198,10 +220,7 @@ export function ReauthDialog({
             Cancelar
           </Button>
           {!hasActiveMFA && (
-            <Button 
-              onClick={handlePasswordSubmit} 
-              disabled={!password || isVerifying}
-            >
+            <Button onClick={handlePasswordSubmit} disabled={!password || isVerifying}>
               {isVerifying && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Confirmar
             </Button>

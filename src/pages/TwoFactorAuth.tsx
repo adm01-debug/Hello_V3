@@ -11,6 +11,7 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useReauth } from '@/hooks/useReauth';
 import { TotpCard } from './two-factor/TotpCard';
 import { SmsCard } from './two-factor/SmsCard';
 import { BackupCodesCard } from './two-factor/BackupCodesCard';
@@ -42,6 +43,7 @@ export default function TwoFactorAuth() {
     generateBackupCodes,
     saveSettings,
   } = useMFA();
+  const { withReauth } = useReauth();
 
   const [enrollmentData, setEnrollmentData] = useState<EnrollmentState | null>(null);
   const [verificationCode, setVerificationCode] = useState('');
@@ -99,23 +101,25 @@ export default function TwoFactorAuth() {
   };
 
   const handleDisableFactor = async (factorId: string) => {
-    const success = await unenrollFactor(factorId);
-    if (!success) return;
-    const remainingFactors = factors.filter((f) => f.id !== factorId && f.status === 'verified');
-    if (remainingFactors.length === 0) {
-      await saveSettings({ mfa_enabled: false, mfa_method: null });
-    } else {
-      const hasRemainingTOTP = remainingFactors.some((f) => f.type === 'totp');
-      const hasRemainingPhone = remainingFactors.some((f) => f.type === 'phone');
-      await saveSettings({
-        mfa_method:
-          hasRemainingTOTP && hasRemainingPhone
-            ? 'both'
-            : hasRemainingTOTP
-              ? 'totp'
-              : 'phone',
-      });
-    }
+    void withReauth('configure_mfa', async () => {
+      const success = await unenrollFactor(factorId);
+      if (!success) return;
+      const remainingFactors = factors.filter((f) => f.id !== factorId && f.status === 'verified');
+      if (remainingFactors.length === 0) {
+        await saveSettings({ mfa_enabled: false, mfa_method: null });
+      } else {
+        const hasRemainingTOTP = remainingFactors.some((f) => f.type === 'totp');
+        const hasRemainingPhone = remainingFactors.some((f) => f.type === 'phone');
+        await saveSettings({
+          mfa_method:
+            hasRemainingTOTP && hasRemainingPhone
+              ? 'both'
+              : hasRemainingTOTP
+                ? 'totp'
+                : 'phone',
+        });
+      }
+    });
   };
 
   const copyToClipboard = (text: string) => {

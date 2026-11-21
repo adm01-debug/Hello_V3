@@ -1,11 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { useReauth } from '../useReauth';
+import { ReauthProvider } from '@/contexts/ReauthContext';
 
 const signInMock = vi.fn();
 const challengeMock = vi.fn();
 const verifyMock = vi.fn();
-let mockUser: { email?: string } | null = { email: 'ti@promobrindes.com.br' };
+let mockUser: { id?: string; email?: string } | null = {
+  id: 'user-1',
+  email: 'ti@promobrindes.com.br',
+};
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
@@ -21,22 +26,31 @@ vi.mock('@/integrations/supabase/client', () => ({
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn(), info: vi.fn(), warning: vi.fn() } }));
 vi.mock('@/contexts/AuthContext', () => ({ useAuthContext: () => ({ user: mockUser }) }));
 
+function wrapper({ children }: { children: ReactNode }) {
+  return <ReauthProvider>{children}</ReauthProvider>;
+}
+
+function renderReauth() {
+  return renderHook(() => useReauth(), { wrapper });
+}
+
 describe('useReauth', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockUser = { email: 'ti@promobrindes.com.br' };
+    sessionStorage.clear();
+    mockUser = { id: 'user-1', email: 'ti@promobrindes.com.br' };
     signInMock.mockResolvedValue({ error: null });
     challengeMock.mockResolvedValue({ data: { id: 'ch1' }, error: null });
     verifyMock.mockResolvedValue({ error: null });
   });
 
   it('needsReauth true sem verificação prévia', () => {
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     expect(result.current.needsReauth('change_password')).toBe(true);
   });
 
   it('requestReauth marca isRequired', () => {
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     let ret = false;
     act(() => { ret = result.current.requestReauth('admin_action'); });
     expect(ret).toBe(true);
@@ -45,7 +59,7 @@ describe('useReauth', () => {
   });
 
   it('verifyWithPassword sucesso atualiza lastVerified e dispensa reauth', async () => {
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     let ok = false;
     await act(async () => { ok = await result.current.verifyWithPassword('senha'); });
     expect(ok).toBe(true);
@@ -59,7 +73,7 @@ describe('useReauth', () => {
 
   it('verifyWithPassword falha quando supabase retorna erro', async () => {
     signInMock.mockResolvedValue({ error: new Error('bad') });
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     let ok = true;
     await act(async () => { ok = await result.current.verifyWithPassword('x'); });
     expect(ok).toBe(false);
@@ -67,7 +81,7 @@ describe('useReauth', () => {
 
   it('verifyWithPassword retorna false sem email', async () => {
     mockUser = {};
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     let ok = true;
     await act(async () => { ok = await result.current.verifyWithPassword('x'); });
     expect(ok).toBe(false);
@@ -75,14 +89,14 @@ describe('useReauth', () => {
 
   it('verifyWithPassword captura exceção', async () => {
     signInMock.mockRejectedValue(new Error('throw'));
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     let ok = true;
     await act(async () => { ok = await result.current.verifyWithPassword('x'); });
     expect(ok).toBe(false);
   });
 
   it('verifyWithMFA sucesso', async () => {
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     let ok = false;
     await act(async () => { ok = await result.current.verifyWithMFA('f1', '123456'); });
     expect(ok).toBe(true);
@@ -90,7 +104,7 @@ describe('useReauth', () => {
 
   it('verifyWithMFA falha no challenge', async () => {
     challengeMock.mockResolvedValue({ data: null, error: new Error('challenge fail') });
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     let ok = true;
     await act(async () => { ok = await result.current.verifyWithMFA('f1', '000') ; });
     expect(ok).toBe(false);
@@ -98,7 +112,7 @@ describe('useReauth', () => {
 
   it('verifyWithMFA falha na verificação', async () => {
     verifyMock.mockResolvedValue({ error: new Error('verify fail') });
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     let ok = true;
     await act(async () => { ok = await result.current.verifyWithMFA('f1', '000'); });
     expect(ok).toBe(false);
@@ -106,14 +120,14 @@ describe('useReauth', () => {
 
   it('verifyWithMFA captura exceção', async () => {
     challengeMock.mockRejectedValue(new Error('boom'));
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     let ok = true;
     await act(async () => { ok = await result.current.verifyWithMFA('f1', '000'); });
     expect(ok).toBe(false);
   });
 
   it('cancelReauth limpa estado', () => {
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     act(() => { result.current.requestReauth('export_data'); });
     act(() => { result.current.cancelReauth(); });
     expect(result.current.isRequired).toBe(false);
@@ -121,7 +135,7 @@ describe('useReauth', () => {
   });
 
   it('withReauth executa callback quando não precisa reauth', async () => {
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     await act(async () => { await result.current.verifyWithPassword('senha'); });
     const cb = vi.fn().mockResolvedValue('done');
     let out: string | null = null;
@@ -131,7 +145,7 @@ describe('useReauth', () => {
   });
 
   it('withReauth dispara reauth e retorna null quando necessário', async () => {
-    const { result } = renderHook(() => useReauth());
+    const { result } = renderReauth();
     const cb = vi.fn().mockResolvedValue('done');
     let out: string | null = 'x';
     await act(async () => { out = await result.current.withReauth('revoke_sessions', cb); });
