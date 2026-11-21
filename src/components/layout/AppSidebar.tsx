@@ -100,6 +100,7 @@ const securityNavItems = [
 ];
 
 const settingsNavItems = [
+  { title: 'Onboarding', url: '/onboarding', icon: Sparkles },
   { title: 'Notificações', url: '/notifications', icon: BellRing },
   { title: 'Compliance', url: '/compliance', icon: ListChecks },
   { title: 'Outbound Compliance', url: '/outbound-compliance', icon: ShieldCheck },
