@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "592732efa58dd4aa95f3b002ee2ea93a4c00765c",
+  "commit": "587dafffe19c07231fb93f984dbfc06a75961fb2",
   "branch": "main",
-  "data_commit": "2026-11-21T11:37:58-03:00",
+  "data_commit": "2026-11-21T11:53:42-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "587daff",
+    "data": "2026-11-21",
+    "assunto": "chore(docs): reflete wiring WIRING-04/06 na doc de funcionalidades planejadas (#68)"
+   },
    {
     "sha": "592732e",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "82934f8",
     "data": "2026-11-19",
     "assunto": "infra: SPA rewrites no Vercel (rotas client-side sem 404) (#43)"
-   },
-   {
-    "sha": "bd4186d",
-    "data": "2026-11-14",
-    "assunto": "fix: trata erro nas queries dos 3 hooks e adiciona noopener no video conference (#41)"
    }
   ],
-  "arquivos_mudados_7d": 575,
+  "arquivos_mudados_7d": 576,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -258,6 +258,10 @@
     "mudancas": 2
    },
    {
+    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 2
+   },
+   {
     "arquivo": "docs/observabilidade/SLI_SLO.md",
     "mudancas": 2
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "docs/pendencias/_verificado-banco.md",
     "mudancas": 2
-   },
-   {
-    "arquivo": "inventario/estado/README.md",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 50
+    "commits": 51
    },
    {
     "autor": "Joaquim Ataides",

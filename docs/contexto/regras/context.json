@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "592732efa58dd4aa95f3b002ee2ea93a4c00765c",
+  "sha": "587dafffe19c07231fb93f984dbfc06a75961fb2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 14:38 UTC",
+  "generated_at": "2026-11-21 15:11 UTC",
   "files_total": 1607,
   "code_files": 1413,
   "code_lines": 177793
@@ -117853,10 +117853,19 @@
   }
  },
  "git": {
-  "sha": "592732efa58dd4aa95f3b002ee2ea93a4c00765c",
+  "sha": "587dafffe19c07231fb93f984dbfc06a75961fb2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "587daff",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "chore(docs): reflete wiring WIRING-04/06 na doc de funcionalidades planejadas (#68)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "592732e",
     "date": "2026-11-21",
@@ -118692,20 +118701,6 @@
      "supabase/functions/data-lake-flush/index.ts",
      "supabase/functions/health-check/index.ts"
     ]
-   },
-   {
-    "sha": "f53ee94",
-    "date": "2026-11-14",
-    "author": "adm01-debug",
-    "subject": "feat: wrapper zod central (zodFormErrors + schemas de auth/voip) e migra os forms para ele (#37)",
-    "files": [
-     "src/components/admin/voip/VoipTrunkFormDrawer.tsx",
-     "src/lib/schema.ts",
-     "src/lib/validation/auth.ts",
-     "src/lib/validation/voip-trunk.ts",
-     "src/pages/ForgotPassword.tsx",
-     "src/pages/ResetPassword.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -118786,7 +118781,7 @@
     2
    ],
    [
-    "src/components/accounts/ChurnSignalsPanel.tsx",
+    "docs/estado/funcionalidades-planejadas.md",
     1
    ]
   ]

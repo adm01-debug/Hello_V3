@@ -6,44 +6,46 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 
 | métrica | valor |
 |---|---|
-| tamanho | 25.9 MB |
-| schema public | 8.7 MB |
+| tamanho | 26.1 MB |
+| schema public | 8.8 MB |
 
 
 ## Tabelas (ordenadas por tamanho)
 
 | tabela | linhas (~) | total | heap | índices | linhas mortas (~) | seq scans (~) | idx scans (~) | último autovacuum |
 |---|---|---|---|---|---|---|---|---|
-| public.performance_metrics | ~2.1k | 1.1 MB | 760.0 KB | 328.0 KB | 0 | 1 | ~20 |  |
-| public.audit_logs | ~200 | 376.0 KB | 184.0 KB | 160.0 KB | 1 | ~60 | 2 |  |
-| public.rate_limit_logs | ~420 | 352.0 KB | 120.0 KB | 200.0 KB | 4 | ~20 | ~850 |  |
+| public.performance_metrics | ~2.4k | 1.1 MB | 760.0 KB | 328.0 KB | 0 | 1 | ~20 |  |
+| public.audit_logs | ~200 | 376.0 KB | 184.0 KB | 160.0 KB | 1 | ~70 | 2 |  |
+| public.rate_limit_logs | ~420 | 376.0 KB | 144.0 KB | 200.0 KB | 4 | ~20 | ~950 |  |
 | public.call_control_audit_logs | ~60 | 256.0 KB | 128.0 KB | 96.0 KB | 0 | ~10 | 0 |  |
-| public.call_sessions | ~50 | 200.0 KB | 8.0 KB | 184.0 KB | 4 | ~390 | ~810 |  |
+| public.call_sessions | ~50 | 200.0 KB | 8.0 KB | 184.0 KB | 4 | ~420 | ~880 |  |
 | public.voip_trunk_usage_metrics | 3 | 160.0 KB | 8.0 KB | 144.0 KB | 0 | ~20 | 0 |  |
-| public.contacts | ~50 | 136.0 KB | 16.0 KB | 88.0 KB | 1 | ~220 | ~80 |  |
-| public.call_quality_metrics | 4 | 128.0 KB | 8.0 KB | 112.0 KB | 0 | ~360 | 0 |  |
-| public.notifications | 1 | 128.0 KB | 8.0 KB | 112.0 KB | 0 | ~120 | 0 |  |
+| public.contacts | ~50 | 136.0 KB | 16.0 KB | 88.0 KB | 1 | ~240 | ~80 |  |
+| public.call_quality_metrics | 4 | 128.0 KB | 8.0 KB | 112.0 KB | 0 | ~380 | 0 |  |
+| public.notifications | 1 | 128.0 KB | 8.0 KB | 112.0 KB | 0 | ~130 | 0 |  |
 | public.login_attempts | 2 | 112.0 KB | 8.0 KB | 96.0 KB | 0 | ~10 | 0 |  |
 | public.accounts | 0 | 96.0 KB | 8.0 KB | 80.0 KB | 9 | ~20 | ~30 |  |
 | public.coaching_assignments | 0 | 96.0 KB | 8.0 KB | 80.0 KB | 8 | ~20 | 4 |  |
 | public.deals | ~50 | 96.0 KB | 8.0 KB | 80.0 KB | 3 | ~50 | 0 |  |
 | public.playlist_items | 0 | 96.0 KB | 8.0 KB | 80.0 KB | 2 | ~20 | 4 |  |
 | public.survey_responses | 0 | 96.0 KB | 8.0 KB | 80.0 KB | ~10 | ~20 | 4 |  |
-| public.user_roles | 1 | 88.0 KB | 8.0 KB | 80.0 KB | 0 | ~23.5k | 0 |  |
+| public.user_roles | 1 | 88.0 KB | 8.0 KB | 80.0 KB | 0 | ~25k | 0 |  |
 | public.account_lockouts | 1 | 80.0 KB | 8.0 KB | 64.0 KB | 0 | ~10 | 0 |  |
 | public.active_sessions | 0 | 80.0 KB | 8.0 KB | 64.0 KB | 0 | ~10 | 1 |  |
+| public.conversation_messages | 0 | 80.0 KB | 8.0 KB | 64.0 KB | 1 | ~10 | 1 |  |
 | public.geo_access_logs | 0 | 80.0 KB | 0 B | 72.0 KB | 0 | ~10 | 0 |  |
-| public.hold_events | 1 | 80.0 KB | 8.0 KB | 64.0 KB | 0 | ~300 | 0 |  |
-| public.optimistic_lock_conflicts | 0 | 80.0 KB | 8.0 KB | 48.0 KB | ~20 | ~40 | ~440 | 2026-10-20 |
-| public.user_profiles | 2 | 80.0 KB | 8.0 KB | 32.0 KB | ~20 | ~27.1k | 1 | 2026-10-20 |
+| public.hold_events | 1 | 80.0 KB | 8.0 KB | 64.0 KB | 0 | ~330 | 0 |  |
+| public.optimistic_lock_conflicts | 0 | 80.0 KB | 8.0 KB | 48.0 KB | ~20 | ~40 | ~480 | 2026-10-20 |
+| public.user_profiles | 2 | 80.0 KB | 8.0 KB | 32.0 KB | ~20 | ~29.6k | 1 | 2026-10-20 |
 | public.agent_badges | 0 | 72.0 KB | 8.0 KB | 64.0 KB | 9 | ~20 | 1 |  |
 | public.call_queues | 0 | 72.0 KB | 0 B | 64.0 KB | 0 | ~10 | 0 |  |
-| public.kb_articles | 0 | 72.0 KB | 0 B | 64.0 KB | 0 | ~20 | 0 |  |
+| public.kb_articles | 0 | 72.0 KB | 0 B | 64.0 KB | 0 | ~20 | 1 |  |
 | public.meeting_summaries | 0 | 72.0 KB | 0 B | 64.0 KB | 0 | ~10 | 8 |  |
+| public.bot_conversations | 0 | 64.0 KB | 8.0 KB | 48.0 KB | 1 | ~10 | 0 |  |
 | public.call_park_orbits | 1 | 64.0 KB | 8.0 KB | 48.0 KB | 0 | ~10 | 0 |  |
 | public.churn_risk_signals | 0 | 64.0 KB | 8.0 KB | 48.0 KB | ~10 | ~20 | 0 |  |
-| public.conversations | 0 | 64.0 KB | 0 B | 56.0 KB | 0 | ~20 | 3 |  |
-| public.rls_audit_logs | 0 | 64.0 KB | 0 B | 56.0 KB | 0 | ~30 | 0 |  |
+| public.conversations | 0 | 64.0 KB | 0 B | 56.0 KB | 0 | ~20 | 7 |  |
+| public.rls_audit_logs | 0 | 64.0 KB | 0 B | 56.0 KB | 0 | ~40 | 0 |  |
 | public.voip_trunks | 1 | 64.0 KB | 8.0 KB | 48.0 KB | 0 | ~20 | 0 |  |
 | public.agent_weekly_stats | 0 | 56.0 KB | 8.0 KB | 48.0 KB | ~10 | ~20 | 0 |  |
 | public.cadence_enrollments | 0 | 56.0 KB | 0 B | 48.0 KB | 0 | ~10 | 3 |  |
@@ -54,28 +56,27 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.saved_filters | 0 | 56.0 KB | 0 B | 48.0 KB | 0 | ~10 | 1 |  |
 | public.shift_swap_suggestions | 0 | 56.0 KB | 0 B | 48.0 KB | 0 | ~10 | 0 |  |
 | public.agent_goals | 0 | 48.0 KB | 8.0 KB | 32.0 KB | 3 | ~20 | 1 |  |
-| public.agents | 1 | 48.0 KB | 8.0 KB | 32.0 KB | 0 | ~16.8k | 0 |  |
+| public.agents | 1 | 48.0 KB | 8.0 KB | 32.0 KB | 0 | ~18k | 0 |  |
 | public.call_playlists | 0 | 48.0 KB | 8.0 KB | 32.0 KB | 4 | ~20 | 3 |  |
 | public.call_summaries | 0 | 48.0 KB | 8.0 KB | 32.0 KB | 2 | ~30 | ~160 |  |
 | public.chat_sessions | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~10 | 0 |  |
 | public.compliance_rules | 0 | 48.0 KB | 8.0 KB | 32.0 KB | ~20 | ~20 | 0 |  |
 | public.consent_records | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~10 | 0 |  |
-| public.contact_alerts | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~10 | ~200 |  |
+| public.contact_alerts | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~10 | ~220 |  |
 | public.contact_interactions | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~200 | 4 |  |
 | public.data_lake_exports | ~20 | 48.0 KB | 8.0 KB | 32.0 KB | ~40 | ~90 | 0 |  |
 | public.dnc_list | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~10 | 2 |  |
 | public.live_assist_signals | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~10 | 4 |  |
-| public.scheduled_callbacks | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~10 | ~540 |  |
+| public.scheduled_callbacks | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~10 | ~600 |  |
 | public.agent_shifts | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 0 |  |
 | public.agent_skills | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 0 |  |
 | public.agent_trunk_assignments | 0 | 40.0 KB | 0 B | 40.0 KB | 0 | ~10 | 0 |  |
 | public.blocked_access_logs | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 2 |  |
-| public.call_alerts | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~20 | ~600 |  |
-| public.call_scorecards | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~20 | 6 |  |
+| public.call_alerts | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~20 | ~660 |  |
+| public.call_scorecards | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~20 | 7 |  |
 | public.call_transcriptions | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 5 |  |
 | public.call_translations | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~20 | 4 |  |
 | public.contact_engagement_patterns | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 0 |  |
-| public.conversation_messages | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 0 |  |
 | public.crm_field_suggestions | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 5 |  |
 | public.dialer_favorites | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 4 |  |
 | public.email_tickets | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 0 |  |
@@ -89,10 +90,9 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.tracker_matches | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 4 |  |
 | public.user_passkeys | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 5 |  |
 | public.voip_quality_alerts | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~10 | 4 |  |
-| public.webhook_flush_metrics | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~20 | ~30 |  |
+| public.webhook_flush_metrics | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~20 | ~40 |  |
 | public.badges | 0 | 32.0 KB | 8.0 KB | 16.0 KB | ~20 | ~30 | ~10 |  |
 | public.battle_card_triggers | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 1 |  |
-| public.bot_conversations | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 0 |  |
 | public.cadence_steps | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 0 |  |
 | public.call_key_moments | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 4 |  |
 | public.call_queue_members | 0 | 32.0 KB | 0 B | 32.0 KB | 0 | ~10 | 0 |  |
@@ -119,7 +119,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.scorecard_responses | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 0 |  |
 | public.success_plans | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 0 |  |
 | public.surveys | 0 | 32.0 KB | 8.0 KB | 16.0 KB | 6 | ~20 | ~20 |  |
-| public.system_settings | 0 | 32.0 KB | 8.0 KB | 16.0 KB | 0 | ~10 | 0 |  |
+| public.system_settings | 0 | 32.0 KB | 8.0 KB | 16.0 KB | 0 | ~10 | 1 |  |
 | public.time_off_requests | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 0 |  |
 | public.toll_free_numbers | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 0 |  |
 | public.user_allowed_ips | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 1 |  |
@@ -131,7 +131,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.webauthn_challenges | 0 | 32.0 KB | 0 B | 24.0 KB | 0 | ~10 | 1 |  |
 | public.account_journey_history | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~20 | 2 |  |
 | public.agent_ring_settings | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~10 | 0 |  |
-| public.barge_in_sessions | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~200 | 4 |  |
+| public.barge_in_sessions | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~220 | 4 |  |
 | public.call_analyses | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~10 | 4 |  |
 | public.coaching_recommendations | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~10 | 0 |  |
 | public.compliance_settings | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~10 | 1 |  |
@@ -145,7 +145,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.notification_preferences | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~10 | 0 |  |
 | public.permissions | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~20 | 0 |  |
 | public.queue_items | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | 2 | 0 |  |
-| public.rate_limit_settings | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~470 | 0 |  |
+| public.rate_limit_settings | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~520 | 0 |  |
 | public.role_permissions | 0 | 24.0 KB | 0 B | 24.0 KB | 0 | ~20 | 0 |  |
 | public.routing_rules | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~10 | 0 |  |
 | public.scorecard_criteria | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~10 | 0 |  |
@@ -155,7 +155,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.topic_detections | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~10 | 4 |  |
 | public.user_ip_restrictions | 0 | 24.0 KB | 0 B | 24.0 KB | 0 | ~10 | 1 |  |
 | public.webhook_secrets | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~10 | 0 |  |
-| public.whisper_messages | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~110 | 4 |  |
+| public.whisper_messages | 0 | 24.0 KB | 0 B | 16.0 KB | 0 | ~120 | 4 |  |
 | public.agent_devices | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 1 |  |
 | public.battle_cards | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~20 | 0 |  |
 | public.bitrix_departments | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
@@ -176,7 +176,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.trackers | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
 | public.video_conferences | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
 | public.voicemail_messages | 0 | 16.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
-| public.hold_alert_settings | 0 | 8.0 KB | 0 B | 8.0 KB | 0 | ~110 | 1 |  |
+| public.hold_alert_settings | 0 | 8.0 KB | 0 B | 8.0 KB | 0 | ~120 | 1 |  |
 | public.queue_metrics_settings | 0 | 8.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
 | public.voip_monitoring_settings | 0 | 8.0 KB | 0 B | 8.0 KB | 0 | ~10 | 0 |  |
 
@@ -197,33 +197,33 @@ _nenhum_
 
 | métrica | valor |
 |---|---|
-| usuários (~) | 4 |
+| usuários (~) | 5 |
 | confirmados (~) | 4 |
-| criados últimos 30d (~) | 1 |
+| criados últimos 30d (~) | 2 |
 
 | provider | usuários (~) |
 |---|---|
-| email | 3 |
+| email | 4 |
 | google | 1 |
 
 
 ## Consultas mais custosas (pg_stat_statements, desde o último reset)
 | role | chamadas (~) | total ms (~) | média ms | query |
 |---|---|---|---|---|
-| postgres | ~120 | ~636.1k | 5436.45 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
+| postgres | ~120 | ~641.9k | 5439.65 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
 | postgres | 2 | ~264.9k | 132452.35 | `SELECT count(*) FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM information_schema.role_table_grants g WHERE g.table_` |
 | postgres | 2 | ~263k | 131503.84 | `SELECT table_schema, table_name, column_name, grantee, privilege_type FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM` |
 | postgres | 1 | ~117.3k | 117288.34 | `SELECT table_schema, table_name, column_name, grantee, privilege_type FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND table_schema NOT IN ($16,$1` |
-| authenticator | ~60 | ~56.2k | 952.63 | `SELECT name FROM pg_timezone_names` |
-| postgres | ~120 | ~22.7k | 187.54 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
-| authenticator | ~60 | ~13k | 215.94 | `WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $2), oid) AS base_type FROM pg_type UNIO` |
-| postgres | ~120 | ~12.2k | 101.21 | `SELECT n.nspname AS schema, c.relname AS "table", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS "default", NULLIF(` |
+| authenticator | ~60 | ~58.2k | 954.04 | `SELECT name FROM pg_timezone_names` |
+| postgres | ~120 | ~23k | 188.45 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
+| authenticator | ~60 | ~13.6k | 219.02 | `WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $2), oid) AS base_type FROM pg_type UNIO` |
+| postgres | ~120 | ~12.4k | 101.55 | `SELECT n.nspname AS schema, c.relname AS "table", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS "default", NULLIF(` |
+| service_role | ~510 | ~12.2k | 23.98 | `WITH pgrst_source AS (SELECT pgrst_call.pgrst_scalar FROM (SELECT $1 AS json_data) pgrst_payload, LATERAL (SELECT "_ip_address", "_endpoint", "_user_id" FROM json_to_record(pgrst_payload.json_data) AS _("_ip_address" tex` |
 | postgres | 1 | ~11.8k | 11813.21 | `WITH vp AS ( SELECT pr_c.grantee, pr_c.prtype, a.attname, pr_c.relname, pr_c.relnamespace FROM (SELECT c.oid, c.relname, c.relnamespace, (aclexplode(COALESCE(c.relacl, acldefault($1, c.relowner)))).grantee AS grantee, (a` |
-| service_role | ~460 | ~11.2k | 24.42 | `WITH pgrst_source AS (SELECT pgrst_call.pgrst_scalar FROM (SELECT $1 AS json_data) pgrst_payload, LATERAL (SELECT "_ip_address", "_endpoint", "_user_id" FROM json_to_record(pgrst_payload.json_data) AS _("_ip_address" tex` |
 | postgres | ~80 | ~8.2k | 108.45 | `UPDATE public.user_profiles SET full_name = $1 \|\| ( COALESCE( NULLIF(regexp_replace(full_name, $2, $3, $4), $5), $6 )::integer + $7 )::text WHERE id = $8` |
 | postgres | 1 | ~6.2k | 6150.10 | `WITH vp AS ( SELECT pr_c.grantee, pr_c.prtype, a.attname, pr_c.relname, pr_c.relnamespace FROM (SELECT c.oid, c.relname, c.relnamespace, (aclexplode(COALESCE(c.relacl, acldefault($1, c.relowner)))).grantee AS grantee, (a` |
 | postgres | ~20 | ~6.1k | 304.54 | `SELECT e.name, n.nspname AS schema, e.default_version, x.extversion AS installed_version, e.comment, ev.schema AS default_version_schema FROM pg_available_extensions e LEFT JOIN pg_extension x ON e.name = x.extname LEFT ` |
-| postgres | ~120 | ~5.8k | 47.68 | `SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3` |
+| postgres | ~120 | ~5.8k | 47.70 | `SELECT n.nspname AS schema, p.proname AS name, pg_get_function_identity_arguments(p.oid) AS args FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace WHERE n.nspname = $1 AND p.prokind = $2 AND p.prorettype <> $3` |
 | postgres | 1 | ~5.6k | 5561.18 | `WITH vp AS ( SELECT pr_c.grantee, pr_c.prtype, a.attname, pr_c.relname, pr_c.relnamespace FROM (SELECT c.oid, c.relname, c.relnamespace, (aclexplode(COALESCE(c.relacl, acldefault($1, c.relowner)))).grantee AS grantee, (a` |
 
 
@@ -231,8 +231,11 @@ _nenhum_
 | usuário | estado | n |
 |---|---|---|
 | authenticator | idle | 11 |
-| pgbouncer | idle | 1 |
+| pgbouncer | idle | 2 |
 | postgres | active | 1 |
 | postgres | idle | 1 |
-| supabase_admin | idle | 2 |
+| supabase_admin | active | 1 |
+| supabase_admin | idle | 8 |
 | supabase_admin |  | 1 |
+| supabase_auth_admin | idle | 8 |
+| supabase_storage_admin | idle | 1 |
