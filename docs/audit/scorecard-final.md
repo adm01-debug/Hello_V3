@@ -1,4 +1,77 @@
-# Scorecard Final — Maturidade Técnica
+# Scorecard — Maturidade Técnica (re-avaliação E2)
+
+**Data:** 2026-11-22
+**Escopo:** re-linter + re-scorecard pós-plano (item E2 de `docs/audits/pendencias-2026-07.md`)
+**Base medida:** `main` em `f8ba359` + banco oficial `cfmlmcdyjuotqobjapng`
+**Veredito:** **8,7/10** — nota real, com as duas lacunas estruturais nomeadas abaixo.
+
+> O scorecard anterior (`## Scorecard Final`, 2026-04-17) declarava **10/10 em 10 dimensões** e estava
+> numericamente obsoleto: falava em 1.527 testes vitest / 29 Deno / 22 Playwright, quando o repo tem
+> 3.278 / 223 / 7. Também não citava nenhuma das exposições de banco encontradas nesta rodada. Ele fica
+> preservado abaixo como registro histórico, não como avaliação vigente.
+
+## Números medidos (não estimados)
+
+| Métrica | Valor medido | Como foi medido |
+| --- | --- | --- |
+| Testes vitest | 3.278 em 271 arquivos | `vitest run` |
+| Testes Deno (edge functions) | 223 passando, 4 ignorados, 42 arquivos | `deno test -A supabase/functions/` |
+| Testes Playwright (e2e) | 7 suítes | `e2e/` |
+| Edge functions | 94 | contagem em `supabase/functions/` |
+| Migrations | 212 | `supabase/migrations/*.sql` |
+| ADRs | 53 (duplicata ADR-012, lacuna 044→046) | `docs/adr/` |
+| Cobertura (Statements/Branches/Functions/Lines) | 79,97% / 70,36% / 80,05% / 81,6% | `vitest run --coverage`, thresholds 75/70/75/75 |
+| Páginas | 119 | `src/pages/` |
+| Componentes | 331 | `src/components/` |
+| Hooks | 167 | `src/hooks/` |
+| Tabelas em `public` | 165 | `information_schema.tables` |
+| Tabelas sem RLS | **0** | `pg_class.relrowsecurity = false` |
+| Policies | 452 | `pg_policies` |
+| Funções em `public` | 236 (75 `SECURITY DEFINER`) | `pg_proc` |
+| Índices | 534 | `pg_indexes` |
+| Triggers não-internos | 106 | `pg_trigger` |
+| Views | 4 | `pg_class.relkind = 'v'` |
+
+## Notas por dimensão
+
+| Dimensão | Nota | Evidência | O que impede o 10 |
+| --- | --- | --- | --- |
+| Segurança — banco | 9,0 | 0 tabelas sem RLS em 165; 0 policies de escrita com `qual = true`; RPC de SQL arbitrário (`exec_sql`) bloqueada a `anon`; `password_min_length` já em 10 | `auth_leaked_password_protection` (HIBP) desabilitado — **bloqueado por plano**, `HTTP 402 entitlement_required`; `password_required_characters` nulo; 2 extensões em `public` (`pg_trgm`, `vector`) |
+| Segurança — superfície de funções | 9,0 | 74 → 21 funções `SECURITY DEFINER` executáveis por `anon` (PR #84); 4 → 0 views legíveis por `anon`; 4 → 0 funções com `search_path` mutável; `entity_versions` fora do role `PUBLIC` | As 21 restantes são intencionais (helpers de RLS + auth pré-login), mas a superfície ainda é grande |
+| Segurança — aplicação | 9,0 | 94 edge functions; `rls-audit`, `data-lake-flush`, `database-cleanup` usam `service_role`; `validate-ip` exige `Authorization` | SSRF/inbound hardening implementado no PR #80, ainda **aguardando autorização** (regra 8) |
+| Tipagem | 9,0 | `strict` ligado | `noUnusedLocals: false` e `noUnusedParameters: false` — 2 flags de rigor desligadas |
+| Testes | 8,5 | 3.278 vitest + 223 Deno + 7 e2e; cobertura acima dos thresholds em 4 métricas | 7 suítes e2e para 119 páginas é cobertura de jornada, não de sistema; 4 testes Deno ignorados |
+| CI/CD | 9,0 | lint + type-check + vitest + build + Deno + security audit + bundle budget | `Supabase Preview` na `main` estava vermelho por ordem migration/índice (PR #82 aberta); histórico de E2E vermelho herdado |
+| Observabilidade | 9,0 | Logger central, `x-request-id`, `health-check` com SLO/error budget por componente (PR #83) | Nenhum alerta externo configurado; dependência do dashboard do Supabase |
+| Documentação | 8,5 | 53 ADRs; `docs/estado/`, `docs/audit/`, `docs/audits/`; contexto gerado por workflow | ADR-012 duplicada, lacuna 044→046, e este scorecard estava desatualizado |
+| Acessibilidade | 8,0 | `aria-label` presente na maioria dos controles interativos | `<div onClick>` sem `role`/`tabIndex`/`onKeyDown` em `src/components/calls/ActiveCallsIndicator.tsx:112` |
+| Banco — desempenho | 8,0 | 534 índices; índices de `audit_logs` corrigidos (PR #82) | 323 `multiple_permissive_policies` (RLS resolve várias policies por query), 250 `unused_index`, 13 `auth_rls_initplan` (chamada de `auth.uid()` sem `(select ...)`) |
+| Banco — manutenção | 8,0 | 212 migrations versionadas | 212 migrations sem squash (C3); `pg_partman` 5.3.1 disponível mas não instalado (B1) — sem particionamento de `audit_logs` |
+
+**Média ponderada: 8,7/10.**
+
+## O que mudou nesta rodada
+
+- **E2 concluído**: este documento substitui a avaliação de 2026-04-17.
+- **Achado novo e maior que o documentado**: a exposição de funções a `anon` era 74, não 62, e a origem era `PUBLIC`, não o role `anon`. Corrigido no PR #84 com validação por simulação transacional no banco real.
+- **Achado novo**: `entity_versions` tinha SELECT **e** INSERT no role `PUBLIC`; o INSERT aceitava `changed_by IS NULL`, então anônimo gravava histórico sem autoria. Também corrigido no PR #84.
+
+## Lacunas estruturais (não são bugs, são decisões pendentes)
+
+1. **`noUnusedLocals`/`noUnusedParameters` desligados** — ligar expõe lixo de código, mas gera diff grande. Decisão de escopo, não de bug.
+2. **212 migrations sem squash** — o histórico inteiro roda a cada `Supabase Preview`; o custo cresce e a chance de erro de ordem cresce junto (foi exatamente a causa do Preview vermelho).
+
+## Findings aceitos conscientemente
+
+- 3 `WARN` de linter em policies `SELECT` públicas **intencionais** (dados de referência).
+- `as any` em interop Radix/Recharts/react-day-picker (ADR-022).
+- `crm_field_suggestions` com policies amplas.
+- `pg_trgm` e `vector` em `public` — mover quebra `search_path` de funções existentes; custo maior que o risco atual.
+- `password_hibp` desabilitado — bloqueio de plano, não de código.
+
+---
+
+## Anexo — scorecard anterior (2026-04-17), preservado como registro histórico
 
 **Data:** 2026-04-17  
 **Versão:** Pós-Onda 6  
@@ -107,5 +180,3 @@ Sistema **production-ready** com maturidade técnica máxima certificada.
 - Ações: marcar individual, marcar todos, seguir `action_url` (deep-link para `/admin/database-health` no caso da Onda 43).
 - Realtime via `postgres_changes` filtrado por `category=eq.security` invalida a query automaticamente.
 - Zero schema change; reusa RLS existente da tabela `notifications` (user_id = auth.uid()). Link cruzado adicionado no header de `/admin/database-health`.
-
-
