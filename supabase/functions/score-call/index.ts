@@ -42,11 +42,11 @@ Deno.serve(async (req) => {
     ).join("\n");
 
     const { resilientFetch } = await import('../_shared/resilience.ts');
-    const aiResp = await resilientFetch('ai-gateway-score', "https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const aiResp = await resilientFetch('ai-gateway-score', "https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${Deno.env.get("LOVABLE_API_KEY")}`,
+        "Authorization": `Bearer ${Deno.env.get("OPENROUTER_API_KEY")}`,
       },
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",

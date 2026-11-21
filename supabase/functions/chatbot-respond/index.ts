@@ -31,8 +31,8 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const apiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!apiKey) throw new Error('LOVABLE_API_KEY não configurada');
+    const apiKey = Deno.env.get('OPENROUTER_API_KEY');
+    if (!apiKey) throw new Error('OPENROUTER_API_KEY não configurada');
 
     // Buscar artigos KB relevantes via full-text search (português)
     const searchTerms = body.user_message
@@ -96,7 +96,7 @@ ${kbContext}
 
 Responda de forma clara, cordial e objetiva. Use markdown leve quando útil.`;
 
-    const aiResp = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const aiResp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,

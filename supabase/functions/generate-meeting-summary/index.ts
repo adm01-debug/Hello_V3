@@ -85,10 +85,10 @@ Deno.serve(async (req) => {
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const lovableKey = Deno.env.get("LOVABLE_API_KEY");
+    const openRouterKey = Deno.env.get("OPENROUTER_API_KEY");
 
-    if (!lovableKey) {
-      return new Response(JSON.stringify({ error: "LOVABLE_API_KEY não configurada" }), {
+    if (!openRouterKey) {
+      return new Response(JSON.stringify({ error: "OPENROUTER_API_KEY não configurada" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -196,10 +196,10 @@ Gere o resumo estruturado chamando a função save_meeting_summary.`;
 
     const model = "google/gemini-2.5-flash";
 
-    const aiResp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const aiResp = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${lovableKey}`,
+        Authorization: `Bearer ${openRouterKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

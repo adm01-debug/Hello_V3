@@ -41,16 +41,16 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: `Idioma não suportado: ${body.targetLang}` }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    const apiKey = Deno.env.get('LOVABLE_API_KEY');
+    const apiKey = Deno.env.get('OPENROUTER_API_KEY');
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: 'LOVABLE_API_KEY not configured' }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify({ error: 'OPENROUTER_API_KEY not configured' }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const sourceLangHint = body.sourceLang ?? 'auto';
     const sys = `Você é um tradutor profissional para call centers. Responda APENAS com a tradução, sem comentários, sem aspas, sem prefixos. Preserve nomes próprios, números e tom.`;
     const usr = `Idioma de origem: ${sourceLangHint}\nIdioma de destino: ${body.targetLang}\nTexto: ${body.text}`;
 
-    const aiRes = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const aiRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -40,8 +40,8 @@ serve(async (req) => {
       }), { headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
+    const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
+    if (!OPENROUTER_API_KEY) {
       return new Response(JSON.stringify({ error: "Serviço indisponível" }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
@@ -54,9 +54,9 @@ serve(async (req) => {
     const safeDuration = Math.max(0, Math.min(86400, callInfo.duration || 0));
 
     const { resilientFetch } = await import('../_shared/resilience.ts');
-    const response = await resilientFetch('ai-gateway-summary', "https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await resilientFetch('ai-gateway-summary', "https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
-      headers: { Authorization: `Bearer ${LOVABLE_API_KEY}`, "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${OPENROUTER_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",
         messages: [

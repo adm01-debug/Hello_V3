@@ -42,18 +42,18 @@ Deno.serve(async (req) => {
     }
 
     // Use Lovable AI to process the voice command
-    const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
-    if (!lovableApiKey) {
+    const openRouterApiKey = Deno.env.get("OPENROUTER_API_KEY");
+    if (!openRouterApiKey) {
       return new Response(
         JSON.stringify({ error: "AI service not configured" }),
         { status: 500, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } }
       );
     }
 
-    const response = await fetch("https://api.lovable.dev/v1/chat/completions", {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${lovableApiKey}`,
+        Authorization: `Bearer ${openRouterApiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

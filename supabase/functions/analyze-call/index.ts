@@ -74,8 +74,8 @@ serve(withRequestLog('analyze-call', async (req) => {
     }
     const { transcript, callInfo } = validation.data!;
 
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) return createErrorResponse('Serviço indisponível', 'SERVICE_UNAVAILABLE', undefined, 503, cors);
+    const OPENROUTER_API_KEY = Deno.env.get('OPENROUTER_API_KEY');
+    if (!OPENROUTER_API_KEY) return createErrorResponse('Serviço indisponível', 'SERVICE_UNAVAILABLE', undefined, 503, cors);
 
     // V2 Logic
     const model = version === 'v2' ? 'google/gemini-2.0-flash' : 'google/gemini-1.5-flash';
@@ -104,9 +104,9 @@ ${callInfo ? `- Contato: ${String(callInfo.contactName || '').slice(0, 100)}
 Transcrição:
 ${transcript.slice(0, 10000)}`;
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${LOVABLE_API_KEY}`, 'Content-Type': 'application/json' },
+      headers: { 'Authorization': `Bearer ${OPENROUTER_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model,
         messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }],

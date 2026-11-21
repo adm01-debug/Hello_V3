@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders } from "../_shared/cors.ts";
 import { validate, string, optional } from "../_shared/validate.ts";
 
-const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+const OPENROUTER_API_KEY = Deno.env.get('OPENROUTER_API_KEY');
 
 const SYSTEM_PROMPT = `Você é um analista especialista em vendas e atendimento. Analise a transcrição de uma chamada e identifique momentos-chave.
 
@@ -34,8 +34,8 @@ Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
 
   try {
-    if (!LOVABLE_API_KEY) {
-      return new Response(JSON.stringify({ error: 'LOVABLE_API_KEY not configured' }), {
+    if (!OPENROUTER_API_KEY) {
+      return new Response(JSON.stringify({ error: 'OPENROUTER_API_KEY not configured' }), {
         status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
@@ -57,9 +57,9 @@ Deno.serve(async (req) => {
     const persist = parsed.data.persist !== 'false';
 
     const { resilientFetch } = await import('../_shared/resilience.ts');
-    const aiResp = await resilientFetch('ai-gateway-keymoments', 'https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const aiResp = await resilientFetch('ai-gateway-keymoments', 'https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${LOVABLE_API_KEY}`, 'Content-Type': 'application/json' },
+      headers: { 'Authorization': `Bearer ${OPENROUTER_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
         messages: [
