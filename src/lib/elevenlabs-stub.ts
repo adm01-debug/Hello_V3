@@ -12,8 +12,13 @@ export function useConversation(options?: {
     status: 'disconnected' as const,
     isSpeaking: false,
     startSession: async (_opts?: Record<string, unknown>) => {
+      // Nunca sinaliza conexão bem-sucedida: sem @elevenlabs/react instalado não há áudio.
+      const err = new Error(
+        'Chamada WebRTC indisponível: o cliente ElevenLabs (@elevenlabs/react) não está instalado. Use SIP ou Wavoip.'
+      );
       logger.warn('ElevenLabs not configured. Install @elevenlabs/react for WebRTC support.');
-      options?.onConnect?.();
+      options?.onError?.(err);
+      return false;
     },
     endSession: async () => {
       options?.onDisconnect?.();

@@ -57,9 +57,9 @@ const INTEGRATIONS: Integration[] = [
     slug: "ldap",
     name: "LDAP / Active Directory",
     category: "Identidade",
-    description: "Importação e sincronização automática de ramais, grupos e permissões.",
+    description: "Sincronização de contatos a partir do seu diretório corporativo. Requer servidor LDAP acessível.",
     icon: Users,
-    status: "disponivel",
+    status: "beta",
   },
   {
     slug: "wavoip",
@@ -91,7 +91,7 @@ const INTEGRATIONS: Integration[] = [
     category: "Analytics",
     description: "Export incremental de chamadas, métricas e transcrições para o seu warehouse.",
     icon: BarChart3,
-    status: "roadmap",
+    status: "disponivel",
   },
 ];
 

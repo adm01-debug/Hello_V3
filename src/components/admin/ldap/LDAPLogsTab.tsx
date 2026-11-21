@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+﻿import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
 import type { SyncLog } from './types';
@@ -9,6 +9,7 @@ function statusIcon(status: SyncLog['status']) {
     case 'success': return <CheckCircle2 className="h-4 w-4 text-success" />;
     case 'partial': return <AlertTriangle className="h-4 w-4 text-warning" />;
     case 'error': return <XCircle className="h-4 w-4 text-destructive" />;
+    default: return <XCircle className="h-4 w-4 text-destructive" />;
   }
 }
 
@@ -17,7 +18,7 @@ export function LDAPLogsTab({ logs }: { logs: SyncLog[] }) {
     <Card>
       <CardHeader>
         <CardTitle className="text-lg">Histórico de Sincronização</CardTitle>
-        <CardDescription>Últimas sincronizações realizadas</CardDescription>
+        <CardDescription>Últimas sincronizações executadas</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
@@ -34,7 +35,13 @@ export function LDAPLogsTab({ logs }: { logs: SyncLog[] }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {logs.map((log) => (
+            {logs.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={8} className="text-center text-sm text-muted-foreground py-8">
+                  Nenhuma sincronização registrada ainda.
+                </TableCell>
+              </TableRow>
+            ) : logs.map((log) => (
               <TableRow key={log.id}>
                 <TableCell>{statusIcon(log.status)}</TableCell>
                 <TableCell className="text-sm">

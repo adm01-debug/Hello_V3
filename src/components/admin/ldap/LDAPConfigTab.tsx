@@ -1,21 +1,23 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+﻿import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Server, Shield, Settings2, RefreshCw } from 'lucide-react';
-import { toast } from 'sonner';
+import { Server, Shield, Settings2, RefreshCw, Save } from 'lucide-react';
 import type { LDAPConfig } from './types';
 
 interface Props {
   config: LDAPConfig;
   setConfig: React.Dispatch<React.SetStateAction<LDAPConfig>>;
   testing: boolean;
+  loading: boolean;
+  saving: boolean;
   onTest: () => void;
+  onSave: () => void;
 }
 
-export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
+export function LDAPConfigTab({ config, setConfig, testing, loading, saving, onTest, onSave }: Props) {
   return (
     <div className="grid gap-6 lg:grid-cols-2">
       <Card>
@@ -33,6 +35,7 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
               <Input
                 placeholder="ldap.empresa.com"
                 value={config.serverUrl}
+                disabled={loading}
                 onChange={(e) => setConfig(p => ({ ...p, serverUrl: e.target.value }))}
               />
             </div>
@@ -41,6 +44,7 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
               <Input
                 placeholder="389"
                 value={config.port}
+                disabled={loading}
                 onChange={(e) => setConfig(p => ({ ...p, port: e.target.value }))}
               />
             </div>
@@ -51,6 +55,7 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
             <Input
               placeholder="dc=empresa,dc=com"
               value={config.baseDn}
+              disabled={loading}
               onChange={(e) => setConfig(p => ({ ...p, baseDn: e.target.value }))}
             />
           </div>
@@ -60,6 +65,7 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
             <Input
               placeholder="cn=admin,dc=empresa,dc=com"
               value={config.bindDn}
+              disabled={loading}
               onChange={(e) => setConfig(p => ({ ...p, bindDn: e.target.value }))}
             />
           </div>
@@ -68,8 +74,9 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
             <Label>Bind Password</Label>
             <Input
               type="password"
-              placeholder="••••••••"
+              placeholder="•••••••• (deixe vazio para manter a atual)"
               value={config.bindPassword}
+              disabled={loading}
               onChange={(e) => setConfig(p => ({ ...p, bindPassword: e.target.value }))}
             />
           </div>
@@ -81,14 +88,21 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
             </div>
             <Switch
               checked={config.useTLS}
+              disabled={loading}
               onCheckedChange={(v) => setConfig(p => ({ ...p, useTLS: v, port: v ? '636' : '389' }))}
             />
           </div>
 
-          <Button variant="outline" onClick={onTest} disabled={testing} className="w-full gap-2">
-            {testing ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Server className="h-4 w-4" />}
-            {testing ? 'Testando...' : 'Testar Conexão'}
-          </Button>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <Button variant="outline" onClick={onTest} disabled={testing || loading} className="gap-2">
+              {testing ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Server className="h-4 w-4" />}
+              {testing ? 'Testando...' : 'Testar Conexão'}
+            </Button>
+            <Button onClick={onSave} disabled={saving || loading} className="gap-2">
+              {saving ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              {saving ? 'Salvando...' : 'Salvar Configuração'}
+            </Button>
+          </div>
         </CardContent>
       </Card>
 
@@ -106,10 +120,11 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
             <Input
               placeholder="(objectClass=person)"
               value={config.searchFilter}
+              disabled={loading}
               onChange={(e) => setConfig(p => ({ ...p, searchFilter: e.target.value }))}
             />
             <p className="text-xs text-muted-foreground">
-              Ex: (&(objectClass=person)(department=Sales))
+              Ex: (&amp;(objectClass=person)(department=Sales))
             </p>
           </div>
 
@@ -118,6 +133,7 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
             <Select
               value={config.syncInterval}
               onValueChange={(v) => setConfig(p => ({ ...p, syncInterval: v }))}
+              disabled={loading}
             >
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -129,6 +145,10 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
                 <SelectItem value="manual">Apenas manual</SelectItem>
               </SelectContent>
             </Select>
+            <p className="text-xs text-muted-foreground">
+              O intervalo é a preferência salva. A sincronização automática requer um agendamento
+              (pg_cron) chamando a ação <code>sync</code>.
+            </p>
           </div>
 
           <div className="rounded-lg border border-border p-4 space-y-3">
@@ -144,10 +164,6 @@ export function LDAPConfigTab({ config, setConfig, testing, onTest }: Props) {
               <span className="text-foreground">{config.syncInterval === 'manual' ? 'Manual' : `${config.syncInterval} min`}</span>
             </div>
           </div>
-
-          <Button className="w-full gap-2" onClick={() => toast.success('Configuração salva!')}>
-            Salvar Configuração
-          </Button>
         </CardContent>
       </Card>
     </div>

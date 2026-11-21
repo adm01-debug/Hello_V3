@@ -114,7 +114,7 @@ export function CallSimulation() {
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Phone className="h-5 w-5 text-primary" />
-              Simulação de Chamada em Tempo Real
+              Simulação de Chamada (demonstração)
             </div>
             <div className="flex items-center gap-2">
               {isPlaying && (

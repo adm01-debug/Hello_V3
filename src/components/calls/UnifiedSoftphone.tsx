@@ -61,7 +61,11 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       if (m.user_transcription_event?.user_transcript) { const t = m.user_transcription_event.user_transcript; addTranscript('user', t); onTranscript?.(t, 'user'); }
       else if (m.agent_response_event?.agent_response) { const t = m.agent_response_event.agent_response; addTranscript('agent', t); onTranscript?.(t, 'agent'); }
     },
-    onError: (error) => { logger.error('Conversation error:', error); toast.error('Erro na conexão'); handleEndCall(); },
+    onError: (error) => {
+      logger.error('Conversation error:', error);
+      toast.error(error instanceof Error ? error.message : 'Erro na conexão');
+      handleEndCall();
+    },
   });
 
   const handleDigitPress = (digit: string) => {
