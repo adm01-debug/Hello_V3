@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)",
    "fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)",
    "feat: migra edge functions chat do gateway Lovable para Open Router (#63)",
    "docs: relatorio atualizado (seed, PR #62, validação O2O)",
-   "docs: regras de negocio verificadas e achados fora de escopo",
-   "docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)"
+   "docs: regras de negocio verificadas e achados fora de escopo"
   ]
  },
  "pr_template": null,

@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "7d28bdeeeff91c9a40084079788b01b631286799",
+  "sha": "7569241fbb3840b0c4db081067337047ca070f42",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 13:21 UTC",
+  "generated_at": "2026-11-21 13:36 UTC",
   "files_total": 1600,
   "code_files": 1406,
   "code_lines": 177247
@@ -117754,10 +117754,19 @@
   }
  },
  "git": {
-  "sha": "7d28bdeeeff91c9a40084079788b01b631286799",
+  "sha": "7569241fbb3840b0c4db081067337047ca070f42",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "7569241",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)",
+    "files": [
+     "supabase/migrations/20250102000000_performance_indexes.sql"
+    ]
+   },
    {
     "sha": "7d28bde",
     "date": "2026-11-21",
@@ -118595,15 +118604,6 @@
      "inventario/estado/README.md",
      "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql"
     ]
-   },
-   {
-    "sha": "1a3c93f",
-    "date": "2026-11-14",
-    "author": "adm01-debug",
-    "subject": "fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)",
-    "files": [
-     "supabase/migrations/20261114090556_f32993dc-8788-4c44-8082-b2e52a7463cb.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -118684,7 +118684,7 @@
     2
    ],
    [
-    "supabase/migrations/20250102000000_hello_production.sql",
+    "supabase/migrations/20250102000000_performance_indexes.sql",
     1
    ]
   ]

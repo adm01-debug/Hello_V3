@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `7d28bdeeeff91c9a40084079788b01b631286799` (2026-11-21T10:19:50-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `7569241fbb3840b0c4db081067337047ca070f42` (2026-11-21T10:35:33-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -359,7 +359,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8863 nós · 23556 arestas · 681 comunidades · grafo do commit `7d28bdee`
+- 8863 nós · 23556 arestas · 681 comunidades · grafo do commit `7569241f`
 - comunidades maiores: card.tsx (301), react (245), vitest (232), button.tsx (226), protectedRoutes.tsx (167), traceHeaders (160), lucide-react (138), safe-date.ts (135), cn (107), ref_https (101), Tabela de funcionalidades (100), UnifiedSoftphone.tsx (99)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -418,6 +418,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `7569241` fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)
 - 2026-11-21 `7d28bde` fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)
 - 2026-11-21 `c2d7efe` feat: migra edge functions chat do gateway Lovable para Open Router (#63)
 - 2026-11-21 `ffaedf6` docs: relatorio atualizado (seed, PR #62, validação O2O)
@@ -432,7 +433,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-20 `c98548c` chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)
 - 2026-11-20 `ea6e3dc` test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)
 - 2026-11-20 `25b35e5` feat: concluir funcionalidades planejadas (wiring IA composer + fix hook TopicDetection) (#53)
-- 2026-11-20 `91e0da8` infra: escopa job CI ao environment e2e (#52)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

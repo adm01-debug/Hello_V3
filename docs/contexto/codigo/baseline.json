@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "7d28bdeeeff91c9a40084079788b01b631286799",
+  "commit": "7569241fbb3840b0c4db081067337047ca070f42",
   "branch": "main",
-  "data_commit": "2026-11-21T10:19:50-03:00",
+  "data_commit": "2026-11-21T10:35:33-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "7569241",
+    "data": "2026-11-21",
+    "assunto": "fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)"
+   },
    {
     "sha": "7d28bde",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "9375146",
     "data": "2026-11-14",
     "assunto": "chore: contexto agendado de 10 min para 1x/hora (#42)"
-   },
-   {
-    "sha": "9e7657f",
-    "data": "2026-11-14",
-    "assunto": "chore: saneia SC2129 no contexto.yml e documenta leitura de logs em producao (#40)"
    }
   ],
-  "arquivos_mudados_7d": 573,
+  "arquivos_mudados_7d": 568,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 48
+    "commits": 49
    },
    {
     "autor": "Joaquim Ataides",
