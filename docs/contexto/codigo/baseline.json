@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ffaedf6268208659e2e7690a304171bdeec1d173",
+  "commit": "c2d7efeb60c305d5ced5af57277c6ccae9d653a4",
   "branch": "main",
-  "data_commit": "2026-11-21T08:50:59-03:00",
+  "data_commit": "2026-11-21T09:52:14-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c2d7efe",
+    "data": "2026-11-21",
+    "assunto": "feat: migra edge functions chat do gateway Lovable para Open Router (#63)"
+   },
    {
     "sha": "ffaedf6",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "a8985a2",
     "data": "2026-11-14",
     "assunto": "feat: (#38)"
-   },
-   {
-    "sha": "d67d0f4",
-    "data": "2026-11-14",
-    "assunto": "feat: logs estruturados JSON nas edge functions + alerta de violação de SLO (observabilidade) (#39)"
    }
   ],
-  "arquivos_mudados_7d": 563,
+  "arquivos_mudados_7d": 584,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -234,6 +234,10 @@
     "mudancas": 3
    },
    {
+    "arquivo": ".env.example",
+    "mudancas": 2
+   },
+   {
     "arquivo": ".github/workflows/inventario-estado-semanal.yml",
     "mudancas": 2
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "inventario/estado/README.md",
     "mudancas": 2
-   },
-   {
-    "arquivo": "inventario/estado/banco.json",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 46
+    "commits": 47
    },
    {
     "autor": "Joaquim Ataides",

@@ -1,7 +1,7 @@
 # Graph Report - Hello_V3  (2026-11-21)
 
 ## Corpus Check
-- 1587 files · ~794,707 words
+- 1587 files · ~794,678 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 11 file(s) not represented in the graph (top: (none) 4, .lock 2, .example 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ffaedf62`
+- Built from commit: `c2d7efeb`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -700,7 +700,7 @@ Nodes (48): react-router-dom, VoipTrunkFormDrawer(), usePasswordStrength(), Aler
 
 ### Community 19 - "validate.ts"
 Cohesion: 0.06
-Nodes (43): AssistSignal, Segment, LOVABLE_API_KEY, notificationSchema, corsHeaders, array(), boolean(), number() (+35 more)
+Nodes (43): AssistSignal, Segment, OPENROUTER_API_KEY, notificationSchema, corsHeaders, array(), boolean(), number() (+35 more)
 
 ### Community 20 - "package.json"
 Cohesion: 0.03

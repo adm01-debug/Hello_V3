@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: migra edge functions chat do gateway Lovable para Open Router (#63)",
    "docs: relatorio atualizado (seed, PR #62, validação O2O)",
    "docs: regras de negocio verificadas e achados fora de escopo",
    "docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)",
-   "feat: wiring dos componentes orfaos no frontend (#61)",
-   "fix: cron data-lake-flush falhava por constraint de dataset sem call_summaries (#60)"
+   "feat: wiring dos componentes orfaos no frontend (#61)"
   ]
  },
  "pr_template": null,

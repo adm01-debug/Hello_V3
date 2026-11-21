@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ffaedf6268` · branch `main` · 2026-11-21 12:17 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c2d7efeb60` · branch `main` · 2026-11-21 12:52 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1784,9 +1784,9 @@ _nenhum item encontrado_
 | `AHT` | `240` | `supabase/functions/forecast-call-volume/index.ts` |
 | `TARGET_SL` | `0.8` | `supabase/functions/forecast-call-volume/index.ts` |
 | `CONCURRENT_CAP` | `3` | `supabase/functions/voip-capacity-forecast/index.ts` |
-| `AI_GATEWAY` | `'https://ai.gateway.lovable.dev/v1/chat/completions'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
+| `AI_GATEWAY` | `'https://openrouter.ai/api/v1/chat/completions'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
-| `AI_GATEWAY` | `'https://ai.gateway.lovable.dev/v1/chat/completions'` | `supabase/functions/voip-executive-narrative/index.ts` |
+| `AI_GATEWAY` | `'https://openrouter.ai/api/v1/chat/completions'` | `supabase/functions/voip-executive-narrative/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/voip-executive-narrative/index.ts` |
 | `CONCURRENT_CAP` | `3` | `supabase/functions/voip-executive-summary/index.ts` |
 | `MOS_RISK_THRESHOLD` | `3.5` | `supabase/functions/voip-quality-forecast/index.ts` |

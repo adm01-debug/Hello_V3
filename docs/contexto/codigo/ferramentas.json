@@ -360,6 +360,7 @@
    "NEXT_PUBLIC_API_URL",
    "NEXT_PUBLIC_APP_VERSION",
    "NODE_ENV",
+   "OPENROUTER_API_KEY",
    "PORT",
    "RATE_LIMIT_MAX",
    "RATE_LIMIT_WINDOW",
@@ -400,6 +401,7 @@
    "FROM_EMAIL",
    "LOVABLE_API_KEY",
    "MICROSOFT_TEAMS_API_KEY",
+   "OPENROUTER_API_KEY",
    "RESEND_API_KEY",
    "SIP_PASSWORD",
    "SIP_SERVER",
@@ -483,8 +485,8 @@
   ],
   "hosts_externos": [
    {
-    "host": "ai.gateway.lovable.dev",
-    "arquivos": 20
+    "host": "openrouter.ai",
+    "arquivos": 21
    },
    {
     "host": "cfmlmcdyjuotqobjapng.supabase.co",
@@ -519,10 +521,6 @@
     "arquivos": 3
    },
    {
-    "host": "api.lovable.dev",
-    "arquivos": 2
-   },
-   {
     "host": "exemplo.com",
     "arquivos": 2
    },
@@ -532,6 +530,10 @@
    },
    {
     "host": "a.com",
+    "arquivos": 1
+   },
+   {
+    "host": "ai.gateway.lovable.dev",
     "arquivos": 1
    },
    {
@@ -612,6 +614,7 @@
    "JWT_SECRET",
    "LOVABLE_API_KEY",
    "MICROSOFT_TEAMS_API_KEY",
+   "OPENROUTER_API_KEY",
    "REDIS_HOST",
    "REDIS_PASSWORD",
    "REDIS_PORT",

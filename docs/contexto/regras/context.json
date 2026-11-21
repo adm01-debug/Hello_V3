@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ffaedf6268208659e2e7690a304171bdeec1d173",
+  "sha": "c2d7efeb60c305d5ced5af57277c6ccae9d653a4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 12:17 UTC",
+  "generated_at": "2026-11-21 12:52 UTC",
   "files_total": 1600,
   "code_files": 1406,
   "code_lines": 177245
  },
  "version": "1.3.2",
- "facts_hash": "165f0fa5fd2c546f",
+ "facts_hash": "5d9d9540703ce920",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -28011,12 +28011,12 @@
      "webhook_secrets"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -28040,13 +28040,13 @@
      "rate_limit_logs"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -28075,13 +28075,13 @@
      "rate_limit_logs"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -28102,7 +28102,7 @@
      "rate_limit_logs"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
@@ -28176,12 +28176,12 @@
      "scorecard_templates"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "Auto-Scorecard — Gera scorecard automático via IA para chamadas com resumo Invocado por trigger em call_summaries (pg_net) ou manualmente.",
@@ -28254,18 +28254,18 @@
      "system_settings"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
     "errors": [
      "AI gateway error: ${aiResp.status}",
-     "LOVABLE_API_KEY não configurada",
+     "OPENROUTER_API_KEY não configurada",
      "Resposta sem tool call"
     ],
     "side_effects": [],
@@ -28632,7 +28632,7 @@
      "call_key_moments"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
@@ -28830,13 +28830,13 @@
      "rate_limit_logs"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -28922,12 +28922,12 @@
      "call_sessions"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "Coaching Copilot — Gera plano semanal de coaching baseado nas últimas chamadas do agente",
@@ -28983,7 +28983,7 @@
      "user_profiles"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
@@ -29010,13 +29010,13 @@
      "rate_limit_logs"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -29036,7 +29036,7 @@
      "rate_limit_logs"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
@@ -29150,13 +29150,13 @@
      "virtual_fax"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -29204,12 +29204,12 @@
      "rate_limit_logs"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -29358,7 +29358,7 @@
      "scorecard_responses"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
@@ -29585,7 +29585,7 @@
      "call_summaries"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
@@ -29616,13 +29616,13 @@
      "call_translations"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -29728,13 +29728,13 @@
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://api.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -29872,7 +29872,7 @@
      "voip_recommendation_actions"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
@@ -29904,7 +29904,7 @@
      "voip_recommendation_actions"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
@@ -30357,12 +30357,12 @@
      "rate_limit_logs"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
     "external": [
-     "https://ai.gateway.lovable.dev/v1/chat/…"
+     "https://openrouter.ai/api/v1/chat/…"
     ],
     "invokes": [],
     "doc": "",
@@ -35795,6 +35795,16 @@
     "scripts/inventario/gerar-banco.mjs"
    ],
    "LOVABLE_API_KEY": [
+    "supabase/functions/embed-kb-article/index.ts",
+    "supabase/functions/teams-fetch-recordings/index.ts"
+   ],
+   "MICROSOFT_TEAMS_API_KEY": [
+    "supabase/functions/teams-fetch-recordings/index.ts"
+   ],
+   "NODE_ENV": [
+    "scripts/ai-context/cenarios.mjs"
+   ],
+   "OPENROUTER_API_KEY": [
     "supabase/functions/analyze-call/index.ts",
     "supabase/functions/analyze-contact-profile/index.ts",
     "supabase/functions/analyze-live-utterance/index.ts",
@@ -35802,7 +35812,6 @@
     "supabase/functions/auto-scorecard/index.ts",
     "supabase/functions/chatbot-respond/index.ts",
     "supabase/functions/detect-key-moments/index.ts",
-    "supabase/functions/embed-kb-article/index.ts",
     "supabase/functions/extract-crm-fields/index.ts",
     "supabase/functions/generate-coaching-plan/index.ts",
     "supabase/functions/generate-coaching/index.ts",
@@ -35811,19 +35820,12 @@
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/realtime-analysis/index.ts",
     "supabase/functions/score-call/index.ts",
-    "supabase/functions/teams-fetch-recordings/index.ts",
     "supabase/functions/translate-summary/index.ts",
     "supabase/functions/translate-utterance/index.ts",
     "supabase/functions/voice-command/index.ts",
     "supabase/functions/voip-diagnostic-voice-qa/index.ts",
     "supabase/functions/voip-executive-narrative/index.ts",
     "supabase/functions/whatsapp-rewrite/index.ts"
-   ],
-   "MICROSOFT_TEAMS_API_KEY": [
-    "supabase/functions/teams-fetch-recordings/index.ts"
-   ],
-   "NODE_ENV": [
-    "scripts/ai-context/cenarios.mjs"
    ],
    "PGDUMP": [
     "scripts/supabase_snapshot/snapshot.py"
@@ -36776,29 +36778,12 @@
    "http://ip-api.com": [
     "supabase/functions/validate-geo/index.ts"
    ],
-   "https://ai.gateway.lovable.dev": [
-    "supabase/functions/analyze-call/index.ts",
-    "supabase/functions/analyze-contact-profile/index.ts",
-    "supabase/functions/analyze-live-utterance/index.ts",
-    "supabase/functions/auto-scorecard/index.ts",
-    "supabase/functions/chatbot-respond/index.ts",
-    "supabase/functions/extract-crm-fields/index.ts",
-    "supabase/functions/generate-coaching-plan/index.ts",
-    "supabase/functions/generate-meeting-summary/index.ts",
-    "supabase/functions/ocr-virtual-fax/index.ts",
-    "supabase/functions/realtime-analysis/index.ts",
-    "supabase/functions/translate-utterance/index.ts",
-    "supabase/functions/whatsapp-rewrite/index.ts"
-   ],
    "https://api.elevenlabs.io": [
     "supabase/functions/elevenlabs-conversation-token/index.ts",
     "supabase/functions/voice-transcribe/index.ts"
    ],
    "https://api.ipify.org": [
     "src/pages/Login.tsx"
-   ],
-   "https://api.lovable.dev": [
-    "supabase/functions/voice-command/index.ts"
    ],
    "https://api.pwnedpasswords.com": [
     "src/components/auth/PasswordStrength.tsx"
@@ -36815,6 +36800,21 @@
     "src/hooks/useDeviceDetection.ts",
     "src/hooks/useSessionManager.ts",
     "src/pages/Login.tsx"
+   ],
+   "https://openrouter.ai": [
+    "supabase/functions/analyze-call/index.ts",
+    "supabase/functions/analyze-contact-profile/index.ts",
+    "supabase/functions/analyze-live-utterance/index.ts",
+    "supabase/functions/auto-scorecard/index.ts",
+    "supabase/functions/chatbot-respond/index.ts",
+    "supabase/functions/extract-crm-fields/index.ts",
+    "supabase/functions/generate-coaching-plan/index.ts",
+    "supabase/functions/generate-meeting-summary/index.ts",
+    "supabase/functions/ocr-virtual-fax/index.ts",
+    "supabase/functions/realtime-analysis/index.ts",
+    "supabase/functions/translate-utterance/index.ts",
+    "supabase/functions/voice-command/index.ts",
+    "supabase/functions/whatsapp-rewrite/index.ts"
    ]
   },
   "dynamic_from": [
@@ -39828,7 +39828,7 @@
    },
    {
     "file": "supabase/functions/chatbot-respond/index.ts",
-    "msg": "LOVABLE_API_KEY não configurada"
+    "msg": "OPENROUTER_API_KEY não configurada"
    },
    {
     "file": "supabase/functions/chatbot-respond/index.ts",
@@ -47839,7 +47839,7 @@
    {
     "file": "supabase/functions/voip-diagnostic-voice-qa/index.ts",
     "name": "AI_GATEWAY",
-    "value": "'https://ai.gateway.lovable.dev/v1/chat/completions'"
+    "value": "'https://openrouter.ai/api/v1/chat/completions'"
    },
    {
     "file": "supabase/functions/voip-diagnostic-voice-qa/index.ts",
@@ -47849,7 +47849,7 @@
    {
     "file": "supabase/functions/voip-executive-narrative/index.ts",
     "name": "AI_GATEWAY",
-    "value": "'https://ai.gateway.lovable.dev/v1/chat/completions'"
+    "value": "'https://openrouter.ai/api/v1/chat/completions'"
    },
    {
     "file": "supabase/functions/voip-executive-narrative/index.ts",
@@ -111235,10 +111235,10 @@
    "path": "supabase/functions/analyze-call/index.ts",
    "lines": 147,
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
@@ -111347,10 +111347,10 @@
     ]
    },
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -111418,10 +111418,10 @@
     "check_rate_limit"
    ],
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -111454,7 +111454,7 @@
     }
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -111631,10 +111631,10 @@
     ]
    },
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -111879,16 +111879,16 @@
     ]
    },
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
    "errors": [
     "AI gateway error: ${aiResp.status}",
-    "LOVABLE_API_KEY não configurada",
+    "OPENROUTER_API_KEY não configurada",
     "Resposta sem tool call"
    ],
    "params": [
@@ -112885,7 +112885,7 @@
     }
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -113291,10 +113291,10 @@
     ]
    },
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -113510,7 +113510,7 @@
     ]
    },
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -113561,10 +113561,10 @@
     ]
    },
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
@@ -113741,10 +113741,10 @@
     ]
    },
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -113932,7 +113932,7 @@
    "path": "supabase/functions/generate-summary/index.ts",
    "lines": 96,
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
@@ -114119,10 +114119,10 @@
     "virtual-fax-docs"
    ],
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -114214,10 +114214,10 @@
    "path": "supabase/functions/realtime-analysis/index.ts",
    "lines": 98,
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
@@ -114430,7 +114430,7 @@
     ]
    },
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -114834,7 +114834,7 @@
     ]
    },
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -114876,10 +114876,10 @@
     }
    ],
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -115082,10 +115082,10 @@
    "path": "supabase/functions/voice-command/index.ts",
    "lines": 97,
    "external_urls": [
-    "https://api.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -115355,7 +115355,7 @@
     ]
    },
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
@@ -115370,7 +115370,7 @@
    "params": [
     {
      "name": "AI_GATEWAY",
-     "value": "'https://ai.gateway.lovable.dev/v1/chat/completions'"
+     "value": "'https://openrouter.ai/api/v1/chat/completions'"
     },
     {
      "name": "MODEL",
@@ -115475,7 +115475,7 @@
     ]
    },
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
@@ -115489,7 +115489,7 @@
    "params": [
     {
      "name": "AI_GATEWAY",
-     "value": "'https://ai.gateway.lovable.dev/v1/chat/completions'"
+     "value": "'https://openrouter.ai/api/v1/chat/completions'"
     },
     {
      "name": "MODEL",
@@ -116669,10 +116669,10 @@
    "path": "supabase/functions/whatsapp-rewrite/index.ts",
    "lines": 140,
    "external_urls": [
-    "https://ai.gateway.lovable.dev/v1/chat/…"
+    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
@@ -117754,10 +117754,41 @@
   }
  },
  "git": {
-  "sha": "ffaedf6268208659e2e7690a304171bdeec1d173",
+  "sha": "c2d7efeb60c305d5ced5af57277c6ccae9d653a4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "c2d7efe",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: migra edge functions chat do gateway Lovable para Open Router (#63)",
+    "files": [
+     ".env.example",
+     "docs/estado/infra-ci-rotas-integracoes.md",
+     "supabase/functions/analyze-call/index.ts",
+     "supabase/functions/analyze-contact-profile/index.ts",
+     "supabase/functions/analyze-live-utterance/index.ts",
+     "supabase/functions/analyze-sentiment/index.ts",
+     "supabase/functions/auto-scorecard/index.ts",
+     "supabase/functions/chatbot-respond/index.ts",
+     "supabase/functions/detect-key-moments/index.ts",
+     "supabase/functions/extract-crm-fields/index.ts",
+     "supabase/functions/generate-coaching-plan/index.ts",
+     "supabase/functions/generate-coaching/index.ts",
+     "supabase/functions/generate-meeting-summary/index.ts",
+     "supabase/functions/generate-summary/index.ts",
+     "supabase/functions/ocr-virtual-fax/index.ts",
+     "supabase/functions/realtime-analysis/index.ts",
+     "supabase/functions/score-call/index.ts",
+     "supabase/functions/translate-summary/index.ts",
+     "supabase/functions/translate-utterance/index.ts",
+     "supabase/functions/voice-command/index.ts",
+     "supabase/functions/voip-diagnostic-voice-qa/index.ts",
+     "supabase/functions/voip-executive-narrative/index.ts",
+     "supabase/functions/whatsapp-rewrite/index.ts"
+    ]
+   },
    {
     "sha": "ffaedf6",
     "date": "2026-11-21",
@@ -118573,15 +118604,6 @@
     "files": [
      "supabase/migrations/20261114090555_39ac6717-4796-4514-bcee-c3a00c1dfd6d.sql"
     ]
-   },
-   {
-    "sha": "4b6df34",
-    "date": "2026-11-13",
-    "author": "adm01-debug",
-    "subject": "chore: fecha relatorio de prod-readiness na main final 25e39c4 (#33)",
-    "files": [
-     "docs/prod-readiness.md"
-    ]
    }
   ],
   "hot_files": [
@@ -118600,6 +118622,14 @@
    [
     ".github/workflows/contexto.yml",
     3
+   ],
+   [
+    ".env.example",
+    2
+   ],
+   [
+    "supabase/functions/analyze-call/index.ts",
+    2
    ],
    [
     "docs/pendencias/_relatorio.md",
@@ -118654,15 +118684,7 @@
     2
    ],
    [
-    "docs/prod-readiness.md",
-    2
-   ],
-   [
-    "docs/pendencias/_achados.md",
-    1
-   ],
-   [
-    "docs/pendencias/_regras-de-negocio.md",
+    "docs/estado/infra-ci-rotas-integracoes.md",
     1
    ]
   ]

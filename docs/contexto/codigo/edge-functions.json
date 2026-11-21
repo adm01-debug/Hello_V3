@@ -35,14 +35,14 @@
    "tabelas": [],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -74,7 +74,7 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -82,7 +82,7 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -115,7 +115,7 @@
     "check_rate_limit"
    ],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -123,7 +123,7 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -152,7 +152,7 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -160,7 +160,7 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -256,14 +256,14 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [],
    "chamada_pelo_front": [],
@@ -359,14 +359,14 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts"
@@ -850,14 +850,14 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -1122,7 +1122,7 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -1130,7 +1130,7 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -1250,7 +1250,7 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -1258,7 +1258,7 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "api.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -1286,14 +1286,14 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [],
    "chamada_pelo_front": [
@@ -1356,7 +1356,7 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -1364,7 +1364,7 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -1391,14 +1391,14 @@
    "tabelas": [],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -1549,7 +1549,7 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -1559,7 +1559,7 @@
    ],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts"
@@ -1615,14 +1615,14 @@
    "tabelas": [],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -1793,14 +1793,14 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "resilience.ts"
@@ -2135,7 +2135,7 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -2143,7 +2143,7 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -2169,7 +2169,7 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -2177,7 +2177,7 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts"
@@ -2312,7 +2312,7 @@
    "tabelas": [],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -2320,7 +2320,7 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "api.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts"
@@ -2509,14 +2509,14 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -2547,14 +2547,14 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
@@ -3140,14 +3140,14 @@
    "tabelas": [],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",
