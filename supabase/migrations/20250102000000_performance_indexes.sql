@@ -8,135 +8,285 @@ BEGIN;
 -- ============================================================================
 
 -- Index for user's calls sorted by date (most common query)
-CREATE INDEX IF NOT EXISTS idx_calls_user_started_at 
-ON calls (user_id, started_at DESC);
+-- Index for user's calls sorted by date (most common query)
+DO $$
+BEGIN
+    IF to_regclass('calls') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_calls_user_started_at 
+ON calls (user_id, started_at DESC);$stmt$;
+    END IF;
+END $$;
 
 -- Index for finding active/ongoing calls
-CREATE INDEX IF NOT EXISTS idx_calls_status_user 
+DO $$
+BEGIN
+    IF to_regclass('calls') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_calls_status_user 
 ON calls (status, user_id) 
-WHERE status IN ('active', 'ringing');
+WHERE status IN ('active', 'ringing');$stmt$;
+    END IF;
+END $$;
 
 -- Index for calls within date range
-CREATE INDEX IF NOT EXISTS idx_calls_date_range 
+DO $$
+BEGIN
+    IF to_regclass('calls') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_calls_date_range 
 ON calls (started_at DESC) 
-WHERE started_at > CURRENT_DATE - INTERVAL '90 days';
+WHERE started_at > CURRENT_DATE - INTERVAL '90 days';$stmt$;
+    END IF;
+END $$;
 
 -- Partial index for failed calls
-CREATE INDEX IF NOT EXISTS idx_calls_failed 
+DO $$
+BEGIN
+    IF to_regclass('calls') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_calls_failed 
 ON calls (user_id, started_at DESC) 
-WHERE status = 'failed';
+WHERE status = 'failed';$stmt$;
+    END IF;
+END $$;
 
 -- Composite index for analytics queries
-CREATE INDEX IF NOT EXISTS idx_calls_analytics 
-ON calls (user_id, status, started_at DESC, duration);
+DO $$
+BEGIN
+    IF to_regclass('calls') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_calls_analytics 
+ON calls (user_id, status, started_at DESC, duration);$stmt$;
+    END IF;
+END $$;
 
 -- ============================================================================
 -- CONTACTS TABLE INDEXES
 -- ============================================================================
 
 -- Index for contact search by name
-CREATE INDEX IF NOT EXISTS idx_contacts_name_search 
-ON contacts USING gin (to_tsvector('english', name));
+-- Index for contact search by name
+DO $$
+BEGIN
+    IF to_regclass('contacts') IS NOT NULL
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='contacts' AND c.column_name='name') THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_contacts_name_search 
+ON contacts USING gin (to_tsvector('english', name));$stmt$;
+    END IF;
+END $$;
 
 -- Index for user's contacts sorted by name
-CREATE INDEX IF NOT EXISTS idx_contacts_user_name 
-ON contacts (user_id, name);
+DO $$
+BEGIN
+    IF to_regclass('contacts') IS NOT NULL
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='contacts' AND c.column_name='user_id') THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_contacts_user_name 
+ON contacts (user_id, name);$stmt$;
+    END IF;
+END $$;
 
 -- Index for finding contacts by phone
-CREATE INDEX IF NOT EXISTS idx_contacts_phone 
+DO $$
+BEGIN
+    IF to_regclass('contacts') IS NOT NULL
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='contacts' AND c.column_name='phone') THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_contacts_phone 
 ON contacts (phone) 
-WHERE phone IS NOT NULL;
+WHERE phone IS NOT NULL;$stmt$;
+    END IF;
+END $$;
 
 -- Index for email lookup
-CREATE INDEX IF NOT EXISTS idx_contacts_email 
+DO $$
+BEGIN
+    IF to_regclass('contacts') IS NOT NULL
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='contacts' AND c.column_name='email') THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_contacts_email 
 ON contacts (email) 
-WHERE email IS NOT NULL;
+WHERE email IS NOT NULL;$stmt$;
+    END IF;
+END $$;
 
 -- Index for recently created contacts
-CREATE INDEX IF NOT EXISTS idx_contacts_recent 
-ON contacts (user_id, created_at DESC);
+DO $$
+BEGIN
+    IF to_regclass('contacts') IS NOT NULL
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='contacts' AND c.column_name='user_id') THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_contacts_recent 
+ON contacts (user_id, created_at DESC);$stmt$;
+    END IF;
+END $$;
 
 -- ============================================================================
 -- TRANSCRIPTIONS TABLE INDEXES
 -- ============================================================================
 
 -- Index for call's transcriptions
-CREATE INDEX IF NOT EXISTS idx_transcriptions_call 
-ON transcriptions (call_id, created_at);
+DO $$
+BEGIN
+    IF to_regclass('transcriptions') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_transcriptions_call 
+ON transcriptions (call_id, created_at);$stmt$;
+    END IF;
+END $$;
 
 -- Full-text search on transcription text
-CREATE INDEX IF NOT EXISTS idx_transcriptions_text_search 
-ON transcriptions USING gin (to_tsvector('english', text));
+DO $$
+BEGIN
+    IF to_regclass('transcriptions') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_transcriptions_text_search 
+ON transcriptions USING gin (to_tsvector('english', text));$stmt$;
+    END IF;
+END $$;
 
 -- Index for high-confidence transcriptions
-CREATE INDEX IF NOT EXISTS idx_transcriptions_confidence 
+DO $$
+BEGIN
+    IF to_regclass('transcriptions') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_transcriptions_confidence 
 ON transcriptions (call_id, confidence DESC) 
-WHERE confidence > 0.8;
+WHERE confidence > 0.8;$stmt$;
+    END IF;
+END $$;
 
 -- ============================================================================
 -- USERS TABLE INDEXES
 -- ============================================================================
 
 -- Index for email login
-CREATE INDEX IF NOT EXISTS idx_users_email_unique 
-ON users (email);
+DO $$
+BEGIN
+    IF to_regclass('users') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_users_email_unique 
+ON users (email);$stmt$;
+    END IF;
+END $$;
 
 -- Index for active users
-CREATE INDEX IF NOT EXISTS idx_users_active 
+DO $$
+BEGIN
+    IF to_regclass('users') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_users_active 
 ON users (created_at DESC) 
-WHERE deleted_at IS NULL;
+WHERE deleted_at IS NULL;$stmt$;
+    END IF;
+END $$;
 
 -- Index for role-based queries
-CREATE INDEX IF NOT EXISTS idx_users_role 
-ON users (role);
+DO $$
+BEGIN
+    IF to_regclass('users') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_users_role 
+ON users (role);$stmt$;
+    END IF;
+END $$;
 
 -- ============================================================================
 -- AUDIT_LOGS TABLE INDEXES
 -- ============================================================================
 
 -- Index for user's audit trail
-CREATE INDEX IF NOT EXISTS idx_audit_user_timestamp 
-ON audit_logs (user_id, timestamp DESC);
+DO $$
+BEGIN
+    IF to_regclass('audit_logs') IS NOT NULL
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='user_id') THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_audit_user_timestamp 
+ON audit_logs (user_id, timestamp DESC);$stmt$;
+    END IF;
+END $$;
 
 -- Index for action-based queries
-CREATE INDEX IF NOT EXISTS idx_audit_action_timestamp 
-ON audit_logs (action, timestamp DESC);
+DO $$
+BEGIN
+    IF to_regclass('audit_logs') IS NOT NULL
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='action') THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_audit_action_timestamp 
+ON audit_logs (action, timestamp DESC);$stmt$;
+    END IF;
+END $$;
 
 -- Index for critical events
-CREATE INDEX IF NOT EXISTS idx_audit_critical 
+DO $$
+BEGIN
+    IF to_regclass('audit_logs') IS NOT NULL
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='severity') THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_audit_critical 
 ON audit_logs (timestamp DESC, severity) 
-WHERE severity = 'critical';
+WHERE severity = 'critical';$stmt$;
+    END IF;
+END $$;
 
--- Partial index for failed actions
-CREATE INDEX IF NOT EXISTS idx_audit_failures 
+-- Index for failed actions
+DO $$
+BEGIN
+    IF to_regclass('audit_logs') IS NOT NULL
+       AND EXISTS (SELECT 1 FROM information_schema.columns c WHERE c.table_schema='public' AND c.table_name='audit_logs' AND c.column_name='user_id') THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_audit_failures 
 ON audit_logs (user_id, timestamp DESC) 
-WHERE success = FALSE;
+WHERE success = FALSE;$stmt$;
+    END IF;
+END $$;
 
 -- ============================================================================
 -- COMPOSITE INDEXES FOR JOINS
 -- ============================================================================
 
 -- Optimized for calls with contact info
-CREATE INDEX IF NOT EXISTS idx_calls_contact_user 
-ON calls (contact_id, user_id, started_at DESC);
+DO $$
+BEGIN
+    IF to_regclass('calls') IS NOT NULL THEN
+        EXECUTE $stmt$CREATE INDEX IF NOT EXISTS idx_calls_contact_user 
+ON calls (contact_id, user_id, started_at DESC);$stmt$;
+    END IF;
+END $$;
 
 -- ============================================================================
 -- MAINTENANCE QUERIES
 -- ============================================================================
 
 -- Analyze tables to update statistics
-ANALYZE calls;
-ANALYZE contacts;
-ANALYZE transcriptions;
-ANALYZE users;
-ANALYZE audit_logs;
+
+DO $$
+BEGIN
+    IF to_regclass('calls') IS NOT NULL THEN
+        EXECUTE $stmt$ANALYZE calls;$stmt$;
+    END IF;
+END $$;
+
+
+DO $$
+BEGIN
+    IF to_regclass('contacts') IS NOT NULL THEN
+        EXECUTE $stmt$ANALYZE contacts;$stmt$;
+    END IF;
+END $$;
+
+
+DO $$
+BEGIN
+    IF to_regclass('transcriptions') IS NOT NULL THEN
+        EXECUTE $stmt$ANALYZE transcriptions;$stmt$;
+    END IF;
+END $$;
+
+
+DO $$
+BEGIN
+    IF to_regclass('users') IS NOT NULL THEN
+        EXECUTE $stmt$ANALYZE users;$stmt$;
+    END IF;
+END $$;
+
+
+DO $$
+BEGIN
+    IF to_regclass('audit_logs') IS NOT NULL THEN
+        EXECUTE $stmt$ANALYZE audit_logs;$stmt$;
+    END IF;
+END $$;
 
 -- Show index usage statistics
 CREATE OR REPLACE VIEW index_usage AS
 SELECT
   schemaname,
-  tablename,
-  indexname,
+  relname AS tablename,
+  indexrelname AS indexname,
   idx_scan AS index_scans,
   idx_tup_read AS tuples_read,
   idx_tup_fetch AS tuples_fetched,
@@ -148,8 +298,8 @@ ORDER BY idx_scan DESC;
 CREATE OR REPLACE VIEW unused_indexes AS
 SELECT
   schemaname,
-  tablename,
-  indexname,
+  relname AS tablename,
+  indexrelname AS indexname,
   idx_scan,
   pg_size_pretty(pg_relation_size(indexrelid)) AS index_size
 FROM pg_stat_user_indexes
