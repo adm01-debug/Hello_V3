@@ -25,6 +25,7 @@ const loaders: Record<string, Loader> = {
   "/contacts/insights": () => import("@/pages/ContactInsights"),
   "/history": () => import("@/pages/CallHistory"),
   "/call-history": () => import("@/pages/CallHistory"),
+  "/onboarding": () => import("@/pages/Onboarding"),
   "/ai": () => import("@/pages/AIAssistant"),
   "/coaching": () => import("@/pages/Coaching"),
   "/voicemail": () => import("@/pages/Voicemail"),

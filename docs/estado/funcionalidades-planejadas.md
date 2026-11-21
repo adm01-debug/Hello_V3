@@ -86,16 +86,16 @@ São o caso mais claro de "planejado, construído e nunca ligado". Todas confirm
 | Playlists de chamada | `useCallPlaylists.ts` + `usePlaylistItems` | ✅ Wireado: aba **Playlists** em `/call-library` (PR #67) | 🟩 |
 | Atribuições de coaching | `useCoachingAssignments.ts` | ✅ Wireado: em `/coaching` (PR #67) | 🟩 |
 | Regras de compliance | `useComplianceRules.ts` | ✅ Wireado: aba **Regras** em `/compliance` (PR #67) | 🟩 |
-| Scorecards | `useScorecards.ts` + 4 tabelas + edge `score-call` | Substituído por `useCallScoring`; deixa 4 tabelas sem leitor | ⬛ |
+| Scorecards | `useScorecards.ts` + 4 tabelas + edge `score-call` | Substituído por `useCallScoring`; deixa 4 tabelas sem leitor (todas com 0 linhas) | ⬛ Legado |
 | Pesquisas (surveys) | `useSurveys.ts` + edge `send-survey` | ✅ Wireado: aba **Pesquisas** em `/call-library` (PR #67) | 🟩 |
-| Notificações (versão antiga) | `useNotifications.ts` (219 linhas) | Substituído por `useNotificationCenter` | ⬛ |
+| Notificações (versão antiga) | `useNotifications.ts` (219 linhas) | Substituído por `useNotificationCenter` (que usa o mesmo `notifications`) | ⬛ Duplicata |
 | Conferência multicanal | `useMultiChannelCallConference.ts` | Duplicata inline em `useMultiChannelCall.ts:189-238` | ⬛ |
 | Tradução ao vivo | `translation/LiveTranslationPanel.tsx` (125 linhas) | ✅ Wireado: painel em chamada ativa em `/calls` (PR #69) | 🟩 |
-| Composer de WhatsApp | `whatsapp/WhatsappComposer.tsx` (106 linhas) | Zero importadores | ⬛ |
+| Composer de WhatsApp | `whatsapp/WhatsappComposer.tsx` (106 linhas) | ✅ Wireado: usado em `/inbox` (linha 354) | 🟩 |
 | Gate de permissões granular | `auth/PermissionGate.tsx` — citado no `README.md` como recurso ativo | ✅ Wireado: protege bulk action em `/admin/extensions` (PR #61) | 🟩 |
 | Dashboard de gamificação | `gamification/GamificationDashboard.tsx` | ✅ Wireado: rota `/gamification` + menu **Gamificação IA** (PR #67) | 🟩 |
-| Auditoria de segurança (admin) | `pages/admin/SecurityAuditDashboard.tsx` (313 linhas) | Sem rota registrada | ⬛ |
-| Cadeia WebRTC alternativa | `calls/WebRTCCall.tsx` + 4 filhos (~880 linhas) | Só referenciada por testes | ⬛ |
+| Auditoria de segurança (admin) | `pages/admin/SecurityAuditDashboard.tsx` (313 linhas) | ✅ Wireado: rota `/admin/security-audit` + menu **Auditoria de Segurança** | 🟩 |
+| Cadeia WebRTC alternativa | `calls/WebRTCCall.tsx` + 4 filhos (~880 linhas) | Só referenciada por testes; sem rota nem entrada de UI | ⬛ Legado |
 
 **6 Edge Functions sem chamador identificado:** `cleanup-lock-conflicts`, `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`. (`generate-coaching-track` agora wireada via botão em `/coaching`.)
 **2 Edge Functions com testes mas sem `index.ts`:** `check-calling-hours/`, `check-dnc/`.
@@ -104,10 +104,15 @@ São o caso mais claro de "planejado, construído e nunca ligado". Todas confirm
 
 ## 6. Rotas ativas sem caminho de navegação
 
-Funcionalidades entregues que o usuário não encontra pelo menu (~1.146 linhas):
-`/accounts`, `/cadences`, `/deals`, `/onboarding`, `/permissions` (318 linhas, admin), `/dialer/predictive`.
+Estado após a varredura de 21/11 (menu lateral + Command Palette):
 
-Além disso: rota duplicada `/history` + `/call-history`, com rótulos contraditórios ("Histórico Completo" vs. "Transcrições").
+| Rota | Situação |
+|---|---|
+| `/accounts`, `/cadences`, `/deals` | ✅ No menu **CRM** |
+| `/dialer/predictive`, `/permissions` | ✅ No menu **Administração** |
+| `/admin/security-audit` | ✅ No menu **Segurança** |
+| `/onboarding` | ✅ Agora no menu **Configurações** e na Command Palette ("Configuração Inicial") |
+| `/history` + `/call-history` | ⬛ Duas rotas para `CallHistory`. O rótulo "Transcrições" na Command Palette virou "Histórico de Chamadas", eliminando o contraditório. As duas rotas foram preservadas para não quebrar links existentes (`/call-history?session=…` é usado em `/call-library`). |
 
 ---
 

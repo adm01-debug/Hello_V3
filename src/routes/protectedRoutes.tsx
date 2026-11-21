@@ -112,7 +112,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/blf", element: BlfBoard },
   { path: "/contacts/insights", element: ContactInsights },
    { path: "/history", element: CallHistory },
-   { path: "/call-history", element: CallHistory },
+  { path: "/call-history", element: CallHistory },
   { path: "/analytics", element: CallAnalytics },
   { path: "/alerts", element: Alerts },
   { path: "/alert-history", element: AlertHistory },
