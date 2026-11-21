@@ -2,10 +2,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DNCListManager } from '@/components/compliance/DNCListManager';
 import { CallingHoursConfig } from '@/components/compliance/CallingHoursConfig';
 import { ComplianceSettings } from '@/components/compliance/ComplianceSettings';
+import { ComplianceRulesPanel } from '@/components/compliance/ComplianceRulesPanel';
 import { ConsentHistoryViewer } from '@/components/compliance/ConsentHistoryViewer';
 import { DNCImportLogs } from '@/components/compliance/DNCImportLogs';
 import { HolidaysManager } from '@/components/compliance/HolidaysManager';
-import { Ban, Clock, Settings, Shield, FileText, Upload, Calendar } from 'lucide-react';
+import { Ban, Clock, Settings, Shield, FileText, Upload, Calendar, ScrollText } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function CompliancePage() {
@@ -26,7 +27,7 @@ export default function CompliancePage() {
       </div>
 
       <Tabs defaultValue="dnc" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 lg:w-auto lg:inline-grid">
+        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 lg:w-auto lg:inline-grid">
           <TabsTrigger value="dnc" className="gap-2">
             <Ban className="h-4 w-4" />
             <span className="hidden sm:inline">Lista DNC</span>
@@ -51,6 +52,10 @@ export default function CompliancePage() {
             <Settings className="h-4 w-4" />
             <span className="hidden sm:inline">Configurações</span>
           </TabsTrigger>
+          <TabsTrigger value="rules" className="gap-2">
+            <ScrollText className="h-4 w-4" />
+            <span className="hidden sm:inline">Regras</span>
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="dnc"><DNCListManager /></TabsContent>
@@ -59,6 +64,7 @@ export default function CompliancePage() {
         <TabsContent value="consent"><ConsentHistoryViewer /></TabsContent>
         <TabsContent value="imports"><DNCImportLogs /></TabsContent>
         <TabsContent value="settings"><ComplianceSettings /></TabsContent>
+        <TabsContent value="rules"><ComplianceRulesPanel /></TabsContent>
       </Tabs>
     </div>
   );

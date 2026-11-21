@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Heart, AlertTriangle, RefreshCcw, ShieldAlert, Search } from 'lucide-react';
 import { useAccounts } from '@/hooks/useAccounts';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { ChurnSignalsPanel } from '@/components/accounts/ChurnSignalsPanel';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 
 function healthVariant(score: number): 'default' | 'secondary' | 'destructive' {
@@ -66,6 +67,15 @@ export default function Accounts() {
           </div>
         </CardContent></Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Sinais de Churn Ativos</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ChurnSignalsPanel />
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>
