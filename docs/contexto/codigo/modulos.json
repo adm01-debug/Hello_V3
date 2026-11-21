@@ -5689,9 +5689,9 @@
   },
   {
    "modulo": "pages/admin",
-   "arquivos": 17,
+   "arquivos": 16,
    "testes": 0,
-   "linhas": 2241,
+   "linhas": 2092,
    "itens_menu": [
     "Exportação Data Lake",
     "Linhas VoIP",
@@ -5709,7 +5709,7 @@
     "/admin/webhook-health"
    ],
    "rotas_http": [],
-   "componentes": 16,
+   "componentes": 15,
    "hooks_locais": [
     "useAlertPresets",
     "useAlertsExport",

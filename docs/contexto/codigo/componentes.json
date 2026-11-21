@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 441,
+ "total": 440,
  "orfaos": 19,
  "nomes_duplicados": {
   "KpiCards": [
@@ -11,10 +11,6 @@
   "SearchInput": [
    "src/components/SearchInput.tsx",
    "src/components/ui/search-input.tsx"
-  ],
-  "SecurityDashboard": [
-   "src/pages/admin/SecurityDashboard.tsx",
-   "src/pages/SecurityDashboard.tsx"
   ],
   "Skeleton": [
    "src/components/ui/skeleton-loader.tsx",
@@ -4023,7 +4019,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 202,
+   "usado_por": 201,
    "orfao": false
   },
   {
@@ -4108,7 +4104,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 230,
+   "usado_por": 229,
    "orfao": false
   },
   {
@@ -4375,7 +4371,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 90,
+   "usado_por": 89,
    "orfao": false
   },
   {
@@ -4592,7 +4588,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 70,
+   "usado_por": 69,
    "orfao": false
   },
   {
@@ -4771,7 +4767,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 27,
+   "usado_por": 26,
    "orfao": false
   },
   {
@@ -5232,22 +5228,6 @@
    ],
    "edges": [],
    "usado_por": 1,
-   "orfao": false
-  },
-  {
-   "arquivo": "src/pages/admin/SecurityDashboard.tsx",
-   "exports": [
-    "SecurityDashboard"
-   ],
-   "export_default": "SecurityDashboard",
-   "linhas": 149,
-   "dominio": "pages/admin",
-   "hooks_locais": [],
-   "tabelas": [
-    "audit_logs"
-   ],
-   "edges": [],
-   "usado_por": 0,
    "orfao": false
   },
   {

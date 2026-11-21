@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `51ac7dd85b` · branch `main` · 2026-11-20 19:32 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ce4911ded4` · branch `main` · 2026-11-21 11:44 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -937,7 +937,6 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `type` | `action` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
 | `type` | `agent` | escreve | `src/hooks/useMultiChannelCall.ts` |
 | `type` | `alert` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
-| `type` | `all` | escreve | `src/pages/admin/SecurityDashboard.tsx` |
 | `type` | `announcement` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `array` | escreve | `supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
 | `type` | `authentication` | escreve | `src/hooks/useWebAuthn.ts` |
@@ -989,7 +988,6 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `type` | `revoke` | compara, escreve | `src/pages/SessionManagement.tsx` |
 | `type` | `revoke_all` | compara, escreve | `src/pages/SessionManagement.tsx` |
 | `type` | `ring_group` | escreve | `src/pages/CallFlowDesigner.tsx` |
-| `type` | `security_critical` | compara | `src/pages/admin/SecurityDashboard.tsx` |
 | `type` | `sentiment_negative` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
 | `type` | `signup` | escreve | `src/pages/VerifyEmail.tsx` |
 | `type` | `sla_breach` | escreve | `supabase/functions/enforce-sla/index.ts` |
@@ -1002,7 +1000,6 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `type` | `totp` | compara, escreve | `src/components/auth/ReauthDialog.tsx`<br>`src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx`<br>`src/pages/two-factor/DevicesCard.tsx` |
 | `type` | `transfer` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `unhandled-rejection` | escreve | `src/lib/error-tracking.ts` |
-| `type` | `validation_error` | compara | `src/pages/admin/SecurityDashboard.tsx` |
 | `type` | `vip_inactive` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
 | `type` | `voicemail` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `warning` | compara, escreve | `src/hooks/useHoldSoundAlert.ts`<br>`supabase/functions/voip-failover-notifier/index.ts` |
@@ -2018,7 +2015,6 @@ _nenhum item encontrado_
 | 20 | `src/pages/admin/DatabaseHealth.tsx` |
 | 1000 | `src/pages/admin/SecurityAuditDashboard.tsx` |
 | 200 | `src/pages/admin/SecurityAuditDashboard.tsx` |
-| 100 | `src/pages/admin/SecurityDashboard.tsx` |
 | 500 | `src/pages/admin/VoiceQuality.tsx` |
 | 5000 | `src/pages/roles/RoleAuditTrail.tsx` |
 | 50 | `supabase/functions/analyze-contact-profile/index.ts` |

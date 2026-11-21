@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "51ac7dd85bb5a6bbe5b46e3cc6bac86834946dd3",
+  "sha": "ce4911ded4ea34af1d0afc83ca4b5dc8fa6d15d3",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-20 19:32 UTC",
-  "files_total": 1599,
-  "code_files": 1407,
-  "code_lines": 177394
+  "generated_at": "2026-11-21 11:44 UTC",
+  "files_total": 1598,
+  "code_files": 1406,
+  "code_lines": 177245
  },
  "version": "1.3.2",
- "facts_hash": "4f40140c8b281ec7",
+ "facts_hash": "165f0fa5fd2c546f",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 595,
+   ".tsx": 594,
    ".ts": 567,
    ".sql": 213,
    ".mjs": 25,
@@ -32480,8 +32480,8 @@
   },
   {
    "module": "src/pages",
-   "files": 130,
-   "lines": 20778,
+   "files": 129,
+   "lines": 20629,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -33209,7 +33209,6 @@
      "src/hooks/useExtensionAuditHistory.ts",
      "src/hooks/useSecurityMonitoringData.ts",
      "src/pages/admin/SecurityAuditDashboard.tsx",
-     "src/pages/admin/SecurityDashboard.tsx",
      "src/pages/roles/RoleAuditTrail.tsx"
     ],
     "insert": [
@@ -51632,24 +51631,6 @@
     "file": "src/pages/admin/DataExport.tsx",
     "field": "status",
     "value": "completed",
-    "kind": "compara"
-   },
-   {
-    "file": "src/pages/admin/SecurityDashboard.tsx",
-    "field": "type",
-    "value": "all",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/pages/admin/SecurityDashboard.tsx",
-    "field": "type",
-    "value": "validation_error",
-    "kind": "compara"
-   },
-   {
-    "file": "src/pages/admin/SecurityDashboard.tsx",
-    "field": "type",
-    "value": "security_critical",
     "kind": "compara"
    },
    {
@@ -78510,10 +78491,6 @@
     "limit": "200"
    },
    {
-    "file": "src/pages/admin/SecurityDashboard.tsx",
-    "limit": "100"
-   },
-   {
     "file": "src/pages/admin/VoiceQuality.tsx",
     "limit": "500"
    },
@@ -79907,15 +79884,6 @@
      ],
      "email": [
       "compara:src/pages/VerifyEmail.tsx"
-     ],
-     "all": [
-      "escreve:src/pages/admin/SecurityDashboard.tsx"
-     ],
-     "validation_error": [
-      "compara:src/pages/admin/SecurityDashboard.tsx"
-     ],
-     "security_critical": [
-      "compara:src/pages/admin/SecurityDashboard.tsx"
      ],
      "outbound": [
       "escreve:supabase/functions/analyze-call/analyze-call_test.ts"
@@ -110360,39 +110328,6 @@
     "200"
    ]
   },
-  "src/pages/admin/SecurityDashboard.tsx": {
-   "path": "src/pages/admin/SecurityDashboard.tsx",
-   "lines": 149,
-   "exports": [
-    "function SecurityDashboard"
-   ],
-   "tables": [
-    {
-     "table": "audit_logs",
-     "op": "select"
-    }
-   ],
-   "status_values": [
-    {
-     "field": "type",
-     "value": "all",
-     "kind": "escreve"
-    },
-    {
-     "field": "type",
-     "value": "validation_error",
-     "kind": "compara"
-    },
-    {
-     "field": "type",
-     "value": "security_critical",
-     "kind": "compara"
-    }
-   ],
-   "pagination": [
-    "100"
-   ]
-  },
   "src/pages/admin/SloDashboard.tsx": {
    "path": "src/pages/admin/SloDashboard.tsx",
    "lines": 166,
@@ -117819,10 +117754,21 @@
   }
  },
  "git": {
-  "sha": "51ac7dd85bb5a6bbe5b46e3cc6bac86834946dd3",
+  "sha": "ce4911ded4ea34af1d0afc83ca4b5dc8fa6d15d3",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ce4911d",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)",
+    "files": [
+     "docs/pendencias/_ordem.md",
+     "docs/pendencias/_verificado-banco.md",
+     "src/pages/admin/SecurityDashboard.tsx"
+    ]
+   },
    {
     "sha": "51ac7dd",
     "date": "2026-11-20",
@@ -118635,21 +118581,16 @@
     "files": [
      "docs/prod-readiness.md"
     ]
-   },
-   {
-    "sha": "4060612",
-    "date": "2026-11-13",
-    "author": "adm01-debug",
-    "subject": "chore: docs: relatorio de prod-readiness com inventario de funcionalidades (#30)",
-    "files": [
-     "docs/prod-readiness.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/prod-readiness.md",
-    5
+    4
+   ],
+   [
+    "docs/pendencias/_ordem.md",
+    3
    ],
    [
     "supabase/functions/migrate-helper/index.ts",
@@ -118662,6 +118603,10 @@
    [
     ".github/workflows/contexto.yml",
     3
+   ],
+   [
+    "docs/pendencias/_verificado-banco.md",
+    2
    ],
    [
     "docs/pendencias/WIRING-01-permissiongate.md",
@@ -118688,10 +118633,6 @@
     2
    ],
    [
-    "docs/pendencias/_ordem.md",
-    2
-   ],
-   [
     "src/pages/Inbox.tsx",
     2
    ],
@@ -118712,19 +118653,15 @@
     2
    ],
    [
+    "src/pages/admin/SecurityDashboard.tsx",
+    1
+   ],
+   [
     "src/pages/admin/ExtensionsAdmin.tsx",
     1
    ],
    [
     "src/routes/protectedRoutes.tsx",
-    1
-   ],
-   [
-    "scripts/inventario/gerar-banco.mjs",
-    1
-   ],
-   [
-    "supabase/migrations/20261120154610_fix-data-lake-exports-call-summaries.sql",
     1
    ]
   ]

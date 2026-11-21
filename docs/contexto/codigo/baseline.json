@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "51ac7dd85bb5a6bbe5b46e3cc6bac86834946dd3",
+  "commit": "ce4911ded4ea34af1d0afc83ca4b5dc8fa6d15d3",
   "branch": "main",
-  "data_commit": "2026-11-20T16:31:36-03:00",
+  "data_commit": "2026-11-21T08:44:07-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ce4911de",
+    "data": "2026-11-21",
+    "assunto": "docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)"
+   },
    {
     "sha": "51ac7dd",
     "data": "2026-11-20",
@@ -126,14 +131,9 @@
     "sha": "2c8b481",
     "data": "2026-11-14",
     "assunto": "fix: remove referencia ao projeto morto dyibdjwuoibwwpidgsxu (#36)"
-   },
-   {
-    "sha": "1a3c93f",
-    "data": "2026-11-14",
-    "assunto": "fix: desativa crons de teste que falham com OPTIMISTIC_LOCK_CONFLICT (#35)"
    }
   ],
-  "arquivos_mudados_7d": 560,
+  "arquivos_mudados_7d": 561,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -188,11 +188,11 @@
     "mudancas": 3
    },
    {
-    "pasta": "scripts/inventario/gerar-banco.mjs",
+    "pasta": "docs/pendencias/_ordem.md",
     "mudancas": 3
    },
    {
-    "pasta": "scripts/supabase_snapshot/snapshot.py",
+    "pasta": "scripts/inventario/gerar-banco.mjs",
     "mudancas": 3
    }
   ],
@@ -215,6 +215,10 @@
    },
    {
     "arquivo": "AGENTS.md",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "docs/pendencias/_ordem.md",
     "mudancas": 3
    },
    {
@@ -278,7 +282,7 @@
     "mudancas": 2
    },
    {
-    "arquivo": "docs/pendencias/_ordem.md",
+    "arquivo": "docs/pendencias/_verificado-banco.md",
     "mudancas": 2
    },
    {
@@ -292,16 +296,12 @@
    {
     "arquivo": "inventario/estado/rotas.json",
     "mudancas": 2
-   },
-   {
-    "arquivo": "scripts/ai-context/cenarios.mjs",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 45
+    "commits": 46
    },
    {
     "autor": "github-actions[bot]",
@@ -310,15 +310,15 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1552,
-  "arquivos_codigo": 1193,
-  "linhas_codigo": 163555,
+  "arquivos_total": 1551,
+  "arquivos_codigo": 1192,
+  "linhas_codigo": 163406,
   "rotas": 104,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 79,
   "modulos": 75,
-  "componentes": 441,
+  "componentes": 440,
   "hooks": 188,
   "edge_functions": 93,
   "tabelas": 171,
@@ -495,8 +495,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 130,
-   "linhas": 20778
+   "arquivos": 129,
+   "linhas": 20629
   },
   "src/routes": {
    "arquivos": 2,
@@ -745,7 +745,6 @@
   "componentes_com_nome_duplicado": [
    "KpiCards",
    "SearchInput",
-   "SecurityDashboard",
    "Skeleton",
    "Toaster"
   ],

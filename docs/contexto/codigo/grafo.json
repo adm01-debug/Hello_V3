@@ -1,12 +1,12 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 870,
- "arestas": 3364,
+ "nos": 869,
+ "arestas": 3356,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 260
+   "importado_por": 259
   },
   {
    "arquivo": "src/components/ui/button.tsx",
@@ -14,11 +14,11 @@
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 230
+   "importado_por": 229
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 202
+   "importado_por": 201
   },
   {
    "arquivo": "src/lib/logger.ts",
@@ -30,7 +30,7 @@
   },
   {
    "arquivo": "src/lib/safe-date.ts",
-   "importado_por": 103
+   "importado_por": 102
   },
   {
    "arquivo": "src/hooks/usePageTitle.ts",
@@ -38,7 +38,7 @@
   },
   {
    "arquivo": "src/components/ui/input.tsx",
-   "importado_por": 90
+   "importado_por": 89
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
@@ -46,7 +46,7 @@
   },
   {
    "arquivo": "src/components/ui/select.tsx",
-   "importado_por": 70
+   "importado_por": 69
   },
   {
    "arquivo": "src/components/ui/label.tsx",
@@ -81,12 +81,12 @@
    "importado_por": 29
   },
   {
-   "arquivo": "src/components/ui/table.tsx",
+   "arquivo": "src/contexts/AuthContext.tsx",
    "importado_por": 27
   },
   {
-   "arquivo": "src/contexts/AuthContext.tsx",
-   "importado_por": 27
+   "arquivo": "src/components/ui/table.tsx",
+   "importado_por": 26
   },
   {
    "arquivo": "src/components/ui/tooltip.tsx",
@@ -122,7 +122,7 @@
   },
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "importado_por": 17
+   "importado_por": 16
   },
   {
    "arquivo": "src/hooks/useContacts.ts",

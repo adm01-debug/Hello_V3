@@ -4193,16 +4193,6 @@
    "src/lib/logger.ts",
    "src/lib/safe-date.ts"
   ],
-  "src/pages/admin/SecurityDashboard.tsx": [
-   "src/components/ui/badge.tsx",
-   "src/components/ui/card.tsx",
-   "src/components/ui/input.tsx",
-   "src/components/ui/select.tsx",
-   "src/components/ui/table.tsx",
-   "src/integrations/supabase/client.ts",
-   "src/integrations/supabase/types.ts",
-   "src/lib/safe-date.ts"
-  ],
   "src/pages/admin/SloDashboard.tsx": [
    "src/components/ui/badge.tsx",
    "src/components/ui/card.tsx",

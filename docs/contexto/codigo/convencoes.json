@@ -7,7 +7,7 @@
   ],
   "componentes": [
    "src/components (313)",
-   "src/pages (125)",
+   "src/pages (124)",
    "src/contexts (2)"
   ],
   "hooks": [
@@ -47,7 +47,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (441)"
+  ".tsx (440)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)",
    "feat: wiring dos componentes orfaos no frontend (#61)",
    "fix: cron data-lake-flush falhava por constraint de dataset sem call_summaries (#60)",
    "fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)",
-   "fix: sanitiza path com fileURLToPath no gerador de inventario (#58)",
-   "chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)"
+   "fix: sanitiza path com fileURLToPath no gerador de inventario (#58)"
   ]
  },
  "pr_template": null,
