@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e534879514` · branch `main` · 2026-11-21 16:08 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d9528b577a` · branch `main` · 2026-11-21 18:30 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -862,7 +862,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `calling` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `cancelled` | escreve | `src/hooks/useScheduledCallbacks.ts` |
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
-| `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +30 |
+| `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +31 |
 | `status` | `conference` | escreve | `src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
 | `status` | `connected` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>… +3 |
@@ -895,7 +895,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `on-hold` | compara, escreve | `src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
 | `status` | `on_call` | compara | `src/hooks/useQueueMetrics.ts` |
 | `status` | `online` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
-| `status` | `open` | compara, escreve, filtra | `src/components/executive/CustomerSuccessCard.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/hooks/useRenewals.ts`<br>`src/lib/security/penetration-test-reporter.ts`<br>`src/pages/Deals.tsx`<br>… +6 |
+| `status` | `open` | compara, escreve, filtra | `src/components/executive/CustomerSuccessCard.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/hooks/useRenewals.ts`<br>`src/lib/security/penetration-test-reporter.ts`<br>`src/pages/Deals.tsx`<br>… +8 |
 | `status` | `operational` | compara, escreve | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
 | `status` | `optimal` | compara | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `status` | `outage` | compara | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
@@ -903,7 +903,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `parked` | compara, escreve, filtra | `src/components/park/ParkOrbitCard.tsx`<br>`src/hooks/useBlfBoard.ts`<br>`src/hooks/useCallPark.ts`<br>`src/lib/call-park.ts` |
 | `status` | `partial` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/admin/ldap/types.ts`<br>`src/pages/SecurityReport.tsx` |
 | `status` | `paused` | compara, escreve | `src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/hooks/predictive-dialer/api.ts` |
-| `status` | `pending` | compara, escreve, filtra | `src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/components/executive/PendingFollowupsCard.tsx`<br>… +22 |
+| `status` | `pending` | compara, escreve, filtra | `src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/components/executive/PendingFollowupsCard.tsx`<br>… +21 |
 | `status` | `processing` | compara, escreve | `src/hooks/useDataLakeExports.ts`<br>`supabase/functions/data-lake-flush/index.ts`<br>`supabase/functions/export-data-lake/index.ts`<br>`supabase/functions/sync-crm-queue/index.ts` |
 | `status` | `published` | compara, filtra | `src/hooks/useKnowledgeBase.ts`<br>`src/pages/Knowledge.tsx`<br>`supabase/functions/chatbot-respond/index.ts` |
 | `status` | `ready` | escreve | `supabase/functions/wavoip-call/index.ts` |
@@ -1596,6 +1596,10 @@ _nenhum item encontrado_
   ```
   try { const supabaseUrl = Deno.env.get('SUPABASE_URL')!; const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!; const supabase = createClient(supabaseUrl, supabaseServiceKey); const forwarded = req.headers.get('x-forwarded-for'); const ip = forwarded ? forwarded.split(',')[0].trim() : '0.0.0.0'; await supabase.from('audit_logs').insert({ action: 'VALIDATION_ERROR', resource_type: 'api_endpoint', resource_id: endpoint, user_id: userId, ip_address: ip, details: { fields, url: req.u …
   ```
+- **computeWeaknesses(stat: AgentStat)** — `supabase/functions/generate-coaching-track/track-engine.ts`
+  ```
+  const avgPerf = stat.perfSum / stat.count; const avgSat = stat.satSum / stat.count; const weaknesses: Weakness[] = []; if (avgPerf < SCORE_THRESHOLD) weaknesses.push({ key: "performance", label: "desempenho geral", avg: avgPerf }); if (avgSat < SCORE_THRESHOLD) weaknesses.push({ key: "satisfacao", label: "satisfação do cliente", avg: avgSat }); return weaknesses;
+  ```
 - **zScore(observed: number, mu: number, sigma: number)** — `supabase/functions/voip-anomaly-detector/index.ts`
   ```
   if (sigma === 0) return 0; return (observed - mu) / sigma;
@@ -1783,6 +1787,9 @@ _nenhum item encontrado_
 | `PAGE_SIZE` | `1000` | `supabase/functions/data-lake-flush/index.ts` |
 | `AHT` | `240` | `supabase/functions/forecast-call-volume/index.ts` |
 | `TARGET_SL` | `0.8` | `supabase/functions/forecast-call-volume/index.ts` |
+| `SCORE_THRESHOLD` | `3.0` | `supabase/functions/generate-coaching-track/track-engine.ts` |
+| `MIN_SAMPLES` | `3` | `supabase/functions/generate-coaching-track/track-engine.ts` |
+| `WINDOW_DAYS` | `14` | `supabase/functions/generate-coaching-track/track-engine.ts` |
 | `CONCURRENT_CAP` | `3` | `supabase/functions/voip-capacity-forecast/index.ts` |
 | `AI_GATEWAY` | `'https://openrouter.ai/api/v1/chat/completions'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
@@ -1918,7 +1925,7 @@ _nenhum item encontrado_
 | `const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/database-cleanup/index.ts` |
 | `const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/database-cleanup/index.ts` |
 | `const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/generate-coaching-track/index.ts` |
-| `const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/generate-coaching-track/index.ts` |
+| `const dueAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/generate-coaching-track/track-engine.ts` |
 | `const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();` | `supabase/functions/health-check/index.ts` |
 | `const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();` | `supabase/functions/process-digest/index.ts` |
 | `expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()` | `supabase/functions/request-password-reset/index.ts` |
@@ -2239,6 +2246,7 @@ _nenhum item encontrado_
 | Falha ao resolver sinal | `src/hooks/useChurnRisk.ts` |
 | Erro ao atribuir coaching | `src/hooks/useCoachingAssignments.ts` |
 | Erro ao concluir | `src/hooks/useCoachingAssignments.ts` |
+| Erro ao gerar trilhas | `src/hooks/useCoachingTrack.ts` |
 | Erro ao registrar consentimento | `src/hooks/useConsent.ts` |
 | Dados inválidos | `src/hooks/useContacts.ts` |
 | Erro ao buscar contato por telefone | `src/hooks/useContacts.ts` |
@@ -2374,8 +2382,7 @@ _nenhum item encontrado_
 | Linha primária offline — usando linha de backup | `src/hooks/useSipCall.ts` |
 | Nenhuma chamada recebida pendente | `src/hooks/useSipCall.ts` |
 | Não foi possível conectar ao servidor SIP | `src/hooks/useSipCall.ts` |
-| Registro SIP falhou: ${cause} | `src/hooks/useSipCall.ts` |
-| … +203 linhas — lista completa em `context.json` | |
+| … +204 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2756,6 +2763,7 @@ _nenhum item encontrado_
 | `invoke(` | `src/hooks/useCallSession.ts` |
 | `invoke(` | `src/hooks/useChatbot.ts` |
 | `invoke(` | `src/hooks/useCoaching.ts` |
+| `invoke(` | `src/hooks/useCoachingTrack.ts` |
 | `invoke(` | `src/hooks/useConsent.ts` |
 | `invoke(` | `src/hooks/useContactAlerts.ts` |
 | `invoke(` | `src/hooks/useCrmFieldSuggestions.ts` |
@@ -2948,7 +2956,8 @@ _nenhum item encontrado_
 | 3. Clean resolved rate limit alerts (older than 30 days) | `supabase/functions/database-cleanup/index.ts` |
 | 2. Se for trigger, atualizar o banco. Se for busca, apenas retornar. | `supabase/functions/embed-kb-article/index.ts` |
 | ').limit(50000); | `supabase/functions/export-data-lake/index.ts` |
-| Rate-limit: 1 trilha ativa/semana/agente | `supabase/functions/generate-coaching-track/index.ts` |
+| Somente supervisor/admin podem disparar geração em massa. | `supabase/functions/generate-coaching-track/index.ts` |
+| Rate-limit: uma trilha aberta por agente (evita duplicar). | `supabase/functions/generate-coaching-track/index.ts` |
 | Input validation | `supabase/functions/notify-blocked-ip/index.ts` |
 | Input validation | `supabase/functions/notify-new-device/index.ts` |
 | Na verdade, vamos apenas rodar uma query SQL via RPC customizado ou direto se permitido. | `supabase/functions/rls-audit/index.ts` |

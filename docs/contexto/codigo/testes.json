@@ -3283,6 +3283,7 @@
    "src/hooks/useBlfBoard.ts",
    "src/hooks/useCallPark.ts",
    "src/hooks/useCallQueues.ts",
+   "src/hooks/useCoachingTrack.ts",
    "src/hooks/useDataLakeExports.ts",
    "src/hooks/useDeviceLabel.ts",
    "src/hooks/useDialerFavorites.ts",

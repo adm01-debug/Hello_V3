@@ -1307,18 +1307,16 @@
   {
    "nome": "generate-coaching-track",
    "entrada": "supabase/functions/generate-coaching-track/index.ts",
-   "arquivos": 1,
-   "linhas": 167,
+   "arquivos": 3,
+   "linhas": 357,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
    "tabelas": [
     "agents",
-    "call_analyses",
     "call_sessions",
     "coaching_assignments",
-    "learning_modules",
     "notifications",
     "user_profiles"
    ],
@@ -1334,10 +1332,12 @@
    "usa_shared": [
     "cors.ts"
    ],
-   "chamada_pelo_front": [],
+   "chamada_pelo_front": [
+    "src/hooks/useCoachingTrack.ts"
+   ],
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
-   "orfa": true,
+   "orfa": false,
    "testes": 0
   },
   {

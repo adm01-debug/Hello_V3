@@ -11,7 +11,7 @@
    "src/contexts (2)"
   ],
   "hooks": [
-   "src/hooks (171)",
+   "src/hooks (172)",
    "src/components (12)",
    "src/contexts (2)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)",
    "fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)",
    "chore(docs): marca PermissionGate como wireado (PR #61) (#73)",
    "fix: adiciona guards de tabela/coluna no performance_indexes para Supabase Preview (#66)",
-   "chore: docs - chatbot e traducao ao vivo marcados como wireados (#71)",
-   "feat: botao responder com IA no inbox via useChatbot (#70)"
+   "chore: docs - chatbot e traducao ao vivo marcados como wireados (#71)"
   ]
  },
  "pr_template": null,

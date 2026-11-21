@@ -1192,10 +1192,11 @@
     "CoachingAssignmentsPanel"
    ],
    "export_default": null,
-   "linhas": 75,
+   "linhas": 104,
    "dominio": "components/coaching",
    "hooks_locais": [
-    "useCoachingAssignments"
+    "useCoachingAssignments",
+    "useCoachingTrack"
    ],
    "tabelas": [],
    "edges": [],

@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e534879514` · branch `main` · 2026-11-21 16:08 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d9528b577a` · branch `main` · 2026-11-21 18:30 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -325,11 +325,6 @@ _nenhum item encontrado_
 | status | valor `vip` para `relationship_status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useContactInsights.ts` |
 | coluna | coluna `adherence_percent` usada no código não existe no schema de `agent_weekly_stats` |  |
 | coluna | coluna `avg_call_score` usada no código não existe no schema de `agent_weekly_stats` |  |
-| coluna | coluna `clarity_score` usada no código não existe no schema de `call_analyses` |  |
-| coluna | coluna `compliance_score` usada no código não existe no schema de `call_analyses` |  |
-| coluna | coluna `empathy_score` usada no código não existe no schema de `call_analyses` |  |
-| coluna | coluna `objection_handling_score` usada no código não existe no schema de `call_analyses` |  |
-| coluna | coluna `agent_id` usada no código não existe no schema de `coaching_assignments` |  |
 | coluna | coluna `agent_id` usada no código não existe no schema de `agent_shifts` |  |
 | coluna | coluna `ends_at` usada no código não existe no schema de `agent_shifts` |  |
 | coluna | coluna `starts_at` usada no código não existe no schema de `agent_shifts` |  |

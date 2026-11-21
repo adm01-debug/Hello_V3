@@ -317,7 +317,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 230,
+   "usado_por": 231,
    "usado_por_modulos": [
     "components/admin",
     "components/agent",
@@ -1067,7 +1067,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 183,
+   "usado_por": 184,
    "usado_por_modulos": [
     "components/admin",
     "components/ai",

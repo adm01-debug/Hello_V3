@@ -593,11 +593,13 @@
    "src/hooks/useMultiChannelCall.ts"
   ],
   "src/components/coaching/CoachingAssignmentsPanel.tsx": [
+   "src/components/auth/PermissionGate.tsx",
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/card.tsx",
    "src/components/ui/skeleton.tsx",
    "src/hooks/useCoachingAssignments.ts",
+   "src/hooks/useCoachingTrack.ts",
    "src/lib/safe-date.ts"
   ],
   "src/components/coaching/CoachingCopilotCard.tsx": [
@@ -2344,6 +2346,10 @@
    "src/lib/logger.ts"
   ],
   "src/hooks/useCoachingAssignments.ts": [
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts"
+  ],
+  "src/hooks/useCoachingTrack.ts": [
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
   ],
@@ -4688,7 +4694,11 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/generate-coaching-track/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/generate-coaching-track/track-engine.ts"
+  ],
+  "supabase/functions/generate-coaching-track/track-engine_test.ts": [
+   "supabase/functions/generate-coaching-track/track-engine.ts"
   ],
   "supabase/functions/generate-coaching/index.ts": [
    "supabase/functions/_shared/cors.ts",

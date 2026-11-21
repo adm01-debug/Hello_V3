@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e53487951420e7afe5d6c1a6b812b17967850522",
+  "commit": "d9528b577a36f08c305452d5605e3e348b72aca5",
   "branch": "main",
-  "data_commit": "2026-11-21T13:08:19-03:00",
+  "data_commit": "2026-11-21T15:29:28-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d9528b5",
+    "data": "2026-11-21",
+    "assunto": "fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)"
+   },
    {
     "sha": "e534879",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "91e0da8",
     "data": "2026-11-20",
     "assunto": "infra: escopa job CI ao environment e2e (#52)"
-   },
-   {
-    "sha": "18f6948",
-    "data": "2026-11-20",
-    "assunto": "chore: remove .env e coverage do versionamento (#51)"
    }
   ],
-  "arquivos_mudados_7d": 578,
+  "arquivos_mudados_7d": 576,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -164,6 +164,10 @@
     "mudancas": 5
    },
    {
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 5
+   },
+   {
     "pasta": "docs/prod-readiness.md",
     "mudancas": 5
    },
@@ -174,10 +178,6 @@
    {
     "pasta": "supabase/functions/migrate-helper",
     "mudancas": 5
-   },
-   {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 4
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -206,16 +206,16 @@
     "mudancas": 5
    },
    {
+    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 5
+   },
+   {
     "arquivo": "docs/prod-readiness.md",
     "mudancas": 5
    },
    {
     "arquivo": "inventario/estado/edges.json",
     "mudancas": 5
-   },
-   {
-    "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 4
    },
    {
     "arquivo": "AGENTS.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 57
+    "commits": 58
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,16 +314,16 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1561,
-  "arquivos_codigo": 1199,
-  "linhas_codigo": 163984,
+  "arquivos_total": 1564,
+  "arquivos_codigo": 1202,
+  "linhas_codigo": 164254,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 81,
   "modulos": 78,
   "componentes": 447,
-  "hooks": 188,
+  "hooks": 189,
   "edge_functions": 93,
   "tabelas": 169,
   "migrations": 212,
@@ -472,7 +472,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41885
+   "linhas": 41914
   },
   "src/contexts": {
    "arquivos": 2,
@@ -483,8 +483,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 346,
-   "linhas": 44741
+   "arquivos": 347,
+   "linhas": 44792
   },
   "src/integrations": {
    "arquivos": 3,
@@ -511,8 +511,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 145,
-   "linhas": 16470
+   "arquivos": 147,
+   "linhas": 16660
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -687,7 +687,6 @@
    "database-cleanup",
    "email-inbound",
    "fuzz-test-runner",
-   "generate-coaching-track",
    "global-load-test",
    "process-digest",
    "rls-audit",

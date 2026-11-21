@@ -1365,34 +1365,57 @@
    "hooks": [
     "useAgentStatus",
     "useAuditLog",
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
     "useCallback",
     "useCoaching",
     "useCoachingAssignments",
+    "useCoachingTrack",
+    "useContext",
     "useEffect",
+    "useMemo",
     "useMutation",
     "usePageTitle",
+    "usePermissions",
     "useQuery",
     "useQueryClient",
+    "useRef",
     "useState"
    ],
    "hooks_locais": [
     "useAgentStatus",
     "useAuditLog",
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
     "useCoaching",
     "useCoachingAssignments",
-    "usePageTitle"
+    "useCoachingTrack",
+    "usePageTitle",
+    "usePermissions"
    ],
    "tabelas": [
     "agents",
     "coaching_assignments",
-    "coaching_recommendations"
+    "coaching_recommendations",
+    "role_permissions",
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [
     "log_audit_event"
    ],
    "edges": [
     "generate-coaching",
-    "generate-coaching-plan"
+    "generate-coaching-plan",
+    "generate-coaching-track"
    ],
    "canais_realtime": [
     "agents-status",
@@ -1400,7 +1423,7 @@
    ],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 21
+   "arquivos_puxados": 30
   },
   {
    "protegida": false,

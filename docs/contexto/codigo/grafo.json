@@ -1,12 +1,12 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 876,
- "arestas": 3409,
+ "nos": 879,
+ "arestas": 3415,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 259
+   "importado_por": 260
   },
   {
    "arquivo": "src/components/ui/button.tsx",
@@ -22,7 +22,7 @@
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 191
+   "importado_por": 192
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -215,6 +215,7 @@
   "src/lib/talkRatio.ts",
   "src/lib/validation/index.ts",
   "supabase/functions/analyze-call/analyze-call_test.ts",
+  "supabase/functions/generate-coaching-track/track-engine_test.ts",
   "supabase/functions/whatsapp-inbound/schema_test.ts"
  ],
  "modulos_mais_acoplados": [
@@ -264,6 +265,11 @@
    "importado_por": 3
   },
   {
+   "modulo": "components/auth",
+   "depende_de": 4,
+   "importado_por": 3
+  },
+  {
    "modulo": "components/call-history",
    "depende_de": 6,
    "importado_por": 1
@@ -284,9 +290,9 @@
    "importado_por": 6
   },
   {
-   "modulo": "components/auth",
-   "depende_de": 4,
-   "importado_por": 2
+   "modulo": "components/coaching",
+   "depende_de": 5,
+   "importado_por": 1
   },
   {
    "modulo": "components/contacts",
@@ -307,11 +313,6 @@
    "modulo": "components/ai",
    "depende_de": 3,
    "importado_por": 2
-  },
-  {
-   "modulo": "components/coaching",
-   "depende_de": 4,
-   "importado_por": 1
   },
   {
    "modulo": "components/compliance",
