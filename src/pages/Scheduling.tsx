@@ -11,8 +11,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
-import { Calendar, CalendarDays, Plus, CheckCircle2, XCircle } from 'lucide-react';
+import { Calendar, CalendarDays, Plus, CheckCircle2, XCircle, Clock3 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { AdherencePanel } from '@/components/scheduling/AdherencePanel';
 
 import { safeToLocaleTimeString } from "@/lib/safe-date";
 const DAYS_PT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
@@ -63,6 +64,7 @@ export default function Scheduling() {
           <TabsTrigger value="grid"><Calendar className="h-4 w-4 mr-1" /> Grade Semanal</TabsTrigger>
           <TabsTrigger value="timeoff">Solicitações de Folga ({requests.filter(r => r.status === 'pending').length})</TabsTrigger>
           <TabsTrigger value="templates">Modelos ({templates.length})</TabsTrigger>
+          <TabsTrigger value="adherence"><Clock3 className="h-4 w-4 mr-1" /> Aderência</TabsTrigger>
         </TabsList>
 
         <TabsContent value="grid" className="space-y-4 mt-4">
@@ -159,6 +161,9 @@ export default function Scheduling() {
               </CardContent>
             </Card>
           ))}
+        </TabsContent>
+        <TabsContent value="adherence" className="space-y-3 mt-4">
+          <AdherencePanel />
         </TabsContent>
       </Tabs>
     </NeonPageLayout>

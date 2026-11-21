@@ -8,7 +8,9 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Search, Library, Loader2, Calendar, Headphones, Filter, ChevronLeft, ChevronRight, DollarSign, Swords, AlertTriangle, ArrowRight } from 'lucide-react';
+import { CallPlaylistsPanel } from '@/components/call-library/CallPlaylistsPanel';
+import { SurveysPanel } from '@/components/call-library/SurveysPanel';
+import { Search, Library, Loader2, Calendar, Headphones, Filter, ChevronLeft, ChevronRight, DollarSign, Swords, AlertTriangle, ArrowRight, ListMusic, ClipboardList } from 'lucide-react';
 import { useCallSearch, type CallSearchFilters } from '@/hooks/useCallSearch';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { Link } from 'react-router-dom';
@@ -64,6 +66,14 @@ export default function CallLibrary() {
         description="Busque conversas por palavra-chave em toda a base"
       />
 
+      <Tabs defaultValue="search" className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="search"><Search className="h-4 w-4 mr-1" /> Busca</TabsTrigger>
+          <TabsTrigger value="playlists"><ListMusic className="h-4 w-4 mr-1" /> Playlists</TabsTrigger>
+          <TabsTrigger value="surveys"><ClipboardList className="h-4 w-4 mr-1" /> Pesquisas</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="search">
       <div className="grid lg:grid-cols-[280px_1fr] gap-4">
         <Card className="p-4 h-fit lg:sticky lg:top-4">
           <div className="flex items-center gap-2 mb-3">
@@ -217,6 +227,16 @@ export default function CallLibrary() {
           </Card>
         </div>
       </div>
+        </TabsContent>
+
+        <TabsContent value="playlists">
+          <CallPlaylistsPanel />
+        </TabsContent>
+
+        <TabsContent value="surveys">
+          <SurveysPanel />
+        </TabsContent>
+      </Tabs>
     </NeonPageLayout>
   );
 }

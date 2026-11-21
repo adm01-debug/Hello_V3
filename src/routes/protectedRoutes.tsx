@@ -85,6 +85,7 @@ const ExtensionsAdmin = lazy(() => import("@/pages/admin/ExtensionsAdmin"));
 const SecurityAudit = lazy(() => import("@/pages/admin/SecurityAuditDashboard"));
 const FinancialImpact = lazy(() => import("@/pages/FinancialImpact"));
 const ShiftSwapSuggestions = lazy(() => import("@/pages/ShiftSwapSuggestions"));
+const Gamification = lazy(() => import("@/pages/Gamification"));
 const DataExport = lazy(() => import("@/pages/admin/DataExport"));
 const DatabaseHealth = lazy(() => import("@/pages/admin/DatabaseHealth"));
 const SecurityAlerts = lazy(() => import("@/pages/admin/SecurityAlerts"));
@@ -145,6 +146,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/renewals", element: Renewals },
   { path: "/success-plans", element: SuccessPlans },
   { path: "/scheduling", element: Scheduling, roles: ["supervisor", "admin"] },
+  { path: "/gamification", element: Gamification, roles: ["supervisor", "admin"] },
   { path: "/skills", element: Skills, roles: ["supervisor", "admin"] },
   { path: "/learning", element: Learning },
   { path: "/meeting-summaries", element: MeetingSummaries },

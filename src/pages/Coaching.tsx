@@ -1,5 +1,6 @@
 import { CoachingPanel } from '@/components/coaching/CoachingPanel';
 import { CoachingCopilotCard } from '@/components/coaching/CoachingCopilotCard';
+import { CoachingAssignmentsPanel } from '@/components/coaching/CoachingAssignmentsPanel';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Coaching() {
@@ -9,6 +10,7 @@ export default function Coaching() {
     <div className="container mx-auto p-6 space-y-6">
       <CoachingCopilotCard />
       <CoachingPanel />
+      <CoachingAssignmentsPanel />
     </div>
   );
 }
