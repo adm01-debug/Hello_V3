@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `63087086a7fd7b1fa617882902b6901fdfb57d77` (2026-11-21T16:09:20-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b2f65d72620d100131308d984e5db086457823f2` (2026-11-21T16:52:42-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,11 +36,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1564 |
 | arquivos_codigo | 1202 |
-| linhas_codigo | 164254 |
+| linhas_codigo | 164270 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
-| itens_menu | 81 |
+| itens_menu | 87 |
 | modulos | 78 |
 | componentes | 447 |
 | hooks | 189 |
@@ -96,7 +96,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | lib | 0 | 0 | 47 | 111 | 30 | 65 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
-| pages | 77 | 93 | 92 | 186 | 64 | 133 |
+| pages | 83 | 93 | 92 | 186 | 64 | 133 |
 | pages/admin | 4 | 9 | 16 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
@@ -360,8 +360,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8879 nós · 23726 arestas · 703 comunidades · grafo do commit `63087086`
-- comunidades maiores: lucide-react (271), client.ts (200), @tanstack/react-query (198), react (195), vitest (161), utils.ts (135), Tabela de funcionalidades (122), safe-date.ts (112), snapshot.py (102), Tabela de funcionalidades (101), ref_https (99), protectedRoutes.tsx (93)
+- 8880 nós · 23727 arestas · 694 comunidades · grafo do commit `b2f65d72`
+- comunidades maiores: lucide-react (276), react (161), traceHeaders (154), usePageTitle (140), sonner (137), safe-date.ts (133), utils.ts (129), vitest (122), cn (109), @tanstack/react-query (104), client.ts (102), protectedRoutes.tsx (99)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -376,11 +376,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - scripts/inventario/gerar-banco.mjs (3)
 - scripts/supabase_snapshot/snapshot.py (3)
 - scripts/supabase_snapshot/test_snapshot.py (3)
+- src/components/layout/AppSidebar.tsx (3)
 - src/pages/Inbox.tsx (3)
 - .env.example (2)
 - .github/workflows/inventario-estado-semanal.yml (2)
 - deno.lock (2)
-- docs/agentes/banco.md (2)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -419,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `b2f65d7` feat: (#76)
 - 2026-11-21 `6308708` docs: (#75)
 - 2026-11-21 `d9528b5` fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)
 - 2026-11-21 `e534879` fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)
@@ -433,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `7d28bde` fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)
 - 2026-11-21 `c2d7efe` feat: migra edge functions chat do gateway Lovable para Open Router (#63)
 - 2026-11-21 `ffaedf6` docs: relatorio atualizado (seed, PR #62, validação O2O)
-- 2026-11-21 `ea386b1` docs: regras de negocio verificadas e achados fora de escopo
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

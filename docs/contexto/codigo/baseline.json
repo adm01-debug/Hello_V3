@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "63087086a7fd7b1fa617882902b6901fdfb57d77",
+  "commit": "b2f65d72620d100131308d984e5db086457823f2",
   "branch": "main",
-  "data_commit": "2026-11-21T16:09:20-03:00",
+  "data_commit": "2026-11-21T16:52:42-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "b2f65d7",
+    "data": "2026-11-21",
+    "assunto": "feat: (#76)"
+   },
    {
     "sha": "6308708",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "ea6e3dc",
     "data": "2026-11-20",
     "assunto": "test: contrato do hook useWhatsappRewrite (invoke + fallback) (#54)"
-   },
-   {
-    "sha": "25b35e5",
-    "data": "2026-11-20",
-    "assunto": "feat: concluir funcionalidades planejadas (wiring IA composer + fix hook TopicDetection) (#53)"
    }
   ],
-  "arquivos_mudados_7d": 576,
+  "arquivos_mudados_7d": 577,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -180,6 +180,10 @@
     "mudancas": 5
    },
    {
+    "pasta": "src/components/layout",
+    "mudancas": 4
+   },
+   {
     "pasta": "src/hooks/__tests__",
     "mudancas": 4
    },
@@ -189,10 +193,6 @@
    },
    {
     "pasta": "covout/lib/validation",
-    "mudancas": 3
-   },
-   {
-    "pasta": "docs/pendencias/_ordem.md",
     "mudancas": 3
    }
   ],
@@ -235,6 +235,10 @@
    },
    {
     "arquivo": "scripts/supabase_snapshot/test_snapshot.py",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "src/components/layout/AppSidebar.tsx",
     "mudancas": 3
    },
    {
@@ -292,16 +296,12 @@
    {
     "arquivo": "docs/pendencias/WIRING-06-hooks-orfaos.md",
     "mudancas": 2
-   },
-   {
-    "arquivo": "docs/pendencias/_relatorio.md",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 59
+    "commits": 60
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,11 +316,11 @@
  "contagens": {
   "arquivos_total": 1564,
   "arquivos_codigo": 1202,
-  "linhas_codigo": 164254,
+  "linhas_codigo": 164270,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 81,
+  "itens_menu": 87,
   "modulos": 78,
   "componentes": 447,
   "hooks": 189,
@@ -472,7 +472,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41914
+   "linhas": 41930
   },
   "src/contexts": {
    "arquivos": 2,
@@ -617,6 +617,10 @@
    "linhas": 352
   },
   {
+   "arquivo": "src/components/layout/AppSidebar.tsx",
+   "linhas": 347
+  },
+  {
    "arquivo": "src/components/dialer/phone/PhoneQuickAccess.tsx",
    "linhas": 346
   },
@@ -627,10 +631,6 @@
   {
    "arquivo": "src/pages/Contacts.tsx",
    "linhas": 345
-  },
-  {
-   "arquivo": "src/components/alerts/AlertsTrendChart.tsx",
-   "linhas": 343
   }
  ],
  "qualidade": {

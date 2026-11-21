@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "63087086a7fd7b1fa617882902b6901fdfb57d77",
+  "sha": "b2f65d72620d100131308d984e5db086457823f2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 19:11 UTC",
+  "generated_at": "2026-11-21 19:53 UTC",
   "files_total": 1611,
   "code_files": 1417,
-  "code_lines": 178277
+  "code_lines": 178293
  },
  "version": "1.3.2",
- "facts_hash": "f0d7142087ead4ed",
+ "facts_hash": "678558c5ca6adad4",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31626,7 +31626,7 @@
   {
    "module": "src/components",
    "files": 350,
-   "lines": 41914,
+   "lines": 41930,
    "tables": [
     "accounts",
     "agent_goals",
@@ -90230,7 +90230,7 @@
   },
   "src/components/layout/AppSidebar.tsx": {
    "path": "src/components/layout/AppSidebar.tsx",
-   "lines": 337,
+   "lines": 347,
    "exports": [
     "function AppSidebar"
    ],
@@ -90252,7 +90252,7 @@
   },
   "src/components/layout/CommandPalette.tsx": {
    "path": "src/components/layout/CommandPalette.tsx",
-   "lines": 190,
+   "lines": 196,
    "exports": [
     "function CommandPalette"
    ],
@@ -117758,10 +117758,20 @@
   }
  },
  "git": {
-  "sha": "63087086a7fd7b1fa617882902b6901fdfb57d77",
+  "sha": "b2f65d72620d100131308d984e5db086457823f2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "b2f65d7",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: (#76)",
+    "files": [
+     "src/components/layout/AppSidebar.tsx",
+     "src/components/layout/CommandPalette.tsx"
+    ]
+   },
    {
     "sha": "6308708",
     "date": "2026-11-21",
@@ -118587,23 +118597,16 @@
     "files": [
      "tests/e2e/helpers/adminSession.ts"
     ]
-   },
-   {
-    "sha": "2fcd5ba",
-    "date": "2026-11-19",
-    "author": "adm01-debug",
-    "subject": "fix: torna testes vitest robustos a timezone e path com espaço (#46)",
-    "files": [
-     "src/hooks/__tests__/useAlertHistory.coverage.test.tsx",
-     "src/lib/__tests__/guard-edge-numeric.test.ts",
-     "src/lib/__tests__/safe-date.test.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
     5
+   ],
+   [
+    "src/components/layout/AppSidebar.tsx",
+    3
    ],
    [
     "src/pages/Inbox.tsx",
@@ -118623,10 +118626,6 @@
    ],
    [
     "supabase/migrations/20250102000000_performance_indexes.sql",
-    2
-   ],
-   [
-    "src/components/layout/AppSidebar.tsx",
     2
    ],
    [

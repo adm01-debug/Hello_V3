@@ -5,7 +5,7 @@
   "urls": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 81,
+  "itens_menu": 87,
   "lazy": 104
  },
  "urls": [
@@ -5178,6 +5178,15 @@
    "resolve_para": "src/pages/GeoBlocking.tsx"
   },
   {
+   "rotulo": "Cadências",
+   "destino": "/cadences",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Cadences.tsx"
+  },
+  {
    "rotulo": "Caixa de Entrada",
    "destino": "/inbox",
    "grupo": null,
@@ -5266,6 +5275,15 @@
    "papeis_nao_resolvidos": null,
    "definido_em": "src/components/layout/AppSidebar.tsx",
    "resolve_para": "src/pages/ConcurrencyConflicts.tsx"
+  },
+  {
+   "rotulo": "Contas",
+   "destino": "/accounts",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Accounts.tsx"
   },
   {
    "rotulo": "Contatos",
@@ -5565,6 +5583,15 @@
    "resolve_para": "src/pages/MultiDeviceRing.tsx"
   },
   {
+   "rotulo": "Negócios",
+   "destino": "/deals",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Deals.tsx"
+  },
+  {
    "rotulo": "Notificações",
    "destino": "/notifications",
    "grupo": null,
@@ -5617,6 +5644,15 @@
    "papeis_nao_resolvidos": null,
    "definido_em": "src/components/layout/AppSidebar.tsx",
    "resolve_para": "src/pages/Passkeys.tsx"
+  },
+  {
+   "rotulo": "Planos de Sucesso",
+   "destino": "/success-plans",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/SuccessPlans.tsx"
   },
   {
    "rotulo": "Políticas SLA",
@@ -5691,6 +5727,15 @@
    "resolve_para": "src/pages/Reports.tsx"
   },
   {
+   "rotulo": "Renovações",
+   "destino": "/renewals",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Renewals.tsx"
+  },
+  {
    "rotulo": "Reset de Senha",
    "destino": "/password-reset-approval",
    "grupo": null,
@@ -5734,6 +5779,15 @@
    "papeis_nao_resolvidos": null,
    "definido_em": "src/components/layout/AppSidebar.tsx",
    "resolve_para": "src/pages/ShiftSwapSuggestions.tsx"
+  },
+  {
+   "rotulo": "Trackers",
+   "destino": "/trackers",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Trackers.tsx"
   },
   {
    "rotulo": "Tradução Multilíngue",
