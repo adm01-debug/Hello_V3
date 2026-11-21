@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ee5082dd85` · branch `main` · 2026-11-21 20:37 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c96ef1baa4` · branch `main` · 2026-11-21 21:12 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -875,7 +875,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `down` | compara, escreve | `src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts` |
 | `status` | `draft` | escreve | `src/hooks/useKnowledgeBase.ts`<br>`src/hooks/useScorecards.ts`<br>`src/pages/Knowledge.tsx`<br>`supabase/functions/score-call/index.ts` |
 | `status` | `ended` | compara, escreve | `src/components/calls/WebRTCCall.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>… +2 |
-| `status` | `error` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/admin/ldap/types.ts`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>… +1 |
+| `status` | `error` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>`src/pages/VerifyEmail.tsx` |
 | `status` | `expired` | compara, escreve | `src/pages/PasswordResetApproval.tsx`<br>`src/pages/VerifyEmail.tsx`<br>`supabase/functions/approve-password-reset/index.ts` |
 | `status` | `failed` | compara, escreve | `src/components/calls/MeetingSummaryCard.tsx`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/lib/bitrix/sync-log.ts`<br>`src/pages/VirtualFax.tsx`<br>`supabase/functions/compute-best-time/index.ts`<br>… +4 |
 | `status` | `fulfilled` | compara | `supabase/functions/health-check/index.ts` |
@@ -887,6 +887,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `in_negotiation` | compara | `src/hooks/useRenewals.ts` |
 | `status` | `in_progress` | compara, escreve | `src/components/coaching/CoachingPanel.tsx`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/hooks/useCoaching.ts`<br>`src/lib/bitrix/sync-log.ts` |
 | `status` | `inactive` | compara, filtra | `src/components/admin/extensions/ExtensionStatusBadge.tsx`<br>`src/hooks/useExtensionsOverview.ts`<br>`supabase/functions/voip-capacity-recommendations/index.ts`<br>`supabase/migrations/20260403173646_6cd26a7c-d9a5-46fd-a088-d45d6a7899b8.sql` |
+| `status` | `listening` | escreve | `src/hooks/useSupervisorPanel.ts` |
 | `status` | `loading` | compara | `src/pages/VerifyEmail.tsx` |
 | `status` | `missed` | compara, escreve | `src/components/dashboard/RecentCalls.tsx`<br>`src/data/mockData.ts`<br>`src/pages/CallHistory.tsx` |
 | `status` | `number` | compara | `src/lib/security-alerts-webhook-history.ts`<br>`supabase/functions/_shared/resilience.ts` |
@@ -901,7 +902,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `outage` | compara | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
 | `status` | `overdue` | compara, escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `parked` | compara, escreve, filtra | `src/components/park/ParkOrbitCard.tsx`<br>`src/hooks/useBlfBoard.ts`<br>`src/hooks/useCallPark.ts`<br>`src/lib/call-park.ts` |
-| `status` | `partial` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/admin/ldap/types.ts`<br>`src/pages/SecurityReport.tsx` |
+| `status` | `partial` | compara | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/pages/SecurityReport.tsx` |
 | `status` | `paused` | compara, escreve | `src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/hooks/predictive-dialer/api.ts` |
 | `status` | `pending` | compara, escreve, filtra | `src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/components/executive/PendingFollowupsCard.tsx`<br>… +21 |
 | `status` | `processing` | compara, escreve | `src/hooks/useDataLakeExports.ts`<br>`supabase/functions/data-lake-flush/index.ts`<br>`supabase/functions/export-data-lake/index.ts`<br>`supabase/functions/sync-crm-queue/index.ts` |
@@ -912,13 +913,12 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `resolved` | compara, escreve | `src/pages/Inbox.tsx`<br>`supabase/functions/enforce-sla/index.ts` |
 | `status` | `retrieved` | escreve | `src/hooks/useCallPark.ts` |
 | `status` | `ringing` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +3 |
-| `status` | `roadmap` | escreve | `src/pages/Marketplace.tsx` |
 | `status` | `scheduled` | compara, escreve | `src/pages/Scheduling.tsx`<br>`src/pages/VideoConference.tsx` |
 | `status` | `sent` | compara | `src/pages/VirtualFax.tsx` |
 | `status` | `skipped` | escreve | `supabase/functions/auto-scorecard/index.ts` |
 | `status` | `soon` | compara, escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `submitted` | escreve | `supabase/functions/auto-scorecard/index.ts` |
-| `status` | `success` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/admin/ldap/types.ts`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/lib/bitrix/sync-log.ts`<br>`src/pages/VerifyEmail.tsx`<br>… +1 |
+| `status` | `success` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/admin/ldap/types.ts`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/lib/bitrix/sync-log.ts`<br>`src/pages/VerifyEmail.tsx`<br>… +2 |
 | `status` | `system` | escreve | `supabase/functions/check-goals/index.ts` |
 | `status` | `today` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `tomorrow` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
@@ -1020,7 +1020,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `state` | `parked` | escreve | `src/lib/blf.ts` |
 | `state` | `recording` | compara | `src/components/calls/live-transcription/useLiveTranscription.ts`<br>`src/hooks/useVoiceCommand.ts` |
 | `state` | `suspended` | compara | `src/hooks/useCriticalAlertNotifications.ts`<br>`src/hooks/useHoldSoundAlert.ts`<br>`src/lib/incoming-call-alert.ts` |
-| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +7 |
+| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +8 |
 | `role` | `agent` | compara, escreve | `src/lib/talkRatio.ts`<br>`src/pages/roles/RoleStatsCards.tsx`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `customer` | compara | `src/lib/talkRatio.ts`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `string` | compara | `src/pages/roles/RoleAuditTrail.tsx` |
@@ -1790,6 +1790,8 @@ _nenhum item encontrado_
 | `SCORE_THRESHOLD` | `3.0` | `supabase/functions/generate-coaching-track/track-engine.ts` |
 | `MIN_SAMPLES` | `3` | `supabase/functions/generate-coaching-track/track-engine.ts` |
 | `WINDOW_DAYS` | `14` | `supabase/functions/generate-coaching-track/track-engine.ts` |
+| `MAX_ENTRIES` | `5000` | `supabase/functions/ldap-sync/index.ts` |
+| `LDAP_TIMEOUT_MS` | `15000` | `supabase/functions/ldap-sync/index.ts` |
 | `CONCURRENT_CAP` | `3` | `supabase/functions/voip-capacity-forecast/index.ts` |
 | `AI_GATEWAY` | `'https://openrouter.ai/api/v1/chat/completions'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
@@ -1907,7 +1909,6 @@ _nenhum item encontrado_
 | `timeout: 60000,` | `src/lib/webauthn/webauthn-utils.ts` |
 | `setTimeout(() => URL.revokeObjectURL(url), 1000);` | `src/pages/FinancialImpact.tsx` |
 | `from: subDays(new Date(), 7),` | `src/pages/HoldAlerts.tsx` |
-| `await new Promise(r => setTimeout(r, 2000));` | `src/pages/LDAPSync.tsx` |
 | `const timeout = setTimeout(resolve, 5000);` | `src/pages/NetworkDiagnostics.tsx` |
 | `setTimeout(() => setCopied(false), 2000);` | `src/pages/QRProvisioning.tsx` |
 | `setTimeout(() => { navigate('/login'); }, 3000);` | `src/pages/ResetPassword.tsx` |
@@ -2050,6 +2051,7 @@ _nenhum item encontrado_
 | 80 | `supabase/functions/generate-coaching/index.ts` |
 | 20 | `supabase/functions/generate-coaching-plan/index.ts` |
 | 2000 | `supabase/functions/generate-coaching-track/index.ts` |
+| 20 | `supabase/functions/ldap-sync/index.ts` |
 | 50 | `supabase/functions/process-digest/index.ts` |
 | 500 | `supabase/functions/suggest-shift-swaps/index.ts` |
 | 10 | `supabase/functions/sync-crm-queue/index.ts` |
@@ -2142,7 +2144,6 @@ _nenhum item encontrado_
 | Falha ao exportar CSV | `src/components/calls/PostCallSummary.tsx` |
 | Digite um número WhatsApp para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
 | Digite um número para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
-| Erro na conexão | `src/components/calls/UnifiedSoftphone.tsx` |
 | Falha ao conectar ao servidor SIP | `src/components/calls/UnifiedSoftphone.tsx` |
 | Máximo de 3 chamadas simultâneas atingido | `src/components/calls/UnifiedSoftphone.tsx` |
 | Não foi possível iniciar a chamada | `src/components/calls/UnifiedSoftphone.tsx` |
@@ -2300,6 +2301,10 @@ _nenhum item encontrado_
 | IP é obrigatório | `src/hooks/useIPWhitelist.ts` |
 | Usuário e IP são obrigatórios | `src/hooks/useIPWhitelist.ts` |
 | Falha ao salvar artigo | `src/hooks/useKnowledgeBase.ts` |
+| Configure o servidor LDAP primeiro | `src/hooks/useLDAPSync.ts` |
+| Falha na conexão: ${result.error ??  | `src/hooks/useLDAPSync.ts` |
+| Preencha servidor e Base DN | `src/hooks/useLDAPSync.ts` |
+| Sincronização falhou: ${result.error ??  | `src/hooks/useLDAPSync.ts` |
 | Erro ao registrar conclusão | `src/hooks/useLearning.ts` |
 | Código inválido | `src/hooks/useMFA.ts` |
 | Erro ao configurar SMS | `src/hooks/useMFA.ts` |
@@ -2379,10 +2384,7 @@ _nenhum item encontrado_
 | Chamada falhou: ${cause} | `src/hooks/useSipCall.ts` |
 | Falha ao atender a chamada | `src/hooks/useSipCall.ts` |
 | Já existe uma chamada em andamento | `src/hooks/useSipCall.ts` |
-| Linha primária offline — usando linha de backup | `src/hooks/useSipCall.ts` |
-| Nenhuma chamada recebida pendente | `src/hooks/useSipCall.ts` |
-| Não foi possível conectar ao servidor SIP | `src/hooks/useSipCall.ts` |
-| … +204 linhas — lista completa em `context.json` | |
+| … +208 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2784,6 +2786,7 @@ _nenhum item encontrado_
 | `invoke(` | `src/hooks/useIPValidation.ts` |
 | `invoke(` | `src/hooks/useKeyMoments.ts` |
 | `invoke(` | `src/hooks/useKnowledgeBase.ts` |
+| `invoke(` | `src/hooks/useLDAPSync.ts` |
 | `invoke(` | `src/hooks/useLiveAssist.ts` |
 | `invoke(` | `src/hooks/useLiveTranslation.ts` |
 | `invoke(` | `src/hooks/useMeetingSummary.ts` |

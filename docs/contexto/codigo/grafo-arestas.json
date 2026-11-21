@@ -2529,6 +2529,11 @@
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
   ],
+  "src/hooks/useLDAPSync.ts": [
+   "src/components/admin/ldap/types.ts",
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts"
+  ],
   "src/hooks/useLearning.ts": [
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
@@ -3571,12 +3576,12 @@
    "src/components/admin/ldap/LDAPConfigTab.tsx",
    "src/components/admin/ldap/LDAPLogsTab.tsx",
    "src/components/admin/ldap/LDAPMappingTab.tsx",
-   "src/components/admin/ldap/types.ts",
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/card.tsx",
    "src/components/ui/progress.tsx",
    "src/components/ui/tabs.tsx",
+   "src/hooks/useLDAPSync.ts",
    "src/hooks/usePageTitle.ts"
   ],
   "src/pages/Learning.tsx": [
@@ -4716,6 +4721,9 @@
   "supabase/functions/health-check/index.ts": [
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/observability.ts"
+  ],
+  "supabase/functions/ldap-sync/index.ts": [
+   "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/notify-blocked-ip/index.ts": [
    "supabase/functions/_shared/cors.ts"

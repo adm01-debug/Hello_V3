@@ -317,7 +317,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 231,
+   "usado_por": 232,
    "usado_por_modulos": [
     "components/admin",
     "components/agent",
@@ -800,7 +800,7 @@
     "useConversation"
    ],
    "export_default": null,
-   "linhas": 24,
+   "linhas": 29,
    "tabelas": [],
    "rpcs": [],
    "edges": [],
@@ -1067,7 +1067,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 184,
+   "usado_por": 185,
    "usado_por_modulos": [
     "components/admin",
     "components/ai",

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ee5082dd8568026a59f0491c3284aff8084bc3bf",
+  "sha": "c96ef1baa47e7af57be3e79a356528f1dbfeb8a8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 20:37 UTC",
-  "files_total": 1611,
-  "code_files": 1417,
-  "code_lines": 178309
+  "generated_at": "2026-11-21 21:12 UTC",
+  "files_total": 1613,
+  "code_files": 1419,
+  "code_lines": 178907
  },
  "version": "1.3.2",
- "facts_hash": "b39943a1b5a82d03",
+ "facts_hash": "e23a0eab47b41990",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 601,
-   ".ts": 570,
+   ".ts": 572,
    ".sql": 214,
    ".mjs": 25,
    ".py": 5,
@@ -27155,6 +27155,7 @@
     "component": "Index",
     "tables_transitive": [
      "barge_in_sessions",
+     "call_control_audit_logs",
      "call_sessions",
      "hold_alert_settings",
      "hold_events",
@@ -27194,9 +27195,11 @@
     "file": "src/pages/LDAPSync.tsx",
     "component": "LDAPSync",
     "tables_transitive": [],
-    "invokes_transitive": [],
+    "invokes_transitive": [
+     "ldap-sync"
+    ],
     "rpc_transitive": [],
-    "deps_count": 17
+    "deps_count": 21
    },
    {
     "path": "",
@@ -28955,6 +28958,35 @@
     "invokes": [],
     "doc": "Health check consolidado — endpoint público retornando status dos componentes",
     "errors": [],
+    "side_effects": [],
+    "webhook_events": [],
+    "idempotency": false
+   },
+   {
+    "name": "ldap-sync",
+    "file": "supabase/functions/ldap-sync/index.ts",
+    "methods": [
+     "OPTIONS"
+    ],
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "tables": [
+     "audit_logs",
+     "contacts",
+     "system_settings",
+     "user_roles"
+    ],
+    "env": [
+     "LDAP_ALLOW_SELF_SIGNED",
+     "SUPABASE_ANON_KEY",
+     "SUPABASE_SERVICE_ROLE_KEY",
+     "SUPABASE_URL"
+    ],
+    "external": [],
+    "invokes": [],
+    "doc": "",
+    "errors": [
+     "Servidor LDAP e Base DN são obrigatórios"
+    ],
     "side_effects": [],
     "webhook_events": [],
     "idempotency": false
@@ -30923,6 +30955,10 @@
     "file": "src/hooks/useKnowledgeBase.ts"
    },
    {
+    "name": "useLDAPSync",
+    "file": "src/hooks/useLDAPSync.ts"
+   },
+   {
     "name": "useLearning",
     "file": "src/hooks/useLearning.ts"
    },
@@ -31626,7 +31662,7 @@
   {
    "module": "src/components",
    "files": 350,
-   "lines": 41946,
+   "lines": 41953,
    "tables": [
     "accounts",
     "agent_goals",
@@ -31681,7 +31717,7 @@
     "LDAPConfigTab.tsx: LDAPConfigTab",
     "LDAPLogsTab.tsx: LDAPLogsTab",
     "LDAPMappingTab.tsx: LDAPMappingTab",
-    "types.ts: LDAPConfig, SyncLog, DEFAULT_LDAP_CONFIG, MOCK_SYNC_LOGS",
+    "types.ts: LDAPConfig, SyncLog, DEFAULT_LDAP_CONFIG",
     "TrunkAssignmentsTab.tsx: TrunkAssignmentsTab",
     "TrunkHealthHistoryDrawer.tsx: TrunkHealthHistoryDrawer",
     "TrunkMetricsTab.tsx: TrunkMetricsTab",
@@ -31873,8 +31909,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 347,
-   "lines": 44792,
+   "files": 348,
+   "lines": 45012,
    "tables": [
     "accounts",
     "active_sessions",
@@ -31900,6 +31936,7 @@
     "cadences",
     "call_alerts",
     "call_analyses",
+    "call_control_audit_logs",
     "call_key_moments",
     "call_park_orbits",
     "call_playlists",
@@ -32147,7 +32184,7 @@
     "src/hooks/useIPWhitelist.ts",
     "src/hooks/useKeyMoments.ts",
     "src/hooks/useKnowledgeBase.ts",
-    "src/hooks/useLearning.ts"
+    "src/hooks/useLDAPSync.ts"
    ]
   },
   {
@@ -32178,7 +32215,7 @@
   {
    "module": "src/lib",
    "files": 160,
-   "lines": 20649,
+   "lines": 20654,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -32350,7 +32387,7 @@
   {
    "module": "src/pages",
    "files": 130,
-   "lines": 20718,
+   "lines": 20717,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -32574,8 +32611,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 147,
-   "lines": 16660,
+   "files": 148,
+   "lines": 17027,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -32781,11 +32818,11 @@
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
     "supabase/functions/health-check/__tests__/index.test.ts",
+    "supabase/functions/ldap-sync/index.ts",
     "supabase/functions/notify-blocked-ip/index.ts",
     "supabase/functions/notify-new-device/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
-    "supabase/functions/process-digest/index.ts",
-    "supabase/functions/realtime-analysis/index.ts"
+    "supabase/functions/process-digest/index.ts"
    ]
   },
   {
@@ -33077,13 +33114,15 @@
      "src/hooks/useExtensionAuditHistory.ts",
      "src/hooks/useSecurityMonitoringData.ts",
      "src/pages/admin/SecurityAuditDashboard.tsx",
-     "src/pages/roles/RoleAuditTrail.tsx"
+     "src/pages/roles/RoleAuditTrail.tsx",
+     "supabase/functions/ldap-sync/index.ts"
     ],
     "insert": [
      "supabase/functions/_shared/validator.ts",
      "supabase/functions/approve-password-reset/index.ts",
      "supabase/functions/database-backup/index.ts",
      "supabase/functions/database-cleanup/index.ts",
+     "supabase/functions/ldap-sync/index.ts",
      "supabase/functions/webauthn-authenticate/index.ts",
      "supabase/functions/webhook-handler/index.ts"
     ]
@@ -33221,11 +33260,12 @@
     ]
    },
    "call_control_audit_logs": {
+    "insert": [
+     "src/hooks/useSupervisorPanel.ts",
+     "supabase/functions/voip-trunks-manage/index.ts"
+    ],
     "select": [
      "src/pages/AuditLogs.tsx"
-    ],
-    "insert": [
-     "supabase/functions/voip-trunks-manage/index.ts"
     ]
    },
    "call_flows": {
@@ -33624,15 +33664,18 @@
      "supabase/functions/compute-best-time/index.ts",
      "supabase/functions/email-inbound/index.ts",
      "supabase/functions/extract-crm-fields/index.ts",
+     "supabase/functions/ldap-sync/index.ts",
      "supabase/functions/whatsapp-inbound/index.ts"
     ],
     "insert": [
-     "src/hooks/useContacts.ts"
+     "src/hooks/useContacts.ts",
+     "supabase/functions/ldap-sync/index.ts"
     ],
     "update": [
      "src/hooks/useContacts.ts",
      "src/hooks/useCrmFieldSuggestions.ts",
-     "supabase/functions/analyze-contact-profile/index.ts"
+     "supabase/functions/analyze-contact-profile/index.ts",
+     "supabase/functions/ldap-sync/index.ts"
     ],
     "delete": [
      "src/hooks/useContacts.ts"
@@ -34427,10 +34470,12 @@
    "system_settings": {
     "select": [
      "src/components/settings/BitrixIntegration.tsx",
-     "supabase/functions/chatbot-respond/index.ts"
+     "supabase/functions/chatbot-respond/index.ts",
+     "supabase/functions/ldap-sync/index.ts"
     ],
     "upsert": [
-     "src/components/settings/BitrixIntegration.tsx"
+     "src/components/settings/BitrixIntegration.tsx",
+     "supabase/functions/ldap-sync/index.ts"
     ]
    },
    "t": {
@@ -34585,6 +34630,7 @@
      "src/pages/roles/useRoles.ts",
      "supabase/functions/database-backup/index.ts",
      "supabase/functions/database-cleanup/index.ts",
+     "supabase/functions/ldap-sync/index.ts",
      "supabase/functions/voip-trunks-manage/index.ts"
     ],
     "insert": [
@@ -34837,7 +34883,9 @@
    ],
    "barge_in_sessions": [
     "agent_name",
+    "call_session_id",
     "id",
+    "started_at",
     "status",
     "supervisor_name"
    ],
@@ -35033,12 +35081,14 @@
    "contacts": [
     "company",
     "email",
+    "external_id",
     "id",
     "name",
     "notes",
     "personality_insights",
     "phone",
-    "position"
+    "position",
+    "source"
    ],
    "conversation_messages": [
     "content",
@@ -35654,6 +35704,9 @@
    "INVENTARIO_PERMITIR_OUTRO_PROJETO": [
     "scripts/inventario/gerar-banco.mjs"
    ],
+   "LDAP_ALLOW_SELF_SIGNED": [
+    "supabase/functions/ldap-sync/index.ts"
+   ],
    "LOVABLE_API_KEY": [
     "supabase/functions/embed-kb-article/index.ts",
     "supabase/functions/teams-fetch-recordings/index.ts"
@@ -35769,6 +35822,7 @@
     "supabase/functions/generate-coaching/index.ts",
     "supabase/functions/generate-meeting-summary/index.ts",
     "supabase/functions/generate-summary/index.ts",
+    "supabase/functions/ldap-sync/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/process-digest/index.ts",
     "supabase/functions/realtime-analysis/index.ts",
@@ -35872,6 +35926,7 @@
     "supabase/functions/generate-meeting-summary/index.ts",
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
+    "supabase/functions/ldap-sync/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/process-digest/index.ts",
     "supabase/functions/record-consent/index.ts",
@@ -35960,6 +36015,7 @@
     "supabase/functions/generate-summary/index.ts",
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
+    "supabase/functions/ldap-sync/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/process-digest/index.ts",
     "supabase/functions/realtime-analysis/index.ts",
@@ -36196,6 +36252,7 @@
     "scripts/ai-context/gerar.unit.mjs"
    ],
    "is_admin_user": [
+    "supabase/functions/ldap-sync/index.ts",
     "supabase/functions/voip-trunks-healthcheck/index.ts",
     "supabase/functions/voip-trunks-manage/index.ts"
    ],
@@ -36352,6 +36409,9 @@
    ],
    "inexistente": [
     "scripts/ai-context/cenarios.mjs"
+   ],
+   "ldap-sync": [
+    "src/hooks/useLDAPSync.ts"
    ],
    "notify-blocked-ip": [
     "src/pages/Login.tsx"
@@ -38171,10 +38231,6 @@
    },
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
-    "msg": "Erro na conexão"
-   },
-   {
-    "file": "src/components/calls/UnifiedSoftphone.tsx",
     "msg": "Falha ao conectar ao servidor SIP"
    },
    {
@@ -38802,6 +38858,22 @@
     "msg": "Falha ao salvar artigo"
    },
    {
+    "file": "src/hooks/useLDAPSync.ts",
+    "msg": "Configure o servidor LDAP primeiro"
+   },
+   {
+    "file": "src/hooks/useLDAPSync.ts",
+    "msg": "Falha na conexão: ${result.error ?? "
+   },
+   {
+    "file": "src/hooks/useLDAPSync.ts",
+    "msg": "Preencha servidor e Base DN"
+   },
+   {
+    "file": "src/hooks/useLDAPSync.ts",
+    "msg": "Sincronização falhou: ${result.error ?? "
+   },
+   {
     "file": "src/hooks/useLearning.ts",
     "msg": "Erro ao registrar conclusão"
    },
@@ -39159,11 +39231,19 @@
    },
    {
     "file": "src/hooks/useSupervisorPanel.ts",
+    "msg": "Erro ao encerrar sessão de escuta"
+   },
+   {
+    "file": "src/hooks/useSupervisorPanel.ts",
     "msg": "Erro ao enviar whisper"
    },
    {
     "file": "src/hooks/useSupervisorPanel.ts",
     "msg": "Erro ao iniciar barge-in"
+   },
+   {
+    "file": "src/hooks/useSupervisorPanel.ts",
+    "msg": "Erro ao registrar sessão de escuta"
    },
    {
     "file": "src/hooks/useSupervisorPanel.ts",
@@ -39424,14 +39504,6 @@
    {
     "file": "src/pages/Index.tsx",
     "msg": "Erro ao atualizar o dashboard"
-   },
-   {
-    "file": "src/pages/LDAPSync.tsx",
-    "msg": "Configure o servidor LDAP primeiro"
-   },
-   {
-    "file": "src/pages/LDAPSync.tsx",
-    "msg": "Preencha servidor e Base DN"
    },
    {
     "file": "src/pages/Login.tsx",
@@ -39720,6 +39792,10 @@
    {
     "file": "supabase/functions/generate-summary/index.ts",
     "msg": "Não autorizado"
+   },
+   {
+    "file": "supabase/functions/ldap-sync/index.ts",
+    "msg": "Servidor LDAP e Base DN são obrigatórios"
    },
    {
     "file": "supabase/functions/ocr-virtual-fax/index.ts",
@@ -47698,6 +47774,16 @@
     "value": "14"
    },
    {
+    "file": "supabase/functions/ldap-sync/index.ts",
+    "name": "MAX_ENTRIES",
+    "value": "5000"
+   },
+   {
+    "file": "supabase/functions/ldap-sync/index.ts",
+    "name": "LDAP_TIMEOUT_MS",
+    "value": "15000"
+   },
+   {
     "file": "supabase/functions/voip-capacity-forecast/index.ts",
     "name": "CONCURRENT_CAP",
     "value": "3"
@@ -47813,24 +47899,6 @@
     "file": "src/components/admin/ldap/types.ts",
     "field": "status",
     "value": "success",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/components/admin/ldap/types.ts",
-    "field": "status",
-    "value": "success",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/components/admin/ldap/types.ts",
-    "field": "status",
-    "value": "partial",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/components/admin/ldap/types.ts",
-    "field": "status",
-    "value": "error",
     "kind": "escreve"
    },
    {
@@ -50314,6 +50382,18 @@
    {
     "file": "src/hooks/useSupervisorPanel.ts",
     "field": "status",
+    "value": "listening",
+    "kind": "escreve"
+   },
+   {
+    "file": "src/hooks/useSupervisorPanel.ts",
+    "field": "status",
+    "value": "ended",
+    "kind": "escreve"
+   },
+   {
+    "file": "src/hooks/useSupervisorPanel.ts",
+    "field": "status",
     "value": "active",
     "kind": "filtra"
    },
@@ -50926,7 +51006,7 @@
    {
     "file": "src/pages/Marketplace.tsx",
     "field": "status",
-    "value": "disponivel",
+    "value": "beta",
     "kind": "escreve"
    },
    {
@@ -50950,7 +51030,7 @@
    {
     "file": "src/pages/Marketplace.tsx",
     "field": "status",
-    "value": "roadmap",
+    "value": "disponivel",
     "kind": "escreve"
    },
    {
@@ -52598,6 +52678,18 @@
     "kind": "compara"
    },
    {
+    "file": "supabase/functions/ldap-sync/index.ts",
+    "field": "status",
+    "value": "success",
+    "kind": "escreve"
+   },
+   {
+    "file": "supabase/functions/ldap-sync/index.ts",
+    "field": "role",
+    "value": "admin",
+    "kind": "filtra"
+   },
+   {
     "file": "supabase/functions/ocr-virtual-fax/index.ts",
     "field": "role",
     "value": "system",
@@ -53730,10 +53822,6 @@
    {
     "file": "src/pages/HoldAlerts.tsx",
     "line": "from: subDays(new Date(), 7),"
-   },
-   {
-    "file": "src/pages/LDAPSync.tsx",
-    "line": "await new Promise(r => setTimeout(r, 2000));"
    },
    {
     "file": "src/pages/NetworkDiagnostics.tsx",
@@ -70023,6 +70111,10 @@
     "call": "invoke("
    },
    {
+    "file": "src/hooks/useLDAPSync.ts",
+    "call": "invoke("
+   },
+   {
     "file": "src/hooks/useLiveAssist.ts",
     "call": "invoke("
    },
@@ -78503,6 +78595,10 @@
     "limit": "2000"
    },
    {
+    "file": "supabase/functions/ldap-sync/index.ts",
+    "limit": "20"
+   },
+   {
     "file": "supabase/functions/process-digest/index.ts",
     "limit": "50"
    },
@@ -79088,18 +79184,17 @@
       "compara:src/pages/VerifyEmail.tsx",
       "compara:supabase/functions/validate-geo/index.ts",
       "escreve:src/components/admin/ldap/types.ts",
-      "escreve:src/lib/bitrix/sync-log.ts"
+      "escreve:src/lib/bitrix/sync-log.ts",
+      "escreve:supabase/functions/ldap-sync/index.ts"
      ],
      "partial": [
       "compara:src/components/admin/ldap/LDAPLogsTab.tsx",
-      "compara:src/pages/SecurityReport.tsx",
-      "escreve:src/components/admin/ldap/types.ts"
+      "compara:src/pages/SecurityReport.tsx"
      ],
      "error": [
       "compara:src/components/admin/ldap/LDAPLogsTab.tsx",
       "compara:src/components/calls/SipConnectionStatus.tsx",
       "compara:src/pages/VerifyEmail.tsx",
-      "escreve:src/components/admin/ldap/types.ts",
       "escreve:src/hooks/useSipCall.ts",
       "escreve:src/hooks/useWavoipCall.ts"
      ],
@@ -79530,6 +79625,9 @@
      "registered": [
       "escreve:src/hooks/useSipCall.ts"
      ],
+     "listening": [
+      "escreve:src/hooks/useSupervisorPanel.ts"
+     ],
      "agent_low": [
       "escreve:src/hooks/useTalkRatio.ts",
       "escreve:src/lib/talkRatio.ts"
@@ -79551,9 +79649,6 @@
       "escreve:src/pages/Marketplace.tsx"
      ],
      "beta": [
-      "escreve:src/pages/Marketplace.tsx"
-     ],
-     "roadmap": [
       "escreve:src/pages/Marketplace.tsx"
      ],
      "expired": [
@@ -79963,6 +80058,7 @@
       "compara:supabase/functions/export-data-lake/index.ts",
       "filtra:supabase/functions/database-backup/index.ts",
       "filtra:supabase/functions/database-cleanup/index.ts",
+      "filtra:supabase/functions/ldap-sync/index.ts",
       "filtra:supabase/functions/voip-trunks-manage/index.ts"
      ],
      "supervisor": [
@@ -82786,6 +82882,7 @@
    "supabase/functions/global-load-test/index.ts",
    "supabase/functions/health-check/__tests__/index.test.ts",
    "supabase/functions/health-check/index.ts",
+   "supabase/functions/ldap-sync/index.ts",
    "supabase/functions/ocr-virtual-fax/index.ts",
    "supabase/functions/process-digest/index.ts",
    "supabase/functions/record-consent/index.ts",
@@ -84660,8 +84757,7 @@
     "msg": "valor `partial` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/components/admin/ldap/LDAPLogsTab.tsx",
-     "compara:src/pages/SecurityReport.tsx",
-     "escreve:src/components/admin/ldap/types.ts"
+     "compara:src/pages/SecurityReport.tsx"
     ]
    },
    {
@@ -84909,13 +85005,6 @@
    {
     "kind": "status",
     "msg": "valor `beta` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:src/pages/Marketplace.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `roadmap` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "escreve:src/pages/Marketplace.tsx"
     ]
@@ -87297,14 +87386,14 @@
   },
   "src/components/admin/ldap/LDAPConfigTab.tsx": {
    "path": "src/components/admin/ldap/LDAPConfigTab.tsx",
-   "lines": 156,
+   "lines": 172,
    "exports": [
     "function LDAPConfigTab"
    ]
   },
   "src/components/admin/ldap/LDAPLogsTab.tsx": {
    "path": "src/components/admin/ldap/LDAPLogsTab.tsx",
-   "lines": 65,
+   "lines": 72,
    "exports": [
     "function LDAPLogsTab"
    ],
@@ -87335,32 +87424,16 @@
   },
   "src/components/admin/ldap/types.ts": {
    "path": "src/components/admin/ldap/types.ts",
-   "lines": 83,
+   "lines": 48,
    "exports": [
     "interface LDAPConfig",
     "interface SyncLog",
-    "const DEFAULT_LDAP_CONFIG",
-    "const MOCK_SYNC_LOGS"
+    "const DEFAULT_LDAP_CONFIG"
    ],
    "status_values": [
     {
      "field": "status",
      "value": "success",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "success",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "partial",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "error",
      "kind": "escreve"
     }
    ]
@@ -88291,7 +88364,7 @@
   },
   "src/components/calls/UnifiedSoftphone.tsx": {
    "path": "src/components/calls/UnifiedSoftphone.tsx",
-   "lines": 252,
+   "lines": 256,
    "exports": [
     "function UnifiedSoftphone"
    ],
@@ -88301,7 +88374,6 @@
    "errors": [
     "Digite um número WhatsApp para ligar",
     "Digite um número para ligar",
-    "Erro na conexão",
     "Falha ao conectar ao servidor SIP",
     "Máximo de 3 chamadas simultâneas atingido",
     "Não foi possível iniciar a chamada"
@@ -91619,7 +91691,7 @@
   },
   "src/components/supervisor/panel/CallActionTabs.tsx": {
    "path": "src/components/supervisor/panel/CallActionTabs.tsx",
-   "lines": 115,
+   "lines": 130,
    "exports": [
     "function CallActionTabs"
    ]
@@ -95906,6 +95978,28 @@
     "200"
    ]
   },
+  "src/hooks/useLDAPSync.ts": {
+   "path": "src/hooks/useLDAPSync.ts",
+   "lines": 177,
+   "exports": [
+    "function useLDAPSync"
+   ],
+   "invokes": [
+    "ldap-sync"
+   ],
+   "errors": [
+    "Configure o servidor LDAP primeiro",
+    "Falha na conexão: ${result.error ?? ",
+    "Preencha servidor e Base DN",
+    "Sincronização falhou: ${result.error ?? "
+   ],
+   "hooks": [
+    "useLDAPSync"
+   ],
+   "side_effects": [
+    "invoke("
+   ]
+  },
   "src/hooks/useLearning.ts": {
    "path": "src/hooks/useLearning.ts",
    "lines": 74,
@@ -98259,7 +98353,7 @@
   },
   "src/hooks/useSupervisorPanel.ts": {
    "path": "src/hooks/useSupervisorPanel.ts",
-   "lines": 221,
+   "lines": 264,
    "exports": [
     "interface ActiveCall",
     "interface WhisperMessage",
@@ -98299,6 +98393,22 @@
     {
      "table": "barge_in_sessions",
      "op": "update"
+    },
+    {
+     "table": "barge_in_sessions",
+     "op": "insert,select"
+    },
+    {
+     "table": "call_control_audit_logs",
+     "op": "insert"
+    },
+    {
+     "table": "barge_in_sessions",
+     "op": "update"
+    },
+    {
+     "table": "call_control_audit_logs",
+     "op": "insert"
     }
    ],
    "table_cols": {
@@ -98311,7 +98421,10 @@
      "status"
     ],
     "barge_in_sessions": [
+     "agent_name",
+     "call_session_id",
      "id",
+     "started_at",
      "status",
      "supervisor_name"
     ],
@@ -98324,8 +98437,10 @@
     "whisper-history-${selectedCall.id}"
    ],
    "errors": [
+    "Erro ao encerrar sessão de escuta",
     "Erro ao enviar whisper",
     "Erro ao iniciar barge-in",
+    "Erro ao registrar sessão de escuta",
     "Erro ao sair da chamada",
     "Selecione uma chamada e digite uma mensagem",
     "Selecione uma chamada primeiro"
@@ -98334,6 +98449,16 @@
     {
      "field": "status",
      "value": "active",
+     "kind": "escreve"
+    },
+    {
+     "field": "status",
+     "value": "ended",
+     "kind": "escreve"
+    },
+    {
+     "field": "status",
+     "value": "listening",
      "kind": "escreve"
     },
     {
@@ -103898,7 +104023,7 @@
   },
   "src/lib/elevenlabs-stub.ts": {
    "path": "src/lib/elevenlabs-stub.ts",
-   "lines": 24,
+   "lines": 29,
    "exports": [
     "function useConversation"
    ],
@@ -108805,16 +108930,9 @@
   },
   "src/pages/LDAPSync.tsx": {
    "path": "src/pages/LDAPSync.tsx",
-   "lines": 122,
+   "lines": 121,
    "exports": [
     "function LDAPSync"
-   ],
-   "errors": [
-    "Configure o servidor LDAP primeiro",
-    "Preencha servidor e Base DN"
-   ],
-   "temporal": [
-    "await new Promise(r => setTimeout(r, 2000));"
    ]
   },
   "src/pages/Learning.tsx": {
@@ -108886,7 +109004,7 @@
     },
     {
      "field": "status",
-     "value": "disponivel",
+     "value": "beta",
      "kind": "escreve"
     },
     {
@@ -108906,7 +109024,7 @@
     },
     {
      "field": "status",
-     "value": "roadmap",
+     "value": "disponivel",
      "kind": "escreve"
     }
    ],
@@ -114066,6 +114184,103 @@
    ],
    "uses_service_role": true
   },
+  "supabase/functions/ldap-sync/index.ts": {
+   "path": "supabase/functions/ldap-sync/index.ts",
+   "lines": 367,
+   "tables": [
+    {
+     "table": "system_settings",
+     "op": "select"
+    },
+    {
+     "table": "audit_logs",
+     "op": "insert"
+    },
+    {
+     "table": "user_roles",
+     "op": "select"
+    },
+    {
+     "table": "system_settings",
+     "op": "upsert"
+    },
+    {
+     "table": "audit_logs",
+     "op": "select"
+    },
+    {
+     "table": "contacts",
+     "op": "select"
+    },
+    {
+     "table": "contacts",
+     "op": "update"
+    },
+    {
+     "table": "contacts",
+     "op": "insert"
+    }
+   ],
+   "table_cols": {
+    "system_settings": [
+     "key",
+     "value"
+    ],
+    "user_roles": [
+     "role",
+     "user_id"
+    ],
+    "audit_logs": [
+     "action",
+     "created_at",
+     "details",
+     "id"
+    ],
+    "contacts": [
+     "external_id",
+     "id",
+     "source"
+    ]
+   },
+   "rpc": [
+    "is_admin_user"
+   ],
+   "env": [
+    "LDAP_ALLOW_SELF_SIGNED",
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "errors": [
+    "Servidor LDAP e Base DN são obrigatórios"
+   ],
+   "params": [
+    {
+     "name": "MAX_ENTRIES",
+     "value": "5000"
+    },
+    {
+     "name": "LDAP_TIMEOUT_MS",
+     "value": "15000"
+    }
+   ],
+   "status_values": [
+    {
+     "field": "status",
+     "value": "success",
+     "kind": "escreve"
+    },
+    {
+     "field": "role",
+     "value": "admin",
+     "kind": "filtra"
+    }
+   ],
+   "pagination": [
+    "20"
+   ],
+   "uses_service_role": true
+  },
   "supabase/functions/notify-blocked-ip/index.ts": {
    "path": "supabase/functions/notify-blocked-ip/index.ts",
    "lines": 102,
@@ -117758,10 +117973,33 @@
   }
  },
  "git": {
-  "sha": "ee5082dd8568026a59f0491c3284aff8084bc3bf",
+  "sha": "c96ef1baa47e7af57be3e79a356528f1dbfeb8a8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "c96ef1b",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)",
+    "files": [
+     "deno.lock",
+     "docs/estado/funcionalidades-planejadas.md",
+     "src/components/admin/ldap/LDAPConfigTab.tsx",
+     "src/components/admin/ldap/LDAPLogsTab.tsx",
+     "src/components/admin/ldap/types.ts",
+     "src/components/ai/CallSimulation.tsx",
+     "src/components/calls/UnifiedSoftphone.tsx",
+     "src/components/supervisor/panel/CallActionTabs.tsx",
+     "src/hooks/useLDAPSync.ts",
+     "src/hooks/useSupervisorPanel.ts",
+     "src/lib/elevenlabs-stub.ts",
+     "src/pages/AIAssistant.tsx",
+     "src/pages/LDAPSync.tsx",
+     "src/pages/Marketplace.tsx",
+     "supabase/functions/ldap-sync/index.ts"
+    ]
+   },
    {
     "sha": "ee5082d",
     "date": "2026-11-21",
@@ -118574,36 +118812,12 @@
      "supabase/.temp/storage-migration",
      "supabase/.temp/storage-version"
     ]
-   },
-   {
-    "sha": "b3d9f80",
-    "date": "2026-11-20",
-    "author": "adm01-debug",
-    "subject": "fix: remove segredos service_role e postgres literais dos scripts de diagnostico (#50)",
-    "files": [
-     ".env.example",
-     "scripts/apply-call-volume-fix.mjs",
-     "scripts/check-cfmlmc-db.mjs",
-     "scripts/check-data.mjs",
-     "scripts/check-rls.mjs",
-     "scripts/clean-hold-events.mjs",
-     "scripts/cleanup-and-count.mjs",
-     "scripts/fix-user-profile.mjs",
-     "scripts/inspect-schema.mjs",
-     "scripts/test-api-direct.mjs",
-     "scripts/test-auth-flow.mjs",
-     "scripts/test-authenticated-queries.mjs",
-     "scripts/test-call-volume-rpc.mjs",
-     "scripts/test-dashboard-rpcs.mjs",
-     "scripts/test-rls-access.mjs",
-     "scripts/test-validate-ip.mjs"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    5
+    6
    ],
    [
     "src/components/layout/AppSidebar.tsx",
@@ -118622,6 +118836,10 @@
     3
    ],
    [
+    "deno.lock",
+    2
+   ],
+   [
     "src/components/layout/CommandPalette.tsx",
     2
    ],
@@ -118635,10 +118853,6 @@
    ],
    [
     "src/routes/protectedRoutes.tsx",
-    2
-   ],
-   [
-    ".env.example",
     2
    ],
    [

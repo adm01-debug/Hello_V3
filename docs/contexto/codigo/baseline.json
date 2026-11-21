@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ee5082dd8568026a59f0491c3284aff8084bc3bf",
+  "commit": "c96ef1baa47e7af57be3e79a356528f1dbfeb8a8",
   "branch": "main",
-  "data_commit": "2026-11-21T17:36:37-03:00",
+  "data_commit": "2026-11-21T18:10:51-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c96ef1b",
+    "data": "2026-11-21",
+    "assunto": "feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)"
+   },
    {
     "sha": "ee5082d",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "ce6fee5",
     "data": "2026-11-20",
     "assunto": "chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)"
-   },
-   {
-    "sha": "c98548c",
-    "data": "2026-11-20",
-    "assunto": "chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)"
    }
   ],
-  "arquivos_mudados_7d": 577,
+  "arquivos_mudados_7d": 590,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -148,6 +148,10 @@
     "mudancas": 18
    },
    {
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 7
+   },
+   {
     "pasta": "src/lib/__tests__",
     "mudancas": 7
    },
@@ -157,10 +161,6 @@
    },
    {
     "pasta": "covout/hooks/auth",
-    "mudancas": 6
-   },
-   {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 6
    },
    {
@@ -184,25 +184,25 @@
     "mudancas": 5
    },
    {
+    "pasta": "src/components/admin",
+    "mudancas": 4
+   },
+   {
     "pasta": "src/hooks/__tests__",
     "mudancas": 4
    },
    {
     "pasta": "AGENTS.md",
     "mudancas": 3
-   },
-   {
-    "pasta": "covout/lib/validation",
-    "mudancas": 3
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
-    "arquivo": ".github/workflows/contexto.yml",
-    "mudancas": 6
+    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 7
    },
    {
-    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 6
    },
    {
@@ -223,6 +223,10 @@
    },
    {
     "arquivo": "AGENTS.md",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "deno.lock",
     "mudancas": 3
    },
    {
@@ -251,10 +255,6 @@
    },
    {
     "arquivo": ".github/workflows/inventario-estado-semanal.yml",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "deno.lock",
     "mudancas": 2
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 61
+    "commits": 62
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,17 +314,17 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1564,
-  "arquivos_codigo": 1202,
-  "linhas_codigo": 164286,
+  "arquivos_total": 1566,
+  "arquivos_codigo": 1204,
+  "linhas_codigo": 164884,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 93,
   "modulos": 78,
   "componentes": 447,
-  "hooks": 189,
-  "edge_functions": 93,
+  "hooks": 190,
+  "edge_functions": 94,
   "tabelas": 169,
   "migrations": 212,
   "cron_jobs": 7,
@@ -472,7 +472,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41946
+   "linhas": 41953
   },
   "src/contexts": {
    "arquivos": 2,
@@ -483,8 +483,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 347,
-   "linhas": 44792
+   "arquivos": 348,
+   "linhas": 45012
   },
   "src/integrations": {
    "arquivos": 3,
@@ -492,7 +492,7 @@
   },
   "src/lib": {
    "arquivos": 160,
-   "linhas": 20649
+   "linhas": 20654
   },
   "src/main.tsx": {
    "arquivos": 1,
@@ -500,7 +500,7 @@
   },
   "src/pages": {
    "arquivos": 130,
-   "linhas": 20718
+   "linhas": 20717
   },
   "src/routes": {
    "arquivos": 2,
@@ -511,8 +511,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 147,
-   "linhas": 16660
+   "arquivos": 148,
+   "linhas": 17027
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -601,6 +601,10 @@
    "linhas": 370
   },
   {
+   "arquivo": "supabase/functions/ldap-sync/index.ts",
+   "linhas": 367
+  },
+  {
    "arquivo": "src/lib/security-alerts-webhook.ts",
    "linhas": 359
   },
@@ -627,14 +631,10 @@
   {
    "arquivo": "src/lib/blf.ts",
    "linhas": 345
-  },
-  {
-   "arquivo": "src/pages/Contacts.tsx",
-   "linhas": 345
   }
  ],
  "qualidade": {
-  "any": 9,
+  "any": 11,
   "console_log": 181,
   "ts_ignore": 0,
   "eslint_disable": 1,

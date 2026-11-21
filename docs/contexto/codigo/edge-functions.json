@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "pasta": "supabase/functions",
- "total": 93,
+ "total": 94,
  "verify_jwt_false": [],
  "shared": [
   "supabase/functions/_shared/__tests__/resilience.test.ts",
@@ -1471,6 +1471,44 @@
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
    "testes": 1
+  },
+  {
+   "nome": "ldap-sync",
+   "entrada": "supabase/functions/ldap-sync/index.ts",
+   "arquivos": 1,
+   "linhas": 367,
+   "verify_jwt": true,
+   "metodos": [
+    "OPTIONS"
+   ],
+   "tabelas": [
+    "audit_logs",
+    "contacts",
+    "system_settings",
+    "user_roles"
+   ],
+   "rpcs": [
+    "is_admin_user"
+   ],
+   "env": [
+    "LDAP_ALLOW_SELF_SIGNED",
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "buckets": [],
+   "chama_edges": [],
+   "hosts_externos": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
+   "chamada_pelo_front": [
+    "src/hooks/useLDAPSync.ts"
+   ],
+   "chamada_por_edges": [],
+   "chamada_por_sql_ou_cron": false,
+   "orfa": false,
+   "testes": 0
   },
   {
    "nome": "notify-blocked-ip",

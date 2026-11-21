@@ -1,12 +1,12 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 879,
- "arestas": 3415,
+ "nos": 881,
+ "arestas": 3419,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 260
+   "importado_por": 261
   },
   {
    "arquivo": "src/components/ui/button.tsx",
@@ -22,7 +22,7 @@
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 192
+   "importado_por": 193
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -42,7 +42,7 @@
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
-   "importado_por": 83
+   "importado_por": 84
   },
   {
    "arquivo": "src/components/ui/select.tsx",

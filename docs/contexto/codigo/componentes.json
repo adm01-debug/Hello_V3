@@ -211,7 +211,7 @@
     "LDAPConfigTab"
    ],
    "export_default": null,
-   "linhas": 156,
+   "linhas": 172,
    "dominio": "components/admin",
    "hooks_locais": [],
    "tabelas": [],
@@ -225,7 +225,7 @@
     "LDAPLogsTab"
    ],
    "export_default": null,
-   "linhas": 65,
+   "linhas": 72,
    "dominio": "components/admin",
    "hooks_locais": [],
    "tabelas": [],
@@ -1122,7 +1122,7 @@
     "UnifiedSoftphone"
    ],
    "export_default": null,
-   "linhas": 252,
+   "linhas": 256,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAgentStatus",
@@ -3907,7 +3907,7 @@
     "CallActionTabs"
    ],
    "export_default": null,
-   "linhas": 115,
+   "linhas": 130,
    "dominio": "components/supervisor",
    "hooks_locais": [],
    "tabelas": [],
@@ -6176,9 +6176,10 @@
     "LDAPSync"
    ],
    "export_default": "LDAPSync",
-   "linhas": 122,
+   "linhas": 121,
    "dominio": "pages",
    "hooks_locais": [
+    "useLDAPSync",
     "usePageTitle"
    ],
    "tabelas": [],

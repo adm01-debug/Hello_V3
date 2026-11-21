@@ -11,7 +11,7 @@
    "src/contexts (2)"
   ],
   "hooks": [
-   "src/hooks (172)",
+   "src/hooks (173)",
    "src/components (12)",
    "src/contexts (2)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)",
    "feat: (#77)",
    "feat: (#76)",
    "docs: (#75)",
-   "fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)",
-   "fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)"
+   "fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)"
   ]
  },
  "pr_template": null,

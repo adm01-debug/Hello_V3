@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ee5082dd85` · branch `main` · 2026-11-21 20:37 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c96ef1baa4` · branch `main` · 2026-11-21 21:12 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -275,7 +275,7 @@ _nenhum item encontrado_
 
 | Tipo | Problema | Onde |
 |---|---|---|
-| status | valor `partial` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/admin/ldap/LDAPLogsTab.tsx`<br>`compara:src/pages/SecurityReport.tsx`<br>`escreve:src/components/admin/ldap/types.ts` |
+| status | valor `partial` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/admin/ldap/LDAPLogsTab.tsx`<br>`compara:src/pages/SecurityReport.tsx` |
 | status | valor `verified` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/auth/ReauthDialog.tsx`<br>`compara:src/hooks/useMFA.ts`<br>`compara:src/pages/TwoFactorAuth.tsx`<br>`compara:src/pages/two-factor/DevicesCard.tsx` |
 | status | valor `overdue` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/callbacks/ScheduledCallbacksList.tsx`<br>`escreve:src/components/callbacks/ScheduledCallbacksList.tsx` |
 | status | valor `soon` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/callbacks/ScheduledCallbacksList.tsx`<br>`escreve:src/components/callbacks/ScheduledCallbacksList.tsx` |
@@ -309,7 +309,6 @@ _nenhum item encontrado_
 | status | valor `implemented` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/SecurityReport.tsx`<br>`escreve:src/lib/security-report-data.ts` |
 | status | valor `disponivel` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/Marketplace.tsx` |
 | status | valor `beta` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/Marketplace.tsx` |
-| status | valor `roadmap` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/Marketplace.tsx` |
 | status | valor `scheduled` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VideoConference.tsx`<br>`escreve:src/pages/Scheduling.tsx`<br>`escreve:src/pages/VideoConference.tsx` |
 | status | valor `loading` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VerifyEmail.tsx` |
 | status | valor `sent` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VirtualFax.tsx` |

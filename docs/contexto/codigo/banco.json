@@ -2894,6 +2894,7 @@
     "approve-password-reset",
     "database-backup",
     "database-cleanup",
+    "ldap-sync",
     "webauthn-authenticate",
     "webhook-handler"
    ],
@@ -4539,7 +4540,7 @@
     ],
     "so_no_types": []
    },
-   "usada_no_front": 1,
+   "usada_no_front": 2,
    "usada_em_edges": [
     "voip-trunks-manage"
    ],
@@ -9252,6 +9253,7 @@
     "compute-best-time",
     "email-inbound",
     "extract-crm-fields",
+    "ldap-sync",
     "whatsapp-inbound"
    ],
    "triggers": [
@@ -20200,7 +20202,8 @@
    },
    "usada_no_front": 1,
    "usada_em_edges": [
-    "chatbot-respond"
+    "chatbot-respond",
+    "ldap-sync"
    ],
    "triggers": [],
    "sem_rls": false,
@@ -21786,6 +21789,7 @@
    "usada_em_edges": [
     "database-backup",
     "database-cleanup",
+    "ldap-sync",
     "voip-trunks-manage"
    ],
    "triggers": [
@@ -23960,7 +23964,7 @@
   {
    "nome": "is_admin_user",
    "definida": true,
-   "usada_em": 2
+   "usada_em": 3
   },
   {
    "nome": "log_audit_event",

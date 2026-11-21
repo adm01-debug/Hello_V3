@@ -1667,6 +1667,7 @@
    ],
    "tabelas": [
     "barge_in_sessions",
+    "call_control_audit_logs",
     "call_sessions",
     "hold_alert_settings",
     "hold_events",
@@ -2543,20 +2544,25 @@
    "arquivo": "src/pages/LDAPSync.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
+    "useCallback",
     "useEffect",
+    "useLDAPSync",
     "usePageTitle",
     "useState"
    ],
    "hooks_locais": [
+    "useLDAPSync",
     "usePageTitle"
    ],
    "tabelas": [],
    "rpcs": [],
-   "edges": [],
+   "edges": [
+    "ldap-sync"
+   ],
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 17
+   "arquivos_puxados": 21
   },
   {
    "protegida": false,
