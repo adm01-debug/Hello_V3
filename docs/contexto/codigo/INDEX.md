@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `d9528b577a36f08c305452d5605e3e348b72aca5` (2026-11-21T15:29:28-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `63087086a7fd7b1fa617882902b6901fdfb57d77` (2026-11-21T16:09:20-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -360,15 +360,15 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8879 nós · 23724 arestas · 702 comunidades · grafo do commit `d9528b57`
-- comunidades maiores: lucide-react (341), logger.ts (155), client.ts (153), react (152), Logger (150), usePageTitle.ts (145), utils.ts (136), vitest (124), cn (110), snapshot.py (102), ref_https (102), @tanstack/react-query (102)
+- 8879 nós · 23726 arestas · 703 comunidades · grafo do commit `63087086`
+- comunidades maiores: lucide-react (271), client.ts (200), @tanstack/react-query (198), react (195), vitest (161), utils.ts (135), Tabela de funcionalidades (122), safe-date.ts (112), snapshot.py (102), Tabela de funcionalidades (101), ref_https (99), protectedRoutes.tsx (93)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - .github/workflows/contexto.yml (6)
+- docs/estado/funcionalidades-planejadas.md (6)
 - .github/workflows/ci.yml (5)
-- docs/estado/funcionalidades-planejadas.md (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
 - AGENTS.md (3)
@@ -419,6 +419,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `6308708` docs: (#75)
 - 2026-11-21 `d9528b5` fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)
 - 2026-11-21 `e534879` fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)
 - 2026-11-21 `468450f` chore(docs): marca PermissionGate como wireado (PR #61) (#73)
@@ -433,7 +434,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `c2d7efe` feat: migra edge functions chat do gateway Lovable para Open Router (#63)
 - 2026-11-21 `ffaedf6` docs: relatorio atualizado (seed, PR #62, validação O2O)
 - 2026-11-21 `ea386b1` docs: regras de negocio verificadas e achados fora de escopo
-- 2026-11-21 `ce4911de` docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

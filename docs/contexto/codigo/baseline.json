@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d9528b577a36f08c305452d5605e3e348b72aca5",
+  "commit": "63087086a7fd7b1fa617882902b6901fdfb57d77",
   "branch": "main",
-  "data_commit": "2026-11-21T15:29:28-03:00",
+  "data_commit": "2026-11-21T16:09:20-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6308708",
+    "data": "2026-11-21",
+    "assunto": "docs: (#75)"
+   },
    {
     "sha": "d9528b5",
     "data": "2026-11-21",
@@ -126,11 +131,6 @@
     "sha": "25b35e5",
     "data": "2026-11-20",
     "assunto": "feat: concluir funcionalidades planejadas (wiring IA composer + fix hook TopicDetection) (#53)"
-   },
-   {
-    "sha": "91e0da8",
-    "data": "2026-11-20",
-    "assunto": "infra: escopa job CI ao environment e2e (#52)"
    }
   ],
   "arquivos_mudados_7d": 576,
@@ -160,11 +160,11 @@
     "mudancas": 6
    },
    {
-    "pasta": ".github/workflows/ci.yml",
-    "mudancas": 5
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 6
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "pasta": ".github/workflows/ci.yml",
     "mudancas": 5
    },
    {
@@ -202,11 +202,11 @@
     "mudancas": 6
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 5
+    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 6
    },
    {
-    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "arquivo": ".github/workflows/ci.yml",
     "mudancas": 5
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 58
+    "commits": 59
    },
    {
     "autor": "Joaquim Ataides",

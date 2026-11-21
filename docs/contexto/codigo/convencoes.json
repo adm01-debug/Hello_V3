@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "docs: (#75)",
    "fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)",
    "fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)",
    "chore(docs): marca PermissionGate como wireado (PR #61) (#73)",
-   "fix: adiciona guards de tabela/coluna no performance_indexes para Supabase Preview (#66)",
-   "chore: docs - chatbot e traducao ao vivo marcados como wireados (#71)"
+   "fix: adiciona guards de tabela/coluna no performance_indexes para Supabase Preview (#66)"
   ]
  },
  "pr_template": null,

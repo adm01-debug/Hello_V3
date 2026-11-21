@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "d9528b577a36f08c305452d5605e3e348b72aca5",
+  "sha": "63087086a7fd7b1fa617882902b6901fdfb57d77",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 18:30 UTC",
+  "generated_at": "2026-11-21 19:11 UTC",
   "files_total": 1611,
   "code_files": 1417,
   "code_lines": 178277
@@ -117758,10 +117758,19 @@
   }
  },
  "git": {
-  "sha": "d9528b577a36f08c305452d5605e3e348b72aca5",
+  "sha": "63087086a7fd7b1fa617882902b6901fdfb57d77",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "6308708",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "docs: (#75)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "d9528b5",
     "date": "2026-11-21",
@@ -118589,24 +118598,12 @@
      "src/lib/__tests__/guard-edge-numeric.test.ts",
      "src/lib/__tests__/safe-date.test.ts"
     ]
-   },
-   {
-    "sha": "f3cc8f6",
-    "date": "2026-11-19",
-    "author": "adm01-debug",
-    "subject": "fix: corrige selectors e ativa E2E autenticado (#45)",
-    "files": [
-     ".github/workflows/ci.yml",
-     "tests/e2e/performance.spec.ts",
-     "tests/e2e/webhook-audit-ndjson.spec.ts",
-     "tests/e2e/workflow.spec.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    4
+    5
    ],
    [
     "src/pages/Inbox.tsx",
@@ -118618,10 +118615,6 @@
    ],
    [
     "supabase/functions/migrate-helper/index.ts",
-    3
-   ],
-   [
-    ".github/workflows/ci.yml",
     3
    ],
    [
@@ -118682,6 +118675,10 @@
    ],
    [
     "supabase/functions/migrate-helper/index.test.ts",
+    2
+   ],
+   [
+    ".github/workflows/ci.yml",
     2
    ]
   ]
