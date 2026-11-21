@@ -1,7 +1,7 @@
 import { 
   CircleParking,
   LayoutGrid,
-  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Clock as ClockIcon, Wifi, Gamepad2, Building2, Handshake, RefreshCw, Target,
+  LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, StarOff, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Clock as ClockIcon, Wifi, Gamepad2, Building2, Handshake, RefreshCw, Target, ShieldAlert, Webhook, Database,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -116,6 +116,15 @@ const settingsNavItems = [
   { title: 'Sugestões de Escala IA', url: '/shift-swap-suggestions', icon: CalendarDays },
   { title: 'Exportação Data Lake', url: '/admin/data-export', icon: Cloud },
   { title: 'Configurações', url: '/settings', icon: Settings },
+];
+
+const adminNavItems = [
+  { title: 'Discador Preditivo', url: '/dialer/predictive', icon: PhoneOutgoing },
+  { title: 'Permissões', url: '/permissions', icon: UserCog },
+  { title: 'Alertas de Segurança', url: '/admin/security-alerts', icon: ShieldAlert },
+  { title: 'Saúde de Webhooks', url: '/admin/webhook-health', icon: Webhook },
+  { title: 'SLO', url: '/admin/slo', icon: Gauge },
+  { title: 'Saúde do Banco', url: '/admin/database-health', icon: Database },
 ];
 
 type NavItemType = { title: string; url: string; icon: React.ElementType };
@@ -252,7 +261,7 @@ function useFavorites() {
   return { favorites, toggle };
 }
 
-const allItems = [...mainNavItems, ...crmNavItems, ...omnichannelNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems];
+const allItems = [...mainNavItems, ...crmNavItems, ...omnichannelNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems, ...adminNavItems];
 
 export function AppSidebar() {
   const { state } = useSidebar();
@@ -311,6 +320,7 @@ export function AppSidebar() {
         <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
         <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
+        <NavGroup label="Administração" items={adminNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border/50 p-4">

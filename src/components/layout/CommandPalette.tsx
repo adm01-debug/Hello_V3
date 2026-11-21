@@ -12,7 +12,7 @@ import {
  import {
   CircleParking,
   LayoutGrid,
-  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi, RefreshCw, Moon, Sun, LogOut, Building2, Handshake, Target,
+  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi, RefreshCw, Moon, Sun, LogOut, Building2, Handshake, Target, ShieldAlert, Webhook, Database,
  } from 'lucide-react';
  import { useQueryClient } from '@tanstack/react-query';
  import { useTheme } from '@/contexts/ThemeContext';
@@ -90,6 +90,12 @@ const allRoutes = [
   { title: 'Painel BLF de Ramais', url: '/blf', icon: LayoutGrid, group: 'Chamadas' },
   { title: 'Linhas VoIP', url: '/admin/voip-trunks', icon: Phone, group: 'Sistema' },
   { title: 'Configurações', url: '/settings', icon: Settings, group: 'Sistema' },
+  { title: 'Discador Preditivo', url: '/dialer/predictive', icon: PhoneOutgoing, group: 'Administração' },
+  { title: 'Permissões', url: '/permissions', icon: UserCog, group: 'Administração' },
+  { title: 'Alertas de Segurança', url: '/admin/security-alerts', icon: ShieldAlert, group: 'Administração' },
+  { title: 'Saúde de Webhooks', url: '/admin/webhook-health', icon: Webhook, group: 'Administração' },
+  { title: 'SLO', url: '/admin/slo', icon: Gauge, group: 'Administração' },
+  { title: 'Saúde do Banco', url: '/admin/database-health', icon: Database, group: 'Administração' },
 ];
 
 export function CommandPalette() {
