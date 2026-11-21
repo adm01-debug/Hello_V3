@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "c2d7efeb60c305d5ced5af57277c6ccae9d653a4",
+  "sha": "7d28bdeeeff91c9a40084079788b01b631286799",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-21 12:52 UTC",
+  "generated_at": "2026-11-21 13:21 UTC",
   "files_total": 1600,
   "code_files": 1406,
-  "code_lines": 177245
+  "code_lines": 177247
  },
  "version": "1.3.2",
- "facts_hash": "5d9d9540703ce920",
+ "facts_hash": "f9c30bb0bf7eecdd",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -32923,7 +32923,7 @@
   {
    "module": "supabase/migrations",
    "files": 211,
-   "lines": 13628,
+   "lines": 13630,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -116703,7 +116703,7 @@
   },
   "supabase/migrations/20250102000000_hello_production.sql": {
    "path": "supabase/migrations/20250102000000_hello_production.sql",
-   "lines": 80
+   "lines": 82
   },
   "supabase/migrations/20250102000000_performance_indexes.sql": {
    "path": "supabase/migrations/20250102000000_performance_indexes.sql",
@@ -117754,10 +117754,19 @@
   }
  },
  "git": {
-  "sha": "c2d7efeb60c305d5ced5af57277c6ccae9d653a4",
+  "sha": "7d28bdeeeff91c9a40084079788b01b631286799",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "7d28bde",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)",
+    "files": [
+     "supabase/migrations/20250102000000_hello_production.sql"
+    ]
+   },
    {
     "sha": "c2d7efe",
     "date": "2026-11-21",
@@ -118595,15 +118604,6 @@
     "files": [
      "supabase/migrations/20261114090556_f32993dc-8788-4c44-8082-b2e52a7463cb.sql"
     ]
-   },
-   {
-    "sha": "42f17da",
-    "date": "2026-11-14",
-    "author": "adm01-debug",
-    "subject": "fix: aplica security_invoker na view financial_impact_daily (#34)",
-    "files": [
-     "supabase/migrations/20261114090555_39ac6717-4796-4514-bcee-c3a00c1dfd6d.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -118684,7 +118684,7 @@
     2
    ],
    [
-    "docs/estado/infra-ci-rotas-integracoes.md",
+    "supabase/migrations/20250102000000_hello_production.sql",
     1
    ]
   ]

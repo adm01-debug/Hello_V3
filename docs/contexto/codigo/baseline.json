@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "c2d7efeb60c305d5ced5af57277c6ccae9d653a4",
+  "commit": "7d28bdeeeff91c9a40084079788b01b631286799",
   "branch": "main",
-  "data_commit": "2026-11-21T09:52:14-03:00",
+  "data_commit": "2026-11-21T10:19:50-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "7d28bde",
+    "data": "2026-11-21",
+    "assunto": "fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)"
+   },
    {
     "sha": "c2d7efe",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "9e7657f",
     "data": "2026-11-14",
     "assunto": "chore: saneia SC2129 no contexto.yml e documenta leitura de logs em producao (#40)"
-   },
-   {
-    "sha": "a8985a2",
-    "data": "2026-11-14",
-    "assunto": "feat: (#38)"
    }
   ],
-  "arquivos_mudados_7d": 584,
+  "arquivos_mudados_7d": 573,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 47
+    "commits": 48
    },
    {
     "autor": "Joaquim Ataides",

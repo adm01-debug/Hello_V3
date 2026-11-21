@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)",
    "feat: migra edge functions chat do gateway Lovable para Open Router (#63)",
    "docs: relatorio atualizado (seed, PR #62, validação O2O)",
    "docs: regras de negocio verificadas e achados fora de escopo",
-   "docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)",
-   "feat: wiring dos componentes orfaos no frontend (#61)"
+   "docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)"
   ]
  },
  "pr_template": null,
