@@ -12,6 +12,7 @@ import { safeFormatDistanceToNow } from "@/lib/safe-date";
  import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
  import { useRealtimeHoldAlerts } from '@/hooks/useRealtimeHoldAlerts';
 import { ptBR } from 'date-fns/locale';
+import { activateOnKey } from "../../lib/a11y-clickable";
  import { useAlerts } from '@/hooks/useAlerts';
  import { useNavigate } from 'react-router-dom';
  import { cn } from '@/lib/utils';
@@ -217,7 +218,10 @@ import { ptBR } from 'date-fns/locale';
    };
  
    return (
-     <div 
+<div
+      role="button"
+      tabIndex={0}
+      onKeyDown={activateOnKey}
        className={cn(
          "flex flex-col gap-1 p-3 rounded-lg border border-border/40 transition-all hover:border-primary/30 cursor-pointer relative overflow-hidden group",
          !isRead ? "bg-primary/5" : "bg-card"

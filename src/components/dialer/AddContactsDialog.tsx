@@ -25,6 +25,7 @@ import { usePredictiveDialer, AddToQueueInput } from '@/hooks/usePredictiveDiale
 import { useContacts } from '@/hooks/useContacts';
 import { VirtualList } from '@/components/ui/VirtualList';
 import { Checkbox } from '@/components/ui/checkbox';
+import { activateOnKey } from "../../lib/a11y-clickable";
 
 interface AddContactsDialogProps {
   campaignId: string;
@@ -201,7 +202,10 @@ export function AddContactsDialog({ campaignId }: AddContactsDialogProps) {
                   className="border rounded-lg p-1"
                   keyExtractor={(c) => c.id}
                   renderItem={(contact) => (
-                    <div 
+<div
+      role="button"
+      tabIndex={0}
+      onKeyDown={activateOnKey}
                       className="flex items-center gap-3 p-2 rounded-md hover:bg-accent cursor-pointer transition-colors"
                       onClick={() => toggleContact(contact.id)}
                     >

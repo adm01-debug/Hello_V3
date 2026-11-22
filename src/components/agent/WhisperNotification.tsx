@@ -14,6 +14,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 
 import { safeToLocaleTimeString } from "@/lib/safe-date";
+import { activateOnKey } from "../../lib/a11y-clickable";
 interface WhisperMessage {
   id: string;
   supervisor_name: string;
@@ -141,7 +142,10 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
   return (
     <div className="fixed bottom-4 right-4 z-50 animate-fade-in">
       <Card className="w-80 shadow-lg border-primary/20 bg-card/95 backdrop-blur-sm">
-        <div 
+<div
+      role="button"
+      tabIndex={0}
+      onKeyDown={activateOnKey}
           className="flex items-center justify-between p-3 bg-primary/10 rounded-t-lg cursor-pointer"
           onClick={() => setIsExpanded(!isExpanded)}
         >

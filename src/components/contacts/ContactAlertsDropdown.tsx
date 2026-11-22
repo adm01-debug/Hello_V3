@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 
 import { safeFormatDistanceToNow } from "@/lib/safe-date";
+import { activateOnKey } from "../../lib/a11y-clickable";
 export function ContactAlertsDropdown() {
   const navigate = useNavigate();
   const { 
@@ -148,7 +149,10 @@ export function ContactAlertsDropdown() {
           ) : (
             <div className="divide-y">
               {alerts.map((alert) => (
-                <div
+<div
+      role="button"
+      tabIndex={0}
+      onKeyDown={activateOnKey}
                   key={alert.id}
                   className={cn(
                     'p-3 transition-colors hover:bg-muted/50 cursor-pointer',

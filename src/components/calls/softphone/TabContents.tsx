@@ -4,6 +4,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import type { CallSession, CallChannel } from '@/hooks/useMultiChannelCall';
 import { channelIcons, formatCallDuration, getInitials } from './constants';
+import { activateOnKey } from "../../../lib/a11y-clickable";
 
 interface ContactsTabProps {
   quickContacts: Array<{ id: string; name: string; phone: string; favorite: boolean; company?: string }>;
@@ -59,7 +60,10 @@ export function HistoryTab({ callHistory, onSelectNumber }: HistoryTabProps) {
         {callHistory.map((call) => {
           const CallIcon = channelIcons[call.channel];
           return (
-            <div
+<div
+      role="button"
+      tabIndex={0}
+      onKeyDown={activateOnKey}
               key={call.id}
               className="flex items-center gap-3 p-3 rounded-lg border hover:bg-accent/50 cursor-pointer"
               onClick={() => call.phoneNumber && onSelectNumber(call.phoneNumber)}

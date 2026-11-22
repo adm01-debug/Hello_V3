@@ -7,6 +7,7 @@ import { cn, formatDuration } from '@/lib/utils';
 import { SessionWithSummary } from '@/hooks/useCallHistory';
 import { VirtualList } from '@/components/ui/VirtualList';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
+import { activateOnKey } from "../../lib/a11y-clickable";
 
 interface Props {
   sessions: SessionWithSummary[];
@@ -35,7 +36,10 @@ const getSentimentBadge = (sentiment: string | null | undefined) => {
 
 export function CallSessionsList({ sessions, isLoading, activeFiltersCount, onSessionClick, onClearFilters, onLoadMore, hasMore }: Props) {
   const renderSessionItem = (session: SessionWithSummary) => (
-    <div 
+<div
+      role="button"
+      tabIndex={0}
+      onKeyDown={activateOnKey}
       className="flex items-center justify-between rounded-lg border border-border p-4 hover:bg-accent/50 cursor-pointer transition-colors mb-2 bg-card" 
       onClick={() => onSessionClick(session)}
     >

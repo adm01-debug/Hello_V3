@@ -3,6 +3,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { Clock, Phone, User, Users } from 'lucide-react';
 import type { SupervisorPanelState } from './types';
+import { activateOnKey } from "../../../lib/a11y-clickable";
 
 export function ActiveCallsList({ s }: { s: SupervisorPanelState }) {
   return (
@@ -23,7 +24,10 @@ export function ActiveCallsList({ s }: { s: SupervisorPanelState }) {
               const inBargeIn = s.isCallInBargeIn(call.id);
               const selected = s.selectedCall?.id === call.id;
               return (
-                <div
+<div
+      role="button"
+      tabIndex={0}
+      onKeyDown={activateOnKey}
                   key={call.id}
                   onClick={() => s.setSelectedCall(call)}
                   className={cn(

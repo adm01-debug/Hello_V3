@@ -5,6 +5,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Play, Pause, SkipBack, SkipForward, Sparkles, Lightbulb } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import { cn } from '@/lib/utils';
+import { activateOnKey } from "../../lib/a11y-clickable";
 
 export interface TranscriptSegment {
   speaker: 'agent' | 'customer';
@@ -151,7 +152,10 @@ export function CallPlayerWithTranscript({ audioUrl, segments, seekTo, markers =
           {segments.length === 0 ? (
             <p className="text-center text-sm text-muted-foreground py-6">Nenhuma transcrição segmentada disponível.</p>
           ) : segments.map((s, i) => (
-            <div
+<div
+      role="button"
+      tabIndex={0}
+      onKeyDown={activateOnKey}
               key={i}
               className={cn(
                 'p-2 rounded-md text-sm cursor-pointer transition-colors',
