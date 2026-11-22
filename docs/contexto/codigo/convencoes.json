@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)",
    "feat: wire QueueTrendChart a dados reais (realtimeData do useQueueMetrics) (#123)",
    "test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)",
    "docs: marca achado createTestData como RESOLVIDO (PR #120) (#121)",
-   "fix: gate createTestData e botão Criar Dados para DEV (#120)",
-   "test: escopa locators do login para #email/#password no E2E (#119)"
+   "fix: gate createTestData e botão Criar Dados para DEV (#120)"
   ]
  },
  "pr_template": null,

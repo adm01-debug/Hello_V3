@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e7083876a4892ec936994d2bb206a2a4b96aebe9",
+  "commit": "36c5c1f552aa234613e1c8d44dad425cdff65d31",
   "branch": "main",
-  "data_commit": "2026-11-22T08:59:14-03:00",
+  "data_commit": "2026-11-22T09:15:33-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "36c5c1f",
+    "data": "2026-11-22",
+    "assunto": "chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)"
+   },
    {
     "sha": "e708387",
     "data": "2026-11-22",
@@ -126,11 +131,6 @@
     "sha": "f249e85",
     "data": "2026-11-21",
     "assunto": "chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)"
-   },
-   {
-    "sha": "f83c5a8",
-    "data": "2026-11-21",
-    "assunto": "docs: regenera indice de ADRs (7 de 53 estavam listados) (#98)"
    }
   ],
   "arquivos_mudados_7d": 847,
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 16
+    "mudancas": 17
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 16
+    "mudancas": 17
    },
    {
     "arquivo": ".github/workflows/ci.yml",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 104
+    "commits": 105
    },
    {
     "autor": "Joaquim Ataides",

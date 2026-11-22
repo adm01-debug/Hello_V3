@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "e7083876a4892ec936994d2bb206a2a4b96aebe9",
+  "sha": "36c5c1f552aa234613e1c8d44dad425cdff65d31",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 11:59 UTC",
+  "generated_at": "2026-11-22 12:17 UTC",
   "files_total": 1673,
   "code_files": 1476,
   "code_lines": 184432
@@ -122379,10 +122379,19 @@
   }
  },
  "git": {
-  "sha": "e7083876a4892ec936994d2bb206a2a4b96aebe9",
+  "sha": "36c5c1f552aa234613e1c8d44dad425cdff65d31",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "36c5c1f",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "e708387",
     "date": "2026-11-22",
@@ -122894,22 +122903,12 @@
      "supabase/functions/dialer-pacing-tick/index.ts",
      "supabase/migrations/20261122140000_dialer_pacing_cron.sql"
     ]
-   },
-   {
-    "sha": "3a2530e",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "feat: cron diario que gera trilhas de coaching (D4) (#89)",
-    "files": [
-     "supabase/functions/generate-coaching-track/index.ts",
-     "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    5
+    6
    ],
    [
     "supabase/functions/validate-geo/index.ts",
@@ -122960,10 +122959,6 @@
     2
    ],
    [
-    "supabase/functions/generate-coaching-track/index.ts",
-    2
-   ],
-   [
     "supabase/functions/record-consent/index.ts",
     2
    ],
@@ -122985,6 +122980,10 @@
    ],
    [
     "deno.lock",
+    2
+   ],
+   [
+    "src/components/agent/WhisperNotification.tsx",
     2
    ]
   ]
