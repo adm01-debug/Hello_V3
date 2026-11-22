@@ -108,7 +108,10 @@ export function useQueueMetrics() {
         ? completedCalls.reduce((acc, c) => acc + (c.hold_time_seconds || 0), 0) / completedCalls.length : 0;
 
       const abandonedCalls = recentCalls?.filter(c => c.status === 'abandoned')?.length || 0;
-      const totalCalls = (recentCalls?.length || 0) + abandonedCalls;
+      // recentCalls já traz todas as chamadas da janela, abandonadas inclusive —
+      // somar abandonedCalls aqui contava a mesma chamada duas vezes no
+      // denominador e subestimava a taxa de abandono.
+      const totalCalls = recentCalls?.length || 0;
       const abandonmentRate = totalCalls > 0 ? (abandonedCalls / totalCalls) * 100 : 0;
       const answeredQuickly = completedCalls.filter(c => (c.hold_time_seconds || 0) < 20).length;
       const serviceLevel = completedCalls.length > 0 ? (answeredQuickly / completedCalls.length) * 100 : 100;

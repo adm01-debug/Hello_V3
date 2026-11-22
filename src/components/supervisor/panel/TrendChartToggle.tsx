@@ -15,7 +15,7 @@ export function TrendChartToggle({ s }: { s: SupervisorPanelState }) {
           <ChevronDown className={`h-4 w-4 transition-transform ${s.showTrendChart ? 'rotate-180' : ''}`} />
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="pt-2">
+      <CollapsibleContent forceMount className="pt-2 data-[state=closed]:hidden">
         <QueueTrendChart />
       </CollapsibleContent>
     </Collapsible>
