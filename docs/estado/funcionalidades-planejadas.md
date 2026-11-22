@@ -98,7 +98,7 @@ São o caso mais claro de "planejado, construído e nunca ligado". Todas confirm
 | Auditoria de segurança (admin) | `pages/admin/SecurityAuditDashboard.tsx` (313 linhas) | ✅ Wireado: rota `/admin/security-audit` + menu **Auditoria de Segurança** | 🟩 |
 | Cadeia WebRTC alternativa | `calls/WebRTCCall.tsx` + 4 filhos (~880 linhas) | Só referenciada por testes; sem rota nem entrada de UI | ⬛ Legado |
 
-**6 Edge Functions sem chamador identificado:** `cleanup-lock-conflicts`, `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`. (`generate-coaching-track` agora wireada via botão em `/coaching`.)
+**5 Edge Functions sem chamador identificado:** `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`. (`cleanup-lock-conflicts` agora roda por `pg_cron` semanal desde 22/11.) (`generate-coaching-track` agora wireada via botão em `/coaching`.)
 **2 Edge Functions com testes mas sem `index.ts`:** `check-calling-hours/`, `check-dnc/`.
 
 ---
@@ -137,6 +137,6 @@ Diferente de "dormente": aqui havia UI completa e navegável que **simulava** o 
 ## 8. Resumo: o que responder ao dono
 
 - **Nada relevante do que foi planejado está "não começado".** Para praticamente todo item de roadmap existe backend construído.
-- **O gargalo era de ligação, não de construção:** 16 unidades completas sem consumidor, 7 Edge Functions sem gatilho, 6 rotas sem link de menu. **Resolvido em 21/11:** WIRING-01/03/05 CONCLUÍDOS; WIRING-02 DESCARTADO (sem chamadas ativas); WIRING-04/06 wireados (gamificação, surveys, churn, playlists, compliance, coaching com dados reais); `generate-coaching-track` reescrita contra schema real e wireada via botão em `/coaching` (PR #74). Restam 6 edges órfãs legítimas/ferramentas (`cleanup-lock-conflicts`, `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`) sem consumidor no fluxo do produto.
+- **O gargalo era de ligação, não de construção:** 16 unidades completas sem consumidor, 7 Edge Functions sem gatilho, 6 rotas sem link de menu. **Resolvido em 21/11:** WIRING-01/03/05 CONCLUÍDOS; WIRING-02 DESCARTADO (sem chamadas ativas); WIRING-04/06 wireados (gamificação, surveys, churn, playlists, compliance, coaching com dados reais); `generate-coaching-track` reescrita contra schema real e wireada via botão em `/coaching` (PR #74). Restam 5 edges órfãs legítimas/ferramentas (`fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`) sem consumidor no fluxo do produto. (`cleanup-lock-conflicts` foi wireada ao `pg_cron` semanal em 22/11.)
 - **Seis módulos deixaram de ser fachada** — três ganharam função real (LDAP, escuta, Marketplace) e três foram rotulados honestamente (WebRTC indisponível, Zoom/Meet em breve, simulação declarada como demonstração). Ver §7.
 - **A documentação de conclusão (`SYSTEM_FEATURES.md`, ADRs) não deve ser usada para decidir nada** enquanto não for reconciliada: ela marca 100% de conclusão sobre um sistema com 16 features dormentes e 6 fachadas.

@@ -64,7 +64,7 @@ gate: teste à mão.
 | `wavoip-call` | Exige `WAVOIP_TOKEN` e **nunca o usa**; respostas constantes. | ver `telefonia-voip.md` |
 | `elevenlabs-stub.ts` | `status: 'disconnected'` / `isSpeaking: false` constantes, consumido em produção. | `src/lib/elevenlabs-stub.ts:12-13` |
 | `check-hold-alerts` | `.is('ended_at', null)` gera alerta que nunca cessa porque o fio de dados de hold está quebrado. | `check-hold-alerts/index.ts:52`; ver `telefonia-voip.md` |
-| Sem chamador identificado | `cleanup-lock-conflicts`, `fuzz-test-runner`, `generate-coaching-track`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary` | `ESTADO_ATUAL.md` §3 R10 |
+| Sem chamador identificado | `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary` | `ESTADO_ATUAL.md` §3 R10 |
 
 **Regra:** corrija o que foi pedido. Achou outro item desta tabela no caminho → "Próximos passos", não
 "aproveitei e também". Adicionar auth a `search-calls` muda o contrato de quem a chama hoje: é mudança de

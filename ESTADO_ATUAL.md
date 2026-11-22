@@ -139,7 +139,7 @@ Complementarmente, a cobertura mede apenas `src/lib/**` e `src/hooks/**` (`vites
 ### 🟡 R10 — Funcionalidades completas e dormentes
 Backend provisionado (tabela + edge function), **zero consumidores** no `src/` — confirmado por múltiplos padrões de busca, incluindo import dinâmico:
 `useAdherence`, `useChatbot`, `useChurnRisk`, `useCallPlaylists`, `useCoachingAssignments`, `useComplianceRules`, `useScorecards` (deixa 4 tabelas sem leitor), `useSurveys` (edge `send-survey` sem gatilho), `useNotifications`, `useMultiChannelCallConference`.
-Mais 7 Edge Functions sem chamador identificado: `cleanup-lock-conflicts`, `fuzz-test-runner`, `generate-coaching-track`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`.
+Mais 5 Edge Functions sem chamador identificado: `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`. (`cleanup-lock-conflicts` roda por `pg_cron` semanal e `generate-coaching-track` é chamada pelo cron diário de coaching, ambos desde 22/11.)
 
 ### 🔴 R3b — A camada de segurança do frontend inteira está inativa
 **Evidência:** os 17 arquivos de `src/lib/security/` (~700 linhas) — CSP, HSTS, `https-enforcer`, `rate-limiter`, `input-sanitizer`, `xss-prevention`, `csrf-token`, `sql-sanitizer`, `jwt-handler` — são importados **somente** pelo barrel `src/lib/security/index.ts`, e esse barrel **não tem nenhum importador** (`grep -rn "from '@/lib/security'" src` fora de testes → vazio).

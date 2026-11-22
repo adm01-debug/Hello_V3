@@ -19,7 +19,9 @@ Faltava **automação** (retenção manual) e **observabilidade proativa** (admi
 ### 1. Cron pg_cron semanal
 - `pg_cron` + `pg_net` habilitados
 - Agendamento `0 3 * * 0` (domingo 03:00 UTC) invocando `cleanup-lock-conflicts`
-- Configurado via `INSERT` (não migration) por conter URL/anon key específicos do projeto
+- Versionado na migration `20261122220000_lock_conflicts_retention_cron.sql`
+- A edge aceita o cron por token dedicado (`CLEANUP_CRON_TOKEN`, comparação em tempo constante), além do JWT de admin. O token vive na Vault (`cleanup_lock_conflicts_cron_token`) e é lido no disparo — nenhum segredo no repositório.
+  - **Correção de 22/11:** a versão original desta ADR dizia "configurado via INSERT, não migration", e o INSERT nunca foi feito. As três promessas desta ADR (cron, hotspot e badge) eram inertes porque `optimistic_lock_conflicts` nunca recebia linha: o `INSERT` do conflito morria no rollback do `RAISE EXCEPTION` na mesma transação. Corrigido em duas migrations (auditoria por `dblink` + cron de retenção); ver `supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql`.
 
 ### 2. Trigger de hotspot
 - Função `notify_lock_conflict_hotspot()` `SECURITY DEFINER`

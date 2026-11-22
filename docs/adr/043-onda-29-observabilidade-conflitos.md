@@ -22,6 +22,17 @@
    - Cron-ready (pode ser agendada via `pg_cron` posteriormente)
    - Smoke test Deno (401 sem auth + preflight CORS)
 
+## Correção (22/11)
+
+Esta onda construiu painel, hook e edge de limpeza sobre `optimistic_lock_conflicts`,
+mas a tabela **nunca recebeu uma linha**: o trigger `enforce_optimistic_lock` fazia o
+`INSERT` do conflito e o `RAISE EXCEPTION` na mesma transação, então o próprio
+Postgres desfazia o registro. Painel e badge ficavam permanentemente vazios.
+Corrigido em `supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql`
+(registro do conflito por conexão separada, sobrevive ao rollback). Também foi
+agendada a purga de 90 dias que esta ADR descrevia como cron-ready:
+`20261122220000_lock_conflicts_retention_cron.sql`.
+
 ## Consequências
 
 - ✅ Hotspots de concorrência visíveis em produção
