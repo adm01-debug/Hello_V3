@@ -44,15 +44,15 @@ Origem: `docs/audits/pendencias-2026-07.md`. Reverifiquei os itens verificáveis
 |---|---|---|---|
 | A5 | Reauth centralizado (Context + HMAC) | 🟢 | `ReauthContext.tsx` (provider único + grant HMAC-SHA256 em `sessionStorage`, TTL 5 min, `withReauth` executa a ação pendente); `ReauthDialog` global em `App.tsx`; gate aplicado em revogar sessão, desativar MFA e registrar/remover passkey |
 | B1 | Particionar tabelas de alto volume (`pg_partman`) | 🔴 | Confirmado pendente: nenhuma extensão `pg_partman` entre as 5 declaradas |
-| B2 | Script CI `scripts/audit-edge-functions.ts` | 🔴 | **Confirmado ausente** — o arquivo não existe |
-| B5 | Retry idempotente `whatsapp-inbound` | 🔴 | Confirmado pendente |
+| B2 | Script CI `scripts/audit-edge-functions.ts` | 🟡 | Implementado no PR #80, aguardando autorização (regra 8). |
+| B5 | Retry idempotente `whatsapp-inbound` | 🟡 | Implementado no PR #80, aguardando autorização. |
 | B6 | CHECK/enums nas colunas `text` | 🔴 | Confirmado pendente (apenas 2 enums em `types.ts`) |
-| B8 | Whitelist de hosts (SSRF) `_shared/allowed-hosts.ts` | 🔴 | **Confirmado ausente** |
+| B8 | Whitelist de hosts (SSRF) `_shared/allowed-hosts.ts` | 🟡 | Implementado no PR #80, aguardando autorização. |
 | C1 | SLO/SLI + error budget alerts | 🟢 | `health-check` expõe bloco `error_budget` por componente (`remaining_pct`, `burn_rate`, `status`); emite `slo_budget_exhausted` quando a margem acaba antes do SLO estourar. Cálculo em `supabase/functions/health-check/slo-budget.ts`, 11 testes Deno. Exibido em `/admin/slo` |
 | C3 | Squash das 100 primeiras migrations | 🔴 | Confirmado pendente (207 migrations) |
 | C6 | Auditoria de crons `pg_cron` | 🔴 | **Agora urgente:** 7 jobs declarados, 2 apontando para projeto errado |
-| C7 | Bundle budget por rota no CI | 🔴 | Confirmado ausente do `ci.yml` |
-| E2 | Re-linter + re-scorecard pós-plano | 🔴 | Não executado |
+| C7 | Bundle budget por rota no CI | 🟡 | Implementado no PR #80, aguardando autorização. |
+| E2 | Re-linter + re-scorecard pós-plano | 🟢 | `docs/audit/scorecard-final.md` reescrito em 2026-11-22 com 27 métricas medidas: **8,7/10 real**. O 10/10 anterior era herdado e estava obsoleto. |
 | B3 | Índices trigram em `call_sessions` | 🟢 Concluído | ✅ Confirmado: `pg_trgm` está entre as 5 extensões |
 | B4 | Circuit breaker no cliente Bitrix | 🟢 Concluído | ✅ Confirmado: `src/lib/bitrix/circuit-breaker.ts` existe e é integrado em `useBitrix` |
 | B7 | `usePageVisibility` | 🟢 Concluído | ✅ Confirmado: `src/hooks/usePageVisibility.ts` existe |
