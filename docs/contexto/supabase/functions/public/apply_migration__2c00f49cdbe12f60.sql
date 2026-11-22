@@ -1,6 +1,7 @@
 CREATE OR REPLACE FUNCTION public.apply_migration(p_version character varying, p_name character varying, p_checksum character varying)
  RETURNS boolean
  LANGUAGE plpgsql
+ SET search_path TO 'public', 'pg_temp'
 AS $function$
 DECLARE
   v_start_time TIMESTAMP;

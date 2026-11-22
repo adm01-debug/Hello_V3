@@ -10,3 +10,17 @@
 | 2026-11-21 03:00:00 | succeeded | 0.02 | 1 row |
 | 2026-11-20 03:00:00 | failed | 0.00 | ERROR:  schema "net" does not exist LINE 1: SELECT net.http_post(                ^  |
 | 2026-11-19 03:00:00 | failed | 0.00 | ERROR:  schema "net" does not exist LINE 1: SELECT net.http_post(                ^  |
+
+
+## 11 · generate-coaching-tracks-daily
+
+_nenhum_
+
+
+## 12 · dialer-pacing-tick
+
+| início (UTC) | status | duração (s) | mensagem |
+|---|---|---|---|
+| 2026-11-22 01:14:00 | succeeded | 0.01 | 1 row |
+| 2026-11-22 01:13:00 | succeeded | 0.02 | 1 row |
+| 2026-11-22 01:12:00 | succeeded | 0.01 | 1 row |

@@ -71,8 +71,8 @@ SELECT schemaname,
 | campo | valor |
 |---|---|
 | owner | postgres |
-| security_invoker | não |
-| opções |  |
+| security_invoker | sim |
+| opções | security_invoker=true |
 | depende de | public.migration_rollbacks, public.schema_migrations |
 | populada | n/a |
 | comentário |  |

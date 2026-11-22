@@ -1,6 +1,7 @@
 CREATE OR REPLACE FUNCTION public.rollback_migration(p_version character varying, p_reason text)
  RETURNS boolean
  LANGUAGE plpgsql
+ SET search_path TO 'public', 'pg_temp'
 AS $function$
 BEGIN
   -- Check if migration exists

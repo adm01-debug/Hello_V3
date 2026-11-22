@@ -214,8 +214,8 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.email_verification_tokens | Deny update email_verification_tokens | UPDATE | PERMISSIVE | authenticated |  | `false` |
 | public.email_verification_tokens | Users can delete own verification tokens | DELETE | PERMISSIVE | authenticated | `((( SELECT auth.uid() AS uid) = user_id) OR is_admin_user(( SELECT auth.uid() AS uid)))` |  |
 | public.email_verification_tokens | Users can view own verification tokens | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` |  |
-| public.entity_versions | Users can insert versions | INSERT | PERMISSIVE | public |  | `((auth.uid() = changed_by) OR (changed_by IS NULL))` |
-| public.entity_versions | Users can view versions | SELECT | PERMISSIVE | public | `true` |  |
+| public.entity_versions | Authenticated can insert versions | INSERT | PERMISSIVE | authenticated |  | `(auth.uid() = changed_by)` |
+| public.entity_versions | Authenticated can view versions | SELECT | PERMISSIVE | authenticated | `(auth.uid() IS NOT NULL)` |  |
 | public.fraud_signals | Admins and supervisors view all fraud signals | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
 | public.fraud_signals | Admins manage fraud signals | ALL | PERMISSIVE | public | `is_admin_user(( SELECT auth.uid() AS uid))` | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | public.fraud_signals | Agents view fraud signals on own calls | SELECT | PERMISSIVE | public | `(agent_name = get_user_agent_name())` |  |
