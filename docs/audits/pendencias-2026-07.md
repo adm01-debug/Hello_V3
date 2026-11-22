@@ -32,9 +32,9 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 | Item | Descrição | Status | Nota |
 | ---- | --------- | ------ | ---- |
 | C1 | SLO/SLI + error budget alerts | 🟢 | `health-check` calcula `error_budget` (burn rate, remaining, status) por componente e emite `slo_budget_exhausted` antes do SLO estourar. `slo-budget.ts` + 11 testes Deno. Visível em `/admin/slo`. |
-| C2 | Lifecycle `call-recordings` (cold/delete >180 d) | 🔴 | Job Deno agendado. |
-| C3 | Squash das 100 primeiras migrations | 🔴 | `20250101000000_initial_squashed.sql`. |
-| C4 | Contratos Deno para 88 edges restantes | 🔴 | Gerar a partir de schemas Zod. |
+| C2 | Lifecycle `call-recordings` (cold/delete >180 d) | 🟢 | PR #138: edge `cleanup-recordings` apaga objeto do bucket **antes** da linha (gravação órfã seria invisível para sempre) e cron diário `cleanup-recordings-daily` às 03:45 UTC. Token no Vault. Medido antes: 0 linhas e 0 objetos — o gap era de código, não de dado. **Pendente de deploy da edge.** |
+| C3 | Squash das 100 primeiras migrations | 🔴 | `20250101000000_initial_squashed.sql`. Decisão de negócio (regra 8). |
+| C4 | Contratos Deno para 88 edges restantes | 🟡 | 30 de 97 edges chamam `validate()`. Cobertura parcial, não funcionalidade ausente: as edges sem contrato validam payload manualmente e respondem 400 nos testes de sondagem. |
 | C5 | Catálogo público `docs/edge-functions/README.md` | ✅ | PR #87: `scripts/inventario/gerar-catalogo-edges.mjs` gera o catálogo a partir de `supabase/functions/*/index.ts` (94 edges: 26 públicas, 62 autenticadas, 6 staff, 9 sem chamador). `--check` falha se desatualizado. |
 | C6 | Auditoria de crons `pg_cron` | ✅ | Verificado em 2026-11-22: `cron.job` jobid 4 `data-lake-flush-daily` com 7 execuções; o run 168 (2026-11-21) retornou `succeeded`. As 6 falhas eram de 11-15 a 11-20 com `ERROR: schema "net" does not exist`, resolvidas com a instalação do `pg_net` (hoje 0.20.4, schema `net`, `net.http_post` disponível e `net._http_response` com registros). Nenhum cron órfão. |
 | C7 | Bundle analyze + budget por rota (<200 KB gz) | ✅ | PR #80: gate de CI compara o bundle gz por rota contra o orçamento e falha acima de 200 KB. |
@@ -55,6 +55,34 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 | ---- | --------- | ------ | ---- |
 | E1 | Este documento (tabela viva) | 🟢 | Criado em 2026-07-15. |
 | E2 | Re-linter + re-scorecard pós-plano | 🟡 | Re-lint executado em 2026-11-22. Restam 323 `multiple_permissive_policies`, 250 `unused_index`, 13 `auth_rls_initplan` — nenhum deles é exposição de dado. O bloqueio ao 10/10 é o `password_hibp_enabled`, que a API recusa com `HTTP 402 entitlement_required` (proteção de senha vazada exige plano pago). |
+
+---
+
+## Onda A2 — Log de execução (2026-11-22)
+
+**Objetivo:** auditar os `pg_cron` e corrigir o que estivesse quebrado em silêncio.
+
+Quatro jobs ativos em `cron.job`:
+
+| Job | Schedule | Estado |
+| --- | --- | --- |
+| `data-lake-flush-daily` | `0 3 * * *` | ✅ exporta NDJSON (validado ponta a ponta) |
+| `cleanup-lock-conflicts-weekly` | `0 3 * * 0` | 🔴 **nunca autenticou** — corrigido na PR #137 |
+| `dialer-pacing-tick` | `* * * * *` | ✅ caminho de cron token presente |
+| `generate-coaching-tracks-daily` | `15 3 * * *` | ✅ caminho de cron token presente |
+
+**O bug:** `cleanup-lock-conflicts` só aceitava JWT de usuário via `getClaims()`, mas o job envia um bearer opaco de 64 hex lido do Vault. Todo domingo a chamada morria em 401 e a purga de `optimistic_lock_conflicts` com mais de 90 dias **nunca rodou** — embora o ADR-044 e o `docs/edge-functions/README.md` afirmassem o contrário.
+
+```
+POST /functions/v1/cleanup-lock-conflicts   Bearer <token do Vault>   -> 401 (antes)
+POST /functions/v1/cleanup-lock-conflicts   Bearer <token do Vault>   -> 200 (depois)
+POST /functions/v1/cleanup-lock-conflicts   Bearer errado             -> 401 (mantido)
+POST /functions/v1/cleanup-lock-conflicts   Bearer <service_role>     -> 401 (mantido)
+```
+
+Token do Vault confirmado idêntico ao secret da edge (`37c9d2e5…302aafc`), lendo `vault.decrypted_secrets` por join — a lista de secrets da API só devolve hash.
+
+**Lição para os 3 crons restantes:** o código da edge tem que aceitar o bearer que o job manda. Verificado que `dialer-pacing-tick` (`DIALER_CRON_TOKEN`) e `generate-coaching-track` (`COACHING_CRON_TOKEN`) já faziam isso; só o de lock-conflicts estava fora do padrão.
 
 ---
 
