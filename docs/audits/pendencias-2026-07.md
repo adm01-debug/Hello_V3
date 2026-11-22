@@ -32,7 +32,7 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 | Item | Descrição | Status | Nota |
 | ---- | --------- | ------ | ---- |
 | C1 | SLO/SLI + error budget alerts | 🟢 | `health-check` calcula `error_budget` (burn rate, remaining, status) por componente e emite `slo_budget_exhausted` antes do SLO estourar. `slo-budget.ts` + 11 testes Deno. Visível em `/admin/slo`. |
-| C2 | Lifecycle `call-recordings` (cold/delete >180 d) | 🟢 | PR #138: edge `cleanup-recordings` apaga objeto do bucket **antes** da linha (gravação órfã seria invisível para sempre) e cron diário `cleanup-recordings-daily` às 03:45 UTC. Token no Vault. Medido antes: 0 linhas e 0 objetos — o gap era de código, não de dado. **Pendente de deploy da edge.** |
+| C2 | Lifecycle `call-recordings` (cold/delete >180 d) | ✅ | PR #138: edge `cleanup-recordings` apaga objeto do bucket **antes** da linha (gravação órfã seria invisível para sempre) e cron diário `cleanup-recordings-daily` às 03:45 UTC. Token no Vault. Medido antes: 0 linhas e 0 objetos — o gap era de código, não de dado. **Deployado e validado em produção em 2026-11-22** com 2 gravações reais (181 d e 10 d): retornou `linhas_removidas:1`, preservou a recente, e a 2ª execução deu `linhas_removidas:0` (idempotente). Exigiu `--no-verify-jwt` — o gateway da Supabase barrava o bearer do Vault antes da edge rodar. |
 | C3 | Squash das 100 primeiras migrations | 🔴 | `20250101000000_initial_squashed.sql`. Decisão de negócio (regra 8). |
 | C4 | Contratos Deno para 88 edges restantes | 🟡 | 30 de 97 edges chamam `validate()`. Cobertura parcial, não funcionalidade ausente: as edges sem contrato validam payload manualmente e respondem 400 nos testes de sondagem. |
 | C5 | Catálogo público `docs/edge-functions/README.md` | ✅ | PR #87: `scripts/inventario/gerar-catalogo-edges.mjs` gera o catálogo a partir de `supabase/functions/*/index.ts` (94 edges: 26 públicas, 62 autenticadas, 6 staff, 9 sem chamador). `--check` falha se desatualizado. |
@@ -46,7 +46,7 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 | D1 | Unified Inbox (WA + SMS + Voz) | ✅ | `src/pages/Inbox.tsx` (381 linhas) + `WhatsappComposer`; rota `/inbox` em `src/routes/protectedRoutes.tsx`. Canais voice/whatsapp/sms. Tabela `conversations` com RLS + 5 policies. |
 | D2 | Virtual Fax v2 (OCR Gemini) | ✅ | `src/pages/VirtualFax.tsx` + `useVirtualFaxOcr.ts`; edge `ocr-virtual-fax` ACTIVE v8; rota `/virtual-fax`. Tabela `virtual_fax` com RLS + 4 policies. |
 | D3 | AI-Driven Shift Management | ✅ | `src/pages/ShiftSwapSuggestions.tsx` + `useShiftSwapSuggestions.ts`; edge `suggest-shift-swaps` ACTIVE v7; rota `/shift-swap-suggestions`. Tabelas `shift_swap_suggestions` e `shift_templates` com RLS. |
-| D4 | Coaching Automático (sentimento → trilhas) | 🟡 | **Parcial.** Front e edges prontos: `src/pages/Coaching.tsx` + `CoachingAssignmentsPanel.tsx` + `useCoaching`/`useCoachingAssignments`/`useCoachingTrack`; edges `generate-coaching-track` v7, `generate-coaching` v8, `generate-coaching-plan` v8; rota `/coaching`; tabelas `coaching_assignments` (4 policies), `coaching_recommendations` (4), `coaching_timestamps` (3). **Falta o gatilho periódico** — hoje a trilha só nasce por invocação manual; não há `cron.schedule` que detecte sentimento e gere trilhas (requer DDL). |
+| D4 | Coaching Automático (sentimento → trilhas) | ✅ | `src/pages/Coaching.tsx` + `CoachingAssignmentsPanel.tsx` + `useCoaching`/`useCoachingAssignments`/`useCoachingTrack`; edges `generate-coaching-track` v7, `generate-coaching` v8, `generate-coaching-plan` v8; rota `/coaching`; tabelas `coaching_assignments` (4 policies), `coaching_recommendations` (4), `coaching_timestamps` (3). **Gatilho periódico fechado** pela migration `20261122120000_coaching_auto_tracks_cron.sql`: cron diário `generate-coaching-tracks-daily` às 03:15 UTC, token em `vault.secrets`. Validado ponta a ponta em 2026-11-22: com 3+ summaries de score baixo na janela de 14 d, a edge retornou `tracks_created:2` e gravou 2 linhas em `coaching_assignments` (`status=open`, `due_at` +7 d); com 1 amostra retorna `skipped` explicando o mínimo de 3. Motor em `track-engine.ts` (threshold 3.0 numa escala 0–5, mínimo 3 amostras, janela 14 d). |
 | D5 | Data Lake connector (BQ/Snowflake) | ✅ | `src/pages/admin/DataExport.tsx` + `useDataLakeExports.ts`; edges `export-data-lake` v7 e `data-lake-flush` v8; rota `/admin/data-export`; tabela `data_lake_exports`. PR #85 fechou o gap: `call_summaries` estava liberado no CHECK do banco desde a migration `20261120154610`, mas ausente do `validDatasets` da edge e do tipo do front, o que retornava 400 ao exportar transcrições. |
 
 ## Bloco E — Encerramento
@@ -62,14 +62,15 @@ Legenda de status: 🔴 Pendente · 🟡 Em andamento · 🟢 Concluído · ⚪ 
 
 **Objetivo:** auditar os `pg_cron` e corrigir o que estivesse quebrado em silêncio.
 
-Quatro jobs ativos em `cron.job`:
+Quatro jobs ativos em `cron.job` (hoje cinco, com o novo `cleanup-recordings-daily`):
 
 | Job | Schedule | Estado |
 | --- | --- | --- |
 | `data-lake-flush-daily` | `0 3 * * *` | ✅ exporta NDJSON (validado ponta a ponta) |
-| `cleanup-lock-conflicts-weekly` | `0 3 * * 0` | 🔴 **nunca autenticou** — corrigido na PR #137 |
+| `cleanup-lock-conflicts-weekly` | `0 3 * * 0` | 🟢 **nunca autenticava** — corrigido e deployado na PR #137; bearer do Vault devolve 200 |
 | `dialer-pacing-tick` | `* * * * *` | ✅ caminho de cron token presente |
-| `generate-coaching-tracks-daily` | `15 3 * * *` | ✅ caminho de cron token presente |
+| `generate-coaching-tracks-daily` | `15 3 * * *` | ✅ roda diariamente; última execução `succeeded`. Fluxo validado ponta a ponta (ver D4) |
+| `cleanup-recordings-daily` | `45 3 * * *` | ✅ criado na PR #138; purga validada com dados reais |
 
 **O bug:** `cleanup-lock-conflicts` só aceitava JWT de usuário via `getClaims()`, mas o job envia um bearer opaco de 64 hex lido do Vault. Todo domingo a chamada morria em 401 e a purga de `optimistic_lock_conflicts` com mais de 90 dias **nunca rodou** — embora o ADR-044 e o `docs/edge-functions/README.md` afirmassem o contrário.
 
@@ -83,6 +84,27 @@ POST /functions/v1/cleanup-lock-conflicts   Bearer <service_role>     -> 401 (ma
 Token do Vault confirmado idêntico ao secret da edge (`37c9d2e5…302aafc`), lendo `vault.decrypted_secrets` por join — a lista de secrets da API só devolve hash.
 
 **Lição para os 3 crons restantes:** o código da edge tem que aceitar o bearer que o job manda. Verificado que `dialer-pacing-tick` (`DIALER_CRON_TOKEN`) e `generate-coaching-track` (`COACHING_CRON_TOKEN`) já faziam isso; só o de lock-conflicts estava fora do padrão.
+
+### O gateway valida o JWT antes da edge rodar
+
+Descoberto ao deployar `cleanup-recordings`: um bearer opaco lido do Vault **não é um JWT**, então o gateway responde
+`{"code":"UNAUTHORIZED_INVALID_JWT_FORMAT"}` com 401 **sem nunca invocar a edge**. O código de comparação em tempo constante
+nunca era alcançado. As 5 edges de cron do projeto já estavam com `verify_jwt=false` no dashboard, mas o
+`supabase/config.toml` do repo só declarava `project_id` — qualquer deploy futuro sem `--no-verify-jwt` reintroduziria
+o 401 silencioso. As 5 seções agora estão declaradas no `config.toml`.
+
+### Data Lake validado ponta a ponta
+
+`data-lake-flush` exportou 50 linhas de `call_sessions` em dois runs consecutivos (paginação de 50 por execução),
+gravando `file_path` em `data_lake_exports`. O objeto existe no bucket `data-lake-exports`:
+
+```
+GET /storage/v1/object/data-lake-exports/2026/11/22/call_sessions-9a8fa4f0-….ndjson  ->  200, 18100 bytes, 50 linhas NDJSON
+```
+
+O `rows:0` intermitente é legítimo: a janela é incremental (`created_at > completed_at` do último export `completed`), então
+um run logo após o anterior não encontra novidade. O dataset correto é `call_sessions` (o bucket chama-se `data-lake-exports`,
+não `data-lake`).
 
 ---
 
