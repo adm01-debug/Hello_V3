@@ -138,9 +138,15 @@ lógica localmente dentro do próprio `describe` e asseveram sobre a cópia. Tes
 | useGamificationAndCallbacks.test.ts (318 l.) | ⬛ MORTO_OU_ABANDONADO | `:1` só `vitest`; cálculo de `weekStart` copiado em `:8-11`; describes `:3,185,273` | — | nenhuma | Importar `@/hooks/useGamification` (existe, 308 l., 6 consumidores) |
 | useEdgeFunctions.test.ts (290 l.) | ⬛ MORTO_OU_ABANDONADO | `:1` importa só `vitest`; rate limiter reconstruído com `Map` local em `:6-17`; 9 describes (`:4,62,76,90,121,179,213,248,266`) | — | nenhuma (não toca `supabase/functions/`) | Testar as edge functions reais em `supabase/functions/` |
 | useEdgeFunctionIntegrity.test.ts (265 l.) | ⬛ MORTO_OU_ABANDONADO | `:1` só `vitest`; "Edge Function: check-contact-alerts" em `:3` apenas monta objetos literais (`:5-8`); 7 describes | — | nenhuma | Idem acima — o nome promete integridade de edge function e não abre nenhuma |
-| useBusinessLogic.test.ts (256 l.) | ⬛ MORTO_OU_ABANDONADO | `vi.mock('@/integrations/supabase/client')` em `:4-34` **sem nenhum import de SUT** → mock nunca é injetado em nada; describes locais em `:36,83,112,123,159,200,221` | — | nenhuma (mock morto) | Importar os hooks que o mock pretende servir |
+| useBusinessLogic.test.ts (256 l.) | 🟨 IMPLEMENTADO_PARCIAL | Importa a SUT em `:39` (`await import("@/hooks/useRealtimeHoldAlerts")`) mas so verifica `toBeDefined()` - nao exercita comportamento. Os outros 9 describes (`:36,83,112,123,159,200,221`) testam logica reescrita no proprio arquivo, nao o hook | `useRealtimeHoldAlerts.ts` (so existencia) | nenhuma | Substituir os 9 describes por assercao sobre o hook real |
 | useCallSession.test.ts (128 l.) | ⬛ MORTO_OU_ABANDONADO | `vi.mock` de supabase em `:3-16` sem import do hook; `:20` (`const session = {status:'active'}; expect(session.status).toBe('active')`) | — | nenhuma (mock morto) | Já existe `useCallSession.coverage.test.tsx` que faz o certo — este é redundante e falso |
 | useCoachingAndRecording.test.ts (255 l.) | ⬛ MORTO_OU_ABANDONADO | `:1` só `vitest`; `validStatuses` literal em `:5`; describes `:3,104,210` | — | nenhuma | Importar `@/hooks/useCoaching`, `useCallRecording`, `useConferenceRecording` |
+
+> **Auditoria de 22/11/2026 (confirmada por codigo):** dos 11 testes acima, 10 nao importam
+> nenhum hook de `@/hooks/` (`grep -c "@/hooks/"` = 0) e testam logica reescrita
+> localmente (ex.: `phone.replace(/\D/g,"")`) - passam mesmo se o hook quebrar.
+> `useBusinessLogic.test.ts` e o unico que importa a SUT (`:39`), mas so checa
+> `toBeDefined()`. O achado e valido: os 11 sao testes de fachada.
 
 ### D) Hooks completos, porém sem consumidor em produção (fio solto)
 
