@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: zera os 5 warnings de ESLint extraindo constantes de .tsx (#153)",
    "chore: unifica mesmaString no _shared/constant-time (SSOT) (#152)",
    "docs: registra persistencia provada das edges de escrita (#151)",
    "docs: registra 8 edges de IA provadas ponta a ponta (#150)",
-   "chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)",
-   "fix: troca teste falso de optimistic lock por guarda real do contrato (#148)"
+   "chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)"
   ]
  },
  "pr_template": null,

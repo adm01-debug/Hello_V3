@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1361fd95d2` · branch `main` · 2026-11-22 18:40 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `505cb990ab` · branch `main` · 2026-11-22 18:44 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1047,13 +1047,13 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | HealthFilter | all \| healthy \| warning \| critical | `src/components/admin/extensions/ExtensionsFilters.tsx` |
 | SUPPORTED_TIMEZONES | 'America/Sao_Paulo', 'America/Fortaleza', 'America/Manaus', 'America/Cuiaba', 'America/Bogota', 'America/Buenos_Aires', 'America/Mexico_City', 'America/New_York', 'America/Los_Angeles', 'Europe/Lisbon', 'Europe/Madrid', 'UTC', | `src/components/compliance/calling-hours/types.ts` |
 | DNC_REASONS | { value: 'manual', label: 'Adição Manual' }, { value: 'customer_request', label: 'Solicitação do Cliente' }, { value: 'complaint', label: 'Reclamação' }, { value: 'legal', label: 'Determinação Legal' }, { value: 'opt_out', label: 'Opt-out' }, { value: 'wrong_number', label: 'Número Incorreto' }, { v … | `src/components/compliance/dnc/constants.ts` |
-| ContactSort | recent \| name-asc \| name-desc \| company | `src/components/contacts/ContactFilters.tsx` |
-| ContactSourceFilter | all \| manual \| bitrix24 \| auto | `src/components/contacts/ContactFilters.tsx` |
-| PAGE_SIZE_OPTIONS | 12, 24, 48, 96 | `src/components/contacts/ContactPagination.tsx` |
+| ContactSort | recent \| name-asc \| name-desc \| company | `src/components/contacts/contactFiltersState.ts` |
+| ContactSourceFilter | all \| manual \| bitrix24 \| auto | `src/components/contacts/contactFiltersState.ts` |
+| PAGE_SIZE_OPTIONS | 12, 24, 48, 96 | `src/components/contacts/pagination.ts` |
 | DIAL_KEYS | '1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#' | `src/components/dialer/phone/phone-utils.ts` |
 | ExportFormat | csv \| pdf | `src/components/security-alerts/AlertsHeader.tsx` |
 | ExportScope | all \| critical \| unread | `src/components/security-alerts/AlertsHeader.tsx` |
-| Severity | critical \| warning \| info | `src/components/security-alerts/VirtualTimeline.tsx` |
+| Severity | critical \| warning \| info | `src/components/security-alerts/severity.ts` |
 | VoiceAction | dial \| hangup \| mute \| unmute \| redial \| history \| none | `src/components/voice/voice-intent.ts` |
 | VoicePhase | idle \| listening \| processing \| speaking \| error | `src/components/voice/overlay/usePhaseColors.ts` |
 | UserRole | admin \| supervisor \| agent \| viewer | `src/contexts/AuthContext.tsx` |

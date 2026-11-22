@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "1361fd95d2b8b21ab07768656a1b9a61f2979478",
+  "commit": "505cb990abf2dace4f07b937f4ec7c90f373e920",
   "branch": "main",
-  "data_commit": "2026-11-22T15:39:43-03:00",
+  "data_commit": "2026-11-22T15:44:02-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "505cb99",
+    "data": "2026-11-22",
+    "assunto": "chore: zera os 5 warnings de ESLint extraindo constantes de .tsx (#153)"
+   },
    {
     "sha": "1361fd9",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "71169af",
     "data": "2026-11-22",
     "assunto": "fix: contagem em espera do dashboard usava status inexistente (#129)"
-   },
-   {
-    "sha": "a0096de",
-    "data": "2026-11-22",
-    "assunto": "feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)"
    }
   ],
-  "arquivos_mudados_7d": 871,
+  "arquivos_mudados_7d": 879,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -188,12 +188,12 @@
     "mudancas": 7
    },
    {
-    "pasta": "src/components/supervisor",
+    "pasta": "src/components/contacts",
     "mudancas": 7
    },
    {
-    "pasta": ".github/workflows/contexto.yml",
-    "mudancas": 6
+    "pasta": "src/components/supervisor",
+    "mudancas": 7
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 133
+    "commits": 134
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1636,
-  "arquivos_codigo": 1241,
-  "linhas_codigo": 169386,
+  "arquivos_total": 1639,
+  "arquivos_codigo": 1244,
+  "linhas_codigo": 169401,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 351,
-   "linhas": 42062
+   "arquivos": 354,
+   "linhas": 42076
   },
   "src/contexts": {
    "arquivos": 3,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 350,
-   "linhas": 45356
+   "linhas": 45358
   },
   "src/integrations": {
    "arquivos": 3,
@@ -500,7 +500,7 @@
   },
   "src/lib": {
    "arquivos": 162,
-   "linhas": 20719
+   "linhas": 20720
   },
   "src/main.tsx": {
    "arquivos": 1,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 132,
-   "linhas": 21062
+   "linhas": 21060
   },
   "src/routes": {
    "arquivos": 2,

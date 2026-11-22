@@ -785,6 +785,7 @@
    "src/lib/safe-date.ts"
   ],
   "src/components/contacts/ContactFilters.tsx": [
+   "src/components/contacts/contactFiltersState.ts",
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/checkbox.tsx",
@@ -804,6 +805,7 @@
    "src/lib/safe-date.ts"
   ],
   "src/components/contacts/ContactPagination.tsx": [
+   "src/components/contacts/pagination.ts",
    "src/components/ui/button.tsx",
    "src/components/ui/select.tsx"
   ],
@@ -1760,6 +1762,7 @@
   ],
   "src/components/security-alerts/AlertDetailsDialog.tsx": [
    "src/components/security-alerts/VirtualTimeline.tsx",
+   "src/components/security-alerts/severity.ts",
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/dialog.tsx",
@@ -1796,6 +1799,7 @@
    "src/lib/security-alerts-presets.ts"
   ],
   "src/components/security-alerts/VirtualTimeline.tsx": [
+   "src/components/security-alerts/severity.ts",
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/skeleton.tsx",
@@ -2235,6 +2239,7 @@
   ],
   "src/hooks/useAlertsExport.ts": [
    "src/components/security-alerts/VirtualTimeline.tsx",
+   "src/components/security-alerts/severity.ts",
    "src/integrations/supabase/client.ts",
    "src/lib/security-alerts-export.ts",
    "src/lib/security-alerts-webhook-history.ts",
@@ -2708,6 +2713,7 @@
   ],
   "src/hooks/useSecurityAlertNotifications.ts": [
    "src/components/security-alerts/VirtualTimeline.tsx",
+   "src/components/security-alerts/severity.ts",
    "src/integrations/supabase/client.ts",
    "src/lib/safe-date.ts"
   ],
@@ -3365,6 +3371,8 @@
    "src/components/contacts/ContactGrid.tsx",
    "src/components/contacts/ContactPagination.tsx",
    "src/components/contacts/CreateContactDialog.tsx",
+   "src/components/contacts/contactFiltersState.ts",
+   "src/components/contacts/pagination.ts",
    "src/components/contacts/useBitrixSync.ts",
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
@@ -4252,8 +4260,8 @@
    "src/components/security-alerts/AlertsHeader.tsx",
    "src/components/security-alerts/AlertsTimelineCard.tsx",
    "src/components/security-alerts/KpiStrip.tsx",
-   "src/components/security-alerts/VirtualTimeline.tsx",
    "src/components/security-alerts/WebhookConfigDialog.tsx",
+   "src/components/security-alerts/severity.ts",
    "src/hooks/useAlertPresets.ts",
    "src/hooks/useAlertsExport.ts",
    "src/hooks/useDebouncedSearchParam.ts",

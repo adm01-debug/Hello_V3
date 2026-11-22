@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `1361fd95d2b8b21ab07768656a1b9a61f2979478` (2026-11-22T15:39:43-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `505cb990abf2dace4f07b937f4ec7c90f373e920` (2026-11-22T15:44:02-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1208), SQL (244), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1211), SQL (244), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1636 |
-| arquivos_codigo | 1241 |
-| linhas_codigo | 169386 |
+| arquivos_total | 1639 |
+| arquivos_codigo | 1244 |
+| linhas_codigo | 169401 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -75,7 +75,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/auth | 0 | 0 | 7 | 12 | 2 | 6 |
 | components/calls | 0 | 0 | 27 | 29 | 12 | 19 |
 | components/compliance | 0 | 0 | 17 | 3 | 0 | 7 |
-| components/contacts | 0 | 0 | 11 | 6 | 3 | 6 |
+| components/contacts | 0 | 0 | 13 | 6 | 3 | 6 |
 | components/conversation-intelligence | 0 | 0 | 7 | 4 | 2 | 5 |
 | components/dashboard | 0 | 0 | 13 | 11 | 0 | 5 |
 | components/dialer | 0 | 0 | 16 | 17 | 1 | 8 |
@@ -86,7 +86,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/observability | 0 | 0 | 6 | 0 | 0 | 0 |
 | components/queue-alerts | 0 | 0 | 8 | 1 | 0 | 1 |
 | components/ranking | 0 | 0 | 6 | 1 | 0 | 5 |
-| components/security-alerts | 0 | 0 | 10 | 0 | 0 | 0 |
+| components/security-alerts | 0 | 0 | 11 | 0 | 0 | 0 |
 | components/settings | 0 | 0 | 6 | 8 | 1 | 7 |
 | components/supervisor | 0 | 0 | 11 | 4 | 1 | 6 |
 | components/ui | 0 | 0 | 56 | 7 | 0 | 0 |
@@ -370,8 +370,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9190 nós · 24334 arestas · 739 comunidades · grafo do commit `1361fd95`
-- comunidades maiores: card.tsx (213), badge.tsx (188), react (186), client.ts (177), protectedRoutes.tsx (172), vitest (161), Tabela de funcionalidades (115), cn (110), usePageTitle (104), @tanstack/react-query (99), NetworkDiagnostics.tsx (98), buildCorsHeaders (86)
+- 9193 nós · 24352 arestas · 737 comunidades · grafo do commit `505cb990`
+- comunidades maiores: card.tsx (232), button.tsx (164), vitest (159), traceHeaders (154), usePageTitle (125), usePageTitle.ts (115), client.ts (114), react (108), cn (104), buildCorsHeaders (103), utils.ts (100), safeFormatDatePtBR (92)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `505cb99` chore: zera os 5 warnings de ESLint extraindo constantes de .tsx (#153)
 - 2026-11-22 `1361fd9` chore: unifica mesmaString no _shared/constant-time (SSOT) (#152)
 - 2026-11-22 `8b08ba2` docs: registra persistencia provada das edges de escrita (#151)
 - 2026-11-22 `66b53b9` docs: registra 8 edges de IA provadas ponta a ponta (#150)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `36732f9` feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)
 - 2026-11-22 `d9ee2d8` docs: corrige rotulos defasados de D3/D5 e dos testes Deno (#141)
 - 2026-11-22 `f80b054` docs: fecha D4 e C2 com validacao real em producao (#140)
-- 2026-11-22 `51aa44d` docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

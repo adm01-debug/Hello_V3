@@ -1501,13 +1501,10 @@
   {
    "arquivo": "src/components/contacts/ContactFilters.tsx",
    "exports": [
-    "ContactFilters",
-    "ContactFiltersState",
-    "ContactSort",
-    "ContactSourceFilter"
+    "ContactFilters"
    ],
    "export_default": null,
-   "linhas": 199,
+   "linhas": 184,
    "dominio": "components/contacts",
    "hooks_locais": [],
    "tabelas": [],
@@ -1546,12 +1543,10 @@
   {
    "arquivo": "src/components/contacts/ContactPagination.tsx",
    "exports": [
-    "ContactPagination",
-    "PAGE_SIZE_OPTIONS",
-    "PageSize"
+    "ContactPagination"
    ],
    "export_default": null,
-   "linhas": 109,
+   "linhas": 108,
    "dominio": "components/contacts",
    "hooks_locais": [],
    "tabelas": [],
@@ -3612,7 +3607,7 @@
     "AlertDetailsDialog"
    ],
    "export_default": null,
-   "linhas": 108,
+   "linhas": 110,
    "dominio": "components/security-alerts",
    "hooks_locais": [],
    "tabelas": [],
@@ -3710,16 +3705,15 @@
    "arquivo": "src/components/security-alerts/VirtualTimeline.tsx",
    "exports": [
     "SecurityNotification",
-    "Severity",
     "VirtualTimeline"
    ],
    "export_default": null,
-   "linhas": 252,
+   "linhas": 242,
    "dominio": "components/security-alerts",
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 5,
+   "usado_por": 4,
    "orfao": false
   },
   {
@@ -5896,7 +5890,7 @@
     "Contacts"
    ],
    "export_default": "Contacts",
-   "linhas": 345,
+   "linhas": 343,
    "dominio": "pages",
    "hooks_locais": [
     "useBitrixSync",

@@ -3606,7 +3606,7 @@
    "hooks_exportados": [
     "useSecurityAlertNotifications"
    ],
-   "linhas": 228,
+   "linhas": 230,
    "dominio": "hooks",
    "tabelas": [
     "notifications"
