@@ -78,7 +78,7 @@ Deno.serve(async (req) => {
             response_format: { type: 'json_object' },
           }),
         },
-        { retry: { retries: 2, baseMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } },
+        { retry: { retries: 2, baseDelayMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } },
       );
     } catch (err) {
       console.error('translate-summary resilient error', err);

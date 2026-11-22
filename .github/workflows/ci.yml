@@ -77,6 +77,22 @@ jobs:
           export PATH="$DENO_INSTALL/bin:$PATH"
           deno test -A supabase/functions/
 
+      # `deno test` nao faz typecheck. Sem este passo, erro de tipo em edge
+      # function (ex.: propriedade inexistente em opcao de retry) passa o CI
+      # e so quebra em producao.
+      - name: Edge Function Type-check (Deno)
+        run: |
+          curl -fsSL https://deno.land/install.sh | sh
+          export DENO_INSTALL="$HOME/.deno"
+          export PATH="$DENO_INSTALL/bin:$PATH"
+          status=0
+          for f in supabase/functions/*/index.ts supabase/functions/_shared/*.ts; do
+            case "$f" in *__tests__*|*.test.ts) continue;; esac
+            deno check --quiet "$f" || { echo "::error file=$f::falha no type-check Deno"; status=1; }
+          done
+          rm -f deno.lock
+          exit $status
+
 
       - name: Build
         run: bun run build

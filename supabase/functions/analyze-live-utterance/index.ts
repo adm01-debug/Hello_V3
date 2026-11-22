@@ -204,7 +204,7 @@ Retorne intent="none" se nada relevante for detectado.`;
         .map((s) => s.metadata!.objection_id as string);
       if (objIds.length > 0) {
         for (const oid of objIds) {
-          await adminClient.rpc('check_rate_limit', { _ip_address: 'noop', _endpoint: 'noop' }).catch(() => {});
+          try { await adminClient.rpc('check_rate_limit', { _ip_address: 'noop', _endpoint: 'noop' }); } catch { /* best-effort */ }
           await adminClient.from('objection_library')
             .update({ times_suggested: (signals.length) }) // best-effort; uso real conta no front
             .eq('id', oid);

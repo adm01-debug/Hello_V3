@@ -80,7 +80,7 @@ serve(async (req) => {
         'elevenlabs:stt',
         'https://api.elevenlabs.io/v1/speech-to-text',
         { method: 'POST', headers: { 'xi-api-key': ELEVENLABS_API_KEY }, body: formData },
-        { retry: { retries: 2, baseMs: 500 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } },
+        { retry: { retries: 2, baseDelayMs: 500 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } },
       );
     } catch (err) {
       console.error('ElevenLabs resilient error:', err);
