@@ -61,6 +61,22 @@ Origem: `docs/audits/pendencias-2026-07.md`. Reverificado no código **e no banc
 
 **Veredito:** dos 13 itens, 10 estão concluídos e medidos, 2 são decisões de negócio fechadas nesta auditoria (B1 = adiar por volume; C3 = não fazer, preserva rastreabilidade) e 1 está concluído (E2). **Nenhum item aberto bloqueia operação nem segurança em produção.** O item A1, antes tratado como risco material, foi refutado por medição direta.
 
+### 3.1 Achado de 22/11: o mesmo "Nível de Serviço" tem 4 implementações e 2 limiares
+
+A métrica **Nível de Serviço** (percentual de chamadas atendidas rápido) é calculada em **4 lugares independentes**, com regra diferente em cada um:
+
+| Local | Limiar | Comparação | Janela |
+|---|---|---|---|
+| `src/hooks/useQueueMetrics.ts:106` | **20 s** | `< 20` | última 1 h |
+| `supabase/functions/check-goals/index.ts:118` | **20 s** | `< 20` | hoje |
+| `supabase/functions/check-queue-metrics/index.ts:110` | **30 s** | `<= 30` | última 1 h |
+| `src/hooks/useSupervisorPanel.ts:127` | **30 s** | `<= 30` | hoje |
+
+**Efeito no negócio:** duas telas do produto mostram percentuais diferentes para a mesma pergunta ("quantas chamadas atendemos dentro do alvo?"), e o alerta automático dispara num limiar enquanto o dashboard do supervisor usa outro. Não há tabela de configuração do alvo — `queue_metrics_settings` guarda apenas o *limite de alerta* do percentual (`service_level_warning`/`critical`), não o tempo-alvo que define o percentual. `sla_policies` (`first_response_minutes`) é de outro domínio (omnichannel) e não é usada por nenhum desses 4 cálculos.
+
+**Não corrigido nesta rodada por ser decisão de negócio, não bug:** é preciso definir **qual é o alvo oficial** (20 s ou 30 s) e **onde ele mora** (constante compartilhada ou coluna em `queue_metrics_settings`). O `hold_time_seconds` e o vocabulário de status (`active`/`ringing`/`on_hold`) já foram corrigidos na PR #129.
+
+
 ---
 
 ## 4. Plano da "Onda 39" (`.lovable/plan.md`) × medição
@@ -70,7 +86,7 @@ Origem: `docs/audits/pendencias-2026-07.md`. Reverificado no código **e no banc
 | Eliminar hooks chamados fora do topo do componente (8 páginas listadas) | 🟩 **8 de 8 corrigidas.** A ocorrência em `TopicDetection.tsx` era falso positivo: `usePageTitle` está em `:47`, no topo do componente, e `TrendIcon` (`:99`) é componente puro sem hooks. Varredura por profundidade de chaves em todo o `src/`: **zero violações** de regras de hooks. |
 | Substituir testes sintéticos por testes reais | 🟦 **Não realizado.** 35 de 268 arquivos de teste (13%) ainda não importam nada do projeto. |
 | Testes Deno reais das Edge Functions críticas | 🟨 Parcial: 33 arquivos de teste Deno existem; `bitrix-api` continua sem teste dedicado, como o próprio plano apontou. Não executados (Deno indisponível). |
-| "Suíte verde sem falhas relevantes" (critério de aceite) | 🟩 **Atingido.** `vitest run`: **3265/3265 testes, 0 falhas**; `tsc --noEmit` limpo; CI da main em `success`. Os 2 arquivos que apareciam como falha só exigem `VITE_SUPABASE_URL`/`VITE_SUPABASE_PUBLISHABLE_KEY` no ambiente — com elas, 5/5 passam. |
+| "Suíte verde sem falhas relevantes" (critério de aceite) | 🟩 **Atingido.** `vitest run`: **3292/3292 testes, 274 arquivos, 0 falhas** (22/11, após PRs #125–#129); `tsc --noEmit` limpo; CI da main em `success`. Os 2 arquivos que apareciam como falha só exigem `VITE_SUPABASE_URL`/`VITE_SUPABASE_PUBLISHABLE_KEY` no ambiente — com elas, 5/5 passam. O PBT `agent-assist.pbt.test.ts` (antes intermitente com seed 1434598619) foi corrigido na PR #122 e revalidado em **20 execuções consecutivas sem falha**. |
 | "Sistema em estado confiável para produção" | 🟨 **Parcial.** R1–R5 fechados: RLS sem `USING(true)`, 0 funções `SECURITY DEFINER` com UUID acessíveis por `anon` (PRs #107/#108), lock conflicts auditados e purgados, InitPlan nas 12 policies. Restam itens de **decisão de negócio**, não de correção: B1 (`pg_partman` — volume não justifica, maior tabela 1664 kB) e C3 (squash de 207 migrations). |
 
 ---
