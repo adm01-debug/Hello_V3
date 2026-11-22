@@ -4,12 +4,11 @@ CREATE OR REPLACE FUNCTION public.has_role(_user_id uuid, _role app_role)
  STABLE SECURITY DEFINER
  SET search_path TO 'public'
 AS $function$
-  SELECT EXISTS (
-    SELECT 1
-    FROM public.user_roles
-    WHERE user_id = _user_id
-      AND role = _role
-      AND is_active = true
-      AND (expires_at IS NULL OR expires_at > now())
-  )
-$function$
+        SELECT EXISTS (
+          SELECT 1 FROM public.user_roles
+          WHERE user_id = _user_id
+            AND role = _role
+            AND coalesce(is_active, true)
+            AND (expires_at IS NULL OR expires_at > now())
+        );
+      $function$

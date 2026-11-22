@@ -2,6 +2,7 @@
 
 | extensão | versão instalada | versão disponível | schema |
 |---|---|---|---|
+| dblink | 1.2 | 1.2 | public |
 | pg_cron | 1.6.4 | 1.6.4 | pg_catalog |
 | pg_net | 0.20.4 | 0.20.4 | extensions |
 | pg_stat_statements | 1.11 | 1.11 | extensions |

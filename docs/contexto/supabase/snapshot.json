@@ -24,6 +24,45 @@
     "columns": [
       {
         "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "err",
+        "nullable": true,
+        "position": 1,
+        "schema": "public",
+        "table": "__dbg",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "host",
+        "nullable": true,
+        "position": 1,
+        "schema": "public",
+        "table": "__dsn_probe",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "res",
+        "nullable": true,
+        "position": 2,
+        "schema": "public",
+        "table": "__dsn_probe",
+        "type": "text"
+      },
+      {
+        "comment": null,
         "default": "gen_random_uuid()",
         "generated": null,
         "identity": null,
@@ -21135,7 +21174,7 @@
         "type": "text"
       },
       {
-        "comment": null,
+        "comment": "Espelho de exibicao. NAO use para autorizacao: use public.user_roles.role via is_admin_or_supervisor().",
         "default": "'agent'::text",
         "generated": null,
         "identity": null,
@@ -30590,7 +30629,7 @@
           "role"
         ],
         "deferrable": false,
-        "definition": "CHECK (role = ANY (ARRAY['agent'::text, 'supervisor'::text, 'admin'::text]))",
+        "definition": "CHECK (role = ANY (ARRAY['agent'::text, 'supervisor'::text, 'admin'::text, 'viewer'::text]))",
         "name": "user_profiles_role_check",
         "on_delete": null,
         "on_update": null,
@@ -31286,10 +31325,25 @@
           "jobname": "dialer-pacing-tick",
           "schedule": "* * * * *",
           "username": "postgres"
+        },
+        {
+          "active": true,
+          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/cleanup-lock-conflicts',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_lock_conflicts_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
+          "database": "postgres",
+          "jobid": 13,
+          "jobname": "cleanup-lock-conflicts-weekly",
+          "schedule": "0 3 * * 0",
+          "username": "postgres"
         }
       ]
     },
     "extensions": [
+      {
+        "available_version": "1.2",
+        "name": "dblink",
+        "schema": "public",
+        "version": "1.2"
+      },
       {
         "available_version": "1.6.4",
         "name": "pg_cron",
@@ -32282,12 +32336,12 @@
           ],
           "views": []
         },
-        "comment": null,
+        "comment": "Trigger BEFORE UPDATE de locking otimista. Se NEW.version divergir de OLD.version, grava o conflito em optimistic_lock_conflicts via dblink (conexao separada, sobrevive ao rollback do RAISE) com fallback local, e lanca OPTIMISTIC_LOCK_CONFLICT.",
         "config": [
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "7c3569f1090e59e2",
+        "definition_sha": "239d9871424725f5",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": true,
@@ -32786,7 +32840,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "f39bb082bf435927",
+        "definition_sha": "eeea3780f90560c1",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": false,
@@ -33133,7 +33187,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "10185c763dc5bd58",
+        "definition_sha": "607e7825574fb6a3",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": false,
@@ -33356,7 +33410,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "b691c4a66b54eb03",
+        "definition_sha": "5c3f7a52c19b8f5e",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": false,
@@ -33466,7 +33520,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "e71419d3f91f2a24",
+        "definition_sha": "0763108a8ba40fed",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": false,
@@ -33620,7 +33674,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "f9001f62ef897d5c",
+        "definition_sha": "d2418e382c98b4fe",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": false,
@@ -33745,7 +33799,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "b7c87396f68c3ff1",
+        "definition_sha": "9a7ca13df741a85e",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": false,
@@ -33784,7 +33838,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "7f34f6ff3a21a0f3",
+        "definition_sha": "b385febd20afc72f",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": false,
@@ -34036,7 +34090,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "796a1073a0daa7e4",
+        "definition_sha": "2d3866eda5337589",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": false,
@@ -34075,7 +34129,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "a333cee796500a56",
+        "definition_sha": "25bc0d83a0e8acdf",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": false,
@@ -34116,7 +34170,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "8a2a6a82edc28a30",
+        "definition_sha": "9f24f65c2e756859",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": true,
@@ -34157,7 +34211,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "daff4a43ea492d01",
+        "definition_sha": "58adac0d4cad0749",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": true,
@@ -34198,7 +34252,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "61e5752082425eac",
+        "definition_sha": "fb35229717c1962d",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": true,
@@ -34239,7 +34293,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "c334487d4a8edc3a",
+        "definition_sha": "5527a3c60ef5fdcb",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": true,
@@ -34284,7 +34338,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "b9dd74d74cd0c38f",
+        "definition_sha": "5a22f8c825d6eb93",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": true,
@@ -34624,6 +34678,38 @@
         "name": "snapshot_deals_daily",
         "owner": "postgres",
         "returns": "jsonb",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "volatile"
+      },
+      {
+        "args": "",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [],
+          "db": [],
+          "triggers": [
+            "public.user_roles.trg_sync_profile_role"
+          ],
+          "views": []
+        },
+        "comment": "Mantem user_profiles.role (espelho de exibicao) alinhado a user_roles (fonte de verdade).",
+        "config": [
+          "search_path=public"
+        ],
+        "definition": null,
+        "definition_sha": "dd8dd798d92ceabb",
+        "execute_api_roles": "anon, authenticated, service_role",
+        "execute_public": true,
+        "is_trigger_fn": true,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "sync_profile_role_from_user_roles",
+        "owner": "postgres",
+        "returns": "trigger",
         "schema": "public",
         "security_definer": true,
         "strict": false,
@@ -35636,6 +35722,42 @@
         }
       ],
       "tables": [
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "__dbg"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "__dbg"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "__dbg"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "__dsn_probe"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "__dsn_probe"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "__dsn_probe"
+        },
         {
           "grantee": "anon",
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
@@ -37493,6 +37615,12 @@
         {
           "grantee": "authenticated",
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "optimistic_lock_conflicts"
+        },
+        {
+          "grantee": "optimistic_lock_writer",
+          "privileges": "INSERT",
           "schema": "public",
           "table": "optimistic_lock_conflicts"
         },
@@ -46320,6 +46448,30 @@
         "severity": "ALTA"
       },
       {
+        "code": "no_primary_key",
+        "detail": "Sem chave primária: Realtime/replicação e updates por linha ficam frágeis.",
+        "object": "public.__dbg",
+        "severity": "MÉDIA"
+      },
+      {
+        "code": "no_primary_key",
+        "detail": "Sem chave primária: Realtime/replicação e updates por linha ficam frágeis.",
+        "object": "public.__dsn_probe",
+        "severity": "MÉDIA"
+      },
+      {
+        "code": "rls_no_policies",
+        "detail": "RLS ligado sem policies: inacessível via API (só service_role).",
+        "object": "public.__dbg",
+        "severity": "MÉDIA"
+      },
+      {
+        "code": "rls_no_policies",
+        "detail": "RLS ligado sem policies: inacessível via API (só service_role).",
+        "object": "public.__dsn_probe",
+        "severity": "MÉDIA"
+      },
+      {
         "code": "rls_no_policies",
         "detail": "RLS ligado sem policies: inacessível via API (só service_role).",
         "object": "public.migration_rollbacks",
@@ -46330,6 +46482,12 @@
         "detail": "RLS ligado sem policies: inacessível via API (só service_role).",
         "object": "public.schema_migrations",
         "severity": "MÉDIA"
+      },
+      {
+        "code": "extension_in_public",
+        "detail": "Extensão instalada no schema public (recomendado: schema extensions).",
+        "object": "dblink",
+        "severity": "BAIXA"
       },
       {
         "code": "extension_in_public",
@@ -48629,7 +48787,7 @@
         ],
         "schema": "public",
         "table": "conversation_messages",
-        "using": "((EXISTS ( SELECT 1\n   FROM conversations c\n  WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = ( SELECT user_profiles.full_name\n           FROM user_profiles\n          WHERE (user_profiles.id = ( SELECT auth.uid() AS uid))))))) OR (EXISTS ( SELECT 1\n   FROM user_profiles\n  WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = ANY (ARRAY['admin'::text, 'supervisor'::text]))))))",
+        "using": "((EXISTS ( SELECT 1\n   FROM conversations c\n  WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = ( SELECT up.full_name\n           FROM user_profiles up\n          WHERE (up.id = ( SELECT auth.uid() AS uid))))))) OR is_admin_or_supervisor())",
         "with_check": null
       },
       {
@@ -48689,7 +48847,7 @@
         ],
         "schema": "public",
         "table": "conversations",
-        "using": "((( SELECT auth.uid() AS uid) = id) OR (EXISTS ( SELECT 1\n   FROM user_profiles\n  WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = ANY (ARRAY['admin'::text, 'supervisor'::text]))))))",
+        "using": "((( SELECT auth.uid() AS uid) = id) OR is_admin_or_supervisor())",
         "with_check": null
       },
       {
@@ -50025,6 +50183,18 @@
         "with_check": null
       },
       {
+        "cmd": "INSERT",
+        "name": "olc_writer_insert",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "optimistic_lock_writer"
+        ],
+        "schema": "public",
+        "table": "optimistic_lock_conflicts",
+        "using": null,
+        "with_check": "((table_name IS NOT NULL) AND (record_id IS NOT NULL) AND (attempted_at IS NOT NULL))"
+      },
+      {
         "cmd": "DELETE",
         "name": "parked_calls_delete_admin",
         "permissive": "PERMISSIVE",
@@ -50513,7 +50683,7 @@
         ],
         "schema": "public",
         "table": "rls_audit_logs",
-        "using": "(EXISTS ( SELECT 1\n   FROM user_profiles\n  WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = 'admin'::text))))",
+        "using": "is_admin_or_supervisor()",
         "with_check": null
       },
       {
@@ -51965,20 +52135,8 @@
         ],
         "schema": "public",
         "table": "webhook_secrets",
-        "using": "(EXISTS ( SELECT 1\n   FROM user_profiles\n  WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = 'admin'::text))))",
-        "with_check": null
-      },
-      {
-        "cmd": "ALL",
-        "name": "Apenas administradores podem gerenciar segredos",
-        "permissive": "PERMISSIVE",
-        "roles": [
-          "public"
-        ],
-        "schema": "public",
-        "table": "webhook_secrets",
-        "using": "(EXISTS ( SELECT 1\n   FROM user_profiles\n  WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = 'admin'::text))))",
-        "with_check": null
+        "using": "is_admin_or_supervisor()",
+        "with_check": "is_admin_or_supervisor()"
       },
       {
         "cmd": "DELETE",
@@ -52157,6 +52315,18 @@
         "conn_limit": -1,
         "create_db": false,
         "create_role": false,
+        "inherit": false,
+        "login": true,
+        "member_of": [],
+        "name": "optimistic_lock_writer",
+        "superuser": false
+      },
+      {
+        "bypass_rls": false,
+        "config": null,
+        "conn_limit": -1,
+        "create_db": false,
+        "create_role": false,
         "inherit": true,
         "login": true,
         "member_of": [],
@@ -52177,6 +52347,7 @@
           "anon",
           "authenticated",
           "authenticator",
+          "optimistic_lock_writer",
           "pg_create_subscription",
           "pg_monitor",
           "pg_read_all_data",
@@ -52407,6 +52578,36 @@
       }
     ],
     "tables": [
+      {
+        "comment": null,
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
+        "name": "__dbg",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
+        "comment": null,
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
+        "name": "__dsn_probe",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
       {
         "comment": null,
         "from_extension": false,
@@ -55952,6 +56153,17 @@
         "timing": "AFTER"
       },
       {
+        "definition": "CREATE TRIGGER trg_sync_profile_role AFTER INSERT OR DELETE OR UPDATE ON user_roles FOR EACH ROW EXECUTE FUNCTION sync_profile_role_from_user_roles()",
+        "events": "INSERT OR DELETE OR UPDATE",
+        "function": "public.sync_profile_role_from_user_roles",
+        "level": "ROW",
+        "name": "trg_sync_profile_role",
+        "schema": "public",
+        "status": "enabled",
+        "table": "user_roles",
+        "timing": "AFTER"
+      },
+      {
         "definition": "CREATE TRIGGER update_user_roles_updated_at BEFORE UPDATE ON user_roles FOR EACH ROW EXECUTE FUNCTION update_security_updated_at()",
         "events": "UPDATE",
         "function": "public.update_security_updated_at",
@@ -56174,6 +56386,13 @@
     ],
     "types": [
       {
+        "definition": "position integer, colname text",
+        "kind": "composite",
+        "name": "dblink_pkey_results",
+        "schema": "public",
+        "values": null
+      },
+      {
         "definition": null,
         "kind": "enum",
         "name": "app_role",
@@ -56201,6 +56420,11 @@
     ],
     "vault": [
       {
+        "created_at": "2026-11-22T02:39:26.437636+00:00",
+        "description": "Token do cron semanal de purga de optimistic_lock_conflicts (>90 dias)",
+        "name": "cleanup_lock_conflicts_cron_token"
+      },
+      {
         "created_at": "2026-11-22T00:52:23.452551+00:00",
         "description": "Token do cron de coaching (D4)",
         "name": "coaching_cron_token"
@@ -56209,6 +56433,11 @@
         "created_at": "2026-11-22T00:52:23.452551+00:00",
         "description": "Token do cron do discador preditivo",
         "name": "dialer_cron_token"
+      },
+      {
+        "created_at": "2026-11-22T02:36:16.535732+00:00",
+        "description": "Role de privilegio minimo usado pelo trigger enforce_optimistic_lock via dblink",
+        "name": "optimistic_lock_dblink_dsn"
       }
     ],
     "views": [

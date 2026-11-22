@@ -173,12 +173,12 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.conversation_messages | Admin/Supervisor view all messages | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
 | public.conversation_messages | Agents insert in assigned conversations | INSERT | PERMISSIVE | public |  | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = get_user_agent_name())))))` |
 | public.conversation_messages | Agents view messages from assigned convs | SELECT | PERMISSIVE | public | `(EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = get_user_agent_name()))))` |  |
-| public.conversation_messages | Users can view messages of their conversations | SELECT | PERMISSIVE | public | `((EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = ( SELECT user_profiles.full_name            FROM user_profiles           WHERE (user_profiles.id = ( SELECT auth.uid() AS uid))))))) OR (EXISTS ( SELECT 1    FROM user_profiles   WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = ANY (ARRAY['admin'::text, 'supervisor'::text]))))))` |  |
+| public.conversation_messages | Users can view messages of their conversations | SELECT | PERMISSIVE | public | `((EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = ( SELECT up.full_name            FROM user_profiles up           WHERE (up.id = ( SELECT auth.uid() AS uid))))))) OR is_admin_or_supervisor())` |  |
 | public.conversations | Admin/Supervisor manage conversations | ALL | PERMISSIVE | public | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.conversations | Admin/Supervisor view all conversations | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
 | public.conversations | Agents update assigned conversations | UPDATE | PERMISSIVE | public | `(assigned_agent_name = get_user_agent_name())` | `(assigned_agent_name = get_user_agent_name())` |
 | public.conversations | Agents view assigned conversations | SELECT | PERMISSIVE | public | `(assigned_agent_name = get_user_agent_name())` |  |
-| public.conversations | Users can view their own conversations | SELECT | PERMISSIVE | public | `((( SELECT auth.uid() AS uid) = id) OR (EXISTS ( SELECT 1    FROM user_profiles   WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = ANY (ARRAY['admin'::text, 'supervisor'::text]))))))` |  |
+| public.conversations | Users can view their own conversations | SELECT | PERMISSIVE | public | `((( SELECT auth.uid() AS uid) = id) OR is_admin_or_supervisor())` |  |
 | public.crm_field_suggestions | Admin supervisor insert crm suggestions | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
 | public.crm_field_suggestions | Admin supervisor read crm suggestions | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.crm_field_suggestions | Admin supervisor update crm suggestions | UPDATE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
@@ -290,6 +290,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.objection_library | Admin/supervisor gerenciam biblioteca de objeções | ALL | PERMISSIVE | public | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.objection_library | Todos autenticados leem biblioteca de objeções | SELECT | PERMISSIVE | public | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.optimistic_lock_conflicts | olc_admin_supervisor_select | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
+| public.optimistic_lock_conflicts | olc_writer_insert | INSERT | PERMISSIVE | optimistic_lock_writer |  | `((table_name IS NOT NULL) AND (record_id IS NOT NULL) AND (attempted_at IS NOT NULL))` |
 | public.parked_calls | parked_calls_delete_admin | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.parked_calls | parked_calls_insert_self | INSERT | PERMISSIVE | authenticated |  | `((parked_by = auth.uid()) AND (status = 'parked'::text))` |
 | public.parked_calls | parked_calls_select_auth | SELECT | PERMISSIVE | authenticated | `true` |  |
@@ -330,7 +331,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.ring_group_members | ring_group_members_write_staff | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.ring_groups | ring_groups_select_authenticated | SELECT | PERMISSIVE | authenticated | `true` |  |
 | public.ring_groups | ring_groups_write_staff | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
-| public.rls_audit_logs | Admins can view RLS audit logs | SELECT | PERMISSIVE | authenticated | `(EXISTS ( SELECT 1    FROM user_profiles   WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = 'admin'::text))))` |  |
+| public.rls_audit_logs | Admins can view RLS audit logs | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.role_permissions | Admins can manage role_permissions | ALL | PERMISSIVE | authenticated | `has_role(( SELECT auth.uid() AS uid), 'admin'::app_role)` |  |
 | public.role_permissions | Authenticated users can view role_permissions | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.routing_rules | Admin manage routing rules | ALL | PERMISSIVE | public | `is_admin_user(( SELECT auth.uid() AS uid))` | `is_admin_user(( SELECT auth.uid() AS uid))` |
@@ -451,8 +452,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.webauthn_challenges | Users can read own challenges | SELECT | PERMISSIVE | authenticated | `(user_id = ( SELECT auth.uid() AS uid))` |  |
 | public.webhook_flush_metrics | admins_supervisors_read_flush_metrics | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.webhook_flush_metrics | authenticated_insert_own_flush_metrics | INSERT | PERMISSIVE | authenticated |  | `(( SELECT auth.uid() AS uid) = user_id)` |
-| public.webhook_secrets | Admins can manage webhook secrets | ALL | PERMISSIVE | authenticated | `(EXISTS ( SELECT 1    FROM user_profiles   WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = 'admin'::text))))` |  |
-| public.webhook_secrets | Apenas administradores podem gerenciar segredos | ALL | PERMISSIVE | public | `(EXISTS ( SELECT 1    FROM user_profiles   WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = 'admin'::text))))` |  |
+| public.webhook_secrets | Admins can manage webhook secrets | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.whisper_messages | Admins can delete whisper_messages | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.whisper_messages | Agents can update own whisper_messages | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
 | public.whisper_messages | Role-based view whisper_messages | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |

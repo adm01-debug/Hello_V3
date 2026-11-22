@@ -6,8 +6,13 @@ Verificações objetivas feitas no catálogo. Um agente deve ler isto antes de p
 |---|---|---|---|
 | ALTA | view_security_definer | public.index_usage | View em public sem security_invoker: executa como owner e ignora RLS das tabelas base. |
 | ALTA | view_security_definer | public.unused_indexes | View em public sem security_invoker: executa como owner e ignora RLS das tabelas base. |
+| MÉDIA | no_primary_key | public.__dbg | Sem chave primária: Realtime/replicação e updates por linha ficam frágeis. |
+| MÉDIA | no_primary_key | public.__dsn_probe | Sem chave primária: Realtime/replicação e updates por linha ficam frágeis. |
+| MÉDIA | rls_no_policies | public.__dbg | RLS ligado sem policies: inacessível via API (só service_role). |
+| MÉDIA | rls_no_policies | public.__dsn_probe | RLS ligado sem policies: inacessível via API (só service_role). |
 | MÉDIA | rls_no_policies | public.migration_rollbacks | RLS ligado sem policies: inacessível via API (só service_role). |
 | MÉDIA | rls_no_policies | public.schema_migrations | RLS ligado sem policies: inacessível via API (só service_role). |
+| BAIXA | extension_in_public | dblink | Extensão instalada no schema public (recomendado: schema extensions). |
 | BAIXA | extension_in_public | pg_trgm | Extensão instalada no schema public (recomendado: schema extensions). |
 | BAIXA | extension_in_public | vector | Extensão instalada no schema public (recomendado: schema extensions). |
 | BAIXA | fk_without_index | public.call_park_orbits.call_park_orbits_moh_prompt_id_fkey | FK sem índice nas colunas ['moh_prompt_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |

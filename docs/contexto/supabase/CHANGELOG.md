@@ -2,6 +2,27 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-22 03:16 UTC
+
+- **colunas** adicionado (3): `public.__dbg.err`, `public.__dsn_probe.host`, `public.__dsn_probe.res`
+- **colunas** alterado (1): `public.user_profiles.role`
+- **constraints** alterado (1): `public.user_profiles.user_profiles_role_check`
+- **cron jobs** adicionado (1): `13:cleanup-lock-conflicts-weekly`
+- **extensions** adicionado (1): `dblink`
+- **functions** adicionado (1): `public.sync_profile_role_from_user_roles()`
+- **functions** alterado (15): `public.enforce_optimistic_lock()`, `public.get_profile_role(_user_id uuid)`, `public.get_user_role()`, `public.has_role(_user_id uuid, _role app_role)`, `public.is_admin()`, `public.is_admin_or_supervisor()`, `public.is_admin_user(_user_id uuid)`, `public.is_supervisor()`, `public.notify_bloat_hotspots()`, `public.notify_idle_indexes()`, `public.notify_lock_conflict_hotspot()`, `public.notify_suspicious_index_drop_activity()`, `public.notify_trunk_offline()`, `public.notify_webhook_failure_spike()`, `public.prevent_role_escalation()`
+- **grants** adicionado (7): `public.__dbg:anon`, `public.__dbg:authenticated`, `public.__dbg:service_role`, `public.__dsn_probe:anon`, `public.__dsn_probe:authenticated`, `public.__dsn_probe:service_role`, `public.optimistic_lock_conflicts:optimistic_lock_writer`
+- **lints** adicionado (5): `extension_in_public:dblink`, `no_primary_key:public.__dbg`, `no_primary_key:public.__dsn_probe`, `rls_no_policies:public.__dbg`, `rls_no_policies:public.__dsn_probe`
+- **policies (RLS)** adicionado (1): `public.optimistic_lock_conflicts.olc_writer_insert`
+- **policies (RLS)** removido (1): `public.webhook_secrets.Apenas administradores podem gerenciar segredos`
+- **policies (RLS)** alterado (4): `public.conversation_messages.Users can view messages of their conversations`, `public.conversations.Users can view their own conversations`, `public.rls_audit_logs.Admins can view RLS audit logs`, `public.webhook_secrets.Admins can manage webhook secrets`
+- **roles** adicionado (1): `optimistic_lock_writer`
+- **roles** alterado (1): `postgres`
+- **tabelas** adicionado (2): `public.__dbg`, `public.__dsn_probe`
+- **triggers** adicionado (1): `public.user_roles.trg_sync_profile_role`
+- **types/enums** adicionado (1): `public.dblink_pkey_results`
+- **vault secrets (nomes)** adicionado (2): `cleanup_lock_conflicts_cron_token`, `optimistic_lock_dblink_dsn`
+
 ## 2026-11-22 02:18 UTC
 
 - **functions** alterado (1): `public.is_admin_user(_user_id uuid)`

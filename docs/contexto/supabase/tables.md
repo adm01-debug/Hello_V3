@@ -4,6 +4,8 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 
 | tabela | tipo | RLS | policies | colunas | realtime | comentário |
 |---|---|---|---|---|---|---|
+| [public.__dbg](tables/public/dbg.md) | table | sim | 0 | 1 | não |  |
+| [public.__dsn_probe](tables/public/dsn_probe.md) | table | sim | 0 | 2 | não |  |
 | [public.account_journey_history](tables/public/account_journey_history.md) | table | sim | 3 | 8 | não |  |
 | [public.account_lockouts](tables/public/account_lockouts.md) | table | sim | 4 | 7 | não |  |
 | [public.accounts](tables/public/accounts.md) | table | sim | 3 | 22 | não |  |
@@ -106,7 +108,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.notifications](tables/public/notifications.md) | table | sim | 4 | 18 | não |  |
 | [public.number_porting_requests](tables/public/number_porting_requests.md) | table | sim | 2 | 14 | não |  |
 | [public.objection_library](tables/public/objection_library.md) | table | sim | 2 | 16 | não |  |
-| [public.optimistic_lock_conflicts](tables/public/optimistic_lock_conflicts.md) | table | sim | 1 | 7 | não |  |
+| [public.optimistic_lock_conflicts](tables/public/optimistic_lock_conflicts.md) | table | sim | 2 | 7 | não |  |
 | [public.parked_calls](tables/public/parked_calls.md) | table | sim | 4 | 17 | não |  |
 | [public.password_reset_requests](tables/public/password_reset_requests.md) | table | sim | 3 | 13 | não |  |
 | [public.password_reset_tokens](tables/public/password_reset_tokens.md) | table | sim | 4 | 7 | não |  |
@@ -167,5 +169,5 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.voip_trunks](tables/public/voip_trunks.md) | table | sim | 5 | 23 | não |  |
 | [public.webauthn_challenges](tables/public/webauthn_challenges.md) | table | sim | 5 | 6 | não |  |
 | [public.webhook_flush_metrics](tables/public/webhook_flush_metrics.md) | table | sim | 2 | 10 | não |  |
-| [public.webhook_secrets](tables/public/webhook_secrets.md) | table | sim | 2 | 5 | não |  |
+| [public.webhook_secrets](tables/public/webhook_secrets.md) | table | sim | 1 | 5 | não |  |
 | [public.whisper_messages](tables/public/whisper_messages.md) | table | sim | 4 | 7 | não |  |

@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "4c76ea5c701c9336e94ee55dcc9ba6d992298361",
+  "sha": "4a44ddcd33a60e85dd96b472c277ad09b735ed64",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 02:31 UTC",
+  "generated_at": "2026-11-22 03:15 UTC",
   "files_total": 1634,
   "code_files": 1437,
   "code_lines": 181428
@@ -120834,10 +120834,25 @@
   }
  },
  "git": {
-  "sha": "4c76ea5c701c9336e94ee55dcc9ba6d992298361",
+  "sha": "4a44ddcd33a60e85dd96b472c277ad09b735ed64",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4a44ddc",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)",
+    "files": [
+     "ESTADO_ATUAL.md",
+     "docs/adr/043-onda-29-observabilidade-conflitos.md",
+     "docs/adr/044-onda-30-cron-hotspot-alerts.md",
+     "docs/agentes/edge-functions.md",
+     "docs/edge-functions/README.md",
+     "docs/estado/edge-functions-parte1.md",
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "4c76ea5",
     "date": "2026-11-21",
@@ -121313,15 +121328,6 @@
     "files": [
      "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
     ]
-   },
-   {
-    "sha": "468450f",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "chore(docs): marca PermissionGate como wireado (PR #61) (#73)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
    }
   ],
   "hot_files": [
@@ -121331,7 +121337,7 @@
    ],
    [
     "docs/edge-functions/README.md",
-    6
+    7
    ],
    [
     "src/components/layout/AppSidebar.tsx",
@@ -121386,23 +121392,23 @@
     2
    ],
    [
-    "src/components/contacts/ContactAlertsDropdown.tsx",
+    "ESTADO_ATUAL.md",
     1
    ],
    [
-    "src/components/conversation-intelligence/CallPlayerWithTranscript.tsx",
+    "docs/adr/043-onda-29-observabilidade-conflitos.md",
     1
    ],
    [
-    "src/components/dialer/AddContactsDialog.tsx",
+    "docs/adr/044-onda-30-cron-hotspot-alerts.md",
     1
    ],
    [
-    "src/components/supervisor/panel/ActiveCallsList.tsx",
+    "docs/agentes/edge-functions.md",
     1
    ],
    [
-    "src/lib/__tests__/a11y-clickable.test.ts",
+    "docs/estado/edge-functions-parte1.md",
     1
    ]
   ]

@@ -11,7 +11,6 @@ DECLARE
   v_already_notified boolean;
   v_admin record;
 BEGIN
-  -- Conta conflitos da mesma tabela na última hora
   SELECT COUNT(*) INTO v_recent_count
   FROM public.optimistic_lock_conflicts
   WHERE table_name = NEW.table_name
@@ -21,7 +20,6 @@ BEGIN
     RETURN NEW;
   END IF;
 
-  -- Debounce: já notificou para esta tabela na última hora?
   SELECT EXISTS (
     SELECT 1 FROM public.notifications
     WHERE source_type = 'optimistic_lock_hotspot'
@@ -33,9 +31,10 @@ BEGIN
     RETURN NEW;
   END IF;
 
-  -- Notifica todos os admins
   FOR v_admin IN
-    SELECT id FROM public.user_profiles WHERE role = 'admin'
+    SELECT DISTINCT user_id AS id
+    FROM public.user_roles
+    WHERE role = 'admin'
   LOOP
     BEGIN
       INSERT INTO public.notifications (
@@ -43,9 +42,9 @@ BEGIN
         action_url, action_label, source_type, source_id, metadata
       ) VALUES (
         v_admin.id,
-        'Hotspot de conflito de concorrência',
+        'Hotspot de conflito de concorr�ncia',
         'Tabela "' || NEW.table_name || '" registrou ' || v_recent_count ||
-          ' conflitos na última hora. Investigue possíveis problemas de UI ou contenção.',
+          ' conflitos na �ltima hora. Investigue poss�veis problemas de UI ou conten��o.',
         'warning',
         'system',
         'warning',
@@ -61,7 +60,7 @@ BEGIN
         )
       );
     EXCEPTION WHEN OTHERS THEN
-      NULL; -- não bloquear o INSERT principal por falha de notificação
+      NULL;
     END;
   END LOOP;
 

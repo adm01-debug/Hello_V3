@@ -6,7 +6,7 @@
 | owner | postgres |
 | RLS habilitado | sim |
 | RLS forçado (owner) | não |
-| policies | 1 |
+| policies | 2 |
 | realtime (publication) | não |
 | replica identity | default |
 | vem de extensão | não |
@@ -53,6 +53,16 @@
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK |  |
 
+### `olc_writer_insert`
+
+| campo | valor |
+|---|---|
+| comando | INSERT |
+| tipo | PERMISSIVE |
+| roles | optimistic_lock_writer |
+| USING |  |
+| WITH CHECK | `((table_name IS NOT NULL) AND (record_id IS NOT NULL) AND (attempted_at IS NOT NULL))` |
+
 
 ## Triggers
 
@@ -67,4 +77,5 @@
 |---|---|
 | anon | DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE |
 | authenticated | DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE |
+| optimistic_lock_writer | INSERT |
 | service_role | DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE |

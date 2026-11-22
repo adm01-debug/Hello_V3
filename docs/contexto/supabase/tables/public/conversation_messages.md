@@ -101,7 +101,7 @@
 | comando | SELECT |
 | tipo | PERMISSIVE |
 | roles | public |
-| USING | `((EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = ( SELECT user_profiles.full_name            FROM user_profiles           WHERE (user_profiles.id = ( SELECT auth.uid() AS uid))))))) OR (EXISTS ( SELECT 1    FROM user_profiles   WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = ANY (ARRAY['admin'::text, 'supervisor'::text]))))))` |
+| USING | `((EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = ( SELECT up.full_name            FROM user_profiles up           WHERE (up.id = ( SELECT auth.uid() AS uid))))))) OR is_admin_or_supervisor())` |
 | WITH CHECK |  |
 
 

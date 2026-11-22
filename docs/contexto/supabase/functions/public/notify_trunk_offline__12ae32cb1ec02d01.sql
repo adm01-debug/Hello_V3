@@ -43,7 +43,7 @@ BEGIN
 
   SELECT name INTO v_trunk_name FROM public.voip_trunks WHERE id = NEW.trunk_id;
 
-  FOR v_admin IN SELECT id FROM public.user_profiles WHERE role = 'admin'
+  FOR v_admin IN SELECT DISTINCT user_id AS id FROM public.user_roles WHERE role = 'admin' AND coalesce(is_active, true) AND (expires_at IS NULL OR expires_at > now())
   LOOP
     BEGIN
       INSERT INTO public.notifications (

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4c76ea5c701c9336e94ee55dcc9ba6d992298361",
+  "commit": "4a44ddcd33a60e85dd96b472c277ad09b735ed64",
   "branch": "main",
-  "data_commit": "2026-11-21T23:30:56-03:00",
+  "data_commit": "2026-11-21T23:54:09-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4a44ddc",
+    "data": "2026-11-21",
+    "assunto": "chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)"
+   },
    {
     "sha": "4c76ea5",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "c96ef1b",
     "data": "2026-11-21",
     "assunto": "feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)"
-   },
-   {
-    "sha": "ee5082d",
-    "data": "2026-11-21",
-    "assunto": "feat: (#77)"
    }
   ],
-  "arquivos_mudados_7d": 773,
+  "arquivos_mudados_7d": 777,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 12
+    "mudancas": 13
    },
    {
     "pasta": "src/components/calls",
@@ -166,6 +166,10 @@
    {
     "pasta": "src/components/layout",
     "mudancas": 10
+   },
+   {
+    "pasta": "docs/edge-functions/README.md",
+    "mudancas": 7
    },
    {
     "pasta": "supabase/functions/_shared",
@@ -184,10 +188,6 @@
     "mudancas": 6
    },
    {
-    "pasta": "docs/edge-functions/README.md",
-    "mudancas": 6
-   },
-   {
     "pasta": "src/components/compliance",
     "mudancas": 6
    },
@@ -199,7 +199,11 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 12
+    "mudancas": 13
+   },
+   {
+    "arquivo": "docs/edge-functions/README.md",
+    "mudancas": 7
    },
    {
     "arquivo": ".github/workflows/ci.yml",
@@ -207,10 +211,6 @@
    },
    {
     "arquivo": ".github/workflows/contexto.yml",
-    "mudancas": 6
-   },
-   {
-    "arquivo": "docs/edge-functions/README.md",
     "mudancas": 6
    },
    {
@@ -238,7 +238,15 @@
     "mudancas": 3
    },
    {
+    "arquivo": "docs/agentes/edge-functions.md",
+    "mudancas": 3
+   },
+   {
     "arquivo": "docs/audits/pendencias-2026-07.md",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "docs/estado/edge-functions-parte1.md",
     "mudancas": 3
    },
    {
@@ -286,22 +294,14 @@
     "mudancas": 2
    },
    {
-    "arquivo": "docs/agentes/banco.md",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "docs/agentes/edge-functions.md",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "docs/audit/scorecard-final.md",
+    "arquivo": "ESTADO_ATUAL.md",
     "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 85
+    "commits": 86
    },
    {
     "autor": "Joaquim Ataides",

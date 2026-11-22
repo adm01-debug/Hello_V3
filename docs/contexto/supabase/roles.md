@@ -8,8 +8,9 @@
 | authenticated | não | não | não | não | não | -1 | statement_timeout=8s |  |
 | authenticator | não | sim | não | não | não | -1 | session_preload_libraries=supautils, safeupdate, statement_timeout=8s, lock_timeout=8s | anon, authenticated, service_role |
 | dashboard_user | não | não | não | sim | sim | -1 |  |  |
+| optimistic_lock_writer | não | sim | não | não | não | -1 |  |  |
 | pgbouncer | não | sim | não | não | não | -1 |  |  |
-| postgres | não | sim | sim | sim | sim | -1 | search_path="\$user", public, extensions | anon, authenticated, authenticator, pg_create_subscription, pg_monitor, pg_read_all_data, pg_signal_backend, service_role, supabase_privileged_role |
+| postgres | não | sim | sim | sim | sim | -1 | search_path="\$user", public, extensions | anon, authenticated, authenticator, optimistic_lock_writer, pg_create_subscription, pg_monitor, pg_read_all_data, pg_signal_backend, service_role, supabase_privileged_role |
 | service_role | não | não | sim | não | não | -1 |  |  |
 | supabase_admin | sim | sim | sim | sim | sim | -1 | search_path="$user", public, auth, extensions, log_statement=none, statement_timeout=0 |  |
 | supabase_auth_admin | não | sim | não | sim | não | -1 | search_path=auth, idle_in_transaction_session_timeout=60000, log_statement=none |  |

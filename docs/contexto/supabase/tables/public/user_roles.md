@@ -77,6 +77,7 @@
 |---|---|---|---|---|---|
 | audit_user_roles_changes | AFTER | INSERT OR DELETE OR UPDATE | ROW | enabled | public.audit_table_change |
 | trg_audit_user_roles | AFTER | INSERT OR DELETE OR UPDATE | ROW | enabled | public.audit_role_change |
+| trg_sync_profile_role | AFTER | INSERT OR DELETE OR UPDATE | ROW | enabled | public.sync_profile_role_from_user_roles |
 | update_user_roles_updated_at | BEFORE | UPDATE | ROW | enabled | public.update_security_updated_at |
 
 

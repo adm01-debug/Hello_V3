@@ -24,7 +24,7 @@ BEGIN
 
     IF v_already THEN CONTINUE; END IF;
 
-    FOR v_admin IN SELECT id FROM public.user_profiles WHERE role = 'admin' LOOP
+    FOR v_admin IN SELECT DISTINCT user_id AS id FROM public.user_roles WHERE role = 'admin' AND coalesce(is_active, true) AND (expires_at IS NULL OR expires_at > now()) LOOP
       BEGIN
         INSERT INTO public.notifications (
           user_id, title, message, type, category, severity,

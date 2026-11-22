@@ -19,7 +19,7 @@
 | 1 | `id` | `uuid` | não |  |  |  |
 | 2 | `email` | `text` | não |  |  |  |
 | 3 | `full_name` | `text` | sim |  |  |  |
-| 4 | `role` | `text` | não | `'agent'::text` |  |  |
+| 4 | `role` | `text` | não | `'agent'::text` |  | Espelho de exibicao. NAO use para autorizacao: use public.user_roles.role via is_admin_or_supervisor(). |
 | 5 | `agent_id` | `uuid` | sim |  |  |  |
 | 6 | `created_at` | `timestamp with time zone` | não | `now()` |  |  |
 | 7 | `updated_at` | `timestamp with time zone` | não | `now()` |  |  |
@@ -52,7 +52,7 @@
 | user_profiles_ringtone_device_check | CHECK | `CHECK (ringtone_updated_by_device IS NULL OR ringtone_updated_by_device = btrim(ringtone_updated_by_device) AND char_length(ringtone_updated_by_device) >= 1 AND char_length(ringtone_updated_by_device) <= 60)` |  |  | sim |
 | user_profiles_ringtone_preset_check | CHECK | `CHECK (ringtone_preset IS NULL OR char_length(btrim(ringtone_preset)) >= 1 AND char_length(btrim(ringtone_preset)) <= 32 AND ringtone_preset = btrim(ringtone_preset))` |  |  | sim |
 | user_profiles_ringtone_volume_check | CHECK | `CHECK (ringtone_volume IS NULL OR ringtone_volume >= 0::numeric AND ringtone_volume <= 1::numeric)` |  |  | sim |
-| user_profiles_role_check | CHECK | `CHECK (role = ANY (ARRAY['agent'::text, 'supervisor'::text, 'admin'::text]))` |  |  | sim |
+| user_profiles_role_check | CHECK | `CHECK (role = ANY (ARRAY['agent'::text, 'supervisor'::text, 'admin'::text, 'viewer'::text]))` |  |  | sim |
 | user_profiles_voice_command_history_shape | CHECK | `CHECK (jsonb_typeof(voice_command_history) = 'array'::text AND jsonb_array_length(voice_command_history) <= 6)` |  |  | sim |
 | user_profiles_voice_tts_rate_range | CHECK | `CHECK (voice_tts_rate >= 0.50 AND voice_tts_rate <= 2.00)` |  |  | sim |
 | user_profiles_voice_tts_voice_len | CHECK | `CHECK (voice_tts_voice IS NULL OR char_length(voice_tts_voice) <= 160)` |  |  | sim |

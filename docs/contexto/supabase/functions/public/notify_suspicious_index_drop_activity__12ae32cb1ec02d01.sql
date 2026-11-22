@@ -38,8 +38,11 @@ BEGIN
 
   -- Notifica todos os OUTROS admins (revisão cruzada)
   FOR v_admin IN
-    SELECT id FROM public.user_profiles
-    WHERE role = 'admin' AND id <> NEW.admin_id
+    SELECT DISTINCT user_id AS id FROM public.user_roles
+    WHERE role = 'admin'
+      AND coalesce(is_active, true)
+      AND (expires_at IS NULL OR expires_at > now())
+      AND user_id <> NEW.admin_id
   LOOP
     BEGIN
       INSERT INTO public.notifications (

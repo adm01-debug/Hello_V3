@@ -124,7 +124,7 @@
 | comando | SELECT |
 | tipo | PERMISSIVE |
 | roles | public |
-| USING | `((( SELECT auth.uid() AS uid) = id) OR (EXISTS ( SELECT 1    FROM user_profiles   WHERE ((user_profiles.id = ( SELECT auth.uid() AS uid)) AND (user_profiles.role = ANY (ARRAY['admin'::text, 'supervisor'::text]))))))` |
+| USING | `((( SELECT auth.uid() AS uid) = id) OR is_admin_or_supervisor())` |
 | WITH CHECK |  |
 
 
