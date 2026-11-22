@@ -42,13 +42,13 @@ descartado. Nenhum README/docs/mem foi lido.
 | supervisor/SupervisorPanel.tsx | ✅ IMPLEMENTADO_TOTAL | `:11` `useSupervisorPanel()`; composição de 6 subcomponentes `:15-21` | `pages/Index.tsx:14` | hook `useSupervisorPanel` | — |
 | supervisor/AlertSoundSettings.tsx | ✅ IMPLEMENTADO_TOTAL | `:29-43` sliders com `onConfigChange` real; `:47-52` `onTestSound` | `panel/PanelHeader.tsx:6,25` | props do hook (`AlertSoundConfig`) | — |
 | supervisor/SoundProfileManager.tsx | ✅ IMPLEMENTADO_TOTAL | `:11-15` 3 perfis; `:39` `onApplyProfile` real | `panel/PanelHeader.tsx:7,24` | constante local `PROFILES` (config, não métrica) | Perfis não persistem por usuário (só aplicam em memória) |
-| **supervisor/QueueTrendChart.tsx** | ⬛ MORTO_OU_ABANDONADO | `:23` `waiting: Math.floor(Math.random()*8)`; `:24` `active: Math.floor(Math.random()*12)+2`; comentário `:16` "Generate sample trend data"; `supabase` importado `:3` e **nunca usado** | `panel/TrendChartToggle.tsx:4,19` → visível ao supervisor | **Nenhuma — dados 100% aleatórios** | Trocar por query real em `call_sessions` agrupada por janela de 5 min |
+| supervisor/QueueTrendChart.tsx | ✅ IMPLEMENTADO_TOTAL | `:2` consome `useQueueMetrics()`; `:6-9` escala sobre `max(waitingCalls, activeCalls)`; `:21-24` estado de espera explicito. **Zero `Math.random`** desde a PR #123 (`e708387`) | `panel/TrendChartToggle.tsx:5,35` -> `SupervisorPanel.tsx` -> visivel ao supervisor | `call_sessions` + `agents` via `useQueueMetrics.ts:91-139` (polling 5 s + realtime, janela de 20 pontos em `:48`) | - |
 | supervisor/panel/ActiveCallsList.tsx | ✅ IMPLEMENTADO_TOTAL | `:22-60` mapeia `s.activeCalls`; `:28` seleção funcional | `SupervisorPanel.tsx:3,20` | `call_sessions` via hook (`useSupervisorPanel.ts:110`) | — |
 | supervisor/panel/BargeInBanner.tsx | ✅ IMPLEMENTADO_TOTAL | `:19` `onClick={s.endBargeIn}` → UPDATE real (`useSupervisorPanel.ts:188`) | `SupervisorPanel.tsx:4,19` | `barge_in_sessions` | — |
 | supervisor/panel/CallActionTabs.tsx | 🟨 IMPLEMENTADO_PARCIAL | Whisper persiste (`useSupervisorPanel.ts:167` INSERT `whisper_messages`); Barge-in persiste (`:178` INSERT `barge_in_sessions`). **Aba "Escuta" (`:34-46`) não tem nenhum controle** — só texto e um Badge decorativo `:41-43` "Áudio recebido pelo canal SIP do supervisor" | `SupervisorPanel.tsx:5,21` | `whisper_messages`, `barge_in_sessions` | Escuta silenciosa: nenhum botão, nenhuma chamada de API, nenhum stream. Promessa de UI sem implementação |
 | supervisor/panel/PanelHeader.tsx | ✅ IMPLEMENTADO_TOTAL | `:24-25` liga sound managers; `:33` toggle de som real | `SupervisorPanel.tsx:6,15` | estado do hook | — |
 | supervisor/panel/QueueMetricsGrid.tsx | ✅ IMPLEMENTADO_TOTAL | `:45-68` consome `SupervisorQueueMetrics` calculado de queries reais (`useSupervisorPanel.ts:117-118`) | `SupervisorPanel.tsx:7,17` | `call_sessions` (completed/abandoned do dia) | — |
-| supervisor/panel/TrendChartToggle.tsx | 🟨 IMPLEMENTADO_PARCIAL | `:9-17` collapsible funcional, mas `:19` renderiza o `QueueTrendChart` aleatório | `SupervisorPanel.tsx:8,18` | — | Herda o defeito do gráfico fictício |
+| supervisor/panel/TrendChartToggle.tsx | ✅ IMPLEMENTADO_TOTAL | `:16` `everOpened` + `:34` `forceMount` preservam a serie de 20 pontos entre abre/fecha; `:35` so monta apos o primeiro clique (evita polling de quem nunca abre) | `SupervisorPanel.tsx:8,18` | - | - |
 | supervisor/panel/types.ts | ✅ IMPLEMENTADO_TOTAL | `:3` `ReturnType<typeof useSupervisorPanel>` | 5 arquivos do próprio diretório (`ActiveCallsList:5`, `BargeInBanner:3`, `PanelHeader:8`, `CallActionTabs:7`, `TrendChartToggle:5`) | — | — |
 | **translation/LiveTranslationPanel.tsx** | ⬛ MORTO_OU_ABANDONADO | 125 linhas completas e funcionais (`:25` `useLiveTranslation`, `:26` `useCulturalHints`, hooks existem em `src/hooks/`), mas **zero importadores** — os 3 padrões de grep retornaram vazio; é o único arquivo de `src/components/translation/` | **ÓRFÃO** | `useLiveTranslation` / `useCulturalHints` | Nunca montado em nenhuma página. Feature de tradução ao vivo construída e não plugada |
 | **whatsapp/WhatsappComposer.tsx** | ⬛ MORTO_OU_ABANDONADO | 106 linhas funcionais (`:42,47` `useWhatsappRewrite` existe), mas **zero importadores** nos 3 padrões; único arquivo de `src/components/whatsapp/` | **ÓRFÃO** | `useWhatsappRewrite` (Lovable AI Gateway, doc `:32`) | Nunca montado. Feature "Melhorar com IA" inacessível ao usuário |
@@ -108,19 +108,12 @@ lógica de negócio nem dados. Todos íntegros. Distribuição:
 
 ## Achados graves
 
-1. **⬛ Gráfico de tendência de filas exibe números aleatórios ao supervisor.**
-   `supervisor/QueueTrendChart.tsx:23-24` gera `waiting` e `active` com
-   `Math.floor(Math.random()*…)` a cada montagem. O comentário `:16` admite
-   "Generate sample trend data from recent call sessions", e `supabase` é
-   importado em `:3` mas **nunca chamado** — a intenção de buscar dado real foi
-   abandonada. O componente está em produção via
-   `panel/TrendChartToggle.tsx:19` → `SupervisorPanel.tsx:18` →
-   `pages/Index.tsx:14`, sob o rótulo "Tendência do Dia"
-   (`TrendChartToggle.tsx:13`) e legendas "Em espera"/"Ativas"
-   (`QueueTrendChart.tsx:36,39`). **Um supervisor pode tomar decisão operacional
-   sobre ruído.** É o achado mais severo do lote: os demais painéis do mesmo card
-   (`QueueMetricsGrid`) usam dados reais, o que aumenta a credibilidade aparente
-   do gráfico falso.
+1. ~~**⬛ Gráfico de tendência de filas exibe números aleatórios ao supervisor.**~~
+   **RESOLVIDO na PR #123** (`e708387`, "feat: wire QueueTrendChart a dados
+   reais"). `QueueTrendChart.tsx` agora tem 48 linhas e consome `realtimeData`
+   de `useQueueMetrics()` — `call_sessions` + `agents`, polling de 5 s e canal
+   realtime. Não há mais `Math.random` no arquivo. Registro mantido para
+   mostrar que o achado existiu e foi corrigido.
 
 2. **🟨 Aba "Escuta silenciosa" é uma promessa sem implementação.**
    `panel/CallActionTabs.tsx:34-46`: a aba renderiza ícone, título "Modo Escuta
