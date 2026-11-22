@@ -35,9 +35,9 @@ serve(async (req) => {
       .getUser();
     if (authError || !user) return json({ error: "Nao autorizado" }, 401);
 
-    const { data: profile } = await admin.from("user_profiles").select("role")
-      .eq("id", user.id).maybeSingle();
-    if (!profile || !["admin", "supervisor"].includes(profile.role)) {
+    const { data: roles } = await admin.from("user_roles").select("role")
+      .eq("user_id", user.id).in("role", ["admin", "supervisor"]).eq("is_active", true);
+    if (!roles || roles.length === 0) {
       return json({ error: "Acesso negado" }, 403);
     }
 

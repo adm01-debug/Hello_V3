@@ -32,8 +32,8 @@ serve(async (req) => {
     const { data: { user }, error } = await supabase.auth.getUser();
     if (error || !user) return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
 
-    const { data: profile } = await admin.from('user_profiles').select('role').eq('id', user.id).single();
-    if (!profile || profile.role !== 'admin') {
+    const { data: profile } = await admin.from('user_roles').select('role').eq('user_id', user.id).eq('role', 'admin').eq('is_active', true).maybeSingle();
+    if (!profile) {
       return new Response(JSON.stringify({ error: 'Apenas admin' }), { status: 403, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
     }
 
