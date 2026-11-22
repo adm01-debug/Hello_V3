@@ -48,8 +48,9 @@ function setTable(name: string, res: QueryResult) {
   tableResponses[name] = res;
 }
 
-const invokeMock = vi.hoisted(() => vi.fn(async () => ({ data: { success: true }, error: null })));
+const invokeMock = vi.hoisted(() => vi.fn());
 const getUserMock = vi.hoisted(() => vi.fn(async () => ({ data: { user: { id: 'u1' } }, error: null })));
+const verifyOtpMock = vi.hoisted(() => vi.fn(async () => ({ data: { user: { id: 'u1' } }, error: null })));
 
 vi.mock('@/integrations/supabase/client', () => {
   const makeBuilder = (table: string) => {
@@ -79,7 +80,10 @@ vi.mock('@/integrations/supabase/client', () => {
   return {
     supabase: {
       from: vi.fn((table: string) => makeBuilder(table)),
-      auth: { getUser: (...a: unknown[]) => getUserMock(...(a as [])) },
+      auth: {
+        getUser: (...a: unknown[]) => getUserMock(...(a as [])),
+        verifyOtp: (...a: unknown[]) => verifyOtpMock(...(a as [])),
+      },
       functions: { invoke: (...a: unknown[]) => invokeMock(...(a as [])) },
     },
   };
@@ -98,6 +102,7 @@ describe('useWebAuthn', () => {
     utilsMock.isPlatformAuthenticatorAvailable.mockResolvedValue(true);
     invokeMock.mockResolvedValue({ data: { success: true }, error: null });
     getUserMock.mockResolvedValue({ data: { user: { id: 'u1' } }, error: null });
+    verifyOtpMock.mockResolvedValue({ data: { user: { id: 'u1' } }, error: null });
   });
 
   it('loads passkeys and reports support on mount', async () => {
@@ -176,8 +181,9 @@ describe('useWebAuthn', () => {
   });
 
   it('authenticates with passkey successfully (with email)', async () => {
-    setTable('user_profiles', { data: { id: 'u1', email: 'a@b.com' }, error: null });
-    setTable('user_passkeys', { data: [{ user_id: 'u1', counter: 0, credential_id: 'cred-1' }], error: null });
+    invokeMock
+      .mockResolvedValueOnce({ data: { success: true, challenge: 'ch-1', allowCredentialIds: ['cred-1'] }, error: null })
+      .mockResolvedValueOnce({ data: { success: true, userId: 'u1', token: 'tok-1', action_link: 'x' }, error: null });
     const { result } = renderHook(() => useWebAuthn());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     let res: { success: boolean; userId?: string } = { success: false };
@@ -187,14 +193,13 @@ describe('useWebAuthn', () => {
     expect(res.userId).toBe('u1');
   });
 
-  it('authenticates without email param', async () => {
-    setTable('user_profiles', { data: { id: 'u1', email: 'a@b.com' }, error: null });
-    setTable('user_passkeys', { data: [{ user_id: 'u1', counter: 5, credential_id: 'cred-1' }], error: null });
+  it('authenticates without email param fails (email required)', async () => {
     const { result } = renderHook(() => useWebAuthn());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     let res: { success: boolean } = { success: false };
     await act(async () => { res = await result.current.authenticateWithPasskey(); });
-    expect(res.success).toBe(true);
+    expect(res.success).toBe(false);
+    expect(toast.error).toHaveBeenCalledWith('Informe o e-mail para entrar com passkey');
   });
 
   it('auth fails when unsupported', async () => {
@@ -202,32 +207,62 @@ describe('useWebAuthn', () => {
     const { result } = renderHook(() => useWebAuthn());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     let res: { success: boolean } = { success: true };
-    await act(async () => { res = await result.current.authenticateWithPasskey(); });
+    await act(async () => { res = await result.current.authenticateWithPasskey('a@b.com'); });
     expect(res.success).toBe(false);
   });
 
-  it('auth fails when no current user', async () => {
+  it('auth requires an email for anonymous login', async () => {
+    const { result } = renderHook(() => useWebAuthn());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    let res: { success: boolean } = { success: true };
+    await act(async () => { res = await result.current.authenticateWithPasskey(); });
+    expect(res.success).toBe(false);
+    expect(toast.error).toHaveBeenCalledWith('Informe o e-mail para entrar com passkey');
+    expect(invokeMock).not.toHaveBeenCalled();
+  });
+
+  it('auth succeeds without an active session (anonymous login)', async () => {
     getUserMock.mockResolvedValue({ data: { user: null }, error: null } as never);
+    invokeMock
+      .mockResolvedValueOnce({ data: { success: true, challenge: 'ch-1', allowCredentialIds: ['cred-1'] }, error: null })
+      .mockResolvedValueOnce({ data: { success: true, userId: 'u1', token: 'tok-1', action_link: 'x' }, error: null });
     const { result } = renderHook(() => useWebAuthn());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     let res: { success: boolean } = { success: true };
-    await act(async () => { res = await result.current.authenticateWithPasskey(); });
-    expect(res.success).toBe(false);
+    await act(async () => { res = await result.current.authenticateWithPasskey('a@b.com'); });
+    expect(res.success).toBe(true);
+    expect(verifyOtpMock).toHaveBeenCalledWith({ token_hash: 'tok-1', type: 'magiclink' });
   });
 
-  it('auth fails when passkey not found', async () => {
-    setTable('user_passkeys', { data: null, error: new Error('nope') });
+  it('auth fails when challenge edge errors', async () => {
+    invokeMock.mockResolvedValue({ data: { success: false }, error: { message: 'no passkey' } } as never);
     const { result } = renderHook(() => useWebAuthn());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     let res: { success: boolean } = { success: true };
-    await act(async () => { res = await result.current.authenticateWithPasskey(); });
+    await act(async () => { res = await result.current.authenticateWithPasskey('a@b.com'); });
     expect(res.success).toBe(false);
+    expect(invokeMock).toHaveBeenCalledWith('webauthn-challenge', { body: { email: 'a@b.com' } });
   });
 
-  it('auth fails when edge function errors', async () => {
-    setTable('user_profiles', { data: { id: 'u1', email: 'a@b.com' }, error: null });
-    setTable('user_passkeys', { data: [{ user_id: 'u1', counter: 0, credential_id: 'cred-1' }], error: null });
-    invokeMock.mockResolvedValue({ data: { success: false }, error: { message: 'bad' } } as never);
+  it('auth fails when authenticate edge errors', async () => {
+    invokeMock
+      .mockResolvedValueOnce({ data: { success: true, challenge: 'ch-1', allowCredentialIds: ['cred-1'] }, error: null })
+      .mockResolvedValueOnce({ data: { success: false }, error: { message: 'bad signature' } } as never);
+    const { result } = renderHook(() => useWebAuthn());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    let res: { success: boolean } = { success: true };
+    await act(async () => { res = await result.current.authenticateWithPasskey('a@b.com'); });
+    expect(res.success).toBe(false);
+    expect(invokeMock).toHaveBeenCalledWith('webauthn-authenticate', expect.objectContaining({
+      body: expect.objectContaining({ credentialId: 'cred-1' }),
+    }));
+  });
+
+  it('auth fails when verifyOtp fails to create session', async () => {
+    invokeMock
+      .mockResolvedValueOnce({ data: { success: true, challenge: 'ch-1', allowCredentialIds: ['cred-1'] }, error: null })
+      .mockResolvedValueOnce({ data: { success: true, userId: 'u1', token: 'tok-1' }, error: null });
+    verifyOtpMock.mockResolvedValue({ data: null, error: new Error('bad token') } as never);
     const { result } = renderHook(() => useWebAuthn());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     let res: { success: boolean } = { success: true };
@@ -237,10 +272,11 @@ describe('useWebAuthn', () => {
 
   it('handles auth NotAllowedError', async () => {
     const err = new Error('cancel'); err.name = 'NotAllowedError';
+    invokeMock.mockResolvedValueOnce({ data: { success: true, challenge: 'ch-1', allowCredentialIds: ['cred-1'] }, error: null });
     utilsMock.startAuthentication.mockRejectedValueOnce(err);
     const { result } = renderHook(() => useWebAuthn());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    await act(async () => { await result.current.authenticateWithPasskey(); });
+    await act(async () => { await result.current.authenticateWithPasskey('a@b.com'); });
     expect(toast.error).toHaveBeenCalledWith('Autenticação cancelada pelo usuário');
   });
 

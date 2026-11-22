@@ -153,87 +153,39 @@ export function useWebAuthn() {
     setIsAuthenticating(true);
 
     try {
-      const challenge = generateChallenge();
-      const rpId = getRpId();
-
-      // Get current user for challenge binding
-      const { data: { user: currentUser } } = await supabase.auth.getUser();
-      const challengeUserId = currentUser?.id;
-
-      if (!challengeUserId) {
-        toast.error('Você precisa estar autenticado para usar passkeys');
+      // Login SEM sessao: o desafio e gerado pela edge webauthn-challenge
+      // (service role), que resolve o dono pelo e-mail e insere em
+      // webauthn_challenges contornando a RLS que exigia sessao ativa.
+      if (!email) {
+        toast.error('Informe o e-mail para entrar com passkey');
         return { success: false };
       }
 
-      // Store challenge in database
-      const { error: challengeError } = await supabase
-        .from('webauthn_challenges')
-        .insert({
-          user_id: challengeUserId,
-          challenge,
-          type: 'authentication',
-          expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
-        });
+      const { data: challengeData, error: challengeError } = await supabase.functions.invoke(
+        'webauthn-challenge',
+        { body: { email } },
+      );
 
-      if (challengeError) throw challengeError;
-
-      // Get allowed credentials if email provided
-      let allowCredentialIds: string[] | undefined;
-      
-      if (email) {
-        // Get user ID from email via user_profiles
-        const { data: profile } = await supabase
-          .from('user_profiles')
-          .select('id')
-          .eq('email', email)
-          .maybeSingle();
-
-        if (profile) {
-          const { data: userPasskeys } = await supabase
-            .from('user_passkeys')
-            .select('credential_id')
-            .eq('user_id', profile.id);
-
-          allowCredentialIds = userPasskeys?.map(p => p.credential_id);
-        }
+      if (challengeError || !challengeData?.success) {
+        throw new Error(challengeError?.message || challengeData?.error || 'Falha ao gerar desafio');
       }
+
+      const challenge = challengeData.challenge as string;
+      const rpId = getRpId();
+      const allowCredentialIds = (challengeData.allowCredentialIds ?? []) as string[];
 
       // Start authentication with browser
       const result = await startAuthentication({
         challenge,
         rpId,
-        allowCredentialIds,
+        allowCredentialIds: allowCredentialIds.length > 0 ? allowCredentialIds : undefined,
       });
 
-      // Verify credential exists and get user
-      const { data: passkey, error: passkeyError } = await supabase
-        .from('user_passkeys')
-        .select('user_id, counter')
-        .eq('credential_id', result.credentialId)
-        .single();
-
-      if (passkeyError || !passkey) {
-        throw new Error('Passkey não encontrada');
-      }
-
-      // Get user email for sign in
-      const { data: userProfile } = await supabase
-        .from('user_profiles')
-        .select('email')
-        .eq('id', passkey.user_id)
-        .maybeSingle();
-
-      if (!userProfile?.email) {
-        throw new Error('Usuário não encontrado');
-      }
-
-      // Create a one-time token for passwordless login via edge function.
       // A assercao vai junto: a edge verifica a assinatura contra a chave
       // publica registrada antes de emitir qualquer magic link.
       const { data: authData, error: authError } = await supabase.functions.invoke('webauthn-authenticate', {
         body: {
           credentialId: result.credentialId,
-          userId: passkey.user_id,
           clientDataJSON: result.clientDataJSON,
           authenticatorData: result.authenticatorData,
           signature: result.signature,
@@ -244,17 +196,28 @@ export function useWebAuthn() {
         throw new Error(authError?.message || authData?.error || 'Falha na autenticação');
       }
 
-      // So marca uso depois que a assinatura foi de fato verificada.
+      // Consome o token one-time devolvido pela edge e cria a sessao de
+      // verdade. Sem isso o botao navegava mas nao havia sessao ativa.
+      const token = authData.token as string;
+      if (!token) {
+        throw new Error('Falha ao criar sessão. Tente novamente.');
+      }
+      const { error: verifyError } = await supabase.auth.verifyOtp({
+        token_hash: token,
+        type: 'magiclink',
+      });
+      if (verifyError) {
+        throw new Error('Falha ao criar sessão. Tente novamente.');
+      }
+
+      // Marca uso da passkey apos a assinatura verificada.
       await supabase
         .from('user_passkeys')
-        .update({
-          last_used_at: new Date().toISOString(),
-          counter: (passkey.counter || 0) + 1,
-        })
+        .update({ last_used_at: new Date().toISOString() })
         .eq('credential_id', result.credentialId);
 
       toast.success('Login realizado com sucesso!');
-      return { success: true, userId: passkey.user_id };
+      return { success: true, userId: authData.userId as string | undefined };
     } catch (error: unknown) {
       log.error('Authentication error', error);
       if ((error instanceof Error ? error.name : "Error") === 'NotAllowedError') {
@@ -267,7 +230,6 @@ export function useWebAuthn() {
       setIsAuthenticating(false);
     }
   };
-
   const removePasskey = async (passkeyId: string): Promise<boolean> => {
     try {
       const { error } = await supabase

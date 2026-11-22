@@ -19,7 +19,8 @@ export function PasskeyLogin({ onSuccess, showEmailField = true }: PasskeyLoginP
   }
 
   const handlePasskeyLogin = async () => {
-    const result = await authenticateWithPasskey(email || undefined);
+    if (!email.trim()) return;
+    const result = await authenticateWithPasskey(email.trim());
     if (result.success && onSuccess) {
       onSuccess();
     }
@@ -29,7 +30,7 @@ export function PasskeyLogin({ onSuccess, showEmailField = true }: PasskeyLoginP
     <div className="space-y-4">
       {showEmailField && (
         <div className="space-y-2">
-          <Label htmlFor="passkey-email">Email (opcional)</Label>
+          <Label htmlFor="passkey-email">Email</Label>
           <Input
             id="passkey-email"
             type="email"
@@ -38,7 +39,7 @@ export function PasskeyLogin({ onSuccess, showEmailField = true }: PasskeyLoginP
             onChange={(e) => setEmail(e.target.value)}
           />
           <p className="text-xs text-muted-foreground">
-            Deixe em branco para usar qualquer passkey registrada neste dispositivo
+            Use o e-mail da conta para buscar suas passkeys registradas
           </p>
         </div>
       )}

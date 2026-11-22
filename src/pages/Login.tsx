@@ -169,7 +169,7 @@ export default function Login() {
             Entrar com Google
           </Button>
 
-          {isWebAuthnSupported() && <PasskeyLogin onSuccess={() => navigate(from, { replace: true })} showEmailField={false} />}
+          {isWebAuthnSupported() && <PasskeyLogin onSuccess={() => navigate(from, { replace: true })}  />}
 
           <p className="text-center text-sm text-muted-foreground">Não tem uma conta?{' '}<Link to="/register" className="text-primary hover:text-primary-hover font-semibold transition-colors">Registre-se</Link></p>
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/50 pt-2"><Shield className="h-3 w-3" /><span>Conexão segura · Dados criptografados</span></div>
