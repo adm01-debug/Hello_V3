@@ -90,7 +90,6 @@ jobs:
             case "$f" in *__tests__*|*.test.ts) continue;; esac
             deno check --quiet "$f" || { echo "::error file=$f::falha no type-check Deno"; status=1; }
           done
-          rm -f deno.lock
           exit $status
 
 
