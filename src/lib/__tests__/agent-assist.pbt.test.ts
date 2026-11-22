@@ -66,11 +66,15 @@
    });
  
    it("matchesKeywords: handles composite keywords regardless of order", () => {
+     // Exclui strings whitespace-only: matchesKeywords filtra tokens vazios
+     // (split(/\s+/).filter(Boolean)) e retorna false, o que tornaria a
+     // propriedade abaixo falsa para palavras compostas só de espaços.
+     const nonBlank = fc.string({ minLength: 1 }).filter((s) => s.trim().length > 0);
      fc.assert(
        fc.property(
-         fc.string({ minLength: 1 }),
-         fc.string({ minLength: 1 }),
-         fc.string({ minLength: 1 }),
+         nonBlank,
+         nonBlank,
+         nonBlank,
          (word1, word2, noise) => {
            const compositeKw = `${word1} ${word2}`;
            const text = `${noise} ${word2} ${noise} ${word1} ${noise}`;
