@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "025ada530731c5d2e3f3ba900840c555271693f8",
+  "sha": "49ee3776ebac4a998a8bb515b398503839e8091a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 17:36 UTC",
+  "generated_at": "2026-11-22 18:05 UTC",
   "files_total": 1683,
   "code_files": 1486,
-  "code_lines": 185338
+  "code_lines": 185356
  },
  "version": "1.3.2",
- "facts_hash": "c89f3f2d093862a2",
+ "facts_hash": "e1397c88d415ab5f",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34198,7 +34198,7 @@
   {
    "module": "supabase/functions",
    "files": 174,
-   "lines": 19834,
+   "lines": 19852,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34325,7 +34325,7 @@
     "schema.ts: WhatsAppInboundV1Schema, WhatsAppInboundV2Schema, WhatsAppInboundV1, WhatsAppInboundV2"
    ],
    "docs": [
-    "optimistic-lock.test.ts: Teste defensivo do trigger enforce_optimistic_lock via SQL direto. Executado com: deno test --allow-net --allow-env supabase/functions/__tests__/optimistic-lock.test.ts Requer SUPABASE_DB_URL apontando para um banco com a migration aplicada. Em CI sem DB, o teste é pulado (skip) — não falha o pipeli …",
+    "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
     "allowed-hosts.ts: Guarda contra SSRF para chamadas de saída feitas por Edge Functions. Regra: nenhum `fetch` com URL derivada de dado do usuário ou de configuração deve sair sem passar por `assertSafeOutboundUrl`. Bloqueios sempre ativos: esquemas não HTTP(S), loopback, link-local (inclui 169.254.169.254 - metadata d …",
     "client-ip.ts: O IP do cliente so pode vir de header HTTP, e header e controlado por quem chama. Antes de usar o valor em URL, log ou decisao de autorizacao, ele precisa ser um IP literal — nunca hostname, porta, path ou query.",
     "constant-time.ts: Comparacao de segredos em tempo constante. `a === b` sai no primeiro byte diferente e vaza o prefixo do token por timing. Usado para validar os bearers que os crons do Vault mandam para as edges (DIALER_CRON_TOKEN, COACHING_CRON_TOKEN, CLEANUP_CRON_TOKEN).",
@@ -37549,8 +37549,7 @@
     "scripts/fix-user-profile.mjs",
     "scripts/inspect-schema.mjs",
     "scripts/supabase_snapshot/snapshot.py",
-    "scripts/test-rls-access.mjs",
-    "supabase/functions/__tests__/optimistic-lock.test.ts"
+    "scripts/test-rls-access.mjs"
    ],
    "SUPABASE_PROJECT_REF": [
     "scripts/inventario/gerar-banco.mjs",
@@ -71463,6 +71462,30 @@
    {
     "file": "src/pages/roles/__tests__/useRoles.test.ts",
     "name": "toggleRoleStatus alterna e exibe toast correspondente"
+   },
+   {
+    "file": "supabase/functions/__tests__/optimistic-lock.test.ts",
+    "name": "optimistic-lock: migration canonica do trigger existe"
+   },
+   {
+    "file": "supabase/functions/__tests__/optimistic-lock.test.ts",
+    "name": "optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT"
+   },
+   {
+    "file": "supabase/functions/__tests__/optimistic-lock.test.ts",
+    "name": "optimistic-lock: incrementa a versao quando nao ha divergencia"
+   },
+   {
+    "file": "supabase/functions/__tests__/optimistic-lock.test.ts",
+    "name": "optimistic-lock: conflito e auditado em optimistic_lock_conflicts"
+   },
+   {
+    "file": "supabase/functions/__tests__/optimistic-lock.test.ts",
+    "name": "optimistic-lock: falha na auditoria nao bloqueia o fluxo principal"
+   },
+   {
+    "file": "supabase/functions/__tests__/optimistic-lock.test.ts",
+    "name": "optimistic-lock: trigger aplicado em deals e contacts"
    },
    {
     "file": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
@@ -115018,20 +115041,16 @@
   },
   "supabase/functions/__tests__/optimistic-lock.test.ts": {
    "path": "supabase/functions/__tests__/optimistic-lock.test.ts",
-   "lines": 77,
+   "lines": 95,
    "is_test": true,
-   "env": [
-    "SUPABASE_DB_URL"
-   ],
-   "errors": [
-    "OPTIMISTIC_LOCK_CONFLICT"
-   ],
-   "rule_comments": [
-    "Aqui apenas garantimos que o teste é estruturalmente válido."
-   ],
-   "doc": "Teste defensivo do trigger enforce_optimistic_lock via SQL direto. Executado com: deno test --allow-net --allow-env supabase/functions/__tests__/optimistic-lock.test.ts Requer SUPABASE_DB_URL apontando para um banco com a migration aplicada. Em CI sem DB, o teste é pulado (skip) — não falha o pipeli …",
-   "temporal": [
-    "WHERE table_name = 'deals' AND attempted_at > now() - interval '1 minute';"
+   "doc": "Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
+   "tests": [
+    "optimistic-lock: migration canonica do trigger existe",
+    "optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT",
+    "optimistic-lock: incrementa a versao quando nao ha divergencia",
+    "optimistic-lock: conflito e auditado em optimistic_lock_conflicts",
+    "optimistic-lock: falha na auditoria nao bloqueia o fluxo principal",
+    "optimistic-lock: trigger aplicado em deals e contacts"
    ]
   },
   "supabase/functions/_shared/allowed-hosts.ts": {
@@ -122941,10 +122960,30 @@
   }
  },
  "git": {
-  "sha": "025ada530731c5d2e3f3ba900840c555271693f8",
+  "sha": "49ee3776ebac4a998a8bb515b398503839e8091a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "49ee377",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: troca teste falso de optimistic lock por guarda real do contrato (#148)",
+    "files": [
+     "supabase/functions/__tests__/optimistic-lock.test.ts"
+    ]
+   },
+   {
+    "sha": "df7171f",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: corrige roadmap desatualizado e registra verificacoes de 22/11 (#147)",
+    "files": [
+     "docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md",
+     "docs/audits/pendencias-2026-07.md",
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "025ada5",
     "date": "2026-11-22",
@@ -123226,44 +123265,16 @@
     "files": [
      "tests/e2e/auth.spec.ts"
     ]
-   },
-   {
-    "sha": "1e1f3ef",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix(auth): login por passkey sem sessao ativa (#118)",
-    "files": [
-     "docs/estado/edge-functions-parte2.md",
-     "docs/estado/hooks-parte4.md",
-     "src/components/auth/PasskeyLogin.tsx",
-     "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
-     "src/hooks/useWebAuthn.ts",
-     "src/pages/Login.tsx",
-     "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
-     "supabase/functions/webauthn-authenticate/index.ts",
-     "supabase/functions/webauthn-challenge/__tests__/index.test.ts",
-     "supabase/functions/webauthn-challenge/index.ts"
-    ]
-   },
-   {
-    "sha": "bb8f219",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix(edge): libera a origem de producao no CORS das edge functions (#117)",
-    "files": [
-     "supabase/functions/_shared/__tests__/cors.test.ts",
-     "supabase/functions/_shared/cors.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    8
+    9
    ],
    [
     "docs/audits/pendencias-2026-07.md",
-    3
+    4
    ],
    [
     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
@@ -123284,6 +123295,14 @@
    [
     "src/components/supervisor/panel/TrendChartToggle.tsx",
     2
+   ],
+   [
+    "supabase/functions/__tests__/optimistic-lock.test.ts",
+    1
+   ],
+   [
+    "docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md",
+    1
    ],
    [
     "supabase/migrations/20261123010000_fix_user_delete_cascade.sql",
@@ -123327,14 +123346,6 @@
    ],
    [
     "supabase/functions/_shared/constant-time.ts",
-    1
-   ],
-   [
-    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
-    1
-   ],
-   [
-    "supabase/functions/cleanup-lock-conflicts/index.ts",
     1
    ]
   ]

@@ -2628,9 +2628,9 @@
   {
    "arquivo": "supabase/functions/__tests__/optimistic-lock.test.ts",
    "tipo": "unit",
-   "linhas": 77,
+   "linhas": 95,
    "testa": [],
-   "casos": 4
+   "casos": 7
   },
   {
    "arquivo": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",

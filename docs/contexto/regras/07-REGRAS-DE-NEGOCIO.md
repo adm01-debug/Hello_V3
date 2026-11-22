@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `025ada5307` · branch `main` · 2026-11-22 17:36 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `49ee3776eb` · branch `main` · 2026-11-22 18:05 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2450,7 +2450,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4027 testes em 331 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4033 testes em 332 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2675,6 +2675,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/security-alerts-webhook-history.property.test.ts` | 6 | security-alerts-webhook-history (PBT) · respeita cap MAX_ENTRIES e mantém ordem do mais recente para o mais antigo · descarta entradas corrompidas no storage sem lançar · truncateResponseSnippet nunca retorna string maior que o input + marcador … |
 | `src/lib/__tests__/webrtc-config.test.ts` | 6 | getIceServers · retorna STUN servers padrão sem TURN quando envs ausentes · inclui TURN quando todas as envs estão presentes · não inclui TURN quando falta uma das credenciais … |
 | `src/lib/audit/__tests__/index.coverage.test.ts` | 6 | audit/index (coverage) · logAuditEvent returns id on success · logAuditEvent defaults details to empty object and resourceId undefined · logAuditEvent returns null on supabase error … |
+| `supabase/functions/__tests__/optimistic-lock.test.ts` | 6 | optimistic-lock: migration canonica do trigger existe · optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT · optimistic-lock: incrementa a versao quando nao ha divergencia · optimistic-lock: conflito e auditado em optimistic_lock_conflicts … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
 | `supabase/functions/_shared/__tests__/cors.test.ts` | 6 | cors: origem de producao (Vercel) e ecoada · cors: origem desconhecida nao e ecoada (cai no default) · cors: sem header Origin nao quebra · cors: CORS_EXTRA_ORIGINS libera origem adicional … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
@@ -2753,8 +2754,7 @@ _nenhum item encontrado_
 | `supabase/functions/webauthn-authenticate/__tests__/index.test.ts` | 4 | webauthn-authenticate: OPTIONS devolve preflight CORS vazio · webauthn-authenticate: sem campos obrigatorios responde 400 · webauthn-authenticate: nao aceita email do request · webauthn-authenticate: passkey desconhecida e recusada (400, nunca 200) |
 | `tests/e2e/performance.spec.ts` | 4 | Dashboard Performance and Lists · should render call lists efficiently · Edge Function Resilience · should handle rapid requests to analyze-call |
 | `src/hooks/__tests__/useCallRecording.test.ts` | 3 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado |
-| `src/hooks/__tests__/useChatbot.coverage.test.tsx` | 3 | useChatbot · returns chatbot response on success · handles error path and toasts |
-| … +31 linhas — lista completa em `context.json` | | |
+| … +32 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

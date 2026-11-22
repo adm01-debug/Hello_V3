@@ -277,7 +277,7 @@
   {
    "arquivo": "docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md",
    "titulo": "📊 Inventário Exaustivo de Funcionalidades e Roadmap - VoIP Enterprise",
-   "linhas": 63
+   "linhas": 84
   },
   {
    "arquivo": "docs/prod-readiness.md",
@@ -422,7 +422,6 @@
    "SIP_SERVER",
    "SIP_USERNAME",
    "SUPABASE_ANON_KEY",
-   "SUPABASE_DB_URL",
    "SUPABASE_SERVICE_ROLE_KEY",
    "SUPABASE_URL",
    "VITE_SUPABASE_PUBLISHABLE_KEY",

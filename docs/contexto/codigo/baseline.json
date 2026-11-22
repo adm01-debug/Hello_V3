@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "025ada530731c5d2e3f3ba900840c555271693f8",
+  "commit": "49ee3776ebac4a998a8bb515b398503839e8091a",
   "branch": "main",
-  "data_commit": "2026-11-22T14:36:28-03:00",
+  "data_commit": "2026-11-22T15:04:57-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "49ee377",
+    "data": "2026-11-22",
+    "assunto": "fix: troca teste falso de optimistic lock por guarda real do contrato (#148)"
+   },
+   {
+    "sha": "df7171f",
+    "data": "2026-11-22",
+    "assunto": "docs: corrige roadmap desatualizado e registra verificacoes de 22/11 (#147)"
+   },
    {
     "sha": "025ada5",
     "data": "2026-11-22",
@@ -121,19 +131,9 @@
     "sha": "36c5c1f",
     "data": "2026-11-22",
     "assunto": "chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)"
-   },
-   {
-    "sha": "e708387",
-    "data": "2026-11-22",
-    "assunto": "feat: wire QueueTrendChart a dados reais (realtimeData do useQueueMetrics) (#123)"
-   },
-   {
-    "sha": "92cb97a",
-    "data": "2026-11-22",
-    "assunto": "test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)"
    }
   ],
-  "arquivos_mudados_7d": 869,
+  "arquivos_mudados_7d": 871,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 24
+    "mudancas": 25
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -176,6 +176,10 @@
     "mudancas": 7
    },
    {
+    "pasta": "docs/audits/pendencias-2026-07.md",
+    "mudancas": 7
+   },
+   {
     "pasta": "docs/edge-functions/README.md",
     "mudancas": 7
    },
@@ -190,16 +194,12 @@
    {
     "pasta": ".github/workflows/contexto.yml",
     "mudancas": 6
-   },
-   {
-    "pasta": "covout/hooks/auth",
-    "mudancas": 6
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 24
+    "mudancas": 25
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -210,15 +210,15 @@
     "mudancas": 7
    },
    {
+    "arquivo": "docs/audits/pendencias-2026-07.md",
+    "mudancas": 7
+   },
+   {
     "arquivo": "docs/edge-functions/README.md",
     "mudancas": 7
    },
    {
     "arquivo": ".github/workflows/contexto.yml",
-    "mudancas": 6
-   },
-   {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 6
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 127
+    "commits": 129
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1636,
   "arquivos_codigo": 1241,
-  "linhas_codigo": 169380,
+  "linhas_codigo": 169398,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 174,
-   "linhas": 19834
+   "linhas": 19852
   },
   "tailwind.config.ts": {
    "arquivos": 1,
