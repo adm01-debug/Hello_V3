@@ -1800,6 +1800,7 @@
     "whisper-history-${selectedCall.id}"
    ],
    "env": [
+    "DEV",
     "VITE_SUPABASE_PUBLISHABLE_KEY",
     "VITE_SUPABASE_URL"
    ],
@@ -2385,6 +2386,7 @@
    "buckets": [],
    "canais_realtime": [],
    "env": [
+    "DEV",
     "VITE_SUPABASE_PUBLISHABLE_KEY",
     "VITE_SUPABASE_URL"
    ],
@@ -3157,7 +3159,7 @@
    "modulo": "hooks",
    "arquivos": 167,
    "testes": 0,
-   "linhas": 20511,
+   "linhas": 20515,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3829,6 +3831,7 @@
     "whisper-history-${selectedCall.id}"
    ],
    "env": [
+    "DEV",
     "VITE_SUPABASE_PUBLISHABLE_KEY",
     "VITE_SUPABASE_URL"
    ],
@@ -4671,6 +4674,7 @@
     "whisper-history-${selectedCall.id}"
    ],
    "env": [
+    "DEV",
     "VITE_SUPABASE_PUBLISHABLE_KEY",
     "VITE_SUPABASE_URL",
     "VITE_TURN_CRED",
@@ -5187,7 +5191,7 @@
    "modulo": "pages",
    "arquivos": 92,
    "testes": 0,
-   "linhas": 16306,
+   "linhas": 16308,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5828,6 +5832,7 @@
     "whisper-history-${selectedCall.id}"
    ],
    "env": [
+    "DEV",
     "VITE_SUPABASE_PROJECT_ID",
     "VITE_SUPABASE_PUBLISHABLE_KEY",
     "VITE_SUPABASE_URL"
@@ -6829,6 +6834,7 @@
     "whisper-history-${selectedCall.id}"
    ],
    "env": [
+    "DEV",
     "VITE_SUPABASE_PROJECT_ID",
     "VITE_SUPABASE_PUBLISHABLE_KEY",
     "VITE_SUPABASE_URL"

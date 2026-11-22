@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "8c73b1ef29b65769c011d998f3024c4fdc8d198f",
+  "sha": "1123090e2faf3646d503c6ef63c3a599a4ca8e0a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 08:16 UTC",
+  "generated_at": "2026-11-22 08:31 UTC",
   "files_total": 1673,
   "code_files": 1476,
-  "code_lines": 184434
+  "code_lines": 184440
  },
  "version": "1.3.2",
- "facts_hash": "7e32a5b13496ea14",
+ "facts_hash": "df6fd04dd028f91b",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33431,7 +33431,7 @@
   {
    "module": "src/hooks",
    "files": 350,
-   "lines": 45225,
+   "lines": 45229,
    "tables": [
     "accounts",
     "active_sessions",
@@ -33908,7 +33908,7 @@
   {
    "module": "src/pages",
    "files": 131,
-   "lines": 20816,
+   "lines": 20818,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -37222,6 +37222,10 @@
     "scripts/fix-user-profile.mjs",
     "scripts/inspect-schema.mjs",
     "scripts/test-rls-access.mjs"
+   ],
+   "DEV": [
+    "src/hooks/useAgentRanking.ts",
+    "src/pages/AgentRanking.tsx"
    ],
    "DIALER_CRON_TOKEN": [
     "supabase/functions/dialer-pacing-tick/index.ts"
@@ -96409,7 +96413,7 @@
   },
   "src/hooks/useAgentRanking.ts": {
    "path": "src/hooks/useAgentRanking.ts",
-   "lines": 315,
+   "lines": 319,
    "exports": [
     "interface AgentStats",
     "interface AgentGoals",
@@ -96482,6 +96486,9 @@
      "customer_satisfaction"
     ]
    },
+   "env": [
+    "DEV"
+   ],
    "errors": [
     "Erro ao carregar dados dos agentes",
     "Erro ao criar dados de teste",
@@ -112027,9 +112034,12 @@
   },
   "src/pages/AgentRanking.tsx": {
    "path": "src/pages/AgentRanking.tsx",
-   "lines": 84,
+   "lines": 86,
    "exports": [
     "function AgentRanking"
+   ],
+   "env": [
+    "DEV"
    ]
   },
   "src/pages/AlertHistory.tsx": {
@@ -122365,10 +122375,20 @@
   }
  },
  "git": {
-  "sha": "8c73b1ef29b65769c011d998f3024c4fdc8d198f",
+  "sha": "1123090e2faf3646d503c6ef63c3a599a4ca8e0a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "1123090",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: gate createTestData e botão Criar Dados para DEV (#120)",
+    "files": [
+     "src/hooks/useAgentRanking.ts",
+     "src/pages/AgentRanking.tsx"
+    ]
+   },
    {
     "sha": "8c73b1e",
     "date": "2026-11-22",
@@ -122889,17 +122909,6 @@
      "supabase/functions/sync-crm-queue/index.ts",
      "supabase/functions/teams-fetch-recordings/index.ts"
     ]
-   },
-   {
-    "sha": "ce11791",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: load-tests exigem admin e limpam dados de teste (#91)",
-    "files": [
-     "docs/edge-functions/README.md",
-     "supabase/functions/global-load-test/index.ts",
-     "supabase/functions/voip-load-test/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -122909,15 +122918,15 @@
    ],
    [
     "docs/edge-functions/README.md",
-    5
+    4
    ],
    [
     "supabase/functions/validate-geo/index.ts",
     3
    ],
    [
-    "supabase/functions/voip-load-test/index.ts",
-    3
+    "src/pages/AgentRanking.tsx",
+    2
    ],
    [
     "src/hooks/useWebAuthn.ts",
@@ -122952,10 +122961,6 @@
     2
    ],
    [
-    "supabase/functions/global-load-test/index.ts",
-    2
-   ],
-   [
     "supabase/functions/record-consent/index.ts",
     2
    ],
@@ -122965,6 +122970,10 @@
    ],
    [
     "supabase/functions/voip-failover-notifier/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/voip-load-test/index.ts",
     2
    ],
    [

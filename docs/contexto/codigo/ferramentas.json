@@ -392,6 +392,7 @@
    "VITE_SUPABASE_URL"
   ],
   "usadas_no_front": [
+   "DEV",
    "VITE_SUPABASE_PROJECT_ID",
    "VITE_SUPABASE_PUBLISHABLE_KEY",
    "VITE_SUPABASE_URL",
@@ -447,6 +448,7 @@
    "TYPES_TS_SRC"
   ],
   "usadas_mas_nao_declaradas": [
+   "DEV",
    "VITE_TURN_CRED",
    "VITE_TURN_URL",
    "VITE_TURN_USER"

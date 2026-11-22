@@ -719,7 +719,7 @@
    "hooks_exportados": [
     "useAgentRanking"
    ],
-   "linhas": 315,
+   "linhas": 319,
    "dominio": "hooks",
    "tabelas": [
     "agent_goals",

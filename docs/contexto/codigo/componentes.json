@@ -5446,7 +5446,7 @@
     "AgentRanking"
    ],
    "export_default": "AgentRanking",
-   "linhas": 84,
+   "linhas": 86,
    "dominio": "pages",
    "hooks_locais": [
     "useAgentRanking",
