@@ -94,6 +94,26 @@ As duas edges (`check-goals`, `check-queue-metrics`) já usavam `completed + aba
 
 Corrigido na PR #131 (`forceMount` + `data-[state=closed]:hidden`) e ajustado na #133: o `forceMount` puro montava o gráfico para sempre, e como o gráfico chama `useQueueMetrics()` — canal realtime + polling de 5 s — isso passava a cobrar polling infinito de quem **nunca** abria a tendência. Agora monta no primeiro clique e nunca desmonta depois.
 
+### 3.4 Validação ponta a ponta de 22/11: IA e Data Lake
+
+Até aqui a IA era tratada como "20+ edges que devolvem 503 por falta de chave" e o Data Lake como "aguardando dados reais". As duas pendências foram fechadas por execução real contra produção, não por leitura de código.
+
+**IA — 6 chamadas reais, 0 × 503.** Com um JWT de sessão válido, o gateway Open Router respondeu:
+
+| Edge | Payload | Resultado |
+|---|---|---|
+| `whatsapp-rewrite` × 4 tons (`profissional`, `amigavel`, `conciso`, `empatico`) | mensagem de 43 caracteres | 200 nos 4, cada um com reescrita distinta e coerente com o tom |
+| `analyze-sentiment` | transcrição de reclamação | 200, `overall_sentiment: negative`, `sentiment_score: -0.9`, `customer_satisfaction_estimate: 1` |
+| `score-call` / `translate-summary` | payload incompleto | 400 com mensagem de campo obrigatório — validação de entrada ativa |
+
+O contrato de `whatsapp-rewrite` é `{ message, tone, context? }` (não `text`); o de `analyze-sentiment` é `{ transcription, callSessionId? }`.
+
+**Data Lake — ciclo completo provado.** `data-lake-flush` exportou 50 linhas de `call_sessions` e 50 de `deals` para `data-lake-exports/2026/11/22/*.ndjson`; o objeto foi baixado do bucket com 18 100 bytes e 50 linhas NDJSON válidas, e `data_lake_exports.row_count`/`size_bytes` foram gravados. Com um `call_summaries` inserido de propósito, o flush seguinte exportou **1 linha** e a RPC `get_call_history_with_summaries` passou a devolver `overall_sentiment`, `main_topics` e `customer_satisfaction`. O registro de teste foi removido e o contador voltou a 0.
+
+**Por que o histórico mostrava `rows: 0`.** O export diário das 06:12:38 UTC rodou **33 segundos antes** das 50 sessões serem criadas (06:13:11). Não era defeito de código: o flush é incremental por `created_at > último completed_at`, e simplesmente não havia nada novo na janela. Os únicos dados em produção são de carga de teste (`Load Test Bot` × 100, `Agente Teste` × 1) e já estão fora da janela de 1 h usada pelo dashboard, que portanto mede zero — correto.
+
+**Estado:** todas as 98 pastas de `supabase/functions/` respondem — 97 deployadas em produção (`__tests__` é pasta de teste, não função). Nenhuma 404.
+
 
 
 ---
@@ -175,3 +195,14 @@ Diferente de "dormente": aqui havia UI completa e navegável que **simulava** o 
 - **O gargalo era de ligação, não de construção:** 16 unidades completas sem consumidor, 7 Edge Functions sem gatilho, 6 rotas sem link de menu. **Resolvido em 21/11:** WIRING-01/03/05 CONCLUÍDOS; WIRING-02 DESCARTADO (sem chamadas ativas); WIRING-04/06 wireados (gamificação, surveys, churn, playlists, compliance, coaching com dados reais); `generate-coaching-track` reescrita contra schema real e wireada via botão em `/coaching` (PR #74). Restam 5 edges órfãs legítimas/ferramentas (`fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`) sem consumidor no fluxo do produto. (`cleanup-lock-conflicts` foi wireada ao `pg_cron` semanal em 22/11.)
 - **Seis módulos deixaram de ser fachada** — três ganharam função real (LDAP, escuta, Marketplace) e três foram rotulados honestamente (WebRTC indisponível, Zoom/Meet em breve, simulação declarada como demonstração). Ver §7.
 - **A documentação de conclusão (`SYSTEM_FEATURES.md`, ADRs) não deve ser usada para decidir nada** enquanto não for reconciliada: ela marca 100% de conclusão sobre um sistema com 16 features dormentes e 6 fachadas.
+
+**Fechamento de 22/11 (após §3.4):** as duas últimas pendências abertas foram fechadas por execução real. A IA responde nas 4 variações de tom e classifica sentimento (0 × 503). O Data Lake exporta para o bucket e é lido de volta pelo banco. Nenhuma feature planejada segue bloqueada por código. O que resta **não é implementação**:
+
+| Pendência | Natureza |
+|---|---|
+| `wavoip-call` chamar a operadora real | Falta `WAVOIP_TOKEN` e o contrato da API, que não existe no repositório — integração externa |
+| Canal WebRTC do softphone | Falta o pacote `@elevenlabs/react` e a chave; hoje o componente avisa que está indisponível em vez de fingir conexão |
+| Zoom / Google Meet | Dependem de OAuth e registro de app nos provedores |
+| Dados de negócio | Produção tem apenas carga de teste; todos os painéis estão corretos medindo zero |
+| `service_role` a rotacionar | Ação de dashboard, sem via de API |
+
