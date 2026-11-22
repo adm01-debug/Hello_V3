@@ -12,10 +12,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-  normalizeSeverity,
-  severityBadgeVariant,
   type SecurityNotification,
 } from "@/components/security-alerts/VirtualTimeline";
+import {
+  normalizeSeverity,
+  severityBadgeVariant,
+} from "@/components/security-alerts/severity";
 
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 interface AlertDetailsDialogProps {

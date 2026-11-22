@@ -12,9 +12,9 @@ import {
 } from "@/lib/security-alerts-webhook";
 import { enqueueWebhook } from "@/lib/security-alerts-webhook-queue";
 import {
-  normalizeSeverity,
   type SecurityNotification,
 } from "@/components/security-alerts/VirtualTimeline";
+import { normalizeSeverity } from "@/components/security-alerts/severity";
 
 export type ExportScope = "all" | "critical" | "unread";
 export type ExportFormat = "csv" | "pdf";

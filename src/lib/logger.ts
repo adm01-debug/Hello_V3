@@ -67,6 +67,7 @@ function log(level: LogLevel, message: string, context?: string, data?: unknown)
   const rid = entry.requestId ? `[rid:${entry.requestId}]` : '';
   const formatted = `${entry.timestamp} [${entry.level.toUpperCase()}]${ctx}${rid} ${entry.message}`;
   const args: unknown[] = entry.data !== undefined ? [formatted, entry.data] : [formatted];
+  // eslint-disable-next-line no-console -- este é o único ponto que emite para o console; o nível é dinâmico
   console[level](...args);
 }
 

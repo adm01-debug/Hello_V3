@@ -17,15 +17,13 @@ import { useContacts, type Contact } from '@/hooks/useContacts';
 import { ContactDetailSheet } from '@/components/contacts/ContactDetailSheet';
 import { CreateContactDialog } from '@/components/contacts/CreateContactDialog';
 import { ContactGrid } from '@/components/contacts/ContactGrid';
+import { ContactFilters } from '@/components/contacts/ContactFilters';
 import {
-  ContactFilters,
   defaultContactFilters,
   type ContactFiltersState,
-} from '@/components/contacts/ContactFilters';
-import {
-  ContactPagination,
-  type PageSize,
-} from '@/components/contacts/ContactPagination';
+} from '@/components/contacts/contactFiltersState';
+import { ContactPagination } from '@/components/contacts/ContactPagination';
+import { type PageSize } from '@/components/contacts/pagination';
 import { useBitrixSync } from '@/components/contacts/useBitrixSync';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';

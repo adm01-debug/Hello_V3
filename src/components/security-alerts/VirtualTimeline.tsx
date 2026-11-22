@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CheckCircle2, ExternalLink, RefreshCw } from "lucide-react";
 import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
+import {
+  normalizeSeverity,
+  severityBadgeVariant,
+} from "./severity";
 
 export type SecurityNotification = {
   id: string;
@@ -22,20 +26,6 @@ export type SecurityNotification = {
   created_at: string;
   metadata: Record<string, unknown> | null;
 };
-
-export type Severity = "critical" | "warning" | "info";
-
-export function normalizeSeverity(s: string): Severity {
-  if (s === "critical" || s === "error") return "critical";
-  if (s === "warning") return "warning";
-  return "info";
-}
-
-export function severityBadgeVariant(s: Severity): "destructive" | "secondary" | "outline" {
-  if (s === "critical") return "destructive";
-  if (s === "warning") return "secondary";
-  return "outline";
-}
 
 type TimelineRow =
   | { kind: "day"; day: string; key: string }
