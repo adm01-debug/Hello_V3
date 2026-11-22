@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1191)",
+   "TypeScript (1197)",
    "SQL (241)",
    "Markdown (114)",
    "JavaScript (29)",
@@ -422,7 +422,8 @@
    "SUPABASE_URL",
    "VITE_SUPABASE_PUBLISHABLE_KEY",
    "VITE_SUPABASE_URL",
-   "WAVOIP_TOKEN"
+   "WAVOIP_TOKEN",
+   "WEBAUTHN_ALLOWED_ORIGINS"
   ],
   "usadas_no_python": [
    "AI_CONTEXT_INDEX",
@@ -507,6 +508,10 @@
     "arquivos": 6
    },
    {
+    "host": "hello-v3.vercel.app",
+    "arquivos": 4
+   },
+   {
     "host": "api.elevenlabs.io",
     "arquivos": 3
    },
@@ -532,10 +537,6 @@
    },
    {
     "host": "exemplo.com",
-    "arquivos": 2
-   },
-   {
-    "host": "hello-v3.vercel.app",
     "arquivos": 2
    },
    {
@@ -600,6 +601,10 @@
    },
    {
     "host": "ip-api.com",
+    "arquivos": 1
+   },
+   {
+    "host": "lalamove.app",
     "arquivos": 1
    },
    {

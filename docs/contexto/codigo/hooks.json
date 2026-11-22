@@ -4693,7 +4693,7 @@
    "hooks_exportados": [
     "useWebAuthn"
    ],
-   "linhas": 336,
+   "linhas": 340,
    "dominio": "hooks",
    "tabelas": [
     "user_passkeys",

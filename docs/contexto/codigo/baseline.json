@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6659a49213625504805d3c37a0bef1ca94146cba",
+  "commit": "6f648ab906e01b5855f53511f7c146410baf45d8",
   "branch": "main",
-  "data_commit": "2026-11-22T03:26:24-03:00",
+  "data_commit": "2026-11-22T03:30:45-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6f648ab",
+    "data": "2026-11-22",
+    "assunto": "fix(security): fecha account takeover no login por passkey (#116)"
+   },
    {
     "sha": "6659a49",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "ac18a93",
     "data": "2026-11-21",
     "assunto": "fix: indices de audit_logs usam created_at e guardam a coluna (#82)"
-   },
-   {
-    "sha": "d3e59cd",
-    "data": "2026-11-21",
-    "assunto": "fix: edges que escrevem com service_role exigem sessao (#92)"
    }
   ],
-  "arquivos_mudados_7d": 826,
+  "arquivos_mudados_7d": 834,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -168,15 +168,15 @@
     "mudancas": 10
    },
    {
+    "pasta": "supabase/functions/_shared",
+    "mudancas": 8
+   },
+   {
     "pasta": ".github/workflows/ci.yml",
     "mudancas": 7
    },
    {
     "pasta": "docs/edge-functions/README.md",
-    "mudancas": 7
-   },
-   {
-    "pasta": "supabase/functions/_shared",
     "mudancas": 7
    },
    {
@@ -290,18 +290,18 @@
     "mudancas": 3
    },
    {
-    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
+    "arquivo": "supabase/functions/export-data-lake/index.ts",
     "mudancas": 3
    },
    {
-    "arquivo": "supabase/functions/health-check/index.ts",
+    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
     "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 96
+    "commits": 97
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1616,
-  "arquivos_codigo": 1224,
-  "linhas_codigo": 167715,
+  "arquivos_total": 1622,
+  "arquivos_codigo": 1230,
+  "linhas_codigo": 168341,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 238,
   "cron_jobs": 10,
-  "testes": 331,
+  "testes": 335,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 350,
-   "linhas": 45223
+   "linhas": 45227
   },
   "src/integrations": {
    "arquivos": 3,
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 159,
-   "linhas": 18672
+   "arquivos": 165,
+   "linhas": 19294
   },
   "tailwind.config.ts": {
    "arquivos": 1,

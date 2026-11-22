@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6659a49213` · branch `main` · 2026-11-22 06:26 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6f648ab906` · branch `main` · 2026-11-22 06:31 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -941,7 +941,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `type` | `alert` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
 | `type` | `announcement` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `array` | escreve | `supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
-| `type` | `authentication` | escreve | `src/hooks/useWebAuthn.ts` |
+| `type` | `authentication` | escreve, filtra | `src/hooks/useWebAuthn.ts`<br>`supabase/functions/webauthn-authenticate/index.ts` |
 | `type` | `avg_handle_time` | compara | `supabase/functions/check-goals/index.ts` |
 | `type` | `avg_wait_time` | compara | `supabase/functions/check-goals/index.ts` |
 | `type` | `away_too_long` | escreve | `supabase/functions/compute-adherence/index.ts` |
@@ -2088,6 +2088,7 @@ _nenhum item encontrado_
 | 500 | `supabase/functions/voip-recommendations/index.ts` |
 | 2000 | `supabase/functions/voip-sla-report/index.ts` |
 | 1 | `supabase/functions/voip-trunks-healthcheck/index.ts` |
+| 1 | `supabase/functions/webauthn-authenticate/index.ts` |
 | 1 | `supabase/functions/whatsapp-inbound/index.ts` |
 | 10 | `supabase/functions/whatsapp-inbound/index.ts` |
 
@@ -2395,7 +2396,7 @@ _nenhum item encontrado_
 | Erro ao criar turno | `src/hooks/useShifts.ts` |
 | Erro ao remover turno | `src/hooks/useShifts.ts` |
 | Chamada em espera | `src/hooks/useSipCall.ts` |
-| … +219 linhas — lista completa em `context.json` | |
+| … +235 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2439,7 +2440,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3967 testes em 322 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3986 testes em 325 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2573,6 +2574,7 @@ _nenhum item encontrado_
 | `supabase/functions/_shared/__tests__/resilience.test.ts` | 9 | retry: sucesso na primeira tentativa não dorme · retry: exponencial sem jitter é determinístico · retry: respeita shouldRetry (não repete em 4xx) · retry: repete em 429 e 5xx … |
 | `supabase/functions/compute-deal-health/__tests__/index.test.ts` | 9 | compute-deal-health: recencyScore decresce 5 pts/dia, mín 0 · compute-deal-health: recencyScore = 100 quando hoje · compute-deal-health: sentimentScore neutro = 50 · compute-deal-health: sentimentScore 100% positivo = 100 … |
 | `supabase/functions/voip-recommendation-insights/__tests__/index.test.ts` | 9 | rejeita requisição sem JWT · rejeita período inválido (validação oneOf) · buildHeatmap gera 7×24 = 168 buckets · buildHeatmap incrementa bucket correto … |
+| `supabase/functions/webauthn-authenticate/__tests__/verify.test.ts` | 9 | verify: assercao legitima e aceita e devolve signCount · verify: assinatura de OUTRA chave e rejeitada · verify: desafio diferente e rejeitado (replay) · verify: origem estranha e rejeitada (phishing) … |
 | `src/__tests__/rls/audit-logs.test.ts` | 8 | RLS — audit_logs (imutabilidade + admin-only read) · admin pode ler logs de auditoria · admin pode inserir via função RPC · admin NÃO pode atualizar logs (imutabilidade) … |
 | `src/hooks/__tests__/useAccounts.coverage.test.tsx` | 8 | useAccounts coverage · handles load error · create success · create error returns null … |
 | `src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx` | 8 | useAnomalyRemediation · applied success · idempotent_skip → info · dryRun → info … |
@@ -2664,6 +2666,7 @@ _nenhum item encontrado_
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
 | `supabase/functions/enforce-sla/__tests__/index.test.ts` | 6 | enforce-sla: prioriza política de canal específico sobre  · enforce-sla: cai no fallback  · enforce-sla: calcula due dates a partir de created_at · enforce-sla: detecta breach de primeira resposta … |
+| `supabase/functions/record-consent/__tests__/index.test.ts` | 6 | record-consent: OPTIONS devolve preflight · record-consent: sem Authorization responde 401 · record-consent: token invalido nao grava consentimento · record-consent: canal fora do enum nao e aceito … |
 | `supabase/functions/validate-ip/__tests__/index.test.ts` | 6 | validate-ip: CORS preflight retorna headers válidos · validate-ip: rejeita requisição sem Authorization header · validate-ip: extrai IP de cf-connecting-ip prioritariamente · validate-ip: fallback para x-forwarded-for quando cf/real ausentes … |
 | `supabase/functions/voip-sla-report/__tests__/index.test.ts` | 6 | voip-sla-report: exige Authorization · voip-sla-report: rejeita token inválido · voip-sla-report: rejeita period inválido · voip-sla-report: aceita period=day/week/month na shape … |
 | `supabase/functions/whatsapp-inbound/contract.test.ts` | 6 | WhatsApp Inbound V1 - Valid Payload · WhatsApp Inbound V1 - Missing Required Fields · WhatsApp Inbound V1 - Invalid Attachment URL · WhatsApp Inbound V2 - Valid Payload (New ID field) … |
@@ -2722,6 +2725,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
 | `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
 | `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 4 | check-queue-metrics: cálculo de avg wait time (contrato) · check-queue-metrics: cálculo de abandonment rate (contrato) · check-queue-metrics: service level (≤30s contrato) · check-queue-metrics: thresholds default (contrato) |
+| `supabase/functions/export-data-lake/__tests__/csv.test.ts` | 4 | toCsv: vazio devolve string vazia · toCsv: cabecalho e a uniao das colunas, sem perder dados · toCsv: escapa virgula, aspas e quebra de linha · toCsv: nulo e undefined viram vazio |
 | `supabase/functions/voip-anomaly-detector/__tests__/index.test.ts` | 4 | detectAnomalies — sem anomalias quando obs próximo da média · detectAnomalies — MOS muito baixo gera anomaly critical · detectAnomalies — jitter elevado gera warning · detectAnomalies — baseline insuficiente não gera anomaly |
 | `supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts` | 4 | planRemediation — mos:outage retorna ação crítica de codec · planRemediation — jitter:outage pausa campanhas · planRemediation — combinação desconhecida vira noop · idempotencyKey — chave estável e derivada do id |
 | `supabase/functions/voip-capacity-forecast/__tests__/index.test.ts` | 4 | buildHistory — agrupa sessões por dia e identifica pico · forecastNextDays — vazio quando histórico < 7 dias · forecastNextDays — gera 7 dias com confiança quando há histórico · forecastNextDays — sinaliza exceeds_capacity quando peak > cap |
@@ -2740,10 +2744,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useForecastVolume.coverage.test.tsx` | 3 | useForecastVolume · returns forecast on success · errors when invoke returns error |
 | `src/hooks/__tests__/useRenewals.test.ts` | 3 | useRenewals · classifies renewals into 30/60/90 buckets · computes weighted and pipeline totals |
 | `src/hooks/__tests__/useShifts.test.tsx` | 3 | useShifts · carrega shifts da semana · expõe ações CRUD |
-| `src/hooks/__tests__/useSkills.coverage.test.tsx` | 3 | useSkills · loads skills and agent skills, runs mutations · handles mutation errors |
-| `src/hooks/__tests__/useTrunkRealtimeMetrics.coverage.test.tsx` | 3 | useTrunkRealtimeMetrics · computes occupancy metrics · handles trunk with zero max_channels and no calls |
-| `src/hooks/__tests__/useVoipRecommendationSimulate.coverage.test.tsx` | 3 | useVoipRecommendationSimulate · simulates a recommendation successfully · throws when invoke returns an error |
-| … +22 linhas — lista completa em `context.json` | | |
+| … +25 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3019,6 +3020,9 @@ _nenhum item encontrado_
 | JWT obrigatório, CORS centralizado, validação Zod-like via _shared/validate. | `supabase/functions/voip-recommendation-simulate/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-recommendations/index.ts` |
 | validação Zod-like via _shared/validate, tracing via x-request-id. | `supabase/functions/voip-sla-report/index.ts` |
+| O e-mail NAO pode vir do corpo do request: a edge e publica, e um | `supabase/functions/webauthn-authenticate/index.ts` |
+| * Antes desta correcao a edge apenas conferia se o `credential_id` existia | `supabase/functions/webauthn-authenticate/verify.ts` |
+| rpIdHash (32 bytes) deve bater com o RP configurado (o host). | `supabase/functions/webauthn-authenticate/verify.ts` |
 | * Normaliza telefone para comparação (apenas dígitos). */ | `supabase/functions/whatsapp-inbound/idempotency.ts` |
 | Erro de dedup não pode derrubar a entrega: registra e segue. | `supabase/functions/whatsapp-inbound/index.ts` |
 | Required but empty | `supabase/functions/whatsapp-inbound/schema_test.ts` |

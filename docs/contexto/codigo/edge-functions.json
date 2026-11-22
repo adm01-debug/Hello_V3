@@ -6,6 +6,7 @@
  "verify_jwt_false": [],
  "shared": [
   "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+  "supabase/functions/_shared/__tests__/capture-handler.ts",
   "supabase/functions/_shared/__tests__/resilience.test.ts",
   "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
   "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
@@ -1146,8 +1147,8 @@
   {
    "nome": "export-data-lake",
    "entrada": "supabase/functions/export-data-lake/index.ts",
-   "arquivos": 1,
-   "linhas": 93,
+   "arquivos": 2,
+   "linhas": 120,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1176,7 +1177,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "extract-crm-fields",
@@ -1795,7 +1796,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "redact-sensitive-audio",
@@ -3171,24 +3172,28 @@
   {
    "nome": "webauthn-authenticate",
    "entrada": "supabase/functions/webauthn-authenticate/index.ts",
-   "arquivos": 1,
-   "linhas": 98,
+   "arquivos": 2,
+   "linhas": 330,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
    "tabelas": [
     "audit_logs",
-    "user_passkeys"
+    "user_passkeys",
+    "webauthn_challenges"
    ],
    "rpcs": [],
    "env": [
     "SUPABASE_SERVICE_ROLE_KEY",
-    "SUPABASE_URL"
+    "SUPABASE_URL",
+    "WEBAUTHN_ALLOWED_ORIGINS"
    ],
    "buckets": [],
    "chama_edges": [],
-   "hosts_externos": [],
+   "hosts_externos": [
+    "lalamove.app"
+   ],
    "usa_shared": [
     "cors.ts"
    ],
@@ -3198,7 +3203,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "webhook-handler",

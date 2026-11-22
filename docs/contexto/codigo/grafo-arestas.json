@@ -4698,7 +4698,8 @@
    "supabase/functions/_shared/voice-utils.ts"
   ],
   "supabase/functions/export-data-lake/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/export-data-lake/csv.ts"
   ],
   "supabase/functions/extract-crm-fields/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4906,7 +4907,8 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/webauthn-authenticate/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/webauthn-authenticate/verify.ts"
   ],
   "supabase/functions/webhook-handler/index.ts": [
    "supabase/functions/_shared/cors.ts",

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "6659a49213625504805d3c37a0bef1ca94146cba",
+  "sha": "6f648ab906e01b5855f53511f7c146410baf45d8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 06:26 UTC",
-  "files_total": 1663,
-  "code_files": 1466,
-  "code_lines": 183534
+  "generated_at": "2026-11-22 06:31 UTC",
+  "files_total": 1669,
+  "code_files": 1472,
+  "code_lines": 184160
  },
  "version": "1.3.2",
- "facts_hash": "9d56f334edabf278",
+ "facts_hash": "6060cb3c2b3c3dea",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 604,
-   ".ts": 587,
+   ".ts": 593,
    ".sql": 241,
    ".mjs": 27,
    ".py": 5,
@@ -31652,19 +31652,24 @@
     "auth": "service_role (ignora RLS) — NÃO valida usuário no código",
     "tables": [
      "audit_logs",
-     "user_passkeys"
+     "user_passkeys",
+     "webauthn_challenges"
     ],
     "env": [
      "SUPABASE_SERVICE_ROLE_KEY",
-     "SUPABASE_URL"
+     "SUPABASE_URL",
+     "WEBAUTHN_ALLOWED_ORIGINS"
     ],
     "external": [],
     "invokes": [],
     "doc": "",
     "errors": [
+     "Challenge expirado. Tente novamente.",
      "Failed to generate authentication token",
+     "Failed to resolve passkey owner",
      "Invalid passkey",
-     "Missing required fields"
+     "Missing required fields",
+     "Passkey invalida (${codigo})"
     ],
     "side_effects": [],
     "webhook_events": [],
@@ -33399,7 +33404,7 @@
   {
    "module": "src/hooks",
    "files": 350,
-   "lines": 45223,
+   "lines": 45227,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34100,8 +34105,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 159,
-   "lines": 18672,
+   "files": 165,
+   "lines": 19294,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34185,6 +34190,7 @@
     "voip_recommendation_actions",
     "voip_trunk_health_checks",
     "voip_trunks",
+    "webauthn_challenges",
     "webhook_flush_metrics",
     "webhook_secrets"
    ],
@@ -34201,7 +34207,9 @@
     "validate.ts: string, uuid, number, boolean, optional, array",
     "validator.ts: ValidationError, StandardErrorResponse, createErrorResponse, validateBody",
     "voice-utils.ts: VoiceFeatures, cosineSimilarity, averageEmbeddings, verifyVerdict, REDACTION_PATTERNS, RedactionMatch",
+    "capture-handler.ts: capturarHandler",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
+    "csv.ts: toCsv",
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
     "index.ts: handler",
     "slo-budget.ts: BudgetStatus, BudgetInput, BudgetResult, budget",
@@ -34218,6 +34226,7 @@
     "index.ts: ActionRow, QualityRow, InsightsResponse, buildHeatmap, calcEffectiveness, computeRecurring",
     "index.ts: QualityRow, AlertRow, SimulationDelta, SimulationResult, projectImpact",
     "index.ts: RecommendationCategory, RecommendationSeverity, RecommendationActionType, Recommendation, SignalContext, buildRecommendations",
+    "verify.ts: WebAuthnError, base64UrlToBytes, AssertionInput, AssertionResultado, verificarAssercao",
     "idempotency.ts: StoredMessageRef, ReplayResponse, detectReplay, normalizePhone",
     "schema.ts: WhatsAppInboundV1Schema, WhatsAppInboundV2Schema, WhatsAppInboundV1, WhatsAppInboundV2"
    ],
@@ -34253,6 +34262,7 @@
     "supabase/functions/_shared/validator_test.ts",
     "supabase/functions/_shared/voice-utils.ts",
     "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+    "supabase/functions/_shared/__tests__/capture-handler.ts",
     "supabase/functions/_shared/__tests__/resilience.test.ts",
     "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
     "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
@@ -34302,7 +34312,9 @@
     "supabase/functions/enforce-sla/index.ts",
     "supabase/functions/enforce-sla/__tests__/index.test.ts",
     "supabase/functions/enroll-voice/index.ts",
+    "supabase/functions/export-data-lake/csv.ts",
     "supabase/functions/export-data-lake/index.ts",
+    "supabase/functions/export-data-lake/__tests__/csv.test.ts",
     "supabase/functions/extract-crm-fields/index.ts",
     "supabase/functions/forecast-call-volume/index.ts",
     "supabase/functions/forecast-deals/index.ts",
@@ -34311,10 +34323,7 @@
     "supabase/functions/generate-coaching-plan/index.ts",
     "supabase/functions/generate-coaching-track/index.ts",
     "supabase/functions/generate-coaching-track/track-engine.ts",
-    "supabase/functions/generate-coaching-track/track-engine_test.ts",
-    "supabase/functions/generate-meeting-summary/index.ts",
-    "supabase/functions/generate-summary/index.ts",
-    "supabase/functions/global-load-test/index.ts"
+    "supabase/functions/generate-coaching-track/track-engine_test.ts"
    ]
   },
   {
@@ -36281,6 +36290,12 @@
    "webauthn_challenges": {
     "ref": [
      "src/hooks/useWebAuthn.ts"
+    ],
+    "select": [
+     "supabase/functions/webauthn-authenticate/index.ts"
+    ],
+    "delete": [
+     "supabase/functions/webauthn-authenticate/index.ts"
     ]
    },
    "webhook_flush_metrics": {
@@ -36948,6 +36963,7 @@
     "friendly_name",
     "id",
     "last_used_at",
+    "public_key",
     "user_id"
    ],
    "user_profiles": [
@@ -37048,6 +37064,13 @@
     "transport",
     "updated_at",
     "version"
+   ],
+   "webauthn_challenges": [
+    "challenge",
+    "expires_at",
+    "id",
+    "type",
+    "user_id"
    ],
    "webhook_flush_metrics": [
     "created_at",
@@ -37677,6 +37700,9 @@
    ],
    "WAVOIP_TOKEN": [
     "supabase/functions/wavoip-call/index.ts"
+   ],
+   "WEBAUTHN_ALLOWED_ORIGINS": [
+    "supabase/functions/webauthn-authenticate/index.ts"
    ]
   },
   "rpc": {
@@ -41602,7 +41628,15 @@
    },
    {
     "file": "supabase/functions/webauthn-authenticate/index.ts",
+    "msg": "Challenge expirado. Tente novamente."
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/index.ts",
     "msg": "Failed to generate authentication token"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/index.ts",
+    "msg": "Failed to resolve passkey owner"
    },
    {
     "file": "supabase/functions/webauthn-authenticate/index.ts",
@@ -41611,6 +41645,62 @@
    {
     "file": "supabase/functions/webauthn-authenticate/index.ts",
     "msg": "Missing required fields"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/index.ts",
+    "msg": "Passkey invalida (${codigo})"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "assinatura invalida"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "authenticatorData truncado"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "chave publica ilegivel"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "chave publica nao e P-256/SPKI"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "chave publica vazia"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "clientDataJSON invalido"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "desafio nao corresponde"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "origem malformada: ${origem}"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "origem nao permitida: ${origem}"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "presenca do usuario nao confirmada"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "rpIdHash nao corresponde"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "tipo de cerimonia inesperado: ${clientData.type}"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "msg": "verificacao do usuario nao confirmada"
    }
   ],
   "role_checks": [
@@ -42283,6 +42373,18 @@
    {
     "file": "supabase/functions/voip-sla-report/index.ts",
     "text": "validação Zod-like via _shared/validate, tracing via x-request-id."
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/index.ts",
+    "text": "O e-mail NAO pode vir do corpo do request: a edge e publica, e um"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "text": "* Antes desta correcao a edge apenas conferia se o `credential_id` existia"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/verify.ts",
+    "text": "rpIdHash (32 bytes) deve bater com o RP configurado (o host)."
    },
    {
     "file": "supabase/functions/whatsapp-inbound/idempotency.ts",
@@ -54736,6 +54838,12 @@
     "field": "type",
     "value": "magiclink",
     "kind": "escreve"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/index.ts",
+    "field": "type",
+    "value": "authentication",
+    "kind": "filtra"
    },
    {
     "file": "supabase/functions/whatsapp-inbound/index.ts",
@@ -71358,6 +71466,22 @@
     "name": "enforce-sla: idempotente — não recalcula se já tem due"
    },
    {
+    "file": "supabase/functions/export-data-lake/__tests__/csv.test.ts",
+    "name": "toCsv: vazio devolve string vazia"
+   },
+   {
+    "file": "supabase/functions/export-data-lake/__tests__/csv.test.ts",
+    "name": "toCsv: cabecalho e a uniao das colunas, sem perder dados"
+   },
+   {
+    "file": "supabase/functions/export-data-lake/__tests__/csv.test.ts",
+    "name": "toCsv: escapa virgula, aspas e quebra de linha"
+   },
+   {
+    "file": "supabase/functions/export-data-lake/__tests__/csv.test.ts",
+    "name": "toCsv: nulo e undefined viram vazio"
+   },
+   {
     "file": "supabase/functions/health-check/__tests__/index.test.ts",
     "name": "health-check: handles OPTIONS"
    },
@@ -71408,6 +71532,30 @@
    {
     "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
     "name": "budget - total nao finito vira unknown"
+   },
+   {
+    "file": "supabase/functions/record-consent/__tests__/index.test.ts",
+    "name": "record-consent: OPTIONS devolve preflight"
+   },
+   {
+    "file": "supabase/functions/record-consent/__tests__/index.test.ts",
+    "name": "record-consent: sem Authorization responde 401"
+   },
+   {
+    "file": "supabase/functions/record-consent/__tests__/index.test.ts",
+    "name": "record-consent: token invalido nao grava consentimento"
+   },
+   {
+    "file": "supabase/functions/record-consent/__tests__/index.test.ts",
+    "name": "record-consent: canal fora do enum nao e aceito"
+   },
+   {
+    "file": "supabase/functions/record-consent/__tests__/index.test.ts",
+    "name": "record-consent: consent_type fora do enum nao e aceito"
+   },
+   {
+    "file": "supabase/functions/record-consent/__tests__/index.test.ts",
+    "name": "record-consent: JSON quebrado nao vira 200"
    },
    {
     "file": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
@@ -71780,6 +71928,42 @@
    {
     "file": "supabase/functions/voip-trunks-healthcheck/index.test.ts",
     "name": "voip-trunks-healthcheck: basic execution logic"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+    "name": "verify: assercao legitima e aceita e devolve signCount"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+    "name": "verify: assinatura de OUTRA chave e rejeitada"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+    "name": "verify: desafio diferente e rejeitado (replay)"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+    "name": "verify: origem estranha e rejeitada (phishing)"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+    "name": "verify: sem verificacao do usuario (UV) e rejeitado"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+    "name": "verify: tipo de cerimonia errado e rejeitado"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+    "name": "verify: authenticatorData truncado e rejeitado"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+    "name": "verify: chave publica ilegivel e rejeitada"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+    "name": "verify: base64url decodifica corretamente"
    },
    {
     "file": "supabase/functions/whatsapp-inbound/contract.test.ts",
@@ -80736,6 +80920,10 @@
     "limit": "1"
    },
    {
+    "file": "supabase/functions/webauthn-authenticate/index.ts",
+    "limit": "1"
+   },
+   {
     "file": "supabase/functions/whatsapp-inbound/index.ts",
     "limit": "1"
    },
@@ -81874,7 +82062,8 @@
       "escreve:src/hooks/useWebAuthn.ts"
      ],
      "authentication": [
-      "escreve:src/hooks/useWebAuthn.ts"
+      "escreve:src/hooks/useWebAuthn.ts",
+      "filtra:supabase/functions/webauthn-authenticate/index.ts"
      ],
      "unhandled-rejection": [
       "escreve:src/lib/error-tracking.ts"
@@ -102892,7 +103081,7 @@
   },
   "src/hooks/useWebAuthn.ts": {
    "path": "src/hooks/useWebAuthn.ts",
-   "lines": 336,
+   "lines": 340,
    "exports": [
     "function useWebAuthn"
    ],
@@ -102926,12 +103115,12 @@
      "op": "select"
     },
     {
-     "table": "user_passkeys",
-     "op": "update"
-    },
-    {
      "table": "user_profiles",
      "op": "select"
+    },
+    {
+     "table": "user_passkeys",
+     "op": "update"
     },
     {
      "table": "user_passkeys",
@@ -114710,6 +114899,22 @@
     "classifyHost trata host vazio e domínios internos"
    ]
   },
+  "supabase/functions/_shared/__tests__/capture-handler.ts": {
+   "path": "supabase/functions/_shared/__tests__/capture-handler.ts",
+   "lines": 43,
+   "is_test": true,
+   "exports": [
+    "function capturarHandler"
+   ],
+   "errors": [
+    "Deno.serve chamado sem handler de funcao",
+    "nenhum handler registrado via Deno.serve"
+   ],
+   "rule_comments": [
+    "chamar como funcao. Deve ser usado UMA vez por modulo, porque o cache de"
+   ],
+   "doc": "Captura o handler de uma edge escrita com `Deno.serve(fn)` sem alterar o codigo de producao. Muitas edges registram o handler direto no modulo, entao importa-las subiria um servidor de verdade. Este helper substitui `Deno.serve` por um espião, importa o modulo e devolve o handler capturado para o te …"
+  },
   "supabase/functions/_shared/__tests__/resilience.test.ts": {
    "path": "supabase/functions/_shared/__tests__/resilience.test.ts",
    "lines": 162,
@@ -116798,9 +117003,17 @@
    ],
    "uses_service_role": true
   },
+  "supabase/functions/export-data-lake/csv.ts": {
+   "path": "supabase/functions/export-data-lake/csv.ts",
+   "lines": 37,
+   "exports": [
+    "function toCsv"
+   ],
+   "doc": "Serializa linhas para CSV. A versao anterior usava as chaves de `rows[0]` como cabecalho: se uma linha seguinte trouxesse uma coluna que a primeira nao tinha, esse dado era descartado em silencio — inaceitavel numa exportacao de LGPD, onde o arquivo e a resposta legal ao titular. Aqui o cabecalho e …"
+  },
   "supabase/functions/export-data-lake/index.ts": {
    "path": "supabase/functions/export-data-lake/index.ts",
-   "lines": 93,
+   "lines": 83,
    "tables": [
     {
      "table": "user_roles",
@@ -116882,6 +117095,21 @@
     "50000"
    ],
    "uses_service_role": true
+  },
+  "supabase/functions/export-data-lake/__tests__/csv.test.ts": {
+   "path": "supabase/functions/export-data-lake/__tests__/csv.test.ts",
+   "lines": 39,
+   "is_test": true,
+   "rule_comments": [
+    "precisa conter TODAS as colunas e nao pode corromper campos com aspas,"
+   ],
+   "doc": "A exportacao e a resposta legal a um pedido de LGPD: o CSV entregue precisa conter TODAS as colunas e nao pode corromper campos com aspas, virgula ou quebra de linha. Estes testes travam esse contrato.",
+   "tests": [
+    "toCsv: vazio devolve string vazia",
+    "toCsv: cabecalho e a uniao das colunas, sem perder dados",
+    "toCsv: escapa virgula, aspas e quebra de linha",
+    "toCsv: nulo e undefined viram vazio"
+   ]
   },
   "supabase/functions/extract-crm-fields/index.ts": {
    "path": "supabase/functions/extract-crm-fields/index.ts",
@@ -118129,6 +118357,23 @@
     "Unauthorized"
    ],
    "uses_service_role": true
+  },
+  "supabase/functions/record-consent/__tests__/index.test.ts": {
+   "path": "supabase/functions/record-consent/__tests__/index.test.ts",
+   "lines": 92,
+   "is_test": true,
+   "rule_comments": [
+    "titular autorizou contato. Um bug aqui nao quebra a tela, gera multa."
+   ],
+   "doc": "record-consent grava consentimento TCPA/LGPD: a prova legal de que o titular autorizou contato. Um bug aqui nao quebra a tela, gera multa. Testamos os caminhos fail-closed sem tocar Supabase.",
+   "tests": [
+    "record-consent: OPTIONS devolve preflight",
+    "record-consent: sem Authorization responde 401",
+    "record-consent: token invalido nao grava consentimento",
+    "record-consent: canal fora do enum nao e aceito",
+    "record-consent: consent_type fora do enum nao e aceito",
+    "record-consent: JSON quebrado nao vira 200"
+   ]
   },
   "supabase/functions/redact-sensitive-audio/index.ts": {
    "path": "supabase/functions/redact-sensitive-audio/index.ts",
@@ -120393,11 +120638,19 @@
   },
   "supabase/functions/webauthn-authenticate/index.ts": {
    "path": "supabase/functions/webauthn-authenticate/index.ts",
-   "lines": 98,
+   "lines": 157,
    "tables": [
     {
      "table": "user_passkeys",
      "op": "select"
+    },
+    {
+     "table": "webauthn_challenges",
+     "op": "select"
+    },
+    {
+     "table": "webauthn_challenges",
+     "op": "delete"
     },
     {
      "table": "audit_logs",
@@ -120406,28 +120659,110 @@
    ],
    "table_cols": {
     "user_passkeys": [
+     "counter",
      "credential_id",
      "id",
+     "public_key",
+     "user_id"
+    ],
+    "webauthn_challenges": [
+     "challenge",
+     "expires_at",
+     "id",
+     "type",
      "user_id"
     ]
    },
    "env": [
     "SUPABASE_SERVICE_ROLE_KEY",
-    "SUPABASE_URL"
+    "SUPABASE_URL",
+    "WEBAUTHN_ALLOWED_ORIGINS"
    ],
    "errors": [
+    "Challenge expirado. Tente novamente.",
     "Failed to generate authentication token",
+    "Failed to resolve passkey owner",
     "Invalid passkey",
-    "Missing required fields"
+    "Missing required fields",
+    "Passkey invalida (${codigo})"
    ],
    "status_values": [
     {
      "field": "type",
      "value": "magiclink",
      "kind": "escreve"
+    },
+    {
+     "field": "type",
+     "value": "authentication",
+     "kind": "filtra"
     }
    ],
+   "rule_comments": [
+    "O e-mail NAO pode vir do corpo do request: a edge e publica, e um"
+   ],
+   "pagination": [
+    "1"
+   ],
    "uses_service_role": true
+  },
+  "supabase/functions/webauthn-authenticate/verify.ts": {
+   "path": "supabase/functions/webauthn-authenticate/verify.ts",
+   "lines": 173,
+   "exports": [
+    "class WebAuthnError",
+    "function base64UrlToBytes",
+    "interface AssertionInput",
+    "interface AssertionResultado",
+    "function verificarAssercao"
+   ],
+   "errors": [
+    "assinatura invalida",
+    "authenticatorData truncado",
+    "chave publica ilegivel",
+    "chave publica nao e P-256/SPKI",
+    "chave publica vazia",
+    "clientDataJSON invalido",
+    "desafio nao corresponde",
+    "origem malformada: ${origem}",
+    "origem nao permitida: ${origem}",
+    "presenca do usuario nao confirmada",
+    "rpIdHash nao corresponde",
+    "tipo de cerimonia inesperado: ${clientData.type}",
+    "verificacao do usuario nao confirmada"
+   ],
+   "rule_comments": [
+    "* Antes desta correcao a edge apenas conferia se o `credential_id` existia",
+    "rpIdHash (32 bytes) deve bater com o RP configurado (o host)."
+   ],
+   "doc": "Verificacao de assercao WebAuthn (ES256) no servidor. Antes desta correcao a edge apenas conferia se o `credential_id` existia na tabela e emitia um magic link. Nao verificava assinatura, desafio nem origem — ou seja, quem conhecesse um `credential_id` valido entrava na conta correspondente sem poss …"
+  },
+  "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts": {
+   "path": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+   "lines": 189,
+   "is_test": true,
+   "params": [
+    {
+     "name": "ORIGEM",
+     "value": "\"https://hello-v3.vercel.app\""
+    },
+    {
+     "name": "CHALLENGE",
+     "value": "\"desafio-de-teste-1234567890\""
+    }
+   ],
+   "doc": "Prova que o verificador de assercao WebAuthn realmente barra o ataque que existia: antes, quem conhecesse um credential_id valido recebia um magic link da conta. Aqui geramos um par de chaves P-256 real, assinamos uma assercao valida e depois a mutamos de todas as formas relevantes.",
+   "tests": [
+    "verify: assercao legitima e aceita e devolve signCount",
+    "verify: assinatura de OUTRA chave e rejeitada",
+    "verify: desafio diferente e rejeitado (replay)",
+    "verify: origem estranha e rejeitada (phishing)",
+    "verify: sem verificacao do usuario (UV) e rejeitado",
+    "verify: tipo de cerimonia errado e rejeitado",
+    "verify: authenticatorData truncado e rejeitado",
+    "verify: chave publica ilegivel e rejeitada",
+    "verify: base64url decodifica corretamente"
+   ]
   },
   "supabase/functions/webhook-handler/index.ts": {
    "path": "supabase/functions/webhook-handler/index.ts",
@@ -121841,10 +122176,27 @@
   }
  },
  "git": {
-  "sha": "6659a49213625504805d3c37a0bef1ca94146cba",
+  "sha": "6f648ab906e01b5855f53511f7c146410baf45d8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "6f648ab",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix(security): fecha account takeover no login por passkey (#116)",
+    "files": [
+     "src/hooks/useWebAuthn.ts",
+     "supabase/functions/_shared/__tests__/capture-handler.ts",
+     "supabase/functions/export-data-lake/__tests__/csv.test.ts",
+     "supabase/functions/export-data-lake/csv.ts",
+     "supabase/functions/export-data-lake/index.ts",
+     "supabase/functions/record-consent/__tests__/index.test.ts",
+     "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
+     "supabase/functions/webauthn-authenticate/index.ts",
+     "supabase/functions/webauthn-authenticate/verify.ts"
+    ]
+   },
    {
     "sha": "6659a49",
     "date": "2026-11-22",
@@ -122350,15 +122702,6 @@
      "docs/edge-functions/README.md",
      "scripts/inventario/gerar-catalogo-edges.mjs"
     ]
-   },
-   {
-    "sha": "f6f0740",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: rls-audit exige auth e usa RPC real de RLS (#86)",
-    "files": [
-     "supabase/functions/rls-audit/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -122377,6 +122720,10 @@
    [
     "supabase/functions/voip-load-test/index.ts",
     3
+   ],
+   [
+    "supabase/functions/export-data-lake/index.ts",
+    2
    ],
    [
     "src/hooks/auth/__tests__/useAuthProfile.coverage.test.tsx",
@@ -122408,10 +122755,6 @@
    ],
    [
     "supabase/functions/request-password-reset/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/rls-audit/index.ts",
     2
    ],
    [
