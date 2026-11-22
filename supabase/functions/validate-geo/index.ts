@@ -6,7 +6,8 @@ export function isIpLiteral(value: string): boolean {
   const candidate = value.trim();
   if (!candidate || candidate.length > 45) return false;
   if (/^\d{1,3}(\.\d{1,3}){3}$/.test(candidate)) {
-    return candidate.split('.').every((octet) => Number(octet) <= 255);
+    // Comparacao lexicografica de 3 digitos evita coercao numerica (guard-edge-numeric).
+    return candidate.split('.').every((octet) => octet.length < 3 || octet <= '255');
   }
   return /^[0-9a-fA-F:]+$/.test(candidate) && candidate.includes(':');
 }
