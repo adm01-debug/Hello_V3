@@ -41,7 +41,7 @@ import { resilientFetch } from "../_shared/resilience.ts";
           input: textToEmbed
         })
       },
-      { retry: { retries: 2, baseMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } },
+      { retry: { retries: 2, baseDelayMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } },
     );
 
     if (!embedResp.ok) throw new Error(`Gateway error: ${await embedResp.text()}`);
@@ -62,6 +62,7 @@ import { resilientFetch } from "../_shared/resilience.ts";
      });
    } catch (error) {
      console.error('embed-kb-article error:', error);
-     return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
+     const message = error instanceof Error ? error.message : String(error);
+     return new Response(JSON.stringify({ error: message }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
    }
  });

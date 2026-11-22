@@ -72,7 +72,7 @@ serve(async (req) => {
         });
       }
 
-      if (['negativo', 'piorando'].includes(profile.sentiment_trend?.toLowerCase()) && 
+      if (['negativo', 'piorando'].includes(profile.sentiment_trend?.toLowerCase() ?? '') && 
           !recentAlertKeys.has(`${contact.id}-sentiment_negative`)) {
         alertsToCreate.push({
           contact_id: contact.id, alert_type: 'sentiment_negative', severity: 'warning',

@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+import { createClient, type SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 
 type CorsHeaders = Record<string, string>;

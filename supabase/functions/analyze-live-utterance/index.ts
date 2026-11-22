@@ -204,7 +204,8 @@ Retorne intent="none" se nada relevante for detectado.`;
         .map((s) => s.metadata!.objection_id as string);
       if (objIds.length > 0) {
         for (const oid of objIds) {
-          await adminClient.rpc('check_rate_limit', { _ip_address: 'noop', _endpoint: 'noop' }).catch(() => {});
+          // PostgrestFilterBuilder nao tem .catch(); await direto ja basta.
+          await adminClient.rpc('check_rate_limit', { _ip_address: 'noop', _endpoint: 'noop' });
           await adminClient.from('objection_library')
             .update({ times_suggested: (signals.length) }) // best-effort; uso real conta no front
             .eq('id', oid);
