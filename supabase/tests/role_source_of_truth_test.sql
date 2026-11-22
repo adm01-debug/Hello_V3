@@ -23,7 +23,8 @@ WHERE n.nspname = 'public'
   AND p.prokind = 'f'
   -- get_user_role/get_profile_role caem para user_profiles.role como fallback
   -- de exibicao, e isso e intencional: nao ha linha em user_roles para migrar.
-  AND p.proname NOT IN ('get_user_role', 'get_profile_role')
+  -- handle_new_user apenas grava o papel inicial no cadastro; nao autoriza.
+  AND p.proname NOT IN ('get_user_role', 'get_profile_role', 'handle_new_user')
   AND pg_get_functiondef(p.oid) LIKE '%user_profiles%'
   AND pg_get_functiondef(p.oid) LIKE '%role%'
 
@@ -39,4 +40,19 @@ WHERE coalesce(up.role, '') <> ''
     SELECT 1 FROM public.user_roles ur
     WHERE ur.user_id = up.id
       AND ur.role::text = up.role
+  )
+
+UNION ALL
+
+-- Funcoes que decidem autorizacao lendo user_roles devem honrar is_active e
+-- expires_at. Estas quatro sao as que governam policies e checagens de acesso.
+SELECT 'sem_filtro_validade' AS categoria,
+       n.nspname || '.' || p.proname AS objeto
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE n.nspname = 'public'
+  AND p.proname IN ('is_admin', 'is_supervisor', 'is_admin_user', 'is_admin_or_supervisor', 'has_role', 'has_permission', 'get_user_roles')
+  AND NOT (
+    pg_get_functiondef(p.oid) LIKE '%is_active%'
+    AND pg_get_functiondef(p.oid) LIKE '%expires_at%'
   );
