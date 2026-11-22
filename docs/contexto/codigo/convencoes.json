@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: envolve auth.uid/jwt/role em subselect nas policies restantes (#96)",
    "fix: trigger de papel cria o espelho que faltava em user_profiles (#108)",
    "fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)",
    "feat: fecha B6 - dominio nas colunas text enumeraveis (#111)",
-   "fix: remove dependencia do gateway Lovable na importacao do Teams (#112)",
-   "chore: doc reflete a medicao real da Onda 39 e do D3 (#109)"
+   "fix: remove dependencia do gateway Lovable na importacao do Teams (#112)"
   ]
  },
  "pr_template": null,

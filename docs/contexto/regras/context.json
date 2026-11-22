@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "68a2c219f64408380adf82eaa57e05e4eb779b38",
+  "sha": "6f94283c45846d79010f09450fd7ab5e51674c15",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 05:48 UTC",
-  "files_total": 1639,
-  "code_files": 1442,
-  "code_lines": 181734
+  "generated_at": "2026-11-22 05:51 UTC",
+  "files_total": 1640,
+  "code_files": 1443,
+  "code_lines": 181787
  },
  "version": "1.3.2",
- "facts_hash": "56e5c630bcd2fe9d",
+ "facts_hash": "804a68d28068bc56",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -160,7 +160,7 @@
   "languages": {
    ".tsx": 603,
    ".ts": 583,
-   ".sql": 222,
+   ".sql": 223,
    ".mjs": 27,
    ".py": 5,
    ".js": 2
@@ -25497,6 +25497,7 @@
    "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql",
    "supabase/migrations/20261122140000_dialer_pacing_cron.sql",
    "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+   "supabase/migrations/20261122200000_rls_initplan_remaining.sql",
    "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
    "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
    "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
@@ -34164,8 +34165,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 220,
-   "lines": 14413,
+   "files": 221,
+   "lines": 14466,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -121203,6 +121204,10 @@
    ],
    "uses_service_role": true
   },
+  "supabase/migrations/20261122200000_rls_initplan_remaining.sql": {
+   "path": "supabase/migrations/20261122200000_rls_initplan_remaining.sql",
+   "lines": 53
+  },
   "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql": {
    "path": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
    "lines": 64,
@@ -121337,10 +121342,19 @@
   }
  },
  "git": {
-  "sha": "68a2c219f64408380adf82eaa57e05e4eb779b38",
+  "sha": "6f94283c45846d79010f09450fd7ab5e51674c15",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "6f94283",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: envolve auth.uid/jwt/role em subselect nas policies restantes (#96)",
+    "files": [
+     "supabase/migrations/20261122200000_rls_initplan_remaining.sql"
+    ]
+   },
    {
     "sha": "68a2c21",
     "date": "2026-11-22",
@@ -121812,25 +121826,12 @@
      "src/pages/SessionManagement.tsx",
      "src/pages/TwoFactorAuth.tsx"
     ]
-   },
-   {
-    "sha": "409f79f",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md",
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx",
-     "src/lib/route-prefetch.ts",
-     "src/routes/protectedRoutes.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    9
+    8
    ],
    [
     "docs/edge-functions/README.md",
@@ -121885,12 +121886,8 @@
     2
    ],
    [
-    "src/components/layout/AppSidebar.tsx",
-    2
-   ],
-   [
-    "src/components/layout/CommandPalette.tsx",
-    2
+    "supabase/migrations/20261122200000_rls_initplan_remaining.sql",
+    1
    ],
    [
     "supabase/migrations/20261123001000_sync_role_creates_missing_profile.sql",
@@ -121906,6 +121903,10 @@
    ],
    [
     "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
     1
    ]
   ]
