@@ -1,11 +1,16 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { verificarAssercao, WebAuthnError } from "./verify.ts";
 
 
 interface AuthRequest {
   credentialId: string;
   userId: string;
-  email: string;
+  clientDataJSON: string;
+  authenticatorData: string;
+  signature: string;
+  /** Ignorado: o e-mail vem do dono da passkey, nunca do request. */
+  email?: string;
 }
 
 Deno.serve(async (req) => {
@@ -15,8 +20,9 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { credentialId, userId, email } = await req.json() as AuthRequest;
-    if (!credentialId || !userId || !email) {
+    const { credentialId, userId, clientDataJSON, authenticatorData, signature } =
+      await req.json() as AuthRequest;
+    if (!credentialId || !userId || !clientDataJSON || !authenticatorData || !signature) {
       throw new Error('Missing required fields');
     }
 
@@ -35,7 +41,7 @@ Deno.serve(async (req) => {
     // Verify the passkey exists and belongs to the user
     const { data: passkey, error: passkeyError } = await supabaseAdmin
       .from('user_passkeys')
-      .select('id, user_id')
+      .select('id, user_id, public_key, counter')
       .eq('credential_id', credentialId)
       .eq('user_id', userId)
       .single();
@@ -45,10 +51,63 @@ Deno.serve(async (req) => {
       throw new Error('Invalid passkey');
     }
 
+    // Desafio: o mais recente ainda valido para este usuario. Consumido
+    // logo abaixo para impedir replay.
+    const { data: desafio } = await supabaseAdmin
+      .from('webauthn_challenges')
+      .select('id, challenge, expires_at')
+      .eq('user_id', userId)
+      .eq('type', 'authentication')
+      .gt('expires_at', new Date().toISOString())
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (!desafio) {
+      throw new Error('Challenge expirado. Tente novamente.');
+    }
+
+    const origensPermitidas = (Deno.env.get('WEBAUTHN_ALLOWED_ORIGINS') ??
+      'https://hello-v3.vercel.app,https://lalamove.app')
+      .split(',')
+      .map((o) => o.trim())
+      .filter(Boolean);
+
+    try {
+      await verificarAssercao({
+        clientDataJSON,
+        authenticatorData,
+        signature,
+        challengeEsperado: desafio.challenge,
+        publicKey: passkey.public_key as string,
+        origensPermitidas,
+      });
+    } catch (erroVerificacao) {
+      const codigo = erroVerificacao instanceof WebAuthnError
+        ? erroVerificacao.code
+        : 'desconhecido';
+      console.error('WebAuthn assertion recusada:', codigo, erroVerificacao);
+      throw new Error(`Passkey invalida (${codigo})`);
+    }
+
+    // Consome o desafio: uso unico.
+    await supabaseAdmin.from('webauthn_challenges').delete().eq('id', desafio.id);
+
     // Generate a magic link token for the user
+    // O e-mail NAO pode vir do corpo do request: a edge e publica, e um
+    // atacante que conheca um credential_id valido poderia pedir magic
+    // link para a propria caixa e assumir a conta. Derivamos do dono da
+    // passkey, que e a unica fonte confiavel.
+    const { data: dono, error: donoError } = await supabaseAdmin.auth.admin.getUserById(passkey.user_id);
+    const emailDoDono = dono?.user?.email;
+    if (donoError || !emailDoDono) {
+      console.error('Dono da passkey sem e-mail:', donoError);
+      throw new Error('Failed to resolve passkey owner');
+    }
+
     const { data: linkData, error: linkError } = await supabaseAdmin.auth.admin.generateLink({
       type: 'magiclink',
-      email: email,
+      email: emailDoDono,
       options: {
         redirectTo: `${req.headers.get('origin') || 'https://localhost:3000'}/`,
       },
@@ -62,7 +121,7 @@ Deno.serve(async (req) => {
     // Log successful authentication
     await supabaseAdmin.from('audit_logs').insert({
       user_id: userId,
-      user_email: email,
+      user_email: emailDoDono,
       action: 'webauthn_login',
       resource_type: 'authentication',
       details: {

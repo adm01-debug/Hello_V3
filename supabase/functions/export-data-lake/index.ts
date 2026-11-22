@@ -1,20 +1,10 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
-
 type Dataset = 'call_sessions' | 'call_summaries' | 'deals' | 'contacts' | 'audit_logs';
 type Format = 'csv' | 'ndjson' | 'parquet';
 
-function toCsv(rows: Record<string, unknown>[]): string {
-  if (rows.length === 0) return '';
-  const headers = Object.keys(rows[0]);
-  const esc = (v: unknown) => {
-    if (v === null || v === undefined) return '';
-    const s = typeof v === 'string' ? v : JSON.stringify(v);
-    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-  };
-  return [headers.join(','), ...rows.map((r) => headers.map((h) => esc(r[h])).join(','))].join('\n');
-}
+import { toCsv } from './csv.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: buildCorsHeaders(req) });
