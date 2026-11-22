@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `51aa44de74861ad17233cd565a8bf1ecb289d8e7` (2026-11-22T12:57:30-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `36732f97b9a8ae4d520bd3dc1a78ca4135da2166` (2026-11-22T13:33:08-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,11 +36,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1630 |
 | arquivos_codigo | 1238 |
-| linhas_codigo | 168900 |
+| linhas_codigo | 168902 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
-| itens_menu | 94 |
+| itens_menu | 95 |
 | modulos | 79 |
 | componentes | 448 |
 | hooks | 191 |
@@ -97,7 +97,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
 | pages | 86 | 93 | 92 | 188 | 66 | 133 |
-| pages/admin | 8 | 9 | 16 | 36 | 4 | 18 |
+| pages/admin | 9 | 9 | 16 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
 | pages/roles | 0 | 0 | 6 | 1 | 0 | 3 |
@@ -367,23 +367,23 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9171 nós · 24265 arestas · 734 comunidades · grafo do commit `51aa44de`
-- comunidades maiores: card.tsx (245), usePageTitle (215), client.ts (213), traceHeaders (155), vitest (153), badge.tsx (143), react (140), @tanstack/react-query (118), safeFormatDatePtBR (116), cn (108), usePageTitle.ts (105), snapshot.py (102)
+- 9173 nós · 24268 arestas · 729 comunidades · grafo do commit `36732f97`
+- comunidades maiores: card.tsx (287), client.ts (183), @tanstack/react-query (181), usePageTitle (159), react (157), vitest (147), usePageTitle.ts (144), safeFormatDistanceToNow (125), Tabela de funcionalidades (117), safe-date.ts (107), cn (105), snapshot.py (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/estado/funcionalidades-planejadas.md (21)
+- docs/estado/funcionalidades-planejadas.md (23)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
+- src/components/layout/AppSidebar.tsx (7)
 - .github/workflows/contexto.yml (6)
-- src/components/layout/AppSidebar.tsx (6)
 - deno.lock (5)
+- docs/audits/pendencias-2026-07.md (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
-- docs/audits/pendencias-2026-07.md (4)
+- src/components/layout/CommandPalette.tsx (5)
 - docs/pendencias/_ordem.md (4)
-- src/components/layout/CommandPalette.tsx (4)
 - AGENTS.md (3)
 - docs/agentes/edge-functions.md (3)
 - docs/estado/edge-functions-parte1.md (3)
@@ -426,6 +426,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `36732f9` feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)
+- 2026-11-22 `d9ee2d8` docs: corrige rotulos defasados de D3/D5 e dos testes Deno (#141)
+- 2026-11-22 `f80b054` docs: fecha D4 e C2 com validacao real em producao (#140)
 - 2026-11-22 `51aa44d` docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)
 - 2026-11-22 `80115e5` fix: cron de retencao de lock-conflicts nunca autenticava (#137)
 - 2026-11-22 `9d3d288` docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)
@@ -438,9 +441,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `71169af` fix: contagem em espera do dashboard usava status inexistente (#129)
 - 2026-11-22 `a0096de` feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)
 - 2026-11-22 `071d1dd` docs: substitui rotulo desatualizado por prova de execucao (guard + IA em prod) (#127)
-- 2026-11-22 `d62b800` chore: corrige deps de hook que causavam closure obsoleto (22 -> 5 warnings) (#126)
-- 2026-11-22 `d337973` fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)
-- 2026-11-22 `36c5c1f` chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

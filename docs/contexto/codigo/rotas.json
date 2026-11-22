@@ -5,7 +5,7 @@
   "urls": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 94,
+  "itens_menu": 95,
   "lazy": 104
  },
  "urls": [
@@ -5775,6 +5775,15 @@
    "papeis_nao_resolvidos": null,
    "definido_em": "src/components/layout/AppSidebar.tsx",
    "resolve_para": "src/pages/QRProvisioning.tsx"
+  },
+  {
+   "rotulo": "Qualidade de Voz",
+   "destino": "/admin/voice-quality",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/VoiceQuality.tsx"
   },
   {
    "rotulo": "Ramais",
