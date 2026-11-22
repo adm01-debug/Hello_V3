@@ -56,7 +56,7 @@ export default function ExternalRecordingsImport() {
             Importar do Teams
           </Button>
           <p className="text-xs text-muted-foreground mt-3">
-            Requer conector Microsoft Teams ativo com permissões de leitura de reuniões.
+            Requer app registration no Entra ID com permissão Group.Read.All (secrets MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET).
           </p>
         </Card>
 

@@ -1,7 +1,35 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders } from "../_shared/cors.ts";
 
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/microsoft_teams";
+const GRAPH_URL = "https://graph.microsoft.com/v1.0";
+
+// O gateway de conectores do Lovable deixou de existir. Esta edge passa a falar
+// direto com o Microsoft Graph usando um app registration (client credentials).
+async function obterTokenGraph(): Promise<string | null> {
+  const tenant = Deno.env.get("MS_TENANT_ID");
+  const clientId = Deno.env.get("MS_CLIENT_ID");
+  const clientSecret = Deno.env.get("MS_CLIENT_SECRET");
+  if (!tenant || !clientId || !clientSecret) return null;
+
+  const resp = await fetch(
+    `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "client_credentials",
+        client_id: clientId,
+        client_secret: clientSecret,
+        scope: "https://graph.microsoft.com/.default",
+      }),
+    },
+  );
+  if (!resp.ok) {
+    throw new Error(`Falha ao autenticar no Graph [${resp.status}]`);
+  }
+  const data = await resp.json();
+  return data.access_token ?? null;
+}
 
 interface TeamsRecording {
   id: string;
@@ -24,37 +52,41 @@ Deno.serve(async (req) => {
   if (negado) return negado;
 
   try {
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    const TEAMS_API_KEY = Deno.env.get("MICROSOFT_TEAMS_API_KEY");
-    if (!LOVABLE_API_KEY) {
+    let token: string | null;
+    try {
+      token = await obterTokenGraph();
+    } catch (e) {
       return new Response(
-        JSON.stringify({ error: "LOVABLE_API_KEY not configured" }),
+        JSON.stringify({
+          error: "Falha na autenticacao com o Microsoft Graph",
+          detail: e instanceof Error ? e.message : String(e),
+        }),
         {
-          status: 500,
+          status: 502,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         },
       );
     }
-    if (!TEAMS_API_KEY) {
+    if (!token) {
       return new Response(
         JSON.stringify({
-          error:
-            "Microsoft Teams not connected. Please connect via Connectors.",
+          error: "Microsoft Teams nao configurado",
+          detail:
+            "Defina os secrets MS_TENANT_ID, MS_CLIENT_ID e MS_CLIENT_SECRET para habilitar a importacao de gravacoes do Teams.",
+          configurado: false,
         }),
         {
-          status: 400,
+          status: 503,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         },
       );
     }
 
-    // Fetch recent recordings from joined teams
-    const teamsResp = await fetch(`${GATEWAY_URL}/me/joinedTeams`, {
-      headers: {
-        "Authorization": `Bearer ${LOVABLE_API_KEY}`,
-        "X-Connection-Api-Key": TEAMS_API_KEY,
-      },
-    });
+    // Token app-only nao resolve /me; usar /groups (Application permission Group.Read.All)
+    const teamsResp = await fetch(
+      `${GRAPH_URL}/groups?$select=id,displayName&$top=20`,
+      { headers: { "Authorization": `Bearer ${token}` } },
+    );
 
     if (!teamsResp.ok) {
       const errText = await teamsResp.text();
