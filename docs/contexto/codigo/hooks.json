@@ -191,7 +191,7 @@
    "hooks_exportados": [
     "useQueueMetricsSettings"
    ],
-   "linhas": 57,
+   "linhas": 89,
    "dominio": "components/queue-alerts",
    "tabelas": [
     "queue_metrics_settings"

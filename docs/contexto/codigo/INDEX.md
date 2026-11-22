@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `2ec2c4457f60d832cb015687fe1350abf42f076c` (2026-11-22T16:08:03-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b27cc88e73daa9250184050f46cc3bd2ba2e9e64` (2026-11-22T16:13:26-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1639 |
 | arquivos_codigo | 1244 |
-| linhas_codigo | 169437 |
+| linhas_codigo | 169469 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,7 +370,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9193 nós · 24348 arestas · 724 comunidades · grafo do commit `2ec2c445`
+- 9193 nós · 24348 arestas · 724 comunidades · grafo do commit `b27cc88e`
 - comunidades maiores: lucide-react (265), react (246), button.tsx (191), vitest (188), traceHeaders (166), usePageTitle (139), protectedRoutes.tsx (125), safeFormatDistanceToNow (117), cn (116), Badge (109), snapshot.py (102), cors.ts (88)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `b27cc88` fix: configuracoes de metricas de fila ficavam presas em nao encontradas (#158)
 - 2026-11-22 `2ec2c44` feat: sino do header passa a mostrar a tabela notifications (#157)
 - 2026-11-22 `08ee7a3` docs: createTestData tem gate DEV duplo; 6 hooks orfaos estao wired (#156)
 - 2026-11-22 `ef1134d` docs: 2 falsos parciais (useBusinessLogic importa SUT, AppSidebar tem RBAC) (#155)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `025ada5` fix: exclusao de conta de usuario (8 FKs em NO ACTION bloqueavam o DELETE) (#146)
 - 2026-11-22 `0e60f41` docs: scorecards entregues e cron do data-lake endurecido (#145)
 - 2026-11-22 `67d0180` fix: cron data-lake-flush usa token dedicado em vez da anon key (#144)
-- 2026-11-22 `d3a6f69` feat: pagina de avaliacoes de chamada com geracao por IA (#143)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `2ec2c4457f` · branch `main` · 2026-11-22 19:08 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b27cc88e73` · branch `main` · 2026-11-22 19:14 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2207,6 +2207,7 @@ _nenhum item encontrado_
 | Pergunta muito curta | `src/components/network/VoipVoiceQAPanel.tsx` |
 | ; import {   Select,   SelectContent,   SelectItem,   SelectTrigger,   SelectValue, } from  | `src/components/park/ParkOrbitFormDialog.tsx` |
 | Erro ao carregar configurações | `src/components/queue-alerts/useQueueMetricsSettings.ts` |
+| Erro ao inicializar configurações | `src/components/queue-alerts/useQueueMetricsSettings.ts` |
 | Erro ao salvar configurações | `src/components/queue-alerts/useQueueMetricsSettings.ts` |
 | ; import { AlertTriangle, Music, Play, Trash2, Upload } from  | `src/components/queues/QueueAudioLibrary.tsx` |
 | ; import { AlertTriangle } from  | `src/components/queues/QueueFormDialog.tsx` |
@@ -2403,8 +2404,7 @@ _nenhum item encontrado_
 | Erro ao revogar sessão | `src/hooks/useSessionManager.ts` |
 | Erro ao revogar sessões | `src/hooks/useSessionManager.ts` |
 | Sua sessão expirou. Faça login novamente. | `src/hooks/useSessionManager.ts` |
-| Erro ao atualizar turno | `src/hooks/useShifts.ts` |
-| … +237 linhas — lista completa em `context.json` | |
+| … +238 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
