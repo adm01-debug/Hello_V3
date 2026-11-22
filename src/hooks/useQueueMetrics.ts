@@ -107,11 +107,13 @@ export function useQueueMetrics() {
       const avgWaitTime = completedCalls.length > 0
         ? completedCalls.reduce((acc, c) => acc + (c.hold_time_seconds || 0), 0) / completedCalls.length : 0;
 
-      const abandonedCalls = recentCalls?.filter(c => c.status === 'abandoned')?.length || 0;
-      // recentCalls já traz todas as chamadas da janela, abandonadas inclusive —
-      // somar abandonedCalls aqui contava a mesma chamada duas vezes no
-      // denominador e subestimava a taxa de abandono.
-      const totalCalls = recentCalls?.length || 0;
+      // Definição única da taxa de abandono, igual à das edges check-goals e
+      // check-queue-metrics: abandonada/missed sobre (completadas + abandonadas).
+      // Antes o denominador era recentCalls.length, que inclui chamadas ainda em
+      // curso — e cada abandonada aparecia duas vezes, porque a coleção já as
+      // continha e o código somava de novo.
+      const abandonedCalls = recentCalls?.filter(c => c.status === 'abandoned' || c.status === 'missed').length || 0;
+      const totalCalls = completedCalls.length + abandonedCalls;
       const abandonmentRate = totalCalls > 0 ? (abandonedCalls / totalCalls) * 100 : 0;
       const answeredQuickly = completedCalls.filter(c => (c.hold_time_seconds || 0) < 20).length;
       const serviceLevel = completedCalls.length > 0 ? (answeredQuickly / completedCalls.length) * 100 : 100;

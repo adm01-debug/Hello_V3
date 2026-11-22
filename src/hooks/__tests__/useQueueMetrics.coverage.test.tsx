@@ -90,8 +90,7 @@ describe('useQueueMetrics', () => {
   it('calcula taxa de abandono sem contar a abandonada duas vezes', async () => {
     // Regressão: totalCalls somava `abandonedCalls` a `recentCalls.length`, mas
     // recentCalls já inclui as abandonadas. Com 3 abandonadas em 10 chamadas a
-    // taxa correta é 30%; a fórmula antiga dava 3/13 = 23,1% — denominador
-    // inflado, taxa sempre subestimada.
+    // taxa correta é 30%; a fórmula antiga dava 3/13 = 23,1%.
     recentCallsData = [
       ...Array.from({ length: 7 }, () => ({ status: 'completed', duration_seconds: 60, hold_time_seconds: 5 })),
       ...Array.from({ length: 3 }, () => ({ status: 'abandoned', duration_seconds: 0, hold_time_seconds: 0 })),
@@ -99,6 +98,38 @@ describe('useQueueMetrics', () => {
     const { result } = renderHook(() => useQueueMetrics());
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.metrics.abandonmentRate).toBe(30);
+  });
+
+  it('taxa de abandono ignora chamadas em curso no denominador', async () => {
+    // Chamada ainda em curso (active/ringing/on_hold) não tem desfecho: não é
+    // atendida nem abandonada. Antes ela entrava no denominador e deprimia a
+    // taxa — 3 abandonadas em 10 chamadas sendo 5 em curso davam 20% em vez
+    // dos 60% reais (3 de 5 finalizadas).
+    activeCallsData = [
+      ...Array.from({ length: 5 }, () => ({ status: 'on_hold' })),
+    ];
+    recentCallsData = [
+      ...Array.from({ length: 2 }, () => ({ status: 'completed', duration_seconds: 60, hold_time_seconds: 5 })),
+      ...Array.from({ length: 3 }, () => ({ status: 'abandoned', duration_seconds: 0, hold_time_seconds: 0 })),
+      ...Array.from({ length: 5 }, () => ({ status: 'on_hold', duration_seconds: 0, hold_time_seconds: 0 })),
+    ];
+    const { result } = renderHook(() => useQueueMetrics());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.metrics.abandonmentRate).toBe(60);
+  });
+
+  it('taxa de abandono conta missed como abandono, igual as edges', async () => {
+    // check-goals e check-queue-metrics usam `.in('status', ['abandoned','missed'])`.
+    // O hook contava só 'abandoned', então o alerta da edge e o card do
+    // dashboard discordavam.
+    recentCallsData = [
+      { status: 'completed', duration_seconds: 60, hold_time_seconds: 5 },
+      { status: 'abandoned', duration_seconds: 0, hold_time_seconds: 0 },
+      { status: 'missed', duration_seconds: 0, hold_time_seconds: 0 },
+    ];
+    const { result } = renderHook(() => useQueueMetrics());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.metrics.abandonmentRate).toBe(66.7);
   });
 
   it('notifies on goals when goals present', async () => {
