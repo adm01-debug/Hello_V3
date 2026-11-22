@@ -7,8 +7,8 @@ import { resilientFetch } from "../_shared/resilience.ts";
    const cors = buildCorsHeaders(req);
    if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
  
-   const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-   if (!LOVABLE_API_KEY) return new Response('LOVABLE_API_KEY missing', { status: 500 });
+   const OPENROUTER_API_KEY = Deno.env.get('OPENROUTER_API_KEY');
+   if (!OPENROUTER_API_KEY) return new Response('OPENROUTER_API_KEY missing', { status: 500 });
  
    const supabase = createClient(
      Deno.env.get('SUPABASE_URL')!,
@@ -26,18 +26,18 @@ import { resilientFetch } from "../_shared/resilience.ts";
        return new Response('Missing input', { status: 400 });
      }
  
-     // 1. Gerar embedding via Lovable AI Gateway
+     // 1. Gerar embedding via Open Router
     const embedResp = await resilientFetch(
-      'lovable-ai:embeddings',
-      'https://ai.gateway.lovable.dev/v1/embeddings',
+      'openrouter:embeddings',
+      'https://openrouter.ai/api/v1/embeddings',
       {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'text-embedding-004',
+          model: 'openai/text-embedding-3-small',
           input: textToEmbed
         })
       },
