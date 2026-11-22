@@ -8,10 +8,10 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 212,
+ "migrations": 215,
  "seeds": [],
  "avisos": [
-  "40 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
+  "42 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
  ],
  "extensoes": [
   "pg_cron",
@@ -969,6 +969,18 @@
    "agenda": "0 3 * * *",
    "migration": "20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
    "chama_edge": "data-lake-flush"
+  },
+  {
+   "nome": "dialer-pacing-tick",
+   "agenda": "* * * * *",
+   "migration": "20261122140000_dialer_pacing_cron.sql",
+   "chama_edge": "dialer-pacing-tick"
+  },
+  {
+   "nome": "generate-coaching-tracks-daily",
+   "agenda": "15 3 * * *",
+   "migration": "20261122120000_coaching_auto_tracks_cron.sql",
+   "chama_edge": "generate-coaching-track"
   },
   {
    "nome": "quarterly-reset-index-stats",
@@ -11956,15 +11968,15 @@
    "rls": true,
    "policies": [
     {
-     "nome": "Users can insert versions",
+     "nome": "Authenticated can insert versions",
      "comando": "insert",
-     "para": "public",
+     "para": "authenticated",
      "tipo": "permissive"
     },
     {
-     "nome": "Users can view versions",
+     "nome": "Authenticated can view versions",
      "comando": "select",
-     "para": "public",
+     "para": "authenticated",
      "tipo": "permissive"
     }
    ],
@@ -21651,6 +21663,7 @@
    "usada_em_edges": [
     "approve-password-reset",
     "cleanup-lock-conflicts",
+    "dialer-pacing-tick",
     "export-data-lake",
     "generate-coaching",
     "generate-coaching-track",

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ac18a931e77aaec70c6a6844cc4b8a717dbe196a",
+  "sha": "a01216be6769e931ffa88e7a363ff39b4330b276",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 01:04 UTC",
-  "files_total": 1619,
-  "code_files": 1424,
-  "code_lines": 180296
+  "generated_at": "2026-11-22 01:06 UTC",
+  "files_total": 1622,
+  "code_files": 1427,
+  "code_lines": 180703
  },
  "version": "1.3.2",
- "facts_hash": "e75b5e868819c534",
+ "facts_hash": "3063d64797b17e21",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -160,7 +160,7 @@
   "languages": {
    ".tsx": 603,
    ".ts": 574,
-   ".sql": 214,
+   ".sql": 217,
    ".mjs": 26,
    ".py": 5,
    ".js": 2
@@ -14222,26 +14222,6 @@
     "src": "supabase/migrations/20241231000000_saved_filters.sql"
    },
    {
-    "name": "Users can view versions",
-    "table": "entity_versions",
-    "cmd": "SELECT",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20241231000001_entity_versions.sql"
-   },
-   {
-    "name": "Users can insert versions",
-    "table": "entity_versions",
-    "cmd": "INSERT",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "",
-    "check": "auth.uid() = changed_by OR changed_by IS NULL",
-    "src": "supabase/migrations/20241231000001_entity_versions.sql"
-   },
-   {
     "name": "Allow public read on call_alerts",
     "table": "call_alerts",
     "cmd": "SELECT",
@@ -19400,6 +19380,26 @@
     "using": "public.is_admin_or_supervisor()",
     "check": "",
     "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
+   },
+   {
+    "name": "Authenticated can view versions",
+    "table": "entity_versions",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "auth.uid() IS NOT NULL",
+    "check": "",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "name": "Authenticated can insert versions",
+    "table": "entity_versions",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "auth.uid() = changed_by",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
    }
   ],
   "triggers": [
@@ -25462,6 +25462,9 @@
    "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
    "supabase/migrations/20261120154610_fix-data-lake-exports-call-summaries.sql",
    "supabase/migrations/20261121125200_fix_rls_allow_all.sql",
+   "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql",
+   "supabase/migrations/20261122140000_dialer_pacing_cron.sql",
+   "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
    "src/integrations/supabase/types.ts"
   ],
   "rls": {
@@ -26418,6 +26421,1086 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "apply_migration",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "audit_role_change",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "audit_table_change",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "bridge_voip_alert_to_notification",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_suspicious_activity",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_table_bloat",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_old_data",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_old_logs",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "enforce_optimistic_lock",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "ensure_single_default_filter",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_call_queues_overview",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_kb_article_change",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_kb_article_history",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_new_user",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_critical_rls_event",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_bloat_hotspots",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_idle_indexes",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_lock_conflict_hotspot",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_suspicious_index_drop_activity",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_trunk_offline",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_webhook_failure_spike",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "prevent_role_escalation",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "process_audit_log",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "recalc_deal_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "reset_public_index_stats",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "rollback_migration",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "snapshot_deals_daily",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "trg_recalc_deals_on_interaction",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "trigger_auto_scorecard",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_kb_article_search_vector",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_saved_filters_updated_at",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_security_updated_at",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_transcript_search_vector",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_updated_at_column",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_virtual_fax_ocr_vector",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_audit_insert",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_call_queue",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_park_orbit",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_parked_call",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_queue_audio_slots",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_ring_group",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "apply_migration",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "audit_role_change",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "audit_table_change",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "bridge_voip_alert_to_notification",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_suspicious_activity",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_table_bloat",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_old_data",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_old_logs",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "enforce_optimistic_lock",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "ensure_single_default_filter",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_kb_article_change",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_kb_article_history",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_new_user",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_critical_rls_event",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_bloat_hotspots",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_idle_indexes",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_lock_conflict_hotspot",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_suspicious_index_drop_activity",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_trunk_offline",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_webhook_failure_spike",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "prevent_role_escalation",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "process_audit_log",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "reset_public_index_stats",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "rollback_migration",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "snapshot_deals_daily",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "trg_recalc_deals_on_interaction",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "trigger_auto_scorecard",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_kb_article_search_vector",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_saved_filters_updated_at",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_security_updated_at",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_transcript_search_vector",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_updated_at_column",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_virtual_fax_ocr_vector",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_audit_insert",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_call_queue",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_park_orbit",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_parked_call",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_queue_audio_slots",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_ring_group",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "index_usage",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "unused_indexes",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "migration_status",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "index_usage",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "unused_indexes",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "migration_status",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "financial_impact_daily",
+    "objkind": "table",
+    "roles": "anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "apply_predictive_pacing",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "apply_predictive_pacing",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "calculate_predictive_pace",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "calculate_predictive_pace",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_all_tables_rls_status",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_all_tables_rls_status",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_idle_indexes",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_idle_indexes",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_ip_in_cidr",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_ip_in_cidr",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_rate_limit",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_rate_limit",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_rls_enabled",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_rls_enabled",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_expired_challenges",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "cleanup_expired_challenges",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "expire_parked_calls",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "expire_parked_calls",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_agent_financial_leaderboard",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_agent_financial_leaderboard",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_agent_performance",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_agent_performance",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_agents_with_active_calls",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_agents_with_active_calls",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_call_history_with_summaries",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_call_history_with_summaries",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_call_volume_stats",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_call_volume_stats",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_dashboard_stats",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_dashboard_stats",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_database_health_snapshot",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_database_health_snapshot",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_queue_stats",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_queue_stats",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_top_slow_queries",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_top_slow_queries",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_audit_event",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "log_audit_event",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_index_drop_copy",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "log_index_drop_copy",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_rls_event",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "log_rls_event",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "record_trunk_usage",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "record_trunk_usage",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "schema_migrations",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "migration_rollbacks",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "schema_migrations",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "migration_rollbacks",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
    }
   ],
   "raises": [
@@ -28522,15 +29605,19 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "service_role (ignora RLS) — NÃO valida usuário no código",
-    "tables": [],
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "tables": [
+     "user_profiles"
+    ],
     "env": [
+     "DIALER_CRON_TOKEN",
+     "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [],
     "invokes": [],
-    "doc": "Tick do discador preditivo — invocado por pg_cron a cada 10s ou manualmente",
+    "doc": "Tick do discador preditivo — invocado por pg_cron a cada minuto ou manualmente.",
     "errors": [],
     "side_effects": [],
     "webhook_events": [],
@@ -28824,6 +29911,7 @@
      "user_profiles"
     ],
     "env": [
+     "COACHING_CRON_TOKEN",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
@@ -32635,7 +33723,7 @@
   {
    "module": "supabase/functions",
    "files": 150,
-   "lines": 17733,
+   "lines": 17818,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -32850,8 +33938,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 212,
-   "lines": 13817,
+   "files": 215,
+   "lines": 14139,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -34637,6 +35725,7 @@
      "src/pages/roles/useRoles.ts",
      "supabase/functions/approve-password-reset/index.ts",
      "supabase/functions/cleanup-lock-conflicts/index.ts",
+     "supabase/functions/dialer-pacing-tick/index.ts",
      "supabase/functions/export-data-lake/index.ts",
      "supabase/functions/generate-coaching-track/index.ts",
      "supabase/functions/generate-coaching/index.ts",
@@ -35625,6 +36714,9 @@
    "CLAUDE_MD_BASE": [
     "scripts/ci/check-claude-md-integrity.mjs"
    ],
+   "COACHING_CRON_TOKEN": [
+    "supabase/functions/generate-coaching-track/index.ts"
+   ],
    "CODE_SCAN_DIRS": [
     "scripts/supabase_snapshot/snapshot.py"
    ],
@@ -35680,6 +36772,9 @@
     "scripts/fix-user-profile.mjs",
     "scripts/inspect-schema.mjs",
     "scripts/test-rls-access.mjs"
+   ],
+   "DIALER_CRON_TOKEN": [
+    "supabase/functions/dialer-pacing-tick/index.ts"
    ],
    "E2E_ADMIN_EMAIL": [
     "tests/e2e/helpers/adminSession.ts",
@@ -35831,6 +36926,7 @@
     "supabase/functions/database-cleanup/index.ts",
     "supabase/functions/detect-churn-risk/index.ts",
     "supabase/functions/detect-key-moments/index.ts",
+    "supabase/functions/dialer-pacing-tick/index.ts",
     "supabase/functions/elevenlabs-conversation-token/index.ts",
     "supabase/functions/enforce-sla/index.ts",
     "supabase/functions/enroll-voice/index.ts",
@@ -40602,7 +41698,7 @@
    },
    {
     "file": "supabase/functions/generate-coaching-track/index.ts",
-    "text": "Somente supervisor/admin podem disparar geração em massa."
+    "text": "Somente supervisor/admin podem disparar geracao em massa."
    },
    {
     "file": "supabase/functions/generate-coaching-track/index.ts",
@@ -70590,6 +71686,30 @@
    {
     "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
     "call": "notify_webhook_failure_spike"
+   },
+   {
+    "file": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+    "call": "notify_bloat_hotspots"
+   },
+   {
+    "file": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+    "call": "notify_idle_indexes"
+   },
+   {
+    "file": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+    "call": "notify_lock_conflict_hotspot"
+   },
+   {
+    "file": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+    "call": "notify_suspicious_index_drop_activity"
+   },
+   {
+    "file": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+    "call": "notify_trunk_offline"
+   },
+   {
+    "file": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+    "call": "notify_webhook_failure_spike"
    }
   ],
   "db_policies": [
@@ -70632,26 +71752,6 @@
     "using": "auth.uid() = user_id",
     "check": "",
     "src": "supabase/migrations/20241231000000_saved_filters.sql"
-   },
-   {
-    "name": "Users can view versions",
-    "table": "entity_versions",
-    "cmd": "SELECT",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "true",
-    "check": "",
-    "src": "supabase/migrations/20241231000001_entity_versions.sql"
-   },
-   {
-    "name": "Users can insert versions",
-    "table": "entity_versions",
-    "cmd": "INSERT",
-    "roles": "public",
-    "mode": "permissive",
-    "using": "",
-    "check": "auth.uid() = changed_by OR changed_by IS NULL",
-    "src": "supabase/migrations/20241231000001_entity_versions.sql"
    },
    {
     "name": "Allow public read on call_alerts",
@@ -75812,6 +76912,26 @@
     "using": "public.is_admin_or_supervisor()",
     "check": "",
     "src": "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
+   },
+   {
+    "name": "Authenticated can view versions",
+    "table": "entity_versions",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "auth.uid() IS NOT NULL",
+    "check": "",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "name": "Authenticated can insert versions",
+    "table": "entity_versions",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "auth.uid() = changed_by",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
    }
   ],
   "db_triggers": [
@@ -81583,10 +82703,10 @@
    "entity_versions": {
     "rls": "enabled",
     "SELECT": [
-     "public: true"
+     "authenticated: auth.uid() IS NOT NULL"
     ],
     "INSERT": [
-     "public: auth.uid() = changed_by OR changed_by IS NULL"
+     "authenticated: auth.uid() = changed_by"
     ],
     "UPDATE": [],
     "DELETE": []
@@ -83116,7 +84236,8 @@
    "supabase/migrations/20260726200037_ddb39a7d-1e45-4c97-be01-1923e0caea6d.sql",
    "supabase/migrations/20260726201157_da4cb47a-5f61-4783-9786-eb99a7ee6bfc.sql",
    "supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql",
-   "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql"
+   "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
+   "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
   ],
   "security_definer_fns": [
    "add_to_dnc",
@@ -83987,6 +85108,1086 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "apply_migration",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "audit_role_change",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "audit_table_change",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "bridge_voip_alert_to_notification",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_suspicious_activity",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_table_bloat",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_old_data",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_old_logs",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "enforce_optimistic_lock",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "ensure_single_default_filter",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_call_queues_overview",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_kb_article_change",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_kb_article_history",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_new_user",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_critical_rls_event",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_bloat_hotspots",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_idle_indexes",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_lock_conflict_hotspot",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_suspicious_index_drop_activity",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_trunk_offline",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_webhook_failure_spike",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "prevent_role_escalation",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "process_audit_log",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "recalc_deal_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "reset_public_index_stats",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "rollback_migration",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "snapshot_deals_daily",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "trg_recalc_deals_on_interaction",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "trigger_auto_scorecard",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_kb_article_search_vector",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_saved_filters_updated_at",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_security_updated_at",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_transcript_search_vector",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_updated_at_column",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_virtual_fax_ocr_vector",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_audit_insert",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_call_queue",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_park_orbit",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_parked_call",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_queue_audio_slots",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_ring_group",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "apply_migration",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "audit_role_change",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "audit_table_change",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "bridge_voip_alert_to_notification",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_suspicious_activity",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_table_bloat",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_old_data",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_old_logs",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "enforce_optimistic_lock",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "ensure_single_default_filter",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_kb_article_change",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_kb_article_history",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "handle_new_user",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_critical_rls_event",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_bloat_hotspots",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_idle_indexes",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_lock_conflict_hotspot",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_suspicious_index_drop_activity",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_trunk_offline",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "notify_webhook_failure_spike",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "prevent_role_escalation",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "process_audit_log",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "reset_public_index_stats",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "rollback_migration",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "snapshot_deals_daily",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "trg_recalc_deals_on_interaction",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "trigger_auto_scorecard",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_kb_article_search_vector",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_saved_filters_updated_at",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_security_updated_at",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_transcript_search_vector",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_updated_at_column",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "update_virtual_fax_ocr_vector",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_audit_insert",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_call_queue",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_park_orbit",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_parked_call",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_queue_audio_slots",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "validate_ring_group",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "index_usage",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "unused_indexes",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "migration_status",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "index_usage",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "unused_indexes",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "migration_status",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "financial_impact_daily",
+    "objkind": "table",
+    "roles": "anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "apply_predictive_pacing",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "apply_predictive_pacing",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "calculate_predictive_pace",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "calculate_predictive_pace",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_all_tables_rls_status",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_all_tables_rls_status",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_idle_indexes",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_idle_indexes",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_ip_in_cidr",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_ip_in_cidr",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_rate_limit",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_rate_limit",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_rls_enabled",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_rls_enabled",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "cleanup_expired_challenges",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "cleanup_expired_challenges",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "expire_parked_calls",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "expire_parked_calls",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_agent_financial_leaderboard",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_agent_financial_leaderboard",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_agent_performance",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_agent_performance",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_agents_with_active_calls",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_agents_with_active_calls",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_call_history_with_summaries",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_call_history_with_summaries",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_call_volume_stats",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_call_volume_stats",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_dashboard_stats",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_dashboard_stats",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_database_health_snapshot",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_database_health_snapshot",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_queue_stats",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_queue_stats",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_top_slow_queries",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_top_slow_queries",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_audit_event",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "log_audit_event",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_index_drop_copy",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "log_index_drop_copy",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "log_rls_event",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "log_rls_event",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "record_trunk_usage",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "record_trunk_usage",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "schema_migrations",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "migration_rollbacks",
+    "objkind": "table",
+    "roles": "anon, authenticated",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "schema_migrations",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "migration_rollbacks",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
    }
   ],
   "guards": [
@@ -113221,15 +115422,29 @@
   },
   "supabase/functions/dialer-pacing-tick/index.ts": {
    "path": "supabase/functions/dialer-pacing-tick/index.ts",
-   "lines": 31,
+   "lines": 81,
+   "tables": [
+    {
+     "table": "user_profiles",
+     "op": "select"
+    }
+   ],
+   "table_cols": {
+    "user_profiles": [
+     "id",
+     "role"
+    ]
+   },
    "rpc": [
     "apply_predictive_pacing"
    ],
    "env": [
+    "DIALER_CRON_TOKEN",
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
-   "doc": "Tick do discador preditivo — invocado por pg_cron a cada 10s ou manualmente",
+   "doc": "Tick do discador preditivo — invocado por pg_cron a cada minuto ou manualmente.",
    "uses_service_role": true
   },
   "supabase/functions/elevenlabs-conversation-token/index.ts": {
@@ -113892,7 +116107,7 @@
   },
   "supabase/functions/generate-coaching-track/index.ts": {
    "path": "supabase/functions/generate-coaching-track/index.ts",
-   "lines": 139,
+   "lines": 174,
    "tables": [
     {
      "table": "user_profiles",
@@ -113948,6 +116163,7 @@
     ]
    },
    "env": [
+    "COACHING_CRON_TOKEN",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -113970,7 +116186,7 @@
     }
    ],
    "rule_comments": [
-    "Somente supervisor/admin podem disparar geração em massa.",
+    "Somente supervisor/admin podem disparar geracao em massa.",
     "Rate-limit: uma trilha aberta por agente (evita duplicar)."
    ],
    "temporal": [
@@ -118207,6 +120423,27 @@
    "path": "supabase/migrations/20261121125200_fix_rls_allow_all.sql",
    "lines": 32
   },
+  "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql": {
+   "path": "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql",
+   "lines": 39
+  },
+  "supabase/migrations/20261122140000_dialer_pacing_cron.sql": {
+   "path": "supabase/migrations/20261122140000_dialer_pacing_cron.sql",
+   "lines": 39
+  },
+  "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql": {
+   "path": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+   "lines": 244,
+   "side_effects": [
+    "notify_bloat_hotspots",
+    "notify_idle_indexes",
+    "notify_lock_conflict_hotspot",
+    "notify_suspicious_index_drop_activity",
+    "notify_trunk_offline",
+    "notify_webhook_failure_spike"
+   ],
+   "uses_service_role": true
+  },
   "tests/e2e/auth.spec.ts": {
    "path": "tests/e2e/auth.spec.ts",
    "lines": 34,
@@ -118315,10 +120552,42 @@
   }
  },
  "git": {
-  "sha": "ac18a931e77aaec70c6a6844cc4b8a717dbe196a",
+  "sha": "a01216be6769e931ffa88e7a363ff39b4330b276",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a01216b",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: cron de minuto para o discador preditivo (D6) (#93)",
+    "files": [
+     "docs/edge-functions/README.md",
+     "supabase/functions/dialer-pacing-tick/index.ts",
+     "supabase/migrations/20261122140000_dialer_pacing_cron.sql"
+    ]
+   },
+   {
+    "sha": "3a2530e",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "feat: cron diario que gera trilhas de coaching (D4) (#89)",
+    "files": [
+     "supabase/functions/generate-coaching-track/index.ts",
+     "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql"
+    ]
+   },
+   {
+    "sha": "907e943",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix(seguranca): revoga EXECUTE de anon nas funcoes internas e fecha advisors de RLS (#84)",
+    "files": [
+     "docs/audit/scorecard-final.md",
+     "docs/estado/funcionalidades-planejadas.md",
+     "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+    ]
+   },
    {
     "sha": "ac18a93",
     "date": "2026-11-21",
@@ -118650,50 +120919,20 @@
      "supabase/functions/voip-executive-narrative/index.ts",
      "supabase/functions/whatsapp-rewrite/index.ts"
     ]
-   },
-   {
-    "sha": "ffaedf6",
-    "date": "2026-11-21",
-    "author": "Joaquim Ataides",
-    "subject": "docs: relatorio atualizado (seed, PR #62, validação O2O)",
-    "files": [
-     "docs/pendencias/_relatorio.md"
-    ]
-   },
-   {
-    "sha": "ea386b1",
-    "date": "2026-11-21",
-    "author": "Joaquim Ataides",
-    "subject": "docs: regras de negocio verificadas e achados fora de escopo",
-    "files": [
-     "docs/pendencias/_achados.md",
-     "docs/pendencias/_regras-de-negocio.md"
-    ]
-   },
-   {
-    "sha": "ce4911d",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)",
-    "files": [
-     "docs/pendencias/_ordem.md",
-     "docs/pendencias/_verificado-banco.md",
-     "src/pages/admin/SecurityDashboard.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    9
+    10
+   ],
+   [
+    "docs/edge-functions/README.md",
+    5
    ],
    [
     "src/components/layout/AppSidebar.tsx",
     5
-   ],
-   [
-    "docs/edge-functions/README.md",
-    4
    ],
    [
     "supabase/migrations/20250102000000_performance_indexes.sql",
@@ -118708,6 +120947,10 @@
     3
    ],
    [
+    "supabase/functions/generate-coaching-track/index.ts",
+    2
+   ],
+   [
     "supabase/functions/detect-key-moments/index.ts",
     2
    ],
@@ -118718,6 +120961,26 @@
    [
     "src/components/coaching/CoachingAssignmentsPanel.tsx",
     2
+   ],
+   [
+    "supabase/functions/dialer-pacing-tick/index.ts",
+    1
+   ],
+   [
+    "supabase/migrations/20261122140000_dialer_pacing_cron.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql",
+    1
+   ],
+   [
+    "docs/audit/scorecard-final.md",
+    1
+   ],
+   [
+    "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+    1
    ],
    [
     "supabase/functions/compute-account-health/index.ts",
@@ -118737,30 +121000,6 @@
    ],
    [
     "supabase/functions/sync-crm-queue/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/teams-fetch-recordings/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/global-load-test/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/voip-load-test/index.ts",
-    1
-   ],
-   [
-    "scripts/inventario/gerar-catalogo-edges.mjs",
-    1
-   ],
-   [
-    "supabase/functions/rls-audit/index.ts",
-    1
-   ],
-   [
-    "src/hooks/useDataLakeExports.ts",
     1
    ]
   ]

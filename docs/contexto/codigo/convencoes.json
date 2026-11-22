@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: cron de minuto para o discador preditivo (D6) (#93)",
+   "feat: cron diario que gera trilhas de coaching (D4) (#89)",
+   "fix(seguranca): revoga EXECUTE de anon nas funcoes internas e fecha advisors de RLS (#84)",
    "fix: indices de audit_logs usam created_at e guardam a coluna (#82)",
-   "fix: edges que escrevem com service_role exigem sessao (#92)",
-   "fix: load-tests exigem admin e limpam dados de teste (#91)",
-   "docs: regenera catalogo apos corrigir o rls-audit (#90)",
-   "docs: pendencias alinhadas ao estado real medido (#88)"
+   "fix: edges que escrevem com service_role exigem sessao (#92)"
   ]
  },
  "pr_template": null,

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ac18a931e7` · branch `main` · 2026-11-22 01:04 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a01216be67` · branch `main` · 2026-11-22 01:06 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -15,8 +15,6 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `saved_filters` | Users can insert own filters | INSERT | public | permissive |  | `auth.uid() = user_id` |
 | `saved_filters` | Users can update own filters | UPDATE | public | permissive | `auth.uid() = user_id` | `auth.uid() = user_id` |
 | `saved_filters` | Users can delete own filters | DELETE | public | permissive | `auth.uid() = user_id` |  |
-| `entity_versions` | Users can view versions | SELECT | public | permissive | `true` |  |
-| `entity_versions` | Users can insert versions | INSERT | public | permissive |  | `auth.uid() = changed_by OR changed_by IS NULL` |
 | `call_alerts` | Allow public read on call_alerts | SELECT | public | permissive | `true` |  |
 | `call_alerts` | Allow public insert on call_alerts | INSERT | public | permissive |  | `true` |
 | `call_alerts` | Allow public update on call_alerts | UPDATE | public | permissive | `true` |  |
@@ -311,6 +309,8 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `call_playlists` | Owners delete playlists | DELETE | public | permissive | `owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()` |  |
 | `playlist_items` | View items of accessible playlists | SELECT | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (is_admin_or_supervisor() OR p.owner_agent_name = get_user_agent_name() OR p.is_shared = true))` |  |
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
+| `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
+| `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
 | … +222 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
@@ -2869,6 +2869,12 @@ _nenhum item encontrado_
 | `notify_suspicious_index_drop_activity` | `supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql` |
 | `notify_trunk_offline` | `supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql` |
 | `notify_webhook_failure_spike` | `supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql` |
+| `notify_bloat_hotspots` | `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql` |
+| `notify_idle_indexes` | `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql` |
+| `notify_lock_conflict_hotspot` | `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql` |
+| `notify_suspicious_index_drop_activity` | `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql` |
+| `notify_trunk_offline` | `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql` |
+| `notify_webhook_failure_spike` | `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql` |
 
 ## N. Regras citadas em comentários do código
 
@@ -2971,7 +2977,7 @@ _nenhum item encontrado_
 | 2. Se for trigger, atualizar o banco. Se for busca, apenas retornar. | `supabase/functions/embed-kb-article/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/enforce-sla/index.ts` |
 | ').limit(50000); | `supabase/functions/export-data-lake/index.ts` |
-| Somente supervisor/admin podem disparar geração em massa. | `supabase/functions/generate-coaching-track/index.ts` |
+| Somente supervisor/admin podem disparar geracao em massa. | `supabase/functions/generate-coaching-track/index.ts` |
 | Rate-limit: uma trilha aberta por agente (evita duplicar). | `supabase/functions/generate-coaching-track/index.ts` |
 | Budget esgotado alerta mesmo com status ainda dentro do limite: e o sinal | `supabase/functions/health-check/index.ts` |
 | que uma tendencia: burn_rate de 1 e o alvo, nao o limite. | `supabase/functions/health-check/slo-budget.ts` |

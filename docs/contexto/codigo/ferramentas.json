@@ -4,7 +4,7 @@
  "stack": {
   "linguagens": [
    "TypeScript (1177)",
-   "SQL (214)",
+   "SQL (217)",
    "Markdown (114)",
    "JavaScript (28)",
    "JSON (16)",
@@ -400,6 +400,8 @@
   "usadas_nas_edges": [
    "ADMIN_EMAIL",
    "BITRIX_WEBHOOK_URL",
+   "COACHING_CRON_TOKEN",
+   "DIALER_CRON_TOKEN",
    "ELEVENLABS_AGENT_ID",
    "ELEVENLABS_API_KEY",
    "FROM_EMAIL",
@@ -612,7 +614,9 @@
   ],
   "env_de_integracao": [
    "BITRIX_WEBHOOK_URL",
+   "COACHING_CRON_TOKEN",
    "DD_API_KEY",
+   "DIALER_CRON_TOKEN",
    "ELEVENLABS_AGENT_ID",
    "ELEVENLABS_API_KEY",
    "EMAIL_SERVICE_API_KEY",

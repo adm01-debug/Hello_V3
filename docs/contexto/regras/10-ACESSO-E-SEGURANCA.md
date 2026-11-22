@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ac18a931e7` · branch `main` · 2026-11-22 01:04 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a01216be67` · branch `main` · 2026-11-22 01:06 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -90,7 +90,7 @@
 | `dnc_list` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `email_tickets` | enabled | public: is_admin_or_supervisor()<br>public: EXISTS ( SELECT 1 FROM public.conversations c WHERE c.id = email_tickets.conversation_id AND c.assigned_agent_name = get_user_agent_<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `email_verification_tokens` | enabled | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | authenticated: false | public: auth.uid() = user_id OR is_admin_user(auth.uid()) |
-| `entity_versions` | enabled | public: true | public: auth.uid() = changed_by OR changed_by IS NULL | — | — |
+| `entity_versions` | enabled | authenticated: auth.uid() IS NOT NULL | authenticated: auth.uid() = changed_by | — | — |
 | `financial_impact_daily` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
 | `fraud_signals` | enabled | public: is_admin_or_supervisor()<br>public: agent_name = get_user_agent_name()<br>public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) |
 | `geo_access_logs` | não encontrado | sem RLS | authenticated: is_admin_or_supervisor() | sem RLS | authenticated: is_admin_or_supervisor() |
@@ -185,7 +185,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 106 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 107 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -293,6 +293,7 @@
 - `supabase/migrations/20260726201157_da4cb47a-5f61-4783-9786-eb99a7ee6bfc.sql`
 - `supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql`
 - `supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql`
+- `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql`
 
 ## Funções SQL `SECURITY DEFINER` (rodam com privilégio do dono, ignoram RLS)
 
@@ -394,18 +395,23 @@ Middleware matcher (Next.js): nenhum
 | grant | authenticated | select | `financial_impact_daily`, `index_drop_audit` |
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
 | grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls` |
-| grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls` |
+| grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +6 |
 | grant | postgres | all privileges | `cron` |
 | grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls` |
-| grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard` |
+| grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges` |
+| grant | service_role | select | `index_usage`, `unused_indexes`, `migration_status`, `schema_migrations`, `migration_rollbacks` |
 | revoke | PUBLIC | all | `log_index_drop_copy`, `expire_parked_calls` |
 | revoke | PUBLIC | execute | `get_dashboard_stats`, `get_queue_stats`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `cleanup_old_logs`, `log_rls_event` |
 | revoke | PUBLIC, anon | all | `calculate_predictive_pace`, `recalc_deal_health` |
+| revoke | PUBLIC, anon | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `get_call_queues_overview`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event` … +48 |
 | revoke | PUBLIC, anon, authenticated | all | `apply_predictive_pacing`, `snapshot_deals_daily` |
 | revoke | PUBLIC, anon, authenticated | execute | `trigger_auto_scorecard` |
+| revoke | anon | all | `financial_impact_daily` |
 | revoke | anon | execute | `cleanup_old_logs` |
 | revoke | anon, PUBLIC | execute | `get_agent_financial_leaderboard`, `get_agent_financial_leaderboard` |
+| revoke | anon, authenticated | all | `index_usage`, `unused_indexes`, `migration_status`, `schema_migrations`, `migration_rollbacks` |
 | revoke | anon, authenticated | execute | `cleanup_old_data`, `check_all_tables_rls_status`, `cleanup_expired_challenges`, `check_all_tables_rls_status`, `cleanup_old_data`, `cleanup_expired_challenges`, `check_rls_enabled` |
+| revoke | authenticated | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event`, `notify_bloat_hotspots` … +24 |
 | revoke | public | all | `get_agent_financial_leaderboard` |
 
 ## Riscos de acesso detectados
