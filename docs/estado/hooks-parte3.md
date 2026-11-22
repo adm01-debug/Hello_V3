@@ -34,7 +34,7 @@
 | `useActiveCallsRealtime` | ✅ | src/hooks/useActiveCallsRealtime.ts:35,40 | components/dashboard/ActiveCallsRealtime.tsx | `call_sessions`, `hold_events` | — |
 | `useAdherence` (aderência de escala) | ✅ | src/hooks/useAdherence.ts:15 (`invoke('compute-adherence')`) | components/scheduling/AdherencePanel.tsx:15,165 | edge `compute-adherence` | Wired e montado em pages/Scheduling.tsx (/scheduling)
 | `useAgentFinancialLeaderboard` | ✅ | src/hooks/useAgentFinancialLeaderboard.ts:20 | components/financial/AgentFinancialLeaderboard.tsx | RPC `get_agent_financial_leaderboard` | Sem teste |
-| **`useAgentRanking`** (ranking + metas + **createTestData**) | 🟨 IMPLEMENTADO_PARCIAL | leitura real: src/hooks/useAgentRanking.ts:107,110,123,132,148,165,166,218,224; **fabricação: :262-307 com `Math.random` em :269,271,272,275,276,278,279,284,285,288,290,293,294,295** | 7 consumidores (pages/AgentRanking.tsx + 6 components/ranking/\*); botão em src/pages/AgentRanking.tsx:47 | lê `call_sessions`,`call_summaries`,`call_alerts`,`agent_goals`,`call_analyses`; **grava** `call_sessions`,`call_summaries`,`call_analyses` | Remover/gatear `createTestData` — ver Achados graves |
+| **`useAgentRanking`** (ranking + metas + **createTestData**) | 🟨 IMPLEMENTADO_PARCIAL | Leitura real: `:107,110,123,132,148,165,166,218,224`. Fabricacao de dados em `:262-311` com `Math.random` em :273,275,276,279,280,282,288,289,292,297,298,299. **Tem guarda de ambiente duplo:** `:266 if (!import.meta.env.DEV) return` e o botao so renderiza em `AgentRanking.tsx:47 {import.meta.env.DEV && ...}` | 7 consumidores (pages/AgentRanking.tsx + 6 components/ranking/\*); botão em src/pages/AgentRanking.tsx:47 | lê `call_sessions`,`call_summaries`,`call_alerts`,`agent_goals`,`call_analyses`; **grava** `call_sessions`,`call_summaries`,`call_analyses` | Correto por design: ferramenta de DEV. Pendencia: sem RBAC (qualquer dev logado pode gravar em project ref de staging)
 | `useAgentStatus` | ✅ | src/hooks/useAgentStatus.ts:39,81,125 (PATCH REST com `keepalive` no unload) | AchievementNotificationProvider.tsx, UnifiedSoftphone.tsx, CoachingPanel.tsx, pages/AgentRanking.tsx | `agents` | — |
 | `useAlertHistory` | ✅ | src/hooks/useAlertHistory.ts:44 | src/pages/AlertHistory.tsx | `call_alerts` | — |
 | `useAlertPresets` (presets em localStorage) | ✅ | src/hooks/useAlertPresets.ts:19-55 | src/pages/admin/SecurityAlerts.tsx | localStorage (por design) | Sem teste |
@@ -103,13 +103,21 @@
 
 ## Achados graves
 
-1. **🔴 CRÍTICO — `createTestData` fabrica e grava dados em tabelas de produção, exposto por botão na UI.**
-   `src/hooks/useAgentRanking.ts:262-307` gera nomes, telefones, durações, sentimentos, notas de satisfação e scores de performance com `Math.random()` (14 ocorrências: linhas 269, 271, 272, 275, 276, 278, 279, 284, 285, 288, 290, 293, 294, 295) e faz `INSERT` real em **`call_sessions`** (`:274`), **`call_summaries`** (`:286`) e **`call_analyses`** (`:292`). Não há guarda de ambiente, de papel/role nem confirmação — o gatilho é um `<Button onClick={createTestData}>` em `src/pages/AgentRanking.tsx:47`, na tela normal de ranking.
-   Contaminação em cascata: essas três tabelas alimentam `useAgentRanking` (:107,148,165), `useCallAnalytics` (:36,41), `useDashboardData` (:87), `useExecutiveDashboard` (:114,118), `useCallHistory` (:136-138) e `useCallSession` (:47,181). Métricas executivas, ranking de agentes e histórico de chamadas passam a misturar chamadas inexistentes com reais, sem coluna de marcação (`is_test`/`source`) que permita separá-las depois.
+1. ~~**🔴 CRITICO - `createTestData` fabrica e grava dados em tabelas de producao.**~~
+   **FALSO POSITIVO - o gate existe, em duas camadas.** `useAgentRanking.ts:266` tem `if (!import.meta.env.DEV) return;` na primeira linha executavel da funcao, com o comentario explicando o risco
+   (que contamina `call_sessions`/`call_summaries`/`call_analyses` e propaga para o dashboard executivo). O botao em
+   `AgentRanking.tsx:47` esta dentro de `{import.meta.env.DEV && (...)}`. Em build de producao o Vite substitui
+   `import.meta.env.DEV` por `false`: a funcao retorna antes de qualquer query e o botao nao e renderizado.
+   A fabricacao com `Math.random` existe (14 ocorrencias, `:273-299`) mas so alcancavel em `npm run dev`.
+   **Pendencia real:** nao ha check de RBAC - qualquer pessoa com o repo rodando
+   localmente e apontando para o project ref de staging pode inserir linhas. Correcao
+   seria exigir `is_admin_user` tambem, nao remover a guarda de env.
 
 2. **🟠 Transferência de chamada é simulada no cliente.** `src/hooks/useCallTransfer.ts:63` conclui a transferência cega com `setTimeout(() => completeTransfer(callId), 2000)`; todo o hook opera só sobre estado React (`:16-70`), sem sinalização SIP/REFER nem persistência em tabela. A UI reporta sucesso após 2 s independentemente do resultado real no PBX.
 
-3. **🟠 Seis módulos órfãos com backend já provisionado** (nenhum consumidor de produção; apenas testes que os importam): `useAdherence` (edge `compute-adherence`), `useChatbot` (edge `chatbot-respond`), `useChurnRisk` (`churn_risk_signals`), `useCallPlaylists`+`usePlaylistItems` (`call_playlists`, `playlist_items`), `useCoachingAssignments` (`coaching_assignments`), `useComplianceRules` (`compliance_rules`). São ~415 linhas de código mantidas e testadas que nada exercita em runtime — e sinalizam tabelas/edge functions possivelmente sem escrita nem leitura reais.
+3. ~~**Oito modulos orfaos com backend ja provisionado.**~~ **RESOLVIDO.** Os 6 hooks
+   foram wired nas PRs WIRING-04/06 e estao em producao: `useAdherence` -> `/scheduling`, `useCallPlaylists` -> `/call-library`, `useChatbot` -> `/inbox`, `useChurnRisk` -> `/accounts`, `useCoachingAssignments` -> `/coaching`, `useComplianceRules` -> `/compliance`. Ver a tabela no topo
+   deste arquivo para o componente e a linha exatos. Registro mantido para nao re-flag.
 
 4. **🟡 Barrel `src/hooks/auth/index.ts` morto.** Re-exporta 5 símbolos (`:1-7`) e não é importado em lugar nenhum de `src/` — busca por `hooks/auth'`, `@/hooks/auth`, `./auth`, `../auth` retorna zero. Cria dois caminhos de import concorrentes para o mesmo módulo de autenticação.
 
