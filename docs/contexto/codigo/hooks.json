@@ -2704,9 +2704,10 @@
    "canais_realtime": [
     "sentiment-${callSessionId}"
    ],
-   "usado_por": 2,
+   "usado_por": 3,
    "usado_por_arquivos": [
     "src/components/call-history/CallDetailDialog.tsx",
+    "src/components/calls/softphone/ActiveCallDisplay.tsx",
     "src/components/conversation-intelligence/LiveSentimentGraph.tsx"
    ],
    "coberto_por_testes": 1

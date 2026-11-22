@@ -1300,6 +1300,7 @@
     "useCulturalHints",
     "useEffect",
     "useHoldReminder",
+    "useLiveSentiment",
     "useLiveTranslation",
     "useMultiChannelCall",
     "useNetworkMonitor",
@@ -1323,6 +1324,7 @@
     "useConversation",
     "useCulturalHints",
     "useHoldReminder",
+    "useLiveSentiment",
     "useLiveTranslation",
     "useMultiChannelCall",
     "useNetworkMonitor",
@@ -1341,6 +1343,7 @@
     "call_recordings",
     "cultural_hints",
     "hold_events",
+    "live_sentiment_snapshots",
     "voip_quality_alerts"
    ],
    "rpcs": [
@@ -1355,7 +1358,8 @@
     "wavoip-call"
    ],
    "canais_realtime": [
-    "agents-status"
+    "agents-status",
+    "sentiment-${callSessionId}"
    ],
    "flags": [],
    "papeis": [
@@ -1363,7 +1367,7 @@
     "button",
     "user"
    ],
-   "arquivos_puxados": 58
+   "arquivos_puxados": 59
   },
   {
    "protegida": false,

@@ -1049,9 +1049,10 @@
     "ActiveCallDisplay"
    ],
    "export_default": null,
-   "linhas": 214,
+   "linhas": 248,
    "dominio": "components/calls",
    "hooks_locais": [
+    "useLiveSentiment",
     "useVoiceCommand"
    ],
    "tabelas": [],

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "975df81b5a63427c47338300af6e262fbf377137",
+  "sha": "2e77319aecf31307d2946d37d26c4302273443fa",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 19:38 UTC",
+  "generated_at": "2026-11-22 19:48 UTC",
   "files_total": 1689,
   "code_files": 1492,
-  "code_lines": 185560
+  "code_lines": 185594
  },
  "version": "1.3.2",
- "facts_hash": "f8bd63590a3a32b0",
+ "facts_hash": "28b7b34ecef7cae4",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -28251,6 +28251,7 @@
      "call_recordings",
      "cultural_hints",
      "hold_events",
+     "live_sentiment_snapshots",
      "voip_quality_alerts"
     ],
     "invokes_transitive": [
@@ -28265,7 +28266,7 @@
     "rpc_transitive": [
      "record_trunk_usage"
     ],
-    "deps_count": 56
+    "deps_count": 57
    },
    {
     "path": "",
@@ -33241,7 +33242,7 @@
   {
    "module": "src/components",
    "files": 355,
-   "lines": 42174,
+   "lines": 42208,
    "tables": [
     "accounts",
     "agent_goals",
@@ -92655,7 +92656,7 @@
   },
   "src/components/calls/softphone/ActiveCallDisplay.tsx": {
    "path": "src/components/calls/softphone/ActiveCallDisplay.tsx",
-   "lines": 214,
+   "lines": 248,
    "exports": [
     "function ActiveCallDisplay"
    ],
@@ -123048,10 +123049,19 @@
   }
  },
  "git": {
-  "sha": "975df81b5a63427c47338300af6e262fbf377137",
+  "sha": "2e77319aecf31307d2946d37d26c4302273443fa",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "2e77319",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "feat: humor da chamada ativa vem do dado real, nao de \"Positivo\" fixo (#163)",
+    "files": [
+     "src/components/calls/softphone/ActiveCallDisplay.tsx"
+    ]
+   },
    {
     "sha": "975df81",
     "date": "2026-11-22",
@@ -123351,16 +123361,6 @@
      "src/components/supervisor/panel/TrendChartToggle.tsx",
      "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx"
     ]
-   },
-   {
-    "sha": "d3b1133",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)",
-    "files": [
-     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-     "src/hooks/useQueueMetrics.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -123387,6 +123387,10 @@
    [
     "src/components/layout/CommandPalette.tsx",
     2
+   ],
+   [
+    "src/components/calls/softphone/ActiveCallDisplay.tsx",
+    1
    ],
    [
     "src/App.tsx",
@@ -123438,10 +123442,6 @@
    ],
    [
     "docs/estado/hooks-parte1.md",
-    1
-   ],
-   [
-    "docs/estado/componentes-parte4.md",
     1
    ]
   ]

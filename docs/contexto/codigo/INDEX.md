@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `975df81b5a63427c47338300af6e262fbf377137` (2026-11-22T16:34:55-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `2e77319aecf31307d2946d37d26c4302273443fa` (2026-11-22T16:45:17-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1642 |
 | arquivos_codigo | 1247 |
-| linhas_codigo | 169602 |
+| linhas_codigo | 169636 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -73,7 +73,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/ai | 0 | 0 | 7 | 1 | 2 | 1 |
 | components/alerts | 0 | 0 | 5 | 0 | 0 | 3 |
 | components/auth | 0 | 0 | 7 | 12 | 2 | 6 |
-| components/calls | 0 | 0 | 27 | 29 | 12 | 19 |
+| components/calls | 0 | 0 | 27 | 30 | 12 | 19 |
 | components/compliance | 0 | 0 | 17 | 3 | 0 | 7 |
 | components/contacts | 0 | 0 | 13 | 6 | 3 | 6 |
 | components/conversation-intelligence | 0 | 0 | 7 | 4 | 2 | 5 |
@@ -370,8 +370,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9205 nós · 24379 arestas · 735 comunidades · grafo do commit `975df81b`
-- comunidades maiores: lucide-react (294), utils.ts (170), traceHeaders (165), usePageTitle (165), sonner (140), react (138), select.tsx (124), client.ts (115), cn (113), @tanstack/react-query (113), vitest (111), Tabela de funcionalidades (105)
+- 9206 nós · 24383 arestas · 755 comunidades · grafo do commit `2e77319a`
+- comunidades maiores: lucide-react (279), react (216), button.tsx (188), protectedRoutes.tsx (166), utils.ts (117), safeFormatDistanceToNow (114), safe-date.ts (109), cn (107), traceHeaders (86), dependencies (83), gerar.mjs (80), req (80)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `2e77319` feat: humor da chamada ativa vem do dado real, nao de "Positivo" fixo (#163)
 - 2026-11-22 `975df81` fix: barra de progresso reflete o carregamento real do chunk da rota (#162)
 - 2026-11-22 `da58d29` fix: transferencia de chamada nao conclui mais sozinha por timer (#161)
 - 2026-11-22 `8fa0938` fix: salvar 2FA pela segunda vez falhava por upsert sem onConflict (#159)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `66b53b9` docs: registra 8 edges de IA provadas ponta a ponta (#150)
 - 2026-11-22 `433f7b6` chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)
 - 2026-11-22 `49ee377` fix: troca teste falso de optimistic lock por guarda real do contrato (#148)
-- 2026-11-22 `df7171f` docs: corrige roadmap desatualizado e registra verificacoes de 22/11 (#147)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

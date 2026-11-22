@@ -638,7 +638,7 @@
    "modulo": "components/calls",
    "arquivos": 27,
    "testes": 4,
-   "linhas": 3788,
+   "linhas": 3822,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -660,6 +660,7 @@
     "useHoldReminder",
     "useLiveAssist",
     "useLiveInsights",
+    "useLiveSentiment",
     "useLiveTranscription",
     "useMeetingSummariesList",
     "useMeetingSummary",
@@ -722,7 +723,8 @@
     "agents-status",
     "crm-suggestions-${callSessionId}",
     "live-assist-${callSessionId}",
-    "meeting-summary-${callSessionId}"
+    "meeting-summary-${callSessionId}",
+    "sentiment-${callSessionId}"
    ],
    "env": [
     "VITE_SUPABASE_PUBLISHABLE_KEY",
