@@ -1,6 +1,7 @@
 // Tick do discador preditivo — invocado por pg_cron a cada minuto ou manualmente.
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { mesmaString } from "../_shared/constant-time.ts";
 
 const CORS = corsHeaders as Record<string, string>;
 
@@ -66,11 +67,4 @@ async function exigirPermissao(
     return negar(403, "Acesso negado");
   }
   return null;
-}
-
-function mesmaString(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
 }
