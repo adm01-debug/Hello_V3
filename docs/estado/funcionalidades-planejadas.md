@@ -27,7 +27,7 @@ Origem: `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` §2 e `docs/audits/pendencias-
 |---|---|---|---|
 | **Unified Inbox** (WhatsApp + SMS + Voz em timeline única) | ✅ **Implementado (D1)** | Rota `/inbox` ativa (`protectedRoutes.tsx:156`); `WhatsappComposer` importado em `Inbox.tsx` (canal whatsapp, 4 tons + envio, WIRING-03); edge `whatsapp-inbound` existe | 🟩 **IMPLEMENTADO** (aguarda dados reais: `conversations`=0) |
 | **Virtual Fax v2** (OCR via Gemini) | ✅ **Implementado (D2)** | Rota `/virtual-fax` ativa (`protectedRoutes.tsx:137`); página `VirtualFax.tsx` usa `useVirtualFaxOcr`; edge `ocr-virtual-fax` chama IA real | 🟩 **IMPLEMENTADO** |
-| **AI-Driven Shift Management** | 🔴 Pendente (D3) | Edge `suggest-shift-swaps` existe; `useAdherence` wireado na aba **Aderência** de `/scheduling` (PR #67) | 🟩 **IMPLEMENTADO_TOTAL** (fio ligado) |
+| **AI-Driven Shift Management** | 🔴 Pendente (D3) | Edge `suggest-shift-swaps` deployada e retornando 200; página `/shift-swap-suggestions` roteada com `roles: ["supervisor","admin"]` e entrada no menu (**Sugestões de Escala IA**); tabela `shift_swap_suggestions` existe com RLS; `useAdherence` na aba **Aderência** de `/scheduling` (PR #67) | 🟩 **IMPLEMENTADO_TOTAL** (fio ligado e provado) |
 | **Coaching Automático** (sentimento → trilhas) | 🟢 **Implementado (D4)** | Edges `generate-coaching`, `generate-coaching-plan`, `generate-coaching-track` wireadas; `generate-coaching-track` reescrita contra schema real (`call_summaries.agent_performance_score`/`customer_satisfaction` 0-5, `coaching_assignments.agent_name`/`title`/`description`/`priority`/`status`) e testada (8 testes); botão **"Gerar trilhas automáticas"** em `/coaching` (guard `coaching.manage`) | 🟩 **IMPLEMENTADO** |
 | **Data Lake connector** (BigQuery/Snowflake) | 🟡 Parcial (D5) | Edges `data-lake-flush` e `export-data-lake` existem; cron reapontado para `cfmlmcdyjuotqobjapng` (migration `20261114090557_…`); flush validado no run 21/11 03:00Z (`1 row`, `succeeded`) | 🟡 **IMPLEMENTADO_PARCIAL** (dados de origem vazios; aguarda `call_summaries` populada) |
 | **Financial Impact Dashboard** | Listado como futuro | Rota `/financial-impact` **existe e está ativa**; hook `useFinancialImpact` com teste de propriedade | ✅ **IMPLEMENTADO_TOTAL** (código) / `NAO_VERIFICADO` em uso real |
@@ -67,11 +67,11 @@ Origem: `docs/audits/pendencias-2026-07.md`. Reverificado no código **e no banc
 
 | Compromisso do plano | Medição |
 |---|---|
-| Eliminar hooks chamados fora do topo do componente (8 páginas listadas) | 🟨 **7 de 8 corrigidas.** Resta `src/pages/TopicDetection.tsx:100` (`usePageTitle` dentro do subcomponente `TrendIcon`, definido em `:99`). Varredura por profundidade de chaves em todo o `src/`: é a **única** ocorrência remanescente. |
+| Eliminar hooks chamados fora do topo do componente (8 páginas listadas) | 🟩 **8 de 8 corrigidas.** A ocorrência em `TopicDetection.tsx` era falso positivo: `usePageTitle` está em `:47`, no topo do componente, e `TrendIcon` (`:99`) é componente puro sem hooks. Varredura por profundidade de chaves em todo o `src/`: **zero violações** de regras de hooks. |
 | Substituir testes sintéticos por testes reais | 🟦 **Não realizado.** 35 de 268 arquivos de teste (13%) ainda não importam nada do projeto. |
 | Testes Deno reais das Edge Functions críticas | 🟨 Parcial: 33 arquivos de teste Deno existem; `bitrix-api` continua sem teste dedicado, como o próprio plano apontou. Não executados (Deno indisponível). |
-| "Suíte verde sem falhas relevantes" (critério de aceite) | ❌ **Não atingido.** 4 testes falham de forma reproduzível; o CI está vermelho há 30 execuções. |
-| "Sistema em estado confiável para produção" | ❌ **Não atingido**, pelos riscos R1–R5 do documento executivo. |
+| "Suíte verde sem falhas relevantes" (critério de aceite) | 🟩 **Atingido.** `vitest run`: **3265/3265 testes, 0 falhas**; `tsc --noEmit` limpo; CI da main em `success`. Os 2 arquivos que apareciam como falha só exigem `VITE_SUPABASE_URL`/`VITE_SUPABASE_PUBLISHABLE_KEY` no ambiente — com elas, 5/5 passam. |
+| "Sistema em estado confiável para produção" | 🟨 **Parcial.** R1–R5 fechados: RLS sem `USING(true)`, 0 funções `SECURITY DEFINER` com UUID acessíveis por `anon` (PRs #107/#108), lock conflicts auditados e purgados, InitPlan nas 12 policies. Restam itens de **decisão de negócio**, não de correção: B1 (`pg_partman` — volume não justifica, maior tabela 1664 kB) e C3 (squash de 207 migrations). |
 
 ---
 
