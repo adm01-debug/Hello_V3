@@ -87,6 +87,20 @@ describe('useQueueMetrics', () => {
     expect(result.current.formatGoalValue(65, 'avg_wait_time')).toBe('1:05');
   });
 
+  it('calcula taxa de abandono sem contar a abandonada duas vezes', async () => {
+    // Regressão: totalCalls somava `abandonedCalls` a `recentCalls.length`, mas
+    // recentCalls já inclui as abandonadas. Com 3 abandonadas em 10 chamadas a
+    // taxa correta é 30%; a fórmula antiga dava 3/13 = 23,1% — denominador
+    // inflado, taxa sempre subestimada.
+    recentCallsData = [
+      ...Array.from({ length: 7 }, () => ({ status: 'completed', duration_seconds: 60, hold_time_seconds: 5 })),
+      ...Array.from({ length: 3 }, () => ({ status: 'abandoned', duration_seconds: 0, hold_time_seconds: 0 })),
+    ];
+    const { result } = renderHook(() => useQueueMetrics());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.metrics.abandonmentRate).toBe(30);
+  });
+
   it('notifies on goals when goals present', async () => {
     goalsData = [
       { id: 'g1', name: 'SL', metric_type: 'service_level', comparison_operator: 'gte', critical_threshold: 200, warning_threshold: 300, notify_on_critical: true, notify_on_warning: true },
