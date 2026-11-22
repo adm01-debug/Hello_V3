@@ -11,7 +11,6 @@ import {
   PieChart as RechartsPie, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, LineChart, Line
 } from 'recharts';
-import { Contact } from '@/hooks/useContacts';
 import { useContactInsights } from '@/hooks/useContactInsights';
 import { usePageTitle } from '@/hooks/usePageTitle';
 

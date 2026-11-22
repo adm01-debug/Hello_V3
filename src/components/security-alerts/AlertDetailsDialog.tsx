@@ -1,5 +1,4 @@
 
-import { ptBR } from "date-fns/locale";
 import { Link } from "react-router-dom";
 import { Archive, CheckCircle2, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";

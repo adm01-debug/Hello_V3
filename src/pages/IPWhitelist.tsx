@@ -11,7 +11,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Shield, Plus, Trash2, Globe, User, AlertTriangle, Clock, Network } from 'lucide-react';
 
-import { ptBR } from 'date-fns/locale';
 import { useIPWhitelist } from '@/hooks/useIPWhitelist';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
@@ -22,7 +21,7 @@ export default function IPWhitelist() {
   const { hasRole } = useAuthContext();
   const isAdmin = hasRole(['admin']);
   const {
-    globalIPs, userRestrictions, blockedLogs, users, loading, userIPs,
+    globalIPs, userRestrictions, blockedLogs, users, userIPs,
     addGlobalIP, removeGlobalIP, toggleUserRestriction, fetchUserIPs, addUserIP, removeUserIP,
   } = useIPWhitelist(isAdmin);
 

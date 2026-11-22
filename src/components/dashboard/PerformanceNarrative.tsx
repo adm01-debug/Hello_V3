@@ -1,5 +1,5 @@
  import { motion } from 'framer-motion';
- import { Sparkles, TrendingUp, TrendingDown, Info } from 'lucide-react';
+ import { Sparkles, TrendingUp, Info } from 'lucide-react';
  import { Card, CardContent } from '@/components/ui/card';
  import { Badge } from '@/components/ui/badge';
  

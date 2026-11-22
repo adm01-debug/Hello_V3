@@ -12,9 +12,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Shield, Search, Filter, RefreshCw, Calendar, User, Activity, Info, Eye } from 'lucide-react';
-import { format } from 'date-fns';
-import { safeFormatDate, safeFormatDatePtBR } from '@/lib/safe-date';
-import { ptBR } from 'date-fns/locale';
+
+import { safeFormatDatePtBR } from '@/lib/safe-date';
+
 import { toast } from 'sonner';
 import type { Tables } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';

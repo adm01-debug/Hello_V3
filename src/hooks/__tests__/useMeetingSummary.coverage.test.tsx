@@ -6,7 +6,7 @@ import { useMeetingSummary, useMeetingSummariesList, usePendingActionItems, useA
 interface QueryResult { data: unknown; error: unknown }
 let summaryRow: QueryResult = { data: { id: 'm1', call_session_id: 'cs1', status: 'completed', key_points: ['a'], action_items: [{ description: 'x', priority: 'high' }] }, error: null };
 let listRows: QueryResult = { data: [{ id: 'm1', call_session_id: 'cs1', action_items: [{ description: 'x' }], status: 'completed', call_sessions: { caller_name: 'C' } }], error: null };
-const pendingRows: QueryResult = { data: [{ id: 'm1', call_session_id: 'cs1', action_items: [{ description: 'x' }], generated_at: 't' }], error: null };
+
 const invoke = vi.fn().mockResolvedValue({ data: { ok: true }, error: null });
 const updateEq = vi.fn().mockResolvedValue({ error: null });
 

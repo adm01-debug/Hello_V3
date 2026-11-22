@@ -9,8 +9,8 @@ import { SecurityAuditCard } from './SecurityAuditCard';
 import { safeFormatDate } from "@/lib/safe-date";
 
 export function RealtimeQualityDashboard() {
-  const { data: quality = [], isLoading: loadingQuality } = useQualityMetrics();
-  const { data: usage = [], isLoading: loadingUsage } = useTrunkUsageMetrics();
+  const { data: quality = [] } = useQualityMetrics();
+  const { data: usage = [] } = useTrunkUsageMetrics();
 
   const chartData = [...quality].reverse().map(m => ({
     time: safeFormatDate(m.created_at, 'HH:mm:ss'),

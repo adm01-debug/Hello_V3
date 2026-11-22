@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule */
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Check, X, AlertTriangle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -60,7 +60,6 @@ async function checkPasswordLeaked(password: string): Promise<boolean> {
 export function PasswordStrength({ password, showRequirements = true, checkLeaked = true }: PasswordStrengthProps) {
   const [isLeaked, setIsLeaked] = useState(false);
   const [isCheckingLeak, setIsCheckingLeak] = useState(false);
-  
 
   // Debounce para verificar senhas vazadas
   useEffect(() => {

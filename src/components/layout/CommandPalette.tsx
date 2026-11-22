@@ -9,11 +9,7 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
- import {
-  CircleParking,
-  LayoutGrid,
-  LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Wifi, RefreshCw, Moon, Sun, LogOut, Building2, Handshake, Target, ShieldAlert, Webhook, Database,
- } from 'lucide-react';
+ import { CircleParking, LayoutGrid, LayoutDashboard, Phone, Users, Clock, Settings, Bot, FileText, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, Calendar, Activity, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, Eye, FileBarChart, UserCog, GitBranch, Voicemail, Video, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, BarChart3, AlertTriangle, Headphones, Library, Swords, DownloadCloud, Sparkles, Languages, Inbox as InboxIcon, BookOpen, RefreshCw, Moon, Sun, LogOut, Building2, Handshake, Target, ShieldAlert, Webhook, Database } from 'lucide-react';
  import { useQueryClient } from '@tanstack/react-query';
  import { useTheme } from '@/contexts/ThemeContext';
  import { supabase } from '@/integrations/supabase/client';

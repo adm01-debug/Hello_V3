@@ -1,4 +1,4 @@
-import { Phone, History, PhoneIncoming, PhoneOutgoing, Users } from 'lucide-react';
+import { Phone, History, PhoneIncoming, PhoneOutgoing } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';

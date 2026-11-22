@@ -12,7 +12,7 @@
  * - Input sanitization pipeline
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 // Mock supabase
 vi.mock('@/integrations/supabase/client', () => ({

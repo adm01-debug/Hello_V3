@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest';
 
 import { render, screen, fireEvent } from '@testing-library/react';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { ErrorBoundary, SectionBoundary } from '@/components/error-boundary/ErrorBoundary';
 import fs from 'fs';
 import path from 'path';
@@ -28,10 +28,6 @@ vi.mock('@/lib/logger', () => ({
  */
 
 // Component that throws on demand
-function ThrowingComponent({ shouldThrow }: { shouldThrow: boolean }) {
-  if (shouldThrow) throw new Error('Test error');
-  return <div>Working content</div>;
-}
 
 // Component that always throws
 function AlwaysThrows(): ReactNode {
@@ -186,7 +182,7 @@ describe('ErrorBoundary: Recovery via retry', () => {
   });
 
   it('retry button resets error state', () => {
-    const { rerender } = render(
+    render(
       <ErrorBoundary>
         <AlwaysThrows />
       </ErrorBoundary>

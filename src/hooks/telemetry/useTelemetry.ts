@@ -2,7 +2,6 @@
  import { onCLS, onINP, onLCP, onFCP, onTTFB, type Metric } from 'web-vitals';
  import { supabase } from '@/integrations/supabase/client';
  import { useAuthContext } from '@/contexts/AuthContext';
- import { logger } from '@/lib/logger';
  
  export function useTelemetry() {
    const { user } = useAuthContext();

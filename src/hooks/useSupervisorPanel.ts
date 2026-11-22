@@ -1,4 +1,4 @@
- import { useEffect, useState, useCallback } from 'react';
+ import { useEffect, useState } from 'react';
  import { formatDuration } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -84,7 +84,7 @@ export function useSupervisorPanel() {
   });
   const supervisorName = 'Supervisor';
 
-  const { notificationPermission, requestNotificationPermission, initAudioContext, playAlertSound } =
+  const { requestNotificationPermission, initAudioContext, playAlertSound } =
     useCriticalAlertNotifications({
       enabled: true, soundEnabled, browserNotificationsEnabled: true, soundConfig,
     });

@@ -9,7 +9,6 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Calendar, CalendarDays, Plus, CheckCircle2, XCircle, Clock3 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -31,7 +30,7 @@ export default function Scheduling() {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ agent_name: '', shift_date: '', start_time: '09:00', end_time: '18:00', break_minutes: 60 });
   const { shifts, templates, isLoading, createShift, deleteShift } = useShifts(weekStart);
-  const { requests, create: createTimeOff, review } = useTimeOff();
+  const { requests, review } = useTimeOff();
 
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(weekStart); d.setDate(d.getDate() + i);

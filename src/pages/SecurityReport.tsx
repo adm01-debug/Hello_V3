@@ -33,22 +33,13 @@ const getStatusBadge = (status: string) => {
   }
 };
 
-const getRiskBadge = (risk: string) => {
-  switch (risk) {
-    case "low": return <Badge variant="outline" className="text-success border-success/30">Baixo</Badge>;
-    case "medium": return <Badge variant="outline" className="text-warning border-warning/30">Médio</Badge>;
-    case "high": return <Badge variant="outline" className="text-destructive border-destructive/30">Alto</Badge>;
-    default: return null;
-  }
-};
-
 const SecurityReport = () => {
   usePageTitle('Relatório de Segurança');
   const { profile, loading } = useAuth();
   const navigate = useNavigate();
   const [reportDate] = useState(new Date());
   const [rlsStatus, setRlsStatus] = useState<{ table_name: string; rls_enabled: boolean }[]>([]);
-  const [fetchingRls, setFetchingRls] = useState(false);
+  const [, setFetchingRls] = useState(false);
 
   useEffect(() => {
     if (!loading && (!profile || profile.role !== 'admin')) navigate('/unauthorized');

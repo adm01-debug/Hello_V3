@@ -26,13 +26,6 @@ interface ChartDataPoint {
   total: number;
 }
 
-interface TypeChartDataPoint {
-  type: string;
-  typeLabel: string;
-  count: number;
-  fill: string;
-}
-
 export function AlertsTrendChart() {
   const [callAlerts, setCallAlerts] = useState<AlertData[]>([]);
   const [contactAlerts, setContactAlerts] = useState<AlertData[]>([]);

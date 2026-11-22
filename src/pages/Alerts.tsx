@@ -1,15 +1,11 @@
-import { AlertTriangle, AlertCircle, Info, Check, Filter, Trash2, FlaskConical, Users, Phone, CheckCircle2, XCircle, RefreshCw } from 'lucide-react';
+import { Filter, Users, Phone, RefreshCw } from 'lucide-react';
 import { AlertsTrendChart } from '@/components/alerts/AlertsTrendChart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { formatDistanceToNow, format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-import { useAlerts, ContactAlert, CallAlert } from '@/hooks/useAlerts';
+
+import { useAlerts } from '@/hooks/useAlerts';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { AlertStatsCards } from '@/components/alerts/AlertStatsCards';
 import { ContactAlertsList } from '@/components/alerts/ContactAlertsList';

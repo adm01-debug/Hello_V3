@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Tag, Trash2 } from "lucide-react";
+import { Plus, Tag } from "lucide-react";
 import { useTrackers } from "@/hooks/useTrackers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

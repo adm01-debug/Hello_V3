@@ -2,12 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  LineChart, Line, AreaChart, Area
-} from 'recharts';
-import { Activity, PhoneCall, Zap, AlertTriangle, CheckCircle } from "lucide-react";
+
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { Activity, PhoneCall, Zap } from "lucide-react";
 
 import { safeToLocaleTimeString } from "@/lib/safe-date";
 export const QualityTrunkDashboard = () => {

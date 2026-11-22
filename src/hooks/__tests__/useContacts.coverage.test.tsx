@@ -12,10 +12,6 @@ vi.mock('@/lib/error-tracking', () => ({ reportError: vi.fn() }));
 
 const contact = { id: 'c1', name: 'Test', phone: '5511999', email: null, company: null };
 
-function listOk(data: unknown[]) {
-  return { select: vi.fn(() => ({ order: vi.fn(() => ({ or: vi.fn().mockResolvedValue({ data, error: null }) , then: undefined })) })) };
-}
-
 describe('useContacts (coverage)', () => {
   beforeEach(() => {
     vi.clearAllMocks();

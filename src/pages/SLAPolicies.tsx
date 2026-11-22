@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Clock, Plus, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { Clock, Plus, CheckCircle2 } from 'lucide-react';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 import { Card } from '@/components/ui/card';

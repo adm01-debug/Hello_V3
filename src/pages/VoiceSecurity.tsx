@@ -7,7 +7,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 
-import { ptBR } from 'date-fns/locale';
 import { useVoicePrints, useFraudSignals, useRedactCall, type VerifyResult } from '@/hooks/useVoiceBiometrics';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { safeFormatDatePtBR } from "@/lib/safe-date";

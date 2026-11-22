@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-  import { Video, Plus, Users, Clock, Calendar, Play, Square, Link2, Copy, Check, Loader2 } from 'lucide-react';
+  import { Video, Plus, Users, Clock, Calendar, Play, Copy, Check, Loader2 } from 'lucide-react';
   import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
@@ -67,7 +67,7 @@ export default function VideoConference() {
      setTimeout(() => setCopiedId(null), 2000);
    };
 
-  const { data: conferences = [], isLoading } = useQuery({
+  const { data: conferences = [] } = useQuery({
     queryKey: ['video-conferences'],
     queryFn: async () => {
       const { data, error } = await supabase.from('video_conferences').select('*').order('created_at', { ascending: false });

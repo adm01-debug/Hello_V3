@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
@@ -16,7 +15,7 @@ import { useDNCCompliance } from '@/hooks/useDNCCompliance';
 import { safeParseInt } from '@/lib/safe-number';
 
 export function ComplianceSettings() {
-  const { settings, isLoadingSettings, getSettingValue, updateSetting } = useDNCCompliance();
+  const { isLoadingSettings, getSettingValue, updateSetting } = useDNCCompliance();
 
   const handleToggleSetting = (key: string) => {
     const currentValue = getSettingValue(key, false);

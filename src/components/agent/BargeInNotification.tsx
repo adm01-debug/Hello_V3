@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Users, PhoneCall, X } from 'lucide-react';
+
+import { Users, PhoneCall } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface BargeInSession {

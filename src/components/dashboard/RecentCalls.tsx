@@ -1,9 +1,4 @@
-import { 
-  PhoneIncoming, 
-  PhoneOutgoing, 
-  PhoneMissed,
-  MoreHorizontal 
-} from 'lucide-react';
+import { PhoneIncoming, PhoneMissed, MoreHorizontal } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EmptyCallsState } from '@/components/ui/empty-state';
@@ -11,8 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { safeFormatDistanceToNow } from "@/lib/safe-date";
  import { useRecentCallsData } from '@/hooks/useDashboardData';
  import { cn, formatDuration } from '@/lib/utils';
- import { formatDistanceToNow } from 'date-fns';
- import { ptBR } from 'date-fns/locale';
+import { ptBR } from 'date-fns/locale';
 
 export function RecentCalls() {
   const { data: recentCalls, isLoading } = useRecentCallsData();

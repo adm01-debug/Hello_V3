@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, AlertCircle, Database, Network, Shield } from 'lucide-react';
+import { CheckCircle, Database, Network, Shield } from 'lucide-react';
 
 export function SystemIntegrityDashboard() {
   const integrity = [

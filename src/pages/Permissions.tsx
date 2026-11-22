@@ -7,13 +7,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
-import {
-  Loader2, Shield, Key, Users, Phone, FileText, Settings,
-  Lock, Eye, Edit, Trash2, Plus, Save
-} from 'lucide-react';
+import { Loader2, Shield, Key, Users, Phone, FileText, Settings, Lock, Eye, Save } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
@@ -57,7 +53,7 @@ export default function Permissions() {
   const [saving, setSaving] = useState(false);
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const [rolePermissions, setRolePermissions] = useState<RolePermission[]>([]);
-  const [selectedRole, setSelectedRole] = useState('admin');
+  const [selectedRole] = useState('admin');
   const [changes, setChanges] = useState<Map<string, boolean>>(new Map());
 
   useEffect(() => {

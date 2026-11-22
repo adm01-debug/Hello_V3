@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertTriangle, AlertCircle, RefreshCw, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, Legend } from 'recharts';
-import { format } from 'date-fns';
-import { safeFormatDate, safeFormatDatePtBR } from '@/lib/safe-date';
-import { ptBR } from 'date-fns/locale';
+
+import { safeFormatDatePtBR } from '@/lib/safe-date';
+
 import { useGoalViolations, METRIC_LABELS } from '@/hooks/useGoalViolations';
 
 const COLORS = {

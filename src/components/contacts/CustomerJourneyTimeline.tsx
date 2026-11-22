@@ -1,8 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Phone, Mail, MessageSquare, Calendar, type LucideIcon } from 'lucide-react';
 
-import { ptBR } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
@@ -35,7 +34,7 @@ const sentimentColors: Record<string, string> = {
   negative: 'bg-destructive/10 text-destructive border-destructive/20',
 };
 
-export function CustomerJourneyTimeline({ contactId, interactions }: CustomerJourneyTimelineProps) {
+export function CustomerJourneyTimeline({ interactions }: CustomerJourneyTimelineProps) {
   if (!interactions.length) {
     return (
       <Card>

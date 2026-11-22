@@ -20,7 +20,6 @@ import { scheduleCoachingCheck, processCoachingQueue } from '@/lib/voipRecommend
 const log = logger.create('VoipRecommendationsPanel');
 const SNOOZE_KEY = 'voip-rec-snoozed';
 const AUTO_APPLY_KEY = 'voip-rec-auto-apply';
-const AUTO_APPLIED_KEY = 'voip-rec-auto-applied'; // ids já auto-aplicados nesta sessão
 const SNOOZE_HOURS = 24;
 const AUTO_APPLY_DELAY_MS = 3000;
 

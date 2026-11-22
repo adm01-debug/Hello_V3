@@ -9,7 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ShieldCheck, Clock, Sparkles, FileText, RefreshCw, Phone, CheckCircle2, XCircle } from 'lucide-react';
 
-import { ptBR } from 'date-fns/locale';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useConsent, type ConsentChannel, type ConsentType } from '@/hooks/useConsent';
 import { useBestTimeToContact } from '@/hooks/useBestTimeToContact';

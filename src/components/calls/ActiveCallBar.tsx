@@ -71,7 +71,7 @@ export function ActiveCallBar() {
   const [endedSessionId, setEndedSessionId] = useState<string | null>(null);
   const [endedContactId, setEndedContactId] = useState<string | null>(null);
   
-  const { currentSession, isSaving, startSession, endSession, addTranscript, addAnalysis } = useCallSession();
+  const { currentSession, startSession, endSession, addTranscript, addAnalysis } = useCallSession();
   const { findOrCreateContact, addContactInteraction } = useContacts();
   const { analyze: analyzeLive } = useLiveAssist(currentSession?.id);
 

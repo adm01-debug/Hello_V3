@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSecurityNotifications } from '@/hooks/useSecurityNotifications';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Bell, BellOff, X } from 'lucide-react';
+import { Bell, X } from 'lucide-react';
 
 export function NotificationPermissionBanner() {
   const { isSupported, permission, requestPermission } = useSecurityNotifications();

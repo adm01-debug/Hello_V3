@@ -5,7 +5,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
  import { AlertCircle, AlertTriangle, Bell, CheckCircle, Clock, Info, X } from 'lucide-react';
  import { formatDurationFriendly } from '@/lib/utils';
 
-import { ptBR } from 'date-fns/locale';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export interface HoldAlertRow {

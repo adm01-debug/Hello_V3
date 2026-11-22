@@ -4,9 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { FileText, CheckCircle2, XCircle, Phone, Shield, Clock } from 'lucide-react';
+import { FileText, CheckCircle2, XCircle, Phone, Clock } from 'lucide-react';
 
-import { ptBR } from 'date-fns/locale';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export function ConsentHistoryViewer() {

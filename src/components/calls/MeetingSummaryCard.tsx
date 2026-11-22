@@ -14,7 +14,6 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useMeetingSummary, type ActionItem, type ParticipantSentiment } from '@/hooks/useMeetingSummary';
 
-import { ptBR } from 'date-fns/locale';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface Props {

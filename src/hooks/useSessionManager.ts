@@ -32,7 +32,7 @@ interface ActiveSession {
 
 export function useSessionManager() {
   const { user, session } = useAuthContext();
-  const { checkAndNotifyNewDevice, getDeviceInfo: detectDeviceInfo, getLocationInfo } = useDeviceDetection();
+  const { checkAndNotifyNewDevice } = useDeviceDetection();
   const [sessions, setSessions] = useState<ActiveSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);

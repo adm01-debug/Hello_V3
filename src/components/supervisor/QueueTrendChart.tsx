@@ -1,7 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { BarChart3 } from 'lucide-react';
 
 interface QueueDataPoint {
   time: string;

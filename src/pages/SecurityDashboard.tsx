@@ -2,16 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useSecurityDashboard } from '@/hooks/useSecurityDashboard';
 import { NotificationPermissionBanner } from '@/components/security/NotificationPermissionBanner';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  Shield, ShieldCheck, ShieldAlert, ShieldX, Lock, Unlock, Key, Smartphone, Monitor, Globe, MapPin, Clock,
-  AlertTriangle, CheckCircle2, XCircle, ChevronRight, Users, FileText, Settings, RefreshCw, Loader2,
-} from 'lucide-react';
+import { Shield, ShieldCheck, ShieldAlert, ShieldX, Lock, Unlock, Key, Smartphone, Monitor, Globe, MapPin, Clock, AlertTriangle, CheckCircle2, XCircle, ChevronRight, FileText, Settings, RefreshCw, Loader2 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function SecurityDashboard() {

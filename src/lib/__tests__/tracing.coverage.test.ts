@@ -67,7 +67,6 @@ describe('tracing (coverage)', () => {
 
   it('withTrace honors a provided parent trace id and restores previous operation', async () => {
     await withTrace('outer', async () => {
-      const outerId = getTraceId();
       await withTrace(
         'inner',
         () => {

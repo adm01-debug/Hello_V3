@@ -1,10 +1,8 @@
-import { Activity, Users, Clock, PhoneOff, TrendingUp, TrendingDown, RefreshCw, Phone, Pause, CheckCircle, AlertTriangle, AlertCircle, Gauge, Target, Settings, Zap, History } from 'lucide-react';
+import { Activity, RefreshCw, CheckCircle, AlertTriangle, AlertCircle, Target, Settings, Zap, History } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { format } from 'date-fns';
 import { DashboardGoalsSettings } from '@/components/dashboard/DashboardGoalsSettings';
 import { GoalViolationsHistory } from '@/components/dashboard/GoalViolationsHistory';

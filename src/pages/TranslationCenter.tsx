@@ -10,7 +10,6 @@ import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { langFlag, langLabel, SUPPORTED_LANGS } from '@/lib/language-detection';
 
-import { ptBR } from 'date-fns/locale';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface TranslationRow {

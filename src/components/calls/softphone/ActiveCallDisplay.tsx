@@ -1,8 +1,4 @@
-import {
-   PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play,
-   Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines,
-   Zap, Activity, Smile, Frown, Meh
-} from 'lucide-react';
+import { PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play, Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines, Zap, Activity, Smile } from 'lucide-react';
 
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { Button } from '@/components/ui/button';
@@ -117,7 +113,6 @@ export function ActiveCallDisplay({
           <span className="border-l pl-2">Codec: OPUS</span>
         </div>
       </div>
-
 
       {currentCall.transcripts.length > 0 && (
         <ScrollArea className="h-24 rounded border bg-background/50 p-2">
