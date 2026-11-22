@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { assertSafeOutboundUrl, SsrfBlockedError } from "../_shared/allowed-hosts.ts";
 
 // Health check WSS/TCP simulado via fetch HEAD/HTTP. Para WSS, fazemos GET HTTP no host.
 async function checkTrunk(server: string, transport: string): Promise<{ reachable: boolean; latency_ms: number; error?: string }> {
@@ -9,6 +10,12 @@ async function checkTrunk(server: string, transport: string): Promise<{ reachabl
     const proto = transport === "wss" ? "https" : "http";
     const host = server.replace(/^(wss?|sip|tls):\/\//, "").split(/[:/]/)[0];
     const url = `${proto}://${host}`;
+    try {
+      assertSafeOutboundUrl(url, { allowPrivate: true });
+    } catch (e) {
+      const reason = e instanceof SsrfBlockedError ? e.message : "destino inválido";
+      return { reachable: false, latency_ms: 0, error: reason };
+    }
     const ctrl = new AbortController();
     const timeout = setTimeout(() => ctrl.abort(), 4000);
     const res = await fetch(url, { method: "HEAD", signal: ctrl.signal }).catch(() => null);

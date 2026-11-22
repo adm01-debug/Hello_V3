@@ -1,18 +1,81 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { fc } from "https://esm.sh/fast-check"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import fc from "https://esm.sh/fast-check"
+import { buildCorsHeaders } from "../_shared/cors.ts"
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id, x-correlation-id, x-trace-id, x-trace-operation',
-}
+// Alvos permitidos: apenas Edge Functions deste projeto. Um `target` arbitrário
+// permitiria usar a função como proxy de requisições para qualquer host.
+const ALLOWED_TARGETS = new Set([
+  "analyze-call",
+  "whatsapp-inbound",
+  "bitrix-api",
+  "elevenlabs-tts",
+  "data-lake-flush",
+])
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
+  const cors = buildCorsHeaders(req)
+  if (req.method === 'OPTIONS') return new Response(null, { headers: cors })
+
+  // Fuzzing dispara até 100 requisições por chamada: exige admin autenticado.
+  const authHeader = req.headers.get("Authorization") ?? ""
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")
+  const anonKey = Deno.env.get("SUPABASE_ANON_KEY")
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
+  if (!supabaseUrl || !anonKey || !serviceKey) {
+    return new Response(JSON.stringify({ error: "Configuração ausente" }), {
+      status: 500,
+      headers: { ...cors, 'Content-Type': 'application/json' },
+    })
+  }
+
+  const supabase = createClient(supabaseUrl, anonKey, {
+    global: { headers: { Authorization: authHeader } },
+  })
+  const { data: userData, error: userError } = await supabase.auth.getUser()
+  if (userError || !userData?.user) {
+    return new Response(JSON.stringify({ error: "Não autorizado" }), {
+      status: 401,
+      headers: { ...cors, 'Content-Type': 'application/json' },
+    })
+  }
+
+  const admin = createClient(supabaseUrl, serviceKey)
+  const { data: isAdminRpc, error: rpcError } = await supabase.rpc("is_admin_user", {
+    _user_id: userData.user.id,
+  })
+  let isAdmin = !rpcError && isAdminRpc === true
+  if (!isAdmin) {
+    const { data: roleRow } = await admin
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userData.user.id)
+      .in("role", ["admin", "super_admin", "owner"])
+      .maybeSingle()
+    isAdmin = !!roleRow
+  }
+  if (!isAdmin) {
+    return new Response(JSON.stringify({ error: "Acesso restrito a administradores" }), {
+      status: 403,
+      headers: { ...cors, 'Content-Type': 'application/json' },
+    })
+  }
 
   const url = new URL(req.url)
   const targetFunction = url.searchParams.get('target') || 'analyze-call'
   const mode = url.searchParams.get('mode') || 'generic' // 'generic' | 'numeric'
-  const endpoint = `${Deno.env.get('SUPABASE_URL')}/functions/v1/${targetFunction}`
+
+  if (!ALLOWED_TARGETS.has(targetFunction)) {
+    return new Response(
+      JSON.stringify({
+        error: "Alvo não permitido",
+        allowed_targets: [...ALLOWED_TARGETS],
+      }),
+      { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } },
+    )
+  }
+
+  const endpoint = `${supabaseUrl}/functions/v1/${targetFunction}`
 
   // Payloads numéricos hostis: garantem que Zod `.number().finite()` bloqueia.
   const hostileNumericSamples: unknown[] = [
@@ -44,7 +107,7 @@ serve(async (req) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`
+          'Authorization': `Bearer ${anonKey}`
         },
         body: JSON.stringify(payload)
       })
@@ -67,13 +130,13 @@ serve(async (req) => {
         unexpected_successes: results.filter(r => !r.passed).length,
         system_integrity: results.every(r => r.passed) ? 'high' : 'compromised'
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { headers: { ...cors, 'Content-Type': 'application/json' } }
     )
 
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : String(error) }), {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...cors, 'Content-Type': 'application/json' }
     })
   }
 })

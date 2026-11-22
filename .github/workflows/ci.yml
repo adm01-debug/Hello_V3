@@ -40,6 +40,9 @@ jobs:
       - name: Guard • Edge Functions com coerção numérica insegura
         run: node scripts/guard-edge-numeric.mjs --check
 
+      - name: Guard • Auditoria estática das Edge Functions
+        run: bun scripts/audit-edge-functions.ts
+
       - name: Lint
         run: bun run lint
         continue-on-error: false
@@ -77,6 +80,9 @@ jobs:
 
       - name: Build
         run: bun run build
+
+      - name: Guard • Bundle budget por rota
+        run: node scripts/check-bundle-budget.mjs
 
       - name: Upload build artifact
         if: success()

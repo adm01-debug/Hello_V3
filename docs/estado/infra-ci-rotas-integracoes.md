@@ -374,6 +374,8 @@ Ambos replicados em runtime em `export const Constants` (`types.ts:7780-7787`).
 **Quem chama o quê** (`grep -rn "scripts/"` em `.json`, `.yml`, `.sh`, `.mjs`, `.ts`, excluindo `node_modules`):
 - `.github/workflows/ci.yml:32` → `codemod-safe-number.mjs`
 - `.github/workflows/ci.yml:35` → `guard-edge-numeric.mjs`
+- `.github/workflows/ci.yml:43` → `audit-edge-functions.ts` (via `bun`)
+- `.github/workflows/ci.yml:82` → `check-bundle-budget.mjs`
 - `src/lib/__tests__/guard-edge-numeric.test.ts:21` → `guard-edge-numeric.mjs` (PBT com `execSync`)
 - `scripts/apply-call-volume-fix.mjs:3` → lê `fix-get-call-volume-stats.sql`
 - **`package.json:6-14` tem apenas 5 scripts** (`dev`, `build`, `build:dev`, `preview`, `lint`, `lint:fix`, `type-check`) — **nenhum** aponta para `scripts/`. Não há script `test` nem `test:e2e`.
@@ -382,6 +384,8 @@ Ambos replicados em runtime em `export const Constants` (`types.ts:7780-7787`).
 |---|---|---|---|---|
 | `codemod-safe-number.mjs` | 230 | Codemod/verificador: reescreve `parseInt`/`parseFloat`/`Number.parse*` → `safeParseInt`/`safeParseFloat`, com tokenizador de strings/comentários e injeção de import | CI (`ci.yml:32`) | ✅ IMPLEMENTADO_TOTAL (com falsos-negativos, seção B) |
 | `guard-edge-numeric.mjs` | 206 | Guard R1/R2 de coerção numérica em edge functions | CI (`ci.yml:35`) + teste PBT | 🟨 IMPLEMENTADO_PARCIAL |
+| `audit-edge-functions.ts` | 170 | Auditoria estática das 94 edge functions: entrypoint, segredo literal, `service_role` sem validação, CORS, coerção numérica, SSRF, preflight. Baseline em `audit-edge-baseline.json` (63 chaves) evita travar na dívida herdada — só achados novos falham | CI (`ci.yml:43`) | ✅ IMPLEMENTADO_TOTAL |
+| `check-bundle-budget.mjs` | 130 | Orçamento de bundle por chunk contra `bundle-budget.json` (21 limites regravados a partir do build real; maior chunk `index.js` = 314,5 kB gzip de 346 kB) | CI (`ci.yml:82`) | ✅ IMPLEMENTADO_TOTAL |
 | `full-audit.sh` | 26 | "Auditoria Técnica Completa" | **ninguém** | ⬛ MORTO — e enganoso |
 | `fix-get-call-volume-stats.sql` | 42 | `CREATE OR REPLACE FUNCTION public.get_call_volume_stats()` | `apply-call-volume-fix.mjs:3` | 🟨 PARCIAL (só alcançável por script quebrado) |
 | `apply-call-volume-fix.mjs` | 35 | Aplica o SQL acima via `pg` | **ninguém** | ⬛ MORTO — quebrado |
