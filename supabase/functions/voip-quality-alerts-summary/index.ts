@@ -2,7 +2,7 @@
 // Agrega alertas de qualidade VoIP (voip_quality_alerts) por período.
 // Retorna contagem por tipo, top 5 usuários afetados, MOS médio nos alertas.
 // JWT obrigatório, CORS centralizado, validação via _shared/validate.
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { createClient } from 'npm:@supabase/supabase-js@2';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, oneOf } from '../_shared/validate.ts';
 
