@@ -42,30 +42,30 @@
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-22T22:12:00.243761+00:00",
+        "end_time": "2026-11-22T23:12:00.194683+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 1438,
+        "runid": 1498,
         "seconds": 0.03,
-        "start_time": "2026-11-22T22:12:00.213526+00:00",
+        "start_time": "2026-11-22T23:12:00.162198+00:00",
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-22T22:11:00.028448+00:00",
+        "end_time": "2026-11-22T23:11:00.034345+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 1437,
+        "runid": 1497,
         "seconds": 0.01,
-        "start_time": "2026-11-22T22:11:00.020209+00:00",
+        "start_time": "2026-11-22T23:11:00.022359+00:00",
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-22T22:10:00.200424+00:00",
+        "end_time": "2026-11-22T23:10:00.184052+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 1436,
-        "seconds": 0.03,
-        "start_time": "2026-11-22T22:10:00.169688+00:00",
+        "runid": 1496,
+        "seconds": 0.04,
+        "start_time": "2026-11-22T23:10:00.147470+00:00",
         "status": "succeeded"
       },
       {
@@ -127,7 +127,7 @@
           "usename": "supabase_admin"
         }
       ],
-      "database_bytes": 33811603,
+      "database_bytes": 33844371,
       "queues": [],
       "schema_bytes": [
         {
@@ -144,12 +144,12 @@
       ],
       "top_queries": [
         {
-          "calls": 149,
-          "mean_ms": 5510.23,
+          "calls": 150,
+          "mean_ms": 5511.76,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 821024
+          "total_ms": 826764
         },
         {
           "calls": 2,
@@ -200,20 +200,20 @@
           "total_ms": 51366
         },
         {
-          "calls": 153,
-          "mean_ms": 208.81,
+          "calls": 154,
+          "mean_ms": 209.4,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 1296,
-          "total_ms": 31948
+          "rows": 1306,
+          "total_ms": 32248
         },
         {
-          "calls": 1274,
-          "mean_ms": 16.06,
+          "calls": 1334,
+          "mean_ms": 15.92,
           "query": "SELECT net.http_post( url := $1, headers := jsonb_build_object( $2, $3, $4, $5 || ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )",
           "role": "postgres",
-          "rows": 1274,
-          "total_ms": 20463
+          "rows": 1334,
+          "total_ms": 21244
         },
         {
           "calls": 253,
@@ -224,12 +224,12 @@
           "total_ms": 18997
         },
         {
-          "calls": 153,
-          "mean_ms": 121.75,
+          "calls": 154,
+          "mean_ms": 122.7,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 268541,
-          "total_ms": 18627
+          "rows": 270342,
+          "total_ms": 18896
         },
         {
           "calls": 3971,
@@ -2395,7 +2395,7 @@
         "is_primary": false,
         "is_unique": false,
         "name": "idx_dialer_campaigns_status",
-        "scans": 1269,
+        "scans": 1330,
         "schema": "public",
         "table": "dialer_campaigns"
       },
@@ -5910,7 +5910,7 @@
         "dead_rows": 4,
         "est_rows": 0,
         "heap_bytes": 8192,
-        "idx_scan": 1276,
+        "idx_scan": 1337,
         "index_bytes": 32768,
         "last_autoanalyze": null,
         "last_autovacuum": null,
