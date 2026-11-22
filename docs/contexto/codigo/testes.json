@@ -1839,7 +1839,7 @@
   {
    "arquivo": "src/lib/__tests__/agent-assist.pbt.test.ts",
    "tipo": "unit",
-   "linhas": 85,
+   "linhas": 89,
    "testa": [
     "src/lib/agent-assist-utils.ts"
    ],

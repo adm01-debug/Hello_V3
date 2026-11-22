@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "782c8e42e4cc7c07ccd617876212e39ea2e14e0c",
+  "commit": "92cb97aabf2a55106f304aba3849bf3a0af44343",
   "branch": "main",
-  "data_commit": "2026-11-22T05:43:15-03:00",
+  "data_commit": "2026-11-22T08:53:14-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "92cb97a",
+    "data": "2026-11-22",
+    "assunto": "test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)"
+   },
    {
     "sha": "782c8e4",
     "data": "2026-11-22",
@@ -126,11 +131,6 @@
     "sha": "e7f6391",
     "data": "2026-11-21",
     "assunto": "fix: torna a troca de chamada operavel por teclado no ActiveCallsIndicator (#97)"
-   },
-   {
-    "sha": "95463e6",
-    "data": "2026-11-21",
-    "assunto": "fix: SSRF guard nas edges, idempotencia do inbound e gates de CI (#80)"
    }
   ],
   "arquivos_mudados_7d": 847,
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 20
+    "mudancas": 21
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 102
+    "commits": 103
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1626,
   "arquivos_codigo": 1234,
-  "linhas_codigo": 168621,
+  "linhas_codigo": 168625,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -500,7 +500,7 @@
   },
   "src/lib": {
    "arquivos": 162,
-   "linhas": 20715
+   "linhas": 20719
   },
   "src/main.tsx": {
    "arquivos": 1,

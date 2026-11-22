@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "782c8e42e4cc7c07ccd617876212e39ea2e14e0c",
+  "sha": "92cb97aabf2a55106f304aba3849bf3a0af44343",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 09:13 UTC",
+  "generated_at": "2026-11-22 11:53 UTC",
   "files_total": 1673,
   "code_files": 1476,
-  "code_lines": 184440
+  "code_lines": 184444
  },
  "version": "1.3.2",
- "facts_hash": "df6fd04dd028f91b",
+ "facts_hash": "0f56e96b5e2799b0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33736,7 +33736,7 @@
   {
    "module": "src/lib",
    "files": 162,
-   "lines": 20715,
+   "lines": 20719,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -108957,7 +108957,7 @@
   },
   "src/lib/__tests__/agent-assist.pbt.test.ts": {
    "path": "src/lib/__tests__/agent-assist.pbt.test.ts",
-   "lines": 85,
+   "lines": 89,
    "is_test": true,
    "errors": [
     ",\n               "
@@ -122375,10 +122375,19 @@
   }
  },
  "git": {
-  "sha": "782c8e42e4cc7c07ccd617876212e39ea2e14e0c",
+  "sha": "92cb97aabf2a55106f304aba3849bf3a0af44343",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "92cb97a",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)",
+    "files": [
+     "src/lib/__tests__/agent-assist.pbt.test.ts"
+    ]
+   },
    {
     "sha": "782c8e4",
     "date": "2026-11-22",
@@ -122893,15 +122902,6 @@
      "docs/estado/funcionalidades-planejadas.md",
      "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
     ]
-   },
-   {
-    "sha": "ac18a93",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: indices de audit_logs usam created_at e guardam a coluna (#82)",
-    "files": [
-     "supabase/migrations/20250102000000_performance_indexes.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -122916,6 +122916,10 @@
    [
     "docs/edge-functions/README.md",
     3
+   ],
+   [
+    "src/lib/__tests__/agent-assist.pbt.test.ts",
+    2
    ],
    [
     "src/pages/AgentRanking.tsx",
@@ -122979,10 +122983,6 @@
    ],
    [
     "src/components/agent/WhisperNotification.tsx",
-    2
-   ],
-   [
-    "src/components/call-history/CallSessionsList.tsx",
     2
    ]
   ]
