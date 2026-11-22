@@ -818,7 +818,7 @@
     "ActiveCallBar"
    ],
    "export_default": null,
-   "linhas": 380,
+   "linhas": 382,
    "dominio": "components/calls",
    "hooks_locais": [
     "useCallSession",
