@@ -1,6 +1,16 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+/** Aceita apenas IPv4/IPv6 literais; descarta hostnames, portas e percorso. */
+export function isIpLiteral(value: string): boolean {
+  const candidate = value.trim();
+  if (!candidate || candidate.length > 45) return false;
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(candidate)) {
+    return candidate.split('.').every((octet) => Number(octet) <= 255);
+  }
+  return /^[0-9a-fA-F:]+$/.test(candidate) && candidate.includes(':');
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: buildCorsHeaders(req) });
@@ -35,7 +45,10 @@ Deno.serve(async (req) => {
     const cfConnectingIp = req.headers.get('cf-connecting-ip');
     const cfCountry = req.headers.get('cf-ipcountry');
     
-    const clientIp = cfConnectingIp || realIp || (forwardedFor ? forwardedFor.split(',')[0].trim() : null);
+    const rawClientIp = cfConnectingIp || realIp || (forwardedFor ? forwardedFor.split(',')[0].trim() : null);
+    // Header e controlado pelo cliente: sem validacao, o valor entra cru na URL do
+    // provedor de geo (path traversal para hosts internos) e no log de acesso.
+    const clientIp = rawClientIp && isIpLiteral(rawClientIp) ? rawClientIp : null;
 
     // Check if geo blocking is enabled
     const { data: settings } = await supabase
