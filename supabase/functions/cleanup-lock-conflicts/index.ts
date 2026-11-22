@@ -1,5 +1,6 @@
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { buildCorsHeaders } from '../_shared/cors.ts';
+import { mesmaString } from '../_shared/constant-time.ts';
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -21,33 +22,45 @@ Deno.serve(async (req) => {
     const ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY')!;
     const SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-    const userClient = createClient(SUPABASE_URL, ANON_KEY, {
-      global: { headers: { Authorization: authHeader } },
-    });
+    // Caminho do cron: token dedicado (CLEANUP_CRON_TOKEN) comparado em tempo
+    // constante. Sem isso o job semanal de retencao (migration 20261122220000)
+    // mandava um Bearer opaco, caia no getClaims e levava 401 — a purga de
+    // optimistic_lock_conflicts >90d nunca rodava, apesar do ADR-044 e do
+    // docs/edge-functions/README.md afirmarem o contrario.
+    const cronToken = Deno.env.get('CLEANUP_CRON_TOKEN');
+    const veioDoCron = !!cronToken && mesmaString(authHeader, `Bearer ${cronToken}`);
 
-    const token = authHeader.replace('Bearer ', '');
-    const { data: claims, error: claimsErr } = await userClient.auth.getClaims(token);
-    if (claimsErr || !claims?.claims?.sub) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { ...cors, 'Content-Type': 'application/json' },
+    if (!veioDoCron) {
+      const userClient = createClient(SUPABASE_URL, ANON_KEY, {
+        global: { headers: { Authorization: authHeader } },
       });
+
+      const token = authHeader.replace('Bearer ', '');
+      const { data: claims, error: claimsErr } = await userClient.auth.getClaims(token);
+      if (claimsErr || !claims?.claims?.sub) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+          status: 401,
+          headers: { ...cors, 'Content-Type': 'application/json' },
+        });
+      }
+
+      // Apenas admin pode invocar manualmente
+      const admin = createClient(SUPABASE_URL, SERVICE_KEY);
+      const { data: profile } = await admin
+        .from('user_profiles')
+        .select('role')
+        .eq('id', claims.claims.sub)
+        .maybeSingle();
+
+      if (!profile || profile.role !== 'admin') {
+        return new Response(JSON.stringify({ error: 'Forbidden: admin only' }), {
+          status: 403,
+          headers: { ...cors, 'Content-Type': 'application/json' },
+        });
+      }
     }
 
-    // Apenas admin pode invocar manualmente
     const admin = createClient(SUPABASE_URL, SERVICE_KEY);
-    const { data: profile } = await admin
-      .from('user_profiles')
-      .select('role')
-      .eq('id', claims.claims.sub)
-      .maybeSingle();
-
-    if (!profile || profile.role !== 'admin') {
-      return new Response(JSON.stringify({ error: 'Forbidden: admin only' }), {
-        status: 403,
-        headers: { ...cors, 'Content-Type': 'application/json' },
-      });
-    }
 
     const cutoff = new Date(Date.now() - 90 * 24 * 3600 * 1000).toISOString();
 
@@ -86,3 +99,4 @@ Deno.serve(async (req) => {
     });
   }
 });
+
