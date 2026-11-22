@@ -1,1 +1,23 @@
 project_id = "cfmlmcdyjuotqobjapng"
+
+# As edges abaixo sao chamadas por pg_cron com um bearer opaco lido do Vault,
+# nao um JWT. O gateway da Supabase valida o JWT ANTES da edge rodar e rejeita
+# o token com UNAUTHORIZED_INVALID_JWT_FORMAT — foi por isso que a purga de
+# optimistic_lock_conflicts ficou anos em 401 sem ninguem notar. Declarar aqui
+# impede que um `supabase functions deploy` sem `--no-verify-jwt` reintroduza
+# o bug; a autorizacao real (comparacao do token em tempo constante) fica no
+# codigo de cada edge.
+[functions.cleanup-lock-conflicts]
+verify_jwt = false
+
+[functions.cleanup-recordings]
+verify_jwt = false
+
+[functions.dialer-pacing-tick]
+verify_jwt = false
+
+[functions.generate-coaching-track]
+verify_jwt = false
+
+[functions.data-lake-flush]
+verify_jwt = false
