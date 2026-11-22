@@ -23,7 +23,7 @@
 
 | Componente | Classificação | Evidência | Consumidor | Fonte de dados | O que falta |
 |---|---|---|---|---|---|
-| gamification/WeeklyRanking.tsx | ⬛ MORTO_OU_ABANDONADO | `WeeklyRanking.tsx:27` query real em `agent_weekly_stats`; único importador é `gamification/GamificationDashboard.tsx`, que **não tem nenhum importador** (`grep -rn "GamificationDashboard" src/` só retorna a própria definição) | nenhum (órfão transitivo) | `agent_weekly_stats` + join `agents(name)` | Reconectar ao `/ranking` (`src/pages/AgentRanking.tsx:5` importa só `BadgesShowcase`) ou remover |
+| gamification/WeeklyRanking.tsx | ✅ IMPLEMENTADO_TOTAL | `WeeklyRanking.tsx:27` query real em `agent_weekly_stats`; importado por `gamification/GamificationDashboard.tsx`, que e montado em `pages/Gamification.tsx:1,12` (rota `/gamification` em `src/routes/protectedRoutes.tsx:88,150`, roles supervisor/admin) | `GamificationDashboard.tsx` -> `pages/Gamification.tsx` | `agent_weekly_stats` + join `agents(name)` | - |
 | hold-alerts/HoldAlertStatsCards.tsx | ✅ IMPLEMENTADO_TOTAL | `HoldAlertStatsCards.tsx:12-17` mapeia 4 KPIs vindos de props | `src/pages/HoldAlerts.tsx:9` | props (`HoldAlertStats`) | — |
 | hold-alerts/HoldAlertsFilters.tsx | ✅ IMPLEMENTADO_TOTAL | `HoldAlertsFilters.tsx:42,62` botões são `PopoverTrigger asChild` de calendário; `:82,98` filtros controlados | `src/pages/HoldAlerts.tsx:10` | props/estado do pai | — |
 | hold-alerts/HoldAlertsTable.tsx | ✅ IMPLEMENTADO_TOTAL | `HoldAlertsTable.tsx:1-8` usa `@/lib/safe-date` e `@/lib/utils`; render de `HoldAlertRow[]` | `src/pages/HoldAlerts.tsx:11` | props | — |
