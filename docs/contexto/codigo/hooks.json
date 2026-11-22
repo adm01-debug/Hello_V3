@@ -2954,8 +2954,10 @@
    "canais_realtime": [
     "notifications-${user.id}"
    ],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/notifications/UnifiedNotificationDropdown.tsx"
+   ],
    "coberto_por_testes": 1
   },
   {

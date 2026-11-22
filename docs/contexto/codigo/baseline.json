@@ -2,11 +2,31 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "505cb990abf2dace4f07b937f4ec7c90f373e920",
+  "commit": "2ec2c4457f60d832cb015687fe1350abf42f076c",
   "branch": "main",
-  "data_commit": "2026-11-22T15:44:02-03:00",
+  "data_commit": "2026-11-22T16:08:03-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "2ec2c44",
+    "data": "2026-11-22",
+    "assunto": "feat: sino do header passa a mostrar a tabela notifications (#157)"
+   },
+   {
+    "sha": "08ee7a3",
+    "data": "2026-11-22",
+    "assunto": "docs: createTestData tem gate DEV duplo; 6 hooks orfaos estao wired (#156)"
+   },
+   {
+    "sha": "ef1134d",
+    "data": "2026-11-22",
+    "assunto": "docs: 2 falsos parciais (useBusinessLogic importa SUT, AppSidebar tem RBAC) (#155)"
+   },
+   {
+    "sha": "33cb310",
+    "data": "2026-11-22",
+    "assunto": "docs: 11 falsos positivos de codigo morto nos docs de estado (#154)"
+   },
    {
     "sha": "505cb99",
     "data": "2026-11-22",
@@ -111,29 +131,9 @@
     "sha": "3de307f",
     "data": "2026-11-22",
     "assunto": "fix: tendencia do dia so monta apos o primeiro clique (#133)"
-   },
-   {
-    "sha": "d3b1133",
-    "data": "2026-11-22",
-    "assunto": "fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)"
-   },
-   {
-    "sha": "5ca0039",
-    "data": "2026-11-22",
-    "assunto": "fix: taxa de abandono contava a chamada abandonada duas vezes (#131)"
-   },
-   {
-    "sha": "89fe47c",
-    "data": "2026-11-22",
-    "assunto": "docs: registra divergencia de limiar no Nivel de Servico (#130)"
-   },
-   {
-    "sha": "71169af",
-    "data": "2026-11-22",
-    "assunto": "fix: contagem em espera do dashboard usava status inexistente (#129)"
    }
   ],
-  "arquivos_mudados_7d": 879,
+  "arquivos_mudados_7d": 882,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -238,6 +238,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "docs/estado/infra-ci-rotas-integracoes.md",
+    "mudancas": 4
+   },
+   {
     "arquivo": "docs/pendencias/_ordem.md",
     "mudancas": 4
    },
@@ -266,10 +270,6 @@
     "mudancas": 3
    },
    {
-    "arquivo": "docs/estado/infra-ci-rotas-integracoes.md",
-    "mudancas": 3
-   },
-   {
     "arquivo": "docs/observabilidade/SLI_SLO.md",
     "mudancas": 3
    },
@@ -294,14 +294,14 @@
     "mudancas": 3
    },
    {
-    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "arquivo": "src/components/notifications/UnifiedNotificationDropdown.tsx",
     "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 134
+    "commits": 138
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1639,
   "arquivos_codigo": 1244,
-  "linhas_codigo": 169401,
+  "linhas_codigo": 169437,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 354,
-   "linhas": 42076
+   "linhas": 42112
   },
   "src/contexts": {
    "arquivos": 3,

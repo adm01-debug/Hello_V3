@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
-   "chore: zera os 5 warnings de ESLint extraindo constantes de .tsx (#153)",
-   "chore: unifica mesmaString no _shared/constant-time (SSOT) (#152)",
-   "docs: registra persistencia provada das edges de escrita (#151)",
-   "docs: registra 8 edges de IA provadas ponta a ponta (#150)",
-   "chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)"
+   "feat: sino do header passa a mostrar a tabela notifications (#157)",
+   "docs: createTestData tem gate DEV duplo; 6 hooks orfaos estao wired (#156)",
+   "docs: 2 falsos parciais (useBusinessLogic importa SUT, AppSidebar tem RBAC) (#155)",
+   "docs: 11 falsos positivos de codigo morto nos docs de estado (#154)",
+   "chore: zera os 5 warnings de ESLint extraindo constantes de .tsx (#153)"
   ]
  },
  "pr_template": null,

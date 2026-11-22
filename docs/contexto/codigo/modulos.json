@@ -1592,6 +1592,7 @@
     "useMeetingSummary",
     "useMultiChannelCall",
     "useNetworkMonitor",
+    "useNotifications",
     "usePageTitle",
     "usePendingActionItems",
     "usePermissions",
@@ -1730,6 +1731,8 @@
     "live_assist_signals",
     "live_sentiment_snapshots",
     "meeting_summaries",
+    "notification_preferences",
+    "notifications",
     "optimistic_lock_conflicts",
     "parked_calls",
     "performance_metrics",
@@ -1791,6 +1794,7 @@
     "live-assist-${callSessionId}",
     "meeting-summary-${callSessionId}",
     "messages-${conversationId}",
+    "notifications-${user.id}",
     "queue-metrics",
     "ringtone-profile-${userId}",
     "scheduled-callbacks-changes",
@@ -2092,13 +2096,19 @@
    "modulo": "components/notifications",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 441,
+   "linhas": 477,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
    "componentes": 2,
    "hooks_locais": [
     "useAlerts",
+    "useAuth",
+    "useAuthActions",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
+    "useNotifications",
     "useRealtimeHoldAlerts"
    ],
    "hooks_definidos": [],
@@ -2108,14 +2118,19 @@
    "tabelas": [
     "call_alerts",
     "call_sessions",
-    "contact_alerts"
+    "contact_alerts",
+    "notification_preferences",
+    "notifications",
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "buckets": [],
    "canais_realtime": [
     "alerts_page_calls",
     "alerts_page_contacts",
-    "hold-alerts-realtime"
+    "hold-alerts-realtime",
+    "notifications-${user.id}"
    ],
    "env": [
     "VITE_SUPABASE_PUBLISHABLE_KEY",

@@ -1522,6 +1522,7 @@
    "src/components/ui/scroll-area.tsx",
    "src/components/ui/tabs.tsx",
    "src/hooks/useAlerts.ts",
+   "src/hooks/useNotifications.ts",
    "src/hooks/useRealtimeHoldAlerts.ts",
    "src/lib/a11y-clickable.ts",
    "src/lib/safe-date.ts",

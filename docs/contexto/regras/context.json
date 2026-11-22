@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "505cb990abf2dace4f07b937f4ec7c90f373e920",
+  "sha": "2ec2c4457f60d832cb015687fe1350abf42f076c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 18:44 UTC",
+  "generated_at": "2026-11-22 19:08 UTC",
   "files_total": 1686,
   "code_files": 1489,
-  "code_lines": 185359
+  "code_lines": 185395
  },
  "version": "1.3.2",
- "facts_hash": "a677e894d2ffc62d",
+ "facts_hash": "25e0d0d8e2dce07a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33241,7 +33241,7 @@
   {
    "module": "src/components",
    "files": 354,
-   "lines": 42076,
+   "lines": 42112,
    "tables": [
     "accounts",
     "agent_goals",
@@ -94819,7 +94819,7 @@
   },
   "src/components/notifications/UnifiedNotificationDropdown.tsx": {
    "path": "src/components/notifications/UnifiedNotificationDropdown.tsx",
-   "lines": 270,
+   "lines": 306,
    "navigates": [
     "/contacts",
     "/notifications"
@@ -122978,10 +122978,50 @@
   }
  },
  "git": {
-  "sha": "505cb990abf2dace4f07b937f4ec7c90f373e920",
+  "sha": "2ec2c4457f60d832cb015687fe1350abf42f076c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "2ec2c44",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "feat: sino do header passa a mostrar a tabela notifications (#157)",
+    "files": [
+     "src/components/notifications/UnifiedNotificationDropdown.tsx"
+    ]
+   },
+   {
+    "sha": "08ee7a3",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: createTestData tem gate DEV duplo; 6 hooks orfaos estao wired (#156)",
+    "files": [
+     "docs/estado/hooks-parte3.md"
+    ]
+   },
+   {
+    "sha": "ef1134d",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: 2 falsos parciais (useBusinessLogic importa SUT, AppSidebar tem RBAC) (#155)",
+    "files": [
+     "docs/estado/componentes-parte3.md",
+     "docs/estado/hooks-parte1.md"
+    ]
+   },
+   {
+    "sha": "33cb310",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: 11 falsos positivos de codigo morto nos docs de estado (#154)",
+    "files": [
+     "docs/estado/componentes-parte3.md",
+     "docs/estado/componentes-parte4.md",
+     "docs/estado/hooks-parte3.md",
+     "docs/estado/infra-ci-rotas-integracoes.md"
+    ]
+   },
    {
     "sha": "505cb99",
     "date": "2026-11-22",
@@ -123249,57 +123289,12 @@
      "scripts/audit-edge-functions.ts",
      "supabase/functions/wavoip-call/index.ts"
     ]
-   },
-   {
-    "sha": "071d1dd",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: substitui rotulo desatualizado por prova de execucao (guard + IA em prod) (#127)",
-    "files": [
-     "docs/estado/infra-ci-rotas-integracoes.md"
-    ]
-   },
-   {
-    "sha": "d62b800",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "chore: corrige deps de hook que causavam closure obsoleto (22 -> 5 warnings) (#126)",
-    "files": [
-     "eslint.config.js",
-     "src/components/calls/WebRTCCall.tsx",
-     "src/components/compliance/calling-hours/useCallingHoursManager.ts",
-     "src/hooks/useDialerFavorites.ts",
-     "src/hooks/useProfile.ts",
-     "src/hooks/useSecurityAlertNotifications.ts",
-     "src/pages/admin/SecurityAlerts.tsx"
-    ]
-   },
-   {
-    "sha": "d337973",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)",
-    "files": [
-     "supabase/functions/_shared/__tests__/local-supabase.ts",
-     "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-     "supabase/functions/check-dnc/__tests__/index.test.ts",
-     "supabase/functions/check-queue-metrics/__tests__/index.test.ts"
-    ]
-   },
-   {
-    "sha": "36c5c1f",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    11
+    10
    ],
    [
     "docs/audits/pendencias-2026-07.md",
@@ -123314,11 +123309,11 @@
     3
    ],
    [
-    "src/hooks/useSecurityAlertNotifications.ts",
+    "docs/estado/hooks-parte3.md",
     2
    ],
    [
-    "src/pages/admin/SecurityAlerts.tsx",
+    "docs/estado/componentes-parte3.md",
     2
    ],
    [
@@ -123332,6 +123327,22 @@
    [
     "src/components/supervisor/panel/TrendChartToggle.tsx",
     2
+   ],
+   [
+    "src/components/notifications/UnifiedNotificationDropdown.tsx",
+    1
+   ],
+   [
+    "docs/estado/hooks-parte1.md",
+    1
+   ],
+   [
+    "docs/estado/componentes-parte4.md",
+    1
+   ],
+   [
+    "docs/estado/infra-ci-rotas-integracoes.md",
+    1
    ],
    [
     "src/components/contacts/ContactFilters.tsx",
@@ -123359,22 +123370,6 @@
    ],
    [
     "src/components/security-alerts/severity.ts",
-    1
-   ],
-   [
-    "src/hooks/useAlertsExport.ts",
-    1
-   ],
-   [
-    "src/lib/logger.ts",
-    1
-   ],
-   [
-    "src/pages/Contacts.tsx",
-    1
-   ],
-   [
-    "supabase/functions/dialer-pacing-tick/index.ts",
     1
    ]
   ]

@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 903,
- "arestas": 3461,
+ "arestas": 3462,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -202,7 +202,6 @@
   "src/data/mockData.ts",
   "src/hooks/auth/index.ts",
   "src/hooks/useMultiChannelCallConference.ts",
-  "src/hooks/useNotifications.ts",
   "src/lib/audit/index.ts",
   "src/lib/dialer/predictive-pace.ts",
   "src/lib/meeting-summary-utils.ts",

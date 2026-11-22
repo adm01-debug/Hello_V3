@@ -3114,10 +3114,11 @@
     "UnifiedNotificationDropdown"
    ],
    "export_default": null,
-   "linhas": 270,
+   "linhas": 306,
    "dominio": "components/notifications",
    "hooks_locais": [
     "useAlerts",
+    "useNotifications",
     "useRealtimeHoldAlerts"
    ],
    "tabelas": [],
