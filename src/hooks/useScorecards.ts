@@ -73,10 +73,60 @@ export function useScorecards(callSessionId?: string) {
 
   useEffect(() => { refresh(); }, [refresh]);
 
-  const generateAIScorecard = useCallback(async (templateId: string) => {
-    if (!callSessionId) return null;
+  const updateStatus = useCallback(async (scorecardId: string, status: CallScorecard["status"]) => {
+    const { error } = await supabase
+      .from("call_scorecards").update({ status, updated_at: new Date().toISOString() })
+      .eq("id", scorecardId);
+    if (error) { toast.error("Erro ao atualizar a avaliação"); logger.error(error.message); return false; }
+    toast.success(status === "approved" ? "Avaliação aprovada" : "Avaliação enviada");
+    await refresh();
+    return true;
+  }, [refresh]);
+
+  const createTemplate = useCallback(async (
+    name: string,
+    description: string | null,
+    criteria: { label: string; description: string | null; weight: number; max_score: number }[],
+  ) => {
+    if (!name.trim() || criteria.length === 0) {
+      toast.error("Informe o nome e ao menos um critério");
+      return null;
+    }
+    const { data: tpl, error: tplErr } = await supabase
+      .from("scorecard_templates")
+      .insert({ name: name.trim(), description, is_active: true })
+      .select("id").single();
+    if (tplErr || !tpl) {
+      toast.error("Erro ao criar o modelo");
+      logger.error(tplErr?.message ?? "template insert failed");
+      return null;
+    }
+    const { error: critErr } = await supabase.from("scorecard_criteria").insert(
+      criteria.map((c, i) => ({
+        template_id: tpl.id,
+        label: c.label,
+        description: c.description,
+        weight: c.weight,
+        max_score: c.max_score,
+        display_order: i,
+      })),
+    );
+    if (critErr) {
+      toast.error("Modelo criado, mas os critérios falharam");
+      logger.error(critErr.message);
+      await refresh();
+      return null;
+    }
+    toast.success("Modelo de avaliação criado");
+    await refresh();
+    return tpl.id as string;
+  }, [refresh]);
+
+  const generateAIScorecard = useCallback(async (templateId: string, overrideCallSessionId?: string) => {
+    const sessionId = overrideCallSessionId ?? callSessionId;
+    if (!sessionId) return null;
     const { data, error } = await supabase.functions.invoke("score-call", {
-      body: { callSessionId, templateId },
+      body: { callSessionId: sessionId, templateId },
     });
     if (error) { toast.error("Erro ao gerar avaliação"); logger.error(error); return null; }
     toast.success("Avaliação gerada pela IA");
@@ -84,5 +134,5 @@ export function useScorecards(callSessionId?: string) {
     return data;
   }, [callSessionId, refresh]);
 
-  return { templates, criteria, scorecards, responses, loading, refresh, generateAIScorecard };
+  return { templates, criteria, scorecards, responses, loading, refresh, updateStatus, createTemplate, generateAIScorecard };
 }
