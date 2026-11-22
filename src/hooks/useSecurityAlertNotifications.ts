@@ -4,10 +4,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format, eachDayOfInterval, subDays, startOfDay } from "date-fns";
 import {
-  normalizeSeverity,
   type SecurityNotification,
-  type Severity,
 } from "@/components/security-alerts/VirtualTimeline";
+import {
+  normalizeSeverity,
+  type Severity,
+} from "@/components/security-alerts/severity";
 
 import { safeFormatDate } from "@/lib/safe-date";
 const ALL_SOURCES = "__all__";

@@ -8,7 +8,7 @@ import { AlertsHeader } from "@/components/security-alerts/AlertsHeader";
 import { AlertsTimelineCard } from "@/components/security-alerts/AlertsTimelineCard";
 import { WebhookConfigDialog } from "@/components/security-alerts/WebhookConfigDialog";
 import { AlertDetailsDialog } from "@/components/security-alerts/AlertDetailsDialog";
-import { normalizeSeverity } from "@/components/security-alerts/VirtualTimeline";
+import { normalizeSeverity } from "@/components/security-alerts/severity";
 import { useWebhookQueue } from "@/hooks/useWebhookQueue";
 import { useWebhookHistory } from "@/hooks/useWebhookHistory";
 import { useWebhookConfig } from "@/hooks/useWebhookConfig";
