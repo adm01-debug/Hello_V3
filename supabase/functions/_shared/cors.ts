@@ -1,6 +1,9 @@
 // Centralized CORS configuration for all Edge Functions
 // Restrict to known origins in production; fallback to first allowed origin
 const ALLOWED_ORIGINS = [
+  // Front em producao roda na Vercel; sem ela aqui o browser bloqueia toda
+  // chamada de edge function por CORS (resposta saia como localhost:8086).
+  'https://hello-v3.vercel.app',
   'http://localhost:8086',
   'http://localhost:8081',
   'http://localhost:5173',
@@ -10,13 +13,19 @@ const ALLOWED_ORIGINS = [
   'https://lovable.dev',
 ];
 
+/** Origens extras declaradas em `CORS_EXTRA_ORIGINS` (lista separada por virgula). */
+function originsExtras(): string[] {
+  const raw = Deno.env.get('CORS_EXTRA_ORIGINS') ?? '';
+  return raw.split(',').map((o) => o.trim()).filter(Boolean);
+}
+
 const ALLOWED_HEADERS =
   'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version, x-request-id, x-correlation-id, x-trace-id, x-trace-operation';
 
 export function getCorsOrigin(req?: Request): string {
   if (!req) return ALLOWED_ORIGINS[0];
   const origin = req.headers.get('origin') || '';
-  if (ALLOWED_ORIGINS.includes(origin)) return origin;
+  if (ALLOWED_ORIGINS.includes(origin) || originsExtras().includes(origin)) return origin;
   // Allow any *.lovable.app subdomain
   if (/^https:\/\/[a-z0-9-]+\.lovable\.app$/.test(origin)) return origin;
   return ALLOWED_ORIGINS[0];
