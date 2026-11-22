@@ -109,7 +109,7 @@
 | useVoipRecommendations | ✅ | useVoipRecommendations.ts:49 | pages/NetworkDiagnostics.tsx, network/VoipRecommendationsPanel.tsx, WhatIfSimulatorDialog.tsx | edge `voip-recommendations` | — |
 | useVoipTrunks — CRUD de troncos | ✅ | useVoipTrunks.ts:42 | pages/admin/VoipTrunksAdmin.tsx, admin/voip/TrunkAssignmentsTab.tsx, VoipTrunkFormDrawer.tsx, executive/VoipInfrastructureTab.tsx | edge `voip-trunks-manage` | — |
 | useWavoipCall — chamada WhatsApp | 🟨 | useWavoipCall.ts:51,101,165 (edge real) **mas** :125-135 força `calling→active` por `setTimeout(2000)` com comentário "Simulate connection" | calls/UnifiedSoftphone.tsx | edge `wavoip-call` | estado de conexão não é event-driven: UI mostra "ativa" mesmo se o destino não atendeu |
-| useWebAuthn — passkeys | ✅ | useWebAuthn.ts:49,90,116,170,186,193,210,221,230,240,270,289 | auth/PasskeyLogin.tsx, auth/PasskeyManager.tsx | `user_passkeys`, `webauthn_challenges`, `user_profiles`, edge `webauthn-authenticate` | — |
+| useWebAuthn — passkeys | ✅ | useWebAuthn.ts:49,90,116,147,165,186,203,240,279,289 | auth/PasskeyLogin.tsx, auth/PasskeyManager.tsx | `user_passkeys`, `webauthn_challenges`, `user_profiles`, edges `webauthn-challenge` + `webauthn-authenticate` | — |
 | useWebVitals — Core Web Vitals | ✅ | useWebVitals.ts:4-19 | src/pages/ObservabilityDashboard.tsx | lib/web-vitals | — |
 | useWebhookConfig — config do webhook | ✅ | useWebhookConfig.ts:33-96 (draft/committed + validação) | src/pages/admin/SecurityAlerts.tsx | localStorage via lib/security-alerts-webhook | sem teste |
 | useWebhookHealthData — saúde do webhook | ✅ | useWebhookHealthData.ts:23 | src/pages/admin/WebhookHealth.tsx | `webhook_flush_metrics` | sem teste |
@@ -166,7 +166,7 @@ Levantadas por varredura de imports não-relativos nos 93 arquivos:
 Integrações via backend (não são libs, mas dependências externas efetivas alcançadas por estes hooks):
 
 - **Supabase** — cliente único `@/integrations/supabase/client`: Postgres (≈70 tabelas distintas), Realtime (18 canais), Storage (buckets `call-recordings` e o de prompts de fila), Auth (MFA/TOTP, sessões, `getUser`), RPC (`match_kb_articles`, `check_login_lockout`, `record_failed_login`, `record_successful_login`, `calculate_predictive_pace`, `record_trunk_usage`) e 32 Edge Functions — **todas as 32 existem em `supabase/functions/`**, nenhuma invocação órfã.
-- **WebAuthn / Passkeys** — API nativa do navegador em `useWebAuthn.ts`, com desafios persistidos em `webauthn_challenges`.
+- **WebAuthn / Passkeys** — API nativa do navegador em `useWebAuthn.ts`; login por passkey funciona **sem sessão ativa** (edge pública `webauthn-challenge` gera o desafio via service role; edge `webauthn-authenticate` verifica a asserção e devolve o token; o hook consome via `verifyOtp`).
 - **Wavoip (WhatsApp voice)** — via edge `wavoip-call` em `useWavoipCall.ts`.
 - **WebRTC `getStats()`** — `useVoipQualityMonitor.ts`, fonte real de MOS/jitter/RTT.
 - **Notification API / Page Visibility API / Network Information API** — `useHoldReminder`, `usePageVisibility`, `useNetworkMonitor`.

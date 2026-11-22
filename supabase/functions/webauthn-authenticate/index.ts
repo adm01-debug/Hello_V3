@@ -5,7 +5,8 @@ import { verificarAssercao, WebAuthnError } from "./verify.ts";
 
 interface AuthRequest {
   credentialId: string;
-  userId: string;
+  /** Opcional: a edge deriva o dono pela credential_id registrada. */
+  userId?: string;
   clientDataJSON: string;
   authenticatorData: string;
   signature: string;
@@ -20,9 +21,9 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { credentialId, userId, clientDataJSON, authenticatorData, signature } =
+    const { credentialId, clientDataJSON, authenticatorData, signature } =
       await req.json() as AuthRequest;
-    if (!credentialId || !userId || !clientDataJSON || !authenticatorData || !signature) {
+    if (!credentialId || !clientDataJSON || !authenticatorData || !signature) {
       throw new Error('Missing required fields');
     }
 
@@ -38,18 +39,20 @@ Deno.serve(async (req) => {
       }
     );
 
-    // Verify the passkey exists and belongs to the user
+    // Resolve a passkey pela credential_id (unica). O dono vem daqui, nunca
+    // do body: um atacante nao pode assumir a conta de outro usuario.
     const { data: passkey, error: passkeyError } = await supabaseAdmin
       .from('user_passkeys')
       .select('id, user_id, public_key, counter')
       .eq('credential_id', credentialId)
-      .eq('user_id', userId)
       .single();
 
     if (passkeyError || !passkey) {
       console.error('Passkey verification failed:', passkeyError);
       throw new Error('Invalid passkey');
     }
+
+    const userId = passkey.user_id;
 
     // Desafio: o mais recente ainda valido para este usuario. Consumido
     // logo abaixo para impedir replay.
@@ -98,7 +101,7 @@ Deno.serve(async (req) => {
     // atacante que conheca um credential_id valido poderia pedir magic
     // link para a propria caixa e assumir a conta. Derivamos do dono da
     // passkey, que e a unica fonte confiavel.
-    const { data: dono, error: donoError } = await supabaseAdmin.auth.admin.getUserById(passkey.user_id);
+    const { data: dono, error: donoError } = await supabaseAdmin.auth.admin.getUserById(userId);
     const emailDoDono = dono?.user?.email;
     if (donoError || !emailDoDono) {
       console.error('Dono da passkey sem e-mail:', donoError);
@@ -109,7 +112,7 @@ Deno.serve(async (req) => {
       type: 'magiclink',
       email: emailDoDono,
       options: {
-        redirectTo: `${req.headers.get('origin') || 'https://localhost:3000'}/`,
+        redirectTo: `${req.headers.get('origin') || 'https://hello-v3.vercel.app'}/`,
       },
     });
 
@@ -132,6 +135,7 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
+        userId,
         token: linkData.properties?.hashed_token,
         action_link: linkData.properties?.action_link,
       }),
