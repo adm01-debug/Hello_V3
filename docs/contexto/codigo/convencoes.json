@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: indices de audit_logs usam created_at e guardam a coluna (#82)",
    "fix: edges que escrevem com service_role exigem sessao (#92)",
    "fix: load-tests exigem admin e limpam dados de teste (#91)",
    "docs: regenera catalogo apos corrigir o rls-audit (#90)",
-   "docs: pendencias alinhadas ao estado real medido (#88)",
-   "docs: catalogo de edge functions gerado do codigo (#87)"
+   "docs: pendencias alinhadas ao estado real medido (#88)"
   ]
  },
  "pr_template": null,

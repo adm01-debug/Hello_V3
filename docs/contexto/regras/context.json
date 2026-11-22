@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "d3e59cd069bcb377903119da5c7dc7b817e3b472",
+  "sha": "ac18a931e77aaec70c6a6844cc4b8a717dbe196a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 00:49 UTC",
+  "generated_at": "2026-11-22 01:04 UTC",
   "files_total": 1619,
   "code_files": 1424,
-  "code_lines": 180291
+  "code_lines": 180296
  },
  "version": "1.3.2",
- "facts_hash": "d5952932cc193df0",
+ "facts_hash": "e75b5e868819c534",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -32851,7 +32851,7 @@
   {
    "module": "supabase/migrations",
    "files": 212,
-   "lines": 13812,
+   "lines": 13817,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -117264,7 +117264,7 @@
   },
   "supabase/migrations/20250102000000_performance_indexes.sql": {
    "path": "supabase/migrations/20250102000000_performance_indexes.sql",
-   "lines": 318
+   "lines": 323
   },
   "supabase/migrations/20250103000000_triggers.sql": {
    "path": "supabase/migrations/20250103000000_triggers.sql",
@@ -118315,10 +118315,19 @@
   }
  },
  "git": {
-  "sha": "d3e59cd069bcb377903119da5c7dc7b817e3b472",
+  "sha": "ac18a931e77aaec70c6a6844cc4b8a717dbe196a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ac18a93",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix: indices de audit_logs usam created_at e guardam a coluna (#82)",
+    "files": [
+     "supabase/migrations/20250102000000_performance_indexes.sql"
+    ]
+   },
    {
     "sha": "d3e59cd",
     "date": "2026-11-21",
@@ -118671,24 +118680,6 @@
      "docs/pendencias/_verificado-banco.md",
      "src/pages/admin/SecurityDashboard.tsx"
     ]
-   },
-   {
-    "sha": "51ac7dd",
-    "date": "2026-11-20",
-    "author": "adm01-debug",
-    "subject": "feat: wiring dos componentes orfaos no frontend (#61)",
-    "files": [
-     "docs/pendencias/WIRING-01-permissiongate.md",
-     "docs/pendencias/WIRING-02-livetranslationpanel.md",
-     "docs/pendencias/WIRING-03-whatsappcomposer.md",
-     "docs/pendencias/WIRING-04-gamificationdashboard.md",
-     "docs/pendencias/WIRING-05-securityauditdashboard.md",
-     "docs/pendencias/WIRING-06-hooks-orfaos.md",
-     "docs/pendencias/_ordem.md",
-     "src/pages/Inbox.tsx",
-     "src/pages/admin/ExtensionsAdmin.tsx",
-     "src/routes/protectedRoutes.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -118705,6 +118696,10 @@
     4
    ],
    [
+    "supabase/migrations/20250102000000_performance_indexes.sql",
+    3
+   ],
+   [
     "docs/audits/pendencias-2026-07.md",
     3
    ],
@@ -118713,27 +118708,15 @@
     3
    ],
    [
-    "src/routes/protectedRoutes.tsx",
-    3
-   ],
-   [
     "supabase/functions/detect-key-moments/index.ts",
     2
    ],
    [
+    "src/routes/protectedRoutes.tsx",
+    2
+   ],
+   [
     "src/components/coaching/CoachingAssignmentsPanel.tsx",
-    2
-   ],
-   [
-    "supabase/migrations/20250102000000_performance_indexes.sql",
-    2
-   ],
-   [
-    "src/pages/Inbox.tsx",
-    2
-   ],
-   [
-    "docs/pendencias/_ordem.md",
     2
    ],
    [
@@ -118770,6 +118753,14 @@
    ],
    [
     "scripts/inventario/gerar-catalogo-edges.mjs",
+    1
+   ],
+   [
+    "supabase/functions/rls-audit/index.ts",
+    1
+   ],
+   [
+    "src/hooks/useDataLakeExports.ts",
     1
    ]
   ]

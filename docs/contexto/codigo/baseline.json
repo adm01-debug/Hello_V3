@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d3e59cd069bcb377903119da5c7dc7b817e3b472",
+  "commit": "ac18a931e77aaec70c6a6844cc4b8a717dbe196a",
   "branch": "main",
-  "data_commit": "2026-11-21T21:49:03-03:00",
+  "data_commit": "2026-11-21T22:04:18-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ac18a93",
+    "data": "2026-11-21",
+    "assunto": "fix: indices de audit_logs usam created_at e guardam a coluna (#82)"
+   },
    {
     "sha": "d3e59cd",
     "data": "2026-11-21",
@@ -126,11 +131,6 @@
     "sha": "7569241",
     "data": "2026-11-21",
     "assunto": "fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)"
-   },
-   {
-    "sha": "7d28bde",
-    "data": "2026-11-21",
-    "assunto": "fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)"
    }
   ],
   "arquivos_mudados_7d": 620,
@@ -274,6 +274,10 @@
     "mudancas": 3
    },
    {
+    "arquivo": "supabase/migrations/20250102000000_performance_indexes.sql",
+    "mudancas": 3
+   },
+   {
     "arquivo": ".env.example",
     "mudancas": 2
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "docs/estado/edge-functions-parte1.md",
     "mudancas": 2
-   },
-   {
-    "arquivo": "docs/pendencias/WIRING-01-permissiongate.md",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 72
+    "commits": 73
    },
    {
     "autor": "Joaquim Ataides",
