@@ -24,7 +24,9 @@ WHERE n.nspname = 'public'
   -- get_user_role/get_profile_role caem para user_profiles.role como fallback
   -- de exibicao, e isso e intencional: nao ha linha em user_roles para migrar.
   -- handle_new_user apenas grava o papel inicial no cadastro; nao autoriza.
-  AND p.proname NOT IN ('get_user_role', 'get_profile_role', 'handle_new_user')
+  -- sync_profile_role_from_user_roles e o unico escritor legitimo do espelho.
+  AND p.proname NOT IN ('get_user_role', 'get_profile_role', 'handle_new_user',
+                        'sync_profile_role_from_user_roles')
   AND pg_get_functiondef(p.oid) LIKE '%user_profiles%'
   AND pg_get_functiondef(p.oid) LIKE '%role%'
 
@@ -55,4 +57,16 @@ WHERE n.nspname = 'public'
   AND NOT (
     pg_get_functiondef(p.oid) LIKE '%is_active%'
     AND pg_get_functiondef(p.oid) LIKE '%expires_at%'
-  );
+  )
+
+UNION ALL
+
+-- O espelho so permanece confiavel se houver trigger mantendo-o sincronizado
+-- a partir de user_roles. Sem este trigger a divergencia volta silenciosamente.
+SELECT 'sem_trigger_sync' AS categoria,
+       'trg_sync_profile_role' AS objeto
+WHERE NOT EXISTS (
+  SELECT 1 FROM pg_trigger
+  WHERE tgname = 'trg_sync_profile_role'
+    AND NOT tgisinternal
+);
