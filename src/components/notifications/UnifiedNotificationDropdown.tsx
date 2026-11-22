@@ -1,6 +1,6 @@
 import { safeFormatDistanceToNow } from "@/lib/safe-date";
  import { useState, useMemo } from 'react';
- import { Bell, BellRing, Settings2, Users, Phone, Check, RefreshCw, ExternalLink, type LucideIcon } from 'lucide-react';
+ import { Bell, BellRing, Settings2, Users, Phone, Check, RefreshCw, ExternalLink, Inbox, type LucideIcon } from 'lucide-react';
  import { Button } from '@/components/ui/button';
  import { Badge } from '@/components/ui/badge';
  import { ScrollArea } from '@/components/ui/scroll-area';
@@ -14,6 +14,7 @@ import { safeFormatDistanceToNow } from "@/lib/safe-date";
 import { ptBR } from 'date-fns/locale';
 import { activateOnKey } from "../../lib/a11y-clickable";
  import { useAlerts } from '@/hooks/useAlerts';
+ import { useNotifications } from '@/hooks/useNotifications';
  import { useNavigate } from 'react-router-dom';
  import { cn } from '@/lib/utils';
  
@@ -27,9 +28,12 @@ import { activateOnKey } from "../../lib/a11y-clickable";
    // Call & Contact Alerts
    const allAlerts = useAlerts();
  
+   // Notificações persistidas da tabela `notifications` (mesma fonte da página /notifications)
+   const userNotifications = useNotifications();
+
    const totalUnread = useMemo(() => {
-     return systemAlerts.unreadCount + allAlerts.callUnreadCount + allAlerts.contactUnreadCount;
-   }, [systemAlerts.unreadCount, allAlerts.callUnreadCount, allAlerts.contactUnreadCount]);
+     return systemAlerts.unreadCount + allAlerts.callUnreadCount + allAlerts.contactUnreadCount + userNotifications.unreadCount;
+   }, [systemAlerts.unreadCount, allAlerts.callUnreadCount, allAlerts.contactUnreadCount, userNotifications.unreadCount]);
  
    return (
      <Popover open={open} onOpenChange={setOpen}>
@@ -70,6 +74,7 @@ import { activateOnKey } from "../../lib/a11y-clickable";
                  await allAlerts.markAllCallAlertsAsRead();
                  // useAlerts doesn't have markAllContactAlertsAsRead yet, but we can do batch
                  await allAlerts.batchMarkContactAlertsAsRead();
+                 await userNotifications.markAllAsRead();
                }}
              >
                <Check className="h-3.5 w-3.5 mr-1" /> Marcar lidos
@@ -78,7 +83,14 @@ import { activateOnKey } from "../../lib/a11y-clickable";
          </div>
  
          <Tabs defaultValue="system" className="w-full">
-           <TabsList className="w-full grid grid-cols-3 bg-muted/20 border-b border-border/30 h-11 rounded-none p-0">
+           <TabsList className="w-full grid grid-cols-4 bg-muted/20 border-b border-border/30 h-11 rounded-none p-0">
+             <TabsTrigger value="all" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-primary/5 gap-1.5 text-xs">
+               <Inbox className="h-3.5 w-3.5" />
+               Todas
+               {userNotifications.unreadCount > 0 && (
+                 <Badge variant="secondary" className="h-4 px-1 text-[10px] ml-0.5">{userNotifications.unreadCount}</Badge>
+               )}
+             </TabsTrigger>
              <TabsTrigger value="system" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-primary/5 gap-2 text-xs">
                <Settings2 className="h-3.5 w-3.5" />
                Sistema
@@ -103,6 +115,30 @@ import { activateOnKey } from "../../lib/a11y-clickable";
            </TabsList>
  
            <ScrollArea className="h-[400px]">
+             <TabsContent value="all" className="m-0 p-2 space-y-2">
+               {userNotifications.notifications.length === 0 ? (
+                 <EmptyState icon={Inbox} message="Nenhuma notificação" />
+               ) : (
+                 userNotifications.notifications.map((notification) => (
+                   <NotificationItem
+                     key={notification.id}
+                     title={notification.title}
+                     message={notification.message}
+                     time={notification.created_at}
+                     isRead={notification.is_read}
+                     severity={notification.severity}
+                     onRead={() => userNotifications.markAsRead(notification.id)}
+                     onClick={() => {
+                       userNotifications.markAsRead(notification.id);
+                       setOpen(false);
+                       if (notification.action_url) navigate(notification.action_url);
+                       else navigate('/notifications');
+                     }}
+                   />
+                 ))
+               )}
+             </TabsContent>
+
              <TabsContent value="system" className="m-0 p-2 space-y-2">
                {systemAlerts.recentAlerts.length === 0 ? (
                  <EmptyState icon={Settings2} message="Nenhum alerta de sistema" />
