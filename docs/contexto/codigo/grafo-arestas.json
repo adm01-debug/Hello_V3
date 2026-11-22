@@ -4658,6 +4658,10 @@
    "supabase/functions/_shared/constant-time.ts",
    "supabase/functions/_shared/cors.ts"
   ],
+  "supabase/functions/cleanup-recordings/index.ts": [
+   "supabase/functions/_shared/constant-time.ts",
+   "supabase/functions/_shared/cors.ts"
+  ],
   "supabase/functions/compute-account-health/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],

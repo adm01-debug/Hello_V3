@@ -3,8 +3,8 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1205)",
-   "SQL (241)",
+   "TypeScript (1207)",
+   "SQL (242)",
    "Markdown (114)",
    "JavaScript (29)",
    "JSON (18)",
@@ -415,6 +415,7 @@
    "MS_CLIENT_SECRET",
    "MS_TENANT_ID",
    "OPENROUTER_API_KEY",
+   "RECORDINGS_CRON_TOKEN",
    "RESEND_API_KEY",
    "SIP_PASSWORD",
    "SIP_SERVER",
@@ -661,6 +662,7 @@
    "MS_CLIENT_ID",
    "MS_CLIENT_SECRET",
    "OPENROUTER_API_KEY",
+   "RECORDINGS_CRON_TOKEN",
    "REDIS_HOST",
    "REDIS_PASSWORD",
    "REDIS_PORT",
@@ -674,7 +676,13 @@
    "TEST_REDIS_PORT",
    "WAVOIP_TOKEN"
   ],
-  "webhooks_recebidos": [],
+  "webhooks_recebidos": [
+   "cleanup-lock-conflicts",
+   "cleanup-recordings",
+   "data-lake-flush",
+   "dialer-pacing-tick",
+   "generate-coaching-track"
+  ],
   "realtime": [
    "active-calls-realtime",
    "admin-security-alerts",
@@ -727,7 +735,7 @@
   "papeis_no_codigo": [
    {
     "papel": "admin",
-    "ocorrencias": 32
+    "ocorrencias": 33
    },
    {
     "papel": "user",

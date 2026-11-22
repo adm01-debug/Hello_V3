@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `36732f97b9` · branch `main` · 2026-11-22 16:34 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `76e30b7deb` · branch `main` · 2026-11-22 16:37 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -185,7 +185,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 116 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 117 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -220,6 +220,7 @@
 - `supabase/functions/check-hold-alerts/index.ts`
 - `supabase/functions/check-queue-metrics/index.ts`
 - `supabase/functions/cleanup-lock-conflicts/index.ts`
+- `supabase/functions/cleanup-recordings/index.ts`
 - `supabase/functions/compute-account-health/index.ts`
 - `supabase/functions/compute-best-time/index.ts`
 - `supabase/functions/compute-deal-health/index.ts`
@@ -383,7 +384,11 @@
 
 ## Edge functions públicas (sem JWT — qualquer um chama)
 
-_nenhuma declarada em config.toml_
+- `cleanup-lock-conflicts`
+- `cleanup-recordings`
+- `dialer-pacing-tick`
+- `generate-coaching-track`
+- `data-lake-flush`
 
 ## Rotas protegidas no front
 

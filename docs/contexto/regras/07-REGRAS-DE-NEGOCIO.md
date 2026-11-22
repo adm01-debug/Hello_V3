@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `36732f97b9` · branch `main` · 2026-11-22 16:34 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `76e30b7deb` · branch `main` · 2026-11-22 16:37 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1020,7 +1020,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `state` | `parked` | escreve | `src/lib/blf.ts` |
 | `state` | `recording` | compara | `src/components/calls/live-transcription/useLiveTranscription.ts`<br>`src/hooks/useVoiceCommand.ts` |
 | `state` | `suspended` | compara | `src/hooks/useCriticalAlertNotifications.ts`<br>`src/hooks/useHoldSoundAlert.ts`<br>`src/lib/incoming-call-alert.ts` |
-| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +11 |
+| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +12 |
 | `role` | `agent` | compara, escreve | `src/lib/talkRatio.ts`<br>`src/pages/roles/RoleStatsCards.tsx`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `button` | escreve | `src/lib/a11y-clickable.ts` |
 | `role` | `customer` | compara | `src/lib/talkRatio.ts`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
@@ -1789,6 +1789,8 @@ _nenhum item encontrado_
 | `PAGE_SIZE` | `25` | `src/pages/roles/RoleAuditTrail.tsx` |
 | `DEFAULT_THRESHOLD` | `0.7` | `supabase/functions/chatbot-respond/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/chatbot-respond/index.ts` |
+| `RETENCAO_DIAS` | `180` | `supabase/functions/cleanup-recordings/index.ts` |
+| `BATCH` | `100` | `supabase/functions/cleanup-recordings/index.ts` |
 | `PAGE_SIZE` | `1000` | `supabase/functions/data-lake-flush/index.ts` |
 | `AHT` | `240` | `supabase/functions/forecast-call-volume/index.ts` |
 | `TARGET_SL` | `0.8` | `supabase/functions/forecast-call-volume/index.ts` |
@@ -2434,9 +2436,10 @@ _nenhum item encontrado_
 | `customer` | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
+| `admin` | `supabase/functions/cleanup-recordings/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4020 testes em 330 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4027 testes em 331 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2630,6 +2633,7 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/helmet-config.coverage.test.ts` | 7 | helmet-config (coverage) · DEFAULT_SECURITY_HEADERS has expected secure defaults · getSecurityHeaders returns defaults when no overrides · getSecurityHeaders merges overrides … |
 | `src/lib/session/__tests__/index.coverage.test.ts` | 7 | session/index · getActiveSessions maps rows · getActiveSessions handles null data and is_active falsy · terminateSession returns true when no error … |
 | `supabase/functions/_shared/__tests__/resilient-fetch.test.ts` | 7 | resilientFetch: sucesso em 2xx passa direto · resilientFetch: 500 é reciclado e sucede na 3ª tentativa · resilientFetch: 404 NÃO é reciclado · resilientFetch: 500 esgota retries e propaga … |
+| `supabase/functions/cleanup-recordings/__tests__/retencao_test.ts` | 7 | corte de retencao fica exatamente 180 dias atras · gravacao com 179 dias ainda nao vence · gravacao com 181 dias vence · cron: aceita bearer exato do token configurado … |
 | `supabase/functions/score-call-attempt/__tests__/index.test.ts` | 7 | score-call-attempt: 401 sem Authorization · score-call-attempt: validação rejeita phone curto demais · score-call-attempt: DNC força score=0 e recommendation=block · score-call-attempt: fora de horário multiplica score por 0.1 … |
 | `supabase/functions/translate-utterance/__tests__/index.test.ts` | 7 | translate-utterance: 401 sem Authorization · translate-utterance: 400 com body inválido (sem callSessionId) · translate-utterance: rejeita idioma não suportado · translate-utterance: trata 429 (rate limit) sem expor stack … |
 | `e2e/calls.spec.ts` | 6 | Calls Flow · should display calls page · should display softphone component · should navigate to call history … |
@@ -2739,8 +2743,7 @@ _nenhum item encontrado_
 | `tests/e2e/performance.spec.ts` | 4 | Dashboard Performance and Lists · should render call lists efficiently · Edge Function Resilience · should handle rapid requests to analyze-call |
 | `src/hooks/__tests__/useCallRecording.test.ts` | 3 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado |
 | `src/hooks/__tests__/useChatbot.coverage.test.tsx` | 3 | useChatbot · returns chatbot response on success · handles error path and toasts |
-| `src/hooks/__tests__/useChurnRisk.test.ts` | 3 | useChurnRisk · loads active signals · resolves a signal with notes |
-| … +30 linhas — lista completa em `context.json` | | |
+| … +31 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2983,6 +2986,8 @@ _nenhum item encontrado_
 | Create a dummy call session for the alert (since call_session_id is required) | `supabase/functions/check-goals/index.ts` |
 | ').limit(1).maybeSingle(); | `supabase/functions/check-hold-alerts/index.ts` |
 | Apenas admin pode invocar manualmente | `supabase/functions/cleanup-lock-conflicts/index.ts` |
+| nao toca storage, e o bucket `call-recordings` cresceria sem limite. A regra | `supabase/functions/cleanup-recordings/index.ts` |
+| de negocio e 180 dias. | `supabase/functions/cleanup-recordings/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/compute-account-health/index.ts` |
 | O cron (pg_cron) chama com a anon key do projeto. Sem validacao alguma, qualquer | `supabase/functions/data-lake-flush/index.ts` |
 | 2. Clean old rate limit logs (older than 7 days) | `supabase/functions/database-cleanup/index.ts` |

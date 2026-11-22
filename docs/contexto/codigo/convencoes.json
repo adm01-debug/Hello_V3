@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (318)",
+   "co-localizado (__tests__) (319)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: retencao de 180 dias para as gravacoes de chamada (#138)",
    "feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)",
    "docs: corrige rotulos defasados de D3/D5 e dos testes Deno (#141)",
    "docs: fecha D4 e C2 com validacao real em producao (#140)",
-   "docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)",
-   "fix: cron de retencao de lock-conflicts nunca autenticava (#137)"
+   "docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)"
   ]
  },
  "pr_template": null,

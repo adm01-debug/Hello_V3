@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 238,
+ "migrations": 239,
  "seeds": [],
  "avisos": [
   "44 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -974,6 +974,12 @@
    "agenda": "0 3 * * 0",
    "migration": "20261122220000_lock_conflicts_retention_cron.sql",
    "chama_edge": "cleanup-lock-conflicts"
+  },
+  {
+   "nome": "cleanup-recordings-daily",
+   "agenda": "45 3 * * *",
+   "migration": "20261122230000_recordings_retention_cron.sql",
+   "chama_edge": "cleanup-recordings"
   },
   {
    "nome": "daily-cleanup-old-logs",
@@ -5880,6 +5886,7 @@
    },
    "usada_no_front": 3,
    "usada_em_edges": [
+    "cleanup-recordings",
     "teams-fetch-recordings",
     "transcribe-recording"
    ],
@@ -21703,6 +21710,7 @@
    "usada_no_front": 9,
    "usada_em_edges": [
     "cleanup-lock-conflicts",
+    "cleanup-recordings",
     "generate-coaching-track",
     "record-consent",
     "sip-config",

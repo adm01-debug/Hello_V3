@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "36732f97b9a8ae4d520bd3dc1a78ca4135da2166",
+  "commit": "76e30b7deb7d68d17575b04e4d55f77b627873e5",
   "branch": "main",
-  "data_commit": "2026-11-22T13:33:08-03:00",
+  "data_commit": "2026-11-22T13:36:06-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "76e30b7",
+    "data": "2026-11-22",
+    "assunto": "feat: retencao de 180 dias para as gravacoes de chamada (#138)"
+   },
    {
     "sha": "36732f9",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "1e1f3ef",
     "data": "2026-11-22",
     "assunto": "fix(auth): login por passkey sem sessao ativa (#118)"
-   },
-   {
-    "sha": "bb8f219",
-    "data": "2026-11-22",
-    "assunto": "fix(edge): libera a origem de producao no CORS das edge functions (#117)"
    }
   ],
-  "arquivos_mudados_7d": 862,
+  "arquivos_mudados_7d": 865,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 122
+    "commits": 123
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1630,
-  "arquivos_codigo": 1238,
-  "linhas_codigo": 168902,
+  "arquivos_total": 1633,
+  "arquivos_codigo": 1240,
+  "linhas_codigo": 169068,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -324,11 +324,11 @@
   "modulos": 79,
   "componentes": 448,
   "hooks": 191,
-  "edge_functions": 97,
+  "edge_functions": 98,
   "tabelas": 169,
-  "migrations": 238,
-  "cron_jobs": 10,
-  "testes": 341,
+  "migrations": 239,
+  "cron_jobs": 11,
+  "testes": 342,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 172,
-   "linhas": 19654
+   "arquivos": 174,
+   "linhas": 19820
   },
   "tailwind.config.ts": {
    "arquivos": 1,

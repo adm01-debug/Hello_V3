@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 898,
- "arestas": 3438,
+ "nos": 899,
+ "arestas": 3440,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -42,7 +42,7 @@
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
-   "importado_por": 89
+   "importado_por": 90
   },
   {
    "arquivo": "src/components/ui/select.tsx",

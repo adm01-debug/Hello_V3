@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "36732f97b9a8ae4d520bd3dc1a78ca4135da2166",
+  "sha": "76e30b7deb7d68d17575b04e4d55f77b627873e5",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 16:34 UTC",
-  "files_total": 1677,
-  "code_files": 1480,
-  "code_lines": 184721
+  "generated_at": "2026-11-22 16:37 UTC",
+  "files_total": 1680,
+  "code_files": 1483,
+  "code_lines": 184937
  },
  "version": "1.3.2",
- "facts_hash": "775dd7d3067ed617",
+ "facts_hash": "6db2ad27a82054e6",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,15 +159,21 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 605,
-   ".ts": 600,
-   ".sql": 241,
+   ".ts": 602,
+   ".sql": 242,
    ".mjs": 27,
    ".py": 5,
    ".js": 2
   },
   "monorepo_packages": [],
   "supabase_config": {
-   "functions_no_jwt": [],
+   "functions_no_jwt": [
+    "cleanup-lock-conflicts",
+    "cleanup-recordings",
+    "dialer-pacing-tick",
+    "generate-coaching-track",
+    "data-lake-flush"
+   ],
    "auth": {}
   },
   "name": "hello",
@@ -25547,6 +25553,7 @@
    "supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql",
    "supabase/migrations/20261122220000_lock_conflicts_retention_cron.sql",
    "supabase/migrations/20261122230000_reconcile_admin_role_sources.sql",
+   "supabase/migrations/20261122230000_recordings_retention_cron.sql",
    "supabase/migrations/20261122240000_policies_read_user_roles.sql",
    "supabase/migrations/20261122250000_role_checks_honor_active_and_expiry.sql",
    "supabase/migrations/20261122260000_is_admin_user_and_get_role_use_user_roles.sql",
@@ -29734,7 +29741,7 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "auth": "PÚBLICA (verify_jwt=false em config.toml)",
     "tables": [
      "optimistic_lock_conflicts",
      "user_profiles"
@@ -29748,6 +29755,31 @@
     "external": [],
     "invokes": [],
     "doc": "",
+    "errors": [],
+    "side_effects": [],
+    "webhook_events": [],
+    "idempotency": false
+   },
+   {
+    "name": "cleanup-recordings",
+    "file": "supabase/functions/cleanup-recordings/index.ts",
+    "methods": [
+     "OPTIONS"
+    ],
+    "auth": "PÚBLICA (verify_jwt=false em config.toml)",
+    "tables": [
+     "call_recordings",
+     "user_profiles"
+    ],
+    "env": [
+     "RECORDINGS_CRON_TOKEN",
+     "SUPABASE_ANON_KEY",
+     "SUPABASE_SERVICE_ROLE_KEY",
+     "SUPABASE_URL"
+    ],
+    "external": [],
+    "invokes": [],
+    "doc": "Retencao das gravacoes de chamada (item C2 de docs/audits/pendencias-2026-07.md). Ate aqui nada apagava nada: `database-cleanup` limpa 5 tabelas de seguranca e nao toca storage, e o bucket `call-recordings` cresceria sem limite. A regra de negocio e 180 dias. Dois caminhos de autenticacao, igual as …",
     "errors": [],
     "side_effects": [],
     "webhook_events": [],
@@ -29859,7 +29891,7 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "auth": "PÚBLICA (verify_jwt=false em config.toml)",
     "tables": [
      "data_lake_exports"
     ],
@@ -29984,7 +30016,7 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "auth": "PÚBLICA (verify_jwt=false em config.toml)",
     "tables": [],
     "env": [
      "DIALER_CRON_TOKEN",
@@ -30282,7 +30314,7 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "auth": "PÚBLICA (verify_jwt=false em config.toml)",
     "tables": [
      "agents",
      "call_sessions",
@@ -34137,8 +34169,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 172,
-   "lines": 19654,
+   "files": 174,
+   "lines": 19820,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34333,6 +34365,8 @@
     "supabase/functions/cleanup-lock-conflicts/index.test.ts",
     "supabase/functions/cleanup-lock-conflicts/index.ts",
     "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "supabase/functions/cleanup-recordings/index.ts",
+    "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
     "supabase/functions/compute-account-health/index.ts",
     "supabase/functions/compute-adherence/index.ts",
     "supabase/functions/compute-best-time/index.ts",
@@ -34355,15 +34389,13 @@
     "supabase/functions/export-data-lake/__tests__/csv.test.ts",
     "supabase/functions/extract-crm-fields/index.ts",
     "supabase/functions/forecast-call-volume/index.ts",
-    "supabase/functions/forecast-deals/index.ts",
-    "supabase/functions/fuzz-test-runner/index.ts",
-    "supabase/functions/generate-coaching/index.ts"
+    "supabase/functions/forecast-deals/index.ts"
    ]
   },
   {
    "module": "supabase/migrations",
-   "files": 238,
-   "lines": 15536,
+   "files": 239,
+   "lines": 15586,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -34918,6 +34950,7 @@
      "src/components/call-history/CallDetailDialog.tsx",
      "src/hooks/useCallRecording.ts",
      "src/hooks/useRecordings.ts",
+     "supabase/functions/cleanup-recordings/index.ts",
      "supabase/functions/transcribe-recording/index.ts"
     ],
     "insert": [
@@ -34925,7 +34958,8 @@
      "supabase/functions/teams-fetch-recordings/index.ts"
     ],
     "delete": [
-     "src/hooks/useRecordings.ts"
+     "src/hooks/useRecordings.ts",
+     "supabase/functions/cleanup-recordings/index.ts"
     ]
    },
    "call_scorecards": {
@@ -36162,6 +36196,7 @@
      "src/hooks/useVoicePreferences.ts",
      "src/pages/roles/useRoles.ts",
      "supabase/functions/cleanup-lock-conflicts/index.ts",
+     "supabase/functions/cleanup-recordings/index.ts",
      "supabase/functions/generate-coaching-track/index.ts",
      "supabase/functions/record-consent/index.ts",
      "supabase/functions/sip-config/index.ts",
@@ -37331,6 +37366,9 @@
    "PY2": [
     "scripts/ai-context/cenarios.mjs"
    ],
+   "RECORDINGS_CRON_TOKEN": [
+    "supabase/functions/cleanup-recordings/index.ts"
+   ],
    "REPO_ROOT": [
     "scripts/supabase_snapshot/snapshot.py"
    ],
@@ -37389,6 +37427,7 @@
     "supabase/functions/check-hold-alerts/index.ts",
     "supabase/functions/check-queue-metrics/index.ts",
     "supabase/functions/cleanup-lock-conflicts/index.ts",
+    "supabase/functions/cleanup-recordings/index.ts",
     "supabase/functions/compute-account-health/index.ts",
     "supabase/functions/compute-adherence/index.ts",
     "supabase/functions/database-backup/index.ts",
@@ -37497,6 +37536,7 @@
     "supabase/functions/check-hold-alerts/index.ts",
     "supabase/functions/check-queue-metrics/index.ts",
     "supabase/functions/cleanup-lock-conflicts/index.ts",
+    "supabase/functions/cleanup-recordings/index.ts",
     "supabase/functions/compute-account-health/index.ts",
     "supabase/functions/compute-best-time/index.ts",
     "supabase/functions/compute-deal-health/index.ts",
@@ -37584,6 +37624,7 @@
     "supabase/functions/check-queue-metrics/index.ts",
     "supabase/functions/cleanup-lock-conflicts/index.test.ts",
     "supabase/functions/cleanup-lock-conflicts/index.ts",
+    "supabase/functions/cleanup-recordings/index.ts",
     "supabase/functions/compute-account-health/index.ts",
     "supabase/functions/compute-adherence/index.ts",
     "supabase/functions/compute-best-time/index.ts",
@@ -38157,6 +38198,7 @@
     "src/components/call-history/CallDetailDialog.tsx",
     "src/hooks/useCallRecording.ts",
     "src/hooks/useRecordings.ts",
+    "supabase/functions/cleanup-recordings/index.ts",
     "supabase/functions/transcribe-recording/index.ts"
    ],
    "data-lake-exports": [
@@ -41892,6 +41934,10 @@
     "value": "admin"
    },
    {
+    "file": "supabase/functions/cleanup-recordings/index.ts",
+    "value": "admin"
+   },
+   {
     "file": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
     "value": "admin"
    }
@@ -42284,6 +42330,14 @@
    {
     "file": "supabase/functions/cleanup-lock-conflicts/index.ts",
     "text": "Apenas admin pode invocar manualmente"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/index.ts",
+    "text": "nao toca storage, e o bucket `call-recordings` cresceria sem limite. A regra"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/index.ts",
+    "text": "de negocio e 180 dias."
    },
    {
     "file": "supabase/functions/compute-account-health/index.ts",
@@ -49630,6 +49684,16 @@
     "value": "'google/gemini-2.5-flash'"
    },
    {
+    "file": "supabase/functions/cleanup-recordings/index.ts",
+    "name": "RETENCAO_DIAS",
+    "value": "180"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/index.ts",
+    "name": "BATCH",
+    "value": "100"
+   },
+   {
     "file": "supabase/functions/data-lake-flush/index.ts",
     "name": "PAGE_SIZE",
     "value": "1000"
@@ -53970,6 +54034,12 @@
    },
    {
     "file": "supabase/functions/cleanup-lock-conflicts/index.ts",
+    "field": "role",
+    "value": "admin",
+    "kind": "compara"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/index.ts",
     "field": "role",
     "value": "admin",
     "kind": "compara"
@@ -71565,6 +71635,34 @@
     "name": "mesmaString: strings identicas retornam true"
    },
    {
+    "file": "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    "name": "corte de retencao fica exatamente 180 dias atras"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    "name": "gravacao com 179 dias ainda nao vence"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    "name": "gravacao com 181 dias vence"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    "name": "cron: aceita bearer exato do token configurado"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    "name": "cron: rejeita quando RECORDINGS_CRON_TOKEN nao esta configurado"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    "name": "cron: rejeita token de outro cron (nao ha reaproveitamento entre edges)"
+   },
+   {
+    "file": "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    "name": "cron: rejeita bearer sem prefixo"
+   },
+   {
     "file": "supabase/functions/compute-deal-health/__tests__/index.test.ts",
     "name": "compute-deal-health: recencyScore decresce 5 pts/dia, mín 0"
    },
@@ -82490,6 +82588,7 @@
       "compara:src/pages/SecurityReport.tsx",
       "compara:src/pages/roles/RoleStatsCards.tsx",
       "compara:supabase/functions/cleanup-lock-conflicts/index.ts",
+      "compara:supabase/functions/cleanup-recordings/index.ts",
       "filtra:supabase/functions/database-backup/index.ts",
       "filtra:supabase/functions/database-cleanup/index.ts",
       "filtra:supabase/functions/export-data-lake/index.ts",
@@ -85302,6 +85401,7 @@
    "supabase/functions/check-hold-alerts/index.ts",
    "supabase/functions/check-queue-metrics/index.ts",
    "supabase/functions/cleanup-lock-conflicts/index.ts",
+   "supabase/functions/cleanup-recordings/index.ts",
    "supabase/functions/compute-account-health/index.ts",
    "supabase/functions/compute-best-time/index.ts",
    "supabase/functions/compute-deal-health/index.ts",
@@ -85462,7 +85562,13 @@
    "validate_parked_call",
    "validate_queue_audio_slots"
   ],
-  "public_functions": [],
+  "public_functions": [
+   "cleanup-lock-conflicts",
+   "cleanup-recordings",
+   "dialer-pacing-tick",
+   "generate-coaching-track",
+   "data-lake-flush"
+  ],
   "auth_config": {},
   "grants": [
    {
@@ -116449,6 +116555,100 @@
     "mesmaString: strings identicas retornam true"
    ]
   },
+  "supabase/functions/cleanup-recordings/index.ts": {
+   "path": "supabase/functions/cleanup-recordings/index.ts",
+   "lines": 115,
+   "tables": [
+    {
+     "table": "user_profiles",
+     "op": "select"
+    },
+    {
+     "table": "call_recordings",
+     "op": "select"
+    },
+    {
+     "table": "call_recordings",
+     "op": "delete,select"
+    }
+   ],
+   "table_cols": {
+    "user_profiles": [
+     "id",
+     "role"
+    ],
+    "call_recordings": [
+     "file_path",
+     "id"
+    ]
+   },
+   "storage": [
+    "call-recordings"
+   ],
+   "env": [
+    "RECORDINGS_CRON_TOKEN",
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "params": [
+    {
+     "name": "RETENCAO_DIAS",
+     "value": "180"
+    },
+    {
+     "name": "BATCH",
+     "value": "100"
+    }
+   ],
+   "status_values": [
+    {
+     "field": "role",
+     "value": "admin",
+     "kind": "compara"
+    }
+   ],
+   "role_checks": [
+    "admin"
+   ],
+   "rule_comments": [
+    "nao toca storage, e o bucket `call-recordings` cresceria sem limite. A regra",
+    "de negocio e 180 dias."
+   ],
+   "doc": "Retencao das gravacoes de chamada (item C2 de docs/audits/pendencias-2026-07.md). Ate aqui nada apagava nada: `database-cleanup` limpa 5 tabelas de seguranca e nao toca storage, e o bucket `call-recordings` cresceria sem limite. A regra de negocio e 180 dias. Dois caminhos de autenticacao, igual as …",
+   "uses_service_role": true
+  },
+  "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts": {
+   "path": "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+   "lines": 51,
+   "is_test": true,
+   "params": [
+    {
+     "name": "RETENCAO_DIAS",
+     "value": "180"
+    }
+   ],
+   "rule_comments": [
+    "5 tabelas de seguranca. A regra de negocio e 180 dias."
+   ],
+   "doc": "Regressao da retencao de gravacoes (item C2). Antes desta edge nada apagava `call_recordings` nem o bucket `call-recordings`: `database-cleanup` so cobre 5 tabelas de seguranca. A regra de negocio e 180 dias.",
+   "calc_fns": [
+    {
+     "name": "calcularCorte",
+     "params": "agora: number",
+     "body": ""
+    }
+   ],
+   "tests": [
+    "corte de retencao fica exatamente 180 dias atras",
+    "gravacao com 179 dias ainda nao vence",
+    "gravacao com 181 dias vence",
+    "cron: aceita bearer exato do token configurado",
+    "cron: rejeita quando RECORDINGS_CRON_TOKEN nao esta configurado",
+    "cron: rejeita token de outro cron (nao ha reaproveitamento entre edges)",
+    "cron: rejeita bearer sem prefixo"
+   ]
+  },
   "supabase/functions/compute-account-health/index.ts": {
    "path": "supabase/functions/compute-account-health/index.ts",
    "lines": 173,
@@ -122317,6 +122517,10 @@
    "path": "supabase/migrations/20261122230000_reconcile_admin_role_sources.sql",
    "lines": 48
   },
+  "supabase/migrations/20261122230000_recordings_retention_cron.sql": {
+   "path": "supabase/migrations/20261122230000_recordings_retention_cron.sql",
+   "lines": 50
+  },
   "supabase/migrations/20261122240000_policies_read_user_roles.sql": {
    "path": "supabase/migrations/20261122240000_policies_read_user_roles.sql",
    "lines": 121,
@@ -122522,10 +122726,22 @@
   }
  },
  "git": {
-  "sha": "36732f97b9a8ae4d520bd3dc1a78ca4135da2166",
+  "sha": "76e30b7deb7d68d17575b04e4d55f77b627873e5",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "76e30b7",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "feat: retencao de 180 dias para as gravacoes de chamada (#138)",
+    "files": [
+     "supabase/config.toml",
+     "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+     "supabase/functions/cleanup-recordings/index.ts",
+     "supabase/migrations/20261122230000_recordings_retention_cron.sql"
+    ]
+   },
    {
     "sha": "36732f9",
     "date": "2026-11-22",
@@ -122877,15 +123093,6 @@
      "supabase/migrations/20261122370000_holiday_region_isolation.sql",
      "supabase/tests/role_source_of_truth_test.sql"
     ]
-   },
-   {
-    "sha": "6f94283",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: envolve auth.uid/jwt/role em subselect nas policies restantes (#96)",
-    "files": [
-     "supabase/migrations/20261122200000_rls_initplan_remaining.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -122934,6 +123141,22 @@
     2
    ],
    [
+    "supabase/config.toml",
+    1
+   ],
+   [
+    "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    1
+   ],
+   [
+    "supabase/functions/cleanup-recordings/index.ts",
+    1
+   ],
+   [
+    "supabase/migrations/20261122230000_recordings_retention_cron.sql",
+    1
+   ],
+   [
     "src/components/layout/AppSidebar.tsx",
     1
    ],
@@ -122951,22 +123174,6 @@
    ],
    [
     "supabase/functions/cleanup-lock-conflicts/index.ts",
-    1
-   ],
-   [
-    "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
-    1
-   ],
-   [
-    "scripts/audit-edge-baseline.json",
-    1
-   ],
-   [
-    "scripts/audit-edge-functions.ts",
-    1
-   ],
-   [
-    "supabase/functions/wavoip-call/index.ts",
     1
    ]
   ]
