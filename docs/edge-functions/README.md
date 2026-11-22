@@ -11,9 +11,9 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 ## Resumo
 
 - **94** edge functions
-- **16** públicas (sem leitura de JWT no código)
+- **15** públicas (sem leitura de JWT no código)
 - **70** exigem usuário autenticado
-- **8** exigem papel admin/supervisor
+- **9** exigem papel admin/supervisor
 - **9** sem chamador no repositório (invocadas por cron, webhook externo ou uso manual)
 
 ## Colunas
@@ -66,7 +66,7 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 | `extract-crm-fields` | — | autenticado | sim | — | sim | src 2 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 172 |
 | `forecast-call-volume` | — | autenticado | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 87 |
 | `forecast-deals` | — | header-only | sim | sim | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 79 |
-| `fuzz-test-runner` | — | publico | — | sim | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 80 |
+| `fuzz-test-runner` | — | admin/supervisor | sim | sim | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 124 |
 | `generate-coaching` | — | admin/supervisor | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 282 |
 | `generate-coaching-plan` | Coaching Copilot — Gera plano semanal de coaching baseado nas últimas chamadas do agente | header-only | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 115 |
 | `generate-coaching-track` | — | admin/supervisor | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 139 |
