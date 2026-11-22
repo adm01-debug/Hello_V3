@@ -45,7 +45,7 @@ descartado. Nenhum README/docs/mem foi lido.
 | supervisor/QueueTrendChart.tsx | ✅ IMPLEMENTADO_TOTAL | `:2` consome `useQueueMetrics()`; `:6-9` escala sobre `max(waitingCalls, activeCalls)`; `:21-24` estado de espera explicito. **Zero `Math.random`** desde a PR #123 (`e708387`) | `panel/TrendChartToggle.tsx:5,35` -> `SupervisorPanel.tsx` -> visivel ao supervisor | `call_sessions` + `agents` via `useQueueMetrics.ts:91-139` (polling 5 s + realtime, janela de 20 pontos em `:48`) | - |
 | supervisor/panel/ActiveCallsList.tsx | ✅ IMPLEMENTADO_TOTAL | `:22-60` mapeia `s.activeCalls`; `:28` seleção funcional | `SupervisorPanel.tsx:3,20` | `call_sessions` via hook (`useSupervisorPanel.ts:110`) | — |
 | supervisor/panel/BargeInBanner.tsx | ✅ IMPLEMENTADO_TOTAL | `:19` `onClick={s.endBargeIn}` → UPDATE real (`useSupervisorPanel.ts:188`) | `SupervisorPanel.tsx:4,19` | `barge_in_sessions` | — |
-| supervisor/panel/CallActionTabs.tsx | 🟨 IMPLEMENTADO_PARCIAL | Whisper persiste (`useSupervisorPanel.ts:167` INSERT `whisper_messages`); Barge-in persiste (`:178` INSERT `barge_in_sessions`). **Aba "Escuta" (`:34-46`) não tem nenhum controle** — só texto e um Badge decorativo `:41-43` "Áudio recebido pelo canal SIP do supervisor" | `SupervisorPanel.tsx:5,21` | `whisper_messages`, `barge_in_sessions` | Escuta silenciosa: nenhum botão, nenhuma chamada de API, nenhum stream. Promessa de UI sem implementação |
+| supervisor/panel/CallActionTabs.tsx | ✅ IMPLEMENTADO_TOTAL | As 3 abas persistem: Whisper (`useSupervisorPanel.ts:168` INSERT `whisper_messages`); Barge-in (:179 INSERT `barge_in_sessions`); Escuta (:194 `startListening` -> INSERT `barge_in_sessions` status `listening` + audit `listen_start` :208; :216 `stopListening` -> UPDATE `ended` + audit `listen_stop` :227) | `SupervisorPanel.tsx:5,21` | `whisper_messages`, `barge_in_sessions`, `call_control_audit_logs` | Audio real depende de o trunk permitir SIPREC/fork de midia - a UI declara isso em :40 e :43 |
 | supervisor/panel/PanelHeader.tsx | ✅ IMPLEMENTADO_TOTAL | `:24-25` liga sound managers; `:33` toggle de som real | `SupervisorPanel.tsx:6,15` | estado do hook | — |
 | supervisor/panel/QueueMetricsGrid.tsx | ✅ IMPLEMENTADO_TOTAL | `:45-68` consome `SupervisorQueueMetrics` calculado de queries reais (`useSupervisorPanel.ts:117-118`) | `SupervisorPanel.tsx:7,17` | `call_sessions` (completed/abandoned do dia) | — |
 | supervisor/panel/TrendChartToggle.tsx | ✅ IMPLEMENTADO_TOTAL | `:16` `everOpened` + `:34` `forceMount` preservam a serie de 20 pontos entre abre/fecha; `:35` so monta apos o primeiro clique (evita polling de quem nunca abre) | `SupervisorPanel.tsx:8,18` | - | - |
@@ -115,23 +115,23 @@ lógica de negócio nem dados. Todos íntegros. Distribuição:
    realtime. Não há mais `Math.random` no arquivo. Registro mantido para
    mostrar que o achado existiu e foi corrigido.
 
-2. **🟨 Aba "Escuta silenciosa" é uma promessa sem implementação.**
-   `panel/CallActionTabs.tsx:34-46`: a aba renderiza ícone, título "Modo Escuta
-   silenciosa", texto explicativo e um `Badge` afirmando "Áudio recebido pelo
-   canal SIP do supervisor" (`:41-43`). Não há botão, handler, chamada de API nem
-   stream de áudio — nenhum efeito. As outras duas abas do mesmo componente
-   (Whisper `:69`, Barge-in `:105`) persistem em Supabase, o que torna a
-   assimetria invisível ao usuário: as três aparentam ser recursos equivalentes.
+2. ~~**🟨 Aba "Escuta silenciosa" e uma promessa sem implementacao.**~~
+   **RESOLVIDO.** `panel/CallActionTabs.tsx:45-56` tem estado `activeListen`, Badge "Escuta ativa" (:48), botao "Encerrar escuta" (:51) e "Iniciar escuta" (:56).
+   O hook persiste: :194 `startListening` faz INSERT em `barge_in_sessions` com status `listening` + auditoria `listen_start` (:208); :216 `stopListening` faz UPDATE para `ended` + `listen_stop` (:227).
+   O audio real depende de o trunk permitir SIPREC/fork de midia - e a UI declara isso
+   em :40 e :43 em vez de prometer audio que nao chega.
 
-3. **⬛ Duas features completas e desconectadas da aplicação.**
-   `translation/LiveTranslationPanel.tsx` (125 linhas) e
-   `whatsapp/WhatsappComposer.tsx` (106 linhas) são funcionalmente completos —
-   consomem hooks que existem (`useLiveTranslation`, `useCulturalHints`,
-   `useWhatsappRewrite`) — mas nenhum arquivo do projeto os importa, por nenhum
-   dos três padrões testados. São os únicos arquivos dos respectivos diretórios,
-   ou seja, os diretórios `src/components/translation/` e
-   `src/components/whatsapp/` inteiros estão mortos. Os hooks correspondentes em
-   `src/hooks/` também ficam sem consumidor de UI.
+3. ~~**⬛ Duas features completas e desconectadas da aplicacao.**~~
+   **FALSO POSITIVO.** As duas estao em producao:
+   - `translation/LiveTranslationPanel.tsx` e importado e renderizado em
+     `pages/Calls.tsx:9,57` (`<LiveTranslationPanel callSessionId={sip.callId} />`).
+   - `whatsapp/WhatsappComposer.tsx` e importado em `pages/Inbox.tsx:16` e
+     renderizado em `:354` quando `channel === "whatsapp"`. E o botao
+     "Melhorar com IA" com os 4 tons, que chama a edge `whatsapp-rewrite`.
+   A afirmacao "zero importadores nos 3 padroes" veio da busca antiga
+   `grep -rn "components/whatsapp"`, que nao casa com import via alias `@/components/...`.
+   Os hooks `useLiveTranslation`, `useCulturalHints` e `useWhatsappRewrite` tem
+   consumidor de UI. Registro mantido para evitar re-flag.
 
 4. **🟨 Infra de acessibilidade construída e engavetada.**
    `ui/keyboard-navigation.tsx` tem 281 linhas com `useKeyboardNavigation:16`,
