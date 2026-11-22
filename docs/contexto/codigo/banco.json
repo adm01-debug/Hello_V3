@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 239,
+ "migrations": 240,
  "seeds": [],
  "avisos": [
   "44 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -989,7 +989,7 @@
   {
    "nome": "data-lake-flush-daily",
    "agenda": "0 3 * * *",
-   "migration": "20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
+   "migration": "20261122180000_data_lake_flush_cron_token.sql",
    "chama_edge": "data-lake-flush"
   },
   {
@@ -21711,6 +21711,7 @@
    "usada_em_edges": [
     "cleanup-lock-conflicts",
     "cleanup-recordings",
+    "data-lake-flush",
     "generate-coaching-track",
     "record-consent",
     "sip-config",

@@ -1,17 +1,17 @@
 # Graph Report - Hello_V3  (2026-11-22)
 
 ## Corpus Check
-- 1668 files · ~838,367 words
+- 1669 files · ~838,665 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 11 file(s) not represented in the graph (top: (none) 4, .lock 2, .example 1)
 
 ## Summary
-- 9183 nodes · 24322 edges · 729 communities (437 shown, 292 thin omitted)
+- 9184 nodes · 24324 edges · 730 communities (437 shown, 293 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 1292 edges (avg confidence: 0.93)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d3a6f692`
+- Built from commit: `67d01806`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -40,9 +40,9 @@
 - package.json
 - safeFormatDate
 - queue-audio.ts
-- analyze-call/index.ts
 - useDNCCompliance.ts
 - PredictiveDialerPanel.tsx
+- analyze-call/index.ts
 - generate.py
 - PasskeyManager.tsx
 - VoiceAssistantDialog.tsx
@@ -83,6 +83,7 @@
 - useExecutiveDashboard.ts
 - call-park.ts
 - useExtensionsOverview.ts
+- ref_npm_supabase
 - hooks/use-toast.ts
 - sync-history.ts
 - utilities-comprehensive.test.ts
@@ -105,7 +106,6 @@
 - 20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql
 - voip-anomaly-detector/index.ts
 - Rotas protegidas — sem exigência de papel (autenticado, qualquer role)
-- ref_npm_supabase
 - gerar-banco.mjs
 - useHoldReminder.ts
 - security-alerts-webhook-queue.ts
@@ -651,7 +651,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (729 total, 292 thin omitted)
+## Communities (730 total, 293 thin omitted)
 
 ### Community 0 - "lucide-react"
 Cohesion: 0.03
@@ -749,17 +749,17 @@ Nodes (43): ScheduleCallbackDialog(), ScheduledCallbacksList(), Props, now, Quer
 Cohesion: 0.06
 Nodes (55): wrap(), QueueAudioLibrary(), readAudioDuration(), QueueAudioSlotSelect(), QueueAudioSlotSelectProps, QueueCard(), QueueCardProps, QueueFormDialog() (+47 more)
 
-### Community 24 - "analyze-call/index.ts"
-Cohesion: 0.06
-Nodes (39): Catálogo, Catálogo de edge functions, Colunas, Funções públicas que usam `service_role`, Funções sem chamador no repositório, Resumo, Achados de segurança, Achados graves (+31 more)
-
-### Community 25 - "useDNCCompliance.ts"
+### Community 24 - "useDNCCompliance.ts"
 Cohesion: 0.05
 Nodes (35): A) Hooks com lógica + persistência + consumidor real e teste que importa o alvo, B) Funcionalidade com dado fabricado gravado em tabela real, C) Testes-espelho — nenhum caminho de execução até `src/`, D) Hooks completos, porém sem consumidor em produção (fio solto), Tabela de funcionalidades, UnifiedSoftphone(), DNCListManager(), insertResult (+27 more)
 
-### Community 26 - "PredictiveDialerPanel.tsx"
+### Community 25 - "PredictiveDialerPanel.tsx"
 Cohesion: 0.09
 Nodes (37): ExtensionsTable(), Alert, CallbackCardProps, channelColors, channelIcons, dialPadButtons, formatCallDuration(), getInitials() (+29 more)
+
+### Community 26 - "analyze-call/index.ts"
+Cohesion: 0.06
+Nodes (37): Catálogo, Catálogo de edge functions, Colunas, Funções públicas que usam `service_role`, Funções sem chamador no repositório, Resumo, Achados de segurança, Achados graves (+29 more)
 
 ### Community 27 - "generate.py"
 Cohesion: 0.12
@@ -921,97 +921,97 @@ Nodes (29): ParkOrbitCard(), ParkOrbitFormDialog(), ACTIONS_REQUIRING_TARGET, cl
 Cohesion: 0.08
 Nodes (22): Decisão, ExtensionAuditTimeline(), HealthFilter, rpcMock, entry, limitMock, removeChannelMock, results (+14 more)
 
-### Community 67 - "hooks/use-toast.ts"
+### Community 67 - "ref_npm_supabase"
+Cohesion: 0.09
+Nodes (14): ref_npm_supabase, AIScore, Criterion, ADR-0044, aceitaCron(), ADR-0044, aceitaCron(), Dataset (+6 more)
+
+### Community 68 - "hooks/use-toast.ts"
 Cohesion: 0.11
 Nodes (26): @radix-ui/react-toast, Toast, ToastAction, ToastActionElement, ToastClose, ToastDescription, ToastProps, src_components_ui_toast_toastprovider (+18 more)
 
-### Community 68 - "sync-history.ts"
+### Community 69 - "sync-history.ts"
 Cohesion: 0.17
 Nodes (21): RFC-4180, SyncHistoryPanel(), listeners, notify(), useSyncHistory(), appendEntry(), buildSyncHistoryCsv(), buildSyncHistoryKey() (+13 more)
 
-### Community 69 - "utilities-comprehensive.test.ts"
+### Community 70 - "utilities-comprehensive.test.ts"
 Cohesion: 0.11
 Nodes (22): 3. Camada `src/lib/{mfa,session,audit,notifications,password}` — extração para lib nunca adotada; hooks seguem sendo o caminho real, Barris `audit / mfa / notifications / password / session` — escritos, testados, não adotados, AuditAction, AuditEvent, formatBackupCode(), generateBackupCodes(), getMFAStatus(), MFAStatus (+14 more)
 
-### Community 70 - "useAgentStatus.ts"
+### Community 71 - "useAgentStatus.ts"
 Cohesion: 0.09
 Nodes (23): CoachingPanel(), AchievementNotificationProvider(), AchievementNotificationProviderProps, agentResult, badgeResult, ChannelStub, handlers, maybeSingle (+15 more)
 
-### Community 71 - "schemas.ts"
+### Community 72 - "schemas.ts"
 Cohesion: 0.10
 Nodes (27): Agent, agentSchema, CallAlert, callAlertSchema, CallSession, callSessionSchema, CallSummary, callSummarySchema (+19 more)
 
-### Community 72 - "20260711194619_238a08b8-a42e-49cd-8856-32a4c1db5c50.sql"
+### Community 73 - "20260711194619_238a08b8-a42e-49cd-8856-32a4c1db5c50.sql"
 Cohesion: 0.07
 Nodes (28): public.geo_access_logs, public.login_attempts, idx_audit_logs_created_brin, idx_call_control_audit_logs_created_brin, idx_call_quality_metrics_created_brin, idx_call_sessions_active_partial, idx_coaching_assignments_pending, idx_dialer_queue_pending (+20 more)
 
-### Community 73 - "ref_pg"
+### Community 74 - "ref_pg"
 Cohesion: 0.07
 Nodes (15): ref_pg, client, clientConfig, client, clientConfig, client, clientConfig, client (+7 more)
 
-### Community 74 - "mock-data-integrity.test.ts"
+### Community 75 - "mock-data-integrity.test.ts"
 Cohesion: 0.09
 Nodes (20): ActiveCall, Agent, CallRecord, Contact, formatPhoneNumber(), getInitials(), mockActiveCall, mockAgents (+12 more)
 
-### Community 75 - "SecurityAlerts.tsx"
+### Community 76 - "SecurityAlerts.tsx"
 Cohesion: 0.09
 Nodes (25): Cobertura, Integrações de terceiros observadas, Lote H4 — src/hooks (parte 4), Tabela de funcionalidades, AlertDetailsDialog(), AlertsFilterBar(), AlertsHeader(), AlertsHeaderProps (+17 more)
 
-### Community 76 - "ErrorBoundary.tsx"
+### Community 77 - "ErrorBoundary.tsx"
 Cohesion: 0.10
 Nodes (15): ErrorBoundary, log, Props, SectionBoundary(), State, WhatsappComposer(), addReport(), context() (+7 more)
 
-### Community 77 - "useBitrix.ts"
+### Community 78 - "useBitrix.ts"
 Cohesion: 0.12
 Nodes (23): BitrixContact, BitrixDeal, BitrixLead, useBitrix(), breaker, BreakerConfig, BreakerInternal, CircuitState (+15 more)
 
-### Community 78 - "security-infrastructure.test.ts"
+### Community 79 - "security-infrastructure.test.ts"
 Cohesion: 0.12
 Nodes (19): buildCSPHeader(), CSPDirectives, DEFAULT_CSP_DIRECTIVES, buildCORSHeaders(), CORSConfig, DEFAULT_CORS_CONFIG, applyMetaTags(), DEFAULT_SECURITY_HEADERS (+11 more)
 
-### Community 79 - "verify.ts"
+### Community 80 - "verify.ts"
 Cohesion: 0.12
 Nodes (16): capturarHandler(), Handler, serveOriginal, AuthRequest, b64url(), criarFixture(), Fixture, AssertionInput (+8 more)
 
-### Community 80 - "Scorecard — Maturidade Técnica (re-avaliação E2)"
+### Community 81 - "Scorecard — Maturidade Técnica (re-avaliação E2)"
 Cohesion: 0.08
 Nodes (25): 1. Heatmap temporal 7×24, 2. Drill-down por agente (24h), 3. Bridge automático para notificações, ADR-028: Onda 13 — Inteligência Executiva e Drill-Down VoIP, Consequences, Decision, Files, Rationale (+17 more)
 
-### Community 81 - "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql"
+### Community 82 - "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql"
 Cohesion: 0.14
 Nodes (25): public.update_security_updated_at, idx_active_sessions_token, idx_active_sessions_user, idx_rate_limit_logs_created, idx_rate_limit_logs_ip, idx_user_roles_role, idx_user_roles_user_id, public.active_sessions (+17 more)
 
-### Community 82 - "cenarios.mjs"
+### Community 83 - "cenarios.mjs"
 Cohesion: 0.08
 Nodes (21): base(), comp(), fails, GERADOR, JS, KEEP, PKG(), scenarios (+13 more)
 
-### Community 83 - "security-alerts-webhook-validation.ts"
+### Community 84 - "security-alerts-webhook-validation.ts"
 Cohesion: 0.11
 Nodes (24): WebhookConfigDialogProps, validateInt(), validateSecret(), validateUrl(), validateWebhookConfig(), WEBHOOK_SECRET_MAX_LENGTH, WEBHOOK_SECRET_MIN_LENGTH, WEBHOOK_URL_MAX_LENGTH (+16 more)
 
-### Community 84 - "incoming-call-alert.ts"
+### Community 85 - "incoming-call-alert.ts"
 Cohesion: 0.12
 Nodes (19): useDialerFavorites(), diffPositions(), moveItem(), normalizePositions(), OrderableFavorite, reorderFavorites(), describeFavorite(), MASK_VISIBLE_DIGITS (+11 more)
 
-### Community 85 - "security/index.ts"
+### Community 86 - "security/index.ts"
 Cohesion: 0.20
 Nodes (20): escapeHTML(), HTML_ENTITIES, isValidURL(), sanitizeEmail(), sanitizeInput(), sanitizePhoneNumber(), sanitizeSearchQuery(), stripHTMLTags() (+12 more)
 
-### Community 86 - "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql"
+### Community 87 - "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql"
 Cohesion: 0.13
 Nodes (26): idx_agent_shifts_agent_date, idx_agent_shifts_date, idx_agent_skills_agent, idx_coaching_assignments_agent, idx_coaching_assignments_status, idx_learning_completions_agent, idx_time_off_agent, idx_time_off_status (+18 more)
 
-### Community 87 - "voip-anomaly-detector/index.ts"
+### Community 88 - "voip-anomaly-detector/index.ts"
 Cohesion: 0.11
 Nodes (21): Re-verificação Onda 14 (2026-04-17), Achados graves, Cobertura, Funções sem chamador identificado (padrões testados), Integrações de terceiros observadas, Lote F2 — supabase/functions (parte 2), Tabela de funcionalidades, Componentes (+13 more)
 
-### Community 88 - "Rotas protegidas — sem exigência de papel (autenticado, qualquer role)"
+### Community 89 - "Rotas protegidas — sem exigência de papel (autenticado, qualquer role)"
 Cohesion: 0.08
 Nodes (26): Rotas protegidas — sem exigência de papel (autenticado, qualquer role), useHoldMetrics(), useSuccessPlans(), Accounts(), healthVariant(), AIAssistant(), AlertHistory(), getSeverityBadge() (+18 more)
-
-### Community 89 - "ref_npm_supabase"
-Cohesion: 0.10
-Nodes (12): ref_npm_supabase, AIScore, Criterion, ADR-0044, aceitaCron(), ADR-0044, aceitaCron(), CORS (+4 more)
 
 ### Community 90 - "gerar-banco.mjs"
 Cohesion: 0.12
@@ -2403,8 +2403,8 @@ Nodes (3): idx_user_roles_granted_by, idx_user_roles_user_id, public.user_roles
 
 ## Knowledge Gaps
 - **2595 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+2590 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3662 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **292 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3663 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **293 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -2412,9 +2412,9 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `react` connect `react` to `lucide-react`, `vitest`, `logger.ts`, `protectedRoutes.tsx`, `client.ts`, `utils.ts`, `select.tsx`, `safe-date.ts`, `cn`, `Tabela de funcionalidades`, `useAuthContext`, `Tabela de funcionalidades`, `Logger`, `useAuth.ts`, `package.json`, `safeFormatDate`, `useDNCCompliance.ts`, `PredictiveDialerPanel.tsx`, `PasskeyManager.tsx`, `VoiceAssistantDialog.tsx`, `useRingtoneSettings.ts`, `WebRTCCall.tsx`, `PhoneQuickAccess.tsx`, `sidebar.tsx`, `publicRoutes.tsx`, `useVoipQualityMonitor.ts`, `PhoneDialer.tsx`, `Memories`, `useConversations.ts`, `useMultiChannelCall.ts`, `tooltip.tsx`, `usePredictiveDialer.ts`, `useSipCall.ts`, `Tabela de funcionalidades`, `useRealtimeHoldAlerts.ts`, `WebhookHealth.tsx`, `RingGroupFormDialog.tsx`, `security-alerts-webhook.ts`, `usePageTitle`, `AppLayout.tsx`, `QueueMetricsAlertSettings.tsx`, `useExecutiveDashboard.ts`, `useExtensionsOverview.ts`, `hooks/use-toast.ts`, `sync-history.ts`, `useAgentStatus.ts`, `SecurityAlerts.tsx`, `ErrorBoundary.tsx`, `useBitrix.ts`, `useHoldReminder.ts`, `security-alerts-webhook-queue.ts`, `SupervisorPanel.tsx`, `useTimeOff.coverage.test.tsx`, `web-vitals.ts`, `ReauthContext.tsx`, `CommandPalette.tsx`, `useQualityAlerts.coverage.test.tsx`, `useAlertsExport.ts`, `LiveTranscription.tsx`, `blf.ts`, `useWebAuthn.ts`, `useSupervisorPanel.ts`, `Inbox.tsx`, `AgentPodium.tsx`, `security-alerts-webhook-history.ts`, `NextBestActionPanel.tsx`, `Contact`, `useKnowledgeBase.coverage.test.tsx`, `Index.tsx`, `useCallHistory.ts`, `useCrmFieldSuggestions.coverage.test.tsx`, `useHoldSoundAlert.ts`, `useReauth`, `useContacts.ts`, `carousel.tsx`, `useConsent.coverage.test.tsx`, `usePageVisibility`, `form.tsx`, `usePermissions`, `useOptimisticLockConflicts.ts`, `security-alerts-presets.ts`, `useLDAPSync.ts`, `AgentAssist.tsx`, `useIPWhitelist.ts`, `SloDashboard.tsx`, `InsightPanels.tsx`, `chart.tsx`, `useVoiceCommand.ts`, `class-variance-authority`, `useCoachingAssignments.coverage.test.tsx`, `useContactInsights.ts`, `StatsCard.tsx`, `VirtualTimeline.tsx`, `ActiveCallsIndicator.tsx`, `PasswordStrength.tsx`, `CoachingTimeline.tsx`, `animations.tsx`, `useLiveAssist.coverage.test.tsx`, `LazyComponent.tsx`?**
   _High betweenness centrality (0.120) - this node is a cross-community bridge._
 - **Why does `vitest` connect `vitest` to `logger.ts`, `client.ts`, `utils.ts`, `safe-date.ts`, `Tabela de funcionalidades`, `useAuthContext`, `Tabela de funcionalidades`, `Logger`, `useAuth.ts`, `package.json`, `safeFormatDate`, `queue-audio.ts`, `useDNCCompliance.ts`, `PredictiveDialerPanel.tsx`, `VoiceAssistantDialog.tsx`, `useRingtoneSettings.ts`, `WebRTCCall.tsx`, `PhoneQuickAccess.tsx`, `sidebar.tsx`, `useVoipQualityMonitor.ts`, `PhoneDialer.tsx`, `Memories`, `useConversations.ts`, `useMultiChannelCall.ts`, `tooltip.tsx`, `usePredictiveDialer.ts`, `useSipCall.ts`, `safe-number.ts`, `Tabela de funcionalidades`, `useRealtimeHoldAlerts.ts`, `WebhookHealth.tsx`, `RingGroupFormDialog.tsx`, `security-alerts-webhook.ts`, `security-advanced.test.ts`, `useExecutiveDashboard.ts`, `call-park.ts`, `useExtensionsOverview.ts`, `hooks/use-toast.ts`, `sync-history.ts`, `utilities-comprehensive.test.ts`, `useAgentStatus.ts`, `schemas.ts`, `mock-data-integrity.test.ts`, `ErrorBoundary.tsx`, `security-infrastructure.test.ts`, `security-alerts-webhook-validation.ts`, `incoming-call-alert.ts`, `security/index.ts`, `useHoldReminder.ts`, `security-alerts-webhook-queue.ts`, `language-detection.ts`, `SupervisorPanel.tsx`, `useTimeOff.coverage.test.tsx`, `ref_node_fs`, `web-vitals.ts`, `ReauthContext.tsx`, `fixes-exhaustive.test.ts`, `useDashboardData.ts`, `useQualityAlerts.coverage.test.tsx`, `RecommendationInsightsCard`, `useContacts`, `computeHealth`, `useAlertsExport.ts`, `blf.ts`, `useWebAuthn.ts`, `useSupervisorPanel.ts`, `agent-assist-utils.ts`, `security-alerts-webhook-history.ts`, `voice-biometrics.coverage.test.ts`, `useActiveCallsRealtime`, `ref_fs`, `useKnowledgeBase.coverage.test.tsx`, `useSipCall.coverage.test.tsx`, `meeting-summary-utils.ts`, `Index.tsx`, `useCallHistory.ts`, `useCrmFieldSuggestions.coverage.test.tsx`, `useHoldSoundAlert.ts`, `voipRecommendationCoaching.ts`, `useReauth`, `useContacts.ts`, `useConsent.coverage.test.tsx`, `useSupervisorPanel.coverage.test.tsx`, `usePageVisibility`, `rls-policies.test.ts`, `useLiveSentiment.coverage.test.tsx`, `useFinancialImpact.ts`, `export/index.ts`, `useOptimisticLockConflicts.ts`, `security-alerts-presets.ts`, `useIPWhitelist.ts`, `useScheduledCallbacks.coverage.test.tsx`, `useVoiceCommand.ts`, `outbound-scoring.ts`, `zod-schemas.property.test.ts`, `useAgentRanking.coverage.test.tsx`, `useBitrix.coverage.test.tsx`, `useCoachingAssignments.coverage.test.tsx`, `useContactInsights.ts`, `useGamification.coverage.test.tsx`, `useWebAuthn.coverage.test.tsx`, `session/index.ts`, `useLiveTranscription.test.ts`, `hsts-headers.ts`, `StatsCard.tsx`, `encryption.ts`, `setup.ts`, `useLiveAssist.coverage.test.tsx`, `useConferenceRecording.coverage.test.tsx`, `predictive-pace.property.test.ts`, `supabase.ts`, `deals.test.ts`, `security-alerts-webhook.property.test.ts`, `useSecurityHooks.test.ts`?**
-  _High betweenness centrality (0.112) - this node is a cross-community bridge._
-- **Why does `cn()` connect `cn` to `lucide-react`, `Lote C1 — src/components (parte 1)`, `Inbox.tsx`, `protectedRoutes.tsx`, `client.ts`, `react`, `utils.ts`, `select.tsx`, `safe-date.ts`, `AgentPodium.tsx`, `vitest`, `RoleAuditTrail`, `NextBestActionPanel.tsx`, `useActiveCallsRealtime`, `Tabela de funcionalidades`, `VoipVoiceQAPanel`, `package.json`, `queue-audio.ts`, `useDNCCompliance.ts`, `PredictiveDialerPanel.tsx`, `BlfBoard.tsx`, `Contact`, `PasskeyManager.tsx`, `KeyMomentsTimeline.tsx`, `WebRTCCall.tsx`, `StatsCard.tsx`, `sidebar.tsx`, `PhoneQuickAccess.tsx`, `useVoipQualityMonitor.ts`, `PhoneDialer.tsx`, `Memories`, `Index.tsx`, `useConversations.ts`, `publicRoutes.tsx`, `tooltip.tsx`, `useSipCall.ts`, `ActiveCallsIndicator.tsx`, `carousel.tsx`, `Decisão`, `ExtensionStatusBadge.tsx`, `useRealtimeHoldAlerts.ts`, `form.tsx`, `usePageTitle`, `AppLayout.tsx`, `PasswordStrength.tsx`, `QueueMetricsAlertSettings.tsx`, `CoachingTimeline.tsx`, `call-park.ts`, `hooks/use-toast.ts`, `sync-history.ts`, `useAgentStatus.ts`, `SecurityAlerts.tsx`, `ErrorBoundary.tsx`, `Scorecard — Maturidade Técnica (re-avaliação E2)`, `useHoldReminder.ts`, `language-detection.ts`, `InsightPanels.tsx`, `SupervisorPanel.tsx`, `chart.tsx`, `VoipHealthScoreCard`, `fixes-exhaustive.test.ts`, `CommandPalette.tsx`, `useDashboardData.ts`, `RecommendationInsightsCard`, `class-variance-authority`, `MeetingSummaryCard`, `LiveTranscription.tsx`, `5c. Auto-auditoria — erros encontrados na primeira versão deste documento`, `ADR-026 — Onda 11: Inteligência Preditiva de Qualidade VoIP`?**
-  _High betweenness centrality (0.073) - this node is a cross-community bridge._
+  _High betweenness centrality (0.113) - this node is a cross-community bridge._
+- **Why does `buildCorsHeaders()` connect `buildCorsHeaders` to `track-engine.ts`, `voip-executive-summary/index.ts`, `voip-anomaly-remediation/index.ts`, `cors.ts`, `ref_https`, `analyze-call/index.ts`, `voip-capacity-recommendations/index.ts`, `voip-recommendations/index.ts`, `external-payload-schemas.ts`, `ESTADO_ATUAL.md`, `resilience.ts`, `whatsapp-inbound/index.ts`, `ref_npm_supabase`, `verify.ts`, `voip-anomaly-detector/index.ts`, `export-data-lake/index.ts`, `voip-sla-report/index.ts`, `voip-recommendation-insights/index.ts`, `allowed-hosts.ts`, `voip-quality-forecast/index.ts`, `ADR-026 — Onda 11: Inteligência Preditiva de Qualidade VoIP`?**
+  _High betweenness centrality (0.070) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `cn()` (e.g. with `Auditoria de testes` and `Núcleo de utilidades e observabilidade`) actually correct?**
   _`cn()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `$schema`, `style`, `rsc` to the rest of the system?**

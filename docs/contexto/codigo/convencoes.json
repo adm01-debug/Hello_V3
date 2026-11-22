@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: cron data-lake-flush usa token dedicado em vez da anon key (#144)",
    "feat: pagina de avaliacoes de chamada com geracao por IA (#143)",
    "feat: retencao de 180 dias para as gravacoes de chamada (#138)",
    "feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)",
-   "docs: corrige rotulos defasados de D3/D5 e dos testes Deno (#141)",
-   "docs: fecha D4 e C2 com validacao real em producao (#140)"
+   "docs: corrige rotulos defasados de D3/D5 e dos testes Deno (#141)"
   ]
  },
  "pr_template": null,

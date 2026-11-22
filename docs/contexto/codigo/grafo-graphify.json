@@ -4,11 +4,11 @@
  "presente": true,
  "como_gerar": "uvx --from \"graphifyy[sql]\" graphify update .  (ou: bun run graph:update); saída em graphify-out/ — graph.json e graph.html NÃO são versionados (dezenas de MB); use `graphify query/path/explain` localmente",
  "relatorio": null,
- "commit_do_grafo": "d3a6f692b9edc1f00097d3705da55fd152655e40",
+ "commit_do_grafo": "67d018067748ba3b5ec2676a95e5e85674b05b83",
  "grafo_atual": true,
- "nos": 9183,
- "arestas": 24322,
- "comunidades_total": 729,
+ "nos": 9184,
+ "arestas": 24324,
+ "comunidades_total": 730,
  "relacoes": {
   "calls": 2328,
   "cites": 9,
@@ -16,8 +16,8 @@
   "defines": 6,
   "dynamic_import": 157,
   "implements": 1,
-  "imports": 6638,
-  "imports_from": 5886,
+  "imports": 6639,
+  "imports_from": 5887,
   "indexes": 419,
   "indirect_call": 204,
   "inherits": 12,
@@ -29,7 +29,7 @@
   "triggers": 113
  },
  "origem": {
-  "EXTRACTED": 23030,
+  "EXTRACTED": 23032,
   "INFERRED": 1292
  },
  "comunidades": [
@@ -420,23 +420,6 @@
   },
   {
    "id": 24,
-   "nome": "analyze-call/index.ts",
-   "nos": 58,
-   "callables": 26,
-   "arquivos": 17,
-   "exemplos_arquivos": [
-    "docs/edge-functions/README.md",
-    "docs/estado/edge-functions-parte1.md",
-    "supabase/functions/_shared/hmac.ts",
-    "supabase/functions/_shared/observability.ts",
-    "supabase/functions/_shared/validator.ts",
-    "supabase/functions/_shared/validator_test.ts",
-    "supabase/functions/analyze-call/__tests__/integration_test.ts",
-    "supabase/functions/analyze-call/__tests__/schema.property.test.ts"
-   ]
-  },
-  {
-   "id": 25,
    "nome": "useDNCCompliance.ts",
    "nos": 54,
    "callables": 30,
@@ -453,7 +436,7 @@
    ]
   },
   {
-   "id": 26,
+   "id": 25,
    "nome": "PredictiveDialerPanel.tsx",
    "nos": 54,
    "callables": 25,
@@ -467,6 +450,23 @@
     "src/components/calls/softphone/HeaderDropdowns.tsx",
     "src/components/calls/softphone/TabContents.tsx",
     "src/components/calls/softphone/constants.tsx"
+   ]
+  },
+  {
+   "id": 26,
+   "nome": "analyze-call/index.ts",
+   "nos": 53,
+   "callables": 23,
+   "arquivos": 16,
+   "exemplos_arquivos": [
+    "docs/edge-functions/README.md",
+    "docs/estado/edge-functions-parte1.md",
+    "supabase/functions/_shared/hmac.ts",
+    "supabase/functions/_shared/observability.ts",
+    "supabase/functions/_shared/validator.ts",
+    "supabase/functions/_shared/validator_test.ts",
+    "supabase/functions/analyze-call/__tests__/integration_test.ts",
+    "supabase/functions/analyze-call/__tests__/schema.property.test.ts"
    ]
   },
   {
@@ -1078,6 +1078,23 @@
   },
   {
    "id": 67,
+   "nome": "ref_npm_supabase",
+   "nos": 31,
+   "callables": 17,
+   "arquivos": 9,
+   "exemplos_arquivos": [
+    "supabase/functions/_shared/constant-time.ts",
+    "supabase/functions/auto-scorecard/index.ts",
+    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "supabase/functions/cleanup-lock-conflicts/index.ts",
+    "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    "supabase/functions/cleanup-recordings/index.ts",
+    "supabase/functions/data-lake-flush/index.ts",
+    "supabase/functions/dialer-pacing-tick/index.ts"
+   ]
+  },
+  {
+   "id": 68,
    "nome": "hooks/use-toast.ts",
    "nos": 31,
    "callables": 13,
@@ -1092,7 +1109,7 @@
    ]
   },
   {
-   "id": 68,
+   "id": 69,
    "nome": "sync-history.ts",
    "nos": 30,
    "callables": 22,
@@ -1105,7 +1122,7 @@
    ]
   },
   {
-   "id": 69,
+   "id": 70,
    "nome": "utilities-comprehensive.test.ts",
    "nos": 30,
    "callables": 17,
@@ -1122,7 +1139,7 @@
    ]
   },
   {
-   "id": 70,
+   "id": 71,
    "nome": "useAgentStatus.ts",
    "nos": 30,
    "callables": 12,
@@ -1139,7 +1156,7 @@
    ]
   },
   {
-   "id": 71,
+   "id": 72,
    "nome": "schemas.ts",
    "nos": 30,
    "callables": 14,
@@ -1151,7 +1168,7 @@
    ]
   },
   {
-   "id": 72,
+   "id": 73,
    "nome": "20260711194619_238a08b8-a42e-49cd-8856-32a4c1db5c50.sql",
    "nos": 29,
    "callables": 0,
@@ -1161,7 +1178,7 @@
    ]
   },
   {
-   "id": 73,
+   "id": 74,
    "nome": "ref_pg",
    "nos": 29,
    "callables": 7,
@@ -1177,7 +1194,7 @@
    ]
   },
   {
-   "id": 74,
+   "id": 75,
    "nome": "mock-data-integrity.test.ts",
    "nos": 29,
    "callables": 16,
@@ -1192,7 +1209,7 @@
    ]
   },
   {
-   "id": 75,
+   "id": 76,
    "nome": "SecurityAlerts.tsx",
    "nos": 28,
    "callables": 16,
@@ -1209,7 +1226,7 @@
    ]
   },
   {
-   "id": 76,
+   "id": 77,
    "nome": "ErrorBoundary.tsx",
    "nos": 28,
    "callables": 21,
@@ -1225,7 +1242,7 @@
    ]
   },
   {
-   "id": 77,
+   "id": 78,
    "nome": "useBitrix.ts",
    "nos": 28,
    "callables": 21,
@@ -1237,7 +1254,7 @@
    ]
   },
   {
-   "id": 78,
+   "id": 79,
    "nome": "security-infrastructure.test.ts",
    "nos": 28,
    "callables": 17,
@@ -1251,22 +1268,6 @@
     "src/lib/security/helmet-config.ts",
     "src/lib/security/https-enforcer.ts",
     "src/lib/security/penetration-test-reporter.ts"
-   ]
-  },
-  {
-   "id": 79,
-   "nome": "verify.ts",
-   "nos": 28,
-   "callables": 20,
-   "arquivos": 7,
-   "exemplos_arquivos": [
-    "supabase/functions/_shared/__tests__/capture-handler.ts",
-    "supabase/functions/record-consent/__tests__/index.test.ts",
-    "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
-    "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
-    "supabase/functions/webauthn-authenticate/index.ts",
-    "supabase/functions/webauthn-authenticate/verify.ts",
-    "supabase/functions/webauthn-challenge/__tests__/index.test.ts"
    ]
   }
  ],
@@ -3405,7 +3406,7 @@
   "supabase/functions/compute-best-time/index.ts": "cors.ts",
   "supabase/functions/compute-deal-health/__tests__/index.test.ts": "ref_https",
   "supabase/functions/compute-deal-health/index.ts": "ref_https",
-  "supabase/functions/data-lake-flush/index.ts": "analyze-call/index.ts",
+  "supabase/functions/data-lake-flush/index.ts": "ref_npm_supabase",
   "supabase/functions/database-backup/index.ts": "buildCorsHeaders",
   "supabase/functions/database-cleanup/index.ts": "buildCorsHeaders",
   "supabase/functions/detect-churn-risk/index.ts": "buildCorsHeaders",
@@ -3732,6 +3733,7 @@
   "supabase/migrations/20261121125200_fix_rls_allow_all.sql": "20261121125200_fix_rls_allow_all.sql",
   "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql": "20261122120000_coaching_auto_tracks_cron.sql",
   "supabase/migrations/20261122140000_dialer_pacing_cron.sql": "20261122140000_dialer_pacing_cron.sql",
+  "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql": "20261122180000_data_lake_flush_cron_token.sql",
   "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql": "20261122183000_hardening_revoke_internal_functions.sql",
   "supabase/migrations/20261122200000_rls_initplan_remaining.sql": "20261122200000_rls_initplan_remaining.sql",
   "supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql": "public.enforce_optimistic_lock",

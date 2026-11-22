@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d3a6f692b9edc1f00097d3705da55fd152655e40",
+  "commit": "67d018067748ba3b5ec2676a95e5e85674b05b83",
   "branch": "main",
-  "data_commit": "2026-11-22T13:51:50-03:00",
+  "data_commit": "2026-11-22T14:06:29-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "67d0180",
+    "data": "2026-11-22",
+    "assunto": "fix: cron data-lake-flush usa token dedicado em vez da anon key (#144)"
+   },
    {
     "sha": "d3a6f69",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "1123090",
     "data": "2026-11-22",
     "assunto": "fix: gate createTestData e botão Criar Dados para DEV (#120)"
-   },
-   {
-    "sha": "8c73b1e",
-    "data": "2026-11-22",
-    "assunto": "test: escopa locators do login para #email/#password no E2E (#119)"
    }
   ],
-  "arquivos_mudados_7d": 867,
+  "arquivos_mudados_7d": 868,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -246,6 +246,10 @@
     "mudancas": 4
    },
    {
+    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "mudancas": 4
+   },
+   {
     "arquivo": "AGENTS.md",
     "mudancas": 3
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "src/hooks/useQueueMetrics.ts",
     "mudancas": 3
-   },
-   {
-    "arquivo": "src/pages/Inbox.tsx",
-    "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 124
+    "commits": 125
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1634,
+  "arquivos_total": 1635,
   "arquivos_codigo": 1241,
-  "linhas_codigo": 169366,
+  "linhas_codigo": 169380,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -326,7 +326,7 @@
   "hooks": 191,
   "edge_functions": 98,
   "tabelas": 169,
-  "migrations": 239,
+  "migrations": 240,
   "cron_jobs": 11,
   "testes": 342,
   "workflows": 3,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 174,
-   "linhas": 19820
+   "linhas": 19834
   },
   "tailwind.config.ts": {
    "arquivos": 1,

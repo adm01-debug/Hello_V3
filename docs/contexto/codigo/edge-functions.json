@@ -818,16 +818,19 @@
    "nome": "data-lake-flush",
    "entrada": "supabase/functions/data-lake-flush/index.ts",
    "arquivos": 1,
-   "linhas": 164,
+   "linhas": 178,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
    ],
    "tabelas": [
-    "data_lake_exports"
+    "data_lake_exports",
+    "user_profiles"
    ],
    "rpcs": [],
    "env": [
+    "DATA_LAKE_CRON_TOKEN",
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -835,6 +838,7 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "constant-time.ts",
     "observability.ts"
    ],
    "chamada_pelo_front": [],

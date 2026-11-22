@@ -4682,6 +4682,7 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/data-lake-flush/index.ts": [
+   "supabase/functions/_shared/constant-time.ts",
    "supabase/functions/_shared/observability.ts"
   ],
   "supabase/functions/database-backup/index.ts": [

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "d3a6f692b9edc1f00097d3705da55fd152655e40",
+  "sha": "67d018067748ba3b5ec2676a95e5e85674b05b83",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 16:52 UTC",
-  "files_total": 1681,
-  "code_files": 1484,
-  "code_lines": 185235
+  "generated_at": "2026-11-22 17:06 UTC",
+  "files_total": 1682,
+  "code_files": 1485,
+  "code_lines": 185302
  },
  "version": "1.3.2",
- "facts_hash": "9a6e1b2c910d9d05",
+ "facts_hash": "87a9e9fc0209f4b0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -160,7 +160,7 @@
   "languages": {
    ".tsx": 606,
    ".ts": 602,
-   ".sql": 242,
+   ".sql": 243,
    ".mjs": 27,
    ".py": 5,
    ".js": 2
@@ -25309,6 +25309,12 @@
     "schedule": "0 3 * * *",
     "body": "SELECT net.http_post( url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush', headers := jsonb_build_object( 'Content-Type', 'application/json', 'Authorization', 'Bearer [REDACTED].3vn9Pm5G3kKPKJrDAjUVgh5gXhYgawgKiM3bFstFEAk' ), body := jsonb_build_object('trigger', 'cron') ) …",
     "src": "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql"
+   },
+   {
+    "job": "data-lake-flush-daily",
+    "schedule": "0 3 * * *",
+    "body": "SELECT net.http_post( url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush', headers := jsonb_build_object( 'Content-Type', 'application/json', 'Authorization', 'Bearer ' || ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'data_lake_cron_token' ) ), body …",
+    "src": "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql"
    }
   ],
   "views": {
@@ -25548,6 +25554,7 @@
    "supabase/migrations/20261121125200_fix_rls_allow_all.sql",
    "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql",
    "supabase/migrations/20261122140000_dialer_pacing_cron.sql",
+   "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql",
    "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
    "supabase/migrations/20261122200000_rls_initplan_remaining.sql",
    "supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql",
@@ -29908,9 +29915,12 @@
     ],
     "auth": "PÚBLICA (verify_jwt=false em config.toml)",
     "tables": [
-     "data_lake_exports"
+     "data_lake_exports",
+     "user_profiles"
     ],
     "env": [
+     "DATA_LAKE_CRON_TOKEN",
+     "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
@@ -34187,7 +34197,7 @@
   {
    "module": "supabase/functions",
    "files": 174,
-   "lines": 19820,
+   "lines": 19834,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34411,8 +34421,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 239,
-   "lines": 15586,
+   "files": 240,
+   "lines": 15639,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36225,6 +36235,7 @@
      "src/pages/roles/useRoles.ts",
      "supabase/functions/cleanup-lock-conflicts/index.ts",
      "supabase/functions/cleanup-recordings/index.ts",
+     "supabase/functions/data-lake-flush/index.ts",
      "supabase/functions/generate-coaching-track/index.ts",
      "supabase/functions/record-consent/index.ts",
      "supabase/functions/sip-config/index.ts",
@@ -37243,6 +37254,9 @@
     "supabase/functions/_shared/__tests__/cors.test.ts",
     "supabase/functions/_shared/cors.ts"
    ],
+   "DATA_LAKE_CRON_TOKEN": [
+    "supabase/functions/data-lake-flush/index.ts"
+   ],
    "DB_HOST": [
     "scripts/apply-call-volume-fix.mjs",
     "scripts/check-cfmlmc-db.mjs",
@@ -37458,6 +37472,7 @@
     "supabase/functions/cleanup-recordings/index.ts",
     "supabase/functions/compute-account-health/index.ts",
     "supabase/functions/compute-adherence/index.ts",
+    "supabase/functions/data-lake-flush/index.ts",
     "supabase/functions/database-backup/index.ts",
     "supabase/functions/database-cleanup/index.ts",
     "supabase/functions/detect-churn-risk/index.ts",
@@ -41978,6 +41993,10 @@
     "value": "admin"
    },
    {
+    "file": "supabase/functions/data-lake-flush/index.ts",
+    "value": "admin"
+   },
+   {
     "file": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
     "value": "admin"
    }
@@ -42382,10 +42401,6 @@
    {
     "file": "supabase/functions/compute-account-health/index.ts",
     "text": "entao a anon key publica nao pode ser suficiente para invoca-las."
-   },
-   {
-    "file": "supabase/functions/data-lake-flush/index.ts",
-    "text": "O cron (pg_cron) chama com a anon key do projeto. Sem validacao alguma, qualquer"
    },
    {
     "file": "supabase/functions/database-cleanup/index.ts",
@@ -54161,6 +54176,12 @@
     "field": "status",
     "value": "failed",
     "kind": "escreve"
+   },
+   {
+    "file": "supabase/functions/data-lake-flush/index.ts",
+    "field": "role",
+    "value": "admin",
+    "kind": "compara"
    },
    {
     "file": "supabase/functions/data-lake-flush/index.ts",
@@ -82677,6 +82698,7 @@
       "compara:src/pages/roles/RoleStatsCards.tsx",
       "compara:supabase/functions/cleanup-lock-conflicts/index.ts",
       "compara:supabase/functions/cleanup-recordings/index.ts",
+      "compara:supabase/functions/data-lake-flush/index.ts",
       "filtra:supabase/functions/database-backup/index.ts",
       "filtra:supabase/functions/database-cleanup/index.ts",
       "filtra:supabase/functions/export-data-lake/index.ts",
@@ -117054,8 +117076,12 @@
   },
   "supabase/functions/data-lake-flush/index.ts": {
    "path": "supabase/functions/data-lake-flush/index.ts",
-   "lines": 164,
+   "lines": 178,
    "tables": [
+    {
+     "table": "user_profiles",
+     "op": "select"
+    },
     {
      "table": "data_lake_exports",
      "op": "select"
@@ -117074,6 +117100,10 @@
     }
    ],
    "table_cols": {
+    "user_profiles": [
+     "id",
+     "role"
+    ],
     "data_lake_exports": [
      "completed_at",
      "dataset",
@@ -117087,6 +117117,8 @@
     "data-lake-exports"
    ],
    "env": [
+    "DATA_LAKE_CRON_TOKEN",
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -117118,13 +117150,18 @@
      "kind": "escreve"
     },
     {
+     "field": "role",
+     "value": "admin",
+     "kind": "compara"
+    },
+    {
      "field": "status",
      "value": "completed",
      "kind": "filtra"
     }
    ],
-   "rule_comments": [
-    "O cron (pg_cron) chama com a anon key do projeto. Sem validacao alguma, qualquer"
+   "role_checks": [
+    "admin"
    ],
    "doc": "edge-public-ok — invocado por cron (`pg_cron` com service_role) ou admin autenticado. Data Lake Flush — Exporta incremental de datasets críticos em NDJSON para o bucket data-lake-exports. Invocado por cron diário (03:00 UTC) ou manualmente por admin.",
    "pagination": [
@@ -122654,6 +122691,10 @@
    "path": "supabase/migrations/20261122140000_dialer_pacing_cron.sql",
    "lines": 39
   },
+  "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql": {
+   "path": "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql",
+   "lines": 53
+  },
   "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql": {
    "path": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
    "lines": 244,
@@ -122895,10 +122936,20 @@
   }
  },
  "git": {
-  "sha": "d3a6f692b9edc1f00097d3705da55fd152655e40",
+  "sha": "67d018067748ba3b5ec2676a95e5e85674b05b83",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "67d0180",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: cron data-lake-flush usa token dedicado em vez da anon key (#144)",
+    "files": [
+     "supabase/functions/data-lake-flush/index.ts",
+     "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql"
+    ]
+   },
    {
     "sha": "d3a6f69",
     "date": "2026-11-22",
@@ -123205,17 +123256,6 @@
     "files": [
      "supabase/functions/bitrix-api/__tests__/index.test.ts"
     ]
-   },
-   {
-    "sha": "49ef164",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "test: testes de integracao param de passar sem verificar nada (#114)",
-    "files": [
-     "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-     "supabase/functions/check-dnc/__tests__/index.test.ts",
-     "supabase/functions/check-queue-metrics/__tests__/index.test.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -123248,24 +123288,20 @@
     2
    ],
    [
-    "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-    2
-   ],
-   [
-    "supabase/functions/check-dnc/__tests__/index.test.ts",
-    2
-   ],
-   [
-    "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
-    2
-   ],
-   [
     "src/hooks/useWebAuthn.ts",
     2
    ],
    [
     "supabase/functions/webauthn-authenticate/index.ts",
     2
+   ],
+   [
+    "supabase/functions/data-lake-flush/index.ts",
+    1
+   ],
+   [
+    "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql",
+    1
    ],
    [
     "src/hooks/useScorecards.ts",
@@ -123297,6 +123333,10 @@
    ],
    [
     "supabase/functions/_shared/constant-time.ts",
+    1
+   ],
+   [
+    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
     1
    ]
   ]

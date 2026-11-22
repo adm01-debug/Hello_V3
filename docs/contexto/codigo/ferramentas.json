@@ -4,7 +4,7 @@
  "stack": {
   "linguagens": [
    "TypeScript (1208)",
-   "SQL (242)",
+   "SQL (243)",
    "Markdown (114)",
    "JavaScript (29)",
    "JSON (18)",
@@ -406,6 +406,7 @@
    "CLEANUP_CRON_TOKEN",
    "COACHING_CRON_TOKEN",
    "CORS_EXTRA_ORIGINS",
+   "DATA_LAKE_CRON_TOKEN",
    "DIALER_CRON_TOKEN",
    "ELEVENLABS_AGENT_ID",
    "ELEVENLABS_API_KEY",
@@ -653,6 +654,7 @@
    "BITRIX_WEBHOOK_URL",
    "CLEANUP_CRON_TOKEN",
    "COACHING_CRON_TOKEN",
+   "DATA_LAKE_CRON_TOKEN",
    "DD_API_KEY",
    "DIALER_CRON_TOKEN",
    "ELEVENLABS_AGENT_ID",
@@ -735,7 +737,7 @@
   "papeis_no_codigo": [
    {
     "papel": "admin",
-    "ocorrencias": 33
+    "ocorrencias": 34
    },
    {
     "papel": "user",

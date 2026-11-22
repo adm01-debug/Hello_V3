@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d3a6f692b9` · branch `main` · 2026-11-22 16:52 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `67d0180677` · branch `main` · 2026-11-22 17:06 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1020,7 +1020,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `state` | `parked` | escreve | `src/lib/blf.ts` |
 | `state` | `recording` | compara | `src/components/calls/live-transcription/useLiveTranscription.ts`<br>`src/hooks/useVoiceCommand.ts` |
 | `state` | `suspended` | compara | `src/hooks/useCriticalAlertNotifications.ts`<br>`src/hooks/useHoldSoundAlert.ts`<br>`src/lib/incoming-call-alert.ts` |
-| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +12 |
+| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +13 |
 | `role` | `agent` | compara, escreve | `src/lib/talkRatio.ts`<br>`src/pages/roles/RoleStatsCards.tsx`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `button` | escreve | `src/lib/a11y-clickable.ts` |
 | `role` | `customer` | compara | `src/lib/talkRatio.ts`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
@@ -2447,6 +2447,7 @@ _nenhum item encontrado_
 | `role` | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/functions/cleanup-recordings/index.ts` |
+| `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
 ## K. Testes como especificação (4027 testes em 331 arquivos — nomes completos em `context.json`)
@@ -2999,7 +3000,6 @@ _nenhum item encontrado_
 | nao toca storage, e o bucket `call-recordings` cresceria sem limite. A regra | `supabase/functions/cleanup-recordings/index.ts` |
 | de negocio e 180 dias. | `supabase/functions/cleanup-recordings/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/compute-account-health/index.ts` |
-| O cron (pg_cron) chama com a anon key do projeto. Sem validacao alguma, qualquer | `supabase/functions/data-lake-flush/index.ts` |
 | 2. Clean old rate limit logs (older than 7 days) | `supabase/functions/database-cleanup/index.ts` |
 | 3. Clean resolved rate limit alerts (older than 30 days) | `supabase/functions/database-cleanup/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/detect-churn-risk/index.ts` |

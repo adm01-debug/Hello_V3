@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `d3a6f692b9edc1f00097d3705da55fd152655e40` (2026-11-22T13:51:50-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `67d018067748ba3b5ec2676a95e5e85674b05b83` (2026-11-22T14:06:29-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1208), SQL (242), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1208), SQL (243), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1634 |
+| arquivos_total | 1635 |
 | arquivos_codigo | 1241 |
-| linhas_codigo | 169366 |
+| linhas_codigo | 169380 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -46,7 +46,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | hooks | 191 |
 | edge_functions | 98 |
 | tabelas | 169 |
-| migrations | 239 |
+| migrations | 240 |
 | cron_jobs | 11 |
 | testes | 342 |
 | workflows | 3 |
@@ -251,7 +251,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `compute-adherence` — tabelas: agent_shifts, agent_status_history; chamada por 1 arquivo(s) do front
 - `compute-best-time` — tabelas: call_sessions, contact_engagement_patterns, contacts; chamada por 1 arquivo(s) do front
 - `compute-deal-health` — tabelas: call_key_moments, call_sessions, call_summaries, deals; chamada por 1 arquivo(s) do front
-- `data-lake-flush` (verify_jwt=false) — tabelas: data_lake_exports; chamada por 0 arquivo(s) do front, por SQL/cron
+- `data-lake-flush` (verify_jwt=false) — tabelas: data_lake_exports, user_profiles; chamada por 0 arquivo(s) do front, por SQL/cron
 - `database-backup` — tabelas: audit_logs, user_roles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `database-cleanup` — tabelas: account_lockouts, audit_logs, login_attempts, rate_limit_alerts, rate_limit_logs, user_roles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `detect-churn-risk` — tabelas: accounts, call_key_moments, call_sessions, call_summaries, churn_risk_signals; chamada por 1 arquivo(s) do front
@@ -331,7 +331,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `cleanup-lock-conflicts-weekly` 0 3 * * 0 → edge cleanup-lock-conflicts (20261122220000_lock_conflicts_retention_cron.sql)
 - `cleanup-recordings-daily` 45 3 * * * → edge cleanup-recordings (20261122230000_recordings_retention_cron.sql)
 - `daily-cleanup-old-logs` 15 3 * * * (20260711185006_44492a26-e136-43de-93b9-066bed1b40a8.sql)
-- `data-lake-flush-daily` 0 3 * * * → edge data-lake-flush (20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql)
+- `data-lake-flush-daily` 0 3 * * * → edge data-lake-flush (20261122180000_data_lake_flush_cron_token.sql)
 - `dialer-pacing-tick` * * * * * → edge dialer-pacing-tick (20261122140000_dialer_pacing_cron.sql)
 - `generate-coaching-tracks-daily` 15 3 * * * → edge generate-coaching-track (20261122120000_coaching_auto_tracks_cron.sql)
 - `quarterly-reset-index-stats` 0 6 1 1,4,7,10 * (20260712115343_8332dd3d-29a2-4017-954c-edc625f7029b.sql)
@@ -344,10 +344,10 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - SDKs: Supabase, react-query, zod
 - hosts mais citados: openrouter.ai, hello-v3.vercel.app, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br
 - webhooks recebidos: cleanup-lock-conflicts, cleanup-recordings, data-lake-flush, dialer-pacing-tick, generate-coaching-track
-- env de integração (só nomes): BITRIX_WEBHOOK_URL, CLEANUP_CRON_TOKEN, COACHING_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, RECORDINGS_CRON_TOKEN, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
+- env de integração (só nomes): BITRIX_WEBHOOK_URL, CLEANUP_CRON_TOKEN, COACHING_CRON_TOKEN, DATA_LAKE_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, RECORDINGS_CRON_TOKEN, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
 ## Permissões / papéis
-- papéis no código: admin (33), user (24), system (18), agent (16), button (13), alert (7), supervisor (7), group (5), status (5), viewer (4), article (3), img (3), navigation (3), anon (2), customer (2), dialog (2), god (1), link (1), presentation (1), region (1), searchbox (1), separator (1), string (1), sup (1), table (1)
+- papéis no código: admin (34), user (24), system (18), agent (16), button (13), alert (7), supervisor (7), group (5), status (5), viewer (4), article (3), img (3), navigation (3), anon (2), customer (2), dialog (2), god (1), link (1), presentation (1), region (1), searchbox (1), separator (1), string (1), sup (1), table (1)
 - enums de papel: app_role: admin|supervisor|agent|viewer
 - guards: src/components/auth/ProtectedRoute.tsx · rotas protegidas: 0 · públicas: /, /*, /accounts, /admin/data-export, /admin/database-health, /admin/extensions, /admin/security-alerts, /admin/security-audit, /admin/slo, /admin/voice-quality, /admin/voip-trunks, /admin/webhook-health, /agent-assist, /ai, /alert-history, /alerts, /analytics, /audit-logs, /battle-cards, /blf, /blocked-access-logs, /cadences, /call-flow-designer, /call-history, /call-library, /call-park, /call-queues, /callbacks, /calls, /coaching, /compliance, /concurrency-conflicts, /contacts, /contacts/insights, /dashboard, /deals, /dialer, /dialer/predictive, /executive, /external-recordings-import, /financial-impact, /forgot-password, /gamification, /geo-blocking, /history, /hold-alerts, /hold-metrics, /hold-settings, /hot-desking, /inbox, /ip-whitelist, /knowledge, /landing, /ldap-sync, /learning, /login, /marketplace, /meeting-summaries, /multi-device-ring, /network-diagnostics, /notifications, /number-porting, /observability, /onboarding, /outbound-compliance, /passkeys, /password-reset-approval, /permissions, /pricing, /qr-provisioning, /queue-dashboard, /queue-metrics-settings, /ranking, /rate-limit, /recordings, /register, /renewals, /reports, /reset-password, /ring-groups, /roles, /routing-rules, /scheduling, /scorecards, /security, /security-monitoring, /security-report, /sessions, /settings, /shift-swap-suggestions, /skills, /sla-policies, /status, /success-plans, /toll-free-numbers, /topic-detection, /trackers, /translation-center, /two-factor-auth, /unauthorized, /verify-email, /video-conference, /virtual-fax, /voice-security, /voicemail, /vs/3cplus
 - feature flags: FEATURE_X, nova-tela, novo-inbox
@@ -370,7 +370,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9183 nós · 24322 arestas · 729 comunidades · grafo do commit `d3a6f692`
+- 9184 nós · 24324 arestas · 730 comunidades · grafo do commit `67d01806`
 - comunidades maiores: lucide-react (276), vitest (184), logger.ts (177), protectedRoutes.tsx (162), client.ts (161), react (152), utils.ts (130), select.tsx (119), safe-date.ts (109), cn (108), snapshot.py (102), Tabela de funcionalidades (90)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -388,9 +388,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - inventario/estado/edges.json (5)
 - docs/pendencias/_ordem.md (4)
 - src/routes/protectedRoutes.tsx (4)
+- supabase/functions/data-lake-flush/index.ts (4)
 - AGENTS.md (3)
 - docs/agentes/edge-functions.md (3)
-- docs/estado/edge-functions-parte1.md (3)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `67d0180` fix: cron data-lake-flush usa token dedicado em vez da anon key (#144)
 - 2026-11-22 `d3a6f69` feat: pagina de avaliacoes de chamada com geracao por IA (#143)
 - 2026-11-22 `76e30b7` feat: retencao de 180 dias para as gravacoes de chamada (#138)
 - 2026-11-22 `36732f9` feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `d3b1133` fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)
 - 2026-11-22 `5ca0039` fix: taxa de abandono contava a chamada abandonada duas vezes (#131)
 - 2026-11-22 `89fe47c` docs: registra divergencia de limiar no Nivel de Servico (#130)
-- 2026-11-22 `71169af` fix: contagem em espera do dashboard usava status inexistente (#129)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
