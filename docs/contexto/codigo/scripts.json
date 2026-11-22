@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 31,
+ "total": 32,
  "scripts": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -243,6 +243,15 @@
    "workflows": [
     "inventario-estado-semanal.yml"
    ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/inventario/gerar-catalogo-edges.mjs",
+   "descricao": "* Catalogo publico das edge functions -> docs/edge-functions/README.md",
+   "linhas": 179,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
    "orfao": false
   },
   {

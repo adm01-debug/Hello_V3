@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "f6f07405228ef3a680cc0b5ae0dfd017f8c47c5f",
+  "sha": "15654d2607d5972986931013f0e77f66fd952c95",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 00:08 UTC",
-  "files_total": 1617,
-  "code_files": 1423,
-  "code_lines": 179624
+  "generated_at": "2026-11-22 00:35 UTC",
+  "files_total": 1619,
+  "code_files": 1424,
+  "code_lines": 179803
  },
  "version": "1.3.2",
- "facts_hash": "a9a224e0fa8ce214",
+ "facts_hash": "61f74549b4f788c5",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -161,7 +161,7 @@
    ".tsx": 603,
    ".ts": 574,
    ".sql": 214,
-   ".mjs": 25,
+   ".mjs": 26,
    ".py": 5,
    ".js": 2
   },
@@ -31494,8 +31494,8 @@
   },
   {
    "module": "scripts",
-   "files": 32,
-   "lines": 9364,
+   "files": 33,
+   "lines": 9543,
    "tables": [
     "a",
     "contacts",
@@ -31591,6 +31591,7 @@
     "scripts/ci/check-claude-md-integrity.mjs",
     "scripts/inventario/banco.sql",
     "scripts/inventario/gerar-banco.mjs",
+    "scripts/inventario/gerar-catalogo-edges.mjs",
     "scripts/inventario/gerar-repo.mjs",
     "scripts/inventario/gerar-rotas.mjs",
     "scripts/inventario/mudou-conteudo.mjs",
@@ -38132,6 +38133,10 @@
    {
     "file": "scripts/inventario/gerar-banco.mjs",
     "msg": "sem foto independente do banco para conferir a origem: nem supabase/schema-manifest.json nem ${TYPES_TS}"
+   },
+   {
+    "file": "scripts/inventario/gerar-catalogo-edges.mjs",
+    "msg": "ripgrep falhou (exit ${erro?.status ?? "
    },
    {
     "file": "scripts/inventario/gerar-repo.mjs",
@@ -82957,6 +82962,7 @@
    "scripts/check-data.mjs",
    "scripts/check-rls.mjs",
    "scripts/inventario/gerar-banco.mjs",
+   "scripts/inventario/gerar-catalogo-edges.mjs",
    "scripts/regras_negocio/generate.py",
    "scripts/supabase_snapshot/snapshot.py",
    "scripts/test-api-direct.mjs",
@@ -86702,6 +86708,25 @@
     "* pelo Supabase), fonte independente do arquivo de entrada: pelo menos 90%",
     "// Cron 100% parado nao grava linha em job_run_details: some de horas_paradas_7d e a taxa fica 0."
    ],
+   "uses_service_role": true
+  },
+  "scripts/inventario/gerar-catalogo-edges.mjs": {
+   "path": "scripts/inventario/gerar-catalogo-edges.mjs",
+   "lines": 179,
+   "errors": [
+    "ripgrep falhou (exit ${erro?.status ?? "
+   ],
+   "params": [
+    {
+     "name": "SAIDA",
+     "value": "'docs/edge-functions/README.md'"
+    }
+   ],
+   "rule_comments": [
+    "- validacao: validateBody / Zod",
+    "- rate limit: checkRateLimit*"
+   ],
+   "doc": "!/usr/bin/env node",
    "uses_service_role": true
   },
   "scripts/inventario/gerar-repo.mjs": {
@@ -118177,10 +118202,38 @@
   }
  },
  "git": {
-  "sha": "f6f07405228ef3a680cc0b5ae0dfd017f8c47c5f",
+  "sha": "15654d2607d5972986931013f0e77f66fd952c95",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "15654d2",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "docs: regenera catalogo apos corrigir o rls-audit (#90)",
+    "files": [
+     "docs/edge-functions/README.md"
+    ]
+   },
+   {
+    "sha": "91b39fd",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "docs: pendencias alinhadas ao estado real medido (#88)",
+    "files": [
+     "docs/audits/pendencias-2026-07.md"
+    ]
+   },
+   {
+    "sha": "c206c6c",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "docs: catalogo de edge functions gerado do codigo (#87)",
+    "files": [
+     "docs/edge-functions/README.md",
+     "scripts/inventario/gerar-catalogo-edges.mjs"
+    ]
+   },
    {
     "sha": "f6f0740",
     "date": "2026-11-21",
@@ -118517,39 +118570,6 @@
      "scripts/ai-context/cenarios.mjs",
      "scripts/ai-context/gerar.unit.mjs"
     ]
-   },
-   {
-    "sha": "72f3935",
-    "date": "2026-11-20",
-    "author": "adm01-debug",
-    "subject": "fix: sanitiza path com fileURLToPath no gerador de inventario (#58)",
-    "files": [
-     "inventario/estado/edges.json",
-     "scripts/inventario/gerar-repo.mjs"
-    ]
-   },
-   {
-    "sha": "6ffab7a",
-    "date": "2026-11-20",
-    "author": "adm01-debug",
-    "subject": "chore: remove migrate-helper do código (funcao ja excluida em producao) (#57)",
-    "files": [
-     "docs/agentes/edge-functions.md",
-     "inventario/estado/edges.json",
-     "supabase/config.toml",
-     "supabase/functions/migrate-helper/index.test.ts",
-     "supabase/functions/migrate-helper/index.ts"
-    ]
-   },
-   {
-    "sha": "ce6fee5",
-    "date": "2026-11-20",
-    "author": "adm01-debug",
-    "subject": "chore: migrate-helper remove fallback hardcoded de ACCESS_KEY (#56)",
-    "files": [
-     "deno.lock",
-     "supabase/functions/migrate-helper/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -118562,6 +118582,10 @@
     5
    ],
    [
+    "docs/audits/pendencias-2026-07.md",
+    3
+   ],
+   [
     "src/components/layout/CommandPalette.tsx",
     3
    ],
@@ -118570,11 +118594,7 @@
     3
    ],
    [
-    "docs/audits/pendencias-2026-07.md",
-    2
-   ],
-   [
-    "deno.lock",
+    "docs/edge-functions/README.md",
     2
    ],
    [
@@ -118594,12 +118614,8 @@
     2
    ],
    [
-    "inventario/estado/edges.json",
-    2
-   ],
-   [
-    "supabase/functions/migrate-helper/index.ts",
-    2
+    "scripts/inventario/gerar-catalogo-edges.mjs",
+    1
    ],
    [
     "supabase/functions/rls-audit/index.ts",
@@ -118631,6 +118647,10 @@
    ],
    [
     "supabase/functions/health-check/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/health-check/slo-budget.ts",
     1
    ]
   ]

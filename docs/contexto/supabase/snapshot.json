@@ -31650,11 +31650,15 @@
               "hits": 1
             },
             {
+              "file": "supabase/functions/rls-audit/index.ts",
+              "hits": 1
+            },
+            {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
             }
           ],
-          "code_total_files": 3,
+          "code_total_files": 4,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -52281,11 +52285,6 @@
         {
           "publication": "supabase_realtime_messages_publication",
           "schema": "realtime",
-          "table": "messages_2026_11_18"
-        },
-        {
-          "publication": "supabase_realtime_messages_publication",
-          "schema": "realtime",
           "table": "messages_2026_11_19"
         },
         {
@@ -52312,6 +52311,11 @@
           "publication": "supabase_realtime_messages_publication",
           "schema": "realtime",
           "table": "messages_2026_11_24"
+        },
+        {
+          "publication": "supabase_realtime_messages_publication",
+          "schema": "realtime",
+          "table": "messages_2026_11_25"
         }
       ]
     },

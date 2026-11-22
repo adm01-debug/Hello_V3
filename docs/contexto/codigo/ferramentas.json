@@ -5,8 +5,8 @@
   "linguagens": [
    "TypeScript (1177)",
    "SQL (214)",
-   "Markdown (113)",
-   "JavaScript (27)",
+   "Markdown (114)",
+   "JavaScript (28)",
    "JSON (16)",
    "Python (5)",
    "YAML (3)",
@@ -318,6 +318,10 @@
   },
   {
    "pasta": "docs/audit",
+   "arquivos_md": 1
+  },
+  {
+   "pasta": "docs/edge-functions",
    "arquivos_md": 1
   },
   {

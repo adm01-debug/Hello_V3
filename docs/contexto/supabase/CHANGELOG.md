@@ -2,6 +2,12 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-22 00:35 UTC
+
+- **functions** alterado (1): `public.check_all_tables_rls_status()`
+- **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_25`
+- **realtime** removido (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_18`
+
 ## 2026-11-21 23:11 UTC
 
 - **colunas** adicionado (12): `public.index_usage.index_scans`, `public.index_usage.index_size`, `public.index_usage.indexname`, `public.index_usage.schemaname`, `public.index_usage.tablename`, `public.index_usage.tuples_fetched`, `public.index_usage.tuples_read`, `public.unused_indexes.idx_scan`, `public.unused_indexes.index_size`, `public.unused_indexes.indexname`, `public.unused_indexes.schemaname`, `public.unused_indexes.tablename`

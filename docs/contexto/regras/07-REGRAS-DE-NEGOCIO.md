@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f6f0740522` · branch `main` · 2026-11-22 00:08 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `15654d2607` · branch `main` · 2026-11-22 00:35 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2127,6 +2127,7 @@ _nenhum item encontrado_
 | format_version ${dado.format_version} desconhecido (esperado 1) | `scripts/inventario/gerar-banco.mjs` |
 | sem --entrada e sem SUPABASE_ACCESS_TOKEN: nada para ler (veja o cabecalho do script). | `scripts/inventario/gerar-banco.mjs` |
 | sem foto independente do banco para conferir a origem: nem supabase/schema-manifest.json nem ${TYPES_TS} | `scripts/inventario/gerar-banco.mjs` |
+| ripgrep falhou (exit ${erro?.status ??  | `scripts/inventario/gerar-catalogo-edges.mjs` |
 | ripgrep (rg) falhou com exit ${status}; o inventário não foi gerado. | `scripts/inventario/gerar-repo.mjs` |
 | ripgrep (rg) não encontrado; o inventário não pode ser gerado com segurança. | `scripts/inventario/gerar-repo.mjs` |
 | O teste offline não permite consultas ao banco | `scripts/supabase_snapshot/test_snapshot.py` |
@@ -2391,8 +2392,7 @@ _nenhum item encontrado_
 | Chamada em espera | `src/hooks/useSipCall.ts` |
 | Chamada encerrada: ${e.cause} | `src/hooks/useSipCall.ts` |
 | Chamada falhou: ${cause} | `src/hooks/useSipCall.ts` |
-| Falha ao atender a chamada | `src/hooks/useSipCall.ts` |
-| … +209 linhas — lista completa em `context.json` | |
+| … +210 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 

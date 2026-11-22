@@ -2,11 +2,26 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "f6f07405228ef3a680cc0b5ae0dfd017f8c47c5f",
+  "commit": "15654d2607d5972986931013f0e77f66fd952c95",
   "branch": "main",
-  "data_commit": "2026-11-21T21:08:25-03:00",
+  "data_commit": "2026-11-21T21:26:23-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "15654d2",
+    "data": "2026-11-21",
+    "assunto": "docs: regenera catalogo apos corrigir o rls-audit (#90)"
+   },
+   {
+    "sha": "91b39fd",
+    "data": "2026-11-21",
+    "assunto": "docs: pendencias alinhadas ao estado real medido (#88)"
+   },
+   {
+    "sha": "c206c6c",
+    "data": "2026-11-21",
+    "assunto": "docs: catalogo de edge functions gerado do codigo (#87)"
+   },
    {
     "sha": "f6f0740",
     "data": "2026-11-21",
@@ -116,24 +131,9 @@
     "sha": "ffaedf6",
     "data": "2026-11-21",
     "assunto": "docs: relatorio atualizado (seed, PR #62, validação O2O)"
-   },
-   {
-    "sha": "ea386b1",
-    "data": "2026-11-21",
-    "assunto": "docs: regras de negocio verificadas e achados fora de escopo"
-   },
-   {
-    "sha": "ce4911de",
-    "data": "2026-11-21",
-    "assunto": "docs: registra seed das tabelas dormentes e remoção do SecurityDashboard antigo (#62)"
-   },
-   {
-    "sha": "51ac7dd",
-    "data": "2026-11-20",
-    "assunto": "feat: wiring dos componentes orfaos no frontend (#61)"
    }
   ],
-  "arquivos_mudados_7d": 610,
+  "arquivos_mudados_7d": 612,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -230,6 +230,10 @@
     "mudancas": 3
    },
    {
+    "arquivo": "docs/audits/pendencias-2026-07.md",
+    "mudancas": 3
+   },
+   {
     "arquivo": "docs/observabilidade/SLI_SLO.md",
     "mudancas": 3
    },
@@ -282,7 +286,7 @@
     "mudancas": 2
    },
    {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
+    "arquivo": "docs/edge-functions/README.md",
     "mudancas": 2
    },
    {
@@ -292,16 +296,12 @@
    {
     "arquivo": "docs/pendencias/WIRING-01-permissiongate.md",
     "mudancas": 2
-   },
-   {
-    "arquivo": "docs/pendencias/WIRING-02-livetranslationpanel.md",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 67
+    "commits": 70
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1570,
-  "arquivos_codigo": 1208,
-  "linhas_codigo": 165601,
+  "arquivos_total": 1572,
+  "arquivos_codigo": 1209,
+  "linhas_codigo": 165780,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -330,8 +330,8 @@
   "cron_jobs": 7,
   "testes": 325,
   "workflows": 3,
-  "scripts": 31,
-  "docs_md": 113
+  "scripts": 32,
+  "docs_md": 114
  },
  "por_pasta": {
   "e2e/calls.spec.ts": {
@@ -423,8 +423,8 @@
    "linhas": 71
   },
   "scripts/inventario": {
-   "arquivos": 4,
-   "linhas": 851
+   "arquivos": 5,
+   "linhas": 1030
   },
   "scripts/regras_negocio": {
    "arquivos": 3,
@@ -635,7 +635,7 @@
  ],
  "qualidade": {
   "any": 11,
-  "console_log": 181,
+  "console_log": 183,
   "ts_ignore": 0,
   "eslint_disable": 1,
   "todos": 5,

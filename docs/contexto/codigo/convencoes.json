@@ -28,7 +28,7 @@
   "edge_functions": "supabase/functions",
   "migrations": "supabase/migrations",
   "scripts": [
-   "scripts/inventario (5)",
+   "scripts/inventario (6)",
    "scripts/regras_negocio (3)",
    "scripts/ai-context (2)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "docs: regenera catalogo apos corrigir o rls-audit (#90)",
+   "docs: pendencias alinhadas ao estado real medido (#88)",
+   "docs: catalogo de edge functions gerado do codigo (#87)",
    "fix: rls-audit exige auth e usa RPC real de RLS (#86)",
-   "fix: dataset call_summaries exportavel no data lake (D5) (#85)",
-   "feat: error budget por componente no health-check (C1) (#83)",
-   "feat: centraliza reauth em Context com grant HMAC persistido (#81)",
-   "fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)"
+   "fix: dataset call_summaries exportavel no data lake (D5) (#85)"
   ]
  },
  "pr_template": null,
