@@ -21,8 +21,8 @@ serve(async (req) => {
     if (authErr || !user) return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
 
     // Valida role
-    const { data: profile } = await admin.from('user_profiles').select('role').eq('id', user.id).single();
-    if (!profile || !['admin', 'supervisor'].includes(profile.role)) {
+    const { data: profile } = await admin.from('user_roles').select('role').eq('user_id', user.id).in('role', ['admin', 'supervisor']).eq('is_active', true);
+    if (!profile || profile.length === 0) {
       return new Response(JSON.stringify({ error: 'Acesso negado' }), { status: 403, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
     }
 

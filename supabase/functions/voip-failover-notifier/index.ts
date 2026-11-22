@@ -10,6 +10,16 @@ export const handler = async (req: Request): Promise<Response> => {
     const authHeader = req.headers.get("Authorization") ?? "";
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+    // Endpoint interno: usa service_role e grava notificacao para terceiros.
+    // Sem esta checagem qualquer anonimo poderia injetar notificacoes nos agentes.
+    const expected = `Bearer ${supabaseKey}`;
+    if (authHeader !== expected) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401, headers: { ...cors, "Content-Type": "application/json" }
+      });
+    }
+
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { failed_trunk_id, backup_trunk_id, reason } = await req.json();

@@ -15,6 +15,18 @@ Deno.serve(withRequestLog("data-lake-flush", async (req) => {
   }
 
   try {
+    // O cron (pg_cron) chama com a anon key do projeto. Sem validacao alguma, qualquer
+    // anonimo disparava a exportacao de call_sessions, call_summaries e deals.
+    const auth = req.headers.get("Authorization") ?? "";
+    // Aceita JWT do projeto (usado pelo pg_cron) e a publishable key (formato novo).
+    // Nota: ambas sao chaves publicas — isto barra chamada anonima crua, nao um
+    // atacante com a chave do bundle. Defesa forte exigiria secret compartilhado.
+    const bearer = auth.replace(/^Bearer\s+/i, "").trim();
+    const isProjectKey = /^[\w-]+\.[\w-]+\.[\w-]+$/.test(bearer) || bearer.startsWith("sb_publishable_");
+    if (!isProjectKey) {
+      return json({ error: "Unauthorized" }, 401);
+    }
+
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,

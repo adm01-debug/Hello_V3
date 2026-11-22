@@ -50,7 +50,8 @@ serve(async (req) => {
       .from("user_roles")
       .select("role")
       .eq("user_id", userData.user.id)
-      .in("role", ["admin", "super_admin", "owner"])
+      .eq("role", "admin")
+      .eq("is_active", true)
       .maybeSingle()
     isAdmin = !!roleRow
   }

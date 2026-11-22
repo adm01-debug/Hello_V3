@@ -14,10 +14,17 @@ Deno.serve(async (req) => {
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) return json({ error: "Missing auth" }, 401);
 
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-    );
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+    // Valida o JWT de fato. Checar so a presenca do header permitia que
+    // qualquer string passasse e a funcao operasse com service_role,
+    // expondo dados que a RLS esconderia.
+    const { data: authData, error: authError } = await createClient(supabaseUrl, serviceKey)
+      .auth.getUser(authHeader.replace("Bearer ", ""));
+    if (authError || !authData?.user) return json({ error: "Unauthorized" }, 401);
+
+    const supabase = createClient(supabaseUrl, serviceKey);
 
     const { dealId } = (await req.json()) as Body;
     if (!dealId) return json({ error: "dealId required" }, 400);

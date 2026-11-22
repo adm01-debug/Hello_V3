@@ -1,6 +1,7 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { clientIpFromHeaders } from "../_shared/client-ip.ts";
+import { checkRateLimitDB } from "../_shared/rate-limit.ts";
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -11,6 +12,16 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Endpoint publico (usuario deslogado precisa resetar). Sem rate limit, o
+    // auth.admin.listUsers() abaixo podia ser martelado por anonimos.
+    const rl = await checkRateLimitDB(clientIpFromHeaders(req.headers) ?? "0.0.0.0", "request-password-reset");
+    if (!rl.allowed) {
+      return new Response(
+        JSON.stringify({ error: "Limite excedido, tente novamente em instantes." }),
+        { status: 429, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } },
+      );
+    }
 
     const body = await req.json();
     const { email } = body;

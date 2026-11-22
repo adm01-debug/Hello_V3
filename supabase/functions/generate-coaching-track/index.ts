@@ -49,12 +49,8 @@ serve(async (req) => {
       }
 
       // Somente supervisor/admin podem disparar geracao em massa.
-      const { data: profile } = await admin
-        .from("user_profiles")
-        .select("role")
-        .eq("id", user.id)
-        .maybeSingle();
-      if (!profile || !["supervisor", "admin"].includes(profile.role)) {
+      const { data: isAdmin } = await admin.rpc("is_admin_user", { _user_id: user.id });
+      if (!isAdmin) {
         return json({ error: "Acesso negado" }, 403, req);
       }
       userId = user.id;

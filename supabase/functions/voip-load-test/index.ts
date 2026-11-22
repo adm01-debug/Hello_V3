@@ -129,12 +129,8 @@ async function exigirAdmin(
   if (error || !user) return negar(401, "Nao autorizado");
 
   const admin = createClient(supabaseUrl, serviceKey);
-  const { data: profile } = await admin
-    .from("user_profiles")
-    .select("role")
-    .eq("id", user.id)
-    .maybeSingle();
-  if (!profile || !["admin", "supervisor"].includes(profile.role)) {
+  const { data: isAdmin } = await admin.rpc("is_admin_user", { _user_id: user.id });
+  if (!isAdmin) {
     return negar(403, "Acesso negado");
   }
   return null;
