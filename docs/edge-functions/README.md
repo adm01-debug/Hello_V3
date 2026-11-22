@@ -11,9 +11,9 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 ## Resumo
 
 - **94** edge functions
-- **16** públicas (sem leitura de JWT no código)
+- **15** públicas (sem leitura de JWT no código)
 - **70** exigem usuário autenticado
-- **8** exigem papel admin/supervisor
+- **9** exigem papel admin/supervisor
 - **9** sem chamador no repositório (invocadas por cron, webhook externo ou uso manual)
 
 ## Colunas
@@ -56,7 +56,7 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 | `database-cleanup` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 111 |
 | `detect-churn-risk` | Detect churn risk signals deterministically + persist + bump churn score | autenticado | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 190 |
 | `detect-key-moments` | — | autenticado | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 198 |
-| `dialer-pacing-tick` | Tick do discador preditivo — invocado por pg_cron a cada 10s ou manualmente | publico | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 31 |
+| `dialer-pacing-tick` | Tick do discador preditivo — invocado por pg_cron a cada minuto ou manualmente. | admin/supervisor | sim | — | — | src 1 / mig 1 / edge 0 / e2e 0 | `DIALER_CRON_TOKEN` | 81 |
 | `elevenlabs-conversation-token` | — | autenticado | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `ELEVENLABS_AGENT_ID`, `ELEVENLABS_API_KEY` | 88 |
 | `email-inbound` | — | publico | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 171 |
 | `embed-kb-article` | — | publico | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `LOVABLE_API_KEY` | 67 |
@@ -150,7 +150,6 @@ exposição deve começar.
 - `chat-widget-session` (rate limit aplicado)
 - `chatbot-respond`
 - `data-lake-flush`
-- `dialer-pacing-tick`
 - `email-inbound`
 - `embed-kb-article`
 - `health-check`
