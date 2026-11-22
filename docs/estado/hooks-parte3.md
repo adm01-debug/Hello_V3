@@ -18,7 +18,7 @@
 
 | Funcionalidade | Classificação | Evidência | Consumidor | Tabela/edge fn | O que falta |
 |---|---|---|---|---|---|
-| `auth/index.ts` (barrel de auth) | ⬛ MORTO_OU_ABANDONADO | src/hooks/auth/index.ts:1-7 (re-exporta 5 símbolos) | **NENHUM** — `grep -rn "hooks/auth['\"]\|from './auth'\|from '../auth'\|@/hooks/auth"` = 0 resultados (nem teste) | — | Barrel nunca importado; consumidores usam `@/hooks/useAuth` ou os arquivos diretos |
+| `auth/index.ts` (barrel de auth) | ⬛ MORTO_OU_ABANDONADO | src/hooks/auth/index.ts:1-7 (re-exporta 5 simbolos) | **NENHUM** - `grep -rn "hooks/auth" src/` = 0 resultados (confirmado em 22/11/2026); os consumidores importam os modulos por caminho direto | - | Barrel nunca importado; sem impacto de runtime, remove-lo nao muda nada |
 | `auth/useAuthState` (tipos + estado base) | ✅ | src/hooks/auth/useAuthState.ts:1-33 | useAuthSession.ts, useAuthActions.ts, useAuthProfile.ts, src/hooks/useAuth.ts | — (estado local) | — |
 | `auth/useAuthSession` (sessão + `withTimeout` + purge de token) | ✅ | src/hooks/auth/useAuthSession.ts:6-18 (limpeza de localStorage), :98 | useAuth.ts, useAuthActions.ts | supabase.auth | — |
 | `auth/useAuthActions` (signIn/signOut) | ✅ | src/hooks/auth/useAuthActions.ts:1-86 | useAuth.ts | supabase.auth | — |
@@ -32,7 +32,7 @@
 | `useAccounts` (contas + health + churn) | ✅ | src/hooks/useAccounts.ts:38,54,72,84,98 | src/pages/Accounts.tsx | `accounts`; edge `compute-account-health`, `detect-churn-risk` | — |
 | `useAchievementNotifications` | ✅ | src/hooks/useAchievementNotifications.ts:41,48,54-61 | components/gamification/AchievementNotificationProvider.tsx | `badges`, `agents` | — |
 | `useActiveCallsRealtime` | ✅ | src/hooks/useActiveCallsRealtime.ts:35,40 | components/dashboard/ActiveCallsRealtime.tsx | `call_sessions`, `hold_events` | — |
-| `useAdherence` (aderência de escala) | ⬛ MORTO_OU_ABANDONADO | src/hooks/useAdherence.ts:15 (`invoke('compute-adherence')`) | **NENHUM em produção**; só src/hooks/\_\_tests\_\_/useAdherence.test.tsx:5 | edge `compute-adherence` | Nenhuma tela consome; edge fn possivelmente sem uso |
+| `useAdherence` (aderência de escala) | ✅ | src/hooks/useAdherence.ts:15 (`invoke('compute-adherence')`) | components/scheduling/AdherencePanel.tsx:15,165 | edge `compute-adherence` | Wired e montado em pages/Scheduling.tsx (/scheduling)
 | `useAgentFinancialLeaderboard` | ✅ | src/hooks/useAgentFinancialLeaderboard.ts:20 | components/financial/AgentFinancialLeaderboard.tsx | RPC `get_agent_financial_leaderboard` | Sem teste |
 | **`useAgentRanking`** (ranking + metas + **createTestData**) | 🟨 IMPLEMENTADO_PARCIAL | leitura real: src/hooks/useAgentRanking.ts:107,110,123,132,148,165,166,218,224; **fabricação: :262-307 com `Math.random` em :269,271,272,275,276,278,279,284,285,288,290,293,294,295** | 7 consumidores (pages/AgentRanking.tsx + 6 components/ranking/\*); botão em src/pages/AgentRanking.tsx:47 | lê `call_sessions`,`call_summaries`,`call_alerts`,`agent_goals`,`call_analyses`; **grava** `call_sessions`,`call_summaries`,`call_analyses` | Remover/gatear `createTestData` — ver Achados graves |
 | `useAgentStatus` | ✅ | src/hooks/useAgentStatus.ts:39,81,125 (PATCH REST com `keepalive` no unload) | AchievementNotificationProvider.tsx, UnifiedSoftphone.tsx, CoachingPanel.tsx, pages/AgentRanking.tsx | `agents` | — |
@@ -53,7 +53,7 @@
 | `useCallAnalytics` | ✅ | src/hooks/useCallAnalytics.ts:36,41 | pages/CallAnalytics.tsx, call-analytics/AnalyticsHeader.tsx | `call_sessions`, `call_summaries` | — |
 | `useCallHistory` | ✅ | src/hooks/useCallHistory.ts:87,136,137,138 | CallDetailDialog.tsx, CallSessionsList.tsx, PhoneDialer.tsx, CallHistory.tsx | RPC `get_call_history_with_summaries`; `call_transcriptions`,`call_analyses`,`call_summaries` | — |
 | `useCallPark` | ✅ | src/hooks/useCallPark.ts:40,54,83,99,114,143,185,212 | src/pages/CallPark.tsx | `call_park_orbits`, `parked_calls`; RPC `expire_parked_calls` | Sem teste |
-| `useCallPlaylists` / `usePlaylistItems` | ⬛ MORTO_OU_ABANDONADO | src/hooks/useCallPlaylists.ts:33,42,50,67 | **NENHUM em produção**; só \_\_tests\_\_/useCallPlaylists.coverage.test.tsx:3 | `call_playlists`, `playlist_items` | Tabelas existem, UI não |
+| `useCallPlaylists` / `usePlaylistItems` | ✅ | src/hooks/useCallPlaylists.ts:33,42,50,67 | components/call-library/CallPlaylistsPanel.tsx:11,233 | `call_playlists`, `playlist_items` | Wired e montado em pages/CallLibrary.tsx (/call-library)
 | `useCallQueues` | ✅ | src/hooks/useCallQueues.ts:36,51,70,90,105,121 | pages/CallQueues.tsx, pages/RingGroups.tsx | `call_queues`, `call_queue_members` | Sem teste |
 | `useCallRecording` | ✅ | src/hooks/useCallRecording.ts:29,56,75 | src/hooks/useConferenceRecording.ts:15 | `call_recordings` + MediaRecorder | — |
 | `useCallScoring` | ✅ | src/hooks/useCallScoring.ts:26 | src/pages/OutboundCompliance.tsx | edge `score-call-attempt` | — |
@@ -61,11 +61,11 @@
 | `useCallSession` | ✅ | src/hooks/useCallSession.ts:47,71,91,133,151,155,161,175,181 | components/calls/ActiveCallBar.tsx | `call_sessions`,`call_transcriptions`,`call_analyses`,`call_transcripts_searchable`,`call_summaries`; edges `analyze-talk-ratio`,`detect-key-moments`,`generate-meeting-summary` | — |
 | `useCallTimers` | ✅ | src/hooks/useCallTimers.ts:13-40 | src/hooks/useMultiChannelCall.ts | — (timers locais, por design) | — |
 | **`useCallTransfer`** | 🟨 IMPLEMENTADO_PARCIAL | src/hooks/useCallTransfer.ts:36-65; **`setTimeout(() => completeTransfer(callId), 2000)` na linha 63** conclui a transferência cega por temporizador | src/hooks/useMultiChannelCall.ts | **nenhuma** — só estado React | Não emite REFER/SIP nem persiste; transferência é simulada no cliente |
-| `useChatbot` | ⬛ MORTO_OU_ABANDONADO | src/hooks/useChatbot.ts:22 (`invoke('chatbot-respond')`) | **NENHUM em produção**; só \_\_tests\_\_/useChatbot.coverage.test.tsx:6 | edge `chatbot-respond` | Sem UI de chatbot |
-| `useChurnRisk` | ⬛ MORTO_OU_ABANDONADO | src/hooks/useChurnRisk.ts:29,47 | **NENHUM em produção**; só \_\_tests\_\_/useChurnRisk.test.ts:3 (`useAccounts` chama a edge fn `detect-churn-risk` por conta própria) | `churn_risk_signals` | Sem tela de risco de churn |
+| `useChatbot` | ✅ | src/hooks/useChatbot.ts:22 (`invoke('chatbot-respond')`) | pages/Inbox.tsx:15,73,107,248 | edge `chatbot-respond` | Wired e montado em pages/Inbox.tsx (/inbox)
+| `useChurnRisk` | ✅ | src/hooks/useChurnRisk.ts:29,47 | components/accounts/ChurnSignalsPanel.tsx:10,76 | `churn_risk_signals` | Wired e montado em pages/Accounts.tsx (/accounts)
 | `useCoaching` | ✅ | src/hooks/useCoaching.ts:37,55,84,102 | components/coaching/CoachingPanel.tsx | `coaching_recommendations`; edge `generate-coaching` | — |
-| `useCoachingAssignments` | ⬛ MORTO_OU_ABANDONADO | src/hooks/useCoachingAssignments.ts:28,38,49 | **NENHUM em produção**; só \_\_tests\_\_/useCoachingAssignments.coverage.test.tsx:5 | `coaching_assignments` | Sem UI de atribuição de coaching |
-| `useComplianceRules` | ⬛ MORTO_OU_ABANDONADO | src/hooks/useComplianceRules.ts:30,40,56,68 | **NENHUM em produção**; só \_\_tests\_\_/useComplianceRules.coverage.test.tsx:4 | `compliance_rules` | Regras de compliance sem tela (a página usa `useDNCCompliance`) |
+| `useCoachingAssignments` | ✅ | src/hooks/useCoachingAssignments.ts:28,38,49 | components/coaching/CoachingAssignmentsPanel.tsx:3,13 | `coaching_assignments` | Wired e montado em pages/Coaching.tsx (/coaching)
+| `useComplianceRules` | ✅ | src/hooks/useComplianceRules.ts:30,40,56,68 | components/compliance/ComplianceRulesPanel.tsx:5,67 | `compliance_rules` | Wired e montado em pages/Compliance.tsx (/compliance)
 | `useConferenceRecording` | ✅ | src/hooks/useConferenceRecording.ts:19-48 | components/calls/UnifiedSoftphone.tsx | via `useCallRecording` → `call_recordings` | — |
 | `useConsent` | ✅ | src/hooks/useConsent.ts:43,56 | src/pages/OutboundCompliance.tsx | `consent_records`; edge `record-consent` | — |
 | `useContactAlerts` | ✅ | src/hooks/useContactAlerts.ts:30,58,76,93,115,130 | UnifiedNotificationDropdown.tsx, ContactAlertsDropdown.tsx | `contact_alerts`; edge `check-contact-alerts` | — |

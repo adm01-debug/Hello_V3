@@ -137,7 +137,7 @@ Verificação cruzada: `find src/pages -name '*.tsx'` × imports `@/pages/...` e
 
 | Arquivo | Linhas | Imports em todo o `src/` | Classificação |
 |---|---|---|---|
-| `src/pages/admin/SecurityAuditDashboard.tsx` | 313 | **0** | ⬛ MORTO_OU_ABANDONADO |
+| `src/pages/admin/SecurityAuditDashboard.tsx` | 313 | **1** | ✅ |
 
 Ponto crítico: a rota `/admin/security-audit` (`src/routes/protectedRoutes.tsx:193`) aponta para `SecurityAudit = lazy(() => import("@/pages/admin/SecurityDashboard"))` (`protectedRoutes.tsx:85`) — um arquivo **diferente**. `SecurityAuditDashboard.tsx` (313 linhas, com `supabase`, `recharts`, `Tabs`, filtros e export) nunca é montado por nenhuma rota nem importado por nenhum componente. É código morto compilado e type-checkado, mas inalcançável.
 
