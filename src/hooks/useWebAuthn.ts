@@ -216,15 +216,6 @@ export function useWebAuthn() {
         throw new Error('Passkey não encontrada');
       }
 
-      // Update last used and counter
-      await supabase
-        .from('user_passkeys')
-        .update({
-          last_used_at: new Date().toISOString(),
-          counter: (passkey.counter || 0) + 1,
-        })
-        .eq('credential_id', result.credentialId);
-
       // Get user email for sign in
       const { data: userProfile } = await supabase
         .from('user_profiles')
@@ -236,18 +227,31 @@ export function useWebAuthn() {
         throw new Error('Usuário não encontrado');
       }
 
-      // Create a one-time token for passwordless login via edge function
+      // Create a one-time token for passwordless login via edge function.
+      // A assercao vai junto: a edge verifica a assinatura contra a chave
+      // publica registrada antes de emitir qualquer magic link.
       const { data: authData, error: authError } = await supabase.functions.invoke('webauthn-authenticate', {
         body: {
           credentialId: result.credentialId,
           userId: passkey.user_id,
-          email: userProfile.email,
+          clientDataJSON: result.clientDataJSON,
+          authenticatorData: result.authenticatorData,
+          signature: result.signature,
         },
       });
 
       if (authError || !authData?.success) {
-        throw new Error(authError?.message || 'Falha na autenticação');
+        throw new Error(authError?.message || authData?.error || 'Falha na autenticação');
       }
+
+      // So marca uso depois que a assinatura foi de fato verificada.
+      await supabase
+        .from('user_passkeys')
+        .update({
+          last_used_at: new Date().toISOString(),
+          counter: (passkey.counter || 0) + 1,
+        })
+        .eq('credential_id', result.credentialId);
 
       toast.success('Login realizado com sucesso!');
       return { success: true, userId: passkey.user_id };
