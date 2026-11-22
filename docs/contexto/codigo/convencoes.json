@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: torna a troca de chamada operavel por teclado no ActiveCallsIndicator (#97)",
    "fix: SSRF guard nas edges, idempotencia do inbound e gates de CI (#80)",
    "chore: regenera catalogo de edges apos cron do discador (#93) (#95)",
    "feat: cron de minuto para o discador preditivo (D6) (#93)",
-   "feat: cron diario que gera trilhas de coaching (D4) (#89)",
-   "fix(seguranca): revoga EXECUTE de anon nas funcoes internas e fecha advisors de RLS (#84)"
+   "feat: cron diario que gera trilhas de coaching (D4) (#89)"
   ]
  },
  "pr_template": null,

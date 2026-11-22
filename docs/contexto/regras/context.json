@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "95463e690b21b3113cbada8a009ed7f1a53d04fa",
+  "sha": "e7f63916263be8b3bede4da64296aabcc812e5c1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 01:20 UTC",
+  "generated_at": "2026-11-22 01:37 UTC",
   "files_total": 1630,
   "code_files": 1433,
-  "code_lines": 181426
+  "code_lines": 181439
  },
  "version": "1.3.2",
- "facts_hash": "2779d7e1b5a852f0",
+ "facts_hash": "d9dc914641ef736d",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -32773,7 +32773,7 @@
   {
    "module": "src/components",
    "files": 350,
-   "lines": 41983,
+   "lines": 41996,
    "tables": [
     "accounts",
     "agent_goals",
@@ -90699,7 +90699,7 @@
   },
   "src/components/calls/ActiveCallsIndicator.tsx": {
    "path": "src/components/calls/ActiveCallsIndicator.tsx",
-   "lines": 155,
+   "lines": 168,
    "exports": [
     "function ActiveCallsIndicator"
    ]
@@ -120760,10 +120760,19 @@
   }
  },
  "git": {
-  "sha": "95463e690b21b3113cbada8a009ed7f1a53d04fa",
+  "sha": "e7f63916263be8b3bede4da64296aabcc812e5c1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e7f6391",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix: torna a troca de chamada operavel por teclado no ActiveCallsIndicator (#97)",
+    "files": [
+     "src/components/calls/ActiveCallsIndicator.tsx"
+    ]
+   },
    {
     "sha": "95463e6",
     "date": "2026-11-21",
@@ -121111,15 +121120,6 @@
      "src/pages/Scheduling.tsx",
      "src/routes/protectedRoutes.tsx"
     ]
-   },
-   {
-    "sha": "7569241",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: remove CREATE INDEX CONCURRENTLY das migrations para compatibilidade com Supabase Preview (#65)",
-    "files": [
-     "supabase/migrations/20250102000000_performance_indexes.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -121136,10 +121136,6 @@
     5
    ],
    [
-    "supabase/migrations/20250102000000_performance_indexes.sql",
-    3
-   ],
-   [
     "docs/audits/pendencias-2026-07.md",
     3
    ],
@@ -121152,12 +121148,20 @@
     2
    ],
    [
+    "supabase/migrations/20250102000000_performance_indexes.sql",
+    2
+   ],
+   [
     "src/routes/protectedRoutes.tsx",
     2
    ],
    [
     "src/components/coaching/CoachingAssignmentsPanel.tsx",
     2
+   ],
+   [
+    "src/components/calls/ActiveCallsIndicator.tsx",
+    1
    ],
    [
     ".github/workflows/ci.yml",
@@ -121197,10 +121201,6 @@
    ],
    [
     "supabase/functions/data-lake-flush/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/fuzz-test-runner/index.ts",
     1
    ]
   ]
