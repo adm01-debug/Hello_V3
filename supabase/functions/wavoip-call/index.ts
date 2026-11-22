@@ -1,3 +1,8 @@
+// edge-stub-ok: NÃO implementa a API Wavoip. Os 4 `case` devolvem objetos fabricados sem
+// nenhum fetch, então a UI do softphone mostra "conectado/chamando" sem nenhuma chamada real
+// existir. WAVOIP_TOKEN não está configurado em produção e o contrato da API externa não tem
+// documentação no repo — implementar sem isso exigiria inventar o protocolo. Achado do
+// audit-edge-functions R9; reconhecer o stub é melhor que fingir funcionamento.
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
