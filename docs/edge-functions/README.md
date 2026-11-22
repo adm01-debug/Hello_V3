@@ -11,8 +11,8 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 ## Resumo
 
 - **94** edge functions
-- **26** públicas (sem leitura de JWT no código)
-- **62** exigem usuário autenticado
+- **25** públicas (sem leitura de JWT no código)
+- **63** exigem usuário autenticado
 - **6** exigem papel admin/supervisor
 - **9** sem chamador no repositório (invocadas por cron, webhook externo ou uso manual)
 
@@ -83,7 +83,7 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 | `record-consent` | — | admin/supervisor | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 99 |
 | `redact-sensitive-audio` | — | autenticado | sim | — | sim | src 2 / mig 0 / edge 0 / e2e 0 | — | 125 |
 | `request-password-reset` | — | publico | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 128 |
-| `rls-audit` | — | publico | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 56 |
+| `rls-audit` | RLS Audit — Relatorio de RLS nas tabelas criticas. Restrito a admin/supervisor. | header-only | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 99 |
 | `score-call` | — | header-only | sim | sim | — | src 1 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 121 |
 | `score-call-attempt` | — | autenticado | sim | sim | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 117 |
 | `search-calls` | — | header-only | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 123 |
@@ -135,7 +135,7 @@ Invocadas fora do repositório (cron, webhook de terceiro) ou disponíveis apena
 - `email-inbound`
 - `fuzz-test-runner`
 - `global-load-test`
-- `rls-audit`
+- `rls-audit` — RLS Audit — Relatorio de RLS nas tabelas criticas. Restrito a admin/supervisor.
 - `sync-crm-queue`
 - `translate-summary`
 - `whatsapp-inbound`
@@ -160,7 +160,6 @@ exposição deve começar.
 - `global-load-test`
 - `health-check`
 - `request-password-reset`
-- `rls-audit`
 - `send-survey`
 - `sync-crm-queue`
 - `teams-fetch-recordings`
