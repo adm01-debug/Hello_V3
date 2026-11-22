@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `bb8f219aeef64dbe6a02fbce4e81ac1f2547985d` (2026-11-22T04:06:43-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `1e1f3ef6a6b32a6c59cd423547d125f8132f1ac0` (2026-11-22T04:32:08-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1198), SQL (241), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1201), SQL (241), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1623 |
-| arquivos_codigo | 1231 |
-| linhas_codigo | 168401 |
+| arquivos_total | 1626 |
+| arquivos_codigo | 1234 |
+| linhas_codigo | 168615 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -44,11 +44,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | modulos | 79 |
 | componentes | 448 |
 | hooks | 191 |
-| edge_functions | 96 |
+| edge_functions | 97 |
 | tabelas | 169 |
 | migrations | 238 |
 | cron_jobs | 10 |
-| testes | 336 |
+| testes | 338 |
 | workflows | 3 |
 | scripts | 34 |
 | docs_md | 114 |
@@ -58,7 +58,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - componentes: src/components (319), src/pages (125), src/contexts (3)
 - hooks: src/hooks (173), src/components (12), src/contexts (3)
 - servicos_logica: src/lib (80), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (313), e2e/ (7), tests/ (6)
+- testes: co-localizado (__tests__) (315), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (6), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -72,7 +72,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/admin | 0 | 0 | 23 | 15 | 2 | 10 |
 | components/ai | 0 | 0 | 7 | 1 | 2 | 1 |
 | components/alerts | 0 | 0 | 5 | 0 | 0 | 3 |
-| components/auth | 0 | 0 | 7 | 12 | 1 | 6 |
+| components/auth | 0 | 0 | 7 | 12 | 2 | 6 |
 | components/calls | 0 | 0 | 27 | 29 | 12 | 19 |
 | components/compliance | 0 | 0 | 17 | 3 | 0 | 7 |
 | components/contacts | 0 | 0 | 11 | 6 | 3 | 6 |
@@ -91,12 +91,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/supervisor | 0 | 0 | 11 | 2 | 0 | 4 |
 | components/ui | 0 | 0 | 56 | 7 | 0 | 0 |
 | components/voice | 0 | 0 | 7 | 4 | 2 | 1 |
-| hooks | 0 | 0 | 167 | 208 | 56 | 122 |
+| hooks | 0 | 0 | 167 | 208 | 57 | 122 |
 | hooks/auth | 0 | 0 | 5 | 5 | 0 | 2 |
 | lib | 0 | 0 | 48 | 112 | 30 | 69 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
-| pages | 86 | 93 | 92 | 188 | 65 | 133 |
+| pages | 86 | 93 | 92 | 188 | 66 | 133 |
 | pages/admin | 8 | 9 | 16 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
@@ -320,6 +320,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `voip-trunks-manage` — tabelas: agent_trunk_assignments, call_control_audit_logs, user_roles, voip_trunks; chamada por 1 arquivo(s) do front
 - `wavoip-call` — tabelas: -; chamada por 1 arquivo(s) do front
 - `webauthn-authenticate` — tabelas: audit_logs, user_passkeys, webauthn_challenges; chamada por 1 arquivo(s) do front
+- `webauthn-challenge` — tabelas: user_passkeys, user_profiles, webauthn_challenges; chamada por 1 arquivo(s) do front
 - `webhook-handler` — tabelas: audit_logs; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `whatsapp-inbound` — tabelas: agents, contacts, conversation_messages, conversations; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `whatsapp-rewrite` — tabelas: -; chamada por 0 arquivo(s) do front — **ÓRFÃ**
@@ -338,7 +339,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Integrações externas
 - SDKs: Supabase, react-query, zod
-- hosts mais citados: openrouter.ai, cfmlmcdyjuotqobjapng.supabase.co, hello-v3.vercel.app, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br
+- hosts mais citados: openrouter.ai, hello-v3.vercel.app, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br
 - webhooks recebidos: nenhum
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, COACHING_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
@@ -366,8 +367,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9149 nós · 24202 arestas · 734 comunidades · grafo do commit `bb8f219a`
-- comunidades maiores: lucide-react (269), usePageTitle (212), react (189), traceHeaders (163), client.ts (137), @tanstack/react-query (136), utils.ts (134), vitest (123), badge.tsx (116), cn (116), generate.py (91), Tabela de funcionalidades (90)
+- 9157 nós · 24227 arestas · 722 comunidades · grafo do commit `1e1f3ef6`
+- comunidades maiores: lucide-react (279), client.ts (210), usePageTitle (182), react (160), vitest (134), utils.ts (120), Tabela de funcionalidades (116), safe-date.ts (112), cn (111), @tanstack/react-query (108), safeFormatDistanceToNow (99), buildCorsHeaders (95)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -425,6 +426,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `1e1f3ef` fix(auth): login por passkey sem sessao ativa (#118)
 - 2026-11-22 `bb8f219` fix(edge): libera a origem de producao no CORS das edge functions (#117)
 - 2026-11-22 `6f648ab` fix(security): fecha account takeover no login por passkey (#116)
 - 2026-11-22 `6659a49` test: cobre bitrix-api com testes reais de auth e fail-closed (#115)
@@ -439,7 +441,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `ed3177d` fix: 9 edge functions com erro de tipo que quebravam em producao (#110)
 - 2026-11-21 `4a44ddc` chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)
 - 2026-11-21 `4c76ea5` fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)
-- 2026-11-21 `4aeee51` fix: valida IP de header antes de usar em URL, log e autorizacao (#102)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "bb8f219aeef64dbe6a02fbce4e81ac1f2547985d",
+  "sha": "1e1f3ef6a6b32a6c59cd423547d125f8132f1ac0",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 07:07 UTC",
-  "files_total": 1670,
-  "code_files": 1473,
-  "code_lines": 184220
+  "generated_at": "2026-11-22 07:32 UTC",
+  "files_total": 1673,
+  "code_files": 1476,
+  "code_lines": 184434
  },
  "version": "1.3.2",
- "facts_hash": "9ae2c94e8405e229",
+ "facts_hash": "7e32a5b13496ea14",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 604,
-   ".ts": 594,
+   ".ts": 597,
    ".sql": 241,
    ".mjs": 27,
    ".py": 5,
@@ -28759,7 +28759,8 @@
      "webauthn_challenges"
     ],
     "invokes_transitive": [
-     "webauthn-authenticate"
+     "webauthn-authenticate",
+     "webauthn-challenge"
     ],
     "rpc_transitive": [],
     "deps_count": 25
@@ -29272,7 +29273,8 @@
     "invokes_transitive": [
      "charge",
      "validate-ip",
-     "webauthn-authenticate"
+     "webauthn-authenticate",
+     "webauthn-challenge"
     ],
     "rpc_transitive": [
      "check_login_lockout",
@@ -31676,6 +31678,31 @@
     "idempotency": false
    },
    {
+    "name": "webauthn-challenge",
+    "file": "supabase/functions/webauthn-challenge/index.ts",
+    "methods": [
+     "OPTIONS"
+    ],
+    "auth": "service_role (ignora RLS) — NÃO valida usuário no código",
+    "tables": [
+     "rate_limit_logs",
+     "user_passkeys",
+     "user_profiles",
+     "webauthn_challenges"
+    ],
+    "env": [
+     "SUPABASE_SERVICE_ROLE_KEY",
+     "SUPABASE_URL"
+    ],
+    "external": [],
+    "invokes": [],
+    "doc": "Emite o desafio de autenticacao WebAuthn para um login SEM sessao ativa. A edge e publica (verify_jwt=false) e usa a service role para inserir o desafio em `webauthn_challenges`, contornando a RLS que exigia sessao. O usuario e resolvido pelo e-mail ANTES da cerimonia, pois a coluna `user_id` e NOT …",
+    "errors": [],
+    "side_effects": [],
+    "webhook_events": [],
+    "idempotency": false
+   },
+   {
     "name": "webhook-handler",
     "file": "supabase/functions/webhook-handler/index.ts",
     "methods": [
@@ -33151,7 +33178,7 @@
   {
    "module": "src/components",
    "files": 350,
-   "lines": 41965,
+   "lines": 41966,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33404,7 +33431,7 @@
   {
    "module": "src/hooks",
    "files": 350,
-   "lines": 45227,
+   "lines": 45225,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34105,8 +34132,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 166,
-   "lines": 19354,
+   "files": 169,
+   "lines": 19569,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -36096,7 +36123,8 @@
    "user_passkeys": {
     "select": [
      "src/hooks/useWebAuthn.ts",
-     "supabase/functions/webauthn-authenticate/index.ts"
+     "supabase/functions/webauthn-authenticate/index.ts",
+     "supabase/functions/webauthn-challenge/index.ts"
     ],
     "insert": [
      "src/hooks/useWebAuthn.ts"
@@ -36125,12 +36153,12 @@
      "src/hooks/useProfile.ts",
      "src/hooks/useRingtoneSettings.ts",
      "src/hooks/useVoicePreferences.ts",
-     "src/hooks/useWebAuthn.ts",
      "src/pages/roles/useRoles.ts",
      "supabase/functions/cleanup-lock-conflicts/index.ts",
      "supabase/functions/generate-coaching-track/index.ts",
      "supabase/functions/record-consent/index.ts",
-     "supabase/functions/sip-config/index.ts"
+     "supabase/functions/sip-config/index.ts",
+     "supabase/functions/webauthn-challenge/index.ts"
     ]
    },
    "user_roles": {
@@ -36289,7 +36317,8 @@
    },
    "webauthn_challenges": {
     "ref": [
-     "src/hooks/useWebAuthn.ts"
+     "src/hooks/useWebAuthn.ts",
+     "supabase/functions/webauthn-challenge/index.ts"
     ],
     "select": [
      "supabase/functions/webauthn-authenticate/index.ts"
@@ -37504,6 +37533,7 @@
     "supabase/functions/voip-trunks-healthcheck/index.ts",
     "supabase/functions/voip-trunks-manage/index.ts",
     "supabase/functions/webauthn-authenticate/index.ts",
+    "supabase/functions/webauthn-challenge/index.ts",
     "supabase/functions/webhook-handler/index.ts",
     "supabase/functions/whatsapp-inbound/index.ts"
    ],
@@ -37617,6 +37647,7 @@
     "supabase/functions/voip-trunks-manage/index.ts",
     "supabase/functions/wavoip-call/index.ts",
     "supabase/functions/webauthn-authenticate/index.ts",
+    "supabase/functions/webauthn-challenge/index.ts",
     "supabase/functions/webhook-handler/index.ts",
     "supabase/functions/whatsapp-inbound/index.ts",
     "supabase/functions/whatsapp-rewrite/index.ts"
@@ -38101,6 +38132,9 @@
     "src/hooks/useWavoipCall.ts"
    ],
    "webauthn-authenticate": [
+    "src/hooks/useWebAuthn.ts"
+   ],
+   "webauthn-challenge": [
     "src/hooks/useWebAuthn.ts"
    ]
   },
@@ -40980,19 +41014,15 @@
    },
    {
     "file": "src/hooks/useWebAuthn.ts",
-    "msg": "Passkey não encontrada"
+    "msg": "Falha ao criar sessão. Tente novamente."
+   },
+   {
+    "file": "src/hooks/useWebAuthn.ts",
+    "msg": "Informe o e-mail para entrar com passkey"
    },
    {
     "file": "src/hooks/useWebAuthn.ts",
     "msg": "Registro cancelado pelo usuário"
-   },
-   {
-    "file": "src/hooks/useWebAuthn.ts",
-    "msg": "Usuário não encontrado"
-   },
-   {
-    "file": "src/hooks/useWebAuthn.ts",
-    "msg": "Você precisa estar autenticado para usar passkeys"
    },
    {
     "file": "src/hooks/useWebAuthn.ts",
@@ -42377,6 +42407,10 @@
    {
     "file": "supabase/functions/voip-sla-report/index.ts",
     "text": "validação Zod-like via _shared/validate, tracing via x-request-id."
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/index.ts",
+    "text": "do body: um atacante nao pode assumir a conta de outro usuario."
    },
    {
     "file": "supabase/functions/webauthn-authenticate/index.ts",
@@ -52404,7 +52438,7 @@
    {
     "file": "src/hooks/useWebAuthn.ts",
     "field": "type",
-    "value": "authentication",
+    "value": "magiclink",
     "kind": "escreve"
    },
    {
@@ -54850,6 +54884,12 @@
     "kind": "filtra"
    },
    {
+    "file": "supabase/functions/webauthn-challenge/index.ts",
+    "field": "type",
+    "value": "authentication",
+    "kind": "escreve"
+   },
+   {
     "file": "supabase/functions/whatsapp-inbound/index.ts",
     "field": "status",
     "value": "open",
@@ -55655,10 +55695,6 @@
    },
    {
     "file": "src/hooks/useWebAuthn.ts",
-    "line": "expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),"
-   },
-   {
-    "file": "src/hooks/useWebAuthn.ts",
     "line": "expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(), // 5 minutes"
    },
    {
@@ -55808,6 +55844,10 @@
    {
     "file": "supabase/functions/voip-trunks-manage/index.ts",
     "line": "const t = setTimeout(() => { ws.close(); resolve(); }, 3000);"
+   },
+   {
+    "file": "supabase/functions/webauthn-challenge/index.ts",
+    "line": "expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),"
    },
    {
     "file": "supabase/migrations/20251225192806_31f73fb3-ef04-442d-b4bd-cc6cce94cdb8.sql",
@@ -65095,7 +65135,7 @@
    },
    {
     "file": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
-    "name": "authenticates without email param"
+    "name": "authenticates without email param fails (email required)"
    },
    {
     "file": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
@@ -65103,15 +65143,23 @@
    },
    {
     "file": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
-    "name": "auth fails when no current user"
+    "name": "auth requires an email for anonymous login"
    },
    {
     "file": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
-    "name": "auth fails when passkey not found"
+    "name": "auth succeeds without an active session (anonymous login)"
    },
    {
     "file": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
-    "name": "auth fails when edge function errors"
+    "name": "auth fails when challenge edge errors"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
+    "name": "auth fails when authenticate edge errors"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
+    "name": "auth fails when verifyOtp fails to create session"
    },
    {
     "file": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
@@ -71958,6 +72006,22 @@
     "name": "voip-trunks-healthcheck: basic execution logic"
    },
    {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
+    "name": "webauthn-authenticate: OPTIONS devolve preflight CORS vazio"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
+    "name": "webauthn-authenticate: sem campos obrigatorios responde 400"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
+    "name": "webauthn-authenticate: nao aceita email do request"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
+    "name": "webauthn-authenticate: passkey desconhecida e recusada (400, nunca 200)"
+   },
+   {
     "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
     "name": "verify: assercao legitima e aceita e devolve signCount"
    },
@@ -71992,6 +72056,26 @@
    {
     "file": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
     "name": "verify: base64url decodifica corretamente"
+   },
+   {
+    "file": "supabase/functions/webauthn-challenge/__tests__/index.test.ts",
+    "name": "webauthn-challenge: OPTIONS devolve preflight CORS vazio"
+   },
+   {
+    "file": "supabase/functions/webauthn-challenge/__tests__/index.test.ts",
+    "name": "webauthn-challenge: sem e-mail responde 400"
+   },
+   {
+    "file": "supabase/functions/webauthn-challenge/__tests__/index.test.ts",
+    "name": "webauthn-challenge: e-mail vazio responde 400"
+   },
+   {
+    "file": "supabase/functions/webauthn-challenge/__tests__/index.test.ts",
+    "name": "webauthn-challenge: payload invalido responde 400, nunca 500"
+   },
+   {
+    "file": "supabase/functions/webauthn-challenge/__tests__/index.test.ts",
+    "name": "webauthn-challenge: e-mail sem passkey responde 404"
    },
    {
     "file": "supabase/functions/whatsapp-inbound/contract.test.ts",
@@ -82089,9 +82173,9 @@
      "registration": [
       "escreve:src/hooks/useWebAuthn.ts"
      ],
-     "authentication": [
+     "magiclink": [
       "escreve:src/hooks/useWebAuthn.ts",
-      "filtra:supabase/functions/webauthn-authenticate/index.ts"
+      "escreve:supabase/functions/webauthn-authenticate/index.ts"
      ],
      "unhandled-rejection": [
       "escreve:src/lib/error-tracking.ts"
@@ -82222,8 +82306,9 @@
      "action": [
       "escreve:supabase/functions/voip-diagnostic-voice-qa/index.ts"
      ],
-     "magiclink": [
-      "escreve:supabase/functions/webauthn-authenticate/index.ts"
+     "authentication": [
+      "escreve:supabase/functions/webauthn-challenge/index.ts",
+      "filtra:supabase/functions/webauthn-authenticate/index.ts"
      ],
      "image": [
       "escreve:supabase/functions/whatsapp-inbound/schema_test.ts"
@@ -85183,7 +85268,10 @@
    "supabase/functions/voip-trunks-healthcheck/index.test.ts",
    "supabase/functions/voip-trunks-healthcheck/index.ts",
    "supabase/functions/voip-trunks-manage/index.ts",
+   "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
    "supabase/functions/webauthn-authenticate/index.ts",
+   "supabase/functions/webauthn-challenge/__tests__/index.test.ts",
+   "supabase/functions/webauthn-challenge/index.ts",
    "supabase/functions/webhook-handler/index.ts",
    "supabase/functions/whatsapp-inbound/index.ts",
    "supabase/migrations/20260417001429_4d360a46-05bd-40b3-a5db-9ad5586337f2.sql",
@@ -91343,7 +91431,7 @@
   },
   "src/components/auth/PasskeyLogin.tsx": {
    "path": "src/components/auth/PasskeyLogin.tsx",
-   "lines": 68,
+   "lines": 69,
    "exports": [
     "function PasskeyLogin"
    ],
@@ -103109,7 +103197,7 @@
   },
   "src/hooks/useWebAuthn.ts": {
    "path": "src/hooks/useWebAuthn.ts",
-   "lines": 340,
+   "lines": 302,
    "exports": [
     "function useWebAuthn"
    ],
@@ -103127,26 +103215,6 @@
      "op": "insert"
     },
     {
-     "table": "webauthn_challenges",
-     "op": "ref"
-    },
-    {
-     "table": "user_profiles",
-     "op": "select"
-    },
-    {
-     "table": "user_passkeys",
-     "op": "select"
-    },
-    {
-     "table": "user_passkeys",
-     "op": "select"
-    },
-    {
-     "table": "user_profiles",
-     "op": "select"
-    },
-    {
      "table": "user_passkeys",
      "op": "update"
     },
@@ -103161,7 +103229,6 @@
    ],
    "table_cols": {
     "user_passkeys": [
-     "counter",
      "created_at",
      "credential_id",
      "device_type",
@@ -103169,14 +103236,11 @@
      "id",
      "last_used_at",
      "user_id"
-    ],
-    "user_profiles": [
-     "email",
-     "id"
     ]
    },
    "invokes": [
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "errors": [
     "Autenticação cancelada pelo usuário",
@@ -103185,10 +103249,9 @@
     "Erro ao renomear passkey",
     "Erro na autenticação",
     "Esta passkey já está registrada",
-    "Passkey não encontrada",
+    "Falha ao criar sessão. Tente novamente.",
+    "Informe o e-mail para entrar com passkey",
     "Registro cancelado pelo usuário",
-    "Usuário não encontrado",
-    "Você precisa estar autenticado para usar passkeys",
     "Você precisa estar logado para registrar uma passkey",
     "WebAuthn não é suportado neste navegador"
    ],
@@ -103200,7 +103263,7 @@
     },
     {
      "field": "type",
-     "value": "authentication",
+     "value": "magiclink",
      "kind": "escreve"
     }
    ],
@@ -103208,7 +103271,6 @@
     "useWebAuthn"
    ],
    "temporal": [
-    "expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),",
     "expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(), // 5 minutes"
    ],
    "side_effects": [
@@ -106966,7 +107028,7 @@
   },
   "src/hooks/__tests__/useWebAuthn.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
-   "lines": 310,
+   "lines": 346,
    "is_test": true,
    "tests": [
     "useWebAuthn",
@@ -106979,11 +107041,13 @@
     "handles registration NotAllowedError",
     "handles registration InvalidStateError",
     "authenticates with passkey successfully (with email)",
-    "authenticates without email param",
+    "authenticates without email param fails (email required)",
     "auth fails when unsupported",
-    "auth fails when no current user",
-    "auth fails when passkey not found",
-    "auth fails when edge function errors",
+    "auth requires an email for anonymous login",
+    "auth succeeds without an active session (anonymous login)",
+    "auth fails when challenge edge errors",
+    "auth fails when authenticate edge errors",
+    "auth fails when verifyOtp fails to create session",
     "handles auth NotAllowedError",
     "removes a passkey successfully",
     "renames a passkey successfully",
@@ -120685,7 +120749,7 @@
   },
   "supabase/functions/webauthn-authenticate/index.ts": {
    "path": "supabase/functions/webauthn-authenticate/index.ts",
-   "lines": 157,
+   "lines": 160,
    "tables": [
     {
      "table": "user_passkeys",
@@ -120746,6 +120810,7 @@
     }
    ],
    "rule_comments": [
+    "do body: um atacante nao pode assumir a conta de outro usuario.",
     "O e-mail NAO pode vir do corpo do request: a edge e publica, e um"
    ],
    "pagination": [
@@ -120784,6 +120849,22 @@
    ],
    "doc": "Verificacao de assercao WebAuthn (ES256) no servidor. Antes desta correcao a edge apenas conferia se o `credential_id` existia na tabela e emitia um magic link. Nao verificava assinatura, desafio nem origem — ou seja, quem conhecesse um `credential_id` valido entrava na conta correspondente sem poss …"
   },
+  "supabase/functions/webauthn-authenticate/__tests__/index.test.ts": {
+   "path": "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
+   "lines": 67,
+   "is_test": true,
+   "rule_comments": [
+    "falha e a edge deve recusar com 400 - nunca emitir magic link."
+   ],
+   "doc": "Testes da edge webauthn-authenticate: fail-closed em assercao. A edge consulta a passkey pela credential_id (dono derivado, nunca do body). Com a service role apontando para a porta 9 (discard), a consulta falha e a edge deve recusar com 400 - nunca emitir magic link.",
+   "tests": [
+    "webauthn-authenticate: OPTIONS devolve preflight CORS vazio",
+    "webauthn-authenticate: sem campos obrigatorios responde 400",
+    "webauthn-authenticate: nao aceita email do request",
+    "webauthn-authenticate: passkey desconhecida e recusada (400, nunca 200)"
+   ],
+   "uses_service_role": true
+  },
   "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts": {
    "path": "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
    "lines": 189,
@@ -120810,6 +120891,67 @@
     "verify: chave publica ilegivel e rejeitada",
     "verify: base64url decodifica corretamente"
    ]
+  },
+  "supabase/functions/webauthn-challenge/index.ts": {
+   "path": "supabase/functions/webauthn-challenge/index.ts",
+   "lines": 83,
+   "tables": [
+    {
+     "table": "user_profiles",
+     "op": "select"
+    },
+    {
+     "table": "user_passkeys",
+     "op": "select"
+    },
+    {
+     "table": "webauthn_challenges",
+     "op": "ref"
+    }
+   ],
+   "table_cols": {
+    "user_profiles": [
+     "email",
+     "id"
+    ],
+    "user_passkeys": [
+     "credential_id",
+     "user_id"
+    ]
+   },
+   "env": [
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "status_values": [
+    {
+     "field": "type",
+     "value": "authentication",
+     "kind": "escreve"
+    }
+   ],
+   "doc": "Emite o desafio de autenticacao WebAuthn para um login SEM sessao ativa. A edge e publica (verify_jwt=false) e usa a service role para inserir o desafio em `webauthn_challenges`, contornando a RLS que exigia sessao. O usuario e resolvido pelo e-mail ANTES da cerimonia, pois a coluna `user_id` e NOT …",
+   "temporal": [
+    "expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),"
+   ],
+   "uses_service_role": true
+  },
+  "supabase/functions/webauthn-challenge/__tests__/index.test.ts": {
+   "path": "supabase/functions/webauthn-challenge/__tests__/index.test.ts",
+   "lines": 62,
+   "is_test": true,
+   "rule_comments": [
+    "Testes da edge webauthn-challenge: validacao, rate-limit e fail-closed."
+   ],
+   "doc": "Testes da edge webauthn-challenge: validacao, rate-limit e fail-closed. Como a edge usa service role para inserir o desafio, exercitamos os caminhos de rejeicao sem rede (SUPABASE_URL aponta para a porta 9, discard) - sao os que precisam ser confiaveis.",
+   "tests": [
+    "webauthn-challenge: OPTIONS devolve preflight CORS vazio",
+    "webauthn-challenge: sem e-mail responde 400",
+    "webauthn-challenge: e-mail vazio responde 400",
+    "webauthn-challenge: payload invalido responde 400, nunca 500",
+    "webauthn-challenge: e-mail sem passkey responde 404"
+   ],
+   "uses_service_role": true
   },
   "supabase/functions/webhook-handler/index.ts": {
    "path": "supabase/functions/webhook-handler/index.ts",
@@ -122223,10 +122365,28 @@
   }
  },
  "git": {
-  "sha": "bb8f219aeef64dbe6a02fbce4e81ac1f2547985d",
+  "sha": "1e1f3ef6a6b32a6c59cd423547d125f8132f1ac0",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "1e1f3ef",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix(auth): login por passkey sem sessao ativa (#118)",
+    "files": [
+     "docs/estado/edge-functions-parte2.md",
+     "docs/estado/hooks-parte4.md",
+     "src/components/auth/PasskeyLogin.tsx",
+     "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
+     "src/hooks/useWebAuthn.ts",
+     "src/pages/Login.tsx",
+     "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
+     "supabase/functions/webauthn-authenticate/index.ts",
+     "supabase/functions/webauthn-challenge/__tests__/index.test.ts",
+     "supabase/functions/webauthn-challenge/index.ts"
+    ]
+   },
    {
     "sha": "bb8f219",
     "date": "2026-11-22",
@@ -122740,15 +122900,6 @@
     "files": [
      "docs/edge-functions/README.md"
     ]
-   },
-   {
-    "sha": "91b39fd",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "docs: pendencias alinhadas ao estado real medido (#88)",
-    "files": [
-     "docs/audits/pendencias-2026-07.md"
-    ]
    }
   ],
   "hot_files": [
@@ -122767,6 +122918,14 @@
    [
     "supabase/functions/voip-load-test/index.ts",
     3
+   ],
+   [
+    "src/hooks/useWebAuthn.ts",
+    2
+   ],
+   [
+    "supabase/functions/webauthn-authenticate/index.ts",
+    2
    ],
    [
     "supabase/functions/export-data-lake/index.ts",
@@ -122822,14 +122981,6 @@
    ],
    [
     "src/components/agent/WhisperNotification.tsx",
-    2
-   ],
-   [
-    "src/components/call-history/CallSessionsList.tsx",
-    2
-   ],
-   [
-    "src/components/calls/softphone/TabContents.tsx",
     2
    ]
   ]

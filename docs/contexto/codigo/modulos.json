@@ -356,7 +356,7 @@
    "modulo": "components/auth",
    "arquivos": 7,
    "testes": 0,
-   "linhas": 1061,
+   "linhas": 1062,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -379,7 +379,8 @@
     "usePasswordStrength"
    ],
    "edges": [
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "tabelas": [
     "role_permissions",
@@ -3156,7 +3157,7 @@
    "modulo": "hooks",
    "arquivos": 167,
    "testes": 0,
-   "linhas": 20549,
+   "linhas": 20511,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3635,7 +3636,8 @@
     "voip-trunks-healthcheck",
     "voip-trunks-manage",
     "wavoip-call",
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "tabelas": [
     "accounts",
@@ -3895,7 +3897,8 @@
      "voip-trunks-healthcheck",
      "voip-trunks-manage",
      "wavoip-call",
-     "webauthn-authenticate"
+     "webauthn-authenticate",
+     "webauthn-challenge"
     ],
     "tabelas": [
      "accounts",
@@ -5626,7 +5629,8 @@
     "voip-sla-report",
     "voip-trunks-manage",
     "wavoip-call",
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "tabelas": [
     "accounts",
@@ -6612,7 +6616,8 @@
     "voip-trunks-healthcheck",
     "voip-trunks-manage",
     "wavoip-call",
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "tabelas": [
     "accounts",

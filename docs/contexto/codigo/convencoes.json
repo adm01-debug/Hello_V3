@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (313)",
+   "co-localizado (__tests__) (315)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix(auth): login por passkey sem sessao ativa (#118)",
    "fix(edge): libera a origem de producao no CORS das edge functions (#117)",
    "fix(security): fecha account takeover no login por passkey (#116)",
    "test: cobre bitrix-api com testes reais de auth e fail-closed (#115)",
-   "test: testes de integracao param de passar sem verificar nada (#114)",
-   "chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)"
+   "test: testes de integracao param de passar sem verificar nada (#114)"
   ]
  },
  "pr_template": null,

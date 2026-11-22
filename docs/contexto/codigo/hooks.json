@@ -4693,16 +4693,16 @@
    "hooks_exportados": [
     "useWebAuthn"
    ],
-   "linhas": 340,
+   "linhas": 302,
    "dominio": "hooks",
    "tabelas": [
     "user_passkeys",
-    "user_profiles",
     "webauthn_challenges"
    ],
    "rpcs": [],
    "edges": [
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "hooks_internos": [
     "useAuthContext",

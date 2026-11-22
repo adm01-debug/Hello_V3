@@ -21456,7 +21456,8 @@
    },
    "usada_no_front": 1,
    "usada_em_edges": [
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "triggers": [],
    "sem_rls": false,
@@ -21699,12 +21700,13 @@
     ],
     "so_no_types": []
    },
-   "usada_no_front": 10,
+   "usada_no_front": 9,
    "usada_em_edges": [
     "cleanup-lock-conflicts",
     "generate-coaching-track",
     "record-consent",
-    "sip-config"
+    "sip-config",
+    "webauthn-challenge"
    ],
    "triggers": [
     "audit_user_profiles_change",
@@ -23564,7 +23566,8 @@
    },
    "usada_no_front": 1,
    "usada_em_edges": [
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "triggers": [],
    "sem_rls": false,

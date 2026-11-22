@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `bb8f219aee` · branch `main` · 2026-11-22 07:07 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1e1f3ef6a6` · branch `main` · 2026-11-22 07:32 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -941,7 +941,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `type` | `alert` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
 | `type` | `announcement` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `array` | escreve | `supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
-| `type` | `authentication` | escreve, filtra | `src/hooks/useWebAuthn.ts`<br>`supabase/functions/webauthn-authenticate/index.ts` |
+| `type` | `authentication` | escreve, filtra | `supabase/functions/webauthn-authenticate/index.ts`<br>`supabase/functions/webauthn-challenge/index.ts` |
 | `type` | `avg_handle_time` | compara | `supabase/functions/check-goals/index.ts` |
 | `type` | `avg_wait_time` | compara | `supabase/functions/check-goals/index.ts` |
 | `type` | `away_too_long` | escreve | `supabase/functions/compute-adherence/index.ts` |
@@ -968,7 +968,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `type` | `json_object` | escreve | `supabase/functions/auto-scorecard/index.ts`<br>`supabase/functions/detect-key-moments/index.ts`<br>`supabase/functions/generate-coaching/index.ts`<br>`supabase/functions/translate-summary/index.ts` |
 | `type` | `layout-shift` | escreve | `src/lib/web-vitals.ts` |
 | `type` | `low_engagement` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
-| `type` | `magiclink` | escreve | `supabase/functions/webauthn-authenticate/index.ts` |
+| `type` | `magiclink` | escreve | `src/hooks/useWebAuthn.ts`<br>`supabase/functions/webauthn-authenticate/index.ts` |
 | `type` | `menu` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `metric` | escreve | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
 | `type` | `moment` | compara, escreve | `src/components/call-history/CallDetailDialog.tsx`<br>`src/components/conversation-intelligence/CallPlayerWithTranscript.tsx` |
@@ -1904,7 +1904,6 @@ _nenhum item encontrado_
 | `gcTime: 15 * 60 * 1000,` | `src/hooks/useVoipRecommendations.ts` |
 | `staleTime: 2 * 60 * 1000,` | `src/hooks/useVoipRecommendations.ts` |
 | `staleTime: 2 * 60 * 1000,` | `src/hooks/useVoipTrunks.ts` |
-| `expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),` | `src/hooks/useWebAuthn.ts` |
 | `expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(), // 5 minutes` | `src/hooks/useWebAuthn.ts` |
 | `const since = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();` | `src/hooks/useWebhookHealthData.ts` |
 | `setTimeout(() => URL.revokeObjectURL(url), 1000);` | `src/lib/security-alerts-webhook-history.ts` |
@@ -1943,6 +1942,7 @@ _nenhum item encontrado_
 | `const EFFECTIVENESS_WINDOW_MS = 2 * 60 * 60 * 1000; // 2h` | `supabase/functions/voip-recommendation-insights/index.ts` |
 | `const timeout = setTimeout(() => ctrl.abort(), 4000);` | `supabase/functions/voip-trunks-healthcheck/index.ts` |
 | `const t = setTimeout(() => { ws.close(); resolve(); }, 3000);` | `supabase/functions/voip-trunks-manage/index.ts` |
+| `expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),` | `supabase/functions/webauthn-challenge/index.ts` |
 | `AND created_at > now() - interval '10 minutes';` | `supabase/migrations/20251225192806_31f73fb3-ef04-442d-b4bd-cc6cce94cdb8.sql` |
 | `AND created_at > now() - interval '5 minutes';` | `supabase/migrations/20251225192806_31f73fb3-ef04-442d-b4bd-cc6cce94cdb8.sql` |
 | `expires_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT (now() + interval '24 hours'),` | `supabase/migrations/20251231131323_f5848ea5-ae7d-4e46-ac63-aba88d5f35bc.sql` |
@@ -2396,7 +2396,7 @@ _nenhum item encontrado_
 | Erro ao criar turno | `src/hooks/useShifts.ts` |
 | Erro ao remover turno | `src/hooks/useShifts.ts` |
 | Chamada em espera | `src/hooks/useSipCall.ts` |
-| … +235 linhas — lista completa em `context.json` | |
+| … +234 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2440,7 +2440,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3992 testes em 326 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4003 testes em 328 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2478,8 +2478,8 @@ _nenhum item encontrado_
 | `src/lib/__tests__/dashboard-integration.test.ts` | 27 | Dashboard Integration: All improvements present in Index.tsx · imports memoized StatsCard · imports memoized CallVolumeChart · imports SectionBoundary … |
 | `src/lib/__tests__/agent-assist-utils.test.ts` | 26 | agent-assist-utils · rankSignals · ordena por prioridade × confiança · lida com array vazio … |
 | `src/lib/__tests__/webhook-health-and-export.simulation.test.ts` | 26 | webhook-health-utils · simulação massiva · ratioColor sempre retorna classe válida para qualquer entrada · aggregateEndpoints preserva invariante attempts = sent+failed acumulados · aggregateEndpoints: sortMode  … |
+| `src/hooks/__tests__/useWebAuthn.coverage.test.tsx` | 25 | useWebAuthn · loads passkeys and reports support on mount · handles loadPasskeys error path · does not load when no user … |
 | `src/lib/__tests__/call-park.test.ts` | 25 | call-park :: clampInt · nunca lança e respeita a faixa · tolera símbolos, objetos sem primitivo e NaN · call-park :: normalizeOrbitDraft … |
-| `src/hooks/__tests__/useWebAuthn.coverage.test.tsx` | 23 | useWebAuthn · loads passkeys and reports support on mount · handles loadPasskeys error path · does not load when no user … |
 | `src/lib/__tests__/dialer-tags-and-ringtone.test.ts` | 23 | normalizeTag · sempre devolve null ou string válida para o CHECK do banco · é idempotente · rejeita entradas não textuais e vazias … |
 | `src/lib/__tests__/queue-audio.test.ts` | 23 | queue-audio :: clampNumber · nunca lança e respeita a faixa para qualquer entrada · tolera símbolos e objetos sem conversão primitiva · queue-audio :: sanitizeFileName … |
 | `src/lib/__tests__/performance-optimizations.test.ts` | 22 | Performance: React.memo wrapping · ${name} is wrapped with React.memo · ${name} imports memo from react · ${name} exports as named export with memo … |
@@ -2701,6 +2701,7 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/encryption.coverage.test.ts` | 5 | encryption (coverage) · round-trips encrypt/decrypt with a generated key · hashData returns base64 string with real crypto · arrayBufferToBase64 and base64ToArrayBuffer are inverse operations … |
 | `src/lib/security/__tests__/security-headers-validator.coverage.test.ts` | 5 | security-headers-validator · returns all headers present when fetch succeeds · returns all headers absent when fetch rejects · handles a mixed set of present/absent headers … |
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
+| `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
 | `src/hooks/__tests__/use-mobile.coverage.test.tsx` | 4 | useIsMobile · returns false for desktop width · returns true for mobile width and reacts to change · cleans up listener on unmount |
@@ -2736,15 +2737,14 @@ _nenhum item encontrado_
 | `supabase/functions/voip-quality-heatmap/__tests__/index.test.ts` | 4 | voip-quality-heatmap: rejects without auth · voip-quality-heatmap: handles OPTIONS · voip-quality-heatmap: rejects invalid days · voip-quality-heatmap: returns x-request-id header |
 | `supabase/functions/voip-recommendation-history/__tests__/index.test.ts` | 4 | aggregate: lista vazia retorna 14 dias zerados · aggregate: contagens por categoria e outcome · aggregate: perDay em ordem cronológica ascendente · aggregate: contabiliza ação no dia correto |
 | `supabase/functions/voip-recommendations/__tests__/index.test.ts` | 4 | buildRecommendations - sistema saudável retorna lista vazia · buildRecommendations - capacidade saturada gera crítico de prioridade máxima · buildRecommendations - múltiplos sinais ordenados por prioridade descendente · buildRecommendations - jitter alto gera ação de função (testar conexão) |
+| `supabase/functions/webauthn-authenticate/__tests__/index.test.ts` | 4 | webauthn-authenticate: OPTIONS devolve preflight CORS vazio · webauthn-authenticate: sem campos obrigatorios responde 400 · webauthn-authenticate: nao aceita email do request · webauthn-authenticate: passkey desconhecida e recusada (400, nunca 200) |
 | `tests/e2e/performance.spec.ts` | 4 | Dashboard Performance and Lists · should render call lists efficiently · Edge Function Resilience · should handle rapid requests to analyze-call |
 | `src/hooks/__tests__/useCallRecording.test.ts` | 3 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado |
 | `src/hooks/__tests__/useChatbot.coverage.test.tsx` | 3 | useChatbot · returns chatbot response on success · handles error path and toasts |
 | `src/hooks/__tests__/useChurnRisk.test.ts` | 3 | useChurnRisk · loads active signals · resolves a signal with notes |
 | `src/hooks/__tests__/useComplianceRules.coverage.test.tsx` | 3 | useComplianceRules · loads rules and runs mutations · handles upsert error branch |
 | `src/hooks/__tests__/useDealForecast.test.ts` | 3 | useDealForecast · fetches forecast on mount with default period · handles error gracefully |
-| `src/hooks/__tests__/useForecastVolume.coverage.test.tsx` | 3 | useForecastVolume · returns forecast on success · errors when invoke returns error |
-| `src/hooks/__tests__/useRenewals.test.ts` | 3 | useRenewals · classifies renewals into 30/60/90 buckets · computes weighted and pipeline totals |
-| … +26 linhas — lista completa em `context.json` | | |
+| … +28 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3020,6 +3020,7 @@ _nenhum item encontrado_
 | JWT obrigatório, CORS centralizado, validação Zod-like via _shared/validate. | `supabase/functions/voip-recommendation-simulate/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-recommendations/index.ts` |
 | validação Zod-like via _shared/validate, tracing via x-request-id. | `supabase/functions/voip-sla-report/index.ts` |
+| do body: um atacante nao pode assumir a conta de outro usuario. | `supabase/functions/webauthn-authenticate/index.ts` |
 | O e-mail NAO pode vir do corpo do request: a edge e publica, e um | `supabase/functions/webauthn-authenticate/index.ts` |
 | * Antes desta correcao a edge apenas conferia se o `credential_id` existia | `supabase/functions/webauthn-authenticate/verify.ts` |
 | rpIdHash (32 bytes) deve bater com o RP configurado (o host). | `supabase/functions/webauthn-authenticate/verify.ts` |

@@ -606,7 +606,7 @@
     "PasskeyLogin"
    ],
    "export_default": null,
-   "linhas": 68,
+   "linhas": 69,
    "dominio": "components/auth",
    "hooks_locais": [
     "useWebAuthn"

@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `bb8f219aee` · branch `main` · 2026-11-22 07:07 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1e1f3ef6a6` · branch `main` · 2026-11-22 07:32 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -185,7 +185,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 113 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 116 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -271,7 +271,10 @@
 - `supabase/functions/voip-trunks-healthcheck/index.test.ts`
 - `supabase/functions/voip-trunks-healthcheck/index.ts`
 - `supabase/functions/voip-trunks-manage/index.ts`
+- `supabase/functions/webauthn-authenticate/__tests__/index.test.ts`
 - `supabase/functions/webauthn-authenticate/index.ts`
+- `supabase/functions/webauthn-challenge/__tests__/index.test.ts`
+- `supabase/functions/webauthn-challenge/index.ts`
 - `supabase/functions/webhook-handler/index.ts`
 - `supabase/functions/whatsapp-inbound/index.ts`
 - `supabase/migrations/20260417001429_4d360a46-05bd-40b3-a5db-9ad5586337f2.sql`

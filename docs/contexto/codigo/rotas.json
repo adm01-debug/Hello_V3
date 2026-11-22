@@ -2694,7 +2694,8 @@
    "edges": [
     "notify-blocked-ip",
     "validate-ip",
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "canais_realtime": [],
    "flags": [],
@@ -3177,7 +3178,8 @@
    ],
    "rpcs": [],
    "edges": [
-    "webauthn-authenticate"
+    "webauthn-authenticate",
+    "webauthn-challenge"
    ],
    "canais_realtime": [],
    "flags": [],

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "bb8f219aeef64dbe6a02fbce4e81ac1f2547985d",
+  "commit": "1e1f3ef6a6b32a6c59cd423547d125f8132f1ac0",
   "branch": "main",
-  "data_commit": "2026-11-22T04:06:43-03:00",
+  "data_commit": "2026-11-22T04:32:08-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "1e1f3ef",
+    "data": "2026-11-22",
+    "assunto": "fix(auth): login por passkey sem sessao ativa (#118)"
+   },
    {
     "sha": "bb8f219",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "3a2530e",
     "data": "2026-11-21",
     "assunto": "feat: cron diario que gera trilhas de coaching (D4) (#89)"
-   },
-   {
-    "sha": "907e943",
-    "data": "2026-11-21",
-    "assunto": "fix(seguranca): revoga EXECUTE de anon nas funcoes internas e fecha advisors de RLS (#84)"
    }
   ],
-  "arquivos_mudados_7d": 836,
+  "arquivos_mudados_7d": 844,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -148,11 +148,11 @@
     "mudancas": 20
    },
    {
-    "pasta": "covout/lib/security",
-    "mudancas": 18
+    "pasta": "src/hooks/__tests__",
+    "mudancas": 19
    },
    {
-    "pasta": "src/hooks/__tests__",
+    "pasta": "covout/lib/security",
     "mudancas": 18
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 98
+    "commits": 99
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1623,
-  "arquivos_codigo": 1231,
-  "linhas_codigo": 168401,
+  "arquivos_total": 1626,
+  "arquivos_codigo": 1234,
+  "linhas_codigo": 168615,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -324,11 +324,11 @@
   "modulos": 79,
   "componentes": 448,
   "hooks": 191,
-  "edge_functions": 96,
+  "edge_functions": 97,
   "tabelas": 169,
   "migrations": 238,
   "cron_jobs": 10,
-  "testes": 336,
+  "testes": 338,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41965
+   "linhas": 41966
   },
   "src/contexts": {
    "arquivos": 3,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 350,
-   "linhas": 45227
+   "linhas": 45225
   },
   "src/integrations": {
    "arquivos": 3,
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 166,
-   "linhas": 19354
+   "arquivos": 169,
+   "linhas": 19569
   },
   "tailwind.config.ts": {
    "arquivos": 1,

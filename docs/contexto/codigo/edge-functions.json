@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "pasta": "supabase/functions",
- "total": 96,
+ "total": 97,
  "verify_jwt_false": [],
  "shared": [
   "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
@@ -3174,7 +3174,7 @@
    "nome": "webauthn-authenticate",
    "entrada": "supabase/functions/webauthn-authenticate/index.ts",
    "arquivos": 2,
-   "linhas": 330,
+   "linhas": 333,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3193,10 +3193,46 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
+    "hello-v3.vercel.app",
     "lalamove.app"
    ],
    "usa_shared": [
     "cors.ts"
+   ],
+   "chamada_pelo_front": [
+    "src/hooks/useWebAuthn.ts"
+   ],
+   "chamada_por_edges": [],
+   "chamada_por_sql_ou_cron": false,
+   "orfa": false,
+   "testes": 2
+  },
+  {
+   "nome": "webauthn-challenge",
+   "entrada": "supabase/functions/webauthn-challenge/index.ts",
+   "arquivos": 1,
+   "linhas": 83,
+   "verify_jwt": true,
+   "metodos": [
+    "OPTIONS"
+   ],
+   "tabelas": [
+    "user_passkeys",
+    "user_profiles",
+    "webauthn_challenges"
+   ],
+   "rpcs": [],
+   "env": [
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "buckets": [],
+   "chama_edges": [],
+   "hosts_externos": [],
+   "usa_shared": [
+    "cors.ts",
+    "rate-limit.ts",
+    "validate.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useWebAuthn.ts"
