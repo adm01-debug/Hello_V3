@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4a44ddcd33a60e85dd96b472c277ad09b735ed64",
+  "commit": "ed3177d7bdcaaa400cb38835aa49fe2c9f71767f",
   "branch": "main",
-  "data_commit": "2026-11-21T23:54:09-03:00",
+  "data_commit": "2026-11-22T02:37:43-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ed3177d",
+    "data": "2026-11-22",
+    "assunto": "fix: 9 edge functions com erro de tipo que quebravam em producao (#110)"
+   },
    {
     "sha": "4a44ddc",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "409f79f",
     "data": "2026-11-21",
     "assunto": "fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)"
-   },
-   {
-    "sha": "c96ef1b",
-    "data": "2026-11-21",
-    "assunto": "feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)"
    }
   ],
-  "arquivos_mudados_7d": 777,
+  "arquivos_mudados_7d": 784,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 13
+    "mudancas": 14
    },
    {
     "pasta": "src/components/calls",
@@ -168,16 +168,16 @@
     "mudancas": 10
    },
    {
+    "pasta": ".github/workflows/ci.yml",
+    "mudancas": 7
+   },
+   {
     "pasta": "docs/edge-functions/README.md",
     "mudancas": 7
    },
    {
     "pasta": "supabase/functions/_shared",
     "mudancas": 7
-   },
-   {
-    "pasta": ".github/workflows/ci.yml",
-    "mudancas": 6
    },
    {
     "pasta": ".github/workflows/contexto.yml",
@@ -199,15 +199,15 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 13
+    "mudancas": 14
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 7
    },
    {
     "arquivo": "docs/edge-functions/README.md",
     "mudancas": 7
-   },
-   {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 6
    },
    {
     "arquivo": ".github/workflows/contexto.yml",
@@ -218,16 +218,16 @@
     "mudancas": 6
    },
    {
+    "arquivo": "deno.lock",
+    "mudancas": 5
+   },
+   {
     "arquivo": "docs/prod-readiness.md",
     "mudancas": 5
    },
    {
     "arquivo": "inventario/estado/edges.json",
     "mudancas": 5
-   },
-   {
-    "arquivo": "deno.lock",
-    "mudancas": 4
    },
    {
     "arquivo": "src/components/layout/CommandPalette.tsx",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 86
+    "commits": 87
    },
    {
     "autor": "Joaquim Ataides",

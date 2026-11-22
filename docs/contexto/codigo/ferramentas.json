@@ -495,7 +495,7 @@
   "hosts_externos": [
    {
     "host": "openrouter.ai",
-    "arquivos": 21
+    "arquivos": 22
    },
    {
     "host": "cfmlmcdyjuotqobjapng.supabase.co",
@@ -539,10 +539,6 @@
    },
    {
     "host": "a.com",
-    "arquivos": 1
-   },
-   {
-    "host": "ai.gateway.lovable.dev",
     "arquivos": 1
    },
    {

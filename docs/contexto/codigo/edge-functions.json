@@ -995,14 +995,14 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "ai.gateway.lovable.dev"
+    "openrouter.ai"
    ],
    "usa_shared": [
     "cors.ts",

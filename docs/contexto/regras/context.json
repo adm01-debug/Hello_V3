@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "4a44ddcd33a60e85dd96b472c277ad09b735ed64",
+  "sha": "ed3177d7bdcaaa400cb38835aa49fe2c9f71767f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 03:15 UTC",
+  "generated_at": "2026-11-22 05:38 UTC",
   "files_total": 1634,
   "code_files": 1437,
   "code_lines": 181428
  },
  "version": "1.3.2",
- "facts_hash": "7458dd6102451cf6",
+ "facts_hash": "f1fb8d8e8d701bdc",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -29684,7 +29684,7 @@
      "kb_articles"
     ],
     "env": [
-     "LOVABLE_API_KEY",
+     "OPENROUTER_API_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
@@ -36831,7 +36831,6 @@
     "supabase/functions/ldap-sync/index.ts"
    ],
    "LOVABLE_API_KEY": [
-    "supabase/functions/embed-kb-article/index.ts",
     "supabase/functions/teams-fetch-recordings/index.ts"
    ],
    "MICROSOFT_TEAMS_API_KEY": [
@@ -36848,6 +36847,7 @@
     "supabase/functions/auto-scorecard/index.ts",
     "supabase/functions/chatbot-respond/index.ts",
     "supabase/functions/detect-key-moments/index.ts",
+    "supabase/functions/embed-kb-article/index.ts",
     "supabase/functions/extract-crm-fields/index.ts",
     "supabase/functions/generate-coaching-plan/index.ts",
     "supabase/functions/generate-coaching/index.ts",
@@ -115792,7 +115792,7 @@
     ]
    },
    "env": [
-    "LOVABLE_API_KEY",
+    "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -120834,10 +120834,30 @@
   }
  },
  "git": {
-  "sha": "4a44ddcd33a60e85dd96b472c277ad09b735ed64",
+  "sha": "ed3177d7bdcaaa400cb38835aa49fe2c9f71767f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ed3177d",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: 9 edge functions com erro de tipo que quebravam em producao (#110)",
+    "files": [
+     ".github/workflows/ci.yml",
+     "deno.lock",
+     "docs/estado/funcionalidades-planejadas.md",
+     "supabase/functions/analyze-live-utterance/index.ts",
+     "supabase/functions/check-contact-alerts/index.ts",
+     "supabase/functions/cleanup-lock-conflicts/index.ts",
+     "supabase/functions/embed-kb-article/index.ts",
+     "supabase/functions/sip-config/index.ts",
+     "supabase/functions/transcribe-recording/index.ts",
+     "supabase/functions/translate-summary/index.ts",
+     "supabase/functions/voip-failover-notifier/index.ts",
+     "supabase/functions/voip-quality-alerts-summary/index.ts"
+    ]
+   },
    {
     "sha": "4a44ddc",
     "date": "2026-11-21",
@@ -121319,21 +121339,12 @@
      "supabase/functions/generate-coaching-track/track-engine.ts",
      "supabase/functions/generate-coaching-track/track-engine_test.ts"
     ]
-   },
-   {
-    "sha": "e534879",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)",
-    "files": [
-     "supabase/migrations/20261121125200_fix_rls_allow_all.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    9
+    10
    ],
    [
     "docs/edge-functions/README.md",
@@ -121348,8 +121359,16 @@
     4
    ],
    [
+    "deno.lock",
+    3
+   ],
+   [
     "docs/audits/pendencias-2026-07.md",
     3
+   ],
+   [
+    ".github/workflows/ci.yml",
+    2
    ],
    [
     "src/components/agent/WhisperNotification.tsx",
@@ -121365,10 +121384,6 @@
    ],
    [
     "src/components/notifications/UnifiedNotificationDropdown.tsx",
-    2
-   ],
-   [
-    "deno.lock",
     2
    ],
    [
@@ -121392,23 +121407,19 @@
     2
    ],
    [
-    "ESTADO_ATUAL.md",
+    "supabase/functions/analyze-live-utterance/index.ts",
     1
    ],
    [
-    "docs/adr/043-onda-29-observabilidade-conflitos.md",
+    "supabase/functions/check-contact-alerts/index.ts",
     1
    ],
    [
-    "docs/adr/044-onda-30-cron-hotspot-alerts.md",
+    "supabase/functions/cleanup-lock-conflicts/index.ts",
     1
    ],
    [
-    "docs/agentes/edge-functions.md",
-    1
-   ],
-   [
-    "docs/estado/edge-functions-parte1.md",
+    "supabase/functions/embed-kb-article/index.ts",
     1
    ]
   ]

@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `4a44ddcd33a60e85dd96b472c277ad09b735ed64` (2026-11-21T23:54:09-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ed3177d7bdcaaa400cb38835aa49fe2c9f71767f` (2026-11-22T02:37:43-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -335,7 +335,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Integrações externas
 - SDKs: Supabase, react-query, zod
-- hosts mais citados: openrouter.ai, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, x.supabase.co, a.com, ai.gateway.lovable.dev, api.acme.io, api.bitrix24.com.br
+- hosts mais citados: openrouter.ai, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br, api.ipify.org
 - webhooks recebidos: nenhum
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, COACHING_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, LOVABLE_API_KEY, MICROSOFT_TEAMS_API_KEY, OPENROUTER_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
@@ -363,20 +363,20 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9030 nós · 23946 arestas · 716 comunidades · grafo do commit `4a44ddcd`
-- comunidades maiores: lucide-react (261), react (215), button.tsx (173), utils.ts (164), vitest (164), logger.ts (156), cn (118), usePageTitle (111), ref_https (105), snapshot.py (100), Logger (96), protectedRoutes.tsx (88)
+- 9030 nós · 23946 arestas · 712 comunidades · grafo do commit `ed3177d7`
+- comunidades maiores: lucide-react (261), traceHeaders (173), button.tsx (173), utils.ts (164), sonner (153), client.ts (150), @tanstack/react-query (119), usePageTitle (111), vitest (109), cn (108), snapshot.py (100), Tabela de funcionalidades (100)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/estado/funcionalidades-planejadas.md (13)
+- docs/estado/funcionalidades-planejadas.md (14)
+- .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
-- .github/workflows/ci.yml (6)
 - .github/workflows/contexto.yml (6)
 - src/components/layout/AppSidebar.tsx (6)
+- deno.lock (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
-- deno.lock (4)
 - src/components/layout/CommandPalette.tsx (4)
 - AGENTS.md (3)
 - docs/agentes/edge-functions.md (3)
@@ -422,6 +422,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `ed3177d` fix: 9 edge functions com erro de tipo que quebravam em producao (#110)
 - 2026-11-21 `4a44ddc` chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)
 - 2026-11-21 `4c76ea5` fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)
 - 2026-11-21 `4aeee51` fix: valida IP de header antes de usar em URL, log e autorizacao (#102)
@@ -436,7 +437,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `3a2530e` feat: cron diario que gera trilhas de coaching (D4) (#89)
 - 2026-11-21 `907e943` fix(seguranca): revoga EXECUTE de anon nas funcoes internas e fecha advisors de RLS (#84)
 - 2026-11-21 `ac18a93` fix: indices de audit_logs usam created_at e guardam a coluna (#82)
-- 2026-11-21 `d3e59cd` fix: edges que escrevem com service_role exigem sessao (#92)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
