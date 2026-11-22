@@ -177,7 +177,7 @@ export function useMFA() {
         user_id: user.id,
         ...newSettings,
         updated_at: new Date().toISOString(),
-      });
+      }, { onConflict: 'user_id' });
 
       if (error) throw error;
       
