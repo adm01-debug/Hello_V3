@@ -3951,7 +3951,7 @@
     "TrendChartToggle"
    ],
    "export_default": null,
-   "linhas": 24,
+   "linhas": 40,
    "dominio": "components/supervisor",
    "hooks_locais": [],
    "tabelas": [],

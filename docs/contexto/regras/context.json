@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "d3b113327e2d57417fd921540face3e797e971bc",
+  "sha": "3de307fb99d3c19f86b3977618e4a7590348ea92",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 13:51 UTC",
-  "files_total": 1674,
-  "code_files": 1477,
-  "code_lines": 184539
+  "generated_at": "2026-11-22 14:04 UTC",
+  "files_total": 1675,
+  "code_files": 1478,
+  "code_lines": 184639
  },
  "version": "1.3.2",
- "facts_hash": "b69cc41f313de23a",
+ "facts_hash": "b6ea94f700c683c3",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 604,
+   ".tsx": 605,
    ".ts": 598,
    ".sql": 241,
    ".mjs": 27,
@@ -32044,7 +32044,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 350,
+  "components_count": 351,
   "hooks": [
    {
     "name": "useContacts",
@@ -33181,8 +33181,8 @@
   },
   {
    "module": "src/components",
-   "files": 350,
-   "lines": 41958,
+   "files": 351,
+   "lines": 42058,
    "tables": [
     "accounts",
     "agent_goals",
@@ -56718,6 +56718,26 @@
    {
     "file": "src/components/executive/__tests__/OmnichannelCard.test.tsx",
     "name": "lista todos os canais com contagem"
+   },
+   {
+    "file": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
+    "name": "TrendChartToggle"
+   },
+   {
+    "file": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
+    "name": "não monta o gráfico antes do primeiro clique"
+   },
+   {
+    "file": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
+    "name": "conserva o gráfico montado ao fechar, para o histórico não zerar"
+   },
+   {
+    "file": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
+    "name": "não reinicia o gráfico quando o pai reflete o fechamento"
+   },
+   {
+    "file": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
+    "name": "continua montado ao reabrir depois de fechar"
    },
    {
     "file": "src/components/ui/__tests__/search-input.test.tsx",
@@ -95373,7 +95393,7 @@
   },
   "src/components/supervisor/panel/TrendChartToggle.tsx": {
    "path": "src/components/supervisor/panel/TrendChartToggle.tsx",
-   "lines": 24,
+   "lines": 40,
    "exports": [
     "function TrendChartToggle"
    ]
@@ -95383,6 +95403,18 @@
    "lines": 4,
    "exports": [
     "type SupervisorPanelState"
+   ]
+  },
+  "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx": {
+   "path": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
+   "lines": 84,
+   "is_test": true,
+   "tests": [
+    "TrendChartToggle",
+    "não monta o gráfico antes do primeiro clique",
+    "conserva o gráfico montado ao fechar, para o histórico não zerar",
+    "não reinicia o gráfico quando o pai reflete o fechamento",
+    "continua montado ao reabrir depois de fechar"
    ]
   },
   "src/components/translation/LiveTranslationPanel.tsx": {
@@ -122428,10 +122460,20 @@
   }
  },
  "git": {
-  "sha": "d3b113327e2d57417fd921540face3e797e971bc",
+  "sha": "3de307fb99d3c19f86b3977618e4a7590348ea92",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "3de307f",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: tendencia do dia so monta apos o primeiro clique (#133)",
+    "files": [
+     "src/components/supervisor/panel/TrendChartToggle.tsx",
+     "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx"
+    ]
+   },
    {
     "sha": "d3b1133",
     "date": "2026-11-22",
@@ -122808,22 +122850,6 @@
      "src/lib/__tests__/a11y-clickable.test.ts",
      "src/lib/a11y-clickable.ts"
     ]
-   },
-   {
-    "sha": "4aeee51",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: valida IP de header antes de usar em URL, log e autorizacao (#102)",
-    "files": [
-     "deno.lock",
-     "supabase/functions/_shared/client-ip.ts",
-     "supabase/functions/_shared/client-ip_test.ts",
-     "supabase/functions/record-consent/index.ts",
-     "supabase/functions/request-password-reset/index.ts",
-     "supabase/functions/validate-geo/index.ts",
-     "supabase/functions/validate-geo/ip_literal_test.ts",
-     "supabase/functions/validate-ip/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -122838,6 +122864,10 @@
    [
     "src/hooks/useQueueMetrics.ts",
     3
+   ],
+   [
+    "src/components/supervisor/panel/TrendChartToggle.tsx",
+    2
    ],
    [
     "supabase/functions/check-calling-hours/__tests__/index.test.ts",
@@ -122864,18 +122894,6 @@
     2
    ],
    [
-    "supabase/functions/record-consent/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/request-password-reset/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/validate-geo/index.ts",
-    2
-   ],
-   [
     "supabase/functions/voip-failover-notifier/index.ts",
     2
    ],
@@ -122884,11 +122902,7 @@
     2
    ],
    [
-    "deno.lock",
-    2
-   ],
-   [
-    "src/components/supervisor/panel/TrendChartToggle.tsx",
+    "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
     1
    ],
    [
@@ -122905,6 +122919,18 @@
    ],
    [
     "docs/estado/infra-ci-rotas-integracoes.md",
+    1
+   ],
+   [
+    "eslint.config.js",
+    1
+   ],
+   [
+    "src/components/calls/WebRTCCall.tsx",
+    1
+   ],
+   [
+    "src/components/compliance/calling-hours/useCallingHoursManager.ts",
     1
    ]
   ]

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d3b113327e` · branch `main` · 2026-11-22 13:51 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3de307fb99` · branch `main` · 2026-11-22 14:04 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2436,7 +2436,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4007 testes em 328 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4012 testes em 329 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2670,6 +2670,7 @@ _nenhum item encontrado_
 | `e2e/observability.spec.ts` | 5 | Observability Dashboard · should display observability page · should display Web Vitals cards · should display health check results … |
 | `src/__tests__/rls/contacts.test.ts` | 5 | RLS — contacts (matriz por role) · %s pode SELECT contacts · %s pode INSERT contacts · %s pode UPDATE contacts … |
 | `src/components/calls/__tests__/AudioOutputSelector.test.tsx` | 5 | AudioOutputSelector · mostra mensagem quando não suportado · renderiza o combobox quando suportado · desabilita quando não há dispositivos disponíveis (usa fallback padrão) … |
+| `src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx` | 5 | TrendChartToggle · não monta o gráfico antes do primeiro clique · conserva o gráfico montado ao fechar, para o histórico não zerar · não reinicia o gráfico quando o pai reflete o fechamento … |
 | `src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx` | 5 | useAnimatedCounter · returns 0 initially and animates toward the end value · respects decimals option · early-returns when diff is zero … |
 | `src/hooks/__tests__/useAuditLog.coverage.test.tsx` | 5 | useAuditLog · logEvent chama rpc com os parâmetros corretos · logEvent registra erro quando rpc retorna error · logEvent captura exceção lançada … |
 | `src/hooks/__tests__/useBlockedAccessLogs.coverage.test.tsx` | 5 | useBlockedAccessLogs · fetches logs and processes stats · handles fetch error · filters logs by search, country, reason; clears filters … |
@@ -2739,8 +2740,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useChatbot.coverage.test.tsx` | 3 | useChatbot · returns chatbot response on success · handles error path and toasts |
 | `src/hooks/__tests__/useChurnRisk.test.ts` | 3 | useChurnRisk · loads active signals · resolves a signal with notes |
 | `src/hooks/__tests__/useComplianceRules.coverage.test.tsx` | 3 | useComplianceRules · loads rules and runs mutations · handles upsert error branch |
-| `src/hooks/__tests__/useDealForecast.test.ts` | 3 | useDealForecast · fetches forecast on mount with default period · handles error gracefully |
-| … +28 linhas — lista completa em `context.json` | | |
+| … +29 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

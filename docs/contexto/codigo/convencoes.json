@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (316)",
+   "co-localizado (__tests__) (317)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: tendencia do dia so monta apos o primeiro clique (#133)",
    "fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)",
    "fix: taxa de abandono contava a chamada abandonada duas vezes (#131)",
    "docs: registra divergencia de limiar no Nivel de Servico (#130)",
-   "fix: contagem em espera do dashboard usava status inexistente (#129)",
-   "feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)"
+   "fix: contagem em espera do dashboard usava status inexistente (#129)"
   ]
  },
  "pr_template": null,

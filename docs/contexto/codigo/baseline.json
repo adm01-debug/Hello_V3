@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d3b113327e2d57417fd921540face3e797e971bc",
+  "commit": "3de307fb99d3c19f86b3977618e4a7590348ea92",
   "branch": "main",
-  "data_commit": "2026-11-22T10:51:20-03:00",
+  "data_commit": "2026-11-22T11:02:08-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "3de307f",
+    "data": "2026-11-22",
+    "assunto": "fix: tendencia do dia so monta apos o primeiro clique (#133)"
+   },
    {
     "sha": "d3b1133",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "a0b70c9",
     "data": "2026-11-22",
     "assunto": "feat: fecha B6 - dominio nas colunas text enumeraveis (#111)"
-   },
-   {
-    "sha": "12b0b3c",
-    "data": "2026-11-22",
-    "assunto": "fix: remove dependencia do gateway Lovable na importacao do Teams (#112)"
    }
   ],
-  "arquivos_mudados_7d": 859,
+  "arquivos_mudados_7d": 860,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -184,15 +184,15 @@
     "mudancas": 7
    },
    {
+    "pasta": "src/components/supervisor",
+    "mudancas": 7
+   },
+   {
     "pasta": ".github/workflows/contexto.yml",
     "mudancas": 6
    },
    {
     "pasta": "covout/hooks/auth",
-    "mudancas": 6
-   },
-   {
-    "pasta": "src/components/dashboard",
     "mudancas": 6
    }
   ],
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 113
+    "commits": 114
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1627,
-  "arquivos_codigo": 1235,
-  "linhas_codigo": 168720,
+  "arquivos_total": 1628,
+  "arquivos_codigo": 1236,
+  "linhas_codigo": 168820,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 238,
   "cron_jobs": 10,
-  "testes": 339,
+  "testes": 340,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 350,
-   "linhas": 41958
+   "arquivos": 351,
+   "linhas": 42058
   },
   "src/contexts": {
    "arquivos": 3,

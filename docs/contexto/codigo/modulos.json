@@ -2726,8 +2726,8 @@
   {
    "modulo": "components/supervisor",
    "arquivos": 11,
-   "testes": 0,
-   "linhas": 564,
+   "testes": 1,
+   "linhas": 580,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
