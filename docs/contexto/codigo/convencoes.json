@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)",
    "fix: tendencia do dia so monta apos o primeiro clique (#133)",
    "fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)",
    "fix: taxa de abandono contava a chamada abandonada duas vezes (#131)",
-   "docs: registra divergencia de limiar no Nivel de Servico (#130)",
-   "fix: contagem em espera do dashboard usava status inexistente (#129)"
+   "docs: registra divergencia de limiar no Nivel de Servico (#130)"
   ]
  },
  "pr_template": null,

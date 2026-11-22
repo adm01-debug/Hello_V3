@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `3de307fb99d3c19f86b3977618e4a7590348ea92` (2026-11-22T11:02:08-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `28337d14dc4194910f2ac860372f7f1893f53b04` (2026-11-22T11:15:04-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -367,13 +367,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9161 nós · 24245 arestas · 727 comunidades · grafo do commit `3de307fb`
-- comunidades maiores: card.tsx (247), react (224), button.tsx (191), vitest (171), safeFormatDistanceToNow (145), traceHeaders (144), protectedRoutes.tsx (116), cn (106), safeFormatDatePtBR (100), @tanstack/react-query (98), usePageTitle (97), generate.py (93)
+- 9163 nós · 24250 arestas · 734 comunidades · grafo do commit `28337d14`
+- comunidades maiores: lucide-react (254), protectedRoutes.tsx (172), logger.ts (168), client.ts (147), utils.ts (146), react (145), vitest (131), usePageTitle (123), cn (122), Tabela de funcionalidades (115), @tanstack/react-query (107), gerar.mjs (104)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/estado/funcionalidades-planejadas.md (18)
+- docs/estado/funcionalidades-planejadas.md (19)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
 - .github/workflows/contexto.yml (6)
@@ -426,6 +426,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `28337d1` docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)
 - 2026-11-22 `3de307f` fix: tendencia do dia so monta apos o primeiro clique (#133)
 - 2026-11-22 `d3b1133` fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)
 - 2026-11-22 `5ca0039` fix: taxa de abandono contava a chamada abandonada duas vezes (#131)
@@ -440,7 +441,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `92cb97a` test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)
 - 2026-11-22 `782c8e4` docs: marca achado createTestData como RESOLVIDO (PR #120) (#121)
 - 2026-11-22 `1123090` fix: gate createTestData e botão Criar Dados para DEV (#120)
-- 2026-11-22 `8c73b1e` test: escopa locators do login para #email/#password no E2E (#119)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

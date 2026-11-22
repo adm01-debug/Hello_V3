@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "3de307fb99d3c19f86b3977618e4a7590348ea92",
+  "commit": "28337d14dc4194910f2ac860372f7f1893f53b04",
   "branch": "main",
-  "data_commit": "2026-11-22T11:02:08-03:00",
+  "data_commit": "2026-11-22T11:15:04-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "28337d1",
+    "data": "2026-11-22",
+    "assunto": "docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)"
+   },
    {
     "sha": "3de307f",
     "data": "2026-11-22",
@@ -126,11 +131,6 @@
     "sha": "0b7522e",
     "data": "2026-11-22",
     "assunto": "fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)"
-   },
-   {
-    "sha": "a0b70c9",
-    "data": "2026-11-22",
-    "assunto": "feat: fecha B6 - dominio nas colunas text enumeraveis (#111)"
    }
   ],
   "arquivos_mudados_7d": 860,
@@ -152,11 +152,11 @@
     "mudancas": 21
    },
    {
-    "pasta": "covout/lib/security",
-    "mudancas": 18
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 19
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "pasta": "covout/lib/security",
     "mudancas": 18
    },
    {
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 18
+    "mudancas": 19
    },
    {
     "arquivo": ".github/workflows/ci.yml",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 114
+    "commits": 115
    },
    {
     "autor": "Joaquim Ataides",

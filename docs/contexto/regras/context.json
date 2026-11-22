@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "3de307fb99d3c19f86b3977618e4a7590348ea92",
+  "sha": "28337d14dc4194910f2ac860372f7f1893f53b04",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 14:04 UTC",
+  "generated_at": "2026-11-22 15:11 UTC",
   "files_total": 1675,
   "code_files": 1478,
   "code_lines": 184639
@@ -122460,10 +122460,19 @@
   }
  },
  "git": {
-  "sha": "3de307fb99d3c19f86b3977618e4a7590348ea92",
+  "sha": "28337d14dc4194910f2ac860372f7f1893f53b04",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "28337d1",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "3de307f",
     "date": "2026-11-22",
@@ -122832,30 +122841,12 @@
      "docs/estado/edge-functions-parte1.md",
      "docs/estado/funcionalidades-planejadas.md"
     ]
-   },
-   {
-    "sha": "4c76ea5",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)",
-    "files": [
-     "src/components/agent/WhisperNotification.tsx",
-     "src/components/call-history/CallSessionsList.tsx",
-     "src/components/calls/softphone/TabContents.tsx",
-     "src/components/contacts/ContactAlertsDropdown.tsx",
-     "src/components/conversation-intelligence/CallPlayerWithTranscript.tsx",
-     "src/components/dialer/AddContactsDialog.tsx",
-     "src/components/notifications/UnifiedNotificationDropdown.tsx",
-     "src/components/supervisor/panel/ActiveCallsList.tsx",
-     "src/lib/__tests__/a11y-clickable.test.ts",
-     "src/lib/a11y-clickable.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    6
+    7
    ],
    [
     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
