@@ -1,6 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, string, oneOf, optional, boolean } from '../_shared/validate.ts';
+import { clientIpFromHeaders } from "../_shared/client-ip.ts";
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -41,7 +42,7 @@ Deno.serve(async (req) => {
     }
 
     const data = result.data;
-    const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] ?? null;
+    const ipAddress = clientIpFromHeaders(req.headers);
     const userAgent = req.headers.get('user-agent') ?? null;
 
     const { data: profile } = await supabase

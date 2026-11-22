@@ -1,5 +1,6 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { clientIpFromHeaders } from "../_shared/client-ip.ts";
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -34,12 +35,9 @@ Deno.serve(async (req) => {
     const userId = user.id;
     const userEmail = user.email || '';
 
-    // Get IP from various headers (proxy support)
-    const forwardedFor = req.headers.get('x-forwarded-for');
-    const realIp = req.headers.get('x-real-ip');
-    const cfConnectingIp = req.headers.get('cf-connecting-ip');
-    
-    const clientIp = cfConnectingIp || realIp || (forwardedFor ? forwardedFor.split(',')[0].trim() : null);
+    // Header e controlado pelo cliente: sem validação, a whitelist de IP é
+    // anulável por quem sabe forjar x-forwarded-for.
+    const clientIp = clientIpFromHeaders(req.headers);
 
     // Create service client for admin queries
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
