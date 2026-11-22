@@ -2,6 +2,12 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-22 17:11 UTC
+
+- **cron jobs** adicionado (1): `16:data-lake-flush-daily`
+- **cron jobs** removido (1): `4:data-lake-flush-daily`
+- **vault secrets (nomes)** adicionado (1): `data_lake_cron_token`
+
 ## 2026-11-22 16:14 UTC
 
 - **cron jobs** adicionado (1): `15:cleanup-recordings-daily`

@@ -31398,15 +31398,6 @@
       "jobs": [
         {
           "active": true,
-          "command": "SELECT net.http_post(\r\n      url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush',\r\n      headers := jsonb_build_object(\r\n        'Content-Type', 'application/json',\r\n        'Authorization', 'Bearer [REDACTED_JWT]'\r\n      ),\r\n      body := jsonb_build_object('trigger', 'cron')\r\n    );",
-          "database": "postgres",
-          "jobid": 4,
-          "jobname": "data-lake-flush-daily",
-          "schedule": "0 3 * * *",
-          "username": "postgres"
-        },
-        {
-          "active": true,
           "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/generate-coaching-track',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'coaching_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
           "database": "postgres",
           "jobid": 11,
@@ -31439,6 +31430,15 @@
           "jobid": 15,
           "jobname": "cleanup-recordings-daily",
           "schedule": "45 3 * * *",
+          "username": "postgres"
+        },
+        {
+          "active": true,
+          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets\n        WHERE name = 'data_lake_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron'),\n    timeout_milliseconds := 120000\n  );\n  ",
+          "database": "postgres",
+          "jobid": 16,
+          "jobname": "data-lake-flush-daily",
+          "schedule": "0 3 * * *",
           "username": "postgres"
         }
       ]
@@ -57604,6 +57604,11 @@
         "created_at": "2026-11-22T00:52:23.452551+00:00",
         "description": "Token do cron de coaching (D4)",
         "name": "coaching_cron_token"
+      },
+      {
+        "created_at": "2026-11-22T16:58:44.649607+00:00",
+        "description": "Token do cron diario do data-lake-flush (03:00 UTC)",
+        "name": "data_lake_cron_token"
       },
       {
         "created_at": "2026-11-22T00:52:23.452551+00:00",
