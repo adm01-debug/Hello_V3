@@ -2118,7 +2118,7 @@
    "nome": "teams-fetch-recordings",
    "entrada": "supabase/functions/teams-fetch-recordings/index.ts",
    "arquivos": 1,
-   "linhas": 161,
+   "linhas": 193,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2128,8 +2128,9 @@
    ],
    "rpcs": [],
    "env": [
-    "LOVABLE_API_KEY",
-    "MICROSOFT_TEAMS_API_KEY",
+    "MS_CLIENT_ID",
+    "MS_CLIENT_SECRET",
+    "MS_TENANT_ID",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -2137,7 +2138,8 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [
-    "connector-gateway.lovable.dev"
+    "graph.microsoft.com",
+    "login.microsoftonline.com"
    ],
    "usa_shared": [
     "cors.ts"

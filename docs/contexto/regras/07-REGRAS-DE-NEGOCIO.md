@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ed3177d7bd` · branch `main` · 2026-11-22 05:38 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `12b0b3c5c6` · branch `main` · 2026-11-22 05:39 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2393,7 +2393,7 @@ _nenhum item encontrado_
 | Chamada em espera | `src/hooks/useSipCall.ts` |
 | Chamada encerrada: ${e.cause} | `src/hooks/useSipCall.ts` |
 | Chamada falhou: ${cause} | `src/hooks/useSipCall.ts` |
-| … +215 linhas — lista completa em `context.json` | |
+| … +216 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2991,6 +2991,7 @@ _nenhum item encontrado_
 | Input validation | `supabase/functions/notify-new-device/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/send-survey/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/sync-crm-queue/index.ts` |
+| Token app-only nao resolve /me; usar /groups (Application permission Group.Read.All) | `supabase/functions/teams-fetch-recordings/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/teams-fetch-recordings/index.ts` |
 | Header e controlado pelo cliente: sem validação, a whitelist de IP é | `supabase/functions/validate-ip/index.ts` |
 | * Whitelist rígida — apenas ações não destrutivas. */ | `supabase/functions/voip-anomaly-remediation/index.ts` |

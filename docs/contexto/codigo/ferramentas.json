@@ -408,8 +408,9 @@
    "ELEVENLABS_API_KEY",
    "FROM_EMAIL",
    "LDAP_ALLOW_SELF_SIGNED",
-   "LOVABLE_API_KEY",
-   "MICROSOFT_TEAMS_API_KEY",
+   "MS_CLIENT_ID",
+   "MS_CLIENT_SECRET",
+   "MS_TENANT_ID",
    "OPENROUTER_API_KEY",
    "RESEND_API_KEY",
    "SIP_PASSWORD",
@@ -570,10 +571,6 @@
     "arquivos": 1
    },
    {
-    "host": "connector-gateway.lovable.dev",
-    "arquivos": 1
-   },
-   {
     "host": "evil.com.br",
     "arquivos": 1
    },
@@ -583,6 +580,10 @@
    },
    {
     "host": "fonts.gstatic.com",
+    "arquivos": 1
+   },
+   {
+    "host": "graph.microsoft.com",
     "arquivos": 1
    },
    {
@@ -599,6 +600,10 @@
    },
    {
     "host": "ip-api.com",
+    "arquivos": 1
+   },
+   {
+    "host": "login.microsoftonline.com",
     "arquivos": 1
    },
    {
@@ -631,8 +636,8 @@
    "ELEVENLABS_API_KEY",
    "EMAIL_SERVICE_API_KEY",
    "JWT_SECRET",
-   "LOVABLE_API_KEY",
-   "MICROSOFT_TEAMS_API_KEY",
+   "MS_CLIENT_ID",
+   "MS_CLIENT_SECRET",
    "OPENROUTER_API_KEY",
    "REDIS_HOST",
    "REDIS_PASSWORD",

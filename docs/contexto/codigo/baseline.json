@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ed3177d7bdcaaa400cb38835aa49fe2c9f71767f",
+  "commit": "12b0b3c5c6c86b29c887dbae5df0255c0997dfb2",
   "branch": "main",
-  "data_commit": "2026-11-22T02:37:43-03:00",
+  "data_commit": "2026-11-22T02:37:51-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "12b0b3c",
+    "data": "2026-11-22",
+    "assunto": "fix: remove dependencia do gateway Lovable na importacao do Teams (#112)"
+   },
+   {
+    "sha": "f03e453",
+    "data": "2026-11-22",
+    "assunto": "chore: doc reflete a medicao real da Onda 39 e do D3 (#109)"
+   },
    {
     "sha": "ed3177d",
     "data": "2026-11-22",
@@ -121,19 +131,9 @@
     "sha": "f8ba359",
     "data": "2026-11-21",
     "assunto": "feat: error budget por componente no health-check (C1) (#83)"
-   },
-   {
-    "sha": "8ee9f60",
-    "data": "2026-11-21",
-    "assunto": "feat: centraliza reauth em Context com grant HMAC persistido (#81)"
-   },
-   {
-    "sha": "409f79f",
-    "data": "2026-11-21",
-    "assunto": "fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)"
    }
   ],
-  "arquivos_mudados_7d": 784,
+  "arquivos_mudados_7d": 785,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 87
+    "commits": 89
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1587,
   "arquivos_codigo": 1219,
-  "linhas_codigo": 167078,
+  "linhas_codigo": 167110,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 156,
-   "linhas": 18343
+   "linhas": 18375
   },
   "tailwind.config.ts": {
    "arquivos": 1,

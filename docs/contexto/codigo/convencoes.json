@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: remove dependencia do gateway Lovable na importacao do Teams (#112)",
+   "chore: doc reflete a medicao real da Onda 39 e do D3 (#109)",
    "fix: 9 edge functions com erro de tipo que quebravam em producao (#110)",
    "chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)",
-   "fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)",
-   "fix: valida IP de header antes de usar em URL, log e autorizacao (#102)",
-   "fix: valida IP literal antes de montar a URL do provedor de geo (#101)"
+   "fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)"
   ]
  },
  "pr_template": null,

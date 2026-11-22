@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ed3177d7bdcaaa400cb38835aa49fe2c9f71767f` (2026-11-22T02:37:43-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `12b0b3c5c6c86b29c887dbae5df0255c0997dfb2` (2026-11-22T02:37:51-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1587 |
 | arquivos_codigo | 1219 |
-| linhas_codigo | 167078 |
+| linhas_codigo | 167110 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -337,7 +337,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - SDKs: Supabase, react-query, zod
 - hosts mais citados: openrouter.ai, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br, api.ipify.org
 - webhooks recebidos: nenhum
-- env de integração (só nomes): BITRIX_WEBHOOK_URL, COACHING_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, LOVABLE_API_KEY, MICROSOFT_TEAMS_API_KEY, OPENROUTER_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
+- env de integração (só nomes): BITRIX_WEBHOOK_URL, COACHING_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
 ## Permissões / papéis
 - papéis no código: admin (32), user (24), system (18), agent (15), button (13), alert (7), supervisor (6), group (5), status (5), article (3), img (3), navigation (3), viewer (3), anon (2), customer (2), dialog (2), god (1), link (1), presentation (1), region (1), searchbox (1), separator (1), string (1), sup (1), table (1)
@@ -363,8 +363,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9030 nós · 23946 arestas · 712 comunidades · grafo do commit `ed3177d7`
-- comunidades maiores: lucide-react (261), traceHeaders (173), button.tsx (173), utils.ts (164), sonner (153), client.ts (150), @tanstack/react-query (119), usePageTitle (111), vitest (109), cn (108), snapshot.py (100), Tabela de funcionalidades (100)
+- 9031 nós · 23947 arestas · 681 comunidades · grafo do commit `12b0b3c5`
+- comunidades maiores: lucide-react (279), @tanstack/react-query (175), client.ts (171), usePageTitle (163), react (161), react-router-dom (153), vitest (142), select.tsx (137), UnifiedSoftphone.tsx (120), safeFormatDistanceToNow (113), cn (112), Tabela de funcionalidades (110)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -422,6 +422,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `12b0b3c` fix: remove dependencia do gateway Lovable na importacao do Teams (#112)
+- 2026-11-22 `f03e453` chore: doc reflete a medicao real da Onda 39 e do D3 (#109)
 - 2026-11-22 `ed3177d` fix: 9 edge functions com erro de tipo que quebravam em producao (#110)
 - 2026-11-21 `4a44ddc` chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)
 - 2026-11-21 `4c76ea5` fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)
@@ -435,8 +437,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `438f9d2` chore: regenera catalogo de edges apos cron do discador (#93) (#95)
 - 2026-11-21 `a01216b` feat: cron de minuto para o discador preditivo (D6) (#93)
 - 2026-11-21 `3a2530e` feat: cron diario que gera trilhas de coaching (D4) (#89)
-- 2026-11-21 `907e943` fix(seguranca): revoga EXECUTE de anon nas funcoes internas e fecha advisors de RLS (#84)
-- 2026-11-21 `ac18a93` fix: indices de audit_logs usam created_at e guardam a coluna (#82)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
