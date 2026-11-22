@@ -44,7 +44,7 @@ export const handler = async (req: Request): Promise<Response> => {
       headers: { ...cors, "Content-Type": "application/json" }
     });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), {
+    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : String(e) }), {
       status: 500, headers: { ...cors, "Content-Type": "application/json" }
     });
   }
