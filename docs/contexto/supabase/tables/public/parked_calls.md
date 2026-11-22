@@ -83,14 +83,14 @@
 | USING |  |
 | WITH CHECK | `((parked_by = ( SELECT auth.uid() AS uid)) AND (status = 'parked'::text))` |
 
-### `parked_calls_select_self_or_staff`
+### `parked_calls_select_auth`
 
 | campo | valor |
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
 | roles | authenticated |
-| USING | `((parked_by = auth.uid()) OR is_admin_user(auth.uid()) OR is_supervisor())` |
+| USING | `true` |
 | WITH CHECK |  |
 
 ### `parked_calls_update_retrieve`

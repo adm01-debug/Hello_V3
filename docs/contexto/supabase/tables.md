@@ -4,8 +4,6 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 
 | tabela | tipo | RLS | policies | colunas | realtime | comentário |
 |---|---|---|---|---|---|---|
-| [public.__dbg](tables/public/dbg.md) | table | sim | 0 | 1 | não |  |
-| [public.__dsn_probe](tables/public/dsn_probe.md) | table | sim | 0 | 2 | não |  |
 | [public.account_journey_history](tables/public/account_journey_history.md) | table | sim | 3 | 8 | não |  |
 | [public.account_lockouts](tables/public/account_lockouts.md) | table | sim | 4 | 7 | não |  |
 | [public.accounts](tables/public/accounts.md) | table | sim | 3 | 22 | não |  |

@@ -232,3 +232,6 @@ SQL em `migrations/<versao>_<nome>.sql`. Mudanças feitas pelo Dashboard/SQL Edi
 | 20261122320000 | [20261122320000_calling_hours_honor_recurring_holidays](migrations/20261122320000_20261122320000_calling_hours_honor_recurring_holidays.sql) | 0 |
 | 20261122330000 | [20261122330000_calling_hours_reasons_acentuados](migrations/20261122330000_20261122330000_calling_hours_reasons_acentuados.sql) | 0 |
 | 20261122340000 | [20261122340000_parked_calls_and_queues_scope_pii](migrations/20261122340000_20261122340000_parked_calls_and_queues_scope_pii.sql) | 0 |
+| 20261122350000 | [20261122350000_revert_parked_calls_scope](migrations/20261122350000_20261122350000_revert_parked_calls_scope.sql) | 0 |
+| 20261122360000 | [20261122360000_storage_policies_rename_and_scope](migrations/20261122360000_20261122360000_storage_policies_rename_and_scope.sql) | 0 |
+| 20261122370000 | [20261122370000_holiday_region_isolation](migrations/20261122370000_20261122370000_holiday_region_isolation.sql) | 0 |

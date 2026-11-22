@@ -293,7 +293,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.optimistic_lock_conflicts | olc_writer_insert | INSERT | PERMISSIVE | optimistic_lock_writer |  | `((table_name IS NOT NULL) AND (record_id IS NOT NULL) AND (attempted_at IS NOT NULL))` |
 | public.parked_calls | parked_calls_delete_admin | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.parked_calls | parked_calls_insert_self | INSERT | PERMISSIVE | authenticated |  | `((parked_by = ( SELECT auth.uid() AS uid)) AND (status = 'parked'::text))` |
-| public.parked_calls | parked_calls_select_self_or_staff | SELECT | PERMISSIVE | authenticated | `((parked_by = auth.uid()) OR is_admin_user(auth.uid()) OR is_supervisor())` |  |
+| public.parked_calls | parked_calls_select_auth | SELECT | PERMISSIVE | authenticated | `true` |  |
 | public.parked_calls | parked_calls_update_retrieve | UPDATE | PERMISSIVE | authenticated | `((status = 'parked'::text) OR is_admin_or_supervisor())` | `(is_admin_or_supervisor() OR ((status <> 'parked'::text) AND (retrieved_by = ( SELECT auth.uid() AS uid))) OR ((status = 'parked'::text) AND (parked_by = ( SELECT auth.uid() AS uid))))` |
 | public.password_reset_requests | Admins can manage password_reset_requests | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.password_reset_requests | Users can request own password reset | INSERT | PERMISSIVE | authenticated |  | `(( SELECT auth.uid() AS uid) = user_id)` |
@@ -457,7 +457,6 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.whisper_messages | Agents can update own whisper_messages | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
 | public.whisper_messages | Role-based view whisper_messages | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
 | public.whisper_messages | Supervisors can insert whisper_messages | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
-| storage.objects | queue_audio_staff_insert | INSERT | PERMISSIVE | authenticated |  | `(bucket_id = 'queue-audio'::text)` |
-| storage.objects | recording_staff_delete | DELETE | PERMISSIVE | authenticated | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text]))` |  |
-| storage.objects | recording_staff_insert | INSERT | PERMISSIVE | authenticated |  | `(bucket_id = 'call-recordings'::text)` |
-| storage.objects | recording_staff_select | SELECT | PERMISSIVE | authenticated | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))` |  |
+| storage.objects | storage_delete_authenticated | DELETE | PERMISSIVE | authenticated | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))` |  |
+| storage.objects | storage_insert_authenticated | INSERT | PERMISSIVE | authenticated |  | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))` |
+| storage.objects | storage_select_authenticated | SELECT | PERMISSIVE | authenticated | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))` |  |

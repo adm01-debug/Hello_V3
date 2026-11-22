@@ -2,6 +2,17 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-22 05:12 UTC
+
+- **colunas** removido (3): `public.__dbg.err`, `public.__dsn_probe.host`, `public.__dsn_probe.res`
+- **functions** alterado (11): `public.add_to_dnc(p_phone text, p_reason text, p_source text, p_notes text, p_expires_at timestamp with time zone)`, `public.check_calling_hours(p_region_code text)`, `public.check_dnc(p_phone text)`, `public.check_ip_allowed(p_user_id uuid, p_ip_address text)`, `public.get_auth_agent_id()`, `public.get_profile_role(_user_id uuid)`, `public.get_user_roles(_user_id uuid)`, `public.has_permission(_user_id uuid, _permission_name text)`, `public.has_role(_user_id uuid, _role app_role)`, `public.is_admin_user(_user_id uuid)`, `public.sync_profile_role_from_user_roles()`
+- **grants** removido (6): `public.__dbg:anon`, `public.__dbg:authenticated`, `public.__dbg:service_role`, `public.__dsn_probe:anon`, `public.__dsn_probe:authenticated`, `public.__dsn_probe:service_role`
+- **lints** removido (15): `no_primary_key:public.__dbg`, `no_primary_key:public.__dsn_probe`, `policy_auth_fn_not_wrapped:public.parked_calls.parked_calls_select_self_or_staff`, `rls_no_policies:public.__dbg`, `rls_no_policies:public.__dsn_probe`, `rpc_anon_executable:public.add_to_dnc(p_phone text, p_reason text, p_source text, p_notes text, p_expires_at timestamp with time zone)`, `rpc_anon_executable:public.check_calling_hours(p_region_code text)`, `rpc_anon_executable:public.check_dnc(p_phone text)`, `rpc_anon_executable:public.check_ip_allowed(p_user_id uuid, p_ip_address text)`, `rpc_anon_executable:public.get_auth_agent_id()`, `rpc_anon_executable:public.get_profile_role(_user_id uuid)`, `rpc_anon_executable:public.get_user_roles(_user_id uuid)`, `rpc_anon_executable:public.has_permission(_user_id uuid, _permission_name text)`, `rpc_anon_executable:public.has_role(_user_id uuid, _role app_role)`, `rpc_anon_executable:public.is_admin_user(_user_id uuid)`
+- **migrations** adicionado (3): `20261122350000_20261122350000_revert_parked_calls_scope`, `20261122360000_20261122360000_storage_policies_rename_and_scope`, `20261122370000_20261122370000_holiday_region_isolation`
+- **policies (RLS)** adicionado (4): `public.parked_calls.parked_calls_select_auth`, `storage.objects.storage_delete_authenticated`, `storage.objects.storage_insert_authenticated`, `storage.objects.storage_select_authenticated`
+- **policies (RLS)** removido (5): `public.parked_calls.parked_calls_select_self_or_staff`, `storage.objects.queue_audio_staff_insert`, `storage.objects.recording_staff_delete`, `storage.objects.recording_staff_insert`, `storage.objects.recording_staff_select`
+- **tabelas** removido (2): `public.__dbg`, `public.__dsn_probe`
+
 ## 2026-11-22 04:14 UTC
 
 - **cron jobs** adicionado (1): `14:cleanup-lock-conflicts-weekly`

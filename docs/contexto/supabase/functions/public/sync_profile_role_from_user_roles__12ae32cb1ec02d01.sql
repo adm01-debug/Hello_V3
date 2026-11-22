@@ -8,7 +8,6 @@ DECLARE
   v_user_id uuid;
   v_effective text;
 BEGIN
-  -- O trigger tambem roda em DELETE; nesse caso quem mudou e OLD.
   v_user_id := COALESCE(NEW.user_id, OLD.user_id);
 
   SELECT role::text INTO v_effective
@@ -20,8 +19,6 @@ BEGIN
                      WHEN 'agent' THEN 3 ELSE 4 END
   LIMIT 1;
 
-  -- Sem papel valido restante: rebaixa o espelho ao menor privilegio. Nunca
-  -- promove; evita um espelho orfao exibindo admin sem papel correspondente.
   IF v_effective IS NULL THEN
     IF TG_OP = 'INSERT' THEN
       RETURN NEW;
@@ -30,10 +27,14 @@ BEGIN
   END IF;
 
   PERFORM set_config('app.role_sync_in_progress', 'on', true);
-  UPDATE public.user_profiles
-     SET role = v_effective
-   WHERE id = v_user_id
-     AND role IS DISTINCT FROM v_effective;
+  -- user_profiles.email e NOT NULL sem default: o INSERT precisa do email de auth.users.
+  INSERT INTO public.user_profiles (id, email, role)
+  SELECT v_user_id, COALESCE(au.email, ''), v_effective
+  FROM (SELECT 1) AS _guard
+  LEFT JOIN auth.users au ON au.id = v_user_id
+  ON CONFLICT (id) DO UPDATE
+    SET role = EXCLUDED.role
+    WHERE public.user_profiles.role IS DISTINCT FROM EXCLUDED.role;
   PERFORM set_config('app.role_sync_in_progress', 'off', true);
 
   RETURN COALESCE(NEW, OLD);

@@ -24,45 +24,6 @@
     "columns": [
       {
         "comment": null,
-        "default": null,
-        "generated": null,
-        "identity": null,
-        "is_enum": false,
-        "name": "err",
-        "nullable": true,
-        "position": 1,
-        "schema": "public",
-        "table": "__dbg",
-        "type": "text"
-      },
-      {
-        "comment": null,
-        "default": null,
-        "generated": null,
-        "identity": null,
-        "is_enum": false,
-        "name": "host",
-        "nullable": true,
-        "position": 1,
-        "schema": "public",
-        "table": "__dsn_probe",
-        "type": "text"
-      },
-      {
-        "comment": null,
-        "default": null,
-        "generated": null,
-        "identity": null,
-        "is_enum": false,
-        "name": "res",
-        "nullable": true,
-        "position": 2,
-        "schema": "public",
-        "table": "__dsn_probe",
-        "type": "text"
-      },
-      {
-        "comment": null,
         "default": "gen_random_uuid()",
         "generated": null,
         "identity": null,
@@ -31426,8 +31387,8 @@
         ],
         "definition": null,
         "definition_sha": "5e9c39f82d6c1c5b",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "plpgsql",
@@ -31790,9 +31751,9 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "e66d1c930690f93d",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "definition_sha": "a384da2734467823",
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "plpgsql",
@@ -31834,8 +31795,8 @@
         ],
         "definition": null,
         "definition_sha": "30691060b3ed375a",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "plpgsql",
@@ -31914,8 +31875,8 @@
         ],
         "definition": null,
         "definition_sha": "280c93ddca802cbb",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "plpgsql",
@@ -32592,8 +32553,8 @@
         ],
         "definition": null,
         "definition_sha": "f73e5f810433e65a",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "plpgsql",
@@ -32841,8 +32802,8 @@
         ],
         "definition": null,
         "definition_sha": "eeea3780f90560c1",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "sql",
@@ -33223,8 +33184,8 @@
         ],
         "definition": null,
         "definition_sha": "288908be325e2b9e",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "sql",
@@ -33368,8 +33329,8 @@
         ],
         "definition": null,
         "definition_sha": "81240ceed4f13d11",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "sql",
@@ -33411,8 +33372,8 @@
         ],
         "definition": null,
         "definition_sha": "5c3f7a52c19b8f5e",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "sql",
@@ -33800,8 +33761,8 @@
         ],
         "definition": null,
         "definition_sha": "9a7ca13df741a85e",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "sql",
@@ -34700,9 +34661,9 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "dd8dd798d92ceabb",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "definition_sha": "1889872a684730c3",
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
         "is_trigger_fn": true,
         "kind": "function",
         "language": "plpgsql",
@@ -35722,42 +35683,6 @@
         }
       ],
       "tables": [
-        {
-          "grantee": "anon",
-          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
-          "schema": "public",
-          "table": "__dbg"
-        },
-        {
-          "grantee": "authenticated",
-          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
-          "schema": "public",
-          "table": "__dbg"
-        },
-        {
-          "grantee": "service_role",
-          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
-          "schema": "public",
-          "table": "__dbg"
-        },
-        {
-          "grantee": "anon",
-          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
-          "schema": "public",
-          "table": "__dsn_probe"
-        },
-        {
-          "grantee": "authenticated",
-          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
-          "schema": "public",
-          "table": "__dsn_probe"
-        },
-        {
-          "grantee": "service_role",
-          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
-          "schema": "public",
-          "table": "__dsn_probe"
-        },
         {
           "grantee": "anon",
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
@@ -46448,30 +46373,6 @@
         "severity": "ALTA"
       },
       {
-        "code": "no_primary_key",
-        "detail": "Sem chave primária: Realtime/replicação e updates por linha ficam frágeis.",
-        "object": "public.__dbg",
-        "severity": "MÉDIA"
-      },
-      {
-        "code": "no_primary_key",
-        "detail": "Sem chave primária: Realtime/replicação e updates por linha ficam frágeis.",
-        "object": "public.__dsn_probe",
-        "severity": "MÉDIA"
-      },
-      {
-        "code": "rls_no_policies",
-        "detail": "RLS ligado sem policies: inacessível via API (só service_role).",
-        "object": "public.__dbg",
-        "severity": "MÉDIA"
-      },
-      {
-        "code": "rls_no_policies",
-        "detail": "RLS ligado sem policies: inacessível via API (só service_role).",
-        "object": "public.__dsn_probe",
-        "severity": "MÉDIA"
-      },
-      {
         "code": "rls_no_policies",
         "detail": "RLS ligado sem policies: inacessível via API (só service_role).",
         "object": "public.migration_rollbacks",
@@ -46520,18 +46421,6 @@
         "severity": "BAIXA"
       },
       {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.parked_calls.parked_calls_select_self_or_staff",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.add_to_dnc(p_phone text, p_reason text, p_source text, p_notes text, p_expires_at timestamp with time zone)",
-        "severity": "INFO"
-      },
-      {
         "code": "rpc_anon_executable",
         "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
         "object": "public.can_access_agent_data(target_agent_name text)",
@@ -46540,37 +46429,7 @@
       {
         "code": "rpc_anon_executable",
         "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.check_calling_hours(p_region_code text)",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.check_dnc(p_phone text)",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.check_ip_allowed(p_user_id uuid, p_ip_address text)",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
         "object": "public.check_login_lockout(p_email text)",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.get_auth_agent_id()",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.get_profile_role(_user_id uuid)",
         "severity": "INFO"
       },
       {
@@ -46594,24 +46453,6 @@
       {
         "code": "rpc_anon_executable",
         "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.get_user_roles(_user_id uuid)",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.has_permission(_user_id uuid, _permission_name text)",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.has_role(_user_id uuid, _role app_role)",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
         "object": "public.is_active_agent(_agent_name text)",
         "severity": "INFO"
       },
@@ -46625,12 +46466,6 @@
         "code": "rpc_anon_executable",
         "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
         "object": "public.is_admin_or_supervisor()",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.is_admin_user(_user_id uuid)",
         "severity": "INFO"
       },
       {
@@ -47796,6 +47631,21 @@
         "name": "20261122340000_parked_calls_and_queues_scope_pii",
         "statements": null,
         "version": "20261122340000"
+      },
+      {
+        "name": "20261122350000_revert_parked_calls_scope",
+        "statements": null,
+        "version": "20261122350000"
+      },
+      {
+        "name": "20261122360000_storage_policies_rename_and_scope",
+        "statements": null,
+        "version": "20261122360000"
+      },
+      {
+        "name": "20261122370000_holiday_region_isolation",
+        "statements": null,
+        "version": "20261122370000"
       }
     ],
     "policies": [
@@ -51257,14 +51107,14 @@
       },
       {
         "cmd": "SELECT",
-        "name": "parked_calls_select_self_or_staff",
+        "name": "parked_calls_select_auth",
         "permissive": "PERMISSIVE",
         "roles": [
           "authenticated"
         ],
         "schema": "public",
         "table": "parked_calls",
-        "using": "((parked_by = auth.uid()) OR is_admin_user(auth.uid()) OR is_supervisor())",
+        "using": "true",
         "with_check": null
       },
       {
@@ -53224,32 +53074,20 @@
         "with_check": "is_admin_or_supervisor()"
       },
       {
-        "cmd": "INSERT",
-        "name": "queue_audio_staff_insert",
-        "permissive": "PERMISSIVE",
-        "roles": [
-          "authenticated"
-        ],
-        "schema": "storage",
-        "table": "objects",
-        "using": null,
-        "with_check": "(bucket_id = 'queue-audio'::text)"
-      },
-      {
         "cmd": "DELETE",
-        "name": "recording_staff_delete",
+        "name": "storage_delete_authenticated",
         "permissive": "PERMISSIVE",
         "roles": [
           "authenticated"
         ],
         "schema": "storage",
         "table": "objects",
-        "using": "(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text]))",
+        "using": "(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))",
         "with_check": null
       },
       {
         "cmd": "INSERT",
-        "name": "recording_staff_insert",
+        "name": "storage_insert_authenticated",
         "permissive": "PERMISSIVE",
         "roles": [
           "authenticated"
@@ -53257,11 +53095,11 @@
         "schema": "storage",
         "table": "objects",
         "using": null,
-        "with_check": "(bucket_id = 'call-recordings'::text)"
+        "with_check": "(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))"
       },
       {
         "cmd": "SELECT",
-        "name": "recording_staff_select",
+        "name": "storage_select_authenticated",
         "permissive": "PERMISSIVE",
         "roles": [
           "authenticated"
@@ -53663,36 +53501,6 @@
       }
     ],
     "tables": [
-      {
-        "comment": null,
-        "from_extension": false,
-        "is_partition": false,
-        "kind": "table",
-        "name": "__dbg",
-        "owner": "postgres",
-        "parent": null,
-        "partition_bound": null,
-        "partition_key": null,
-        "replica_identity": "default",
-        "rls_enabled": true,
-        "rls_forced": false,
-        "schema": "public"
-      },
-      {
-        "comment": null,
-        "from_extension": false,
-        "is_partition": false,
-        "kind": "table",
-        "name": "__dsn_probe",
-        "owner": "postgres",
-        "parent": null,
-        "partition_bound": null,
-        "partition_key": null,
-        "replica_identity": "default",
-        "rls_enabled": true,
-        "rls_forced": false,
-        "schema": "public"
-      },
       {
         "comment": null,
         "from_extension": false,
