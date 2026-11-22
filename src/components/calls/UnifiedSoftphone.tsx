@@ -37,7 +37,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     isInCall, canAddCall, setActiveChannel, initiateCall, switchToCall, updateCallStatus,
     endCall, toggleMute, toggleHold, toggleRecording, addTranscript, configureChannel,
     startConference, addToConference, removeFromConference, endConference, transferCall,
-    toggleConferenceRecording,
+    completeTransfer, cancelTransfer, toggleConferenceRecording,
   } = useMultiChannelCall();
 
   const wavoip = useWavoipCall();
@@ -205,7 +205,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
               onSwitchCall={switchToCall} onEndCall={endCall} onToggleHold={toggleHold}
               onStartConference={startConference} onAddToConference={addToConference}
               onRemoveFromConference={removeFromConference} onEndConference={endConference}
-              onTransferCall={transferCall} onToggleConferenceRecording={toggleConferenceRecording}
+              onTransferCall={transferCall} onCompleteTransfer={completeTransfer} onCancelTransfer={cancelTransfer} onToggleConferenceRecording={toggleConferenceRecording}
             />
 
             <AgentSelector
