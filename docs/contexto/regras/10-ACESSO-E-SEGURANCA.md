@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0b7522ef2c` · branch `main` · 2026-11-22 05:47 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `68a2c219f6` · branch `main` · 2026-11-22 05:48 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -368,6 +368,7 @@
 - `record_trunk_usage`
 - `reset_public_index_stats`
 - `snapshot_deals_daily`
+- `sync_profile_role_from_user_roles`
 - `trg_recalc_deals_on_interaction`
 - `trigger_auto_scorecard`
 - `validate_audit_insert`

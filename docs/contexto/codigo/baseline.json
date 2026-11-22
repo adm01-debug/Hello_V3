@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0b7522ef2c8ce6ac814d7072f7cb350eae0c4236",
+  "commit": "68a2c219f64408380adf82eaa57e05e4eb779b38",
   "branch": "main",
-  "data_commit": "2026-11-22T02:46:51-03:00",
+  "data_commit": "2026-11-22T02:46:55-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "68a2c21",
+    "data": "2026-11-22",
+    "assunto": "fix: trigger de papel cria o espelho que faltava em user_profiles (#108)"
+   },
    {
     "sha": "0b7522e",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "c206c6c",
     "data": "2026-11-21",
     "assunto": "docs: catalogo de edge functions gerado do codigo (#87)"
-   },
-   {
-    "sha": "f6f0740",
-    "data": "2026-11-21",
-    "assunto": "fix: rls-audit exige auth e usa RPC real de RLS (#86)"
    }
   ],
-  "arquivos_mudados_7d": 789,
+  "arquivos_mudados_7d": 790,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 91
+    "commits": 92
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,7 +314,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1591,
+  "arquivos_total": 1592,
   "arquivos_codigo": 1219,
   "linhas_codigo": 167110,
   "rotas": 105,
@@ -326,7 +326,7 @@
   "hooks": 191,
   "edge_functions": 94,
   "tabelas": 169,
-  "migrations": 219,
+  "migrations": 220,
   "cron_jobs": 9,
   "testes": 327,
   "workflows": 3,

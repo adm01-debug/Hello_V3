@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 219,
+ "migrations": 220,
  "seeds": [],
  "avisos": [
   "42 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -119,6 +119,7 @@
   "reset_public_index_stats",
   "rollback_migration",
   "snapshot_deals_daily",
+  "sync_profile_role_from_user_roles",
   "trg_recalc_deals_on_interaction",
   "trigger_auto_scorecard",
   "update_kb_article_search_vector",
