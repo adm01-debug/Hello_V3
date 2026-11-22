@@ -34,12 +34,12 @@ serve(async (req) => {
         .from("call_quality_metrics")
         .insert({
           agent_name: "Load Test Bot",
-          channel: "SIP/test-trunk",
+          channel: "SIP",
           mos_avg: 4.2 + (Math.random() * 0.5),
           jitter_avg_ms: 10 + (Math.random() * 20),
           packet_loss_pct: Math.random() * 2,
           rtt_avg_ms: 50 + (Math.random() * 30),
-          quality_label: "Good",
+          quality_label: "good",
         })
         .select();
 
