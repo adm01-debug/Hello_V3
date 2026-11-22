@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a0096def2318d9c361c7b205825dff8c3b98031c",
+  "commit": "71169af0ed2f7e91e4a7957f8cd998efb9aee2b3",
   "branch": "main",
-  "data_commit": "2026-11-22T10:14:34-03:00",
+  "data_commit": "2026-11-22T10:18:58-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "71169af",
+    "data": "2026-11-22",
+    "assunto": "fix: contagem em espera do dashboard usava status inexistente (#129)"
+   },
    {
     "sha": "a0096de",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "4a44ddc",
     "data": "2026-11-21",
     "assunto": "chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)"
-   },
-   {
-    "sha": "4c76ea5",
-    "data": "2026-11-21",
-    "assunto": "fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)"
    }
   ],
-  "arquivos_mudados_7d": 856,
+  "arquivos_mudados_7d": 858,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 19
+    "mudancas": 20
    },
    {
     "pasta": "covout/lib/security",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 109
+    "commits": 110
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1627,
   "arquivos_codigo": 1235,
-  "linhas_codigo": 168647,
+  "linhas_codigo": 168670,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 350,
-   "linhas": 45233
+   "linhas": 45256
   },
   "src/integrations": {
    "arquivos": 3,

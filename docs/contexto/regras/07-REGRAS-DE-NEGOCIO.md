@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a0096def23` · branch `main` · 2026-11-22 13:15 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `71169af0ed` · branch `main` · 2026-11-22 13:21 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -897,6 +897,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `ok` | compara, escreve | `src/components/queue/QueueGoalsTab.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`supabase/functions/check-goals/index.ts`<br>`supabase/functions/data-lake-flush/index.ts` |
 | `status` | `on-hold` | compara, escreve | `src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
 | `status` | `on_call` | compara | `src/hooks/useQueueMetrics.ts` |
+| `status` | `on_hold` | compara | `src/hooks/useQueueMetrics.ts` |
 | `status` | `online` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
 | `status` | `open` | compara, escreve, filtra | `src/components/executive/CustomerSuccessCard.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/hooks/useRenewals.ts`<br>`src/lib/security/penetration-test-reporter.ts`<br>`src/pages/Deals.tsx`<br>… +8 |
 | `status` | `operational` | compara, escreve | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
@@ -914,7 +915,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `rejected` | compara, escreve | `src/hooks/useCrmFieldSuggestions.ts`<br>`src/pages/NumberPorting.tsx`<br>`src/pages/PasswordResetApproval.tsx`<br>`src/pages/Scheduling.tsx`<br>`src/pages/ShiftSwapSuggestions.tsx` |
 | `status` | `resolved` | compara, escreve | `src/pages/Inbox.tsx`<br>`supabase/functions/enforce-sla/index.ts` |
 | `status` | `retrieved` | escreve | `src/hooks/useCallPark.ts` |
-| `status` | `ringing` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +3 |
+| `status` | `ringing` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +4 |
 | `status` | `scheduled` | compara, escreve | `src/pages/Scheduling.tsx`<br>`src/pages/VideoConference.tsx` |
 | `status` | `sent` | compara | `src/pages/VirtualFax.tsx` |
 | `status` | `skipped` | escreve | `supabase/functions/auto-scorecard/index.ts` |
@@ -929,7 +930,6 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `unstable` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
 | `status` | `verified` | compara, escreve | `src/components/auth/ReauthDialog.tsx`<br>`src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx`<br>`src/pages/two-factor/DevicesCard.tsx` |
 | `status` | `voicemail` | escreve | `src/data/mockData.ts` |
-| `status` | `waiting` | compara | `src/hooks/useQueueMetrics.ts` |
 | `status` | `warning` | compara | `src/components/queue/QueueGoalsTab.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/check-goals/index.ts` |
 | `status` | `won` | compara | `src/hooks/useRenewals.ts` |
 | `type` | `ADD_TOAST` | compara, escreve | `src/hooks/use-toast.ts` |
@@ -2436,7 +2436,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4003 testes em 328 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4004 testes em 328 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2578,6 +2578,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCallRecording.coverage.test.tsx` | 8 | useCallRecording · starts recording successfully · handles start recording failure · stopAndSaveRecording returns null when no recorder … |
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
 | `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 8 | useIPWhitelist · does not fetch when not admin · fetches data when admin · validates IP format on addGlobalIP … |
+| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 8 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useScorecards.coverage.test.tsx` | 8 | useScorecards · loads templates and criteria without callSessionId · loads scorecards and responses with callSessionId · clears responses when no scorecards … |
 | `src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx` | 8 | useSecurityDashboard · returns early without userId · loads data and computes full score · computes lower score branches (no mfa, many sessions, ip off, no alerts) … |
 | `src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx` | 8 | useSecurityNotifications · detects support and initial permission · requestPermission granted path · requestPermission denied path … |
@@ -2614,7 +2615,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 7 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
 | `src/hooks/__tests__/useObjectionLibrary.coverage.test.tsx` | 7 | useObjectionLibrary (coverage) · loads objections · list error throws · upsert success and error … |
 | `src/hooks/__tests__/usePermissions.coverage.test.tsx` | 7 | usePermissions (coverage) · loads permissions for active roles · returns empty when no user · returns empty when user has no roles … |
-| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 7 | useQueueMetrics · fetches metrics and computes values · checkGoalStatus handles gte and lte operators · notifies on goals when goals present … |
 | `src/hooks/__tests__/useRealtimeHoldAlerts.coverage.test.tsx` | 7 | useRealtimeHoldAlerts · initializes and fetches unread count · toggles notifications on and off · requests browser notification permission … |
 | `src/hooks/__tests__/useRoutingRules.coverage.test.tsx` | 7 | useRoutingRules (coverage) · loads rules · rules fetch error · upsert success … |
 | `src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx` | 7 | useSecurityMonitoringData · fetches logs, alerts and computes stats · handles null data from queries · processes realtime log and alert insert payloads … |

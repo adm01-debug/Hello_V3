@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a0096def2318d9c361c7b205825dff8c3b98031c` (2026-11-22T10:14:34-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `71169af0ed2f7e91e4a7957f8cd998efb9aee2b3` (2026-11-22T10:18:58-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1627 |
 | arquivos_codigo | 1235 |
-| linhas_codigo | 168647 |
+| linhas_codigo | 168670 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -367,8 +367,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9156 nós · 24233 arestas · 735 comunidades · grafo do commit `a0096def`
-- comunidades maiores: lucide-react (298), usePageTitle (260), cn (210), react (192), traceHeaders (187), sonner (145), @tanstack/react-query (141), safe-date.ts (138), Tabela de funcionalidades (119), vitest (118), supabase (114), button.tsx (111)
+- 9157 nós · 24234 arestas · 743 comunidades · grafo do commit `71169af0`
+- comunidades maiores: lucide-react (248), react (238), client.ts (170), protectedRoutes.tsx (167), traceHeaders (149), vitest (144), usePageTitle (135), @tanstack/react-query (122), cn (110), gerar.mjs (104), snapshot.py (102), safe-date.ts (98)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -426,6 +426,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `71169af` fix: contagem em espera do dashboard usava status inexistente (#129)
 - 2026-11-22 `a0096de` feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)
 - 2026-11-22 `071d1dd` docs: substitui rotulo desatualizado por prova de execucao (guard + IA em prod) (#127)
 - 2026-11-22 `d62b800` chore: corrige deps de hook que causavam closure obsoleto (22 -> 5 warnings) (#126)
@@ -440,7 +441,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `bb8f219` fix(edge): libera a origem de producao no CORS das edge functions (#117)
 - 2026-11-22 `6f648ab` fix(security): fecha account takeover no login por passkey (#116)
 - 2026-11-22 `6659a49` test: cobre bitrix-api com testes reais de auth e fail-closed (#115)
-- 2026-11-22 `49ef164` test: testes de integracao param de passar sem verificar nada (#114)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

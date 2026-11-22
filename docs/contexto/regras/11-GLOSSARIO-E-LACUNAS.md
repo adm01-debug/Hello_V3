@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a0096def23` · branch `main` · 2026-11-22 13:15 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `71169af0ed` · branch `main` · 2026-11-22 13:21 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -305,6 +305,7 @@
 | status | valor `SUBSCRIBED` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useHealthCheck.ts` |
 | status | valor `CHANNEL_ERROR` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useHealthCheck.ts` |
 | status | valor `TIMED_OUT` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useHealthCheck.ts` |
+| status | valor `on_hold` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useQueueMetrics.ts` |
 | status | valor `on_call` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useQueueMetrics.ts` |
 | status | valor `break` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useQueueMetrics.ts` |
 | status | valor `in_negotiation` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRenewals.ts` |
