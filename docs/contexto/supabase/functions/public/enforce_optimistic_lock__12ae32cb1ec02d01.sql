@@ -40,7 +40,7 @@ BEGIN
     END;
 
     RAISE EXCEPTION 'OPTIMISTIC_LOCK_CONFLICT'
-      USING HINT = 'Registro alterado por outro usu�rio. Recarregue antes de salvar.';
+      USING HINT = 'Registro alterado por outro usuário. Recarregue antes de salvar.';
   END IF;
 
   NEW.version := OLD.version + 1;

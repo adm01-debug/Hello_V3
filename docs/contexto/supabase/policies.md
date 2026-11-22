@@ -78,7 +78,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.call_analyses | Validated insert call_analyses | INSERT | PERMISSIVE | authenticated |  | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = call_analyses.call_session_id) AND (cs.agent_name = get_user_agent_name())))))` |
 | public.call_control_audit_logs | Admins can view call control audit | SELECT | PERMISSIVE | public | `(EXISTS ( SELECT 1    FROM user_roles   WHERE ((user_roles.user_id = ( SELECT auth.uid() AS uid)) AND (user_roles.role = ANY (ARRAY['admin'::app_role, 'supervisor'::app_role])))))` |  |
 | public.call_control_audit_logs | Admins have full access to call_control_audit_logs | ALL | PERMISSIVE | authenticated | `is_admin()` |  |
-| public.call_control_audit_logs | Agents can view own audit logs | SELECT | PERMISSIVE | public | `(is_admin_or_supervisor() OR (source = (auth.jwt() ->> 'email'::text)))` |  |
+| public.call_control_audit_logs | Agents can view own audit logs | SELECT | PERMISSIVE | public | `(is_admin_or_supervisor() OR (source = (( SELECT auth.jwt() AS jwt) ->> 'email'::text)))` |  |
 | public.call_control_audit_logs | Agents log own call control events | INSERT | PERMISSIVE | authenticated |  | `(is_admin_or_supervisor() OR (source = (( SELECT auth.jwt() AS jwt) ->> 'email'::text)) OR (source = (( SELECT auth.uid() AS uid))::text))` |
 | public.call_flows | Admins can manage call_flows | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.call_flows | Admins can view call flows | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
@@ -199,7 +199,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.deals | Authenticated create deals | INSERT | PERMISSIVE | public |  | `((( SELECT auth.uid() AS uid) IS NOT NULL) AND (is_admin_or_supervisor() OR (owner_agent_name IS NULL) OR (owner_agent_name = get_user_agent_name())))` |
 | public.dialer_campaigns | Authenticated users can view dialer_campaigns | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.dialer_campaigns | Supervisors can manage dialer_campaigns | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
-| public.dialer_favorites | Users manage own dialer favorites | ALL | PERMISSIVE | authenticated | `(auth.uid() = user_id)` | `(auth.uid() = user_id)` |
+| public.dialer_favorites | Users manage own dialer favorites | ALL | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` | `(( SELECT auth.uid() AS uid) = user_id)` |
 | public.dialer_queue | Role-based update dialer_queue | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (assigned_agent = get_user_agent_name()))` |  |
 | public.dialer_queue | Role-based view dialer_queue | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (assigned_agent = get_user_agent_name()))` |  |
 | public.dialer_queue | Supervisors can manage dialer_queue | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
@@ -214,8 +214,8 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.email_verification_tokens | Deny update email_verification_tokens | UPDATE | PERMISSIVE | authenticated |  | `false` |
 | public.email_verification_tokens | Users can delete own verification tokens | DELETE | PERMISSIVE | authenticated | `((( SELECT auth.uid() AS uid) = user_id) OR is_admin_user(( SELECT auth.uid() AS uid)))` |  |
 | public.email_verification_tokens | Users can view own verification tokens | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` |  |
-| public.entity_versions | Authenticated can insert versions | INSERT | PERMISSIVE | authenticated |  | `(auth.uid() = changed_by)` |
-| public.entity_versions | Authenticated can view versions | SELECT | PERMISSIVE | authenticated | `(auth.uid() IS NOT NULL)` |  |
+| public.entity_versions | Authenticated can insert versions | INSERT | PERMISSIVE | authenticated |  | `(( SELECT auth.uid() AS uid) = changed_by)` |
+| public.entity_versions | Authenticated can view versions | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.fraud_signals | Admins and supervisors view all fraud signals | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
 | public.fraud_signals | Admins manage fraud signals | ALL | PERMISSIVE | public | `is_admin_user(( SELECT auth.uid() AS uid))` | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | public.fraud_signals | Agents view fraud signals on own calls | SELECT | PERMISSIVE | public | `(agent_name = get_user_agent_name())` |  |
@@ -292,9 +292,9 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.optimistic_lock_conflicts | olc_admin_supervisor_select | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.optimistic_lock_conflicts | olc_writer_insert | INSERT | PERMISSIVE | optimistic_lock_writer |  | `((table_name IS NOT NULL) AND (record_id IS NOT NULL) AND (attempted_at IS NOT NULL))` |
 | public.parked_calls | parked_calls_delete_admin | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
-| public.parked_calls | parked_calls_insert_self | INSERT | PERMISSIVE | authenticated |  | `((parked_by = auth.uid()) AND (status = 'parked'::text))` |
-| public.parked_calls | parked_calls_select_auth | SELECT | PERMISSIVE | authenticated | `true` |  |
-| public.parked_calls | parked_calls_update_retrieve | UPDATE | PERMISSIVE | authenticated | `((status = 'parked'::text) OR is_admin_or_supervisor())` | `(is_admin_or_supervisor() OR ((status <> 'parked'::text) AND (retrieved_by = auth.uid())) OR ((status = 'parked'::text) AND (parked_by = auth.uid())))` |
+| public.parked_calls | parked_calls_insert_self | INSERT | PERMISSIVE | authenticated |  | `((parked_by = ( SELECT auth.uid() AS uid)) AND (status = 'parked'::text))` |
+| public.parked_calls | parked_calls_select_self_or_staff | SELECT | PERMISSIVE | authenticated | `((parked_by = auth.uid()) OR is_admin_user(auth.uid()) OR is_supervisor())` |  |
+| public.parked_calls | parked_calls_update_retrieve | UPDATE | PERMISSIVE | authenticated | `((status = 'parked'::text) OR is_admin_or_supervisor())` | `(is_admin_or_supervisor() OR ((status <> 'parked'::text) AND (retrieved_by = ( SELECT auth.uid() AS uid))) OR ((status = 'parked'::text) AND (parked_by = ( SELECT auth.uid() AS uid))))` |
 | public.password_reset_requests | Admins can manage password_reset_requests | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.password_reset_requests | Users can request own password reset | INSERT | PERMISSIVE | authenticated |  | `(( SELECT auth.uid() AS uid) = user_id)` |
 | public.password_reset_requests | Users can view own reset requests | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` |  |
@@ -336,10 +336,10 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.role_permissions | Authenticated users can view role_permissions | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.routing_rules | Admin manage routing rules | ALL | PERMISSIVE | public | `is_admin_user(( SELECT auth.uid() AS uid))` | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | public.routing_rules | Admin/Supervisor view routing rules | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
-| public.saved_filters | Users can delete own filters | DELETE | PERMISSIVE | public | `(auth.uid() = user_id)` |  |
-| public.saved_filters | Users can insert own filters | INSERT | PERMISSIVE | public |  | `(auth.uid() = user_id)` |
-| public.saved_filters | Users can update own filters | UPDATE | PERMISSIVE | public | `(auth.uid() = user_id)` | `(auth.uid() = user_id)` |
-| public.saved_filters | Users can view own filters | SELECT | PERMISSIVE | public | `(auth.uid() = user_id)` |  |
+| public.saved_filters | Users can delete own filters | DELETE | PERMISSIVE | public | `(( SELECT auth.uid() AS uid) = user_id)` |  |
+| public.saved_filters | Users can insert own filters | INSERT | PERMISSIVE | public |  | `(( SELECT auth.uid() AS uid) = user_id)` |
+| public.saved_filters | Users can update own filters | UPDATE | PERMISSIVE | public | `(( SELECT auth.uid() AS uid) = user_id)` | `(( SELECT auth.uid() AS uid) = user_id)` |
+| public.saved_filters | Users can view own filters | SELECT | PERMISSIVE | public | `(( SELECT auth.uid() AS uid) = user_id)` |  |
 | public.scheduled_callbacks | Admins can delete scheduled_callbacks | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.scheduled_callbacks | Role-based update scheduled_callbacks | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (assigned_agent = get_user_agent_name()) OR (created_by = get_user_agent_name()))` |  |
 | public.scheduled_callbacks | Role-based view scheduled_callbacks | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (assigned_agent = get_user_agent_name()))` |  |
@@ -374,7 +374,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.surveys | Admin/supervisor manage surveys | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.surveys | All authenticated view active surveys | SELECT | PERMISSIVE | authenticated | `((is_active = true) OR is_admin_or_supervisor())` |  |
 | public.system_settings | Admins can manage system settings | ALL | PERMISSIVE | public | `(EXISTS ( SELECT 1    FROM user_roles   WHERE ((user_roles.user_id = ( SELECT auth.uid() AS uid)) AND (user_roles.role = 'admin'::app_role))))` |  |
-| public.system_settings | Leitura de configurações para autenticados | SELECT | PERMISSIVE | public | `(auth.role() = 'authenticated'::text)` |  |
+| public.system_settings | Leitura de configurações para autenticados | SELECT | PERMISSIVE | public | `(( SELECT auth.role() AS role) = 'authenticated'::text)` |  |
 | public.time_off_requests | Admin/supervisor delete time off | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.time_off_requests | Admin/supervisor manage time off | UPDATE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.time_off_requests | Agents create own time off | INSERT | PERMISSIVE | authenticated |  | `((get_user_agent_name() = agent_name) OR is_admin_or_supervisor())` |
@@ -407,8 +407,8 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.user_profiles | Admins can insert profiles with any role | INSERT | PERMISSIVE | authenticated |  | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | public.user_profiles | Admins manage all profiles | ALL | PERMISSIVE | authenticated | `is_admin_user(( SELECT auth.uid() AS uid))` |  |
 | public.user_profiles | Admins supervisors view all profiles | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
-| public.user_profiles | Admins update any profile | UPDATE | PERMISSIVE | authenticated | `is_admin_user(auth.uid())` | `is_admin_user(auth.uid())` |
-| public.user_profiles | Users update own profile | UPDATE | PERMISSIVE | authenticated | `(auth.uid() = id)` | `(auth.uid() = id)` |
+| public.user_profiles | Admins update any profile | UPDATE | PERMISSIVE | authenticated | `is_admin_user(( SELECT auth.uid() AS uid))` | `is_admin_user(( SELECT auth.uid() AS uid))` |
+| public.user_profiles | Users update own profile | UPDATE | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = id)` | `(( SELECT auth.uid() AS uid) = id)` |
 | public.user_profiles | Users view own profile | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = id)` |  |
 | public.user_roles | Admins can manage all roles | ALL | PERMISSIVE | authenticated | `has_role(( SELECT auth.uid() AS uid), 'admin'::app_role)` |  |
 | public.user_roles | Users can view their own roles | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` |  |
@@ -426,7 +426,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.voicemail_messages | Agents can view own voicemail | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
 | public.voicemail_messages | Agents or admins can insert voicemails | INSERT | PERMISSIVE | authenticated |  | `(is_admin_or_supervisor() OR is_active_agent(agent_name))` |
 | public.voip_monitoring_settings | Admins can manage voip settings | ALL | PERMISSIVE | public | `(EXISTS ( SELECT 1    FROM user_roles   WHERE ((user_roles.user_id = ( SELECT auth.uid() AS uid)) AND (user_roles.role = 'admin'::app_role))))` |  |
-| public.voip_monitoring_settings | All authenticated can view voip settings | SELECT | PERMISSIVE | public | `(auth.role() = 'authenticated'::text)` |  |
+| public.voip_monitoring_settings | All authenticated can view voip settings | SELECT | PERMISSIVE | public | `(( SELECT auth.role() AS role) = 'authenticated'::text)` |  |
 | public.voip_quality_alerts | Admins delete voip alerts | DELETE | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
 | public.voip_quality_alerts | Users insert own voip alerts | INSERT | PERMISSIVE | public |  | `(( SELECT auth.uid() AS uid) = user_id)` |
 | public.voip_quality_alerts | Users update own voip alerts | UPDATE | PERMISSIVE | public | `((( SELECT auth.uid() AS uid) = user_id) OR is_admin_or_supervisor())` |  |
@@ -457,3 +457,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.whisper_messages | Agents can update own whisper_messages | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
 | public.whisper_messages | Role-based view whisper_messages | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
 | public.whisper_messages | Supervisors can insert whisper_messages | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
+| storage.objects | queue_audio_staff_insert | INSERT | PERMISSIVE | authenticated |  | `(bucket_id = 'queue-audio'::text)` |
+| storage.objects | recording_staff_delete | DELETE | PERMISSIVE | authenticated | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text]))` |  |
+| storage.objects | recording_staff_insert | INSERT | PERMISSIVE | authenticated |  | `(bucket_id = 'call-recordings'::text)` |
+| storage.objects | recording_staff_select | SELECT | PERMISSIVE | authenticated | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))` |  |

@@ -58,7 +58,7 @@
 | comando | DELETE |
 | tipo | PERMISSIVE |
 | roles | public |
-| USING | `(auth.uid() = user_id)` |
+| USING | `(( SELECT auth.uid() AS uid) = user_id)` |
 | WITH CHECK |  |
 
 ### `Users can insert own filters`
@@ -69,7 +69,7 @@
 | tipo | PERMISSIVE |
 | roles | public |
 | USING |  |
-| WITH CHECK | `(auth.uid() = user_id)` |
+| WITH CHECK | `(( SELECT auth.uid() AS uid) = user_id)` |
 
 ### `Users can update own filters`
 
@@ -78,8 +78,8 @@
 | comando | UPDATE |
 | tipo | PERMISSIVE |
 | roles | public |
-| USING | `(auth.uid() = user_id)` |
-| WITH CHECK | `(auth.uid() = user_id)` |
+| USING | `(( SELECT auth.uid() AS uid) = user_id)` |
+| WITH CHECK | `(( SELECT auth.uid() AS uid) = user_id)` |
 
 ### `Users can view own filters`
 
@@ -88,7 +88,7 @@
 | comando | SELECT |
 | tipo | PERMISSIVE |
 | roles | public |
-| USING | `(auth.uid() = user_id)` |
+| USING | `(( SELECT auth.uid() AS uid) = user_id)` |
 | WITH CHECK |  |
 
 

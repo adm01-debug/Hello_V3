@@ -42,9 +42,9 @@ BEGIN
         action_url, action_label, source_type, source_id, metadata
       ) VALUES (
         v_admin.id,
-        'Hotspot de conflito de concorr�ncia',
+        'Hotspot de conflito de concorrência',
         'Tabela "' || NEW.table_name || '" registrou ' || v_recent_count ||
-          ' conflitos na �ltima hora. Investigue poss�veis problemas de UI ou conten��o.',
+          ' conflitos na última hora. Investigue possíveis problemas de UI ou contenção.',
         'warning',
         'system',
         'warning',

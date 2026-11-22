@@ -56,7 +56,7 @@
 | comando | SELECT |
 | tipo | PERMISSIVE |
 | roles | public |
-| USING | `(auth.role() = 'authenticated'::text)` |
+| USING | `(( SELECT auth.role() AS role) = 'authenticated'::text)` |
 | WITH CHECK |  |
 
 

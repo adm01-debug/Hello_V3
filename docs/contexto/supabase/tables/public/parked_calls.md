@@ -81,16 +81,16 @@
 | tipo | PERMISSIVE |
 | roles | authenticated |
 | USING |  |
-| WITH CHECK | `((parked_by = auth.uid()) AND (status = 'parked'::text))` |
+| WITH CHECK | `((parked_by = ( SELECT auth.uid() AS uid)) AND (status = 'parked'::text))` |
 
-### `parked_calls_select_auth`
+### `parked_calls_select_self_or_staff`
 
 | campo | valor |
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
 | roles | authenticated |
-| USING | `true` |
+| USING | `((parked_by = auth.uid()) OR is_admin_user(auth.uid()) OR is_supervisor())` |
 | WITH CHECK |  |
 
 ### `parked_calls_update_retrieve`
@@ -101,7 +101,7 @@
 | tipo | PERMISSIVE |
 | roles | authenticated |
 | USING | `((status = 'parked'::text) OR is_admin_or_supervisor())` |
-| WITH CHECK | `(is_admin_or_supervisor() OR ((status <> 'parked'::text) AND (retrieved_by = auth.uid())) OR ((status = 'parked'::text) AND (parked_by = auth.uid())))` |
+| WITH CHECK | `(is_admin_or_supervisor() OR ((status <> 'parked'::text) AND (retrieved_by = ( SELECT auth.uid() AS uid))) OR ((status = 'parked'::text) AND (parked_by = ( SELECT auth.uid() AS uid))))` |
 
 
 ## Triggers

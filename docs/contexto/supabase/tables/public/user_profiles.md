@@ -105,8 +105,8 @@
 | comando | UPDATE |
 | tipo | PERMISSIVE |
 | roles | authenticated |
-| USING | `is_admin_user(auth.uid())` |
-| WITH CHECK | `is_admin_user(auth.uid())` |
+| USING | `is_admin_user(( SELECT auth.uid() AS uid))` |
+| WITH CHECK | `is_admin_user(( SELECT auth.uid() AS uid))` |
 
 ### `Users update own profile`
 
@@ -115,8 +115,8 @@
 | comando | UPDATE |
 | tipo | PERMISSIVE |
 | roles | authenticated |
-| USING | `(auth.uid() = id)` |
-| WITH CHECK | `(auth.uid() = id)` |
+| USING | `(( SELECT auth.uid() AS uid) = id)` |
+| WITH CHECK | `(( SELECT auth.uid() AS uid) = id)` |
 
 ### `Users view own profile`
 

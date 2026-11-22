@@ -70,7 +70,7 @@
 | comando | SELECT |
 | tipo | PERMISSIVE |
 | roles | public |
-| USING | `(is_admin_or_supervisor() OR (source = (auth.jwt() ->> 'email'::text)))` |
+| USING | `(is_admin_or_supervisor() OR (source = (( SELECT auth.jwt() AS jwt) ->> 'email'::text)))` |
 | WITH CHECK |  |
 
 ### `Agents log own call control events`

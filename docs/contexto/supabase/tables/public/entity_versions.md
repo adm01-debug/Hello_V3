@@ -55,7 +55,7 @@
 | tipo | PERMISSIVE |
 | roles | authenticated |
 | USING |  |
-| WITH CHECK | `(auth.uid() = changed_by)` |
+| WITH CHECK | `(( SELECT auth.uid() AS uid) = changed_by)` |
 
 ### `Authenticated can view versions`
 
@@ -64,7 +64,7 @@
 | comando | SELECT |
 | tipo | PERMISSIVE |
 | roles | authenticated |
-| USING | `(auth.uid() IS NOT NULL)` |
+| USING | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |
 | WITH CHECK |  |
 
 

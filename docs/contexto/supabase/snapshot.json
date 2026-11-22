@@ -31330,7 +31330,7 @@
           "active": true,
           "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/cleanup-lock-conflicts',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_lock_conflicts_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
           "database": "postgres",
-          "jobid": 13,
+          "jobid": 14,
           "jobname": "cleanup-lock-conflicts-weekly",
           "schedule": "0 3 * * 0",
           "username": "postgres"
@@ -31790,7 +31790,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "b22bfdded80dd2d7",
+        "definition_sha": "e66d1c930690f93d",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": false,
@@ -32341,7 +32341,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "239d9871424725f5",
+        "definition_sha": "2c590530f3b9afd8",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": true,
@@ -34170,7 +34170,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "9f24f65c2e756859",
+        "definition_sha": "2615d44dc050b0b5",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": true,
@@ -46522,85 +46522,7 @@
       {
         "code": "policy_auth_fn_not_wrapped",
         "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.call_control_audit_logs.Agents can view own audit logs",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.dialer_favorites.Users manage own dialer favorites",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.entity_versions.Authenticated can insert versions",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.entity_versions.Authenticated can view versions",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.parked_calls.parked_calls_insert_self",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.parked_calls.parked_calls_update_retrieve",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.saved_filters.Users can delete own filters",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.saved_filters.Users can insert own filters",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.saved_filters.Users can update own filters",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.saved_filters.Users can view own filters",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.system_settings.Leitura de configurações para autenticados",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.user_profiles.Admins update any profile",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.user_profiles.Users update own profile",
-        "severity": "BAIXA"
-      },
-      {
-        "code": "policy_auth_fn_not_wrapped",
-        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
-        "object": "public.voip_monitoring_settings.All authenticated can view voip settings",
+        "object": "public.parked_calls.parked_calls_select_self_or_staff",
         "severity": "BAIXA"
       },
       {
@@ -46756,9 +46678,1124 @@
         "version": "20250102000000"
       },
       {
+        "name": "20250103000000_triggers",
+        "statements": null,
+        "version": "20250103000000"
+      },
+      {
+        "name": "20250104000000_query_monitoring",
+        "statements": null,
+        "version": "20250104000000"
+      },
+      {
+        "name": "20251222153717_0868819c-c2a1-4f51-abcd-34ae49b599ed",
+        "statements": null,
+        "version": "20251222153717"
+      },
+      {
+        "name": "20251222165402_c515f03e-0bf3-4c17-a56b-b209d783515a",
+        "statements": null,
+        "version": "20251222165402"
+      },
+      {
+        "name": "20251222172653_e31b25fa-1495-47dc-a70e-59351aae7386",
+        "statements": null,
+        "version": "20251222172653"
+      },
+      {
+        "name": "20251223013407_14e5788a-757b-4c1a-b447-ee6048bee1b3",
+        "statements": null,
+        "version": "20251223013407"
+      },
+      {
+        "name": "20251223014743_829d5071-0f42-4ea3-bd3d-eb8bd994a318",
+        "statements": null,
+        "version": "20251223014743"
+      },
+      {
+        "name": "20251223203745_ffdf3a72-6756-465c-9e63-fa079846be95",
+        "statements": null,
+        "version": "20251223203745"
+      },
+      {
+        "name": "20251223203951_8b86adf3-98b4-4cf4-8154-b1efb3cde4bd",
+        "statements": null,
+        "version": "20251223203951"
+      },
+      {
+        "name": "20251223204512_e8f40654-7907-4e57-97c1-480e0d602e18",
+        "statements": null,
+        "version": "20251223204512"
+      },
+      {
+        "name": "20251223211907_9badc1f9-c450-4801-b56f-7cac4cabf237",
+        "statements": null,
+        "version": "20251223211907"
+      },
+      {
+        "name": "20251223220228_f4ebbaa7-ea1c-447d-a07b-e1c0f583963d",
+        "statements": null,
+        "version": "20251223220228"
+      },
+      {
+        "name": "20251224021814_cc2dbdc3-ab3c-4fd9-aa8d-7af71ae39f75",
+        "statements": null,
+        "version": "20251224021814"
+      },
+      {
+        "name": "20251224022103_aa00248e-f07a-4edc-8c76-96e520ba31a9",
+        "statements": null,
+        "version": "20251224022103"
+      },
+      {
+        "name": "20251224022711_bcf91fc6-4c52-42e8-b02c-c63b4f495a64",
+        "statements": null,
+        "version": "20251224022711"
+      },
+      {
+        "name": "20251224023203_b0186fe4-1181-4b5d-a9cc-460f3738b952",
+        "statements": null,
+        "version": "20251224023203"
+      },
+      {
+        "name": "20251224023654_29935900-12bb-4c40-bb31-a061340c76eb",
+        "statements": null,
+        "version": "20251224023654"
+      },
+      {
+        "name": "20251224024429_6c4f4a9d-c7f9-4cd3-a57e-c4b8659a6776",
+        "statements": null,
+        "version": "20251224024429"
+      },
+      {
+        "name": "20251224124237_40fde4e2-d0ab-4b62-8898-4171393988c4",
+        "statements": null,
+        "version": "20251224124237"
+      },
+      {
+        "name": "20251224124524_38968a99-a0bc-4cff-a5c2-2fd2590d2e8e",
+        "statements": null,
+        "version": "20251224124524"
+      },
+      {
+        "name": "20251224134357_08ef4955-ebfb-4dc3-b63b-9d247050951f",
+        "statements": null,
+        "version": "20251224134357"
+      },
+      {
+        "name": "20251224134826_e7324447-c07d-4e94-b603-52bf4efa2773",
+        "statements": null,
+        "version": "20251224134826"
+      },
+      {
+        "name": "20251224142716_d2c04aae-f048-4e7c-b447-1d6e3a840412",
+        "statements": null,
+        "version": "20251224142716"
+      },
+      {
+        "name": "20251224143457_dcc666f8-bf68-4077-86f4-4a0ad7dd27b3",
+        "statements": null,
+        "version": "20251224143457"
+      },
+      {
+        "name": "20251225181949_a8f1c32a-4aeb-4156-9cb1-6e71955acb4e",
+        "statements": null,
+        "version": "20251225181949"
+      },
+      {
+        "name": "20251225183119_7313996d-e875-4c04-a6ff-89415df9f212",
+        "statements": null,
+        "version": "20251225183119"
+      },
+      {
+        "name": "20251225185236_a4c86a9f-4ff8-4f94-b7a7-3970e2787ae0",
+        "statements": null,
+        "version": "20251225185236"
+      },
+      {
+        "name": "20251225190920_52373a9f-fb31-4f5d-9fcd-3aeb2db90f94",
+        "statements": null,
+        "version": "20251225190920"
+      },
+      {
+        "name": "20251225191244_a0843a19-ef2a-4fe3-b2ba-feb13d068ec9",
+        "statements": null,
+        "version": "20251225191244"
+      },
+      {
+        "name": "20251225191929_af4e2e70-f169-4dd0-9210-a20c4ec45405",
+        "statements": null,
+        "version": "20251225191929"
+      },
+      {
+        "name": "20251225192806_31f73fb3-ef04-442d-b4bd-cc6cce94cdb8",
+        "statements": null,
+        "version": "20251225192806"
+      },
+      {
+        "name": "20251225193248_4613adbc-ca55-48c4-94aa-3aec14e8d9de",
+        "statements": null,
+        "version": "20251225193248"
+      },
+      {
+        "name": "20251225193519_5687c33d-e757-4f87-b3c2-e4648db83a9c",
+        "statements": null,
+        "version": "20251225193519"
+      },
+      {
+        "name": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921",
+        "statements": null,
+        "version": "20251231115936"
+      },
+      {
+        "name": "20251231123454_98bf0ac7-a43f-4b30-b4cb-00b50bb2482c",
+        "statements": null,
+        "version": "20251231123454"
+      },
+      {
+        "name": "20251231125803_b47a2b11-3915-463a-9c94-57b741b7e4ab",
+        "statements": null,
+        "version": "20251231125803"
+      },
+      {
+        "name": "20251231131323_f5848ea5-ae7d-4e46-ac63-aba88d5f35bc",
+        "statements": null,
+        "version": "20251231131323"
+      },
+      {
+        "name": "20251231132751_524f6c03-6c9f-4b16-aae7-d38bb6903fda",
+        "statements": null,
+        "version": "20251231132751"
+      },
+      {
+        "name": "20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6",
+        "statements": null,
+        "version": "20260103145030"
+      },
+      {
+        "name": "20260306002511_8add8104-e5d1-4a4d-8e8b-d220fb8ebc88",
+        "statements": null,
+        "version": "20260306002511"
+      },
+      {
+        "name": "20260315143846_e02c7525-49f2-4a6c-aeeb-b5cff06ba996",
+        "statements": null,
+        "version": "20260315143846"
+      },
+      {
+        "name": "20260315143859_53accc1d-5241-481f-bb43-a20c0123dede",
+        "statements": null,
+        "version": "20260315143859"
+      },
+      {
+        "name": "20260315144312_5b41e5e7-ff57-40a1-ad7e-68133720c86c",
+        "statements": null,
+        "version": "20260315144312"
+      },
+      {
+        "name": "20260315144323_b1df060b-6599-4b27-8056-0999ad3897f9",
+        "statements": null,
+        "version": "20260315144323"
+      },
+      {
+        "name": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91",
+        "statements": null,
+        "version": "20260315194850"
+      },
+      {
+        "name": "20260315200451_a246f656-4ac8-454c-82f0-11503932b7af",
+        "statements": null,
+        "version": "20260315200451"
+      },
+      {
+        "name": "20260315200900_dac39802-7884-4e8d-a6a4-99ab39e47f13",
+        "statements": null,
+        "version": "20260315200900"
+      },
+      {
+        "name": "20260326182838_760cfe64-1c2a-4917-8d2b-ffb9a9d84706",
+        "statements": null,
+        "version": "20260326182838"
+      },
+      {
+        "name": "20260326203635_fe5f7d10-4927-4979-8a70-b1040cd0533f",
+        "statements": null,
+        "version": "20260326203635"
+      },
+      {
+        "name": "20260326212327_85bcfe8d-5ddd-4e31-ace6-2cdcef39a75c",
+        "statements": null,
+        "version": "20260326212327"
+      },
+      {
+        "name": "20260403173646_6cd26a7c-d9a5-46fd-a088-d45d6a7899b8",
+        "statements": null,
+        "version": "20260403173646"
+      },
+      {
+        "name": "20260403173838_bac4beba-8928-466e-bf28-80f2bcc5f31a",
+        "statements": null,
+        "version": "20260403173838"
+      },
+      {
+        "name": "20260403173933_5a9601f2-c73d-440f-a5ec-6bec06c2c21f",
+        "statements": null,
+        "version": "20260403173933"
+      },
+      {
+        "name": "20260403174025_0883bf21-8a5b-4da0-b298-b2e0c69fd922",
+        "statements": null,
+        "version": "20260403174025"
+      },
+      {
+        "name": "20260403174132_2a136550-f4f2-480b-bcae-7bb69867ce66",
+        "statements": null,
+        "version": "20260403174132"
+      },
+      {
+        "name": "20260403174223_28fcf28e-8d91-4129-993d-8c5d611d1603",
+        "statements": null,
+        "version": "20260403174223"
+      },
+      {
+        "name": "20260403174317_449cc94a-3930-43be-8a8f-ee6721bb8c8e",
+        "statements": null,
+        "version": "20260403174317"
+      },
+      {
+        "name": "20260404151943_4d4acd99-8f24-419a-b876-9385032bcac4",
+        "statements": null,
+        "version": "20260404151943"
+      },
+      {
+        "name": "20260404152930_a0c485a8-be6e-4585-9210-965230883732",
+        "statements": null,
+        "version": "20260404152930"
+      },
+      {
+        "name": "20260404153313_5b939cc2-dab9-4e2c-a217-37944746d340",
+        "statements": null,
+        "version": "20260404153313"
+      },
+      {
+        "name": "20260404153406_63c06b07-8635-4632-9178-cc1e0a7c4768",
+        "statements": null,
+        "version": "20260404153406"
+      },
+      {
+        "name": "20260404153443_fc5cc758-4c59-429e-9665-c491cf8b15a7",
+        "statements": null,
+        "version": "20260404153443"
+      },
+      {
+        "name": "20260404153529_f5087013-0957-4e7a-a90d-b0aa3c45520c",
+        "statements": null,
+        "version": "20260404153529"
+      },
+      {
+        "name": "20260404153606_b7a7e914-9712-4ce4-bb4f-3f2154d04060",
+        "statements": null,
+        "version": "20260404153606"
+      },
+      {
+        "name": "20260404153703_eb70188b-319b-47bf-8f0c-0f1ba4e3362c",
+        "statements": null,
+        "version": "20260404153703"
+      },
+      {
+        "name": "20260404153900_c14f803b-0702-45d1-955e-44052d9cfb5e",
+        "statements": null,
+        "version": "20260404153900"
+      },
+      {
+        "name": "20260404154500_001c5838-bd21-4cec-95ec-f4813305dc93",
+        "statements": null,
+        "version": "20260404154500"
+      },
+      {
+        "name": "20260404155021_d5ad371d-3edc-4f4d-a487-14e8d16b995f",
+        "statements": null,
+        "version": "20260404155021"
+      },
+      {
+        "name": "20260404155303_407909d0-fe74-457f-9f9d-0f94da0141bb",
+        "statements": null,
+        "version": "20260404155303"
+      },
+      {
+        "name": "20260404155346_0124fa88-5184-41ab-be0c-104924a03306",
+        "statements": null,
+        "version": "20260404155346"
+      },
+      {
+        "name": "20260404155428_8ea25ee0-9d60-4d50-944b-9b295f3fc4d9",
+        "statements": null,
+        "version": "20260404155428"
+      },
+      {
+        "name": "20260404155512_228999bb-182f-42dd-8f07-9258821cceba",
+        "statements": null,
+        "version": "20260404155512"
+      },
+      {
+        "name": "20260404155544_4cc03565-fe66-4dfc-8a46-f4d0100185a7",
+        "statements": null,
+        "version": "20260404155544"
+      },
+      {
+        "name": "20260404155609_627e85b5-59c7-4fe3-9f30-be9b31f20ef0",
+        "statements": null,
+        "version": "20260404155609"
+      },
+      {
+        "name": "20260404155727_801b1d27-2b56-4db6-acd1-cb754c060e69",
+        "statements": null,
+        "version": "20260404155727"
+      },
+      {
+        "name": "20260404155927_caf70895-2bf1-4c92-88a3-e66e16e17e66",
+        "statements": null,
+        "version": "20260404155927"
+      },
+      {
+        "name": "20260404160553_5fa5fe0f-ba07-42df-803c-bc7f244e6ac1",
+        "statements": null,
+        "version": "20260404160553"
+      },
+      {
+        "name": "20260404160627_ba4d721b-1f34-4bf9-8b32-2147b7a1b9b1",
+        "statements": null,
+        "version": "20260404160627"
+      },
+      {
+        "name": "20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8",
+        "statements": null,
+        "version": "20260416225701"
+      },
+      {
+        "name": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5",
+        "statements": null,
+        "version": "20260416234921"
+      },
+      {
+        "name": "20260416234937_5d91da48-828d-4b25-a69e-a36aa8d4c792",
+        "statements": null,
+        "version": "20260416234937"
+      },
+      {
+        "name": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d",
+        "statements": null,
+        "version": "20260416235642"
+      },
+      {
+        "name": "20260416235655_f8115cdd-45a5-45af-9801-34219aa00107",
+        "statements": null,
+        "version": "20260416235655"
+      },
+      {
+        "name": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f",
+        "statements": null,
+        "version": "20260417000338"
+      },
+      {
+        "name": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a",
+        "statements": null,
+        "version": "20260417001411"
+      },
+      {
+        "name": "20260417001429_4d360a46-05bd-40b3-a5db-9ad5586337f2",
+        "statements": null,
+        "version": "20260417001429"
+      },
+      {
+        "name": "20260417002302_ac16e3fa-c0c4-4a84-958e-c3936f9e9034",
+        "statements": null,
+        "version": "20260417002302"
+      },
+      {
+        "name": "20260417110551_0cb1418b-1c9a-4cf2-9164-7d7f523213d8",
+        "statements": null,
+        "version": "20260417110551"
+      },
+      {
+        "name": "20260417113024_b37afec8-ce2c-47c3-9009-50ef0e86b65c",
+        "statements": null,
+        "version": "20260417113024"
+      },
+      {
+        "name": "20260417113731_0610041c-71b2-497f-974e-2f62b20b3415",
+        "statements": null,
+        "version": "20260417113731"
+      },
+      {
+        "name": "20260417115220_5f984153-6650-4d10-ad92-88678b974261",
+        "statements": null,
+        "version": "20260417115220"
+      },
+      {
+        "name": "20260417124005_3fc6137c-55d7-49a5-8ca9-fe347cabefb8",
+        "statements": null,
+        "version": "20260417124005"
+      },
+      {
+        "name": "20260417124027_d4a7b08a-d968-4234-b8c2-3f30e9e7bcad",
+        "statements": null,
+        "version": "20260417124027"
+      },
+      {
+        "name": "20260417164448_f2a7d0e1-ed11-4f31-9ec2-8717486ecf5d",
+        "statements": null,
+        "version": "20260417164448"
+      },
+      {
+        "name": "20260417173310_6deb0b6c-91b7-48bc-ba64-00f718d24462",
+        "statements": null,
+        "version": "20260417173310"
+      },
+      {
+        "name": "20260417193624_c504362a-a440-413e-9f5e-2bedb08a01a0",
+        "statements": null,
+        "version": "20260417193624"
+      },
+      {
+        "name": "20260417194803_3f7e2538-de99-493b-99f0-23ddf2349f2d",
+        "statements": null,
+        "version": "20260417194803"
+      },
+      {
+        "name": "20260418011716_3af60ac2-4c97-49a3-9070-de71020046dd",
+        "statements": null,
+        "version": "20260418011716"
+      },
+      {
+        "name": "20260418123303_f221bac1-e35e-4ab2-a93e-3dc4e1e16600",
+        "statements": null,
+        "version": "20260418123303"
+      },
+      {
+        "name": "20260418123340_d3452a78-2e4f-4f47-9bd6-c59dabad34d6",
+        "statements": null,
+        "version": "20260418123340"
+      },
+      {
+        "name": "20260418123436_9d9ee1c4-c236-426f-8034-7ca5df2e6d70",
+        "statements": null,
+        "version": "20260418123436"
+      },
+      {
+        "name": "20260418125824_ffc6f214-6d47-4a13-b234-cfa8c460ec61",
+        "statements": null,
+        "version": "20260418125824"
+      },
+      {
+        "name": "20260418130219_e51ae5d5-32fe-4148-be46-9111af2221f0",
+        "statements": null,
+        "version": "20260418130219"
+      },
+      {
+        "name": "20260418130426_2eb9eeb2-e9c9-4421-bab5-3935bb4a6274",
+        "statements": null,
+        "version": "20260418130426"
+      },
+      {
+        "name": "20260418132329_194c7950-0787-43d5-a46a-f204640ee74a",
+        "statements": null,
+        "version": "20260418132329"
+      },
+      {
+        "name": "20260418134513_8f99e4ad-bf44-4a71-b2ac-bc59c555a283",
+        "statements": null,
+        "version": "20260418134513"
+      },
+      {
+        "name": "20260418141900_bac7392a-79fd-4a8d-8497-2144c6f23337",
+        "statements": null,
+        "version": "20260418141900"
+      },
+      {
+        "name": "20260418143532_ce6a3be9-4e9b-4d97-85ba-276c8ee1354c",
+        "statements": null,
+        "version": "20260418143532"
+      },
+      {
+        "name": "20260418144103_3396eae6-b7f0-4fd0-8596-ee6276d550c1",
+        "statements": null,
+        "version": "20260418144103"
+      },
+      {
+        "name": "20260507194207_0b6ba7a2-4a8f-44f5-8d5f-f822e2ed9a3d",
+        "statements": null,
+        "version": "20260507194207"
+      },
+      {
+        "name": "20260507204417_f94a9c35-059d-4be2-8033-2e8bfa7eaafc",
+        "statements": null,
+        "version": "20260507204417"
+      },
+      {
+        "name": "20260507204428_f439fbba-2071-4812-9a76-1ec61e98267b",
+        "statements": null,
+        "version": "20260507204428"
+      },
+      {
+        "name": "20260507204439_beae22cd-b361-44e2-8e76-14572c648bec",
+        "statements": null,
+        "version": "20260507204439"
+      },
+      {
+        "name": "20260507204501_97c5b796-36b7-4722-b1ec-68f44672030d",
+        "statements": null,
+        "version": "20260507204501"
+      },
+      {
+        "name": "20260507204618_0b29d87e-fa11-4a14-b87d-ea3943062795",
+        "statements": null,
+        "version": "20260507204618"
+      },
+      {
+        "name": "20260507204806_d4ef5bf0-8935-4563-953e-d67f11a70981",
+        "statements": null,
+        "version": "20260507204806"
+      },
+      {
+        "name": "20260507210530_523fc480-d6dd-4353-bdf9-809396a2fd57",
+        "statements": null,
+        "version": "20260507210530"
+      },
+      {
+        "name": "20260507210614_dd491d22-0316-4bcd-bc79-f62325aa845e",
+        "statements": null,
+        "version": "20260507210614"
+      },
+      {
+        "name": "20260507210817_17861cb9-6603-40aa-841e-9a130923b865",
+        "statements": null,
+        "version": "20260507210817"
+      },
+      {
+        "name": "20260507210947_d778a772-2c9d-490b-ad07-4c019a6eaa44",
+        "statements": null,
+        "version": "20260507210947"
+      },
+      {
+        "name": "20260507220325_dcddf456-0d72-414d-b77a-68839a03a706",
+        "statements": null,
+        "version": "20260507220325"
+      },
+      {
+        "name": "20260507220616_3feba3f7-8e03-47ff-b2a3-b4e860beb5e0",
+        "statements": null,
+        "version": "20260507220616"
+      },
+      {
+        "name": "20260507220756_3754305d-eebb-4a27-b26c-d3841747c295",
+        "statements": null,
+        "version": "20260507220756"
+      },
+      {
+        "name": "20260507220818_0e9bddfe-b428-4410-9a46-19d6bca9f4f3",
+        "statements": null,
+        "version": "20260507220818"
+      },
+      {
+        "name": "20260507221246_8cb863b7-2e5f-4003-adb0-fa3597e71bf8",
+        "statements": null,
+        "version": "20260507221246"
+      },
+      {
+        "name": "20260507221454_8ee1f1c8-e52c-42d1-93f5-136662aa8772",
+        "statements": null,
+        "version": "20260507221454"
+      },
+      {
+        "name": "20260509182826_8908f84e-718b-490d-8067-a9d58182751b",
+        "statements": null,
+        "version": "20260509182826"
+      },
+      {
+        "name": "20260509184955_dfe329e5-9241-40ed-8f9d-28cef0cffb1f",
+        "statements": null,
+        "version": "20260509184955"
+      },
+      {
+        "name": "20260515170309_98507006-514f-467b-b3e7-a1f30f5377d4",
+        "statements": null,
+        "version": "20260515170309"
+      },
+      {
+        "name": "20260515171135_134e605d-28e8-4d47-9aa1-1e7c4247c819",
+        "statements": null,
+        "version": "20260515171135"
+      },
+      {
+        "name": "20260515172240_fa26b542-4abd-4df6-8bf6-37088ffbe1cb",
+        "statements": null,
+        "version": "20260515172240"
+      },
+      {
+        "name": "20260515172623_f11560d3-feec-4354-b7bb-4be22995f835",
+        "statements": null,
+        "version": "20260515172623"
+      },
+      {
+        "name": "20260515172829_e3c28053-3fce-46b7-89d5-fee835d0b1de",
+        "statements": null,
+        "version": "20260515172829"
+      },
+      {
+        "name": "20260515173641_1acef862-aca2-4f33-8dfa-1b4a506b9a2b",
+        "statements": null,
+        "version": "20260515173641"
+      },
+      {
+        "name": "20260515173713_956eede7-264d-4ead-8440-33022635c0d9",
+        "statements": null,
+        "version": "20260515173713"
+      },
+      {
+        "name": "20260515174404_622b2b39-59f3-4490-9288-52ab9048d547",
+        "statements": null,
+        "version": "20260515174404"
+      },
+      {
+        "name": "20260516121853_6c77ecf2-fa8d-4077-af53-504bb6ba9577",
+        "statements": null,
+        "version": "20260516121853"
+      },
+      {
+        "name": "20260516121909_02cdd6ef-de51-432c-96ac-609d074599b2",
+        "statements": null,
+        "version": "20260516121909"
+      },
+      {
+        "name": "20260522143147_ddedbdf5-8f2f-4da9-b6c6-90023bcb0ea8",
+        "statements": null,
+        "version": "20260522143147"
+      },
+      {
+        "name": "20260522143220_5f94f41c-e6ae-4c59-88c6-d38431e7e08a",
+        "statements": null,
+        "version": "20260522143220"
+      },
+      {
+        "name": "20260522143305_624e925f-881b-40a9-828f-1cdf672f1e08",
+        "statements": null,
+        "version": "20260522143305"
+      },
+      {
+        "name": "20260522144442_6afe1433-a0eb-47d9-a4ed-80dda371fc09",
+        "statements": null,
+        "version": "20260522144442"
+      },
+      {
+        "name": "20260522150436_dc5c0106-0d3d-446f-b0e8-914c144bd48d",
+        "statements": null,
+        "version": "20260522150436"
+      },
+      {
+        "name": "20260522151925_2ea5f47f-57b0-43c1-b9dd-af080ecf9e6b",
+        "statements": null,
+        "version": "20260522151925"
+      },
+      {
+        "name": "20260522152441_40b20906-baeb-4a9d-b7eb-d230a616e845",
+        "statements": null,
+        "version": "20260522152441"
+      },
+      {
+        "name": "20260522194835_bedfae5d-959f-47e1-be6a-e9bb2bbe380e",
+        "statements": null,
+        "version": "20260522194835"
+      },
+      {
+        "name": "20260522194847_280002e6-5d25-4cf6-9230-d7fba77bea49",
+        "statements": null,
+        "version": "20260522194847"
+      },
+      {
+        "name": "20260522202120_9602a6a5-b48f-402b-a194-f1c009763fbc",
+        "statements": null,
+        "version": "20260522202120"
+      },
+      {
+        "name": "20260522202145_242ac03f-8895-4f38-a4c3-0fd49b927174",
+        "statements": null,
+        "version": "20260522202145"
+      },
+      {
+        "name": "20260523172256_ea1ae0b2-2688-4a63-aaf0-242d16a570e9",
+        "statements": null,
+        "version": "20260523172256"
+      },
+      {
+        "name": "20260523173643_89df4fa0-8082-4d35-bfd2-9145190fd28e",
+        "statements": null,
+        "version": "20260523173643"
+      },
+      {
+        "name": "20260711153050_e3d3822b-d711-42cf-8514-1f348c336641",
+        "statements": null,
+        "version": "20260711153050"
+      },
+      {
+        "name": "20260711153407_cd8b054f-91fe-49ba-973c-f99797f42aef",
+        "statements": null,
+        "version": "20260711153407"
+      },
+      {
+        "name": "20260711182539_427cd174-9b5a-4703-b1eb-04a85818a633",
+        "statements": null,
+        "version": "20260711182539"
+      },
+      {
+        "name": "20260711184851_d9161e14-4b44-49da-a117-f0770fc40585",
+        "statements": null,
+        "version": "20260711184851"
+      },
+      {
+        "name": "20260711185006_44492a26-e136-43de-93b9-066bed1b40a8",
+        "statements": null,
+        "version": "20260711185006"
+      },
+      {
+        "name": "20260711192442_41aba975-730e-46e0-b2ac-5809a3653c07",
+        "statements": null,
+        "version": "20260711192442"
+      },
+      {
+        "name": "20260711192700_6e6ca80d-e218-4d90-b8d7-f8dbb4e41229",
+        "statements": null,
+        "version": "20260711192700"
+      },
+      {
+        "name": "20260711193012_87aa45a6-d657-4e7b-812f-bb160ef3707e",
+        "statements": null,
+        "version": "20260711193012"
+      },
+      {
+        "name": "20260711194619_238a08b8-a42e-49cd-8856-32a4c1db5c50",
+        "statements": null,
+        "version": "20260711194619"
+      },
+      {
+        "name": "20260711194708_409831f1-bcdb-4529-ae31-eece4fe2a6e2",
+        "statements": null,
+        "version": "20260711194708"
+      },
+      {
+        "name": "20260712110237_ae094d69-c026-433d-b7b1-232eb615e4cd",
+        "statements": null,
+        "version": "20260712110237"
+      },
+      {
+        "name": "20260712110926_e4196a49-0eea-4932-a184-5aa2a5ac53e4",
+        "statements": null,
+        "version": "20260712110926"
+      },
+      {
+        "name": "20260712112627_4ad8101d-5e02-4b1c-a570-f8338fc90f70",
+        "statements": null,
+        "version": "20260712112627"
+      },
+      {
+        "name": "20260712115343_8332dd3d-29a2-4017-954c-edc625f7029b",
+        "statements": null,
+        "version": "20260712115343"
+      },
+      {
+        "name": "20260712115542_c8c86e0b-f57f-45aa-a5d4-d11855cbc993",
+        "statements": null,
+        "version": "20260712115542"
+      },
+      {
+        "name": "20260712195727_e87753b7-3685-42d0-b3c6-5fee033d22cf",
+        "statements": null,
+        "version": "20260712195727"
+      },
+      {
+        "name": "20260712195929_25a722b8-6454-47c7-993c-ca936114bac7",
+        "statements": null,
+        "version": "20260712195929"
+      },
+      {
+        "name": "20260712200150_44934fc1-651b-40ed-a31d-adab8b5496bc",
+        "statements": null,
+        "version": "20260712200150"
+      },
+      {
+        "name": "20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406",
+        "statements": null,
+        "version": "20260712220202"
+      },
+      {
+        "name": "20260712220353_071b40cb-ca2f-4b91-9f14-1f1baf77d987",
+        "statements": null,
+        "version": "20260712220353"
+      },
+      {
+        "name": "20260712220518_9adabae5-b93f-4fba-8720-d433d1af9f9d",
+        "statements": null,
+        "version": "20260712220518"
+      },
+      {
+        "name": "20260713105943_b2f9b04c-7571-47f3-8b80-5a4fc5e40844",
+        "statements": null,
+        "version": "20260713105943"
+      },
+      {
+        "name": "20260713123720_67f0e2ad-4146-47ff-8972-4597117ba0b5",
+        "statements": null,
+        "version": "20260713123720"
+      },
+      {
+        "name": "20260713123946_193787d1-fb4d-439d-8a14-717204104f63",
+        "statements": null,
+        "version": "20260713123946"
+      },
+      {
+        "name": "20260713124157_1ec9c862-55e8-4a14-a1d0-1f50e3273191",
+        "statements": null,
+        "version": "20260713124157"
+      },
+      {
+        "name": "20260713124320_8c06f72e-9dc6-4dd7-89ea-0aff99f5aa92",
+        "statements": null,
+        "version": "20260713124320"
+      },
+      {
+        "name": "20260713124448_2dbeaa00-a7ba-4c4e-a7c2-a4166a3a3abc",
+        "statements": null,
+        "version": "20260713124448"
+      },
+      {
+        "name": "20260715141253_a5cfef74-6f5c-4161-bd7e-14e9a50354d7",
+        "statements": null,
+        "version": "20260715141253"
+      },
+      {
+        "name": "20260715185447_78833799-0540-48b7-9640-44ce0237af8d",
+        "statements": null,
+        "version": "20260715185447"
+      },
+      {
+        "name": "20260717133840_fbddc254-bbd8-43ff-ad12-74c7a9dec44a",
+        "statements": null,
+        "version": "20260717133840"
+      },
+      {
+        "name": "20260722213602_011fe9c6-e570-4180-be7a-d9a276c66f2e",
+        "statements": null,
+        "version": "20260722213602"
+      },
+      {
+        "name": "20260722213827_7ee185db-587f-4046-8507-474be04327a8",
+        "statements": null,
+        "version": "20260722213827"
+      },
+      {
+        "name": "20260723114001_09502153-d05c-40eb-be5f-f84f78526fb3",
+        "statements": null,
+        "version": "20260723114001"
+      },
+      {
+        "name": "20260723114026_7c8c04ab-ff4d-4e6f-bbb0-8a93df42420b",
+        "statements": null,
+        "version": "20260723114026"
+      },
+      {
+        "name": "20260723125329_cfbefc57-81be-44d7-a62b-adf192232b7a",
+        "statements": null,
+        "version": "20260723125329"
+      },
+      {
+        "name": "20260726160049_14fac8e9-52d1-4daf-b825-2005ac32e981",
+        "statements": null,
+        "version": "20260726160049"
+      },
+      {
+        "name": "20260726160800_f505f20d-d433-48ad-b5f2-20ed23e59857",
+        "statements": null,
+        "version": "20260726160800"
+      },
+      {
+        "name": "20260726161642_8ffdd37a-88ab-4fd9-ad1d-abd8f648ee76",
+        "statements": null,
+        "version": "20260726161642"
+      },
+      {
+        "name": "20260726163559_cdb20780-2f84-4668-ac65-4dd86816f3cc",
+        "statements": null,
+        "version": "20260726163559"
+      },
+      {
+        "name": "20260726163733_9fdfcfb8-6879-479a-b5cf-c838630eb471",
+        "statements": null,
+        "version": "20260726163733"
+      },
+      {
+        "name": "20260726164019_e03e4463-0cc2-4272-adf9-d8f9966b2832",
+        "statements": null,
+        "version": "20260726164019"
+      },
+      {
+        "name": "20260726164300_3ccfd4a9-e78e-45c2-8691-067a27810e63",
+        "statements": null,
+        "version": "20260726164300"
+      },
+      {
+        "name": "20260726170243_4fa56ee3-4145-4255-bda0-35b2c62668ed",
+        "statements": null,
+        "version": "20260726170243"
+      },
+      {
+        "name": "20260726184422_9255ab14-e6db-4617-bbeb-6f5d74760201",
+        "statements": null,
+        "version": "20260726184422"
+      },
+      {
+        "name": "20260726184736_593727ca-c093-422e-875a-51a8a1755773",
+        "statements": null,
+        "version": "20260726184736"
+      },
+      {
+        "name": "20260726195450_0ffeebc4-7139-4dfa-8465-d41d8193ea38",
+        "statements": null,
+        "version": "20260726195450"
+      },
+      {
+        "name": "20260726200037_ddb39a7d-1e45-4c97-be01-1923e0caea6d",
+        "statements": null,
+        "version": "20260726200037"
+      },
+      {
+        "name": "20260726201157_da4cb47a-5f61-4783-9786-eb99a7ee6bfc",
+        "statements": null,
+        "version": "20260726201157"
+      },
+      {
+        "name": "20260726202218_619850bb-a4f2-4112-96d7-872649f70b37",
+        "statements": null,
+        "version": "20260726202218"
+      },
+      {
+        "name": "20260726202240_6938071f-1811-40eb-89c4-336a42768f7d",
+        "statements": null,
+        "version": "20260726202240"
+      },
+      {
+        "name": "20260805130000_fix_user_profiles_recursion",
+        "statements": null,
+        "version": "20260805130000"
+      },
+      {
+        "name": "20261114090555_39ac6717-4796-4514-bcee-c3a00c1dfd6d",
+        "statements": null,
+        "version": "20261114090555"
+      },
+      {
+        "name": "20261114090556_f32993dc-8788-4c44-8082-b2e52a7463cb",
+        "statements": null,
+        "version": "20261114090556"
+      },
+      {
+        "name": "20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8",
+        "statements": null,
+        "version": "20261114090557"
+      },
+      {
+        "name": "20261120154610_fix-data-lake-exports-call-summaries",
+        "statements": null,
+        "version": "20261120154610"
+      },
+      {
         "name": "fix_rls_allow_all",
         "statements": [],
         "version": "20261121125200"
+      },
+      {
+        "name": "20261122120000_coaching_auto_tracks_cron",
+        "statements": null,
+        "version": "20261122120000"
+      },
+      {
+        "name": "20261122140000_dialer_pacing_cron",
+        "statements": null,
+        "version": "20261122140000"
+      },
+      {
+        "name": "20261122183000_hardening_revoke_internal_functions",
+        "statements": null,
+        "version": "20261122183000"
+      },
+      {
+        "name": "20261122210000_optimistic_lock_audit_survives_rollback",
+        "statements": null,
+        "version": "20261122210000"
+      },
+      {
+        "name": "20261122220000_lock_conflicts_retention_cron",
+        "statements": null,
+        "version": "20261122220000"
+      },
+      {
+        "name": "20261122230000_reconcile_admin_role_sources",
+        "statements": null,
+        "version": "20261122230000"
+      },
+      {
+        "name": "20261122240000_policies_read_user_roles",
+        "statements": null,
+        "version": "20261122240000"
+      },
+      {
+        "name": "20261122250000_role_checks_honor_active_and_expiry",
+        "statements": null,
+        "version": "20261122250000"
+      },
+      {
+        "name": "20261122260000_is_admin_user_and_get_role_use_user_roles",
+        "statements": null,
+        "version": "20261122260000"
+      },
+      {
+        "name": "20261122270000_notification_recipients_use_user_roles",
+        "statements": null,
+        "version": "20261122270000"
+      },
+      {
+        "name": "20261122280000_is_admin_and_supervisor_honor_expiry",
+        "statements": null,
+        "version": "20261122280000"
+      },
+      {
+        "name": "20261122290000_sync_profile_role_from_user_roles",
+        "statements": null,
+        "version": "20261122290000"
+      },
+      {
+        "name": "20261122300000_storage_policies_for_recordings",
+        "statements": null,
+        "version": "20261122300000"
+      },
+      {
+        "name": "20261122310000_seed_compliance_baseline",
+        "statements": null,
+        "version": "20261122310000"
+      },
+      {
+        "name": "20261122320000_calling_hours_honor_recurring_holidays",
+        "statements": null,
+        "version": "20261122320000"
+      },
+      {
+        "name": "20261122330000_calling_hours_reasons_acentuados",
+        "statements": null,
+        "version": "20261122330000"
+      },
+      {
+        "name": "20261122340000_parked_calls_and_queues_scope_pii",
+        "statements": null,
+        "version": "20261122340000"
       }
     ],
     "policies": [
@@ -47647,7 +48684,7 @@
         ],
         "schema": "public",
         "table": "call_control_audit_logs",
-        "using": "(is_admin_or_supervisor() OR (source = (auth.jwt() ->> 'email'::text)))",
+        "using": "(is_admin_or_supervisor() OR (source = (( SELECT auth.jwt() AS jwt) ->> 'email'::text)))",
         "with_check": null
       },
       {
@@ -49099,8 +50136,8 @@
         ],
         "schema": "public",
         "table": "dialer_favorites",
-        "using": "(auth.uid() = user_id)",
-        "with_check": "(auth.uid() = user_id)"
+        "using": "(( SELECT auth.uid() AS uid) = user_id)",
+        "with_check": "(( SELECT auth.uid() AS uid) = user_id)"
       },
       {
         "cmd": "UPDATE",
@@ -49280,7 +50317,7 @@
         "schema": "public",
         "table": "entity_versions",
         "using": null,
-        "with_check": "(auth.uid() = changed_by)"
+        "with_check": "(( SELECT auth.uid() AS uid) = changed_by)"
       },
       {
         "cmd": "SELECT",
@@ -49291,7 +50328,7 @@
         ],
         "schema": "public",
         "table": "entity_versions",
-        "using": "(auth.uid() IS NOT NULL)",
+        "using": "(( SELECT auth.uid() AS uid) IS NOT NULL)",
         "with_check": null
       },
       {
@@ -50216,18 +51253,18 @@
         "schema": "public",
         "table": "parked_calls",
         "using": null,
-        "with_check": "((parked_by = auth.uid()) AND (status = 'parked'::text))"
+        "with_check": "((parked_by = ( SELECT auth.uid() AS uid)) AND (status = 'parked'::text))"
       },
       {
         "cmd": "SELECT",
-        "name": "parked_calls_select_auth",
+        "name": "parked_calls_select_self_or_staff",
         "permissive": "PERMISSIVE",
         "roles": [
           "authenticated"
         ],
         "schema": "public",
         "table": "parked_calls",
-        "using": "true",
+        "using": "((parked_by = auth.uid()) OR is_admin_user(auth.uid()) OR is_supervisor())",
         "with_check": null
       },
       {
@@ -50240,7 +51277,7 @@
         "schema": "public",
         "table": "parked_calls",
         "using": "((status = 'parked'::text) OR is_admin_or_supervisor())",
-        "with_check": "(is_admin_or_supervisor() OR ((status <> 'parked'::text) AND (retrieved_by = auth.uid())) OR ((status = 'parked'::text) AND (parked_by = auth.uid())))"
+        "with_check": "(is_admin_or_supervisor() OR ((status <> 'parked'::text) AND (retrieved_by = ( SELECT auth.uid() AS uid))) OR ((status = 'parked'::text) AND (parked_by = ( SELECT auth.uid() AS uid))))"
       },
       {
         "cmd": "ALL",
@@ -50743,7 +51780,7 @@
         ],
         "schema": "public",
         "table": "saved_filters",
-        "using": "(auth.uid() = user_id)",
+        "using": "(( SELECT auth.uid() AS uid) = user_id)",
         "with_check": null
       },
       {
@@ -50756,7 +51793,7 @@
         "schema": "public",
         "table": "saved_filters",
         "using": null,
-        "with_check": "(auth.uid() = user_id)"
+        "with_check": "(( SELECT auth.uid() AS uid) = user_id)"
       },
       {
         "cmd": "UPDATE",
@@ -50767,8 +51804,8 @@
         ],
         "schema": "public",
         "table": "saved_filters",
-        "using": "(auth.uid() = user_id)",
-        "with_check": "(auth.uid() = user_id)"
+        "using": "(( SELECT auth.uid() AS uid) = user_id)",
+        "with_check": "(( SELECT auth.uid() AS uid) = user_id)"
       },
       {
         "cmd": "SELECT",
@@ -50779,7 +51816,7 @@
         ],
         "schema": "public",
         "table": "saved_filters",
-        "using": "(auth.uid() = user_id)",
+        "using": "(( SELECT auth.uid() AS uid) = user_id)",
         "with_check": null
       },
       {
@@ -51199,7 +52236,7 @@
         ],
         "schema": "public",
         "table": "system_settings",
-        "using": "(auth.role() = 'authenticated'::text)",
+        "using": "(( SELECT auth.role() AS role) = 'authenticated'::text)",
         "with_check": null
       },
       {
@@ -51595,8 +52632,8 @@
         ],
         "schema": "public",
         "table": "user_profiles",
-        "using": "is_admin_user(auth.uid())",
-        "with_check": "is_admin_user(auth.uid())"
+        "using": "is_admin_user(( SELECT auth.uid() AS uid))",
+        "with_check": "is_admin_user(( SELECT auth.uid() AS uid))"
       },
       {
         "cmd": "UPDATE",
@@ -51607,8 +52644,8 @@
         ],
         "schema": "public",
         "table": "user_profiles",
-        "using": "(auth.uid() = id)",
-        "with_check": "(auth.uid() = id)"
+        "using": "(( SELECT auth.uid() AS uid) = id)",
+        "with_check": "(( SELECT auth.uid() AS uid) = id)"
       },
       {
         "cmd": "SELECT",
@@ -51823,7 +52860,7 @@
         ],
         "schema": "public",
         "table": "voip_monitoring_settings",
-        "using": "(auth.role() = 'authenticated'::text)",
+        "using": "(( SELECT auth.role() AS role) = 'authenticated'::text)",
         "with_check": null
       },
       {
@@ -52185,6 +53222,54 @@
         "table": "whisper_messages",
         "using": null,
         "with_check": "is_admin_or_supervisor()"
+      },
+      {
+        "cmd": "INSERT",
+        "name": "queue_audio_staff_insert",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "storage",
+        "table": "objects",
+        "using": null,
+        "with_check": "(bucket_id = 'queue-audio'::text)"
+      },
+      {
+        "cmd": "DELETE",
+        "name": "recording_staff_delete",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "storage",
+        "table": "objects",
+        "using": "(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text]))",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "name": "recording_staff_insert",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "storage",
+        "table": "objects",
+        "using": null,
+        "with_check": "(bucket_id = 'call-recordings'::text)"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "recording_staff_select",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "storage",
+        "table": "objects",
+        "using": "(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))",
+        "with_check": null
       }
     ],
     "queues": {

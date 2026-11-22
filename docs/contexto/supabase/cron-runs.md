@@ -23,13 +23,11 @@
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-22 03:16:00 | succeeded | 0.02 | 1 row |
-| 2026-11-22 03:15:00 | succeeded | 0.02 | 1 row |
-| 2026-11-22 03:14:00 | succeeded | 0.02 | 1 row |
+| 2026-11-22 04:14:00 | succeeded | 0.02 | 1 row |
+| 2026-11-22 04:13:00 | succeeded | 0.01 | 1 row |
+| 2026-11-22 04:12:00 | succeeded | 0.03 | 1 row |
 
 
-## 13 · cleanup-lock-conflicts-weekly
+## 14 · cleanup-lock-conflicts-weekly
 
-| início (UTC) | status | duração (s) | mensagem |
-|---|---|---|---|
-| 2026-11-22 03:00:00 | succeeded | 0.01 | 1 row |
+_nenhum_
