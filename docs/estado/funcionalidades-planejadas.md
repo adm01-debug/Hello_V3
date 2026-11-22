@@ -153,8 +153,7 @@ São o caso mais claro de "planejado, construído e nunca ligado". Todas confirm
 | Auditoria de segurança (admin) | `pages/admin/SecurityAuditDashboard.tsx` (313 linhas) | ✅ Wireado: rota `/admin/security-audit` + menu **Auditoria de Segurança** | 🟩 |
 | Cadeia WebRTC alternativa | `calls/WebRTCCall.tsx` + 4 filhos (~880 linhas) | Só referenciada por testes; sem rota nem entrada de UI | ⬛ Legado |
 
-**5 Edge Functions sem chamador identificado:** `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`. (`cleanup-lock-conflicts` agora roda por `pg_cron` semanal desde 22/11.) (`generate-coaching-track` agora wireada via botão em `/coaching`.)
-**2 Edge Functions com testes mas sem `index.ts`:** `check-calling-hours/`, `check-dnc/`.
+**5 Edge Functions sem chamador identificado:** `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`. Todas são ferramentas internas, não fluxo de produto: as três primeiras só são invocáveis por admin e a última não tem consumidor de UI (a tradução do produto usa `translate-utterance`, wireada em `useLiveTranslation`). (`cleanup-lock-conflicts` agora roda por `pg_cron` semanal desde 22/11.) (`generate-coaching-track` agora wireada via botão em `/coaching`.)
 
 ---
 
@@ -185,7 +184,7 @@ Diferente de "dormente": aqui havia UI completa e navegável que **simulava** o 
 | **Simulação de chamada (IA)** | Rótulo "tempo real". | Rótulo "demonstração"; aba "Demo de Transcrição". É demonstrativo por desenho. | 🟨 Declarado |
 | **Marketplace** | Catálogo estático; LDAP marcado `disponivel` e data-lake `roadmap` (invertido). | LDAP → `beta` (requer servidor LDAP); data-lake → `disponivel` (fluxo provado). | ✅ Corrigido |
 
-**Nota:** `check-dnc` e `check-calling-hours` **não** são Edge Functions faltantes — nunca tiveram `index.ts`; a lógica é RPC no banco (`rpc('check_dnc')` chamada por `score-call-attempt`) e está registrada em `docs/agentes/edge-functions.md`.
+**Nota:** `check-dnc` e `check-calling-hours` **têm** `index.ts` e estão deployadas (respondem 401 sem JWT, verificado em 22/11) — a afirmação anterior de que "nunca tiveram `index.ts`" era falsa. A lógica de DNC também existe como RPC no banco (`rpc('check_dnc')`, chamada por `score-call-attempt`), então há dois caminhos válidos; ambos constam em `docs/agentes/edge-functions.md`.
 
 ---
 
