@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `71169af0ed2f7e91e4a7957f8cd998efb9aee2b3` (2026-11-22T10:18:58-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `5ca003906e3b88c14ad558ff93c694595dc7752f` (2026-11-22T10:44:10-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1627 |
 | arquivos_codigo | 1235 |
-| linhas_codigo | 168670 |
+| linhas_codigo | 168687 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -367,13 +367,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9157 nós · 24234 arestas · 743 comunidades · grafo do commit `71169af0`
-- comunidades maiores: lucide-react (248), react (238), client.ts (170), protectedRoutes.tsx (167), traceHeaders (149), vitest (144), usePageTitle (135), @tanstack/react-query (122), cn (110), gerar.mjs (104), snapshot.py (102), safe-date.ts (98)
+- 9158 nós · 24235 arestas · 739 comunidades · grafo do commit `5ca00390`
+- comunidades maiores: lucide-react (236), client.ts (184), vitest (164), protectedRoutes.tsx (155), traceHeaders (153), react (145), badge.tsx (133), safeFormatDistanceToNow (130), select.tsx (115), utils.ts (101), useAuthContext (100), UnifiedSoftphone.tsx (97)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/estado/funcionalidades-planejadas.md (17)
+- docs/estado/funcionalidades-planejadas.md (18)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
 - .github/workflows/contexto.yml (6)
@@ -426,6 +426,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `5ca0039` fix: taxa de abandono contava a chamada abandonada duas vezes (#131)
+- 2026-11-22 `89fe47c` docs: registra divergencia de limiar no Nivel de Servico (#130)
 - 2026-11-22 `71169af` fix: contagem em espera do dashboard usava status inexistente (#129)
 - 2026-11-22 `a0096de` feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)
 - 2026-11-22 `071d1dd` docs: substitui rotulo desatualizado por prova de execucao (guard + IA em prod) (#127)
@@ -439,8 +441,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `8c73b1e` test: escopa locators do login para #email/#password no E2E (#119)
 - 2026-11-22 `1e1f3ef` fix(auth): login por passkey sem sessao ativa (#118)
 - 2026-11-22 `bb8f219` fix(edge): libera a origem de producao no CORS das edge functions (#117)
-- 2026-11-22 `6f648ab` fix(security): fecha account takeover no login por passkey (#116)
-- 2026-11-22 `6659a49` test: cobre bitrix-api com testes reais de auth e fail-closed (#115)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

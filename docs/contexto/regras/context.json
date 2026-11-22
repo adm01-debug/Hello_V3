@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "71169af0ed2f7e91e4a7957f8cd998efb9aee2b3",
+  "sha": "5ca003906e3b88c14ad558ff93c694595dc7752f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 13:21 UTC",
+  "generated_at": "2026-11-22 13:44 UTC",
   "files_total": 1674,
   "code_files": 1477,
-  "code_lines": 184489
+  "code_lines": 184506
  },
  "version": "1.3.2",
- "facts_hash": "f9ef4ec2b8f8cb58",
+ "facts_hash": "e8d9f10db50c61f2",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33435,7 +33435,7 @@
   {
    "module": "src/hooks",
    "files": 350,
-   "lines": 45256,
+   "lines": 45273,
    "tables": [
     "accounts",
     "active_sessions",
@@ -62664,6 +62664,10 @@
    {
     "file": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
     "name": "checkGoalStatus handles gte and lte operators"
+   },
+   {
+    "file": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "name": "calcula taxa de abandono sem contar a abandonada duas vezes"
    },
    {
     "file": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
@@ -100718,7 +100722,7 @@
   },
   "src/hooks/useQueueMetrics.ts": {
    "path": "src/hooks/useQueueMetrics.ts",
-   "lines": 190,
+   "lines": 193,
    "exports": [
     "interface QueueMetrics",
     "interface RealtimeData",
@@ -105828,13 +105832,14 @@
   },
   "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-   "lines": 130,
+   "lines": 144,
    "is_test": true,
    "tests": [
     "useQueueMetrics",
     "fetches metrics and computes values",
     "conta em espera apenas chamadas on_hold, nunca um status inventado",
     "checkGoalStatus handles gte and lte operators",
+    "calcula taxa de abandono sem contar a abandonada duas vezes",
     "notifies on goals when goals present",
     "runGoalsCheck success and error",
     "setActiveTab updates state",
@@ -122401,10 +122406,30 @@
   }
  },
  "git": {
-  "sha": "71169af0ed2f7e91e4a7957f8cd998efb9aee2b3",
+  "sha": "5ca003906e3b88c14ad558ff93c694595dc7752f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "5ca0039",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: taxa de abandono contava a chamada abandonada duas vezes (#131)",
+    "files": [
+     "src/components/supervisor/panel/TrendChartToggle.tsx",
+     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+     "src/hooks/useQueueMetrics.ts"
+    ]
+   },
+   {
+    "sha": "89fe47c",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: registra divergencia de limiar no Nivel de Servico (#130)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "71169af",
     "date": "2026-11-22",
@@ -122777,159 +122802,24 @@
      "supabase/functions/validate-geo/index.ts",
      "supabase/functions/validate-geo/ip_literal_test.ts"
     ]
-   },
-   {
-    "sha": "25f5bfb",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "docs: re-scorecard 9,1/10 com os PRs #96, #97, #98 e #99 (#100)",
-    "files": [
-     "docs/audit/scorecard-final.md"
-    ]
-   },
-   {
-    "sha": "f249e85",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)",
-    "files": [
-     "src/components/agent/BargeInNotification.tsx",
-     "src/components/agent/WhisperNotification.tsx",
-     "src/components/ai/AICallAnalysis.tsx",
-     "src/components/alerts/AlertsTrendChart.tsx",
-     "src/components/auth/PasswordStrength.tsx",
-     "src/components/call-history/CallDetailDialog.tsx",
-     "src/components/call-history/CallSessionsList.tsx",
-     "src/components/callbacks/ScheduledCallbacksList.tsx",
-     "src/components/calls/ActiveCallBar.tsx",
-     "src/components/calls/ConferenceSection.tsx",
-     "src/components/calls/HoldReminderSettings.tsx",
-     "src/components/calls/MeetingSummaryCard.tsx",
-     "src/components/calls/VoipQualityIndicator.tsx",
-     "src/components/calls/softphone/ActiveCallDisplay.tsx",
-     "src/components/calls/softphone/TabContents.tsx",
-     "src/components/coaching/CoachingPanel.tsx",
-     "src/components/compliance/ComplianceSettings.tsx",
-     "src/components/compliance/ConsentHistoryViewer.tsx",
-     "src/components/compliance/DNCImportLogs.tsx",
-     "src/components/compliance/HolidaysManager.tsx",
-     "src/components/compliance/dnc/DNCTable.tsx",
-     "src/components/contacts/ContactDetailSheet.tsx",
-     "src/components/contacts/CustomerJourneyTimeline.tsx",
-     "src/components/dashboard/GoalViolationsHistory.tsx",
-     "src/components/dashboard/PerformanceNarrative.tsx",
-     "src/components/dashboard/RecentCalls.tsx",
-     "src/components/dashboard/SortableWidget.tsx",
-     "src/components/dashboard/SystemIntegrityDashboard.tsx",
-     "src/components/dashboard/WidgetLibrary.tsx",
-     "src/components/dialer/PredictiveDialerPanel.tsx",
-     "src/components/executive/QualityTrunkDashboard.tsx",
-     "src/components/executive/RealtimeQualityDashboard.tsx",
-     "src/components/executive/VoipInfrastructureTab.tsx",
-     "src/components/gamification/BadgeCard.tsx",
-     "src/components/hold-alerts/HoldAlertsTable.tsx",
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx",
-     "src/components/lazy/LazyComponent.tsx",
-     "src/components/network/AgentQualityRanking.tsx",
-     "src/components/network/RecommendationHistoryDrawer.tsx",
-     "src/components/network/VoipRecommendationsPanel.tsx",
-     "src/components/network/WhatIfSimulatorDialog.tsx",
-     "src/components/notifications/UnifiedNotificationDropdown.tsx",
-     "src/components/queue/QueueMetricsCards.tsx",
-     "src/components/recordings/TranscriptionDialog.tsx",
-     "src/components/security-alerts/AlertDetailsDialog.tsx",
-     "src/components/security-alerts/AlertsDailyChart.tsx",
-     "src/components/security-alerts/VirtualTimeline.tsx",
-     "src/components/security/NotificationPermissionBanner.tsx",
-     "src/components/settings/SystemLogs.tsx",
-     "src/components/supervisor/QueueTrendChart.tsx",
-     "src/hooks/__tests__/useAlertsExport.test.ts",
-     "src/hooks/__tests__/useBusinessLogic.test.ts",
-     "src/hooks/__tests__/useCallSession.coverage.test.tsx",
-     "src/hooks/__tests__/useCallSession.test.ts",
-     "src/hooks/__tests__/useContacts.coverage.test.tsx",
-     "src/hooks/__tests__/useEdgeFunctions.test.ts",
-     "src/hooks/__tests__/useLearning.coverage.test.tsx",
-     "src/hooks/__tests__/useMeetingSummary.coverage.test.tsx",
-     "src/hooks/__tests__/useSLA.coverage.test.tsx",
-     "src/hooks/__tests__/useSecurityHardening.test.ts",
-     "src/hooks/__tests__/useUncoveredHooks.test.ts",
-     "src/hooks/auth/__tests__/useAuthProfile.coverage.test.tsx",
-     "src/hooks/auth/__tests__/useAuthSession.coverage.test.tsx",
-     "src/hooks/telemetry/useTelemetry.ts",
-     "src/hooks/useBlockedAccessLogs.ts",
-     "src/hooks/useCallAnalytics.ts",
-     "src/hooks/useDashboardData.ts",
-     "src/hooks/useDashboardLayout.ts",
-     "src/hooks/useGoalViolations.ts",
-     "src/hooks/useMultiChannelCall.ts",
-     "src/hooks/useSecurityMonitoringData.ts",
-     "src/hooks/useSessionManager.ts",
-     "src/hooks/useSupervisorPanel.ts",
-     "src/hooks/useTrunkFailoverMonitor.ts",
-     "src/lib/__tests__/agent-assist.pbt.test.ts",
-     "src/lib/__tests__/encryption-webauthn.test.ts",
-     "src/lib/__tests__/error-boundaries.test.tsx",
-     "src/lib/__tests__/export-audit-notifications.test.ts",
-     "src/lib/__tests__/guard-edge-numeric.test.ts",
-     "src/lib/__tests__/performance-optimizations.test.ts",
-     "src/lib/__tests__/predictive-pace.property.test.ts",
-     "src/lib/__tests__/security-advanced.test.ts",
-     "src/lib/__tests__/security-infrastructure.test.ts",
-     "src/lib/__tests__/security-sanitizers.test.ts",
-     "src/lib/__tests__/tracing.coverage.test.ts",
-     "src/lib/__tests__/utilities-comprehensive.test.ts",
-     "src/lib/security/__tests__/helmet-config.coverage.test.ts",
-     "src/lib/security/__tests__/https-enforcer.coverage.test.ts",
-     "src/lib/session/__tests__/index.coverage.test.ts",
-     "src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts",
-     "src/pages/AgentAssist.tsx",
-     "src/pages/AgentRanking.tsx",
-     "src/pages/Alerts.tsx",
-     "src/pages/AuditLogs.tsx",
-     "src/pages/BlockedAccessLogs.tsx",
-     "src/pages/CallFlowDesigner.tsx",
-     "src/pages/CallHistory.tsx",
-     "src/pages/Calls.tsx",
-     "src/pages/ContactInsights.tsx",
-     "src/pages/HoldAlertSettings.tsx",
-     "src/pages/HotDesking.tsx",
-     "src/pages/IPWhitelist.tsx",
-     "src/pages/MeetingSummaries.tsx",
-     "src/pages/NumberPorting.tsx",
-     "src/pages/OutboundCompliance.tsx",
-     "src/pages/Permissions.tsx",
-     "src/pages/QueueMetricsDashboard.tsx",
-     "src/pages/Recordings.tsx",
-     "src/pages/SLAPolicies.tsx",
-     "src/pages/Scheduling.tsx",
-     "src/pages/SecurityDashboard.tsx",
-     "src/pages/SecurityReport.tsx",
-     "src/pages/Skills.tsx",
-     "src/pages/TollFreeNumbers.tsx",
-     "src/pages/Trackers.tsx",
-     "src/pages/TranslationCenter.tsx",
-     "src/pages/VerifyEmail.tsx",
-     "src/pages/VideoConference.tsx",
-     "src/pages/VirtualFax.tsx",
-     "src/pages/VoiceSecurity.tsx",
-     "src/pages/Voicemail.tsx",
-     "src/pages/admin/SecurityAuditDashboard.tsx",
-     "tsconfig.app.json",
-     "tsconfig.json",
-     "tsconfig.node.json"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    5
+    6
    ],
    [
     "supabase/functions/validate-geo/index.ts",
     3
+   ],
+   [
+    "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    2
+   ],
+   [
+    "src/hooks/useQueueMetrics.ts",
+    2
    ],
    [
     "supabase/functions/check-calling-hours/__tests__/index.test.ts",
@@ -122944,18 +122834,6 @@
     2
    ],
    [
-    "src/components/supervisor/QueueTrendChart.tsx",
-    2
-   ],
-   [
-    "src/lib/__tests__/agent-assist.pbt.test.ts",
-    2
-   ],
-   [
-    "src/pages/AgentRanking.tsx",
-    2
-   ],
-   [
     "src/hooks/useWebAuthn.ts",
     2
    ],
@@ -122965,10 +122843,6 @@
    ],
    [
     "supabase/functions/export-data-lake/index.ts",
-    2
-   ],
-   [
-    "src/hooks/auth/__tests__/useAuthProfile.coverage.test.tsx",
     2
    ],
    [
@@ -122992,16 +122866,24 @@
     2
    ],
    [
-    "src/components/agent/WhisperNotification.tsx",
+    "supabase/functions/validate-geo/ip_literal_test.ts",
     2
    ],
    [
-    "src/components/call-history/CallSessionsList.tsx",
-    2
+    "src/components/supervisor/panel/TrendChartToggle.tsx",
+    1
    ],
    [
-    "src/components/calls/softphone/TabContents.tsx",
-    2
+    "scripts/audit-edge-baseline.json",
+    1
+   ],
+   [
+    "scripts/audit-edge-functions.ts",
+    1
+   ],
+   [
+    "supabase/functions/wavoip-call/index.ts",
+    1
    ]
   ]
  }

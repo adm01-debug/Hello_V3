@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "71169af0ed2f7e91e4a7957f8cd998efb9aee2b3",
+  "commit": "5ca003906e3b88c14ad558ff93c694595dc7752f",
   "branch": "main",
-  "data_commit": "2026-11-22T10:18:58-03:00",
+  "data_commit": "2026-11-22T10:44:10-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "5ca0039",
+    "data": "2026-11-22",
+    "assunto": "fix: taxa de abandono contava a chamada abandonada duas vezes (#131)"
+   },
+   {
+    "sha": "89fe47c",
+    "data": "2026-11-22",
+    "assunto": "docs: registra divergencia de limiar no Nivel de Servico (#130)"
+   },
    {
     "sha": "71169af",
     "data": "2026-11-22",
@@ -121,19 +131,9 @@
     "sha": "f03e453",
     "data": "2026-11-22",
     "assunto": "chore: doc reflete a medicao real da Onda 39 e do D3 (#109)"
-   },
-   {
-    "sha": "ed3177d",
-    "data": "2026-11-22",
-    "assunto": "fix: 9 edge functions com erro de tipo que quebravam em producao (#110)"
-   },
-   {
-    "sha": "4a44ddc",
-    "data": "2026-11-21",
-    "assunto": "chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)"
    }
   ],
-  "arquivos_mudados_7d": 858,
+  "arquivos_mudados_7d": 859,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -144,12 +144,12 @@
     "mudancas": 55
    },
    {
-    "pasta": "src/lib/__tests__",
+    "pasta": "src/hooks/__tests__",
     "mudancas": 21
    },
    {
-    "pasta": "src/hooks/__tests__",
-    "mudancas": 20
+    "pasta": "src/lib/__tests__",
+    "mudancas": 21
    },
    {
     "pasta": "covout/lib/security",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 17
+    "mudancas": 18
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 17
+    "mudancas": 18
    },
    {
     "arquivo": ".github/workflows/ci.yml",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 110
+    "commits": 112
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1627,
   "arquivos_codigo": 1235,
-  "linhas_codigo": 168670,
+  "linhas_codigo": 168687,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 350,
-   "linhas": 45256
+   "linhas": 45273
   },
   "src/integrations": {
    "arquivos": 3,

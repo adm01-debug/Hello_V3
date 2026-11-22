@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `71169af0ed` · branch `main` · 2026-11-22 13:21 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5ca003906e` · branch `main` · 2026-11-22 13:44 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2436,7 +2436,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4004 testes em 328 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4005 testes em 328 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2559,6 +2559,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useMFA.coverage.test.tsx` | 9 | useMFA · loads factors and settings · enrollTOTP success and error · enrollPhone success and error … |
 | `src/hooks/__tests__/useNotifications.coverage.test.tsx` | 9 | useNotifications · loads notifications and unread count · marks single and all as read · archives a notification … |
 | `src/hooks/__tests__/useQualityTrendAnalyzer.coverage.test.tsx` | 9 | useQualityTrendAnalyzer · não faz nada quando desabilitado · ignora MOS null ou não finito · detecta degradação progressiva e persiste alerta … |
+| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 9 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useRecordings.coverage.test.tsx` | 9 | useRecordings · fetches recordings and filters · handles fetch error · plays, toggles pause/play, seeks, skips … |
 | `src/hooks/__tests__/useSLA.coverage.test.tsx` | 9 | useSLA · useSlaPolicies loads policies · useSlaPolicies surfaces error · useSlaCompliance computes compliance … |
 | `src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` | 9 | useScheduledCallbacks · loads pending callbacks and upcoming count on mount · fetchCallbacks with status filter and error branch · fetchUpcomingCount error branch … |
@@ -2578,7 +2579,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCallRecording.coverage.test.tsx` | 8 | useCallRecording · starts recording successfully · handles start recording failure · stopAndSaveRecording returns null when no recorder … |
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
 | `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 8 | useIPWhitelist · does not fetch when not admin · fetches data when admin · validates IP format on addGlobalIP … |
-| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 8 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useScorecards.coverage.test.tsx` | 8 | useScorecards · loads templates and criteria without callSessionId · loads scorecards and responses with callSessionId · clears responses when no scorecards … |
 | `src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx` | 8 | useSecurityDashboard · returns early without userId · loads data and computes full score · computes lower score branches (no mfa, many sessions, ip off, no alerts) … |
 | `src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx` | 8 | useSecurityNotifications · detects support and initial permission · requestPermission granted path · requestPermission denied path … |
