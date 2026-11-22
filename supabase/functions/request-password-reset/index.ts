@@ -1,5 +1,6 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { clientIpFromHeaders } from "../_shared/client-ip.ts";
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -24,10 +25,8 @@ Deno.serve(async (req) => {
     // Sanitize email
     const sanitizedEmail = email.trim().toLowerCase();
 
-    // Get IP address
-    const forwardedFor = req.headers.get('x-forwarded-for');
-    const realIp = req.headers.get('x-real-ip');
-    const clientIp = realIp || (forwardedFor ? forwardedFor.split(',')[0].trim() : null);
+    // Get IP address (validado como literal antes de gravar em auditoria)
+    const clientIp = clientIpFromHeaders(req.headers);
 
     // Find user by email
     const { data: users, error: userError } = await supabase.auth.admin.listUsers();
