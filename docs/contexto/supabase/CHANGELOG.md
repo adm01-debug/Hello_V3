@@ -2,6 +2,10 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-22 02:18 UTC
+
+- **functions** alterado (1): `public.is_admin_user(_user_id uuid)`
+
 ## 2026-11-22 01:14 UTC
 
 - **cron jobs** adicionado (2): `11:generate-coaching-tracks-daily`, `12:dialer-pacing-tick`

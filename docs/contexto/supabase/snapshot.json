@@ -33640,6 +33640,10 @@
         "callers": {
           "code": [
             {
+              "file": "supabase/functions/fuzz-test-runner/index.ts",
+              "hits": 1
+            },
+            {
               "file": "supabase/functions/ldap-sync/index.ts",
               "hits": 1
             },
@@ -33728,7 +33732,7 @@
               "hits": 3
             }
           ],
-          "code_total_files": 22,
+          "code_total_files": 23,
           "cron": [],
           "db": [
             "public.prevent_role_escalation"
