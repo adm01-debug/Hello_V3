@@ -121,7 +121,7 @@ Legenda da coluna *Consumidor*: arquivo de produção (fora de `__tests__`) que 
 
 | Funcionalidade | Classificação | Evidência (arquivo:linha) | Consumidor | Tabela/edge fn | O que falta |
 |---|---|---|---|---|---|
-| useAgentRanking — `createTestData` | 🟨 IMPLEMENTADO_PARCIAL | `src/hooks/useAgentRanking.ts:262` (`createTestData`), `:269-295` (`Math.random()` em cascata), `:274` insert em `call_sessions`, `:288` insert em `call_summaries`, `:292` insert em `call_analyses`; exposto no retorno em `:312`; **botão em produção** em `src/pages/AgentRanking.tsx:47` (`onClick={createTestData}`, rótulo "Criar Dados"), **sem gating** de `import.meta.env`/`NODE_ENV`; teste que legitima em `src/hooks/__tests__/useAgentRanking.coverage.test.tsx:159-167` | `src/pages/AgentRanking.tsx` + 6 componentes de ranking | `call_sessions`, `call_summaries`, `call_analyses`, `agent_goals`, `call_alerts` | Remover `createTestData` do caminho de produção (ou gatear por env/role); o restante do hook (fetch/goals) está íntegro |
+| useAgentRanking — `createTestData` | ✅ IMPLEMENTADO_TOTAL (PR #120) | `src/hooks/useAgentRanking.ts:262` (`createTestData`), `:269-295` (`Math.random()` em cascata), `:274` insert em `call_sessions`, `:288` insert em `call_summaries`, `:292` insert em `call_analyses`; exposto no retorno em `:312`; **botão em produção** em `src/pages/AgentRanking.tsx:47` (`onClick={createTestData}`, rótulo "Criar Dados"), **sem gating** de `import.meta.env`/`NODE_ENV`; teste que legitima em `src/hooks/__tests__/useAgentRanking.coverage.test.tsx:159-167` | `src/pages/AgentRanking.tsx` + 6 componentes de ranking | `call_sessions`, `call_summaries`, `call_analyses`, `agent_goals`, `call_alerts` | **RESOLVIDO (PR #120):** `createTestData` gateado por `import.meta.env.DEV` e botão "Criar Dados" só em DEV; produção sem o caminho de fabricação (tree-shake confirmado no bundle). O restante do hook (fetch/goals) está íntegro |
 
 ### C) Testes-espelho — nenhum caminho de execução até `src/`
 
@@ -162,7 +162,14 @@ Tabelas/edge functions **existem** (conferido em `src/integrations/supabase/type
 
 ## Achados graves
 
-### 1. 🔴 CRÍTICO — Botão em produção grava dados fabricados com `Math.random()` em tabelas reais
+### 1. ✅ RESOLVIDO (PR #120) — Botão em produção grava dados fabricados com `Math.random()` em tabelas reais
+
+> **Status (22/11, PR #120):** `createTestData` agora é gateado por `import.meta.env.DEV`
+> (`useAgentRanking.ts:265`) e o botão "Criar Dados" só renderiza em DEV (`AgentRanking.tsx:47`).
+> Na build de produção o caminho de fabricação é **removido por tree-shake** (verificado no bundle
+> de produção: nem `"Criar Dados"` nem `"Dados de teste criados"` aparecem em `dist/`). O teste que
+> certificava a fabricação foi preservado porque exercita o caminho DEV (`import.meta.env.DEV=true`
+> em vitest), sem risco em produção.
 
 `src/hooks/useAgentRanking.ts:262-306` define `createTestData()`, que em laço gera de 5 a 14
 chamadas por agente para 6 nomes fixos (`'Lucas Ferreira', 'Ana Carolina Silva', …`,
@@ -182,11 +189,12 @@ de `import.meta.env`, `NODE_ENV` ou `DEV` no arquivo inteiro. Qualquer usuário 
 `useCallHistory`, `useAlerts` e `useActiveCallsRealtime`. Ou seja, o dado fictício não fica contido
 no ranking: propaga-se para o dashboard executivo, relatórios e histórico de chamadas.
 
-**Agravante de auditoria:** o teste `src/hooks/__tests__/useAgentRanking.coverage.test.tsx:159-167`
+**Agravante de auditoria (resolvido):** o teste `src/hooks/__tests__/useAgentRanking.coverage.test.tsx:159-167`
 (`'createTestData inserts rows and toasts success'`) **fixa `Math.random` em 0.5**
 (`vi.spyOn(Math,'random').mockReturnValue(0.5)`, linha 160) e assevera que o toast de sucesso foi
-emitido. Isto é, a suíte **certifica a fabricação como comportamento correto** e travará qualquer
-tentativa de remoção.
+emitido. Isto é, a suíte **certificava a fabricação como comportamento correto** e travaria qualquer
+tentativa de remoção. Após o gate de DEV (PR #120), o teste segue válido porque exercita o caminho
+DEV (`import.meta.env.DEV=true` em vitest), e a fabricação não alcança produção.
 
 ### 2. 🔴 31,4% do lote (3.462 de 11.029 linhas) são testes-espelho que não tocam código de produção
 
