@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "36c5c1f552aa234613e1c8d44dad425cdff65d31",
+  "commit": "d33797382f42b404dccd668e2473ca14f6855b99",
   "branch": "main",
-  "data_commit": "2026-11-22T09:15:33-03:00",
+  "data_commit": "2026-11-22T09:31:15-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d337973",
+    "data": "2026-11-22",
+    "assunto": "fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)"
+   },
    {
     "sha": "36c5c1f",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "25f5bfb",
     "data": "2026-11-21",
     "assunto": "docs: re-scorecard 9,1/10 com os PRs #96, #97, #98 e #99 (#100)"
-   },
-   {
-    "sha": "f249e85",
-    "data": "2026-11-21",
-    "assunto": "chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)"
    }
   ],
-  "arquivos_mudados_7d": 847,
+  "arquivos_mudados_7d": 848,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -164,11 +164,11 @@
     "mudancas": 11
    },
    {
-    "pasta": "src/components/layout",
-    "mudancas": 10
+    "pasta": "supabase/functions/_shared",
+    "mudancas": 11
    },
    {
-    "pasta": "supabase/functions/_shared",
+    "pasta": "src/components/layout",
     "mudancas": 10
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 105
+    "commits": 106
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,8 +314,8 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1626,
-  "arquivos_codigo": 1234,
+  "arquivos_total": 1627,
+  "arquivos_codigo": 1235,
   "linhas_codigo": 168613,
   "rotas": 105,
   "rotas_http_backend": 12,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 238,
   "cron_jobs": 10,
-  "testes": 338,
+  "testes": 339,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -519,7 +519,7 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 169,
+   "arquivos": 170,
    "linhas": 19569
   },
   "tailwind.config.ts": {

@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 338,
+ "total": 339,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 321
+  "unit": 322
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 315
+   "arquivos": 316
   },
   {
    "padrao": "e2e/",
@@ -2648,6 +2648,13 @@
    "casos": 6
   },
   {
+   "arquivo": "supabase/functions/_shared/__tests__/local-supabase.ts",
+   "tipo": "unit",
+   "linhas": 33,
+   "testa": [],
+   "casos": 1
+  },
+  {
    "arquivo": "supabase/functions/_shared/__tests__/resilience.test.ts",
    "tipo": "unit",
    "linhas": 162,
@@ -2721,21 +2728,21 @@
   {
    "arquivo": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 88,
+   "linhas": 77,
    "testa": [],
    "casos": 6
   },
   {
    "arquivo": "supabase/functions/check-dnc/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 105,
+   "linhas": 94,
    "testa": [],
    "casos": 6
   },
   {
    "arquivo": "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 112,
+   "linhas": 101,
    "testa": [],
    "casos": 7
   },

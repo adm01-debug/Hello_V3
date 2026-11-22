@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "36c5c1f552aa234613e1c8d44dad425cdff65d31",
+  "sha": "d33797382f42b404dccd668e2473ca14f6855b99",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 12:17 UTC",
-  "files_total": 1673,
-  "code_files": 1476,
+  "generated_at": "2026-11-22 12:31 UTC",
+  "files_total": 1674,
+  "code_files": 1477,
   "code_lines": 184432
  },
  "version": "1.3.2",
- "facts_hash": "54a3f169b718b795",
+ "facts_hash": "da41e663a113f84c",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 604,
-   ".ts": 597,
+   ".ts": 598,
    ".sql": 241,
    ".mjs": 27,
    ".py": 5,
@@ -34136,7 +34136,7 @@
   },
   {
    "module": "supabase/functions",
-   "files": 169,
+   "files": 170,
    "lines": 19569,
    "tables": [
     "account_lockouts",
@@ -34239,6 +34239,7 @@
     "validator.ts: ValidationError, StandardErrorResponse, createErrorResponse, validateBody",
     "voice-utils.ts: VoiceFeatures, cosineSimilarity, averageEmbeddings, verifyVerdict, REDACTION_PATTERNS, RedactionMatch",
     "capture-handler.ts: capturarHandler",
+    "local-supabase.ts: edgeLocalDisponivel, MOTIVO_IGNORADO",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
     "csv.ts: toCsv",
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
@@ -34295,6 +34296,7 @@
     "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
     "supabase/functions/_shared/__tests__/capture-handler.ts",
     "supabase/functions/_shared/__tests__/cors.test.ts",
+    "supabase/functions/_shared/__tests__/local-supabase.ts",
     "supabase/functions/_shared/__tests__/resilience.test.ts",
     "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
     "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
@@ -34353,8 +34355,7 @@
     "supabase/functions/fuzz-test-runner/index.ts",
     "supabase/functions/generate-coaching/index.ts",
     "supabase/functions/generate-coaching-plan/index.ts",
-    "supabase/functions/generate-coaching-track/index.ts",
-    "supabase/functions/generate-coaching-track/track-engine.ts"
+    "supabase/functions/generate-coaching-track/index.ts"
    ]
   },
   {
@@ -38302,11 +38303,6 @@
   "external": {
    "http://ip-api.com": [
     "supabase/functions/validate-geo/index.ts"
-   ],
-   "http://localhost:54321": [
-    "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-    "supabase/functions/check-dnc/__tests__/index.test.ts",
-    "supabase/functions/check-queue-metrics/__tests__/index.test.ts"
    ],
    "https://api.elevenlabs.io": [
     "supabase/functions/elevenlabs-conversation-token/index.ts",
@@ -115040,6 +115036,29 @@
     "cors: deprecado corsHeaders reflete origem de producao"
    ]
   },
+  "supabase/functions/_shared/__tests__/local-supabase.ts": {
+   "path": "supabase/functions/_shared/__tests__/local-supabase.ts",
+   "lines": 33,
+   "is_test": true,
+   "exports": [
+    "function edgeLocalDisponivel",
+    "const MOTIVO_IGNORADO"
+   ],
+   "params": [
+    {
+     "name": "BASE",
+     "value": "\"http://localhost:54321\""
+    },
+    {
+     "name": "MOTIVO_IGNORADO",
+     "value": "\"edge nao servida pelo Supabase local\""
+    }
+   ],
+   "rule_comments": [
+    "* true se o stack local serve esta edge (e nao apenas se a porta responde). */"
+   ],
+   "doc": "Deteccao de Supabase local para testes de edge que batem em HTTP. Antes, cada teste so perguntava \"a porta 54321 responde?\". Isso da falso positivo quando OUTRO projeto Supabase esta rodando na mesma maquina: o Kong responde, os testes deixam de ser ignorados, batem numa edge que nao existe naquele …"
+  },
   "supabase/functions/_shared/__tests__/resilience.test.ts": {
    "path": "supabase/functions/_shared/__tests__/resilience.test.ts",
    "lines": 162,
@@ -115904,11 +115923,8 @@
   },
   "supabase/functions/check-calling-hours/__tests__/index.test.ts": {
    "path": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-   "lines": 88,
+   "lines": 77,
    "is_test": true,
-   "external_urls": [
-    "http://localhost:54321/"
-   ],
    "doc": "Testes Deno para edge function check-calling-hours (Onda 8)",
    "tests": [
     "check-calling-hours: aceita region_code default ",
@@ -115969,11 +115985,8 @@
   },
   "supabase/functions/check-dnc/__tests__/index.test.ts": {
    "path": "supabase/functions/check-dnc/__tests__/index.test.ts",
-   "lines": 105,
+   "lines": 94,
    "is_test": true,
-   "external_urls": [
-    "http://localhost:54321/"
-   ],
    "rule_comments": [
     "Cobre: CORS preflight, auth branches, validação de entrada, x-request-id",
     "Validação determinística do contrato de header"
@@ -116231,11 +116244,8 @@
   },
   "supabase/functions/check-queue-metrics/__tests__/index.test.ts": {
    "path": "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
-   "lines": 112,
+   "lines": 101,
    "is_test": true,
-   "external_urls": [
-    "http://localhost:54321/"
-   ],
    "doc": "Testes Deno para edge function check-queue-metrics (Onda 8)",
    "tests": [
     "check-queue-metrics: cálculo de avg wait time (contrato)",
@@ -122379,10 +122389,22 @@
   }
  },
  "git": {
-  "sha": "36c5c1f552aa234613e1c8d44dad425cdff65d31",
+  "sha": "d33797382f42b404dccd668e2473ca14f6855b99",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "d337973",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)",
+    "files": [
+     "supabase/functions/_shared/__tests__/local-supabase.ts",
+     "supabase/functions/check-calling-hours/__tests__/index.test.ts",
+     "supabase/functions/check-dnc/__tests__/index.test.ts",
+     "supabase/functions/check-queue-metrics/__tests__/index.test.ts"
+    ]
+   },
    {
     "sha": "36c5c1f",
     "date": "2026-11-22",
@@ -122892,17 +122914,6 @@
     "files": [
      "docs/edge-functions/README.md"
     ]
-   },
-   {
-    "sha": "a01216b",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "feat: cron de minuto para o discador preditivo (D6) (#93)",
-    "files": [
-     "docs/edge-functions/README.md",
-     "supabase/functions/dialer-pacing-tick/index.ts",
-     "supabase/migrations/20261122140000_dialer_pacing_cron.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -122915,8 +122926,16 @@
     3
    ],
    [
-    "docs/edge-functions/README.md",
-    3
+    "supabase/functions/check-calling-hours/__tests__/index.test.ts",
+    2
+   ],
+   [
+    "supabase/functions/check-dnc/__tests__/index.test.ts",
+    2
+   ],
+   [
+    "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
+    2
    ],
    [
     "src/components/supervisor/QueueTrendChart.tsx",
@@ -122951,10 +122970,6 @@
     2
    ],
    [
-    "supabase/functions/dialer-pacing-tick/index.ts",
-    2
-   ],
-   [
     "supabase/functions/fuzz-test-runner/index.ts",
     2
    ],
@@ -122980,10 +122995,6 @@
    ],
    [
     "deno.lock",
-    2
-   ],
-   [
-    "src/components/agent/WhisperNotification.tsx",
     2
    ]
   ]

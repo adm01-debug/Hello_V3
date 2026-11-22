@@ -8,6 +8,7 @@
   "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
   "supabase/functions/_shared/__tests__/capture-handler.ts",
   "supabase/functions/_shared/__tests__/cors.test.ts",
+  "supabase/functions/_shared/__tests__/local-supabase.ts",
   "supabase/functions/_shared/__tests__/resilience.test.ts",
   "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
   "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
