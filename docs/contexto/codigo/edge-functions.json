@@ -993,7 +993,7 @@
    "nome": "dialer-pacing-tick",
    "entrada": "supabase/functions/dialer-pacing-tick/index.ts",
    "arquivos": 1,
-   "linhas": 77,
+   "linhas": 71,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -1012,7 +1012,9 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [],
-   "usa_shared": [],
+   "usa_shared": [
+    "constant-time.ts"
+   ],
    "chamada_pelo_front": [
     "src/hooks/usePredictivePacing.ts"
    ],
@@ -1436,7 +1438,7 @@
    "nome": "generate-coaching-track",
    "entrada": "supabase/functions/generate-coaching-track/index.ts",
    "arquivos": 3,
-   "linhas": 388,
+   "linhas": 382,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -1461,6 +1463,7 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "constant-time.ts",
     "cors.ts"
    ],
    "chamada_pelo_front": [

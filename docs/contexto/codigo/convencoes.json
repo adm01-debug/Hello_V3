@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: unifica mesmaString no _shared/constant-time (SSOT) (#152)",
+   "docs: registra persistencia provada das edges de escrita (#151)",
+   "docs: registra 8 edges de IA provadas ponta a ponta (#150)",
    "chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)",
-   "fix: troca teste falso de optimistic lock por guarda real do contrato (#148)",
-   "docs: corrige roadmap desatualizado e registra verificacoes de 22/11 (#147)",
-   "fix: exclusao de conta de usuario (8 FKs em NO ACTION bloqueavam o DELETE) (#146)",
-   "docs: scorecards entregues e cron do data-lake endurecido (#145)"
+   "fix: troca teste falso de optimistic lock por guarda real do contrato (#148)"
   ]
  },
  "pr_template": null,

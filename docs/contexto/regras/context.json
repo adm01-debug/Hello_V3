@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "433f7b623cd0733e943d1eb6cfdcbc96d9fa2146",
+  "sha": "1361fd95d2b8b21ab07768656a1b9a61f2979478",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 18:14 UTC",
+  "generated_at": "2026-11-22 18:40 UTC",
   "files_total": 1683,
   "code_files": 1486,
-  "code_lines": 185356
+  "code_lines": 185344
  },
  "version": "1.3.2",
- "facts_hash": "e1397c88d415ab5f",
+ "facts_hash": "fd3fb9e7c612b761",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34198,7 +34198,7 @@
   {
    "module": "supabase/functions",
    "files": 174,
-   "lines": 19852,
+   "lines": 19840,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -117429,7 +117429,7 @@
   },
   "supabase/functions/dialer-pacing-tick/index.ts": {
    "path": "supabase/functions/dialer-pacing-tick/index.ts",
-   "lines": 77,
+   "lines": 71,
    "rpc": [
     "apply_predictive_pacing",
     "is_admin_user"
@@ -118147,7 +118147,7 @@
   },
   "supabase/functions/generate-coaching-track/index.ts": {
    "path": "supabase/functions/generate-coaching-track/index.ts",
-   "lines": 170,
+   "lines": 164,
    "tables": [
     {
      "table": "call_sessions",
@@ -122960,10 +122960,38 @@
   }
  },
  "git": {
-  "sha": "433f7b623cd0733e943d1eb6cfdcbc96d9fa2146",
+  "sha": "1361fd95d2b8b21ab07768656a1b9a61f2979478",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "1361fd9",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "chore: unifica mesmaString no _shared/constant-time (SSOT) (#152)",
+    "files": [
+     "supabase/functions/dialer-pacing-tick/index.ts",
+     "supabase/functions/generate-coaching-track/index.ts"
+    ]
+   },
+   {
+    "sha": "8b08ba2",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: registra persistencia provada das edges de escrita (#151)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
+   {
+    "sha": "66b53b9",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: registra 8 edges de IA provadas ponta a ponta (#150)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "433f7b6",
     "date": "2026-11-22",
@@ -123237,40 +123265,12 @@
     "files": [
      "src/components/supervisor/QueueTrendChart.tsx"
     ]
-   },
-   {
-    "sha": "92cb97a",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)",
-    "files": [
-     "src/lib/__tests__/agent-assist.pbt.test.ts"
-    ]
-   },
-   {
-    "sha": "782c8e4",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: marca achado createTestData como RESOLVIDO (PR #120) (#121)",
-    "files": [
-     "docs/estado/hooks-parte1.md"
-    ]
-   },
-   {
-    "sha": "1123090",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: gate createTestData e botão Criar Dados para DEV (#120)",
-    "files": [
-     "src/hooks/useAgentRanking.ts",
-     "src/pages/AgentRanking.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    9
+    11
    ],
    [
     "docs/audits/pendencias-2026-07.md",
@@ -123295,6 +123295,14 @@
    [
     "src/components/supervisor/panel/TrendChartToggle.tsx",
     2
+   ],
+   [
+    "supabase/functions/dialer-pacing-tick/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/generate-coaching-track/index.ts",
+    1
    ],
    [
     "supabase/functions/__tests__/optimistic-lock.test.ts",
@@ -123338,14 +123346,6 @@
    ],
    [
     "supabase/functions/cleanup-recordings/index.ts",
-    1
-   ],
-   [
-    "supabase/migrations/20261122230000_recordings_retention_cron.sql",
-    1
-   ],
-   [
-    "supabase/functions/_shared/constant-time.ts",
     1
    ]
   ]

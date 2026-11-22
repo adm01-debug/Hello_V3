@@ -4699,6 +4699,9 @@
    "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts"
   ],
+  "supabase/functions/dialer-pacing-tick/index.ts": [
+   "supabase/functions/_shared/constant-time.ts"
+  ],
   "supabase/functions/elevenlabs-conversation-token/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
@@ -4731,6 +4734,7 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/generate-coaching-track/index.ts": [
+   "supabase/functions/_shared/constant-time.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/generate-coaching-track/track-engine.ts"
   ],

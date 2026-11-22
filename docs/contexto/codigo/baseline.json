@@ -2,11 +2,26 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "433f7b623cd0733e943d1eb6cfdcbc96d9fa2146",
+  "commit": "1361fd95d2b8b21ab07768656a1b9a61f2979478",
   "branch": "main",
-  "data_commit": "2026-11-22T15:12:45-03:00",
+  "data_commit": "2026-11-22T15:39:43-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "1361fd9",
+    "data": "2026-11-22",
+    "assunto": "chore: unifica mesmaString no _shared/constant-time (SSOT) (#152)"
+   },
+   {
+    "sha": "8b08ba2",
+    "data": "2026-11-22",
+    "assunto": "docs: registra persistencia provada das edges de escrita (#151)"
+   },
+   {
+    "sha": "66b53b9",
+    "data": "2026-11-22",
+    "assunto": "docs: registra 8 edges de IA provadas ponta a ponta (#150)"
+   },
    {
     "sha": "433f7b6",
     "data": "2026-11-22",
@@ -116,21 +131,6 @@
     "sha": "a0096de",
     "data": "2026-11-22",
     "assunto": "feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)"
-   },
-   {
-    "sha": "071d1dd",
-    "data": "2026-11-22",
-    "assunto": "docs: substitui rotulo desatualizado por prova de execucao (guard + IA em prod) (#127)"
-   },
-   {
-    "sha": "d62b800",
-    "data": "2026-11-22",
-    "assunto": "chore: corrige deps de hook que causavam closure obsoleto (22 -> 5 warnings) (#126)"
-   },
-   {
-    "sha": "d337973",
-    "data": "2026-11-22",
-    "assunto": "fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)"
    }
   ],
   "arquivos_mudados_7d": 871,
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 25
+    "mudancas": 27
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 25
+    "mudancas": 27
    },
    {
     "arquivo": "docs/audits/pendencias-2026-07.md",
@@ -250,6 +250,10 @@
     "mudancas": 4
    },
    {
+    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
+    "mudancas": 4
+   },
+   {
     "arquivo": "AGENTS.md",
     "mudancas": 3
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
     "mudancas": 3
-   },
-   {
-    "arquivo": "src/hooks/useQueueMetrics.ts",
-    "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 130
+    "commits": 133
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1636,
   "arquivos_codigo": 1241,
-  "linhas_codigo": 169398,
+  "linhas_codigo": 169386,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 174,
-   "linhas": 19852
+   "linhas": 19840
   },
   "tailwind.config.ts": {
    "arquivos": 1,
