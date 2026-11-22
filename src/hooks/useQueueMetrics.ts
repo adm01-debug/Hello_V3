@@ -6,6 +6,13 @@ import { DashboardGoal } from '@/components/dashboard/DashboardGoalsSettings';
 import { logger } from '@/lib/logger';
 
 import { safeFormatDate } from "@/lib/safe-date";
+
+// Estados em que a chamada está em curso. Já era o vocabulário usado no índice
+// parcial idx_call_sessions_status (20260326203635) e no useBlfBoard.
+// 'waiting' nunca existiu em call_sessions — a contagem "em espera" ficava
+// permanentemente zerada no dashboard.
+const CHAMADA_EM_CURSO = ['active', 'ringing', 'on_hold'] as const;
+
 export interface QueueMetrics {
   activeCalls: number;
   waitingCalls: number;
@@ -83,13 +90,13 @@ export function useQueueMetrics() {
 
   const fetchMetrics = useCallback(async () => {
     try {
-      const { data: activeCalls } = await supabase.from('call_sessions').select('*').eq('status', 'active');
+      const { data: activeCalls } = await supabase.from('call_sessions').select('status').in('status', [...CHAMADA_EM_CURSO]);
       const { data: agents } = await supabase.from('agents').select('status');
       const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
       const { data: recentCalls } = await supabase.from('call_sessions').select('duration_seconds, hold_time_seconds, status').gte('created_at', oneHourAgo);
 
-      const active = activeCalls?.length || 0;
-      const waiting = activeCalls?.filter(c => c.status === 'waiting')?.length || 0;
+      const active = activeCalls?.filter(c => c.status === 'active' || c.status === 'ringing').length || 0;
+      const waiting = activeCalls?.filter(c => c.status === 'on_hold').length || 0;
       const agentsAvailable = agents?.filter(a => a.status === 'available')?.length || 0;
       const agentsBusy = agents?.filter(a => a.status === 'busy' || a.status === 'on_call')?.length || 0;
       const agentsOnBreak = agents?.filter(a => a.status === 'break' || a.status === 'away')?.length || 0;
