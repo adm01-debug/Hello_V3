@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "12b0b3c5c6c86b29c887dbae5df0255c0997dfb2",
+  "sha": "a0b70c9e14e1daf3884793069ba690e889ad6017",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 05:39 UTC",
-  "files_total": 1634,
-  "code_files": 1437,
-  "code_lines": 181460
+  "generated_at": "2026-11-22 05:40 UTC",
+  "files_total": 1635,
+  "code_files": 1438,
+  "code_lines": 181559
  },
  "version": "1.3.2",
- "facts_hash": "15ddb4a1de08db5a",
+ "facts_hash": "5d28d12eaf142834",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -160,7 +160,7 @@
   "languages": {
    ".tsx": 603,
    ".ts": 583,
-   ".sql": 217,
+   ".sql": 218,
    ".mjs": 27,
    ".py": 5,
    ".js": 2
@@ -5970,7 +5970,9 @@
       "src": "supabase/migrations/20260315200451_a246f656-4ac8-454c-82f0-11503932b7af.sql"
      }
     ],
-    "constraints": [],
+    "constraints": [
+     "constraint agent_devices_device_type_check CHECK ( device_type IS NULL OR device_type IN ('desktop', 'mobile', 'sip_phone', 'softphone') )"
+    ],
     "src": "supabase/migrations/20260315200451_a246f656-4ac8-454c-82f0-11503932b7af.sql",
     "comment": "",
     "origin": "migration"
@@ -6041,7 +6043,10 @@
       "src": "supabase/migrations/20260315200451_a246f656-4ac8-454c-82f0-11503932b7af.sql"
      }
     ],
-    "constraints": [],
+    "constraints": [
+     "constraint agent_ring_settings_ring_strategy_check CHECK (ring_strategy IS NULL OR ring_strategy IN ('sequential', 'simultaneous'))",
+     "constraint agent_ring_settings_fallback_action_check CHECK (fallback_action IS NULL OR fallback_action IN ('voicemail', 'forward', 'queue'))"
+    ],
     "src": "supabase/migrations/20260315200451_a246f656-4ac8-454c-82f0-11503932b7af.sql",
     "comment": "",
     "origin": "migration"
@@ -7339,7 +7344,9 @@
       "src": "supabase/migrations/20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql"
      }
     ],
-    "constraints": [],
+    "constraints": [
+     "constraint call_playlists_playlist_type_check CHECK (playlist_type IS NULL OR playlist_type IN ('auto', 'manual'))"
+    ],
     "src": "supabase/migrations/20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
     "comment": "",
     "origin": "migration"
@@ -7560,7 +7567,10 @@
       "src": "supabase/migrations/20260418132329_194c7950-0787-43d5-a46a-f204640ee74a.sql"
      }
     ],
-    "constraints": [],
+    "constraints": [
+     "constraint accounts_segment_check CHECK (segment IS NULL OR segment IN ('enterprise', 'midmarket', 'smb'))",
+     "constraint accounts_current_stage_check CHECK ( current_stage IS NULL OR current_stage IN ('adoption', 'at_risk', 'expansion', 'growth') )"
+    ],
     "src": "supabase/migrations/20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
     "comment": "",
     "origin": "migration"
@@ -8494,7 +8504,9 @@
       "src": "supabase/migrations/20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql"
      }
     ],
-    "constraints": [],
+    "constraints": [
+     "constraint agent_shifts_status_check CHECK ( status IS NULL OR status IN ('scheduled', 'active', 'completed', 'cancelled', 'no_show') )"
+    ],
     "src": "supabase/migrations/20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
     "comment": "",
     "origin": "migration"
@@ -11477,7 +11489,9 @@
       "src": "src/integrations/supabase/types.ts"
      }
     ],
-    "constraints": [],
+    "constraints": [
+     "constraint call_quality_metrics_quality_label_check CHECK ( quality_label IS NULL OR lower(quality_label) IN ('excellent', 'good', 'fair', 'poor', 'unknown') )"
+    ],
     "src": "supabase/migrations/20260515170309_98507006-514f-467b-b3e7-a1f30f5377d4.sql",
     "comment": "",
     "origin": "migration"
@@ -25465,6 +25479,7 @@
    "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql",
    "supabase/migrations/20261122140000_dialer_pacing_cron.sql",
    "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+   "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
    "src/integrations/supabase/types.ts"
   ],
   "rls": {
@@ -33951,8 +33966,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 215,
-   "lines": 14139,
+   "files": 216,
+   "lines": 14238,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -44588,6 +44603,11 @@
     "rule": "default now()"
    },
    {
+    "table": "agent_devices",
+    "column": "(tabela)",
+    "rule": "constraint agent_devices_device_type_check CHECK ( device_type IS NULL OR device_type IN ('desktop', 'mobile', 'sip_phone', 'softphone') )"
+   },
+   {
     "table": "agent_ring_settings",
     "column": "id",
     "rule": "PK; default gen_random_uuid()"
@@ -44631,6 +44651,16 @@
     "table": "agent_ring_settings",
     "column": "updated_at",
     "rule": "default now()"
+   },
+   {
+    "table": "agent_ring_settings",
+    "column": "(tabela)",
+    "rule": "constraint agent_ring_settings_ring_strategy_check CHECK (ring_strategy IS NULL OR ring_strategy IN ('sequential', 'simultaneous'))"
+   },
+   {
+    "table": "agent_ring_settings",
+    "column": "(tabela)",
+    "rule": "constraint agent_ring_settings_fallback_action_check CHECK (fallback_action IS NULL OR fallback_action IN ('voicemail', 'forward', 'queue'))"
    },
    {
     "table": "call_key_moments",
@@ -45228,6 +45258,11 @@
     "rule": "default now()"
    },
    {
+    "table": "call_playlists",
+    "column": "(tabela)",
+    "rule": "constraint call_playlists_playlist_type_check CHECK (playlist_type IS NULL OR playlist_type IN ('auto', 'manual'))"
+   },
+   {
     "table": "playlist_items",
     "column": "id",
     "rule": "PK; default gen_random_uuid()"
@@ -45326,6 +45361,16 @@
     "table": "accounts",
     "column": "version",
     "rule": "default 1"
+   },
+   {
+    "table": "accounts",
+    "column": "(tabela)",
+    "rule": "constraint accounts_segment_check CHECK (segment IS NULL OR segment IN ('enterprise', 'midmarket', 'smb'))"
+   },
+   {
+    "table": "accounts",
+    "column": "(tabela)",
+    "rule": "constraint accounts_current_stage_check CHECK ( current_stage IS NULL OR current_stage IN ('adoption', 'at_risk', 'expansion', 'growth') )"
    },
    {
     "table": "churn_risk_signals",
@@ -45791,6 +45836,11 @@
     "table": "agent_shifts",
     "column": "updated_at",
     "rule": "default now()"
+   },
+   {
+    "table": "agent_shifts",
+    "column": "(tabela)",
+    "rule": "constraint agent_shifts_status_check CHECK ( status IS NULL OR status IN ('scheduled', 'active', 'completed', 'cancelled', 'no_show') )"
    },
    {
     "table": "time_off_requests",
@@ -47171,6 +47221,11 @@
     "table": "call_quality_metrics",
     "column": "updated_at",
     "rule": "obrigatório"
+   },
+   {
+    "table": "call_quality_metrics",
+    "column": "(tabela)",
+    "rule": "constraint call_quality_metrics_quality_label_check CHECK ( quality_label IS NULL OR lower(quality_label) IN ('excellent', 'good', 'fair', 'poor', 'unknown') )"
    },
    {
     "table": "voip_quality_alerts",
@@ -80343,7 +80398,12 @@
      "table": "accounts",
      "column": "current_stage",
      "enum": "",
-     "allowed": [],
+     "allowed": [
+      "adoption",
+      "at_risk",
+      "expansion",
+      "growth"
+     ],
      "default": "onboarding",
      "type": "TEXT DEFAULT 'onboarding'"
     },
@@ -80415,7 +80475,13 @@
      "table": "agent_shifts",
      "column": "status",
      "enum": "",
-     "allowed": [],
+     "allowed": [
+      "active",
+      "cancelled",
+      "completed",
+      "no_show",
+      "scheduled"
+     ],
      "default": "scheduled",
      "type": "TEXT NOT NULL DEFAULT 'scheduled'"
     },
@@ -87491,13 +87557,6 @@
    },
    {
     "kind": "status",
-    "msg": "valor `cancelled` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:src/hooks/useScheduledCallbacks.ts"
-    ]
-   },
-   {
-    "kind": "status",
     "msg": "valor `agent_low` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "escreve:src/hooks/useTalkRatio.ts",
@@ -87532,15 +87591,6 @@
     "msg": "valor `beta` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "escreve:src/pages/Marketplace.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `scheduled` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "compara:src/pages/VideoConference.tsx",
-     "escreve:src/pages/Scheduling.tsx",
-     "escreve:src/pages/VideoConference.tsx"
     ]
    },
    {
@@ -88068,7 +88118,7 @@
    "`cadence_steps.step_type` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
    "`cadence_enrollments.current_step` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
    "`cadence_enrollments.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
-   "`accounts.current_stage` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
+   "`accounts.current_stage` tem valores ['adoption', 'at_risk', 'expansion', 'growth'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`accounts.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
    "`renewals.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
    "`customer_journey_stages.stage_key` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
@@ -88077,7 +88127,7 @@
    "`account_journey_history.to_stage` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
    "`success_plans.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
    "`success_plan_milestones.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
-   "`agent_shifts.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
+   "`agent_shifts.status` tem valores ['active', 'cancelled', 'completed', 'no_show', 'scheduled'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`time_off_requests.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
    "`coaching_assignments.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
    "`conversations.status` tem valores ['closed', 'open', 'pending', 'resolved', 'snoozed'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
@@ -120753,6 +120803,10 @@
    ],
    "uses_service_role": true
   },
+  "supabase/migrations/20261123002000_b6_text_domain_checks.sql": {
+   "path": "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
+   "lines": 99
+  },
   "tests/e2e/auth.spec.ts": {
    "path": "tests/e2e/auth.spec.ts",
    "lines": 34,
@@ -120861,10 +120915,21 @@
   }
  },
  "git": {
-  "sha": "12b0b3c5c6c86b29c887dbae5df0255c0997dfb2",
+  "sha": "a0b70c9e14e1daf3884793069ba690e889ad6017",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a0b70c9",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "feat: fecha B6 - dominio nas colunas text enumeraveis (#111)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md",
+     "supabase/functions/voip-load-test/index.ts",
+     "supabase/migrations/20261123002000_b6_text_domain_checks.sql"
+    ]
+   },
    {
     "sha": "12b0b3c",
     "date": "2026-11-22",
@@ -121350,42 +121415,36 @@
      "src/components/layout/AppSidebar.tsx",
      "src/components/layout/CommandPalette.tsx"
     ]
-   },
-   {
-    "sha": "b2f65d7",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "feat: (#76)",
-    "files": [
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    8
+    9
    ],
    [
     "docs/edge-functions/README.md",
     7
    ],
    [
+    "deno.lock",
+    3
+   ],
+   [
     "src/components/layout/AppSidebar.tsx",
-    4
+    3
    ],
    [
     "src/components/layout/CommandPalette.tsx",
-    4
-   ],
-   [
-    "deno.lock",
     3
    ],
    [
     "docs/audits/pendencias-2026-07.md",
     3
+   ],
+   [
+    "supabase/functions/voip-load-test/index.ts",
+    2
    ],
    [
     "supabase/functions/teams-fetch-recordings/index.ts",
@@ -121428,19 +121487,15 @@
     2
    ],
    [
+    "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
+    1
+   ],
+   [
     "src/pages/ExternalRecordingsImport.tsx",
     1
    ],
    [
     "supabase/functions/analyze-live-utterance/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/check-contact-alerts/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/cleanup-lock-conflicts/index.ts",
     1
    ]
   ]

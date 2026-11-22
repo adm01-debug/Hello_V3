@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `12b0b3c5c6` · branch `main` · 2026-11-22 05:39 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a0b70c9e14` · branch `main` · 2026-11-22 05:40 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -617,7 +617,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_roles` | `role` | default 'agent' |
 | `user_roles` | `is_active` | default true |
 | `user_roles` | `created_at` | default now() |
-| … +1034 linhas — lista completa em `context.json` | | |
+| … +1042 linhas — lista completa em `context.json` | | |
 
 ## D. Automações no banco (triggers e funções — regras que rodam sozinhas)
 
@@ -803,7 +803,7 @@ Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banc
 | `cadence_steps` | `step_type` | **livre (sem enum/CHECK)** |  |
 | `cadence_enrollments` | `current_step` | **livre (sem enum/CHECK)** | `0` |
 | `cadence_enrollments` | `status` | **livre (sem enum/CHECK)** | `active` |
-| `accounts` | `current_stage` | **livre (sem enum/CHECK)** | `onboarding` |
+| `accounts` | `current_stage` | `adoption`, `at_risk`, `expansion`, `growth` | `onboarding` |
 | `accounts` | `status` | **livre (sem enum/CHECK)** | `active` |
 | `renewals` | `status` | **livre (sem enum/CHECK)** | `open` |
 | `customer_journey_stages` | `stage_key` | **livre (sem enum/CHECK)** |  |
@@ -812,7 +812,7 @@ Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banc
 | `account_journey_history` | `to_stage` | **livre (sem enum/CHECK)** |  |
 | `success_plans` | `status` | **livre (sem enum/CHECK)** | `active` |
 | `success_plan_milestones` | `status` | **livre (sem enum/CHECK)** | `pending` |
-| `agent_shifts` | `status` | **livre (sem enum/CHECK)** | `scheduled` |
+| `agent_shifts` | `status` | `active`, `cancelled`, `completed`, `no_show`, `scheduled` | `scheduled` |
 | `time_off_requests` | `status` | **livre (sem enum/CHECK)** | `pending` |
 | `coaching_assignments` | `status` | **livre (sem enum/CHECK)** | `open` |
 | `conversations` | `status` | `closed`, `open`, `pending`, `resolved`, `snoozed` | `open` |

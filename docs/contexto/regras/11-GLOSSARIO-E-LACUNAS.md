@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `12b0b3c5c6` · branch `main` · 2026-11-22 05:39 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a0b70c9e14` · branch `main` · 2026-11-22 05:40 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -305,13 +305,11 @@ _nenhum item encontrado_
 | status | valor `break` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useQueueMetrics.ts` |
 | status | valor `in_negotiation` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRenewals.ts` |
 | status | valor `won` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRenewals.ts` |
-| status | valor `cancelled` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/hooks/useScheduledCallbacks.ts` |
 | status | valor `agent_low` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/hooks/useTalkRatio.ts`<br>`escreve:src/lib/talkRatio.ts` |
 | status | valor `number` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/lib/security-alerts-webhook-history.ts`<br>`compara:supabase/functions/_shared/resilience.ts` |
 | status | valor `implemented` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/SecurityReport.tsx`<br>`escreve:src/lib/security-report-data.ts` |
 | status | valor `disponivel` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/Marketplace.tsx` |
 | status | valor `beta` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/Marketplace.tsx` |
-| status | valor `scheduled` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VideoConference.tsx`<br>`escreve:src/pages/Scheduling.tsx`<br>`escreve:src/pages/VideoConference.tsx` |
 | status | valor `loading` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VerifyEmail.tsx` |
 | status | valor `sent` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VirtualFax.tsx` |
 | status | valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/admin/SloDashboard.tsx`<br>`escreve:src/pages/admin/SloDashboard.tsx`<br>`escreve:supabase/functions/health-check/index.ts` |
@@ -410,7 +408,7 @@ _nenhum item encontrado_
 - `cadence_steps.step_type` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
 - `cadence_enrollments.current_step` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
 - `cadence_enrollments.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
-- `accounts.current_stage` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
+- `accounts.current_stage` tem valores ['adoption', 'at_risk', 'expansion', 'growth'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `accounts.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
 - `renewals.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
 - `customer_journey_stages.stage_key` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
@@ -419,7 +417,7 @@ _nenhum item encontrado_
 - `account_journey_history.to_stage` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
 - `success_plans.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
 - `success_plan_milestones.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
-- `agent_shifts.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
+- `agent_shifts.status` tem valores ['active', 'cancelled', 'completed', 'no_show', 'scheduled'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `time_off_requests.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
 - `coaching_assignments.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
 - `conversations.status` tem valores ['closed', 'open', 'pending', 'resolved', 'snoozed'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.

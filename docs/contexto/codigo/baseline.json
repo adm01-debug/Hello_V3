@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "12b0b3c5c6c86b29c887dbae5df0255c0997dfb2",
+  "commit": "a0b70c9e14e1daf3884793069ba690e889ad6017",
   "branch": "main",
-  "data_commit": "2026-11-22T02:37:51-03:00",
+  "data_commit": "2026-11-22T02:39:30-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a0b70c9",
+    "data": "2026-11-22",
+    "assunto": "feat: fecha B6 - dominio nas colunas text enumeraveis (#111)"
+   },
    {
     "sha": "12b0b3c",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "6807b07",
     "data": "2026-11-21",
     "assunto": "fix: dataset call_summaries exportavel no data lake (D5) (#85)"
-   },
-   {
-    "sha": "f8ba359",
-    "data": "2026-11-21",
-    "assunto": "feat: error budget por componente no health-check (C1) (#83)"
    }
   ],
-  "arquivos_mudados_7d": 785,
+  "arquivos_mudados_7d": 786,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 14
+    "mudancas": 15
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 14
+    "mudancas": 15
    },
    {
     "arquivo": ".github/workflows/ci.yml",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 89
+    "commits": 90
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,7 +314,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1587,
+  "arquivos_total": 1588,
   "arquivos_codigo": 1219,
   "linhas_codigo": 167110,
   "rotas": 105,
@@ -326,7 +326,7 @@
   "hooks": 191,
   "edge_functions": 94,
   "tabelas": 169,
-  "migrations": 215,
+  "migrations": 216,
   "cron_jobs": 9,
   "testes": 327,
   "workflows": 3,
