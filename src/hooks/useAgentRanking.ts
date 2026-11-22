@@ -260,6 +260,10 @@ export function useAgentRanking() {
   };
 
   const createTestData = async () => {
+    // Ferramenta de desenvolvimento: só pode gravar dados fabricados em DEV.
+    // Em produção isso contaminaria call_sessions/call_summaries/call_analyses
+    // e propagaria para o dashboard executivo e relatórios.
+    if (!import.meta.env.DEV) return;
     const agentNames = ['Lucas Ferreira', 'Ana Carolina Silva', 'Pedro Santos', 'Mariana Costa', 'João Oliveira', 'Beatriz Almeida'];
     const sentiments = ['positive', 'neutral', 'negative'];
     const topics = ['Suporte Técnico', 'Cobrança', 'Vendas', 'Cancelamento', 'Dúvidas', 'Reclamação'];

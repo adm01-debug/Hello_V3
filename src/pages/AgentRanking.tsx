@@ -44,9 +44,11 @@ export default function AgentRanking() {
          icon={<Gamepad2 />}
          actions={
            <>
-             <Button variant="outline" onClick={createTestData} size="sm" className="h-9">
-               <FlaskConical className="h-4 w-4 mr-2" />Criar Dados
-             </Button>
+             {import.meta.env.DEV && (
+               <Button variant="outline" onClick={createTestData} size="sm" className="h-9">
+                 <FlaskConical className="h-4 w-4 mr-2" />Criar Dados
+               </Button>
+             )}
              <Select value={period} onValueChange={setPeriod}>
                <SelectTrigger className="w-[140px] h-9"><SelectValue placeholder="Período" /></SelectTrigger>
                <SelectContent>
