@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "69573a228b83e811fd4cf090e5f2411881453951",
+  "commit": "4aeee51feda90c6d4c5e3d632753df8208738535",
   "branch": "main",
-  "data_commit": "2026-11-21T23:12:50-03:00",
+  "data_commit": "2026-11-21T23:20:57-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4aeee51",
+    "data": "2026-11-21",
+    "assunto": "fix: valida IP de header antes de usar em URL, log e autorizacao (#102)"
+   },
    {
     "sha": "69573a2",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "b2f65d7",
     "data": "2026-11-21",
     "assunto": "feat: (#76)"
-   },
-   {
-    "sha": "6308708",
-    "data": "2026-11-21",
-    "assunto": "docs: (#75)"
    }
   ],
-  "arquivos_mudados_7d": 762,
+  "arquivos_mudados_7d": 767,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -168,6 +168,10 @@
     "mudancas": 9
    },
    {
+    "pasta": "supabase/functions/_shared",
+    "mudancas": 7
+   },
+   {
     "pasta": ".github/workflows/ci.yml",
     "mudancas": 6
    },
@@ -190,10 +194,6 @@
    {
     "pasta": "src/components/dashboard",
     "mudancas": 6
-   },
-   {
-    "pasta": "docs/prod-readiness.md",
-    "mudancas": 5
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -226,15 +226,15 @@
     "mudancas": 5
    },
    {
+    "arquivo": "deno.lock",
+    "mudancas": 4
+   },
+   {
     "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 4
    },
    {
     "arquivo": "AGENTS.md",
-    "mudancas": 3
-   },
-   {
-    "arquivo": "deno.lock",
     "mudancas": 3
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 83
+    "commits": 84
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1584,
-  "arquivos_codigo": 1216,
-  "linhas_codigo": 166942,
+  "arquivos_total": 1585,
+  "arquivos_codigo": 1217,
+  "linhas_codigo": 166974,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 155,
-   "linhas": 18311
+   "arquivos": 156,
+   "linhas": 18343
   },
   "tailwind.config.ts": {
    "arquivos": 1,

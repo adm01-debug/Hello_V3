@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: valida IP de header antes de usar em URL, log e autorizacao (#102)",
    "fix: valida IP literal antes de montar a URL do provedor de geo (#101)",
    "docs: re-scorecard 9,1/10 com os PRs #96, #97, #98 e #99 (#100)",
    "chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)",
-   "docs: regenera indice de ADRs (7 de 53 estavam listados) (#98)",
-   "fix: torna a troca de chamada operavel por teclado no ActiveCallsIndicator (#97)"
+   "docs: regenera indice de ADRs (7 de 53 estavam listados) (#98)"
   ]
  },
  "pr_template": null,

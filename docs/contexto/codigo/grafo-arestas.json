@@ -4549,6 +4549,9 @@
    "src/pages/marketing/Pricing.tsx",
    "src/pages/marketing/VsThreeCPlus.tsx"
   ],
+  "supabase/functions/_shared/client-ip_test.ts": [
+   "supabase/functions/_shared/client-ip.ts"
+  ],
   "supabase/functions/_shared/external-payload-schemas.ts": [
    "supabase/functions/_shared/numeric-schemas.ts"
   ],
@@ -4735,6 +4738,7 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/record-consent/index.ts": [
+   "supabase/functions/_shared/client-ip.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
@@ -4745,6 +4749,7 @@
    "supabase/functions/_shared/voice-utils.ts"
   ],
   "supabase/functions/request-password-reset/index.ts": [
+   "supabase/functions/_shared/client-ip.ts",
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/rls-audit/index.ts": [
@@ -4792,12 +4797,11 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/validate-geo/index.ts": [
+   "supabase/functions/_shared/client-ip.ts",
    "supabase/functions/_shared/cors.ts"
   ],
-  "supabase/functions/validate-geo/ip_literal_test.ts": [
-   "supabase/functions/validate-geo/index.ts"
-  ],
   "supabase/functions/validate-ip/index.ts": [
+   "supabase/functions/_shared/client-ip.ts",
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/verify-voice/index.ts": [

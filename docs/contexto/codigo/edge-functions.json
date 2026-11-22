@@ -10,6 +10,8 @@
   "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
   "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
   "supabase/functions/_shared/allowed-hosts.ts",
+  "supabase/functions/_shared/client-ip.ts",
+  "supabase/functions/_shared/client-ip_test.ts",
   "supabase/functions/_shared/cors.ts",
   "supabase/functions/_shared/external-payload-schemas.ts",
   "supabase/functions/_shared/external-payload-schemas_test.ts",
@@ -1701,7 +1703,7 @@
    "nome": "record-consent",
    "entrada": "supabase/functions/record-consent/index.ts",
    "arquivos": 1,
-   "linhas": 99,
+   "linhas": 100,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1721,6 +1723,7 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "client-ip.ts",
     "cors.ts",
     "validate.ts"
    ],
@@ -1772,7 +1775,7 @@
    "nome": "request-password-reset",
    "entrada": "supabase/functions/request-password-reset/index.ts",
    "arquivos": 1,
-   "linhas": 128,
+   "linhas": 127,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1790,6 +1793,7 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "client-ip.ts",
     "cors.ts"
    ],
    "chamada_pelo_front": [
@@ -2255,8 +2259,8 @@
   {
    "nome": "validate-geo",
    "entrada": "supabase/functions/validate-geo/index.ts",
-   "arquivos": 2,
-   "linhas": 209,
+   "arquivos": 1,
+   "linhas": 174,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2279,6 +2283,7 @@
     "ip-api.com"
    ],
    "usa_shared": [
+    "client-ip.ts",
     "cors.ts"
    ],
    "chamada_pelo_front": [
@@ -2293,7 +2298,7 @@
    "nome": "validate-ip",
    "entrada": "supabase/functions/validate-ip/index.ts",
    "arquivos": 1,
-   "linhas": 148,
+   "linhas": 146,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2316,6 +2321,7 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "client-ip.ts",
     "cors.ts"
    ],
    "chamada_pelo_front": [

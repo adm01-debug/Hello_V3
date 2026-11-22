@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 890,
- "arestas": 3413,
+ "nos": 891,
+ "arestas": 3417,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -216,7 +216,6 @@
   "src/lib/validation/index.ts",
   "supabase/functions/analyze-call/analyze-call_test.ts",
   "supabase/functions/generate-coaching-track/track-engine_test.ts",
-  "supabase/functions/validate-geo/ip_literal_test.ts",
   "supabase/functions/whatsapp-inbound/idempotency_test.ts",
   "supabase/functions/whatsapp-inbound/schema_test.ts"
  ],
