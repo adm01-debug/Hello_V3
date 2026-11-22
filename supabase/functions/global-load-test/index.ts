@@ -1,103 +1,153 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id, x-correlation-id, x-trace-id, x-trace-operation',
-}
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-request-id, x-correlation-id, x-trace-id, x-trace-operation",
+};
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
 
   try {
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    )
+    const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+
+    // Exige admin: esta edge insere 200 registros com service_role e sem isso
+    // qualquer requisicao anonima poluia call_sessions/contacts/deals/audit_logs.
+    const negado = await exigirAdmin(req, supabaseUrl, serviceKey, corsHeaders);
+    if (negado) return negado;
+
+    const supabaseClient = createClient(supabaseUrl, serviceKey);
 
     const scenarios = [
-      { 
-        table: 'call_sessions', 
-        data: { 
-          agent_name: 'Load Test Bot', 
-          duration_seconds: 120, 
-          direction: 'inbound',
-          status: 'completed'
-        } 
+      {
+        table: "call_sessions",
+        data: {
+          agent_name: "Load Test Bot",
+          duration_seconds: 120,
+          direction: "inbound",
+          status: "completed",
+        },
       },
-      { 
-        table: 'contacts', 
-        data: { 
-          name: 'Load Test Contact', 
+      {
+        table: "contacts",
+        data: {
+          name: "Load Test Contact",
           email: `test_${Date.now()}@example.com`,
-          phone: '+5511999999999',
-          source: 'load_test'
-        } 
+          phone: "+5511999999999",
+          source: "load_test",
+        },
       },
-      { 
-        table: 'deals', 
-        data: { 
-          name: 'Load Test Deal', 
-          value_cents: 1000000, 
-          currency: 'BRL',
-          stage: 'proposal',
-          status: 'open'
-        } 
+      {
+        table: "deals",
+        data: {
+          name: "Load Test Deal",
+          value_cents: 1000000,
+          currency: "BRL",
+          stage: "proposal",
+          status: "open",
+        },
       },
-      { 
-        table: 'audit_logs', 
-        data: { 
-          action: 'LOAD_TEST_EVENT', 
-          resource_type: 'SYSTEM',
-          details: { msg: 'Global load test automated run' } 
-        } 
-      }
-    ]
+      {
+        table: "audit_logs",
+        data: {
+          action: "LOAD_TEST_EVENT",
+          resource_type: "SYSTEM",
+          details: { msg: "Global load test automated run" },
+        },
+      },
+    ];
 
-    const results = []
-    const iterations = 50 
+    const results = [];
+    const iterations = 50;
 
-    const startTime = performance.now()
+    const startTime = performance.now();
 
     for (const scenario of scenarios) {
-      const batchStart = performance.now()
+      const batchStart = performance.now();
       const payload = Array.from({ length: iterations }, () => ({
         ...scenario.data,
-      }))
+      }));
 
       const { data, error } = await supabaseClient
         .from(scenario.table)
         .insert(payload)
-        .select('id')
+        .select("id");
 
       results.push({
         entity: scenario.table,
         count: iterations,
         latency_ms: performance.now() - batchStart,
         success: !error,
-        error: error?.message
-      })
+        error: error?.message,
+      });
     }
 
-    const totalTime = performance.now() - startTime
+    const totalTime = performance.now() - startTime;
 
     return new Response(
       JSON.stringify({
-        status: 'completed',
+        status: "completed",
         total_scenarios: scenarios.length,
         total_records: scenarios.length * iterations,
         total_duration_ms: totalTime,
         breakdown: results,
-        system_status: totalTime < 5000 ? 'optimal' : 'degraded',
-        latency_p50_ms: totalTime / (scenarios.length * iterations)
+        system_status: totalTime < 5000 ? "optimal" : "degraded",
+        latency_p50_ms: totalTime / (scenarios.length * iterations),
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    )
-
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    })
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "erro desconhecido",
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
+    );
   }
-})
+});
+
+// 401 sem JWT valido; 403 se o perfil nao for admin/supervisor.
+async function exigirAdmin(
+  req: Request,
+  supabaseUrl: string,
+  serviceKey: string,
+  headers: Record<string, string>,
+): Promise<Response | null> {
+  const negar = (status: number, msg: string) =>
+    new Response(JSON.stringify({ error: msg }), {
+      status,
+      headers: { ...headers, "Content-Type": "application/json" },
+    });
+
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) return negar(401, "Nao autorizado");
+
+  const comoUsuario = createClient(
+    supabaseUrl,
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+    {
+      global: { headers: { Authorization: authHeader } },
+    },
+  );
+  const { data: { user }, error } = await comoUsuario.auth.getUser();
+  if (error || !user) return negar(401, "Nao autorizado");
+
+  const admin = createClient(supabaseUrl, serviceKey);
+  const { data: profile } = await admin
+    .from("user_profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle();
+  if (!profile || !["admin", "supervisor"].includes(profile.role)) {
+    return negar(403, "Acesso negado");
+  }
+  return null;
+}
