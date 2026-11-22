@@ -98,13 +98,23 @@ Corrigido na PR #131 (`forceMount` + `data-[state=closed]:hidden`) e ajustado na
 
 Até aqui a IA era tratada como "20+ edges que devolvem 503 por falta de chave" e o Data Lake como "aguardando dados reais". As duas pendências foram fechadas por execução real contra produção, não por leitura de código.
 
-**IA — 6 chamadas reais, 0 × 503.** Com um JWT de sessão válido, o gateway Open Router respondeu:
+**IA — 12 chamadas reais, 0 × 503.** Com um JWT de sessão válido, o gateway Open Router respondeu:
 
 | Edge | Payload | Resultado |
 |---|---|---|
 | `whatsapp-rewrite` × 4 tons (`profissional`, `amigavel`, `conciso`, `empatico`) | mensagem de 43 caracteres | 200 nos 4, cada um com reescrita distinta e coerente com o tom |
-| `analyze-sentiment` | transcrição de reclamação | 200, `overall_sentiment: negative`, `sentiment_score: -0.9`, `customer_satisfaction_estimate: 1` |
-| `score-call` / `translate-summary` | payload incompleto | 400 com mensagem de campo obrigatório — validação de entrada ativa |
+| `analyze-sentiment` | transcrição positiva | 200, `overall_sentiment: positive`, `sentiment_score: 0.95`, `customer_satisfaction_estimate: 10` |
+| `analyze-sentiment` (2ª) | transcrição de reclamação | 200, `overall_sentiment: negative`, `sentiment_score: -0.9`, `customer_satisfaction_estimate: 1` |
+| `extract-crm-fields` | transcript com nome/e-mail/telefone/empresa | 200, `suggested_value: "ACME Ltda"` no campo `company` com `confidence` |
+| `detect-key-moments` | transcript com ameaça de cancelamento | 200, momento `type: churn_risk` com `quote` extraída do texto |
+| `analyze-live-utterance` | utterance de pedido de cancelamento | 200, sinal `intent: churn_risk`, `confidence: 0.95` + sugestão de retenção |
+| `realtime-analysis` | mensagem de cobrança duplicada | 200, `sentiment: negative`, `urgency: high`, `emotion: irritado` |
+| `voip-diagnostic-voice-qa` | pergunta + `period: week` | 200, resposta admitindo ausência de dados em vez de inventar número |
+| `voip-executive-narrative` | `period: week`, `format: markdown` | 200, narrativa em markdown declarando falta de dados |
+| `generate-summary` | transcript de atendimento | 200, `summary` + `overallSentiment` + `customerSatisfaction` |
+| `score-call` / `translate-summary` / `extract-crm-fields` | payload incompleto | 400 com o campo obrigatório nomeado — validação de entrada ativa |
+
+**8 edges de IA com 200 e saída semântica correta em 22/11** (além dos 4 tons). Nenhuma devolveu 503: o `OPENROUTER_API_KEY` está ativo em produção. Onde não há dado (`voip-diagnostic-voice-qa`, `voip-executive-narrative`), o modelo declara a ausência em vez de inventar número — comportamento correto.
 
 O contrato de `whatsapp-rewrite` é `{ message, tone, context? }` (não `text`); o de `analyze-sentiment` é `{ transcription, callSessionId? }`.
 
