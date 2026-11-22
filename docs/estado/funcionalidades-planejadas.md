@@ -25,11 +25,11 @@ Origem: `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` §2 e `docs/audits/pendencias-
 
 | Item planejado | Status declarado | Medição | Classificação |
 |---|---|---|---|
-| **Unified Inbox** (WhatsApp + SMS + Voz em timeline única) | ✅ **Implementado (D1)** | Rota `/inbox` ativa (`protectedRoutes.tsx:156`); `WhatsappComposer` importado em `Inbox.tsx` (canal whatsapp, 4 tons + envio, WIRING-03); edge `whatsapp-inbound` existe | 🟩 **IMPLEMENTADO** (aguarda dados reais: `conversations`=0) |
+| **Unified Inbox** (WhatsApp + SMS + Voz em timeline única) | ✅ **Implementado (D1)** | Rota `/inbox` ativa (`protectedRoutes.tsx:156`); `WhatsappComposer` importado em `Inbox.tsx` (canal whatsapp, 4 tons + envio, WIRING-03); edge `whatsapp-inbound` existe. **`whatsapp-rewrite` testado nos 4 tons em 22/11 (§3.4): 200 nos 4.** | 🟩 **IMPLEMENTADO** (aguarda dados reais: 1 conversa em produção, sem histórico) |
 | **Virtual Fax v2** (OCR via Gemini) | ✅ **Implementado (D2)** | Rota `/virtual-fax` ativa (`protectedRoutes.tsx:137`); página `VirtualFax.tsx` usa `useVirtualFaxOcr`; edge `ocr-virtual-fax` chama IA real | 🟩 **IMPLEMENTADO** |
 | **AI-Driven Shift Management** | 🔴 Pendente (D3) | Edge `suggest-shift-swaps` deployada e retornando 200; página `/shift-swap-suggestions` roteada com `roles: ["supervisor","admin"]` e entrada no menu (**Sugestões de Escala IA**); tabela `shift_swap_suggestions` existe com RLS; `useAdherence` na aba **Aderência** de `/scheduling` (PR #67) | 🟩 **IMPLEMENTADO_TOTAL** (fio ligado e provado) |
 | **Coaching Automático** (sentimento → trilhas) | 🟢 **Implementado (D4)** | Edges `generate-coaching`, `generate-coaching-plan`, `generate-coaching-track` wireadas; `generate-coaching-track` reescrita contra schema real (`call_summaries.agent_performance_score`/`customer_satisfaction` 0-5, `coaching_assignments.agent_name`/`title`/`description`/`priority`/`status`) e testada (8 testes); botão **"Gerar trilhas automáticas"** em `/coaching` (guard `coaching.manage`) | 🟩 **IMPLEMENTADO** |
-| **Data Lake connector** (BigQuery/Snowflake) | 🟡 Parcial (D5) | Edges `data-lake-flush` e `export-data-lake` existem; cron reapontado para `cfmlmcdyjuotqobjapng` (migration `20261114090557_…`); flush validado no run 21/11 03:00Z (`1 row`, `succeeded`) | 🟡 **IMPLEMENTADO_PARCIAL** (dados de origem vazios; aguarda `call_summaries` populada) |
+| **Data Lake connector** (BigQuery/Snowflake) | 🟡 Parcial (D5) | Edges `data-lake-flush` e `export-data-lake` existem; cron `data-lake-flush-daily` (`0 3 * * *`) aponta para `cfmlmcdyjuotqobjapng`. **Provado ponta a ponta em 22/11 (§3.4):** flush exportou 50 linhas de `call_sessions` e 50 de `deals`; objeto baixado do bucket com 18 100 bytes / 50 linhas NDJSON; com `call_summaries` populada, exportou 1 linha e a RPC `get_call_history_with_summaries` passou a devolver sentimento, tópicos e satisfação. UI em `/admin/data-export` (`useDataLakeExports` + `export-data-lake`) | 🟩 **IMPLEMENTADO_TOTAL** (fluxo provado; o único `rows: 0` era janela incremental sem dado novo, não defeito) |
 | **Financial Impact Dashboard** | Listado como futuro | Rota `/financial-impact` **existe e está ativa**; hook `useFinancialImpact` com teste de propriedade | ✅ **IMPLEMENTADO_TOTAL** (código) / `NAO_VERIFICADO` em uso real |
 
 **Padrão observado:** quase tudo do "roadmap futuro" já tem backend construído. O que falta, consistentemente, é o **último fio** — o consumidor na UI ou o gatilho. É o oposto do padrão usual de roadmap.
@@ -153,8 +153,7 @@ São o caso mais claro de "planejado, construído e nunca ligado". Todas confirm
 | Auditoria de segurança (admin) | `pages/admin/SecurityAuditDashboard.tsx` (313 linhas) | ✅ Wireado: rota `/admin/security-audit` + menu **Auditoria de Segurança** | 🟩 |
 | Cadeia WebRTC alternativa | `calls/WebRTCCall.tsx` + 4 filhos (~880 linhas) | Só referenciada por testes; sem rota nem entrada de UI | ⬛ Legado |
 
-**5 Edge Functions sem chamador identificado:** `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`. (`cleanup-lock-conflicts` agora roda por `pg_cron` semanal desde 22/11.) (`generate-coaching-track` agora wireada via botão em `/coaching`.)
-**2 Edge Functions com testes mas sem `index.ts`:** `check-calling-hours/`, `check-dnc/`.
+**5 Edge Functions sem chamador identificado:** `fuzz-test-runner`, `global-load-test`, `rls-audit`, `sync-crm-queue`, `translate-summary`. Todas são ferramentas internas, não fluxo de produto: as três primeiras só são invocáveis por admin e a última não tem consumidor de UI (a tradução do produto usa `translate-utterance`, wireada em `useLiveTranslation`). (`cleanup-lock-conflicts` agora roda por `pg_cron` semanal desde 22/11.) (`generate-coaching-track` agora wireada via botão em `/coaching`.)
 
 ---
 
@@ -185,7 +184,7 @@ Diferente de "dormente": aqui havia UI completa e navegável que **simulava** o 
 | **Simulação de chamada (IA)** | Rótulo "tempo real". | Rótulo "demonstração"; aba "Demo de Transcrição". É demonstrativo por desenho. | 🟨 Declarado |
 | **Marketplace** | Catálogo estático; LDAP marcado `disponivel` e data-lake `roadmap` (invertido). | LDAP → `beta` (requer servidor LDAP); data-lake → `disponivel` (fluxo provado). | ✅ Corrigido |
 
-**Nota:** `check-dnc` e `check-calling-hours` **não** são Edge Functions faltantes — nunca tiveram `index.ts`; a lógica é RPC no banco (`rpc('check_dnc')` chamada por `score-call-attempt`) e está registrada em `docs/agentes/edge-functions.md`.
+**Nota:** `check-dnc` e `check-calling-hours` **têm** `index.ts` e estão deployadas (respondem 401 sem JWT, verificado em 22/11) — a afirmação anterior de que "nunca tiveram `index.ts`" era falsa. A lógica de DNC também existe como RPC no banco (`rpc('check_dnc')`, chamada por `score-call-attempt`), então há dois caminhos válidos; ambos constam em `docs/agentes/edge-functions.md`.
 
 ---
 
