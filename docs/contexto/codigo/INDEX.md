@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `1e1f3ef6a6b32a6c59cd423547d125f8132f1ac0` (2026-11-22T04:32:08-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `8c73b1ef29b65769c011d998f3024c4fdc8d198f` (2026-11-22T04:59:54-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -367,7 +367,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9157 nós · 24227 arestas · 722 comunidades · grafo do commit `1e1f3ef6`
+- 9157 nós · 24227 arestas · 722 comunidades · grafo do commit `8c73b1ef`
 - comunidades maiores: lucide-react (279), client.ts (210), usePageTitle (182), react (160), vitest (134), utils.ts (120), Tabela de funcionalidades (116), safe-date.ts (112), cn (111), @tanstack/react-query (108), safeFormatDistanceToNow (99), buildCorsHeaders (95)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -426,6 +426,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `8c73b1e` test: escopa locators do login para #email/#password no E2E (#119)
 - 2026-11-22 `1e1f3ef` fix(auth): login por passkey sem sessao ativa (#118)
 - 2026-11-22 `bb8f219` fix(edge): libera a origem de producao no CORS das edge functions (#117)
 - 2026-11-22 `6f648ab` fix(security): fecha account takeover no login por passkey (#116)
@@ -440,7 +441,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `f03e453` chore: doc reflete a medicao real da Onda 39 e do D3 (#109)
 - 2026-11-22 `ed3177d` fix: 9 edge functions com erro de tipo que quebravam em producao (#110)
 - 2026-11-21 `4a44ddc` chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)
-- 2026-11-21 `4c76ea5` fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

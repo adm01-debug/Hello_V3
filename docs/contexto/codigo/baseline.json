@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "1e1f3ef6a6b32a6c59cd423547d125f8132f1ac0",
+  "commit": "8c73b1ef29b65769c011d998f3024c4fdc8d198f",
   "branch": "main",
-  "data_commit": "2026-11-22T04:32:08-03:00",
+  "data_commit": "2026-11-22T04:59:54-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8c73b1e",
+    "data": "2026-11-22",
+    "assunto": "test: escopa locators do login para #email/#password no E2E (#119)"
+   },
    {
     "sha": "1e1f3ef",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "a01216b",
     "data": "2026-11-21",
     "assunto": "feat: cron de minuto para o discador preditivo (D6) (#93)"
-   },
-   {
-    "sha": "3a2530e",
-    "data": "2026-11-21",
-    "assunto": "feat: cron diario que gera trilhas de coaching (D4) (#89)"
    }
   ],
-  "arquivos_mudados_7d": 844,
+  "arquivos_mudados_7d": 845,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 99
+    "commits": 100
    },
    {
     "autor": "Joaquim Ataides",

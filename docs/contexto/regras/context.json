@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "1e1f3ef6a6b32a6c59cd423547d125f8132f1ac0",
+  "sha": "8c73b1ef29b65769c011d998f3024c4fdc8d198f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 07:32 UTC",
+  "generated_at": "2026-11-22 08:16 UTC",
   "files_total": 1673,
   "code_files": 1476,
   "code_lines": 184434
@@ -122365,10 +122365,19 @@
   }
  },
  "git": {
-  "sha": "1e1f3ef6a6b32a6c59cd423547d125f8132f1ac0",
+  "sha": "8c73b1ef29b65769c011d998f3024c4fdc8d198f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "8c73b1e",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "test: escopa locators do login para #email/#password no E2E (#119)",
+    "files": [
+     "tests/e2e/auth.spec.ts"
+    ]
+   },
    {
     "sha": "1e1f3ef",
     "date": "2026-11-22",
@@ -122891,15 +122900,6 @@
      "supabase/functions/global-load-test/index.ts",
      "supabase/functions/voip-load-test/index.ts"
     ]
-   },
-   {
-    "sha": "15654d2",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "docs: regenera catalogo apos corrigir o rls-audit (#90)",
-    "files": [
-     "docs/edge-functions/README.md"
-    ]
    }
   ],
   "hot_files": [
@@ -122909,7 +122909,7 @@
    ],
    [
     "docs/edge-functions/README.md",
-    6
+    5
    ],
    [
     "supabase/functions/validate-geo/index.ts",
