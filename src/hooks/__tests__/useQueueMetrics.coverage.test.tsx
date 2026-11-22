@@ -18,6 +18,10 @@ vi.mock('@/integrations/supabase/client', () => {
       if (table === 'call_sessions') return Promise.resolve({ data: activeCallsData, error: null });
       return b;
     });
+    b.in = vi.fn(() => {
+      if (table === 'call_sessions') return Promise.resolve({ data: activeCallsData, error: null });
+      return b;
+    });
     b.gte = vi.fn(() => Promise.resolve({ data: recentCallsData, error: null }));
     b.then = (resolve: (v: unknown) => void) => {
       if (table === 'agents') return resolve({ data: agentsData, error: null });
@@ -43,7 +47,7 @@ describe('useQueueMetrics', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     goalsData = [];
-    activeCallsData = [{ status: 'active' }, { status: 'waiting' }];
+    activeCallsData = [{ status: 'active' }, { status: 'ringing' }, { status: 'on_hold' }];
     agentsData = [{ status: 'available' }, { status: 'busy' }, { status: 'on_call' }, { status: 'break' }, { status: 'away' }];
     recentCallsData = [
       { status: 'completed', duration_seconds: 100, hold_time_seconds: 10 },
@@ -56,8 +60,20 @@ describe('useQueueMetrics', () => {
     const { result } = renderHook(() => useQueueMetrics());
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.metrics.activeCalls).toBe(2);
+    expect(result.current.metrics.waitingCalls).toBe(1);
     expect(result.current.metrics.agentsBusy).toBe(2);
     expect(result.current.realtimeData.length).toBeGreaterThan(0);
+  });
+
+  it('conta em espera apenas chamadas on_hold, nunca um status inventado', async () => {
+    // Regressão: o hook filtrava por status === 'waiting', que não existe em
+    // call_sessions (vocabulário real: active/ringing/on_hold/completed/
+    // missed/abandoned). O card "em espera" do dashboard ficava sempre em 0.
+    activeCallsData = [{ status: 'waiting' }, { status: 'waiting' }];
+    const { result } = renderHook(() => useQueueMetrics());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.metrics.waitingCalls).toBe(0);
+    expect(result.current.metrics.activeCalls).toBe(0);
   });
 
   it('checkGoalStatus handles gte and lte operators', async () => {
