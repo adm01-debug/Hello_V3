@@ -10,6 +10,7 @@ import { useMultiChannelCall, type CallChannel } from '@/hooks/useMultiChannelCa
 import { useCallHistory } from '@/hooks/useCallHistory';
 import { useSipCall } from '@/hooks/useSipCall';
 import { useDialerFavorites } from '@/hooks/useDialerFavorites';
+import { useDNCCompliance } from '@/hooks/useDNCCompliance';
 import { PhoneFrame } from '@/components/dialer/phone/PhoneFrame';
 import { PhoneDialpad } from '@/components/dialer/phone/PhoneDialpad';
 import { PhoneCallScreen } from '@/components/dialer/phone/PhoneCallScreen';
@@ -45,6 +46,7 @@ const PhoneDialer = () => {
   const call = useMultiChannelCall();
   const { sessions, isLoading } = useCallHistory();
   const sip = useSipCall();
+  const { preDialCheck } = useDNCCompliance();
   const { favorites: savedFavorites, isFavorite, toggleFavorite, moveFavorite, setFavoriteTag } =
     useDialerFavorites();
 
@@ -128,12 +130,20 @@ const PhoneDialer = () => {
 
 
   const startCall = useCallback(
-    (rawNumber: string, contactName?: string) => {
+    async (rawNumber: string, contactName?: string) => {
       const number = sanitizeDialInput(rawNumber);
       if (!isDialable(number)) {
         toast.error('Número inválido', { description: 'Informe pelo menos 3 dígitos.' });
         return;
       }
+
+      // Bloqueia discagem violando DNC ou fora da janela de horário permitida.
+      const { canDial, reasons } = await preDialCheck(number);
+      if (!canDial) {
+        toast.error('Chamada bloqueada por compliance', { description: reasons.join(' · ') });
+        return;
+      }
+
       const session = call.initiateCall(call.activeChannel, number, contactName);
       if (!session) {
         toast.error('Limite de chamadas simultâneas atingido');
@@ -150,7 +160,7 @@ const PhoneDialer = () => {
       }
       toast.success('Chamada iniciada', { description: `Canal ${call.activeChannel.toUpperCase()}` });
     },
-    [call, sip],
+    [call, sip, preDialCheck],
   );
 
   const handleVoiceIntent = useCallback(
