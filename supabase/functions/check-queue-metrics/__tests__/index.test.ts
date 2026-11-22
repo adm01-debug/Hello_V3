@@ -2,19 +2,8 @@
 
 import { assertEquals, assert } from "https://deno.land/std@0.224.0/assert/mod.ts";
 
-// Estes testes batem em um Supabase local. Antes, sem servidor o fetch
-// falhava, o `catch` virava null e o `return` fazia o teste passar sem
-// verificar nada -- verde oco que nunca pegou regressao. Agora a ausencia
-// do servidor vira IGNORADO explicito, contado a parte do verde.
-async function supabaseLocalAtivo(): Promise<boolean> {
-  try {
-    await fetch("http://localhost:54321/", { signal: AbortSignal.timeout(2000) });
-    return true;
-  } catch {
-    return false;
-  }
-}
-const SEM_LOCAL = !(await supabaseLocalAtivo());
+import { edgeLocalDisponivel } from "../../_shared/__tests__/local-supabase.ts";
+const SEM_LOCAL = !(await edgeLocalDisponivel("check-queue-metrics"));
 
 const FN_URL = "http://localhost:54321/functions/v1/check-queue-metrics";
 const REQUEST_ID = "test-req-queue-001";
