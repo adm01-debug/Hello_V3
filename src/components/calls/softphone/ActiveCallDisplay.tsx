@@ -1,4 +1,4 @@
-import { PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play, Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines, Zap, Activity, Smile } from 'lucide-react';
+import { PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play, Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines, Zap, Activity, Smile, Meh, Frown } from 'lucide-react';
 
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,17 @@ import { cn } from '@/lib/utils';
  import type { CallSession, CallChannel } from '@/hooks/useMultiChannelCall';
  import { VoipQualityIndicator } from '../VoipQualityIndicator';
 import { channelIcons, formatCallDuration } from './constants';
+
+const sentimentVisual: Record<
+  'positive' | 'neutral' | 'negative' | 'mixed',
+  { label: string; icon: JSX.Element }
+> = {
+  positive: { label: 'Positivo', icon: <Smile className="h-3 w-3 text-success" /> },
+  neutral: { label: 'Neutro', icon: <Meh className="h-3 w-3 text-muted-foreground" /> },
+  negative: { label: 'Negativo', icon: <Frown className="h-3 w-3 text-destructive" /> },
+  mixed: { label: 'Misto', icon: <Activity className="h-3 w-3 text-warning" /> },
+};
+import { useLiveSentiment } from '@/hooks/useLiveSentiment';
 
 interface ActiveCallDisplayProps {
   currentCall: CallSession;
@@ -30,6 +41,12 @@ export function ActiveCallDisplay({
 }: ActiveCallDisplayProps) {
   const ChannelIcon = channelIcons[activeChannel];
   const { isListening, isProcessing, lastCommand, startListening, stopListening } = useVoiceCommand();
+
+  // Humor real da chamada: usa o último snapshot gravado em `live_sentiment_snapshots`
+  // pela análise de transcrição. Sem snapshot não há como afirmar sentimento — a UI
+  // mostra "sem análise" em vez de um "Positivo" inventado.
+  const { snapshots } = useLiveSentiment(currentCall.dbSessionId);
+  const latestSentiment = snapshots.length > 0 ? snapshots[snapshots.length - 1] : undefined;
 
   return (
     <div className={cn(
@@ -79,18 +96,35 @@ export function ActiveCallDisplay({
             {currentCall.status === 'on-hold' && 'Em espera'}
           </Badge>
           
-          {/* Sentiment Indicator (Mock/placeholder for real sentiment) */}
+          {/* Humor do cliente — vem de live_sentiment_snapshots, não é fixo */}
           {currentCall.status === 'active' && (
             <div className="flex items-center gap-1 mt-1 justify-end">
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Humor</span>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Badge variant="outline" className="h-5 px-1 bg-background/50">
-                    <Smile className="h-3 w-3 text-success" />
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent>Sentimento do cliente: Positivo</TooltipContent>
-              </Tooltip>
+              {latestSentiment ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Badge variant="outline" className="h-5 px-1 bg-background/50 gap-1">
+                      {sentimentVisual[latestSentiment.sentiment].icon}
+                      <span className="text-[10px] font-medium">{sentimentVisual[latestSentiment.sentiment].label}</span>
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Sentimento do cliente: {sentimentVisual[latestSentiment.sentiment].label}</p>
+                    {latestSentiment.emotion && <p className="text-xs text-muted-foreground">Emoção: {latestSentiment.emotion}</p>}
+                    {latestSentiment.score !== null && <p className="text-xs text-muted-foreground">Score: {latestSentiment.score}</p>}
+                  </TooltipContent>
+                </Tooltip>
+              ) : (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Badge variant="outline" className="h-5 px-1 bg-background/50 gap-1 text-muted-foreground">
+                      <Activity className="h-3 w-3" />
+                      <span className="text-[10px] font-medium">Sem análise</span>
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>Nenhuma análise de sentimento registrada para esta chamada ainda</TooltipContent>
+                </Tooltip>
+              )}
             </div>
           )}
         </div>
