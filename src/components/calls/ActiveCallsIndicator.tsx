@@ -113,7 +113,20 @@ export function ActiveCallsIndicator({
             <div key={call.id} className={cn("flex items-center justify-between p-3 rounded-lg border transition-colors",
               call.id === activeCallId ? "bg-primary/10 border-primary/30" : "bg-muted/50 hover:bg-muted",
               call.isOnHold && "opacity-60", call.isInConference && "border-success/30 bg-success/5")}>
-              <div className="flex items-center gap-3 cursor-pointer flex-1" onClick={() => !isSelectingForConference && onSwitchCall(call.id)}>
+              <div
+                className="flex items-center gap-3 cursor-pointer flex-1"
+                role="button"
+                tabIndex={isSelectingForConference ? -1 : 0}
+                aria-label={`Alternar para a chamada de ${call.contactName || call.phoneNumber || 'contato'}`}
+                onClick={() => !isSelectingForConference && onSwitchCall(call.id)}
+                onKeyDown={(e) => {
+                  if (isSelectingForConference) return;
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onSwitchCall(call.id);
+                  }
+                }}
+              >
                 {isSelectingForConference && !call.isInConference ? (
                   <Checkbox checked={selectedForConference.includes(call.id)} onCheckedChange={() => setSelectedForConference(prev => prev.includes(call.id) ? prev.filter(id => id !== call.id) : [...prev, call.id])} onClick={(e) => e.stopPropagation()} />
                 ) : (
