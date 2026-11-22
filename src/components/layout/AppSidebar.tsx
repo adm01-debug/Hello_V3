@@ -120,6 +120,7 @@ const adminNavItems = [
   { title: 'Alertas de Segurança', url: '/admin/security-alerts', icon: ShieldAlert },
   { title: 'Saúde de Webhooks', url: '/admin/webhook-health', icon: Webhook },
   { title: 'SLO', url: '/admin/slo', icon: Gauge },
+  { title: 'Qualidade de Voz', url: '/admin/voice-quality', icon: Activity },
   { title: 'Saúde do Banco', url: '/admin/database-health', icon: Database },
 ];
 
