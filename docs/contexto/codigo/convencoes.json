@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "docs: marca achado createTestData como RESOLVIDO (PR #120) (#121)",
    "fix: gate createTestData e botão Criar Dados para DEV (#120)",
    "test: escopa locators do login para #email/#password no E2E (#119)",
    "fix(auth): login por passkey sem sessao ativa (#118)",
-   "fix(edge): libera a origem de producao no CORS das edge functions (#117)",
-   "fix(security): fecha account takeover no login por passkey (#116)"
+   "fix(edge): libera a origem de producao no CORS das edge functions (#117)"
   ]
  },
  "pr_template": null,

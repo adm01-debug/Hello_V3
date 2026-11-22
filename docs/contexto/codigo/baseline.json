@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "1123090e2faf3646d503c6ef63c3a599a4ca8e0a",
+  "commit": "782c8e42e4cc7c07ccd617876212e39ea2e14e0c",
   "branch": "main",
-  "data_commit": "2026-11-22T05:31:11-03:00",
+  "data_commit": "2026-11-22T05:43:15-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "782c8e4",
+    "data": "2026-11-22",
+    "assunto": "docs: marca achado createTestData como RESOLVIDO (PR #120) (#121)"
+   },
    {
     "sha": "1123090",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "95463e6",
     "data": "2026-11-21",
     "assunto": "fix: SSRF guard nas edges, idempotencia do inbound e gates de CI (#80)"
-   },
-   {
-    "sha": "438f9d2",
-    "data": "2026-11-21",
-    "assunto": "chore: regenera catalogo de edges apos cron do discador (#93) (#95)"
    }
   ],
-  "arquivos_mudados_7d": 846,
+  "arquivos_mudados_7d": 847,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 101
+    "commits": 102
    },
    {
     "autor": "Joaquim Ataides",

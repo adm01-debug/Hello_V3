@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "1123090e2faf3646d503c6ef63c3a599a4ca8e0a",
+  "sha": "782c8e42e4cc7c07ccd617876212e39ea2e14e0c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 08:31 UTC",
+  "generated_at": "2026-11-22 09:13 UTC",
   "files_total": 1673,
   "code_files": 1476,
   "code_lines": 184440
@@ -122375,10 +122375,19 @@
   }
  },
  "git": {
-  "sha": "1123090e2faf3646d503c6ef63c3a599a4ca8e0a",
+  "sha": "782c8e42e4cc7c07ccd617876212e39ea2e14e0c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "782c8e4",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: marca achado createTestData como RESOLVIDO (PR #120) (#121)",
+    "files": [
+     "docs/estado/hooks-parte1.md"
+    ]
+   },
    {
     "sha": "1123090",
     "date": "2026-11-22",
@@ -122893,22 +122902,6 @@
     "files": [
      "supabase/migrations/20250102000000_performance_indexes.sql"
     ]
-   },
-   {
-    "sha": "d3e59cd",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: edges que escrevem com service_role exigem sessao (#92)",
-    "files": [
-     "docs/edge-functions/README.md",
-     "supabase/functions/compute-account-health/index.ts",
-     "supabase/functions/detect-churn-risk/index.ts",
-     "supabase/functions/detect-key-moments/index.ts",
-     "supabase/functions/enforce-sla/index.ts",
-     "supabase/functions/send-survey/index.ts",
-     "supabase/functions/sync-crm-queue/index.ts",
-     "supabase/functions/teams-fetch-recordings/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -122917,11 +122910,11 @@
     6
    ],
    [
-    "docs/edge-functions/README.md",
-    4
+    "supabase/functions/validate-geo/index.ts",
+    3
    ],
    [
-    "supabase/functions/validate-geo/index.ts",
+    "docs/edge-functions/README.md",
     3
    ],
    [
@@ -122977,10 +122970,6 @@
     2
    ],
    [
-    "supabase/functions/teams-fetch-recordings/index.ts",
-    2
-   ],
-   [
     ".github/workflows/ci.yml",
     2
    ],
@@ -122990,6 +122979,10 @@
    ],
    [
     "src/components/agent/WhisperNotification.tsx",
+    2
+   ],
+   [
+    "src/components/call-history/CallSessionsList.tsx",
     2
    ]
   ]
