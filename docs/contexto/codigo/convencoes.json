@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)",
    "fix: taxa de abandono contava a chamada abandonada duas vezes (#131)",
    "docs: registra divergencia de limiar no Nivel de Servico (#130)",
    "fix: contagem em espera do dashboard usava status inexistente (#129)",
-   "feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)",
-   "docs: substitui rotulo desatualizado por prova de execucao (guard + IA em prod) (#127)"
+   "feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)"
   ]
  },
  "pr_template": null,

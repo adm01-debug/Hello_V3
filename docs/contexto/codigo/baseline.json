@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "5ca003906e3b88c14ad558ff93c694595dc7752f",
+  "commit": "d3b113327e2d57417fd921540face3e797e971bc",
   "branch": "main",
-  "data_commit": "2026-11-22T10:44:10-03:00",
+  "data_commit": "2026-11-22T10:51:20-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d3b1133",
+    "data": "2026-11-22",
+    "assunto": "fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)"
+   },
    {
     "sha": "5ca0039",
     "data": "2026-11-22",
@@ -126,11 +131,6 @@
     "sha": "12b0b3c",
     "data": "2026-11-22",
     "assunto": "fix: remove dependencia do gateway Lovable na importacao do Teams (#112)"
-   },
-   {
-    "sha": "f03e453",
-    "data": "2026-11-22",
-    "assunto": "chore: doc reflete a medicao real da Onda 39 e do D3 (#109)"
    }
   ],
   "arquivos_mudados_7d": 859,
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 21
+    "mudancas": 22
    },
    {
     "pasta": "src/lib/__tests__",
@@ -282,26 +282,26 @@
     "mudancas": 3
    },
    {
+    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "src/hooks/useQueueMetrics.ts",
+    "mudancas": 3
+   },
+   {
     "arquivo": "src/pages/Inbox.tsx",
     "mudancas": 3
    },
    {
     "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 3
-   },
-   {
-    "arquivo": "supabase/functions/data-lake-flush/index.ts",
-    "mudancas": 3
-   },
-   {
-    "arquivo": "supabase/functions/export-data-lake/index.ts",
-    "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 112
+    "commits": 113
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1627,
   "arquivos_codigo": 1235,
-  "linhas_codigo": 168687,
+  "linhas_codigo": 168720,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 350,
-   "linhas": 45273
+   "linhas": 45306
   },
   "src/integrations": {
    "arquivos": 3,
