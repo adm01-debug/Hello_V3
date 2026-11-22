@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: dataset call_summaries exportavel no data lake (D5) (#85)",
    "feat: error budget por componente no health-check (C1) (#83)",
    "feat: centraliza reauth em Context com grant HMAC persistido (#81)",
    "fix: onboarding no menu e fim do rotulo contraditorio do historico (#79)",
-   "feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)",
-   "feat: (#77)"
+   "feat: sincronizacao LDAP real, escuta registrada e fim dos sinais falsos (#78)"
   ]
  },
  "pr_template": null,

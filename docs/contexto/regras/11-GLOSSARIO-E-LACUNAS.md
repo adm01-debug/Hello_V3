@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f8ba359bfe` · branch `main` · 2026-11-21 23:02 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6807b07762` · branch `main` · 2026-11-22 00:03 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -204,7 +204,7 @@
 | `ConversationStatus` (TS) | open \| pending \| resolved \| closed \| snoozed |  | `src/hooks/useConversations.ts` |
 | `ConversationPriority` (TS) | low \| normal \| high \| urgent |  | `src/hooks/useConversations.ts` |
 | `WidgetId` (TS) | stats \| active-calls \| call-volume \| queue-status \| callbacks \| supervisor \| recent-calls \| agents-list |  | `src/hooks/useDashboardLayout.ts` |
-| `ExportDataset` (TS) | call_sessions \| deals \| contacts \| audit_logs |  | `src/hooks/useDataLakeExports.ts` |
+| `ExportDataset` (TS) | call_sessions \| call_summaries \| deals \| contacts \| audit_logs |  | `src/hooks/useDataLakeExports.ts` |
 | `ExportFormat` (TS) | csv \| ndjson \| parquet |  | `src/hooks/useDataLakeExports.ts` |
 | `DEAL_STAGES` (TS) | { id: "prospecting", label: "Prospecção" }, { id: "qualification", label: "Qualificação" }, { id: "proposal", label: "Proposta" }, { id: "negotiation", label: "Negociação" }, { id: "closed_won", label: "Ganha" }, { id: "closed_lost", label: "Perdida" }, |  | `src/hooks/useDeals.ts` |
 | `PeriodType` (TS) | today \| week \| month \| all |  | `src/hooks/useExecutiveDashboard.ts` |

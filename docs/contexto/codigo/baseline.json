@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "f8ba359bfe7367946988fdef6c36f649a33cbc0e",
+  "commit": "6807b077624f3ef81aa8907d280ee0642c7d03a5",
   "branch": "main",
-  "data_commit": "2026-11-21T20:01:09-03:00",
+  "data_commit": "2026-11-21T21:02:59-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6807b07",
+    "data": "2026-11-21",
+    "assunto": "fix: dataset call_summaries exportavel no data lake (D5) (#85)"
+   },
    {
     "sha": "f8ba359",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "68850f6",
     "data": "2026-11-20",
     "assunto": "fix: cron data-lake-flush falhava por constraint de dataset sem call_summaries (#60)"
-   },
-   {
-    "sha": "f105468",
-    "data": "2026-11-20",
-    "assunto": "fix: usa fileURLToPath nos testes/simulacoes do gerador de contexto (#59)"
    }
   ],
-  "arquivos_mudados_7d": 606,
+  "arquivos_mudados_7d": 609,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 65
+    "commits": 66
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1570,
   "arquivos_codigo": 1208,
-  "linhas_codigo": 165557,
+  "linhas_codigo": 165558,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -500,7 +500,7 @@
   },
   "src/pages": {
    "arquivos": 130,
-   "linhas": 20770
+   "linhas": 20771
   },
   "src/routes": {
    "arquivos": 2,

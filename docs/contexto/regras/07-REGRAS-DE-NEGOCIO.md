@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f8ba359bfe` · branch `main` · 2026-11-21 23:02 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6807b07762` · branch `main` · 2026-11-22 00:03 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1071,7 +1071,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | ConversationStatus | open \| pending \| resolved \| closed \| snoozed | `src/hooks/useConversations.ts` |
 | ConversationPriority | low \| normal \| high \| urgent | `src/hooks/useConversations.ts` |
 | WidgetId | stats \| active-calls \| call-volume \| queue-status \| callbacks \| supervisor \| recent-calls \| agents-list | `src/hooks/useDashboardLayout.ts` |
-| ExportDataset | call_sessions \| deals \| contacts \| audit_logs | `src/hooks/useDataLakeExports.ts` |
+| ExportDataset | call_sessions \| call_summaries \| deals \| contacts \| audit_logs | `src/hooks/useDataLakeExports.ts` |
 | ExportFormat | csv \| ndjson \| parquet | `src/hooks/useDataLakeExports.ts` |
 | DEAL_STAGES | { id: "prospecting", label: "Prospecção" }, { id: "qualification", label: "Qualificação" }, { id: "proposal", label: "Proposta" }, { id: "negotiation", label: "Negociação" }, { id: "closed_won", label: "Ganha" }, { id: "closed_lost", label: "Perdida" }, | `src/hooks/useDeals.ts` |
 | PeriodType | today \| week \| month \| all | `src/hooks/useExecutiveDashboard.ts` |
