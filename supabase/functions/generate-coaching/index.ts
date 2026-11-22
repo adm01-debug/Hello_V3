@@ -37,13 +37,10 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
-    const { data: profile } = await supabaseAdmin
-      .from('user_profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
+    const { data: isAdmin } = await supabaseAdmin
+      .rpc('is_admin_user', { _user_id: user.id });
 
-    if (!profile || !['supervisor', 'admin'].includes(profile.role)) {
+    if (!isAdmin) {
       return new Response(JSON.stringify({ error: 'Acesso negado' }), {
         status: 403,
         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },

@@ -34,15 +34,11 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Apenas admin pode invocar manualmente
+    // Apenas admin pode invocar manualmente -- papel lido de user_roles.
     const admin = createClient(SUPABASE_URL, SERVICE_KEY);
-    const { data: profile } = await admin
-      .from('user_profiles')
-      .select('role')
-      .eq('id', claims.claims.sub)
-      .maybeSingle();
+    const { data: isAdmin } = await admin.rpc('is_admin_user', { _user_id: claims.claims.sub as string });
 
-    if (!profile || profile.role !== 'admin') {
+    if (!isAdmin) {
       return new Response(JSON.stringify({ error: 'Forbidden: admin only' }), {
         status: 403,
         headers: { ...cors, 'Content-Type': 'application/json' },
