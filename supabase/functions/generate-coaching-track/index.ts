@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { mesmaString } from "../_shared/constant-time.ts";
 import {
   buildTrackCandidates,
   CallSession,
@@ -153,13 +154,6 @@ serve(async (req) => {
     );
   }
 });
-
-function mesmaString(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-}
 
 function json(payload: unknown, status: number, req: Request): Response {
   return new Response(JSON.stringify(payload), {
