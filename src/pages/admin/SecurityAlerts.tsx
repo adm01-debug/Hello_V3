@@ -77,7 +77,7 @@ export default function SecurityAlerts() {
       setSearchParams(next, { replace: true });
       setSearchInput(p.q);
     },
-    [setSearchParams],
+    [setSearchParams, setSearchInput],
   );
 
   const { presets, applyPreset, savePreset, removePreset } = useAlertPresets({

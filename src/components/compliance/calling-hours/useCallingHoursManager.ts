@@ -36,7 +36,11 @@ export function useCallingHoursManager() {
     },
   });
 
-  const invalidate = () => qc.invalidateQueries({ queryKey: ['calling-hours-config'] });
+  // Estável por referência: os useCallback abaixo dependem dele e recriariam a cada render sem o useCallback.
+  const invalidate = useCallback(
+    () => qc.invalidateQueries({ queryKey: ['calling-hours-config'] }),
+    [qc],
+  );
 
   const createRegion = useCallback(async (draft: CallingHoursDraft) => {
     setSaving(true);
@@ -74,7 +78,7 @@ export function useCallingHoursManager() {
     } finally {
       setSaving(false);
     }
-  }, []);
+  }, [invalidate]);
 
   const updateRegion = useCallback(async (id: string, draft: CallingHoursDraft) => {
     setSaving(true);
@@ -108,7 +112,7 @@ export function useCallingHoursManager() {
     } finally {
       setSaving(false);
     }
-  }, []);
+  }, [invalidate]);
 
   const toggleActive = useCallback(async (region: CallingHoursRegion) => {
     const { error } = await supabase
@@ -121,7 +125,7 @@ export function useCallingHoursManager() {
     }
     toast.success(region.is_active ? 'Região desativada' : 'Região ativada');
     await invalidate();
-  }, []);
+  }, [invalidate]);
 
   const deleteRegion = useCallback(async (region: CallingHoursRegion) => {
     if (!confirm(`Remover a região "${region.region_name}"?`)) return false;
@@ -136,7 +140,7 @@ export function useCallingHoursManager() {
     toast.success('Região removida');
     await invalidate();
     return true;
-  }, []);
+  }, [invalidate]);
 
   const checkNow = useCallback(async (regionCode: string): Promise<CheckResult | null> => {
     try {

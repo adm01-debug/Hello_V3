@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
@@ -72,7 +72,8 @@ export function useDialerFavorites() {
   });
 
 
-  const favorites = query.data ?? [];
+  // Referência estável enquanto os dados não mudam; sem isso os useCallback abaixo recriam a cada render.
+  const favorites = useMemo(() => query.data ?? [], [query.data]);
 
   const addMutation = useMutation({
     mutationFn: async ({ phone, label }: { phone: string; label?: string | null }) => {

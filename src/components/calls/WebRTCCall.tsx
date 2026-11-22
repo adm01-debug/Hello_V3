@@ -234,7 +234,7 @@ export function WebRTCCall({
       }
       setStatus("idle");
     }
-  }, [onCallStarted, endCall]);
+  }, [onCallStarted, endCall, clearReconnectTimers, scheduleReconnect]);
 
   const toggleMute = useCallback(() => {
     const stream = localStreamRef.current;
