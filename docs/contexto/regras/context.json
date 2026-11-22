@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "d62b80044e0170dc1ea867aa96e92ad1c6f08752",
+  "sha": "071d1ddd0f50d1dd1d41f4deb53a1c0b128dc22e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 12:57 UTC",
+  "generated_at": "2026-11-22 13:11 UTC",
   "files_total": 1674,
   "code_files": 1477,
   "code_lines": 184445
@@ -122376,10 +122376,19 @@
   }
  },
  "git": {
-  "sha": "d62b80044e0170dc1ea867aa96e92ad1c6f08752",
+  "sha": "071d1ddd0f50d1dd1d41f4deb53a1c0b128dc22e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "071d1dd",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: substitui rotulo desatualizado por prova de execucao (guard + IA em prod) (#127)",
+    "files": [
+     "docs/estado/infra-ci-rotas-integracoes.md"
+    ]
+   },
    {
     "sha": "d62b800",
     "date": "2026-11-22",
@@ -122883,36 +122892,12 @@
     "files": [
      "src/components/calls/ActiveCallsIndicator.tsx"
     ]
-   },
-   {
-    "sha": "95463e6",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: SSRF guard nas edges, idempotencia do inbound e gates de CI (#80)",
-    "files": [
-     ".github/workflows/ci.yml",
-     "docs/estado/funcionalidades-planejadas.md",
-     "docs/estado/infra-ci-rotas-integracoes.md",
-     "scripts/audit-edge-baseline.json",
-     "scripts/audit-edge-functions.ts",
-     "scripts/bundle-budget.json",
-     "scripts/check-bundle-budget.mjs",
-     "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
-     "supabase/functions/_shared/allowed-hosts.ts",
-     "supabase/functions/bitrix-api/index.ts",
-     "supabase/functions/data-lake-flush/index.ts",
-     "supabase/functions/fuzz-test-runner/index.ts",
-     "supabase/functions/voip-trunks-healthcheck/index.ts",
-     "supabase/functions/whatsapp-inbound/idempotency.ts",
-     "supabase/functions/whatsapp-inbound/idempotency_test.ts",
-     "supabase/functions/whatsapp-inbound/index.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    6
+    5
    ],
    [
     "supabase/functions/validate-geo/index.ts",
@@ -122959,14 +122944,6 @@
     2
    ],
    [
-    "supabase/functions/data-lake-flush/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/fuzz-test-runner/index.ts",
-    2
-   ],
-   [
     "supabase/functions/record-consent/index.ts",
     2
    ],
@@ -122983,11 +122960,19 @@
     2
    ],
    [
-    ".github/workflows/ci.yml",
+    "deno.lock",
     2
    ],
    [
-    "deno.lock",
+    "src/components/agent/WhisperNotification.tsx",
+    2
+   ],
+   [
+    "src/components/call-history/CallSessionsList.tsx",
+    2
+   ],
+   [
+    "src/components/calls/softphone/TabContents.tsx",
     2
    ]
   ]

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d62b80044e0170dc1ea867aa96e92ad1c6f08752",
+  "commit": "071d1ddd0f50d1dd1d41f4deb53a1c0b128dc22e",
   "branch": "main",
-  "data_commit": "2026-11-22T09:56:09-03:00",
+  "data_commit": "2026-11-22T10:04:52-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "071d1dd",
+    "data": "2026-11-22",
+    "assunto": "docs: substitui rotulo desatualizado por prova de execucao (guard + IA em prod) (#127)"
+   },
    {
     "sha": "d62b800",
     "data": "2026-11-22",
@@ -126,11 +131,6 @@
     "sha": "4aeee51",
     "data": "2026-11-21",
     "assunto": "fix: valida IP de header antes de usar em URL, log e autorizacao (#102)"
-   },
-   {
-    "sha": "69573a2",
-    "data": "2026-11-21",
-    "assunto": "fix: valida IP literal antes de montar a URL do provedor de geo (#101)"
    }
   ],
   "arquivos_mudados_7d": 855,
@@ -254,6 +254,10 @@
     "mudancas": 3
    },
    {
+    "arquivo": "docs/estado/infra-ci-rotas-integracoes.md",
+    "mudancas": 3
+   },
+   {
     "arquivo": "docs/observabilidade/SLI_SLO.md",
     "mudancas": 3
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "supabase/functions/export-data-lake/index.ts",
     "mudancas": 3
-   },
-   {
-    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
-    "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 107
+    "commits": 108
    },
    {
     "autor": "Joaquim Ataides",
