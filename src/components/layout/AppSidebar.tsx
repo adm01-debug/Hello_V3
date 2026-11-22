@@ -1,4 +1,4 @@
-import { CircleParking, LayoutGrid, LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Clock as ClockIcon, Wifi, Gamepad2, Building2, Handshake, RefreshCw, Target, ShieldAlert, Webhook, Database } from 'lucide-react';
+import { CircleParking, LayoutGrid, LayoutDashboard, Phone, Users, Clock, Settings, Headphones, BarChart3, Bot, PieChart, Bell, Trophy, Gauge, Brain, Disc, Timer, AlertTriangle, Calendar, Activity, History, Shield, ShieldCheck, Key, Monitor, Lock, Fingerprint, Globe, PhoneOutgoing, MessageCircle, Siren, ListChecks, ScrollText, Eye, FileBarChart, UserCog, ChevronDown, GitBranch, Voicemail, Video, Monitor as MonitorIcon, Printer, ArrowLeftRight, PhoneCall, Tag, QrCode, FolderSync, Star, BellRing, Library, Swords, Cloud, CalendarDays, Award, GraduationCap, Sparkles, Languages, Inbox as InboxIcon, BookOpen, Clock as ClockIcon, Wifi, Gamepad2, Building2, Handshake, RefreshCw, Target, ShieldAlert, Webhook, Database, ClipboardCheck } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar,
@@ -121,6 +121,7 @@ const adminNavItems = [
   { title: 'Saúde de Webhooks', url: '/admin/webhook-health', icon: Webhook },
   { title: 'SLO', url: '/admin/slo', icon: Gauge },
   { title: 'Qualidade de Voz', url: '/admin/voice-quality', icon: Activity },
+  { title: 'Avaliações de Chamada', url: '/scorecards', icon: ClipboardCheck },
   { title: 'Saúde do Banco', url: '/admin/database-health', icon: Database },
 ];
 

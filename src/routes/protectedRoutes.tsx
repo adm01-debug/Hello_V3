@@ -93,6 +93,7 @@ const WebhookHealth = lazy(() => import("@/pages/admin/WebhookHealth"));
 const Onboarding = lazy(() => import("@/pages/Onboarding"));
 const PredictiveDialer = lazy(() => import("@/pages/PredictiveDialer"));
 const VoiceQuality = lazy(() => import("@/pages/admin/VoiceQuality"));
+const Scorecards = lazy(() => import("@/pages/Scorecards"));
 const SloDashboard = lazy(() => import("@/pages/admin/SloDashboard"));
 
 export interface RouteConfig {
@@ -167,6 +168,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/dialer", element: Dialer, roles: ["supervisor", "admin"] },
   { path: "/dialer/predictive", element: PredictiveDialer, roles: ["supervisor", "admin"] },
   { path: "/admin/voice-quality", element: VoiceQuality, roles: ["supervisor", "admin"] },
+  { path: "/scorecards", element: Scorecards, roles: ["supervisor", "admin"] },
   { path: "/compliance", element: Compliance, roles: ["supervisor", "admin"] },
   { path: "/outbound-compliance", element: OutboundCompliance, roles: ["supervisor", "admin"] },
   { path: "/call-flow-designer", element: CallFlowDesigner, roles: ["supervisor", "admin"] },
