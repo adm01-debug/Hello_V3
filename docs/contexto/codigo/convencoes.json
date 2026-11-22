@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: corrige deps de hook que causavam closure obsoleto (22 -> 5 warnings) (#126)",
    "fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)",
    "chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)",
    "feat: wire QueueTrendChart a dados reais (realtimeData do useQueueMetrics) (#123)",
-   "test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)",
-   "docs: marca achado createTestData como RESOLVIDO (PR #120) (#121)"
+   "test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)"
   ]
  },
  "pr_template": null,

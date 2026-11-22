@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d33797382f` · branch `main` · 2026-11-22 12:31 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d62b80044e` · branch `main` · 2026-11-22 12:57 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1374,10 +1374,6 @@ _nenhum item encontrado_
 - **apply(s: CrmFieldSuggestion)** — `src/components/calls/CrmSuggestionsCard.tsx`
   ```
   const value = editing[s.id] ?? s.suggested_value; accept({ id: s.id, contactId: contactId ?? null, field: s.field_name, value }); cancelEdit(s.id);
-  ```
-- **invalidate()** — `src/components/compliance/calling-hours/useCallingHoursManager.ts`
-  ```
-  qc.invalidateQueries({ queryKey: ['calling-hours-config'] });
   ```
 - **fetchRanking()** — `src/components/gamification/WeeklyRanking.tsx`
   ```

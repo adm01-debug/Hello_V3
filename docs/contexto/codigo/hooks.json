@@ -116,7 +116,7 @@
    "hooks_exportados": [
     "useCallingHoursManager"
    ],
-   "linhas": 179,
+   "linhas": 183,
    "dominio": "components/compliance",
    "tabelas": [
     "calling_hours_config"
@@ -2070,7 +2070,7 @@
    "hooks_exportados": [
     "useDialerFavorites"
    ],
-   "linhas": 257,
+   "linhas": 258,
    "dominio": "hooks",
    "tabelas": [
     "dialer_favorites"
@@ -2080,6 +2080,7 @@
    "hooks_internos": [
     "useCallback",
     "useEffect",
+    "useMemo",
     "useMutation",
     "useQuery",
     "useQueryClient"
@@ -3182,7 +3183,7 @@
    "hooks_exportados": [
     "useProfile"
    ],
-   "linhas": 71,
+   "linhas": 72,
    "dominio": "hooks",
    "tabelas": [
     "user_profiles"
@@ -3603,7 +3604,7 @@
    "hooks_exportados": [
     "useSecurityAlertNotifications"
    ],
-   "linhas": 226,
+   "linhas": 228,
    "dominio": "hooks",
    "tabelas": [
     "notifications"
