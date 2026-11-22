@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useMultiChannelCall, type CallSession } from '@/hooks/useMultiChannelCall';
+import { useCallRecording } from '@/hooks/useCallRecording';
 import { useWavoipCall } from '@/hooks/useWavoipCall';
 import { useConferenceRecording } from '@/hooks/useConferenceRecording';
 import { useSipCall } from '@/hooks/useSipCall';
@@ -41,6 +42,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
 
   const wavoip = useWavoipCall();
   const sipCall = useSipCall();
+  const recording = useCallRecording();
   const { currentAgent, agents, setAgent, clearAgent, setStatusBusy, setStatusAvailable, setStatusAway } = useAgentStatus();
 
   useConferenceRecording({
@@ -145,10 +147,29 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     toast.info(currentCall?.isOnHold ? 'Chamada retomada' : 'Chamada em espera');
   }, [toggleHold, currentCall, sipCall]);
 
-  const handleRecordToggle = useCallback(() => {
+  const handleRecordToggle = useCallback(async () => {
+    // Captura o audio da chamada e persiste no bucket antes de anunciar sucesso.
+    if (recording.isRecording) {
+      const filePath = await recording.stopAndSaveRecording({
+        callSessionId: currentCall?.id,
+        participantCount: currentCall?.isInConference ? activeCalls.length : 1,
+      });
+      toggleRecording();
+      if (filePath) toast.success('Gravação salva', { description: filePath });
+      else toast.error('Falha ao salvar a gravação');
+      return;
+    }
+
+    const started = await recording.startRecording();
+    if (!started) {
+      toast.error('Não foi possível iniciar a gravação', {
+        description: 'Verifique a permissão de microfone do navegador.',
+      });
+      return;
+    }
     toggleRecording();
-    toast.info(currentCall?.isRecording ? 'Gravação parada' : 'Gravação iniciada');
-  }, [toggleRecording, currentCall]);
+    toast.info('Gravação iniciada');
+  }, [recording, toggleRecording, currentCall, activeCalls.length]);
 
   const ChannelIcon = channelIcons[activeChannel];
   const isSpeaking = conversation.isSpeaking;
