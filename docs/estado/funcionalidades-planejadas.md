@@ -76,6 +76,25 @@ A métrica **Nível de Serviço** (percentual de chamadas atendidas rápido) é 
 
 **Não corrigido nesta rodada por ser decisão de negócio, não bug:** é preciso definir **qual é o alvo oficial** (20 s ou 30 s) e **onde ele mora** (constante compartilhada ou coluna em `queue_metrics_settings`). O `hold_time_seconds` e o vocabulário de status (`active`/`ringing`/`on_hold`) já foram corrigidos na PR #129.
 
+### 3.2 Achado de 22/11: taxa de abandono — corrigida em 2 etapas
+
+Auditando as mesmas 4 implementações, a **taxa de abandono** tinha três defeitos sobrepostos no `useQueueMetrics`. Foram corrigidos nas PRs #131 e #132:
+
+| Defeito | Antes | Depois |
+|---|---|---|
+| Abandonada contada **duas vezes** no denominador | `(abandoned / (recentCalls + abandoned))` → 3 em 10 dava **23,1%** | `(abandoned / (completed + abandoned))` → **30%** |
+| Chamadas **em curso** no denominador | 2 completadas + 3 abandonadas + 5 em curso dava **30%** | **60%** |
+| `missed` ignorada | 1 abandonada + 2 perdidas dava **33%** no card, mas **100%** no alerta da edge | **100%** nos dois |
+
+As duas edges (`check-goals`, `check-queue-metrics`) já usavam `completed + abandoned + missed`. Agora as três implementações usam a mesma fórmula. **Nenhum dos defeitos foi introduzido por outro agente — todos eram do código herdado**, e todos empurravam o número para baixo, escondendo abandono de quem decide remanejar equipe por ele.
+
+### 3.3 Achado de 22/11: tendência do dia perdia o histórico
+
+`QueueTrendChart` fica dentro de um `CollapsibleContent` do Radix, que **desmonta o filho ao fechar**. Cada toggle destruía a série de 20 pontos e o gráfico levava ~100 s (20 × polling de 5 s) para reaparecer com dados — e `showTrendChart` nasce `false`, então o primeiro clique também abria vazio.
+
+Corrigido na PR #131 (`forceMount` + `data-[state=closed]:hidden`) e ajustado na #133: o `forceMount` puro montava o gráfico para sempre, e como o gráfico chama `useQueueMetrics()` — canal realtime + polling de 5 s — isso passava a cobrar polling infinito de quem **nunca** abria a tendência. Agora monta no primeiro clique e nunca desmonta depois.
+
+
 
 ---
 
