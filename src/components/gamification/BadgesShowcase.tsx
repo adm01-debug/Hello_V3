@@ -7,9 +7,10 @@ import { BadgeCard } from './BadgeCard';
 interface BadgesShowcaseProps {
   badges: BadgeType[];
   agentBadges: AgentBadge[];
+  isLoading?: boolean;
 }
 
-export function BadgesShowcase({ badges, agentBadges }: BadgesShowcaseProps) {
+export function BadgesShowcase({ badges, agentBadges, isLoading = false }: BadgesShowcaseProps) {
   const earnedBadgeIds = new Set(agentBadges.map(ab => ab.badge_id));
   
   const categories = [
@@ -52,6 +53,17 @@ export function BadgesShowcase({ badges, agentBadges }: BadgesShowcaseProps) {
         </div>
       </CardHeader>
       <CardContent>
+        {isLoading ? (
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="h-24 animate-pulse rounded-lg bg-muted" />
+            ))}
+          </div>
+        ) : totalCount === 0 ? (
+          <p className="text-muted-foreground text-center py-8">
+            Nenhum badge cadastrado no momento.
+          </p>
+        ) : (
         <Tabs defaultValue="all">
           <TabsList className="w-full flex-wrap h-auto gap-1 bg-transparent p-0 mb-4">
             {categories.map(cat => (
@@ -65,10 +77,17 @@ export function BadgesShowcase({ badges, agentBadges }: BadgesShowcaseProps) {
             ))}
           </TabsList>
 
-          {categories.map(cat => (
+          {categories.map(cat => {
+            const filtered = filterBadgesByCategory(cat.id);
+            return (
             <TabsContent key={cat.id} value={cat.id} className="mt-0">
+              {filtered.length === 0 ? (
+                <p className="text-muted-foreground text-center py-8 text-sm">
+                  Nenhum badge nesta categoria.
+                </p>
+              ) : (
               <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
-                {filterBadgesByCategory(cat.id).map(badge => {
+                {filtered.map(badge => {
                   const agentBadge = agentBadges.find(ab => ab.badge_id === badge.id);
                   return (
                     <BadgeCard
@@ -81,9 +100,12 @@ export function BadgesShowcase({ badges, agentBadges }: BadgesShowcaseProps) {
                   );
                 })}
               </div>
+              )}
             </TabsContent>
-          ))}
+            );
+          })}
         </Tabs>
+        )}
       </CardContent>
     </Card>
   );
