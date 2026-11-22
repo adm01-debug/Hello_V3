@@ -2727,27 +2727,34 @@
    "modulo": "components/supervisor",
    "arquivos": 11,
    "testes": 0,
-   "linhas": 576,
+   "linhas": 564,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
    "componentes": 10,
    "hooks_locais": [
     "useCriticalAlertNotifications",
+    "useDashboardGoals",
+    "useQueueMetrics",
     "useSupervisorPanel"
    ],
    "hooks_definidos": [],
-   "edges": [],
+   "edges": [
+    "check-goals"
+   ],
    "tabelas": [
+    "agents",
     "barge_in_sessions",
     "call_control_audit_logs",
     "call_sessions",
+    "dashboard_goals",
     "whisper_messages"
    ],
    "rpcs": [],
    "buckets": [],
    "canais_realtime": [
     "critical-alerts-notifications",
+    "queue-metrics",
     "supervisor-panel-updates",
     "whisper-history-${selectedCall.id}"
    ],

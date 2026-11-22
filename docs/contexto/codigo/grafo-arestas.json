@@ -1876,6 +1876,9 @@
    "src/components/ui/slider.tsx",
    "src/hooks/useCriticalAlertNotifications.ts"
   ],
+  "src/components/supervisor/QueueTrendChart.tsx": [
+   "src/hooks/useQueueMetrics.ts"
+  ],
   "src/components/supervisor/SoundProfileManager.tsx": [
    "src/components/ui/button.tsx",
    "src/components/ui/popover.tsx",

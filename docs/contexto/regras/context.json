@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "92cb97aabf2a55106f304aba3849bf3a0af44343",
+  "sha": "e7083876a4892ec936994d2bb206a2a4b96aebe9",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 11:53 UTC",
+  "generated_at": "2026-11-22 11:59 UTC",
   "files_total": 1673,
   "code_files": 1476,
-  "code_lines": 184444
+  "code_lines": 184432
  },
  "version": "1.3.2",
- "facts_hash": "0f56e96b5e2799b0",
+ "facts_hash": "54a3f169b718b795",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -28548,9 +28548,11 @@
     "file": "src/pages/Index.tsx",
     "component": "Index",
     "tables_transitive": [
+     "agents",
      "barge_in_sessions",
      "call_control_audit_logs",
      "call_sessions",
+     "dashboard_goals",
      "hold_alert_settings",
      "hold_events",
      "scheduled_callbacks",
@@ -28558,14 +28560,16 @@
      "user_roles",
      "whisper_messages"
     ],
-    "invokes_transitive": [],
+    "invokes_transitive": [
+     "check-goals"
+    ],
     "rpc_transitive": [
      "get_agents_with_active_calls",
      "get_call_volume_stats",
      "get_dashboard_stats",
      "get_queue_stats"
     ],
-    "deps_count": 69
+    "deps_count": 70
    },
    {
     "path": "",
@@ -33178,7 +33182,7 @@
   {
    "module": "src/components",
    "files": 350,
-   "lines": 41966,
+   "lines": 41954,
    "tables": [
     "accounts",
     "agent_goals",
@@ -95293,7 +95297,7 @@
   },
   "src/components/supervisor/QueueTrendChart.tsx": {
    "path": "src/components/supervisor/QueueTrendChart.tsx",
-   "lines": 61,
+   "lines": 49,
    "exports": [
     "function QueueTrendChart"
    ]
@@ -122375,10 +122379,19 @@
   }
  },
  "git": {
-  "sha": "92cb97aabf2a55106f304aba3849bf3a0af44343",
+  "sha": "e7083876a4892ec936994d2bb206a2a4b96aebe9",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e708387",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "feat: wire QueueTrendChart a dados reais (realtimeData do useQueueMetrics) (#123)",
+    "files": [
+     "src/components/supervisor/QueueTrendChart.tsx"
+    ]
+   },
    {
     "sha": "92cb97a",
     "date": "2026-11-22",
@@ -122891,23 +122904,12 @@
      "supabase/functions/generate-coaching-track/index.ts",
      "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql"
     ]
-   },
-   {
-    "sha": "907e943",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix(seguranca): revoga EXECUTE de anon nas funcoes internas e fecha advisors de RLS (#84)",
-    "files": [
-     "docs/audit/scorecard-final.md",
-     "docs/estado/funcionalidades-planejadas.md",
-     "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    6
+    5
    ],
    [
     "supabase/functions/validate-geo/index.ts",
@@ -122916,6 +122918,10 @@
    [
     "docs/edge-functions/README.md",
     3
+   ],
+   [
+    "src/components/supervisor/QueueTrendChart.tsx",
+    2
    ],
    [
     "src/lib/__tests__/agent-assist.pbt.test.ts",
@@ -122979,10 +122985,6 @@
    ],
    [
     "deno.lock",
-    2
-   ],
-   [
-    "src/components/agent/WhisperNotification.tsx",
     2
    ]
   ]

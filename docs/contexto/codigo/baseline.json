@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "92cb97aabf2a55106f304aba3849bf3a0af44343",
+  "commit": "e7083876a4892ec936994d2bb206a2a4b96aebe9",
   "branch": "main",
-  "data_commit": "2026-11-22T08:53:14-03:00",
+  "data_commit": "2026-11-22T08:59:14-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "e708387",
+    "data": "2026-11-22",
+    "assunto": "feat: wire QueueTrendChart a dados reais (realtimeData do useQueueMetrics) (#123)"
+   },
    {
     "sha": "92cb97a",
     "data": "2026-11-22",
@@ -126,11 +131,6 @@
     "sha": "f83c5a8",
     "data": "2026-11-21",
     "assunto": "docs: regenera indice de ADRs (7 de 53 estavam listados) (#98)"
-   },
-   {
-    "sha": "e7f6391",
-    "data": "2026-11-21",
-    "assunto": "fix: torna a troca de chamada operavel por teclado no ActiveCallsIndicator (#97)"
    }
   ],
   "arquivos_mudados_7d": 847,
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 103
+    "commits": 104
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1626,
   "arquivos_codigo": 1234,
-  "linhas_codigo": 168625,
+  "linhas_codigo": 168613,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41966
+   "linhas": 41954
   },
   "src/contexts": {
    "arquivos": 3,

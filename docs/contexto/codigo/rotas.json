@@ -1641,6 +1641,7 @@
     "useCallback",
     "useContext",
     "useCriticalAlertNotifications",
+    "useDashboardGoals",
     "useDashboardLayout",
     "useDashboardStats",
     "useEffect",
@@ -1648,6 +1649,7 @@
     "useMemo",
     "usePageTitle",
     "useQueryClient",
+    "useQueueMetrics",
     "useQueueStatsData",
     "useRecentCallsData",
     "useRef",
@@ -1670,19 +1672,23 @@
     "useAuthState",
     "useCallVolumeData",
     "useCriticalAlertNotifications",
+    "useDashboardGoals",
     "useDashboardLayout",
     "useDashboardStats",
     "useHoldSoundAlert",
     "usePageTitle",
+    "useQueueMetrics",
     "useQueueStatsData",
     "useRecentCallsData",
     "useScheduledCallbacks",
     "useSupervisorPanel"
    ],
    "tabelas": [
+    "agents",
     "barge_in_sessions",
     "call_control_audit_logs",
     "call_sessions",
+    "dashboard_goals",
     "hold_alert_settings",
     "hold_events",
     "scheduled_callbacks",
@@ -1696,7 +1702,9 @@
     "get_dashboard_stats",
     "get_queue_stats"
    ],
-   "edges": [],
+   "edges": [
+    "check-goals"
+   ],
    "canais_realtime": [
     "active-calls-realtime",
     "agent-bargein-${agentName}",
@@ -1704,6 +1712,7 @@
     "critical-alerts-notifications",
     "hold-sound-settings",
     "hold-trend-realtime",
+    "queue-metrics",
     "scheduled-callbacks-changes",
     "supervisor-panel-updates",
     "whisper-history-${selectedCall.id}"
@@ -1716,7 +1725,7 @@
     "img",
     "status"
    ],
-   "arquivos_puxados": 69
+   "arquivos_puxados": 73
   },
   {
    "protegida": false,
