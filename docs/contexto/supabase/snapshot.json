@@ -31431,6 +31431,15 @@
           "jobname": "cleanup-lock-conflicts-weekly",
           "schedule": "0 3 * * 0",
           "username": "postgres"
+        },
+        {
+          "active": true,
+          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/cleanup-recordings',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_recordings_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
+          "database": "postgres",
+          "jobid": 15,
+          "jobname": "cleanup-recordings-daily",
+          "schedule": "45 3 * * *",
+          "username": "postgres"
         }
       ]
     },
@@ -57585,6 +57594,11 @@
         "created_at": "2026-11-22T02:39:26.437636+00:00",
         "description": "Token do cron semanal de purga de optimistic_lock_conflicts (>90 dias)",
         "name": "cleanup_lock_conflicts_cron_token"
+      },
+      {
+        "created_at": "2026-11-22T15:59:17.618880+00:00",
+        "description": "Token do cron diario de retencao de gravacoes (180 dias)",
+        "name": "cleanup_recordings_cron_token"
       },
       {
         "created_at": "2026-11-22T00:52:23.452551+00:00",

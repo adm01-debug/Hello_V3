@@ -2,6 +2,11 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-22 16:14 UTC
+
+- **cron jobs** adicionado (1): `15:cleanup-recordings-daily`
+- **vault secrets (nomes)** adicionado (1): `cleanup_recordings_cron_token`
+
 ## 2026-11-22 06:20 UTC
 
 - **constraints** adicionado (8): `public.accounts.accounts_current_stage_check`, `public.accounts.accounts_segment_check`, `public.agent_devices.agent_devices_device_type_check`, `public.agent_ring_settings.agent_ring_settings_fallback_action_check`, `public.agent_ring_settings.agent_ring_settings_ring_strategy_check`, `public.agent_shifts.agent_shifts_status_check`, `public.call_playlists.call_playlists_playlist_type_check`, `public.call_quality_metrics.call_quality_metrics_quality_label_check`

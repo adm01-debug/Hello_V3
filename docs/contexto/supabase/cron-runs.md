@@ -23,11 +23,16 @@
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-22 15:11:00 | succeeded | 0.02 | 1 row |
-| 2026-11-22 15:10:00 | succeeded | 0.01 | 1 row |
-| 2026-11-22 15:09:00 | succeeded | 0.02 | 1 row |
+| 2026-11-22 16:14:00 | succeeded | 0.01 | 1 row |
+| 2026-11-22 16:13:00 | succeeded | 0.02 | 1 row |
+| 2026-11-22 16:12:00 | succeeded | 0.05 | 1 row |
 
 
 ## 14 · cleanup-lock-conflicts-weekly
+
+_nenhum_
+
+
+## 15 · cleanup-recordings-daily
 
 _nenhum_

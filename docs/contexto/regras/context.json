@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "80115e5f324962f8caf3ed9e63da541165963aec",
+  "sha": "51aa44de74861ad17233cd565a8bf1ecb289d8e7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 15:47 UTC",
+  "generated_at": "2026-11-22 16:13 UTC",
   "files_total": 1677,
   "code_files": 1480,
   "code_lines": 184719
@@ -122522,10 +122522,19 @@
   }
  },
  "git": {
-  "sha": "80115e5f324962f8caf3ed9e63da541165963aec",
+  "sha": "51aa44de74861ad17233cd565a8bf1ecb289d8e7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "51aa44d",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)",
+    "files": [
+     "docs/audits/pendencias-2026-07.md"
+    ]
+   },
    {
     "sha": "80115e5",
     "date": "2026-11-22",
@@ -122880,16 +122889,6 @@
      "supabase/functions/voip-load-test/index.ts",
      "supabase/migrations/20261123002000_b6_text_domain_checks.sql"
     ]
-   },
-   {
-    "sha": "12b0b3c",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: remove dependencia do gateway Lovable na importacao do Teams (#112)",
-    "files": [
-     "src/pages/ExternalRecordingsImport.tsx",
-     "supabase/functions/teams-fetch-recordings/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -122938,6 +122937,10 @@
     2
    ],
    [
+    "docs/audits/pendencias-2026-07.md",
+    1
+   ],
+   [
     "supabase/functions/_shared/constant-time.ts",
     1
    ],
@@ -122967,10 +122970,6 @@
    ],
    [
     "docs/estado/infra-ci-rotas-integracoes.md",
-    1
-   ],
-   [
-    "eslint.config.js",
     1
    ]
   ]

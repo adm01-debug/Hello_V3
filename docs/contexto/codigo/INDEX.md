@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `80115e5f324962f8caf3ed9e63da541165963aec` (2026-11-22T12:46:56-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `51aa44de74861ad17233cd565a8bf1ecb289d8e7` (2026-11-22T12:57:30-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -367,8 +367,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9170 nós · 24263 arestas · 736 comunidades · grafo do commit `80115e5f`
-- comunidades maiores: lucide-react (249), usePageTitle (232), client.ts (224), vitest (181), react (163), traceHeaders (154), cn (111), @tanstack/react-query (103), snapshot.py (102), badge.tsx (88), safeFormatDistanceToNow (87), buildCorsHeaders (84)
+- 9171 nós · 24265 arestas · 734 comunidades · grafo do commit `51aa44de`
+- comunidades maiores: card.tsx (245), usePageTitle (215), client.ts (213), traceHeaders (155), vitest (153), badge.tsx (143), react (140), @tanstack/react-query (118), safeFormatDatePtBR (116), cn (108), usePageTitle.ts (105), snapshot.py (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -381,11 +381,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - deno.lock (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
+- docs/audits/pendencias-2026-07.md (4)
 - docs/pendencias/_ordem.md (4)
 - src/components/layout/CommandPalette.tsx (4)
 - AGENTS.md (3)
 - docs/agentes/edge-functions.md (3)
-- docs/audits/pendencias-2026-07.md (3)
 - docs/estado/edge-functions-parte1.md (3)
 - docs/estado/infra-ci-rotas-integracoes.md (3)
 
@@ -426,6 +426,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `51aa44d` docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)
 - 2026-11-22 `80115e5` fix: cron de retencao de lock-conflicts nunca autenticava (#137)
 - 2026-11-22 `9d3d288` docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)
 - 2026-11-22 `c7bbfa0` docs: valida IA e Data Lake ponta a ponta em producao (#135)
@@ -440,7 +441,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `d62b800` chore: corrige deps de hook que causavam closure obsoleto (22 -> 5 warnings) (#126)
 - 2026-11-22 `d337973` fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)
 - 2026-11-22 `36c5c1f` chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)
-- 2026-11-22 `e708387` feat: wire QueueTrendChart a dados reais (realtimeData do useQueueMetrics) (#123)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

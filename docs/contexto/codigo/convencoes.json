@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)",
    "fix: cron de retencao de lock-conflicts nunca autenticava (#137)",
    "docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)",
    "docs: valida IA e Data Lake ponta a ponta em producao (#135)",
-   "docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)",
-   "fix: tendencia do dia so monta apos o primeiro clique (#133)"
+   "docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)"
   ]
  },
  "pr_template": null,

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "80115e5f324962f8caf3ed9e63da541165963aec",
+  "commit": "51aa44de74861ad17233cd565a8bf1ecb289d8e7",
   "branch": "main",
-  "data_commit": "2026-11-22T12:46:56-03:00",
+  "data_commit": "2026-11-22T12:57:30-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "51aa44d",
+    "data": "2026-11-22",
+    "assunto": "docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)"
+   },
    {
     "sha": "80115e5",
     "data": "2026-11-22",
@@ -126,11 +131,6 @@
     "sha": "49ef164",
     "data": "2026-11-22",
     "assunto": "test: testes de integracao param de passar sem verificar nada (#114)"
-   },
-   {
-    "sha": "f48e4ef",
-    "data": "2026-11-22",
-    "assunto": "chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)"
    }
   ],
   "arquivos_mudados_7d": 862,
@@ -230,6 +230,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "docs/audits/pendencias-2026-07.md",
+    "mudancas": 4
+   },
+   {
     "arquivo": "docs/pendencias/_ordem.md",
     "mudancas": 4
    },
@@ -243,10 +247,6 @@
    },
    {
     "arquivo": "docs/agentes/edge-functions.md",
-    "mudancas": 3
-   },
-   {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 3
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 118
+    "commits": 119
    },
    {
     "autor": "Joaquim Ataides",
