@@ -1,42 +1,48 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id, x-correlation-id, x-trace-id, x-trace-operation',
-}
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-request-id, x-correlation-id, x-trace-id, x-trace-operation",
+};
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    )
+    const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+
+    // Exige admin: sem isso qualquer requisicao anonima inseria 10 registros
+    // em call_quality_metrics a cada chamada, falsificando as metricas de qualidade.
+    const negado = await exigirAdmin(req, supabaseUrl, serviceKey, corsHeaders);
+    if (negado) return negado;
+
+    const supabaseClient = createClient(supabaseUrl, serviceKey);
 
     const startTime = performance.now();
     const metrics = [];
     const batchSize = 10;
-    
+
     // Teste de Carga: Inserção em Lote
     const insertStart = performance.now();
     for (let i = 0; i < batchSize; i++) {
       const { data, error } = await supabaseClient
-        .from('call_quality_metrics')
+        .from("call_quality_metrics")
         .insert({
-          agent_name: 'Load Test Bot',
-          channel: 'SIP/test-trunk',
+          agent_name: "Load Test Bot",
+          channel: "SIP/test-trunk",
           mos_avg: 4.2 + (Math.random() * 0.5),
           jitter_avg_ms: 10 + (Math.random() * 20),
           packet_loss_pct: Math.random() * 2,
           rtt_avg_ms: 50 + (Math.random() * 30),
-          quality_label: 'Good'
+          quality_label: "Good",
         })
-        .select()
-      
+        .select();
+
       if (error) throw error;
       if (data) metrics.push(data[0].id);
     }
@@ -45,17 +51,25 @@ serve(async (req) => {
     // Teste de Busca (Bottleneck check)
     const selectStart = performance.now();
     const { data: selectData, error: selectError } = await supabaseClient
-      .from('call_quality_metrics')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(100)
-    
+      .from("call_quality_metrics")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(100);
+
     if (selectError) throw selectError;
     const selectEnd = performance.now();
 
     // Limpeza (opcional, mas bom para não poluir)
     // No load test real não deletaríamos, mas aqui vamos manter os logs por 1 hora
-    
+
+    // Limpeza: as amostras do teste nao podem se acumular no historico de qualidade.
+    if (metrics.length) {
+      await supabaseClient.from("call_quality_metrics").delete().in(
+        "id",
+        metrics,
+      );
+    }
+
     const totalTime = performance.now() - startTime;
 
     return new Response(
@@ -67,22 +81,61 @@ serve(async (req) => {
           select_latency_ms: selectEnd - selectStart,
           batch_size: batchSize,
           records_processed: metrics.length,
-          supabase_health: 'healthy'
-        }
+          supabase_health: "healthy",
+        },
       }),
       {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
-      }
-    )
-
+      },
+    );
   } catch (error) {
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "erro desconhecido",
+      }),
       {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 500,
-      }
-    )
+      },
+    );
   }
-})
+});
+
+// 401 sem JWT valido; 403 se o perfil nao for admin/supervisor.
+async function exigirAdmin(
+  req: Request,
+  supabaseUrl: string,
+  serviceKey: string,
+  headers: Record<string, string>,
+): Promise<Response | null> {
+  const negar = (status: number, msg: string) =>
+    new Response(JSON.stringify({ error: msg }), {
+      status,
+      headers: { ...headers, "Content-Type": "application/json" },
+    });
+
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) return negar(401, "Nao autorizado");
+
+  const comoUsuario = createClient(
+    supabaseUrl,
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+    {
+      global: { headers: { Authorization: authHeader } },
+    },
+  );
+  const { data: { user }, error } = await comoUsuario.auth.getUser();
+  if (error || !user) return negar(401, "Nao autorizado");
+
+  const admin = createClient(supabaseUrl, serviceKey);
+  const { data: profile } = await admin
+    .from("user_profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle();
+  if (!profile || !["admin", "supervisor"].includes(profile.role)) {
+    return negar(403, "Acesso negado");
+  }
+  return null;
+}

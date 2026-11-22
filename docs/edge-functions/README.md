@@ -11,9 +11,9 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 ## Resumo
 
 - **94** edge functions
-- **25** públicas (sem leitura de JWT no código)
+- **23** públicas (sem leitura de JWT no código)
 - **63** exigem usuário autenticado
-- **6** exigem papel admin/supervisor
+- **8** exigem papel admin/supervisor
 - **9** sem chamador no repositório (invocadas por cron, webhook externo ou uso manual)
 
 ## Colunas
@@ -72,7 +72,7 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 | `generate-coaching-track` | — | admin/supervisor | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 139 |
 | `generate-meeting-summary` | — | autenticado | sim | — | sim | src 3 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 309 |
 | `generate-summary` | — | autenticado | — | sim | sim | src 1 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 96 |
-| `global-load-test` | — | publico | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 104 |
+| `global-load-test` | — | admin/supervisor | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 154 |
 | `health-check` | Health check consolidado — endpoint público retornando status dos componentes | publico | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 122 |
 | `ldap-sync` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `LDAP_ALLOW_SELF_SIGNED` | 367 |
 | `notify-blocked-ip` | — | publico | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `ADMIN_EMAIL`, `FROM_EMAIL`, `RESEND_API_KEY` | 102 |
@@ -109,7 +109,7 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 | `voip-executive-narrative` | Edge Function: voip-executive-narrative (Onda 20) | autenticado | — | — | — | src 2 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 165 |
 | `voip-executive-summary` | Edge Function: voip-executive-summary | autenticado | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 219 |
 | `voip-failover-notifier` | — | header-only | sim | — | — | src 0 / mig 0 / edge 1 / e2e 0 | — | 54 |
-| `voip-load-test` | — | publico | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 89 |
+| `voip-load-test` | — | admin/supervisor | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 142 |
 | `voip-quality-alerts-summary` | Edge Function: voip-quality-alerts-summary | header-only | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 107 |
 | `voip-quality-forecast` | — | autenticado | — | — | — | src 1 / mig 0 / edge 1 / e2e 0 | — | 248 |
 | `voip-quality-heatmap` | Edge Function: voip-quality-heatmap | header-only | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 116 |
@@ -157,13 +157,11 @@ exposição deve começar.
 - `email-inbound`
 - `embed-kb-article`
 - `enforce-sla`
-- `global-load-test`
 - `health-check`
 - `request-password-reset`
 - `send-survey`
 - `sync-crm-queue`
 - `teams-fetch-recordings`
-- `voip-load-test`
 - `webauthn-authenticate`
 - `webhook-handler`
 - `whatsapp-inbound`
