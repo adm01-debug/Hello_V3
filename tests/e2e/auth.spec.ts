@@ -9,8 +9,8 @@ test.describe('Authentication Flow', () => {
 
   test('should show login form elements', async ({ page }) => {
     await page.goto('/login');
-    await expect(page.locator('input[type="email"]')).toBeVisible();
-    await expect(page.locator('input[type="password"]')).toBeVisible();
+    await expect(page.locator('#email')).toBeVisible();
+    await expect(page.locator('#password')).toBeVisible();
     await expect(page.locator('button[type="submit"]')).toBeVisible();
   });
 });
