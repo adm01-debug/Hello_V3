@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a0b70c9e14e1daf3884793069ba690e889ad6017",
+  "sha": "0b7522ef2c8ce6ac814d7072f7cb350eae0c4236",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 05:40 UTC",
-  "files_total": 1635,
-  "code_files": 1438,
-  "code_lines": 181559
+  "generated_at": "2026-11-22 05:47 UTC",
+  "files_total": 1638,
+  "code_files": 1441,
+  "code_lines": 181658
  },
  "version": "1.3.2",
- "facts_hash": "5d28d12eaf142834",
+ "facts_hash": "628e794d68d54a55",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -160,7 +160,7 @@
   "languages": {
    ".tsx": 603,
    ".ts": 583,
-   ".sql": 218,
+   ".sql": 221,
    ".mjs": 27,
    ".py": 5,
    ".js": 2
@@ -25479,6 +25479,9 @@
    "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql",
    "supabase/migrations/20261122140000_dialer_pacing_cron.sql",
    "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+   "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+   "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+   "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
    "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
    "src/integrations/supabase/types.ts"
   ],
@@ -27516,6 +27519,182 @@
     "objkind": "table",
     "roles": "service_role",
     "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_user_roles",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_profile_role",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "has_permission",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "add_to_dnc",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_dnc",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_calling_hours",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_ip_allowed",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_auth_agent_id",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "sync_profile_role_from_user_roles",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_user_roles",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_profile_role",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "has_permission",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "add_to_dnc",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_dnc",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_calling_hours",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_ip_allowed",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_auth_agent_id",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "sync_profile_role_from_user_roles",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "is_admin_user",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "is_admin_user",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "has_role",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "has_role",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql"
    }
   ],
   "raises": [
@@ -33966,8 +34145,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 216,
-   "lines": 14238,
+   "files": 219,
+   "lines": 14337,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -41367,6 +41546,10 @@
    },
    {
     "file": "supabase/functions/export-data-lake/index.ts",
+    "value": "admin"
+   },
+   {
+    "file": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
     "value": "admin"
    }
   ],
@@ -84445,7 +84628,10 @@
    "supabase/migrations/20260726201157_da4cb47a-5f61-4783-9786-eb99a7ee6bfc.sql",
    "supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql",
    "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
-   "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+   "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+   "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+   "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql"
   ],
   "security_definer_fns": [
    "add_to_dnc",
@@ -86396,6 +86582,182 @@
     "objkind": "table",
     "roles": "service_role",
     "src": "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_user_roles",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_profile_role",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "has_permission",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "add_to_dnc",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_dnc",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_calling_hours",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "check_ip_allowed",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "get_auth_agent_id",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "sync_profile_role_from_user_roles",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_user_roles",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_profile_role",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "has_permission",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "add_to_dnc",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_dnc",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_calling_hours",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_ip_allowed",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_auth_agent_id",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "sync_profile_role_from_user_roles",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "is_admin_user",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "is_admin_user",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "has_role",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "has_role",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql"
    }
   ],
   "guards": [
@@ -120803,6 +121165,24 @@
    ],
    "uses_service_role": true
   },
+  "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql": {
+   "path": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+   "lines": 64,
+   "uses_service_role": true
+  },
+  "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql": {
+   "path": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+   "lines": 22,
+   "uses_service_role": true
+  },
+  "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql": {
+   "path": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
+   "lines": 13,
+   "role_checks": [
+    "admin"
+   ],
+   "uses_service_role": true
+  },
   "supabase/migrations/20261123002000_b6_text_domain_checks.sql": {
    "path": "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
    "lines": 99
@@ -120915,10 +121295,22 @@
   }
  },
  "git": {
-  "sha": "a0b70c9e14e1daf3884793069ba690e889ad6017",
+  "sha": "0b7522ef2c8ce6ac814d7072f7cb350eae0c4236",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "0b7522e",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md",
+     "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+     "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+     "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql"
+    ]
+   },
    {
     "sha": "a0b70c9",
     "date": "2026-11-22",
@@ -121405,22 +121797,12 @@
      "src/pages/Marketplace.tsx",
      "supabase/functions/ldap-sync/index.ts"
     ]
-   },
-   {
-    "sha": "ee5082d",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "feat: (#77)",
-    "files": [
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    9
+    10
    ],
    [
     "docs/edge-functions/README.md",
@@ -121428,14 +121810,6 @@
    ],
    [
     "deno.lock",
-    3
-   ],
-   [
-    "src/components/layout/AppSidebar.tsx",
-    3
-   ],
-   [
-    "src/components/layout/CommandPalette.tsx",
     3
    ],
    [
@@ -121483,19 +121857,27 @@
     2
    ],
    [
+    "src/components/layout/AppSidebar.tsx",
+    2
+   ],
+   [
+    "src/components/layout/CommandPalette.tsx",
+    2
+   ],
+   [
     "src/hooks/useSupervisorPanel.ts",
     2
    ],
    [
-    "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
+    "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
     1
    ],
    [
-    "src/pages/ExternalRecordingsImport.tsx",
+    "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
     1
    ],
    [
-    "supabase/functions/analyze-live-utterance/index.ts",
+    "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
     1
    ]
   ]

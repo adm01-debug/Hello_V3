@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)",
    "feat: fecha B6 - dominio nas colunas text enumeraveis (#111)",
    "fix: remove dependencia do gateway Lovable na importacao do Teams (#112)",
    "chore: doc reflete a medicao real da Onda 39 e do D3 (#109)",
-   "fix: 9 edge functions com erro de tipo que quebravam em producao (#110)",
-   "chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)"
+   "fix: 9 edge functions com erro de tipo que quebravam em producao (#110)"
   ]
  },
  "pr_template": null,

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a0b70c9e14` · branch `main` · 2026-11-22 05:40 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0b7522ef2c` · branch `main` · 2026-11-22 05:47 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2436,6 +2436,7 @@ _nenhum item encontrado_
 | `role` | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/functions/export-data-lake/index.ts` |
+| `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
 ## K. Testes como especificação (3963 testes em 319 arquivos — nomes completos em `context.json`)
 

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a0b70c9e14e1daf3884793069ba690e889ad6017",
+  "commit": "0b7522ef2c8ce6ac814d7072f7cb350eae0c4236",
   "branch": "main",
-  "data_commit": "2026-11-22T02:39:30-03:00",
+  "data_commit": "2026-11-22T02:46:51-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "0b7522e",
+    "data": "2026-11-22",
+    "assunto": "fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)"
+   },
    {
     "sha": "a0b70c9",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "f6f0740",
     "data": "2026-11-21",
     "assunto": "fix: rls-audit exige auth e usa RPC real de RLS (#86)"
-   },
-   {
-    "sha": "6807b07",
-    "data": "2026-11-21",
-    "assunto": "fix: dataset call_summaries exportavel no data lake (D5) (#85)"
    }
   ],
-  "arquivos_mudados_7d": 786,
+  "arquivos_mudados_7d": 789,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 15
+    "mudancas": 16
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 15
+    "mudancas": 16
    },
    {
     "arquivo": ".github/workflows/ci.yml",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 90
+    "commits": 91
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,7 +314,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1588,
+  "arquivos_total": 1591,
   "arquivos_codigo": 1219,
   "linhas_codigo": 167110,
   "rotas": 105,
@@ -326,7 +326,7 @@
   "hooks": 191,
   "edge_functions": 94,
   "tabelas": 169,
-  "migrations": 216,
+  "migrations": 219,
   "cron_jobs": 9,
   "testes": 327,
   "workflows": 3,

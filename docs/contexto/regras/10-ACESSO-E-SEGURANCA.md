@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a0b70c9e14` · branch `main` · 2026-11-22 05:40 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0b7522ef2c` · branch `main` · 2026-11-22 05:47 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -185,7 +185,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 109 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 112 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -296,6 +296,9 @@
 - `supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql`
 - `supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql`
 - `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql`
+- `supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql`
+- `supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql`
+- `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql`
 
 ## Funções SQL `SECURITY DEFINER` (rodam com privilégio do dono, ignoram RLS)
 
@@ -397,7 +400,7 @@ Middleware matcher (Next.js): nenhum
 | grant | authenticated | select | `financial_impact_daily`, `index_drop_audit` |
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
 | grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls` |
-| grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +6 |
+| grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +17 |
 | grant | postgres | all privileges | `cron` |
 | grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls` |
 | grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges` |
@@ -405,7 +408,7 @@ Middleware matcher (Next.js): nenhum
 | revoke | PUBLIC | all | `log_index_drop_copy`, `expire_parked_calls` |
 | revoke | PUBLIC | execute | `get_dashboard_stats`, `get_queue_stats`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `cleanup_old_logs`, `log_rls_event` |
 | revoke | PUBLIC, anon | all | `calculate_predictive_pace`, `recalc_deal_health` |
-| revoke | PUBLIC, anon | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `get_call_queues_overview`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event` … +48 |
+| revoke | PUBLIC, anon | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `get_call_queues_overview`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event` … +59 |
 | revoke | PUBLIC, anon, authenticated | all | `apply_predictive_pacing`, `snapshot_deals_daily` |
 | revoke | PUBLIC, anon, authenticated | execute | `trigger_auto_scorecard` |
 | revoke | anon | all | `financial_impact_daily` |
