@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "67d018067748ba3b5ec2676a95e5e85674b05b83",
+  "sha": "025ada530731c5d2e3f3ba900840c555271693f8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 17:06 UTC",
-  "files_total": 1682,
-  "code_files": 1485,
-  "code_lines": 185302
+  "generated_at": "2026-11-22 17:36 UTC",
+  "files_total": 1683,
+  "code_files": 1486,
+  "code_lines": 185338
  },
  "version": "1.3.2",
- "facts_hash": "87a9e9fc0209f4b0",
+ "facts_hash": "c89f3f2d093862a2",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -160,7 +160,7 @@
   "languages": {
    ".tsx": 606,
    ".ts": 602,
-   ".sql": 243,
+   ".sql": 244,
    ".mjs": 27,
    ".py": 5,
    ".js": 2
@@ -25580,6 +25580,7 @@
    "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
    "supabase/migrations/20261123001000_sync_role_creates_missing_profile.sql",
    "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
+   "supabase/migrations/20261123010000_fix_user_delete_cascade.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "src/integrations/supabase/types.ts"
   ],
@@ -34421,8 +34422,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 240,
-   "lines": 15639,
+   "files": 241,
+   "lines": 15675,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -122823,6 +122824,10 @@
    "path": "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
    "lines": 99
   },
+  "supabase/migrations/20261123010000_fix_user_delete_cascade.sql": {
+   "path": "supabase/migrations/20261123010000_fix_user_delete_cascade.sql",
+   "lines": 36
+  },
   "supabase/tests/role_source_of_truth_test.sql": {
    "path": "supabase/tests/role_source_of_truth_test.sql",
    "lines": 72,
@@ -122936,10 +122941,29 @@
   }
  },
  "git": {
-  "sha": "67d018067748ba3b5ec2676a95e5e85674b05b83",
+  "sha": "025ada530731c5d2e3f3ba900840c555271693f8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "025ada5",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: exclusao de conta de usuario (8 FKs em NO ACTION bloqueavam o DELETE) (#146)",
+    "files": [
+     "supabase/migrations/20261123010000_fix_user_delete_cascade.sql"
+    ]
+   },
+   {
+    "sha": "0e60f41",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: scorecards entregues e cron do data-lake endurecido (#145)",
+    "files": [
+     "docs/audits/pendencias-2026-07.md",
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "67d0180",
     "date": "2026-11-22",
@@ -123230,38 +123254,16 @@
      "supabase/functions/_shared/__tests__/cors.test.ts",
      "supabase/functions/_shared/cors.ts"
     ]
-   },
-   {
-    "sha": "6f648ab",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix(security): fecha account takeover no login por passkey (#116)",
-    "files": [
-     "src/hooks/useWebAuthn.ts",
-     "supabase/functions/_shared/__tests__/capture-handler.ts",
-     "supabase/functions/export-data-lake/__tests__/csv.test.ts",
-     "supabase/functions/export-data-lake/csv.ts",
-     "supabase/functions/export-data-lake/index.ts",
-     "supabase/functions/record-consent/__tests__/index.test.ts",
-     "supabase/functions/webauthn-authenticate/__tests__/verify.test.ts",
-     "supabase/functions/webauthn-authenticate/index.ts",
-     "supabase/functions/webauthn-authenticate/verify.ts"
-    ]
-   },
-   {
-    "sha": "6659a49",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "test: cobre bitrix-api com testes reais de auth e fail-closed (#115)",
-    "files": [
-     "supabase/functions/bitrix-api/__tests__/index.test.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    7
+    8
+   ],
+   [
+    "docs/audits/pendencias-2026-07.md",
+    3
    ],
    [
     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
@@ -123280,20 +123282,12 @@
     2
    ],
    [
-    "docs/audits/pendencias-2026-07.md",
-    2
-   ],
-   [
     "src/components/supervisor/panel/TrendChartToggle.tsx",
     2
    ],
    [
-    "src/hooks/useWebAuthn.ts",
-    2
-   ],
-   [
-    "supabase/functions/webauthn-authenticate/index.ts",
-    2
+    "supabase/migrations/20261123010000_fix_user_delete_cascade.sql",
+    1
    ],
    [
     "supabase/functions/data-lake-flush/index.ts",
@@ -123337,6 +123331,10 @@
    ],
    [
     "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    1
+   ],
+   [
+    "supabase/functions/cleanup-lock-conflicts/index.ts",
     1
    ]
   ]

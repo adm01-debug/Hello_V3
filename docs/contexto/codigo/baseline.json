@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "67d018067748ba3b5ec2676a95e5e85674b05b83",
+  "commit": "025ada530731c5d2e3f3ba900840c555271693f8",
   "branch": "main",
-  "data_commit": "2026-11-22T14:06:29-03:00",
+  "data_commit": "2026-11-22T14:36:28-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "025ada5",
+    "data": "2026-11-22",
+    "assunto": "fix: exclusao de conta de usuario (8 FKs em NO ACTION bloqueavam o DELETE) (#146)"
+   },
+   {
+    "sha": "0e60f41",
+    "data": "2026-11-22",
+    "assunto": "docs: scorecards entregues e cron do data-lake endurecido (#145)"
+   },
    {
     "sha": "67d0180",
     "data": "2026-11-22",
@@ -121,19 +131,9 @@
     "sha": "92cb97a",
     "data": "2026-11-22",
     "assunto": "test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)"
-   },
-   {
-    "sha": "782c8e4",
-    "data": "2026-11-22",
-    "assunto": "docs: marca achado createTestData como RESOLVIDO (PR #120) (#121)"
-   },
-   {
-    "sha": "1123090",
-    "data": "2026-11-22",
-    "assunto": "fix: gate createTestData e botão Criar Dados para DEV (#120)"
    }
   ],
-  "arquivos_mudados_7d": 868,
+  "arquivos_mudados_7d": 869,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 23
+    "mudancas": 24
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 23
+    "mudancas": 24
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -218,15 +218,15 @@
     "mudancas": 6
    },
    {
+    "arquivo": "docs/audits/pendencias-2026-07.md",
+    "mudancas": 6
+   },
+   {
     "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 6
    },
    {
     "arquivo": "deno.lock",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 5
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 125
+    "commits": 127
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,7 +314,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1635,
+  "arquivos_total": 1636,
   "arquivos_codigo": 1241,
   "linhas_codigo": 169380,
   "rotas": 106,
@@ -326,7 +326,7 @@
   "hooks": 191,
   "edge_functions": 98,
   "tabelas": 169,
-  "migrations": 240,
+  "migrations": 241,
   "cron_jobs": 11,
   "testes": 342,
   "workflows": 3,

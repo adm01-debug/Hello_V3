@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `67d018067748ba3b5ec2676a95e5e85674b05b83` (2026-11-22T14:06:29-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `025ada530731c5d2e3f3ba900840c555271693f8` (2026-11-22T14:36:28-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1208), SQL (243), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1208), SQL (244), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,7 +34,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1635 |
+| arquivos_total | 1636 |
 | arquivos_codigo | 1241 |
 | linhas_codigo | 169380 |
 | rotas | 106 |
@@ -46,7 +46,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | hooks | 191 |
 | edge_functions | 98 |
 | tabelas | 169 |
-| migrations | 240 |
+| migrations | 241 |
 | cron_jobs | 11 |
 | testes | 342 |
 | workflows | 3 |
@@ -370,20 +370,20 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9184 nós · 24324 arestas · 730 comunidades · grafo do commit `67d01806`
-- comunidades maiores: lucide-react (276), vitest (184), logger.ts (177), protectedRoutes.tsx (162), client.ts (161), react (152), utils.ts (130), select.tsx (119), safe-date.ts (109), cn (108), snapshot.py (102), Tabela de funcionalidades (90)
+- 9192 nós · 24331 arestas · 742 comunidades · grafo do commit `025ada53`
+- comunidades maiores: lucide-react (295), cn (219), react (188), traceHeaders (164), usePageTitle (151), CallDetailDialog.tsx (135), @tanstack/react-query (131), usePageTitle.ts (125), vitest (117), safeFormatDistanceToNow (104), logger.ts (103), Tabela de funcionalidades (100)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/estado/funcionalidades-planejadas.md (23)
+- docs/estado/funcionalidades-planejadas.md (24)
 - src/components/layout/AppSidebar.tsx (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
 - .github/workflows/contexto.yml (6)
+- docs/audits/pendencias-2026-07.md (6)
 - src/components/layout/CommandPalette.tsx (6)
 - deno.lock (5)
-- docs/audits/pendencias-2026-07.md (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
 - docs/pendencias/_ordem.md (4)
@@ -429,6 +429,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `025ada5` fix: exclusao de conta de usuario (8 FKs em NO ACTION bloqueavam o DELETE) (#146)
+- 2026-11-22 `0e60f41` docs: scorecards entregues e cron do data-lake endurecido (#145)
 - 2026-11-22 `67d0180` fix: cron data-lake-flush usa token dedicado em vez da anon key (#144)
 - 2026-11-22 `d3a6f69` feat: pagina de avaliacoes de chamada com geracao por IA (#143)
 - 2026-11-22 `76e30b7` feat: retencao de 180 dias para as gravacoes de chamada (#138)
@@ -442,8 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `28337d1` docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)
 - 2026-11-22 `3de307f` fix: tendencia do dia so monta apos o primeiro clique (#133)
 - 2026-11-22 `d3b1133` fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)
-- 2026-11-22 `5ca0039` fix: taxa de abandono contava a chamada abandonada duas vezes (#131)
-- 2026-11-22 `89fe47c` docs: registra divergencia de limiar no Nivel de Servico (#130)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
