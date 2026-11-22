@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `49ef164d02` · branch `main` · 2026-11-22 06:10 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6659a49213` · branch `main` · 2026-11-22 06:26 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2439,7 +2439,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3963 testes em 321 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3967 testes em 322 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2720,6 +2720,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipRecommendations.coverage.test.tsx` | 4 | useVoipRecommendations · loads recommendations successfully · defaults period to week and supports day · throws and surfaces error when invoke returns error |
 | `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
+| `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
 | `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 4 | check-queue-metrics: cálculo de avg wait time (contrato) · check-queue-metrics: cálculo de abandonment rate (contrato) · check-queue-metrics: service level (≤30s contrato) · check-queue-metrics: thresholds default (contrato) |
 | `supabase/functions/voip-anomaly-detector/__tests__/index.test.ts` | 4 | detectAnomalies — sem anomalias quando obs próximo da média · detectAnomalies — MOS muito baixo gera anomaly critical · detectAnomalies — jitter elevado gera warning · detectAnomalies — baseline insuficiente não gera anomaly |
 | `supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts` | 4 | planRemediation — mos:outage retorna ação crítica de codec · planRemediation — jitter:outage pausa campanhas · planRemediation — combinação desconhecida vira noop · idempotencyKey — chave estável e derivada do id |
@@ -2742,8 +2743,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useSkills.coverage.test.tsx` | 3 | useSkills · loads skills and agent skills, runs mutations · handles mutation errors |
 | `src/hooks/__tests__/useTrunkRealtimeMetrics.coverage.test.tsx` | 3 | useTrunkRealtimeMetrics · computes occupancy metrics · handles trunk with zero max_channels and no calls |
 | `src/hooks/__tests__/useVoipRecommendationSimulate.coverage.test.tsx` | 3 | useVoipRecommendationSimulate · simulates a recommendation successfully · throws when invoke returns an error |
-| `src/lib/__tests__/agent-assist.pbt.test.ts` | 3 | Agent Assist PBT (Property-Based Testing) · rankSignals: priority always dominates confidence · matchesKeywords: handles composite keywords regardless of order |
-| … +21 linhas — lista completa em `context.json` | | |
+| … +22 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

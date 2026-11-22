@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "49ef164d02395023a8cede418a9c21b1053c47e4",
+  "commit": "6659a49213625504805d3c37a0bef1ca94146cba",
   "branch": "main",
-  "data_commit": "2026-11-22T03:09:50-03:00",
+  "data_commit": "2026-11-22T03:26:24-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6659a49",
+    "data": "2026-11-22",
+    "assunto": "test: cobre bitrix-api com testes reais de auth e fail-closed (#115)"
+   },
    {
     "sha": "49ef164",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "d3e59cd",
     "data": "2026-11-21",
     "assunto": "fix: edges que escrevem com service_role exigem sessao (#92)"
-   },
-   {
-    "sha": "ce11791",
-    "data": "2026-11-21",
-    "assunto": "fix: load-tests exigem admin e limpam dados de teste (#91)"
    }
   ],
-  "arquivos_mudados_7d": 825,
+  "arquivos_mudados_7d": 826,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 95
+    "commits": 96
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1615,
-  "arquivos_codigo": 1223,
-  "linhas_codigo": 167648,
+  "arquivos_total": 1616,
+  "arquivos_codigo": 1224,
+  "linhas_codigo": 167715,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 238,
   "cron_jobs": 10,
-  "testes": 330,
+  "testes": 331,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 158,
-   "linhas": 18605
+   "arquivos": 159,
+   "linhas": 18672
   },
   "tailwind.config.ts": {
    "arquivos": 1,

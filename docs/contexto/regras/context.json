@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "49ef164d02395023a8cede418a9c21b1053c47e4",
+  "sha": "6659a49213625504805d3c37a0bef1ca94146cba",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 06:10 UTC",
-  "files_total": 1662,
-  "code_files": 1465,
-  "code_lines": 183467
+  "generated_at": "2026-11-22 06:26 UTC",
+  "files_total": 1663,
+  "code_files": 1466,
+  "code_lines": 183534
  },
  "version": "1.3.2",
- "facts_hash": "75ca10ad3056f32c",
+ "facts_hash": "9d56f334edabf278",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 604,
-   ".ts": 586,
+   ".ts": 587,
    ".sql": 241,
    ".mjs": 27,
    ".py": 5,
@@ -34100,8 +34100,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 158,
-   "lines": 18605,
+   "files": 159,
+   "lines": 18672,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34270,6 +34270,7 @@
     "supabase/functions/auto-scorecard/index.ts",
     "supabase/functions/bitrix-api/index.test.ts",
     "supabase/functions/bitrix-api/index.ts",
+    "supabase/functions/bitrix-api/__tests__/index.test.ts",
     "supabase/functions/chat-widget-session/index.ts",
     "supabase/functions/chatbot-respond/index.ts",
     "supabase/functions/check-alerts/index.ts",
@@ -34313,8 +34314,7 @@
     "supabase/functions/generate-coaching-track/track-engine_test.ts",
     "supabase/functions/generate-meeting-summary/index.ts",
     "supabase/functions/generate-summary/index.ts",
-    "supabase/functions/global-load-test/index.ts",
-    "supabase/functions/health-check/index.ts"
+    "supabase/functions/global-load-test/index.ts"
    ]
   },
   {
@@ -71238,6 +71238,22 @@
     "name": "bitrix-api: handles get_user when not configured"
    },
    {
+    "file": "supabase/functions/bitrix-api/__tests__/index.test.ts",
+    "name": "bitrix-api: OPTIONS devolve preflight CORS vazio"
+   },
+   {
+    "file": "supabase/functions/bitrix-api/__tests__/index.test.ts",
+    "name": "bitrix-api: sem Authorization responde 401"
+   },
+   {
+    "file": "supabase/functions/bitrix-api/__tests__/index.test.ts",
+    "name": "bitrix-api: token invalido responde 401, nunca 500"
+   },
+   {
+    "file": "supabase/functions/bitrix-api/__tests__/index.test.ts",
+    "name": "bitrix-api: acao desconhecida e recusada pelo schema"
+   },
+   {
     "file": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
     "name": "check-calling-hours: aceita region_code default "
    },
@@ -84890,6 +84906,7 @@
    "supabase/functions/analyze-sentiment/index.ts",
    "supabase/functions/approve-password-reset/index.ts",
    "supabase/functions/auto-scorecard/index.ts",
+   "supabase/functions/bitrix-api/__tests__/index.test.ts",
    "supabase/functions/chat-widget-session/index.ts",
    "supabase/functions/chatbot-respond/index.ts",
    "supabase/functions/check-alerts/index.ts",
@@ -115257,6 +115274,24 @@
     "SUPABASE_URL"
    ]
   },
+  "supabase/functions/bitrix-api/__tests__/index.test.ts": {
+   "path": "supabase/functions/bitrix-api/__tests__/index.test.ts",
+   "lines": 67,
+   "is_test": true,
+   "rule_comments": [
+    "Testes da edge bitrix-api: auth, validacao e SSRF.",
+    "SUPABASE_URL aponta para a porta 9 (discard) para que a validacao de",
+    "e negar. O que nao pode acontecer e 200 ou 500."
+   ],
+   "doc": "Testes da edge bitrix-api: auth, validacao e SSRF. O handler e exportado, entao exercitamos os caminhos de rejeicao sem rede: sao justamente os que precisam ser confiaveis (fail-closed). SUPABASE_URL aponta para a porta 9 (discard) para que a validacao de usuario falhe rapido, como um token invalido …",
+   "tests": [
+    "bitrix-api: OPTIONS devolve preflight CORS vazio",
+    "bitrix-api: sem Authorization responde 401",
+    "bitrix-api: token invalido responde 401, nunca 500",
+    "bitrix-api: acao desconhecida e recusada pelo schema"
+   ],
+   "uses_service_role": true
+  },
   "supabase/functions/chat-widget-session/index.ts": {
    "path": "supabase/functions/chat-widget-session/index.ts",
    "lines": 184,
@@ -121806,10 +121841,19 @@
   }
  },
  "git": {
-  "sha": "49ef164d02395023a8cede418a9c21b1053c47e4",
+  "sha": "6659a49213625504805d3c37a0bef1ca94146cba",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "6659a49",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "test: cobre bitrix-api com testes reais de auth e fail-closed (#115)",
+    "files": [
+     "supabase/functions/bitrix-api/__tests__/index.test.ts"
+    ]
+   },
    {
     "sha": "49ef164",
     "date": "2026-11-22",
@@ -122315,17 +122359,6 @@
     "files": [
      "supabase/functions/rls-audit/index.ts"
     ]
-   },
-   {
-    "sha": "6807b07",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: dataset call_summaries exportavel no data lake (D5) (#85)",
-    "files": [
-     "src/hooks/useDataLakeExports.ts",
-     "src/pages/admin/DataExport.tsx",
-     "supabase/functions/export-data-lake/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -122355,10 +122388,6 @@
    ],
    [
     "supabase/functions/dialer-pacing-tick/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/export-data-lake/index.ts",
     2
    ],
    [
@@ -122407,6 +122436,10 @@
    ],
    [
     "src/components/call-history/CallSessionsList.tsx",
+    2
+   ],
+   [
+    "src/components/calls/softphone/TabContents.tsx",
     2
    ]
   ]

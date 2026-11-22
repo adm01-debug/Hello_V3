@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1190)",
+   "TypeScript (1191)",
    "SQL (241)",
    "Markdown (114)",
    "JavaScript (29)",
@@ -535,6 +535,10 @@
     "arquivos": 2
    },
    {
+    "host": "hello-v3.vercel.app",
+    "arquivos": 2
+   },
+   {
     "host": "x.supabase.co",
     "arquivos": 2
    },
@@ -584,10 +588,6 @@
    },
    {
     "host": "graph.microsoft.com",
-    "arquivos": 1
-   },
-   {
-    "host": "hello-v3.vercel.app",
     "arquivos": 1
    },
    {

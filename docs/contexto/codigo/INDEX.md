@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `49ef164d02395023a8cede418a9c21b1053c47e4` (2026-11-22T03:09:50-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `6659a49213625504805d3c37a0bef1ca94146cba` (2026-11-22T03:26:24-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1190), SQL (241), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1191), SQL (241), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1615 |
-| arquivos_codigo | 1223 |
-| linhas_codigo | 167648 |
+| arquivos_total | 1616 |
+| arquivos_codigo | 1224 |
+| linhas_codigo | 167715 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 169 |
 | migrations | 238 |
 | cron_jobs | 10 |
-| testes | 330 |
+| testes | 331 |
 | workflows | 3 |
 | scripts | 34 |
 | docs_md | 114 |
@@ -58,7 +58,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - componentes: src/components (319), src/pages (125), src/contexts (3)
 - hooks: src/hooks (173), src/components (12), src/contexts (3)
 - servicos_logica: src/lib (80), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (307), e2e/ (7), tests/ (6)
+- testes: co-localizado (__tests__) (308), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (6), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -338,7 +338,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Integrações externas
 - SDKs: Supabase, react-query, zod
-- hosts mais citados: openrouter.ai, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br, api.ipify.org
+- hosts mais citados: openrouter.ai, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, hello-v3.vercel.app, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br
 - webhooks recebidos: nenhum
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, COACHING_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
@@ -366,8 +366,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9119 nós · 24059 arestas · 724 comunidades · grafo do commit `49ef164d`
-- comunidades maiores: lucide-react (340), cn (289), usePageTitle (248), react (194), logger.ts (165), vitest (156), client.ts (146), safe-date.ts (138), safeFormatDistanceToNow (134), CallDetailDialog.tsx (133), snapshot.py (102), @tanstack/react-query (95)
+- 9121 nós · 24063 arestas · 737 comunidades · grafo do commit `6659a492`
+- comunidades maiores: card.tsx (254), usePageTitle (246), react (194), lucide-react (137), @tanstack/react-query (121), utils.ts (119), react-router-dom (113), cn (112), logger.ts (104), vitest (104), snapshot.py (102), Tabela de funcionalidades (91)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -425,6 +425,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `6659a49` test: cobre bitrix-api com testes reais de auth e fail-closed (#115)
 - 2026-11-22 `49ef164` test: testes de integracao param de passar sem verificar nada (#114)
 - 2026-11-22 `f48e4ef` chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)
 - 2026-11-22 `6f94283` fix: envolve auth.uid/jwt/role em subselect nas policies restantes (#96)
@@ -439,7 +440,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `4aeee51` fix: valida IP de header antes de usar em URL, log e autorizacao (#102)
 - 2026-11-21 `69573a2` fix: valida IP literal antes de montar a URL do provedor de geo (#101)
 - 2026-11-21 `25f5bfb` docs: re-scorecard 9,1/10 com os PRs #96, #97, #98 e #99 (#100)
-- 2026-11-21 `f249e85` chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `49ef164d02` · branch `main` · 2026-11-22 06:10 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6659a49213` · branch `main` · 2026-11-22 06:26 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -185,7 +185,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 112 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 113 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -211,6 +211,7 @@
 - `supabase/functions/analyze-sentiment/index.ts`
 - `supabase/functions/approve-password-reset/index.ts`
 - `supabase/functions/auto-scorecard/index.ts`
+- `supabase/functions/bitrix-api/__tests__/index.test.ts`
 - `supabase/functions/chat-widget-session/index.ts`
 - `supabase/functions/chatbot-respond/index.ts`
 - `supabase/functions/check-alerts/index.ts`

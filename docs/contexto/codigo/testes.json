@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 330,
+ "total": 331,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 313
+  "unit": 314
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 307
+   "arquivos": 308
   },
   {
    "padrao": "e2e/",
@@ -2685,6 +2685,15 @@
    "casos": 2
   },
   {
+   "arquivo": "supabase/functions/bitrix-api/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 67,
+   "testa": [
+    "supabase/functions/bitrix-api/index.ts"
+   ],
+   "casos": 4
+  },
+  {
    "arquivo": "supabase/functions/bitrix-api/index.test.ts",
    "tipo": "unit",
    "linhas": 48,
@@ -3203,7 +3212,7 @@
   "supabase/functions/_shared/resilience.ts": 2,
   "supabase/functions/_shared/validator.ts": 1,
   "supabase/functions/analyze-call/schema.ts": 3,
-  "supabase/functions/bitrix-api/index.ts": 1,
+  "supabase/functions/bitrix-api/index.ts": 2,
   "supabase/functions/health-check/index.ts": 1,
   "supabase/functions/health-check/slo-budget.ts": 1,
   "supabase/functions/voip-anomaly-detector/index.ts": 1,
