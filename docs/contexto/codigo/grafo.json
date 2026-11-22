@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 905,
- "arestas": 3466,
+ "arestas": 3467,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -210,7 +210,6 @@
   "src/lib/password/index.ts",
   "src/lib/security/index.ts",
   "src/lib/session/index.ts",
-  "src/lib/talkRatio.ts",
   "src/lib/validation/index.ts",
   "supabase/functions/analyze-call/analyze-call_test.ts",
   "supabase/functions/generate-coaching-track/track-engine_test.ts",

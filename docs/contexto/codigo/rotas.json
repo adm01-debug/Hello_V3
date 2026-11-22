@@ -1931,6 +1931,7 @@
     "call_key_moments",
     "call_sessions",
     "call_summaries",
+    "call_transcriptions",
     "call_translations",
     "churn_risk_signals",
     "consent_records",
@@ -1960,8 +1961,11 @@
     "messages-${conversationId}"
    ],
    "flags": [],
-   "papeis": [],
-   "arquivos_puxados": 37
+   "papeis": [
+    "agent",
+    "customer"
+   ],
+   "arquivos_puxados": 38
   },
   {
    "protegida": false,

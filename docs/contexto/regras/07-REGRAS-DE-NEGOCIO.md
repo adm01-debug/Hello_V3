@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `2e77319aec` · branch `main` · 2026-11-22 19:48 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1b9ec210d9` · branch `main` · 2026-11-22 19:50 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2449,7 +2449,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4038 testes em 333 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4041 testes em 334 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2753,7 +2753,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendations/__tests__/index.test.ts` | 4 | buildRecommendations - sistema saudável retorna lista vazia · buildRecommendations - capacidade saturada gera crítico de prioridade máxima · buildRecommendations - múltiplos sinais ordenados por prioridade descendente · buildRecommendations - jitter alto gera ação de função (testar conexão) |
 | `supabase/functions/webauthn-authenticate/__tests__/index.test.ts` | 4 | webauthn-authenticate: OPTIONS devolve preflight CORS vazio · webauthn-authenticate: sem campos obrigatorios responde 400 · webauthn-authenticate: nao aceita email do request · webauthn-authenticate: passkey desconhecida e recusada (400, nunca 200) |
 | `tests/e2e/performance.spec.ts` | 4 | Dashboard Performance and Lists · should render call lists efficiently · Edge Function Resilience · should handle rapid requests to analyze-call |
-| … +33 linhas — lista completa em `context.json` | | |
+| … +34 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

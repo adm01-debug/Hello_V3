@@ -2173,12 +2173,13 @@
     "ConversationIntelligenceCard"
    ],
    "export_default": null,
-   "linhas": 117,
+   "linhas": 151,
    "dominio": "components/executive",
    "hooks_locais": [],
    "tabelas": [
     "call_key_moments",
-    "call_sessions"
+    "call_sessions",
+    "call_transcriptions"
    ],
    "edges": [],
    "usado_por": 1,

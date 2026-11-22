@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "2e77319aecf31307d2946d37d26c4302273443fa",
+  "sha": "1b9ec210d969444432b883e99c35217bb429cd11",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 19:48 UTC",
-  "files_total": 1689,
-  "code_files": 1492,
-  "code_lines": 185594
+  "generated_at": "2026-11-22 19:50 UTC",
+  "files_total": 1690,
+  "code_files": 1493,
+  "code_lines": 185699
  },
  "version": "1.3.2",
- "facts_hash": "28b7b34ecef7cae4",
+ "facts_hash": "08f14f68f12837b4",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,8 +158,8 @@
   ],
   "package_manager": "bun",
   "languages": {
+   ".tsx": 608,
    ".ts": 607,
-   ".tsx": 607,
    ".sql": 244,
    ".mjs": 27,
    ".py": 5,
@@ -28398,6 +28398,7 @@
      "call_key_moments",
      "call_sessions",
      "call_summaries",
+     "call_transcriptions",
      "call_translations",
      "churn_risk_signals",
      "consent_records",
@@ -28420,7 +28421,7 @@
      "generate-meeting-summary"
     ],
     "rpc_transitive": [],
-    "deps_count": 37
+    "deps_count": 38
    },
    {
     "path": "",
@@ -32104,7 +32105,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 355,
+  "components_count": 356,
   "hooks": [
    {
     "name": "useContacts",
@@ -33241,8 +33242,8 @@
   },
   {
    "module": "src/components",
-   "files": 355,
-   "lines": 42208,
+   "files": 356,
+   "lines": 42313,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33256,6 +33257,7 @@
     "call_quality_metrics",
     "call_recordings",
     "call_sessions",
+    "call_transcriptions",
     "call_translations",
     "calling_hours_config",
     "churn_risk_signals",
@@ -35089,6 +35091,7 @@
    },
    "call_transcriptions": {
     "select": [
+     "src/components/executive/ConversationIntelligenceCard.tsx",
      "src/hooks/useCallHistory.ts",
      "supabase/functions/generate-coaching/index.ts",
      "supabase/functions/generate-meeting-summary/index.ts",
@@ -56886,6 +56889,18 @@
    {
     "file": "src/components/dialer/phone/__tests__/phone-dialer.test.ts",
     "name": "retorna none para texto irreconhecível"
+   },
+   {
+    "file": "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx",
+    "name": "ConversationIntelligenceCard — talk ratio real"
+   },
+   {
+    "file": "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx",
+    "name": "calcula o talk ratio a partir das transcrições, não um valor fixo"
+   },
+   {
+    "file": "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx",
+    "name": "mostra "
    },
    {
     "file": "src/components/executive/__tests__/OmnichannelCard.test.tsx",
@@ -93842,7 +93857,7 @@
   },
   "src/components/executive/ConversationIntelligenceCard.tsx": {
    "path": "src/components/executive/ConversationIntelligenceCard.tsx",
-   "lines": 117,
+   "lines": 151,
    "exports": [
     "function ConversationIntelligenceCard"
    ],
@@ -93853,6 +93868,10 @@
     },
     {
      "table": "call_sessions",
+     "op": "select"
+    },
+    {
+     "table": "call_transcriptions",
      "op": "select"
     }
    ],
@@ -93865,7 +93884,14 @@
     ],
     "call_sessions": [
      "created_at",
+     "duration_seconds",
      "id"
+    ],
+    "call_transcriptions": [
+     "call_session_id",
+     "end_time",
+     "speaker",
+     "start_time"
     ]
    },
    "temporal": [
@@ -94173,6 +94199,16 @@
    "lines": 77,
    "exports": [
     "const VolumeForecastCard"
+   ]
+  },
+  "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx": {
+   "path": "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx",
+   "lines": 71,
+   "is_test": true,
+   "tests": [
+    "ConversationIntelligenceCard — talk ratio real",
+    "calcula o talk ratio a partir das transcrições, não um valor fixo",
+    "mostra "
    ]
   },
   "src/components/executive/__tests__/OmnichannelCard.test.tsx": {
@@ -123049,10 +123085,20 @@
   }
  },
  "git": {
-  "sha": "2e77319aecf31307d2946d37d26c4302273443fa",
+  "sha": "1b9ec210d969444432b883e99c35217bb429cd11",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "1b9ec21",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: talk ratio do card executivo usa transcricao real, nao 50% fixo (#164)",
+    "files": [
+     "src/components/executive/ConversationIntelligenceCard.tsx",
+     "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx"
+    ]
+   },
    {
     "sha": "2e77319",
     "date": "2026-11-22",
@@ -123351,16 +123397,6 @@
     "files": [
      "docs/estado/funcionalidades-planejadas.md"
     ]
-   },
-   {
-    "sha": "3de307f",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: tendencia do dia so monta apos o primeiro clique (#133)",
-    "files": [
-     "src/components/supervisor/panel/TrendChartToggle.tsx",
-     "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -123387,6 +123423,14 @@
    [
     "src/components/layout/CommandPalette.tsx",
     2
+   ],
+   [
+    "src/components/executive/ConversationIntelligenceCard.tsx",
+    1
+   ],
+   [
+    "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx",
+    1
    ],
    [
     "src/components/calls/softphone/ActiveCallDisplay.tsx",
@@ -123434,14 +123478,6 @@
    ],
    [
     "src/components/queue-alerts/useQueueMetricsSettings.ts",
-    1
-   ],
-   [
-    "src/components/notifications/UnifiedNotificationDropdown.tsx",
-    1
-   ],
-   [
-    "docs/estado/hooks-parte1.md",
     1
    ]
   ]

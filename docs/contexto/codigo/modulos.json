@@ -1256,8 +1256,8 @@
   {
    "modulo": "components/executive",
    "arquivos": 18,
-   "testes": 1,
-   "linhas": 1894,
+   "testes": 2,
+   "linhas": 1928,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1307,6 +1307,7 @@
     "call_quality_metrics",
     "call_sessions",
     "call_summaries",
+    "call_transcriptions",
     "call_translations",
     "churn_risk_signals",
     "consent_records",
@@ -1335,7 +1336,10 @@
     "VITE_SUPABASE_URL"
    ],
    "flags": [],
-   "papeis": [],
+   "papeis": [
+    "agent",
+    "customer"
+   ],
    "diretos": {
     "edges": [],
     "tabelas": [
@@ -1343,6 +1347,7 @@
      "call_key_moments",
      "call_quality_metrics",
      "call_sessions",
+     "call_transcriptions",
      "call_translations",
      "churn_risk_signals",
      "consent_records",
@@ -1813,9 +1818,11 @@
    "flags": [],
    "papeis": [
     "admin",
+    "agent",
     "alert",
     "article",
     "button",
+    "customer",
     "dialog",
     "group",
     "img",
@@ -5881,6 +5888,7 @@
     "alert",
     "article",
     "button",
+    "customer",
     "dialog",
     "group",
     "img",
@@ -6892,6 +6900,7 @@
     "alert",
     "article",
     "button",
+    "customer",
     "dialog",
     "group",
     "img",

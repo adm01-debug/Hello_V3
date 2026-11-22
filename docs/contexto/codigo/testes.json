@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 343,
+ "total": 344,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 326
+  "unit": 327
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 320
+   "arquivos": 321
   },
   {
    "padrao": "e2e/",
@@ -213,6 +213,15 @@
     "src/components/voice/voice-intent.ts"
    ],
    "casos": 8
+  },
+  {
+   "arquivo": "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx",
+   "tipo": "unit",
+   "linhas": 71,
+   "testa": [
+    "src/components/executive/ConversationIntelligenceCard.tsx"
+   ],
+   "casos": 2
   },
   {
    "arquivo": "src/components/executive/__tests__/OmnichannelCard.test.tsx",
@@ -3091,6 +3100,7 @@
   "src/components/dashboard/StatsCard.tsx": 1,
   "src/components/dialer/phone/phone-utils.ts": 1,
   "src/components/error-boundary/ErrorBoundary.tsx": 1,
+  "src/components/executive/ConversationIntelligenceCard.tsx": 1,
   "src/components/executive/OmnichannelCard.tsx": 1,
   "src/components/supervisor/panel/TrendChartToggle.tsx": 1,
   "src/components/supervisor/panel/types.ts": 1,

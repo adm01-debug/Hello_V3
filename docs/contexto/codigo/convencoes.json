@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (320)",
+   "co-localizado (__tests__) (321)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: talk ratio do card executivo usa transcricao real, nao 50% fixo (#164)",
    "feat: humor da chamada ativa vem do dado real, nao de \"Positivo\" fixo (#163)",
    "fix: barra de progresso reflete o carregamento real do chunk da rota (#162)",
    "fix: transferencia de chamada nao conclui mais sozinha por timer (#161)",
-   "fix: salvar 2FA pela segunda vez falhava por upsert sem onConflict (#159)",
-   "fix: configuracoes de metricas de fila ficavam presas em nao encontradas (#158)"
+   "fix: salvar 2FA pela segunda vez falhava por upsert sem onConflict (#159)"
   ]
  },
  "pr_template": null,

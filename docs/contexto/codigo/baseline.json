@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "2e77319aecf31307d2946d37d26c4302273443fa",
+  "commit": "1b9ec210d969444432b883e99c35217bb429cd11",
   "branch": "main",
-  "data_commit": "2026-11-22T16:45:17-03:00",
+  "data_commit": "2026-11-22T16:48:57-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "1b9ec21",
+    "data": "2026-11-22",
+    "assunto": "fix: talk ratio do card executivo usa transcricao real, nao 50% fixo (#164)"
+   },
    {
     "sha": "2e77319",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "f80b054",
     "data": "2026-11-22",
     "assunto": "docs: fecha D4 e C2 com validacao real em producao (#140)"
-   },
-   {
-    "sha": "51aa44d",
-    "data": "2026-11-22",
-    "assunto": "docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)"
    }
   ],
-  "arquivos_mudados_7d": 890,
+  "arquivos_mudados_7d": 892,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 143
+    "commits": 144
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1642,
-  "arquivos_codigo": 1247,
-  "linhas_codigo": 169636,
+  "arquivos_total": 1643,
+  "arquivos_codigo": 1248,
+  "linhas_codigo": 169741,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 241,
   "cron_jobs": 11,
-  "testes": 343,
+  "testes": 344,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 355,
-   "linhas": 42208
+   "arquivos": 356,
+   "linhas": 42313
   },
   "src/contexts": {
    "arquivos": 3,
