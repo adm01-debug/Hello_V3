@@ -4,6 +4,7 @@
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { logError, withRequestLog } from "../_shared/observability.ts";
+import { mesmaString } from "../_shared/constant-time.ts";
 
 type Dataset = "call_sessions" | "call_summaries" | "deals";
 const DATASETS: Dataset[] = ["call_sessions", "call_summaries", "deals"];
@@ -15,16 +16,29 @@ Deno.serve(withRequestLog("data-lake-flush", async (req) => {
   }
 
   try {
-    // O cron (pg_cron) chama com a anon key do projeto. Sem validacao alguma, qualquer
-    // anonimo disparava a exportacao de call_sessions, call_summaries e deals.
+    // Caminho do cron: token dedicado (DATA_LAKE_CRON_TOKEN) comparado em tempo
+    // constante. Antes aceitava qualquer JWT do projeto (isProjectKey), ou seja a
+    // anon key do bundle, que e publica — qualquer pessoa disparava a exportacao
+    // de call_sessions, call_summaries e deals.
+    const cronToken = Deno.env.get("DATA_LAKE_CRON_TOKEN");
     const auth = req.headers.get("Authorization") ?? "";
-    // Aceita JWT do projeto (usado pelo pg_cron) e a publishable key (formato novo).
-    // Nota: ambas sao chaves publicas — isto barra chamada anonima crua, nao um
-    // atacante com a chave do bundle. Defesa forte exigiria secret compartilhado.
     const bearer = auth.replace(/^Bearer\s+/i, "").trim();
-    const isProjectKey = /^[\w-]+\.[\w-]+\.[\w-]+$/.test(bearer) || bearer.startsWith("sb_publishable_");
-    if (!isProjectKey) {
-      return json({ error: "Unauthorized" }, 401);
+    const veioDoCron = !!cronToken && mesmaString(bearer, cronToken);
+    if (!veioDoCron) {
+      // Fallback: JWT de usuario com role admin (invocacao manual pelo painel).
+      const probe = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
+        global: { headers: { Authorization: `Bearer ${bearer}` } },
+      });
+      const { data: claims, error: claimsErr } = await probe.auth.getClaims(bearer);
+      const sub = claims?.claims?.sub;
+      if (claimsErr || !sub) {
+        return json({ error: "Unauthorized" }, 401);
+      }
+      const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+      const { data: profile } = await admin.from("user_profiles").select("role").eq("id", sub).maybeSingle();
+      if (!profile || profile.role !== "admin") {
+        return json({ error: "Forbidden" }, 403);
+      }
     }
 
     const supabase = createClient(
