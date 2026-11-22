@@ -35,19 +35,40 @@ Este documento apresenta o levantamento minucioso de todas as funcionalidades im
 
 ---
 
-## 🚀 2. Funcionalidades a Implementar (Roadmap de Excelência)
+## 🚀 2. Roadmap de Excelência — todos os 6 itens já têm implementação
 
-### 🤖 Automação Avançada
-- **AI-Driven Shift Management:** Automação completa de trocas de turno baseada na performance e demanda prevista.
-- **Coaching Automático:** Geração de trilhas de aprendizado personalizadas com base nas falhas detectadas pela análise de sentimento.
+> **Atualizado em 22/11/2026.** A redação original listava estes itens como "a implementar",
+> mas a verificação no código mostrou que **os 6 existem e estão roteados**. O que variava
+> era só o último fio (consumidor na UI ou gatilho), hoje fechado — ver
+> `docs/estado/funcionalidades-planejadas.md` §2 para a medição item a item.
+>
+> | Item | Implementação verificada |
+> |---|---|
+> | AI-Driven Shift Management | `/shift-swap-suggestions` + edge `suggest-shift-swaps` v16 |
+> | Coaching Automático | `/coaching` + `generate-coaching{-plan,-track}` + cron `15 3 * * *` |
+> | Unified Inbox | `/inbox` + `WhatsappComposer` + `whatsapp-rewrite` (4 tons provados) |
+> | Virtual Fax v2 | `/virtual-fax` + edge `ocr-virtual-fax` (Gemini real) |
+> | Financial Impact Dashboard | `/financial-impact` sobre a view `financial_impact_daily` |
+> | Data Lake Export | `data-lake-flush` + `export-data-lake` + bucket `data-lake-exports` |
+>
+> **Gap real que resta neste bloco:** o item de Data Lake exporta para **bucket**, não para
+> BigQuery/Snowflake. Um conector nativo desses exigiria credencial e contrato externos.
 
-### 📱 Omnicanalidade (Omnichannel)
-- **Unified Inbox:** Integração completa de WhatsApp, SMS e Voz em uma única linha do tempo de interação.
-- **Virtual Fax v2:** Interface avançada para gestão de documentos digitais com OCR automático.
+### Descritivo original dos 6 itens (mantido como referência de escopo)
 
-### 📊 Business Intelligence (BI)
-- **Financial Impact Dashboard:** Visualização do custo por chamada vs. receita gerada por lead em tempo real.
-- **Exportação de Data Lake:** Conector nativo para BigQuery/Snowflake para análise de dados de longo prazo.
+- **AI-Driven Shift Management:** automação de trocas de turno por performance e demanda prevista.
+- **Coaching Automático:** trilhas de aprendizado a partir das falhas detectadas na análise de sentimento.
+- **Unified Inbox:** WhatsApp, SMS e Voz numa linha do tempo única.
+- **Virtual Fax v2:** gestão de documentos digitais com OCR automático.
+- **Financial Impact Dashboard:** custo por chamada × receita por lead em tempo real.
+- **Exportação de Data Lake:** conector nativo para BigQuery/Snowflake.
+
+### O que deste bloco **realmente** falta
+
+Só a última linha: o conector **nativo** para BigQuery/Snowflake. O export existe e funciona
+(NDJSON no bucket `data-lake-exports` via `data-lake-flush`/`export-data-lake`), e um
+conector nativo acrescentaria só o passo final de carga — que depende de credencial da conta
+de destino. Os outros cinco estão entregues e roteados.
 
 ---
 
