@@ -51,7 +51,7 @@ serve(async (req) => {
     // Use fallback check if RPC is not found or fails
     const adminCheck = !rpcError && isAdmin;
     if (!adminCheck) {
-      const { data: userRole } = await supabase.from('user_roles').select('role').eq('user_id', user.id).eq('role', 'admin').maybeSingle();
+      const { data: userRole } = await supabase.from('user_roles').select('role').eq('user_id', user.id).eq('role', 'admin').eq('is_active', true).maybeSingle();
       if (!userRole) {
         return new Response(JSON.stringify({ error: "Forbidden", rpcError: rpcError?.message }), {
           status: 403, headers: { ...cors, "Content-Type": "application/json" },
