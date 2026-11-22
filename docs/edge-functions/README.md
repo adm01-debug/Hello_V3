@@ -46,7 +46,7 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 | `check-goals` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 297 |
 | `check-hold-alerts` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 121 |
 | `check-queue-metrics` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 243 |
-| `cleanup-lock-conflicts` | — | header-only | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 89 |
+| `cleanup-lock-conflicts` | — | header-only ou `CLEANUP_CRON_TOKEN` | sim | — | semanal (`0 3 * * 0`) | src 0 / mig 1 / edge 0 / e2e 0 | — | 90 |
 | `compute-account-health` | Compute account health score 0-100 from deterministic signals | autenticado | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 173 |
 | `compute-adherence` | — | autenticado | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 94 |
 | `compute-best-time` | — | autenticado | sim | sim | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 131 |
@@ -131,7 +131,6 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 Invocadas fora do repositório (cron, webhook de terceiro) ou disponíveis apenas para operação manual.
 
 - `chat-widget-session`
-- `cleanup-lock-conflicts`
 - `email-inbound`
 - `fuzz-test-runner`
 - `global-load-test`

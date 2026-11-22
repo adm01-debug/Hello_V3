@@ -51,7 +51,7 @@ os **66** `index.ts` foram varridos com um script que extraiu, por arquivo e com
 | check-goals | ✅ | [UI] `src/hooks/useQueueMetrics.ts:149` | dashboard_goals, call_sessions, goal_violations, call_alerts | nenhuma | n/d (default) | SERVICE_ROLE, ANON | cria "dummy call session" para o alerta (`check-goals/index.ts:213`) |
 | check-hold-alerts | ✅ | [UI] `src/components/settings/SystemMaintenancePanel.tsx:12` + `:24` | hold_events, hold_alert_settings, call_alerts | nenhuma | n/d (default) | SERVICE_ROLE, ANON | não valida papel admin |
 | check-queue-metrics | ✅ | [UI] `src/components/settings/SystemMaintenancePanel.tsx:13` + `:24` | call_sessions, queue_metrics_settings, call_alerts | nenhuma | n/d (default) | SERVICE_ROLE, ANON | cria "dummy call session ID" (`check-queue-metrics/index.ts:123`) |
-| cleanup-lock-conflicts | ⬛ | **[NENHUM ENCONTRADO]** nos 5 padrões | optimistic_lock_conflicts, user_profiles | nenhuma | n/d (default) | SERVICE_ROLE, ANON | nenhum gatilho: nem UI, nem cron, nem outra function (tem só `index.test.ts`) |
+| cleanup-lock-conflicts | ✅ | cron `cleanup-lock-conflicts-weekly` (`0 3 * * 0`, migration `20261122220000`) | optimistic_lock_conflicts, user_profiles | semanal | `CLEANUP_CRON_TOKEN` (Vault) ou JWT admin | SERVICE_ROLE, ANON | cron semanal + admin manual |
 | compute-account-health | ✅ | [UI] `src/hooks/useAccounts.ts:84` | accounts, call_sessions, call_summaries, survey_responses, churn_risk_signals | nenhuma | n/d (default) | SERVICE_ROLE | **service role sem nenhuma checagem de auth** (`:13-24`) |
 | compute-adherence | ✅ | [UI] `src/hooks/useAdherence.ts:15` | agent_shifts, agent_status_history | nenhuma | n/d (default) | ANON | CORS `*` (`compute-adherence/index.ts:4`) |
 | compute-best-time | ✅ | [UI] `src/hooks/useBestTimeToContact.ts:57` | contacts, call_sessions, contact_engagement_patterns | nenhuma | n/d (default) | SERVICE_ROLE | — |
@@ -120,7 +120,7 @@ Os **5 padrões** descritos na seção de Cobertura foram aplicados a cada uma. 
 
 | Função | Resultado por padrão | Veredicto |
 |---|---|---|
-| cleanup-lock-conflicts | P1 ∅, P2 ∅, P3 ∅, P4 ∅, P5 ∅ | ⬛ órfã (só `index.test.ts` no mesmo dir) |
+| cleanup-lock-conflicts | P1 ∅, P2 ∅, P3 ∅, P4 ∅, P5 ∅, **cron** ✅ | ✅ wireada por `pg_cron` (`cleanup-lock-conflicts-weekly`, domingo 03:00 UTC) |
 | fuzz-test-runner | P1 ∅, P2 ∅, P3 ∅, P4 ∅, P5 ∅ | ⬛ órfã |
 | generate-coaching-track | P1 ∅, P2 ∅, P3 ∅, P4 ∅, P5 ∅ | ⬛ órfã (166 linhas, 7 tabelas) |
 | global-load-test | P1 ∅, P2 ∅, P3 ∅, P4 ∅, P5 ∅ | ⬛ órfã e perigosa |
