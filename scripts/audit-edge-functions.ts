@@ -121,6 +121,22 @@ for (const file of entrypoints) {
   if (!/OPTIONS/.test(code)) {
     report("info", "R8-preflight", rel, "não trata OPTIONS: preflight CORS quebra");
   }
+
+  // R9 — edge que devolve sucesso sem falar com serviço externo nem com o banco (stub silencioso).
+  // Um `{ success: true }` literal só é resposta fabricada quando não há NENHUM trabalho por trás:
+  // sem fetch de saída e sem rpc/from/storage do Supabase. `// edge-stub-ok` silencia quando for
+  // intencional (ex.: edge que só delega a outro serviço via outra edge).
+  const declaraAcao = /action\s*[:=]|case\s+["'][a-z]+["']\s*:/.test(code);
+  const devolveSucessoLiteral = /success:\s*true/.test(code);
+  const acessaBanco = /\.rpc\s*\(|\.from\s*\(|\.storage\b/.test(code);
+  if (devolveSucessoLiteral && declaraAcao && fetches === 0 && !acessaBanco && !/edge-stub-ok/.test(raw)) {
+    report(
+      "warn",
+      "R9-stub",
+      rel,
+      "declara ação e devolve `success: true` sem fetch: resposta fabricada (use // edge-stub-ok se intencional)",
+    );
+  }
 }
 
 function keyOf(f: Finding): string {

@@ -1,29 +1,16 @@
 {
-  "generated_at": "2026-11-21T21:41:15.286Z",
+  "generated_at": "2026-11-22T12:59:12.490Z",
   "keys": [
     "R3-auth|supabase/functions/auto-scorecard/index.ts",
     "R3-auth|supabase/functions/chatbot-respond/index.ts",
     "R3-auth|supabase/functions/cleanup-lock-conflicts/index.ts",
-    "R3-auth|supabase/functions/compute-account-health/index.ts",
-    "R3-auth|supabase/functions/compute-deal-health/index.ts",
-    "R3-auth|supabase/functions/detect-churn-risk/index.ts",
-    "R3-auth|supabase/functions/detect-key-moments/index.ts",
-    "R3-auth|supabase/functions/dialer-pacing-tick/index.ts",
     "R3-auth|supabase/functions/email-inbound/index.ts",
     "R3-auth|supabase/functions/embed-kb-article/index.ts",
-    "R3-auth|supabase/functions/enforce-sla/index.ts",
-    "R3-auth|supabase/functions/forecast-deals/index.ts",
-    "R3-auth|supabase/functions/global-load-test/index.ts",
+    "R3-auth|supabase/functions/generate-coaching-track/index.ts",
     "R3-auth|supabase/functions/health-check/index.ts",
-    "R3-auth|supabase/functions/request-password-reset/index.ts",
     "R3-auth|supabase/functions/rls-audit/index.ts",
-    "R3-auth|supabase/functions/score-call/index.ts",
     "R3-auth|supabase/functions/search-calls/index.ts",
-    "R3-auth|supabase/functions/send-survey/index.ts",
-    "R3-auth|supabase/functions/sync-crm-queue/index.ts",
-    "R3-auth|supabase/functions/teams-fetch-recordings/index.ts",
     "R3-auth|supabase/functions/voip-failover-notifier/index.ts",
-    "R3-auth|supabase/functions/voip-load-test/index.ts",
     "R3-auth|supabase/functions/webauthn-authenticate/index.ts",
     "R4-cors|supabase/functions/compute-adherence/index.ts",
     "R4-cors|supabase/functions/compute-deal-health/index.ts",
@@ -63,6 +50,7 @@
     "R7-ssrf|supabase/functions/voip-capacity-recommendations/index.ts",
     "R7-ssrf|supabase/functions/voip-diagnostic-voice-qa/index.ts",
     "R7-ssrf|supabase/functions/voip-executive-narrative/index.ts",
-    "R7-ssrf|supabase/functions/whatsapp-rewrite/index.ts"
+    "R7-ssrf|supabase/functions/whatsapp-rewrite/index.ts",
+    "R9-stub|supabase/functions/wavoip-call/index.ts"
   ]
 }
