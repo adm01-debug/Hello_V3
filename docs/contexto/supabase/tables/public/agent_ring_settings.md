@@ -32,7 +32,9 @@
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
 | agent_ring_settings_agent_name_key | UNIQUE | `UNIQUE (agent_name)` |  |  | sim |
+| agent_ring_settings_fallback_action_check | CHECK | `CHECK (fallback_action IS NULL OR (fallback_action = ANY (ARRAY['voicemail'::text, 'forward'::text, 'queue'::text])))` |  |  | sim |
 | agent_ring_settings_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
+| agent_ring_settings_ring_strategy_check | CHECK | `CHECK (ring_strategy IS NULL OR (ring_strategy = ANY (ARRAY['sequential'::text, 'simultaneous'::text])))` |  |  | sim |
 
 
 ## Índices

@@ -33,6 +33,7 @@
 
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
+| agent_devices_device_type_check | CHECK | `CHECK (device_type IS NULL OR (device_type = ANY (ARRAY['desktop'::text, 'mobile'::text, 'sip_phone'::text, 'softphone'::text])))` |  |  | sim |
 | agent_devices_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
 
 

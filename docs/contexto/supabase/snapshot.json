@@ -23526,6 +23526,23 @@
       },
       {
         "columns": [
+          "current_stage"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (current_stage IS NULL OR (current_stage = ANY (ARRAY['adoption'::text, 'at_risk'::text, 'expansion'::text, 'growth'::text])))",
+        "name": "accounts_current_stage_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "accounts",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
           "health_score"
         ],
         "deferrable": false,
@@ -23556,6 +23573,23 @@
         "schema": "public",
         "table": "accounts",
         "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "segment"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (segment IS NULL OR (segment = ANY (ARRAY['enterprise'::text, 'midmarket'::text, 'smb'::text])))",
+        "name": "accounts_segment_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "accounts",
+        "type": "CHECK",
         "validated": true
       },
       {
@@ -23686,6 +23720,23 @@
       },
       {
         "columns": [
+          "device_type"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (device_type IS NULL OR (device_type = ANY (ARRAY['desktop'::text, 'mobile'::text, 'sip_phone'::text, 'softphone'::text])))",
+        "name": "agent_devices_device_type_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "agent_devices",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
           "id"
         ],
         "deferrable": false,
@@ -23754,6 +23805,23 @@
       },
       {
         "columns": [
+          "fallback_action"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (fallback_action IS NULL OR (fallback_action = ANY (ARRAY['voicemail'::text, 'forward'::text, 'queue'::text])))",
+        "name": "agent_ring_settings_fallback_action_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "agent_ring_settings",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
           "id"
         ],
         "deferrable": false,
@@ -23771,6 +23839,23 @@
       },
       {
         "columns": [
+          "ring_strategy"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (ring_strategy IS NULL OR (ring_strategy = ANY (ARRAY['sequential'::text, 'simultaneous'::text])))",
+        "name": "agent_ring_settings_ring_strategy_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "agent_ring_settings",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
           "id"
         ],
         "deferrable": false,
@@ -23784,6 +23869,23 @@
         "schema": "public",
         "table": "agent_shifts",
         "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "status"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (status IS NULL OR (status = ANY (ARRAY['scheduled'::text, 'active'::text, 'completed'::text, 'cancelled'::text, 'no_show'::text])))",
+        "name": "agent_shifts_status_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "agent_shifts",
+        "type": "CHECK",
         "validated": true
       },
       {
@@ -24746,6 +24848,23 @@
       },
       {
         "columns": [
+          "playlist_type"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (playlist_type IS NULL OR (playlist_type = ANY (ARRAY['auto'::text, 'manual'::text])))",
+        "name": "call_playlists_playlist_type_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "call_playlists",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
           "call_session_id"
         ],
         "deferrable": false,
@@ -24778,6 +24897,23 @@
         "schema": "public",
         "table": "call_quality_metrics",
         "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "quality_label"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (quality_label IS NULL OR (lower(quality_label) = ANY (ARRAY['excellent'::text, 'good'::text, 'fair'::text, 'poor'::text, 'unknown'::text])))",
+        "name": "call_quality_metrics_quality_label_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "call_quality_metrics",
+        "type": "CHECK",
         "validated": true
       },
       {
@@ -31644,9 +31780,17 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 3,
+          "code_total_files": 5,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -31732,6 +31876,10 @@
               "hits": 1
             },
             {
+              "file": "supabase/functions/check-calling-hours/index.ts",
+              "hits": 1
+            },
+            {
               "file": "supabase/functions/score-call-attempt/index.ts",
               "hits": 1
             },
@@ -31740,7 +31888,7 @@
               "hits": 1
             }
           ],
-          "code_total_files": 4,
+          "code_total_files": 5,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -31775,6 +31923,10 @@
               "hits": 1
             },
             {
+              "file": "supabase/functions/check-dnc/index.ts",
+              "hits": 1
+            },
+            {
               "file": "supabase/functions/score-call-attempt/index.ts",
               "hits": 1
             },
@@ -31783,7 +31935,7 @@
               "hits": 1
             }
           ],
-          "code_total_files": 3,
+          "code_total_files": 4,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -32788,9 +32940,13 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261122260000_is_admin_user_and_get_role_use_user_roles.sql",
+              "hits": 2
             }
           ],
-          "code_total_files": 7,
+          "code_total_files": 8,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -32917,9 +33073,17 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 5,
+          "code_total_files": 7,
           "cron": [],
           "db": [
             "public.record_trunk_usage"
@@ -33072,7 +33236,7 @@
               "hits": 2
             }
           ],
-          "code_total_files": 31,
+          "code_total_files": 33,
           "cron": [],
           "db": [
             "public.can_access_agent_data"
@@ -33135,9 +33299,21 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261122260000_is_admin_user_and_get_role_use_user_roles.sql",
+              "hits": 2
+            },
+            {
+              "file": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 8,
+          "code_total_files": 11,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -33170,9 +33346,13 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261122280000_is_admin_and_supervisor_honor_expiry.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 1,
+          "code_total_files": 2,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -33315,9 +33495,13 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261122280000_is_admin_and_supervisor_honor_expiry.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 1,
+          "code_total_files": 2,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -33358,9 +33542,25 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261122250000_role_checks_honor_active_and_expiry.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
+              "hits": 2
             }
           ],
-          "code_total_files": 3,
+          "code_total_files": 7,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -33405,9 +33605,17 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 4,
+          "code_total_files": 6,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -33464,9 +33672,21 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261122280000_is_admin_and_supervisor_honor_expiry.sql",
+              "hits": 2
+            },
+            {
+              "file": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 7,
+          "code_total_files": 10,
           "cron": [],
           "db": [
             "public.get_database_health_snapshot",
@@ -33621,7 +33841,7 @@
               "hits": 1
             }
           ],
-          "code_total_files": 71,
+          "code_total_files": 78,
           "cron": [],
           "db": [
             "public.can_access_agent_data",
@@ -33655,11 +33875,39 @@
         "callers": {
           "code": [
             {
+              "file": "supabase/functions/approve-password-reset/index.ts",
+              "hits": 1
+            },
+            {
+              "file": "supabase/functions/dialer-pacing-tick/index.ts",
+              "hits": 1
+            },
+            {
               "file": "supabase/functions/fuzz-test-runner/index.ts",
               "hits": 1
             },
             {
+              "file": "supabase/functions/generate-coaching-track/index.ts",
+              "hits": 1
+            },
+            {
+              "file": "supabase/functions/generate-coaching/index.ts",
+              "hits": 1
+            },
+            {
+              "file": "supabase/functions/global-load-test/index.ts",
+              "hits": 1
+            },
+            {
               "file": "supabase/functions/ldap-sync/index.ts",
+              "hits": 1
+            },
+            {
+              "file": "supabase/functions/record-consent/index.ts",
+              "hits": 1
+            },
+            {
+              "file": "supabase/functions/voip-load-test/index.ts",
               "hits": 1
             },
             {
@@ -33747,7 +33995,7 @@
               "hits": 3
             }
           ],
-          "code_total_files": 23,
+          "code_total_files": 36,
           "cron": [],
           "db": [
             "public.prevent_role_escalation"
@@ -33786,9 +34034,25 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261122280000_is_admin_and_supervisor_honor_expiry.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261122340000_parked_calls_and_queues_scope_pii.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 2,
+          "code_total_files": 6,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -34647,8 +34911,13 @@
       {
         "args": "",
         "callers": {
-          "code": [],
-          "code_total_files": 0,
+          "code": [
+            {
+              "file": "supabase/migrations/20261122290000_sync_profile_role_from_user_roles.sql",
+              "hits": 1
+            }
+          ],
+          "code_total_files": 1,
           "cron": [],
           "db": [],
           "triggers": [

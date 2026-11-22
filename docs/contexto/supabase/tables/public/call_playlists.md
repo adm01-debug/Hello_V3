@@ -34,6 +34,7 @@
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
 | call_playlists_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
+| call_playlists_playlist_type_check | CHECK | `CHECK (playlist_type IS NULL OR (playlist_type = ANY (ARRAY['auto'::text, 'manual'::text])))` |  |  | sim |
 
 
 ## Referenciada por (FKs de outras tabelas)

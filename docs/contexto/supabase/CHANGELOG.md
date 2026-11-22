@@ -2,6 +2,11 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-22 06:20 UTC
+
+- **constraints** adicionado (8): `public.accounts.accounts_current_stage_check`, `public.accounts.accounts_segment_check`, `public.agent_devices.agent_devices_device_type_check`, `public.agent_ring_settings.agent_ring_settings_fallback_action_check`, `public.agent_ring_settings.agent_ring_settings_ring_strategy_check`, `public.agent_shifts.agent_shifts_status_check`, `public.call_playlists.call_playlists_playlist_type_check`, `public.call_quality_metrics.call_quality_metrics_quality_label_check`
+- **functions** alterado (16): `public.can_access_agent_data(target_agent_name text)`, `public.check_calling_hours(p_region_code text)`, `public.check_dnc(p_phone text)`, `public.get_profile_role(_user_id uuid)`, `public.get_user_agent_id()`, `public.get_user_agent_name()`, `public.get_user_role()`, `public.get_user_roles(_user_id uuid)`, `public.has_permission(_user_id uuid, _permission_name text)`, `public.has_role(_user_id uuid, _role app_role)`, `public.is_active_agent(_agent_name text)`, `public.is_admin()`, `public.is_admin_or_supervisor()`, `public.is_admin_user(_user_id uuid)`, `public.is_supervisor()`, `public.sync_profile_role_from_user_roles()`
+
 ## 2026-11-22 05:12 UTC
 
 - **colunas** removido (3): `public.__dbg.err`, `public.__dsn_probe.host`, `public.__dsn_probe.res`

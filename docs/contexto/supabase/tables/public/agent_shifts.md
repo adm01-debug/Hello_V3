@@ -35,6 +35,7 @@
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
 | agent_shifts_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
+| agent_shifts_status_check | CHECK | `CHECK (status IS NULL OR (status = ANY (ARRAY['scheduled'::text, 'active'::text, 'completed'::text, 'cancelled'::text, 'no_show'::text])))` |  |  | sim |
 | agent_shifts_template_id_fkey | FOREIGN KEY | `FOREIGN KEY (template_id) REFERENCES shift_templates(id) ON DELETE SET NULL` | SET NULL | NO ACTION | sim |
 
 

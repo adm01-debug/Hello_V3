@@ -40,6 +40,7 @@
 |---|---|---|---|---|---|
 | call_quality_metrics_call_session_id_fkey | FOREIGN KEY | `FOREIGN KEY (call_session_id) REFERENCES call_sessions(id) ON DELETE CASCADE` | CASCADE | NO ACTION | sim |
 | call_quality_metrics_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
+| call_quality_metrics_quality_label_check | CHECK | `CHECK (quality_label IS NULL OR (lower(quality_label) = ANY (ARRAY['excellent'::text, 'good'::text, 'fair'::text, 'poor'::text, 'unknown'::text])))` |  |  | sim |
 
 
 ## Índices

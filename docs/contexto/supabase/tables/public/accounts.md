@@ -45,8 +45,10 @@
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
 | accounts_churn_risk_score_check | CHECK | `CHECK (churn_risk_score >= 0 AND churn_risk_score <= 100)` |  |  | sim |
+| accounts_current_stage_check | CHECK | `CHECK (current_stage IS NULL OR (current_stage = ANY (ARRAY['adoption'::text, 'at_risk'::text, 'expansion'::text, 'growth'::text])))` |  |  | sim |
 | accounts_health_score_check | CHECK | `CHECK (health_score >= 0 AND health_score <= 100)` |  |  | sim |
 | accounts_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
+| accounts_segment_check | CHECK | `CHECK (segment IS NULL OR (segment = ANY (ARRAY['enterprise'::text, 'midmarket'::text, 'smb'::text])))` |  |  | sim |
 
 
 ## Referenciada por (FKs de outras tabelas)
