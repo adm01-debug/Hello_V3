@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a01216be67` · branch `main` · 2026-11-22 01:06 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `95463e690b` · branch `main` · 2026-11-22 01:20 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1019,7 +1019,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `state` | `parked` | escreve | `src/lib/blf.ts` |
 | `state` | `recording` | compara | `src/components/calls/live-transcription/useLiveTranscription.ts`<br>`src/hooks/useVoiceCommand.ts` |
 | `state` | `suspended` | compara | `src/hooks/useCriticalAlertNotifications.ts`<br>`src/hooks/useHoldSoundAlert.ts`<br>`src/lib/incoming-call-alert.ts` |
-| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +8 |
+| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +9 |
 | `role` | `agent` | compara, escreve | `src/lib/talkRatio.ts`<br>`src/pages/roles/RoleStatsCards.tsx`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `customer` | compara | `src/lib/talkRatio.ts`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `string` | compara | `src/pages/roles/RoleAuditTrail.tsx` |
@@ -2392,7 +2392,7 @@ _nenhum item encontrado_
 | Chamada em espera | `src/hooks/useSipCall.ts` |
 | Chamada encerrada: ${e.cause} | `src/hooks/useSipCall.ts` |
 | Chamada falhou: ${cause} | `src/hooks/useSipCall.ts` |
-| … +210 linhas — lista completa em `context.json` | |
+| … +215 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2436,7 +2436,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/functions/export-data-lake/index.ts` |
 
-## K. Testes como especificação (3953 testes em 317 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3959 testes em 318 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2658,6 +2658,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/security-alerts-webhook-history.property.test.ts` | 6 | security-alerts-webhook-history (PBT) · respeita cap MAX_ENTRIES e mantém ordem do mais recente para o mais antigo · descarta entradas corrompidas no storage sem lançar · truncateResponseSnippet nunca retorna string maior que o input + marcador … |
 | `src/lib/__tests__/webrtc-config.test.ts` | 6 | getIceServers · retorna STUN servers padrão sem TURN quando envs ausentes · inclui TURN quando todas as envs estão presentes · não inclui TURN quando falta uma das credenciais … |
 | `src/lib/audit/__tests__/index.coverage.test.ts` | 6 | audit/index (coverage) · logAuditEvent returns id on success · logAuditEvent defaults details to empty object and resourceId undefined · logAuditEvent returns null on supabase error … |
+| `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
 | `supabase/functions/check-calling-hours/__tests__/index.test.ts` | 6 | check-calling-hours: CORS preflight retorna headers · check-calling-hours: rejeita sem Authorization · check-calling-hours: rejeita JWT inválido · check-calling-hours: aceita region_code default  … |
 | `supabase/functions/check-dnc/__tests__/index.test.ts` | 6 | check-dnc: CORS preflight responde 200/204 com headers · check-dnc: rejeita requisição sem Authorization · check-dnc: rejeita JWT inválido · check-dnc: valida campo phone obrigatório … |
@@ -2739,8 +2740,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useTrunkRealtimeMetrics.coverage.test.tsx` | 3 | useTrunkRealtimeMetrics · computes occupancy metrics · handles trunk with zero max_channels and no calls |
 | `src/hooks/__tests__/useVoipRecommendationSimulate.coverage.test.tsx` | 3 | useVoipRecommendationSimulate · simulates a recommendation successfully · throws when invoke returns an error |
 | `src/lib/__tests__/agent-assist.pbt.test.ts` | 3 | Agent Assist PBT (Property-Based Testing) · rankSignals: priority always dominates confidence · matchesKeywords: handles composite keywords regardless of order |
-| `src/lib/__tests__/tag-filter-label.test.ts` | 3 | formatTagFilterLabel · mapeia sentinelas para rótulos legíveis · nunca lança e sempre devolve string não vazia (PBT) |
-| … +17 linhas — lista completa em `context.json` | | |
+| … +18 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2958,6 +2958,9 @@ _nenhum item encontrado_
 | ').order('created_at', { ascending: false }).limit(200), | `src/pages/TranslationCenter.tsx` |
 | ').order('created_at', { ascending: false }).limit(200), | `src/pages/admin/SecurityAuditDashboard.tsx` |
 | ').order('created_at', { ascending: false }).limit(200), | `src/pages/admin/SecurityAuditDashboard.tsx` |
+| * Regra: nenhum `fetch` com URL derivada de dado do usuário ou de configuração | `supabase/functions/_shared/allowed-hosts.ts` |
+| deve sair sem passar por `assertSafeOutboundUrl`. | `supabase/functions/_shared/allowed-hosts.ts` |
+| `allowPrivate` remove apenas o bloqueio de faixas privadas. | `supabase/functions/_shared/allowed-hosts.ts` |
 | * @deprecated Use buildCorsHeaders(req) instead for proper origin validation */ | `supabase/functions/_shared/cors.ts` |
 | Webhook também não deve lançar | `supabase/functions/_shared/external-payload-schemas_test.ts` |
 | e garante que apenas números finitos sejam aceitos. | `supabase/functions/_shared/numeric-schemas_test.ts` |
@@ -2977,6 +2980,7 @@ _nenhum item encontrado_
 | 2. Se for trigger, atualizar o banco. Se for busca, apenas retornar. | `supabase/functions/embed-kb-article/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/enforce-sla/index.ts` |
 | ').limit(50000); | `supabase/functions/export-data-lake/index.ts` |
+| Alvos permitidos: apenas Edge Functions deste projeto. Um `target` arbitrário | `supabase/functions/fuzz-test-runner/index.ts` |
 | Somente supervisor/admin podem disparar geracao em massa. | `supabase/functions/generate-coaching-track/index.ts` |
 | Rate-limit: uma trilha aberta por agente (evita duplicar). | `supabase/functions/generate-coaching-track/index.ts` |
 | Budget esgotado alerta mesmo com status ainda dentro do limite: e o sinal | `supabase/functions/health-check/index.ts` |
@@ -2996,4 +3000,6 @@ _nenhum item encontrado_
 | JWT obrigatório, CORS centralizado, validação Zod-like via _shared/validate. | `supabase/functions/voip-recommendation-simulate/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-recommendations/index.ts` |
 | validação Zod-like via _shared/validate, tracing via x-request-id. | `supabase/functions/voip-sla-report/index.ts` |
+| * Normaliza telefone para comparação (apenas dígitos). */ | `supabase/functions/whatsapp-inbound/idempotency.ts` |
+| Erro de dedup não pode derrubar a entrega: registra e segue. | `supabase/functions/whatsapp-inbound/index.ts` |
 | Required but empty | `supabase/functions/whatsapp-inbound/schema_test.ts` |

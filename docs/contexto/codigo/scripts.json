@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 32,
+ "total": 34,
  "scripts": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -54,6 +54,28 @@
    ],
    "npm_scripts": [],
    "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/audit-edge-functions.ts",
+   "descricao": "* Auditoria estática das Edge Functions.",
+   "linhas": 161,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [
+    "ci.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/check-bundle-budget.mjs",
+   "descricao": "* Orçamento de bundle por rota.",
+   "linhas": 104,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [
+    "ci.yml"
+   ],
    "orfao": false
   },
   {

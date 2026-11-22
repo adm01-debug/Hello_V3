@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a01216be6769e931ffa88e7a363ff39b4330b276",
+  "commit": "95463e690b21b3113cbada8a009ed7f1a53d04fa",
   "branch": "main",
-  "data_commit": "2026-11-21T22:05:13-03:00",
+  "data_commit": "2026-11-21T22:20:12-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "95463e6",
+    "data": "2026-11-21",
+    "assunto": "fix: SSRF guard nas edges, idempotencia do inbound e gates de CI (#80)"
+   },
+   {
+    "sha": "438f9d2",
+    "data": "2026-11-21",
+    "assunto": "chore: regenera catalogo de edges apos cron do discador (#93) (#95)"
+   },
    {
     "sha": "a01216b",
     "data": "2026-11-21",
@@ -121,19 +131,9 @@
     "sha": "67a43aa",
     "data": "2026-11-21",
     "assunto": "chore: docs - chatbot e traducao ao vivo marcados como wireados (#71)"
-   },
-   {
-    "sha": "a40abd0",
-    "data": "2026-11-21",
-    "assunto": "feat: botao responder com IA no inbox via useChatbot (#70)"
-   },
-   {
-    "sha": "723ff66",
-    "data": "2026-11-21",
-    "assunto": "feat: wirea traducao em tempo real na chamada e auditoria de seguranca no menu (#69)"
    }
   ],
-  "arquivos_mudados_7d": 625,
+  "arquivos_mudados_7d": 638,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 11
+    "mudancas": 12
    },
    {
     "pasta": "src/components/layout",
@@ -160,6 +160,10 @@
     "mudancas": 7
    },
    {
+    "pasta": ".github/workflows/ci.yml",
+    "mudancas": 6
+   },
+   {
     "pasta": ".github/workflows/contexto.yml",
     "mudancas": 6
    },
@@ -168,16 +172,12 @@
     "mudancas": 6
    },
    {
-    "pasta": "src/hooks/__tests__",
+    "pasta": "docs/edge-functions/README.md",
     "mudancas": 6
    },
    {
-    "pasta": ".github/workflows/ci.yml",
-    "mudancas": 5
-   },
-   {
-    "pasta": "docs/edge-functions/README.md",
-    "mudancas": 5
+    "pasta": "src/hooks/__tests__",
+    "mudancas": 6
    },
    {
     "pasta": "docs/prod-readiness.md",
@@ -188,30 +188,30 @@
     "mudancas": 5
    },
    {
-    "pasta": "supabase/functions/health-check",
+    "pasta": "supabase/functions/_shared",
     "mudancas": 5
    },
    {
-    "pasta": "supabase/functions/migrate-helper",
+    "pasta": "supabase/functions/health-check",
     "mudancas": 5
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 11
+    "mudancas": 12
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 6
    },
    {
     "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 6
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 5
-   },
-   {
     "arquivo": "docs/edge-functions/README.md",
-    "mudancas": 5
+    "mudancas": 6
    },
    {
     "arquivo": "docs/prod-readiness.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 76
+    "commits": 78
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1575,
-  "arquivos_codigo": 1209,
-  "linhas_codigo": 166353,
+  "arquivos_total": 1583,
+  "arquivos_codigo": 1215,
+  "linhas_codigo": 167076,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,9 +328,9 @@
   "tabelas": 169,
   "migrations": 215,
   "cron_jobs": 9,
-  "testes": 325,
+  "testes": 326,
   "workflows": 3,
-  "scripts": 32,
+  "scripts": 34,
   "docs_md": 114
  },
  "por_pasta": {
@@ -381,6 +381,14 @@
   "scripts/apply-call-volume-fix.mjs": {
    "arquivos": 1,
    "linhas": 43
+  },
+  "scripts/audit-edge-functions.ts": {
+   "arquivos": 1,
+   "linhas": 161
+  },
+  "scripts/check-bundle-budget.mjs": {
+   "arquivos": 1,
+   "linhas": 104
   },
   "scripts/check-cfmlmc-db.mjs": {
    "arquivos": 1,
@@ -511,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 150,
-   "linhas": 17818
+   "arquivos": 154,
+   "linhas": 18276
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -634,8 +642,8 @@
   }
  ],
  "qualidade": {
-  "any": 11,
-  "console_log": 183,
+  "any": 12,
+  "console_log": 192,
   "ts_ignore": 0,
   "eslint_disable": 1,
   "todos": 5,

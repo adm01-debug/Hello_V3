@@ -5,9 +5,11 @@
  "total": 94,
  "verify_jwt_false": [],
  "shared": [
+  "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
   "supabase/functions/_shared/__tests__/resilience.test.ts",
   "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
   "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
+  "supabase/functions/_shared/allowed-hosts.ts",
   "supabase/functions/_shared/cors.ts",
   "supabase/functions/_shared/external-payload-schemas.ts",
   "supabase/functions/_shared/external-payload-schemas_test.ts",
@@ -276,7 +278,7 @@
    "nome": "bitrix-api",
    "entrada": "supabase/functions/bitrix-api/index.ts",
    "arquivos": 1,
-   "linhas": 272,
+   "linhas": 286,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -292,6 +294,7 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "allowed-hosts.ts",
     "cors.ts",
     "external-payload-schemas.ts",
     "numeric-schemas.ts",
@@ -709,7 +712,7 @@
    "nome": "data-lake-flush",
    "entrada": "supabase/functions/data-lake-flush/index.ts",
    "arquivos": 1,
-   "linhas": 135,
+   "linhas": 152,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1216,21 +1219,28 @@
    "nome": "fuzz-test-runner",
    "entrada": "supabase/functions/fuzz-test-runner/index.ts",
    "arquivos": 1,
-   "linhas": 80,
+   "linhas": 142,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
-   "tabelas": [],
-   "rpcs": [],
+   "tabelas": [
+    "user_roles"
+   ],
+   "rpcs": [
+    "is_admin_user"
+   ],
    "env": [
     "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [],
-   "usa_shared": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
@@ -2983,7 +2993,7 @@
    "nome": "voip-trunks-healthcheck",
    "entrada": "supabase/functions/voip-trunks-healthcheck/index.ts",
    "arquivos": 1,
-   "linhas": 177,
+   "linhas": 184,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3007,6 +3017,7 @@
    ],
    "hosts_externos": [],
    "usa_shared": [
+    "allowed-hosts.ts",
     "cors.ts"
    ],
    "chamada_pelo_front": [
@@ -3151,8 +3162,8 @@
   {
    "nome": "whatsapp-inbound",
    "entrada": "supabase/functions/whatsapp-inbound/index.ts",
-   "arquivos": 3,
-   "linhas": 230,
+   "arquivos": 5,
+   "linhas": 376,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",

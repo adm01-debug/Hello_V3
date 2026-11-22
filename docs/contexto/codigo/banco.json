@@ -21805,6 +21805,7 @@
    "usada_em_edges": [
     "database-backup",
     "database-cleanup",
+    "fuzz-test-runner",
     "ldap-sync",
     "voip-trunks-manage"
    ],
@@ -23968,7 +23969,7 @@
   {
    "nome": "is_admin_user",
    "definida": true,
-   "usada_em": 3
+   "usada_em": 4
   },
   {
    "nome": "log_audit_event",

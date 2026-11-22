@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a01216be6769e931ffa88e7a363ff39b4330b276",
+  "sha": "95463e690b21b3113cbada8a009ed7f1a53d04fa",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 01:06 UTC",
-  "files_total": 1622,
-  "code_files": 1427,
-  "code_lines": 180703
+  "generated_at": "2026-11-22 01:20 UTC",
+  "files_total": 1630,
+  "code_files": 1433,
+  "code_lines": 181426
  },
  "version": "1.3.2",
- "facts_hash": "3063d64797b17e21",
+ "facts_hash": "2779d7e1b5a852f0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,9 +159,9 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 603,
-   ".ts": 574,
+   ".ts": 579,
    ".sql": 217,
-   ".mjs": 26,
+   ".mjs": 27,
    ".py": 5,
    ".js": 2
   },
@@ -29490,7 +29490,7 @@
     ],
     "external": [],
     "invokes": [],
-    "doc": "Data Lake Flush — Exporta incremental de datasets críticos em NDJSON para o bucket data-lake-exports. Invocado por cron diário (03:00 UTC) ou manualmente por admin.",
+    "doc": "edge-public-ok — invocado por cron (`pg_cron` com service_role) ou admin autenticado. Data Lake Flush — Exporta incremental de datasets críticos em NDJSON para o bucket data-lake-exports. Invocado por cron diário (03:00 UTC) ou manualmente por admin.",
     "errors": [],
     "side_effects": [],
     "webhook_events": [],
@@ -29857,10 +29857,13 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "JWT do usuário",
-    "tables": [],
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "tables": [
+     "user_roles"
+    ],
     "env": [
      "SUPABASE_ANON_KEY",
+     "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [],
@@ -31337,11 +31340,11 @@
     ],
     "external": [],
     "invokes": [],
-    "doc": "",
+    "doc": "edge-public-ok — webhook do provedor de WhatsApp; autenticidade garantida pelo contrato de payload versionado (v1/v2), não por JWT de usuário.",
     "errors": [],
     "side_effects": [],
     "webhook_events": [],
-    "idempotency": false
+    "idempotency": true
    },
    {
     "name": "whatsapp-rewrite",
@@ -32594,8 +32597,8 @@
   },
   {
    "module": "scripts",
-   "files": 33,
-   "lines": 9543,
+   "files": 35,
+   "lines": 9808,
    "tables": [
     "a",
     "contacts",
@@ -32625,12 +32628,12 @@
     "test_snapshot.py: OfflineConnection, function, migration, structural_records, SnapshotFixture, SnapshotSQLRecoveryTests"
    ],
    "docs": [
+    "audit-edge-functions.ts: !/usr/bin/env bun",
+    "check-bundle-budget.mjs: !/usr/bin/env node",
     "codemod-safe-number.mjs: !/usr/bin/env node",
     "guard-edge-numeric.mjs: !/usr/bin/env node",
     "test-api-direct.mjs: Testa exatamente as chamadas que o frontend faz via supabase-js client",
-    "test-auth-flow.mjs: Simula login real do ti@promobrindes e testa queries do frontend",
-    "test-authenticated-queries.mjs: Login do ti@promobrindes (já confirmado) e teste das queries",
-    "test-validate-ip.mjs: Test validate-ip com JWT válido de usuário autenticado"
+    "test-auth-flow.mjs: Simula login real do ti@promobrindes e testa queries do frontend"
    ],
    "deps": [
     "#",
@@ -32650,6 +32653,7 @@
     "node:path",
     "node:test",
     "node:url",
+    "node:zlib",
     "pg",
     "react",
     "react-router-dom",
@@ -32668,6 +32672,8 @@
    ],
    "file_list": [
     "scripts/apply-call-volume-fix.mjs",
+    "scripts/audit-edge-functions.ts",
+    "scripts/check-bundle-budget.mjs",
     "scripts/check-cfmlmc-db.mjs",
     "scripts/check-data.mjs",
     "scripts/check-rls.mjs",
@@ -33722,8 +33728,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 150,
-   "lines": 17818,
+   "files": 154,
+   "lines": 18276,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -33811,6 +33817,7 @@
     "webhook_secrets"
    ],
    "exports": [
+    "allowed-hosts.ts: SsrfBlockedError, OutboundUrlOptions, classifyHost, isHostAllowed, assertSafeOutboundUrl",
     "cors.ts: getCorsOrigin, buildCorsHeaders, corsHeaders",
     "external-payload-schemas.ts: BitrixActionSchema, BitrixAction, BitrixRequestSchema, BitrixRequest, paramsSchemaFor, WebhookEventSchema",
     "hmac.ts: verifyWebhookSignature",
@@ -33838,15 +33845,16 @@
     "index.ts: ActionRow, QualityRow, InsightsResponse, buildHeatmap, calcEffectiveness, computeRecurring",
     "index.ts: QualityRow, AlertRow, SimulationDelta, SimulationResult, projectImpact",
     "index.ts: RecommendationCategory, RecommendationSeverity, RecommendationActionType, Recommendation, SignalContext, buildRecommendations",
+    "idempotency.ts: StoredMessageRef, ReplayResponse, detectReplay, normalizePhone",
     "schema.ts: WhatsAppInboundV1Schema, WhatsAppInboundV2Schema, WhatsAppInboundV1, WhatsAppInboundV2"
    ],
    "docs": [
     "optimistic-lock.test.ts: Teste defensivo do trigger enforce_optimistic_lock via SQL direto. Executado com: deno test --allow-net --allow-env supabase/functions/__tests__/optimistic-lock.test.ts Requer SUPABASE_DB_URL apontando para um banco com a migration aplicada. Em CI sem DB, o teste é pulado (skip) — não falha o pipeli …",
+    "allowed-hosts.ts: Guarda contra SSRF para chamadas de saída feitas por Edge Functions. Regra: nenhum `fetch` com URL derivada de dado do usuário ou de configuração deve sair sem passar por `assertSafeOutboundUrl`. Bloqueios sempre ativos: esquemas não HTTP(S), loopback, link-local (inclui 169.254.169.254 - metadata d …",
     "cors.ts: Centralized CORS configuration for all Edge Functions Restrict to known origins in production; fallback to first allowed origin",
     "external-payload-schemas.ts: Schemas Zod para payloads externos (Bitrix24 + webhooks genéricos). Toda propriedade numérica usa `.finite()` (do `numeric-schemas.ts`) para bloquear NaN/Infinity que corromperiam cálculos downstream e poderiam burlar validações SQL. Strings recebem `.max()` para conter payloads hostis; enums restri …",
     "observability.ts: Observabilidade estruturada para edge functions (JSON em 1 linha). Logs parseáveis por ferramentas de observabilidade (Supabase Logs, Logflare).",
-    "rate-limit.ts: Database-backed rate limiter for edge functions Uses the public.check_rate_limit() DB function for persistence across cold starts",
-    "resilience.ts: Resilience utilities for external API calls. - Retry with exponential backoff + jitter - Circuit breaker per key (CLOSED → OPEN → HALF_OPEN) Pure, deterministic (accepts injectable clock + rng for testing)."
+    "rate-limit.ts: Database-backed rate limiter for edge functions Uses the public.check_rate_limit() DB function for persistence across cold starts"
    ],
    "deps": [
     "https:",
@@ -33855,6 +33863,7 @@
    "imports_modules": [],
    "file_list": [
     "supabase/functions/__tests__/optimistic-lock.test.ts",
+    "supabase/functions/_shared/allowed-hosts.ts",
     "supabase/functions/_shared/cors.ts",
     "supabase/functions/_shared/external-payload-schemas.ts",
     "supabase/functions/_shared/external-payload-schemas_test.ts",
@@ -33868,6 +33877,7 @@
     "supabase/functions/_shared/validator.ts",
     "supabase/functions/_shared/validator_test.ts",
     "supabase/functions/_shared/voice-utils.ts",
+    "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
     "supabase/functions/_shared/__tests__/resilience.test.ts",
     "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
     "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
@@ -33931,9 +33941,7 @@
     "supabase/functions/health-check/slo-budget.ts",
     "supabase/functions/health-check/__tests__/index.test.ts",
     "supabase/functions/health-check/__tests__/slo-budget_test.ts",
-    "supabase/functions/ldap-sync/index.ts",
-    "supabase/functions/notify-blocked-ip/index.ts",
-    "supabase/functions/notify-new-device/index.ts"
+    "supabase/functions/ldap-sync/index.ts"
    ]
   },
   {
@@ -34799,7 +34807,8 @@
     "select": [
      "src/hooks/useConversations.ts",
      "supabase/functions/chat-widget-session/index.ts",
-     "supabase/functions/chatbot-respond/index.ts"
+     "supabase/functions/chatbot-respond/index.ts",
+     "supabase/functions/whatsapp-inbound/index.ts"
     ],
     "insert": [
      "src/hooks/useConversations.ts",
@@ -35743,6 +35752,7 @@
      "src/pages/roles/useRoles.ts",
      "supabase/functions/database-backup/index.ts",
      "supabase/functions/database-cleanup/index.ts",
+     "supabase/functions/fuzz-test-runner/index.ts",
      "supabase/functions/ldap-sync/index.ts",
      "supabase/functions/voip-trunks-manage/index.ts"
     ],
@@ -36219,6 +36229,7 @@
     "channel",
     "contact_id",
     "created_at",
+    "external_id",
     "first_response_at",
     "handoff_threshold",
     "id",
@@ -37044,6 +37055,7 @@
     "supabase/functions/export-data-lake/index.ts",
     "supabase/functions/extract-crm-fields/index.ts",
     "supabase/functions/forecast-deals/index.ts",
+    "supabase/functions/fuzz-test-runner/index.ts",
     "supabase/functions/generate-coaching-track/index.ts",
     "supabase/functions/generate-coaching/index.ts",
     "supabase/functions/generate-meeting-summary/index.ts",
@@ -37370,6 +37382,7 @@
     "scripts/ai-context/gerar.unit.mjs"
    ],
    "is_admin_user": [
+    "supabase/functions/fuzz-test-runner/index.ts",
     "supabase/functions/ldap-sync/index.ts",
     "supabase/functions/voip-trunks-healthcheck/index.ts",
     "supabase/functions/voip-trunks-manage/index.ts"
@@ -40841,6 +40854,26 @@
     "msg": ";\nimport { Loader2, ShieldCheck, Smartphone, Key, Copy, CheckCircle, QrCode } from "
    },
    {
+    "file": "supabase/functions/_shared/allowed-hosts.ts",
+    "msg": "URL inválida"
+   },
+   {
+    "file": "supabase/functions/_shared/allowed-hosts.ts",
+    "msg": "credenciais na URL"
+   },
+   {
+    "file": "supabase/functions/_shared/allowed-hosts.ts",
+    "msg": "esquema ${url.protocol}"
+   },
+   {
+    "file": "supabase/functions/_shared/allowed-hosts.ts",
+    "msg": "host fora da whitelist"
+   },
+   {
+    "file": "supabase/functions/_shared/allowed-hosts.ts",
+    "msg": "porta ${port}"
+   },
+   {
     "file": "supabase/functions/analyze-call/index.ts",
     "msg": "Invalid AI format"
    },
@@ -41621,6 +41654,18 @@
     "text": "').order('created_at', { ascending: false }).limit(200),"
    },
    {
+    "file": "supabase/functions/_shared/allowed-hosts.ts",
+    "text": "* Regra: nenhum `fetch` com URL derivada de dado do usuário ou de configuração"
+   },
+   {
+    "file": "supabase/functions/_shared/allowed-hosts.ts",
+    "text": "deve sair sem passar por `assertSafeOutboundUrl`."
+   },
+   {
+    "file": "supabase/functions/_shared/allowed-hosts.ts",
+    "text": "`allowPrivate` remove apenas o bloqueio de faixas privadas."
+   },
+   {
     "file": "supabase/functions/_shared/cors.ts",
     "text": "* @deprecated Use buildCorsHeaders(req) instead for proper origin validation */"
    },
@@ -41697,6 +41742,10 @@
     "text": "').limit(50000);"
    },
    {
+    "file": "supabase/functions/fuzz-test-runner/index.ts",
+    "text": "Alvos permitidos: apenas Edge Functions deste projeto. Um `target` arbitrário"
+   },
+   {
     "file": "supabase/functions/generate-coaching-track/index.ts",
     "text": "Somente supervisor/admin podem disparar geracao em massa."
    },
@@ -41771,6 +41820,14 @@
    {
     "file": "supabase/functions/voip-sla-report/index.ts",
     "text": "validação Zod-like via _shared/validate, tracing via x-request-id."
+   },
+   {
+    "file": "supabase/functions/whatsapp-inbound/idempotency.ts",
+    "text": "* Normaliza telefone para comparação (apenas dígitos). */"
+   },
+   {
+    "file": "supabase/functions/whatsapp-inbound/index.ts",
+    "text": "Erro de dedup não pode derrubar a entrega: registra e segue."
    },
    {
     "file": "supabase/functions/whatsapp-inbound/schema_test.ts",
@@ -53504,6 +53561,12 @@
     "file": "supabase/functions/forecast-deals/index.ts",
     "field": "status",
     "value": "open",
+    "kind": "filtra"
+   },
+   {
+    "file": "supabase/functions/fuzz-test-runner/index.ts",
+    "field": "role",
+    "value": "admin",
     "kind": "filtra"
    },
    {
@@ -70437,6 +70500,30 @@
     "name": "toggleRoleStatus alterna e exibe toast correspondente"
    },
    {
+    "file": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+    "name": "aceita hosts públicos https"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+    "name": "bloqueia loopback, metadata e esquemas perigosos"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+    "name": "faixas privadas são liberáveis apenas com allowPrivate"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+    "name": "metadata continua bloqueada mesmo com allowPrivate"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+    "name": "whitelist de sufixo e portas"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+    "name": "classifyHost trata host vazio e domínios internos"
+   },
+   {
     "file": "supabase/functions/_shared/__tests__/resilience.test.ts",
     "name": "retry: sucesso na primeira tentativa não dorme"
    },
@@ -81359,6 +81446,7 @@
       "compara:supabase/functions/export-data-lake/index.ts",
       "filtra:supabase/functions/database-backup/index.ts",
       "filtra:supabase/functions/database-cleanup/index.ts",
+      "filtra:supabase/functions/fuzz-test-runner/index.ts",
       "filtra:supabase/functions/ldap-sync/index.ts",
       "filtra:supabase/functions/voip-trunks-manage/index.ts"
      ],
@@ -84133,6 +84221,7 @@
   "service_role_files": [
    "scripts/ai-context/cenarios.mjs",
    "scripts/ai-context/gerar.unit.mjs",
+   "scripts/audit-edge-functions.ts",
    "scripts/check-data.mjs",
    "scripts/check-rls.mjs",
    "scripts/inventario/gerar-banco.mjs",
@@ -84178,6 +84267,7 @@
    "supabase/functions/export-data-lake/index.ts",
    "supabase/functions/extract-crm-fields/index.ts",
    "supabase/functions/forecast-deals/index.ts",
+   "supabase/functions/fuzz-test-runner/index.ts",
    "supabase/functions/generate-coaching-track/index.ts",
    "supabase/functions/generate-coaching/index.ts",
    "supabase/functions/generate-meeting-summary/index.ts",
@@ -88161,6 +88251,25 @@
    "errors": [
     "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
    ]
+  },
+  "scripts/audit-edge-functions.ts": {
+   "path": "scripts/audit-edge-functions.ts",
+   "lines": 161,
+   "rule_comments": [
+    "R3 — service_role sem validação do chamador. Webhooks e crons são legítimos:"
+   ],
+   "doc": "!/usr/bin/env bun",
+   "uses_service_role": true
+  },
+  "scripts/check-bundle-budget.mjs": {
+   "path": "scripts/check-bundle-budget.mjs",
+   "lines": 104,
+   "rule_comments": [
+    "* Lê o `dist/` produzido pelo Vite e falha quando um chunk passa do limite",
+    "declarado em `scripts/bundle-budget.json`. A chave do limite é o nome do chunk",
+    "O chunk de entrada carrega o shell inteiro: limite maior, mas ainda rastreado."
+   ],
+   "doc": "!/usr/bin/env node"
   },
   "scripts/check-cfmlmc-db.mjs": {
    "path": "scripts/check-cfmlmc-db.mjs",
@@ -113327,6 +113436,30 @@
     "WHERE table_name = 'deals' AND attempted_at > now() - interval '1 minute';"
    ]
   },
+  "supabase/functions/_shared/allowed-hosts.ts": {
+   "path": "supabase/functions/_shared/allowed-hosts.ts",
+   "lines": 150,
+   "exports": [
+    "class SsrfBlockedError",
+    "interface OutboundUrlOptions",
+    "function classifyHost",
+    "function isHostAllowed",
+    "function assertSafeOutboundUrl"
+   ],
+   "errors": [
+    "URL inválida",
+    "credenciais na URL",
+    "esquema ${url.protocol}",
+    "host fora da whitelist",
+    "porta ${port}"
+   ],
+   "rule_comments": [
+    "* Regra: nenhum `fetch` com URL derivada de dado do usuário ou de configuração",
+    "deve sair sem passar por `assertSafeOutboundUrl`.",
+    "`allowPrivate` remove apenas o bloqueio de faixas privadas."
+   ],
+   "doc": "Guarda contra SSRF para chamadas de saída feitas por Edge Functions. Regra: nenhum `fetch` com URL derivada de dado do usuário ou de configuração deve sair sem passar por `assertSafeOutboundUrl`. Bloqueios sempre ativos: esquemas não HTTP(S), loopback, link-local (inclui 169.254.169.254 - metadata d …"
+  },
   "supabase/functions/_shared/cors.ts": {
    "path": "supabase/functions/_shared/cors.ts",
    "lines": 36,
@@ -113645,6 +113778,19 @@
     "function maskText"
    ],
    "doc": "Utilitários de biometria de voz (sem dependências externas). Trabalha com vetores numéricos (features acústicas extraídas no client-side)."
+  },
+  "supabase/functions/_shared/__tests__/allowed-hosts.test.ts": {
+   "path": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+   "lines": 62,
+   "is_test": true,
+   "tests": [
+    "aceita hosts públicos https",
+    "bloqueia loopback, metadata e esquemas perigosos",
+    "faixas privadas são liberáveis apenas com allowPrivate",
+    "metadata continua bloqueada mesmo com allowPrivate",
+    "whitelist de sufixo e portas",
+    "classifyHost trata host vazio e domínios internos"
+   ]
   },
   "supabase/functions/_shared/__tests__/resilience.test.ts": {
    "path": "supabase/functions/_shared/__tests__/resilience.test.ts",
@@ -114208,7 +114354,7 @@
   },
   "supabase/functions/bitrix-api/index.ts": {
    "path": "supabase/functions/bitrix-api/index.ts",
-   "lines": 272,
+   "lines": 286,
    "env": [
     "BITRIX_WEBHOOK_URL",
     "SUPABASE_ANON_KEY",
@@ -115107,7 +115253,7 @@
   },
   "supabase/functions/data-lake-flush/index.ts": {
    "path": "supabase/functions/data-lake-flush/index.ts",
-   "lines": 135,
+   "lines": 152,
    "tables": [
     {
      "table": "data_lake_exports",
@@ -115176,7 +115322,7 @@
      "kind": "filtra"
     }
    ],
-   "doc": "Data Lake Flush — Exporta incremental de datasets críticos em NDJSON para o bucket data-lake-exports. Invocado por cron diário (03:00 UTC) ou manualmente por admin.",
+   "doc": "edge-public-ok — invocado por cron (`pg_cron` com service_role) ou admin autenticado. Data Lake Flush — Exporta incremental de datasets críticos em NDJSON para o bucket data-lake-exports. Invocado por cron diário (03:00 UTC) ou manualmente por admin.",
    "pagination": [
     "1"
    ],
@@ -115962,11 +116108,38 @@
   },
   "supabase/functions/fuzz-test-runner/index.ts": {
    "path": "supabase/functions/fuzz-test-runner/index.ts",
-   "lines": 80,
+   "lines": 142,
+   "tables": [
+    {
+     "table": "user_roles",
+     "op": "select"
+    }
+   ],
+   "table_cols": {
+    "user_roles": [
+     "role",
+     "user_id"
+    ]
+   },
+   "rpc": [
+    "is_admin_user"
+   ],
    "env": [
     "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
-   ]
+   ],
+   "status_values": [
+    {
+     "field": "role",
+     "value": "admin",
+     "kind": "filtra"
+    }
+   ],
+   "rule_comments": [
+    "Alvos permitidos: apenas Edge Functions deste projeto. Um `target` arbitrário"
+   ],
+   "uses_service_role": true
   },
   "supabase/functions/generate-coaching/index.ts": {
    "path": "supabase/functions/generate-coaching/index.ts",
@@ -119048,7 +119221,7 @@
   },
   "supabase/functions/voip-trunks-healthcheck/index.ts": {
    "path": "supabase/functions/voip-trunks-healthcheck/index.ts",
-   "lines": 177,
+   "lines": 184,
    "tables": [
     {
      "table": "voip_trunks",
@@ -119319,10 +119492,36 @@
     "WhatsApp Inbound V2 - Invalid Timestamp"
    ]
   },
+  "supabase/functions/whatsapp-inbound/idempotency.ts": {
+   "path": "supabase/functions/whatsapp-inbound/idempotency.ts",
+   "lines": 61,
+   "exports": [
+    "interface StoredMessageRef",
+    "interface ReplayResponse",
+    "function detectReplay",
+    "function normalizePhone"
+   ],
+   "rule_comments": [
+    "* Normaliza telefone para comparação (apenas dígitos). */"
+   ],
+   "doc": "Regras de idempotência do recebimento de WhatsApp. Provedores reentregam a mesma mensagem quando não recebem HTTP 200 (timeout, deploy, 5xx). Sem deduplicação, cada retry cria uma mensagem duplicada na conversa e infla `unread_count`. Mantido puro e separado do handler para ser testável sem banco."
+  },
+  "supabase/functions/whatsapp-inbound/idempotency_test.ts": {
+   "path": "supabase/functions/whatsapp-inbound/idempotency_test.ts",
+   "lines": 44
+  },
   "supabase/functions/whatsapp-inbound/index.ts": {
    "path": "supabase/functions/whatsapp-inbound/index.ts",
-   "lines": 139,
+   "lines": 180,
    "tables": [
+    {
+     "table": "conversation_messages",
+     "op": "select"
+    },
+    {
+     "table": "conversations",
+     "op": "select"
+    },
     {
      "table": "contacts",
      "op": "select"
@@ -119353,15 +119552,20 @@
     }
    ],
    "table_cols": {
-    "contacts": [
+    "conversation_messages": [
+     "conversation_id",
      "id"
     ],
     "conversations": [
      "assigned_agent_name",
      "channel",
      "contact_id",
+     "external_id",
      "id",
      "status"
+    ],
+    "contacts": [
+     "id"
     ],
     "agents": [
      "name",
@@ -119399,6 +119603,10 @@
      "kind": "filtra"
     }
    ],
+   "rule_comments": [
+    "Erro de dedup não pode derrubar a entrega: registra e segue."
+   ],
+   "doc": "edge-public-ok — webhook do provedor de WhatsApp; autenticidade garantida pelo contrato de payload versionado (v1/v2), não por JWT de usuário.",
    "pagination": [
     "1",
     "10"
@@ -120552,10 +120760,43 @@
   }
  },
  "git": {
-  "sha": "a01216be6769e931ffa88e7a363ff39b4330b276",
+  "sha": "95463e690b21b3113cbada8a009ed7f1a53d04fa",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "95463e6",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix: SSRF guard nas edges, idempotencia do inbound e gates de CI (#80)",
+    "files": [
+     ".github/workflows/ci.yml",
+     "docs/estado/funcionalidades-planejadas.md",
+     "docs/estado/infra-ci-rotas-integracoes.md",
+     "scripts/audit-edge-baseline.json",
+     "scripts/audit-edge-functions.ts",
+     "scripts/bundle-budget.json",
+     "scripts/check-bundle-budget.mjs",
+     "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+     "supabase/functions/_shared/allowed-hosts.ts",
+     "supabase/functions/bitrix-api/index.ts",
+     "supabase/functions/data-lake-flush/index.ts",
+     "supabase/functions/fuzz-test-runner/index.ts",
+     "supabase/functions/voip-trunks-healthcheck/index.ts",
+     "supabase/functions/whatsapp-inbound/idempotency.ts",
+     "supabase/functions/whatsapp-inbound/idempotency_test.ts",
+     "supabase/functions/whatsapp-inbound/index.ts"
+    ]
+   },
+   {
+    "sha": "438f9d2",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "chore: regenera catalogo de edges apos cron do discador (#93) (#95)",
+    "files": [
+     "docs/edge-functions/README.md"
+    ]
+   },
    {
     "sha": "a01216b",
     "date": "2026-11-21",
@@ -120879,56 +121120,16 @@
     "files": [
      "supabase/migrations/20250102000000_performance_indexes.sql"
     ]
-   },
-   {
-    "sha": "7d28bde",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: adiciona coluna favorite defensiva em contacts para preview idempotente (#64)",
-    "files": [
-     "supabase/migrations/20250102000000_hello_production.sql"
-    ]
-   },
-   {
-    "sha": "c2d7efe",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "feat: migra edge functions chat do gateway Lovable para Open Router (#63)",
-    "files": [
-     ".env.example",
-     "docs/estado/infra-ci-rotas-integracoes.md",
-     "supabase/functions/analyze-call/index.ts",
-     "supabase/functions/analyze-contact-profile/index.ts",
-     "supabase/functions/analyze-live-utterance/index.ts",
-     "supabase/functions/analyze-sentiment/index.ts",
-     "supabase/functions/auto-scorecard/index.ts",
-     "supabase/functions/chatbot-respond/index.ts",
-     "supabase/functions/detect-key-moments/index.ts",
-     "supabase/functions/extract-crm-fields/index.ts",
-     "supabase/functions/generate-coaching-plan/index.ts",
-     "supabase/functions/generate-coaching/index.ts",
-     "supabase/functions/generate-meeting-summary/index.ts",
-     "supabase/functions/generate-summary/index.ts",
-     "supabase/functions/ocr-virtual-fax/index.ts",
-     "supabase/functions/realtime-analysis/index.ts",
-     "supabase/functions/score-call/index.ts",
-     "supabase/functions/translate-summary/index.ts",
-     "supabase/functions/translate-utterance/index.ts",
-     "supabase/functions/voice-command/index.ts",
-     "supabase/functions/voip-diagnostic-voice-qa/index.ts",
-     "supabase/functions/voip-executive-narrative/index.ts",
-     "supabase/functions/whatsapp-rewrite/index.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    10
+    11
    ],
    [
     "docs/edge-functions/README.md",
-    5
+    6
    ],
    [
     "src/components/layout/AppSidebar.tsx",
@@ -120951,10 +121152,6 @@
     2
    ],
    [
-    "supabase/functions/detect-key-moments/index.ts",
-    2
-   ],
-   [
     "src/routes/protectedRoutes.tsx",
     2
    ],
@@ -120963,43 +121160,47 @@
     2
    ],
    [
-    "supabase/functions/dialer-pacing-tick/index.ts",
+    ".github/workflows/ci.yml",
     1
    ],
    [
-    "supabase/migrations/20261122140000_dialer_pacing_cron.sql",
+    "docs/estado/infra-ci-rotas-integracoes.md",
     1
    ],
    [
-    "supabase/migrations/20261122120000_coaching_auto_tracks_cron.sql",
+    "scripts/audit-edge-baseline.json",
     1
    ],
    [
-    "docs/audit/scorecard-final.md",
+    "scripts/audit-edge-functions.ts",
     1
    ],
    [
-    "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
+    "scripts/bundle-budget.json",
     1
    ],
    [
-    "supabase/functions/compute-account-health/index.ts",
+    "scripts/check-bundle-budget.mjs",
     1
    ],
    [
-    "supabase/functions/detect-churn-risk/index.ts",
+    "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
     1
    ],
    [
-    "supabase/functions/enforce-sla/index.ts",
+    "supabase/functions/_shared/allowed-hosts.ts",
     1
    ],
    [
-    "supabase/functions/send-survey/index.ts",
+    "supabase/functions/bitrix-api/index.ts",
     1
    ],
    [
-    "supabase/functions/sync-crm-queue/index.ts",
+    "supabase/functions/data-lake-flush/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/fuzz-test-runner/index.ts",
     1
    ]
   ]

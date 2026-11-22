@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 884,
- "arestas": 3426,
+ "nos": 889,
+ "arestas": 3431,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -42,7 +42,7 @@
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
-   "importado_por": 84
+   "importado_por": 85
   },
   {
    "arquivo": "src/components/ui/select.tsx",
@@ -216,6 +216,7 @@
   "src/lib/validation/index.ts",
   "supabase/functions/analyze-call/analyze-call_test.ts",
   "supabase/functions/generate-coaching-track/track-engine_test.ts",
+  "supabase/functions/whatsapp-inbound/idempotency_test.ts",
   "supabase/functions/whatsapp-inbound/schema_test.ts"
  ],
  "modulos_mais_acoplados": [
