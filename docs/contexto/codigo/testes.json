@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 342,
+ "total": 343,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 325
+  "unit": 326
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 319
+   "arquivos": 320
   },
   {
    "padrao": "e2e/",
@@ -572,7 +572,7 @@
   {
    "arquivo": "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 139,
+   "linhas": 143,
    "testa": [
     "src/hooks/useCallTransfer.ts",
     "src/hooks/useMultiChannelCall.ts"
@@ -2112,6 +2112,15 @@
    "casos": 49
   },
   {
+   "arquivo": "src/lib/__tests__/navigation-progress-store.test.ts",
+   "tipo": "unit",
+   "linhas": 49,
+   "testa": [
+    "src/lib/navigation-progress-store.ts"
+   ],
+   "casos": 4
+  },
+  {
    "arquivo": "src/lib/__tests__/outbound-scoring.test.ts",
    "tipo": "unit",
    "linhas": 64,
@@ -3256,6 +3265,7 @@
   "src/lib/logger.ts": 8,
   "src/lib/meeting-summary-utils.ts": 1,
   "src/lib/mfa/index.ts": 3,
+  "src/lib/navigation-progress-store.ts": 1,
   "src/lib/notifications/index.ts": 4,
   "src/lib/outbound-scoring.ts": 1,
   "src/lib/password/index.ts": 2,

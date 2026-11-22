@@ -12,6 +12,7 @@
    "src/components/gamification/AchievementNotificationProvider.tsx",
    "src/components/layout/AppLayout.tsx",
    "src/components/layout/GlobalServices.tsx",
+   "src/components/navigation/NavigationProgressMarker.tsx",
    "src/components/ui/skeleton-loader.tsx",
    "src/components/ui/sonner.tsx",
    "src/components/ui/toaster.tsx",
@@ -1324,6 +1325,12 @@
   "src/components/navigation/BackButton.tsx": [
    "src/components/ui/button.tsx",
    "src/components/ui/tooltip.tsx"
+  ],
+  "src/components/navigation/NavigationProgress.tsx": [
+   "src/lib/navigation-progress-store.ts"
+  ],
+  "src/components/navigation/NavigationProgressMarker.tsx": [
+   "src/lib/navigation-progress-store.ts"
   ],
   "src/components/network/AgentQualityRanking.tsx": [
    "src/components/ui/badge.tsx",

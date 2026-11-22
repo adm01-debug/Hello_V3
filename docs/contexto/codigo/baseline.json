@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "8fa0938a4d9b0a6f6c98e4cc11bff27c99d71c2d",
+  "commit": "975df81b5a63427c47338300af6e262fbf377137",
   "branch": "main",
-  "data_commit": "2026-11-22T16:34:47-03:00",
+  "data_commit": "2026-11-22T16:34:55-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "975df81",
+    "data": "2026-11-22",
+    "assunto": "fix: barra de progresso reflete o carregamento real do chunk da rota (#162)"
+   },
+   {
+    "sha": "da58d29",
+    "data": "2026-11-22",
+    "assunto": "fix: transferencia de chamada nao conclui mais sozinha por timer (#161)"
+   },
    {
     "sha": "8fa0938",
     "data": "2026-11-22",
@@ -121,19 +131,9 @@
     "sha": "80115e5",
     "data": "2026-11-22",
     "assunto": "fix: cron de retencao de lock-conflicts nunca autenticava (#137)"
-   },
-   {
-    "sha": "9d3d288",
-    "data": "2026-11-22",
-    "assunto": "docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)"
-   },
-   {
-    "sha": "c7bbfa0",
-    "data": "2026-11-22",
-    "assunto": "docs: valida IA e Data Lake ponta a ponta em producao (#135)"
    }
   ],
-  "arquivos_mudados_7d": 884,
+  "arquivos_mudados_7d": 890,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -149,23 +149,23 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 22
+    "mudancas": 23
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 21
+    "mudancas": 22
    },
    {
     "pasta": "covout/lib/security",
     "mudancas": 18
    },
    {
-    "pasta": "src/components/layout",
+    "pasta": "src/components/calls",
     "mudancas": 14
    },
    {
-    "pasta": "src/components/calls",
-    "mudancas": 12
+    "pasta": "src/components/layout",
+    "mudancas": 14
    },
    {
     "pasta": "supabase/functions/_shared",
@@ -294,14 +294,14 @@
     "mudancas": 3
    },
    {
-    "arquivo": "src/components/notifications/UnifiedNotificationDropdown.tsx",
+    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
     "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 140
+    "commits": 142
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1639,
-  "arquivos_codigo": 1244,
-  "linhas_codigo": 169469,
+  "arquivos_total": 1642,
+  "arquivos_codigo": 1247,
+  "linhas_codigo": 169602,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 241,
   "cron_jobs": 11,
-  "testes": 342,
+  "testes": 343,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -472,15 +472,15 @@
   },
   "src/App.tsx": {
    "arquivos": 1,
-   "linhas": 112
+   "linhas": 118
   },
   "src/__tests__": {
    "arquivos": 7,
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 354,
-   "linhas": 42144
+   "arquivos": 355,
+   "linhas": 42174
   },
   "src/contexts": {
    "arquivos": 3,
@@ -492,15 +492,15 @@
   },
   "src/hooks": {
    "arquivos": 350,
-   "linhas": 45358
+   "linhas": 45364
   },
   "src/integrations": {
    "arquivos": 3,
    "linhas": 7847
   },
   "src/lib": {
-   "arquivos": 162,
-   "linhas": 20720
+   "arquivos": 164,
+   "linhas": 20811
   },
   "src/main.tsx": {
    "arquivos": 1,

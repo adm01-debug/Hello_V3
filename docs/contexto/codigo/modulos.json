@@ -638,7 +638,7 @@
    "modulo": "components/calls",
    "arquivos": 27,
    "testes": 4,
-   "linhas": 3777,
+   "linhas": 3788,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1818,6 +1818,7 @@
     "group",
     "img",
     "navigation",
+    "progressbar",
     "searchbox",
     "status",
     "supervisor",
@@ -1916,9 +1917,9 @@
   },
   {
    "modulo": "components/navigation",
-   "arquivos": 3,
+   "arquivos": 4,
    "testes": 0,
-   "linhas": 134,
+   "linhas": 153,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1932,7 +1933,9 @@
    "canais_realtime": [],
    "env": [],
    "flags": [],
-   "papeis": [],
+   "papeis": [
+    "progressbar"
+   ],
    "diretos": {
     "edges": [],
     "tabelas": [],
@@ -1942,7 +1945,8 @@
     "components/layout"
    ],
    "depende_de_modulos": [
-    "components/ui"
+    "components/ui",
+    "lib"
    ],
    "pacotes_externos": [
     "framer-motion",
@@ -3181,7 +3185,7 @@
    "modulo": "hooks",
    "arquivos": 167,
    "testes": 0,
-   "linhas": 20583,
+   "linhas": 20585,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4421,9 +4425,9 @@
   },
   {
    "modulo": "lib",
-   "arquivos": 48,
+   "arquivos": 49,
    "testes": 0,
-   "linhas": 6331,
+   "linhas": 6373,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4750,6 +4754,7 @@
     "components/gamification",
     "components/hold-alerts",
     "components/layout",
+    "components/navigation",
     "components/network",
     "components/notification-center",
     "components/notifications",
@@ -4798,7 +4803,7 @@
   {
    "modulo": "lib/__tests__",
    "arquivos": 0,
-   "testes": 70,
+   "testes": 71,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],

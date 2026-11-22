@@ -1425,7 +1425,7 @@
    "hooks_exportados": [
     "useCallTransfer"
    ],
-   "linhas": 82,
+   "linhas": 84,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],

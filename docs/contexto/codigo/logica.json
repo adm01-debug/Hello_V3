@@ -1,11 +1,11 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 87,
+ "total": 88,
  "por_camada": {
   "data": 1,
   "integrations": 3,
-  "lib": 80,
+  "lib": 81,
   "python": 3
  },
  "arquivos": [
@@ -1179,6 +1179,33 @@
    "usado_por": 0,
    "usado_por_modulos": [],
    "coberto_por_testes": 3,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/lib/navigation-progress-store.ts",
+   "camada": "lib",
+   "exports": [
+    "finishNavigation",
+    "getServerSnapshot",
+    "isNavigating",
+    "startNavigation",
+    "subscribeNavigation"
+   ],
+   "export_default": null,
+   "linhas": 42,
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "env": [],
+   "externos": [],
+   "zod_schemas": 0,
+   "flags": [],
+   "papeis": [],
+   "usado_por": 2,
+   "usado_por_modulos": [
+    "components/navigation"
+   ],
+   "coberto_por_testes": 1,
    "orfao": false
   },
   {

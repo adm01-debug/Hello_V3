@@ -28,7 +28,7 @@
     "App"
    ],
    "export_default": "App",
-   "linhas": 112,
+   "linhas": 118,
    "dominio": null,
    "hooks_locais": [],
    "tabelas": [],
@@ -839,7 +839,7 @@
     "ActiveCallsIndicator"
    ],
    "export_default": null,
-   "linhas": 168,
+   "linhas": 179,
    "dominio": "components/calls",
    "hooks_locais": [
     "useHoldReminder"
@@ -2765,7 +2765,7 @@
     "NavigationProgress"
    ],
    "export_default": null,
-   "linhas": 35,
+   "linhas": 38,
    "dominio": "components/navigation",
    "hooks_locais": [],
    "tabelas": [],

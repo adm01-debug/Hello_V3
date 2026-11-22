@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8fa0938a4d` · branch `main` · 2026-11-22 19:36 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `975df81b5a` · branch `main` · 2026-11-22 19:38 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1863,7 +1863,6 @@ _nenhum item encontrado_
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useCallPark.ts` |
 | `gcTime: 30 * 60 * 1000,` | `src/hooks/useCallQueues.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useCallQueues.ts` |
-| `setTimeout(() => completeTransfer(callId), 2000);` | `src/hooks/useCallTransfer.ts` |
 | `if (alert.severity !== 'critical') setTimeout(() => notification.close(), 10000);` | `src/hooks/useCriticalAlertNotifications.ts` |
 | `gcTime: 30 * 60 * 1000,` | `src/hooks/useDialerFavorites.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useDialerFavorites.ts` |
@@ -2450,7 +2449,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4033 testes em 332 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4038 testes em 333 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2621,7 +2620,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAlertHistory.coverage.test.tsx` | 7 | useAlertHistory · loads with empty stats when there are no alerts · computes severity counts, read rate, types and daily stats · applies search, severity and type filters … |
 | `src/hooks/__tests__/useBestTimeToContact.coverage.test.tsx` | 7 | useBestTimeToContact (coverage) · loads pattern and top patterns when contactId provided · does not query single pattern when no contactId (disabled) · recompute success path … |
 | `src/hooks/__tests__/useCallHistory.coverage.test.tsx` | 7 | useCallHistory · fetches sessions on mount and maps summary · handles fetch error branch · exercises filters, setters, presets and clearFilters … |
-| `src/hooks/__tests__/useCallTransfer.coverage.test.tsx` | 7 | useCallTransfer · blind transfer sets transferring status then completes after timeout · attended transfer puts call on hold and does not auto-complete · completeTransfer returns early when call not found … |
+| `src/hooks/__tests__/useCallTransfer.coverage.test.tsx` | 7 | useCallTransfer · blind transfer stays pending until confirmed instead of auto-completing on a timer · attended transfer puts call on hold and does not auto-complete · completeTransfer returns early when call not found … |
 | `src/hooks/__tests__/useDashboardLayout.coverage.test.tsx` | 7 | useDashboardLayout · initializes with default layout when nothing stored · initializes from stored layout · saves a new layout and persists to localStorage … |
 | `src/hooks/__tests__/useDeviceDetection.coverage.test.tsx` | 7 | useDeviceDetection · returns device info helpers · detects new device when existing sessions and new IP · no notification when no existing sessions … |
 | `src/hooks/__tests__/useExtensionAudit.scenarios.test.ts` | 7 | useExtensionAudit — cenários (fire-and-forget) · envia RPC log_audit_event com payload correto · lida com erro do RPC sem lançar (fire-and-forget) · lida com exception do RPC sem propagar … |
@@ -2709,6 +2708,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipRecommendationHistory.coverage.test.tsx` | 5 | useVoipRecommendationHistory · returns data on success with default options · passes custom period and limit · errors when invoke returns error … |
 | `src/lib/__tests__/cache.stress.test.ts` | 5 | React Query cache — stress (10k entries) · insere 10.000 entradas em < 2s · invalidateQueries em filtro genérico < 500ms · clear() libera todas as entradas … |
 | `src/lib/__tests__/favorite-sync-labels.test.ts` | 5 | maskPhone · preserva apenas os últimos dígitos · nunca vaza mais de 4 dígitos (PBT) · describeFavorite … |
+| `src/lib/__tests__/navigation-progress-store.test.ts` | 5 | navigation-progress-store · starts idle · reports loading between start and finish and notifies subscribers · only stops loading when every concurrent navigation finished … |
 | `src/lib/__tests__/predictive-pace.property.test.ts` | 5 | calculatePredictivePace — property-based (1000 runs) · sugestão sempre dentro de [minPace, maxPace] · sem agentes livres → suggested = minPace · abandono acima do alvo → nunca sobe o pace … |
 | `src/lib/__tests__/web-vitals.coverage.test.ts` | 5 | web-vitals · getWebVitals returns an array · initWebVitals registers observers and records metrics across ratings · handles empty paint entries without throwing … |
 | `src/lib/export/__tests__/index.coverage.test.ts` | 5 | export/index · exportToCSV downloads with BOM and formatting · exportToCSV no-ops on empty data · exportToJSON downloads … |
@@ -2753,8 +2753,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendations/__tests__/index.test.ts` | 4 | buildRecommendations - sistema saudável retorna lista vazia · buildRecommendations - capacidade saturada gera crítico de prioridade máxima · buildRecommendations - múltiplos sinais ordenados por prioridade descendente · buildRecommendations - jitter alto gera ação de função (testar conexão) |
 | `supabase/functions/webauthn-authenticate/__tests__/index.test.ts` | 4 | webauthn-authenticate: OPTIONS devolve preflight CORS vazio · webauthn-authenticate: sem campos obrigatorios responde 400 · webauthn-authenticate: nao aceita email do request · webauthn-authenticate: passkey desconhecida e recusada (400, nunca 200) |
 | `tests/e2e/performance.spec.ts` | 4 | Dashboard Performance and Lists · should render call lists efficiently · Edge Function Resilience · should handle rapid requests to analyze-call |
-| `src/hooks/__tests__/useCallRecording.test.ts` | 3 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado |
-| … +32 linhas — lista completa em `context.json` | | |
+| … +33 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2904,6 +2903,7 @@ _nenhum item encontrado_
 | Requer mínimo de 8 caracteres e caractere especial como obrigatórios | `src/components/auth/PasswordStrength.tsx` |
 | LGPD Consent Required */} | `src/components/compliance/ComplianceSettings.tsx` |
 | Renderiza nada quando há apenas a opção "Todos" (nenhuma etiqueta em uso), | `src/components/dialer/phone/FavoriteTagFilter.tsx` |
+| e usa `location.pathname` apenas para reiniciar a animação ao trocar de página. | `src/components/navigation/NavigationProgress.tsx` |
 | Total alerts (não distribuímos por agente — apenas total para contexto) | `src/components/network/AgentQualityRanking.tsx` |
 | Lógica de auto-apply: apenas critical + function (categoria infra implícita) | `src/components/network/VoipRecommendationsPanel.tsx` |
 | Uma faixa desativada depois de salva não pode permanecer selecionada. | `src/components/queues/QueueAudioSlotSelect.tsx` |
@@ -2951,6 +2951,7 @@ _nenhum item encontrado_
 | e polui a UX. A permissão é requisitada em `ensureNotificationPermission`. | `src/lib/incoming-call-alert.ts` |
 | * Solicita permissão de notificação a partir de um gesto do usuário. */ | `src/lib/incoming-call-alert.ts` |
 | - Dev: console com prefixo estruturado. Prod: apenas warn/error. | `src/lib/logger.ts` |
+| * Store mínimo do estado de navegação, alimentado pelo Suspense das rotas. | `src/lib/navigation-progress-store.ts` |
 | * Erros de negócio antecipados na UI (o banco também os rejeitaria). */ | `src/lib/queue-audio.ts` |
 | nenhum CHECK constraint nem o trigger de validação pode falhar depois disto. | `src/lib/ring-group.ts` |
 | * Erros de negócio que o banco também rejeitaria — antecipados na UI | `src/lib/ring-group.ts` |

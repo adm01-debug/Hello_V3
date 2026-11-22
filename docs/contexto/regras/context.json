@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "8fa0938a4d9b0a6f6c98e4cc11bff27c99d71c2d",
+  "sha": "975df81b5a63427c47338300af6e262fbf377137",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 19:36 UTC",
-  "files_total": 1686,
-  "code_files": 1489,
-  "code_lines": 185427
+  "generated_at": "2026-11-22 19:38 UTC",
+  "files_total": 1689,
+  "code_files": 1492,
+  "code_lines": 185560
  },
  "version": "1.3.2",
- "facts_hash": "12be2144af7ee76d",
+ "facts_hash": "f8bd63590a3a32b0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,8 +158,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 606,
-   ".ts": 605,
+   ".ts": 607,
+   ".tsx": 607,
    ".sql": 244,
    ".mjs": 27,
    ".py": 5,
@@ -32103,7 +32103,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 354,
+  "components_count": 355,
   "hooks": [
    {
     "name": "useContacts",
@@ -33179,7 +33179,7 @@
   {
    "module": "src",
    "files": 3,
-   "lines": 158,
+   "lines": 164,
    "tables": [
     "webhook_flush_metrics"
    ],
@@ -33240,8 +33240,8 @@
   },
   {
    "module": "src/components",
-   "files": 354,
-   "lines": 42144,
+   "files": 355,
+   "lines": 42174,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33494,7 +33494,7 @@
   {
    "module": "src/hooks",
    "files": 350,
-   "lines": 45358,
+   "lines": 45364,
    "tables": [
     "accounts",
     "active_sessions",
@@ -33798,8 +33798,8 @@
   },
   {
    "module": "src/lib",
-   "files": 162,
-   "lines": 20720,
+   "files": 164,
+   "lines": 20811,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -33826,6 +33826,7 @@
     "language-detection.ts: SupportedLang, SUPPORTED_LANGS, detectLanguage, langLabel, langFlag, toLocale",
     "logger.ts: generateRequestId, setRequestId, getRequestId, clearRequestId, withRequestId, logger",
     "meeting-summary-utils.ts: isValidActionItem, isValidParticipantSentiment, serializeSummaryAsText",
+    "navigation-progress-store.ts: startNavigation, finishNavigation, isNavigating, subscribeNavigation, getServerSnapshot",
     "outbound-scoring.ts: Recommendation, EngagementPattern, ScoreInput, ScoreResult, computeAttemptScore, formatBestWindow",
     "phone-normalization.ts: stripNonDigits, normalizeBrPhone, isE164, maskPhone",
     "queue-audio.ts: AUDIO_PROMPT_KINDS, AudioPromptKind, AUDIO_PROMPT_KIND_LABELS, QUEUE_AUDIO_SLOTS, QueueAudioSlot, QUEUE_AUDIO_SLOT_LABELS",
@@ -33845,8 +33846,7 @@
     "sync-history.ts: MAX_SYNC_HISTORY_ENTRIES, SyncHistoryEntry, SyncHistoryStorageLike, buildSyncHistoryKey, sanitizeEntry, appendEntry",
     "talkRatio.ts: TalkRatioSegment, TalkRatioComputation, computeTalkRatio",
     "tracing.ts: getTraceId, getTraceOperation, traceHeaders, withTrace, startTrace, endTrace",
-    "voice-biometrics.ts: ExtractedFeatures, captureVoiceSample, isValidEmbedding, VOICE_VECTOR_DIM",
-    "voice-command-history.ts: MAX_HISTORY_ENTRIES, MAX_COMMAND_LENGTH, VoiceCommandEntry, sanitizeCommand, loadCommandHistory, pushCommandHistory"
+    "voice-biometrics.ts: ExtractedFeatures, captureVoiceSample, isValidEmbedding, VOICE_VECTOR_DIM"
    ],
    "docs": [
     "agent-assist-utils.ts: Utilitários puros para Real-Time Agent Assist. Sem efeitos colaterais — fáceis de testar.",
@@ -33905,6 +33905,7 @@
     "src/lib/language-detection.ts",
     "src/lib/logger.ts",
     "src/lib/meeting-summary-utils.ts",
+    "src/lib/navigation-progress-store.ts",
     "src/lib/outbound-scoring.ts",
     "src/lib/phone-normalization.ts",
     "src/lib/queue-audio.ts",
@@ -33964,8 +33965,7 @@
     "src/lib/__tests__/language-detection.test.ts",
     "src/lib/__tests__/logger.test.ts",
     "src/lib/__tests__/meeting-summary-utils.test.ts",
-    "src/lib/__tests__/mock-data-integrity.test.ts",
-    "src/lib/__tests__/outbound-scoring.test.ts"
+    "src/lib/__tests__/mock-data-integrity.test.ts"
    ]
   },
   {
@@ -42026,6 +42026,10 @@
     "text": "Renderiza nada quando há apenas a opção \"Todos\" (nenhuma etiqueta em uso),"
    },
    {
+    "file": "src/components/navigation/NavigationProgress.tsx",
+    "text": "e usa `location.pathname` apenas para reiniciar a animação ao trocar de página."
+   },
+   {
     "file": "src/components/network/AgentQualityRanking.tsx",
     "text": "Total alerts (não distribuímos por agente — apenas total para contexto)"
    },
@@ -42212,6 +42216,10 @@
    {
     "file": "src/lib/logger.ts",
     "text": "- Dev: console com prefixo estruturado. Prod: apenas warn/error."
+   },
+   {
+    "file": "src/lib/navigation-progress-store.ts",
+    "text": "* Store mínimo do estado de navegação, alimentado pelo Suspense das rotas."
    },
    {
     "file": "src/lib/queue-audio.ts",
@@ -55695,10 +55703,6 @@
     "line": "staleTime: 5 * 60 * 1000,"
    },
    {
-    "file": "src/hooks/useCallTransfer.ts",
-    "line": "setTimeout(() => completeTransfer(callId), 2000);"
-   },
-   {
     "file": "src/hooks/useCriticalAlertNotifications.ts",
     "line": "if (alert.severity !== 'critical') setTimeout(() => notification.close(), 10000);"
    },
@@ -58656,7 +58660,7 @@
    },
    {
     "file": "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
-    "name": "blind transfer sets transferring status then completes after timeout"
+    "name": "blind transfer stays pending until confirmed instead of auto-completing on a timer"
    },
    {
     "file": "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
@@ -68201,6 +68205,26 @@
    {
     "file": "src/lib/__tests__/mock-data-integrity.test.ts",
     "name": "QueueStats fields are numeric"
+   },
+   {
+    "file": "src/lib/__tests__/navigation-progress-store.test.ts",
+    "name": "navigation-progress-store"
+   },
+   {
+    "file": "src/lib/__tests__/navigation-progress-store.test.ts",
+    "name": "starts idle"
+   },
+   {
+    "file": "src/lib/__tests__/navigation-progress-store.test.ts",
+    "name": "reports loading between start and finish and notifies subscribers"
+   },
+   {
+    "file": "src/lib/__tests__/navigation-progress-store.test.ts",
+    "name": "only stops loading when every concurrent navigation finished"
+   },
+   {
+    "file": "src/lib/__tests__/navigation-progress-store.test.ts",
+    "name": "never goes negative when finishing without a start"
    },
    {
     "file": "src/lib/__tests__/outbound-scoring.test.ts",
@@ -90961,7 +90985,7 @@
   },
   "src/App.tsx": {
    "path": "src/App.tsx",
-   "lines": 112,
+   "lines": 118,
    "exports": [
     "default App"
    ],
@@ -92180,7 +92204,7 @@
   },
   "src/components/calls/ActiveCallsIndicator.tsx": {
    "path": "src/components/calls/ActiveCallsIndicator.tsx",
-   "lines": 168,
+   "lines": 179,
    "exports": [
     "function ActiveCallsIndicator"
    ]
@@ -94385,9 +94409,19 @@
   },
   "src/components/navigation/NavigationProgress.tsx": {
    "path": "src/components/navigation/NavigationProgress.tsx",
-   "lines": 35,
+   "lines": 38,
    "exports": [
     "function NavigationProgress"
+   ],
+   "rule_comments": [
+    "e usa `location.pathname` apenas para reiniciar a animação ao trocar de página."
+   ]
+  },
+  "src/components/navigation/NavigationProgressMarker.tsx": {
+   "path": "src/components/navigation/NavigationProgressMarker.tsx",
+   "lines": 16,
+   "exports": [
+    "function NavigationProgressMarker"
    ]
   },
   "src/components/navigation/PageTransition.tsx": {
@@ -97976,7 +98010,7 @@
   },
   "src/hooks/useCallTransfer.ts": {
    "path": "src/hooks/useCallTransfer.ts",
-   "lines": 82,
+   "lines": 84,
    "exports": [
     "function useCallTransfer"
    ],
@@ -98004,9 +98038,6 @@
    ],
    "hooks": [
     "useCallTransfer"
-   ],
-   "temporal": [
-    "setTimeout(() => completeTransfer(callId), 2000);"
    ]
   },
   "src/hooks/useChatbot.ts": {
@@ -104519,11 +104550,11 @@
   },
   "src/hooks/__tests__/useCallTransfer.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
-   "lines": 139,
+   "lines": 143,
    "is_test": true,
    "tests": [
     "useCallTransfer",
-    "blind transfer sets transferring status then completes after timeout",
+    "blind transfer stays pending until confirmed instead of auto-completing on a timer",
     "attended transfer puts call on hold and does not auto-complete",
     "completeTransfer returns early when call not found",
     "completeTransfer sets active id null when no remaining calls",
@@ -108348,6 +108379,21 @@
     "function serializeSummaryAsText"
    ]
   },
+  "src/lib/navigation-progress-store.ts": {
+   "path": "src/lib/navigation-progress-store.ts",
+   "lines": 42,
+   "exports": [
+    "function startNavigation",
+    "function finishNavigation",
+    "function isNavigating",
+    "function subscribeNavigation",
+    "function getServerSnapshot"
+   ],
+   "rule_comments": [
+    "* Store mínimo do estado de navegação, alimentado pelo Suspense das rotas."
+   ],
+   "doc": "Store mínimo do estado de navegação, alimentado pelo Suspense das rotas. A barra de progresso antiga usava `setTimeout(400)` no `location.pathname`: era uma animação fixa que terminava antes (ou depois) do chunk lazy carregar e não dizia nada sobre o progresso real. Como o app usa `<BrowserRouter>` …"
+  },
   "src/lib/outbound-scoring.ts": {
    "path": "src/lib/outbound-scoring.ts",
    "lines": 100,
@@ -110214,6 +110260,18 @@
     "CallRecord type has all required fields",
     "Agent status values are exhaustive",
     "QueueStats fields are numeric"
+   ]
+  },
+  "src/lib/__tests__/navigation-progress-store.test.ts": {
+   "path": "src/lib/__tests__/navigation-progress-store.test.ts",
+   "lines": 49,
+   "is_test": true,
+   "tests": [
+    "navigation-progress-store",
+    "starts idle",
+    "reports loading between start and finish and notifies subscribers",
+    "only stops loading when every concurrent navigation finished",
+    "never goes negative when finishing without a start"
    ]
   },
   "src/lib/__tests__/outbound-scoring.test.ts": {
@@ -122990,10 +123048,35 @@
   }
  },
  "git": {
-  "sha": "8fa0938a4d9b0a6f6c98e4cc11bff27c99d71c2d",
+  "sha": "975df81b5a63427c47338300af6e262fbf377137",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "975df81",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: barra de progresso reflete o carregamento real do chunk da rota (#162)",
+    "files": [
+     "src/App.tsx",
+     "src/components/navigation/NavigationProgress.tsx",
+     "src/components/navigation/NavigationProgressMarker.tsx",
+     "src/lib/__tests__/navigation-progress-store.test.ts",
+     "src/lib/navigation-progress-store.ts"
+    ]
+   },
+   {
+    "sha": "da58d29",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: transferencia de chamada nao conclui mais sozinha por timer (#161)",
+    "files": [
+     "src/components/calls/ActiveCallsIndicator.tsx",
+     "src/components/calls/UnifiedSoftphone.tsx",
+     "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
+     "src/hooks/useCallTransfer.ts"
+    ]
+   },
    {
     "sha": "8fa0938",
     "date": "2026-11-22",
@@ -123278,32 +123361,12 @@
      "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
      "src/hooks/useQueueMetrics.ts"
     ]
-   },
-   {
-    "sha": "5ca0039",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: taxa de abandono contava a chamada abandonada duas vezes (#131)",
-    "files": [
-     "src/components/supervisor/panel/TrendChartToggle.tsx",
-     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-     "src/hooks/useQueueMetrics.ts"
-    ]
-   },
-   {
-    "sha": "89fe47c",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: registra divergencia de limiar no Nivel de Servico (#130)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    10
+    9
    ],
    [
     "docs/audits/pendencias-2026-07.md",
@@ -123326,16 +123389,40 @@
     2
    ],
    [
-    "src/components/supervisor/panel/TrendChartToggle.tsx",
-    2
+    "src/App.tsx",
+    1
    ],
    [
-    "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-    2
+    "src/components/navigation/NavigationProgress.tsx",
+    1
    ],
    [
-    "src/hooks/useQueueMetrics.ts",
-    2
+    "src/components/navigation/NavigationProgressMarker.tsx",
+    1
+   ],
+   [
+    "src/lib/__tests__/navigation-progress-store.test.ts",
+    1
+   ],
+   [
+    "src/lib/navigation-progress-store.ts",
+    1
+   ],
+   [
+    "src/components/calls/ActiveCallsIndicator.tsx",
+    1
+   ],
+   [
+    "src/components/calls/UnifiedSoftphone.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useCallTransfer.ts",
+    1
    ],
    [
     "src/hooks/useMFA.ts",
@@ -123355,30 +123442,6 @@
    ],
    [
     "docs/estado/componentes-parte4.md",
-    1
-   ],
-   [
-    "docs/estado/infra-ci-rotas-integracoes.md",
-    1
-   ],
-   [
-    "src/components/contacts/ContactFilters.tsx",
-    1
-   ],
-   [
-    "src/components/contacts/ContactPagination.tsx",
-    1
-   ],
-   [
-    "src/components/contacts/contactFiltersState.ts",
-    1
-   ],
-   [
-    "src/components/contacts/pagination.ts",
-    1
-   ],
-   [
-    "src/components/security-alerts/AlertDetailsDialog.tsx",
     1
    ]
   ]
