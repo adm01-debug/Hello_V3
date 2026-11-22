@@ -21654,10 +21654,12 @@
     "export-data-lake",
     "generate-coaching",
     "generate-coaching-track",
+    "global-load-test",
     "record-consent",
     "rls-audit",
     "sip-config",
-    "suggest-shift-swaps"
+    "suggest-shift-swaps",
+    "voip-load-test"
    ],
    "triggers": [
     "audit_user_profiles_change",

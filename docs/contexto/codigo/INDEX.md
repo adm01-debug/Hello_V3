@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `15654d2607d5972986931013f0e77f66fd952c95` (2026-11-21T21:26:23-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ce117912144cfc84ff4aeb32b3d57e4ceeddac3d` (2026-11-21T21:40:50-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1572 |
 | arquivos_codigo | 1209 |
-| linhas_codigo | 165780 |
+| linhas_codigo | 165883 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -268,7 +268,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `generate-coaching-track` — tabelas: agents, call_sessions, coaching_assignments, notifications, user_profiles; chamada por 1 arquivo(s) do front
 - `generate-meeting-summary` — tabelas: call_sessions, call_transcriptions, meeting_summaries; chamada por 2 arquivo(s) do front
 - `generate-summary` — tabelas: -; chamada por 1 arquivo(s) do front
-- `global-load-test` — tabelas: -; chamada por 0 arquivo(s) do front — **ÓRFÃ**
+- `global-load-test` — tabelas: user_profiles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `health-check` — tabelas: voip_trunk_health_checks, webhook_flush_metrics; chamada por 2 arquivo(s) do front
 - `ldap-sync` — tabelas: audit_logs, contacts, system_settings, user_roles; chamada por 1 arquivo(s) do front
 - `notify-blocked-ip` — tabelas: -; chamada por 1 arquivo(s) do front
@@ -305,7 +305,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `voip-executive-narrative` — tabelas: call_quality_metrics, voip_quality_alerts, voip_recommendation_actions; chamada por 1 arquivo(s) do front
 - `voip-executive-summary` — tabelas: call_quality_metrics, call_sessions, voip_quality_alerts; chamada por 1 arquivo(s) do front
 - `voip-failover-notifier` — tabelas: agent_trunk_assignments, notifications, voip_trunks; chamada por 0 arquivo(s) do front
-- `voip-load-test` — tabelas: call_quality_metrics; chamada por 1 arquivo(s) do front
+- `voip-load-test` — tabelas: call_quality_metrics, user_profiles; chamada por 1 arquivo(s) do front
 - `voip-quality-alerts-summary` — tabelas: voip_quality_alerts; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `voip-quality-forecast` — tabelas: call_quality_metrics; chamada por 1 arquivo(s) do front
 - `voip-quality-heatmap` — tabelas: call_quality_metrics; chamada por 1 arquivo(s) do front
@@ -361,8 +361,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8953 nós · 23878 arestas · 703 comunidades · grafo do commit `15654d26`
-- comunidades maiores: lucide-react (265), protectedRoutes.tsx (197), button.tsx (171), traceHeaders (156), safe-date.ts (152), client.ts (129), cn (112), Tabela de funcionalidades (111), vitest (111), usePageTitle (111), utils.ts (111), react (98)
+- 8955 nós · 23880 arestas · 693 comunidades · grafo do commit `ce117912`
+- comunidades maiores: lucide-react (261), button.tsx (207), vitest (183), logger.ts (173), usePageTitle.ts (152), react (128), usePageTitle (120), client.ts (118), safe-date.ts (113), cn (104), snapshot.py (102), Tabela de funcionalidades (95)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -376,12 +376,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - AGENTS.md (3)
 - deno.lock (3)
 - docs/audits/pendencias-2026-07.md (3)
+- docs/edge-functions/README.md (3)
 - docs/observabilidade/SLI_SLO.md (3)
 - docs/pendencias/_ordem.md (3)
 - scripts/inventario/gerar-banco.mjs (3)
 - scripts/supabase_snapshot/snapshot.py (3)
 - scripts/supabase_snapshot/test_snapshot.py (3)
-- src/components/layout/CommandPalette.tsx (3)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -420,6 +420,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `ce11791` fix: load-tests exigem admin e limpam dados de teste (#91)
 - 2026-11-21 `15654d2` docs: regenera catalogo apos corrigir o rls-audit (#90)
 - 2026-11-21 `91b39fd` docs: pendencias alinhadas ao estado real medido (#88)
 - 2026-11-21 `c206c6c` docs: catalogo de edge functions gerado do codigo (#87)
@@ -434,7 +435,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `6308708` docs: (#75)
 - 2026-11-21 `d9528b5` fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)
 - 2026-11-21 `e534879` fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)
-- 2026-11-21 `468450f` chore(docs): marca PermissionGate como wireado (PR #61) (#73)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

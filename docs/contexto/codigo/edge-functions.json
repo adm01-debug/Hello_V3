@@ -1417,14 +1417,17 @@
    "nome": "global-load-test",
    "entrada": "supabase/functions/global-load-test/index.ts",
    "arquivos": 1,
-   "linhas": 104,
+   "linhas": 154,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
-   "tabelas": [],
+   "tabelas": [
+    "user_profiles"
+   ],
    "rpcs": [],
    "env": [
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -2676,16 +2679,18 @@
    "nome": "voip-load-test",
    "entrada": "supabase/functions/voip-load-test/index.ts",
    "arquivos": 1,
-   "linhas": 89,
+   "linhas": 142,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
    "tabelas": [
-    "call_quality_metrics"
+    "call_quality_metrics",
+    "user_profiles"
    ],
    "rpcs": [],
    "env": [
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],

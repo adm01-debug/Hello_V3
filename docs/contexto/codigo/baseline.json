@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "15654d2607d5972986931013f0e77f66fd952c95",
+  "commit": "ce117912144cfc84ff4aeb32b3d57e4ceeddac3d",
   "branch": "main",
-  "data_commit": "2026-11-21T21:26:23-03:00",
+  "data_commit": "2026-11-21T21:40:50-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ce11791",
+    "data": "2026-11-21",
+    "assunto": "fix: load-tests exigem admin e limpam dados de teste (#91)"
+   },
    {
     "sha": "15654d2",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "c2d7efe",
     "data": "2026-11-21",
     "assunto": "feat: migra edge functions chat do gateway Lovable para Open Router (#63)"
-   },
-   {
-    "sha": "ffaedf6",
-    "data": "2026-11-21",
-    "assunto": "docs: relatorio atualizado (seed, PR #62, validação O2O)"
    }
   ],
-  "arquivos_mudados_7d": 612,
+  "arquivos_mudados_7d": 614,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -234,6 +234,10 @@
     "mudancas": 3
    },
    {
+    "arquivo": "docs/edge-functions/README.md",
+    "mudancas": 3
+   },
+   {
     "arquivo": "docs/observabilidade/SLI_SLO.md",
     "mudancas": 3
    },
@@ -286,10 +290,6 @@
     "mudancas": 2
    },
    {
-    "arquivo": "docs/edge-functions/README.md",
-    "mudancas": 2
-   },
-   {
     "arquivo": "docs/estado/edge-functions-parte1.md",
     "mudancas": 2
    },
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 70
+    "commits": 71
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1572,
   "arquivos_codigo": 1209,
-  "linhas_codigo": 165780,
+  "linhas_codigo": 165883,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -512,7 +512,7 @@
   },
   "supabase/functions": {
    "arquivos": 150,
-   "linhas": 17245
+   "linhas": 17348
   },
   "tailwind.config.ts": {
    "arquivos": 1,
