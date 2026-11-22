@@ -20,8 +20,29 @@ export function useQueueMetricsSettings() {
     if (error) {
       logger.error('Error fetching settings:', error);
       toast.error('Erro ao carregar configurações');
-    } else if (data) {
+      setLoading(false);
+      return;
+    }
+
+    if (data) {
       setSettings(data as QueueMetricsSettings);
+      setLoading(false);
+      return;
+    }
+
+    // Tabela é singleton: sem fallback a página ficava presa em "Configurações não
+    // encontradas". O INSERT usa os defaults do schema (todos NOT NULL com default).
+    const { data: created, error: insertError } = await supabase
+      .from('queue_metrics_settings')
+      .insert({})
+      .select()
+      .single();
+
+    if (insertError) {
+      logger.error('Error seeding settings:', insertError);
+      toast.error('Erro ao inicializar configurações');
+    } else {
+      setSettings(created as QueueMetricsSettings);
     }
     setLoading(false);
   }, []);
@@ -33,11 +54,22 @@ export function useQueueMetricsSettings() {
   const save = useCallback(async () => {
     if (!settings) return;
     setSaving(true);
-    const { id, ...rest } = settings;
+    // Payload explícito: `settings` vem de select('*') e carrega created_at/updated_at,
+    // que não existem na interface e seriam rejeitados pelo update.
     const { error } = await supabase
       .from('queue_metrics_settings')
-      .update(rest)
-      .eq('id', id);
+      .update({
+        enabled: settings.enabled,
+        avg_wait_time_warning: settings.avg_wait_time_warning,
+        avg_wait_time_critical: settings.avg_wait_time_critical,
+        abandonment_rate_warning: settings.abandonment_rate_warning,
+        abandonment_rate_critical: settings.abandonment_rate_critical,
+        service_level_warning: settings.service_level_warning,
+        service_level_critical: settings.service_level_critical,
+        check_interval_minutes: settings.check_interval_minutes,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', settings.id);
 
     if (error) {
       logger.error('Error saving settings:', error);
