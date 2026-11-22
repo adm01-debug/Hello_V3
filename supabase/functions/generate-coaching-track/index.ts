@@ -1,7 +1,11 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
-import { buildTrackCandidates, CallSession, TrackResult } from "./track-engine.ts";
+import {
+  buildTrackCandidates,
+  CallSession,
+  TrackResult,
+} from "./track-engine.ts";
 
 interface TrackRow {
   id: string;
@@ -25,22 +29,35 @@ serve(async (req) => {
     const url = Deno.env.get("SUPABASE_URL")!;
     const anon = Deno.env.get("SUPABASE_ANON_KEY")!;
     const service = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(url, anon, { global: { headers: { Authorization: authHeader } } });
     const admin = createClient(url, service);
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return json({ error: "Não autorizado" }, 401, req);
-    }
+    // Caminho do cron: token dedicado (COACHING_CRON_TOKEN) comparado em tempo constante.
+    // Sem isso a geracao periodica teria que carregar um JWT de admin no SQL do cron.
+    const cronToken = Deno.env.get("COACHING_CRON_TOKEN");
+    const esperado = cronToken ? `Bearer ${cronToken}` : null;
+    const veioDoCron = !!esperado && mesmaString(authHeader, esperado);
 
-    // Somente supervisor/admin podem disparar geração em massa.
-    const { data: profile } = await admin
-      .from("user_profiles")
-      .select("role")
-      .eq("id", user.id)
-      .maybeSingle();
-    if (!profile || !["supervisor", "admin"].includes(profile.role)) {
-      return json({ error: "Acesso negado" }, 403, req);
+    let userId: string | null = null;
+    if (!veioDoCron) {
+      const supabase = createClient(url, anon, {
+        global: { headers: { Authorization: authHeader } },
+      });
+      const { data: { user }, error: authError } = await supabase.auth
+        .getUser();
+      if (authError || !user) {
+        return json({ error: "Nao autorizado" }, 401, req);
+      }
+
+      // Somente supervisor/admin podem disparar geracao em massa.
+      const { data: profile } = await admin
+        .from("user_profiles")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (!profile || !["supervisor", "admin"].includes(profile.role)) {
+        return json({ error: "Acesso negado" }, 403, req);
+      }
+      userId = user.id;
     }
 
     const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
@@ -48,7 +65,9 @@ serve(async (req) => {
     // Lê chamadas completas das últimas 14d com os resumos (fonte real dos scores).
     const { data: sessions, error: sessErr } = await admin
       .from("call_sessions")
-      .select("id, agent_name, started_at, call_summaries(agent_performance_score, customer_satisfaction, summary)")
+      .select(
+        "id, agent_name, started_at, call_summaries(agent_performance_score, customer_satisfaction, summary)",
+      )
       .eq("status", "completed")
       .gte("started_at", since)
       .order("started_at", { ascending: false })
@@ -60,7 +79,9 @@ serve(async (req) => {
       .from("coaching_assignments")
       .select("agent_name")
       .eq("status", "open");
-    const openByAgent = new Set((openAssignments ?? []).map((a) => a.agent_name));
+    const openByAgent = new Set(
+      (openAssignments ?? []).map((a) => a.agent_name),
+    );
 
     const { candidates, skipped } = buildTrackCandidates(
       (sessions ?? []) as CallSession[],
@@ -76,7 +97,7 @@ serve(async (req) => {
         priority: c.priority,
         status: c.status,
         due_at: c.due_at,
-        assigned_by: user.id,
+        assigned_by: userId,
       };
 
       const { data: created, error: insErr } = await admin
@@ -105,7 +126,10 @@ serve(async (req) => {
             await admin.from("notifications").insert({
               user_id: userProfile.id,
               title: "Nova trilha de coaching",
-              message: `Sugestão automática: ${c.weakness.label} abaixo do alvo (${c.weakness.avg.toFixed(1)}/5). Confira em /coaching.`,
+              message:
+                `Sugestão automática: ${c.weakness.label} abaixo do alvo (${
+                  c.weakness.avg.toFixed(1)
+                }/5). Confira em /coaching.`,
               type: "info",
               category: "coaching",
               severity: "info",
@@ -126,9 +150,20 @@ serve(async (req) => {
     };
     return json(result, 200, req);
   } catch (err) {
-    return json({ error: err instanceof Error ? err.message : "unknown" }, 500, req);
+    return json(
+      { error: err instanceof Error ? err.message : "unknown" },
+      500,
+      req,
+    );
   }
 });
+
+function mesmaString(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
 
 function json(payload: unknown, status: number, req: Request): Response {
   return new Response(JSON.stringify(payload), {
