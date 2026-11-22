@@ -35,7 +35,8 @@
     const updateProfileMutation = useMutation({
       mutationFn: async (updates: Partial<Profile>) => {
         if (!user) throw new Error('Not authenticated');
-        const { id, role, ...allowedUpdates } = updates;
+        // id/role vêm do usuário e não são editáveis: descartados de propósito.
+        const { id: _id, role: _role, ...allowedUpdates } = updates;
         const { error } = await supabase
           .from('user_profiles')
           .update(allowedUpdates as TablesUpdate<'user_profiles'>)

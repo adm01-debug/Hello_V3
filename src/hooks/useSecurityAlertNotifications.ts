@@ -134,6 +134,8 @@ export function useSecurityAlertNotifications({
     );
     observer.observe(el);
     return () => observer.disconnect();
+  // `alerts` é estável (objeto do useInfiniteQuery); as flags abaixo são o que de fato muda.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.isFetchNextPageError, alerts.fetchNextPage]);
 
   const grouped = useMemo(() => {
