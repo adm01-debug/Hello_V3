@@ -66,7 +66,7 @@ Quatro jobs ativos em `cron.job` (hoje cinco, com o novo `cleanup-recordings-dai
 
 | Job | Schedule | Estado |
 | --- | --- | --- |
-| `data-lake-flush-daily` | `0 3 * * *` | ✅ exporta NDJSON (validado ponta a ponta) |
+| `data-lake-flush-daily` | `0 3 * * *` | ✅ exporta NDJSON (validado ponta a ponta). Autenticação endurecida em 2026-11-22 (PR #144): antes aceitava a anon key pública (presente no bundle) e qualquer visitante disparava a exportação; agora compara token dedicado em tempo constante, lido do Vault pelo cron, e a chamada manual exige `role = admin` |
 | `cleanup-lock-conflicts-weekly` | `0 3 * * 0` | 🟢 **nunca autenticava** — corrigido e deployado na PR #137; bearer do Vault devolve 200 |
 | `dialer-pacing-tick` | `* * * * *` | ✅ caminho de cron token presente |
 | `generate-coaching-tracks-daily` | `15 3 * * *` | ✅ roda diariamente; última execução `succeeded`. Fluxo validado ponta a ponta (ver D4) |
