@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: salvar 2FA pela segunda vez falhava por upsert sem onConflict (#159)",
    "fix: configuracoes de metricas de fila ficavam presas em nao encontradas (#158)",
    "feat: sino do header passa a mostrar a tabela notifications (#157)",
    "docs: createTestData tem gate DEV duplo; 6 hooks orfaos estao wired (#156)",
-   "docs: 2 falsos parciais (useBusinessLogic importa SUT, AppSidebar tem RBAC) (#155)",
-   "docs: 11 falsos positivos de codigo morto nos docs de estado (#154)"
+   "docs: 2 falsos parciais (useBusinessLogic importa SUT, AppSidebar tem RBAC) (#155)"
   ]
  },
  "pr_template": null,

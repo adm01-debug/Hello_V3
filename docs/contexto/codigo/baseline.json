@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "b27cc88e73daa9250184050f46cc3bd2ba2e9e64",
+  "commit": "8fa0938a4d9b0a6f6c98e4cc11bff27c99d71c2d",
   "branch": "main",
-  "data_commit": "2026-11-22T16:13:26-03:00",
+  "data_commit": "2026-11-22T16:34:47-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8fa0938",
+    "data": "2026-11-22",
+    "assunto": "fix: salvar 2FA pela segunda vez falhava por upsert sem onConflict (#159)"
+   },
    {
     "sha": "b27cc88",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "c7bbfa0",
     "data": "2026-11-22",
     "assunto": "docs: valida IA e Data Lake ponta a ponta em producao (#135)"
-   },
-   {
-    "sha": "28337d1",
-    "data": "2026-11-22",
-    "assunto": "docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)"
    }
   ],
-  "arquivos_mudados_7d": 883,
+  "arquivos_mudados_7d": 884,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 139
+    "commits": 140
    },
    {
     "autor": "Joaquim Ataides",
