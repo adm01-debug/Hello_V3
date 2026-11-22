@@ -3,6 +3,12 @@ import type { CallSession, CallStatus, TransferTarget, TransferType } from './us
 
 /**
  * Manages call transfer operations (blind and attended).
+ *
+ * Nenhum canal de telefonia do produto (WaVoIP, SIP, WebRTC) expõe um evento de
+ * confirmação de transferência: o PBX não avisa quando o destino atende. Por isso
+ * a chamada permanece em `isTransferring` até o agente confirmar (completeTransfer)
+ * ou desistir (cancelTransfer) — concluir por timer esconderia do painel uma
+ * chamada que ainda está com o cliente na linha.
  */
 export function useCallTransfer(
   activeCalls: CallSession[],
@@ -58,11 +64,7 @@ export function useCallTransfer(
         };
       }
     }));
-
-    if (transferType === 'blind') {
-      setTimeout(() => completeTransfer(callId), 2000);
-    }
-  }, [setActiveCalls, completeTransfer]);
+  }, [setActiveCalls]);
 
   const cancelTransfer = useCallback((callId: string) => {
     setActiveCalls(prev => prev.map(call => {

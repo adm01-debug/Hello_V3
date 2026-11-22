@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Phone, PhoneOff, Pause, Play, Users, Bell, Merge, X, PhoneForwarded, Clock, VolumeX } from 'lucide-react';
+import { Phone, PhoneOff, Pause, Play, Users, Bell, Merge, X, PhoneForwarded, Clock, VolumeX, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
  import { cn, formatDuration } from '@/lib/utils';
@@ -24,6 +24,8 @@ interface ActiveCallsIndicatorProps {
   onRemoveFromConference: (callId: string) => void;
   onEndConference: () => void;
   onTransferCall: (callId: string, target: TransferTarget, transferType: TransferType) => void;
+  onCompleteTransfer: (callId: string) => void;
+  onCancelTransfer: (callId: string) => void;
   onToggleConferenceRecording?: () => void;
 }
 
@@ -31,7 +33,8 @@ const channelLabels: Record<CallChannel, string> = { webrtc: 'WebRTC', wavoip: '
 
 export function ActiveCallsIndicator({
   activeCalls, activeCallId, conference, onSwitchCall, onEndCall, onToggleHold,
-  onStartConference, onAddToConference, onRemoveFromConference, onEndConference, onTransferCall, onToggleConferenceRecording
+  onStartConference, onAddToConference, onRemoveFromConference, onEndConference, onTransferCall,
+  onCompleteTransfer, onCancelTransfer, onToggleConferenceRecording
 }: ActiveCallsIndicatorProps) {
   const holdReminder = useHoldReminder(activeCalls);
   const [selectedForConference, setSelectedForConference] = useState<string[]>([]);
@@ -156,7 +159,15 @@ export function ActiveCallsIndicator({
                   <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive" onClick={(e) => { e.stopPropagation(); onEndCall(call.id); }}><PhoneOff className="h-3.5 w-3.5" /></Button>
                 </div>
               )}
-              {call.isTransferring && <Badge variant="outline" className="text-xs animate-pulse">Transferindo...</Badge>}
+              {call.isTransferring && (
+                <div className="flex items-center gap-1">
+                  <Badge variant="outline" className="text-xs animate-pulse">
+                    {call.transferTarget?.name ? `Transferindo para ${call.transferTarget.name}` : 'Transferindo...'}
+                  </Badge>
+                  <Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" className="h-7 w-7 text-success hover:text-success" onClick={(e) => { e.stopPropagation(); onCompleteTransfer(call.id); }}><Check className="h-3.5 w-3.5" /></Button></TooltipTrigger><TooltipContent>Confirmar transferência</TooltipContent></Tooltip>
+                  <Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); onCancelTransfer(call.id); }}><X className="h-3.5 w-3.5" /></Button></TooltipTrigger><TooltipContent>Cancelar transferência</TooltipContent></Tooltip>
+                </div>
+              )}
             </div>
           ))}
         </div>

@@ -30,7 +30,7 @@ describe('useCallTransfer', () => {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => vi.useRealTimers());
 
-  it('blind transfer sets transferring status then completes after timeout', () => {
+  it('blind transfer stays pending until confirmed instead of auto-completing on a timer', () => {
     const calls = [makeCall('c1'), makeCall('c2')];
     const setActiveCalls = vi.fn();
     const setActiveCallId = vi.fn();
@@ -50,17 +50,21 @@ describe('useCallTransfer', () => {
     const updater = setActiveCalls.mock.calls[0][0] as (p: CallSession[]) => CallSession[];
     const mapped = updater(calls);
     expect(mapped[0].status).toBe('transferring');
+    expect(mapped[0].isTransferring).toBe(true);
     expect(mapped[1].id).toBe('c2');
 
-    act(() => {
-      vi.advanceTimersByTime(2000);
-    });
-    // completeTransfer ran
+    // Nenhum timer encerra a chamada: sem confirmação do PBX ela continua no painel.
+    act(() => { vi.advanceTimersByTime(60000); });
+    expect(setActiveCalls).toHaveBeenCalledTimes(1);
+    expect(stopDurationTimer).not.toHaveBeenCalled();
+    expect(setCallHistory).not.toHaveBeenCalled();
+
+    // O agente confirma manualmente -> agora sim vira histórico.
+    act(() => { result.current.completeTransfer('c1'); });
     expect(stopDurationTimer).toHaveBeenCalledWith('c1');
     expect(setCallHistory).toHaveBeenCalled();
     const histUpdater = setCallHistory.mock.calls[0][0] as (p: CallSession[]) => CallSession[];
     expect(histUpdater([])[0].status).toBe('ended');
-    // remaining has c2 and activeCallId === c1 -> switch active
     expect(setActiveCallId).toHaveBeenCalledWith('c2');
     expect(setActiveChannel).toHaveBeenCalledWith('webrtc');
   });
