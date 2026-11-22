@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "f48e4ef2315c9be4a76e7c7ff42aa858687f9625",
+  "sha": "49ef164d02395023a8cede418a9c21b1053c47e4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 05:58 UTC",
+  "generated_at": "2026-11-22 06:10 UTC",
   "files_total": 1662,
   "code_files": 1465,
-  "code_lines": 183375
+  "code_lines": 183467
  },
  "version": "1.3.2",
- "facts_hash": "bce049a71d969d8f",
+ "facts_hash": "75ca10ad3056f32c",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34101,7 +34101,7 @@
   {
    "module": "supabase/functions",
    "files": 158,
-   "lines": 18513,
+   "lines": 18605,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -38230,6 +38230,11 @@
   "external": {
    "http://ip-api.com": [
     "supabase/functions/validate-geo/index.ts"
+   ],
+   "http://localhost:54321": [
+    "supabase/functions/check-calling-hours/__tests__/index.test.ts",
+    "supabase/functions/check-dnc/__tests__/index.test.ts",
+    "supabase/functions/check-queue-metrics/__tests__/index.test.ts"
    ],
    "https://api.elevenlabs.io": [
     "supabase/functions/elevenlabs-conversation-token/index.ts",
@@ -71234,18 +71239,6 @@
    },
    {
     "file": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-    "name": "check-calling-hours: CORS preflight retorna headers"
-   },
-   {
-    "file": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-    "name": "check-calling-hours: rejeita sem Authorization"
-   },
-   {
-    "file": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-    "name": "check-calling-hours: rejeita JWT inválido"
-   },
-   {
-    "file": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
     "name": "check-calling-hours: aceita region_code default "
    },
    {
@@ -71258,39 +71251,11 @@
    },
    {
     "file": "supabase/functions/check-dnc/__tests__/index.test.ts",
-    "name": "check-dnc: CORS preflight responde 200/204 com headers"
-   },
-   {
-    "file": "supabase/functions/check-dnc/__tests__/index.test.ts",
-    "name": "check-dnc: rejeita requisição sem Authorization"
-   },
-   {
-    "file": "supabase/functions/check-dnc/__tests__/index.test.ts",
-    "name": "check-dnc: rejeita JWT inválido"
-   },
-   {
-    "file": "supabase/functions/check-dnc/__tests__/index.test.ts",
-    "name": "check-dnc: valida campo phone obrigatório"
-   },
-   {
-    "file": "supabase/functions/check-dnc/__tests__/index.test.ts",
     "name": "check-dnc: propaga x-request-id no log"
    },
    {
     "file": "supabase/functions/check-dnc/__tests__/index.test.ts",
     "name": "check-dnc: normaliza telefone removendo não-numéricos (contrato)"
-   },
-   {
-    "file": "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
-    "name": "check-queue-metrics: CORS preflight retorna headers válidos"
-   },
-   {
-    "file": "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
-    "name": "check-queue-metrics: rejeita ausência de Authorization"
-   },
-   {
-    "file": "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
-    "name": "check-queue-metrics: rejeita JWT inválido"
    },
    {
     "file": "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
@@ -115574,13 +115539,13 @@
   },
   "supabase/functions/check-calling-hours/__tests__/index.test.ts": {
    "path": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-   "lines": 59,
+   "lines": 88,
    "is_test": true,
+   "external_urls": [
+    "http://localhost:54321/"
+   ],
    "doc": "Testes Deno para edge function check-calling-hours (Onda 8)",
    "tests": [
-    "check-calling-hours: CORS preflight retorna headers",
-    "check-calling-hours: rejeita sem Authorization",
-    "check-calling-hours: rejeita JWT inválido",
     "check-calling-hours: aceita region_code default ",
     "check-calling-hours: dia da semana correto via timezone",
     "check-calling-hours: propaga x-request-id (contrato)"
@@ -115639,18 +115604,17 @@
   },
   "supabase/functions/check-dnc/__tests__/index.test.ts": {
    "path": "supabase/functions/check-dnc/__tests__/index.test.ts",
-   "lines": 71,
+   "lines": 105,
    "is_test": true,
+   "external_urls": [
+    "http://localhost:54321/"
+   ],
    "rule_comments": [
     "Cobre: CORS preflight, auth branches, validação de entrada, x-request-id",
     "Validação determinística do contrato de header"
    ],
    "doc": "Testes Deno para edge function check-dnc (Onda 8) Cobre: CORS preflight, auth branches, validação de entrada, x-request-id",
    "tests": [
-    "check-dnc: CORS preflight responde 200/204 com headers",
-    "check-dnc: rejeita requisição sem Authorization",
-    "check-dnc: rejeita JWT inválido",
-    "check-dnc: valida campo phone obrigatório",
     "check-dnc: propaga x-request-id no log",
     "check-dnc: normaliza telefone removendo não-numéricos (contrato)"
    ]
@@ -115902,13 +115866,13 @@
   },
   "supabase/functions/check-queue-metrics/__tests__/index.test.ts": {
    "path": "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
-   "lines": 83,
+   "lines": 112,
    "is_test": true,
+   "external_urls": [
+    "http://localhost:54321/"
+   ],
    "doc": "Testes Deno para edge function check-queue-metrics (Onda 8)",
    "tests": [
-    "check-queue-metrics: CORS preflight retorna headers válidos",
-    "check-queue-metrics: rejeita ausência de Authorization",
-    "check-queue-metrics: rejeita JWT inválido",
     "check-queue-metrics: cálculo de avg wait time (contrato)",
     "check-queue-metrics: cálculo de abandonment rate (contrato)",
     "check-queue-metrics: service level (≤30s contrato)",
@@ -121842,10 +121806,21 @@
   }
  },
  "git": {
-  "sha": "f48e4ef2315c9be4a76e7c7ff42aa858687f9625",
+  "sha": "49ef164d02395023a8cede418a9c21b1053c47e4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "49ef164",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "test: testes de integracao param de passar sem verificar nada (#114)",
+    "files": [
+     "supabase/functions/check-calling-hours/__tests__/index.test.ts",
+     "supabase/functions/check-dnc/__tests__/index.test.ts",
+     "supabase/functions/check-queue-metrics/__tests__/index.test.ts"
+    ]
+   },
    {
     "sha": "f48e4ef",
     "date": "2026-11-22",
@@ -122351,31 +122326,16 @@
      "src/pages/admin/DataExport.tsx",
      "supabase/functions/export-data-lake/index.ts"
     ]
-   },
-   {
-    "sha": "f8ba359",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "feat: error budget por componente no health-check (C1) (#83)",
-    "files": [
-     "docs/audits/pendencias-2026-07.md",
-     "docs/estado/funcionalidades-planejadas.md",
-     "docs/observabilidade/SLI_SLO.md",
-     "src/pages/admin/SloDashboard.tsx",
-     "supabase/functions/health-check/__tests__/slo-budget_test.ts",
-     "supabase/functions/health-check/index.ts",
-     "supabase/functions/health-check/slo-budget.ts"
-    ]
    }
   ],
   "hot_files": [
    [
-    "docs/estado/funcionalidades-planejadas.md",
+    "docs/edge-functions/README.md",
     7
    ],
    [
-    "docs/edge-functions/README.md",
-    7
+    "docs/estado/funcionalidades-planejadas.md",
+    6
    ],
    [
     "supabase/functions/validate-geo/index.ts",

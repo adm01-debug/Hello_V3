@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `f48e4ef2315c9be4a76e7c7ff42aa858687f9625` (2026-11-22T02:57:57-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `49ef164d02395023a8cede418a9c21b1053c47e4` (2026-11-22T03:09:50-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1615 |
 | arquivos_codigo | 1223 |
-| linhas_codigo | 167556 |
+| linhas_codigo | 167648 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -366,8 +366,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9116 nós · 24056 arestas · 719 comunidades · grafo do commit `f48e4ef2`
-- comunidades maiores: lucide-react (254), client.ts (204), utils.ts (188), react (186), vitest (171), usePageTitle (166), Tabela de funcionalidades (159), cn (118), safe-date.ts (116), snapshot.py (102), UnifiedSoftphone.tsx (87), @tanstack/react-query (86)
+- 9119 nós · 24059 arestas · 724 comunidades · grafo do commit `49ef164d`
+- comunidades maiores: lucide-react (340), cn (289), usePageTitle (248), react (194), logger.ts (165), vitest (156), client.ts (146), safe-date.ts (138), safeFormatDistanceToNow (134), CallDetailDialog.tsx (133), snapshot.py (102), @tanstack/react-query (95)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -425,6 +425,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `49ef164` test: testes de integracao param de passar sem verificar nada (#114)
 - 2026-11-22 `f48e4ef` chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)
 - 2026-11-22 `6f94283` fix: envolve auth.uid/jwt/role em subselect nas policies restantes (#96)
 - 2026-11-22 `68a2c21` fix: trigger de papel cria o espelho que faltava em user_profiles (#108)
@@ -439,7 +440,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `69573a2` fix: valida IP literal antes de montar a URL do provedor de geo (#101)
 - 2026-11-21 `25f5bfb` docs: re-scorecard 9,1/10 com os PRs #96, #97, #98 e #99 (#100)
 - 2026-11-21 `f249e85` chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)
-- 2026-11-21 `f83c5a8` docs: regenera indice de ADRs (7 de 53 estavam listados) (#98)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

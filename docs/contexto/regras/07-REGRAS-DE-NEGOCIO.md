@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f48e4ef231` · branch `main` · 2026-11-22 05:58 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `49ef164d02` · branch `main` · 2026-11-22 06:10 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2439,7 +2439,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3973 testes em 321 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3963 testes em 321 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2631,7 +2631,6 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/helmet-config.coverage.test.ts` | 7 | helmet-config (coverage) · DEFAULT_SECURITY_HEADERS has expected secure defaults · getSecurityHeaders returns defaults when no overrides · getSecurityHeaders merges overrides … |
 | `src/lib/session/__tests__/index.coverage.test.ts` | 7 | session/index · getActiveSessions maps rows · getActiveSessions handles null data and is_active falsy · terminateSession returns true when no error … |
 | `supabase/functions/_shared/__tests__/resilient-fetch.test.ts` | 7 | resilientFetch: sucesso em 2xx passa direto · resilientFetch: 500 é reciclado e sucede na 3ª tentativa · resilientFetch: 404 NÃO é reciclado · resilientFetch: 500 esgota retries e propaga … |
-| `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 7 | check-queue-metrics: CORS preflight retorna headers válidos · check-queue-metrics: rejeita ausência de Authorization · check-queue-metrics: rejeita JWT inválido · check-queue-metrics: cálculo de avg wait time (contrato) … |
 | `supabase/functions/score-call-attempt/__tests__/index.test.ts` | 7 | score-call-attempt: 401 sem Authorization · score-call-attempt: validação rejeita phone curto demais · score-call-attempt: DNC força score=0 e recommendation=block · score-call-attempt: fora de horário multiplica score por 0.1 … |
 | `supabase/functions/translate-utterance/__tests__/index.test.ts` | 7 | translate-utterance: 401 sem Authorization · translate-utterance: 400 com body inválido (sem callSessionId) · translate-utterance: rejeita idioma não suportado · translate-utterance: trata 429 (rate limit) sem expor stack … |
 | `e2e/calls.spec.ts` | 6 | Calls Flow · should display calls page · should display softphone component · should navigate to call history … |
@@ -2664,8 +2663,6 @@ _nenhum item encontrado_
 | `src/lib/audit/__tests__/index.coverage.test.ts` | 6 | audit/index (coverage) · logAuditEvent returns id on success · logAuditEvent defaults details to empty object and resourceId undefined · logAuditEvent returns null on supabase error … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
-| `supabase/functions/check-calling-hours/__tests__/index.test.ts` | 6 | check-calling-hours: CORS preflight retorna headers · check-calling-hours: rejeita sem Authorization · check-calling-hours: rejeita JWT inválido · check-calling-hours: aceita region_code default  … |
-| `supabase/functions/check-dnc/__tests__/index.test.ts` | 6 | check-dnc: CORS preflight responde 200/204 com headers · check-dnc: rejeita requisição sem Authorization · check-dnc: rejeita JWT inválido · check-dnc: valida campo phone obrigatório … |
 | `supabase/functions/enforce-sla/__tests__/index.test.ts` | 6 | enforce-sla: prioriza política de canal específico sobre  · enforce-sla: cai no fallback  · enforce-sla: calcula due dates a partir de created_at · enforce-sla: detecta breach de primeira resposta … |
 | `supabase/functions/validate-ip/__tests__/index.test.ts` | 6 | validate-ip: CORS preflight retorna headers válidos · validate-ip: rejeita requisição sem Authorization header · validate-ip: extrai IP de cf-connecting-ip prioritariamente · validate-ip: fallback para x-forwarded-for quando cf/real ausentes … |
 | `supabase/functions/voip-sla-report/__tests__/index.test.ts` | 6 | voip-sla-report: exige Authorization · voip-sla-report: rejeita token inválido · voip-sla-report: rejeita period inválido · voip-sla-report: aceita period=day/week/month na shape … |
@@ -2723,6 +2720,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipRecommendations.coverage.test.tsx` | 4 | useVoipRecommendations · loads recommendations successfully · defaults period to week and supports day · throws and surfaces error when invoke returns error |
 | `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
+| `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 4 | check-queue-metrics: cálculo de avg wait time (contrato) · check-queue-metrics: cálculo de abandonment rate (contrato) · check-queue-metrics: service level (≤30s contrato) · check-queue-metrics: thresholds default (contrato) |
 | `supabase/functions/voip-anomaly-detector/__tests__/index.test.ts` | 4 | detectAnomalies — sem anomalias quando obs próximo da média · detectAnomalies — MOS muito baixo gera anomaly critical · detectAnomalies — jitter elevado gera warning · detectAnomalies — baseline insuficiente não gera anomaly |
 | `supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts` | 4 | planRemediation — mos:outage retorna ação crítica de codec · planRemediation — jitter:outage pausa campanhas · planRemediation — combinação desconhecida vira noop · idempotencyKey — chave estável e derivada do id |
 | `supabase/functions/voip-capacity-forecast/__tests__/index.test.ts` | 4 | buildHistory — agrupa sessões por dia e identifica pico · forecastNextDays — vazio quando histórico < 7 dias · forecastNextDays — gera 7 dias com confiança quando há histórico · forecastNextDays — sinaliza exceeds_capacity quando peak > cap |
@@ -2743,6 +2741,8 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useShifts.test.tsx` | 3 | useShifts · carrega shifts da semana · expõe ações CRUD |
 | `src/hooks/__tests__/useSkills.coverage.test.tsx` | 3 | useSkills · loads skills and agent skills, runs mutations · handles mutation errors |
 | `src/hooks/__tests__/useTrunkRealtimeMetrics.coverage.test.tsx` | 3 | useTrunkRealtimeMetrics · computes occupancy metrics · handles trunk with zero max_channels and no calls |
+| `src/hooks/__tests__/useVoipRecommendationSimulate.coverage.test.tsx` | 3 | useVoipRecommendationSimulate · simulates a recommendation successfully · throws when invoke returns an error |
+| `src/lib/__tests__/agent-assist.pbt.test.ts` | 3 | Agent Assist PBT (Property-Based Testing) · rankSignals: priority always dominates confidence · matchesKeywords: handles composite keywords regardless of order |
 | … +21 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)

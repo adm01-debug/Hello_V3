@@ -2696,21 +2696,21 @@
   {
    "arquivo": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 59,
+   "linhas": 88,
    "testa": [],
    "casos": 6
   },
   {
    "arquivo": "supabase/functions/check-dnc/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 71,
+   "linhas": 105,
    "testa": [],
    "casos": 6
   },
   {
    "arquivo": "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 83,
+   "linhas": 112,
    "testa": [],
    "casos": 7
   },

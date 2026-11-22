@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "test: testes de integracao param de passar sem verificar nada (#114)",
    "chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)",
    "fix: envolve auth.uid/jwt/role em subselect nas policies restantes (#96)",
    "fix: trigger de papel cria o espelho que faltava em user_profiles (#108)",
-   "fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)",
-   "feat: fecha B6 - dominio nas colunas text enumeraveis (#111)"
+   "fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)"
   ]
  },
  "pr_template": null,
