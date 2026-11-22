@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6807b077624f3ef81aa8907d280ee0642c7d03a5",
+  "commit": "f6f07405228ef3a680cc0b5ae0dfd017f8c47c5f",
   "branch": "main",
-  "data_commit": "2026-11-21T21:02:59-03:00",
+  "data_commit": "2026-11-21T21:08:25-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f6f0740",
+    "data": "2026-11-21",
+    "assunto": "fix: rls-audit exige auth e usa RPC real de RLS (#86)"
+   },
    {
     "sha": "6807b07",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "51ac7dd",
     "data": "2026-11-20",
     "assunto": "feat: wiring dos componentes orfaos no frontend (#61)"
-   },
-   {
-    "sha": "68850f6",
-    "data": "2026-11-20",
-    "assunto": "fix: cron data-lake-flush falhava por constraint de dataset sem call_summaries (#60)"
    }
   ],
-  "arquivos_mudados_7d": 609,
+  "arquivos_mudados_7d": 610,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 66
+    "commits": 67
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1570,
   "arquivos_codigo": 1208,
-  "linhas_codigo": 165558,
+  "linhas_codigo": 165601,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -512,7 +512,7 @@
   },
   "supabase/functions": {
    "arquivos": 150,
-   "linhas": 17202
+   "linhas": 17245
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -705,9 +705,7 @@
    "schema_migrations"
   ],
   "tabelas_usadas_sem_definicao": [
-   "agent_status_history",
-   "pg_class",
-   "pg_policies"
+   "agent_status_history"
   ],
   "tabelas_com_drift_migration_vs_types": [
    "agents",
@@ -720,10 +718,7 @@
    "user_profiles",
    "voip_trunk_usage_metrics"
   ],
-  "rpcs_sem_definicao": [
-   "check_db_policies",
-   "get_table_policies"
-  ],
+  "rpcs_sem_definicao": [],
   "componentes_orfaos": [
    "src/components/alerts/AlertsDropdown.tsx",
    "src/components/calls/WebRTCCall.tsx",

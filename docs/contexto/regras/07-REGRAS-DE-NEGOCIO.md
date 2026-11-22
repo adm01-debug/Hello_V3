@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6807b07762` · branch `main` · 2026-11-22 00:03 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f6f0740522` · branch `main` · 2026-11-22 00:08 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2973,7 +2973,6 @@ _nenhum item encontrado_
 | que uma tendencia: burn_rate de 1 e o alvo, nao o limite. | `supabase/functions/health-check/slo-budget.ts` |
 | Input validation | `supabase/functions/notify-blocked-ip/index.ts` |
 | Input validation | `supabase/functions/notify-new-device/index.ts` |
-| Na verdade, vamos apenas rodar uma query SQL via RPC customizado ou direto se permitido. | `supabase/functions/rls-audit/index.ts` |
 | * Whitelist rígida — apenas ações não destrutivas. */ | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-executive-summary/index.ts` |
 | 3. Insere notificações na tabela (que deve disparar Realtime) | `supabase/functions/voip-failover-notifier/index.ts` |

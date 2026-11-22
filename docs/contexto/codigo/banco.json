@@ -21655,6 +21655,7 @@
     "generate-coaching",
     "generate-coaching-track",
     "record-consent",
+    "rls-audit",
     "sip-config",
     "suggest-shift-swaps"
    ],
@@ -23836,9 +23837,7 @@
   }
  },
  "tabelas_usadas_no_codigo_sem_definicao": [
-  "agent_status_history",
-  "pg_class",
-  "pg_policies"
+  "agent_status_history"
  ],
  "rpcs_usadas_no_codigo": [
   {
@@ -23859,17 +23858,12 @@
   {
    "nome": "check_all_tables_rls_status",
    "definida": true,
-   "usada_em": 2
+   "usada_em": 3
   },
   {
    "nome": "check_calling_hours",
    "definida": true,
    "usada_em": 3
-  },
-  {
-   "nome": "check_db_policies",
-   "definida": false,
-   "usada_em": 1
   },
   {
    "nome": "check_dnc",
@@ -23949,11 +23943,6 @@
   {
    "nome": "get_queue_stats",
    "definida": true,
-   "usada_em": 1
-  },
-  {
-   "nome": "get_table_policies",
-   "definida": false,
    "usada_em": 1
   },
   {

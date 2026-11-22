@@ -1782,21 +1782,20 @@
    "nome": "rls-audit",
    "entrada": "supabase/functions/rls-audit/index.ts",
    "arquivos": 1,
-   "linhas": 56,
+   "linhas": 99,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
    "tabelas": [
-    "pg_class",
-    "pg_policies"
+    "user_profiles"
    ],
    "rpcs": [
-    "check_db_policies",
-    "check_rls_enabled",
-    "get_table_policies"
+    "check_all_tables_rls_status",
+    "check_rls_enabled"
    ],
    "env": [
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],

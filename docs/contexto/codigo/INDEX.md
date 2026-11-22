@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `6807b077624f3ef81aa8907d280ee0642c7d03a5` (2026-11-21T21:02:59-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `f6f07405228ef3a680cc0b5ae0dfd017f8c47c5f` (2026-11-21T21:08:25-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1570 |
 | arquivos_codigo | 1208 |
-| linhas_codigo | 165558 |
+| linhas_codigo | 165601 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -279,7 +279,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `record-consent` — tabelas: consent_records, user_profiles; chamada por 1 arquivo(s) do front
 - `redact-sensitive-audio` — tabelas: call_transcriptions, redaction_log; chamada por 1 arquivo(s) do front
 - `request-password-reset` — tabelas: password_reset_requests, security_alerts; chamada por 1 arquivo(s) do front
-- `rls-audit` — tabelas: pg_class, pg_policies; chamada por 0 arquivo(s) do front — **ÓRFÃ**
+- `rls-audit` — tabelas: user_profiles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `score-call` — tabelas: call_scorecards, call_sessions, call_summaries, call_transcripts_searchable, scorecard_criteria, scorecard_responses; chamada por 1 arquivo(s) do front
 - `score-call-attempt` — tabelas: contact_engagement_patterns; chamada por 1 arquivo(s) do front
 - `search-calls` — tabelas: call_key_moments, call_transcripts_searchable; chamada por 1 arquivo(s) do front
@@ -350,9 +350,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - edges_orfas: 20 — ex.: chat-widget-session, check-alerts, check-hold-alerts
 - edges_chamadas_sem_pasta: 0
 - tabelas_sem_rls: 2 — ex.: migration_rollbacks, schema_migrations
-- tabelas_usadas_sem_definicao: 3 — ex.: agent_status_history, pg_class, pg_policies
+- tabelas_usadas_sem_definicao: 1 — ex.: agent_status_history
 - tabelas_com_drift_migration_vs_types: 9 — ex.: agents, blocked_access_logs, call_control_audit_logs
-- rpcs_sem_definicao: 2 — ex.: check_db_policies, get_table_policies
+- rpcs_sem_definicao: 0
 - componentes_orfaos: 17 — ex.: src/components/alerts/AlertsDropdown.tsx, src/components/calls/WebRTCCall.tsx, src/components/contacts/ContactAlertsDropdown.tsx
 - componentes_com_nome_duplicado: 4 — ex.: KpiCards, SearchInput, Skeleton
 - scripts_orfaos: 0
@@ -361,8 +361,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 8933 nós · 23848 arestas · 700 comunidades · grafo do commit `6807b077`
-- comunidades maiores: lucide-react (263), usePageTitle (199), vitest (198), react (197), Tabela de funcionalidades (142), client.ts (130), CallDetailDialog.tsx (125), safe-date.ts (118), cn (109), ref_https (99), useAuthContext (85), useCoachingAssignments.coverage.test.tsx (83)
+- 8934 nós · 23849 arestas · 695 comunidades · grafo do commit `f6f07405`
+- comunidades maiores: lucide-react (254), vitest (204), cn (172), client.ts (159), button.tsx (158), logger.ts (154), Badge (117), snapshot.py (102), usePageTitle.ts (98), useCoachingAssignments.coverage.test.tsx (94), protectedRoutes.tsx (93), select.tsx (91)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -420,6 +420,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `f6f0740` fix: rls-audit exige auth e usa RPC real de RLS (#86)
 - 2026-11-21 `6807b07` fix: dataset call_summaries exportavel no data lake (D5) (#85)
 - 2026-11-21 `f8ba359` feat: error budget por componente no health-check (C1) (#83)
 - 2026-11-21 `8ee9f60` feat: centraliza reauth em Context com grant HMAC persistido (#81)
@@ -434,7 +435,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `92533c9` fix: adiciona guards de tabela/coluna no performance_indexes para Supabase Preview (#66)
 - 2026-11-21 `67a43aa` chore: docs - chatbot e traducao ao vivo marcados como wireados (#71)
 - 2026-11-21 `a40abd0` feat: botao responder com IA no inbox via useChatbot (#70)
-- 2026-11-21 `723ff66` feat: wirea traducao em tempo real na chamada e auditoria de seguranca no menu (#69)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

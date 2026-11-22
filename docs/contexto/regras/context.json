@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "6807b077624f3ef81aa8907d280ee0642c7d03a5",
+  "sha": "f6f07405228ef3a680cc0b5ae0dfd017f8c47c5f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 00:03 UTC",
+  "generated_at": "2026-11-22 00:08 UTC",
   "files_total": 1617,
   "code_files": 1423,
-  "code_lines": 179581
+  "code_lines": 179624
  },
  "version": "1.3.2",
- "facts_hash": "135f6a7a46c8d8b4",
+ "facts_hash": "a9a224e0fa8ce214",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -29199,18 +29199,19 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "service_role (ignora RLS) — NÃO valida usuário no código",
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
      "pg_class",
-     "pg_policies"
+     "user_profiles"
     ],
     "env": [
+     "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
     "external": [],
     "invokes": [],
-    "doc": "",
+    "doc": "RLS Audit — Relatorio de RLS nas tabelas criticas. Restrito a admin/supervisor.",
     "errors": [],
     "side_effects": [],
     "webhook_events": [],
@@ -32621,7 +32622,7 @@
   {
    "module": "supabase/functions",
    "files": 150,
-   "lines": 17202,
+   "lines": 17245,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -32681,7 +32682,6 @@
     "optimistic_lock_conflicts",
     "password_reset_requests",
     "pg_class",
-    "pg_policies",
     "queue_metrics_settings",
     "rate_limit_alerts",
     "rate_limit_logs",
@@ -34209,12 +34209,7 @@
     ]
    },
    "pg_class": {
-    "select": [
-     "supabase/functions/rls-audit/index.ts"
-    ]
-   },
-   "pg_policies": {
-    "select": [
+    "ref": [
      "supabase/functions/rls-audit/index.ts"
     ]
    },
@@ -34630,6 +34625,7 @@
      "supabase/functions/generate-coaching-track/index.ts",
      "supabase/functions/generate-coaching/index.ts",
      "supabase/functions/record-consent/index.ts",
+     "supabase/functions/rls-audit/index.ts",
      "supabase/functions/sip-config/index.ts",
      "supabase/functions/suggest-shift-swaps/index.ts"
     ]
@@ -35321,13 +35317,6 @@
     "status",
     "user_email"
    ],
-   "pg_class": [
-    "relname",
-    "relrowsecurity"
-   ],
-   "pg_policies": [
-    "tablename"
-   ],
    "playlist_items": [
     "playlist_id"
    ],
@@ -35837,6 +35826,7 @@
     "supabase/functions/process-digest/index.ts",
     "supabase/functions/realtime-analysis/index.ts",
     "supabase/functions/redact-sensitive-audio/index.ts",
+    "supabase/functions/rls-audit/index.ts",
     "supabase/functions/send-notification/index.ts",
     "supabase/functions/sip-config/index.ts",
     "supabase/functions/suggest-shift-swaps/index.ts",
@@ -36176,15 +36166,13 @@
    ],
    "check_all_tables_rls_status": [
     "src/pages/ObservabilityDashboard.tsx",
-    "src/pages/SecurityReport.tsx"
+    "src/pages/SecurityReport.tsx",
+    "supabase/functions/rls-audit/index.ts"
    ],
    "check_calling_hours": [
     "src/components/compliance/calling-hours/useCallingHoursManager.ts",
     "src/hooks/useDNCCompliance.ts",
     "supabase/functions/score-call-attempt/index.ts"
-   ],
-   "check_db_policies": [
-    "supabase/functions/rls-audit/index.ts"
    ],
    "check_dnc": [
     "src/hooks/useDNCCompliance.ts",
@@ -36248,9 +36236,6 @@
    ],
    "get_queue_stats": [
     "src/hooks/useDashboardData.ts"
-   ],
-   "get_table_policies": [
-    "supabase/functions/rls-audit/index.ts"
    ],
    "get_top_slow_queries": [
     "src/pages/admin/DatabaseHealth.tsx"
@@ -36931,7 +36916,6 @@
    "ghost_table",
    "payments",
    "pg_class",
-   "pg_policies",
    "runtime_table",
    "so_teste",
    "t",
@@ -40592,10 +40576,6 @@
    {
     "file": "supabase/functions/notify-new-device/index.ts",
     "text": "Input validation"
-   },
-   {
-    "file": "supabase/functions/rls-audit/index.ts",
-    "text": "Na verdade, vamos apenas rodar uma query SQL via RPC customizado ou direto se permitido."
    },
    {
     "file": "supabase/functions/voip-anomaly-remediation/index.ts",
@@ -85332,13 +85312,6 @@
    },
    {
     "kind": "tabela",
-    "msg": "tabela `pg_policies` usada no código não existe nas migrations/types do repo",
-    "where": [
-     "supabase/functions/rls-audit/index.ts"
-    ]
-   },
-   {
-    "kind": "tabela",
     "msg": "tabela `runtime_table` usada no código não existe nas migrations/types do repo",
     "where": [
      "scripts/ai-context/gerar.unit.mjs"
@@ -85515,13 +85488,6 @@
    },
    {
     "kind": "rpc",
-    "msg": "RPC `check_db_policies` chamada mas não definida nas migrations/types",
-    "where": [
-     "supabase/functions/rls-audit/index.ts"
-    ]
-   },
-   {
-    "kind": "rpc",
     "msg": "RPC `dashboard_rpc` chamada mas não definida nas migrations/types",
     "where": [
      "scripts/ai-context/gerar.unit.mjs"
@@ -85546,13 +85512,6 @@
     "msg": "RPC `fn` chamada mas não definida nas migrations/types",
     "where": [
      "scripts/supabase_snapshot/snapshot.py"
-    ]
-   },
-   {
-    "kind": "rpc",
-    "msg": "RPC `get_table_policies` chamada mas não definida nas migrations/types",
-    "where": [
-     "supabase/functions/rls-audit/index.ts"
     ]
    },
    {
@@ -114815,38 +114774,33 @@
   },
   "supabase/functions/rls-audit/index.ts": {
    "path": "supabase/functions/rls-audit/index.ts",
-   "lines": 56,
+   "lines": 99,
    "tables": [
     {
-     "table": "pg_class",
+     "table": "user_profiles",
      "op": "select"
     },
     {
-     "table": "pg_policies",
-     "op": "select"
+     "table": "pg_class",
+     "op": "ref"
     }
    ],
    "table_cols": {
-    "pg_class": [
-     "relname",
-     "relrowsecurity"
-    ],
-    "pg_policies": [
-     "tablename"
+    "user_profiles": [
+     "id",
+     "role"
     ]
    },
    "rpc": [
-    "check_db_policies",
-    "check_rls_enabled",
-    "get_table_policies"
+    "check_all_tables_rls_status",
+    "check_rls_enabled"
    ],
    "env": [
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
-   "rule_comments": [
-    "Na verdade, vamos apenas rodar uma query SQL via RPC customizado ou direto se permitido."
-   ],
+   "doc": "RLS Audit — Relatorio de RLS nas tabelas criticas. Restrito a admin/supervisor.",
    "uses_service_role": true
   },
   "supabase/functions/score-call/index.ts": {
@@ -118223,10 +118177,19 @@
   }
  },
  "git": {
-  "sha": "6807b077624f3ef81aa8907d280ee0642c7d03a5",
+  "sha": "f6f07405228ef3a680cc0b5ae0dfd017f8c47c5f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "f6f0740",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix: rls-audit exige auth e usa RPC real de RLS (#86)",
+    "files": [
+     "supabase/functions/rls-audit/index.ts"
+    ]
+   },
    {
     "sha": "6807b07",
     "date": "2026-11-21",
@@ -118587,16 +118550,6 @@
      "deno.lock",
      "supabase/functions/migrate-helper/index.ts"
     ]
-   },
-   {
-    "sha": "c98548c",
-    "date": "2026-11-20",
-    "author": "adm01-debug",
-    "subject": "chore: migrate-helper le ACCESS_KEY de env com fallback e ganha teste de contrato (#55)",
-    "files": [
-     "supabase/functions/migrate-helper/index.test.ts",
-     "supabase/functions/migrate-helper/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -118614,10 +118567,6 @@
    ],
    [
     "src/routes/protectedRoutes.tsx",
-    3
-   ],
-   [
-    "supabase/functions/migrate-helper/index.ts",
     3
    ],
    [
@@ -118649,8 +118598,12 @@
     2
    ],
    [
-    "supabase/functions/migrate-helper/index.test.ts",
+    "supabase/functions/migrate-helper/index.ts",
     2
+   ],
+   [
+    "supabase/functions/rls-audit/index.ts",
+    1
    ],
    [
     "src/hooks/useDataLakeExports.ts",
