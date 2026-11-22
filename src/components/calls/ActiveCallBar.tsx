@@ -359,12 +359,14 @@ export function ActiveCallBar() {
       />
 
       {/* Live AI Analysis Panel - Now connected to transcripts */}
-      {/* Live AI Analysis Panel - Now connected to transcripts */}
+      {/* callSessionId/callStartedAt sao obrigatorios para o snapshot de sentimento */}
       <LiveCallAnalysis
         isActive={showAIAnalysis && call.status === 'connected'}
         contactName={call.contactName}
         onClose={() => setShowAIAnalysis(false)}
         transcripts={transcripts}
+        callSessionId={currentSession?.id}
+        callStartedAt={currentSession?.startedAt}
         onAnalysis={handleAnalysis}
       />
 
