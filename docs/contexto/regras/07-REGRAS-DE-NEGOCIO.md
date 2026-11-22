@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ce11791214` · branch `main` · 2026-11-22 00:41 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d3e59cd069` · branch `main` · 2026-11-22 00:49 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2963,9 +2963,13 @@ _nenhum item encontrado_
 | Create a dummy call session for the alert (since call_session_id is required) | `supabase/functions/check-goals/index.ts` |
 | ').limit(1).maybeSingle(); | `supabase/functions/check-hold-alerts/index.ts` |
 | Apenas admin pode invocar manualmente | `supabase/functions/cleanup-lock-conflicts/index.ts` |
+| entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/compute-account-health/index.ts` |
 | 2. Clean old rate limit logs (older than 7 days) | `supabase/functions/database-cleanup/index.ts` |
 | 3. Clean resolved rate limit alerts (older than 30 days) | `supabase/functions/database-cleanup/index.ts` |
+| entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/detect-churn-risk/index.ts` |
+| entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/detect-key-moments/index.ts` |
 | 2. Se for trigger, atualizar o banco. Se for busca, apenas retornar. | `supabase/functions/embed-kb-article/index.ts` |
+| entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/enforce-sla/index.ts` |
 | ').limit(50000); | `supabase/functions/export-data-lake/index.ts` |
 | Somente supervisor/admin podem disparar geração em massa. | `supabase/functions/generate-coaching-track/index.ts` |
 | Rate-limit: uma trilha aberta por agente (evita duplicar). | `supabase/functions/generate-coaching-track/index.ts` |
@@ -2973,6 +2977,9 @@ _nenhum item encontrado_
 | que uma tendencia: burn_rate de 1 e o alvo, nao o limite. | `supabase/functions/health-check/slo-budget.ts` |
 | Input validation | `supabase/functions/notify-blocked-ip/index.ts` |
 | Input validation | `supabase/functions/notify-new-device/index.ts` |
+| entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/send-survey/index.ts` |
+| entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/sync-crm-queue/index.ts` |
+| entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/teams-fetch-recordings/index.ts` |
 | * Whitelist rígida — apenas ações não destrutivas. */ | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-executive-summary/index.ts` |
 | 3. Insere notificações na tabela (que deve disparar Realtime) | `supabase/functions/voip-failover-notifier/index.ts` |

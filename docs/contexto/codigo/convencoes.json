@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: edges que escrevem com service_role exigem sessao (#92)",
    "fix: load-tests exigem admin e limpam dados de teste (#91)",
    "docs: regenera catalogo apos corrigir o rls-audit (#90)",
    "docs: pendencias alinhadas ao estado real medido (#88)",
-   "docs: catalogo de edge functions gerado do codigo (#87)",
-   "fix: rls-audit exige auth e usa RPC real de RLS (#86)"
+   "docs: catalogo de edge functions gerado do codigo (#87)"
   ]
  },
  "pr_template": null,

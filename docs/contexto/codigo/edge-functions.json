@@ -577,7 +577,7 @@
    "nome": "compute-account-health",
    "entrada": "supabase/functions/compute-account-health/index.ts",
    "arquivos": 1,
-   "linhas": 127,
+   "linhas": 173,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -591,6 +591,7 @@
    ],
    "rpcs": [],
    "env": [
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -805,7 +806,7 @@
    "nome": "detect-churn-risk",
    "entrada": "supabase/functions/detect-churn-risk/index.ts",
    "arquivos": 1,
-   "linhas": 154,
+   "linhas": 190,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -819,6 +820,7 @@
    ],
    "rpcs": [],
    "env": [
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -840,7 +842,7 @@
    "nome": "detect-key-moments",
    "entrada": "supabase/functions/detect-key-moments/index.ts",
    "arquivos": 1,
-   "linhas": 122,
+   "linhas": 198,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -851,6 +853,7 @@
    "rpcs": [],
    "env": [
     "OPENROUTER_API_KEY",
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -1008,7 +1011,7 @@
    "nome": "enforce-sla",
    "entrada": "supabase/functions/enforce-sla/index.ts",
    "arquivos": 1,
-   "linhas": 110,
+   "linhas": 164,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1020,6 +1023,7 @@
    ],
    "rpcs": [],
    "env": [
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -1959,7 +1963,7 @@
    "nome": "send-survey",
    "entrada": "supabase/functions/send-survey/index.ts",
    "arquivos": 1,
-   "linhas": 60,
+   "linhas": 105,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1970,6 +1974,7 @@
    ],
    "rpcs": [],
    "env": [
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -2062,7 +2067,7 @@
    "nome": "sync-crm-queue",
    "entrada": "supabase/functions/sync-crm-queue/index.ts",
    "arquivos": 1,
-   "linhas": 69,
+   "linhas": 129,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2072,6 +2077,7 @@
    ],
    "rpcs": [],
    "env": [
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
@@ -2093,7 +2099,7 @@
    "nome": "teams-fetch-recordings",
    "entrada": "supabase/functions/teams-fetch-recordings/index.ts",
    "arquivos": 1,
-   "linhas": 93,
+   "linhas": 161,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2105,6 +2111,7 @@
    "env": [
     "LOVABLE_API_KEY",
     "MICROSOFT_TEAMS_API_KEY",
+    "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
