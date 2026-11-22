@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { subDays } from 'date-fns';
+import { computeTalkRatio } from '@/lib/talkRatio';
 
 const log = logger.create('ConvIntelCard');
 
@@ -14,9 +15,10 @@ interface CIStats {
   objectionRate: number;
   weeklyMoments: number;
   totalCalls: number;
+  sampledCalls: number;
 }
 
-const EMPTY: CIStats = { avgTalkRatio: 0, topCompetitors: [], objectionRate: 0, weeklyMoments: 0, totalCalls: 0 };
+const EMPTY: CIStats = { avgTalkRatio: 0, topCompetitors: [], objectionRate: 0, weeklyMoments: 0, totalCalls: 0, sampledCalls: 0 };
 
 export function ConversationIntelligenceCard() {
   const [stats, setStats] = useState<CIStats>(EMPTY);
@@ -29,7 +31,7 @@ export function ConversationIntelligenceCard() {
         const since = subDays(new Date(), 7).toISOString();
         const [{ data: moments }, { data: sessions }] = await Promise.all([
           supabase.from('call_key_moments').select('moment_type, quote, call_session_id').gte('created_at', since),
-          supabase.from('call_sessions').select('id').gte('created_at', since),
+          supabase.from('call_sessions').select('id, duration_seconds').gte('created_at', since),
         ]);
 
         const totalCalls = sessions?.length ?? 0;
@@ -51,11 +53,38 @@ export function ConversationIntelligenceCard() {
         ).size;
         const objectionRate = totalCalls > 0 ? (callsWithObjection / totalCalls) * 100 : 0;
 
-        // Talk ratio agregado: usa hold_time como proxy invertido se não houver dados melhores
-        const avgTalkRatio = 50; // placeholder: precisaria de tabela talk_ratios; mostra benchmark
+        // Talk ratio agregado a partir das transcrções reais das chamadas do período.
+        // Antes era `const avgTalkRatio = 50;` fixo, sem relação com o que foi falado.
+        const sessionsWithDuration = (sessions ?? []).filter(s => s.duration_seconds != null);
+        const ratios: number[] = [];
+        if (sessionsWithDuration.length > 0) {
+          const ids = sessionsWithDuration.map(s => s.id);
+          const { data: turns } = await supabase
+            .from('call_transcriptions')
+            .select('call_session_id, speaker, start_time, end_time')
+            .in('call_session_id', ids);
+
+          const byCall = new Map<string, Array<{ speaker: string; start: number; end: number }>>();
+          for (const t of turns ?? []) {
+            if (t.start_time == null || t.end_time == null) continue;
+            const list = byCall.get(t.call_session_id) ?? [];
+            list.push({ speaker: t.speaker, start: t.start_time, end: t.end_time });
+            byCall.set(t.call_session_id, list);
+          }
+
+          for (const s of sessionsWithDuration) {
+            const segs = byCall.get(s.id);
+            if (!segs || segs.length === 0) continue;
+            const r = computeTalkRatio(segs, s.duration_seconds ?? undefined);
+            if (r.totalDuration > 0) ratios.push(r.agentTalkRatio * 100);
+          }
+        }
+        const avgTalkRatio = ratios.length > 0
+          ? Math.round(ratios.reduce((a, b) => a + b, 0) / ratios.length)
+          : 0;
 
         if (active) {
-          setStats({ avgTalkRatio, topCompetitors, objectionRate, weeklyMoments, totalCalls });
+          setStats({ avgTalkRatio, topCompetitors, objectionRate, weeklyMoments, totalCalls, sampledCalls: ratios.length });
           setLoading(false);
         }
       } catch (e) {
@@ -80,7 +109,12 @@ export function ConversationIntelligenceCard() {
           <div className="text-sm text-muted-foreground">Carregando métricas...</div>
         ) : (
           <div className="grid gap-4 md:grid-cols-4">
-            <Metric icon={<Mic className="h-4 w-4" />} label="Talk Ratio Médio" value={`${stats.avgTalkRatio}%`} hint="Benchmark: 40-60%" />
+            <Metric
+              icon={<Mic className="h-4 w-4" />}
+              label="Talk Ratio Médio"
+              value={stats.sampledCalls > 0 ? `${stats.avgTalkRatio}%` : "—"}
+              hint={stats.sampledCalls > 0 ? `Benchmark: 40-60% · ${stats.sampledCalls} chamada(s)` : "Sem transcrição no período"}
+            />
             <Metric icon={<AlertTriangle className="h-4 w-4" />} label="Chamadas c/ Objeção" value={`${stats.objectionRate.toFixed(1)}%`} hint={`${stats.totalCalls} chamadas`} />
             <Metric icon={<TrendingUp className="h-4 w-4" />} label="Momentos-chave" value={String(stats.weeklyMoments)} hint="Detectados pela IA" />
             <div className="space-y-1">
