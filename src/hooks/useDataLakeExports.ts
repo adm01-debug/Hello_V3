@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
-export type ExportDataset = 'call_sessions' | 'deals' | 'contacts' | 'audit_logs';
+export type ExportDataset = 'call_sessions' | 'call_summaries' | 'deals' | 'contacts' | 'audit_logs';
 export type ExportFormat = 'csv' | 'ndjson' | 'parquet';
 
 export interface DataLakeExport {
