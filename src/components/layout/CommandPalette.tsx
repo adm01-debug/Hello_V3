@@ -92,6 +92,7 @@ const allRoutes = [
   { title: 'Alertas de Segurança', url: '/admin/security-alerts', icon: ShieldAlert, group: 'Administração' },
   { title: 'Saúde de Webhooks', url: '/admin/webhook-health', icon: Webhook, group: 'Administração' },
   { title: 'SLO', url: '/admin/slo', icon: Gauge, group: 'Administração' },
+  { title: 'Qualidade de Voz (MOS/Jitter)', url: '/admin/voice-quality', icon: Activity, group: 'Administração' },
   { title: 'Saúde do Banco', url: '/admin/database-health', icon: Database, group: 'Administração' },
 ];
 
