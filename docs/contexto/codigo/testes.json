@@ -3404,6 +3404,7 @@
    "src/pages/RoutingRules.tsx",
    "src/pages/SLAPolicies.tsx",
    "src/pages/Scheduling.tsx",
+   "src/pages/Scorecards.tsx",
    "src/pages/SecurityDashboard.tsx",
    "src/pages/SecurityMonitoring.tsx",
    "src/pages/SecurityReport.tsx",

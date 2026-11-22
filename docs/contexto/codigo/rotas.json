@@ -2,11 +2,11 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "resumo": {
-  "urls": 105,
+  "urls": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
-  "itens_menu": 95,
-  "lazy": 104
+  "itens_menu": 96,
+  "lazy": 105
  },
  "urls": [
   {
@@ -3917,6 +3917,45 @@
    "indice": false,
    "lazy": false,
    "tipo": "tela",
+   "caminho": "/scorecards",
+   "componente": "Scorecards",
+   "arquivo": "src/pages/Scorecards.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useCallback",
+    "useEffect",
+    "usePageTitle",
+    "useQuery",
+    "useScorecards",
+    "useState"
+   ],
+   "hooks_locais": [
+    "usePageTitle",
+    "useScorecards"
+   ],
+   "tabelas": [
+    "call_scorecards",
+    "call_sessions",
+    "scorecard_criteria",
+    "scorecard_responses",
+    "scorecard_templates"
+   ],
+   "rpcs": [],
+   "edges": [
+    "score-call"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 12
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
    "caminho": "/security",
    "componente": "SecurityDashboard",
    "arquivo": "src/pages/SecurityDashboard.tsx",
@@ -5210,6 +5249,15 @@
    "resolve_para": "src/pages/TwoFactorAuth.tsx"
   },
   {
+   "rotulo": "Avaliações de Chamada",
+   "destino": "/scorecards",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/Scorecards.tsx"
+  },
+  {
    "rotulo": "Base de Conhecimento",
    "destino": "/knowledge",
    "grupo": null,
@@ -6035,6 +6083,7 @@
   "RoutingRules": "src/pages/RoutingRules.tsx",
   "SLAPolicies": "src/pages/SLAPolicies.tsx",
   "Scheduling": "src/pages/Scheduling.tsx",
+  "Scorecards": "src/pages/Scorecards.tsx",
   "SecurityAlerts": "src/pages/admin/SecurityAlerts.tsx",
   "SecurityAudit": "src/pages/admin/SecurityAuditDashboard.tsx",
   "SecurityDashboard": "src/pages/SecurityDashboard.tsx",

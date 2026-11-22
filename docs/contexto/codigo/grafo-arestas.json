@@ -3978,6 +3978,17 @@
    "src/hooks/useTimeOff.ts",
    "src/lib/safe-date.ts"
   ],
+  "src/pages/Scorecards.tsx": [
+   "src/components/ui/badge.tsx",
+   "src/components/ui/button.tsx",
+   "src/components/ui/card.tsx",
+   "src/components/ui/input.tsx",
+   "src/components/ui/select.tsx",
+   "src/components/ui/table.tsx",
+   "src/hooks/usePageTitle.ts",
+   "src/hooks/useScorecards.ts",
+   "src/integrations/supabase/client.ts"
+  ],
   "src/pages/SecurityDashboard.tsx": [
    "src/components/security/NotificationPermissionBanner.tsx",
    "src/components/ui/alert.tsx",
@@ -4522,6 +4533,7 @@
    "src/pages/RoutingRules.tsx",
    "src/pages/SLAPolicies.tsx",
    "src/pages/Scheduling.tsx",
+   "src/pages/Scorecards.tsx",
    "src/pages/SecurityDashboard.tsx",
    "src/pages/SecurityMonitoring.tsx",
    "src/pages/SecurityReport.tsx",

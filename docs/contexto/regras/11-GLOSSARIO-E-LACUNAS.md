@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `76e30b7deb` · branch `main` · 2026-11-22 16:37 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d3a6f692b9` · branch `main` · 2026-11-22 16:52 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -315,11 +315,11 @@
 | status | valor `implemented` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/SecurityReport.tsx`<br>`escreve:src/lib/security-report-data.ts` |
 | status | valor `disponivel` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/Marketplace.tsx` |
 | status | valor `beta` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/Marketplace.tsx` |
+| status | valor `submitted` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/Scorecards.tsx`<br>`escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `loading` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VerifyEmail.tsx` |
 | status | valor `sent` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VirtualFax.tsx` |
 | status | valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/admin/SloDashboard.tsx`<br>`escreve:src/pages/admin/SloDashboard.tsx`<br>`escreve:supabase/functions/health-check/index.ts` |
 | status | valor `skipped` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:supabase/functions/auto-scorecard/index.ts` |
-| status | valor `submitted` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `created` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `fulfilled` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:supabase/functions/health-check/index.ts` |
 | status | valor `ready` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:supabase/functions/wavoip-call/index.ts` |

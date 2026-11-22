@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `76e30b7deb7d68d17575b04e4d55f77b627873e5` (2026-11-22T13:36:06-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `d3a6f692b9edc1f00097d3705da55fd152655e40` (2026-11-22T13:51:50-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1207), SQL (242), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1208), SQL (242), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,15 +34,15 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1633 |
-| arquivos_codigo | 1240 |
-| linhas_codigo | 169068 |
-| rotas | 105 |
+| arquivos_total | 1634 |
+| arquivos_codigo | 1241 |
+| linhas_codigo | 169366 |
+| rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
-| itens_menu | 95 |
+| itens_menu | 96 |
 | modulos | 79 |
-| componentes | 448 |
+| componentes | 449 |
 | hooks | 191 |
 | edge_functions | 98 |
 | tabelas | 169 |
@@ -54,8 +54,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | docs_md | 114 |
 
 ## Onde ficam as coisas
-- telas: src/pages (104)
-- componentes: src/components (319), src/pages (125), src/contexts (3)
+- telas: src/pages (105)
+- componentes: src/components (319), src/pages (126), src/contexts (3)
 - hooks: src/hooks (173), src/components (12), src/contexts (3)
 - servicos_logica: src/lib (80), src/integrations (3), scripts/regras_negocio (2)
 - testes: co-localizado (__tests__) (319), e2e/ (7), tests/ (6)
@@ -96,7 +96,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | lib | 0 | 0 | 48 | 112 | 30 | 69 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
-| pages | 86 | 93 | 92 | 188 | 66 | 133 |
+| pages | 87 | 94 | 93 | 189 | 67 | 137 |
 | pages/admin | 9 | 9 | 16 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
@@ -186,6 +186,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `/roles` [tela] → src/pages/Roles.tsx
 - `/routing-rules` [tela] → src/pages/RoutingRules.tsx
 - `/scheduling` [tela] → src/pages/Scheduling.tsx
+- `/scorecards` [tela] → src/pages/Scorecards.tsx
 - `/security` [tela] → src/pages/SecurityDashboard.tsx
 - `/security-monitoring` [tela] → src/pages/SecurityMonitoring.tsx
 - `/security-report` [tela] → src/pages/SecurityReport.tsx
@@ -348,7 +349,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Permissões / papéis
 - papéis no código: admin (33), user (24), system (18), agent (16), button (13), alert (7), supervisor (7), group (5), status (5), viewer (4), article (3), img (3), navigation (3), anon (2), customer (2), dialog (2), god (1), link (1), presentation (1), region (1), searchbox (1), separator (1), string (1), sup (1), table (1)
 - enums de papel: app_role: admin|supervisor|agent|viewer
-- guards: src/components/auth/ProtectedRoute.tsx · rotas protegidas: 0 · públicas: /, /*, /accounts, /admin/data-export, /admin/database-health, /admin/extensions, /admin/security-alerts, /admin/security-audit, /admin/slo, /admin/voice-quality, /admin/voip-trunks, /admin/webhook-health, /agent-assist, /ai, /alert-history, /alerts, /analytics, /audit-logs, /battle-cards, /blf, /blocked-access-logs, /cadences, /call-flow-designer, /call-history, /call-library, /call-park, /call-queues, /callbacks, /calls, /coaching, /compliance, /concurrency-conflicts, /contacts, /contacts/insights, /dashboard, /deals, /dialer, /dialer/predictive, /executive, /external-recordings-import, /financial-impact, /forgot-password, /gamification, /geo-blocking, /history, /hold-alerts, /hold-metrics, /hold-settings, /hot-desking, /inbox, /ip-whitelist, /knowledge, /landing, /ldap-sync, /learning, /login, /marketplace, /meeting-summaries, /multi-device-ring, /network-diagnostics, /notifications, /number-porting, /observability, /onboarding, /outbound-compliance, /passkeys, /password-reset-approval, /permissions, /pricing, /qr-provisioning, /queue-dashboard, /queue-metrics-settings, /ranking, /rate-limit, /recordings, /register, /renewals, /reports, /reset-password, /ring-groups, /roles, /routing-rules, /scheduling, /security, /security-monitoring, /security-report, /sessions, /settings, /shift-swap-suggestions, /skills, /sla-policies, /status, /success-plans, /toll-free-numbers, /topic-detection, /trackers, /translation-center, /two-factor-auth, /unauthorized, /verify-email, /video-conference, /virtual-fax, /voice-security, /voicemail, /vs/3cplus
+- guards: src/components/auth/ProtectedRoute.tsx · rotas protegidas: 0 · públicas: /, /*, /accounts, /admin/data-export, /admin/database-health, /admin/extensions, /admin/security-alerts, /admin/security-audit, /admin/slo, /admin/voice-quality, /admin/voip-trunks, /admin/webhook-health, /agent-assist, /ai, /alert-history, /alerts, /analytics, /audit-logs, /battle-cards, /blf, /blocked-access-logs, /cadences, /call-flow-designer, /call-history, /call-library, /call-park, /call-queues, /callbacks, /calls, /coaching, /compliance, /concurrency-conflicts, /contacts, /contacts/insights, /dashboard, /deals, /dialer, /dialer/predictive, /executive, /external-recordings-import, /financial-impact, /forgot-password, /gamification, /geo-blocking, /history, /hold-alerts, /hold-metrics, /hold-settings, /hot-desking, /inbox, /ip-whitelist, /knowledge, /landing, /ldap-sync, /learning, /login, /marketplace, /meeting-summaries, /multi-device-ring, /network-diagnostics, /notifications, /number-porting, /observability, /onboarding, /outbound-compliance, /passkeys, /password-reset-approval, /permissions, /pricing, /qr-provisioning, /queue-dashboard, /queue-metrics-settings, /ranking, /rate-limit, /recordings, /register, /renewals, /reports, /reset-password, /ring-groups, /roles, /routing-rules, /scheduling, /scorecards, /security, /security-monitoring, /security-report, /sessions, /settings, /shift-swap-suggestions, /skills, /sla-policies, /status, /success-plans, /toll-free-numbers, /topic-detection, /trackers, /translation-center, /two-factor-auth, /unauthorized, /verify-email, /video-conference, /virtual-fax, /voice-security, /voicemail, /vs/3cplus
 - feature flags: FEATURE_X, nova-tela, novo-inbox
 
 ## Alertas (baseline.json → alertas)
@@ -369,27 +370,27 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9178 nós · 24280 arestas · 743 comunidades · grafo do commit `76e30b7d`
-- comunidades maiores: lucide-react (255), react (249), button.tsx (180), vitest (168), usePageTitle.ts (145), safe-date.ts (141), Tabela de funcionalidades (137), @tanstack/react-query (117), usePageTitle (107), cn (107), NetworkDiagnostics.tsx (104), utils.ts (102)
+- 9183 nós · 24322 arestas · 729 comunidades · grafo do commit `d3a6f692`
+- comunidades maiores: lucide-react (276), vitest (184), logger.ts (177), protectedRoutes.tsx (162), client.ts (161), react (152), utils.ts (130), select.tsx (119), safe-date.ts (109), cn (108), snapshot.py (102), Tabela de funcionalidades (90)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/estado/funcionalidades-planejadas.md (23)
+- src/components/layout/AppSidebar.tsx (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
-- src/components/layout/AppSidebar.tsx (7)
 - .github/workflows/contexto.yml (6)
+- src/components/layout/CommandPalette.tsx (6)
 - deno.lock (5)
 - docs/audits/pendencias-2026-07.md (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
-- src/components/layout/CommandPalette.tsx (5)
 - docs/pendencias/_ordem.md (4)
+- src/routes/protectedRoutes.tsx (4)
 - AGENTS.md (3)
 - docs/agentes/edge-functions.md (3)
 - docs/estado/edge-functions-parte1.md (3)
-- docs/estado/infra-ci-rotas-integracoes.md (3)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -428,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `d3a6f69` feat: pagina de avaliacoes de chamada com geracao por IA (#143)
 - 2026-11-22 `76e30b7` feat: retencao de 180 dias para as gravacoes de chamada (#138)
 - 2026-11-22 `36732f9` feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)
 - 2026-11-22 `d9ee2d8` docs: corrige rotulos defasados de D3/D5 e dos testes Deno (#141)
@@ -442,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `5ca0039` fix: taxa de abandono contava a chamada abandonada duas vezes (#131)
 - 2026-11-22 `89fe47c` docs: registra divergencia de limiar no Nivel de Servico (#130)
 - 2026-11-22 `71169af` fix: contagem em espera do dashboard usava status inexistente (#129)
-- 2026-11-22 `a0096de` feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

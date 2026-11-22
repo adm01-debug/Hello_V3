@@ -3,11 +3,11 @@
  "format_version": 2,
  "onde_ficam": {
   "telas": [
-   "src/pages (104)"
+   "src/pages (105)"
   ],
   "componentes": [
    "src/components (319)",
-   "src/pages (125)",
+   "src/pages (126)",
    "src/contexts (3)"
   ],
   "hooks": [
@@ -47,7 +47,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (448)"
+  ".tsx (449)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: pagina de avaliacoes de chamada com geracao por IA (#143)",
    "feat: retencao de 180 dias para as gravacoes de chamada (#138)",
    "feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)",
    "docs: corrige rotulos defasados de D3/D5 e dos testes Deno (#141)",
-   "docs: fecha D4 e C2 com validacao real em producao (#140)",
-   "docs: C2 fecha, C4 reclassificado e a auditoria dos crons no log (#139)"
+   "docs: fecha D4 e C2 com validacao real em producao (#140)"
   ]
  },
  "pr_template": null,

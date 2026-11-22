@@ -3016,7 +3016,7 @@
     "useEffect"
    ],
    "canais_realtime": [],
-   "usado_por": 96,
+   "usado_por": 97,
    "usado_por_arquivos": [
     "src/pages/AIAssistant.tsx",
     "src/pages/Accounts.tsx",
@@ -3577,7 +3577,7 @@
    "hooks_exportados": [
     "useScorecards"
    ],
-   "linhas": 89,
+   "linhas": 139,
    "dominio": "hooks",
    "tabelas": [
     "call_scorecards",
@@ -3595,8 +3595,10 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/pages/Scorecards.tsx"
+   ],
    "coberto_por_testes": 1
   },
   {

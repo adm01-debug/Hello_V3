@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "76e30b7deb7d68d17575b04e4d55f77b627873e5",
+  "sha": "d3a6f692b9edc1f00097d3705da55fd152655e40",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 16:37 UTC",
-  "files_total": 1680,
-  "code_files": 1483,
-  "code_lines": 184937
+  "generated_at": "2026-11-22 16:52 UTC",
+  "files_total": 1681,
+  "code_files": 1484,
+  "code_lines": 185235
  },
  "version": "1.3.2",
- "facts_hash": "6db2ad27a82054e6",
+ "facts_hash": "9a6e1b2c910d9d05",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 605,
+   ".tsx": 606,
    ".ts": 602,
    ".sql": 242,
    ".mjs": 27,
@@ -29031,6 +29031,21 @@
    },
    {
     "path": "",
+    "file": "src/pages/Scorecards.tsx",
+    "component": "Scorecards",
+    "tables_transitive": [
+     "scorecard_criteria",
+     "scorecard_responses",
+     "scorecard_templates"
+    ],
+    "invokes_transitive": [
+     "score-call"
+    ],
+    "rpc_transitive": [],
+    "deps_count": 12
+   },
+   {
+    "path": "",
     "file": "src/pages/SecurityDashboard.tsx",
     "component": "SecurityDashboard",
     "tables_transitive": [
@@ -33215,7 +33230,7 @@
   {
    "module": "src/components",
    "files": 351,
-   "lines": 42060,
+   "lines": 42062,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33468,7 +33483,7 @@
   {
    "module": "src/hooks",
    "files": 350,
-   "lines": 45306,
+   "lines": 45356,
    "tables": [
     "accounts",
     "active_sessions",
@@ -33944,8 +33959,8 @@
   },
   {
    "module": "src/pages",
-   "files": 131,
-   "lines": 20818,
+   "files": 132,
+   "lines": 21062,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -33954,6 +33969,8 @@
     "call_control_audit_logs",
     "call_flows",
     "call_quality_metrics",
+    "call_scorecards",
+    "call_sessions",
     "call_translations",
     "cultural_hints",
     "dialer_campaigns",
@@ -34117,20 +34134,20 @@
     "src/pages/RoutingRules.tsx",
     "src/pages/SLAPolicies.tsx",
     "src/pages/Scheduling.tsx",
+    "src/pages/Scorecards.tsx",
     "src/pages/SecurityDashboard.tsx",
     "src/pages/SecurityMonitoring.tsx",
     "src/pages/SecurityReport.tsx",
     "src/pages/SessionManagement.tsx",
     "src/pages/Settings.tsx",
     "src/pages/ShiftSwapSuggestions.tsx",
-    "src/pages/Skills.tsx",
-    "src/pages/Status.tsx"
+    "src/pages/Skills.tsx"
    ]
   },
   {
    "module": "src/routes",
    "files": 2,
-   "lines": 238,
+   "lines": 240,
    "tables": [],
    "exports": [
     "protectedRoutes.tsx: RouteConfig, protectedRoutes",
@@ -34965,8 +34982,12 @@
    "call_scorecards": {
     "select": [
      "src/hooks/useScorecards.ts",
+     "src/pages/Scorecards.tsx",
      "supabase/functions/auto-scorecard/index.ts",
      "supabase/functions/score-call/index.ts"
+    ],
+    "update": [
+     "src/hooks/useScorecards.ts"
     ],
     "ref": [
      "supabase/functions/auto-scorecard/index.ts"
@@ -34996,6 +35017,7 @@
      "src/hooks/useQueueMetrics.ts",
      "src/hooks/useSupervisorPanel.ts",
      "src/hooks/useTrunkRealtimeMetrics.ts",
+     "src/pages/Scorecards.tsx",
      "supabase/functions/auto-scorecard/index.ts",
      "supabase/functions/check-goals/index.ts",
      "supabase/functions/check-queue-metrics/index.ts",
@@ -35949,6 +35971,9 @@
      "src/hooks/useScorecards.ts",
      "supabase/functions/auto-scorecard/index.ts",
      "supabase/functions/score-call/index.ts"
+    ],
+    "ref": [
+     "src/hooks/useScorecards.ts"
     ]
    },
    "scorecard_responses": {
@@ -35964,6 +35989,9 @@
     "select": [
      "src/hooks/useScorecards.ts",
      "supabase/functions/auto-scorecard/index.ts"
+    ],
+    "insert": [
+     "src/hooks/useScorecards.ts"
     ]
    },
    "security_alerts": {
@@ -40789,7 +40817,19 @@
    },
    {
     "file": "src/hooks/useScorecards.ts",
+    "msg": "Erro ao atualizar a avaliação"
+   },
+   {
+    "file": "src/hooks/useScorecards.ts",
+    "msg": "Erro ao criar o modelo"
+   },
+   {
+    "file": "src/hooks/useScorecards.ts",
     "msg": "Erro ao gerar avaliação"
+   },
+   {
+    "file": "src/hooks/useScorecards.ts",
+    "msg": "Informe o nome e ao menos um critério"
    },
    {
     "file": "src/hooks/useSecurityAlertNotifications.ts",
@@ -52197,6 +52237,12 @@
     "kind": "escreve"
    },
    {
+    "file": "src/hooks/useScorecards.ts",
+    "field": "status",
+    "value": "approved",
+    "kind": "compara"
+   },
+   {
     "file": "src/hooks/useShiftSwapSuggestions.ts",
     "field": "status",
     "value": "pending",
@@ -53197,6 +53243,24 @@
     "field": "status",
     "value": "pending",
     "kind": "compara"
+   },
+   {
+    "file": "src/pages/Scorecards.tsx",
+    "field": "status",
+    "value": "draft",
+    "kind": "compara"
+   },
+   {
+    "file": "src/pages/Scorecards.tsx",
+    "field": "status",
+    "value": "submitted",
+    "kind": "compara"
+   },
+   {
+    "file": "src/pages/Scorecards.tsx",
+    "field": "status",
+    "value": "completed",
+    "kind": "filtra"
    },
    {
     "file": "src/pages/SecurityMonitoring.tsx",
@@ -55347,6 +55411,18 @@
     "name": "generateProvisioningURL",
     "params": "config: SIPConfig",
     "body": "const params = new URLSearchParams({ dn: config.displayName, un: config.username, pw: config.password, d: config.domain, p: config.port, t: config.transport, ...(config.proxy && { px: config.proxy }), c: config.codec, ...(config.srtp && { srtp: '1' }), ...(config.stunServer && { stun: config.stunServer }), }); return `sip-provision://?${params.toString()}`;"
+   },
+   {
+    "file": "src/pages/Scorecards.tsx",
+    "name": "Scorecards",
+    "params": "",
+    "body": "usePageTitle(\"Avaliações de Chamada\"); const { templates, updateStatus, createTemplate, generateAIScorecard } = useScorecards(); const [templateId, setTemplateId] = useState(\"\"); const [callId, setCallId] = useState(\"\"); const [generating, setGenerating] = useState(false); const [creating, setCreating] = useState(false); const [newName, setNewName] = useState(\"\"); const [newDesc, setNewDesc] = useState(\"\"); const [newCriteria, setNewCriteria] = useState([ { label: \"Abertura e identificação\", des …"
+   },
+   {
+    "file": "src/pages/Scorecards.tsx",
+    "name": "generate",
+    "params": "",
+    "body": "if (!callId || !templateId) return; setGenerating(true); try { await generateAIScorecard(templateId, callId); setCallId(\"\"); await refetchScorecards(); } finally { setGenerating(false); }"
    },
    {
     "file": "src/pages/Status.tsx",
@@ -80961,6 +81037,14 @@
     "limit": "20"
    },
    {
+    "file": "src/pages/Scorecards.tsx",
+    "limit": "100"
+   },
+   {
+    "file": "src/pages/Scorecards.tsx",
+    "limit": "50"
+   },
+   {
     "file": "src/pages/SecurityMonitoring.tsx",
     "limit": "100"
    },
@@ -81794,6 +81878,7 @@
       "filtra:src/hooks/useCallAnalytics.ts",
       "filtra:src/hooks/useMeetingSummary.ts",
       "filtra:src/hooks/useSupervisorPanel.ts",
+      "filtra:src/pages/Scorecards.tsx",
       "filtra:supabase/functions/check-goals/index.ts",
       "filtra:supabase/functions/check-queue-metrics/index.ts",
       "filtra:supabase/functions/data-lake-flush/index.ts",
@@ -82107,6 +82192,7 @@
       "compara:src/hooks/useHealthCheck.ts"
      ],
      "draft": [
+      "compara:src/pages/Scorecards.tsx",
       "escreve:src/hooks/useKnowledgeBase.ts",
       "escreve:src/hooks/useScorecards.ts",
       "escreve:src/pages/Knowledge.tsx",
@@ -82146,6 +82232,7 @@
       "escreve:src/hooks/useScheduledCallbacks.ts"
      ],
      "approved": [
+      "compara:src/hooks/useScorecards.ts",
       "compara:src/hooks/useShiftSwapSuggestions.ts",
       "compara:src/pages/PasswordResetApproval.tsx",
       "compara:src/pages/Scheduling.tsx",
@@ -82195,6 +82282,10 @@
       "escreve:src/pages/Scheduling.tsx",
       "escreve:src/pages/VideoConference.tsx"
      ],
+     "submitted": [
+      "compara:src/pages/Scorecards.tsx",
+      "escreve:supabase/functions/auto-scorecard/index.ts"
+     ],
      "loading": [
       "compara:src/pages/VerifyEmail.tsx"
      ],
@@ -82215,9 +82306,6 @@
       "compara:supabase/functions/health-check/index.ts"
      ],
      "skipped": [
-      "escreve:supabase/functions/auto-scorecard/index.ts"
-     ],
-     "submitted": [
       "escreve:supabase/functions/auto-scorecard/index.ts"
      ],
      "created": [
@@ -88832,6 +88920,14 @@
    },
    {
     "kind": "status",
+    "msg": "valor `submitted` para `status` usado no código não existe em nenhum enum do banco/TS",
+    "where": [
+     "compara:src/pages/Scorecards.tsx",
+     "escreve:supabase/functions/auto-scorecard/index.ts"
+    ]
+   },
+   {
+    "kind": "status",
     "msg": "valor `loading` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/pages/VerifyEmail.tsx"
@@ -88856,13 +88952,6 @@
    {
     "kind": "status",
     "msg": "valor `skipped` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:supabase/functions/auto-scorecard/index.ts"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `submitted` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "escreve:supabase/functions/auto-scorecard/index.ts"
     ]
@@ -94126,7 +94215,7 @@
   },
   "src/components/layout/AppSidebar.tsx": {
    "path": "src/components/layout/AppSidebar.tsx",
-   "lines": 354,
+   "lines": 355,
    "exports": [
     "function AppSidebar"
    ],
@@ -94148,7 +94237,7 @@
   },
   "src/components/layout/CommandPalette.tsx": {
    "path": "src/components/layout/CommandPalette.tsx",
-   "lines": 200,
+   "lines": 201,
    "exports": [
     "function CommandPalette"
    ],
@@ -101594,7 +101683,7 @@
   },
   "src/hooks/useScorecards.ts": {
    "path": "src/hooks/useScorecards.ts",
-   "lines": 89,
+   "lines": 139,
    "exports": [
     "interface ScorecardTemplate",
     "interface ScorecardCriterion",
@@ -101618,14 +101707,28 @@
     {
      "table": "scorecard_responses",
      "op": "select"
+    },
+    {
+     "table": "call_scorecards",
+     "op": "update"
+    },
+    {
+     "table": "scorecard_templates",
+     "op": "insert,select"
+    },
+    {
+     "table": "scorecard_criteria",
+     "op": "ref"
     }
    ],
    "table_cols": {
     "scorecard_templates": [
+     "id",
      "is_active"
     ],
     "call_scorecards": [
-     "call_session_id"
+     "call_session_id",
+     "id"
     ],
     "scorecard_responses": [
      "scorecard_id"
@@ -101635,13 +101738,21 @@
     "score-call"
    ],
    "errors": [
-    "Erro ao gerar avaliação"
+    "Erro ao atualizar a avaliação",
+    "Erro ao criar o modelo",
+    "Erro ao gerar avaliação",
+    "Informe o nome e ao menos um critério"
    ],
    "status_values": [
     {
      "field": "status",
      "value": "draft",
      "kind": "escreve"
+    },
+    {
+     "field": "status",
+     "value": "approved",
+     "kind": "compara"
     }
    ],
    "hooks": [
@@ -113537,6 +113648,64 @@
     }
    ]
   },
+  "src/pages/Scorecards.tsx": {
+   "path": "src/pages/Scorecards.tsx",
+   "lines": 244,
+   "exports": [
+    "function Scorecards"
+   ],
+   "tables": [
+    {
+     "table": "call_scorecards",
+     "op": "select"
+    },
+    {
+     "table": "call_sessions",
+     "op": "select"
+    }
+   ],
+   "table_cols": {
+    "call_sessions": [
+     "agent_name",
+     "id",
+     "started_at",
+     "status"
+    ]
+   },
+   "status_values": [
+    {
+     "field": "status",
+     "value": "draft",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "submitted",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "completed",
+     "kind": "filtra"
+    }
+   ],
+   "calc_fns": [
+    {
+     "name": "Scorecards",
+     "params": "",
+     "body": "usePageTitle(\"Avaliações de Chamada\"); const { templates, updateStatus, createTemplate, generateAIScorecard } = useScorecards(); const [templateId, setTemplateId] = useState(\"\"); const [callId, setCallId] = useState(\"\"); const [generating, setGenerating] = useState(false); const [creating, setCreating] = useState(false); const [newName, setNewName] = useState(\"\"); const [newDesc, setNewDesc] = useState(\"\"); const [newCriteria, setNewCriteria] = useState([ { label: \"Abertura e identificação\", des …"
+    },
+    {
+     "name": "generate",
+     "params": "",
+     "body": "if (!callId || !templateId) return; setGenerating(true); try { await generateAIScorecard(templateId, callId); setCallId(\"\"); await refetchScorecards(); } finally { setGenerating(false); }"
+    }
+   ],
+   "pagination": [
+    "100",
+    "50"
+   ]
+  },
   "src/pages/SecurityDashboard.tsx": {
    "path": "src/pages/SecurityDashboard.tsx",
    "lines": 172,
@@ -114797,7 +114966,7 @@
   },
   "src/routes/protectedRoutes.tsx": {
    "path": "src/routes/protectedRoutes.tsx",
-   "lines": 207,
+   "lines": 209,
    "exports": [
     "interface RouteConfig",
     "const protectedRoutes"
@@ -122726,10 +122895,23 @@
   }
  },
  "git": {
-  "sha": "76e30b7deb7d68d17575b04e4d55f77b627873e5",
+  "sha": "d3a6f692b9edc1f00097d3705da55fd152655e40",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "d3a6f69",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "feat: pagina de avaliacoes de chamada com geracao por IA (#143)",
+    "files": [
+     "src/components/layout/AppSidebar.tsx",
+     "src/components/layout/CommandPalette.tsx",
+     "src/hooks/useScorecards.ts",
+     "src/pages/Scorecards.tsx",
+     "src/routes/protectedRoutes.tsx"
+    ]
+   },
    {
     "sha": "76e30b7",
     "date": "2026-11-22",
@@ -123034,65 +123216,6 @@
      "supabase/functions/check-dnc/__tests__/index.test.ts",
      "supabase/functions/check-queue-metrics/__tests__/index.test.ts"
     ]
-   },
-   {
-    "sha": "f48e4ef",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)",
-    "files": [
-     "docs/pendencias/WIRING-04-gamificationdashboard.md",
-     "docs/pendencias/WIRING-06-hooks-orfaos.md",
-     "docs/pendencias/_ordem.md",
-     "src/components/calls/UnifiedSoftphone.tsx",
-     "src/components/gamification/BadgesShowcase.tsx",
-     "src/components/gamification/GamificationDashboard.tsx",
-     "src/hooks/__tests__/useCallRecording.test.ts",
-     "src/hooks/auth/__tests__/useAuthProfile.coverage.test.tsx",
-     "src/hooks/auth/useAuthProfile.ts",
-     "src/pages/PhoneDialer.tsx",
-     "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
-     "supabase/functions/approve-password-reset/index.ts",
-     "supabase/functions/check-calling-hours/index.ts",
-     "supabase/functions/check-dnc/index.ts",
-     "supabase/functions/compute-deal-health/index.ts",
-     "supabase/functions/data-lake-flush/index.ts",
-     "supabase/functions/dialer-pacing-tick/index.ts",
-     "supabase/functions/export-data-lake/index.ts",
-     "supabase/functions/forecast-deals/index.ts",
-     "supabase/functions/fuzz-test-runner/index.ts",
-     "supabase/functions/generate-coaching-track/index.ts",
-     "supabase/functions/generate-coaching/index.ts",
-     "supabase/functions/global-load-test/index.ts",
-     "supabase/functions/ldap-sync/index.ts",
-     "supabase/functions/record-consent/index.ts",
-     "supabase/functions/request-password-reset/index.ts",
-     "supabase/functions/rls-audit/index.ts",
-     "supabase/functions/score-call/index.ts",
-     "supabase/functions/suggest-shift-swaps/index.ts",
-     "supabase/functions/validate-geo/index.ts",
-     "supabase/functions/voip-failover-notifier/index.ts",
-     "supabase/functions/voip-load-test/index.ts",
-     "supabase/functions/voip-trunks-manage/index.ts",
-     "supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql",
-     "supabase/migrations/20261122220000_lock_conflicts_retention_cron.sql",
-     "supabase/migrations/20261122230000_reconcile_admin_role_sources.sql",
-     "supabase/migrations/20261122240000_policies_read_user_roles.sql",
-     "supabase/migrations/20261122250000_role_checks_honor_active_and_expiry.sql",
-     "supabase/migrations/20261122260000_is_admin_user_and_get_role_use_user_roles.sql",
-     "supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql",
-     "supabase/migrations/20261122280000_is_admin_and_supervisor_honor_expiry.sql",
-     "supabase/migrations/20261122290000_sync_profile_role_from_user_roles.sql",
-     "supabase/migrations/20261122300000_storage_policies_for_recordings.sql",
-     "supabase/migrations/20261122310000_seed_compliance_baseline.sql",
-     "supabase/migrations/20261122320000_calling_hours_honor_recurring_holidays.sql",
-     "supabase/migrations/20261122330000_calling_hours_reasons_acentuados.sql",
-     "supabase/migrations/20261122340000_parked_calls_and_queues_scope_pii.sql",
-     "supabase/migrations/20261122350000_revert_parked_calls_scope.sql",
-     "supabase/migrations/20261122360000_storage_policies_rename_and_scope.sql",
-     "supabase/migrations/20261122370000_holiday_region_isolation.sql",
-     "supabase/tests/role_source_of_truth_test.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -123107,6 +123230,14 @@
    [
     "src/hooks/useQueueMetrics.ts",
     3
+   ],
+   [
+    "src/components/layout/AppSidebar.tsx",
+    2
+   ],
+   [
+    "src/components/layout/CommandPalette.tsx",
+    2
    ],
    [
     "docs/audits/pendencias-2026-07.md",
@@ -123137,8 +123268,16 @@
     2
    ],
    [
-    "supabase/functions/export-data-lake/index.ts",
-    2
+    "src/hooks/useScorecards.ts",
+    1
+   ],
+   [
+    "src/pages/Scorecards.tsx",
+    1
+   ],
+   [
+    "src/routes/protectedRoutes.tsx",
+    1
    ],
    [
     "supabase/config.toml",
@@ -123157,23 +123296,7 @@
     1
    ],
    [
-    "src/components/layout/AppSidebar.tsx",
-    1
-   ],
-   [
-    "src/components/layout/CommandPalette.tsx",
-    1
-   ],
-   [
     "supabase/functions/_shared/constant-time.ts",
-    1
-   ],
-   [
-    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
-    1
-   ],
-   [
-    "supabase/functions/cleanup-lock-conflicts/index.ts",
     1
    ]
   ]

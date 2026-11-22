@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 448,
+ "total": 449,
  "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
@@ -2636,7 +2636,7 @@
     "AppSidebar"
    ],
    "export_default": null,
-   "linhas": 354,
+   "linhas": 355,
    "dominio": "components/layout",
    "hooks_locais": [
     "useAuthContext",
@@ -2654,7 +2654,7 @@
     "CommandPalette"
    ],
    "export_default": null,
-   "linhas": 200,
+   "linhas": 201,
    "dominio": "components/layout",
    "hooks_locais": [
     "useTheme"
@@ -4121,7 +4121,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 203,
+   "usado_por": 204,
    "orfao": false
   },
   {
@@ -4171,7 +4171,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 242,
+   "usado_por": 243,
    "orfao": false
   },
   {
@@ -4206,7 +4206,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 234,
+   "usado_por": 235,
    "orfao": false
   },
   {
@@ -4473,7 +4473,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 92,
+   "usado_por": 93,
    "orfao": false
   },
   {
@@ -4690,7 +4690,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 69,
+   "usado_por": 70,
    "orfao": false
   },
   {
@@ -4869,7 +4869,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 26,
+   "usado_por": 27,
    "orfao": false
   },
   {
@@ -6862,6 +6862,26 @@
     "useTimeOff"
    ],
    "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/pages/Scorecards.tsx",
+   "exports": [
+    "Scorecards"
+   ],
+   "export_default": "Scorecards",
+   "linhas": 244,
+   "dominio": "pages",
+   "hooks_locais": [
+    "usePageTitle",
+    "useScorecards"
+   ],
+   "tabelas": [
+    "call_scorecards",
+    "call_sessions"
+   ],
    "edges": [],
    "usado_por": 1,
    "orfao": false

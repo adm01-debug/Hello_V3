@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `76e30b7deb` · branch `main` · 2026-11-22 16:37 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d3a6f692b9` · branch `main` · 2026-11-22 16:52 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -854,7 +854,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>… +20 |
 | `status` | `agent_high` | compara | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `status` | `agent_low` | escreve | `src/hooks/useTalkRatio.ts`<br>`src/lib/talkRatio.ts` |
-| `status` | `approved` | compara, escreve | `src/hooks/useShiftSwapSuggestions.ts`<br>`src/hooks/useTimeOff.ts`<br>`src/pages/PasswordResetApproval.tsx`<br>`src/pages/Scheduling.tsx`<br>`src/pages/ShiftSwapSuggestions.tsx`<br>… +1 |
+| `status` | `approved` | compara, escreve | `src/hooks/useScorecards.ts`<br>`src/hooks/useShiftSwapSuggestions.ts`<br>`src/hooks/useTimeOff.ts`<br>`src/pages/PasswordResetApproval.tsx`<br>`src/pages/Scheduling.tsx`<br>… +2 |
 | `status` | `available` | compara, escreve, filtra | `src/components/admin/extensions/ExtensionStatusBadge.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/softphone/HeaderDropdowns.tsx`<br>`src/components/dashboard/AgentsList.tsx`<br>`src/data/mockData.ts`<br>… +6 |
 | `status` | `away` | compara, escreve | `src/components/admin/extensions/ExtensionStatusBadge.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/softphone/HeaderDropdowns.tsx`<br>`src/data/mockData.ts`<br>`src/hooks/useQueueMetrics.ts`<br>… +1 |
 | `status` | `beta` | escreve | `src/pages/Marketplace.tsx` |
@@ -863,7 +863,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `calling` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `cancelled` | escreve | `src/hooks/useScheduledCallbacks.ts` |
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
-| `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +31 |
+| `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +32 |
 | `status` | `conference` | escreve | `src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
 | `status` | `connected` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>… +3 |
@@ -874,7 +874,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `disconnected` | compara, escreve | `src/components/calls/UnifiedSoftphone.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>`src/lib/elevenlabs-stub.ts` |
 | `status` | `disponivel` | escreve | `src/pages/Marketplace.tsx` |
 | `status` | `down` | compara, escreve | `src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts` |
-| `status` | `draft` | escreve | `src/hooks/useKnowledgeBase.ts`<br>`src/hooks/useScorecards.ts`<br>`src/pages/Knowledge.tsx`<br>`supabase/functions/score-call/index.ts` |
+| `status` | `draft` | compara, escreve | `src/hooks/useKnowledgeBase.ts`<br>`src/hooks/useScorecards.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Scorecards.tsx`<br>`supabase/functions/score-call/index.ts` |
 | `status` | `ended` | compara, escreve | `src/components/calls/WebRTCCall.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>… +2 |
 | `status` | `error` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>`src/pages/VerifyEmail.tsx` |
 | `status` | `exhausted` | compara | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
@@ -920,7 +920,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `sent` | compara | `src/pages/VirtualFax.tsx` |
 | `status` | `skipped` | escreve | `supabase/functions/auto-scorecard/index.ts` |
 | `status` | `soon` | compara, escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
-| `status` | `submitted` | escreve | `supabase/functions/auto-scorecard/index.ts` |
+| `status` | `submitted` | compara, escreve | `src/pages/Scorecards.tsx`<br>`supabase/functions/auto-scorecard/index.ts` |
 | `status` | `success` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/admin/ldap/types.ts`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/lib/bitrix/sync-log.ts`<br>`src/pages/VerifyEmail.tsx`<br>… +2 |
 | `status` | `system` | escreve | `supabase/functions/check-goals/index.ts` |
 | `status` | `today` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
@@ -1579,6 +1579,14 @@ _nenhum item encontrado_
   ```
   const params = new URLSearchParams({ dn: config.displayName, un: config.username, pw: config.password, d: config.domain, p: config.port, t: config.transport, ...(config.proxy && { px: config.proxy }), c: config.codec, ...(config.srtp && { srtp: '1' }), ...(config.stunServer && { stun: config.stunServer }), }); return `sip-provision://?${params.toString()}`;
   ```
+- **Scorecards()** — `src/pages/Scorecards.tsx`
+  ```
+  usePageTitle("Avaliações de Chamada"); const { templates, updateStatus, createTemplate, generateAIScorecard } = useScorecards(); const [templateId, setTemplateId] = useState(""); const [callId, setCallId] = useState(""); const [generating, setGenerating] = useState(false); const [creating, setCreating] = useState(false); const [newName, setNewName] = useState(""); const [newDesc, setNewDesc] = useState(""); const [newCriteria, setNewCriteria] = useState([ { label: "Abertura e identificação", des …
+  ```
+- **generate()** — `src/pages/Scorecards.tsx`
+  ```
+  if (!callId || !templateId) return; setGenerating(true); try { await generateAIScorecard(templateId, callId); setCallId(""); await refetchScorecards(); } finally { setGenerating(false); }
+  ```
 - **computeUptime(samples: DailySample[])** — `src/pages/Status.tsx`
   ```
   let ok = 0; let total = 0; for (const s of samples) { ok += s.ok; total += s.total; } if (!total) return 100; return Math.round((ok / total) * 10000) / 100;
@@ -2023,6 +2031,8 @@ _nenhum item encontrado_
 | 500 | `src/pages/AuditLogs.tsx` |
 | 1 | `src/pages/HoldAlertSettings.tsx` |
 | 20 | `src/pages/NetworkDiagnostics.tsx` |
+| 100 | `src/pages/Scorecards.tsx` |
+| 50 | `src/pages/Scorecards.tsx` |
 | 100 | `src/pages/SecurityMonitoring.tsx` |
 | 20000 | `src/pages/Status.tsx` |
 | 100 | `src/pages/TopicDetection.tsx` |
@@ -2378,7 +2388,10 @@ _nenhum item encontrado_
 | Erro ao carregar callbacks | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao concluir callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao remover callback | `src/hooks/useScheduledCallbacks.ts` |
+| Erro ao atualizar a avaliação | `src/hooks/useScorecards.ts` |
+| Erro ao criar o modelo | `src/hooks/useScorecards.ts` |
 | Erro ao gerar avaliação | `src/hooks/useScorecards.ts` |
+| Informe o nome e ao menos um critério | `src/hooks/useScorecards.ts` |
 | Falha ao marcar como lida | `src/hooks/useSecurityAlertNotifications.ts` |
 | Falha ao marcar como resolvido | `src/hooks/useSecurityAlertNotifications.ts` |
 | Falha ao marcar todos como lidos | `src/hooks/useSecurityAlertNotifications.ts` |
@@ -2391,10 +2404,7 @@ _nenhum item encontrado_
 | Erro ao revogar sessões | `src/hooks/useSessionManager.ts` |
 | Sua sessão expirou. Faça login novamente. | `src/hooks/useSessionManager.ts` |
 | Erro ao atualizar turno | `src/hooks/useShifts.ts` |
-| Erro ao criar turno | `src/hooks/useShifts.ts` |
-| Erro ao remover turno | `src/hooks/useShifts.ts` |
-| Chamada em espera | `src/hooks/useSipCall.ts` |
-| … +234 linhas — lista completa em `context.json` | |
+| … +237 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 

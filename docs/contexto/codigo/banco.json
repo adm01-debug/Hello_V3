@@ -6177,7 +6177,7 @@
     "so_na_migration": [],
     "so_no_types": []
    },
-   "usada_no_front": 1,
+   "usada_no_front": 2,
    "usada_em_edges": [
     "auto-scorecard",
     "score-call"
@@ -6442,7 +6442,7 @@
     ],
     "so_no_types": []
    },
-   "usada_no_front": 16,
+   "usada_no_front": 17,
    "usada_em_edges": [
     "auto-scorecard",
     "check-goals",
