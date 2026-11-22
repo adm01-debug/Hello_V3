@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 335,
+ "total": 336,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 318
+  "unit": 319
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 312
+   "arquivos": 313
   },
   {
    "padrao": "e2e/",
@@ -2639,6 +2639,15 @@
    "casos": 0
   },
   {
+   "arquivo": "supabase/functions/_shared/__tests__/cors.test.ts",
+   "tipo": "unit",
+   "linhas": 51,
+   "testa": [
+    "supabase/functions/_shared/cors.ts"
+   ],
+   "casos": 6
+  },
+  {
    "arquivo": "supabase/functions/_shared/__tests__/resilience.test.ts",
    "tipo": "unit",
    "linhas": 162,
@@ -3242,7 +3251,7 @@
   "src/pages/PhoneDialer.tsx": 1,
   "src/pages/roles/useRoles.ts": 1,
   "supabase/functions/_shared/allowed-hosts.ts": 1,
-  "supabase/functions/_shared/cors.ts": 1,
+  "supabase/functions/_shared/cors.ts": 2,
   "supabase/functions/_shared/resilience.ts": 2,
   "supabase/functions/_shared/validator.ts": 1,
   "supabase/functions/analyze-call/schema.ts": 3,

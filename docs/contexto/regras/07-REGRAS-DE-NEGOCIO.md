@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6f648ab906` · branch `main` · 2026-11-22 06:31 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `bb8f219aee` · branch `main` · 2026-11-22 07:07 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2440,7 +2440,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3986 testes em 325 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3992 testes em 326 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2664,6 +2664,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/webrtc-config.test.ts` | 6 | getIceServers · retorna STUN servers padrão sem TURN quando envs ausentes · inclui TURN quando todas as envs estão presentes · não inclui TURN quando falta uma das credenciais … |
 | `src/lib/audit/__tests__/index.coverage.test.ts` | 6 | audit/index (coverage) · logAuditEvent returns id on success · logAuditEvent defaults details to empty object and resourceId undefined · logAuditEvent returns null on supabase error … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
+| `supabase/functions/_shared/__tests__/cors.test.ts` | 6 | cors: origem de producao (Vercel) e ecoada · cors: origem desconhecida nao e ecoada (cai no default) · cors: sem header Origin nao quebra · cors: CORS_EXTRA_ORIGINS libera origem adicional … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
 | `supabase/functions/enforce-sla/__tests__/index.test.ts` | 6 | enforce-sla: prioriza política de canal específico sobre  · enforce-sla: cai no fallback  · enforce-sla: calcula due dates a partir de created_at · enforce-sla: detecta breach de primeira resposta … |
 | `supabase/functions/record-consent/__tests__/index.test.ts` | 6 | record-consent: OPTIONS devolve preflight · record-consent: sem Authorization responde 401 · record-consent: token invalido nao grava consentimento · record-consent: canal fora do enum nao e aceito … |
@@ -2743,8 +2744,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDealForecast.test.ts` | 3 | useDealForecast · fetches forecast on mount with default period · handles error gracefully |
 | `src/hooks/__tests__/useForecastVolume.coverage.test.tsx` | 3 | useForecastVolume · returns forecast on success · errors when invoke returns error |
 | `src/hooks/__tests__/useRenewals.test.ts` | 3 | useRenewals · classifies renewals into 30/60/90 buckets · computes weighted and pipeline totals |
-| `src/hooks/__tests__/useShifts.test.tsx` | 3 | useShifts · carrega shifts da semana · expõe ações CRUD |
-| … +25 linhas — lista completa em `context.json` | | |
+| … +26 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

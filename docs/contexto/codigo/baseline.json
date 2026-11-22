@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6f648ab906e01b5855f53511f7c146410baf45d8",
+  "commit": "bb8f219aeef64dbe6a02fbce4e81ac1f2547985d",
   "branch": "main",
-  "data_commit": "2026-11-22T03:30:45-03:00",
+  "data_commit": "2026-11-22T04:06:43-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "bb8f219",
+    "data": "2026-11-22",
+    "assunto": "fix(edge): libera a origem de producao no CORS das edge functions (#117)"
+   },
    {
     "sha": "6f648ab",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "907e943",
     "data": "2026-11-21",
     "assunto": "fix(seguranca): revoga EXECUTE de anon nas funcoes internas e fecha advisors de RLS (#84)"
-   },
-   {
-    "sha": "ac18a93",
-    "data": "2026-11-21",
-    "assunto": "fix: indices de audit_logs usam created_at e guardam a coluna (#82)"
    }
   ],
-  "arquivos_mudados_7d": 834,
+  "arquivos_mudados_7d": 836,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -169,7 +169,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 8
+    "mudancas": 10
    },
    {
     "pasta": ".github/workflows/ci.yml",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 97
+    "commits": 98
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1622,
-  "arquivos_codigo": 1230,
-  "linhas_codigo": 168341,
+  "arquivos_total": 1623,
+  "arquivos_codigo": 1231,
+  "linhas_codigo": 168401,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 238,
   "cron_jobs": 10,
-  "testes": 335,
+  "testes": 336,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 165,
-   "linhas": 19294
+   "arquivos": 166,
+   "linhas": 19354
   },
   "tailwind.config.ts": {
    "arquivos": 1,

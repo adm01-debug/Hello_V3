@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "6f648ab906e01b5855f53511f7c146410baf45d8",
+  "sha": "bb8f219aeef64dbe6a02fbce4e81ac1f2547985d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 06:31 UTC",
-  "files_total": 1669,
-  "code_files": 1472,
-  "code_lines": 184160
+  "generated_at": "2026-11-22 07:07 UTC",
+  "files_total": 1670,
+  "code_files": 1473,
+  "code_lines": 184220
  },
  "version": "1.3.2",
- "facts_hash": "6060cb3c2b3c3dea",
+ "facts_hash": "9ae2c94e8405e229",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 604,
-   ".ts": 593,
+   ".ts": 594,
    ".sql": 241,
    ".mjs": 27,
    ".py": 5,
@@ -34105,8 +34105,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 165,
-   "lines": 19294,
+   "files": 166,
+   "lines": 19354,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34263,6 +34263,7 @@
     "supabase/functions/_shared/voice-utils.ts",
     "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
     "supabase/functions/_shared/__tests__/capture-handler.ts",
+    "supabase/functions/_shared/__tests__/cors.test.ts",
     "supabase/functions/_shared/__tests__/resilience.test.ts",
     "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
     "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
@@ -34322,8 +34323,7 @@
     "supabase/functions/generate-coaching/index.ts",
     "supabase/functions/generate-coaching-plan/index.ts",
     "supabase/functions/generate-coaching-track/index.ts",
-    "supabase/functions/generate-coaching-track/track-engine.ts",
-    "supabase/functions/generate-coaching-track/track-engine_test.ts"
+    "supabase/functions/generate-coaching-track/track-engine.ts"
    ]
   },
   {
@@ -37136,6 +37136,10 @@
    ],
    "CODE_SCAN_DIRS": [
     "scripts/supabase_snapshot/snapshot.py"
+   ],
+   "CORS_EXTRA_ORIGINS": [
+    "supabase/functions/_shared/__tests__/cors.test.ts",
+    "supabase/functions/_shared/cors.ts"
    ],
    "DB_HOST": [
     "scripts/apply-call-volume-fix.mjs",
@@ -71216,6 +71220,30 @@
    {
     "file": "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
     "name": "classifyHost trata host vazio e domínios internos"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
+    "name": "cors: origem de producao (Vercel) e ecoada"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
+    "name": "cors: origem desconhecida nao e ecoada (cai no default)"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
+    "name": "cors: sem header Origin nao quebra"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
+    "name": "cors: CORS_EXTRA_ORIGINS libera origem adicional"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
+    "name": "cors: preflight anuncia os headers usados pelo front"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
+    "name": "cors: deprecado corsHeaders reflete origem de producao"
    },
    {
     "file": "supabase/functions/_shared/__tests__/resilience.test.ts",
@@ -114569,11 +114597,14 @@
   },
   "supabase/functions/_shared/cors.ts": {
    "path": "supabase/functions/_shared/cors.ts",
-   "lines": 36,
+   "lines": 45,
    "exports": [
     "function getCorsOrigin",
     "function buildCorsHeaders",
     "const corsHeaders"
+   ],
+   "env": [
+    "CORS_EXTRA_ORIGINS"
    ],
    "rule_comments": [
     "* @deprecated Use buildCorsHeaders(req) instead for proper origin validation */"
@@ -114914,6 +114945,22 @@
     "chamar como funcao. Deve ser usado UMA vez por modulo, porque o cache de"
    ],
    "doc": "Captura o handler de uma edge escrita com `Deno.serve(fn)` sem alterar o codigo de producao. Muitas edges registram o handler direto no modulo, entao importa-las subiria um servidor de verdade. Este helper substitui `Deno.serve` por um espião, importa o modulo e devolve o handler capturado para o te …"
+  },
+  "supabase/functions/_shared/__tests__/cors.test.ts": {
+   "path": "supabase/functions/_shared/__tests__/cors.test.ts",
+   "lines": 51,
+   "is_test": true,
+   "env": [
+    "CORS_EXTRA_ORIGINS"
+   ],
+   "tests": [
+    "cors: origem de producao (Vercel) e ecoada",
+    "cors: origem desconhecida nao e ecoada (cai no default)",
+    "cors: sem header Origin nao quebra",
+    "cors: CORS_EXTRA_ORIGINS libera origem adicional",
+    "cors: preflight anuncia os headers usados pelo front",
+    "cors: deprecado corsHeaders reflete origem de producao"
+   ]
   },
   "supabase/functions/_shared/__tests__/resilience.test.ts": {
    "path": "supabase/functions/_shared/__tests__/resilience.test.ts",
@@ -122176,10 +122223,20 @@
   }
  },
  "git": {
-  "sha": "6f648ab906e01b5855f53511f7c146410baf45d8",
+  "sha": "bb8f219aeef64dbe6a02fbce4e81ac1f2547985d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "bb8f219",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix(edge): libera a origem de producao no CORS das edge functions (#117)",
+    "files": [
+     "supabase/functions/_shared/__tests__/cors.test.ts",
+     "supabase/functions/_shared/cors.ts"
+    ]
+   },
    {
     "sha": "6f648ab",
     "date": "2026-11-22",
@@ -122692,25 +122749,15 @@
     "files": [
      "docs/audits/pendencias-2026-07.md"
     ]
-   },
-   {
-    "sha": "c206c6c",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "docs: catalogo de edge functions gerado do codigo (#87)",
-    "files": [
-     "docs/edge-functions/README.md",
-     "scripts/inventario/gerar-catalogo-edges.mjs"
-    ]
    }
   ],
   "hot_files": [
    [
-    "docs/edge-functions/README.md",
-    7
+    "docs/estado/funcionalidades-planejadas.md",
+    6
    ],
    [
-    "docs/estado/funcionalidades-planejadas.md",
+    "docs/edge-functions/README.md",
     6
    ],
    [

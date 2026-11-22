@@ -42,7 +42,7 @@
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
-   "importado_por": 87
+   "importado_por": 88
   },
   {
    "arquivo": "src/components/ui/select.tsx",
