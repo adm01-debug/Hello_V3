@@ -32,7 +32,7 @@
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
 | kb_article_history_article_id_fkey | FOREIGN KEY | `FOREIGN KEY (article_id) REFERENCES kb_articles(id) ON DELETE CASCADE` | CASCADE | NO ACTION | sim |
-| kb_article_history_changed_by_fkey | FOREIGN KEY | `FOREIGN KEY (changed_by) REFERENCES auth.users(id)` | NO ACTION | NO ACTION | sim |
+| kb_article_history_changed_by_fkey | FOREIGN KEY | `FOREIGN KEY (changed_by) REFERENCES auth.users(id) ON DELETE SET NULL` | SET NULL | NO ACTION | sim |
 | kb_article_history_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
 
 

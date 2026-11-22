@@ -235,3 +235,4 @@ SQL em `migrations/<versao>_<nome>.sql`. Mudanças feitas pelo Dashboard/SQL Edi
 | 20261122350000 | [20261122350000_revert_parked_calls_scope](migrations/20261122350000_20261122350000_revert_parked_calls_scope.sql) | 0 |
 | 20261122360000 | [20261122360000_storage_policies_rename_and_scope](migrations/20261122360000_20261122360000_storage_policies_rename_and_scope.sql) | 0 |
 | 20261122370000 | [20261122370000_holiday_region_isolation](migrations/20261122370000_20261122370000_holiday_region_isolation.sql) | 0 |
+| 20261123010000 | [20261123010000_fix_user_delete_cascade](migrations/20261123010000_20261123010000_fix_user_delete_cascade.sql) | 0 |

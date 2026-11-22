@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "49ee3776ebac4a998a8bb515b398503839e8091a",
+  "sha": "433f7b623cd0733e943d1eb6cfdcbc96d9fa2146",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 18:05 UTC",
+  "generated_at": "2026-11-22 18:14 UTC",
   "files_total": 1683,
   "code_files": 1486,
   "code_lines": 185356
@@ -122960,10 +122960,19 @@
   }
  },
  "git": {
-  "sha": "49ee3776ebac4a998a8bb515b398503839e8091a",
+  "sha": "433f7b623cd0733e943d1eb6cfdcbc96d9fa2146",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "433f7b6",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)",
+    "files": [
+     "docs/audits/pendencias-2026-07.md"
+    ]
+   },
    {
     "sha": "49ee377",
     "date": "2026-11-22",
@@ -123256,15 +123265,6 @@
      "src/hooks/useAgentRanking.ts",
      "src/pages/AgentRanking.tsx"
     ]
-   },
-   {
-    "sha": "8c73b1e",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "test: escopa locators do login para #email/#password no E2E (#119)",
-    "files": [
-     "tests/e2e/auth.spec.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -123274,7 +123274,7 @@
    ],
    [
     "docs/audits/pendencias-2026-07.md",
-    4
+    5
    ],
    [
     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",

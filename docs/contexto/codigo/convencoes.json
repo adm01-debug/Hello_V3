@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)",
    "fix: troca teste falso de optimistic lock por guarda real do contrato (#148)",
    "docs: corrige roadmap desatualizado e registra verificacoes de 22/11 (#147)",
    "fix: exclusao de conta de usuario (8 FKs em NO ACTION bloqueavam o DELETE) (#146)",
-   "docs: scorecards entregues e cron do data-lake endurecido (#145)",
-   "fix: cron data-lake-flush usa token dedicado em vez da anon key (#144)"
+   "docs: scorecards entregues e cron do data-lake endurecido (#145)"
   ]
  },
  "pr_template": null,

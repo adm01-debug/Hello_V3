@@ -31,7 +31,7 @@
 
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
-| user_roles_granted_by_fkey | FOREIGN KEY | `FOREIGN KEY (granted_by) REFERENCES auth.users(id)` | NO ACTION | NO ACTION | sim |
+| user_roles_granted_by_fkey | FOREIGN KEY | `FOREIGN KEY (granted_by) REFERENCES auth.users(id) ON DELETE SET NULL` | SET NULL | NO ACTION | sim |
 | user_roles_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
 | user_roles_user_id_fkey | FOREIGN KEY | `FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE` | CASCADE | NO ACTION | sim |
 | user_roles_user_id_role_key | UNIQUE | `UNIQUE (user_id, role)` |  |  | sim |

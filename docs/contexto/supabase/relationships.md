@@ -66,12 +66,12 @@
 | public.dialer_queue | contact_id | public.contacts | id | SET NULL | NO ACTION |
 | public.email_tickets | conversation_id | public.conversations | id | CASCADE | NO ACTION |
 | public.email_verification_tokens | user_id | auth.users | id | CASCADE | NO ACTION |
-| public.entity_versions | changed_by | auth.users | id | NO ACTION | NO ACTION |
+| public.entity_versions | changed_by | auth.users | id | SET NULL | NO ACTION |
 | public.fraud_signals | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
 | public.goal_violations | goal_id | public.dashboard_goals | id | CASCADE | NO ACTION |
 | public.hold_events | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
 | public.kb_article_history | article_id | public.kb_articles | id | CASCADE | NO ACTION |
-| public.kb_article_history | changed_by | auth.users | id | NO ACTION | NO ACTION |
+| public.kb_article_history | changed_by | auth.users | id | SET NULL | NO ACTION |
 | public.kb_article_views | article_id | public.kb_articles | id | CASCADE | NO ACTION |
 | public.kb_article_views | conversation_id | public.conversations | id | SET NULL | NO ACTION |
 | public.kb_articles | category_id | public.kb_categories | id | SET NULL | NO ACTION |
@@ -88,13 +88,13 @@
 | public.parked_calls | parked_by | auth.users | id | SET NULL | NO ACTION |
 | public.parked_calls | retrieved_by | auth.users | id | SET NULL | NO ACTION |
 | public.password_reset_tokens | user_id | auth.users | id | CASCADE | NO ACTION |
-| public.performance_metrics | user_id | auth.users | id | NO ACTION | NO ACTION |
+| public.performance_metrics | user_id | auth.users | id | SET NULL | NO ACTION |
 | public.playlist_items | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
 | public.playlist_items | playlist_id | public.call_playlists | id | CASCADE | NO ACTION |
 | public.queue_skill_requirements | skill_id | public.skills | id | CASCADE | NO ACTION |
-| public.rate_limit_alerts | resolved_by | auth.users | id | NO ACTION | NO ACTION |
-| public.rate_limit_alerts | user_id | auth.users | id | NO ACTION | NO ACTION |
-| public.rate_limit_logs | user_id | auth.users | id | NO ACTION | NO ACTION |
+| public.rate_limit_alerts | resolved_by | auth.users | id | SET NULL | NO ACTION |
+| public.rate_limit_alerts | user_id | auth.users | id | SET NULL | NO ACTION |
+| public.rate_limit_logs | user_id | auth.users | id | SET NULL | NO ACTION |
 | public.redaction_log | call_session_id | public.call_sessions | id | SET NULL | NO ACTION |
 | public.renewals | account_id | public.accounts | id | CASCADE | NO ACTION |
 | public.ring_group_members | agent_id | public.agents | id | CASCADE | NO ACTION |
@@ -125,7 +125,7 @@
 | public.user_passkeys | user_id | auth.users | id | CASCADE | NO ACTION |
 | public.user_profiles | agent_id | public.agents | id | NO ACTION | NO ACTION |
 | public.user_profiles | id | auth.users | id | CASCADE | NO ACTION |
-| public.user_roles | granted_by | auth.users | id | NO ACTION | NO ACTION |
+| public.user_roles | granted_by | auth.users | id | SET NULL | NO ACTION |
 | public.user_roles | user_id | auth.users | id | CASCADE | NO ACTION |
 | public.voice_prints | user_id | auth.users | id | CASCADE | NO ACTION |
 | public.voip_quality_alerts | call_session_id | public.call_sessions | id | SET NULL | NO ACTION |

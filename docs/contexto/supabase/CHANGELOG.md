@@ -2,6 +2,11 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-22 18:14 UTC
+
+- **constraints** alterado (7): `public.entity_versions.entity_versions_changed_by_fkey`, `public.kb_article_history.kb_article_history_changed_by_fkey`, `public.performance_metrics.performance_metrics_user_id_fkey`, `public.rate_limit_alerts.rate_limit_alerts_resolved_by_fkey`, `public.rate_limit_alerts.rate_limit_alerts_user_id_fkey`, `public.rate_limit_logs.rate_limit_logs_user_id_fkey`, `public.user_roles.user_roles_granted_by_fkey`
+- **migrations** adicionado (1): `20261123010000_20261123010000_fix_user_delete_cascade`
+
 ## 2026-11-22 17:11 UTC
 
 - **cron jobs** adicionado (1): `16:data-lake-flush-daily`

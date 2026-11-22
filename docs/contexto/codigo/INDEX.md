@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `49ee3776ebac4a998a8bb515b398503839e8091a` (2026-11-22T15:04:57-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `433f7b623cd0733e943d1eb6cfdcbc96d9fa2146` (2026-11-22T15:12:45-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -370,16 +370,16 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9192 nós · 24332 arestas · 732 comunidades · grafo do commit `49ee3776`
+- 9192 nós · 24332 arestas · 732 comunidades · grafo do commit `433f7b62`
 - comunidades maiores: card.tsx (249), react (206), client.ts (165), CallDetailDialog.tsx (162), lucide-react (154), vitest (140), traceHeaders (129), @tanstack/react-query (117), protectedRoutes.tsx (107), cn (105), select.tsx (105), snapshot.py (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/estado/funcionalidades-planejadas.md (25)
+- docs/audits/pendencias-2026-07.md (8)
 - src/components/layout/AppSidebar.tsx (8)
 - .github/workflows/ci.yml (7)
-- docs/audits/pendencias-2026-07.md (7)
 - docs/edge-functions/README.md (7)
 - .github/workflows/contexto.yml (6)
 - src/components/layout/CommandPalette.tsx (6)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `433f7b6` chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)
 - 2026-11-22 `49ee377` fix: troca teste falso de optimistic lock por guarda real do contrato (#148)
 - 2026-11-22 `df7171f` docs: corrige roadmap desatualizado e registra verificacoes de 22/11 (#147)
 - 2026-11-22 `025ada5` fix: exclusao de conta de usuario (8 FKs em NO ACTION bloqueavam o DELETE) (#146)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `80115e5` fix: cron de retencao de lock-conflicts nunca autenticava (#137)
 - 2026-11-22 `9d3d288` docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)
 - 2026-11-22 `c7bbfa0` docs: valida IA e Data Lake ponta a ponta em producao (#135)
-- 2026-11-22 `28337d1` docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

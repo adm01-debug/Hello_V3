@@ -30,7 +30,7 @@
 
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
-| entity_versions_changed_by_fkey | FOREIGN KEY | `FOREIGN KEY (changed_by) REFERENCES auth.users(id)` | NO ACTION | NO ACTION | sim |
+| entity_versions_changed_by_fkey | FOREIGN KEY | `FOREIGN KEY (changed_by) REFERENCES auth.users(id) ON DELETE SET NULL` | SET NULL | NO ACTION | sim |
 | entity_versions_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
 | unique_entity_version | UNIQUE | `UNIQUE (entity_type, entity_id, version_number)` |  |  | sim |
 

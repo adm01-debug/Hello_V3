@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "49ee3776ebac4a998a8bb515b398503839e8091a",
+  "commit": "433f7b623cd0733e943d1eb6cfdcbc96d9fa2146",
   "branch": "main",
-  "data_commit": "2026-11-22T15:04:57-03:00",
+  "data_commit": "2026-11-22T15:12:45-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "433f7b6",
+    "data": "2026-11-22",
+    "assunto": "chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)"
+   },
    {
     "sha": "49ee377",
     "data": "2026-11-22",
@@ -126,11 +131,6 @@
     "sha": "d337973",
     "data": "2026-11-22",
     "assunto": "fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)"
-   },
-   {
-    "sha": "36c5c1f",
-    "data": "2026-11-22",
-    "assunto": "chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)"
    }
   ],
   "arquivos_mudados_7d": 871,
@@ -172,11 +172,11 @@
     "mudancas": 12
    },
    {
-    "pasta": ".github/workflows/ci.yml",
-    "mudancas": 7
+    "pasta": "docs/audits/pendencias-2026-07.md",
+    "mudancas": 8
    },
    {
-    "pasta": "docs/audits/pendencias-2026-07.md",
+    "pasta": ".github/workflows/ci.yml",
     "mudancas": 7
    },
    {
@@ -202,15 +202,15 @@
     "mudancas": 25
    },
    {
+    "arquivo": "docs/audits/pendencias-2026-07.md",
+    "mudancas": 8
+   },
+   {
     "arquivo": "src/components/layout/AppSidebar.tsx",
     "mudancas": 8
    },
    {
     "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 7
-   },
-   {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 7
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 129
+    "commits": 130
    },
    {
     "autor": "Joaquim Ataides",
