@@ -16,12 +16,12 @@
    "src/contexts (3)"
   ],
   "servicos_logica": [
-   "src/lib (79)",
+   "src/lib (80)",
    "src/integrations (3)",
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (304)",
+   "co-localizado (__tests__) (305)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)",
    "fix: valida IP de header antes de usar em URL, log e autorizacao (#102)",
    "fix: valida IP literal antes de montar a URL do provedor de geo (#101)",
    "docs: re-scorecard 9,1/10 com os PRs #96, #97, #98 e #99 (#100)",
-   "chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)",
-   "docs: regenera indice de ADRs (7 de 53 estavam listados) (#98)"
+   "chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)"
   ]
  },
  "pr_template": null,

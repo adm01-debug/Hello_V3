@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4aeee51feda90c6d4c5e3d632753df8208738535",
+  "commit": "4c76ea5c701c9336e94ee55dcc9ba6d992298361",
   "branch": "main",
-  "data_commit": "2026-11-21T23:20:57-03:00",
+  "data_commit": "2026-11-21T23:30:56-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4c76ea5",
+    "data": "2026-11-21",
+    "assunto": "fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)"
+   },
    {
     "sha": "4aeee51",
     "data": "2026-11-21",
@@ -126,14 +131,9 @@
     "sha": "ee5082d",
     "data": "2026-11-21",
     "assunto": "feat: (#77)"
-   },
-   {
-    "sha": "b2f65d7",
-    "data": "2026-11-21",
-    "assunto": "feat: (#76)"
    }
   ],
-  "arquivos_mudados_7d": 767,
+  "arquivos_mudados_7d": 773,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 19
+    "mudancas": 20
    },
    {
     "pasta": "covout/lib/security",
@@ -160,12 +160,12 @@
     "mudancas": 12
    },
    {
-    "pasta": "src/components/layout",
+    "pasta": "src/components/calls",
     "mudancas": 10
    },
    {
-    "pasta": "src/components/calls",
-    "mudancas": 9
+    "pasta": "src/components/layout",
+    "mudancas": 10
    },
    {
     "pasta": "supabase/functions/_shared",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 84
+    "commits": 85
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1585,
-  "arquivos_codigo": 1217,
-  "linhas_codigo": 166974,
+  "arquivos_total": 1587,
+  "arquivos_codigo": 1219,
+  "linhas_codigo": 167078,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 215,
   "cron_jobs": 9,
-  "testes": 326,
+  "testes": 327,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41890
+   "linhas": 41922
   },
   "src/contexts": {
    "arquivos": 3,
@@ -499,8 +499,8 @@
    "linhas": 7847
   },
   "src/lib": {
-   "arquivos": 160,
-   "linhas": 20643
+   "arquivos": 162,
+   "linhas": 20715
   },
   "src/main.tsx": {
    "arquivos": 1,

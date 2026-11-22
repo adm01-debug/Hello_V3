@@ -410,7 +410,7 @@
     "WhisperNotification"
    ],
    "export_default": null,
-   "linhas": 247,
+   "linhas": 251,
    "dominio": "components/agent",
    "hooks_locais": [],
    "tabelas": [
@@ -739,7 +739,7 @@
     "CallSessionsList"
    ],
    "export_default": null,
-   "linhas": 129,
+   "linhas": 133,
    "dominio": "components/call-history",
    "hooks_locais": [],
    "tabelas": [],
@@ -1095,7 +1095,7 @@
     "HistoryTab"
    ],
    "export_default": null,
-   "linhas": 94,
+   "linhas": 98,
    "dominio": "components/calls",
    "hooks_locais": [],
    "tabelas": [],
@@ -1454,7 +1454,7 @@
     "ContactAlertsDropdown"
    ],
    "export_default": null,
-   "linhas": 247,
+   "linhas": 251,
    "dominio": "components/contacts",
    "hooks_locais": [
     "useContactAlerts"
@@ -1626,7 +1626,7 @@
     "TranscriptSegment"
    ],
    "export_default": null,
-   "linhas": 177,
+   "linhas": 181,
    "dominio": "components/conversation-intelligence",
    "hooks_locais": [],
    "tabelas": [],
@@ -1913,7 +1913,7 @@
     "AddContactsDialog"
    ],
    "export_default": null,
-   "linhas": 324,
+   "linhas": 328,
    "dominio": "components/dialer",
    "hooks_locais": [
     "useContacts",
@@ -3118,7 +3118,7 @@
     "UnifiedNotificationDropdown"
    ],
    "export_default": null,
-   "linhas": 266,
+   "linhas": 270,
    "dominio": "components/notifications",
    "hooks_locais": [
     "useAlerts",
@@ -3880,7 +3880,7 @@
     "ActiveCallsList"
    ],
    "export_default": null,
-   "linhas": 67,
+   "linhas": 71,
    "dominio": "components/supervisor",
    "hooks_locais": [],
    "tabelas": [],

@@ -179,6 +179,7 @@
    "src/components/ui/card.tsx",
    "src/components/ui/scroll-area.tsx",
    "src/integrations/supabase/client.ts",
+   "src/lib/a11y-clickable.ts",
    "src/lib/safe-date.ts"
   ],
   "src/components/ai/AICallAnalysis.tsx": [
@@ -337,6 +338,7 @@
    "src/components/ui/button.tsx",
    "src/components/ui/card.tsx",
    "src/hooks/useCallHistory.ts",
+   "src/lib/a11y-clickable.ts",
    "src/lib/safe-date.ts",
    "src/lib/utils.ts"
   ],
@@ -588,6 +590,7 @@
    "src/components/ui/button.tsx",
    "src/components/ui/scroll-area.tsx",
    "src/hooks/useMultiChannelCall.ts",
+   "src/lib/a11y-clickable.ts",
    "src/lib/utils.ts"
   ],
   "src/components/calls/softphone/constants.tsx": [
@@ -754,6 +757,7 @@
    "src/components/ui/popover.tsx",
    "src/components/ui/scroll-area.tsx",
    "src/hooks/useContactAlerts.ts",
+   "src/lib/a11y-clickable.ts",
    "src/lib/safe-date.ts",
    "src/lib/utils.ts"
   ],
@@ -841,6 +845,7 @@
    "src/components/ui/card.tsx",
    "src/components/ui/scroll-area.tsx",
    "src/components/ui/slider.tsx",
+   "src/lib/a11y-clickable.ts",
    "src/lib/utils.ts"
   ],
   "src/components/conversation-intelligence/CoachingTimeline.tsx": [
@@ -968,7 +973,8 @@
    "src/components/ui/tabs.tsx",
    "src/components/ui/textarea.tsx",
    "src/hooks/useContacts.ts",
-   "src/hooks/usePredictiveDialer.ts"
+   "src/hooks/usePredictiveDialer.ts",
+   "src/lib/a11y-clickable.ts"
   ],
   "src/components/dialer/CreateCampaignDialog.tsx": [
    "src/components/ui/button.tsx",
@@ -1514,6 +1520,7 @@
    "src/components/ui/tabs.tsx",
    "src/hooks/useAlerts.ts",
    "src/hooks/useRealtimeHoldAlerts.ts",
+   "src/lib/a11y-clickable.ts",
    "src/lib/safe-date.ts",
    "src/lib/utils.ts"
   ],
@@ -1887,6 +1894,7 @@
    "src/components/supervisor/panel/types.ts",
    "src/components/ui/badge.tsx",
    "src/components/ui/scroll-area.tsx",
+   "src/lib/a11y-clickable.ts",
    "src/lib/utils.ts"
   ],
   "src/components/supervisor/panel/BargeInBanner.tsx": [

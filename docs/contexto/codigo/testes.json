@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 326,
+ "total": 327,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 310
+  "unit": 311
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 304
+   "arquivos": 305
   },
   {
    "padrao": "e2e/",
@@ -1803,6 +1803,15 @@
    "casos": 5
   },
   {
+   "arquivo": "src/lib/__tests__/a11y-clickable.test.ts",
+   "tipo": "unit",
+   "linhas": 43,
+   "testa": [
+    "src/lib/a11y-clickable.ts"
+   ],
+   "casos": 3
+  },
+  {
    "arquivo": "src/lib/__tests__/accessibility-improvements.test.ts",
    "tipo": "unit",
    "linhas": 198,
@@ -3099,6 +3108,7 @@
   "src/hooks/useWebVitals.ts": 1,
   "src/hooks/useWhatsappRewrite.ts": 1,
   "src/integrations/supabase/client.ts": 29,
+  "src/lib/a11y-clickable.ts": 1,
   "src/lib/agent-assist-utils.ts": 2,
   "src/lib/audit/index.ts": 2,
   "src/lib/blf.ts": 1,

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "4aeee51feda90c6d4c5e3d632753df8208738535",
+  "sha": "4c76ea5c701c9336e94ee55dcc9ba6d992298361",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 02:21 UTC",
-  "files_total": 1632,
-  "code_files": 1435,
-  "code_lines": 181324
+  "generated_at": "2026-11-22 02:31 UTC",
+  "files_total": 1634,
+  "code_files": 1437,
+  "code_lines": 181428
  },
  "version": "1.3.2",
- "facts_hash": "2ad611c4d2f8aa8c",
+ "facts_hash": "7458dd6102451cf6",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 603,
-   ".ts": 581,
+   ".ts": 583,
    ".sql": 217,
    ".mjs": 27,
    ".py": 5,
@@ -27859,7 +27859,7 @@
      "get_call_history_with_summaries",
      "log_audit_event"
     ],
-    "deps_count": 38
+    "deps_count": 39
    },
    {
     "path": "",
@@ -27941,7 +27941,7 @@
     "rpc_transitive": [
      "record_trunk_usage"
     ],
-    "deps_count": 55
+    "deps_count": 56
    },
    {
     "path": "",
@@ -28060,7 +28060,7 @@
     "rpc_transitive": [
      "record_trunk_usage"
     ],
-    "deps_count": 37
+    "deps_count": 38
    },
    {
     "path": "",
@@ -28253,7 +28253,7 @@
      "get_dashboard_stats",
      "get_queue_stats"
     ],
-    "deps_count": 68
+    "deps_count": 69
    },
    {
     "path": "",
@@ -32773,7 +32773,7 @@
   {
    "module": "src/components",
    "files": 350,
-   "lines": 41890,
+   "lines": 41922,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33330,8 +33330,8 @@
   },
   {
    "module": "src/lib",
-   "files": 160,
-   "lines": 20643,
+   "files": 162,
+   "lines": 20715,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -33339,6 +33339,7 @@
     "user_mfa_settings"
    ],
    "exports": [
+    "a11y-clickable.ts: clickableRowProps, activateOnKey",
     "agent-assist-utils.ts: IntentType, MinimalSignal, INTENT_LABELS, INTENT_COLORS, matchesKeywords, buildRecentContext",
     "blf.ts: LAMP_STATES, LampState, LAMP_LABELS, LAMP_PRIORITY, BlfAgentRow, BlfSessionRow",
     "call-park.ts: PARK_TIMEOUT_ACTIONS, ParkTimeoutAction, PARK_TIMEOUT_ACTION_LABELS, ACTIONS_REQUIRING_TARGET, PARKED_CALL_STATUSES, ParkedCallStatus",
@@ -33377,8 +33378,7 @@
     "talkRatio.ts: TalkRatioSegment, TalkRatioComputation, computeTalkRatio",
     "tracing.ts: getTraceId, getTraceOperation, traceHeaders, withTrace, startTrace, endTrace",
     "voice-biometrics.ts: ExtractedFeatures, captureVoiceSample, isValidEmbedding, VOICE_VECTOR_DIM",
-    "voice-command-history.ts: MAX_HISTORY_ENTRIES, MAX_COMMAND_LENGTH, VoiceCommandEntry, sanitizeCommand, loadCommandHistory, pushCommandHistory",
-    "voice-preferences.ts: MIN_TTS_RATE, MAX_TTS_RATE, TTS_RATE_STEPS, clampTtsRate, nextTtsRate, formatTtsRate"
+    "voice-command-history.ts: MAX_HISTORY_ENTRIES, MAX_COMMAND_LENGTH, VoiceCommandEntry, sanitizeCommand, loadCommandHistory, pushCommandHistory"
    ],
    "docs": [
     "agent-assist-utils.ts: Utilitários puros para Real-Time Agent Assist. Sem efeitos colaterais — fáceis de testar.",
@@ -33418,6 +33418,7 @@
     "src/integrations"
    ],
    "file_list": [
+    "src/lib/a11y-clickable.ts",
     "src/lib/agent-assist-utils.ts",
     "src/lib/blf.ts",
     "src/lib/call-park.ts",
@@ -33465,6 +33466,7 @@
     "src/lib/web-vitals.ts",
     "src/lib/webhook-health-utils.ts",
     "src/lib/webrtc-config.ts",
+    "src/lib/__tests__/a11y-clickable.test.ts",
     "src/lib/__tests__/accessibility-improvements.test.ts",
     "src/lib/__tests__/agent-assist-utils.test.ts",
     "src/lib/__tests__/agent-assist.pbt.test.ts",
@@ -33495,9 +33497,7 @@
     "src/lib/__tests__/logger.test.ts",
     "src/lib/__tests__/meeting-summary-utils.test.ts",
     "src/lib/__tests__/mock-data-integrity.test.ts",
-    "src/lib/__tests__/outbound-scoring.test.ts",
-    "src/lib/__tests__/performance-optimizations.test.ts",
-    "src/lib/__tests__/phone-normalization.property.test.ts"
+    "src/lib/__tests__/outbound-scoring.test.ts"
    ]
   },
   {
@@ -51832,6 +51832,12 @@
     "kind": "filtra"
    },
    {
+    "file": "src/lib/a11y-clickable.ts",
+    "field": "role",
+    "value": "button",
+    "kind": "escreve"
+   },
+   {
     "file": "src/lib/blf.ts",
     "field": "state",
     "value": "parked",
@@ -64670,6 +64676,22 @@
    {
     "file": "src/hooks/telemetry/__tests__/useTelemetry.coverage.test.tsx",
     "name": "lida com exceção lançada pelo insert"
+   },
+   {
+    "file": "src/lib/__tests__/a11y-clickable.test.ts",
+    "name": "clickableRowProps"
+   },
+   {
+    "file": "src/lib/__tests__/a11y-clickable.test.ts",
+    "name": "entrega semantica de controle focavel"
+   },
+   {
+    "file": "src/lib/__tests__/a11y-clickable.test.ts",
+    "name": "ativa com Enter e com Espaco, consumindo o evento"
+   },
+   {
+    "file": "src/lib/__tests__/a11y-clickable.test.ts",
+    "name": "ignora teclas que nao ativam"
    },
    {
     "file": "src/lib/__tests__/accessibility-improvements.test.ts",
@@ -81463,6 +81485,9 @@
       "compara:src/pages/Knowledge.tsx",
       "compara:src/pages/roles/RoleStatsCards.tsx"
      ],
+     "button": [
+      "escreve:src/lib/a11y-clickable.ts"
+     ],
      "agent": [
       "compara:src/lib/talkRatio.ts",
       "compara:src/pages/roles/RoleStatsCards.tsx",
@@ -90063,7 +90088,7 @@
   },
   "src/components/agent/WhisperNotification.tsx": {
    "path": "src/components/agent/WhisperNotification.tsx",
-   "lines": 247,
+   "lines": 251,
    "exports": [
     "const WhisperNotification"
    ],
@@ -90453,7 +90478,7 @@
   },
   "src/components/call-history/CallSessionsList.tsx": {
    "path": "src/components/call-history/CallSessionsList.tsx",
-   "lines": 129,
+   "lines": 133,
    "exports": [
     "function CallSessionsList"
    ],
@@ -91260,7 +91285,7 @@
   },
   "src/components/calls/softphone/TabContents.tsx": {
    "path": "src/components/calls/softphone/TabContents.tsx",
-   "lines": 94,
+   "lines": 98,
    "exports": [
     "function ContactsTab",
     "function HistoryTab"
@@ -91614,7 +91639,7 @@
   },
   "src/components/contacts/ContactAlertsDropdown.tsx": {
    "path": "src/components/contacts/ContactAlertsDropdown.tsx",
-   "lines": 247,
+   "lines": 251,
    "exports": [
     "function ContactAlertsDropdown"
    ],
@@ -91771,7 +91796,7 @@
   },
   "src/components/conversation-intelligence/CallPlayerWithTranscript.tsx": {
    "path": "src/components/conversation-intelligence/CallPlayerWithTranscript.tsx",
-   "lines": 177,
+   "lines": 181,
    "exports": [
     "interface TranscriptSegment",
     "interface PlayerMarker",
@@ -92056,7 +92081,7 @@
   },
   "src/components/dialer/AddContactsDialog.tsx": {
    "path": "src/components/dialer/AddContactsDialog.tsx",
-   "lines": 324,
+   "lines": 328,
    "exports": [
     "function AddContactsDialog"
    ]
@@ -93346,7 +93371,7 @@
   },
   "src/components/notifications/UnifiedNotificationDropdown.tsx": {
    "path": "src/components/notifications/UnifiedNotificationDropdown.tsx",
-   "lines": 266,
+   "lines": 270,
    "navigates": [
     "/contacts",
     "/notifications"
@@ -94175,7 +94200,7 @@
   },
   "src/components/supervisor/panel/ActiveCallsList.tsx": {
    "path": "src/components/supervisor/panel/ActiveCallsList.tsx",
-   "lines": 67,
+   "lines": 71,
    "exports": [
     "function ActiveCallsList"
    ]
@@ -106274,6 +106299,21 @@
     "notify_on_warning"
    ]
   },
+  "src/lib/a11y-clickable.ts": {
+   "path": "src/lib/a11y-clickable.ts",
+   "lines": 29,
+   "exports": [
+    "function clickableRowProps",
+    "function activateOnKey"
+   ],
+   "status_values": [
+    {
+     "field": "role",
+     "value": "button",
+     "kind": "escreve"
+    }
+   ]
+  },
   "src/lib/agent-assist-utils.ts": {
    "path": "src/lib/agent-assist-utils.ts",
    "lines": 138,
@@ -107700,6 +107740,17 @@
     "VITE_TURN_USER"
    ],
    "doc": "Configuração central de ICE servers para WebRTC. TURN opcional via env: VITE_TURN_URL, VITE_TURN_USER, VITE_TURN_CRED."
+  },
+  "src/lib/__tests__/a11y-clickable.test.ts": {
+   "path": "src/lib/__tests__/a11y-clickable.test.ts",
+   "lines": 43,
+   "is_test": true,
+   "tests": [
+    "clickableRowProps",
+    "entrega semantica de controle focavel",
+    "ativa com Enter e com Espaco, consumindo o evento",
+    "ignora teclas que nao ativam"
+   ]
   },
   "src/lib/__tests__/accessibility-improvements.test.ts": {
    "path": "src/lib/__tests__/accessibility-improvements.test.ts",
@@ -120783,10 +120834,28 @@
   }
  },
  "git": {
-  "sha": "4aeee51feda90c6d4c5e3d632753df8208738535",
+  "sha": "4c76ea5c701c9336e94ee55dcc9ba6d992298361",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4c76ea5",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)",
+    "files": [
+     "src/components/agent/WhisperNotification.tsx",
+     "src/components/call-history/CallSessionsList.tsx",
+     "src/components/calls/softphone/TabContents.tsx",
+     "src/components/contacts/ContactAlertsDropdown.tsx",
+     "src/components/conversation-intelligence/CallPlayerWithTranscript.tsx",
+     "src/components/dialer/AddContactsDialog.tsx",
+     "src/components/notifications/UnifiedNotificationDropdown.tsx",
+     "src/components/supervisor/panel/ActiveCallsList.tsx",
+     "src/lib/__tests__/a11y-clickable.test.ts",
+     "src/lib/a11y-clickable.ts"
+    ]
+   },
    {
     "sha": "4aeee51",
     "date": "2026-11-21",
@@ -121253,15 +121322,6 @@
     "files": [
      "docs/estado/funcionalidades-planejadas.md"
     ]
-   },
-   {
-    "sha": "92533c9",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "fix: adiciona guards de tabela/coluna no performance_indexes para Supabase Preview (#66)",
-    "files": [
-     "supabase/migrations/20250102000000_performance_indexes.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -121284,6 +121344,22 @@
    [
     "docs/audits/pendencias-2026-07.md",
     3
+   ],
+   [
+    "src/components/agent/WhisperNotification.tsx",
+    2
+   ],
+   [
+    "src/components/call-history/CallSessionsList.tsx",
+    2
+   ],
+   [
+    "src/components/calls/softphone/TabContents.tsx",
+    2
+   ],
+   [
+    "src/components/notifications/UnifiedNotificationDropdown.tsx",
+    2
    ],
    [
     "deno.lock",
@@ -121310,39 +121386,23 @@
     2
    ],
    [
-    "supabase/migrations/20250102000000_performance_indexes.sql",
-    2
-   ],
-   [
-    "supabase/functions/_shared/client-ip.ts",
+    "src/components/contacts/ContactAlertsDropdown.tsx",
     1
    ],
    [
-    "supabase/functions/_shared/client-ip_test.ts",
+    "src/components/conversation-intelligence/CallPlayerWithTranscript.tsx",
     1
    ],
    [
-    "supabase/functions/record-consent/index.ts",
+    "src/components/dialer/AddContactsDialog.tsx",
     1
    ],
    [
-    "supabase/functions/request-password-reset/index.ts",
+    "src/components/supervisor/panel/ActiveCallsList.tsx",
     1
    ],
    [
-    "supabase/functions/validate-ip/index.ts",
-    1
-   ],
-   [
-    "src/components/agent/BargeInNotification.tsx",
-    1
-   ],
-   [
-    "src/components/agent/WhisperNotification.tsx",
-    1
-   ],
-   [
-    "src/components/ai/AICallAnalysis.tsx",
+    "src/lib/__tests__/a11y-clickable.test.ts",
     1
    ]
   ]

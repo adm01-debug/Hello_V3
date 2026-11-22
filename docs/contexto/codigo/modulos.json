@@ -199,7 +199,7 @@
    "modulo": "components/agent",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 381,
+   "linhas": 385,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -222,7 +222,9 @@
     "VITE_SUPABASE_URL"
    ],
    "flags": [],
-   "papeis": [],
+   "papeis": [
+    "button"
+   ],
    "diretos": {
     "edges": [],
     "tabelas": [
@@ -459,7 +461,7 @@
    "modulo": "components/call-history",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 403,
+   "linhas": 407,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -635,7 +637,7 @@
    "modulo": "components/calls",
    "arquivos": 27,
    "testes": 4,
-   "linhas": 3752,
+   "linhas": 3756,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -912,7 +914,7 @@
    "modulo": "components/contacts",
    "arquivos": 11,
    "testes": 0,
-   "linhas": 1460,
+   "linhas": 1464,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -953,7 +955,9 @@
     "VITE_SUPABASE_URL"
    ],
    "flags": [],
-   "papeis": [],
+   "papeis": [
+    "button"
+   ],
    "diretos": {
     "edges": [
      "analyze-contact-profile"
@@ -986,7 +990,7 @@
    "modulo": "components/conversation-intelligence",
    "arquivos": 7,
    "testes": 0,
-   "linhas": 692,
+   "linhas": 696,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1132,7 +1136,7 @@
    "modulo": "components/dialer",
    "arquivos": 16,
    "testes": 1,
-   "linhas": 2230,
+   "linhas": 2234,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1184,6 +1188,7 @@
    ],
    "flags": [],
    "papeis": [
+    "button",
     "group",
     "status"
    ],
@@ -2077,7 +2082,7 @@
    "modulo": "components/notifications",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 437,
+   "linhas": 441,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2108,6 +2113,7 @@
    ],
    "flags": [],
    "papeis": [
+    "button",
     "status"
    ],
    "diretos": {
@@ -2708,7 +2714,7 @@
    "modulo": "components/supervisor",
    "arquivos": 11,
    "testes": 0,
-   "linhas": 572,
+   "linhas": 576,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2737,7 +2743,9 @@
     "VITE_SUPABASE_URL"
    ],
    "flags": [],
-   "papeis": [],
+   "papeis": [
+    "button"
+   ],
    "diretos": {
     "edges": [],
     "tabelas": [],
@@ -4371,9 +4379,9 @@
   },
   {
    "modulo": "lib",
-   "arquivos": 47,
+   "arquivos": 48,
    "testes": 0,
-   "linhas": 6301,
+   "linhas": 6330,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4740,7 +4748,7 @@
   {
    "modulo": "lib/__tests__",
    "arquivos": 0,
-   "testes": 69,
+   "testes": 70,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
