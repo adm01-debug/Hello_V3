@@ -174,7 +174,7 @@ serve(async (req) => {
     let isAdmin = !rpcError && isAdminRpc === true;
     if (!isAdmin) {
       const { data: roleRow } = await admin
-        .from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").maybeSingle();
+        .from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").eq("is_active", true).maybeSingle();
       isAdmin = !!roleRow;
     }
     if (!isAdmin) return json({ error: "Acesso restrito a administradores" }, cors, 403);

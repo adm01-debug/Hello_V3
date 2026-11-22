@@ -47,11 +47,13 @@ Deno.serve(async (req) => {
 
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('email, role')
+      .select('email')
       .eq('id', user.id)
-      .single();
+      .maybeSingle();
 
-    if (!profile || !['admin', 'supervisor'].includes(profile.role)) {
+    const { data: isAdmin } = await supabase.rpc('is_admin_user', { _user_id: user.id });
+
+    if (!isAdmin || !profile) {
       return new Response(JSON.stringify({ error: 'Forbidden' }), { status: 403, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 

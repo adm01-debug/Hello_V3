@@ -20,7 +20,7 @@
 - **WIRING-03 CONCLUÍDO** — WhatsappComposer integrado ao Inbox (canal whatsapp); demais canais preservados.
 - **WIRING-05 CONCLUÍDO** — rota `/admin/security-audit` agora serve SecurityAuditDashboard (superset; recharts já instalada).
 - **WIRING-02 DESCARTADO** — call_sessions só `completed` (0 ativas); `/translation-center` já tem página própria; call_translations vazia.
-- **WIRING-04 / WIRING-06 AGUARDANDO WIRING** — tabelas alimentadas em 20/11 (seed aplicado: surveys=2, survey_responses=6, coaching_assignments=4, churn_risk_signals=5, call_playlists=2+3, compliance_rules=6, badges=6, agent_badges=3, agent_goals=1, agent_weekly_stats=4; ver _verificado-banco.md). Wirear os hooks agora é acionável numa PR futura.
+- **WIRING-04 / WIRING-06 CONCLUÍDOS (2026-11-22)** — tabelas alimentadas (surveys=2, survey_responses=6, coaching_assignments=4, churn_risk_signals=5, call_playlists=2+3, compliance_rules=6, badges=6, agent_badges=3, agent_goals=1, agent_weekly_stats=4) e wiring de UI executado. Cada hook tem consumidor e cada panel está montado em página: `SurveysPanel`, `CoachingAssignmentsPanel`, `ChurnSignalsPanel`, `CallPlaylistsPanel`, `ComplianceRulesPanel`, `AdherencePanel`, `GamificationDashboard` (com `useGamification` em 7 pontos).
 
 ### Itens OBSOLETOS (documento defasado — já ligados nesta semana)
 - Rotas/menu §6: /accounts, /cadences, /deals, /onboarding, /permissions, /dialer/predictive, /inbox, /financial-impact, /shift-swap-suggestions — todos já no AppSidebar + protectedRoutes.

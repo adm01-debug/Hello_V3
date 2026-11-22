@@ -1,6 +1,7 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { clientIpFromHeaders } from "../_shared/client-ip.ts";
+import { checkRateLimitDB } from "../_shared/rate-limit.ts";
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -8,6 +9,16 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // Endpoint publico (chamado antes do login para checar geo do acesso). Sem
+    // limite, cada request anonimo consumia uma chamada ao provedor externo.
+    const rl = await checkRateLimitDB(clientIpFromHeaders(req.headers) ?? "0.0.0.0", "validate-geo");
+    if (!rl.allowed) {
+      return new Response(
+        JSON.stringify({ error: "Limite excedido, tente novamente em instantes." }),
+        { status: 429, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } },
+      );
+    }
+
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabaseAnon = Deno.env.get('SUPABASE_ANON_KEY')!;

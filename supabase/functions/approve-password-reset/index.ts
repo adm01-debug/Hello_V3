@@ -36,14 +36,11 @@ Deno.serve(async (req) => {
     // Create service client for admin operations
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // SEC-002 FIX: Check admin role via direct query instead of RPC that needs auth.uid()
-    const { data: adminRole } = await supabase
-      .from('user_profiles')
-      .select('role')
-      .eq('id', adminUser.id)
-      .single();
+    // SEC-002 FIX: checa o papel pela fonte de verdade (user_roles), com
+    // precedencia e respeitando is_active/expires_at via is_admin_user().
+    const { data: isAdmin } = await supabase.rpc('is_admin_user', { _user_id: adminUser.id });
 
-    if (!adminRole || !['admin', 'supervisor'].includes(adminRole.role)) {
+    if (!isAdmin) {
       return new Response(
         JSON.stringify({ error: 'Admin privileges required' }),
         { status: 403, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
