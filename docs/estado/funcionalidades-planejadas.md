@@ -122,6 +122,18 @@ O contrato de `whatsapp-rewrite` é `{ message, tone, context? }` (não `text`);
 
 **Por que o histórico mostrava `rows: 0`.** O export diário das 06:12:38 UTC rodou **33 segundos antes** das 50 sessões serem criadas (06:13:11). Não era defeito de código: o flush é incremental por `created_at > último completed_at`, e simplesmente não havia nada novo na janela. Os únicos dados em produção são de carga de teste (`Load Test Bot` × 100, `Agente Teste` × 1) e já estão fora da janela de 1 h usada pelo dashboard, que portanto mede zero — correto.
 
+**Edges de escrita — persistência provada.** Não basta a edge responder 200: ela precisa gravar. Testado com dados reais e limpo depois:
+
+| Edge | Prova | Efeito no banco |
+|---|---|---|
+| `record-consent` (conceder) | 200 com `granted: true`, `granted_at` preenchido | `consent_records` 0 → 1 linha |
+| `record-consent` (revogar) | 200 com `granted: false`, `revoked_at` | nova linha de revogação (histórico preservado) |
+| `detect-churn-risk` | 200, `churn_risk_score: -40`, `signals_detected: 0` | score negativo sem sinal de risco — aritmética correta |
+| `compute-deal-health` | 200, `healthScore: 34` com os 7 fatores discriminados | leitura derivada, sem escrita |
+| `check-goals` | 200, `"No active goals to check"` | sem meta ativa, nada a alertar |
+
+O `record-consent` é o registro de consentimento **LGPD**: exige admin (`is_admin_user` + `user_profiles`). Um usuário comum recebe **403 Forbidden** — testado e correto, não é bug. Após os testes, `consent_records` voltou a **0 linhas** e o admin temporário foi removido (`DELETE` 200).
+
 **Estado:** todas as 98 pastas de `supabase/functions/` respondem — 97 deployadas em produção (`__tests__` é pasta de teste, não função). Nenhuma 404.
 
 
