@@ -1,4 +1,4 @@
-import { Bell, VolumeX, Volume2, AlertTriangle, BellRing, Clock } from 'lucide-react';
+import { Volume2, AlertTriangle, BellRing, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
  import { cn, formatDuration } from '@/lib/utils';
@@ -24,9 +24,8 @@ interface HoldReminderSettingsProps {
   initAudio: () => void;
 }
 
-export function HoldReminderSettings({
-  isEnabled, interval, alertThreshold, alertsEnabled, activeAlerts,
-  browserNotificationsEnabled, callsOnHold, toggleReminder, toggleAlerts,
+export function HoldReminderSettings({ interval, alertThreshold, alertsEnabled, activeAlerts,
+  browserNotificationsEnabled, callsOnHold, toggleAlerts,
   changeInterval, changeAlertThreshold, clearAlerts, requestBrowserNotifications, initAudio
 }: HoldReminderSettingsProps) {
   if (callsOnHold.length === 0) return null;

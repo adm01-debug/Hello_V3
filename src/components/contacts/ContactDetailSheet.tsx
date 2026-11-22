@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Phone, Mail, Building2, User, Clock, MessageSquare, Calendar, Edit, Trash2, Brain, Route } from 'lucide-react';
+import { Phone, Mail, Building2, MessageSquare, Calendar, Edit, Brain, Route } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';

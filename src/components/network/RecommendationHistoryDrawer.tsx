@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { History, Download, Filter, X } from 'lucide-react';
+import { History, Download, Filter } from 'lucide-react';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';

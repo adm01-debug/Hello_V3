@@ -1,16 +1,8 @@
 import { useState } from 'react';
-import { 
-  Phone, 
-  Radio,
-  MessageCircle,
-  Headphones,
-  Info,
-  ExternalLink
-} from 'lucide-react';
+import { Radio, MessageCircle, Headphones, Info, ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UnifiedSoftphone } from '@/components/calls/UnifiedSoftphone';
 import { NetworkStatusBadge } from '@/components/calls/NetworkStatusBadge';
 import { SipConnectionStatus } from '@/components/calls/SipConnectionStatus';

@@ -5,8 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { SearchInput } from '@/components/ui/search-input';
 import { Slider } from '@/components/ui/slider';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
- import { format } from 'date-fns';
- import { ptBR } from 'date-fns/locale';
  import { formatDuration } from '@/lib/utils';
 import { useRecordings } from '@/hooks/useRecordings';
 import { TranscriptionDialog } from '@/components/recordings/TranscriptionDialog';

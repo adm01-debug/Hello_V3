@@ -18,7 +18,7 @@ const completionRow = { id: 'c1', agent_name: 'Ana', module_id: 'm1', completed_
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
-    from: vi.fn((table: string) => {
+    from: vi.fn((_table: string) => {
       const builder: Record<string, unknown> = {};
       builder.select = vi.fn(() => builder);
       builder.eq = vi.fn(() => builder);

@@ -4,7 +4,6 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CheckCircle, XCircle, AlertTriangle, RefreshCw, Database, Loader2 } from 'lucide-react';
 
-import { ptBR } from 'date-fns/locale';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 export function VoipInfrastructureTab() {

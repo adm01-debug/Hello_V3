@@ -27,10 +27,6 @@ interface QualityRow {
   quality_label: string | null;
 }
 
-interface AlertRow {
-  user_id: string;
-}
-
 export function AgentQualityRanking() {
   const [rows, setRows] = useState<AgentRow[]>([]);
   const [loading, setLoading] = useState(true);

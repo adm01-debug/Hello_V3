@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { arrayBufferToBase64, base64ToArrayBuffer } from '@/lib/security/encryption';
 import { bufferToBase64Url, base64UrlToBuffer, generateChallenge, isWebAuthnSupported } from '@/lib/webauthn/webauthn-utils';
 

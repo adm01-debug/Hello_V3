@@ -1,10 +1,6 @@
 import { safeFormatDistanceToNow } from "@/lib/safe-date";
  import { useState, useMemo } from 'react';
- import {
-   Bell, BellRing, Settings2, Users, Phone,
-   Check, Trash2, ChevronRight, RefreshCw, Loader2,
-   FlaskConical, ExternalLink, type LucideIcon
- } from 'lucide-react';
+ import { Bell, BellRing, Settings2, Users, Phone, Check, RefreshCw, ExternalLink, type LucideIcon } from 'lucide-react';
  import { Button } from '@/components/ui/button';
  import { Badge } from '@/components/ui/badge';
  import { ScrollArea } from '@/components/ui/scroll-area';
@@ -14,10 +10,8 @@ import { safeFormatDistanceToNow } from "@/lib/safe-date";
    PopoverTrigger,
  } from '@/components/ui/popover';
  import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
- import { formatDistanceToNow } from 'date-fns';
- import { ptBR } from 'date-fns/locale';
  import { useRealtimeHoldAlerts } from '@/hooks/useRealtimeHoldAlerts';
- import { useContactAlerts } from '@/hooks/useContactAlerts';
+import { ptBR } from 'date-fns/locale';
  import { useAlerts } from '@/hooks/useAlerts';
  import { useNavigate } from 'react-router-dom';
  import { cn } from '@/lib/utils';

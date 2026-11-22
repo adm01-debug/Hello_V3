@@ -1,5 +1,5 @@
- import { useState, useEffect, ReactNode } from 'react';
- import { Gamepad2, FlaskConical, Trophy } from 'lucide-react';
+ import { useState, useEffect } from 'react';
+ import { Gamepad2, FlaskConical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { BadgesShowcase } from '@/components/gamification/BadgesShowcase';

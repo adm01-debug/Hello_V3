@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Phone, Trash2 } from 'lucide-react';
 
-import { ptBR } from 'date-fns/locale';
 import { getReasonLabel, getReasonVariant } from './constants';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 

@@ -1,11 +1,10 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 // Edge function shared utilities tests
 describe('Edge Function Rate Limiter', () => {
   it('allows first request from new IP', () => {
     const requests = new Map<string, { count: number; resetAt: number }>();
     const ip = '10.0.0.1';
-    const maxRequests = 100;
     const windowMs = 60000;
     const now = Date.now();
 

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { buildCSPHeader, DEFAULT_CSP_DIRECTIVES } from '@/lib/security/content-security-policy';
 import { buildCORSHeaders } from '@/lib/security/cors-config';
 import { getSecurityHeaders, DEFAULT_SECURITY_HEADERS } from '@/lib/security/helmet-config';

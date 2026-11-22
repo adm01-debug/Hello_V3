@@ -41,7 +41,7 @@ const state = {
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
-    from: vi.fn((table: string) => {
+    from: vi.fn((_table: string) => {
       const builder: Record<string, unknown> = {};
       builder.select = vi.fn().mockReturnValue(builder);
       builder.eq = vi.fn().mockReturnValue(builder);

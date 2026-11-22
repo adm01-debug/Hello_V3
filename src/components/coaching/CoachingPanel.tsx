@@ -13,14 +13,14 @@ import {
   RefreshCw,
   Lightbulb
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useCoaching, CoachingRecommendation } from '@/hooks/useCoaching';
+import { useCoaching } from '@/hooks/useCoaching';
 import { useAgentStatus } from '@/hooks/useAgentStatus';
 import { useAuditLog } from '@/hooks/useAuditLog';
 import { cn } from '@/lib/utils';

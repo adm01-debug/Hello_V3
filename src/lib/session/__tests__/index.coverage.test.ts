@@ -12,13 +12,6 @@ function setupSelect(result: { data: unknown }) {
   builder.eq = vi.fn().mockReturnThis();
   builder.order = vi.fn().mockResolvedValue(result);
 }
-function setupUpdate(result: { error: unknown }) {
-  builder.update = vi.fn().mockReturnThis();
-  builder.eq = vi.fn().mockReturnThis();
-  builder.neq = vi.fn().mockResolvedValue(result);
-  // for single-eq update, the last eq must resolve
-  builder.eq = vi.fn(() => ({ ...builder, then: undefined }));
-}
 
 describe('session/index', () => {
   beforeEach(() => vi.clearAllMocks());

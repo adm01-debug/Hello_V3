@@ -1,6 +1,6 @@
- import { describe, it, expect } from "vitest";
+ import { describe, it } from "vitest";
  import * as fc from "fast-check";
- import { rankSignals, matchesKeywords, MinimalSignal } from "../agent-assist-utils";
+ import { rankSignals, matchesKeywords } from "../agent-assist-utils";
  
  describe("Agent Assist PBT (Property-Based Testing)", () => {
    it("rankSignals: priority always dominates confidence", () => {

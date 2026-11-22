@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -32,7 +32,6 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
   const [latestWhisper, setLatestWhisper] = useState<WhisperMessage | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const playNotificationSound = () => {
     // Create a simple notification sound using Web Audio API

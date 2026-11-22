@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
-import { AlertTriangle, RefreshCw } from 'lucide-react';
 
 const log = logger.create('TrunkFailover');
 

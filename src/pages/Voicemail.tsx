@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { SearchInput } from '@/components/ui/search-input';
 import { toast } from 'sonner';
- import { Voicemail, Play, Check, Clock, Phone, AlertTriangle, Trash2, MailOpen, Mail } from 'lucide-react';
+ import { Voicemail, Check, Clock, Phone, AlertTriangle, Trash2, MailOpen, Mail } from 'lucide-react';
  import { formatDuration } from '@/lib/utils';
 
 import { ptBR } from 'date-fns/locale';

@@ -1,6 +1,6 @@
  import { Filter, X, Calendar, Clock, Tag, TrendingUp, TrendingDown, Minus, Download, Phone } from 'lucide-react';
  import { SearchInput } from '@/components/ui/search-input';
- import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -38,7 +38,6 @@ export default function CallHistory() {
    useEffect(() => {
      if (debouncedSearch !== searchQuery) setSearchQuery(debouncedSearch);
    }, [debouncedSearch, searchQuery, setSearchQuery]);
-
  
    const stats = useMemo(() => {
      const s = sessions || [];

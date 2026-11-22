@@ -14,7 +14,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Skills() {
   usePageTitle('Habilidades');
-  const { skills, agentSkills, createSkill, upsertAgentSkill } = useSkills();
+  const { skills, agentSkills, createSkill } = useSkills();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ name: '', category: 'general', description: '' });
 

@@ -1,6 +1,5 @@
 import { Users, X, Mic, MicOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
  import { cn, formatDuration } from '@/lib/utils';
 import { CallSession, ConferenceCall } from '@/hooks/useMultiChannelCall';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';

@@ -8,7 +8,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { EmptyState } from '@/components/ui/empty-state';
 
-import { ptBR } from 'date-fns/locale';
 import { useAgentAssistHistory, type LiveAssistSignal } from '@/hooks/useLiveAssist';
 import { useObjectionLibrary } from '@/hooks/useObjectionLibrary';
 import { calculateAcceptanceRate, countByIntent, INTENT_LABELS } from '@/lib/agent-assist-utils';

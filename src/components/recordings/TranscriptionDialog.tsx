@@ -8,7 +8,6 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Progress } from '@/components/ui/progress';
 
-import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
  import { TranscriptionSegment, SentimentAnalysis, Recording } from '@/hooks/useRecordings';

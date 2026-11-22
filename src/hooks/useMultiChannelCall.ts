@@ -137,7 +137,7 @@ export function useMultiChannelCall() {
   }, [activeCallId]);
 
   // Persist hold event to database
-  const persistHoldEvent = useCallback(async (callId: string, callSessionId: string | undefined, agentName: string | undefined, action: 'start' | 'end', durationSeconds?: number) => {
+  const persistHoldEvent = useCallback(async (_callId: string, callSessionId: string | undefined, agentName: string | undefined, action: 'start' | 'end', durationSeconds?: number) => {
     try {
       if (action === 'start') {
         await supabase.from('hold_events').insert({ call_session_id: callSessionId || null, agent_name: agentName || null, started_at: new Date().toISOString() });

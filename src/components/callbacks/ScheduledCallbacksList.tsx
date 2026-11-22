@@ -1,18 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { 
-  Phone, 
-  User, 
-  Calendar,
-  Clock,
-  Check,
-  X,
-  Trash2,
-  Bell,
-  AlertTriangle,
-  ChevronRight,
-  MoreHorizontal,
-  Plus
-} from 'lucide-react';
+import { Phone, User, Calendar, Check, X, Trash2, Bell, AlertTriangle, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -165,7 +152,6 @@ export function ScheduledCallbacksList() {
 
   const pendingCallbacks = callbacks.filter(c => c.status === 'pending');
   const overdueCallbacks = pendingCallbacks.filter(c => isPast(new Date(c.scheduled_at)));
-  const upcomingCallbacks = pendingCallbacks.filter(c => !isPast(new Date(c.scheduled_at)));
 
   return (
     <Card className="h-full">

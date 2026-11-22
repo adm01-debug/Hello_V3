@@ -10,11 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
-import { 
-  Plus, Phone, Voicemail, Users, Clock, ArrowRight, 
-  MessageSquare, GitBranch, Trash2, Save, Play, Pause,
-  PhoneForwarded, PhoneOff, Music, MoveRight, GripVertical
-} from 'lucide-react';
+import { Plus, Phone, Voicemail, Users, Clock, ArrowRight, GitBranch, Trash2, Play, PhoneForwarded, PhoneOff, Music, MoveRight, GripVertical } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 interface FlowNode {

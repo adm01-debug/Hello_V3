@@ -5,8 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Upload, CheckCircle2, XCircle, Clock, FileText, AlertTriangle } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 const statusConfig: Record<string, { label: string; icon: React.ElementType; className: string }> = {

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { format, subDays, startOfDay, endOfDay } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { logger } from '@/lib/logger';
 import { safeFormatDate, safeFormatDatePtBR } from "@/lib/safe-date";
 import { safeParseInt } from '@/lib/safe-number';

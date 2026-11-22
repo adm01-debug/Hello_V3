@@ -12,10 +12,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, Search, Filter, RefreshCw, Calendar, User, Activity, Info, Eye, AlertTriangle, Send } from 'lucide-react';
-import { format } from 'date-fns';
-import { safeFormatDate, safeFormatDatePtBR } from '@/lib/safe-date';
-import { ptBR } from 'date-fns/locale';
+import { Shield, RefreshCw, Activity, Eye, AlertTriangle, Send } from 'lucide-react';
+
+import { safeFormatDate } from '@/lib/safe-date';
+
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 
 import { toast } from 'sonner';
@@ -47,12 +47,11 @@ interface FlushMetricRow {
   duration_ms: number;
 }
 
-
 export default function SecurityAuditDashboard() {
   usePageTitle('Painel de Auditoria de Segurança');
 
   const navigate = useNavigate();
-  const { hasRole, user } = useAuthContext();
+  const { hasRole } = useAuthContext();
   const [auditLogs, setAuditLogs] = useState<AuditLogRow[]>([]);
   const [rlsLogs, setRlsLogs] = useState<RlsLogRow[]>([]);
   const [flushMetrics, setFlushMetrics] = useState<FlushMetricRow[]>([]);
@@ -114,7 +113,6 @@ export default function SecurityAuditDashboard() {
     }
     return Array.from(map.values()).map((d) => ({ ...d, avg_age_s: Math.round(d.avg_age_s) }));
   })();
-
 
   const filteredAudit = auditLogs.filter(log => {
     const matchesSearch = 
@@ -201,7 +199,6 @@ export default function SecurityAuditDashboard() {
           )}
         </CardContent>
       </Card>
-
 
       <Card>
         <CardHeader>

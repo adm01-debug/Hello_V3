@@ -2,9 +2,8 @@ import { safeFormatDistanceToNow } from "@/lib/safe-date";
  import { useQuery } from '@tanstack/react-query';
  import { supabase } from '@/integrations/supabase/client';
  import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
- import { History, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
- import { formatDistanceToNow } from 'date-fns';
- import { ptBR } from 'date-fns/locale';
+ import { History, Loader2, AlertCircle } from 'lucide-react';
+import { ptBR } from 'date-fns/locale';
  
  export function SystemLogs() {
    const { data: logs, isLoading, error } = useQuery({

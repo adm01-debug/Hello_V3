@@ -2,7 +2,6 @@ import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Badge as BadgeType } from '@/hooks/useGamification';
 
-import { ptBR } from 'date-fns/locale';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
 interface BadgeCardProps {

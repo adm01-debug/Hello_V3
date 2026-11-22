@@ -6,13 +6,11 @@ import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 import { Card } from '@/components/ui/card';
 import { SearchInput } from '@/components/ui/search-input';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { ptBR } from 'date-fns/locale';
 import { useMeetingSummariesList, type MeetingSummary } from '@/hooks/useMeetingSummary';
 import { MeetingSummaryCard } from '@/components/calls/MeetingSummaryCard';
 import { usePageTitle } from '@/hooks/usePageTitle';

@@ -1,4 +1,4 @@
-import { useVoipQualityMonitor, type VoipQualityState } from '@/hooks/useVoipQualityMonitor';
+import { useVoipQualityMonitor } from '@/hooks/useVoipQualityMonitor';
 import { Activity, Signal, Zap, AlertTriangle } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';

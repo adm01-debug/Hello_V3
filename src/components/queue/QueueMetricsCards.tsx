@@ -1,4 +1,4 @@
-import { Phone, Pause, Clock, PhoneOff, TrendingUp, TrendingDown, Gauge, CheckCircle, Users, Activity } from 'lucide-react';
+import { Phone, Pause, Clock, PhoneOff, TrendingUp, TrendingDown, Gauge, CheckCircle, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';

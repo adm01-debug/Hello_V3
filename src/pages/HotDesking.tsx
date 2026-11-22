@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
@@ -14,7 +14,7 @@ export default function HotDesking() {
   const queryClient = useQueryClient();
   const { profile } = useAuthContext();
 
-  const { data: stations = [], isLoading } = useQuery({
+  const { data: stations = [] } = useQuery({
     queryKey: ['hot-desking'],
     queryFn: async () => {
       const { data, error } = await supabase.from('hot_desking_stations').select('*').order('station_name');

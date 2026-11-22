@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import type { ExportColumn } from '@/lib/export/index';
 import type { AuditAction, AuditEvent } from '@/lib/audit/index';
 import { validateNotification, type NotificationCategory, type NotificationSeverity } from '@/lib/notifications/index';

@@ -1,5 +1,4 @@
 
-import { ptBR } from "date-fns/locale";
 import {
   Bar,
   BarChart,

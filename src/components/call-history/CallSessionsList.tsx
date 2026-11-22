@@ -4,7 +4,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn, formatDuration } from '@/lib/utils';
 
-import { ptBR } from 'date-fns/locale';
 import { SessionWithSummary } from '@/hooks/useCallHistory';
 import { VirtualList } from '@/components/ui/VirtualList';
 import { safeFormatDatePtBR } from "@/lib/safe-date";

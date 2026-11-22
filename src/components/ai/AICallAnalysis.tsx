@@ -1,20 +1,5 @@
 import { useState } from 'react';
-import { 
-  Bot, 
-  MessageSquare, 
-  TrendingUp, 
-  TrendingDown,
-  Minus,
-  Sparkles,
-  ListChecks,
-  Tags,
-  Send,
-  Loader2,
-  ThumbsUp,
-  ThumbsDown,
-  User,
-  Headphones
-} from 'lucide-react';
+import { Bot, MessageSquare, TrendingUp, TrendingDown, Minus, Sparkles, ListChecks, Tags, Loader2, ThumbsUp, ThumbsDown, User, Headphones } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';

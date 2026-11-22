@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  Phone, Plus, Users, Target, TrendingUp, PhoneCall, List,
-  MoreHorizontal, Trash2, CheckCircle, XCircle, Voicemail,
-  PhoneMissed, PhoneOff, RotateCcw, SkipForward,
-} from 'lucide-react';
+import { Phone, Plus, Users, Target, TrendingUp, List, MoreHorizontal, Trash2, CheckCircle, XCircle, Voicemail, PhoneMissed, PhoneOff, RotateCcw, SkipForward } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
