@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "e7f63916263be8b3bede4da64296aabcc812e5c1",
+  "sha": "f249e85e6020688709ef45d8c9f44fd09b1c8be0",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 01:37 UTC",
+  "generated_at": "2026-11-22 01:58 UTC",
   "files_total": 1630,
   "code_files": 1433,
-  "code_lines": 181439
+  "code_lines": 181257
  },
  "version": "1.3.2",
- "facts_hash": "d9dc914641ef736d",
+ "facts_hash": "c614107a1d20053a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -28167,7 +28167,7 @@
     "tables_transitive": [],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 11
+    "deps_count": 10
    },
    {
     "path": "",
@@ -28465,7 +28465,7 @@
     "tables_transitive": [],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 11
+    "deps_count": 10
    },
    {
     "path": "",
@@ -28688,7 +28688,7 @@
      "compute-adherence"
     ],
     "rpc_transitive": [],
-    "deps_count": 22
+    "deps_count": 21
    },
    {
     "path": "",
@@ -32773,7 +32773,7 @@
   {
    "module": "src/components",
    "files": 350,
-   "lines": 41996,
+   "lines": 41890,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33026,7 +33026,7 @@
   {
    "module": "src/hooks",
    "files": 349,
-   "lines": 45067,
+   "lines": 45054,
    "tables": [
     "accounts",
     "active_sessions",
@@ -33207,7 +33207,6 @@
     "date-fns",
     "fast-check",
     "jssip",
-    "lucide-react",
     "node:crypto",
     "react",
     "react-router-dom",
@@ -33332,7 +33331,7 @@
   {
    "module": "src/lib",
    "files": 160,
-   "lines": 20655,
+   "lines": 20643,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -33504,7 +33503,7 @@
   {
    "module": "src/pages",
    "files": 130,
-   "lines": 20771,
+   "lines": 20720,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -90055,7 +90054,7 @@
   },
   "src/components/agent/WhisperNotification.tsx": {
    "path": "src/components/agent/WhisperNotification.tsx",
-   "lines": 248,
+   "lines": 247,
    "exports": [
     "const WhisperNotification"
    ],
@@ -90086,7 +90085,7 @@
   },
   "src/components/ai/AICallAnalysis.tsx": {
    "path": "src/components/ai/AICallAnalysis.tsx",
-   "lines": 388,
+   "lines": 373,
    "exports": [
     "function AICallAnalysis"
    ],
@@ -90238,7 +90237,7 @@
   },
   "src/components/alerts/AlertsTrendChart.tsx": {
    "path": "src/components/alerts/AlertsTrendChart.tsx",
-   "lines": 343,
+   "lines": 336,
    "exports": [
     "function AlertsTrendChart"
    ],
@@ -90313,7 +90312,7 @@
   },
   "src/components/auth/PasswordStrength.tsx": {
    "path": "src/components/auth/PasswordStrength.tsx",
-   "lines": 276,
+   "lines": 275,
    "exports": [
     "function PasswordStrength",
     "function usePasswordStrength"
@@ -90397,7 +90396,7 @@
   },
   "src/components/call-history/CallDetailDialog.tsx": {
    "path": "src/components/call-history/CallDetailDialog.tsx",
-   "lines": 275,
+   "lines": 274,
    "exports": [
     "function CallDetailDialog"
    ],
@@ -90445,7 +90444,7 @@
   },
   "src/components/call-history/CallSessionsList.tsx": {
    "path": "src/components/call-history/CallSessionsList.tsx",
-   "lines": 130,
+   "lines": 129,
    "exports": [
     "function CallSessionsList"
    ],
@@ -90525,7 +90524,7 @@
   },
   "src/components/callbacks/ScheduledCallbacksList.tsx": {
    "path": "src/components/callbacks/ScheduledCallbacksList.tsx",
-   "lines": 370,
+   "lines": 356,
    "exports": [
     "function ScheduledCallbacksList"
    ],
@@ -90729,7 +90728,7 @@
   },
   "src/components/calls/ConferenceSection.tsx": {
    "path": "src/components/calls/ConferenceSection.tsx",
-   "lines": 84,
+   "lines": 83,
    "exports": [
     "function ConferenceSection"
    ]
@@ -90750,7 +90749,7 @@
   },
   "src/components/calls/HoldReminderSettings.tsx": {
    "path": "src/components/calls/HoldReminderSettings.tsx",
-   "lines": 99,
+   "lines": 98,
    "exports": [
     "function HoldReminderSettings"
    ]
@@ -90764,7 +90763,7 @@
   },
   "src/components/calls/MeetingSummaryCard.tsx": {
    "path": "src/components/calls/MeetingSummaryCard.tsx",
-   "lines": 255,
+   "lines": 254,
    "exports": [
     "function MeetingSummaryCard"
    ],
@@ -91148,7 +91147,7 @@
   },
   "src/components/calls/softphone/ActiveCallDisplay.tsx": {
    "path": "src/components/calls/softphone/ActiveCallDisplay.tsx",
-   "lines": 219,
+   "lines": 214,
    "exports": [
     "function ActiveCallDisplay"
    ],
@@ -91354,7 +91353,7 @@
   },
   "src/components/compliance/ComplianceSettings.tsx": {
    "path": "src/components/compliance/ComplianceSettings.tsx",
-   "lines": 215,
+   "lines": 214,
    "exports": [
     "function ComplianceSettings"
    ],
@@ -91364,7 +91363,7 @@
   },
   "src/components/compliance/ConsentHistoryViewer.tsx": {
    "path": "src/components/compliance/ConsentHistoryViewer.tsx",
-   "lines": 92,
+   "lines": 91,
    "exports": [
     "function ConsentHistoryViewer"
    ],
@@ -91380,7 +91379,7 @@
   },
   "src/components/compliance/DNCImportLogs.tsx": {
    "path": "src/components/compliance/DNCImportLogs.tsx",
-   "lines": 98,
+   "lines": 96,
    "exports": [
     "function DNCImportLogs"
    ],
@@ -91403,7 +91402,7 @@
   },
   "src/components/compliance/HolidaysManager.tsx": {
    "path": "src/components/compliance/HolidaysManager.tsx",
-   "lines": 171,
+   "lines": 170,
    "exports": [
     "function HolidaysManager"
    ],
@@ -91577,7 +91576,7 @@
   },
   "src/components/compliance/dnc/DNCTable.tsx": {
    "path": "src/components/compliance/dnc/DNCTable.tsx",
-   "lines": 105,
+   "lines": 104,
    "exports": [
     "function DNCTable"
    ]
@@ -91726,7 +91725,7 @@
   },
   "src/components/contacts/CustomerJourneyTimeline.tsx": {
    "path": "src/components/contacts/CustomerJourneyTimeline.tsx",
-   "lines": 93,
+   "lines": 92,
    "exports": [
     "function CustomerJourneyTimeline"
    ]
@@ -91960,7 +91959,7 @@
   },
   "src/components/dashboard/RecentCalls.tsx": {
    "path": "src/components/dashboard/RecentCalls.tsx",
-   "lines": 127,
+   "lines": 121,
    "exports": [
     "function RecentCalls"
    ],
@@ -92087,7 +92086,7 @@
   },
   "src/components/dialer/PredictiveDialerPanel.tsx": {
    "path": "src/components/dialer/PredictiveDialerPanel.tsx",
-   "lines": 215,
+   "lines": 211,
    "exports": [
     "function PredictiveDialerPanel"
    ],
@@ -92564,7 +92563,7 @@
   },
   "src/components/executive/QualityTrunkDashboard.tsx": {
    "path": "src/components/executive/QualityTrunkDashboard.tsx",
-   "lines": 129,
+   "lines": 126,
    "exports": [
     "const QualityTrunkDashboard"
    ],
@@ -92628,7 +92627,7 @@
   },
   "src/components/executive/VoipInfrastructureTab.tsx": {
    "path": "src/components/executive/VoipInfrastructureTab.tsx",
-   "lines": 153,
+   "lines": 152,
    "exports": [
     "function VoipInfrastructureTab"
    ],
@@ -92718,7 +92717,7 @@
   },
   "src/components/gamification/BadgeCard.tsx": {
    "path": "src/components/gamification/BadgeCard.tsx",
-   "lines": 51,
+   "lines": 50,
    "exports": [
     "function BadgeCard"
    ]
@@ -92780,7 +92779,7 @@
   },
   "src/components/hold-alerts/HoldAlertsTable.tsx": {
    "path": "src/components/hold-alerts/HoldAlertsTable.tsx",
-   "lines": 125,
+   "lines": 124,
    "exports": [
     "interface HoldAlertRow",
     "function HoldAlertsTable"
@@ -92792,7 +92791,7 @@
   },
   "src/components/layout/AppSidebar.tsx": {
    "path": "src/components/layout/AppSidebar.tsx",
-   "lines": 358,
+   "lines": 353,
    "exports": [
     "function AppSidebar"
    ],
@@ -92814,7 +92813,7 @@
   },
   "src/components/layout/CommandPalette.tsx": {
    "path": "src/components/layout/CommandPalette.tsx",
-   "lines": 203,
+   "lines": 199,
    "exports": [
     "function CommandPalette"
    ],
@@ -92873,7 +92872,7 @@
   },
   "src/components/lazy/LazyComponent.tsx": {
    "path": "src/components/lazy/LazyComponent.tsx",
-   "lines": 25,
+   "lines": 19,
    "exports": [
     "function createLazyComponent"
    ]
@@ -92911,7 +92910,7 @@
   },
   "src/components/network/AgentQualityRanking.tsx": {
    "path": "src/components/network/AgentQualityRanking.tsx",
-   "lines": 190,
+   "lines": 186,
    "exports": [
     "function AgentQualityRanking"
    ],
@@ -93185,7 +93184,7 @@
   },
   "src/components/network/VoipRecommendationsPanel.tsx": {
    "path": "src/components/network/VoipRecommendationsPanel.tsx",
-   "lines": 323,
+   "lines": 322,
    "exports": [
     "function VoipRecommendationsPanel"
    ],
@@ -93229,7 +93228,7 @@
   },
   "src/components/network/WhatIfSimulatorDialog.tsx": {
    "path": "src/components/network/WhatIfSimulatorDialog.tsx",
-   "lines": 199,
+   "lines": 198,
    "exports": [
     "function WhatIfSimulatorDialog"
    ],
@@ -93338,7 +93337,7 @@
   },
   "src/components/notifications/UnifiedNotificationDropdown.tsx": {
    "path": "src/components/notifications/UnifiedNotificationDropdown.tsx",
-   "lines": 272,
+   "lines": 266,
    "navigates": [
     "/contacts",
     "/notifications"
@@ -93809,7 +93808,7 @@
   },
   "src/components/recordings/TranscriptionDialog.tsx": {
    "path": "src/components/recordings/TranscriptionDialog.tsx",
-   "lines": 222
+   "lines": 221
   },
   "src/components/ringgroups/RingGroupCard.tsx": {
    "path": "src/components/ringgroups/RingGroupCard.tsx",
@@ -93880,14 +93879,14 @@
   },
   "src/components/security-alerts/AlertDetailsDialog.tsx": {
    "path": "src/components/security-alerts/AlertDetailsDialog.tsx",
-   "lines": 109,
+   "lines": 108,
    "exports": [
     "function AlertDetailsDialog"
    ]
   },
   "src/components/security-alerts/AlertsDailyChart.tsx": {
    "path": "src/components/security-alerts/AlertsDailyChart.tsx",
-   "lines": 74,
+   "lines": 73,
    "exports": [
     "function AlertsDailyChart"
    ]
@@ -93941,7 +93940,7 @@
   },
   "src/components/security-alerts/VirtualTimeline.tsx": {
    "path": "src/components/security-alerts/VirtualTimeline.tsx",
-   "lines": 253,
+   "lines": 252,
    "exports": [
     "type SecurityNotification",
     "type Severity",
@@ -94103,7 +94102,7 @@
   },
   "src/components/settings/SystemLogs.tsx": {
    "path": "src/components/settings/SystemLogs.tsx",
-   "lines": 65,
+   "lines": 64,
    "tables": [
     {
      "table": "audit_logs",
@@ -94146,7 +94145,7 @@
   },
   "src/components/supervisor/QueueTrendChart.tsx": {
    "path": "src/components/supervisor/QueueTrendChart.tsx",
-   "lines": 64,
+   "lines": 61,
    "exports": [
     "function QueueTrendChart"
    ]
@@ -95910,7 +95909,7 @@
   },
   "src/hooks/useBlockedAccessLogs.ts": {
    "path": "src/hooks/useBlockedAccessLogs.ts",
-   "lines": 129,
+   "lines": 128,
    "exports": [
     "interface BlockedLog",
     "interface DailyStats",
@@ -95996,7 +95995,7 @@
   },
   "src/hooks/useCallAnalytics.ts": {
    "path": "src/hooks/useCallAnalytics.ts",
-   "lines": 135,
+   "lines": 134,
    "exports": [
     "type DateRange",
     "function useCallAnalytics"
@@ -97193,7 +97192,7 @@
   },
   "src/hooks/useDashboardData.ts": {
    "path": "src/hooks/useDashboardData.ts",
-   "lines": 122,
+   "lines": 121,
    "exports": [
     "function useRecentCallsData",
     "function useQueueStatsData"
@@ -98027,7 +98026,7 @@
   },
   "src/hooks/useGoalViolations.ts": {
    "path": "src/hooks/useGoalViolations.ts",
-   "lines": 114,
+   "lines": 113,
    "exports": [
     "interface GoalViolation",
     "interface DailyTrend",
@@ -100415,7 +100414,7 @@
   },
   "src/hooks/useSecurityMonitoringData.ts": {
    "path": "src/hooks/useSecurityMonitoringData.ts",
-   "lines": 110,
+   "lines": 108,
    "exports": [
     "interface AuditLog",
     "interface SecurityAlertItem",
@@ -101188,7 +101187,7 @@
   },
   "src/hooks/useTrunkFailoverMonitor.ts": {
    "path": "src/hooks/useTrunkFailoverMonitor.ts",
-   "lines": 52,
+   "lines": 51,
    "exports": [
     "function useTrunkFailoverMonitor"
    ],
@@ -103258,7 +103257,7 @@
   },
   "src/hooks/__tests__/useContacts.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useContacts.coverage.test.tsx",
-   "lines": 162,
+   "lines": 158,
    "is_test": true,
    "tests": [
     "useContacts (coverage)",
@@ -103727,7 +103726,7 @@
   },
   "src/hooks/__tests__/useEdgeFunctions.test.ts": {
    "path": "src/hooks/__tests__/useEdgeFunctions.test.ts",
-   "lines": 291,
+   "lines": 290,
    "is_test": true,
    "temporal": [
     "const expiresAt = new Date(createdAt.getTime() + 5 * 60 * 1000);"
@@ -106201,7 +106200,7 @@
   },
   "src/hooks/telemetry/useTelemetry.ts": {
    "path": "src/hooks/telemetry/useTelemetry.ts",
-   "lines": 47,
+   "lines": 46,
    "tables": [
     {
      "table": "performance_metrics",
@@ -108153,14 +108152,13 @@
   },
   "src/lib/__tests__/error-boundaries.test.tsx": {
    "path": "src/lib/__tests__/error-boundaries.test.tsx",
-   "lines": 340,
+   "lines": 336,
    "is_test": true,
    "errors": [
     " on error UI",
     ")).toBeInTheDocument();\n  });\n\n  it(",
     ")).toBeInTheDocument();\n  });\n});\n\ndescribe(",
-    "Always fails",
-    "Test error"
+    "Always fails"
    ],
    "tests": [
     "ErrorBoundary: Normal rendering",
@@ -109347,7 +109345,7 @@
   },
   "src/lib/__tests__/tracing.coverage.test.ts": {
    "path": "src/lib/__tests__/tracing.coverage.test.ts",
-   "lines": 113,
+   "lines": 112,
    "is_test": true,
    "tests": [
     "tracing (coverage)",
@@ -110444,11 +110442,8 @@
   },
   "src/lib/session/__tests__/index.coverage.test.ts": {
    "path": "src/lib/session/__tests__/index.coverage.test.ts",
-   "lines": 68,
+   "lines": 61,
    "is_test": true,
-   "rule_comments": [
-    "for single-eq update, the last eq must resolve"
-   ],
    "temporal": [
     "expect(getSessionTimeout()).toBe(30 * 60 * 1000);"
    ],
@@ -110851,7 +110846,7 @@
   },
   "src/pages/AgentAssist.tsx": {
    "path": "src/pages/AgentAssist.tsx",
-   "lines": 141,
+   "lines": 140,
    "exports": [
     "function AgentAssist"
    ]
@@ -110872,7 +110867,7 @@
   },
   "src/pages/Alerts.tsx": {
    "path": "src/pages/Alerts.tsx",
-   "lines": 132,
+   "lines": 128,
    "exports": [
     "function Alerts"
    ]
@@ -110967,7 +110962,7 @@
   },
   "src/pages/BlockedAccessLogs.tsx": {
    "path": "src/pages/BlockedAccessLogs.tsx",
-   "lines": 248,
+   "lines": 247,
    "exports": [
     "default BlockedAccessLogs"
    ]
@@ -110988,7 +110983,7 @@
   },
   "src/pages/CallFlowDesigner.tsx": {
    "path": "src/pages/CallFlowDesigner.tsx",
-   "lines": 355,
+   "lines": 351,
    "exports": [
     "function CallFlowDesigner"
    ],
@@ -111070,7 +111065,7 @@
   },
   "src/pages/CallHistory.tsx": {
    "path": "src/pages/CallHistory.tsx",
-   "lines": 204,
+   "lines": 203,
    "exports": [
     "function CallHistory"
    ],
@@ -111134,7 +111129,7 @@
   },
   "src/pages/Calls.tsx": {
    "path": "src/pages/Calls.tsx",
-   "lines": 211,
+   "lines": 203,
    "exports": [
     "default Calls"
    ],
@@ -111169,7 +111164,7 @@
   },
   "src/pages/ContactInsights.tsx": {
    "path": "src/pages/ContactInsights.tsx",
-   "lines": 271,
+   "lines": 270,
    "exports": [
     "default ContactInsights"
    ]
@@ -111299,7 +111294,7 @@
   },
   "src/pages/HoldAlertSettings.tsx": {
    "path": "src/pages/HoldAlertSettings.tsx",
-   "lines": 321,
+   "lines": 320,
    "tables": [
     {
      "table": "hold_alert_settings",
@@ -111397,7 +111392,7 @@
   },
   "src/pages/IPWhitelist.tsx": {
    "path": "src/pages/IPWhitelist.tsx",
-   "lines": 199,
+   "lines": 198,
    "exports": [
     "function IPWhitelist"
    ]
@@ -111570,7 +111565,7 @@
   },
   "src/pages/MeetingSummaries.tsx": {
    "path": "src/pages/MeetingSummaries.tsx",
-   "lines": 182,
+   "lines": 180,
    "exports": [
     "function MeetingSummaries"
    ]
@@ -111711,7 +111706,7 @@
   },
   "src/pages/OutboundCompliance.tsx": {
    "path": "src/pages/OutboundCompliance.tsx",
-   "lines": 316,
+   "lines": 315,
    "exports": [
     "function OutboundCompliance"
    ],
@@ -111812,7 +111807,7 @@
   },
   "src/pages/Permissions.tsx": {
    "path": "src/pages/Permissions.tsx",
-   "lines": 319,
+   "lines": 315,
    "exports": [
     "function Permissions"
    ],
@@ -111948,7 +111943,7 @@
   },
   "src/pages/QueueMetricsDashboard.tsx": {
    "path": "src/pages/QueueMetricsDashboard.tsx",
-   "lines": 108,
+   "lines": 106,
    "exports": [
     "default QueueMetricsDashboard"
    ],
@@ -112007,7 +112002,7 @@
   },
   "src/pages/Recordings.tsx": {
    "path": "src/pages/Recordings.tsx",
-   "lines": 142,
+   "lines": 140,
    "exports": [
     "function Recordings"
    ]
@@ -112102,7 +112097,7 @@
   },
   "src/pages/Scheduling.tsx": {
    "path": "src/pages/Scheduling.tsx",
-   "lines": 172,
+   "lines": 171,
    "exports": [
     "function Scheduling"
    ],
@@ -112146,7 +112141,7 @@
   },
   "src/pages/SecurityDashboard.tsx": {
    "path": "src/pages/SecurityDashboard.tsx",
-   "lines": 175,
+   "lines": 172,
    "exports": [
     "function SecurityDashboard"
    ],
@@ -112194,7 +112189,7 @@
   },
   "src/pages/SecurityReport.tsx": {
    "path": "src/pages/SecurityReport.tsx",
-   "lines": 210,
+   "lines": 201,
    "exports": [
     "default SecurityReport"
    ],
@@ -112476,7 +112471,7 @@
   },
   "src/pages/TranslationCenter.tsx": {
    "path": "src/pages/TranslationCenter.tsx",
-   "lines": 187,
+   "lines": 186,
    "exports": [
     "function TranslationCenter"
    ],
@@ -112749,7 +112744,7 @@
   },
   "src/pages/VoiceSecurity.tsx": {
    "path": "src/pages/VoiceSecurity.tsx",
-   "lines": 221,
+   "lines": 220,
    "exports": [
     "function VoiceSecurity"
    ]
@@ -112861,7 +112856,7 @@
   },
   "src/pages/admin/SecurityAuditDashboard.tsx": {
    "path": "src/pages/admin/SecurityAuditDashboard.tsx",
-   "lines": 314,
+   "lines": 311,
    "exports": [
     "function SecurityAuditDashboard"
    ],
@@ -120760,10 +120755,153 @@
   }
  },
  "git": {
-  "sha": "e7f63916263be8b3bede4da64296aabcc812e5c1",
+  "sha": "f249e85e6020688709ef45d8c9f44fd09b1c8be0",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "f249e85",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)",
+    "files": [
+     "src/components/agent/BargeInNotification.tsx",
+     "src/components/agent/WhisperNotification.tsx",
+     "src/components/ai/AICallAnalysis.tsx",
+     "src/components/alerts/AlertsTrendChart.tsx",
+     "src/components/auth/PasswordStrength.tsx",
+     "src/components/call-history/CallDetailDialog.tsx",
+     "src/components/call-history/CallSessionsList.tsx",
+     "src/components/callbacks/ScheduledCallbacksList.tsx",
+     "src/components/calls/ActiveCallBar.tsx",
+     "src/components/calls/ConferenceSection.tsx",
+     "src/components/calls/HoldReminderSettings.tsx",
+     "src/components/calls/MeetingSummaryCard.tsx",
+     "src/components/calls/VoipQualityIndicator.tsx",
+     "src/components/calls/softphone/ActiveCallDisplay.tsx",
+     "src/components/calls/softphone/TabContents.tsx",
+     "src/components/coaching/CoachingPanel.tsx",
+     "src/components/compliance/ComplianceSettings.tsx",
+     "src/components/compliance/ConsentHistoryViewer.tsx",
+     "src/components/compliance/DNCImportLogs.tsx",
+     "src/components/compliance/HolidaysManager.tsx",
+     "src/components/compliance/dnc/DNCTable.tsx",
+     "src/components/contacts/ContactDetailSheet.tsx",
+     "src/components/contacts/CustomerJourneyTimeline.tsx",
+     "src/components/dashboard/GoalViolationsHistory.tsx",
+     "src/components/dashboard/PerformanceNarrative.tsx",
+     "src/components/dashboard/RecentCalls.tsx",
+     "src/components/dashboard/SortableWidget.tsx",
+     "src/components/dashboard/SystemIntegrityDashboard.tsx",
+     "src/components/dashboard/WidgetLibrary.tsx",
+     "src/components/dialer/PredictiveDialerPanel.tsx",
+     "src/components/executive/QualityTrunkDashboard.tsx",
+     "src/components/executive/RealtimeQualityDashboard.tsx",
+     "src/components/executive/VoipInfrastructureTab.tsx",
+     "src/components/gamification/BadgeCard.tsx",
+     "src/components/hold-alerts/HoldAlertsTable.tsx",
+     "src/components/layout/AppSidebar.tsx",
+     "src/components/layout/CommandPalette.tsx",
+     "src/components/lazy/LazyComponent.tsx",
+     "src/components/network/AgentQualityRanking.tsx",
+     "src/components/network/RecommendationHistoryDrawer.tsx",
+     "src/components/network/VoipRecommendationsPanel.tsx",
+     "src/components/network/WhatIfSimulatorDialog.tsx",
+     "src/components/notifications/UnifiedNotificationDropdown.tsx",
+     "src/components/queue/QueueMetricsCards.tsx",
+     "src/components/recordings/TranscriptionDialog.tsx",
+     "src/components/security-alerts/AlertDetailsDialog.tsx",
+     "src/components/security-alerts/AlertsDailyChart.tsx",
+     "src/components/security-alerts/VirtualTimeline.tsx",
+     "src/components/security/NotificationPermissionBanner.tsx",
+     "src/components/settings/SystemLogs.tsx",
+     "src/components/supervisor/QueueTrendChart.tsx",
+     "src/hooks/__tests__/useAlertsExport.test.ts",
+     "src/hooks/__tests__/useBusinessLogic.test.ts",
+     "src/hooks/__tests__/useCallSession.coverage.test.tsx",
+     "src/hooks/__tests__/useCallSession.test.ts",
+     "src/hooks/__tests__/useContacts.coverage.test.tsx",
+     "src/hooks/__tests__/useEdgeFunctions.test.ts",
+     "src/hooks/__tests__/useLearning.coverage.test.tsx",
+     "src/hooks/__tests__/useMeetingSummary.coverage.test.tsx",
+     "src/hooks/__tests__/useSLA.coverage.test.tsx",
+     "src/hooks/__tests__/useSecurityHardening.test.ts",
+     "src/hooks/__tests__/useUncoveredHooks.test.ts",
+     "src/hooks/auth/__tests__/useAuthProfile.coverage.test.tsx",
+     "src/hooks/auth/__tests__/useAuthSession.coverage.test.tsx",
+     "src/hooks/telemetry/useTelemetry.ts",
+     "src/hooks/useBlockedAccessLogs.ts",
+     "src/hooks/useCallAnalytics.ts",
+     "src/hooks/useDashboardData.ts",
+     "src/hooks/useDashboardLayout.ts",
+     "src/hooks/useGoalViolations.ts",
+     "src/hooks/useMultiChannelCall.ts",
+     "src/hooks/useSecurityMonitoringData.ts",
+     "src/hooks/useSessionManager.ts",
+     "src/hooks/useSupervisorPanel.ts",
+     "src/hooks/useTrunkFailoverMonitor.ts",
+     "src/lib/__tests__/agent-assist.pbt.test.ts",
+     "src/lib/__tests__/encryption-webauthn.test.ts",
+     "src/lib/__tests__/error-boundaries.test.tsx",
+     "src/lib/__tests__/export-audit-notifications.test.ts",
+     "src/lib/__tests__/guard-edge-numeric.test.ts",
+     "src/lib/__tests__/performance-optimizations.test.ts",
+     "src/lib/__tests__/predictive-pace.property.test.ts",
+     "src/lib/__tests__/security-advanced.test.ts",
+     "src/lib/__tests__/security-infrastructure.test.ts",
+     "src/lib/__tests__/security-sanitizers.test.ts",
+     "src/lib/__tests__/tracing.coverage.test.ts",
+     "src/lib/__tests__/utilities-comprehensive.test.ts",
+     "src/lib/security/__tests__/helmet-config.coverage.test.ts",
+     "src/lib/security/__tests__/https-enforcer.coverage.test.ts",
+     "src/lib/session/__tests__/index.coverage.test.ts",
+     "src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts",
+     "src/pages/AgentAssist.tsx",
+     "src/pages/AgentRanking.tsx",
+     "src/pages/Alerts.tsx",
+     "src/pages/AuditLogs.tsx",
+     "src/pages/BlockedAccessLogs.tsx",
+     "src/pages/CallFlowDesigner.tsx",
+     "src/pages/CallHistory.tsx",
+     "src/pages/Calls.tsx",
+     "src/pages/ContactInsights.tsx",
+     "src/pages/HoldAlertSettings.tsx",
+     "src/pages/HotDesking.tsx",
+     "src/pages/IPWhitelist.tsx",
+     "src/pages/MeetingSummaries.tsx",
+     "src/pages/NumberPorting.tsx",
+     "src/pages/OutboundCompliance.tsx",
+     "src/pages/Permissions.tsx",
+     "src/pages/QueueMetricsDashboard.tsx",
+     "src/pages/Recordings.tsx",
+     "src/pages/SLAPolicies.tsx",
+     "src/pages/Scheduling.tsx",
+     "src/pages/SecurityDashboard.tsx",
+     "src/pages/SecurityReport.tsx",
+     "src/pages/Skills.tsx",
+     "src/pages/TollFreeNumbers.tsx",
+     "src/pages/Trackers.tsx",
+     "src/pages/TranslationCenter.tsx",
+     "src/pages/VerifyEmail.tsx",
+     "src/pages/VideoConference.tsx",
+     "src/pages/VirtualFax.tsx",
+     "src/pages/VoiceSecurity.tsx",
+     "src/pages/Voicemail.tsx",
+     "src/pages/admin/SecurityAuditDashboard.tsx",
+     "tsconfig.app.json",
+     "tsconfig.json",
+     "tsconfig.node.json"
+    ]
+   },
+   {
+    "sha": "f83c5a8",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "docs: regenera indice de ADRs (7 de 53 estavam listados) (#98)",
+    "files": [
+     "docs/adr/README.md"
+    ]
+   },
    {
     "sha": "e7f6391",
     "date": "2026-11-21",
@@ -121089,43 +121227,12 @@
      "src/components/layout/AppSidebar.tsx",
      "src/pages/Calls.tsx"
     ]
-   },
-   {
-    "sha": "587daff",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "chore(docs): reflete wiring WIRING-04/06 na doc de funcionalidades planejadas (#68)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
-   },
-   {
-    "sha": "592732e",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "feat: wirea WIRING-04 e 06 (hooks de contexto e gamificação na UI) (#67)",
-    "files": [
-     "src/components/accounts/ChurnSignalsPanel.tsx",
-     "src/components/call-library/CallPlaylistsPanel.tsx",
-     "src/components/call-library/SurveysPanel.tsx",
-     "src/components/coaching/CoachingAssignmentsPanel.tsx",
-     "src/components/compliance/ComplianceRulesPanel.tsx",
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/scheduling/AdherencePanel.tsx",
-     "src/pages/Accounts.tsx",
-     "src/pages/CallLibrary.tsx",
-     "src/pages/Coaching.tsx",
-     "src/pages/Compliance.tsx",
-     "src/pages/Gamification.tsx",
-     "src/pages/Scheduling.tsx",
-     "src/routes/protectedRoutes.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    11
+    10
    ],
    [
     "docs/edge-functions/README.md",
@@ -121136,12 +121243,20 @@
     5
    ],
    [
+    "src/components/layout/CommandPalette.tsx",
+    4
+   ],
+   [
     "docs/audits/pendencias-2026-07.md",
     3
    ],
    [
-    "src/components/layout/CommandPalette.tsx",
-    3
+    "src/hooks/useSupervisorPanel.ts",
+    2
+   ],
+   [
+    "src/pages/Calls.tsx",
+    2
    ],
    [
     "supabase/functions/generate-coaching-track/index.ts",
@@ -121152,55 +121267,47 @@
     2
    ],
    [
-    "src/routes/protectedRoutes.tsx",
-    2
-   ],
-   [
-    "src/components/coaching/CoachingAssignmentsPanel.tsx",
-    2
-   ],
-   [
-    "src/components/calls/ActiveCallsIndicator.tsx",
+    "src/components/agent/BargeInNotification.tsx",
     1
    ],
    [
-    ".github/workflows/ci.yml",
+    "src/components/agent/WhisperNotification.tsx",
     1
    ],
    [
-    "docs/estado/infra-ci-rotas-integracoes.md",
+    "src/components/ai/AICallAnalysis.tsx",
     1
    ],
    [
-    "scripts/audit-edge-baseline.json",
+    "src/components/alerts/AlertsTrendChart.tsx",
     1
    ],
    [
-    "scripts/audit-edge-functions.ts",
+    "src/components/auth/PasswordStrength.tsx",
     1
    ],
    [
-    "scripts/bundle-budget.json",
+    "src/components/call-history/CallDetailDialog.tsx",
     1
    ],
    [
-    "scripts/check-bundle-budget.mjs",
+    "src/components/call-history/CallSessionsList.tsx",
     1
    ],
    [
-    "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+    "src/components/callbacks/ScheduledCallbacksList.tsx",
     1
    ],
    [
-    "supabase/functions/_shared/allowed-hosts.ts",
+    "src/components/calls/ActiveCallBar.tsx",
     1
    ],
    [
-    "supabase/functions/bitrix-api/index.ts",
+    "src/components/calls/ConferenceSection.tsx",
     1
    ],
    [
-    "supabase/functions/data-lake-flush/index.ts",
+    "src/components/calls/HoldReminderSettings.tsx",
     1
    ]
   ]

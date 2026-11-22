@@ -199,7 +199,7 @@
    "modulo": "components/agent",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 382,
+   "linhas": 381,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -247,7 +247,7 @@
    "modulo": "components/ai",
    "arquivos": 7,
    "testes": 0,
-   "linhas": 1136,
+   "linhas": 1121,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -302,7 +302,7 @@
    "modulo": "components/alerts",
    "arquivos": 5,
    "testes": 0,
-   "linhas": 994,
+   "linhas": 987,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -354,7 +354,7 @@
    "modulo": "components/auth",
    "arquivos": 7,
    "testes": 0,
-   "linhas": 1062,
+   "linhas": 1061,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -459,7 +459,7 @@
    "modulo": "components/call-history",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 405,
+   "linhas": 403,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -530,7 +530,6 @@
     "lib"
    ],
    "pacotes_externos": [
-    "date-fns",
     "lucide-react"
    ]
   },
@@ -587,7 +586,7 @@
    "modulo": "components/callbacks",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 664,
+   "linhas": 650,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -636,7 +635,7 @@
    "modulo": "components/calls",
    "arquivos": 27,
    "testes": 4,
-   "linhas": 3760,
+   "linhas": 3752,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -760,7 +759,6 @@
     "lib"
    ],
    "pacotes_externos": [
-    "date-fns",
     "lucide-react",
     "sonner"
    ]
@@ -843,7 +841,7 @@
    "modulo": "components/compliance",
    "arquivos": 17,
    "testes": 0,
-   "linhas": 2022,
+   "linhas": 2016,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -914,7 +912,7 @@
    "modulo": "components/contacts",
    "arquivos": 11,
    "testes": 0,
-   "linhas": 1461,
+   "linhas": 1460,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1053,7 +1051,7 @@
    "modulo": "components/dashboard",
    "arquivos": 13,
    "testes": 0,
-   "linhas": 1339,
+   "linhas": 1333,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1134,7 +1132,7 @@
    "modulo": "components/dialer",
    "arquivos": 16,
    "testes": 1,
-   "linhas": 2234,
+   "linhas": 2230,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1250,7 +1248,7 @@
    "modulo": "components/executive",
    "arquivos": 18,
    "testes": 1,
-   "linhas": 1898,
+   "linhas": 1894,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1410,7 +1408,7 @@
    "modulo": "components/gamification",
    "arquivos": 7,
    "testes": 0,
-   "linhas": 591,
+   "linhas": 590,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1460,7 +1458,6 @@
     "lib"
    ],
    "pacotes_externos": [
-    "date-fns",
     "lucide-react"
    ]
   },
@@ -1468,7 +1465,7 @@
    "modulo": "components/hold-alerts",
    "arquivos": 3,
    "testes": 0,
-   "linhas": 284,
+   "linhas": 283,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1504,7 +1501,7 @@
    "modulo": "components/layout",
    "arquivos": 9,
    "testes": 0,
-   "linhas": 1003,
+   "linhas": 994,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1765,7 +1762,6 @@
     "alerts_page_calls",
     "alerts_page_contacts",
     "coaching-updates",
-    "contact-alerts-changes",
     "conversations-realtime",
     "critical-alerts-notifications",
     "crm-suggestions-${callSessionId}",
@@ -1841,7 +1837,7 @@
    "modulo": "components/lazy",
    "arquivos": 1,
    "testes": 0,
-   "linhas": 25,
+   "linhas": 19,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1939,7 +1935,7 @@
    "modulo": "components/network",
    "arquivos": 17,
    "testes": 0,
-   "linhas": 3051,
+   "linhas": 3045,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2081,7 +2077,7 @@
    "modulo": "components/notifications",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 443,
+   "linhas": 437,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2104,7 +2100,6 @@
    "canais_realtime": [
     "alerts_page_calls",
     "alerts_page_contacts",
-    "contact-alerts-changes",
     "hold-alerts-realtime"
    ],
    "env": [
@@ -2402,7 +2397,7 @@
    "modulo": "components/recordings",
    "arquivos": 1,
    "testes": 0,
-   "linhas": 222,
+   "linhas": 221,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2446,7 +2441,6 @@
     "lib"
    ],
    "pacotes_externos": [
-    "date-fns",
     "lucide-react",
     "sonner"
    ]
@@ -2598,7 +2592,7 @@
    "modulo": "components/security-alerts",
    "arquivos": 10,
    "testes": 0,
-   "linhas": 1419,
+   "linhas": 1416,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2631,7 +2625,6 @@
    ],
    "pacotes_externos": [
     "@tanstack/react-virtual",
-    "date-fns",
     "lucide-react",
     "react-router-dom",
     "recharts",
@@ -2642,7 +2635,7 @@
    "modulo": "components/settings",
    "arquivos": 6,
    "testes": 0,
-   "linhas": 707,
+   "linhas": 706,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2715,7 +2708,7 @@
    "modulo": "components/supervisor",
    "arquivos": 11,
    "testes": 0,
-   "linhas": 575,
+   "linhas": 572,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2756,7 +2749,6 @@
    "depende_de_modulos": [
     "components/ui",
     "hooks",
-    "integrations/supabase",
     "lib"
    ],
    "pacotes_externos": [
@@ -3145,7 +3137,7 @@
    "modulo": "hooks",
    "arquivos": 167,
    "testes": 0,
-   "linhas": 20552,
+   "linhas": 20545,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4089,7 +4081,6 @@
     "@tanstack/react-query",
     "date-fns",
     "jssip",
-    "lucide-react",
     "react-router-dom",
     "sonner"
    ]
@@ -4225,7 +4216,7 @@
    "modulo": "hooks/telemetry",
    "arquivos": 1,
    "testes": 1,
-   "linhas": 47,
+   "linhas": 46,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4268,8 +4259,7 @@
    ],
    "depende_de_modulos": [
     "contexts",
-    "integrations/supabase",
-    "lib"
+    "integrations/supabase"
    ],
    "pacotes_externos": [
     "web-vitals"
@@ -4358,7 +4348,6 @@
     "components/notification-center",
     "components/queue-alerts",
     "components/settings",
-    "components/supervisor",
     "contexts",
     "hooks",
     "hooks/auth",
@@ -4722,7 +4711,6 @@
     "contexts",
     "hooks",
     "hooks/auth",
-    "hooks/telemetry",
     "lib/audit",
     "lib/bitrix",
     "lib/validation",
@@ -5167,7 +5155,7 @@
    "modulo": "pages",
    "arquivos": 92,
    "testes": 0,
-   "linhas": 16344,
+   "linhas": 16296,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5943,7 +5931,7 @@
    "modulo": "pages/admin",
    "arquivos": 16,
    "testes": 0,
-   "linhas": 2169,
+   "linhas": 2166,
    "itens_menu": [
     "Alertas de Segurança",
     "Auditoria de Segurança",

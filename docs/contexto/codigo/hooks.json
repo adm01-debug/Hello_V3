@@ -69,7 +69,7 @@
    "hooks_exportados": [
     "usePasswordStrength"
    ],
-   "linhas": 276,
+   "linhas": 275,
    "dominio": "components/auth",
    "tabelas": [],
    "rpcs": [],
@@ -530,7 +530,7 @@
    "hooks_exportados": [
     "useTelemetry"
    ],
-   "linhas": 47,
+   "linhas": 46,
    "dominio": "hooks/telemetry",
    "tabelas": [
     "performance_metrics"
@@ -1113,7 +1113,7 @@
    "hooks_exportados": [
     "useBlockedAccessLogs"
    ],
-   "linhas": 129,
+   "linhas": 128,
    "dominio": "hooks",
    "tabelas": [
     "blocked_access_logs"
@@ -1164,7 +1164,7 @@
    "hooks_exportados": [
     "useCallAnalytics"
    ],
-   "linhas": 135,
+   "linhas": 134,
    "dominio": "hooks",
    "tabelas": [
     "call_sessions",
@@ -1654,10 +1654,9 @@
    "canais_realtime": [
     "contact-alerts-changes"
    ],
-   "usado_por": 2,
+   "usado_por": 1,
    "usado_por_arquivos": [
-    "src/components/contacts/ContactAlertsDropdown.tsx",
-    "src/components/notifications/UnifiedNotificationDropdown.tsx"
+    "src/components/contacts/ContactAlertsDropdown.tsx"
    ],
    "coberto_por_testes": 1
   },
@@ -1705,7 +1704,7 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 12,
+   "usado_por": 11,
    "usado_por_arquivos": [
     "src/components/calls/ActiveCallBar.tsx",
     "src/components/contacts/ContactCard.tsx",
@@ -1717,7 +1716,6 @@
     "src/components/contacts/useBitrixSync.ts",
     "src/components/dialer/AddContactsDialog.tsx",
     "src/hooks/useContactInsights.ts",
-    "src/pages/ContactInsights.tsx",
     "src/pages/Contacts.tsx"
    ],
    "coberto_por_testes": 3
@@ -1842,7 +1840,7 @@
     "useQueueStatsData",
     "useRecentCallsData"
    ],
-   "linhas": 122,
+   "linhas": 121,
    "dominio": "hooks",
    "tabelas": [
     "call_sessions"
@@ -2370,7 +2368,7 @@
    "hooks_exportados": [
     "useGoalViolations"
    ],
-   "linhas": 114,
+   "linhas": 113,
    "dominio": "hooks",
    "tabelas": [
     "goal_violations"
@@ -3657,7 +3655,7 @@
    "hooks_exportados": [
     "useSecurityMonitoringData"
    ],
-   "linhas": 110,
+   "linhas": 108,
    "dominio": "hooks",
    "tabelas": [
     "audit_logs",
@@ -4084,7 +4082,7 @@
    "hooks_exportados": [
     "useTrunkFailoverMonitor"
    ],
-   "linhas": 52,
+   "linhas": 51,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],

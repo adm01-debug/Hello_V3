@@ -2284,7 +2284,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 11
+   "arquivos_puxados": 10
   },
   {
    "protegida": false,
@@ -3242,7 +3242,7 @@
    "papeis": [
     "admin"
    ],
-   "arquivos_puxados": 11
+   "arquivos_puxados": 10
   },
   {
    "protegida": false,
@@ -3869,7 +3869,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 22
+   "arquivos_puxados": 21
   },
   {
    "protegida": false,

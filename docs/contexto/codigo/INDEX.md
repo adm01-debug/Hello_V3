@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `e7f63916263be8b3bede4da64296aabcc812e5c1` (2026-11-21T22:37:01-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `f249e85e6020688709ef45d8c9f44fd09b1c8be0` (2026-11-21T22:57:57-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1583 |
 | arquivos_codigo | 1215 |
-| linhas_codigo | 167089 |
+| linhas_codigo | 166907 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -363,8 +363,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9028 nós · 23983 arestas · 693 comunidades · grafo do commit `e7f63916`
-- comunidades maiores: lucide-react (260), client.ts (229), vitest (168), badge.tsx (157), traceHeaders (143), react (132), cn (119), button.tsx (112), @tanstack/react-query (109), usePageTitle (104), snapshot.py (102), CardDescription (97)
+- 9020 nós · 23906 arestas · 702 comunidades · grafo do commit `f249e85e`
+- comunidades maiores: lucide-react (307), react (208), protectedRoutes.tsx (190), traceHeaders (176), usePageTitle (138), client.ts (135), cn (113), badge.tsx (112), vitest (110), utils.ts (110), snapshot.py (102), logger.ts (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -373,9 +373,10 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - .github/workflows/ci.yml (6)
 - .github/workflows/contexto.yml (6)
 - docs/edge-functions/README.md (6)
+- src/components/layout/AppSidebar.tsx (6)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
-- src/components/layout/AppSidebar.tsx (5)
+- src/components/layout/CommandPalette.tsx (4)
 - AGENTS.md (3)
 - deno.lock (3)
 - docs/audits/pendencias-2026-07.md (3)
@@ -383,7 +384,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - docs/pendencias/_ordem.md (3)
 - scripts/inventario/gerar-banco.mjs (3)
 - scripts/supabase_snapshot/snapshot.py (3)
-- scripts/supabase_snapshot/test_snapshot.py (3)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -422,6 +422,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-21 `f249e85` chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)
+- 2026-11-21 `f83c5a8` docs: regenera indice de ADRs (7 de 53 estavam listados) (#98)
 - 2026-11-21 `e7f6391` fix: torna a troca de chamada operavel por teclado no ActiveCallsIndicator (#97)
 - 2026-11-21 `95463e6` fix: SSRF guard nas edges, idempotencia do inbound e gates de CI (#80)
 - 2026-11-21 `438f9d2` chore: regenera catalogo de edges apos cron do discador (#93) (#95)
@@ -435,8 +437,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `91b39fd` docs: pendencias alinhadas ao estado real medido (#88)
 - 2026-11-21 `c206c6c` docs: catalogo de edge functions gerado do codigo (#87)
 - 2026-11-21 `f6f0740` fix: rls-audit exige auth e usa RPC real de RLS (#86)
-- 2026-11-21 `6807b07` fix: dataset call_summaries exportavel no data lake (D5) (#85)
-- 2026-11-21 `f8ba359` feat: error budget por componente no health-check (C1) (#83)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

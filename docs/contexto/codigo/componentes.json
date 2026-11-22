@@ -410,7 +410,7 @@
     "WhisperNotification"
    ],
    "export_default": null,
-   "linhas": 248,
+   "linhas": 247,
    "dominio": "components/agent",
    "hooks_locais": [],
    "tabelas": [
@@ -426,7 +426,7 @@
     "AICallAnalysis"
    ],
    "export_default": null,
-   "linhas": 388,
+   "linhas": 373,
    "dominio": "components/ai",
    "hooks_locais": [],
    "tabelas": [],
@@ -547,7 +547,7 @@
     "AlertsTrendChart"
    ],
    "export_default": null,
-   "linhas": 343,
+   "linhas": 336,
    "dominio": "components/alerts",
    "hooks_locais": [],
    "tabelas": [
@@ -639,7 +639,7 @@
     "PasswordStrength"
    ],
    "export_default": null,
-   "linhas": 276,
+   "linhas": 275,
    "dominio": "components/auth",
    "hooks_locais": [
     "usePasswordStrength"
@@ -718,7 +718,7 @@
     "CallDetailDialog"
    ],
    "export_default": null,
-   "linhas": 275,
+   "linhas": 274,
    "dominio": "components/call-history",
    "hooks_locais": [
     "useKeyMoments",
@@ -739,7 +739,7 @@
     "CallSessionsList"
    ],
    "export_default": null,
-   "linhas": 130,
+   "linhas": 129,
    "dominio": "components/call-history",
    "hooks_locais": [],
    "tabelas": [],
@@ -802,7 +802,7 @@
     "ScheduledCallbacksList"
    ],
    "export_default": null,
-   "linhas": 370,
+   "linhas": 356,
    "dominio": "components/callbacks",
    "hooks_locais": [
     "useScheduledCallbacks"
@@ -883,7 +883,7 @@
     "ConferenceSection"
    ],
    "export_default": null,
-   "linhas": 84,
+   "linhas": 83,
    "dominio": "components/calls",
    "hooks_locais": [],
    "tabelas": [],
@@ -913,7 +913,7 @@
     "HoldReminderSettings"
    ],
    "export_default": null,
-   "linhas": 99,
+   "linhas": 98,
    "dominio": "components/calls",
    "hooks_locais": [],
    "tabelas": [],
@@ -972,7 +972,7 @@
     "MeetingSummaryCard"
    ],
    "export_default": null,
-   "linhas": 255,
+   "linhas": 254,
    "dominio": "components/calls",
    "hooks_locais": [
     "useMeetingSummary"
@@ -1049,7 +1049,7 @@
     "ActiveCallDisplay"
    ],
    "export_default": null,
-   "linhas": 219,
+   "linhas": 214,
    "dominio": "components/calls",
    "hooks_locais": [
     "useVoiceCommand"
@@ -1318,7 +1318,7 @@
     "ComplianceSettings"
    ],
    "export_default": null,
-   "linhas": 215,
+   "linhas": 214,
    "dominio": "components/compliance",
    "hooks_locais": [
     "useDNCCompliance"
@@ -1334,7 +1334,7 @@
     "ConsentHistoryViewer"
    ],
    "export_default": null,
-   "linhas": 92,
+   "linhas": 91,
    "dominio": "components/compliance",
    "hooks_locais": [],
    "tabelas": [
@@ -1378,7 +1378,7 @@
     "DNCTable"
    ],
    "export_default": null,
-   "linhas": 105,
+   "linhas": 104,
    "dominio": "components/compliance",
    "hooks_locais": [],
    "tabelas": [],
@@ -1406,7 +1406,7 @@
     "DNCImportLogs"
    ],
    "export_default": null,
-   "linhas": 98,
+   "linhas": 96,
    "dominio": "components/compliance",
    "hooks_locais": [],
    "tabelas": [
@@ -1438,7 +1438,7 @@
     "HolidaysManager"
    ],
    "export_default": null,
-   "linhas": 171,
+   "linhas": 170,
    "dominio": "components/compliance",
    "hooks_locais": [],
    "tabelas": [
@@ -1594,7 +1594,7 @@
     "CustomerJourneyTimeline"
    ],
    "export_default": null,
-   "linhas": 93,
+   "linhas": 92,
    "dominio": "components/contacts",
    "hooks_locais": [],
    "tabelas": [],
@@ -1839,7 +1839,7 @@
     "RecentCalls"
    ],
    "export_default": null,
-   "linhas": 127,
+   "linhas": 121,
    "dominio": "components/dashboard",
    "hooks_locais": [
     "useRecentCallsData"
@@ -2129,7 +2129,7 @@
     "PredictiveDialerPanel"
    ],
    "export_default": null,
-   "linhas": 215,
+   "linhas": 211,
    "dominio": "components/dialer",
    "hooks_locais": [
     "usePredictiveDialer"
@@ -2357,7 +2357,7 @@
     "QualityTrunkDashboard"
    ],
    "export_default": null,
-   "linhas": 129,
+   "linhas": 126,
    "dominio": "components/executive",
    "hooks_locais": [],
    "tabelas": [
@@ -2419,7 +2419,7 @@
     "VoipInfrastructureTab"
    ],
    "export_default": null,
-   "linhas": 153,
+   "linhas": 152,
    "dominio": "components/executive",
    "hooks_locais": [
     "useVoipTrunks"
@@ -2514,7 +2514,7 @@
     "BadgeCard"
    ],
    "export_default": null,
-   "linhas": 51,
+   "linhas": 50,
    "dominio": "components/gamification",
    "hooks_locais": [],
    "tabelas": [],
@@ -2590,7 +2590,7 @@
     "HoldAlertsTable"
    ],
    "export_default": null,
-   "linhas": 125,
+   "linhas": 124,
    "dominio": "components/hold-alerts",
    "hooks_locais": [],
    "tabelas": [],
@@ -2635,7 +2635,7 @@
     "AppSidebar"
    ],
    "export_default": null,
-   "linhas": 358,
+   "linhas": 353,
    "dominio": "components/layout",
    "hooks_locais": [
     "useAuthContext",
@@ -2653,7 +2653,7 @@
     "CommandPalette"
    ],
    "export_default": null,
-   "linhas": 203,
+   "linhas": 199,
    "dominio": "components/layout",
    "hooks_locais": [
     "useTheme"
@@ -2797,7 +2797,7 @@
     "AgentQualityRanking"
    ],
    "export_default": null,
-   "linhas": 190,
+   "linhas": 186,
    "dominio": "components/network",
    "hooks_locais": [],
    "tabelas": [
@@ -3024,7 +3024,7 @@
     "VoipRecommendationsPanel"
    ],
    "export_default": null,
-   "linhas": 323,
+   "linhas": 322,
    "dominio": "components/network",
    "hooks_locais": [
     "useVoipRecommendations"
@@ -3058,7 +3058,7 @@
     "WhatIfSimulatorDialog"
    ],
    "export_default": null,
-   "linhas": 199,
+   "linhas": 198,
    "dominio": "components/network",
    "hooks_locais": [
     "useVoipRecommendationSimulate"
@@ -3118,7 +3118,7 @@
     "UnifiedNotificationDropdown"
    ],
    "export_default": null,
-   "linhas": 272,
+   "linhas": 266,
    "dominio": "components/notifications",
    "hooks_locais": [
     "useAlerts",
@@ -3536,7 +3536,7 @@
     "TranscriptionDialog"
    ],
    "export_default": null,
-   "linhas": 222,
+   "linhas": 221,
    "dominio": "components/recordings",
    "hooks_locais": [],
    "tabelas": [],
@@ -3611,7 +3611,7 @@
     "AlertDetailsDialog"
    ],
    "export_default": null,
-   "linhas": 109,
+   "linhas": 108,
    "dominio": "components/security-alerts",
    "hooks_locais": [],
    "tabelas": [],
@@ -3625,7 +3625,7 @@
     "AlertsDailyChart"
    ],
    "export_default": null,
-   "linhas": 74,
+   "linhas": 73,
    "dominio": "components/security-alerts",
    "hooks_locais": [],
    "tabelas": [],
@@ -3713,7 +3713,7 @@
     "VirtualTimeline"
    ],
    "export_default": null,
-   "linhas": 253,
+   "linhas": 252,
    "dominio": "components/security-alerts",
    "hooks_locais": [],
    "tabelas": [],
@@ -3822,7 +3822,7 @@
     "SystemLogs"
    ],
    "export_default": null,
-   "linhas": 65,
+   "linhas": 64,
    "dominio": "components/settings",
    "hooks_locais": [],
    "tabelas": [
@@ -3964,7 +3964,7 @@
     "QueueTrendChart"
    ],
    "export_default": null,
-   "linhas": 64,
+   "linhas": 61,
    "dominio": "components/supervisor",
    "hooks_locais": [],
    "tabelas": [],
@@ -4118,7 +4118,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 207,
+   "usado_por": 203,
    "orfao": false
   },
   {
@@ -4168,7 +4168,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 244,
+   "usado_por": 242,
    "orfao": false
   },
   {
@@ -4203,7 +4203,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 235,
+   "usado_por": 234,
    "orfao": false
   },
   {
@@ -4255,7 +4255,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 8,
+   "usado_por": 7,
    "orfao": false
   },
   {
@@ -4470,7 +4470,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 93,
+   "usado_por": 92,
    "orfao": false
   },
   {
@@ -4603,7 +4603,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 30,
+   "usado_por": 29,
    "orfao": false
   },
   {
@@ -4649,7 +4649,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 49,
+   "usado_por": 48,
    "orfao": false
   },
   {
@@ -4687,7 +4687,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 70,
+   "usado_por": 69,
    "orfao": false
   },
   {
@@ -4883,7 +4883,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 47,
+   "usado_por": 45,
    "orfao": false
   },
   {
@@ -4980,7 +4980,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 24,
+   "usado_por": 23,
    "orfao": false
   },
   {
@@ -5335,7 +5335,7 @@
     "SecurityAuditDashboard"
    ],
    "export_default": "SecurityAuditDashboard",
-   "linhas": 314,
+   "linhas": 311,
    "dominio": "pages/admin",
    "hooks_locais": [
     "useAuthContext",
@@ -5427,7 +5427,7 @@
     "AgentAssist"
    ],
    "export_default": "AgentAssist",
-   "linhas": 141,
+   "linhas": 140,
    "dominio": "pages",
    "hooks_locais": [
     "useAgentAssistHistory",
@@ -5497,7 +5497,7 @@
     "Alerts"
    ],
    "export_default": "Alerts",
-   "linhas": 132,
+   "linhas": 128,
    "dominio": "pages",
    "hooks_locais": [
     "useAlerts",
@@ -5569,7 +5569,7 @@
     "BlockedAccessLogs"
    ],
    "export_default": "BlockedAccessLogs",
-   "linhas": 248,
+   "linhas": 247,
    "dominio": "pages",
    "hooks_locais": [
     "useBlockedAccessLogs",
@@ -5720,7 +5720,7 @@
     "CallFlowDesigner"
    ],
    "export_default": "CallFlowDesigner",
-   "linhas": 355,
+   "linhas": 351,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
@@ -5738,7 +5738,7 @@
     "CallHistory"
    ],
    "export_default": "CallHistory",
-   "linhas": 204,
+   "linhas": 203,
    "dominio": "pages",
    "hooks_locais": [
     "useCallHistory",
@@ -5810,7 +5810,7 @@
     "Calls"
    ],
    "export_default": "Calls",
-   "linhas": 211,
+   "linhas": 203,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
@@ -5876,7 +5876,7 @@
     "ContactInsights"
    ],
    "export_default": "ContactInsights",
-   "linhas": 271,
+   "linhas": 270,
    "dominio": "pages",
    "hooks_locais": [
     "useContactInsights",
@@ -6066,7 +6066,7 @@
     "HoldAlertSettings"
    ],
    "export_default": "HoldAlertSettings",
-   "linhas": 321,
+   "linhas": 320,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
@@ -6160,7 +6160,7 @@
     "IPWhitelist"
    ],
    "export_default": "IPWhitelist",
-   "linhas": 199,
+   "linhas": 198,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",
@@ -6324,7 +6324,7 @@
     "MeetingSummaries"
    ],
    "export_default": "MeetingSummaries",
-   "linhas": 182,
+   "linhas": 180,
    "dominio": "pages",
    "hooks_locais": [
     "useDebouncedSearchParam",
@@ -6467,7 +6467,7 @@
     "OutboundCompliance"
    ],
    "export_default": "OutboundCompliance",
-   "linhas": 316,
+   "linhas": 315,
    "dominio": "pages",
    "hooks_locais": [
     "useBestTimeToContact",
@@ -6524,7 +6524,7 @@
     "Permissions"
    ],
    "export_default": "Permissions",
-   "linhas": 319,
+   "linhas": 315,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
@@ -6615,7 +6615,7 @@
     "QueueMetricsDashboard"
    ],
    "export_default": "QueueMetricsDashboard",
-   "linhas": 108,
+   "linhas": 106,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
@@ -6649,7 +6649,7 @@
     "Recordings"
    ],
    "export_default": "Recordings",
-   "linhas": 142,
+   "linhas": 140,
    "dominio": "pages",
    "hooks_locais": [
     "useDebouncedSearchParam",
@@ -6850,7 +6850,7 @@
     "Scheduling"
    ],
    "export_default": "Scheduling",
-   "linhas": 172,
+   "linhas": 171,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
@@ -6868,7 +6868,7 @@
     "SecurityDashboard"
    ],
    "export_default": "SecurityDashboard",
-   "linhas": 175,
+   "linhas": 172,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",
@@ -6906,7 +6906,7 @@
     "SecurityReport"
    ],
    "export_default": "SecurityReport",
-   "linhas": 210,
+   "linhas": 201,
    "dominio": "pages",
    "hooks_locais": [
     "useAuth",
@@ -7101,7 +7101,7 @@
     "TranslationCenter"
    ],
    "export_default": "TranslationCenter",
-   "linhas": 187,
+   "linhas": 186,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
@@ -7282,7 +7282,7 @@
     "VoiceSecurity"
    ],
    "export_default": "VoiceSecurity",
-   "linhas": 221,
+   "linhas": 220,
    "dominio": "pages",
    "hooks_locais": [
     "useFraudSignals",

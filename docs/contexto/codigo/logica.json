@@ -317,7 +317,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 232,
+   "usado_por": 231,
    "usado_por_modulos": [
     "components/admin",
     "components/agent",
@@ -337,7 +337,6 @@
     "components/notification-center",
     "components/queue-alerts",
     "components/settings",
-    "components/supervisor",
     "contexts",
     "hooks",
     "hooks/auth",
@@ -1068,7 +1067,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 186,
+   "usado_por": 185,
    "usado_por_modulos": [
     "components/admin",
     "components/ai",
@@ -1087,7 +1086,6 @@
     "contexts",
     "hooks",
     "hooks/auth",
-    "hooks/telemetry",
     "lib",
     "lib/audit",
     "lib/bitrix",

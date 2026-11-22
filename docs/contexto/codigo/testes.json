@@ -672,7 +672,7 @@
   {
    "arquivo": "src/hooks/__tests__/useContacts.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 162,
+   "linhas": 158,
    "testa": [
     "src/hooks/useContacts.ts"
    ],
@@ -825,7 +825,7 @@
   {
    "arquivo": "src/hooks/__tests__/useEdgeFunctions.test.ts",
    "tipo": "unit",
-   "linhas": 291,
+   "linhas": 290,
    "testa": [],
    "casos": 29
   },
@@ -1956,7 +1956,7 @@
   {
    "arquivo": "src/lib/__tests__/error-boundaries.test.tsx",
    "tipo": "unit",
-   "linhas": 340,
+   "linhas": 336,
    "testa": [
     "src/components/error-boundary/ErrorBoundary.tsx"
    ],
@@ -2325,7 +2325,7 @@
   {
    "arquivo": "src/lib/__tests__/tracing.coverage.test.ts",
    "tipo": "unit",
-   "linhas": 113,
+   "linhas": 112,
    "testa": [
     "src/lib/tracing.ts"
    ],
@@ -2541,7 +2541,7 @@
   {
    "arquivo": "src/lib/session/__tests__/index.coverage.test.ts",
    "tipo": "unit",
-   "linhas": 68,
+   "linhas": 61,
    "testa": [
     "src/lib/session/index.ts"
    ],

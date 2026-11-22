@@ -2,27 +2,27 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 889,
- "arestas": 3431,
+ "arestas": 3412,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 261
+   "importado_por": 260
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 244
+   "importado_por": 242
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 235
+   "importado_por": 234
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 207
+   "importado_por": 203
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 194
+   "importado_por": 193
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -38,7 +38,7 @@
   },
   {
    "arquivo": "src/components/ui/input.tsx",
-   "importado_por": 93
+   "importado_por": 92
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
@@ -46,7 +46,7 @@
   },
   {
    "arquivo": "src/components/ui/select.tsx",
-   "importado_por": 70
+   "importado_por": 69
   },
   {
    "arquivo": "src/components/ui/label.tsx",
@@ -58,7 +58,7 @@
   },
   {
    "arquivo": "src/components/ui/scroll-area.tsx",
-   "importado_por": 49
+   "importado_por": 48
   },
   {
    "arquivo": "src/components/ui/dialog.tsx",
@@ -66,15 +66,15 @@
   },
   {
    "arquivo": "src/components/ui/tabs.tsx",
-   "importado_por": 47
-  },
-  {
-   "arquivo": "src/components/ui/progress.tsx",
-   "importado_por": 30
+   "importado_por": 45
   },
   {
    "arquivo": "src/components/ui/switch.tsx",
    "importado_por": 30
+  },
+  {
+   "arquivo": "src/components/ui/progress.tsx",
+   "importado_por": 29
   },
   {
    "arquivo": "supabase/functions/_shared/validate.ts",
@@ -89,15 +89,15 @@
    "importado_por": 26
   },
   {
-   "arquivo": "src/components/ui/tooltip.tsx",
-   "importado_por": 24
-  },
-  {
    "arquivo": "src/components/layout/NeonPageLayout.tsx",
    "importado_por": 23
   },
   {
    "arquivo": "src/components/ui/textarea.tsx",
+   "importado_por": 23
+  },
+  {
+   "arquivo": "src/components/ui/tooltip.tsx",
    "importado_por": 23
   },
   {
@@ -126,7 +126,7 @@
   },
   {
    "arquivo": "src/hooks/useContacts.ts",
-   "importado_por": 15
+   "importado_por": 14
   },
   {
    "arquivo": "supabase/functions/_shared/rate-limit.ts",
@@ -221,14 +221,14 @@
  ],
  "modulos_mais_acoplados": [
   {
-   "modulo": "lib",
-   "depende_de": 4,
-   "importado_por": 50
-  },
-  {
    "modulo": "hooks",
    "depende_de": 13,
    "importado_por": 40
+  },
+  {
+   "modulo": "lib",
+   "depende_de": 4,
+   "importado_por": 49
   },
   {
    "modulo": "pages",
@@ -243,7 +243,7 @@
   {
    "modulo": "integrations/supabase",
    "depende_de": 0,
-   "importado_por": 34
+   "importado_por": 33
   },
   {
    "modulo": "components/layout",
