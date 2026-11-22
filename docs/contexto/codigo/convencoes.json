@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)",
    "docs: substitui rotulo desatualizado por prova de execucao (guard + IA em prod) (#127)",
    "chore: corrige deps de hook que causavam closure obsoleto (22 -> 5 warnings) (#126)",
    "fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)",
-   "chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)",
-   "feat: wire QueueTrendChart a dados reais (realtimeData do useQueueMetrics) (#123)"
+   "chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)"
   ]
  },
  "pr_template": null,

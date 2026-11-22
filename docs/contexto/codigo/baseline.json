@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "071d1ddd0f50d1dd1d41f4deb53a1c0b128dc22e",
+  "commit": "a0096def2318d9c361c7b205825dff8c3b98031c",
   "branch": "main",
-  "data_commit": "2026-11-22T10:04:52-03:00",
+  "data_commit": "2026-11-22T10:14:34-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a0096de",
+    "data": "2026-11-22",
+    "assunto": "feat: regra R9 detecta edge que finge sucesso sem fazer nada (#128)"
+   },
    {
     "sha": "071d1dd",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "4c76ea5",
     "data": "2026-11-21",
     "assunto": "fix(a11y): torna linhas clicaveis ativaveis por teclado (#103)"
-   },
-   {
-    "sha": "4aeee51",
-    "data": "2026-11-21",
-    "assunto": "fix: valida IP de header antes de usar em URL, log e autorizacao (#102)"
    }
   ],
-  "arquivos_mudados_7d": 855,
+  "arquivos_mudados_7d": 856,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 108
+    "commits": 109
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1627,
   "arquivos_codigo": 1235,
-  "linhas_codigo": 168626,
+  "linhas_codigo": 168647,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -384,7 +384,7 @@
   },
   "scripts/audit-edge-functions.ts": {
    "arquivos": 1,
-   "linhas": 161
+   "linhas": 177
   },
   "scripts/check-bundle-budget.mjs": {
    "arquivos": 1,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 170,
-   "linhas": 19569
+   "linhas": 19574
   },
   "tailwind.config.ts": {
    "arquivos": 1,

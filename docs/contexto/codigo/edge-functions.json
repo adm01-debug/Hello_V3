@@ -3145,7 +3145,7 @@
    "nome": "wavoip-call",
    "entrada": "supabase/functions/wavoip-call/index.ts",
    "arquivos": 1,
-   "linhas": 118,
+   "linhas": 123,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
