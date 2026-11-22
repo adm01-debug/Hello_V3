@@ -16,6 +16,7 @@ import { SkeletonDashboard } from "@/components/ui/skeleton-loader";
 import { ErrorBoundary } from "@/components/error-boundary/ErrorBoundary";
 import { publicRoutes } from "@/routes/publicRoutes";
 import { protectedRoutes } from "@/routes/protectedRoutes";
+import { NavigationProgressMarker } from "@/components/navigation/NavigationProgressMarker";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,7 +37,12 @@ const queryClient = new QueryClient({
 });
 
 function PageFallback() {
-  return <SkeletonDashboard />;
+  return (
+    <>
+      <NavigationProgressMarker />
+      <SkeletonDashboard />
+    </>
+  );
 }
 
 const App = () => (
