@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `28337d14dc4194910f2ac860372f7f1893f53b04` (2026-11-22T11:15:04-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `80115e5f324962f8caf3ed9e63da541165963aec` (2026-11-22T12:46:56-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1203), SQL (241), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1205), SQL (241), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1628 |
-| arquivos_codigo | 1236 |
-| linhas_codigo | 168820 |
+| arquivos_total | 1630 |
+| arquivos_codigo | 1238 |
+| linhas_codigo | 168900 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 169 |
 | migrations | 238 |
 | cron_jobs | 10 |
-| testes | 340 |
+| testes | 341 |
 | workflows | 3 |
 | scripts | 34 |
 | docs_md | 114 |
@@ -58,7 +58,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - componentes: src/components (319), src/pages (125), src/contexts (3)
 - hooks: src/hooks (173), src/components (12), src/contexts (3)
 - servicos_logica: src/lib (80), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (317), e2e/ (7), tests/ (6)
+- testes: co-localizado (__tests__) (318), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (6), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -341,7 +341,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - SDKs: Supabase, react-query, zod
 - hosts mais citados: openrouter.ai, hello-v3.vercel.app, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br
 - webhooks recebidos: nenhum
-- env de integração (só nomes): BITRIX_WEBHOOK_URL, COACHING_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
+- env de integração (só nomes): BITRIX_WEBHOOK_URL, CLEANUP_CRON_TOKEN, COACHING_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
 ## Permissões / papéis
 - papéis no código: admin (32), user (24), system (18), agent (16), button (13), alert (7), supervisor (7), group (5), status (5), viewer (4), article (3), img (3), navigation (3), anon (2), customer (2), dialog (2), god (1), link (1), presentation (1), region (1), searchbox (1), separator (1), string (1), sup (1), table (1)
@@ -367,13 +367,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9163 nós · 24250 arestas · 734 comunidades · grafo do commit `28337d14`
-- comunidades maiores: lucide-react (254), protectedRoutes.tsx (172), logger.ts (168), client.ts (147), utils.ts (146), react (145), vitest (131), usePageTitle (123), cn (122), Tabela de funcionalidades (115), @tanstack/react-query (107), gerar.mjs (104)
+- 9170 nós · 24263 arestas · 736 comunidades · grafo do commit `80115e5f`
+- comunidades maiores: lucide-react (249), usePageTitle (232), client.ts (224), vitest (181), react (163), traceHeaders (154), cn (111), @tanstack/react-query (103), snapshot.py (102), badge.tsx (88), safeFormatDistanceToNow (87), buildCorsHeaders (84)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/estado/funcionalidades-planejadas.md (19)
+- docs/estado/funcionalidades-planejadas.md (21)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
 - .github/workflows/contexto.yml (6)
@@ -426,6 +426,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `80115e5` fix: cron de retencao de lock-conflicts nunca autenticava (#137)
+- 2026-11-22 `9d3d288` docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)
+- 2026-11-22 `c7bbfa0` docs: valida IA e Data Lake ponta a ponta em producao (#135)
 - 2026-11-22 `28337d1` docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)
 - 2026-11-22 `3de307f` fix: tendencia do dia so monta apos o primeiro clique (#133)
 - 2026-11-22 `d3b1133` fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)
@@ -438,9 +441,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `d337973` fix: testes Deno detectam a edge servida, nao so a porta 54321 (#125)
 - 2026-11-22 `36c5c1f` chore: fecha decisao de negocio B1/C3 no scorecard com medicao real (#124)
 - 2026-11-22 `e708387` feat: wire QueueTrendChart a dados reais (realtimeData do useQueueMetrics) (#123)
-- 2026-11-22 `92cb97a` test: fix PBT flaky matchesKeywords (tokens whitespace-only) (#122)
-- 2026-11-22 `782c8e4` docs: marca achado createTestData como RESOLVIDO (PR #120) (#121)
-- 2026-11-22 `1123090` fix: gate createTestData e botão Criar Dados para DEV (#120)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

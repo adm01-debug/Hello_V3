@@ -2,11 +2,26 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "28337d14dc4194910f2ac860372f7f1893f53b04",
+  "commit": "80115e5f324962f8caf3ed9e63da541165963aec",
   "branch": "main",
-  "data_commit": "2026-11-22T11:15:04-03:00",
+  "data_commit": "2026-11-22T12:46:56-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "80115e5",
+    "data": "2026-11-22",
+    "assunto": "fix: cron de retencao de lock-conflicts nunca autenticava (#137)"
+   },
+   {
+    "sha": "9d3d288",
+    "data": "2026-11-22",
+    "assunto": "docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)"
+   },
+   {
+    "sha": "c7bbfa0",
+    "data": "2026-11-22",
+    "assunto": "docs: valida IA e Data Lake ponta a ponta em producao (#135)"
+   },
    {
     "sha": "28337d1",
     "data": "2026-11-22",
@@ -116,24 +131,9 @@
     "sha": "f48e4ef",
     "data": "2026-11-22",
     "assunto": "chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)"
-   },
-   {
-    "sha": "6f94283",
-    "data": "2026-11-22",
-    "assunto": "fix: envolve auth.uid/jwt/role em subselect nas policies restantes (#96)"
-   },
-   {
-    "sha": "68a2c21",
-    "data": "2026-11-22",
-    "assunto": "fix: trigger de papel cria o espelho que faltava em user_profiles (#108)"
-   },
-   {
-    "sha": "0b7522e",
-    "data": "2026-11-22",
-    "assunto": "fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)"
    }
   ],
-  "arquivos_mudados_7d": 860,
+  "arquivos_mudados_7d": 862,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -148,12 +148,12 @@
     "mudancas": 22
    },
    {
-    "pasta": "src/lib/__tests__",
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 21
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 19
+    "pasta": "src/lib/__tests__",
+    "mudancas": 21
    },
    {
     "pasta": "covout/lib/security",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 11
+    "mudancas": 12
    },
    {
     "pasta": "src/components/layout",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 19
+    "mudancas": 21
    },
    {
     "arquivo": ".github/workflows/ci.yml",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 115
+    "commits": 118
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1628,
-  "arquivos_codigo": 1236,
-  "linhas_codigo": 168820,
+  "arquivos_total": 1630,
+  "arquivos_codigo": 1238,
+  "linhas_codigo": 168900,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 238,
   "cron_jobs": 10,
-  "testes": 340,
+  "testes": 341,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 170,
-   "linhas": 19574
+   "arquivos": 172,
+   "linhas": 19654
   },
   "tailwind.config.ts": {
    "arquivos": 1,

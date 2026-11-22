@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (317)",
+   "co-localizado (__tests__) (318)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: cron de retencao de lock-conflicts nunca autenticava (#137)",
+   "docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)",
+   "docs: valida IA e Data Lake ponta a ponta em producao (#135)",
    "docs: registra os achados da taxa de abandono e do grafico de tendencia (#134)",
-   "fix: tendencia do dia so monta apos o primeiro clique (#133)",
-   "fix: taxa de abandono alinhada as edges (missed e chamadas em curso) (#132)",
-   "fix: taxa de abandono contava a chamada abandonada duas vezes (#131)",
-   "docs: registra divergencia de limiar no Nivel de Servico (#130)"
+   "fix: tendencia do dia so monta apos o primeiro clique (#133)"
   ]
  },
  "pr_template": null,

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "28337d14dc4194910f2ac860372f7f1893f53b04",
+  "sha": "80115e5f324962f8caf3ed9e63da541165963aec",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 15:11 UTC",
-  "files_total": 1675,
-  "code_files": 1478,
-  "code_lines": 184639
+  "generated_at": "2026-11-22 15:47 UTC",
+  "files_total": 1677,
+  "code_files": 1480,
+  "code_lines": 184719
  },
  "version": "1.3.2",
- "facts_hash": "b6ea94f700c683c3",
+ "facts_hash": "06afe3e463d8259b",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 605,
-   ".ts": 598,
+   ".ts": 600,
    ".sql": 241,
    ".mjs": 27,
    ".py": 5,
@@ -29740,6 +29740,7 @@
      "user_profiles"
     ],
     "env": [
+     "CLEANUP_CRON_TOKEN",
      "SUPABASE_ANON_KEY",
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
@@ -34136,8 +34137,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 170,
-   "lines": 19574,
+   "files": 172,
+   "lines": 19654,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34228,6 +34229,7 @@
    "exports": [
     "allowed-hosts.ts: SsrfBlockedError, OutboundUrlOptions, classifyHost, isHostAllowed, assertSafeOutboundUrl",
     "client-ip.ts: isIpLiteral, clientIpFromHeaders",
+    "constant-time.ts: mesmaString",
     "cors.ts: getCorsOrigin, buildCorsHeaders, corsHeaders",
     "external-payload-schemas.ts: BitrixActionSchema, BitrixAction, BitrixRequestSchema, BitrixRequest, paramsSchemaFor, WebhookEventSchema",
     "hmac.ts: verifyWebhookSignature",
@@ -34266,9 +34268,9 @@
     "optimistic-lock.test.ts: Teste defensivo do trigger enforce_optimistic_lock via SQL direto. Executado com: deno test --allow-net --allow-env supabase/functions/__tests__/optimistic-lock.test.ts Requer SUPABASE_DB_URL apontando para um banco com a migration aplicada. Em CI sem DB, o teste é pulado (skip) — não falha o pipeli …",
     "allowed-hosts.ts: Guarda contra SSRF para chamadas de saída feitas por Edge Functions. Regra: nenhum `fetch` com URL derivada de dado do usuário ou de configuração deve sair sem passar por `assertSafeOutboundUrl`. Bloqueios sempre ativos: esquemas não HTTP(S), loopback, link-local (inclui 169.254.169.254 - metadata d …",
     "client-ip.ts: O IP do cliente so pode vir de header HTTP, e header e controlado por quem chama. Antes de usar o valor em URL, log ou decisao de autorizacao, ele precisa ser um IP literal — nunca hostname, porta, path ou query.",
+    "constant-time.ts: Comparacao de segredos em tempo constante. `a === b` sai no primeiro byte diferente e vaza o prefixo do token por timing. Usado para validar os bearers que os crons do Vault mandam para as edges (DIALER_CRON_TOKEN, COACHING_CRON_TOKEN, CLEANUP_CRON_TOKEN).",
     "cors.ts: Centralized CORS configuration for all Edge Functions Restrict to known origins in production; fallback to first allowed origin",
-    "external-payload-schemas.ts: Schemas Zod para payloads externos (Bitrix24 + webhooks genéricos). Toda propriedade numérica usa `.finite()` (do `numeric-schemas.ts`) para bloquear NaN/Infinity que corromperiam cálculos downstream e poderiam burlar validações SQL. Strings recebem `.max()` para conter payloads hostis; enums restri …",
-    "observability.ts: Observabilidade estruturada para edge functions (JSON em 1 linha). Logs parseáveis por ferramentas de observabilidade (Supabase Logs, Logflare)."
+    "external-payload-schemas.ts: Schemas Zod para payloads externos (Bitrix24 + webhooks genéricos). Toda propriedade numérica usa `.finite()` (do `numeric-schemas.ts`) para bloquear NaN/Infinity que corromperiam cálculos downstream e poderiam burlar validações SQL. Strings recebem `.max()` para conter payloads hostis; enums restri …"
    ],
    "deps": [
     "https:",
@@ -34280,6 +34282,7 @@
     "supabase/functions/_shared/allowed-hosts.ts",
     "supabase/functions/_shared/client-ip.ts",
     "supabase/functions/_shared/client-ip_test.ts",
+    "supabase/functions/_shared/constant-time.ts",
     "supabase/functions/_shared/cors.ts",
     "supabase/functions/_shared/external-payload-schemas.ts",
     "supabase/functions/_shared/external-payload-schemas_test.ts",
@@ -34329,6 +34332,7 @@
     "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
     "supabase/functions/cleanup-lock-conflicts/index.test.ts",
     "supabase/functions/cleanup-lock-conflicts/index.ts",
+    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
     "supabase/functions/compute-account-health/index.ts",
     "supabase/functions/compute-adherence/index.ts",
     "supabase/functions/compute-best-time/index.ts",
@@ -34353,9 +34357,7 @@
     "supabase/functions/forecast-call-volume/index.ts",
     "supabase/functions/forecast-deals/index.ts",
     "supabase/functions/fuzz-test-runner/index.ts",
-    "supabase/functions/generate-coaching/index.ts",
-    "supabase/functions/generate-coaching-plan/index.ts",
-    "supabase/functions/generate-coaching-track/index.ts"
+    "supabase/functions/generate-coaching/index.ts"
    ]
   },
   {
@@ -37164,6 +37166,9 @@
    ],
    "CLAUDE_MD_BASE": [
     "scripts/ci/check-claude-md-integrity.mjs"
+   ],
+   "CLEANUP_CRON_TOKEN": [
+    "supabase/functions/cleanup-lock-conflicts/index.ts"
    ],
    "COACHING_CRON_TOKEN": [
     "supabase/functions/generate-coaching-track/index.ts"
@@ -71526,6 +71531,38 @@
    {
     "file": "supabase/functions/cleanup-lock-conflicts/index.test.ts",
     "name": "cleanup-lock-conflicts responde a preflight CORS"
+   },
+   {
+    "file": "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "name": "cron: aceita o bearer exato do Vault"
+   },
+   {
+    "file": "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "name": "cron: rejeita quando o secret nao esta configurado"
+   },
+   {
+    "file": "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "name": "cron: rejeita token errado de mesmo tamanho"
+   },
+   {
+    "file": "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "name": "cron: rejeita token com tamanho diferente"
+   },
+   {
+    "file": "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "name": "cron: rejeita header sem o prefixo Bearer"
+   },
+   {
+    "file": "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "name": "cron: rejeita JWT de usuario (nao e o token do cron)"
+   },
+   {
+    "file": "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "name": "mesmaString: prefixo correto e sufixo diferente retorna false"
+   },
+   {
+    "file": "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "name": "mesmaString: strings identicas retornam true"
    },
    {
     "file": "supabase/functions/compute-deal-health/__tests__/index.test.ts",
@@ -114739,6 +114776,14 @@
    "path": "supabase/functions/_shared/client-ip_test.ts",
    "lines": 40
   },
+  "supabase/functions/_shared/constant-time.ts": {
+   "path": "supabase/functions/_shared/constant-time.ts",
+   "lines": 14,
+   "exports": [
+    "function mesmaString"
+   ],
+   "doc": "Comparacao de segredos em tempo constante. `a === b` sai no primeiro byte diferente e vaza o prefixo do token por timing. Usado para validar os bearers que os crons do Vault mandam para as edges (DIALER_CRON_TOKEN, COACHING_CRON_TOKEN, CLEANUP_CRON_TOKEN)."
+  },
   "supabase/functions/_shared/cors.ts": {
    "path": "supabase/functions/_shared/cors.ts",
    "lines": 45,
@@ -116339,7 +116384,7 @@
   },
   "supabase/functions/cleanup-lock-conflicts/index.ts": {
    "path": "supabase/functions/cleanup-lock-conflicts/index.ts",
-   "lines": 89,
+   "lines": 103,
    "tables": [
     {
      "table": "user_profiles",
@@ -116365,6 +116410,7 @@
     ]
    },
    "env": [
+    "CLEANUP_CRON_TOKEN",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -116386,6 +116432,22 @@
     "1"
    ],
    "uses_service_role": true
+  },
+  "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts": {
+   "path": "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+   "lines": 52,
+   "is_test": true,
+   "doc": "Regressao: o cron semanal `cleanup-lock-conflicts-weekly` (migration 20261122220000) envia `Bearer <cleanup_lock_conflicts_cron_token>`, um segredo opaco lido do Vault. A edge so validava JWT via getClaims, entao esse bearer caia em 401 e a purga de optimistic_lock_conflicts > 90 dias NUNCA rodou — …",
+   "tests": [
+    "cron: aceita o bearer exato do Vault",
+    "cron: rejeita quando o secret nao esta configurado",
+    "cron: rejeita token errado de mesmo tamanho",
+    "cron: rejeita token com tamanho diferente",
+    "cron: rejeita header sem o prefixo Bearer",
+    "cron: rejeita JWT de usuario (nao e o token do cron)",
+    "mesmaString: prefixo correto e sufixo diferente retorna false",
+    "mesmaString: strings identicas retornam true"
+   ]
   },
   "supabase/functions/compute-account-health/index.ts": {
    "path": "supabase/functions/compute-account-health/index.ts",
@@ -122460,10 +122522,39 @@
   }
  },
  "git": {
-  "sha": "28337d14dc4194910f2ac860372f7f1893f53b04",
+  "sha": "80115e5f324962f8caf3ed9e63da541165963aec",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "80115e5",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "fix: cron de retencao de lock-conflicts nunca autenticava (#137)",
+    "files": [
+     "supabase/functions/_shared/constant-time.ts",
+     "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+     "supabase/functions/cleanup-lock-conflicts/index.ts"
+    ]
+   },
+   {
+    "sha": "9d3d288",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
+   {
+    "sha": "c7bbfa0",
+    "date": "2026-11-22",
+    "author": "adm01-debug",
+    "subject": "docs: valida IA e Data Lake ponta a ponta em producao (#135)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md"
+    ]
+   },
    {
     "sha": "28337d1",
     "date": "2026-11-22",
@@ -122799,48 +122890,6 @@
      "src/pages/ExternalRecordingsImport.tsx",
      "supabase/functions/teams-fetch-recordings/index.ts"
     ]
-   },
-   {
-    "sha": "f03e453",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "chore: doc reflete a medicao real da Onda 39 e do D3 (#109)",
-    "files": []
-   },
-   {
-    "sha": "ed3177d",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: 9 edge functions com erro de tipo que quebravam em producao (#110)",
-    "files": [
-     ".github/workflows/ci.yml",
-     "deno.lock",
-     "docs/estado/funcionalidades-planejadas.md",
-     "supabase/functions/analyze-live-utterance/index.ts",
-     "supabase/functions/check-contact-alerts/index.ts",
-     "supabase/functions/cleanup-lock-conflicts/index.ts",
-     "supabase/functions/embed-kb-article/index.ts",
-     "supabase/functions/sip-config/index.ts",
-     "supabase/functions/transcribe-recording/index.ts",
-     "supabase/functions/translate-summary/index.ts",
-     "supabase/functions/voip-failover-notifier/index.ts",
-     "supabase/functions/voip-quality-alerts-summary/index.ts"
-    ]
-   },
-   {
-    "sha": "4a44ddc",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "chore: atualiza docs apos corrigir a auditoria e a purga de conflitos de lock (#105)",
-    "files": [
-     "ESTADO_ATUAL.md",
-     "docs/adr/043-onda-29-observabilidade-conflitos.md",
-     "docs/adr/044-onda-30-cron-hotspot-alerts.md",
-     "docs/agentes/edge-functions.md",
-     "docs/edge-functions/README.md",
-     "docs/estado/edge-functions-parte1.md",
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
    }
   ],
   "hot_files": [
@@ -122885,12 +122934,20 @@
     2
    ],
    [
-    "supabase/functions/voip-failover-notifier/index.ts",
+    "supabase/functions/voip-load-test/index.ts",
     2
    ],
    [
-    "supabase/functions/voip-load-test/index.ts",
-    2
+    "supabase/functions/_shared/constant-time.ts",
+    1
+   ],
+   [
+    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    1
+   ],
+   [
+    "supabase/functions/cleanup-lock-conflicts/index.ts",
+    1
    ],
    [
     "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
@@ -122914,14 +122971,6 @@
    ],
    [
     "eslint.config.js",
-    1
-   ],
-   [
-    "src/components/calls/WebRTCCall.tsx",
-    1
-   ],
-   [
-    "src/components/compliance/calling-hours/useCallingHoursManager.ts",
     1
    ]
   ]

@@ -15,6 +15,7 @@
   "supabase/functions/_shared/allowed-hosts.ts",
   "supabase/functions/_shared/client-ip.ts",
   "supabase/functions/_shared/client-ip_test.ts",
+  "supabase/functions/_shared/constant-time.ts",
   "supabase/functions/_shared/cors.ts",
   "supabase/functions/_shared/external-payload-schemas.ts",
   "supabase/functions/_shared/external-payload-schemas_test.ts",
@@ -613,7 +614,7 @@
    "nome": "cleanup-lock-conflicts",
    "entrada": "supabase/functions/cleanup-lock-conflicts/index.ts",
    "arquivos": 1,
-   "linhas": 89,
+   "linhas": 103,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -624,6 +625,7 @@
    ],
    "rpcs": [],
    "env": [
+    "CLEANUP_CRON_TOKEN",
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
@@ -632,13 +634,14 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "constant-time.ts",
     "cors.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": true,
    "orfa": false,
-   "testes": 1
+   "testes": 2
   },
   {
    "nome": "compute-account-health",

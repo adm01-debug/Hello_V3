@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `28337d14dc` · branch `main` · 2026-11-22 15:11 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `80115e5f32` · branch `main` · 2026-11-22 15:47 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2436,7 +2436,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4012 testes em 329 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4020 testes em 330 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2592,6 +2592,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/security-alerts-webhook.property.test.ts` | 8 | sendExportWebhook — property-based (fast-check) · URL inválida sempre curto-circuita sem tentativas · 4xx não-retriável (exceto 408/429) ⇒ attempts === 1 · status retriável persistente ⇒ attempts === maxAttempts … |
 | `src/lib/__tests__/voice-command-history.test.ts` | 8 | voice-command-history · sanitiza qualquer entrada sem lançar e respeita o limite de tamanho · nunca excede o número máximo de entradas · faz dedupe case-insensitive mantendo o comando no topo … |
 | `src/pages/roles/__tests__/useRoles.test.ts` | 8 | useRoles · carrega roles e enriquece com email/nome · mostra erro ao carregar falhar · addRole retorna false quando usuário não existe … |
+| `supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts` | 8 | cron: aceita o bearer exato do Vault · cron: rejeita quando o secret nao esta configurado · cron: rejeita token errado de mesmo tamanho · cron: rejeita token com tamanho diferente … |
 | `supabase/functions/voip-executive-summary/__tests__/index.test.ts` | 8 | computeHealthScore — perfeito = 100 · computeHealthScore — fórmula ponderada correta · normalizeMos — null retorna neutro 75 · normalizeMos — MOS 4.0 ≈ 75 … |
 | `e2e/login.spec.ts` | 7 | Login Flow · should display login form · should show validation errors for empty fields · should show error for invalid credentials … |
 | `e2e/sip-flow.spec.ts` | 7 | Fluxo SIP end-to-end · carrega softphone e exibe badge de status SIP · permite digitar número no dialpad e limpar via backspace · inicia tentativa de chamada SIP e atualiza UI … |
@@ -2739,8 +2740,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCallRecording.test.ts` | 3 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado |
 | `src/hooks/__tests__/useChatbot.coverage.test.tsx` | 3 | useChatbot · returns chatbot response on success · handles error path and toasts |
 | `src/hooks/__tests__/useChurnRisk.test.ts` | 3 | useChurnRisk · loads active signals · resolves a signal with notes |
-| `src/hooks/__tests__/useComplianceRules.coverage.test.tsx` | 3 | useComplianceRules · loads rules and runs mutations · handles upsert error branch |
-| … +29 linhas — lista completa em `context.json` | | |
+| … +30 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

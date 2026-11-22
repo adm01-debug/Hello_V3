@@ -4655,6 +4655,7 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/cleanup-lock-conflicts/index.ts": [
+   "supabase/functions/_shared/constant-time.ts",
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/compute-account-health/index.ts": [

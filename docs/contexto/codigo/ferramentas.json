@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1203)",
+   "TypeScript (1205)",
    "SQL (241)",
    "Markdown (114)",
    "JavaScript (29)",
@@ -403,6 +403,7 @@
   "usadas_nas_edges": [
    "ADMIN_EMAIL",
    "BITRIX_WEBHOOK_URL",
+   "CLEANUP_CRON_TOKEN",
    "COACHING_CRON_TOKEN",
    "CORS_EXTRA_ORIGINS",
    "DIALER_CRON_TOKEN",
@@ -649,6 +650,7 @@
   ],
   "env_de_integracao": [
    "BITRIX_WEBHOOK_URL",
+   "CLEANUP_CRON_TOKEN",
    "COACHING_CRON_TOKEN",
    "DD_API_KEY",
    "DIALER_CRON_TOKEN",
