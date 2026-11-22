@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `6f94283c45846d79010f09450fd7ab5e51674c15` (2026-11-22T02:50:50-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `f48e4ef2315c9be4a76e7c7ff42aa858687f9625` (2026-11-22T02:57:57-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1186), SQL (223), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1190), SQL (241), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,21 +34,21 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1593 |
-| arquivos_codigo | 1219 |
-| linhas_codigo | 167110 |
+| arquivos_total | 1615 |
+| arquivos_codigo | 1223 |
+| linhas_codigo | 167556 |
 | rotas | 105 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
 | itens_menu | 94 |
-| modulos | 78 |
+| modulos | 79 |
 | componentes | 448 |
 | hooks | 191 |
-| edge_functions | 94 |
+| edge_functions | 96 |
 | tabelas | 169 |
-| migrations | 221 |
-| cron_jobs | 9 |
-| testes | 327 |
+| migrations | 238 |
+| cron_jobs | 10 |
+| testes | 330 |
 | workflows | 3 |
 | scripts | 34 |
 | docs_md | 114 |
@@ -58,7 +58,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - componentes: src/components (319), src/pages (125), src/contexts (3)
 - hooks: src/hooks (173), src/components (12), src/contexts (3)
 - servicos_logica: src/lib (80), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (305), e2e/ (7), tests/ (6)
+- testes: co-localizado (__tests__) (307), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (6), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -78,22 +78,22 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/contacts | 0 | 0 | 11 | 6 | 3 | 6 |
 | components/conversation-intelligence | 0 | 0 | 7 | 4 | 2 | 5 |
 | components/dashboard | 0 | 0 | 13 | 11 | 0 | 5 |
-| components/dialer | 0 | 0 | 16 | 17 | 1 | 7 |
+| components/dialer | 0 | 0 | 16 | 17 | 1 | 8 |
 | components/executive | 0 | 0 | 18 | 26 | 6 | 20 |
 | components/gamification | 0 | 0 | 7 | 3 | 0 | 5 |
-| components/layout | 0 | 0 | 9 | 121 | 31 | 73 |
+| components/layout | 0 | 0 | 9 | 122 | 31 | 76 |
 | components/network | 0 | 0 | 17 | 14 | 12 | 3 |
 | components/observability | 0 | 0 | 6 | 0 | 0 | 0 |
 | components/queue-alerts | 0 | 0 | 8 | 1 | 0 | 1 |
 | components/ranking | 0 | 0 | 6 | 1 | 0 | 5 |
 | components/security-alerts | 0 | 0 | 10 | 0 | 0 | 0 |
-| components/settings | 0 | 0 | 6 | 8 | 1 | 6 |
+| components/settings | 0 | 0 | 6 | 8 | 1 | 7 |
 | components/supervisor | 0 | 0 | 11 | 2 | 0 | 4 |
 | components/ui | 0 | 0 | 56 | 7 | 0 | 0 |
 | components/voice | 0 | 0 | 7 | 4 | 2 | 1 |
 | hooks | 0 | 0 | 167 | 208 | 56 | 122 |
-| hooks/auth | 0 | 0 | 5 | 5 | 0 | 1 |
-| lib | 0 | 0 | 48 | 111 | 30 | 66 |
+| hooks/auth | 0 | 0 | 5 | 5 | 0 | 2 |
+| lib | 0 | 0 | 48 | 112 | 30 | 69 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
 | pages | 86 | 93 | 92 | 188 | 65 | 133 |
@@ -232,17 +232,19 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `analyze-live-utterance` — tabelas: compliance_rules, live_assist_signals, objection_library; chamada por 1 arquivo(s) do front
 - `analyze-sentiment` — tabelas: call_summaries; chamada por 1 arquivo(s) do front
 - `analyze-talk-ratio` — tabelas: -; chamada por 2 arquivo(s) do front
-- `approve-password-reset` — tabelas: audit_logs, password_reset_requests, user_profiles; chamada por 1 arquivo(s) do front
+- `approve-password-reset` — tabelas: audit_logs, password_reset_requests; chamada por 1 arquivo(s) do front
 - `auto-scorecard` — tabelas: call_scorecards, call_sessions, scorecard_criteria, scorecard_responses, scorecard_templates; chamada por 0 arquivo(s) do front, por SQL/cron
 - `bitrix-api` — tabelas: -; chamada por 1 arquivo(s) do front
 - `chat-widget-session` — tabelas: agents, chat_sessions, conversation_messages, conversations; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `chatbot-respond` — tabelas: bot_conversations, conversation_messages, conversations, kb_articles, system_settings; chamada por 1 arquivo(s) do front
 - `check-alerts` — tabelas: call_alerts; chamada por 0 arquivo(s) do front — **ÓRFÃ**
+- `check-calling-hours` — tabelas: -; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `check-contact-alerts` — tabelas: contact_alerts, contacts; chamada por 2 arquivo(s) do front
+- `check-dnc` — tabelas: -; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `check-goals` — tabelas: call_alerts, call_sessions, dashboard_goals, goal_violations; chamada por 1 arquivo(s) do front
 - `check-hold-alerts` — tabelas: call_alerts, hold_alert_settings, hold_events; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `check-queue-metrics` — tabelas: call_alerts, call_sessions, queue_metrics_settings; chamada por 0 arquivo(s) do front — **ÓRFÃ**
-- `cleanup-lock-conflicts` — tabelas: optimistic_lock_conflicts, user_profiles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
+- `cleanup-lock-conflicts` — tabelas: optimistic_lock_conflicts, user_profiles; chamada por 0 arquivo(s) do front, por SQL/cron
 - `compute-account-health` — tabelas: accounts, call_sessions, call_summaries, churn_risk_signals, survey_responses; chamada por 1 arquivo(s) do front
 - `compute-adherence` — tabelas: agent_shifts, agent_status_history; chamada por 1 arquivo(s) do front
 - `compute-best-time` — tabelas: call_sessions, contact_engagement_patterns, contacts; chamada por 1 arquivo(s) do front
@@ -252,23 +254,23 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `database-cleanup` — tabelas: account_lockouts, audit_logs, login_attempts, rate_limit_alerts, rate_limit_logs, user_roles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `detect-churn-risk` — tabelas: accounts, call_key_moments, call_sessions, call_summaries, churn_risk_signals; chamada por 1 arquivo(s) do front
 - `detect-key-moments` — tabelas: call_key_moments; chamada por 2 arquivo(s) do front
-- `dialer-pacing-tick` — tabelas: user_profiles; chamada por 1 arquivo(s) do front, por SQL/cron
+- `dialer-pacing-tick` — tabelas: -; chamada por 1 arquivo(s) do front, por SQL/cron
 - `elevenlabs-conversation-token` — tabelas: -; chamada por 1 arquivo(s) do front
 - `email-inbound` — tabelas: agents, contacts, conversation_messages, conversations, email_tickets; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `embed-kb-article` — tabelas: kb_articles; chamada por 1 arquivo(s) do front
 - `enforce-sla` — tabelas: conversations, notifications, sla_policies; chamada por 1 arquivo(s) do front
 - `enroll-voice` — tabelas: voice_prints; chamada por 1 arquivo(s) do front
-- `export-data-lake` — tabelas: data_lake_exports, user_profiles; chamada por 1 arquivo(s) do front
+- `export-data-lake` — tabelas: data_lake_exports, user_roles; chamada por 1 arquivo(s) do front
 - `extract-crm-fields` — tabelas: contacts, crm_field_suggestions; chamada por 2 arquivo(s) do front
 - `forecast-call-volume` — tabelas: call_sessions; chamada por 1 arquivo(s) do front
 - `forecast-deals` — tabelas: deals; chamada por 1 arquivo(s) do front
 - `fuzz-test-runner` — tabelas: user_roles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
-- `generate-coaching` — tabelas: agent_goals, agents, call_sessions, call_summaries, call_transcriptions, coaching_recommendations, coaching_timestamps, user_profiles; chamada por 1 arquivo(s) do front, por SQL/cron
+- `generate-coaching` — tabelas: agent_goals, agents, call_sessions, call_summaries, call_transcriptions, coaching_recommendations, coaching_timestamps; chamada por 1 arquivo(s) do front, por SQL/cron
 - `generate-coaching-plan` — tabelas: call_sessions; chamada por 1 arquivo(s) do front
 - `generate-coaching-track` — tabelas: agents, call_sessions, coaching_assignments, notifications, user_profiles; chamada por 1 arquivo(s) do front, por SQL/cron
 - `generate-meeting-summary` — tabelas: call_sessions, call_transcriptions, meeting_summaries; chamada por 2 arquivo(s) do front
 - `generate-summary` — tabelas: -; chamada por 1 arquivo(s) do front
-- `global-load-test` — tabelas: user_profiles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
+- `global-load-test` — tabelas: -; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `health-check` — tabelas: voip_trunk_health_checks, webhook_flush_metrics; chamada por 2 arquivo(s) do front
 - `ldap-sync` — tabelas: audit_logs, contacts, system_settings, user_roles; chamada por 1 arquivo(s) do front
 - `notify-blocked-ip` — tabelas: -; chamada por 1 arquivo(s) do front
@@ -279,14 +281,14 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `record-consent` — tabelas: consent_records, user_profiles; chamada por 1 arquivo(s) do front
 - `redact-sensitive-audio` — tabelas: call_transcriptions, redaction_log; chamada por 1 arquivo(s) do front
 - `request-password-reset` — tabelas: password_reset_requests, security_alerts; chamada por 1 arquivo(s) do front
-- `rls-audit` — tabelas: user_profiles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
+- `rls-audit` — tabelas: user_roles; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `score-call` — tabelas: call_scorecards, call_sessions, call_summaries, call_transcripts_searchable, scorecard_criteria, scorecard_responses; chamada por 1 arquivo(s) do front
 - `score-call-attempt` — tabelas: contact_engagement_patterns; chamada por 1 arquivo(s) do front
 - `search-calls` — tabelas: call_key_moments, call_transcripts_searchable; chamada por 1 arquivo(s) do front
 - `send-notification` — tabelas: notification_preferences, notifications; chamada por 1 arquivo(s) do front
 - `send-survey` — tabelas: survey_responses, surveys; chamada por 1 arquivo(s) do front
 - `sip-config` — tabelas: agent_trunk_assignments, user_profiles; chamada por 1 arquivo(s) do front
-- `suggest-shift-swaps` — tabelas: agent_shifts, agent_weekly_stats, shift_swap_suggestions, user_profiles; chamada por 1 arquivo(s) do front
+- `suggest-shift-swaps` — tabelas: agent_shifts, agent_weekly_stats, shift_swap_suggestions, user_roles; chamada por 1 arquivo(s) do front
 - `sync-crm-queue` — tabelas: crm_sync_queue; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `teams-fetch-recordings` — tabelas: call_recordings; chamada por 1 arquivo(s) do front
 - `transcribe-recording` — tabelas: call_recordings, call_transcriptions; chamada por 1 arquivo(s) do front
@@ -305,7 +307,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `voip-executive-narrative` — tabelas: call_quality_metrics, voip_quality_alerts, voip_recommendation_actions; chamada por 1 arquivo(s) do front
 - `voip-executive-summary` — tabelas: call_quality_metrics, call_sessions, voip_quality_alerts; chamada por 1 arquivo(s) do front
 - `voip-failover-notifier` — tabelas: agent_trunk_assignments, notifications, voip_trunks; chamada por 0 arquivo(s) do front
-- `voip-load-test` — tabelas: call_quality_metrics, user_profiles; chamada por 1 arquivo(s) do front
+- `voip-load-test` — tabelas: call_quality_metrics; chamada por 1 arquivo(s) do front
 - `voip-quality-alerts-summary` — tabelas: voip_quality_alerts; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `voip-quality-forecast` — tabelas: call_quality_metrics; chamada por 1 arquivo(s) do front
 - `voip-quality-heatmap` — tabelas: call_quality_metrics; chamada por 1 arquivo(s) do front
@@ -323,6 +325,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `whatsapp-rewrite` — tabelas: -; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 
 ## Cron jobs (pg_cron / vercel)
+- `cleanup-lock-conflicts-weekly` 0 3 * * 0 → edge cleanup-lock-conflicts (20261122220000_lock_conflicts_retention_cron.sql)
 - `daily-cleanup-old-logs` 15 3 * * * (20260711185006_44492a26-e136-43de-93b9-066bed1b40a8.sql)
 - `data-lake-flush-daily` 0 3 * * * → edge data-lake-flush (20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql)
 - `dialer-pacing-tick` * * * * * → edge dialer-pacing-tick (20261122140000_dialer_pacing_cron.sql)
@@ -340,7 +343,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, COACHING_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
 ## Permissões / papéis
-- papéis no código: admin (32), user (24), system (18), agent (15), button (13), alert (7), supervisor (6), group (5), status (5), article (3), img (3), navigation (3), viewer (3), anon (2), customer (2), dialog (2), god (1), link (1), presentation (1), region (1), searchbox (1), separator (1), string (1), sup (1), table (1)
+- papéis no código: admin (32), user (24), system (18), agent (16), button (13), alert (7), supervisor (7), group (5), status (5), viewer (4), article (3), img (3), navigation (3), anon (2), customer (2), dialog (2), god (1), link (1), presentation (1), region (1), searchbox (1), separator (1), string (1), sup (1), table (1)
 - enums de papel: app_role: admin|supervisor|agent|viewer
 - guards: src/components/auth/ProtectedRoute.tsx · rotas protegidas: 0 · públicas: /, /*, /accounts, /admin/data-export, /admin/database-health, /admin/extensions, /admin/security-alerts, /admin/security-audit, /admin/slo, /admin/voice-quality, /admin/voip-trunks, /admin/webhook-health, /agent-assist, /ai, /alert-history, /alerts, /analytics, /audit-logs, /battle-cards, /blf, /blocked-access-logs, /cadences, /call-flow-designer, /call-history, /call-library, /call-park, /call-queues, /callbacks, /calls, /coaching, /compliance, /concurrency-conflicts, /contacts, /contacts/insights, /dashboard, /deals, /dialer, /dialer/predictive, /executive, /external-recordings-import, /financial-impact, /forgot-password, /gamification, /geo-blocking, /history, /hold-alerts, /hold-metrics, /hold-settings, /hot-desking, /inbox, /ip-whitelist, /knowledge, /landing, /ldap-sync, /learning, /login, /marketplace, /meeting-summaries, /multi-device-ring, /network-diagnostics, /notifications, /number-porting, /observability, /onboarding, /outbound-compliance, /passkeys, /password-reset-approval, /permissions, /pricing, /qr-provisioning, /queue-dashboard, /queue-metrics-settings, /ranking, /rate-limit, /recordings, /register, /renewals, /reports, /reset-password, /ring-groups, /roles, /routing-rules, /scheduling, /security, /security-monitoring, /security-report, /sessions, /settings, /shift-swap-suggestions, /skills, /sla-policies, /status, /success-plans, /toll-free-numbers, /topic-detection, /trackers, /translation-center, /two-factor-auth, /unauthorized, /verify-email, /video-conference, /virtual-fax, /voice-security, /voicemail, /vs/3cplus
 - feature flags: FEATURE_X, nova-tela, novo-inbox
@@ -349,7 +352,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - rotas_sem_arquivo: 0
 - componentes_ambiguos: 0
 - menu_sem_destino: 0
-- edges_orfas: 20 — ex.: chat-widget-session, check-alerts, check-hold-alerts
+- edges_orfas: 21 — ex.: chat-widget-session, check-alerts, check-calling-hours
 - edges_chamadas_sem_pasta: 0
 - tabelas_sem_rls: 2 — ex.: migration_rollbacks, schema_migrations
 - tabelas_usadas_sem_definicao: 1 — ex.: agent_status_history
@@ -363,8 +366,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9046 nós · 23950 arestas · 726 comunidades · grafo do commit `6f94283c`
-- comunidades maiores: lucide-react (259), usePageTitle (233), client.ts (221), badge.tsx (184), vitest (170), traceHeaders (163), react (160), @tanstack/react-query (115), safeFormatDistanceToNow (103), cn (102), generate.py (93), Tabela de funcionalidades (87)
+- 9116 nós · 24056 arestas · 719 comunidades · grafo do commit `f48e4ef2`
+- comunidades maiores: lucide-react (254), client.ts (204), utils.ts (188), react (186), vitest (171), usePageTitle (166), Tabela de funcionalidades (159), cn (118), safe-date.ts (116), snapshot.py (102), UnifiedSoftphone.tsx (87), @tanstack/react-query (86)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -377,13 +380,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - deno.lock (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
+- docs/pendencias/_ordem.md (4)
 - src/components/layout/CommandPalette.tsx (4)
 - AGENTS.md (3)
 - docs/agentes/edge-functions.md (3)
 - docs/audits/pendencias-2026-07.md (3)
 - docs/estado/edge-functions-parte1.md (3)
 - docs/observabilidade/SLI_SLO.md (3)
-- docs/pendencias/_ordem.md (3)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -422,6 +425,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-22 `f48e4ef` chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)
 - 2026-11-22 `6f94283` fix: envolve auth.uid/jwt/role em subselect nas policies restantes (#96)
 - 2026-11-22 `68a2c21` fix: trigger de papel cria o espelho que faltava em user_profiles (#108)
 - 2026-11-22 `0b7522e` fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)
@@ -436,7 +440,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-21 `25f5bfb` docs: re-scorecard 9,1/10 com os PRs #96, #97, #98 e #99 (#100)
 - 2026-11-21 `f249e85` chore: liga noUnusedLocals/noUnusedParameters e remove 200+ declaracoes orfas (#99)
 - 2026-11-21 `f83c5a8` docs: regenera indice de ADRs (7 de 53 estavam listados) (#98)
-- 2026-11-21 `e7f6391` fix: torna a troca de chamada operavel por teclado no ActiveCallsIndicator (#97)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

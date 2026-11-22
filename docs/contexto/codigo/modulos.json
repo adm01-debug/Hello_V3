@@ -637,7 +637,7 @@
    "modulo": "components/calls",
    "arquivos": 27,
    "testes": 4,
-   "linhas": 3756,
+   "linhas": 3777,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1171,6 +1171,7 @@
     "dialer_campaigns",
     "dialer_queue",
     "user_profiles",
+    "user_roles",
     "voip_quality_alerts"
    ],
    "rpcs": [
@@ -1413,7 +1414,7 @@
    "modulo": "components/gamification",
    "arquivos": 7,
    "testes": 0,
-   "linhas": 590,
+   "linhas": 612,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1555,6 +1556,7 @@
     "useCriticalAlertNotifications",
     "useCrmFieldSuggestions",
     "useCulturalHints",
+    "useDNCCompliance",
     "useDashboardGoals",
     "useDashboardLayout",
     "useDashboardStats",
@@ -1695,10 +1697,12 @@
     "call_transcriptions",
     "call_transcripts_searchable",
     "call_translations",
+    "calling_hours_config",
     "churn_risk_signals",
     "coaching_assignments",
     "coaching_recommendations",
     "coaching_timestamps",
+    "compliance_settings",
     "consent_records",
     "contact_alerts",
     "contact_engagement_patterns",
@@ -1714,6 +1718,7 @@
     "dialer_campaigns",
     "dialer_favorites",
     "dialer_queue",
+    "dnc_list",
     "financial_impact_daily",
     "goal_violations",
     "hold_alert_settings",
@@ -1744,6 +1749,9 @@
     "whisper_messages"
    ],
    "rpcs": [
+    "add_to_dnc",
+    "check_calling_hours",
+    "check_dnc",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agent_performance",
@@ -2561,7 +2569,8 @@
    "hooks_definidos": [],
    "edges": [],
    "tabelas": [
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "buckets": [],
@@ -2666,7 +2675,8 @@
     "bitrix_users",
     "crm_sync_queue",
     "system_settings",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [
     "log_audit_event"
@@ -3080,7 +3090,8 @@
    ],
    "edges": [],
    "tabelas": [
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "buckets": [],
@@ -4096,7 +4107,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 170,
+   "testes": 171,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -4125,7 +4136,7 @@
    "modulo": "hooks/auth",
    "arquivos": 5,
    "testes": 3,
-   "linhas": 253,
+   "linhas": 285,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4149,7 +4160,8 @@
    ],
    "edges": [],
    "tabelas": [
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "buckets": [],
@@ -4163,7 +4175,8 @@
    "diretos": {
     "edges": [],
     "tabelas": [
-     "user_profiles"
+     "user_profiles",
+     "user_roles"
     ],
     "rpcs": []
    },
@@ -4244,7 +4257,8 @@
    "edges": [],
    "tabelas": [
     "performance_metrics",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "buckets": [],
@@ -4427,6 +4441,7 @@
     "useConversations",
     "useCriticalAlertNotifications",
     "useCulturalHints",
+    "useDNCCompliance",
     "useDashboardGoals",
     "useDashboardLayout",
     "useDashboardStats",
@@ -4558,10 +4573,12 @@
     "call_summaries",
     "call_transcriptions",
     "call_translations",
+    "calling_hours_config",
     "churn_risk_signals",
     "coaching_assignments",
     "coaching_recommendations",
     "coaching_timestamps",
+    "compliance_settings",
     "consent_records",
     "contact_alerts",
     "contact_engagement_patterns",
@@ -4576,6 +4593,7 @@
     "dialer_campaigns",
     "dialer_favorites",
     "dialer_queue",
+    "dnc_list",
     "financial_impact_daily",
     "goal_violations",
     "hold_alert_settings",
@@ -4603,6 +4621,9 @@
     "whisper_messages"
    ],
    "rpcs": [
+    "add_to_dnc",
+    "check_calling_hours",
+    "check_dnc",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agent_performance",
@@ -5163,7 +5184,7 @@
    "modulo": "pages",
    "arquivos": 92,
    "testes": 0,
-   "linhas": 16296,
+   "linhas": 16306,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5934,6 +5955,34 @@
     "recharts",
     "sonner"
    ]
+  },
+  {
+   "modulo": "pages/__tests__",
+   "arquivos": 0,
+   "testes": 1,
+   "linhas": 0,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 0,
+   "hooks_locais": [],
+   "hooks_definidos": [],
+   "edges": [],
+   "tabelas": [],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [],
+   "depende_de_modulos": [],
+   "pacotes_externos": []
   },
   {
    "modulo": "pages/admin",

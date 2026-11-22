@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (305)",
+   "co-localizado (__tests__) (307)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)",
    "fix: envolve auth.uid/jwt/role em subselect nas policies restantes (#96)",
    "fix: trigger de papel cria o espelho que faltava em user_profiles (#108)",
    "fix: anon lia papeis de qualquer usuario e escrevia na lista DNC (#107)",
-   "feat: fecha B6 - dominio nas colunas text enumeraveis (#111)",
-   "fix: remove dependencia do gateway Lovable na importacao do Teams (#112)"
+   "feat: fecha B6 - dominio nas colunas text enumeraveis (#111)"
   ]
  },
  "pr_template": null,

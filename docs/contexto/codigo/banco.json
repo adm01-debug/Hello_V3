@@ -8,16 +8,18 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 221,
+ "migrations": 238,
  "seeds": [],
  "avisos": [
-  "42 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
+  "44 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
  ],
  "extensoes": [
+  "dblink",
   "pg_cron",
   "pg_net",
   "pg_stat_statements",
   "pg_trgm",
+  "supabase_vault",
   "vector"
  ],
  "enums": {
@@ -875,6 +877,13 @@
    "funcao": "audit_role_change"
   },
   {
+   "nome": "trg_sync_profile_role",
+   "quando": "after",
+   "evento": "insert or update or delete",
+   "tabela": "user_roles",
+   "funcao": "sync_profile_role_from_user_roles"
+  },
+  {
    "nome": "update_user_roles_updated_at",
    "quando": "before",
    "evento": "update",
@@ -960,6 +969,12 @@
   }
  ],
  "cron_jobs": [
+  {
+   "nome": "cleanup-lock-conflicts-weekly",
+   "agenda": "0 3 * * 0",
+   "migration": "20261122220000_lock_conflicts_retention_cron.sql",
+   "chama_edge": "cleanup-lock-conflicts"
+  },
   {
    "nome": "daily-cleanup-old-logs",
    "agenda": "15 3 * * *",
@@ -15506,6 +15521,12 @@
      "comando": "select",
      "para": "authenticated",
      "tipo": "permissive"
+    },
+    {
+     "nome": "olc_writer_insert",
+     "comando": "insert",
+     "para": "optimistic_lock_writer",
+     "tipo": "permissive"
     }
    ],
    "indices": [
@@ -19500,6 +19521,24 @@
      "comando": "update",
      "para": "authenticated",
      "tipo": "permissive"
+    },
+    {
+     "nome": "storage_delete_authenticated",
+     "comando": "delete",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "storage_insert_authenticated",
+     "comando": "insert",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "storage_select_authenticated",
+     "comando": "select",
+     "para": "authenticated",
+     "tipo": "permissive"
     }
    ],
    "indices": [],
@@ -21662,18 +21701,10 @@
    },
    "usada_no_front": 10,
    "usada_em_edges": [
-    "approve-password-reset",
     "cleanup-lock-conflicts",
-    "dialer-pacing-tick",
-    "export-data-lake",
-    "generate-coaching",
     "generate-coaching-track",
-    "global-load-test",
     "record-consent",
-    "rls-audit",
-    "sip-config",
-    "suggest-shift-swaps",
-    "voip-load-test"
+    "sip-config"
    ],
    "triggers": [
     "audit_user_profiles_change",
@@ -21802,17 +21833,21 @@
     "so_na_migration": [],
     "so_no_types": []
    },
-   "usada_no_front": 2,
+   "usada_no_front": 3,
    "usada_em_edges": [
     "database-backup",
     "database-cleanup",
+    "export-data-lake",
     "fuzz-test-runner",
     "ldap-sync",
+    "rls-audit",
+    "suggest-shift-swaps",
     "voip-trunks-manage"
    ],
    "triggers": [
     "audit_user_roles_changes",
     "trg_audit_user_roles",
+    "trg_sync_profile_role",
     "update_user_roles_updated_at"
    ],
    "sem_rls": false,
@@ -23713,12 +23748,6 @@
      "comando": "all",
      "para": "authenticated",
      "tipo": "permissive"
-    },
-    {
-     "nome": "Apenas administradores podem gerenciar segredos",
-     "comando": "all",
-     "para": "public",
-     "tipo": "permissive"
     }
    ],
    "indices": [],
@@ -23880,12 +23909,12 @@
   {
    "nome": "check_calling_hours",
    "definida": true,
-   "usada_em": 3
+   "usada_em": 4
   },
   {
    "nome": "check_dnc",
    "definida": true,
-   "usada_em": 2
+   "usada_em": 3
   },
   {
    "nome": "check_idle_indexes",
@@ -23970,7 +23999,7 @@
   {
    "nome": "is_admin_user",
    "definida": true,
-   "usada_em": 4
+   "usada_em": 11
   },
   {
    "nome": "log_audit_event",

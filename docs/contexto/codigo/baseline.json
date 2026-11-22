@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6f94283c45846d79010f09450fd7ab5e51674c15",
+  "commit": "f48e4ef2315c9be4a76e7c7ff42aa858687f9625",
   "branch": "main",
-  "data_commit": "2026-11-22T02:50:50-03:00",
+  "data_commit": "2026-11-22T02:57:57-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f48e4ef",
+    "data": "2026-11-22",
+    "assunto": "chore: integra #106 e #104 (papeis, lock, compliance) sobre a main atual (#113)"
+   },
    {
     "sha": "6f94283",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "15654d2",
     "data": "2026-11-21",
     "assunto": "docs: regenera catalogo apos corrigir o rls-audit (#90)"
-   },
-   {
-    "sha": "91b39fd",
-    "data": "2026-11-21",
-    "assunto": "docs: pendencias alinhadas ao estado real medido (#88)"
    }
   ],
-  "arquivos_mudados_7d": 791,
+  "arquivos_mudados_7d": 822,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 17
+    "mudancas": 18
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
@@ -161,7 +161,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 10
+    "mudancas": 11
    },
    {
     "pasta": "src/components/layout",
@@ -230,6 +230,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "docs/pendencias/_ordem.md",
+    "mudancas": 4
+   },
+   {
     "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 4
    },
@@ -254,7 +258,11 @@
     "mudancas": 3
    },
    {
-    "arquivo": "docs/pendencias/_ordem.md",
+    "arquivo": "docs/pendencias/WIRING-04-gamificationdashboard.md",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "docs/pendencias/WIRING-06-hooks-orfaos.md",
     "mudancas": 3
    },
    {
@@ -278,30 +286,22 @@
     "mudancas": 3
    },
    {
+    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "mudancas": 3
+   },
+   {
+    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
+    "mudancas": 3
+   },
+   {
     "arquivo": "supabase/functions/health-check/index.ts",
     "mudancas": 3
-   },
-   {
-    "arquivo": "supabase/migrations/20250102000000_performance_indexes.sql",
-    "mudancas": 3
-   },
-   {
-    "arquivo": ".env.example",
-    "mudancas": 2
-   },
-   {
-    "arquivo": ".github/workflows/inventario-estado-semanal.yml",
-    "mudancas": 2
-   },
-   {
-    "arquivo": "ESTADO_ATUAL.md",
-    "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 93
+    "commits": 94
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,21 +314,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1593,
-  "arquivos_codigo": 1219,
-  "linhas_codigo": 167110,
+  "arquivos_total": 1615,
+  "arquivos_codigo": 1223,
+  "linhas_codigo": 167556,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 94,
-  "modulos": 78,
+  "modulos": 79,
   "componentes": 448,
   "hooks": 191,
-  "edge_functions": 94,
+  "edge_functions": 96,
   "tabelas": 169,
-  "migrations": 221,
-  "cron_jobs": 9,
-  "testes": 327,
+  "migrations": 238,
+  "cron_jobs": 10,
+  "testes": 330,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 114
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 350,
-   "linhas": 41922
+   "linhas": 41965
   },
   "src/contexts": {
    "arquivos": 3,
@@ -491,8 +491,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 349,
-   "linhas": 45054
+   "arquivos": 350,
+   "linhas": 45223
   },
   "src/integrations": {
    "arquivos": 3,
@@ -507,8 +507,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 130,
-   "linhas": 20720
+   "arquivos": 131,
+   "linhas": 20816
   },
   "src/routes": {
    "arquivos": 2,
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 156,
-   "linhas": 18375
+   "arquivos": 158,
+   "linhas": 18513
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -688,9 +688,10 @@
   "edges_orfas": [
    "chat-widget-session",
    "check-alerts",
+   "check-calling-hours",
+   "check-dnc",
    "check-hold-alerts",
    "check-queue-metrics",
-   "cleanup-lock-conflicts",
    "database-backup",
    "database-cleanup",
    "email-inbound",

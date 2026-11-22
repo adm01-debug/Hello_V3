@@ -1123,10 +1123,11 @@
     "UnifiedSoftphone"
    ],
    "export_default": null,
-   "linhas": 256,
+   "linhas": 277,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAgentStatus",
+    "useCallRecording",
     "useConferenceRecording",
     "useConversation",
     "useMultiChannelCall",
@@ -2528,7 +2529,7 @@
     "BadgesShowcase"
    ],
    "export_default": null,
-   "linhas": 91,
+   "linhas": 113,
    "dominio": "components/gamification",
    "hooks_locais": [],
    "tabelas": [],
@@ -6543,10 +6544,11 @@
     "PhoneDialer"
    ],
    "export_default": "PhoneDialer",
-   "linhas": 323,
+   "linhas": 333,
    "dominio": "pages",
    "hooks_locais": [
     "useCallHistory",
+    "useDNCCompliance",
     "useDialerFavorites",
     "useMultiChannelCall",
     "usePageTitle",

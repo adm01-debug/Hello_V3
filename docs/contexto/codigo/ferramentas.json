@@ -3,8 +3,8 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1186)",
-   "SQL (223)",
+   "TypeScript (1190)",
+   "SQL (241)",
    "Markdown (114)",
    "JavaScript (29)",
    "JSON (18)",
@@ -717,7 +717,7 @@
    },
    {
     "papel": "agent",
-    "ocorrencias": 15
+    "ocorrencias": 16
    },
    {
     "papel": "button",
@@ -729,7 +729,7 @@
    },
    {
     "papel": "supervisor",
-    "ocorrencias": 6
+    "ocorrencias": 7
    },
    {
     "papel": "group",
@@ -738,6 +738,10 @@
    {
     "papel": "status",
     "ocorrencias": 5
+   },
+   {
+    "papel": "viewer",
+    "ocorrencias": 4
    },
    {
     "papel": "article",
@@ -749,10 +753,6 @@
    },
    {
     "papel": "navigation",
-    "ocorrencias": 3
-   },
-   {
-    "papel": "viewer",
     "ocorrencias": 3
    },
    {

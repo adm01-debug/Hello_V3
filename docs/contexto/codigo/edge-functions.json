@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "pasta": "supabase/functions",
- "total": 94,
+ "total": 96,
  "verify_jwt_false": [],
  "shared": [
   "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
@@ -212,17 +212,18 @@
    "nome": "approve-password-reset",
    "entrada": "supabase/functions/approve-password-reset/index.ts",
    "arquivos": 1,
-   "linhas": 153,
+   "linhas": 150,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
    "tabelas": [
     "audit_logs",
-    "password_reset_requests",
-    "user_profiles"
+    "password_reset_requests"
    ],
-   "rpcs": [],
+   "rpcs": [
+    "is_admin_user"
+   ],
    "env": [
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
@@ -415,6 +416,35 @@
    "testes": 0
   },
   {
+   "nome": "check-calling-hours",
+   "entrada": "supabase/functions/check-calling-hours/index.ts",
+   "arquivos": 1,
+   "linhas": 47,
+   "verify_jwt": true,
+   "metodos": [
+    "OPTIONS"
+   ],
+   "tabelas": [],
+   "rpcs": [
+    "check_calling_hours"
+   ],
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_URL"
+   ],
+   "buckets": [],
+   "chama_edges": [],
+   "hosts_externos": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
+   "chamada_pelo_front": [],
+   "chamada_por_edges": [],
+   "chamada_por_sql_ou_cron": false,
+   "orfa": true,
+   "testes": 1
+  },
+  {
    "nome": "check-contact-alerts",
    "entrada": "supabase/functions/check-contact-alerts/index.ts",
    "arquivos": 1,
@@ -447,6 +477,35 @@
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
    "testes": 0
+  },
+  {
+   "nome": "check-dnc",
+   "entrada": "supabase/functions/check-dnc/index.ts",
+   "arquivos": 1,
+   "linhas": 45,
+   "verify_jwt": true,
+   "metodos": [
+    "OPTIONS"
+   ],
+   "tabelas": [],
+   "rpcs": [
+    "check_dnc"
+   ],
+   "env": [
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_URL"
+   ],
+   "buckets": [],
+   "chama_edges": [],
+   "hosts_externos": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
+   "chamada_pelo_front": [],
+   "chamada_por_edges": [],
+   "chamada_por_sql_ou_cron": false,
+   "orfa": true,
+   "testes": 1
   },
   {
    "nome": "check-goals",
@@ -574,8 +633,8 @@
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
-   "chamada_por_sql_ou_cron": false,
-   "orfa": true,
+   "chamada_por_sql_ou_cron": true,
+   "orfa": false,
    "testes": 1
   },
   {
@@ -682,7 +741,7 @@
    "nome": "compute-deal-health",
    "entrada": "supabase/functions/compute-deal-health/index.ts",
    "arquivos": 1,
-   "linhas": 104,
+   "linhas": 111,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -714,7 +773,7 @@
    "nome": "data-lake-flush",
    "entrada": "supabase/functions/data-lake-flush/index.ts",
    "arquivos": 1,
-   "linhas": 152,
+   "linhas": 164,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -885,16 +944,15 @@
    "nome": "dialer-pacing-tick",
    "entrada": "supabase/functions/dialer-pacing-tick/index.ts",
    "arquivos": 1,
-   "linhas": 81,
+   "linhas": 77,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
-   "tabelas": [
-    "user_profiles"
-   ],
+   "tabelas": [],
    "rpcs": [
-    "apply_predictive_pacing"
+    "apply_predictive_pacing",
+    "is_admin_user"
    ],
    "env": [
     "DIALER_CRON_TOKEN",
@@ -1096,7 +1154,7 @@
    ],
    "tabelas": [
     "data_lake_exports",
-    "user_profiles"
+    "user_roles"
    ],
    "rpcs": [],
    "env": [
@@ -1192,7 +1250,7 @@
    "nome": "forecast-deals",
    "entrada": "supabase/functions/forecast-deals/index.ts",
    "arquivos": 1,
-   "linhas": 79,
+   "linhas": 86,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1221,7 +1279,7 @@
    "nome": "fuzz-test-runner",
    "entrada": "supabase/functions/fuzz-test-runner/index.ts",
    "arquivos": 1,
-   "linhas": 142,
+   "linhas": 143,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1253,7 +1311,7 @@
    "nome": "generate-coaching",
    "entrada": "supabase/functions/generate-coaching/index.ts",
    "arquivos": 1,
-   "linhas": 282,
+   "linhas": 279,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1265,10 +1323,11 @@
     "call_summaries",
     "call_transcriptions",
     "coaching_recommendations",
-    "coaching_timestamps",
-    "user_profiles"
+    "coaching_timestamps"
    ],
-   "rpcs": [],
+   "rpcs": [
+    "is_admin_user"
+   ],
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -1328,7 +1387,7 @@
    "nome": "generate-coaching-track",
    "entrada": "supabase/functions/generate-coaching-track/index.ts",
    "arquivos": 3,
-   "linhas": 392,
+   "linhas": 388,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1340,7 +1399,9 @@
     "notifications",
     "user_profiles"
    ],
-   "rpcs": [],
+   "rpcs": [
+    "is_admin_user"
+   ],
    "env": [
     "COACHING_CRON_TOKEN",
     "SUPABASE_ANON_KEY",
@@ -1438,15 +1499,15 @@
    "nome": "global-load-test",
    "entrada": "supabase/functions/global-load-test/index.ts",
    "arquivos": 1,
-   "linhas": 154,
+   "linhas": 150,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
-   "tabelas": [
-    "user_profiles"
+   "tabelas": [],
+   "rpcs": [
+    "is_admin_user"
    ],
-   "rpcs": [],
    "env": [
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
@@ -1703,7 +1764,7 @@
    "nome": "record-consent",
    "entrada": "supabase/functions/record-consent/index.ts",
    "arquivos": 1,
-   "linhas": 100,
+   "linhas": 102,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1713,6 +1774,7 @@
     "user_profiles"
    ],
    "rpcs": [
+    "is_admin_user",
     "log_audit_event"
    ],
    "env": [
@@ -1775,7 +1837,7 @@
    "nome": "request-password-reset",
    "entrada": "supabase/functions/request-password-reset/index.ts",
    "arquivos": 1,
-   "linhas": 127,
+   "linhas": 138,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1794,7 +1856,8 @@
    "hosts_externos": [],
    "usa_shared": [
     "client-ip.ts",
-    "cors.ts"
+    "cors.ts",
+    "rate-limit.ts"
    ],
    "chamada_pelo_front": [
     "src/pages/ForgotPassword.tsx"
@@ -1814,7 +1877,7 @@
     "OPTIONS"
    ],
    "tabelas": [
-    "user_profiles"
+    "user_roles"
    ],
    "rpcs": [
     "check_all_tables_rls_status",
@@ -1841,7 +1904,7 @@
    "nome": "score-call",
    "entrada": "supabase/functions/score-call/index.ts",
    "arquivos": 1,
-   "linhas": 121,
+   "linhas": 128,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2060,7 +2123,7 @@
     "agent_shifts",
     "agent_weekly_stats",
     "shift_swap_suggestions",
-    "user_profiles"
+    "user_roles"
    ],
    "rpcs": [],
    "env": [
@@ -2262,7 +2325,7 @@
    "nome": "validate-geo",
    "entrada": "supabase/functions/validate-geo/index.ts",
    "arquivos": 1,
-   "linhas": 174,
+   "linhas": 185,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2286,7 +2349,8 @@
    ],
    "usa_shared": [
     "client-ip.ts",
-    "cors.ts"
+    "cors.ts",
+    "rate-limit.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useGeoBlocking.ts"
@@ -2676,7 +2740,7 @@
    "nome": "voip-failover-notifier",
    "entrada": "supabase/functions/voip-failover-notifier/index.ts",
    "arquivos": 1,
-   "linhas": 54,
+   "linhas": 64,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2709,16 +2773,17 @@
    "nome": "voip-load-test",
    "entrada": "supabase/functions/voip-load-test/index.ts",
    "arquivos": 1,
-   "linhas": 142,
+   "linhas": 138,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
    "tabelas": [
-    "call_quality_metrics",
-    "user_profiles"
+    "call_quality_metrics"
    ],
-   "rpcs": [],
+   "rpcs": [
+    "is_admin_user"
+   ],
    "env": [
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",

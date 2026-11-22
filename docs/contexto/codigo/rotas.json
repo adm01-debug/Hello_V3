@@ -31,6 +31,7 @@
     "useCallTimers",
     "useCallTransfer",
     "useCallback",
+    "useDNCCompliance",
     "useDeviceLabel",
     "useDialerFavorites",
     "useEffect",
@@ -66,6 +67,7 @@
     "useCallHistory",
     "useCallTimers",
     "useCallTransfer",
+    "useDNCCompliance",
     "useDeviceLabel",
     "useDialerFavorites",
     "useMultiChannelCall",
@@ -87,12 +89,19 @@
     "call_quality_metrics",
     "call_summaries",
     "call_transcriptions",
+    "calling_hours_config",
+    "compliance_settings",
     "dialer_favorites",
+    "dnc_list",
     "hold_events",
     "user_profiles",
+    "user_roles",
     "voip_quality_alerts"
    ],
    "rpcs": [
+    "add_to_dnc",
+    "check_calling_hours",
+    "check_dnc",
     "get_call_history_with_summaries",
     "log_audit_event",
     "record_trunk_usage"
@@ -114,7 +123,7 @@
     "status",
     "user"
    ],
-   "arquivos_puxados": 67
+   "arquivos_puxados": 68
   },
   {
    "protegida": false,
@@ -423,6 +432,7 @@
     "audit_logs",
     "rls_audit_logs",
     "user_profiles",
+    "user_roles",
     "webhook_flush_metrics"
    ],
    "rpcs": [],
@@ -815,7 +825,8 @@
    ],
    "tabelas": [
     "call_control_audit_logs",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -1159,7 +1170,8 @@
    "tabelas": [
     "call_park_orbits",
     "parked_calls",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [
     "expire_parked_calls"
@@ -1216,7 +1228,8 @@
     "call_queue_members",
     "call_queues",
     "queue_audio_prompts",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -1674,6 +1687,7 @@
     "hold_events",
     "scheduled_callbacks",
     "user_profiles",
+    "user_roles",
     "whisper_messages"
    ],
    "rpcs": [
@@ -2328,7 +2342,8 @@
    ],
    "tabelas": [
     "hot_desking_stations",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -2433,7 +2448,8 @@
     "ip_whitelist",
     "user_allowed_ips",
     "user_ip_restrictions",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -2496,7 +2512,8 @@
     "kb_article_views",
     "kb_articles",
     "kb_categories",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [
     "match_kb_articles"
@@ -2610,7 +2627,8 @@
    "tabelas": [
     "learning_completions",
     "learning_modules",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -2665,6 +2683,7 @@
    "tabelas": [
     "user_passkeys",
     "user_profiles",
+    "user_roles",
     "webauthn_challenges"
    ],
    "rpcs": [
@@ -2802,7 +2821,8 @@
    "tabelas": [
     "agent_devices",
     "agent_ring_settings",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -2931,7 +2951,8 @@
    "tabelas": [
     "notification_preferences",
     "notifications",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -3151,6 +3172,7 @@
    "tabelas": [
     "user_passkeys",
     "user_profiles",
+    "user_roles",
     "webauthn_challenges"
    ],
    "rpcs": [],
@@ -3204,7 +3226,8 @@
    ],
    "tabelas": [
     "password_reset_requests",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [
@@ -3541,7 +3564,8 @@
     "usePasswordStrength"
    ],
    "tabelas": [
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -3726,7 +3750,8 @@
     "call_queues",
     "ring_group_members",
     "ring_groups",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -3926,7 +3951,8 @@
     "security_alerts",
     "user_ip_restrictions",
     "user_mfa_settings",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [
@@ -3985,7 +4011,8 @@
     "audit_logs",
     "login_attempts",
     "security_alerts",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -4033,7 +4060,8 @@
     "usePageTitle"
    ],
    "tabelas": [
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [
     "check_all_tables_rls_status"
@@ -4091,7 +4119,8 @@
    ],
    "tabelas": [
     "active_sessions",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [
@@ -4153,7 +4182,8 @@
     "bitrix_users",
     "crm_sync_queue",
     "system_settings",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [
     "log_audit_event"
@@ -4518,7 +4548,8 @@
    ],
    "tabelas": [
     "user_mfa_settings",
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],

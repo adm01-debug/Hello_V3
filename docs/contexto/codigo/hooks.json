@@ -462,10 +462,11 @@
    "hooks_exportados": [
     "useAuthProfile"
    ],
-   "linhas": 25,
+   "linhas": 57,
    "dominio": "hooks/auth",
    "tabelas": [
-    "user_profiles"
+    "user_profiles",
+    "user_roles"
    ],
    "rpcs": [],
    "edges": [],
@@ -1316,11 +1317,12 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 1,
+   "usado_por": 2,
    "usado_por_arquivos": [
+    "src/components/calls/UnifiedSoftphone.tsx",
     "src/hooks/useConferenceRecording.ts"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useCallScoring.ts",
@@ -2115,10 +2117,11 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 2,
+   "usado_por": 3,
    "usado_por_arquivos": [
     "src/components/compliance/ComplianceSettings.tsx",
-    "src/components/compliance/DNCListManager.tsx"
+    "src/components/compliance/DNCListManager.tsx",
+    "src/pages/PhoneDialer.tsx"
    ],
    "coberto_por_testes": 1
   },

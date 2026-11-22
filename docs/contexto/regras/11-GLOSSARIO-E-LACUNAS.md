@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6f94283c45` · branch `main` · 2026-11-22 05:51 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f48e4ef231` · branch `main` · 2026-11-22 05:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -269,7 +269,11 @@
 
 ## Dados de referência (seed — planos, categorias, perfis fixos)
 
-_nenhum item encontrado_
+| Tabela | Colunas | Valores | Origem |
+|---|---|---|---|
+| `compliance_settings` | `setting_key, setting_value, description` | `('dnc_enabled', 'true'::jsonb, 'Bloqueia discagem para numeros na lista DNC'), ('calling_hours_enabled', 'true'::jsonb, 'Bloqueia discagem fora da janela de horario permitida'), ('lgpd_consent_required', 'true'::jsonb, 'Exige consentimento LGPD antes de contatar'), ('max_attempts_per_day', '3'::jsonb, 'Tentativas maximas por dia por contato'), ('min_interval_between_calls', '3600'::jsonb, 'Interva …` | `supabase/migrations/20261122310000_seed_compliance_baseline.sql` |
+| `calling_hours_config` | `region_code, region_name, timezone, weekday_start, weekday_end, saturday_start, saturday_end, sunday_allowed, holidays_allowed, is_active` | `('BR', 'Brasil', 'America/Sao_Paulo', '09:00', '18:00', '09:00', '13:00', false, false, true), ('US', 'Estados Unidos', 'America/New_York', '08:00', '21:00', '09:00', '20:00', true, false, true) ON CONFLICT (region_code) DO UPDATE SET weekday_start = EXCLUDED.weekday_start, weekday_end = EXCLUDED.weekday_end, saturday_start = EXCLUDED.saturday_start, saturday_end = EXCLUDED.saturday_end, sunday_al …` | `supabase/migrations/20261122310000_seed_compliance_baseline.sql` |
+| `holidays` | `name, date, region_code, is_national, recurring` | `('Confraternizacao Universal', '2026-01-01', 'BR', true, true), ('Carnaval', '2026-02-17', 'BR', true, false), ('Sexta-feira Santa', '2026-04-03', 'BR', true, false), ('Tiradentes', '2026-04-21', 'BR', true, true), ('Dia do Trabalho', '2026-05-01', 'BR', true, true), ('Corpus Christi', '2026-06-04', 'BR', true, false), ('Independencia', '2026-09-07', 'BR', true, true), ('Nossa Senhora Aparecida', …` | `supabase/migrations/20261122310000_seed_compliance_baseline.sql` |
 
 ## Auditoria de consistência (código × schema) — trate como NÃO VERIFICADO
 

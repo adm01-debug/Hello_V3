@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6f94283c45` · branch `main` · 2026-11-22 05:51 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f48e4ef231` · branch `main` · 2026-11-22 05:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -119,7 +119,7 @@
 | `notifications` | enabled | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id |
 | `number_porting_requests` | enabled | public: is_admin_or_supervisor()<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `objection_library` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
-| `optimistic_lock_conflicts` | enabled | authenticated: public.is_admin_or_supervisor() | — | — | — |
+| `optimistic_lock_conflicts` | enabled | authenticated: public.is_admin_or_supervisor() | optimistic_lock_writer: table_name IS NOT NULL AND record_id IS NOT NULL AND attempted_at IS NOT NULL | — | — |
 | `parked_calls` | enabled | authenticated: true | authenticated: parked_by = auth.uid() AND status = 'parked' | authenticated: status = 'parked' OR public.is_admin_or_supervisor() | authenticated: public.is_admin_or_supervisor() |
 | `password_reset_requests` | enabled | public: is_admin_or_supervisor()<br>public: auth.uid() = user_id | public: is_admin_or_supervisor()<br>authenticated: auth.uid() = user_id | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `password_reset_tokens` | enabled | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | authenticated: false | public: auth.uid() = user_id OR is_admin_user(auth.uid()) |
@@ -180,7 +180,7 @@
 | `voip_trunks` | enabled | authenticated: public.is_admin_user(auth.uid())<br>authenticated: public.is_admin() | authenticated: public.is_admin_user(auth.uid())<br>authenticated: public.is_admin() | authenticated: public.is_admin_user(auth.uid())<br>authenticated: public.is_admin() | authenticated: public.is_admin_user(auth.uid())<br>authenticated: public.is_admin() |
 | `webauthn_challenges` | enabled | authenticated: user_id = auth.uid() | authenticated: user_id IS NOT NULL AND auth.uid() = user_id | authenticated: false | authenticated: expires_at < now() AND (user_id = auth.uid() OR is_admin_or_supervisor())<br>authenticated: user_id = auth.uid() |
 | `webhook_flush_metrics` | enabled | authenticated: public.is_admin_or_supervisor() | authenticated: (SELECT auth.uid()) = user_id | — | — |
-| `webhook_secrets` | enabled | public: EXISTS ( SELECT 1 FROM public.user_profiles WHERE id = auth.uid() AND role = 'admin' )<br>authenticated: EXISTS ( SELECT 1 FROM public.user_profiles WHERE user_profiles.id = auth.uid() AND user_profiles.role = 'admin' ) | public: EXISTS ( SELECT 1 FROM public.user_profiles WHERE id = auth.uid() AND role = 'admin' )<br>authenticated: EXISTS ( SELECT 1 FROM public.user_profiles WHERE user_profiles.id = auth.uid() AND user_profiles.role = 'admin' ) | public: EXISTS ( SELECT 1 FROM public.user_profiles WHERE id = auth.uid() AND role = 'admin' )<br>authenticated: EXISTS ( SELECT 1 FROM public.user_profiles WHERE user_profiles.id = auth.uid() AND user_profiles.role = 'admin' ) | public: EXISTS ( SELECT 1 FROM public.user_profiles WHERE id = auth.uid() AND role = 'admin' )<br>authenticated: EXISTS ( SELECT 1 FROM public.user_profiles WHERE user_profiles.id = auth.uid() AND user_profiles.role = 'admin' ) |
+| `webhook_secrets` | enabled | authenticated: EXISTS ( SELECT 1 FROM public.user_profiles WHERE user_profiles.id = auth.uid() AND user_profiles.role = 'admin' ) | authenticated: EXISTS ( SELECT 1 FROM public.user_profiles WHERE user_profiles.id = auth.uid() AND user_profiles.role = 'admin' ) | authenticated: EXISTS ( SELECT 1 FROM public.user_profiles WHERE user_profiles.id = auth.uid() AND user_profiles.role = 'admin' ) | authenticated: EXISTS ( SELECT 1 FROM public.user_profiles WHERE user_profiles.id = auth.uid() AND user_profiles.role = 'admin' ) |
 | `whisper_messages` | enabled | public: true<br>public: is_admin_or_supervisor() OR agent_name = get_user_agent_name() | public: true<br>public: public.is_admin_or_supervisor() | public: true<br>public: is_admin_or_supervisor() OR agent_name = get_user_agent_name() | public: true<br>public: public.is_admin_or_supervisor() |
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
@@ -402,6 +402,7 @@ Middleware matcher (Next.js): nenhum
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
 | grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls` |
 | grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +17 |
+| grant | optimistic_lock_writer | insert | `optimistic_lock_conflicts` |
 | grant | postgres | all privileges | `cron` |
 | grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls` |
 | grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges` |

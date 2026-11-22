@@ -509,6 +509,7 @@
    "src/components/ui/tabs.tsx",
    "src/components/ui/tooltip.tsx",
    "src/hooks/useAgentStatus.ts",
+   "src/hooks/useCallRecording.ts",
    "src/hooks/useConferenceRecording.ts",
    "src/hooks/useMultiChannelCall.ts",
    "src/hooks/useSipCall.ts",
@@ -3787,6 +3788,7 @@
    "src/components/voice/VoiceAssistantOrb.tsx",
    "src/components/voice/voice-intent.ts",
    "src/hooks/useCallHistory.ts",
+   "src/hooks/useDNCCompliance.ts",
    "src/hooks/useDialerFavorites.ts",
    "src/hooks/useMultiChannelCall.ts",
    "src/hooks/usePageTitle.ts",
@@ -4631,7 +4633,13 @@
   "supabase/functions/check-alerts/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
+  "supabase/functions/check-calling-hours/index.ts": [
+   "supabase/functions/_shared/cors.ts"
+  ],
   "supabase/functions/check-contact-alerts/index.ts": [
+   "supabase/functions/_shared/cors.ts"
+  ],
+  "supabase/functions/check-dnc/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/check-goals/index.ts": [
@@ -4758,7 +4766,8 @@
   ],
   "supabase/functions/request-password-reset/index.ts": [
    "supabase/functions/_shared/client-ip.ts",
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/rate-limit.ts"
   ],
   "supabase/functions/rls-audit/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -4806,7 +4815,8 @@
   ],
   "supabase/functions/validate-geo/index.ts": [
    "supabase/functions/_shared/client-ip.ts",
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/rate-limit.ts"
   ],
   "supabase/functions/validate-ip/index.ts": [
    "supabase/functions/_shared/client-ip.ts",

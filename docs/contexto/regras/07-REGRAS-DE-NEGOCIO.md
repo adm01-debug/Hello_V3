@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6f94283c45` · branch `main` · 2026-11-22 05:51 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f48e4ef231` · branch `main` · 2026-11-22 05:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -311,7 +311,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
 | `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
-| … +222 linhas — lista completa em `context.json` | | | | | | |
+| … +225 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
 
@@ -544,6 +544,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_profiles` | `(tabela)` | constraint user_profiles_ringtone_preset_check CHECK (ringtone_preset IS NULL OR (char_length(btrim(ringtone_preset)) BETWEEN 1 AND 32 AND ringtone_preset = btrim(ringtone_preset))) |
 | `user_profiles` | `(tabela)` | constraint user_profiles_ringtone_volume_check CHECK (ringtone_volume IS NULL OR (ringtone_volume >= 0 AND ringtone_volume <= 1)) |
 | `user_profiles` | `(tabela)` | constraint user_profiles_preferred_device_label_check CHECK ( preferred_device_label IS NULL OR ( char_length(preferred_device_label) BETWEEN 1 AND 60 AND preferred_device_label = btrim(preferred_device_label) ) ) |
+| `user_profiles` | `(tabela)` | constraint user_profiles_role_check CHECK (role = ANY (ARRAY['agent'::text, 'supervisor'::text, 'admin'::text, 'viewer'::text])) |
 | `queue_metrics_settings` | `id` | PK; default gen_random_uuid() |
 | `queue_metrics_settings` | `enabled` | default true |
 | `queue_metrics_settings` | `avg_wait_time_warning` | default 45 |
@@ -616,8 +617,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_roles` | `user_id` | único; FK → users.id ON DELETE CASCADE |
 | `user_roles` | `role` | default 'agent' |
 | `user_roles` | `is_active` | default true |
-| `user_roles` | `created_at` | default now() |
-| … +1042 linhas — lista completa em `context.json` | | |
+| … +1043 linhas — lista completa em `context.json` | | |
 
 ## D. Automações no banco (triggers e funções — regras que rodam sozinhas)
 
@@ -739,6 +739,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | trg_validate_queue_audio_slots | BEFORE INSERT OR UPDATE | `call_queues` | `validate_queue_audio_slots` |  |
 | trg_validate_park_orbit | BEFORE INSERT OR UPDATE | `call_park_orbits` | `validate_park_orbit` |  |
 | trg_validate_parked_call | BEFORE INSERT OR UPDATE | `parked_calls` | `validate_parked_call` |  |
+| trg_sync_profile_role | AFTER INSERT OR UPDATE OR DELETE | `user_roles` | `sync_profile_role_from_user_roles` |  |
 
 Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banco):
 
@@ -748,7 +749,6 @@ Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banc
 | `validate_email` | Invalid email format: % | `supabase/migrations/20250103000000_triggers.sql` |
 | `validate_phone` | Invalid phone format: % | `supabase/migrations/20250103000000_triggers.sql` |
 | `prevent_active_call_deletion` | Cannot delete active or ringing call | `supabase/migrations/20250103000000_triggers.sql` |
-| `enforce_optimistic_lock` | OPTIMISTIC_LOCK_CONFLICT | `supabase/migrations/20260418132329_194c7950-0787-43d5-a46a-f204640ee74a.sql` |
 | `record_trunk_usage` | Authentication required | `supabase/migrations/20260418144103_3396eae6-b7f0-4fd0-8596-ee6276d550c1.sql` |
 | `get_database_health_snapshot` | admin_only | `supabase/migrations/20260712110926_e4196a49-0eea-4932-a184-5aa2a5ac53e4.sql` |
 | `get_top_slow_queries` | admin_only | `supabase/migrations/20260712110926_e4196a49-0eea-4932-a184-5aa2a5ac53e4.sql` |
@@ -774,6 +774,7 @@ Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banc
 | `validate_parked_call` | Órbita de estacionamento inexistente | `supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql` |
 | `validate_parked_call` | Não é possível estacionar em uma órbita desativada | `supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql` |
 | `validate_parked_call` | Vaga % fora da faixa da órbita (%-%) | `supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql` |
+| `enforce_optimistic_lock` | OPTIMISTIC_LOCK_CONFLICT | `supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql` |
 
 ## E. Estados, máquinas de estado e transições
 
@@ -1019,7 +1020,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `state` | `parked` | escreve | `src/lib/blf.ts` |
 | `state` | `recording` | compara | `src/components/calls/live-transcription/useLiveTranscription.ts`<br>`src/hooks/useVoiceCommand.ts` |
 | `state` | `suspended` | compara | `src/hooks/useCriticalAlertNotifications.ts`<br>`src/hooks/useHoldSoundAlert.ts`<br>`src/lib/incoming-call-alert.ts` |
-| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +9 |
+| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +11 |
 | `role` | `agent` | compara, escreve | `src/lib/talkRatio.ts`<br>`src/pages/roles/RoleStatsCards.tsx`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `button` | escreve | `src/lib/a11y-clickable.ts` |
 | `role` | `customer` | compara | `src/lib/talkRatio.ts`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
@@ -1964,6 +1965,7 @@ _nenhum item encontrado_
 | `AND started_at > now() - interval '1 hour';` | `supabase/migrations/20260722213602_011fe9c6-e570-4180-be7a-d9a276c66f2e.sql` |
 | `WHERE started_at > now() - interval '15 minutes';` | `supabase/migrations/20260722213602_011fe9c6-e570-4180-be7a-d9a276c66f2e.sql` |
 | `AND created_at > now() - interval '14 days';` | `supabase/migrations/20260722213827_7ee185db-587f-4046-8507-474be04327a8.sql` |
+| `'host=%s port=5432 dbname=postgres user=optimistic_lock_writer password=%s sslmode=require connect_timeout=5',` | `supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql` |
 
 ### H.3 Limites de paginação
 
@@ -2155,8 +2157,10 @@ _nenhum item encontrado_
 | Digite um número WhatsApp para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
 | Digite um número para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
 | Falha ao conectar ao servidor SIP | `src/components/calls/UnifiedSoftphone.tsx` |
+| Falha ao salvar a gravação | `src/components/calls/UnifiedSoftphone.tsx` |
 | Máximo de 3 chamadas simultâneas atingido | `src/components/calls/UnifiedSoftphone.tsx` |
 | Não foi possível iniciar a chamada | `src/components/calls/UnifiedSoftphone.tsx` |
+| Não foi possível iniciar a gravação | `src/components/calls/UnifiedSoftphone.tsx` |
 | Falha ao iniciar chamada | `src/components/calls/WebRTCCall.tsx` |
 | Nenhum microfone encontrado | `src/components/calls/WebRTCCall.tsx` |
 | Não foi possível restabelecer a chamada | `src/components/calls/WebRTCCall.tsx` |
@@ -2391,9 +2395,7 @@ _nenhum item encontrado_
 | Erro ao criar turno | `src/hooks/useShifts.ts` |
 | Erro ao remover turno | `src/hooks/useShifts.ts` |
 | Chamada em espera | `src/hooks/useSipCall.ts` |
-| Chamada encerrada: ${e.cause} | `src/hooks/useSipCall.ts` |
-| Chamada falhou: ${cause} | `src/hooks/useSipCall.ts` |
-| … +216 linhas — lista completa em `context.json` | |
+| … +219 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2435,10 +2437,9 @@ _nenhum item encontrado_
 | `customer` | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `admin` | `supabase/functions/cleanup-lock-conflicts/index.ts` |
-| `admin` | `supabase/functions/export-data-lake/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3963 testes em 319 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3973 testes em 321 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2585,6 +2586,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useSessionManager.coverage.test.tsx` | 8 | useSessionManager · loads sessions and creates current session · revokes a non-current session · revokes the current session and signs out … |
 | `src/hooks/__tests__/useVoipQualityMonitor.coverage.test.tsx` | 8 | useVoipQualityMonitor · returns unknown state when no peer connection · collects stats and computes MOS for a good connection · uses candidate-pair RTT fallback and tolerates packet loss … |
 | `src/hooks/__tests__/useWhatsappRewrite.test.tsx` | 8 | useWhatsappRewrite · invokes whatsapp-rewrite e retorna o texto reescrito · usa tone e context informados · retorna null sem invocar quando a mensagem é vazia … |
+| `src/hooks/auth/__tests__/useAuthProfile.coverage.test.tsx` | 8 | useAuthProfile · returns profile data on success · returns null and logs on error · returns null when query throws … |
 | `src/lib/__tests__/outbound-scoring.test.ts` | 8 | outbound-scoring · bloqueia números em DNC com score 0 · penaliza fortemente fora do horário permitido · aplica score base sem histórico suficiente … |
 | `src/lib/__tests__/phone-normalization.property.test.ts` | 8 | phone-normalization — property-based (1000+ runs) · stripNonDigits preserva apenas dígitos (e + inicial) · normalizeBrPhone aceita 10-11 dígitos crus e prefixa +55 · normalizeBrPhone rejeita strings não numéricas longas … |
 | `src/lib/__tests__/security-alerts-webhook-queue.test.ts` | 8 | security-alerts-webhook-queue · enqueues and loads items · caps queue at 50 entries · notifies subscribers on change … |
@@ -2720,7 +2722,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipRecommendationInsights.coverage.test.tsx` | 4 | useVoipRecommendationInsights · carrega insights com sucesso (default week) · aceita período month · propaga erro da edge function |
 | `src/hooks/__tests__/useVoipRecommendations.coverage.test.tsx` | 4 | useVoipRecommendations · loads recommendations successfully · defaults period to week and supports day · throws and surfaces error when invoke returns error |
 | `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
-| `src/hooks/auth/__tests__/useAuthProfile.coverage.test.tsx` | 4 | useAuthProfile · returns profile data on success · returns null and logs on error · returns null when query throws |
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
 | `supabase/functions/voip-anomaly-detector/__tests__/index.test.ts` | 4 | detectAnomalies — sem anomalias quando obs próximo da média · detectAnomalies — MOS muito baixo gera anomaly critical · detectAnomalies — jitter elevado gera warning · detectAnomalies — baseline insuficiente não gera anomaly |
 | `supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts` | 4 | planRemediation — mos:outage retorna ação crítica de codec · planRemediation — jitter:outage pausa campanhas · planRemediation — combinação desconhecida vira noop · idempotencyKey — chave estável e derivada do id |
@@ -2732,6 +2733,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendation-history/__tests__/index.test.ts` | 4 | aggregate: lista vazia retorna 14 dias zerados · aggregate: contagens por categoria e outcome · aggregate: perDay em ordem cronológica ascendente · aggregate: contabiliza ação no dia correto |
 | `supabase/functions/voip-recommendations/__tests__/index.test.ts` | 4 | buildRecommendations - sistema saudável retorna lista vazia · buildRecommendations - capacidade saturada gera crítico de prioridade máxima · buildRecommendations - múltiplos sinais ordenados por prioridade descendente · buildRecommendations - jitter alto gera ação de função (testar conexão) |
 | `tests/e2e/performance.spec.ts` | 4 | Dashboard Performance and Lists · should render call lists efficiently · Edge Function Resilience · should handle rapid requests to analyze-call |
+| `src/hooks/__tests__/useCallRecording.test.ts` | 3 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado |
 | `src/hooks/__tests__/useChatbot.coverage.test.tsx` | 3 | useChatbot · returns chatbot response on success · handles error path and toasts |
 | `src/hooks/__tests__/useChurnRisk.test.ts` | 3 | useChurnRisk · loads active signals · resolves a signal with notes |
 | `src/hooks/__tests__/useComplianceRules.coverage.test.tsx` | 3 | useComplianceRules · loads rules and runs mutations · handles upsert error branch |
@@ -2741,8 +2743,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useShifts.test.tsx` | 3 | useShifts · carrega shifts da semana · expõe ações CRUD |
 | `src/hooks/__tests__/useSkills.coverage.test.tsx` | 3 | useSkills · loads skills and agent skills, runs mutations · handles mutation errors |
 | `src/hooks/__tests__/useTrunkRealtimeMetrics.coverage.test.tsx` | 3 | useTrunkRealtimeMetrics · computes occupancy metrics · handles trunk with zero max_channels and no calls |
-| `src/hooks/__tests__/useVoipRecommendationSimulate.coverage.test.tsx` | 3 | useVoipRecommendationSimulate · simulates a recommendation successfully · throws when invoke returns an error |
-| … +19 linhas — lista completa em `context.json` | | |
+| … +21 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2877,6 +2878,12 @@ _nenhum item encontrado_
 | `notify_suspicious_index_drop_activity` | `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql` |
 | `notify_trunk_offline` | `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql` |
 | `notify_webhook_failure_spike` | `supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql` |
+| `notify_lock_conflict_hotspot` | `supabase/migrations/20261122240000_policies_read_user_roles.sql` |
+| `notify_bloat_hotspots` | `supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql` |
+| `notify_idle_indexes` | `supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql` |
+| `notify_suspicious_index_drop_activity` | `supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql` |
+| `notify_trunk_offline` | `supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql` |
+| `notify_webhook_failure_spike` | `supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql` |
 
 ## N. Regras citadas em comentários do código
 
@@ -2909,6 +2916,8 @@ _nenhum item encontrado_
 | (`validation`) para a UI renderizar mensagens inline por campo e bloqueia | `src/hooks/useWebhookConfig.ts` |
 | base já validado; garantimos apenas que max >= base ao persistir | `src/hooks/useWebhookConfig.ts` |
 | validação (para UI inline) | `src/hooks/useWebhookConfig.ts` |
+| Le apenas papeis ativos e nao expirados, aplicando precedencia | `src/hooks/auth/useAuthProfile.ts` |
+| somente se o usuario nao tiver nenhum papel em user_roles. | `src/hooks/auth/useAuthProfile.ts` |
 | — apenas duplicatas próximas no tempo (ruído da IA) são colapsadas. | `src/lib/agent-assist-utils.ts` |
 | * Mascara telefone preservando apenas os 4 últimos dígitos. */ | `src/lib/blf.ts` |
 | * slot_end - slot_start <= 99 → no máximo 100 vagas por órbita. */ | `src/lib/call-park.ts` |
@@ -2972,10 +2981,13 @@ _nenhum item encontrado_
 | Provides Zod-like schema validation without external dependencies. | `supabase/functions/_shared/validate.ts` |
 | Limit is 10000 | `supabase/functions/analyze-call/analyze-call_test.ts` |
 | Input validation with auditing for 422 errors | `supabase/functions/analyze-call/index.ts` |
+| Edge function ausente: existiam apenas os testes. Sem ela o discador nao tinha | `supabase/functions/check-calling-hours/index.ts` |
+| Edge function ausente: existiam apenas os testes. As regras de negocio | `supabase/functions/check-dnc/index.ts` |
 | Create a dummy call session for the alert (since call_session_id is required) | `supabase/functions/check-goals/index.ts` |
 | ').limit(1).maybeSingle(); | `supabase/functions/check-hold-alerts/index.ts` |
 | Apenas admin pode invocar manualmente | `supabase/functions/cleanup-lock-conflicts/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/compute-account-health/index.ts` |
+| O cron (pg_cron) chama com a anon key do projeto. Sem validacao alguma, qualquer | `supabase/functions/data-lake-flush/index.ts` |
 | 2. Clean old rate limit logs (older than 7 days) | `supabase/functions/database-cleanup/index.ts` |
 | 3. Clean resolved rate limit alerts (older than 30 days) | `supabase/functions/database-cleanup/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/detect-churn-risk/index.ts` |
@@ -2990,10 +3002,12 @@ _nenhum item encontrado_
 | que uma tendencia: burn_rate de 1 e o alvo, nao o limite. | `supabase/functions/health-check/slo-budget.ts` |
 | Input validation | `supabase/functions/notify-blocked-ip/index.ts` |
 | Input validation | `supabase/functions/notify-new-device/index.ts` |
+| Endpoint publico (usuario deslogado precisa resetar). Sem rate limit, o | `supabase/functions/request-password-reset/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/send-survey/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/sync-crm-queue/index.ts` |
 | Token app-only nao resolve /me; usar /groups (Application permission Group.Read.All) | `supabase/functions/teams-fetch-recordings/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/teams-fetch-recordings/index.ts` |
+| limite, cada request anonimo consumia uma chamada ao provedor externo. | `supabase/functions/validate-geo/index.ts` |
 | Header e controlado pelo cliente: sem validação, a whitelist de IP é | `supabase/functions/validate-ip/index.ts` |
 | * Whitelist rígida — apenas ações não destrutivas. */ | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-executive-summary/index.ts` |
