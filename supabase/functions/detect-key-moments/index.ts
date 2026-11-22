@@ -1,10 +1,11 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders } from "../_shared/cors.ts";
-import { validate, string, optional } from "../_shared/validate.ts";
+import { optional, string, validate } from "../_shared/validate.ts";
 
-const OPENROUTER_API_KEY = Deno.env.get('OPENROUTER_API_KEY');
+const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
 
-const SYSTEM_PROMPT = `Você é um analista especialista em vendas e atendimento. Analise a transcrição de uma chamada e identifique momentos-chave.
+const SYSTEM_PROMPT =
+  `Você é um analista especialista em vendas e atendimento. Analise a transcrição de uma chamada e identifique momentos-chave.
 
 Retorne APENAS um JSON válido com este formato:
 {
@@ -31,13 +32,25 @@ Tipos:
 - positive: Momento positivo (entusiasmo, elogio)`;
 
 Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+  const negado = await exigirSessao(
+    req,
+    Deno.env.get("SUPABASE_URL")!,
+    corsHeaders,
+  );
+  if (negado) return negado;
 
   try {
     if (!OPENROUTER_API_KEY) {
-      return new Response(JSON.stringify({ error: 'OPENROUTER_API_KEY not configured' }), {
-        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ error: "OPENROUTER_API_KEY not configured" }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
     }
 
     const body = await req.json();
@@ -48,34 +61,53 @@ Deno.serve(async (req) => {
     });
 
     if (!parsed.ok) {
-      return new Response(JSON.stringify({ error: 'Invalid input', details: parsed.errors }), {
-        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ error: "Invalid input", details: parsed.errors }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
     }
 
     const { callSessionId, transcript } = parsed.data;
-    const persist = parsed.data.persist !== 'false';
+    const persist = parsed.data.persist !== "false";
 
-    const { resilientFetch } = await import('../_shared/resilience.ts');
-    const aiResp = await resilientFetch('ai-gateway-keymoments', 'https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${OPENROUTER_API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: `Transcrição:\n\n${transcript}` },
-        ],
-        response_format: { type: 'json_object' },
-      }),
-    }, { retry: { retries: 2, baseDelayMs: 400 }, breaker: { failureThreshold: 5, openDurationMs: 30_000 } });
+    const { resilientFetch } = await import("../_shared/resilience.ts");
+    const aiResp = await resilientFetch(
+      "ai-gateway-keymoments",
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            { role: "user", content: `Transcrição:\n\n${transcript}` },
+          ],
+          response_format: { type: "json_object" },
+        }),
+      },
+      {
+        retry: { retries: 2, baseDelayMs: 400 },
+        breaker: { failureThreshold: 5, openDurationMs: 30_000 },
+      },
+    );
 
     if (!aiResp.ok) {
       const errText = await aiResp.text();
-      console.error('[detect-key-moments] AI error:', aiResp.status, errText);
-      return new Response(JSON.stringify({ error: 'AI request failed', status: aiResp.status }), {
-        status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      console.error("[detect-key-moments] AI error:", aiResp.status, errText);
+      return new Response(
+        JSON.stringify({ error: "AI request failed", status: aiResp.status }),
+        {
+          status: 502,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
     }
 
     const aiData = await aiResp.json();
@@ -86,36 +118,80 @@ Deno.serve(async (req) => {
     } catch {
       parsedContent = { moments: [] };
     }
-    const moments = Array.isArray(parsedContent.moments) ? parsedContent.moments : [];
+    const moments = Array.isArray(parsedContent.moments)
+      ? parsedContent.moments
+      : [];
 
     if (persist && moments.length > 0) {
-      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-      const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+      const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
       const supabase = createClient(supabaseUrl, serviceKey);
 
       const rows = moments.map((m) => ({
         call_session_id: callSessionId,
-        moment_type: typeof m.type === 'string' ? m.type : 'positive',
-        timestamp_seconds: typeof m.timestamp_seconds === 'number' ? m.timestamp_seconds : 0,
-        quote: typeof m.quote === 'string' ? m.quote.slice(0, 1000) : '',
-        speaker: typeof m.speaker === 'string' ? m.speaker : null,
-        confidence: typeof m.confidence === 'number' ? m.confidence : 0.7,
+        moment_type: typeof m.type === "string" ? m.type : "positive",
+        timestamp_seconds: typeof m.timestamp_seconds === "number"
+          ? m.timestamp_seconds
+          : 0,
+        quote: typeof m.quote === "string" ? m.quote.slice(0, 1000) : "",
+        speaker: typeof m.speaker === "string" ? m.speaker : null,
+        confidence: typeof m.confidence === "number" ? m.confidence : 0.7,
         metadata: { context: m.context ?? null },
-      })).filter(r => r.quote.length > 0);
+      })).filter((r) => r.quote.length > 0);
 
       if (rows.length > 0) {
-        const { error: insErr } = await supabase.from('call_key_moments').insert(rows);
-        if (insErr) console.error('[detect-key-moments] insert error:', insErr);
+        const { error: insErr } = await supabase.from("call_key_moments")
+          .insert(rows);
+        if (insErr) console.error("[detect-key-moments] insert error:", insErr);
       }
     }
 
-    return new Response(JSON.stringify({ callSessionId, moments, count: moments.length }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200,
-    });
+    return new Response(
+      JSON.stringify({ callSessionId, moments, count: moments.length }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      },
+    );
   } catch (err) {
-    console.error('[detect-key-moments] error:', err);
-    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : 'Internal error' }), {
-      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    console.error("[detect-key-moments] error:", err);
+    return new Response(
+      JSON.stringify({
+        error: err instanceof Error ? err.message : "Internal error",
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
+    );
   }
 });
+
+// Rejeita chamada sem JWT valido. As edges abaixo escrevem com service_role,
+// entao a anon key publica nao pode ser suficiente para invoca-las.
+async function exigirSessao(
+  req: Request,
+  supabaseUrl: string,
+  headers: Record<string, string>,
+): Promise<Response | null> {
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) {
+    return new Response(JSON.stringify({ error: "Nao autorizado" }), {
+      status: 401,
+      headers: { ...headers, "Content-Type": "application/json" },
+    });
+  }
+  const comoUsuario = createClient(
+    supabaseUrl,
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+    { global: { headers: { Authorization: authHeader } } },
+  );
+  const { data: { user }, error } = await comoUsuario.auth.getUser();
+  if (error || !user) {
+    return new Response(JSON.stringify({ error: "Nao autorizado" }), {
+      status: 401,
+      headers: { ...headers, "Content-Type": "application/json" },
+    });
+  }
+  return null;
+}

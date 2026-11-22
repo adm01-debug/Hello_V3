@@ -11,8 +11,8 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 ## Resumo
 
 - **94** edge functions
-- **23** públicas (sem leitura de JWT no código)
-- **63** exigem usuário autenticado
+- **16** públicas (sem leitura de JWT no código)
+- **70** exigem usuário autenticado
 - **8** exigem papel admin/supervisor
 - **9** sem chamador no repositório (invocadas por cron, webhook externo ou uso manual)
 
@@ -47,20 +47,20 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 | `check-hold-alerts` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 121 |
 | `check-queue-metrics` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 243 |
 | `cleanup-lock-conflicts` | — | header-only | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 89 |
-| `compute-account-health` | Compute account health score 0-100 from deterministic signals | publico | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 127 |
+| `compute-account-health` | Compute account health score 0-100 from deterministic signals | autenticado | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 173 |
 | `compute-adherence` | — | autenticado | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 94 |
 | `compute-best-time` | — | autenticado | sim | sim | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 131 |
 | `compute-deal-health` | — | header-only | sim | sim | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 104 |
 | `data-lake-flush` | Data Lake Flush — Exporta incremental de datasets críticos em NDJSON para o bucket data-lake-exports. | publico | sim | — | — | src 0 / mig 2 / edge 0 / e2e 0 | — | 135 |
 | `database-backup` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 100 |
 | `database-cleanup` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 111 |
-| `detect-churn-risk` | Detect churn risk signals deterministically + persist + bump churn score | publico | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 154 |
-| `detect-key-moments` | — | publico | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 122 |
+| `detect-churn-risk` | Detect churn risk signals deterministically + persist + bump churn score | autenticado | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 190 |
+| `detect-key-moments` | — | autenticado | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 198 |
 | `dialer-pacing-tick` | Tick do discador preditivo — invocado por pg_cron a cada 10s ou manualmente | publico | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 31 |
 | `elevenlabs-conversation-token` | — | autenticado | — | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `ELEVENLABS_AGENT_ID`, `ELEVENLABS_API_KEY` | 88 |
 | `email-inbound` | — | publico | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 171 |
 | `embed-kb-article` | — | publico | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `LOVABLE_API_KEY` | 67 |
-| `enforce-sla` | — | publico | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 110 |
+| `enforce-sla` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 164 |
 | `enroll-voice` | — | autenticado | sim | — | sim | src 2 / mig 0 / edge 0 / e2e 0 | — | 108 |
 | `export-data-lake` | — | admin/supervisor | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 93 |
 | `extract-crm-fields` | — | autenticado | sim | — | sim | src 2 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 172 |
@@ -88,11 +88,11 @@ Conferir se está atualizado: `node scripts/inventario/gerar-catalogo-edges.mjs 
 | `score-call-attempt` | — | autenticado | sim | sim | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 117 |
 | `search-calls` | — | header-only | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 123 |
 | `send-notification` | — | autenticado | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 130 |
-| `send-survey` | Send a survey trigger record (in-app notification) — channel delivery handled elsewhere | publico | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 60 |
+| `send-survey` | Send a survey trigger record (in-app notification) — channel delivery handled elsewhere | autenticado | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | — | 105 |
 | `sip-config` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `SIP_PASSWORD`, `SIP_SERVER`, `SIP_USERNAME` | 161 |
 | `suggest-shift-swaps` | — | admin/supervisor | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | — | 110 |
-| `sync-crm-queue` | — | publico | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 69 |
-| `teams-fetch-recordings` | — | publico | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `LOVABLE_API_KEY`, `MICROSOFT_TEAMS_API_KEY` | 93 |
+| `sync-crm-queue` | — | autenticado | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | — | 129 |
+| `teams-fetch-recordings` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `LOVABLE_API_KEY`, `MICROSOFT_TEAMS_API_KEY` | 161 |
 | `transcribe-recording` | — | autenticado | sim | — | — | src 1 / mig 0 / edge 0 / e2e 0 | `ELEVENLABS_API_KEY` | 172 |
 | `translate-summary` | — | autenticado | sim | — | — | src 0 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 115 |
 | `translate-utterance` | — | autenticado | sim | — | — | src 2 / mig 0 / edge 0 / e2e 0 | `OPENROUTER_API_KEY` | 101 |
@@ -149,19 +149,12 @@ exposição deve começar.
 - `auto-scorecard`
 - `chat-widget-session` (rate limit aplicado)
 - `chatbot-respond`
-- `compute-account-health`
 - `data-lake-flush`
-- `detect-churn-risk`
-- `detect-key-moments`
 - `dialer-pacing-tick`
 - `email-inbound`
 - `embed-kb-article`
-- `enforce-sla`
 - `health-check`
 - `request-password-reset`
-- `send-survey`
-- `sync-crm-queue`
-- `teams-fetch-recordings`
 - `webauthn-authenticate`
 - `webhook-handler`
 - `whatsapp-inbound`
