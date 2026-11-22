@@ -1,31 +1,42 @@
--- Regressao: user_profiles.role e user_roles precisam concordar.
+-- Gate de regressao: nenhum objeto de autorizacao pode ler user_profiles.role.
 --
--- O sistema tem duas fontes de papel de usuario:
---   * public.user_roles       -> usada por is_admin_or_supervisor(), que governa
---                                ~255 policies (a maioria do RLS do produto)
---   * public.user_profiles.role -> usada por 3 policies de admin
---                                (rls_audit_logs, webhook_secrets)
--- O trigger de hotspot de conflito ainda notifica por user_profiles.role.
+-- user_profiles.role e uma coluna espelho de exibicao. A fonte de verdade para
+-- autorizacao e public.user_roles.role, exposta por is_admin_or_supervisor() e
+-- is_admin_user(). Quando algo volta a ler a coluna espelho, o sistema passa a
+-- ter duas respostas para "esse usuario e admin?" e uma delas fica defasada.
 --
--- Medido em producao em 22/11: um usuario com user_profiles.role='admin' e NENHUMA
--- linha em user_roles. Ele aparecia como admin em /concurrency-conflicts e recebia
--- as notificacoes de hotspot, mas qualquer query protegida por is_admin_or_supervisor()
--- retornava vazio. Papel divergente e acesso silenciosamente quebrado.
---
--- Este teste falha se as duas fontes divergirem. Roda com pgTAP ou, na ausencia
--- dele, como SELECT direto: qualquer linha retornada = falha.
+-- Qualquer linha retornada por esta consulta e uma violacao.
 
-SELECT
-  up.id AS user_id,
-  coalesce(up.role::text, '(null)') AS profile_role,
-  coalesce(
-    (SELECT string_agg(ur.role::text, ',' ORDER BY ur.role) FROM public.user_roles ur WHERE ur.user_id = up.id),
-    '(nenhum)'
-  ) AS user_roles
+SELECT 'policies' AS categoria,
+       schemaname || '.' || tablename || '.' || policyname AS objeto
+FROM pg_policies
+WHERE qual LIKE '%user_profiles.role%'
+   OR with_check LIKE '%user_profiles.role%'
+
+UNION ALL
+
+SELECT 'funcoes' AS categoria,
+       n.nspname || '.' || p.proname AS objeto
+FROM pg_proc p
+JOIN pg_namespace n ON n.oid = p.pronamespace
+WHERE n.nspname = 'public'
+  AND p.prokind = 'f'
+  -- get_user_role/get_profile_role caem para user_profiles.role como fallback
+  -- de exibicao, e isso e intencional: nao ha linha em user_roles para migrar.
+  AND p.proname NOT IN ('get_user_role', 'get_profile_role')
+  AND pg_get_functiondef(p.oid) LIKE '%user_profiles%'
+  AND pg_get_functiondef(p.oid) LIKE '%role%'
+
+UNION ALL
+
+-- As duas fontes devem concordar. Linha aqui = usuario com papel numa fonte e
+-- nao na outra.
+SELECT 'divergencia_dados' AS categoria,
+       up.id::text || ' profiles=' || coalesce(up.role, 'null') AS objeto
 FROM public.user_profiles up
-WHERE (up.role = 'admin') <> EXISTS (
-  SELECT 1 FROM public.user_roles ur WHERE ur.user_id = up.id AND ur.role = 'admin'
-)
-   OR (up.role = 'supervisor') <> EXISTS (
-  SELECT 1 FROM public.user_roles ur WHERE ur.user_id = up.id AND ur.role = 'supervisor'
-);
+WHERE coalesce(up.role, '') <> ''
+  AND NOT EXISTS (
+    SELECT 1 FROM public.user_roles ur
+    WHERE ur.user_id = up.id
+      AND ur.role::text = up.role
+  );
