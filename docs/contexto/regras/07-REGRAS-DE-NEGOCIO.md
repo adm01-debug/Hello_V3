@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f249e85e60` · branch `main` · 2026-11-22 01:58 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `69573a228b` · branch `main` · 2026-11-22 02:13 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2990,6 +2990,8 @@ _nenhum item encontrado_
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/send-survey/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/sync-crm-queue/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/teams-fetch-recordings/index.ts` |
+| * Aceita apenas IPv4/IPv6 literais; descarta hostnames, portas e percorso. */ | `supabase/functions/validate-geo/index.ts` |
+| Header e controlado pelo cliente: sem validacao, o valor entra cru na URL do | `supabase/functions/validate-geo/index.ts` |
 | * Whitelist rígida — apenas ações não destrutivas. */ | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-executive-summary/index.ts` |
 | 3. Insere notificações na tabela (que deve disparar Realtime) | `supabase/functions/voip-failover-notifier/index.ts` |

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "f249e85e6020688709ef45d8c9f44fd09b1c8be0",
+  "sha": "69573a228b83e811fd4cf090e5f2411881453951",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 01:58 UTC",
-  "files_total": 1630,
-  "code_files": 1433,
-  "code_lines": 181257
+  "generated_at": "2026-11-22 02:13 UTC",
+  "files_total": 1631,
+  "code_files": 1434,
+  "code_lines": 181292
  },
  "version": "1.3.2",
- "facts_hash": "c614107a1d20053a",
+ "facts_hash": "f7bd647fe6983063",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 603,
-   ".ts": 579,
+   ".ts": 580,
    ".sql": 217,
    ".mjs": 27,
    ".py": 5,
@@ -33727,8 +33727,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 154,
-   "lines": 18276,
+   "files": 155,
+   "lines": 18311,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -33831,6 +33831,7 @@
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
     "index.ts: handler",
     "slo-budget.ts: BudgetStatus, BudgetInput, BudgetResult, budget",
+    "index.ts: isIpLiteral",
     "index.ts: detectAnomalies",
     "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
     "index.ts: ForecastDay, HistoryDay, buildHistory, forecastNextDays",
@@ -41779,6 +41780,14 @@
    {
     "file": "supabase/functions/teams-fetch-recordings/index.ts",
     "text": "entao a anon key publica nao pode ser suficiente para invoca-las."
+   },
+   {
+    "file": "supabase/functions/validate-geo/index.ts",
+    "text": "* Aceita apenas IPv4/IPv6 literais; descarta hostnames, portas e percorso. */"
+   },
+   {
+    "file": "supabase/functions/validate-geo/index.ts",
+    "text": "Header e controlado pelo cliente: sem validacao, o valor entra cru na URL do"
    },
    {
     "file": "supabase/functions/voip-anomaly-remediation/index.ts",
@@ -117853,7 +117862,10 @@
   },
   "supabase/functions/validate-geo/index.ts": {
    "path": "supabase/functions/validate-geo/index.ts",
-   "lines": 174,
+   "lines": 188,
+   "exports": [
+    "function isIpLiteral"
+   ],
    "tables": [
     {
      "table": "geo_settings",
@@ -117897,6 +117909,10 @@
      "kind": "compara"
     }
    ],
+   "rule_comments": [
+    "* Aceita apenas IPv4/IPv6 literais; descarta hostnames, portas e percorso. */",
+    "Header e controlado pelo cliente: sem validacao, o valor entra cru na URL do"
+   ],
    "side_effects": [
     "notify_on_block"
    ],
@@ -117904,6 +117920,10 @@
     "1"
    ],
    "uses_service_role": true
+  },
+  "supabase/functions/validate-geo/ip_literal_test.ts": {
+   "path": "supabase/functions/validate-geo/ip_literal_test.ts",
+   "lines": 21
   },
   "supabase/functions/validate-ip/index.ts": {
    "path": "supabase/functions/validate-ip/index.ts",
@@ -120755,10 +120775,29 @@
   }
  },
  "git": {
-  "sha": "f249e85e6020688709ef45d8c9f44fd09b1c8be0",
+  "sha": "69573a228b83e811fd4cf090e5f2411881453951",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "69573a2",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "fix: valida IP literal antes de montar a URL do provedor de geo (#101)",
+    "files": [
+     "supabase/functions/validate-geo/index.ts",
+     "supabase/functions/validate-geo/ip_literal_test.ts"
+    ]
+   },
+   {
+    "sha": "25f5bfb",
+    "date": "2026-11-21",
+    "author": "adm01-debug",
+    "subject": "docs: re-scorecard 9,1/10 com os PRs #96, #97, #98 e #99 (#100)",
+    "files": [
+     "docs/audit/scorecard-final.md"
+    ]
+   },
    {
     "sha": "f249e85",
     "date": "2026-11-21",
@@ -121208,25 +121247,6 @@
     "files": [
      "docs/estado/funcionalidades-planejadas.md"
     ]
-   },
-   {
-    "sha": "a40abd0",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "feat: botao responder com IA no inbox via useChatbot (#70)",
-    "files": [
-     "src/pages/Inbox.tsx"
-    ]
-   },
-   {
-    "sha": "723ff66",
-    "date": "2026-11-21",
-    "author": "adm01-debug",
-    "subject": "feat: wirea traducao em tempo real na chamada e auditoria de seguranca no menu (#69)",
-    "files": [
-     "src/components/layout/AppSidebar.tsx",
-     "src/pages/Calls.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -121240,7 +121260,7 @@
    ],
    [
     "src/components/layout/AppSidebar.tsx",
-    5
+    4
    ],
    [
     "src/components/layout/CommandPalette.tsx",
@@ -121251,11 +121271,11 @@
     3
    ],
    [
-    "src/hooks/useSupervisorPanel.ts",
+    "docs/audit/scorecard-final.md",
     2
    ],
    [
-    "src/pages/Calls.tsx",
+    "src/hooks/useSupervisorPanel.ts",
     2
    ],
    [
@@ -121265,6 +121285,14 @@
    [
     "supabase/migrations/20250102000000_performance_indexes.sql",
     2
+   ],
+   [
+    "supabase/functions/validate-geo/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/validate-geo/ip_literal_test.ts",
+    1
    ],
    [
     "src/components/agent/BargeInNotification.tsx",
@@ -121300,14 +121328,6 @@
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
-    1
-   ],
-   [
-    "src/components/calls/ConferenceSection.tsx",
-    1
-   ],
-   [
-    "src/components/calls/HoldReminderSettings.tsx",
     1
    ]
   ]

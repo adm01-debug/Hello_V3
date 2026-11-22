@@ -4794,6 +4794,9 @@
   "supabase/functions/validate-geo/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
+  "supabase/functions/validate-geo/ip_literal_test.ts": [
+   "supabase/functions/validate-geo/index.ts"
+  ],
   "supabase/functions/validate-ip/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],

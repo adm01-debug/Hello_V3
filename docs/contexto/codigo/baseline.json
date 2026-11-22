@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "f249e85e6020688709ef45d8c9f44fd09b1c8be0",
+  "commit": "69573a228b83e811fd4cf090e5f2411881453951",
   "branch": "main",
-  "data_commit": "2026-11-21T22:57:57-03:00",
+  "data_commit": "2026-11-21T23:12:50-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "69573a2",
+    "data": "2026-11-21",
+    "assunto": "fix: valida IP literal antes de montar a URL do provedor de geo (#101)"
+   },
+   {
+    "sha": "25f5bfb",
+    "data": "2026-11-21",
+    "assunto": "docs: re-scorecard 9,1/10 com os PRs #96, #97, #98 e #99 (#100)"
+   },
    {
     "sha": "f249e85",
     "data": "2026-11-21",
@@ -121,19 +131,9 @@
     "sha": "6308708",
     "data": "2026-11-21",
     "assunto": "docs: (#75)"
-   },
-   {
-    "sha": "d9528b5",
-    "data": "2026-11-21",
-    "assunto": "fix: wirea generate-coaching-track contra o schema real e adiciona botao de trilhas (#74)"
-   },
-   {
-    "sha": "e534879",
-    "data": "2026-11-21",
-    "assunto": "fix: remove policies USING(true) que anulavam RLS restritivo (A1/A3) (#72)"
    }
   ],
-  "arquivos_mudados_7d": 760,
+  "arquivos_mudados_7d": 762,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -294,14 +294,14 @@
     "mudancas": 2
    },
    {
-    "arquivo": "docs/estado/edge-functions-parte1.md",
+    "arquivo": "docs/audit/scorecard-final.md",
     "mudancas": 2
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 81
+    "commits": 83
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1583,
-  "arquivos_codigo": 1215,
-  "linhas_codigo": 166907,
+  "arquivos_total": 1584,
+  "arquivos_codigo": 1216,
+  "linhas_codigo": 166942,
   "rotas": 105,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 154,
-   "linhas": 18276
+   "arquivos": 155,
+   "linhas": 18311
   },
   "tailwind.config.ts": {
    "arquivos": 1,
