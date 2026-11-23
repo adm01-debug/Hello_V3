@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "4e8548ec7f0063dc2fd1ee1042702c0181a1b139",
+  "sha": "4271aa3a221950f0ecd2a3645186d1d282125908",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 23:46 UTC",
+  "generated_at": "2026-11-23 23:54 UTC",
   "files_total": 1727,
   "code_files": 1524,
   "code_lines": 189063
  },
  "version": "1.3.2",
- "facts_hash": "4dae055ddce15645",
+ "facts_hash": "c3d2734a52e666ba",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -57,7 +57,7 @@
     "in": "package.json"
    },
    "react-router-dom": {
-    "version": "^7.13.1",
+    "version": "^7.18.6",
     "role": "Roteamento (React Router)",
     "in": "package.json"
    },
@@ -124526,10 +124526,22 @@
   }
  },
  "git": {
-  "sha": "4e8548ec7f0063dc2fd1ee1042702c0181a1b139",
+  "sha": "4271aa3a221950f0ecd2a3645186d1d282125908",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4271aa3",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)",
+    "files": [
+     "bun.lock",
+     "docs/qa/05-PROGRESSO.md",
+     "package-lock.json",
+     "package.json"
+    ]
+   },
    {
     "sha": "4e8548e",
     "date": "2026-11-23",
@@ -124918,29 +124930,28 @@
      "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
      "src/hooks/useMultiChannelCall.ts"
     ]
-   },
-   {
-    "sha": "7df1b5b",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "feat: 'Alterar foto' do perfil passa a enviar e exibir a foto",
-    "files": [
-     "src/components/settings/ProfileSettings.tsx",
-     "src/hooks/__tests__/useAvatar.test.ts",
-     "src/hooks/useAvatar.ts",
-     "src/hooks/useProfile.ts",
-     "supabase/migrations/20261123020000_add_avatar_storage.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    27
+    28
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
     4
+   ],
+   [
+    "bun.lock",
+    2
+   ],
+   [
+    "package-lock.json",
+    2
+   ],
+   [
+    "package.json",
+    2
    ],
    [
     "supabase/functions/_shared/__tests__/cors.test.ts",
@@ -125000,18 +125011,6 @@
    ],
    [
     "supabase/functions/auto-scorecard/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/compute-adherence/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/compute-deal-health/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/data-lake-flush/index.ts",
     1
    ]
   ]

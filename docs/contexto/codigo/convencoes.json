@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)",
    "fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)",
    "chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)",
    "fix: rate limit passa a falhar fechado nos endpoints que gastam dinheiro (E012) (#195)",
-   "fix: CORS so ecoa origens conhecidas e omite o header nas desconhecidas (E027) (#194)",
-   "chore: remove xlsx, dependencia sem uso e com duas falhas altas sem correcao (E045) (#193)"
+   "fix: CORS so ecoa origens conhecidas e omite o header nas desconhecidas (E027) (#194)"
   ]
  },
  "pr_template": null,

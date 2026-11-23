@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4e8548ec7f0063dc2fd1ee1042702c0181a1b139",
+  "commit": "4271aa3a221950f0ecd2a3645186d1d282125908",
   "branch": "main",
-  "data_commit": "2026-11-23T20:46:02-03:00",
+  "data_commit": "2026-11-23T20:53:33-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4271aa3",
+    "data": "2026-11-23",
+    "assunto": "chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)"
+   },
    {
     "sha": "4e8548e",
     "data": "2026-11-23",
@@ -126,11 +131,6 @@
     "sha": "61a323b",
     "data": "2026-11-23",
     "assunto": "fix: remove painel decorativo e corrige relatório de segurança (#175)"
-   },
-   {
-    "sha": "fe57120",
-    "data": "2026-11-23",
-    "assunto": "fix: status sem medicao em vez de 100%% e erro tratado (E092-E093) (#173)"
    }
   ],
   "arquivos_mudados_7d": 981,
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 28
+    "mudancas": 29
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 28
+    "mudancas": 29
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 176
+    "commits": 177
    },
    {
     "autor": "Joaquim Ataides",
