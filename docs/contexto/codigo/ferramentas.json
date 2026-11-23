@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1217)",
+   "TypeScript (1218)",
    "SQL (245)",
    "Markdown (120)",
    "JavaScript (29)",
@@ -1005,6 +1005,7 @@
    "AchievementNotificationProvider",
    "AuthProvider",
    "BrowserRouter",
+   "CallProvider",
    "ErrorBoundary",
    "QueryClientProvider",
    "ReauthProvider",

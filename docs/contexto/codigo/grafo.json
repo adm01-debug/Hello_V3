@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 906,
- "arestas": 3474,
+ "nos": 907,
+ "arestas": 3478,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -101,12 +101,12 @@
    "importado_por": 23
   },
   {
-   "arquivo": "src/lib/tracing.ts",
+   "arquivo": "src/hooks/useMultiChannelCall.ts",
    "importado_por": 23
   },
   {
-   "arquivo": "src/hooks/useMultiChannelCall.ts",
-   "importado_por": 22
+   "arquivo": "src/lib/tracing.ts",
+   "importado_por": 23
   },
   {
    "arquivo": "src/components/ui/alert.tsx",
@@ -248,19 +248,19 @@
    "importado_por": 2
   },
   {
-   "modulo": "pages/admin",
-   "depende_de": 9,
-   "importado_por": 1
-  },
-  {
    "modulo": "components/calls",
-   "depende_de": 6,
+   "depende_de": 7,
    "importado_por": 3
   },
   {
    "modulo": "contexts",
    "depende_de": 3,
-   "importado_por": 6
+   "importado_por": 7
+  },
+  {
+   "modulo": "pages/admin",
+   "depende_de": 9,
+   "importado_por": 1
   },
   {
    "modulo": "components/admin",

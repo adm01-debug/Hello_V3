@@ -18,6 +18,7 @@
    "src/components/ui/toaster.tsx",
    "src/components/ui/tooltip.tsx",
    "src/contexts/AuthContext.tsx",
+   "src/contexts/CallContext.tsx",
    "src/contexts/ReauthContext.tsx",
    "src/contexts/ThemeContext.tsx",
    "src/routes/protectedRoutes.tsx",
@@ -390,7 +391,7 @@
    "src/components/calls/LiveTranscription.tsx",
    "src/components/calls/NextBestActionPanel.tsx",
    "src/components/ui/button.tsx",
-   "src/hooks/useCallSession.ts",
+   "src/contexts/CallContext.tsx",
    "src/hooks/useContacts.ts",
    "src/hooks/useLiveAssist.ts",
    "src/integrations/supabase/client.ts",
@@ -509,6 +510,7 @@
    "src/components/ui/card.tsx",
    "src/components/ui/tabs.tsx",
    "src/components/ui/tooltip.tsx",
+   "src/contexts/CallContext.tsx",
    "src/hooks/useAgentStatus.ts",
    "src/hooks/useCallRecording.ts",
    "src/hooks/useConferenceRecording.ts",
@@ -2170,6 +2172,9 @@
   "src/contexts/AuthContext.tsx": [
    "src/hooks/useAuth.ts"
   ],
+  "src/contexts/CallContext.tsx": [
+   "src/hooks/useMultiChannelCall.ts"
+  ],
   "src/contexts/ReauthContext.tsx": [
    "src/contexts/AuthContext.tsx",
    "src/integrations/supabase/client.ts",
@@ -3817,6 +3822,7 @@
    "src/components/voice/VoiceAssistantDialog.tsx",
    "src/components/voice/VoiceAssistantOrb.tsx",
    "src/components/voice/voice-intent.ts",
+   "src/contexts/CallContext.tsx",
    "src/hooks/useCallHistory.ts",
    "src/hooks/useDNCCompliance.ts",
    "src/hooks/useDialerFavorites.ts",

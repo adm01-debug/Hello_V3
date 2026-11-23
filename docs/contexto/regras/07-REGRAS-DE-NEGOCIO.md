@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `2e60683843` · branch `main` · 2026-11-23 11:26 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9b30ac81da` · branch `main` · 2026-11-23 12:04 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -851,7 +851,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `Validado` | escreve | `src/components/executive/SecurityAuditCard.tsx` |
 | `status` | `abandoned` | compara, filtra | `src/components/dashboard/RecentCalls.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>`src/pages/CallHistory.tsx`<br>`supabase/functions/check-goals/index.ts`<br>… +1 |
 | `status` | `accepted` | escreve | `src/hooks/useCrmFieldSuggestions.ts` |
-| `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>… +20 |
+| `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>… +21 |
 | `status` | `agent_high` | compara | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `status` | `agent_low` | escreve | `src/hooks/useTalkRatio.ts`<br>`src/lib/talkRatio.ts` |
 | `status` | `approved` | compara, escreve | `src/hooks/useScorecards.ts`<br>`src/hooks/useShiftSwapSuggestions.ts`<br>`src/hooks/useTimeOff.ts`<br>`src/pages/PasswordResetApproval.tsx`<br>`src/pages/Scheduling.tsx`<br>… +2 |
@@ -865,7 +865,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
 | `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +32 |
 | `status` | `conference` | compara, escreve | `src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
-| `status` | `connected` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
+| `status` | `connected` | escreve | `src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>… +3 |
 | `status` | `created` | escreve | `supabase/functions/auto-scorecard/index.ts` |
 | `status` | `critical` | compara | `src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`supabase/functions/check-goals/index.ts` |
@@ -2228,6 +2228,7 @@ _nenhum item encontrado_
 | useFormField should be used within <FormField> | `src/components/ui/form.tsx` |
 | useSidebar must be used within a SidebarProvider. | `src/components/ui/sidebar.tsx` |
 | useAuthContext must be used within an AuthProvider | `src/contexts/AuthContext.tsx` |
+| useCallContext must be used within CallProvider | `src/contexts/CallContext.tsx` |
 | useReauthContext must be used within a ReauthProvider | `src/contexts/ReauthContext.tsx` |
 | useTheme must be used within ThemeProvider | `src/contexts/ThemeContext.tsx` |
 | Falha ao atualizar conta | `src/hooks/useAccounts.ts` |
@@ -2404,8 +2405,7 @@ _nenhum item encontrado_
 | Falha ao marcar todos como lidos | `src/hooks/useSecurityAlertNotifications.ts` |
 | Alerta de Segurança: ${newAlert.title} | `src/hooks/useSecurityMonitoringData.ts` |
 | Acesso bloqueado detectado | `src/hooks/useSecurityNotifications.ts` |
-| Notificações bloqueadas | `src/hooks/useSecurityNotifications.ts` |
-| … +243 linhas — lista completa em `context.json` | |
+| … +244 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 

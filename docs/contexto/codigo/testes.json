@@ -2623,7 +2623,7 @@
   {
    "arquivo": "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
    "tipo": "unit",
-   "linhas": 86,
+   "linhas": 103,
    "testa": [
     "src/pages/PhoneDialer.tsx"
    ],
@@ -3482,6 +3482,7 @@
    "src/components/ui/use-toast.ts",
    "src/components/voice/overlay/usePhaseColors.ts",
    "src/contexts/AuthContext.tsx",
+   "src/contexts/CallContext.tsx",
    "src/contexts/ThemeContext.tsx",
    "src/hooks/auth/index.ts",
    "src/hooks/useAgentFinancialLeaderboard.ts",

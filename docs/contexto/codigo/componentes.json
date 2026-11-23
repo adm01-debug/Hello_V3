@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 449,
+ "total": 450,
  "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
@@ -28,7 +28,7 @@
     "App"
    ],
    "export_default": "App",
-   "linhas": 118,
+   "linhas": 121,
    "dominio": null,
    "hooks_locais": [],
    "tabelas": [],
@@ -818,10 +818,10 @@
     "ActiveCallBar"
    ],
    "export_default": null,
-   "linhas": 382,
+   "linhas": 370,
    "dominio": "components/calls",
    "hooks_locais": [
-    "useCallSession",
+    "useCallContext",
     "useContacts",
     "useLiveAssist"
    ],
@@ -1124,14 +1124,14 @@
     "UnifiedSoftphone"
    ],
    "export_default": null,
-   "linhas": 277,
+   "linhas": 278,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAgentStatus",
+    "useCallContext",
     "useCallRecording",
     "useConferenceRecording",
     "useConversation",
-    "useMultiChannelCall",
     "useSipCall",
     "useWavoipCall"
    ],
@@ -5114,6 +5114,23 @@
    "orfao": false
   },
   {
+   "arquivo": "src/contexts/CallContext.tsx",
+   "exports": [
+    "CallProvider"
+   ],
+   "export_default": null,
+   "linhas": 18,
+   "dominio": "contexts",
+   "hooks_locais": [
+    "useCallContext",
+    "useMultiChannelCall"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 4,
+   "orfao": false
+  },
+  {
    "arquivo": "src/contexts/ReauthContext.tsx",
    "exports": [
     "REAUTH_GRANT_TTL_MS",
@@ -6544,13 +6561,13 @@
     "PhoneDialer"
    ],
    "export_default": "PhoneDialer",
-   "linhas": 333,
+   "linhas": 334,
    "dominio": "pages",
    "hooks_locais": [
+    "useCallContext",
     "useCallHistory",
     "useDNCCompliance",
     "useDialerFavorites",
-    "useMultiChannelCall",
     "usePageTitle",
     "useSipCall"
    ],

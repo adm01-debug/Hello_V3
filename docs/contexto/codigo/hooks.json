@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 192,
+ "total": 193,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -368,6 +368,30 @@
     "src/pages/Roles.tsx",
     "src/pages/SecurityDashboard.tsx",
     "src/pages/admin/SecurityAuditDashboard.tsx"
+   ],
+   "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/contexts/CallContext.tsx",
+   "hooks_exportados": [
+    "useCallContext"
+   ],
+   "linhas": 18,
+   "dominio": "contexts",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useContext",
+    "useMultiChannelCall"
+   ],
+   "canais_realtime": [],
+   "usado_por": 4,
+   "usado_por_arquivos": [
+    "src/App.tsx",
+    "src/components/calls/ActiveCallBar.tsx",
+    "src/components/calls/UnifiedSoftphone.tsx",
+    "src/pages/PhoneDialer.tsx"
    ],
    "coberto_por_testes": 0
   },
@@ -1421,9 +1445,8 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 2,
+   "usado_por": 1,
    "usado_por_arquivos": [
-    "src/components/calls/ActiveCallBar.tsx",
     "src/hooks/useMultiChannelCall.ts"
    ],
    "coberto_por_testes": 1
@@ -2857,7 +2880,7 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 286,
+   "linhas": 288,
    "dominio": "hooks",
    "tabelas": [
     "hold_events"
@@ -2873,7 +2896,7 @@
     "useEffect"
    ],
    "canais_realtime": [],
-   "usado_por": 16,
+   "usado_por": 17,
    "usado_por_arquivos": [
     "src/components/calls/ActiveCallsIndicator.tsx",
     "src/components/calls/ConferenceSection.tsx",
@@ -2885,6 +2908,7 @@
     "src/components/calls/softphone/HeaderDropdowns.tsx",
     "src/components/calls/softphone/TabContents.tsx",
     "src/components/calls/softphone/constants.tsx",
+    "src/contexts/CallContext.tsx",
     "src/hooks/useCallTimers.ts",
     "src/hooks/useCallTransfer.ts",
     "src/hooks/useConferenceRecording.ts",

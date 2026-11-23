@@ -638,7 +638,7 @@
    "modulo": "components/calls",
    "arquivos": 27,
    "testes": 4,
-   "linhas": 3824,
+   "linhas": 3813,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -655,6 +655,7 @@
     "useAuthState",
     "useAutoMeetingSummary",
     "useBattleCardDetection",
+    "useCallContext",
     "useCallRecording",
     "useCallSession",
     "useCallTimers",
@@ -767,6 +768,7 @@
     "components/ai",
     "components/conversation-intelligence",
     "components/ui",
+    "contexts",
     "hooks",
     "integrations/supabase",
     "lib"
@@ -1551,6 +1553,7 @@
     "useBitrix",
     "useBitrixSync",
     "useCallAnalytics",
+    "useCallContext",
     "useCallHistory",
     "useCallPark",
     "useCallQueues",
@@ -3114,13 +3117,13 @@
   },
   {
    "modulo": "contexts",
-   "arquivos": 3,
+   "arquivos": 4,
    "testes": 0,
-   "linhas": 464,
+   "linhas": 482,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 3,
+   "componentes": 4,
    "hooks_locais": [
     "useAuth",
     "useAuthActions",
@@ -3128,16 +3131,32 @@
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
+    "useCallContext",
+    "useCallSession",
+    "useCallTimers",
+    "useCallTransfer",
+    "useMultiChannelCall",
     "useReauthContext",
     "useTheme"
    ],
    "hooks_definidos": [
     "useAuthContext",
+    "useCallContext",
     "useReauthContext",
     "useTheme"
    ],
-   "edges": [],
+   "edges": [
+    "analyze-talk-ratio",
+    "detect-key-moments",
+    "generate-meeting-summary"
+   ],
    "tabelas": [
+    "call_analyses",
+    "call_sessions",
+    "call_summaries",
+    "call_transcriptions",
+    "call_transcripts_searchable",
+    "hold_events",
     "user_profiles",
     "user_roles"
    ],
@@ -3149,7 +3168,9 @@
     "VITE_SUPABASE_URL"
    ],
    "flags": [],
-   "papeis": [],
+   "papeis": [
+    "user"
+   ],
    "diretos": {
     "edges": [],
     "tabelas": [],
@@ -3157,6 +3178,7 @@
    },
    "importado_por_outros_modulos": [
     "components/auth",
+    "components/calls",
     "components/layout",
     "hooks",
     "hooks/telemetry",
@@ -3204,7 +3226,7 @@
    "modulo": "hooks",
    "arquivos": 168,
    "testes": 0,
-   "linhas": 20775,
+   "linhas": 20777,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4475,6 +4497,7 @@
     "useBitrix",
     "useBitrixSync",
     "useCallAnalytics",
+    "useCallContext",
     "useCallHistory",
     "useCallPark",
     "useCallQueues",
@@ -5242,7 +5265,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 16550,
+   "linhas": 16551,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5461,6 +5484,7 @@
     "useCadenceEnrollments",
     "useCadences",
     "useCallAnalytics",
+    "useCallContext",
     "useCallHistory",
     "useCallPark",
     "useCallPlaylists",
@@ -6443,6 +6467,7 @@
     "useCadenceEnrollments",
     "useCadences",
     "useCallAnalytics",
+    "useCallContext",
     "useCallHistory",
     "useCallPark",
     "useCallPlaylists",
