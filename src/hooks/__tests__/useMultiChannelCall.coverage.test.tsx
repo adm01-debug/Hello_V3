@@ -29,6 +29,10 @@ vi.mock('@/integrations/supabase/client', () => {
 
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn(), info: vi.fn(), warning: vi.fn() } }));
 
+vi.mock('@/contexts/AuthContext', () => ({
+  useAuthContext: () => ({ user: { id: 'u1' }, profile: { id: 'u1', full_name: 'Agente Teste', role: 'agent' as const }, loading: false }),
+}));
+
 import { useMultiChannelCall } from '../useMultiChannelCall';
 import type { CallChannel } from '../useMultiChannelCall';
 
@@ -258,6 +262,34 @@ describe('useMultiChannelCall', () => {
       result.current.removeFromConference(ids[1]);
     });
     expect(result.current.conference).toBeNull();
+  });
+
+  it('E057: dbSessionId é preenchido após setCallDbSession', () => {
+    const { result } = renderHook(() => useMultiChannelCall());
+    let callId = '';
+    act(() => { callId = result.current.initiateCall('webrtc', '111', 'Alice')!.id; });
+    act(() => { result.current.setCallDbSession(callId, 'db-uuid-123', 'Agente Teste'); });
+    const call = result.current.activeCalls.find(c => c.id === callId);
+    expect(call?.dbSessionId).toBe('db-uuid-123');
+    expect(call?.agentName).toBe('Agente Teste');
+  });
+
+  it('E058: updateCallStatus para active muda o status da chamada sem crash', async () => {
+    const { result } = renderHook(() => useMultiChannelCall());
+    let callId = '';
+    act(() => { callId = result.current.initiateCall('webrtc', '111', 'Alice')!.id; });
+    await act(async () => { result.current.updateCallStatus('active', callId); });
+    expect(result.current.activeCalls.find(c => c.id === callId)?.status).toBe('active');
+  });
+
+  it('E059: endCall com chamada active termina sem crash e remove da lista', async () => {
+    const { result } = renderHook(() => useMultiChannelCall());
+    let callId = '';
+    act(() => { callId = result.current.initiateCall('webrtc', '111', 'Alice')!.id; });
+    await act(async () => { result.current.updateCallStatus('active', callId); });
+    await act(async () => { result.current.endCall(callId); });
+    expect(result.current.activeCalls.find(c => c.id === callId)).toBeUndefined();
+    expect(result.current.isInCall).toBe(false);
   });
 
   it('endConference directly and conference no-op guards', () => {

@@ -3,6 +3,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { useCallTimers } from './useCallTimers';
 import { useCallTransfer } from './useCallTransfer';
+import { useCallSession } from './useCallSession';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 const log = logger.create('MultiChannelCall');
 export type CallChannel = 'webrtc' | 'wavoip' | 'sip';
@@ -76,6 +78,9 @@ export function useMultiChannelCall() {
   const [conference, setConference] = useState<ConferenceCall | null>(null);
   const conferenceDurationRef = useRef<number | null>(null);
 
+  const { startSession, endSession } = useCallSession();
+  const { profile } = useAuthContext();
+
   const { startDurationTimer, stopDurationTimer, startHoldTimer, stopHoldTimer, stopAllTimers } = useCallTimers(setActiveCalls);
   const { transferCall, completeTransfer, cancelTransfer } = useCallTransfer(
     activeCalls, activeCallId, setActiveCalls, setActiveCallId, setActiveChannel, stopDurationTimer, setCallHistory
@@ -104,26 +109,63 @@ export function useMultiChannelCall() {
   const updateCallStatus = useCallback((status: CallStatus, callId?: string) => {
     const targetId = callId || activeCallId;
     if (!targetId) return;
+
+    // E058: grava call_sessions quando a chamada é atendida (transição qualquer → active)
+    if (status === 'active') {
+      setActiveCalls(prev => {
+        const call = prev.find(c => c.id === targetId);
+        if (call && call.status !== 'active' && !call.dbSessionId) {
+          void (async () => {
+            const session = await startSession(
+              call.contactName ?? 'Cliente',
+              call.phoneNumber ?? '',
+              profile?.full_name ?? undefined,
+            );
+            if (session) {
+              setActiveCalls(p => p.map(c => c.id === targetId ? { ...c, dbSessionId: session.id, agentName: profile?.full_name ?? undefined } : c));
+            } else {
+              log.error('startSession returned null — call_sessions não gravado');
+            }
+          })();
+        }
+        return prev;
+      });
+    }
+
     setActiveCalls(prev => prev.map(call => {
       if (call.id !== targetId) return call;
       if (status === 'active' && call.status !== 'active') startDurationTimer(targetId);
       return { ...call, status };
     }));
-  }, [activeCallId, startDurationTimer]);
+  }, [activeCallId, startDurationTimer, startSession, profile]);
 
   const endCall = useCallback((callId?: string) => {
     const targetId = callId || activeCallId;
     if (!targetId) return;
     stopDurationTimer(targetId);
     const ended = activeCalls.find(c => c.id === targetId);
-    if (ended) setCallHistory(prev => [{ ...ended, status: 'ended' as CallStatus }, ...prev].slice(0, 50));
+    if (ended) {
+      setCallHistory(prev => [{ ...ended, status: 'ended' as CallStatus }, ...prev].slice(0, 50));
+
+      // E059: fecha a chamada no banco (completed / missed / abandoned)
+      if (ended.dbSessionId) {
+        // Determina o status de encerramento pelos estados possíveis
+        const wasAnswered = ended.status === 'active' || ended.status === 'on-hold' ||
+          ended.status === 'conference' || ended.status === 'transferring';
+        const wasRinging = ended.status === 'ringing';
+        const finalStatus = wasAnswered ? 'completed' : wasRinging ? 'missed' : 'abandoned';
+        void endSession(ended.duration, undefined).catch(err => {
+          log.error(`endSession falhou (${finalStatus}):`, err);
+        });
+      }
+    }
     setActiveCalls(prev => {
       const remaining = prev.filter(c => c.id !== targetId);
       if (remaining.length > 0 && activeCallId === targetId) { setActiveCallId(remaining[0].id); setActiveChannel(remaining[0].channel); }
       else if (remaining.length === 0) setActiveCallId(null);
       return remaining;
     });
-  }, [activeCallId, activeCalls, stopDurationTimer]);
+  }, [activeCallId, activeCalls, stopDurationTimer, endSession]);
 
   const endAllCalls = useCallback(() => {
     stopAllTimers();
