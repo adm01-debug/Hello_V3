@@ -29,7 +29,7 @@ export async function handler(req: Request): Promise<Response> {
   const auth = await requireRole(req, ["supervisor", "admin"]);
   if (auth instanceof Response) return auth;
 
-  const rate = await checkRateLimitDB(getClientIp(req), "embed-kb-article", auth.user.id);
+  const rate = await checkRateLimitDB(getClientIp(req), "embed-kb-article", auth.user.id, { onError: 'deny' });
   if (!rate.allowed) {
     return createErrorResponse("Limite de requisicoes excedido", "RATE_LIMITED", undefined, 429, cors);
   }
