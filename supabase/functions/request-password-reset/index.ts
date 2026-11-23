@@ -3,6 +3,13 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { clientIpFromHeaders } from "../_shared/client-ip.ts";
 import { checkRateLimitDB } from "../_shared/rate-limit.ts";
 
+// A-021: conta inexistente, pedido pendente, pedido criado e falha ao listar usuarios
+// respondem o mesmo corpo (status 200); distinguir os casos descobria quais emails existem.
+const RESPOSTA_GENERICA = {
+  success: true,
+  message: 'Se o email existir, uma solicitação será enviada para aprovação.',
+};
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: buildCorsHeaders(req) });
@@ -45,10 +52,7 @@ Deno.serve(async (req) => {
     if (userError) {
       console.error('Error listing users:', userError);
       return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: 'Se o email existir, uma solicitação será enviada para aprovação.'
-        }),
+        JSON.stringify(RESPOSTA_GENERICA),
         { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
@@ -57,10 +61,7 @@ Deno.serve(async (req) => {
     
     if (!user) {
       return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: 'Se o email existir, uma solicitação será enviada para aprovação.'
-        }),
+        JSON.stringify(RESPOSTA_GENERICA),
         { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
@@ -76,10 +77,7 @@ Deno.serve(async (req) => {
 
     if (existingRequest) {
       return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: 'Já existe uma solicitação pendente. Aguarde a aprovação de um administrador.'
-        }),
+        JSON.stringify(RESPOSTA_GENERICA),
         { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
@@ -119,10 +117,7 @@ Deno.serve(async (req) => {
     });
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: 'Solicitação enviada. Um administrador irá revisar e aprovar seu pedido.'
-      }),
+      JSON.stringify(RESPOSTA_GENERICA),
       { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
 
