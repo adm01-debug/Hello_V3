@@ -61,3 +61,31 @@ Deno.test("Validation error structure check", () => {
   const urlError = errors.find(e => e.path.join('.') === 'attachments.0.url');
   assert(urlError, "Should have error for invalid attachment URL");
 });
+
+Deno.test("WhatsAppInboundV1Schema recusa telefone que tenta mexer no filtro PostgREST", () => {
+  const tentativas = [
+    "5511999999999,id.gt.0",
+    "5511999999999)",
+    "phone.eq.1",
+    "5511 9999-8888",
+    "abc12345678",
+    "5511999999999\n",
+  ];
+  for (const ruim of tentativas) {
+    const r = WhatsAppInboundV1Schema.safeParse({ from: ruim, message: "oi" });
+    assert(!r.success, `deveria recusar from=${JSON.stringify(ruim)}`);
+  }
+});
+
+Deno.test("WhatsAppInboundV1Schema aceita E.164 com e sem o + inicial", () => {
+  for (const bom of ["+5511999999999", "5511999999999", "1199999999"]) {
+    const r = WhatsAppInboundV1Schema.safeParse({ from: bom, message: "oi" });
+    assert(r.success, `deveria aceitar from=${bom}`);
+  }
+});
+
+Deno.test("WhatsAppInboundV2Schema herda a validacao de telefone", () => {
+  const base = { message: "oi", message_id: "m1", timestamp: "2024-01-01T12:00:00Z" };
+  assert(!WhatsAppInboundV2Schema.safeParse({ ...base, from: "1,id.gt.0" }).success);
+  assert(WhatsAppInboundV2Schema.safeParse({ ...base, from: "+5511999999999" }).success);
+});

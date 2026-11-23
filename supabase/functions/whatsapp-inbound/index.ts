@@ -74,11 +74,12 @@ Deno.serve(async (req) => {
     const messageContent = 'message' in body ? body.message : '';
     const normalizedPhone = normalizePhone(fromPhone);
 
-    // Encontrar contato existente por telefone
+    // Encontrar contato existente por telefone. `in` recebe array (o cliente
+    // escapa cada valor) em vez de montar a gramatica do filtro por concatenacao.
     const { data: contact } = await supabase
       .from('contacts')
       .select('id')
-      .or(`phone.eq.${fromPhone},phone.eq.${normalizedPhone}`)
+      .in('phone', [...new Set([fromPhone, normalizedPhone])])
       .maybeSingle();
 
 
