@@ -2,10 +2,10 @@
  import { handler } from "./index.ts";
  
  Deno.test("voip-trunks-healthcheck: CORS handling", async () => {
-   const req = new Request("http://localhost", { method: "OPTIONS" });
+   const req = new Request("http://localhost", { method: "OPTIONS", headers: { Origin: "https://hello-v3.vercel.app" } });
    const res = await handler(req);
    assertEquals(res.status, 200);
-   assert(res.headers.get("Access-Control-Allow-Origin"));
+   assertEquals(res.headers.get("Access-Control-Allow-Origin"), "https://hello-v3.vercel.app");
  });
  
  // Setup mock environment globally for the tests

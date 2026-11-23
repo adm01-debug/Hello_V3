@@ -36,11 +36,11 @@ Deno.test('search-calls: preflight OPTIONS responde com CORS da origem permitida
   assert(res.headers.get('Access-Control-Allow-Headers')?.includes('authorization'));
 });
 
-Deno.test('search-calls: preflight OPTIONS de origem desconhecida nao ecoa a origem', async () => {
+Deno.test('search-calls: preflight OPTIONS de origem desconhecida nao emite CORS', async () => {
   const res = await handler(new Request(URL_, {
     method: 'OPTIONS',
     headers: { Origin: 'https://origem-maliciosa.example' },
   }));
 
-  assertEquals(res.headers.get('Access-Control-Allow-Origin'), 'https://hello-v3.vercel.app');
+  assertEquals(res.headers.get('Access-Control-Allow-Origin'), null);
 });
