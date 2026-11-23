@@ -4,8 +4,6 @@ import { Progress } from '@/components/ui/progress';
 import { useQualityMetrics, useTrunkUsageMetrics } from '@/hooks/useQualityMetrics';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { Activity, ShieldAlert, Zap, Wifi } from 'lucide-react';
-
-import { SecurityAuditCard } from './SecurityAuditCard';
 import { safeFormatDate } from "@/lib/safe-date";
 
 export function RealtimeQualityDashboard() {
@@ -89,7 +87,7 @@ export function RealtimeQualityDashboard() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
-        <div className="md:col-span-2 space-y-6">
+        <div className="md:col-span-3 space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>Tendência de Qualidade (MOS)</CardTitle>
@@ -118,10 +116,6 @@ export function RealtimeQualityDashboard() {
               </div>
             </CardContent>
           </Card>
-        </div>
-
-        <div className="md:col-span-1">
-          <SecurityAuditCard />
         </div>
       </div>
 
