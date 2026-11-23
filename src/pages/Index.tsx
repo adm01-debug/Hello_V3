@@ -23,7 +23,6 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from '@dnd-kit/sortable';
 import { SortableWidget } from '@/components/dashboard/SortableWidget';
 import { WidgetLibrary } from '@/components/dashboard/WidgetLibrary';
-import { PerformanceNarrative } from '@/components/dashboard/PerformanceNarrative';
 import { Skeleton } from '@/components/ui/skeleton';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 import { usePageTitle } from '@/hooks/usePageTitle';
@@ -112,8 +111,6 @@ const Index = () => {
           </div>
         }
       />
-
-      <PerformanceNarrative />
 
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={layout.filter((w) => w.visible).map((w) => w.id)} strategy={rectSortingStrategy}>

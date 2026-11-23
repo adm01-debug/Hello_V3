@@ -17,7 +17,7 @@ export const securityFeatures: SecurityFeature[] = [
     name: 'Row Level Security (RLS)',
     status: 'implemented',
     description: 'Todas as tabelas possuem políticas RLS ativas',
-    details: ['22 tabelas com RLS habilitado', 'Políticas baseadas em funções (agent, supervisor, admin)', 'Funções SECURITY DEFINER para evitar recursão'],
+    details: ['Políticas baseadas em funções (agent, supervisor, admin)', 'Funções SECURITY DEFINER para evitar recursão'],
   },
   {
     name: 'Controle de Acesso Baseado em Funções (RBAC)',
@@ -59,22 +59,4 @@ export const securityDecisions: SecurityDecision[] = [
   { category: 'Perfis de Usuários', decision: 'Supervisores/admins veem todos os perfis', justification: 'Gestão de equipe requer visibilidade de informações dos membros', riskLevel: 'low' },
   { category: 'SECURITY DEFINER Functions', decision: 'Funções com privilégios elevados mantidas', justification: 'Necessárias para evitar recursão infinita em políticas RLS. Implementadas com search_path fixo', riskLevel: 'medium' },
   { category: 'Audit Logs INSERT', decision: 'Inserção via função validada', justification: 'Função log_audit_event() obtém dados do usuário autenticado automaticamente', riskLevel: 'low' },
-];
-
-export const rlsPolicies = [
-  { table: 'agents', policies: 2, description: 'Próprio registro ou admin/supervisor' },
-  { table: 'contacts', policies: 4, description: 'Baseado em interações + supervisor' },
-  { table: 'call_sessions', policies: 4, description: 'Chamadas do próprio agente' },
-  { table: 'call_transcriptions', policies: 3, description: 'Transcrições de próprias chamadas' },
-  { table: 'call_recordings', policies: 3, description: 'Gravações de próprias chamadas' },
-  { table: 'call_analyses', policies: 3, description: 'Análises de próprias chamadas' },
-  { table: 'call_summaries', policies: 3, description: 'Resumos de próprias chamadas' },
-  { table: 'scheduled_callbacks', policies: 4, description: 'Callbacks atribuídos + criados' },
-  { table: 'dialer_queue', policies: 3, description: 'Fila atribuída ao agente' },
-  { table: 'contact_interactions', policies: 3, description: 'Interações do próprio agente' },
-  { table: 'coaching_recommendations', policies: 4, description: 'Recomendações do próprio agente' },
-  { table: 'user_profiles', policies: 4, description: 'Próprio perfil ou admin/supervisor' },
-  { table: 'audit_logs', policies: 2, description: 'Apenas admins podem visualizar' },
-  { table: 'whisper_messages', policies: 4, description: 'Mensagens para o próprio agente' },
-  { table: 'contact_alerts', policies: 4, description: 'Apenas supervisores/admins' },
 ];
