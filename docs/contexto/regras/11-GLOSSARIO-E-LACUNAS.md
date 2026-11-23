@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `560302de48` · branch `main` · 2026-11-23 20:57 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `727deadc16` · branch `main` · 2026-11-23 20:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -262,6 +262,7 @@
 | `Severity` (TS) | critical \| high \| medium \| low \| info |  | `src/lib/security/penetration-test-reporter.ts` |
 | `MosLabel` (TS) | poor \| fair \| good \| excellent \| unknown |  | `supabase/functions/_shared/mos.ts` |
 | `CircuitState` (TS) | CLOSED \| OPEN \| HALF_OPEN |  | `supabase/functions/_shared/resilience.ts` |
+| `TalkRatioStatus` (TS) | agent_low \| agent_high \| optimal \| insufficient_data |  | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `BudgetStatus` (TS) | healthy \| warning \| exhausted \| unknown |  | `supabase/functions/health-check/slo-budget.ts` |
 | `AnomalyKind` (TS) | spike \| drift \| outage |  | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | `AnomalyMetric` (TS) | mos \| jitter \| volume |  | `supabase/functions/voip-anomaly-remediation/index.ts` |
@@ -289,8 +290,6 @@
 | status | valor `soon` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/callbacks/ScheduledCallbacksList.tsx`<br>`escreve:src/components/callbacks/ScheduledCallbacksList.tsx` |
 | status | valor `tomorrow` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/callbacks/ScheduledCallbacksList.tsx` |
 | status | valor `future` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/callbacks/ScheduledCallbacksList.tsx` |
-| status | valor `optimal` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/conversation-intelligence/TalkRatioChart.tsx` |
-| status | valor `agent_high` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | status | valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`compara:src/pages/admin/SloDashboard.tsx`<br>`escreve:src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`escreve:src/pages/admin/SloDashboard.tsx` |
 | status | valor `degraded` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`compara:src/components/executive/VoipInfrastructureTab.tsx`<br>`compara:src/components/observability/HealthTab.tsx`<br>`compara:src/pages/admin/SloDashboard.tsx` |
 | status | valor `dialing` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dialer/PredictiveDialerPanel.tsx`<br>`escreve:src/hooks/predictive-dialer/api.ts` |
@@ -306,7 +305,6 @@
 | status | valor `break` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useQueueMetrics.ts` |
 | status | valor `in_negotiation` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRenewals.ts` |
 | status | valor `won` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRenewals.ts` |
-| status | valor `agent_low` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/hooks/useTalkRatio.ts`<br>`escreve:src/lib/talkRatio.ts` |
 | status | valor `number` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/lib/security-alerts-webhook-history.ts`<br>`compara:supabase/functions/_shared/resilience.ts` |
 | status | valor `implemented` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/SecurityReport.tsx`<br>`escreve:src/lib/security-report-data.ts` |
 | status | valor `disponivel` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/Marketplace.tsx` |

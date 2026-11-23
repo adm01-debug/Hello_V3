@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "560302de488363f05ba6f7195574653b899ae143",
+  "sha": "727deadc167b75269b5877e8d4ebaa5dacb41027",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 20:57 UTC",
-  "files_total": 1714,
-  "code_files": 1511,
-  "code_lines": 187804
+  "generated_at": "2026-11-23 20:58 UTC",
+  "files_total": 1715,
+  "code_files": 1512,
+  "code_lines": 187914
  },
  "version": "1.3.2",
- "facts_hash": "994e356659ebc6c0",
+ "facts_hash": "46736a6a71b0b6ab",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 622,
+   ".ts": 623,
    ".tsx": 610,
    ".sql": 245,
    ".mjs": 27,
@@ -33310,7 +33310,7 @@
   {
    "module": "src/components",
    "files": 355,
-   "lines": 42583,
+   "lines": 42588,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33872,7 +33872,7 @@
   {
    "module": "src/lib",
    "files": 172,
-   "lines": 21184,
+   "lines": 21244,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -33918,7 +33918,7 @@
     "security-alerts-webhook.ts: WEBHOOK_MAX_ATTEMPTS_MIN, WEBHOOK_MAX_ATTEMPTS_MAX, WEBHOOK_MAX_ATTEMPTS_DEFAULT, WEBHOOK_BASE_DELAY_MIN, WEBHOOK_BASE_DELAY_MAX, WEBHOOK_BASE_DELAY_DEFAULT",
     "security-report-data.ts: SecurityFeature, SecurityDecision, securityFeatures, securityDecisions",
     "sync-history.ts: MAX_SYNC_HISTORY_ENTRIES, SyncHistoryEntry, SyncHistoryStorageLike, buildSyncHistoryKey, sanitizeEntry, appendEntry",
-    "talkRatio.ts: TalkRatioSegment, TalkRatioComputation, computeTalkRatio",
+    "talkRatio.ts: TalkRatioSegment, TalkRatioComputation, classifyTalkRatio, computeTalkRatio",
     "tracing.ts: getTraceId, getTraceOperation, traceHeaders, withTrace, startTrace, endTrace"
    ],
    "docs": [
@@ -34270,8 +34270,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 179,
-   "lines": 20444,
+   "files": 180,
+   "lines": 20489,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34380,6 +34380,7 @@
     "capture-handler.ts: capturarHandler",
     "local-supabase.ts: edgeLocalDisponivel, MOTIVO_IGNORADO",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
+    "index.ts: TalkRatioStatus, talkRatioStatus",
     "index.ts: pickPolicy",
     "csv.ts: toCsv",
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
@@ -34400,8 +34401,7 @@
     "index.ts: QualityRow, AlertRow, SimulationDelta, SimulationResult, projectImpact",
     "index.ts: RecommendationCategory, RecommendationSeverity, RecommendationActionType, Recommendation, SignalContext, buildRecommendations",
     "verify.ts: WebAuthnError, base64UrlToBytes, AssertionInput, AssertionResultado, verificarAssercao",
-    "idempotency.ts: StoredMessageRef, ReplayResponse, detectReplay, normalizePhone",
-    "schema.ts: WhatsAppInboundV1Schema, WhatsAppInboundV2Schema, WhatsAppInboundV1, WhatsAppInboundV2"
+    "idempotency.ts: StoredMessageRef, ReplayResponse, detectReplay, normalizePhone"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -34456,6 +34456,7 @@
     "supabase/functions/analyze-live-utterance/index.ts",
     "supabase/functions/analyze-sentiment/index.ts",
     "supabase/functions/analyze-talk-ratio/index.ts",
+    "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
     "supabase/functions/approve-password-reset/index.ts",
     "supabase/functions/auto-scorecard/index.ts",
     "supabase/functions/bitrix-api/index.test.ts",
@@ -34495,8 +34496,7 @@
     "supabase/functions/enforce-sla/index.ts",
     "supabase/functions/enforce-sla/__tests__/index.test.ts",
     "supabase/functions/enroll-voice/index.ts",
-    "supabase/functions/export-data-lake/csv.ts",
-    "supabase/functions/export-data-lake/index.ts"
+    "supabase/functions/export-data-lake/csv.ts"
    ]
   },
   {
@@ -39778,6 +39778,11 @@
     "file": "supabase/functions/_shared/resilience.ts",
     "name": "CircuitState",
     "values": "CLOSED | OPEN | HALF_OPEN"
+   },
+   {
+    "file": "supabase/functions/analyze-talk-ratio/index.ts",
+    "name": "TalkRatioStatus",
+    "values": "agent_low | agent_high | optimal | insufficient_data"
    },
    {
     "file": "supabase/functions/health-check/slo-budget.ts",
@@ -50747,6 +50752,12 @@
    {
     "file": "src/components/conversation-intelligence/TalkRatioChart.tsx",
     "field": "status",
+    "value": "insufficient_data",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/conversation-intelligence/TalkRatioChart.tsx",
+    "field": "status",
     "value": "optimal",
     "kind": "compara"
    },
@@ -56398,7 +56409,7 @@
    },
    {
     "file": "src/components/conversation-intelligence/TalkRatioChart.tsx",
-    "line": "Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}"
+    "line": ": <>Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}</>}"
    },
    {
     "file": "src/components/gamification/AchievementCelebration.tsx",
@@ -70424,6 +70435,18 @@
    },
    {
     "file": "src/lib/__tests__/talkRatio.test.ts",
+    "name": "chamada sem áudio não é classificada como ideal"
+   },
+   {
+    "file": "src/lib/__tests__/talkRatio.test.ts",
+    "name": "duração zero com segmentos não gera NaN nem veredito"
+   },
+   {
+    "file": "src/lib/__tests__/talkRatio.test.ts",
+    "name": "duração positiva sem nenhuma fala é insuficiente, não "
+   },
+   {
+    "file": "src/lib/__tests__/talkRatio.test.ts",
     "name": "maps first speaker to agent and second to customer"
    },
    {
@@ -70441,6 +70464,22 @@
    {
     "file": "src/lib/__tests__/talkRatio.test.ts",
     "name": "tracks longest monologues per role"
+   },
+   {
+    "file": "src/lib/__tests__/talkRatio.test.ts",
+    "name": "classifyTalkRatio"
+   },
+   {
+    "file": "src/lib/__tests__/talkRatio.test.ts",
+    "name": "sem duração ou sem fala devolve insufficient_data"
+   },
+   {
+    "file": "src/lib/__tests__/talkRatio.test.ts",
+    "name": "classifica quando há áudio"
+   },
+   {
+    "file": "src/lib/__tests__/talkRatio.test.ts",
+    "name": "NaN não vira optimal"
    },
    {
     "file": "src/lib/__tests__/tracing.coverage.test.ts",
@@ -72141,6 +72180,22 @@
    {
     "file": "supabase/functions/analyze-call/__tests__/schema_test.ts",
     "name": "AnalyzeCallSchema - invalid callInfo fields"
+   },
+   {
+    "file": "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
+    "name": "chamada com duração 0 é insuficiente, nunca "
+   },
+   {
+    "file": "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
+    "name": "duração positiva sem fala é insuficiente"
+   },
+   {
+    "file": "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
+    "name": "NaN do quociente não cai em optimal"
+   },
+   {
+    "file": "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
+    "name": "com áudio, classifica pelo intervalo 40–60%"
    },
    {
     "file": "supabase/functions/bitrix-api/index.test.ts",
@@ -82661,6 +82716,9 @@
       "compara:src/hooks/useCoaching.ts",
       "escreve:src/lib/bitrix/sync-log.ts"
      ],
+     "insufficient_data": [
+      "compara:src/components/conversation-intelligence/TalkRatioChart.tsx"
+     ],
      "optimal": [
       "compara:src/components/conversation-intelligence/TalkRatioChart.tsx"
      ],
@@ -89336,20 +89394,6 @@
    },
    {
     "kind": "status",
-    "msg": "valor `optimal` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "compara:src/components/conversation-intelligence/TalkRatioChart.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `agent_high` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "compara:src/components/conversation-intelligence/TalkRatioChart.tsx"
-    ]
-   },
-   {
-    "kind": "status",
     "msg": "valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/components/dashboard/SystemIntegrityDashboard.tsx",
@@ -89464,14 +89508,6 @@
     "msg": "valor `won` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/hooks/useRenewals.ts"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `agent_low` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:src/hooks/useTalkRatio.ts",
-     "escreve:src/lib/talkRatio.ts"
     ]
    },
    {
@@ -93826,11 +93862,16 @@
   },
   "src/components/conversation-intelligence/TalkRatioChart.tsx": {
    "path": "src/components/conversation-intelligence/TalkRatioChart.tsx",
-   "lines": 86,
+   "lines": 91,
    "exports": [
     "function TalkRatioChart"
    ],
    "status_values": [
+    {
+     "field": "status",
+     "value": "insufficient_data",
+     "kind": "compara"
+    },
     {
      "field": "status",
      "value": "optimal",
@@ -93858,7 +93899,7 @@
     }
    ],
    "percents": [
-    "Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}"
+    ": <>Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}</>}"
    ]
   },
   "src/components/dashboard/ActiveCallsRealtime.tsx": {
@@ -109630,10 +109671,11 @@
   },
   "src/lib/talkRatio.ts": {
    "path": "src/lib/talkRatio.ts",
-   "lines": 92,
+   "lines": 111,
    "exports": [
     "interface TalkRatioSegment",
     "interface TalkRatioComputation",
+    "function classifyTalkRatio",
     "function computeTalkRatio"
    ],
    "status_values": [
@@ -111694,16 +111736,23 @@
   },
   "src/lib/__tests__/talkRatio.test.ts": {
    "path": "src/lib/__tests__/talkRatio.test.ts",
-   "lines": 59,
+   "lines": 100,
    "is_test": true,
    "tests": [
     "computeTalkRatio",
     "returns zeros for empty input",
+    "chamada sem áudio não é classificada como ideal",
+    "duração zero com segmentos não gera NaN nem veredito",
+    "duração positiva sem nenhuma fala é insuficiente, não ",
     "maps first speaker to agent and second to customer",
     "detects interruptions when overlap > 0.3s",
     "flags agent_high when agent dominates",
     "computes silence as remainder of total duration",
-    "tracks longest monologues per role"
+    "tracks longest monologues per role",
+    "classifyTalkRatio",
+    "sem duração ou sem fala devolve insufficient_data",
+    "classifica quando há áudio",
+    "NaN não vira optimal"
    ]
   },
   "src/lib/__tests__/tracing.coverage.test.ts": {
@@ -116744,7 +116793,17 @@
   },
   "supabase/functions/analyze-talk-ratio/index.ts": {
    "path": "supabase/functions/analyze-talk-ratio/index.ts",
-   "lines": 116,
+   "lines": 136,
+   "exports": [
+    "type TalkRatioStatus",
+    "function talkRatioStatus"
+   ],
+   "enums": [
+    {
+     "name": "TalkRatioStatus",
+     "values": "agent_low | agent_high | optimal | insufficient_data"
+    }
+   ],
    "status_values": [
     {
      "field": "role",
@@ -116776,6 +116835,17 @@
     "agent",
     "customer",
     "role"
+   ]
+  },
+  "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts": {
+   "path": "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
+   "lines": 25,
+   "is_test": true,
+   "tests": [
+    "chamada com duração 0 é insuficiente, nunca ",
+    "duração positiva sem fala é insuficiente",
+    "NaN do quociente não cai em optimal",
+    "com áudio, classifica pelo intervalo 40–60%"
    ]
   },
   "supabase/functions/approve-password-reset/index.ts": {
@@ -123973,10 +124043,25 @@
   }
  },
  "git": {
-  "sha": "560302de488363f05ba6f7195574653b899ae143",
+  "sha": "727deadc167b75269b5877e8d4ebaa5dacb41027",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "727dead",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: chamada sem audio deixa de ser classificada como ideal (E115) (#183)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/conversation-intelligence/TalkRatioChart.tsx",
+     "src/hooks/useTalkRatio.ts",
+     "src/lib/__tests__/talkRatio.test.ts",
+     "src/lib/talkRatio.ts",
+     "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
+     "supabase/functions/analyze-talk-ratio/index.ts"
+    ]
+   },
    {
     "sha": "560302d",
     "date": "2026-11-23",
@@ -124339,21 +124424,12 @@
      "supabase/functions/dialer-pacing-tick/index.ts",
      "supabase/functions/generate-coaching-track/index.ts"
     ]
-   },
-   {
-    "sha": "8b08ba2",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: registra persistencia provada das edges de escrita (#151)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    13
+    14
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124388,6 +124464,30 @@
     2
    ],
    [
+    "src/components/conversation-intelligence/TalkRatioChart.tsx",
+    1
+   ],
+   [
+    "src/hooks/useTalkRatio.ts",
+    1
+   ],
+   [
+    "src/lib/__tests__/talkRatio.test.ts",
+    1
+   ],
+   [
+    "src/lib/talkRatio.ts",
+    1
+   ],
+   [
+    "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/analyze-talk-ratio/index.ts",
+    1
+   ],
+   [
     "src/components/network/AgentQualityRanking.tsx",
     1
    ],
@@ -124405,30 +124505,6 @@
    ],
    [
     "src/lib/metrics/__tests__/mos.test.ts",
-    1
-   ],
-   [
-    "src/lib/metrics/mos.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/mos.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/mos_test.ts",
-    1
-   ],
-   [
-    "supabase/functions/voip-recommendation-simulate/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/business-hours.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/business-hours_test.ts",
     1
    ]
   ]

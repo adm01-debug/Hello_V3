@@ -2466,10 +2466,11 @@
    "exports": [
     "TalkRatioComputation",
     "TalkRatioSegment",
+    "classifyTalkRatio",
     "computeTalkRatio"
    ],
    "export_default": null,
-   "linhas": 92,
+   "linhas": 111,
    "tabelas": [],
    "rpcs": [],
    "edges": [],

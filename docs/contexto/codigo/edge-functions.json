@@ -198,7 +198,7 @@
    "nome": "analyze-talk-ratio",
    "entrada": "supabase/functions/analyze-talk-ratio/index.ts",
    "arquivos": 1,
-   "linhas": 116,
+   "linhas": 136,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -220,7 +220,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "approve-password-reset",

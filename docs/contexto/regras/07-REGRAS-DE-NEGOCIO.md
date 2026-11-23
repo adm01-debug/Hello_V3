@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `560302de48` · branch `main` · 2026-11-23 20:57 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `727deadc16` · branch `main` · 2026-11-23 20:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -882,6 +882,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `in_negotiation` | compara | `src/hooks/useRenewals.ts` |
 | `status` | `in_progress` | compara, escreve | `src/components/coaching/CoachingPanel.tsx`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/hooks/useCoaching.ts`<br>`src/lib/bitrix/sync-log.ts` |
 | `status` | `inactive` | compara, filtra | `src/components/admin/extensions/ExtensionStatusBadge.tsx`<br>`src/hooks/useExtensionsOverview.ts`<br>`supabase/functions/voip-capacity-recommendations/index.ts`<br>`supabase/migrations/20260403173646_6cd26a7c-d9a5-46fd-a088-d45d6a7899b8.sql` |
+| `status` | `insufficient_data` | compara | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `status` | `listening` | escreve | `src/hooks/useSupervisorPanel.ts` |
 | `status` | `loading` | compara | `src/pages/VerifyEmail.tsx` |
 | `status` | `missed` | compara, escreve | `src/components/dashboard/RecentCalls.tsx`<br>`src/data/mockData.ts`<br>`src/hooks/useQueueMetrics.ts`<br>`src/pages/CallHistory.tsx` |
@@ -1124,6 +1125,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | Severity | critical \| high \| medium \| low \| info | `src/lib/security/penetration-test-reporter.ts` |
 | MosLabel | poor \| fair \| good \| excellent \| unknown | `supabase/functions/_shared/mos.ts` |
 | CircuitState | CLOSED \| OPEN \| HALF_OPEN | `supabase/functions/_shared/resilience.ts` |
+| TalkRatioStatus | agent_low \| agent_high \| optimal \| insufficient_data | `supabase/functions/analyze-talk-ratio/index.ts` |
 | BudgetStatus | healthy \| warning \| exhausted \| unknown | `supabase/functions/health-check/slo-budget.ts` |
 | AnomalyKind | spike \| drift \| outage | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | AnomalyMetric | mos \| jitter \| volume | `supabase/functions/voip-anomaly-remediation/index.ts` |
@@ -1653,7 +1655,7 @@ _nenhum item encontrado_
 | `oscillator.start(audioContext.currentTime + i * 0.15);` | `src/components/agent/BargeInNotification.tsx` |
 | `oscillator.stop(audioContext.currentTime + i * 0.15 + 0.2);` | `src/components/agent/BargeInNotification.tsx` |
 | `setOverallSentiment((prev) => Math.round(prev * 0.7 + sentimentValue * 0.3));` | `src/components/ai/live-call/useLiveInsights.ts` |
-| `Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}` | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
+| `: <>Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}</>}` | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `delay: Math.random() * 0.5,` | `src/components/gamification/AchievementCelebration.tsx` |
 | `value: +(baseline + (Math.sin(i * 1.3 + a.bucket_hour) * a.std * 0.4)).toFixed(2),` | `src/components/network/AnomalyDetectionCard.tsx` |
 | `: `hsl(var(--primary) / ${0.2 + intensity * 0.8})`,` | `src/components/network/RecommendationInsightsCard.tsx` |
@@ -2452,7 +2454,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4108 testes em 343 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4119 testes em 344 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2525,6 +2527,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx` | 14 | useSupervisorPanel (coverage) · loads active calls and queue metrics on mount · selecting a call fetches whisper history · sendWhisper errors when no call/message selected … |
 | `src/lib/__tests__/safe-date.test.ts` | 14 | safe-date · entradas hostis nunca lançam · PBT: qualquer string arbitrária é tolerada · PBT: qualquer número (inclui NaN, ±Infinity, valores fora do range) é tolerado · null / undefined /  … |
 | `src/lib/__tests__/sync-history.test.ts` | 14 | sync-history · sanitizeEntry só aceita timestamps finitos e positivos · nunca ultrapassa o limite de entradas · appendEntry mantém a entrada mais recente no topo … |
+| `src/lib/__tests__/talkRatio.test.ts` | 14 | computeTalkRatio · returns zeros for empty input · chamada sem áudio não é classificada como ideal · duração zero com segmentos não gera NaN nem veredito … |
 | `src/lib/__tests__/voice-preferences.test.ts` | 14 | voice-preferences (PBT) · clampTtsRate sempre devolve valor finito no intervalo permitido · nextTtsRate percorre apenas passos válidos · ciclo de velocidades é fechado e volta ao início … |
 | `src/lib/__tests__/webhook-health-utils.test.ts` | 14 | ratioColor · retorna muted quando attempts=0 · classifica faixas por ratio · aggregateEndpoints … |
 | `src/lib/notifications/__tests__/index.coverage.test.ts` | 14 | notifications · sendNotification · returns success when edge function succeeds · returns error when edge function returns error … |
@@ -2643,7 +2646,6 @@ _nenhum item encontrado_
 | `src/lib/__tests__/health-score.property.test.ts` | 7 | computeHealth — property-based (1000 runs) · score sempre entre 0 e 100 · máximo absoluto = 100 quando tudo true · mínimo absoluto = 0 quando tudo false … |
 | `src/lib/__tests__/safe-number.instrumentation.test.ts` | 7 | safe-number instrumentation · emite evento com motivo e helper para input inválido · reporta clamp de min/max sem descartar o valor · propaga requestId ativo para os eventos … |
 | `src/lib/__tests__/security-alerts-webhook-queue.property.test.ts` | 7 | security-alerts-webhook-queue — property-based (fast-check) · enqueue nunca excede MAX_QUEUE (50) · clearWebhookQueue sempre esvazia · hashEndpoint é determinístico e sempre 12 chars hex … |
-| `src/lib/__tests__/talkRatio.test.ts` | 7 | computeTalkRatio · returns zeros for empty input · maps first speaker to agent and second to customer · detects interruptions when overlap > 0.3s … |
 | `src/lib/metrics/__tests__/mos.test.ts` | 7 | classifyMos · usa 3.5 como fronteira de ruim · separa mediano, bom e excelente · trata ausência e valores inválidos como unknown … |
 | `src/lib/mfa/__tests__/index.coverage.test.ts` | 7 | mfa (coverage) · returns disabled default when no settings row · maps existing settings row including backup codes · handles settings row with falsy/missing fields … |
 | `src/lib/security/__tests__/helmet-config.coverage.test.ts` | 7 | helmet-config (coverage) · DEFAULT_SECURITY_HEADERS has expected secure defaults · getSecurityHeaders returns defaults when no overrides · getSecurityHeaders merges overrides … |
@@ -2752,11 +2754,11 @@ _nenhum item encontrado_
 | `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
 | `src/lib/__tests__/pendingCallWrites.test.ts` | 4 | pendingCallWrites · enfileira e retira em ordem FIFO · descarta o mais antigo quando chega a 20 itens · clear() esvazia a fila |
 | `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
+| `supabase/functions/analyze-talk-ratio/__tests__/index.test.ts` | 4 | chamada com duração 0 é insuficiente, nunca  · duração positiva sem fala é insuficiente · NaN do quociente não cai em optimal · com áudio, classifica pelo intervalo 40–60% |
 | `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
 | `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 4 | check-queue-metrics: cálculo de avg wait time (contrato) · check-queue-metrics: cálculo de abandonment rate (contrato) · check-queue-metrics: service level (≤30s contrato) · check-queue-metrics: thresholds default (contrato) |
 | `supabase/functions/export-data-lake/__tests__/csv.test.ts` | 4 | toCsv: vazio devolve string vazia · toCsv: cabecalho e a uniao das colunas, sem perder dados · toCsv: escapa virgula, aspas e quebra de linha · toCsv: nulo e undefined viram vazio |
-| `supabase/functions/voip-anomaly-detector/__tests__/index.test.ts` | 4 | detectAnomalies — sem anomalias quando obs próximo da média · detectAnomalies — MOS muito baixo gera anomaly critical · detectAnomalies — jitter elevado gera warning · detectAnomalies — baseline insuficiente não gera anomaly |
-| … +43 linhas — lista completa em `context.json` | | |
+| … +44 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

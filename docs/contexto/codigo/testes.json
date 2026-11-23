@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 353,
+ "total": 354,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 336
+  "unit": 337
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 329
+   "arquivos": 330
   },
   {
    "padrao": "e2e/",
@@ -2418,11 +2418,11 @@
   {
    "arquivo": "src/lib/__tests__/talkRatio.test.ts",
    "tipo": "unit",
-   "linhas": 59,
+   "linhas": 100,
    "testa": [
     "src/lib/talkRatio.ts"
    ],
-   "casos": 6
+   "casos": 12
   },
   {
    "arquivo": "src/lib/__tests__/tracing.coverage.test.ts",
@@ -2809,6 +2809,15 @@
     "supabase/functions/analyze-call/schema.ts"
    ],
    "casos": 2
+  },
+  {
+   "arquivo": "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 25,
+   "testa": [
+    "supabase/functions/analyze-talk-ratio/index.ts"
+   ],
+   "casos": 4
   },
   {
    "arquivo": "supabase/functions/bitrix-api/__tests__/index.test.ts",
@@ -3426,6 +3435,7 @@
   "supabase/functions/_shared/resilience.ts": 2,
   "supabase/functions/_shared/validator.ts": 1,
   "supabase/functions/analyze-call/schema.ts": 3,
+  "supabase/functions/analyze-talk-ratio/index.ts": 1,
   "supabase/functions/bitrix-api/index.ts": 2,
   "supabase/functions/enforce-sla/index.ts": 1,
   "supabase/functions/export-data-lake/csv.ts": 1,
@@ -3603,7 +3613,6 @@
    "analyze-contact-profile",
    "analyze-live-utterance",
    "analyze-sentiment",
-   "analyze-talk-ratio",
    "approve-password-reset",
    "auto-scorecard",
    "chat-widget-session",

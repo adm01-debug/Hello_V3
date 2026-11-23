@@ -1695,7 +1695,7 @@
     "TalkRatioChart"
    ],
    "export_default": null,
-   "linhas": 86,
+   "linhas": 91,
    "dominio": "components/conversation-intelligence",
    "hooks_locais": [],
    "tabelas": [],
