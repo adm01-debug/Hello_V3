@@ -45,7 +45,7 @@
 - [ ] **006** — Exigir token de cron (ou papel de supervisor) em `auto-scorecard` — onda 1 — Alta — Edge Function 🔒
 - [ ] **007** — Exigir autenticação de visitante em `chatbot-respond` — onda 1 — Alta — Edge Function
 - [ ] **008** — Exigir papel de staff e limitar tamanho em `embed-kb-article` — onda 1 — Alta — Edge Function
-- [ ] **009** — Fechar o relay de e-mail aberto em `notify-new-device` — onda 1 — Alta — Edge Function 🔒
+- [x] **009** — Fechar o relay de e-mail aberto em `notify-new-device` — onda 1 — Alta — Edge Function 🔒
 - [ ] **010** — Fechar o relay de e-mail aberto em `notify-blocked-ip` — onda 1 — Alta — Edge Function
 - [ ] **011** — Impedir que um usuário notifique outro em `send-notification` — onda 1 — Média — Edge Function
 - [ ] **012** — Fazer o rate limit falhar fechado nos endpoints que gastam dinheiro — onda 1 — Média — Edge Function
