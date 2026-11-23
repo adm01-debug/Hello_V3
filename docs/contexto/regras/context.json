@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "9e81eea2413f7769b00f211bf28a6dbb354112c4",
+  "sha": "ba0ddcf553dd3d102da9f80fae52410bf2934b2e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 21:18 UTC",
-  "files_total": 1716,
-  "code_files": 1513,
-  "code_lines": 187988
+  "generated_at": "2026-11-23 21:37 UTC",
+  "files_total": 1717,
+  "code_files": 1514,
+  "code_lines": 188051
  },
  "version": "1.3.2",
- "facts_hash": "867471f5a1d20109",
+ "facts_hash": "b67cef77125fa67a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 623,
+   ".ts": 624,
    ".tsx": 611,
    ".sql": 245,
    ".mjs": 27,
@@ -30865,13 +30865,13 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "auth": "JWT do usuário",
     "tables": [
      "call_key_moments",
      "call_transcripts_searchable"
     ],
     "env": [
-     "SUPABASE_SERVICE_ROLE_KEY",
+     "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
     "external": [],
@@ -34270,8 +34270,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 180,
-   "lines": 20489,
+   "files": 181,
+   "lines": 20552,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34387,6 +34387,7 @@
     "index.ts: handler",
     "slo-budget.ts: BudgetStatus, BudgetInput, BudgetResult, budget",
     "index.ts: computeWeightedTotal",
+    "index.ts: handler",
     "index.ts: detectAnomalies",
     "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
     "index.ts: ForecastDay, HistoryDay, buildHistory, forecastNextDays",
@@ -34400,8 +34401,7 @@
     "index.ts: ActionRow, QualityRow, InsightsResponse, buildHeatmap, calcEffectiveness, computeRecurring",
     "index.ts: QualityRow, AlertRow, SimulationDelta, SimulationResult, projectImpact",
     "index.ts: RecommendationCategory, RecommendationSeverity, RecommendationActionType, Recommendation, SignalContext, buildRecommendations",
-    "verify.ts: WebAuthnError, base64UrlToBytes, AssertionInput, AssertionResultado, verificarAssercao",
-    "idempotency.ts: StoredMessageRef, ReplayResponse, detectReplay, normalizePhone"
+    "verify.ts: WebAuthnError, base64UrlToBytes, AssertionInput, AssertionResultado, verificarAssercao"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -37599,6 +37599,7 @@
     "supabase/functions/realtime-analysis/index.ts",
     "supabase/functions/redact-sensitive-audio/index.ts",
     "supabase/functions/rls-audit/index.ts",
+    "supabase/functions/search-calls/index.ts",
     "supabase/functions/send-notification/index.ts",
     "supabase/functions/send-survey/index.ts",
     "supabase/functions/sip-config/index.ts",
@@ -37712,7 +37713,6 @@
     "supabase/functions/rls-audit/index.ts",
     "supabase/functions/score-call-attempt/index.ts",
     "supabase/functions/score-call/index.ts",
-    "supabase/functions/search-calls/index.ts",
     "supabase/functions/send-notification/index.ts",
     "supabase/functions/send-survey/index.ts",
     "supabase/functions/sip-config/index.ts",
@@ -42687,6 +42687,10 @@
    {
     "file": "supabase/functions/score-call/index.ts",
     "text": "Mesma regra de clamp de auto-scorecard/index.ts."
+   },
+   {
+    "file": "supabase/functions/search-calls/index.ts",
+    "text": "busca passa a devolver apenas as chamadas que aquele agente pode ver."
    },
    {
     "file": "supabase/functions/send-survey/index.ts",
@@ -72566,6 +72570,22 @@
     "name": "score-call-attempt: region_code default = BR"
    },
    {
+    "file": "supabase/functions/search-calls/__tests__/index.test.ts",
+    "name": "search-calls: sem header Authorization devolve 401 antes de qualquer consulta"
+   },
+   {
+    "file": "supabase/functions/search-calls/__tests__/index.test.ts",
+    "name": "search-calls: header Authorization vazio tambem devolve 401"
+   },
+   {
+    "file": "supabase/functions/search-calls/__tests__/index.test.ts",
+    "name": "search-calls: preflight OPTIONS responde com CORS da origem permitida"
+   },
+   {
+    "file": "supabase/functions/search-calls/__tests__/index.test.ts",
+    "name": "search-calls: preflight OPTIONS de origem desconhecida nao ecoa a origem"
+   },
+   {
     "file": "supabase/functions/translate-utterance/__tests__/index.test.ts",
     "name": "translate-utterance: 401 sem Authorization"
    },
@@ -86225,7 +86245,6 @@
    "supabase/functions/rls-audit/index.ts",
    "supabase/functions/score-call-attempt/index.ts",
    "supabase/functions/score-call/index.ts",
-   "supabase/functions/search-calls/index.ts",
    "supabase/functions/send-notification/index.ts",
    "supabase/functions/send-survey/index.ts",
    "supabase/functions/sip-config/index.ts",
@@ -120419,7 +120438,10 @@
   },
   "supabase/functions/search-calls/index.ts": {
    "path": "supabase/functions/search-calls/index.ts",
-   "lines": 123,
+   "lines": 139,
+   "exports": [
+    "function handler"
+   ],
    "tables": [
     {
      "table": "call_key_moments",
@@ -120446,10 +120468,23 @@
     ]
    },
    "env": [
-    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
-   "uses_service_role": true
+   "rule_comments": [
+    "busca passa a devolver apenas as chamadas que aquele agente pode ver."
+   ]
+  },
+  "supabase/functions/search-calls/__tests__/index.test.ts": {
+   "path": "supabase/functions/search-calls/__tests__/index.test.ts",
+   "lines": 47,
+   "is_test": true,
+   "tests": [
+    "search-calls: sem header Authorization devolve 401 antes de qualquer consulta",
+    "search-calls: header Authorization vazio tambem devolve 401",
+    "search-calls: preflight OPTIONS responde com CORS da origem permitida",
+    "search-calls: preflight OPTIONS de origem desconhecida nao ecoa a origem"
+   ]
   },
   "supabase/functions/send-notification/index.ts": {
    "path": "supabase/functions/send-notification/index.ts",
@@ -124077,10 +124112,21 @@
   }
  },
  "git": {
-  "sha": "9e81eea2413f7769b00f211bf28a6dbb354112c4",
+  "sha": "ba0ddcf553dd3d102da9f80fae52410bf2934b2e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ba0ddcf",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: search-calls exige autenticacao e deixa de usar a service_role (E004) (#185)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/search-calls/__tests__/index.test.ts",
+     "supabase/functions/search-calls/index.ts"
+    ]
+   },
    {
     "sha": "9e81eea",
     "date": "2026-11-23",
@@ -124441,32 +124487,12 @@
      "docs/estado/hooks-parte3.md",
      "docs/estado/infra-ci-rotas-integracoes.md"
     ]
-   },
-   {
-    "sha": "505cb99",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "chore: zera os 5 warnings de ESLint extraindo constantes de .tsx (#153)",
-    "files": [
-     "src/components/contacts/ContactFilters.tsx",
-     "src/components/contacts/ContactPagination.tsx",
-     "src/components/contacts/contactFiltersState.ts",
-     "src/components/contacts/pagination.ts",
-     "src/components/security-alerts/AlertDetailsDialog.tsx",
-     "src/components/security-alerts/VirtualTimeline.tsx",
-     "src/components/security-alerts/severity.ts",
-     "src/hooks/useAlertsExport.ts",
-     "src/hooks/useSecurityAlertNotifications.ts",
-     "src/lib/logger.ts",
-     "src/pages/Contacts.tsx",
-     "src/pages/admin/SecurityAlerts.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    15
+    16
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124499,6 +124525,14 @@
    [
     "docs/estado/componentes-parte3.md",
     2
+   ],
+   [
+    "supabase/functions/search-calls/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/search-calls/index.ts",
+    1
    ],
    [
     "src/hooks/__tests__/useLoginLockout.coverage.test.tsx",
@@ -124534,14 +124568,6 @@
    ],
    [
     "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
-    1
-   ],
-   [
-    "supabase/functions/analyze-talk-ratio/index.ts",
-    1
-   ],
-   [
-    "src/components/network/AgentQualityRanking.tsx",
     1
    ]
   ]

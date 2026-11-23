@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 355,
+ "total": 356,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 338
+  "unit": 339
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 331
+   "arquivos": 332
   },
   {
    "padrao": "e2e/",
@@ -2961,6 +2961,15 @@
    "casos": 5
   },
   {
+   "arquivo": "supabase/functions/search-calls/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 47,
+   "testa": [
+    "supabase/functions/search-calls/index.ts"
+   ],
+   "casos": 4
+  },
+  {
    "arquivo": "supabase/functions/translate-utterance/__tests__/index.test.ts",
    "tipo": "unit",
    "linhas": 56,
@@ -3452,6 +3461,7 @@
   "supabase/functions/health-check/slo-budget.ts": 1,
   "supabase/functions/record-consent/index.ts": 1,
   "supabase/functions/score-call/index.ts": 1,
+  "supabase/functions/search-calls/index.ts": 1,
   "supabase/functions/voip-anomaly-detector/index.ts": 1,
   "supabase/functions/voip-anomaly-remediation/index.ts": 1,
   "supabase/functions/voip-capacity-forecast/index.ts": 1,
@@ -3662,7 +3672,6 @@
    "redact-sensitive-audio",
    "request-password-reset",
    "rls-audit",
-   "search-calls",
    "send-notification",
    "send-survey",
    "sip-config",

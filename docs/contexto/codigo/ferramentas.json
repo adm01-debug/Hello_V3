@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1234)",
+   "TypeScript (1235)",
    "SQL (245)",
    "Markdown (120)",
    "JavaScript (29)",
@@ -506,11 +506,11 @@
    },
    {
     "host": "hello-v3.vercel.app",
-    "arquivos": 9
+    "arquivos": 10
    },
    {
     "host": "cfmlmcdyjuotqobjapng.supabase.co",
-    "arquivos": 8
+    "arquivos": 9
    },
    {
     "host": "lovable.dev",
@@ -626,6 +626,10 @@
    },
    {
     "host": "nao-listado.exemplo.com",
+    "arquivos": 1
+   },
+   {
+    "host": "origem-maliciosa.example",
     "arquivos": 1
    },
    {

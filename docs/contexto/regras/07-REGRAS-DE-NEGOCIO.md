@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9e81eea241` · branch `main` · 2026-11-23 21:18 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ba0ddcf553` · branch `main` · 2026-11-23 21:37 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2454,7 +2454,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4122 testes em 345 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4126 testes em 346 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2758,7 +2758,7 @@ _nenhum item encontrado_
 | `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
 | `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 4 | check-queue-metrics: cálculo de avg wait time (contrato) · check-queue-metrics: cálculo de abandonment rate (contrato) · check-queue-metrics: service level (≤30s contrato) · check-queue-metrics: thresholds default (contrato) |
 | `supabase/functions/export-data-lake/__tests__/csv.test.ts` | 4 | toCsv: vazio devolve string vazia · toCsv: cabecalho e a uniao das colunas, sem perder dados · toCsv: escapa virgula, aspas e quebra de linha · toCsv: nulo e undefined viram vazio |
-| … +45 linhas — lista completa em `context.json` | | |
+| … +46 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3037,6 +3037,7 @@ _nenhum item encontrado_
 | Endpoint publico (usuario deslogado precisa resetar). Sem rate limit, o | `supabase/functions/request-password-reset/index.ts` |
 | ao max_score do critério — a IA pode devolver nota acima do máximo (A-029). | `supabase/functions/score-call/index.ts` |
 | Mesma regra de clamp de auto-scorecard/index.ts. | `supabase/functions/score-call/index.ts` |
+| busca passa a devolver apenas as chamadas que aquele agente pode ver. | `supabase/functions/search-calls/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/send-survey/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/sync-crm-queue/index.ts` |
 | Token app-only nao resolve /me; usar /groups (Application permission Group.Read.All) | `supabase/functions/teams-fetch-recordings/index.ts` |

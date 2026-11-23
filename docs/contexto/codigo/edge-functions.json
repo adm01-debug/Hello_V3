@@ -2038,7 +2038,7 @@
    "nome": "search-calls",
    "entrada": "supabase/functions/search-calls/index.ts",
    "arquivos": 1,
-   "linhas": 123,
+   "linhas": 139,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2049,7 +2049,7 @@
    ],
    "rpcs": [],
    "env": [
-    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_ANON_KEY",
     "SUPABASE_URL"
    ],
    "buckets": [],
@@ -2065,7 +2065,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "send-notification",
