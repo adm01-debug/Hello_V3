@@ -83,7 +83,7 @@ export async function handler(req: Request): Promise<Response> {
       return createErrorResponse("Sem permissão para notificar outro usuário", "FORBIDDEN", undefined, 403, cors);
     }
 
-    const rate = await checkRateLimitDB(getClientIp(req), "notify-blocked-ip", user.id);
+    const rate = await checkRateLimitDB(getClientIp(req), "notify-blocked-ip", user.id, { onError: 'deny' });
     if (!rate.allowed) {
       return createErrorResponse("Muitas notificações seguidas. Tente novamente em instantes.", "RATE_LIMITED", undefined, 429, cors);
     }

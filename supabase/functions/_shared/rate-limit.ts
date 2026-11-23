@@ -10,15 +10,32 @@ export interface RateLimitResult {
   reason?: string;
 }
 
+export interface RateLimitOptions {
+  /**
+   * Comportamento quando o banco nao responde.
+   * `allow` (default) preserva a disponibilidade; `deny` protege endpoints que
+   * gastam dinheiro (credito de IA, cota de e-mail) contra oscilacao do banco.
+   */
+  onError?: 'allow' | 'deny';
+}
+
 /**
  * Check rate limit using persistent DB function.
- * Falls back to allowing if DB is unreachable (fail-open for availability).
+ * Falls back to allowing if DB is unreachable (fail-open for availability),
+ * exceto quando `options.onError === 'deny'`.
  */
 export async function checkRateLimitDB(
   ipAddress: string,
   endpoint: string,
-  userId?: string
+  userId?: string,
+  options: RateLimitOptions = {}
 ): Promise<RateLimitResult> {
+  const onError = options.onError ?? 'allow';
+  const onFailure = (): RateLimitResult =>
+    onError === 'deny'
+      ? { allowed: false, reason: 'rate_limit_unavailable', retryAfter: 60 }
+      : { allowed: true };
+
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -32,7 +49,7 @@ export async function checkRateLimitDB(
 
     if (error) {
       console.error('[rate-limit] DB check failed:', error.message);
-      return { allowed: true }; // fail-open
+      return onFailure();
     }
 
     if (!data.allowed) {
@@ -55,7 +72,7 @@ export async function checkRateLimitDB(
     };
   } catch (err) {
     console.error('[rate-limit] Unexpected error:', err);
-    return { allowed: true }; // fail-open
+    return onFailure();
   }
 }
 
