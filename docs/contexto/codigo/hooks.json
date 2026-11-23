@@ -2793,7 +2793,7 @@
    "hooks_exportados": [
     "useLoginLockout"
    ],
-   "linhas": 115,
+   "linhas": 117,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [

@@ -3647,6 +3647,7 @@
    "src/hooks/usePageTitle.ts",
    "src/integrations/lovable/index.ts",
    "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts",
    "src/lib/webauthn/webauthn-utils.ts"
   ],
   "src/pages/Marketplace.tsx": [

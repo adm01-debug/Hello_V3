@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (330)",
+   "co-localizado (__tests__) (331)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: bloqueio de login falha fechado quando a verificacao nao responde (E003) (#184)",
    "fix: chamada sem audio deixa de ser classificada como ideal (E115) (#183)",
    "fix: unifica o limiar de qualidade MOS em uma lib (E113) (#182)",
    "fix: SLA passa a respeitar horario comercial e feriados (E111) (#181)",
-   "fix: envia version nos updates e liga o lock otimista (E110) (#180)",
-   "fix: escolhe a politica SLA mais especifica sem depender da ordem do banco (E109) (#179)"
+   "fix: envia version nos updates e liga o lock otimista (E110) (#180)"
   ]
  },
  "pr_template": null,

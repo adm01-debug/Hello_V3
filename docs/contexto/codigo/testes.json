@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 354,
+ "total": 355,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 337
+  "unit": 338
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 330
+   "arquivos": 331
   },
   {
    "padrao": "e2e/",
@@ -2677,6 +2677,15 @@
    "casos": 14
   },
   {
+   "arquivo": "src/pages/__tests__/Login.lockout.test.tsx",
+   "tipo": "unit",
+   "linhas": 66,
+   "testa": [
+    "src/pages/Login.tsx"
+   ],
+   "casos": 2
+  },
+  {
    "arquivo": "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
    "tipo": "unit",
    "linhas": 103,
@@ -3424,7 +3433,7 @@
   "src/lib/webauthn/webauthn-utils.ts": 2,
   "src/lib/webhook-health-utils.ts": 2,
   "src/lib/webrtc-config.ts": 1,
-  "src/pages/Login.tsx": 1,
+  "src/pages/Login.tsx": 2,
   "src/pages/PhoneDialer.tsx": 1,
   "src/pages/Status.tsx": 1,
   "src/pages/roles/useRoles.ts": 1,
