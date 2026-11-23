@@ -8,10 +8,10 @@ const log = logger.create('useVoipExecutiveSummary');
 export type ExecutivePeriod = 'day' | 'week' | 'month';
 
 export interface ExecutiveBreakdown {
-  sla_score: number;
-  mos_score: number;
-  alerts_score: number;
-  capacity_score: number;
+  sla_score: number | null;
+  mos_score: number | null;
+  alerts_score: number | null;
+  capacity_score: number | null;
 }
 
 export interface ExecutiveAgentStat {
@@ -23,7 +23,9 @@ export interface ExecutiveAgentStat {
 export interface ExecutiveSummary {
   period: ExecutivePeriod;
   since: string;
-  health_score: number;
+  health_score: number | null;
+  label?: string;
+  coverage: number;
   breakdown: ExecutiveBreakdown;
   sla: {
     current_pct: number | null;

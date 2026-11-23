@@ -38,11 +38,11 @@ export function ExecutiveReportExport({ period = 'week' }: Props) {
 
       const rows: ReportRow[] = [
         { metric: 'Período', value: summary.period, detail: `Desde ${safeToLocaleString(summary.since, 'pt-BR')}` },
-        { metric: 'Health Score', value: `${summary.health_score} / 100`, detail: '40% SLA + 30% MOS + 20% Alertas + 10% Capacidade' },
-        { metric: 'SLA — Score', value: `${Math.round(summary.breakdown.sla_score)}`, detail: `Atual: ${summary.sla.current_pct ?? '—'}% / Anterior: ${summary.sla.previous_pct ?? '—'}%` },
-        { metric: 'MOS — Score', value: `${Math.round(summary.breakdown.mos_score)}`, detail: `Média: ${summary.mos_avg ?? '—'}` },
-        { metric: 'Alertas — Score', value: `${Math.round(summary.breakdown.alerts_score)}`, detail: `${summary.alerts.unacknowledged} pendentes / ${summary.alerts.total} total` },
-        { metric: 'Capacidade — Score', value: `${Math.round(summary.breakdown.capacity_score)}`, detail: `Pico ${summary.capacity.peak_concurrent} / ${summary.capacity.cap} (${summary.capacity.utilization_pct}%)` },
+        { metric: 'Health Score', value: summary.health_score === null ? 'sem medição' : `${summary.health_score} / 100`, detail: summary.health_score === null ? `Cobertura ${summary.coverage}/4` : '40% SLA + 30% MOS + 20% Alertas + 10% Capacidade' },
+        { metric: 'SLA — Score', value: summary.breakdown.sla_score === null ? '—' : `${Math.round(summary.breakdown.sla_score)}`, detail: `Atual: ${summary.sla.current_pct ?? '—'}% / Anterior: ${summary.sla.previous_pct ?? '—'}%` },
+        { metric: 'MOS — Score', value: summary.breakdown.mos_score === null ? '—' : `${Math.round(summary.breakdown.mos_score)}`, detail: `Média: ${summary.mos_avg ?? '—'}` },
+        { metric: 'Alertas — Score', value: summary.breakdown.alerts_score === null ? '—' : `${Math.round(summary.breakdown.alerts_score)}`, detail: `${summary.alerts.unacknowledged} pendentes / ${summary.alerts.total} total` },
+        { metric: 'Capacidade — Score', value: summary.breakdown.capacity_score === null ? '—' : `${Math.round(summary.breakdown.capacity_score)}`, detail: `Pico ${summary.capacity.peak_concurrent} / ${summary.capacity.cap} (${summary.capacity.utilization_pct}%)` },
         { metric: 'Total de chamadas', value: String(summary.sla.total_calls), detail: 'No período analisado' },
         ...summary.worst_agents.map((a, i) => ({
           metric: `Pior agente #${i + 1}`,

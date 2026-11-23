@@ -12,19 +12,22 @@ interface Props {
   period?: ExecutivePeriod;
 }
 
-function scoreColor(score: number): string {
+function scoreColor(score: number | null): string {
+  if (score === null) return 'text-muted-foreground';
   if (score >= 80) return 'text-success';
   if (score >= 60) return 'text-warning';
   return 'text-destructive';
 }
 
-function scoreBadgeClass(score: number): string {
+function scoreBadgeClass(score: number | null): string {
+  if (score === null) return 'bg-muted/15 text-muted-foreground border-border/30';
   if (score >= 80) return 'bg-success/15 text-success border-success/30';
   if (score >= 60) return 'bg-warning/15 text-warning border-warning/30';
   return 'bg-destructive/15 text-destructive border-destructive/30';
 }
 
-function scoreLabel(score: number): string {
+function scoreLabel(score: number | null): string {
+  if (score === null) return 'SEM MEDIÇÃO';
   if (score >= 80) return 'SAUDÁVEL';
   if (score >= 60) return 'ATENÇÃO';
   return 'CRÍTICO';
@@ -35,15 +38,11 @@ export function VoipHealthScoreCard({ period = 'week' }: Props) {
 
   const sparkData = useMemo(() => {
     if (!data) return [];
-    // Sparkline derivada do breakdown (4 pilares + score final)
+    // Sparkline derivada do breakdown (4 pilares + score final); ignora null.
     const b = data.breakdown;
-    return [
-      { v: b.sla_score },
-      { v: b.mos_score },
-      { v: b.alerts_score },
-      { v: b.capacity_score },
-      { v: data.health_score },
-    ];
+    return [b.sla_score, b.mos_score, b.alerts_score, b.capacity_score, data.health_score]
+      .filter((v): v is number => v !== null)
+      .map((v) => ({ v }));
   }, [data]);
 
   if (isLoading) {
@@ -70,6 +69,39 @@ export function VoipHealthScoreCard({ period = 'week' }: Props) {
 
   const score = data.health_score;
   const delta = data.sla.delta_pct;
+
+  if (score === null) {
+    return (
+      <Card className="glass-card border-primary/30 shadow-elegant overflow-hidden">
+        <CardHeader className="pb-3">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <CardDescription className="flex items-center gap-2">
+                <Activity className="h-3.5 w-3.5" />
+                Health Score VoIP
+              </CardDescription>
+              <CardTitle className="flex items-baseline gap-3 mt-1">
+                <span className="text-3xl font-mono font-bold text-muted-foreground">—</span>
+                <Badge variant="outline" className={cn('font-mono text-[10px] uppercase', scoreBadgeClass(null))}>
+                  {data.label ?? 'sem medição suficiente'}
+                </Badge>
+              </CardTitle>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <p className="text-xs text-muted-foreground">
+            Menos de 2 dos 4 sinais (SLA, MOS, alertas, capacidade) têm amostra no período.
+            O score só é calculado quando há medição suficiente.
+          </p>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Info className="h-3.5 w-3.5" />
+            Cobertura: {data.coverage}/4 sinais medidos
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <TooltipProvider>
@@ -130,7 +162,7 @@ export function VoipHealthScoreCard({ period = 'week' }: Props) {
                   <span className="font-mono">{weight}</span>
                 </div>
                 <div className={cn('text-2xl font-mono font-bold tabular-nums', scoreColor(value))}>
-                  {Math.round(value)}
+                  {value === null ? '—' : Math.round(value)}
                 </div>
               </div>
             ))}
