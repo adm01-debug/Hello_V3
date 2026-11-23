@@ -51,7 +51,7 @@
 - [x] **012** — Fazer o rate limit falhar fechado nos endpoints que gastam dinheiro — onda 1 — Média — Edge Function
 - [ ] **013** — Verificar assinatura HMAC em `whatsapp-inbound` — onda 1 — Alta — Edge Function 🔒
 - [ ] **014** — Verificar assinatura em `email-inbound` — onda 1 — Alta — Edge Function 🔒
-- [ ] **015** — Tornar `email-inbound` idempotente e parar o laço de 500 — onda 1 — Alta — Edge Function
+- [x] **015** — Tornar `email-inbound` idempotente e parar o laço de 500 — onda 1 — Alta — Edge Function
 - [ ] **016** — Parar de concatenar o telefone no filtro do PostgREST — onda 1 — Média — Edge Function
 - [ ] **017** — Índice único para a deduplicação de mensagens de WhatsApp — onda 1 — Média — Banco 🔒
 - [ ] **018** — Substituir o XOR por criptografia real nas senhas de tronco SIP — onda 1 — Crítica — Edge Function + Banco 🔒
