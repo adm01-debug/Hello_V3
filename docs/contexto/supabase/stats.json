@@ -51,30 +51,30 @@
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-23T03:18:00.145907+00:00",
+        "end_time": "2026-11-23T05:16:00.104861+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 1746,
+        "runid": 1865,
         "seconds": 0.02,
-        "start_time": "2026-11-23T03:18:00.123304+00:00",
+        "start_time": "2026-11-23T05:16:00.087660+00:00",
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-23T03:17:00.027431+00:00",
+        "end_time": "2026-11-23T05:15:00.171880+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 1745,
-        "seconds": 0.01,
-        "start_time": "2026-11-23T03:17:00.019757+00:00",
+        "runid": 1864,
+        "seconds": 0.03,
+        "start_time": "2026-11-23T05:15:00.144599+00:00",
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-23T03:16:00.220528+00:00",
+        "end_time": "2026-11-23T05:14:00.111498+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 1744,
+        "runid": 1863,
         "seconds": 0.02,
-        "start_time": "2026-11-23T03:16:00.195609+00:00",
+        "start_time": "2026-11-23T05:14:00.088845+00:00",
         "status": "succeeded"
       },
       {
@@ -84,6 +84,15 @@
         "runid": 285,
         "seconds": 0.01,
         "start_time": "2026-11-22T03:00:00.104887+00:00",
+        "status": "succeeded"
+      },
+      {
+        "end_time": "2026-11-23T03:45:00.248799+00:00",
+        "jobid": 15,
+        "return_message": "1 row",
+        "runid": 1774,
+        "seconds": 0.04,
+        "start_time": "2026-11-23T03:45:00.212778+00:00",
         "status": "succeeded"
       },
       {
@@ -145,7 +154,7 @@
           "usename": "supabase_admin"
         }
       ],
-      "database_bytes": 34024595,
+      "database_bytes": 34090131,
       "queues": [],
       "schema_bytes": [
         {
@@ -162,12 +171,12 @@
       ],
       "top_queries": [
         {
-          "calls": 154,
-          "mean_ms": 5519.26,
+          "calls": 156,
+          "mean_ms": 5525.13,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 849966
+          "total_ms": 861920
         },
         {
           "calls": 2,
@@ -218,28 +227,28 @@
           "total_ms": 51607
         },
         {
-          "calls": 158,
-          "mean_ms": 211.72,
+          "calls": 160,
+          "mean_ms": 212.83,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 1346,
-          "total_ms": 33452
+          "rows": 1366,
+          "total_ms": 34053
         },
         {
-          "calls": 1581,
-          "mean_ms": 15.26,
+          "calls": 1700,
+          "mean_ms": 15.02,
           "query": "SELECT net.http_post( url := $1, headers := jsonb_build_object( $2, $3, $4, $5 || ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )",
           "role": "postgres",
-          "rows": 1581,
-          "total_ms": 24127
+          "rows": 1700,
+          "total_ms": 25541
         },
         {
-          "calls": 158,
-          "mean_ms": 126.75,
+          "calls": 160,
+          "mean_ms": 129.17,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 277546,
-          "total_ms": 20026
+          "rows": 281148,
+          "total_ms": 20668
         },
         {
           "calls": 255,
@@ -2413,7 +2422,7 @@
         "is_primary": false,
         "is_unique": false,
         "name": "idx_dialer_campaigns_status",
-        "scans": 1576,
+        "scans": 1694,
         "schema": "public",
         "table": "dialer_campaigns"
       },
@@ -5635,7 +5644,7 @@
         "last_autovacuum": null,
         "name": "call_recordings",
         "schema": "public",
-        "seq_scan": 46,
+        "seq_scan": 47,
         "total_bytes": 65536
       },
       {
@@ -5928,7 +5937,7 @@
         "dead_rows": 4,
         "est_rows": 0,
         "heap_bytes": 8192,
-        "idx_scan": 1582,
+        "idx_scan": 1701,
         "index_bytes": 32768,
         "last_autoanalyze": null,
         "last_autovacuum": null,
