@@ -126,7 +126,7 @@ export function ChannelSelector({ channels, activeChannel, isInCall, onSetChanne
               <Icon className={cn("h-4 w-4", channelColors[channel.id])} />
               <span>{channel.name}</span>
               {!channel.configured && (
-                <Badge variant="outline" className="ml-auto text-xs">Config</Badge>
+                <Badge variant="outline" className="ml-auto text-xs">Requer config</Badge>
               )}
             </DropdownMenuItem>
           );

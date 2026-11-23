@@ -5,15 +5,15 @@ const MAX_SIMULTANEOUS_CALLS = 3;
 describe('Multi-Channel Call System', () => {
   describe('Channel configuration', () => {
     const channels = [
-      { id: 'webrtc', name: 'WebRTC', enabled: true, configured: true },
+      { id: 'webrtc', name: 'WebRTC', enabled: false, configured: false },
       { id: 'wavoip', name: 'Wavoip', enabled: false, configured: false },
-      { id: 'sip', name: 'SIP Genérico', enabled: false, configured: false },
+      { id: 'sip', name: 'SIP Genérico', enabled: true, configured: true },
     ];
 
-    it('only webrtc is enabled by default', () => {
+    it('only sip is enabled by default', () => {
       const enabledChannels = channels.filter(c => c.enabled);
       expect(enabledChannels).toHaveLength(1);
-      expect(enabledChannels[0].id).toBe('webrtc');
+      expect(enabledChannels[0].id).toBe('sip');
     });
 
     it('all channels are listed', () => {

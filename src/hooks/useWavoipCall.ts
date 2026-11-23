@@ -26,17 +26,6 @@ export function useWavoipCall() {
 
   const durationIntervalRef = useRef<number | null>(null);
 
-  // Start duration timer
-  const startDurationTimer = useCallback(() => {
-    if (durationIntervalRef.current) {
-      clearInterval(durationIntervalRef.current);
-    }
-    
-    durationIntervalRef.current = window.setInterval(() => {
-      setState(prev => ({ ...prev, duration: prev.duration + 1 }));
-    }, 1000);
-  }, []);
-
   // Stop duration timer
   const stopDurationTimer = useCallback(() => {
     if (durationIntervalRef.current) {
@@ -122,17 +111,8 @@ export function useWavoipCall() {
         callId: data.callId 
       }));
 
-      // Simulate connection after a delay (in production this would be event-driven)
-      setTimeout(() => {
-        setState(prev => {
-          if (prev.status === 'calling') {
-            startDurationTimer();
-            return { ...prev, status: 'active' };
-          }
-          return prev;
-        });
-      }, 2000);
-
+      // E100: o canal wavoip nao esta configurado (stub); nao simula chamada ativa
+      // nem inicia cronometro — a interface nao deve afirmar chamada inexistente.
       toast.success('Chamada WhatsApp iniciada');
       return true;
     } catch (error) {
@@ -146,7 +126,7 @@ export function useWavoipCall() {
       toast.error(errorMsg);
       return false;
     }
-  }, [startDurationTimer]);
+  }, []);
 
   // End the current call
   const endCall = useCallback(async (): Promise<boolean> => {

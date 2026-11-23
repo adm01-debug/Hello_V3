@@ -142,7 +142,7 @@
 - [x] **097** — Ligar o painel "Integridade da Infraestrutura (10/10)" aos dados reais — onda 2 — Alta — Frontend
 - [x] **098** — Corrigir o cartão "Auditoria de Segurança (10/10)" — onda 2 — Alta — Frontend
 - [x] **099** — Corrigir a contagem de RLS do relatório de conformidade — onda 2 — Média — Frontend
-- [ ] **100** — Rotular corretamente os canais do softphone — onda 2 — Alta — Hooks + Frontend
+- [x] **100** — Rotular corretamente os canais do softphone — onda 2 — Alta — Hooks + Frontend
 
 
 ## Onda 3 — Integridade de dados e regras de negócio (101–150, 50 etapas)
