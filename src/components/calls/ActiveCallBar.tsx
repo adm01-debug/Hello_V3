@@ -58,7 +58,7 @@ export function ActiveCallBar() {
   const [endedSessionId, setEndedSessionId] = useState<string | null>(null);
   const [endedContactId, setEndedContactId] = useState<string | null>(null);
 
-  const { activeCalls, activeCallId, endCall, currentSession, endDbSession, addCallAnalysis } = useCallContext();
+  const { activeCalls, activeCallId, endCall, currentSession, endDbSession, addCallAnalysis, addDbTranscript } = useCallContext();
   // call é derivado do contexto compartilhado — sem estado local
   const rawCall = activeCalls.find(c => c.id === activeCallId) ?? null;
   const duration = rawCall?.duration ?? 0;
@@ -68,6 +68,8 @@ export function ActiveCallBar() {
   // startSession é chamado por useMultiChannelCall.updateCallStatus (E058) — não duplicar aqui
 
   const handleTranscript = useCallback((entry: TranscriptEntry) => {
+    // Persiste no banco via useCallSession (flush em batch a cada 5s)
+    addDbTranscript(entry);
     setTranscripts(prev => {
       const next = [...prev, entry];
       if (currentSession?.id) {
@@ -81,7 +83,7 @@ export function ActiveCallBar() {
       }
       return next;
     });
-  }, [analyzeLive, currentSession]);
+  }, [addDbTranscript, analyzeLive, currentSession]);
 
   const handleAnalysis = useCallback((analysis: AnalysisEntry) => {
     addCallAnalysis(analysis);

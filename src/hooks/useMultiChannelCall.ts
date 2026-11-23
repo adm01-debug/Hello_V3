@@ -78,7 +78,7 @@ export function useMultiChannelCall() {
   const [conference, setConference] = useState<ConferenceCall | null>(null);
   const conferenceDurationRef = useRef<number | null>(null);
 
-  const { startSession, endSession, currentSession, addAnalysis: addCallAnalysis } = useCallSession();
+  const { startSession, endSession, currentSession, addAnalysis: addCallAnalysis, addTranscript: addDbTranscript } = useCallSession();
   const { profile } = useAuthContext();
 
   const { startDurationTimer, stopDurationTimer, startHoldTimer, stopHoldTimer, stopAllTimers } = useCallTimers(setActiveCalls);
@@ -282,6 +282,6 @@ export function useMultiChannelCall() {
     startConference, addToConference, removeFromConference, endConference, getCallsAvailableForConference, toggleConferenceRecording,
     transferCall, completeTransfer, cancelTransfer, setCallDbSession,
     // Passthrough de useCallSession para consumo via CallContext (evita múltiplas instâncias)
-    currentSession, endDbSession: endSession, addCallAnalysis,
+    currentSession, endDbSession: endSession, addCallAnalysis, addDbTranscript,
   };
 }

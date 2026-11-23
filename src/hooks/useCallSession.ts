@@ -67,6 +67,9 @@ export function useCallSession() {
     if (!currentSession || pendingTranscriptsRef.current.length === 0) return;
     const transcriptsToSave = [...pendingTranscriptsRef.current];
     pendingTranscriptsRef.current = [];
+    // Empilha em allTranscriptsRef ANTES do insert para que runPostCallIntelligence
+    // sempre tenha acesso a todos os dados mesmo se o flush falhar (E063)
+    allTranscriptsRef.current.push(...transcriptsToSave);
     try {
       const { error } = await supabase.from('call_transcriptions').insert(
         transcriptsToSave.map((t) => ({
@@ -75,7 +78,6 @@ export function useCallSession() {
         }))
       );
       if (error) throw error;
-      allTranscriptsRef.current.push(...transcriptsToSave);
       log.info(`Saved ${transcriptsToSave.length} transcripts`);
     } catch (error) {
       log.error('Error saving transcripts', error);
