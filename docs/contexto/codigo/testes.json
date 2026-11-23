@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 362,
+ "total": 363,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 345
+  "unit": 346
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 338
+   "arquivos": 339
   },
   {
    "padrao": "e2e/",
@@ -2776,6 +2776,15 @@
    "casos": 1
   },
   {
+   "arquivo": "supabase/functions/_shared/__tests__/rate-limit.test.ts",
+   "tipo": "unit",
+   "linhas": 91,
+   "testa": [
+    "supabase/functions/_shared/rate-limit.ts"
+   ],
+   "casos": 5
+  },
+  {
    "arquivo": "supabase/functions/_shared/__tests__/resilience.test.ts",
    "tipo": "unit",
    "linhas": 162,
@@ -3505,6 +3514,7 @@
   "supabase/functions/_shared/auth.ts": 1,
   "supabase/functions/_shared/constant-time.ts": 2,
   "supabase/functions/_shared/cors.ts": 2,
+  "supabase/functions/_shared/rate-limit.ts": 1,
   "supabase/functions/_shared/resilience.ts": 2,
   "supabase/functions/_shared/validator.ts": 1,
   "supabase/functions/analyze-call/schema.ts": 3,

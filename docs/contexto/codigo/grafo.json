@@ -110,7 +110,7 @@
   },
   {
    "arquivo": "supabase/functions/_shared/rate-limit.ts",
-   "importado_por": 21
+   "importado_por": 22
   },
   {
    "arquivo": "src/components/ui/alert.tsx",

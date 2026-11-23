@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e42050a809` · branch `main` · 2026-11-23 23:13 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `cf786766d3` · branch `main` · 2026-11-23 23:28 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -185,7 +185,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 117 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 118 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -203,6 +203,7 @@
 - `scripts/test-dashboard-rpcs.mjs`
 - `scripts/test-rls-access.mjs`
 - `scripts/test-validate-ip.mjs`
+- `supabase/functions/_shared/__tests__/rate-limit.test.ts`
 - `supabase/functions/_shared/hmac.ts`
 - `supabase/functions/_shared/rate-limit.ts`
 - `supabase/functions/_shared/validator.ts`

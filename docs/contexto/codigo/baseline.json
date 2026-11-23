@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e42050a8092d55634c8622b9e37bee557b762506",
+  "commit": "cf786766d378b8ee4f6ec90d78c31546dbc1a3f6",
   "branch": "main",
-  "data_commit": "2026-11-23T20:10:46-03:00",
+  "data_commit": "2026-11-23T20:27:56-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "cf78676",
+    "data": "2026-11-23",
+    "assunto": "fix: rate limit passa a falhar fechado nos endpoints que gastam dinheiro (E012) (#195)"
+   },
    {
     "sha": "e42050a",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "a81e535",
     "data": "2026-11-23",
     "assunto": "feat: gravar e fechar call_sessions + transcricoes no banco (E061-E073) (#170)"
-   },
-   {
-    "sha": "9b30ac8",
-    "data": "2026-11-23",
-    "assunto": "feat: E060 CallContext provider singleton — resolve A-001 (múltiplas instâncias)"
    }
   ],
-  "arquivos_mudados_7d": 975,
+  "arquivos_mudados_7d": 977,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -152,20 +152,20 @@
     "mudancas": 27
    },
    {
+    "pasta": "docs/qa/05-PROGRESSO.md",
+    "mudancas": 26
+   },
+   {
     "pasta": "src/lib/__tests__",
     "mudancas": 26
    },
    {
-    "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 25
+    "pasta": "supabase/functions/_shared",
+    "mudancas": 23
    },
    {
     "pasta": "src/components/calls",
     "mudancas": 22
-   },
-   {
-    "pasta": "supabase/functions/_shared",
-    "mudancas": 21
    },
    {
     "pasta": "covout/lib/security",
@@ -203,7 +203,7 @@
    },
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 25
+    "mudancas": 26
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 173
+    "commits": 174
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1678,
-  "arquivos_codigo": 1276,
-  "linhas_codigo": 172765,
+  "arquivos_total": 1679,
+  "arquivos_codigo": 1277,
+  "linhas_codigo": 172873,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 362,
+  "testes": 363,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 189,
-   "linhas": 21277
+   "arquivos": 190,
+   "linhas": 21385
   },
   "tailwind.config.ts": {
    "arquivos": 1,
