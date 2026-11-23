@@ -80,7 +80,7 @@ describe('useWavoipCall', () => {
     expect(mockToast.error).toHaveBeenCalledWith('Número de telefone é obrigatório');
   });
 
-  it('startCall success transitions calling -> active and runs duration timer', async () => {
+  it('startCall success stays calling without simulating active call', async () => {
     vi.useFakeTimers();
     const { result } = renderHook(() => useWavoipCall());
     // mount config check resolves
@@ -96,18 +96,13 @@ describe('useWavoipCall', () => {
     expect(result.current.status).toBe('calling');
     expect(result.current.callId).toBe('call-1');
 
-    // advance the 2000ms connection delay -> active + duration timer starts
+    // E100: canal wavoip nao configurado (stub) — nao simula chamada ativa nem cronometro
     await act(async () => {
-      await vi.advanceTimersByTimeAsync(2000);
+      await vi.advanceTimersByTimeAsync(5000);
     });
-    expect(result.current.status).toBe('active');
+    expect(result.current.status).toBe('calling');
     expect(result.current.isInCall).toBe(true);
-
-    // advance duration timer ticks
-    await act(async () => {
-      await vi.advanceTimersByTimeAsync(3000);
-    });
-    expect(result.current.duration).toBeGreaterThanOrEqual(3);
+    expect(result.current.duration).toBe(0);
 
     vi.useRealTimers();
   });

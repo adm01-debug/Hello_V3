@@ -64,13 +64,13 @@ export interface ChannelConfig {
 const MAX_SIMULTANEOUS_CALLS = 3;
 
 const AVAILABLE_CHANNELS: ChannelConfig[] = [
-  { id: 'webrtc', name: 'WebRTC', enabled: true, configured: true, icon: 'Radio', description: 'Chamadas via navegador com IA' },
-  { id: 'wavoip', name: 'Wavoip', enabled: false, configured: false, icon: 'MessageCircle', description: 'Chamadas via WhatsApp' },
+  { id: 'webrtc', name: 'WebRTC', enabled: false, configured: false, icon: 'Radio', description: 'Chamadas via navegador com IA (requer configuração)' },
+  { id: 'wavoip', name: 'Wavoip', enabled: false, configured: false, icon: 'MessageCircle', description: 'Chamadas via WhatsApp (requer configuração)' },
   { id: 'sip', name: 'SIP Genérico', enabled: true, configured: true, icon: 'Headphones', description: 'Servidor SIP próprio (Bitrix)' },
 ];
 
 export function useMultiChannelCall() {
-  const [activeChannel, setActiveChannel] = useState<CallChannel>('webrtc');
+  const [activeChannel, setActiveChannel] = useState<CallChannel>('sip');
   const [activeCalls, setActiveCalls] = useState<CallSession[]>([]);
   const [activeCallId, setActiveCallId] = useState<string | null>(null);
   const [callHistory, setCallHistory] = useState<CallSession[]>([]);
