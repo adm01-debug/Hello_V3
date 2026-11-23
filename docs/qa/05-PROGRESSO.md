@@ -134,8 +134,8 @@
 - [x] **089** — Filtrar o menu pelo papel do usuário — onda 2 — Alta — Frontend · (AppSidebar filtra por hasRole e esconde grupos vazios; tsc=0, 4/4, build OK sem violar orçamento)
 - [ ] **090** — Classificar as 49 rotas que não declaram papel — onda 2 — Média — Frontend
 - [ ] **091** — Decidir o que o papel `viewer` significa — onda 2 — Alta — Banco + Frontend 🔒
-- [ ] **092** — `/status`: dizer "sem medição" em vez de 100% — onda 2 — Alta — Frontend
-- [ ] **093** — `/status`: tratar erro em vez de ficar carregando para sempre — onda 2 — Alta — Frontend
+- [x] **092** — `/status`: dizer "sem medição" em vez de 100% — onda 2 — Alta — Frontend
+- [x] **093** — `/status`: tratar erro em vez de ficar carregando para sempre — onda 2 — Alta — Frontend
 - [ ] **094** — `health-check`: parar de reportar "operacional" sem medir — onda 2 — Alta — Edge Function
 - [ ] **095** — Score de saúde VoIP: parar de dar 83/100 sem dado — onda 2 — Alta — Edge Function
 - [ ] **096** — Remover ou ligar o painel "Análise IA de Performance" — onda 2 — Alta — Frontend
