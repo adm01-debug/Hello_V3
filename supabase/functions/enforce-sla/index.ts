@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { addBusinessMinutes, scheduleFromRows, type BusinessSchedule } from "../_shared/business-hours.ts";
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -42,6 +43,30 @@ Deno.serve(async (req) => {
       )
       .in("status", ["open", "pending"]);
 
+    // Horário comercial: só carrega quando alguma política aplicável pede.
+    // Sem configuração ativa, `business_hours_only` cai no prazo por tempo
+    // corrido (comportamento anterior).
+    const wantsBusinessHours = policies.some((p) => p.business_hours_only);
+    let schedule: BusinessSchedule | null = null;
+    if (wantsBusinessHours) {
+      const { data: configs } = await supabase
+        .from("calling_hours_config")
+        .select(
+          "region_code, timezone, weekday_start, weekday_end, saturday_start, saturday_end, sunday_allowed, sunday_start, sunday_end, holidays_allowed",
+        )
+        .eq("is_active", true);
+      const lista = (configs ?? []) as Array<{ region_code: string }>;
+      // Mesma preferência de `check_calling_hours`: BR, senão a primeira ativa.
+      const cfg = lista.find((c) => c.region_code === "BR") ?? lista[0];
+      if (cfg) {
+        const { data: holidayRows } = await supabase
+          .from("holidays")
+          .select("date, recurring")
+          .eq("region_code", cfg.region_code);
+        schedule = scheduleFromRows(cfg as never, (holidayRows ?? []) as never);
+      }
+    }
+
     let applied = 0;
     let breaches = 0;
     const now = new Date();
@@ -53,17 +78,17 @@ Deno.serve(async (req) => {
 
       const createdAt = new Date(conv.created_at);
       const updates: Record<string, unknown> = {};
+      const dueFrom = (minutes: number) =>
+        matched.business_hours_only && schedule
+          ? addBusinessMinutes(createdAt, minutes, schedule)
+          : new Date(createdAt.getTime() + minutes * 60_000);
 
       if (!conv.sla_first_response_due_at) {
-        updates.sla_first_response_due_at = new Date(
-          createdAt.getTime() + matched.first_response_minutes * 60_000,
-        ).toISOString();
+        updates.sla_first_response_due_at = dueFrom(matched.first_response_minutes).toISOString();
         applied++;
       }
       if (!conv.sla_resolution_due_at) {
-        updates.sla_resolution_due_at = new Date(
-          createdAt.getTime() + matched.resolution_minutes * 60_000,
-        ).toISOString();
+        updates.sla_resolution_due_at = dueFrom(matched.resolution_minutes).toISOString();
       }
 
       // Detectar breach
