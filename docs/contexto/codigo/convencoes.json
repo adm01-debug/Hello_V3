@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: rotula corretamente os canais do softphone (E100) (#177)",
    "fix: liga painel de integridade a dados reais e remove cartao decorativo (E097-E098) (#176)",
    "fix: health-check e score VoIP nao reportam sem medir (E094-E095) (#174)",
    "fix: remove painel decorativo e corrige relatório de segurança (#175)",
-   "fix: status sem medicao em vez de 100%% e erro tratado (E092-E093) (#173)",
-   "feat: filtrar menu por papel (E088-E089) (#172)"
+   "fix: status sem medicao em vez de 100%% e erro tratado (E092-E093) (#173)"
   ]
  },
  "pr_template": null,

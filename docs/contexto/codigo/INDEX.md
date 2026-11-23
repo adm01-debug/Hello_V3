@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `0942091ccb3b0836a256dd195912440ee0c481a2` (2026-11-23T12:34:34-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `00fa64c498e930bc7470e52cb7715a4936c126f4` (2026-11-23T16:20:36-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1660 |
 | arquivos_codigo | 1258 |
-| linhas_codigo | 171150 |
+| linhas_codigo | 171125 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,7 +370,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9825 nós · 25265 arestas · 765 comunidades · grafo do commit `0942091c`
+- 9825 nós · 25265 arestas · 765 comunidades · grafo do commit `00fa64c4`
 - comunidades maiores: lucide-react (257), cn (250), client.ts (208), vitest (174), logger.ts (169), badge.tsx (164), button.tsx (143), usePageTitle (135), react (134), ref_https (116), safeFormatDistanceToNow (114), @tanstack/react-query (103)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -379,18 +379,18 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
+- docs/qa/05-PROGRESSO.md (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
-- docs/qa/05-PROGRESSO.md (7)
 - .github/workflows/contexto.yml (6)
 - src/components/layout/CommandPalette.tsx (6)
 - deno.lock (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
 - src/components/calls/UnifiedSoftphone.tsx (5)
+- src/hooks/useMultiChannelCall.ts (5)
 - src/routes/protectedRoutes.tsx (5)
 - docs/estado/infra-ci-rotas-integracoes.md (4)
-- docs/pendencias/_ordem.md (4)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `00fa64c` fix: rotula corretamente os canais do softphone (E100) (#177)
 - 2026-11-23 `0942091` fix: liga painel de integridade a dados reais e remove cartao decorativo (E097-E098) (#176)
 - 2026-11-23 `e7889cb` fix: health-check e score VoIP nao reportam sem medir (E094-E095) (#174)
 - 2026-11-23 `61a323b` fix: remove painel decorativo e corrige relatório de segurança (#175)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `1b9ec21` fix: talk ratio do card executivo usa transcricao real, nao 50% fixo (#164)
 - 2026-11-22 `2e77319` feat: humor da chamada ativa vem do dado real, nao de "Positivo" fixo (#163)
 - 2026-11-22 `975df81` fix: barra de progresso reflete o carregamento real do chunk da rota (#162)
-- 2026-11-22 `da58d29` fix: transferencia de chamada nao conclui mais sozinha por timer (#161)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

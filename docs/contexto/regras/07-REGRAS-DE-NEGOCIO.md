@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0942091ccb` · branch `main` · 2026-11-23 15:48 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `00fa64c498` · branch `main` · 2026-11-23 19:21 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2475,7 +2475,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/utilities-comprehensive.test.ts` | 37 | Password Strength · rates empty password as very weak · rates short password as weak · rates 8-char mixed as reasonable … |
 | `src/lib/__tests__/accessibility-improvements.test.ts` | 36 | Accessibility: Dashboard page (Index.tsx) · main element has aria-label · stats section has aria-label for metrics · active calls section has aria-label … |
 | `src/lib/__tests__/security-observability.test.ts` | 35 | Security: Logger PII masking (comprehensive) · masks  · masks case-insensitive keys (Password, TOKEN, etc.) · preserves non-sensitive fields … |
-| `src/hooks/__tests__/useMultiChannelCall.test.ts` | 34 | Multi-Channel Call System · Channel configuration · only webrtc is enabled by default · all channels are listed … |
+| `src/hooks/__tests__/useMultiChannelCall.test.ts` | 34 | Multi-Channel Call System · Channel configuration · only sip is enabled by default · all channels are listed … |
 | `src/hooks/__tests__/useMFA.test.ts` | 32 | MFA System · Backup code generation · generates exactly 10 codes · codes are uppercase … |
 | `src/hooks/__tests__/usePredictiveDialer.test.ts` | 30 | Predictive Dialer Logic · Campaign creation defaults · applies correct defaults · Call result handling … |
 | `src/lib/__tests__/encryption-webauthn.test.ts` | 29 | Encryption Utilities · arrayBufferToBase64 · converts empty buffer · converts known bytes … |
@@ -2925,6 +2925,7 @@ _nenhum item encontrado_
 | Apenas admin/supervisor têm acesso (gated por RLS de optimistic_lock_conflicts). | `src/hooks/useUnreadConflicts.ts` |
 | * Registra a mudança no histórico curto de sincronização. Nunca deve | `src/hooks/useVoicePreferences.ts` |
 | * Grava um patch no perfil; falhas são acessórias e apenas logadas. */ | `src/hooks/useVoicePreferences.ts` |
+| nem inicia cronometro — a interface nao deve afirmar chamada inexistente. | `src/hooks/useWavoipCall.ts` |
 | * A validação delega para `validateWebhookConfig` — o hook expõe o resultado | `src/hooks/useWebhookConfig.ts` |
 | (`validation`) para a UI renderizar mensagens inline por campo e bloqueia | `src/hooks/useWebhookConfig.ts` |
 | base já validado; garantimos apenas que max >= base ao persistir | `src/hooks/useWebhookConfig.ts` |

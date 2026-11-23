@@ -1789,7 +1789,7 @@
   {
    "arquivo": "src/hooks/__tests__/useWavoipCall.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 241,
+   "linhas": 236,
    "testa": [
     "src/hooks/useWavoipCall.ts"
    ],

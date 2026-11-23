@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "0942091ccb3b0836a256dd195912440ee0c481a2",
+  "sha": "00fa64c498e930bc7470e52cb7715a4936c126f4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 15:48 UTC",
+  "generated_at": "2026-11-23 19:21 UTC",
   "files_total": 1707,
   "code_files": 1504,
-  "code_lines": 187162
+  "code_lines": 187137
  },
  "version": "1.3.2",
- "facts_hash": "3537715d406142c7",
+ "facts_hash": "a97d30067e2f8687",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33565,7 +33565,7 @@
   {
    "module": "src/hooks",
    "files": 353,
-   "lines": 45992,
+   "lines": 45967,
    "tables": [
     "accounts",
     "active_sessions",
@@ -42228,6 +42228,10 @@
    {
     "file": "src/hooks/useVoicePreferences.ts",
     "text": "* Grava um patch no perfil; falhas são acessórias e apenas logadas. */"
+   },
+   {
+    "file": "src/hooks/useWavoipCall.ts",
+    "text": "nem inicia cronometro — a interface nao deve afirmar chamada inexistente."
    },
    {
     "file": "src/hooks/useWebhookConfig.ts",
@@ -52706,12 +52710,6 @@
    {
     "file": "src/hooks/useWavoipCall.ts",
     "field": "status",
-    "value": "active",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useWavoipCall.ts",
-    "field": "status",
     "value": "error",
     "kind": "escreve"
    },
@@ -52732,12 +52730,6 @@
     "field": "status",
     "value": "connected",
     "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useWavoipCall.ts",
-    "field": "status",
-    "value": "calling",
-    "kind": "compara"
    },
    {
     "file": "src/hooks/useWavoipCall.ts",
@@ -62527,7 +62519,7 @@
    },
    {
     "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "only webrtc is enabled by default"
+    "name": "only sip is enabled by default"
    },
    {
     "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
@@ -65571,7 +65563,7 @@
    },
    {
     "file": "src/hooks/__tests__/useWavoipCall.coverage.test.tsx",
-    "name": "startCall success transitions calling -> active and runs duration timer"
+    "name": "startCall success stays calling without simulating active call"
    },
    {
     "file": "src/hooks/__tests__/useWavoipCall.coverage.test.tsx",
@@ -82331,7 +82323,6 @@
       "escreve:src/hooks/useMultiChannelCallConference.ts",
       "escreve:src/hooks/useSipCall.ts",
       "escreve:src/hooks/useSupervisorPanel.ts",
-      "escreve:src/hooks/useWavoipCall.ts",
       "escreve:src/pages/VideoConference.tsx",
       "filtra:src/components/agent/BargeInNotification.tsx",
       "filtra:src/components/dashboard/HoldTrendChart.tsx",
@@ -104022,7 +104013,7 @@
   },
   "src/hooks/useWavoipCall.ts": {
    "path": "src/hooks/useWavoipCall.ts",
-   "lines": 222,
+   "lines": 202,
    "exports": [
     "type WavoipStatus",
     "interface WavoipCallState",
@@ -104063,11 +104054,6 @@
     },
     {
      "field": "status",
-     "value": "active",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
      "value": "error",
      "kind": "escreve"
     },
@@ -104093,14 +104079,12 @@
     },
     {
      "field": "status",
-     "value": "calling",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
      "value": "active",
      "kind": "compara"
     }
+   ],
+   "rule_comments": [
+    "nem inicia cronometro — a interface nao deve afirmar chamada inexistente."
    ],
    "hooks": [
     "useWavoipCall"
@@ -106497,7 +106481,7 @@
    "tests": [
     "Multi-Channel Call System",
     "Channel configuration",
-    "only webrtc is enabled by default",
+    "only sip is enabled by default",
     "all channels are listed",
     "disabled channels are not configured",
     "Call limits",
@@ -107964,7 +107948,7 @@
   },
   "src/hooks/__tests__/useWavoipCall.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useWavoipCall.coverage.test.tsx",
-   "lines": 241,
+   "lines": 236,
    "is_test": true,
    "tests": [
     "useWavoipCall",
@@ -107973,7 +107957,7 @@
     "checkConfiguration with supabase error sets error state",
     "checkConfiguration thrown error sets connection failure",
     "startCall rejects empty phone number",
-    "startCall success transitions calling -> active and runs duration timer",
+    "startCall success stays calling without simulating active call",
     "startCall failure (data.success false) sets error",
     "startCall failure (supabase error) uses fallback message",
     "startCall thrown error sets error message from exception",
@@ -123684,10 +123668,24 @@
   }
  },
  "git": {
-  "sha": "0942091ccb3b0836a256dd195912440ee0c481a2",
+  "sha": "00fa64c498e930bc7470e52cb7715a4936c126f4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "00fa64c",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: rotula corretamente os canais do softphone (E100) (#177)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/calls/softphone/HeaderDropdowns.tsx",
+     "src/hooks/__tests__/useMultiChannelCall.test.ts",
+     "src/hooks/__tests__/useWavoipCall.coverage.test.tsx",
+     "src/hooks/useMultiChannelCall.ts",
+     "src/hooks/useWavoipCall.ts"
+    ]
+   },
    {
     "sha": "0942091",
     "date": "2026-11-23",
@@ -124027,25 +124025,15 @@
     "files": [
      "supabase/migrations/20261123010000_fix_user_delete_cascade.sql"
     ]
-   },
-   {
-    "sha": "0e60f41",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: scorecards entregues e cron do data-lake endurecido (#145)",
-    "files": [
-     "docs/audits/pendencias-2026-07.md",
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    7
+    8
    ],
    [
-    "docs/estado/funcionalidades-planejadas.md",
+    "src/hooks/useMultiChannelCall.ts",
     4
    ],
    [
@@ -124057,11 +124045,7 @@
     3
    ],
    [
-    "src/hooks/useMultiChannelCall.ts",
-    3
-   ],
-   [
-    "docs/audits/pendencias-2026-07.md",
+    "docs/estado/funcionalidades-planejadas.md",
     3
    ],
    [
@@ -124079,6 +124063,26 @@
    [
     "docs/estado/componentes-parte3.md",
     2
+   ],
+   [
+    "docs/audits/pendencias-2026-07.md",
+    2
+   ],
+   [
+    "src/components/calls/softphone/HeaderDropdowns.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useMultiChannelCall.test.ts",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useWavoipCall.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useWavoipCall.ts",
+    1
    ],
    [
     "src/components/dashboard/SystemIntegrityDashboard.tsx",
@@ -124102,22 +124106,6 @@
    ],
    [
     "src/hooks/useVoipExecutiveSummary.ts",
-    1
-   ],
-   [
-    "src/pages/admin/SloDashboard.tsx",
-    1
-   ],
-   [
-    "supabase/functions/health-check/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
-    1
-   ],
-   [
-    "supabase/functions/voip-executive-summary/index.ts",
     1
    ]
   ]

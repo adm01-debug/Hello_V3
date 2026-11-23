@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0942091ccb3b0836a256dd195912440ee0c481a2",
+  "commit": "00fa64c498e930bc7470e52cb7715a4936c126f4",
   "branch": "main",
-  "data_commit": "2026-11-23T12:34:34-03:00",
+  "data_commit": "2026-11-23T16:20:36-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "00fa64c",
+    "data": "2026-11-23",
+    "assunto": "fix: rotula corretamente os canais do softphone (E100) (#177)"
+   },
    {
     "sha": "0942091",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "8b08ba2",
     "data": "2026-11-22",
     "assunto": "docs: registra persistencia provada das edges de escrita (#151)"
-   },
-   {
-    "sha": "66b53b9",
-    "data": "2026-11-22",
-    "assunto": "docs: registra 8 edges de IA provadas ponta a ponta (#150)"
    }
   ],
-  "arquivos_mudados_7d": 928,
+  "arquivos_mudados_7d": 932,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -144,12 +144,12 @@
     "mudancas": 55
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 27
+    "pasta": "src/hooks/__tests__",
+    "mudancas": 28
    },
    {
-    "pasta": "src/hooks/__tests__",
-    "mudancas": 26
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 27
    },
    {
     "pasta": "src/lib/__tests__",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 21
+    "mudancas": 22
    },
    {
     "pasta": "covout/lib/security",
@@ -176,6 +176,10 @@
     "mudancas": 8
    },
    {
+    "pasta": "docs/qa/05-PROGRESSO.md",
+    "mudancas": 8
+   },
+   {
     "pasta": "src/components/dashboard",
     "mudancas": 8
    },
@@ -189,10 +193,6 @@
    },
    {
     "pasta": "docs/edge-functions/README.md",
-    "mudancas": 7
-   },
-   {
-    "pasta": "docs/qa/05-PROGRESSO.md",
     "mudancas": 7
    }
   ],
@@ -210,15 +210,15 @@
     "mudancas": 8
    },
    {
+    "arquivo": "docs/qa/05-PROGRESSO.md",
+    "mudancas": 8
+   },
+   {
     "arquivo": ".github/workflows/ci.yml",
     "mudancas": 7
    },
    {
     "arquivo": "docs/edge-functions/README.md",
-    "mudancas": 7
-   },
-   {
-    "arquivo": "docs/qa/05-PROGRESSO.md",
     "mudancas": 7
    },
    {
@@ -246,6 +246,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "src/hooks/useMultiChannelCall.ts",
+    "mudancas": 5
+   },
+   {
     "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 5
    },
@@ -259,10 +263,6 @@
    },
    {
     "arquivo": "src/components/calls/ActiveCallBar.tsx",
-    "mudancas": 4
-   },
-   {
-    "arquivo": "src/hooks/useMultiChannelCall.ts",
     "mudancas": 4
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 155
+    "commits": 156
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1660,
   "arquivos_codigo": 1258,
-  "linhas_codigo": 171150,
+  "linhas_codigo": 171125,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 353,
-   "linhas": 45992
+   "linhas": 45967
   },
   "src/integrations": {
    "arquivos": 3,

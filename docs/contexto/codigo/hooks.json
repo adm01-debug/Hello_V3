@@ -4732,7 +4732,7 @@
    "hooks_exportados": [
     "useWavoipCall"
    ],
-   "linhas": 222,
+   "linhas": 202,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
