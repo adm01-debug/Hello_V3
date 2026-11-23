@@ -1,5 +1,6 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, string, uuid, optional, oneOf } from "../_shared/validate.ts";
+import { requireRole } from "../_shared/auth.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const notificationSchema = {
@@ -16,7 +17,15 @@ const notificationSchema = {
   expires_at: optional(string({ max: 50 })),
 };
 
-Deno.serve(async (req) => {
+/**
+ * Rejeita texto com tag HTML. Um titulo/mensagem de notificacao e conteudo
+ * de sistema e nao deve carregar markup (E011).
+ */
+export function contemHtml(texto: string): boolean {
+  return /<\s*[a-zA-Z/][^>]*>/.test(texto);
+}
+
+export async function handler(req: Request): Promise<Response> {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: buildCorsHeaders(req) });
   }
@@ -49,6 +58,16 @@ Deno.serve(async (req) => {
     }
 
     const payload = parsed.data;
+
+    if (contemHtml(payload.title) || contemHtml(payload.message)) {
+      return new Response(JSON.stringify({ error: "Texto da notificação não pode conter HTML" }), { status: 400, headers });
+    }
+
+    // Um agente comum só notifica a si mesmo; avisar outra pessoa exige papel de staff (E011).
+    if (payload.user_id !== user.id) {
+      const staff = await requireRole(req, ["supervisor", "admin"]);
+      if (staff instanceof Response) return staff;
+    }
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
     // Check user preferences
@@ -126,4 +145,6 @@ Deno.serve(async (req) => {
     console.error("send-notification error:", err);
     return new Response(JSON.stringify({ error: "Erro interno do servidor" }), { status: 500, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } });
   }
-});
+}
+
+Deno.serve(handler);
