@@ -81,7 +81,7 @@
 - [ ] **042** — Proteger a branch `main` — onda 1 — Média — Infraestrutura 🔒
 - [ ] **043** — Fazer o bloqueio geográfico bloquear, e a tela gravar — onda 1 — Alta — Banco + Edge Function 🔒
 - [ ] **044** — Drenar o baseline do guard de edge functions e fazer a regra de autorização reprovar — onda 1 — Alta — CI
-- [ ] **045** — Remover `xlsx`, que não é usado e tem duas falhas altas sem correção — onda 1 — Alta — Dependências
+- [x] **045** — Remover `xlsx`, que não é usado e tem duas falhas altas sem correção — onda 1 — Alta — Dependências
 - [ ] **046** — Atualizar `react-router-dom` (open redirect com correção disponível) — onda 1 — Alta — Dependências
 - [ ] **047** — Validar o corpo nas edges públicas que gastam dinheiro — onda 1 — Média — Edge Function
 - [ ] **048** — Validar o corpo nas edges de IA e transcrição — onda 1 — Média — Edge Function
