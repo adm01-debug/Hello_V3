@@ -43,7 +43,7 @@
 - [x] **004** — Exigir autenticação em `search-calls` e parar de usar a service_role — onda 1 — Crítica — Edge Function
 - [x] **005** — Criar o módulo compartilhado de autenticação de edge function — onda 1 — Alta — Edge Function
 - [ ] **006** — Exigir token de cron (ou papel de supervisor) em `auto-scorecard` — onda 1 — Alta — Edge Function 🔒
-- [ ] **007** — Exigir autenticação de visitante em `chatbot-respond` — onda 1 — Alta — Edge Function
+- [x] **007** — Exigir autenticação de visitante em `chatbot-respond` — onda 1 — Alta — Edge Function
 - [x] **008** — Exigir papel de staff e limitar tamanho em `embed-kb-article` — onda 1 — Alta — Edge Function
 - [x] **009** — Fechar o relay de e-mail aberto em `notify-new-device` — onda 1 — Alta — Edge Function 🔒
 - [x] **010** — Fechar o relay de e-mail aberto em `notify-blocked-ip` — onda 1 — Alta — Edge Function
