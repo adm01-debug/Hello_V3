@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b712310d1a3841281b4d0b0af4dfbf5238efae94` (2026-11-22T16:53:48-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `d768fc81adb83a190b0781fd9519738cf6a582df` (2026-11-23T06:51:24-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1215), SQL (244), Markdown (114), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1215), SQL (244), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,7 +34,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1643 |
+| arquivos_total | 1649 |
 | arquivos_codigo | 1248 |
 | linhas_codigo | 169743 |
 | rotas | 106 |
@@ -51,7 +51,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | testes | 344 |
 | workflows | 3 |
 | scripts | 34 |
-| docs_md | 114 |
+| docs_md | 120 |
 
 ## Onde ficam as coisas
 - telas: src/pages (105)
@@ -370,8 +370,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9210 nós · 24393 arestas · 734 comunidades · grafo do commit `b712310d`
-- comunidades maiores: lucide-react (252), vitest (208), react (164), traceHeaders (157), usePageTitle (145), safeFormatDistanceToNow (144), usePageTitle.ts (139), sonner (128), client.ts (113), protectedRoutes.tsx (108), snapshot.py (102), Tabela de funcionalidades (102)
+- 9762 nós · 25104 arestas · 766 comunidades · grafo do commit `d768fc81`
+- comunidades maiores: card.tsx (241), react (208), usePageTitle (199), button.tsx (193), usePageTitle.ts (169), traceHeaders (161), vitest (157), lucide-react (135), Tabela de funcionalidades (121), cn (113), @tanstack/react-query (106), snapshot.py (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -425,10 +425,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `docs/CONTEXTO-PARA-AGENTES.md` — Contexto para agentes de IA — leia ANTES de qualquer tarefa (41 linhas)
 - `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` — 📊 Inventário Exaustivo de Funcionalidades e Roadmap - VoIP Enterprise (84 linhas)
 - `docs/prod-readiness.md` (97 linhas)
-- subpastas de docs/: docs/adr (53), docs/estado (18), docs/pendencias (12), docs/agentes (6), docs/audits (2), docs/contexto (2), docs/qa (2), docs/analises (1), docs/audit (1), docs/edge-functions (1), docs/observabilidade (1), docs/runbooks (1)
+- subpastas de docs/: docs/adr (53), docs/estado (18), docs/pendencias (12), docs/qa (8), docs/agentes (6), docs/audits (2), docs/contexto (2), docs/analises (1), docs/audit (1), docs/edge-functions (1), docs/observabilidade (1), docs/runbooks (1)
 
 
 ## Últimos commits
+- 2026-11-23 `d768fc8` docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)
 - 2026-11-22 `b712310` fix: snapshots de sentimento gravam com o call_session_id real (#165)
 - 2026-11-22 `1b9ec21` fix: talk ratio do card executivo usa transcricao real, nao 50% fixo (#164)
 - 2026-11-22 `2e77319` feat: humor da chamada ativa vem do dado real, nao de "Positivo" fixo (#163)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `505cb99` chore: zera os 5 warnings de ESLint extraindo constantes de .tsx (#153)
 - 2026-11-22 `1361fd9` chore: unifica mesmaString no _shared/constant-time (SSOT) (#152)
 - 2026-11-22 `8b08ba2` docs: registra persistencia provada das edges de escrita (#151)
-- 2026-11-22 `66b53b9` docs: registra 8 edges de IA provadas ponta a ponta (#150)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

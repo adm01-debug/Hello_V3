@@ -5,7 +5,7 @@
   "linguagens": [
    "TypeScript (1215)",
    "SQL (244)",
-   "Markdown (114)",
+   "Markdown (120)",
    "JavaScript (29)",
    "JSON (18)",
    "Python (5)",
@@ -299,6 +299,10 @@
    "arquivos_md": 12
   },
   {
+   "pasta": "docs/qa",
+   "arquivos_md": 8
+  },
+  {
    "pasta": "docs/agentes",
    "arquivos_md": 6
   },
@@ -308,10 +312,6 @@
   },
   {
    "pasta": "docs/contexto",
-   "arquivos_md": 2
-  },
-  {
-   "pasta": "docs/qa",
    "arquivos_md": 2
   },
   {

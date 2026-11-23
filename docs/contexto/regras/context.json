@@ -1,10 +1,10 @@
 {
  "meta": {
-  "sha": "b712310d1a3841281b4d0b0af4dfbf5238efae94",
+  "sha": "d768fc81adb83a190b0781fd9519738cf6a582df",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-22 19:54 UTC",
-  "files_total": 1690,
+  "generated_at": "2026-11-23 10:14 UTC",
+  "files_total": 1696,
   "code_files": 1493,
   "code_lines": 185701
  },
@@ -123085,10 +123085,24 @@
   }
  },
  "git": {
-  "sha": "b712310d1a3841281b4d0b0af4dfbf5238efae94",
+  "sha": "d768fc81adb83a190b0781fd9519738cf6a582df",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "d768fc8",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)",
+    "files": [
+     "docs/qa/00-RESUMO.md",
+     "docs/qa/01-INVENTARIO.md",
+     "docs/qa/02-CENARIOS.md",
+     "docs/qa/03-ACHADOS.md",
+     "docs/qa/04-PLANO.md",
+     "docs/qa/05-PROGRESSO.md"
+    ]
+   },
    {
     "sha": "b712310",
     "date": "2026-11-22",
@@ -123388,21 +123402,12 @@
     "files": [
      "docs/estado/funcionalidades-planejadas.md"
     ]
-   },
-   {
-    "sha": "c7bbfa0",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: valida IA e Data Lake ponta a ponta em producao (#135)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    8
+    7
    ],
    [
     "docs/audits/pendencias-2026-07.md",
@@ -123423,6 +123428,30 @@
    [
     "src/components/layout/CommandPalette.tsx",
     2
+   ],
+   [
+    "docs/qa/00-RESUMO.md",
+    1
+   ],
+   [
+    "docs/qa/01-INVENTARIO.md",
+    1
+   ],
+   [
+    "docs/qa/02-CENARIOS.md",
+    1
+   ],
+   [
+    "docs/qa/03-ACHADOS.md",
+    1
+   ],
+   [
+    "docs/qa/04-PLANO.md",
+    1
+   ],
+   [
+    "docs/qa/05-PROGRESSO.md",
+    1
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
@@ -123454,30 +123483,6 @@
    ],
    [
     "src/lib/__tests__/navigation-progress-store.test.ts",
-    1
-   ],
-   [
-    "src/lib/navigation-progress-store.ts",
-    1
-   ],
-   [
-    "src/components/calls/ActiveCallsIndicator.tsx",
-    1
-   ],
-   [
-    "src/components/calls/UnifiedSoftphone.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useCallTransfer.ts",
-    1
-   ],
-   [
-    "src/hooks/useMFA.ts",
     1
    ]
   ]

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "b712310d1a3841281b4d0b0af4dfbf5238efae94",
+  "commit": "d768fc81adb83a190b0781fd9519738cf6a582df",
   "branch": "main",
-  "data_commit": "2026-11-22T16:53:48-03:00",
+  "data_commit": "2026-11-23T06:51:24-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d768fc8",
+    "data": "2026-11-23",
+    "assunto": "docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)"
+   },
    {
     "sha": "b712310",
     "data": "2026-11-22",
@@ -126,14 +131,9 @@
     "sha": "36732f9",
     "data": "2026-11-22",
     "assunto": "feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)"
-   },
-   {
-    "sha": "d9ee2d8",
-    "data": "2026-11-22",
-    "assunto": "docs: corrige rotulos defasados de D3/D5 e dos testes Deno (#141)"
    }
   ],
-  "arquivos_mudados_7d": 892,
+  "arquivos_mudados_7d": 898,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 145
+    "commits": 146
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,7 +314,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1643,
+  "arquivos_total": 1649,
   "arquivos_codigo": 1248,
   "linhas_codigo": 169743,
   "rotas": 106,
@@ -331,7 +331,7 @@
   "testes": 344,
   "workflows": 3,
   "scripts": 34,
-  "docs_md": 114
+  "docs_md": 120
  },
  "por_pasta": {
   "e2e/calls.spec.ts": {
