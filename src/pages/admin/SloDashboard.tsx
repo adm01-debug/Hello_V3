@@ -17,15 +17,15 @@ interface ErrorBudget {
 interface HealthResponse {
   status: 'operational' | 'degraded' | 'outage' | 'unknown';
   components: {
-    trunks: { status: string; uptime_pct: number; checks_15min: number; error_budget?: ErrorBudget };
+    trunks: { status: string; uptime_pct: number | null; checks_15min: number; error_budget?: ErrorBudget };
     webhooks: {
       status: string;
-      error_rate_pct: number;
+      error_rate_pct: number | null;
       p95_latency_ms: number;
       attempts_15min: number;
       error_budget?: ErrorBudget;
     };
-    database: { status: string };
+    database: { status: string; latency_ms?: number | null };
   };
   checked_at: string;
   window_minutes: number;
@@ -90,19 +90,19 @@ export default function SloDashboard() {
             <SloCard
               title="Uptime Trunks VoIP"
               icon={<Activity className="h-4 w-4" />}
-              value={`${data.components.trunks.uptime_pct.toFixed(2)}%`}
+              value={data.components.trunks.uptime_pct === null ? null : `${data.components.trunks.uptime_pct.toFixed(2)}%`}
               target={`${SLO_TARGETS.trunk_uptime}%`}
-              progress={data.components.trunks.uptime_pct}
-              healthy={data.components.trunks.uptime_pct >= SLO_TARGETS.trunk_uptime}
+              progress={data.components.trunks.uptime_pct ?? 0}
+              healthy={data.components.trunks.uptime_pct !== null && data.components.trunks.uptime_pct >= SLO_TARGETS.trunk_uptime}
               subtitle={`${data.components.trunks.checks_15min} health checks / 15min`}
             />
             <SloCard
               title="Erro Webhooks"
               icon={<AlertCircle className="h-4 w-4" />}
-              value={`${data.components.webhooks.error_rate_pct.toFixed(2)}%`}
+              value={data.components.webhooks.error_rate_pct === null ? null : `${data.components.webhooks.error_rate_pct.toFixed(2)}%`}
               target={`< ${SLO_TARGETS.webhook_error_rate}%`}
-              progress={100 - Math.min(100, data.components.webhooks.error_rate_pct * 20)}
-              healthy={data.components.webhooks.error_rate_pct < SLO_TARGETS.webhook_error_rate}
+              progress={100 - Math.min(100, (data.components.webhooks.error_rate_pct ?? 0) * 20)}
+              healthy={data.components.webhooks.error_rate_pct !== null && data.components.webhooks.error_rate_pct < SLO_TARGETS.webhook_error_rate}
               subtitle={`${data.components.webhooks.attempts_15min} tentativas / 15min`}
             />
             <SloCard
@@ -153,7 +153,7 @@ export default function SloDashboard() {
 function SloCard(props: {
   title: string;
   icon: React.ReactNode;
-  value: string;
+  value: string | null;
   target: string;
   progress: number;
   healthy: boolean;
@@ -169,7 +169,7 @@ function SloCard(props: {
       </CardHeader>
       <CardContent className="space-y-2">
         <div className="flex items-baseline justify-between">
-          <span className="text-2xl font-bold">{props.value}</span>
+          <span className="text-2xl font-bold">{props.value ?? '—'}</span>
           <span className="text-xs text-muted-foreground">meta {props.target}</span>
         </div>
         <Progress value={Math.max(0, Math.min(100, props.progress))} />

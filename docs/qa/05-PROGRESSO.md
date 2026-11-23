@@ -136,8 +136,8 @@
 - [ ] **091** — Decidir o que o papel `viewer` significa — onda 2 — Alta — Banco + Frontend 🔒
 - [x] **092** — `/status`: dizer "sem medição" em vez de 100% — onda 2 — Alta — Frontend
 - [x] **093** — `/status`: tratar erro em vez de ficar carregando para sempre — onda 2 — Alta — Frontend
-- [ ] **094** — `health-check`: parar de reportar "operacional" sem medir — onda 2 — Alta — Edge Function
-- [ ] **095** — Score de saúde VoIP: parar de dar 83/100 sem dado — onda 2 — Alta — Edge Function
+- [x] **094** — `health-check`: parar de reportar "operacional" sem medir — onda 2 — Alta — Edge Function
+- [x] **095** — Score de saúde VoIP: parar de dar 83/100 sem dado — onda 2 — Alta — Edge Function
 - [x] **096** — Remover ou ligar o painel "Análise IA de Performance" — onda 2 — Alta — Frontend
 - [ ] **097** — Ligar o painel "Integridade da Infraestrutura (10/10)" aos dados reais — onda 2 — Alta — Frontend
 - [ ] **098** — Corrigir o cartão "Auditoria de Segurança (10/10)" — onda 2 — Alta — Frontend

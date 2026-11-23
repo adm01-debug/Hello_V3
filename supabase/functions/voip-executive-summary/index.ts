@@ -43,31 +43,45 @@ function slaPct(rows: QualityRow[]): number | null {
 }
 
 export interface HealthBreakdown {
-  sla_score: number;        // 0-100
-  mos_score: number;        // 0-100 (MOS 1-5 → normalizado)
-  alerts_score: number;     // 0-100 (penalty por alertas não-reconhecidos)
-  capacity_score: number;   // 0-100 (penalty por exceder cap)
+  sla_score: number | null;   // 0-100
+  mos_score: number | null;   // 0-100 (MOS 1-5 → normalizado)
+  alerts_score: number | null; // 0-100 (penalty por alertas não-reconhecidos)
+  capacity_score: number | null; // 0-100 (penalty por exceder cap)
 }
 
-export function computeHealthScore(b: HealthBreakdown): number {
-  const score = 0.4 * b.sla_score + 0.3 * b.mos_score + 0.2 * b.alerts_score + 0.1 * b.capacity_score;
+/**
+ * Calcula o score ponderado SÓ sobre as dimensões que têm amostra.
+ * Cobertura < 2 => score null (sem medição suficiente). null propaga.
+ */
+export function computeHealthScore(b: HealthBreakdown): number | null {
+  const dims: Array<[number | null, number]> = [
+    [b.sla_score, 0.4],
+    [b.mos_score, 0.3],
+    [b.alerts_score, 0.2],
+    [b.capacity_score, 0.1],
+  ];
+  const measured = dims.filter(([v]) => v !== null) as Array<[number, number]>;
+  if (measured.length < 2) return null;
+  const weightSum = measured.reduce((s, [, w]) => s + w, 0);
+  const score = measured.reduce((s, [v, w]) => s + v * w, 0) / weightSum;
   return Math.round(Math.max(0, Math.min(100, score)));
 }
 
-export function normalizeMos(mosAvg: number | null): number {
-  if (mosAvg === null) return 75; // neutro quando sem dados
+export function normalizeMos(mosAvg: number | null): number | null {
+  if (mosAvg === null) return null; // sem dado => sem medição
   // MOS 1-5 → 0-100, com MOS=4 valendo 80
   return Math.round(Math.max(0, Math.min(100, ((mosAvg - 1) / 4) * 100)));
 }
 
-export function normalizeAlerts(unackCount: number, totalCalls: number): number {
-  if (totalCalls === 0) return 100;
+export function normalizeAlerts(unackCount: number, totalCalls: number): number | null {
+  if (totalCalls === 0) return null; // sem chamadas => sem medição
   const ratio = unackCount / Math.max(totalCalls, 1);
   // 0% alertas = 100, 10%+ = 0
   return Math.round(Math.max(0, Math.min(100, 100 - ratio * 1000)));
 }
 
-export function normalizeCapacity(peakConcurrent: number): number {
+export function normalizeCapacity(peakConcurrent: number, hasSessions: boolean): number | null {
+  if (!hasSessions) return null; // sem sessões => sem medição
   if (peakConcurrent <= CONCURRENT_CAP * 0.6) return 100;
   if (peakConcurrent >= CONCURRENT_CAP) return 30;
   // linear entre 60% e 100% do cap
@@ -178,19 +192,25 @@ Deno.serve(async (req) => {
     const currentMos = avg(current.map(r => r.mos_avg).filter((v): v is number => v !== null));
     const unackAlerts = alerts.filter(a => !a.acknowledged_at).length;
     const peak = computePeakConcurrent(sessions);
+    const hasSessions = sessions.length > 0;
 
+    // Sem fallback otimista: dimensão sem amostra é null, e null propaga.
     const breakdown: HealthBreakdown = {
-      sla_score: currentSla ?? 75,
+      sla_score: currentSla,
       mos_score: normalizeMos(currentMos),
       alerts_score: normalizeAlerts(unackAlerts, current.length),
-      capacity_score: normalizeCapacity(peak),
+      capacity_score: normalizeCapacity(peak, hasSessions),
     };
     const healthScore = computeHealthScore(breakdown);
+    const measuredDims = [breakdown.sla_score, breakdown.mos_score, breakdown.alerts_score, breakdown.capacity_score]
+      .filter((v) => v !== null).length;
 
     return new Response(JSON.stringify({
       period,
       since,
       health_score: healthScore,
+      label: healthScore === null ? 'sem medição suficiente' : undefined,
+      coverage: measuredDims,
       breakdown,
       sla: {
         current_pct: currentSla,
