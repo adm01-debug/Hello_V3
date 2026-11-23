@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d768fc81adb83a190b0781fd9519738cf6a582df",
+  "commit": "7df1b5bb99239d26955108a2a2671dd88e4be9f8",
   "branch": "main",
-  "data_commit": "2026-11-23T06:51:24-03:00",
+  "data_commit": "2026-11-23T07:52:57-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "7df1b5b",
+    "data": "2026-11-23",
+    "assunto": "feat: 'Alterar foto' do perfil passa a enviar e exibir a foto"
+   },
    {
     "sha": "d768fc8",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "76e30b7",
     "data": "2026-11-22",
     "assunto": "feat: retencao de 180 dias para as gravacoes de chamada (#138)"
-   },
-   {
-    "sha": "36732f9",
-    "data": "2026-11-22",
-    "assunto": "feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)"
    }
   ],
-  "arquivos_mudados_7d": 898,
+  "arquivos_mudados_7d": 902,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 23
+    "mudancas": 24
    },
    {
     "pasta": "src/lib/__tests__",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 146
+    "commits": 147
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,21 +314,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1649,
-  "arquivos_codigo": 1248,
-  "linhas_codigo": 169743,
+  "arquivos_total": 1652,
+  "arquivos_codigo": 1250,
+  "linhas_codigo": 170122,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "modulos": 79,
   "componentes": 449,
-  "hooks": 191,
+  "hooks": 192,
   "edge_functions": 98,
   "tabelas": 169,
-  "migrations": 241,
+  "migrations": 242,
   "cron_jobs": 11,
-  "testes": 344,
+  "testes": 345,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 356,
-   "linhas": 42315
+   "linhas": 42366
   },
   "src/contexts": {
    "arquivos": 3,
@@ -491,8 +491,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 350,
-   "linhas": 45364
+   "arquivos": 352,
+   "linhas": 45692
   },
   "src/integrations": {
    "arquivos": 3,

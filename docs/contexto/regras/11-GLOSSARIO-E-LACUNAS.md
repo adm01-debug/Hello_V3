@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d768fc81ad` · branch `main` · 2026-11-23 10:14 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `7df1b5bb99` · branch `main` · 2026-11-23 10:53 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -377,6 +377,7 @@
 | rpc | RPC `x` chamada mas não definida nas migrations/types | `scripts/inventario/gerar-rotas.mjs` |
 | dinâmico | 1 chamada(s) `.from(variável)` — tabela só conhecida em runtime | `scripts/inventario/gerar-banco.mjs` |
 | dinâmico | 2 chamada(s) `.from(variável)` — tabela só conhecida em runtime | `scripts/regras_negocio/generate.py` |
+| dinâmico | 2 chamada(s) `.from(variável)` — tabela só conhecida em runtime | `src/hooks/useAvatar.ts` |
 | dinâmico | 1 chamada(s) `.from(variável)` — tabela só conhecida em runtime | `src/hooks/useQueueAudioPrompts.ts` |
 | dinâmico | 1 chamada(s) `.from(variável)` — tabela só conhecida em runtime | `src/hooks/__tests__/useExtensionsOverview.coverage.test.tsx` |
 | dinâmico | 1 chamada(s) `.from(variável)` — tabela só conhecida em runtime | `supabase/functions/data-lake-flush/index.ts` |

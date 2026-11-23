@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 241,
+ "migrations": 242,
  "seeds": [],
  "avisos": [
   "44 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -1031,6 +1031,11 @@
   }
  ],
  "buckets": [
+  {
+   "nome": "avatars",
+   "criado_em_sql": true,
+   "usado_em": 0
+  },
   {
    "nome": "call-recordings",
    "criado_em_sql": true,
@@ -19506,6 +19511,30 @@
      "tipo": "permissive"
     },
     {
+     "nome": "avatars_delete_own",
+     "comando": "delete",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "avatars_insert_own",
+     "comando": "insert",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "avatars_select_own",
+     "comando": "select",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "avatars_update_own",
+     "comando": "update",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
      "nome": "queue_audio_delete_staff",
      "comando": "delete",
      "para": "authenticated",
@@ -21707,7 +21736,7 @@
     ],
     "so_no_types": []
    },
-   "usada_no_front": 9,
+   "usada_no_front": 10,
    "usada_em_edges": [
     "cleanup-lock-conflicts",
     "cleanup-recordings",

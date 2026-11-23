@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 191,
+ "total": 192,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -337,7 +337,7 @@
     "useContext"
    ],
    "canais_realtime": [],
-   "usado_por": 27,
+   "usado_por": 28,
    "usado_por_arquivos": [
     "src/App.tsx",
     "src/components/auth/ProtectedRoute.tsx",
@@ -345,6 +345,7 @@
     "src/components/layout/AppSidebar.tsx",
     "src/contexts/ReauthContext.tsx",
     "src/hooks/telemetry/useTelemetry.ts",
+    "src/hooks/useAvatar.ts",
     "src/hooks/useMFA.ts",
     "src/hooks/useMultiDeviceRing.ts",
     "src/hooks/usePermissions.ts",
@@ -996,6 +997,31 @@
     "src/pages/SecurityMonitoring.tsx",
     "src/pages/SecurityReport.tsx",
     "src/routes/protectedRoutes.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAvatar.ts",
+   "hooks_exportados": [
+    "useAvatar"
+   ],
+   "linhas": 147,
+   "dominio": "hooks",
+   "tabelas": [
+    "user_profiles"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/settings/ProfileSettings.tsx"
    ],
    "coberto_por_testes": 1
   },
@@ -3186,7 +3212,7 @@
    "hooks_exportados": [
     "useProfile"
    ],
-   "linhas": 72,
+   "linhas": 73,
    "dominio": "hooks",
    "tabelas": [
     "user_profiles"

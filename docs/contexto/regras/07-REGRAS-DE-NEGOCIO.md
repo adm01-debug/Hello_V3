@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d768fc81ad` · branch `main` · 2026-11-23 10:14 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `7df1b5bb99` · branch `main` · 2026-11-23 10:53 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -311,7 +311,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
 | `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
-| … +225 linhas — lista completa em `context.json` | | | | | | |
+| … +229 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
 
@@ -1727,6 +1727,8 @@ _nenhum item encontrado_
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useAlertsExport.ts` |
 | `CHUNK` | `1000` | `src/hooks/useAlertsExport.ts` |
 | `MAX_ROWS` | `20000` | `src/hooks/useAlertsExport.ts` |
+| `BUCKET` | `'avatars'` | `src/hooks/useAvatar.ts` |
+| `MAX_BYTES` | `2` | `src/hooks/useAvatar.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useCallHistory.ts` |
 | `MAX_FAVORITES` | `12` | `src/hooks/useDialerFavorites.ts` |
 | `ANALYSIS_THROTTLE_MS` | `5000` | `src/hooks/useLiveAssist.ts` |
@@ -2246,6 +2248,11 @@ _nenhum item encontrado_
 | Falha ao aplicar remediação automática | `src/hooks/useAnomalyRemediation.ts` |
 | Resposta vazia da remediação | `src/hooks/useAnomalyRemediation.ts` |
 | Sem ação automática mapeada | `src/hooks/useAnomalyRemediation.ts` |
+| Arquivo muito grande | `src/hooks/useAvatar.ts` |
+| Erro ao enviar a foto | `src/hooks/useAvatar.ts` |
+| Erro ao remover a foto | `src/hooks/useAvatar.ts` |
+| Formato não suportado | `src/hooks/useAvatar.ts` |
+| Sessão expirada | `src/hooks/useAvatar.ts` |
 | Erro ao recomputar | `src/hooks/useBestTimeToContact.ts` |
 | Bitrix24 indisponível | `src/hooks/useBitrix.ts` |
 | Bitrix24 não retornou dados de usuários | `src/hooks/useBitrix.ts` |
@@ -2398,12 +2405,7 @@ _nenhum item encontrado_
 | Alerta de Segurança: ${newAlert.title} | `src/hooks/useSecurityMonitoringData.ts` |
 | Acesso bloqueado detectado | `src/hooks/useSecurityNotifications.ts` |
 | Notificações bloqueadas | `src/hooks/useSecurityNotifications.ts` |
-| Rate limit excedido | `src/hooks/useSecurityNotifications.ts` |
-| Seu navegador não suporta notificações push | `src/hooks/useSecurityNotifications.ts` |
-| Erro ao revogar sessão | `src/hooks/useSessionManager.ts` |
-| Erro ao revogar sessões | `src/hooks/useSessionManager.ts` |
-| Sua sessão expirou. Faça login novamente. | `src/hooks/useSessionManager.ts` |
-| … +238 linhas — lista completa em `context.json` | |
+| … +243 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2449,7 +2451,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4041 testes em 334 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4056 testes em 335 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2510,6 +2512,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useLoginLockout.test.ts` | 16 | useLoginLockout · check_login_lockout RPC · returns unlocked for unknown email · returns locked after 5 failed attempts … |
 | `src/hooks/__tests__/useVoipTrunks.coverage.test.tsx` | 16 | useVoipTrunks (coverage) · lists trunks · lists assignments · throws when invoke returns error … |
 | `src/lib/__tests__/utils.coverage.test.ts` | 16 | utils (coverage) · merges class names · dedups tailwind conflicts · handles conditional / falsy values … |
+| `src/hooks/__tests__/useAvatar.test.ts` | 15 | useAvatar · does not request a signed url when there is no path · resolves a signed url for an existing avatar · clears the url when signing fails … |
 | `src/hooks/__tests__/useCallSession.test.ts` | 15 | Call Session Logic · Session lifecycle · creates session with correct initial status · session ends with completed status … |
 | `src/hooks/__tests__/useCrmFieldSuggestions.coverage.test.tsx` | 15 | useCrmFieldSuggestions · returns empty defaults when no callSessionId (query disabled, no channel) · fetches suggestions and computes pending, wires realtime channel · query error branch throws … |
 | `src/hooks/__tests__/useWavoipCall.coverage.test.tsx` | 15 | useWavoipCall · checks configuration on mount (connected) · checkConfiguration when not connected sets disconnected · checkConfiguration with supabase error sets error state … |
@@ -2752,8 +2755,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendation-history/__tests__/index.test.ts` | 4 | aggregate: lista vazia retorna 14 dias zerados · aggregate: contagens por categoria e outcome · aggregate: perDay em ordem cronológica ascendente · aggregate: contabiliza ação no dia correto |
 | `supabase/functions/voip-recommendations/__tests__/index.test.ts` | 4 | buildRecommendations - sistema saudável retorna lista vazia · buildRecommendations - capacidade saturada gera crítico de prioridade máxima · buildRecommendations - múltiplos sinais ordenados por prioridade descendente · buildRecommendations - jitter alto gera ação de função (testar conexão) |
 | `supabase/functions/webauthn-authenticate/__tests__/index.test.ts` | 4 | webauthn-authenticate: OPTIONS devolve preflight CORS vazio · webauthn-authenticate: sem campos obrigatorios responde 400 · webauthn-authenticate: nao aceita email do request · webauthn-authenticate: passkey desconhecida e recusada (400, nunca 200) |
-| `tests/e2e/performance.spec.ts` | 4 | Dashboard Performance and Lists · should render call lists efficiently · Edge Function Resilience · should handle rapid requests to analyze-call |
-| … +34 linhas — lista completa em `context.json` | | |
+| … +35 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

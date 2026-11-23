@@ -4209,6 +4209,7 @@
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
+    "useAvatar",
     "useBitrix",
     "useCallback",
     "useContext",
@@ -4230,6 +4231,7 @@
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
+    "useAvatar",
     "useBitrix",
     "usePageTitle",
     "useProfile"
@@ -4254,7 +4256,7 @@
    ],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 33
+   "arquivos_puxados": 34
   },
   {
    "protegida": false,

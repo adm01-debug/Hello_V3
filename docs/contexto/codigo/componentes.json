@@ -3804,9 +3804,10 @@
     "ProfileSettings"
    ],
    "export_default": null,
-   "linhas": 77,
+   "linhas": 128,
    "dominio": "components/settings",
    "hooks_locais": [
+    "useAvatar",
     "useProfile"
    ],
    "tabelas": [],
@@ -5109,7 +5110,7 @@
    ],
    "tabelas": [],
    "edges": [],
-   "usado_por": 27,
+   "usado_por": 28,
    "orfao": false
   },
   {

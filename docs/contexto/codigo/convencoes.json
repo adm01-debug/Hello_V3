@@ -11,7 +11,7 @@
    "src/contexts (3)"
   ],
   "hooks": [
-   "src/hooks (173)",
+   "src/hooks (174)",
    "src/components (12)",
    "src/contexts (3)"
   ],
@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (321)",
+   "co-localizado (__tests__) (322)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: 'Alterar foto' do perfil passa a enviar e exibir a foto",
    "docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)",
    "fix: snapshots de sentimento gravam com o call_session_id real (#165)",
    "fix: talk ratio do card executivo usa transcricao real, nao 50% fixo (#164)",
-   "feat: humor da chamada ativa vem do dado real, nao de \"Positivo\" fixo (#163)",
-   "fix: barra de progresso reflete o carregamento real do chunk da rota (#162)"
+   "feat: humor da chamada ativa vem do dado real, nao de \"Positivo\" fixo (#163)"
   ]
  },
  "pr_template": null,

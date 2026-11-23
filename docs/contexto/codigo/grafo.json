@@ -1,12 +1,12 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 905,
- "arestas": 3467,
+ "nos": 906,
+ "arestas": 3472,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 261
+   "importado_por": 262
   },
   {
    "arquivo": "src/components/ui/button.tsx",
@@ -22,7 +22,7 @@
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 193
+   "importado_por": 194
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -81,11 +81,11 @@
    "importado_por": 29
   },
   {
-   "arquivo": "src/components/ui/table.tsx",
-   "importado_por": 27
+   "arquivo": "src/contexts/AuthContext.tsx",
+   "importado_por": 28
   },
   {
-   "arquivo": "src/contexts/AuthContext.tsx",
+   "arquivo": "src/components/ui/table.tsx",
    "importado_por": 27
   },
   {
@@ -121,12 +121,12 @@
    "importado_por": 18
   },
   {
-   "arquivo": "supabase/functions/_shared/rate-limit.ts",
+   "arquivo": "src/integrations/supabase/types.ts",
    "importado_por": 17
   },
   {
-   "arquivo": "src/integrations/supabase/types.ts",
-   "importado_por": 16
+   "arquivo": "supabase/functions/_shared/rate-limit.ts",
+   "importado_por": 17
   },
   {
    "arquivo": "src/hooks/useContacts.ts",

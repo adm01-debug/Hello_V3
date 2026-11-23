@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 344,
+ "total": 345,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 327
+  "unit": 328
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 321
+   "arquivos": 322
   },
   {
    "padrao": "e2e/",
@@ -420,6 +420,15 @@
    "linhas": 374,
    "testa": [],
    "casos": 63
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useAvatar.test.ts",
+   "tipo": "unit",
+   "linhas": 180,
+   "testa": [
+    "src/hooks/useAvatar.ts"
+   ],
+   "casos": 14
   },
   {
    "arquivo": "src/hooks/__tests__/useBattleCardDetection.test.ts",
@@ -3129,6 +3138,7 @@
   "src/hooks/useAudioOutputDevices.ts": 1,
   "src/hooks/useAuditLog.ts": 1,
   "src/hooks/useAuth.ts": 1,
+  "src/hooks/useAvatar.ts": 1,
   "src/hooks/useBattleCardDetection.ts": 1,
   "src/hooks/useBestTimeToContact.ts": 1,
   "src/hooks/useBitrix.ts": 2,

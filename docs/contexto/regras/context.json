@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "d768fc81adb83a190b0781fd9519738cf6a582df",
+  "sha": "7df1b5bb99239d26955108a2a2671dd88e4be9f8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 10:14 UTC",
-  "files_total": 1696,
-  "code_files": 1493,
-  "code_lines": 185701
+  "generated_at": "2026-11-23 10:53 UTC",
+  "files_total": 1699,
+  "code_files": 1496,
+  "code_lines": 186134
  },
  "version": "1.3.2",
- "facts_hash": "2b75ac7bc2fc2739",
+ "facts_hash": "13b1a903db563ebf",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,9 +158,9 @@
   ],
   "package_manager": "bun",
   "languages": {
+   ".ts": 609,
    ".tsx": 608,
-   ".ts": 607,
-   ".sql": 244,
+   ".sql": 245,
    ".mjs": 27,
    ".py": 5,
    ".js": 2
@@ -19451,6 +19451,46 @@
     "using": "bucket_id IN ('call-recordings','queue-audio','data-lake-exports','virtual-fax-docs')",
     "check": "",
     "src": "supabase/migrations/20261122360000_storage_policies_rename_and_scope.sql"
+   },
+   {
+    "name": "avatars_select_own",
+    "table": "storage.objects",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "check": "",
+    "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
+   },
+   {
+    "name": "avatars_insert_own",
+    "table": "storage.objects",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
+   },
+   {
+    "name": "avatars_update_own",
+    "table": "storage.objects",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "check": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
+   },
+   {
+    "name": "avatars_delete_own",
+    "table": "storage.objects",
+    "cmd": "DELETE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "check": "",
+    "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
    }
   ],
   "triggers": [
@@ -25581,6 +25621,7 @@
    "supabase/migrations/20261123001000_sync_role_creates_missing_profile.sql",
    "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
    "supabase/migrations/20261123010000_fix_user_delete_cascade.sql",
+   "supabase/migrations/20261123020000_add_avatar_storage.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "src/integrations/supabase/types.ts"
   ],
@@ -27987,7 +28028,8 @@
    "function:check_table_bloat": "Retorna tabelas public com bloat significativo: dead_tuples > 10k E dead_ratio > 20%. Consumida pelo cron weekly-bloat-monitor.",
    "function:notify_bloat_hotspots": "Executa check_table_bloat, notifica admins com debounce de 7 dias por tabela. Chamada semanalmente via pg_cron.",
    "column:webhook_flush_metrics.endpoint_hash": "SHA-256 (12 primeiros hex) da URL do webhook, para drill-down sem expor a URL bruta.",
-   "column:user_profiles.role": "Espelho de exibicao. NAO use para autorizacao: use public.user_roles.role via is_admin_or_supervisor()."
+   "column:user_profiles.role": "Espelho de exibicao. NAO use para autorizacao: use public.user_roles.role via is_admin_or_supervisor().",
+   "column:user_profiles.avatar_url": "Caminho do objeto no bucket avatars (<user_id>/<timestamp>.<ext>), nao URL publica. Render usa createSignedUrl."
   },
   "types_file": "src/integrations/supabase/types.ts"
  },
@@ -29132,7 +29174,7 @@
     "rpc_transitive": [
      "log_audit_event"
     ],
-    "deps_count": 29
+    "deps_count": 30
    },
    {
     "path": "",
@@ -32252,6 +32294,10 @@
     "file": "src/hooks/useAuth.ts"
    },
    {
+    "name": "useAvatar",
+    "file": "src/hooks/useAvatar.ts"
+   },
+   {
     "name": "useBattleCardDetection",
     "file": "src/hooks/useBattleCardDetection.ts"
    },
@@ -33243,7 +33289,7 @@
   {
    "module": "src/components",
    "files": 356,
-   "lines": 42315,
+   "lines": 42366,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33496,8 +33542,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 350,
-   "lines": 45364,
+   "files": 352,
+   "lines": 45692,
    "tables": [
     "accounts",
     "active_sessions",
@@ -33642,6 +33688,7 @@
     "useAudioOutputDevices.ts: AudioOutputDevice, useAudioOutputDevices",
     "useAuditLog.ts: useAuditLog",
     "useAuth.ts: useAuth",
+    "useAvatar.ts: AVATAR_ACCEPT, useAvatar",
     "useBattleCardDetection.ts: BattleCard, useBattleCardDetection",
     "useBestTimeToContact.ts: EngagementPattern, useBestTimeToContact",
     "useBitrix.ts: BitrixContact, BitrixLead, BitrixDeal, BitrixCallData, useBitrix",
@@ -33662,8 +33709,7 @@
     "useChatbot.ts: ChatbotResponse, useChatbot",
     "useChurnRisk.ts: ChurnSignal, useChurnRisk",
     "useCoaching.ts: CoachingRecommendation, useCoaching",
-    "useCoachingAssignments.ts: CoachingAssignment, useCoachingAssignments",
-    "useCoachingTrack.ts: useCoachingTrack"
+    "useCoachingAssignments.ts: CoachingAssignment, useCoachingAssignments"
    ],
    "docs": [
     "usePageVisibility.ts: usePageVisibility — retorna `true` quando a aba está visível. Fonte: Page Visibility API (document.visibilityState). Uso típico: const isVisible = usePageVisibility(); useEffect(() => { if (!isVisible) return; // subscribe... }, [isVisible]); SSR-safe: assume visível quando `document` não existe.",
@@ -33710,6 +33756,7 @@
     "src/hooks/useAudioOutputDevices.ts",
     "src/hooks/useAuditLog.ts",
     "src/hooks/useAuth.ts",
+    "src/hooks/useAvatar.ts",
     "src/hooks/useBattleCardDetection.ts",
     "src/hooks/useBestTimeToContact.ts",
     "src/hooks/useBitrix.ts",
@@ -33770,8 +33817,7 @@
     "src/hooks/useIPValidation.ts",
     "src/hooks/useIPWhitelist.ts",
     "src/hooks/useKeyMoments.ts",
-    "src/hooks/useKnowledgeBase.ts",
-    "src/hooks/useLDAPSync.ts"
+    "src/hooks/useKnowledgeBase.ts"
    ]
   },
   {
@@ -34425,8 +34471,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 241,
-   "lines": 15675,
+   "files": 242,
+   "lines": 15729,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36225,6 +36271,7 @@
    },
    "user_profiles": {
     "update": [
+     "src/hooks/useAvatar.ts",
      "src/hooks/useDeviceLabel.ts",
      "src/hooks/usePersistedTagFilter.ts",
      "src/hooks/useProfile.ts",
@@ -38453,6 +38500,10 @@
     "count": 2
    },
    {
+    "file": "src/hooks/useAvatar.ts",
+    "count": 2
+   },
+   {
     "file": "src/hooks/useQueueAudioPrompts.ts",
     "count": 1
    },
@@ -40272,6 +40323,26 @@
    {
     "file": "src/hooks/useAnomalyRemediation.ts",
     "msg": "Sem ação automática mapeada"
+   },
+   {
+    "file": "src/hooks/useAvatar.ts",
+    "msg": "Arquivo muito grande"
+   },
+   {
+    "file": "src/hooks/useAvatar.ts",
+    "msg": "Erro ao enviar a foto"
+   },
+   {
+    "file": "src/hooks/useAvatar.ts",
+    "msg": "Erro ao remover a foto"
+   },
+   {
+    "file": "src/hooks/useAvatar.ts",
+    "msg": "Formato não suportado"
+   },
+   {
+    "file": "src/hooks/useAvatar.ts",
+    "msg": "Sessão expirada"
    },
    {
     "file": "src/hooks/useBestTimeToContact.ts",
@@ -49408,6 +49479,16 @@
     "value": "20000"
    },
    {
+    "file": "src/hooks/useAvatar.ts",
+    "name": "BUCKET",
+    "value": "'avatars'"
+   },
+   {
+    "file": "src/hooks/useAvatar.ts",
+    "name": "MAX_BYTES",
+    "value": "2"
+   },
+   {
     "file": "src/hooks/useCallHistory.ts",
     "name": "PAGE_SIZE",
     "value": "50"
@@ -58057,6 +58138,66 @@
    {
     "file": "src/hooks/__tests__/useAuthAndDataIntegrity.test.ts",
     "name": "out of bounds returns undefined"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "useAvatar"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "does not request a signed url when there is no path"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "resolves a signed url for an existing avatar"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "clears the url when signing fails"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "rejects without a session"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "rejects an unsupported mime type"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "rejects a file larger than 2 MB"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "uploads, persists the column and keeps the new path"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "removes the previous avatar after the new one is persisted"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "rolls back the uploaded object when the column update fails"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "surfaces upload errors"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "removeAvatar is a no-op without user or path"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "removes the avatar and clears the column"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "keeps the object when clearing the column fails"
+   },
+   {
+    "file": "src/hooks/__tests__/useAvatar.test.ts",
+    "name": "falls back to png extension when the filename has none"
    },
    {
     "file": "src/hooks/__tests__/useBattleCardDetection.test.ts",
@@ -78280,6 +78421,46 @@
     "using": "bucket_id IN ('call-recordings','queue-audio','data-lake-exports','virtual-fax-docs')",
     "check": "",
     "src": "supabase/migrations/20261122360000_storage_policies_rename_and_scope.sql"
+   },
+   {
+    "name": "avatars_select_own",
+    "table": "storage.objects",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "check": "",
+    "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
+   },
+   {
+    "name": "avatars_insert_own",
+    "table": "storage.objects",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
+   },
+   {
+    "name": "avatars_update_own",
+    "table": "storage.objects",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "check": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
+   },
+   {
+    "name": "avatars_delete_own",
+    "table": "storage.objects",
+    "cmd": "DELETE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
+    "check": "",
+    "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
    }
   ],
   "db_triggers": [
@@ -89444,6 +89625,13 @@
    },
    {
     "kind": "dinâmico",
+    "msg": "2 chamada(s) `.from(variável)` — tabela só conhecida em runtime",
+    "where": [
+     "src/hooks/useAvatar.ts"
+    ]
+   },
+   {
+    "kind": "dinâmico",
     "msg": "1 chamada(s) `.from(variável)` — tabela só conhecida em runtime",
     "where": [
      "src/hooks/useQueueAudioPrompts.ts"
@@ -95659,7 +95847,7 @@
   },
   "src/components/settings/ProfileSettings.tsx": {
    "path": "src/components/settings/ProfileSettings.tsx",
-   "lines": 77,
+   "lines": 128,
    "html_constraints": [
     {
      "field": "email",
@@ -97289,6 +97477,50 @@
    ],
    "hooks": [
     "useAuth"
+   ]
+  },
+  "src/hooks/useAvatar.ts": {
+   "path": "src/hooks/useAvatar.ts",
+   "lines": 147,
+   "exports": [
+    "const AVATAR_ACCEPT",
+    "function useAvatar"
+   ],
+   "tables": [
+    {
+     "table": "user_profiles",
+     "op": "update"
+    },
+    {
+     "table": "user_profiles",
+     "op": "update"
+    }
+   ],
+   "table_cols": {
+    "user_profiles": [
+     "id"
+    ]
+   },
+   "dyn_from": 2,
+   "errors": [
+    "Arquivo muito grande",
+    "Erro ao enviar a foto",
+    "Erro ao remover a foto",
+    "Formato não suportado",
+    "Sessão expirada"
+   ],
+   "params": [
+    {
+     "name": "BUCKET",
+     "value": "'avatars'"
+    },
+    {
+     "name": "MAX_BYTES",
+     "value": "2"
+    }
+   ],
+   "hooks": [
+    "useAvatar"
    ]
   },
   "src/hooks/useBattleCardDetection.ts": {
@@ -101004,7 +101236,7 @@
   },
   "src/hooks/useProfile.ts": {
    "path": "src/hooks/useProfile.ts",
-   "lines": 72,
+   "lines": 73,
    "tables": [
     {
      "table": "user_profiles",
@@ -104276,6 +104508,28 @@
     "empty array access returns undefined",
     "negative index returns undefined",
     "out of bounds returns undefined"
+   ]
+  },
+  "src/hooks/__tests__/useAvatar.test.ts": {
+   "path": "src/hooks/__tests__/useAvatar.test.ts",
+   "lines": 180,
+   "is_test": true,
+   "tests": [
+    "useAvatar",
+    "does not request a signed url when there is no path",
+    "resolves a signed url for an existing avatar",
+    "clears the url when signing fails",
+    "rejects without a session",
+    "rejects an unsupported mime type",
+    "rejects a file larger than 2 MB",
+    "uploads, persists the column and keeps the new path",
+    "removes the previous avatar after the new one is persisted",
+    "rolls back the uploaded object when the column update fails",
+    "surfaces upload errors",
+    "removeAvatar is a no-op without user or path",
+    "removes the avatar and clears the column",
+    "keeps the object when clearing the column fails",
+    "falls back to png extension when the filename has none"
    ]
   },
   "src/hooks/__tests__/useBattleCardDetection.test.ts": {
@@ -122972,6 +123226,10 @@
    "path": "supabase/migrations/20261123010000_fix_user_delete_cascade.sql",
    "lines": 36
   },
+  "supabase/migrations/20261123020000_add_avatar_storage.sql": {
+   "path": "supabase/migrations/20261123020000_add_avatar_storage.sql",
+   "lines": 54
+  },
   "supabase/tests/role_source_of_truth_test.sql": {
    "path": "supabase/tests/role_source_of_truth_test.sql",
    "lines": 72,
@@ -123085,10 +123343,23 @@
   }
  },
  "git": {
-  "sha": "d768fc81adb83a190b0781fd9519738cf6a582df",
+  "sha": "7df1b5bb99239d26955108a2a2671dd88e4be9f8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "7df1b5b",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "feat: 'Alterar foto' do perfil passa a enviar e exibir a foto",
+    "files": [
+     "src/components/settings/ProfileSettings.tsx",
+     "src/hooks/__tests__/useAvatar.test.ts",
+     "src/hooks/useAvatar.ts",
+     "src/hooks/useProfile.ts",
+     "supabase/migrations/20261123020000_add_avatar_storage.sql"
+    ]
+   },
    {
     "sha": "d768fc8",
     "date": "2026-11-23",
@@ -123393,21 +123664,12 @@
      "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
      "supabase/functions/cleanup-lock-conflicts/index.ts"
     ]
-   },
-   {
-    "sha": "9d3d288",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: D5 Data Lake e D1 Inbox passam a IMPLEMENTADO_TOTAL (#136)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    7
+    6
    ],
    [
     "docs/audits/pendencias-2026-07.md",
@@ -123428,6 +123690,26 @@
    [
     "src/components/layout/CommandPalette.tsx",
     2
+   ],
+   [
+    "src/components/settings/ProfileSettings.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useAvatar.test.ts",
+    1
+   ],
+   [
+    "src/hooks/useAvatar.ts",
+    1
+   ],
+   [
+    "src/hooks/useProfile.ts",
+    1
+   ],
+   [
+    "supabase/migrations/20261123020000_add_avatar_storage.sql",
+    1
    ],
    [
     "docs/qa/00-RESUMO.md",
@@ -123463,26 +123745,6 @@
    ],
    [
     "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx",
-    1
-   ],
-   [
-    "src/components/calls/softphone/ActiveCallDisplay.tsx",
-    1
-   ],
-   [
-    "src/App.tsx",
-    1
-   ],
-   [
-    "src/components/navigation/NavigationProgress.tsx",
-    1
-   ],
-   [
-    "src/components/navigation/NavigationProgressMarker.tsx",
-    1
-   ],
-   [
-    "src/lib/__tests__/navigation-progress-store.test.ts",
     1
    ]
   ]
