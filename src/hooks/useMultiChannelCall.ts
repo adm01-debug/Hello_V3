@@ -78,7 +78,7 @@ export function useMultiChannelCall() {
   const [conference, setConference] = useState<ConferenceCall | null>(null);
   const conferenceDurationRef = useRef<number | null>(null);
 
-  const { startSession, endSession } = useCallSession();
+  const { startSession, endSession, currentSession, addAnalysis: addCallAnalysis } = useCallSession();
   const { profile } = useAuthContext();
 
   const { startDurationTimer, stopDurationTimer, startHoldTimer, stopHoldTimer, stopAllTimers } = useCallTimers(setActiveCalls);
@@ -147,9 +147,9 @@ export function useMultiChannelCall() {
     if (ended) {
       setCallHistory(prev => [{ ...ended, status: 'ended' as CallStatus }, ...prev].slice(0, 50));
 
-      // E059: fecha a chamada no banco (completed / missed / abandoned)
-      if (ended.dbSessionId) {
-        // Determina o status de encerramento pelos estados possíveis
+      // E059: fecha a chamada no banco — só se a sessão ainda não foi encerrada
+      // (currentSession === null indica que ActiveCallBar já chamou endSession com resumo)
+      if (ended.dbSessionId && currentSession) {
         const wasAnswered = ended.status === 'active' || ended.status === 'on-hold' ||
           ended.status === 'conference' || ended.status === 'transferring';
         const wasRinging = ended.status === 'ringing';
@@ -165,7 +165,7 @@ export function useMultiChannelCall() {
       else if (remaining.length === 0) setActiveCallId(null);
       return remaining;
     });
-  }, [activeCallId, activeCalls, stopDurationTimer, endSession]);
+  }, [activeCallId, activeCalls, stopDurationTimer, endSession, currentSession]);
 
   const endAllCalls = useCallback(() => {
     stopAllTimers();
@@ -281,5 +281,7 @@ export function useMultiChannelCall() {
     toggleMute, toggleHold, toggleRecording, addTranscript, configureChannel, getCallById,
     startConference, addToConference, removeFromConference, endConference, getCallsAvailableForConference, toggleConferenceRecording,
     transferCall, completeTransfer, cancelTransfer, setCallDbSession,
+    // Passthrough de useCallSession para consumo via CallContext (evita múltiplas instâncias)
+    currentSession, endDbSession: endSession, addCallAnalysis,
   };
 }

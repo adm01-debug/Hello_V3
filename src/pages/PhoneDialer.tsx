@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { usePageTitle } from '@/hooks/usePageTitle';
-import { useMultiChannelCall, type CallChannel } from '@/hooks/useMultiChannelCall';
+import { type CallChannel } from '@/hooks/useMultiChannelCall';
+import { useCallContext } from '@/contexts/CallContext';
 import { useCallHistory } from '@/hooks/useCallHistory';
 import { useSipCall } from '@/hooks/useSipCall';
 import { useDialerFavorites } from '@/hooks/useDialerFavorites';
@@ -43,7 +44,7 @@ const STATUS_LABEL: Record<string, string> = {
 const PhoneDialer = () => {
   usePageTitle('Discador');
   const navigate = useNavigate();
-  const call = useMultiChannelCall();
+  const call = useCallContext();
   const { sessions, isLoading } = useCallHistory();
   const sip = useSipCall();
   const { preDialCheck } = useDNCCompliance();

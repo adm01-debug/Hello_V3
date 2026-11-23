@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { 
   Phone, 
   PhoneOff, 
@@ -19,24 +19,13 @@ import { LiveCallAnalysis } from '@/components/ai/LiveCallAnalysis';
 import { LiveTranscription } from '@/components/calls/LiveTranscription';
 import { NextBestActionPanel } from '@/components/calls/NextBestActionPanel';
 import { CrmSuggestionsCard } from '@/components/calls/CrmSuggestionsCard';
-import { useCallSession } from '@/hooks/useCallSession';
+import { useCallContext } from '@/contexts/CallContext';
 import { useLiveAssist } from '@/hooks/useLiveAssist';
 import { useContacts } from '@/hooks/useContacts';
 import { buildRecentContext } from '@/lib/agent-assist-utils';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
-
-interface ActiveCall {
-  id: string;
-  contactName: string;
-  contactPhone: string;
-  type: 'incoming' | 'outgoing';
-  status: 'ringing' | 'connected' | 'hold' | 'transferring';
-  startTime: Date;
-  duration: number;
-  muted: boolean;
-}
 
 interface TranscriptEntry {
   id: string;
@@ -60,8 +49,6 @@ interface AnalysisEntry {
 }
 
 export function ActiveCallBar() {
-  const [call, setCall] = useState<ActiveCall | null>(null);
-  const [duration, setDuration] = useState(0);
   const [muted, setMuted] = useState(false);
   const [onHold, setOnHold] = useState(false);
   const [showAIAnalysis, setShowAIAnalysis] = useState(false);
@@ -70,27 +57,15 @@ export function ActiveCallBar() {
   const [isEnding, setIsEnding] = useState(false);
   const [endedSessionId, setEndedSessionId] = useState<string | null>(null);
   const [endedContactId, setEndedContactId] = useState<string | null>(null);
-  
-  const { currentSession, startSession, endSession, addTranscript, addAnalysis } = useCallSession();
+
+  const { activeCalls, activeCallId, endCall, currentSession, endDbSession, addCallAnalysis } = useCallContext();
+  // call é derivado do contexto compartilhado — sem estado local
+  const rawCall = activeCalls.find(c => c.id === activeCallId) ?? null;
+  const duration = rawCall?.duration ?? 0;
   const { findOrCreateContact, addContactInteraction } = useContacts();
   const { analyze: analyzeLive } = useLiveAssist(currentSession?.id);
 
-  // Start session when call connects
-  useEffect(() => {
-    if (call && call.status === 'connected' && !currentSession) {
-      startSession(call.contactName, call.contactPhone, 'Agente Demo');
-    }
-  }, [call, currentSession, startSession]);
-
-  useEffect(() => {
-    if (!call || call.status !== 'connected') return;
-    
-    const interval = setInterval(() => {
-      setDuration(prev => prev + 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [call]);
+  // startSession é chamado por useMultiChannelCall.updateCallStatus (E058) — não duplicar aqui
 
   const handleTranscript = useCallback((entry: TranscriptEntry) => {
     setTranscripts(prev => {
@@ -106,14 +81,13 @@ export function ActiveCallBar() {
       }
       return next;
     });
-    addTranscript(entry);
-  }, [addTranscript, analyzeLive, currentSession]);
+  }, [analyzeLive, currentSession]);
 
   const handleAnalysis = useCallback((analysis: AnalysisEntry) => {
-    addAnalysis(analysis);
-  }, [addAnalysis]);
+    addCallAnalysis(analysis);
+  }, [addCallAnalysis]);
 
-  if (!call) {
+  if (!rawCall) {
     if (endedSessionId) {
       return (
         <div className="border-b border-border bg-card px-6 py-3">
@@ -123,6 +97,13 @@ export function ActiveCallBar() {
     }
     return null;
   }
+
+  // Mapeamento de campos para compatibilidade com JSX existente
+  const call = {
+    ...rawCall,
+    contactPhone: rawCall.phoneNumber,
+    type: rawCall.direction === 'inbound' ? 'incoming' as const : 'outgoing' as const,
+  };
 
   const handleHangup = async () => {
     if (currentSession) {
@@ -163,7 +144,12 @@ export function ActiveCallBar() {
           }
         }
         
-        await endSession(duration, summary);
+        // endDbSession usa a mesma instância do useCallSession que registrou o startSession (via contexto)
+        await endDbSession(duration, summary);
+
+        // Remove a chamada do estado compartilhado; endCall não chamará endSession novamente
+        // porque currentSession já é null após endDbSession
+        endCall(activeCallId!);
 
         // Save interaction to contact + dispara extração CRM em background
         let contactIdSnapshot: string | null = null;
@@ -204,30 +190,32 @@ export function ActiveCallBar() {
         toast.success('Chamada salva com resumo no histórico');
       } catch (error) {
         logger.error('Error ending call:', error);
-        await endSession(duration);
+        await endDbSession(duration);
+        endCall(activeCallId!);
         toast.success('Chamada salva no histórico');
       } finally {
         setIsEnding(false);
       }
+    } else {
+      // Sem sessão no banco — só remove do estado compartilhado
+      endCall(activeCallId!);
     }
-    setCall(null);
     setShowAIAnalysis(false);
     setShowTranscription(false);
     setTranscripts([]);
-    setDuration(0);
   };
 
   return (
     <>
       <div className={cn(
         'relative border-b border-border bg-card px-6 py-3 animate-fade-in',
-        call.status === 'connected' && 'bg-success/5 border-success/20',
+        call.status === 'active' && 'bg-success/5 border-success/20',
         onHold && 'bg-warning/5 border-warning/20'
       )}>
         {/* Pulse indicator */}
         <div className={cn(
           'absolute left-0 top-0 h-full w-1',
-          call.status === 'connected' && !onHold && 'bg-success',
+          call.status === 'active' && !onHold && 'bg-success',
           onHold && 'bg-warning animate-pulse',
           call.status === 'ringing' && 'bg-primary animate-pulse'
         )} />
@@ -237,7 +225,7 @@ export function ActiveCallBar() {
           <div className="flex items-center gap-4">
             <div className={cn(
               'flex h-10 w-10 items-center justify-center rounded-full',
-              call.status === 'connected' && !onHold && 'bg-success/20 text-success',
+              call.status === 'active' && !onHold && 'bg-success/20 text-success',
               onHold && 'bg-warning/20 text-warning',
               call.status === 'ringing' && 'bg-primary/20 text-primary animate-ring'
             )}>
@@ -354,15 +342,15 @@ export function ActiveCallBar() {
 
       {/* Live Transcription Panel */}
       <LiveTranscription
-        isActive={showTranscription && call.status === 'connected'}
+        isActive={showTranscription && call.status === 'active'}
         onTranscript={handleTranscript}
       />
 
       {/* Live AI Analysis Panel - Now connected to transcripts */}
       {/* callSessionId/callStartedAt sao obrigatorios para o snapshot de sentimento */}
       <LiveCallAnalysis
-        isActive={showAIAnalysis && call.status === 'connected'}
-        contactName={call.contactName}
+        isActive={showAIAnalysis && call.status === 'active'}
+        contactName={call.contactName ?? 'Cliente'}
         onClose={() => setShowAIAnalysis(false)}
         transcripts={transcripts}
         callSessionId={currentSession?.id}
@@ -371,7 +359,7 @@ export function ActiveCallBar() {
       />
 
       {/* Real-time Agent Assist (Next-Best-Action) */}
-      {currentSession?.id && call.status === 'connected' && (
+      {currentSession?.id && call.status === 'active' && (
         <div className="border-b border-border bg-card/40 px-6 py-2">
           <NextBestActionPanel callSessionId={currentSession.id} agentName={currentSession.agentName} />
         </div>
