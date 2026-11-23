@@ -78,7 +78,7 @@ export function CreateContactDialog({
 
       let result: Contact | null;
       if (editContact) {
-        result = await updateContact(editContact.id, input);
+        result = await updateContact(editContact.id, { ...input, version: editContact.version });
       } else {
         result = await createContact(input);
       }
