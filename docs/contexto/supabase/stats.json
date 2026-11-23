@@ -51,30 +51,30 @@
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-23T06:30:00.156844+00:00",
+        "end_time": "2026-11-23T08:20:00.163647+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 1939,
+        "runid": 2049,
         "seconds": 0.02,
-        "start_time": "2026-11-23T06:30:00.131978+00:00",
+        "start_time": "2026-11-23T08:20:00.139915+00:00",
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-23T06:29:00.035197+00:00",
+        "end_time": "2026-11-23T08:19:00.057878+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 1938,
+        "runid": 2048,
         "seconds": 0.01,
-        "start_time": "2026-11-23T06:29:00.023288+00:00",
+        "start_time": "2026-11-23T08:19:00.047710+00:00",
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-23T06:28:00.125984+00:00",
+        "end_time": "2026-11-23T08:18:00.102588+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 1937,
-        "seconds": 0.02,
-        "start_time": "2026-11-23T06:28:00.103075+00:00",
+        "runid": 2047,
+        "seconds": 0.01,
+        "start_time": "2026-11-23T08:18:00.090106+00:00",
         "status": "succeeded"
       },
       {
@@ -154,7 +154,7 @@
           "usename": "supabase_admin"
         }
       ],
-      "database_bytes": 34131091,
+      "database_bytes": 34196627,
       "queues": [],
       "schema_bytes": [
         {
@@ -171,12 +171,12 @@
       ],
       "top_queries": [
         {
-          "calls": 157,
-          "mean_ms": 5525.86,
+          "calls": 159,
+          "mean_ms": 5527.58,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 867560
+          "total_ms": 878885
         },
         {
           "calls": 2,
@@ -227,28 +227,28 @@
           "total_ms": 51607
         },
         {
-          "calls": 161,
-          "mean_ms": 213.39,
+          "calls": 163,
+          "mean_ms": 213.29,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 1376,
-          "total_ms": 34356
+          "rows": 1396,
+          "total_ms": 34767
         },
         {
-          "calls": 1774,
-          "mean_ms": 14.86,
+          "calls": 1884,
+          "mean_ms": 14.67,
           "query": "SELECT net.http_post( url := $1, headers := jsonb_build_object( $2, $3, $4, $5 || ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )",
           "role": "postgres",
-          "rows": 1774,
-          "total_ms": 26354
+          "rows": 1884,
+          "total_ms": 27641
         },
         {
-          "calls": 161,
-          "mean_ms": 130.56,
+          "calls": 163,
+          "mean_ms": 132.78,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 282949,
-          "total_ms": 21021
+          "rows": 286551,
+          "total_ms": 21643
         },
         {
           "calls": 255,
@@ -2422,7 +2422,7 @@
         "is_primary": false,
         "is_unique": false,
         "name": "idx_dialer_campaigns_status",
-        "scans": 1768,
+        "scans": 1878,
         "schema": "public",
         "table": "dialer_campaigns"
       },
@@ -5937,7 +5937,7 @@
         "dead_rows": 4,
         "est_rows": 0,
         "heap_bytes": 8192,
-        "idx_scan": 1775,
+        "idx_scan": 1885,
         "index_bytes": 32768,
         "last_autoanalyze": null,
         "last_autovacuum": null,
