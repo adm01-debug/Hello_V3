@@ -100,20 +100,22 @@
 - [ ] **057** — Dar a `useMultiChannelCall` um campo para o id da chamada no banco — onda 2 — Crítica — Hooks
 - [ ] **058** — Gravar `call_sessions` quando a chamada é atendida — onda 2 — Crítica — Hooks
 - [ ] **059** — Fechar a chamada no banco quando ela termina — onda 2 — Crítica — Hooks
-- [ ] **060** — Fazer a barra de chamada ativa renderizar a chamada real — onda 2 — Crítica — Frontend
-- [ ] **061** — Religar a transcrição ao vivo — onda 2 — Alta — Frontend
+- [x] **060** — Fazer a barra de chamada ativa renderizar a chamada real — onda 2 — Crítica — Frontend · (PR #168; tsc=0, eslint=0, testes 24/24)
+- [x] **061** — Religar a transcrição ao vivo — onda 2 — Alta — Frontend · (PR #170; handleTranscript chama addDbTranscript; tsc=0)
 - [ ] **062** — Religar a próxima melhor ação e as sugestões de CRM — onda 2 — Alta — Frontend
-- [ ] **063** — Garantir que o resumo automático da chamada seja gerado e gravado — onda 2 — Alta — Hooks
-- [ ] **064** — Teste de ponta a ponta do ciclo de vida da chamada — onda 2 — Alta — Testes
+- [x] **063** — Garantir que o resumo automático da chamada seja gerado e gravado — onda 2 — Alta — Hooks · (PR #170; allTranscriptsRef.push antes do insert; tsc=0)
+- [x] **064** — Teste de ponta a ponta do ciclo de vida da chamada — onda 2 — Alta — Testes · (PR #170; callLifecycle-integration.test.tsx 3/3)
 - [ ] **065** — Confirmar em produção que a chamada está sendo gravada — onda 2 — Crítica — Verificação
-- [ ] **066** — Gravar `hold_events` com o id real da chamada — onda 2 — Alta — Hooks
-- [ ] **067** — Fazer o alerta de espera parar quando a espera termina — onda 2 — Alta — Edge Function
-- [ ] **068** — Decidir o que fazer com os `hold_events` órfãos já gravados — onda 2 — Média — Banco 🔒
-- [ ] **069** — Preencher `hold_time_seconds` a partir dos eventos de espera — onda 2 — Crítica — Banco 🔒
-- [ ] **070** — Corrigir o id sintético no relatório de uso de tronco — onda 2 — Alta — Hooks
-- [ ] **071** — Parar de afirmar "Chamada salva" quando a gravação falhou — onda 2 — Alta — Hooks + Frontend
-- [ ] **072** — Fila de retentativa para o encerramento de chamada — onda 2 — Média — Hooks
-- [ ] **073** — Ligar o botão "Transferir" do softphone — onda 2 — Alta — Frontend
+- [x] **066** — Gravar `hold_events` com o id real da chamada — onda 2 — Alta — Hooks · (PR #170; persistHoldEvent guard; tsc=0)
+- [x] **067** — Fazer o alerta de espera parar quando a espera termina — onda 2 — Alta — Edge Function · (PR #170; janela 24h; edge pronta p/ deploy)
+- [ ] **068** — Decidir o que fazer com os `hold_events` órfãos já gravados — onda 2 — Média — Banco 🔒 · (aguarda decisão do dono)
+- [ ] **069** — Preencher `hold_time_seconds` a partir dos eventos de espera — onda 2 — Crítica — Banco 🔒 · (migration preparada 20261123030000, aguarda decisão do dono)
+- [x] **070** — Corrigir o id sintético no relatório de uso de tronco — onda 2 — Alta — Hooks · (PR #170; useSipCall usa dbSessionIdRef; tsc=0)
+- [x] **071** — Parar de afirmar "Chamada salva" quando a gravação falhou — onda 2 — Alta — Hooks + Frontend · (PR #170; endSession retorna {ok}; tsc=0)
+- [x] **072** — Fila de retentativa para o encerramento de chamada — onda 2 — Média — Hooks · (PR #170; pendingCallWrites 3/3)
+- [x] **073** — Ligar o botão "Transferir" do softphone — onda 2 — Alta — Frontend · (PR #170; TransferCallDialog conectado; tsc=0)
+- [x] **074** — Exportar histórico de chamadas em CSV — onda 2 — Alta — Frontend · (PR #170; downloadCallHistoryCsv ligado; tsc=0, 3/3)
+- [x] **075** — Ligar o "Exportar" dos relatórios — onda 2 — Alta — Frontend · (PR #170; downloadReportCsv ligado; tsc=0, 6/6, build OK sem violar orçamento)
 - [ ] **074** — Ligar o "Exportar" do histórico de chamadas — onda 2 — Alta — Frontend
 - [ ] **075** — Ligar o "Exportar" dos relatórios — onda 2 — Alta — Frontend
 - [ ] **076** — Fazer o "Salvar" das Configurações salvar de verdade — onda 2 — Alta — Frontend + Hooks 🔒

@@ -58,7 +58,7 @@ export function ActiveCallBar() {
   const [endedSessionId, setEndedSessionId] = useState<string | null>(null);
   const [endedContactId, setEndedContactId] = useState<string | null>(null);
 
-  const { activeCalls, activeCallId, endCall, currentSession, endDbSession, addCallAnalysis } = useCallContext();
+  const { activeCalls, activeCallId, endCall, currentSession, endDbSession, addCallAnalysis, addDbTranscript } = useCallContext();
   // call é derivado do contexto compartilhado — sem estado local
   const rawCall = activeCalls.find(c => c.id === activeCallId) ?? null;
   const duration = rawCall?.duration ?? 0;
@@ -68,6 +68,8 @@ export function ActiveCallBar() {
   // startSession é chamado por useMultiChannelCall.updateCallStatus (E058) — não duplicar aqui
 
   const handleTranscript = useCallback((entry: TranscriptEntry) => {
+    // Persiste no banco via useCallSession (flush em batch a cada 5s)
+    addDbTranscript(entry);
     setTranscripts(prev => {
       const next = [...prev, entry];
       if (currentSession?.id) {
@@ -81,7 +83,7 @@ export function ActiveCallBar() {
       }
       return next;
     });
-  }, [analyzeLive, currentSession]);
+  }, [addDbTranscript, analyzeLive, currentSession]);
 
   const handleAnalysis = useCallback((analysis: AnalysisEntry) => {
     addCallAnalysis(analysis);
@@ -145,7 +147,7 @@ export function ActiveCallBar() {
         }
         
         // endDbSession usa a mesma instância do useCallSession que registrou o startSession (via contexto)
-        await endDbSession(duration, summary);
+        const saveResult = await endDbSession(duration, summary);
 
         // Remove a chamada do estado compartilhado; endCall não chamará endSession novamente
         // porque currentSession já é null após endDbSession
@@ -187,12 +189,17 @@ export function ActiveCallBar() {
         setEndedSessionId(sessionIdSnapshot);
         setEndedContactId(contactIdSnapshot);
 
-        toast.success('Chamada salva com resumo no histórico');
+        // E071: exibe toast correto de acordo com o resultado da gravação
+        if (saveResult.ok) {
+          toast.success(summary ? 'Chamada salva com resumo no histórico' : 'Chamada salva no histórico');
+        } else {
+          toast.error('A chamada foi encerrada, mas não foi possível salvar o histórico');
+          logger.error('endDbSession falhou:', saveResult.reason);
+        }
       } catch (error) {
         logger.error('Error ending call:', error);
-        await endDbSession(duration);
         endCall(activeCallId!);
-        toast.success('Chamada salva no histórico');
+        toast.error('A chamada foi encerrada, mas não foi possível salvar o histórico');
       } finally {
         setIsEnding(false);
       }

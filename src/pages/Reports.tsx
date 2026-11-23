@@ -26,6 +26,8 @@ import { useMemo } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
  import { formatDuration } from '@/lib/utils';
+import { toast } from 'sonner';
+import { downloadReportCsv } from '@/lib/export/reportCsv';
  
  const COLORS = ['hsl(var(--primary))', 'hsl(var(--success))', 'hsl(var(--warning))', 'hsl(var(--destructive))'];
 
@@ -90,7 +92,17 @@ import { usePageTitle } from '@/hooks/usePageTitle';
             </SelectContent>
           </Select>
           
-          <Button variant="outline" className="gap-2">
+          <Button variant="outline" className="gap-2"
+            onClick={() => {
+              downloadReportCsv({
+                kpis: stats || undefined,
+                volume: volumeData || undefined,
+                agents: agentPerformance.length ? agentPerformance : undefined,
+                distribution: callTypeData.length ? callTypeData : undefined,
+              });
+              toast.success('Relatório exportado');
+            }}
+          >
             <Download className="h-4 w-4" />
             Exportar
           </Button>

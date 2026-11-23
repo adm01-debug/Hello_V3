@@ -1,4 +1,5 @@
-import { PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play, Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines, Zap, Activity, Smile, Meh, Frown } from 'lucide-react';
+import { useState } from 'react';
+import { PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play, Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines, Zap, Activity, Smile, Meh, Frown, Check, X } from 'lucide-react';
 
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { Button } from '@/components/ui/button';
@@ -6,8 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
- import type { CallSession, CallChannel } from '@/hooks/useMultiChannelCall';
+ import type { CallSession, CallChannel, TransferTarget, TransferType } from '@/hooks/useMultiChannelCall';
  import { VoipQualityIndicator } from '../VoipQualityIndicator';
+import { TransferCallDialog } from '../TransferCallDialog';
 import { channelIcons, formatCallDuration } from './constants';
 
 const sentimentVisual: Record<
@@ -32,13 +34,18 @@ interface ActiveCallDisplayProps {
   onVolumeToggle: () => void;
   onRecordToggle: () => void;
    onEndCall: () => void;
+   onTransferCall: (callId: string, target: TransferTarget, transferType: TransferType) => void;
+   onCompleteTransfer: (callId: string) => void;
+   onCancelTransfer: (callId: string) => void;
    pc?: RTCPeerConnection | null;
 }
 
 export function ActiveCallDisplay({
   currentCall, activeChannel, channelName, isSpeaking, volume,
-   onMuteToggle, onHoldToggle, onVolumeToggle, onRecordToggle, onEndCall, pc,
+   onMuteToggle, onHoldToggle, onVolumeToggle, onRecordToggle, onEndCall,
+   onTransferCall, onCompleteTransfer, onCancelTransfer, pc,
 }: ActiveCallDisplayProps) {
+  const [transferDialogOpen, setTransferDialogOpen] = useState(false);
   const ChannelIcon = channelIcons[activeChannel];
   const { isListening, isProcessing, lastCommand, startListening, stopListening } = useVoiceCommand();
 
@@ -49,6 +56,7 @@ export function ActiveCallDisplay({
   const latestSentiment = snapshots.length > 0 ? snapshots[snapshots.length - 1] : undefined;
 
   return (
+    <>
     <div className={cn(
       "p-4 border-b transition-colors",
       currentCall.status === 'active'
@@ -229,19 +237,59 @@ export function ActiveCallDisplay({
           <TooltipContent>{isListening ? 'Parar comando de voz' : isProcessing ? 'Processando...' : 'Comando de voz'}</TooltipContent>
         </Tooltip>
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="outline" size="icon" className="h-11 w-11 rounded-full">
-              <PhoneForwarded className="h-5 w-5" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Transferir</TooltipContent>
-        </Tooltip>
+        {currentCall.isTransferring ? (
+          <>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full text-success border-success/40"
+                  onClick={() => onCompleteTransfer(currentCall.id)}
+                >
+                  <Check className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Confirmar transferência</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full"
+                  onClick={() => onCancelTransfer(currentCall.id)}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Cancelar transferência</TooltipContent>
+            </Tooltip>
+          </>
+        ) : (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="outline" size="icon" className="h-11 w-11 rounded-full"
+                onClick={() => setTransferDialogOpen(true)}
+              >
+                <PhoneForwarded className="h-5 w-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Transferir</TooltipContent>
+          </Tooltip>
+        )}
 
         <Button variant="destructive" size="icon" className="h-11 w-11 rounded-full" onClick={onEndCall}>
           <PhoneOff className="h-5 w-5" />
         </Button>
       </div>
     </div>
+
+    <TransferCallDialog
+      open={transferDialogOpen}
+      onOpenChange={setTransferDialogOpen}
+      callId={currentCall.id}
+      callerName={currentCall.contactName || currentCall.phoneNumber}
+      onTransfer={(callId, target, type) => {
+        onTransferCall(callId, target, type);
+        // Transferência assistida: aguarda confirmação explícita (via botão do botão no estado isTransferring)
+        // Transferência cega: também exige confirmação explícita — ver useCallTransfer.ts:7-11
+      }}
+    />
+    </>
   );
 }
