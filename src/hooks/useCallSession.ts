@@ -169,9 +169,10 @@ export function useCallSession() {
   const endSession = useCallback(async (durationSeconds: number, summary?: {
     summary: string; mainTopics: string[]; overallSentiment: string;
     customerSatisfaction: number; agentPerformance: number; nextSteps: string[];
-  }) => {
-    if (!currentSession) return;
+  }): Promise<{ ok: boolean; reason?: string }> => {
+    if (!currentSession) return { ok: false, reason: 'sem sessão ativa' };
     setIsSaving(true);
+    let result: { ok: boolean; reason?: string } = { ok: false };
     try {
       await Promise.all([saveTranscripts(), saveAnalyses()]);
       const { error: sessionError } = await supabase.from('call_sessions')
@@ -192,14 +193,18 @@ export function useCallSession() {
       await runPostCallIntelligence(currentSession.id, currentSession.agentName, durationSeconds);
 
       log.info('Call session ended', { sessionId: currentSession.id });
+      result = { ok: true };
     } catch (error) {
       log.error('Error ending call session', error);
+      result = { ok: false, reason: (error as Error).message };
     } finally {
+      // Limpeza do estado sempre acontece — independente de sucesso ou falha (E071)
       setIsSaving(false);
       setCurrentSession(null);
       allTranscriptsRef.current = [];
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
     }
+    return result;
   }, [currentSession, saveTranscripts, saveAnalyses, runPostCallIntelligence]);
 
   return { currentSession, isSaving, startSession, endSession, addTranscript, addAnalysis };

@@ -147,7 +147,7 @@ export function ActiveCallBar() {
         }
         
         // endDbSession usa a mesma instância do useCallSession que registrou o startSession (via contexto)
-        await endDbSession(duration, summary);
+        const saveResult = await endDbSession(duration, summary);
 
         // Remove a chamada do estado compartilhado; endCall não chamará endSession novamente
         // porque currentSession já é null após endDbSession
@@ -189,12 +189,17 @@ export function ActiveCallBar() {
         setEndedSessionId(sessionIdSnapshot);
         setEndedContactId(contactIdSnapshot);
 
-        toast.success('Chamada salva com resumo no histórico');
+        // E071: exibe toast correto de acordo com o resultado da gravação
+        if (saveResult.ok) {
+          toast.success(summary ? 'Chamada salva com resumo no histórico' : 'Chamada salva no histórico');
+        } else {
+          toast.error('A chamada foi encerrada, mas não foi possível salvar o histórico');
+          logger.error('endDbSession falhou:', saveResult.reason);
+        }
       } catch (error) {
         logger.error('Error ending call:', error);
-        await endDbSession(duration);
         endCall(activeCallId!);
-        toast.success('Chamada salva no histórico');
+        toast.error('A chamada foi encerrada, mas não foi possível salvar o histórico');
       } finally {
         setIsEnding(false);
       }
