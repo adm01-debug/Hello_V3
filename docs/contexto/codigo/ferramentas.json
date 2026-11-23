@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1242)",
+   "TypeScript (1243)",
    "SQL (245)",
    "Markdown (120)",
    "JavaScript (29)",
@@ -519,6 +519,10 @@
     "arquivos": 6
    },
    {
+    "host": "mock.supabase.co",
+    "arquivos": 4
+   },
+   {
     "host": "api.elevenlabs.io",
     "arquivos": 3
    },
@@ -536,10 +540,6 @@
    },
    {
     "host": "ipapi.co",
-    "arquivos": 3
-   },
-   {
-    "host": "mock.supabase.co",
     "arquivos": 3
    },
    {

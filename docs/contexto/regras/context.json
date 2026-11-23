@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "32923f95434e2137e9017e9e4c1a0aa4bc102d37",
+  "sha": "a5e32decad7b9b19d40d559847d51d7a49bbc8db",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 22:37 UTC",
-  "files_total": 1724,
-  "code_files": 1521,
-  "code_lines": 188648
+  "generated_at": "2026-11-23 22:59 UTC",
+  "files_total": 1725,
+  "code_files": 1522,
+  "code_lines": 188761
  },
  "version": "1.3.2",
- "facts_hash": "5bc02d95bf7e30b9",
+ "facts_hash": "114e72147130c820",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 631,
+   ".ts": 632,
    ".tsx": 611,
    ".sql": 245,
    ".mjs": 27,
@@ -29626,10 +29626,13 @@
     ],
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
+     "audit_logs",
      "bot_conversations",
+     "chat_sessions",
      "conversation_messages",
      "conversations",
      "kb_articles",
+     "rate_limit_logs",
      "system_settings"
     ],
     "env": [
@@ -34283,8 +34286,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 188,
-   "lines": 21148,
+   "files": 189,
+   "lines": 21261,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34396,6 +34399,7 @@
     "local-supabase.ts: edgeLocalDisponivel, MOTIVO_IGNORADO",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
     "index.ts: TalkRatioStatus, talkRatioStatus",
+    "index.ts: handler",
     "index.ts: recordKb, handler",
     "index.ts: pickPolicy",
     "csv.ts: toCsv",
@@ -34413,8 +34417,7 @@
     "index.ts: CapacityRecommendation, CapacityResult, buildRecommendations",
     "index.ts: VoiceQAResponse",
     "index.ts: ExecKpis, ExecutiveNarrativeResponse",
-    "index.ts: HealthBreakdown, computeHealthScore, normalizeMos, normalizeAlerts, normalizeCapacity",
-    "index.ts: handler"
+    "index.ts: HealthBreakdown, computeHealthScore, normalizeMos, normalizeAlerts, normalizeCapacity"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -34480,6 +34483,7 @@
     "supabase/functions/bitrix-api/__tests__/index.test.ts",
     "supabase/functions/chat-widget-session/index.ts",
     "supabase/functions/chatbot-respond/index.ts",
+    "supabase/functions/chatbot-respond/__tests__/index.test.ts",
     "supabase/functions/check-alerts/index.ts",
     "supabase/functions/check-calling-hours/index.ts",
     "supabase/functions/check-calling-hours/__tests__/index.test.ts",
@@ -34508,8 +34512,7 @@
     "supabase/functions/dialer-pacing-tick/index.ts",
     "supabase/functions/elevenlabs-conversation-token/index.ts",
     "supabase/functions/email-inbound/index.ts",
-    "supabase/functions/embed-kb-article/index.ts",
-    "supabase/functions/embed-kb-article/__tests__/index.test.ts"
+    "supabase/functions/embed-kb-article/index.ts"
    ]
   },
   {
@@ -35232,7 +35235,8 @@
      "supabase/functions/chat-widget-session/index.ts"
     ],
     "select": [
-     "supabase/functions/chat-widget-session/index.ts"
+     "supabase/functions/chat-widget-session/index.ts",
+     "supabase/functions/chatbot-respond/index.ts"
     ],
     "update": [
      "supabase/functions/chat-widget-session/index.ts"
@@ -72327,6 +72331,22 @@
     "name": "bitrix-api: acao desconhecida e recusada pelo schema"
    },
    {
+    "file": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+    "name": "chatbot-respond: sem visitor_token e sem sessao devolve 401"
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+    "name": "chatbot-respond: corpo sem conversation_id devolve 400"
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+    "name": "chatbot-respond: conversation_id que nao e UUID devolve 400"
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+    "name": "chatbot-respond: preflight OPTIONS responde com CORS da origem permitida"
+   },
+   {
     "file": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
     "name": "check-calling-hours: aceita region_code default "
    },
@@ -86351,6 +86371,7 @@
    "supabase/functions/auto-scorecard/index.ts",
    "supabase/functions/bitrix-api/__tests__/index.test.ts",
    "supabase/functions/chat-widget-session/index.ts",
+   "supabase/functions/chatbot-respond/__tests__/index.test.ts",
    "supabase/functions/chatbot-respond/index.ts",
    "supabase/functions/check-alerts/index.ts",
    "supabase/functions/check-contact-alerts/index.ts",
@@ -117436,8 +117457,15 @@
   },
   "supabase/functions/chatbot-respond/index.ts": {
    "path": "supabase/functions/chatbot-respond/index.ts",
-   "lines": 217,
+   "lines": 271,
+   "exports": [
+    "function handler"
+   ],
    "tables": [
+    {
+     "table": "chat_sessions",
+     "op": "select"
+    },
     {
      "table": "kb_articles",
      "op": "select"
@@ -117468,6 +117496,10 @@
     }
    ],
    "table_cols": {
+    "chat_sessions": [
+     "conversation_id",
+     "visitor_token"
+    ],
     "kb_articles": [
      "content",
      "excerpt",
@@ -117583,6 +117615,24 @@
    "pagination": [
     "3",
     "6"
+   ],
+   "uses_service_role": true
+  },
+  "supabase/functions/chatbot-respond/__tests__/index.test.ts": {
+   "path": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+   "lines": 59,
+   "is_test": true,
+   "params": [
+    {
+     "name": "CONV",
+     "value": "\"3f9d2b70-2f47-4f0a-9a5e-0f0f0f0f0f0f\""
+    }
+   ],
+   "tests": [
+    "chatbot-respond: sem visitor_token e sem sessao devolve 401",
+    "chatbot-respond: corpo sem conversation_id devolve 400",
+    "chatbot-respond: conversation_id que nao e UUID devolve 400",
+    "chatbot-respond: preflight OPTIONS responde com CORS da origem permitida"
    ],
    "uses_service_role": true
   },
@@ -124393,10 +124443,21 @@
   }
  },
  "git": {
-  "sha": "32923f95434e2137e9017e9e4c1a0aa4bc102d37",
+  "sha": "a5e32decad7b9b19d40d559847d51d7a49bbc8db",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a5e32de",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+     "supabase/functions/chatbot-respond/index.ts"
+    ]
+   },
    {
     "sha": "32923f9",
     "date": "2026-11-23",
@@ -124767,21 +124828,12 @@
      "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
      "src/hooks/useCallTransfer.ts"
     ]
-   },
-   {
-    "sha": "8fa0938",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: salvar 2FA pela segunda vez falhava por upsert sem onConflict (#159)",
-    "files": [
-     "src/hooks/useMFA.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    21
+    22
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124810,6 +124862,14 @@
    [
     "src/App.tsx",
     2
+   ],
+   [
+    "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/chatbot-respond/index.ts",
+    1
    ],
    [
     "supabase/functions/embed-kb-article/__tests__/index.test.ts",
@@ -124849,14 +124909,6 @@
    ],
    [
     "supabase/functions/_shared/__tests__/auth_test.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/auth.ts",
-    1
-   ],
-   [
-    "supabase/functions/search-calls/__tests__/index.test.ts",
     1
    ]
   ]

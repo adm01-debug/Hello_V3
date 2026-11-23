@@ -7330,7 +7330,8 @@
    },
    "usada_no_front": 0,
    "usada_em_edges": [
-    "chat-widget-session"
+    "chat-widget-session",
+    "chatbot-respond"
    ],
    "triggers": [],
    "sem_rls": false,

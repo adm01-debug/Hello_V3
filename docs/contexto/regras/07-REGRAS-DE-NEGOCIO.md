@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `32923f9543` · branch `main` · 2026-11-23 22:37 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a5e32decad` · branch `main` · 2026-11-23 22:59 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2457,7 +2457,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4150 testes em 351 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4154 testes em 352 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2761,7 +2761,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
 | `supabase/functions/analyze-talk-ratio/__tests__/index.test.ts` | 4 | chamada com duração 0 é insuficiente, nunca  · duração positiva sem fala é insuficiente · NaN do quociente não cai em optimal · com áudio, classifica pelo intervalo 40–60% |
 | `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
-| … +51 linhas — lista completa em `context.json` | | |
+| … +52 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

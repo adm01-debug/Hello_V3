@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (337)",
+   "co-localizado (__tests__) (338)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)",
    "fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)",
    "fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)",
    "fix: notify-blocked-ip exige sessao autenticada, valida corpo e escapa HTML (E010) (#188)",
-   "fix: notify-new-device exige sessao autenticada e nao aceita destinatario do corpo (E009) (#187)",
-   "feat: modulo compartilhado de autenticacao de edge function (E005) (#186)"
+   "fix: notify-new-device exige sessao autenticada e nao aceita destinatario do corpo (E009) (#187)"
   ]
  },
  "pr_template": null,

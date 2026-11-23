@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 361,
+ "total": 362,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 344
+  "unit": 345
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 337
+   "arquivos": 338
   },
   {
    "padrao": "e2e/",
@@ -2856,6 +2856,15 @@
    "casos": 3
   },
   {
+   "arquivo": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 59,
+   "testa": [
+    "supabase/functions/chatbot-respond/index.ts"
+   ],
+   "casos": 4
+  },
+  {
    "arquivo": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
    "tipo": "unit",
    "linhas": 77,
@@ -3501,6 +3510,7 @@
   "supabase/functions/analyze-call/schema.ts": 3,
   "supabase/functions/analyze-talk-ratio/index.ts": 1,
   "supabase/functions/bitrix-api/index.ts": 2,
+  "supabase/functions/chatbot-respond/index.ts": 1,
   "supabase/functions/embed-kb-article/index.ts": 1,
   "supabase/functions/enforce-sla/index.ts": 1,
   "supabase/functions/export-data-lake/csv.ts": 1,
@@ -3685,7 +3695,6 @@
    "approve-password-reset",
    "auto-scorecard",
    "chat-widget-session",
-   "chatbot-respond",
    "check-alerts",
    "check-contact-alerts",
    "check-goals",

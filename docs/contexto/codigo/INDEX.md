@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `32923f95434e2137e9017e9e4c1a0aa4bc102d37` (2026-11-23T19:35:53-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a5e32decad7b9b19d40d559847d51d7a49bbc8db` (2026-11-23T19:57:26-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1242), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1243), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1677 |
-| arquivos_codigo | 1275 |
-| linhas_codigo | 172636 |
+| arquivos_total | 1678 |
+| arquivos_codigo | 1276 |
+| linhas_codigo | 172749 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 169 |
 | migrations | 242 |
 | cron_jobs | 11 |
-| testes | 361 |
+| testes | 362 |
 | workflows | 3 |
 | scripts | 34 |
 | docs_md | 120 |
@@ -58,7 +58,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - componentes: src/components (317), src/pages (126), src/contexts (4)
 - hooks: src/hooks (174), src/components (12), src/contexts (4)
 - servicos_logica: src/lib (85), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (337), e2e/ (7), tests/ (6)
+- testes: co-localizado (__tests__) (338), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (6), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -237,7 +237,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `auto-scorecard` — tabelas: call_scorecards, call_sessions, scorecard_criteria, scorecard_responses, scorecard_templates; chamada por 0 arquivo(s) do front, por SQL/cron
 - `bitrix-api` — tabelas: -; chamada por 1 arquivo(s) do front
 - `chat-widget-session` — tabelas: agents, chat_sessions, conversation_messages, conversations; chamada por 0 arquivo(s) do front — **ÓRFÃ**
-- `chatbot-respond` — tabelas: bot_conversations, conversation_messages, conversations, kb_articles, system_settings; chamada por 1 arquivo(s) do front
+- `chatbot-respond` — tabelas: bot_conversations, chat_sessions, conversation_messages, conversations, kb_articles, system_settings; chamada por 1 arquivo(s) do front
 - `check-alerts` — tabelas: call_alerts; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `check-calling-hours` — tabelas: -; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 - `check-contact-alerts` — tabelas: contact_alerts, contacts; chamada por 2 arquivo(s) do front
@@ -342,7 +342,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Integrações externas
 - SDKs: Supabase, react-query, zod
-- hosts mais citados: openrouter.ai, hello-v3.vercel.app, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, mock.supabase.co, exemplo.com, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br
+- hosts mais citados: openrouter.ai, hello-v3.vercel.app, cfmlmcdyjuotqobjapng.supabase.co, lovable.dev, mock.supabase.co, api.elevenlabs.io, api.resend.com, ex.com, example.supabase.co, ipapi.co, exemplo.com, x.supabase.co, a.com, api.acme.io, api.bitrix24.com.br
 - webhooks recebidos: cleanup-lock-conflicts, cleanup-recordings, data-lake-flush, dialer-pacing-tick, generate-coaching-track
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, CLEANUP_CRON_TOKEN, COACHING_CRON_TOKEN, DATA_LAKE_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, RECORDINGS_CRON_TOKEN, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TESTE_CRON_TOKEN, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
@@ -370,14 +370,14 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9896 nós · 25423 arestas · 767 comunidades · grafo do commit `32923f95`
-- comunidades maiores: lucide-react (274), client.ts (230), vitest (185), protectedRoutes.tsx (169), traceHeaders (159), badge.tsx (144), Tabela de funcionalidades (143), react (126), select.tsx (111), cn (110), @tanstack/react-query (103), snapshot.py (102)
-- símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
+- 9898 nós · 25442 arestas · 759 comunidades · grafo do commit `a5e32dec`
+- comunidades maiores: lucide-react (257), usePageTitle (204), client.ts (190), react (176), utils.ts (146), traceHeaders (137), safe-date.ts (129), ref_https (122), @tanstack/react-query (120), cn (111), vitest (108), sonner (105)
+- símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/estado/funcionalidades-planejadas.md (27)
-- docs/qa/05-PROGRESSO.md (21)
+- docs/qa/05-PROGRESSO.md (22)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
 - .github/workflows/ci.yml (7)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `a5e32de` fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)
 - 2026-11-23 `32923f9` fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)
 - 2026-11-23 `5e77404` fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)
 - 2026-11-23 `fa2c38d` fix: notify-blocked-ip exige sessao autenticada, valida corpo e escapa HTML (E010) (#188)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `cdae222` fix: escolhe a politica SLA mais especifica sem depender da ordem do banco (E109) (#179)
 - 2026-11-23 `3407137` fix: limita a nota da IA ao maximo do criterio no score-call (E106) (#178)
 - 2026-11-23 `00fa64c` fix: rotula corretamente os canais do softphone (E100) (#177)
-- 2026-11-23 `0942091` fix: liga painel de integridade a dados reais e remove cartao decorativo (E097-E098) (#176)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

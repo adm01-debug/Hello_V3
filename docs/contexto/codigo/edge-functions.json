@@ -368,13 +368,14 @@
    "nome": "chatbot-respond",
    "entrada": "supabase/functions/chatbot-respond/index.ts",
    "arquivos": 1,
-   "linhas": 217,
+   "linhas": 271,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
    "tabelas": [
     "bot_conversations",
+    "chat_sessions",
     "conversation_messages",
     "conversations",
     "kb_articles",
@@ -392,7 +393,11 @@
     "openrouter.ai"
    ],
    "usa_shared": [
-    "cors.ts"
+    "auth.ts",
+    "constant-time.ts",
+    "cors.ts",
+    "rate-limit.ts",
+    "validate.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useChatbot.ts"
@@ -400,7 +405,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "check-alerts",

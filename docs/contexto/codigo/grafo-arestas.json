@@ -4693,7 +4693,11 @@
    "supabase/functions/_shared/rate-limit.ts"
   ],
   "supabase/functions/chatbot-respond/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/auth.ts",
+   "supabase/functions/_shared/constant-time.ts",
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/check-alerts/index.ts": [
    "supabase/functions/_shared/cors.ts"
