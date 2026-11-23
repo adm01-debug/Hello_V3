@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ed1d3244589a9d66ecf3d63b78cf6fb5b951ed6e",
+  "commit": "e42050a8092d55634c8622b9e37bee557b762506",
   "branch": "main",
-  "data_commit": "2026-11-23T19:58:05-03:00",
+  "data_commit": "2026-11-23T20:10:46-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "e42050a",
+    "data": "2026-11-23",
+    "assunto": "fix: CORS so ecoa origens conhecidas e omite o header nas desconhecidas (E027) (#194)"
+   },
    {
     "sha": "ed1d324",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "9b30ac8",
     "data": "2026-11-23",
     "assunto": "feat: E060 CallContext provider singleton — resolve A-001 (múltiplas instâncias)"
-   },
-   {
-    "sha": "2e60683",
-    "data": "2026-11-23",
-    "assunto": "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)"
    }
   ],
-  "arquivos_mudados_7d": 973,
+  "arquivos_mudados_7d": 975,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 24
+    "mudancas": 25
    },
    {
     "pasta": "src/components/calls",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 19
+    "mudancas": 21
    },
    {
     "pasta": "covout/lib/security",
@@ -203,7 +203,7 @@
    },
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 24
+    "mudancas": 25
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 172
+    "commits": 173
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1678,
   "arquivos_codigo": 1276,
-  "linhas_codigo": 172744,
+  "linhas_codigo": 172765,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 189,
-   "linhas": 21256
+   "linhas": 21277
   },
   "tailwind.config.ts": {
    "arquivos": 1,

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ed1d324458` · branch `main` · 2026-11-23 23:00 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e42050a809` · branch `main` · 2026-11-23 23:13 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2457,7 +2457,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4154 testes em 352 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4157 testes em 352 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2595,6 +2595,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts` | 9 | voipProactiveSnapshot · isProactiveEnabled reflects localStorage pref · setProactiveEnabled writes the pref · shouldRunProactiveCheck false when disabled … |
 | `src/lib/security/__tests__/https-enforcer.coverage.test.ts` | 9 | https-enforcer · does not enforce on localhost · does not enforce on 127.0.0.1 · does not enforce when already https … |
 | `supabase/functions/_shared/__tests__/auth_test.ts` | 9 | auth: requireUser sem header Authorization devolve 401 · auth: requireUser com header que nao e Bearer devolve 401 · auth: header Bearer vazio devolve 401 · auth: erro de credencial devolve o envelope com CORS da origem do chamador … |
+| `supabase/functions/_shared/__tests__/cors.test.ts` | 9 | cors: origem de producao (Vercel) e ecoada · cors: origem desconhecida nao recebe Access-Control-Allow-Origin · cors: subdominio arbitrario de lovable.app nao e aceito por padrao · cors: preview da Lovable em uso continua liberado pela lista … |
 | `supabase/functions/_shared/__tests__/resilience.test.ts` | 9 | retry: sucesso na primeira tentativa não dorme · retry: exponencial sem jitter é determinístico · retry: respeita shouldRetry (não repete em 4xx) · retry: repete em 429 e 5xx … |
 | `supabase/functions/compute-deal-health/__tests__/index.test.ts` | 9 | compute-deal-health: recencyScore decresce 5 pts/dia, mín 0 · compute-deal-health: recencyScore = 100 quando hoje · compute-deal-health: sentimentScore neutro = 50 · compute-deal-health: sentimentScore 100% positivo = 100 … |
 | `supabase/functions/voip-recommendation-insights/__tests__/index.test.ts` | 9 | rejeita requisição sem JWT · rejeita período inválido (validação oneOf) · buildHeatmap gera 7×24 = 168 buckets · buildHeatmap incrementa bucket correto … |
@@ -2689,7 +2690,6 @@ _nenhum item encontrado_
 | `src/lib/audit/__tests__/index.coverage.test.ts` | 6 | audit/index (coverage) · logAuditEvent returns id on success · logAuditEvent defaults details to empty object and resourceId undefined · logAuditEvent returns null on supabase error … |
 | `supabase/functions/__tests__/optimistic-lock.test.ts` | 6 | optimistic-lock: migration canonica do trigger existe · optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT · optimistic-lock: incrementa a versao quando nao ha divergencia · optimistic-lock: conflito e auditado em optimistic_lock_conflicts … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
-| `supabase/functions/_shared/__tests__/cors.test.ts` | 6 | cors: origem de producao (Vercel) e ecoada · cors: origem desconhecida nao e ecoada (cai no default) · cors: sem header Origin nao quebra · cors: CORS_EXTRA_ORIGINS libera origem adicional … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
 | `supabase/functions/record-consent/__tests__/index.test.ts` | 6 | record-consent: OPTIONS devolve preflight · record-consent: sem Authorization responde 401 · record-consent: token invalido nao grava consentimento · record-consent: canal fora do enum nao e aceito … |
 | `supabase/functions/validate-ip/__tests__/index.test.ts` | 6 | validate-ip: CORS preflight retorna headers válidos · validate-ip: rejeita requisição sem Authorization header · validate-ip: extrai IP de cf-connecting-ip prioritariamente · validate-ip: fallback para x-forwarded-for quando cf/real ausentes … |

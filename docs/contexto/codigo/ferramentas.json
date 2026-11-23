@@ -508,7 +508,7 @@
    },
    {
     "host": "hello-v3.vercel.app",
-    "arquivos": 14
+    "arquivos": 16
    },
    {
     "host": "cfmlmcdyjuotqobjapng.supabase.co",
@@ -544,6 +544,10 @@
    },
    {
     "host": "exemplo.com",
+    "arquivos": 2
+   },
+   {
+    "host": "id-preview--e326811c-e59a-4850-bf9e-cfc9d6748662.lovable.app",
     "arquivos": 2
    },
    {
@@ -607,10 +611,6 @@
     "arquivos": 1
    },
    {
-    "host": "id-preview--e326811c-e59a-4850-bf9e-cfc9d6748662.lovable.app",
-    "arquivos": 1
-   },
-   {
     "host": "ip-api.com",
     "arquivos": 1
    },
@@ -636,6 +636,10 @@
    },
    {
     "host": "outro.exemplo.com",
+    "arquivos": 1
+   },
+   {
+    "host": "qualquer-coisa.lovable.app",
     "arquivos": 1
    },
    {

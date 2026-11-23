@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ed1d3244589a9d66ecf3d63b78cf6fb5b951ed6e",
+  "sha": "e42050a8092d55634c8622b9e37bee557b762506",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 23:00 UTC",
+  "generated_at": "2026-11-23 23:13 UTC",
   "files_total": 1725,
   "code_files": 1522,
-  "code_lines": 188756
+  "code_lines": 188777
  },
  "version": "1.3.2",
- "facts_hash": "87851bfa30656dfb",
+ "facts_hash": "93440970f9da9bd1",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34282,7 +34282,7 @@
   {
    "module": "supabase/functions",
    "files": 189,
-   "lines": 21256,
+   "lines": 21277,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -72147,11 +72147,23 @@
    },
    {
     "file": "supabase/functions/_shared/__tests__/cors.test.ts",
-    "name": "cors: origem desconhecida nao e ecoada (cai no default)"
+    "name": "cors: origem desconhecida nao recebe Access-Control-Allow-Origin"
    },
    {
     "file": "supabase/functions/_shared/__tests__/cors.test.ts",
-    "name": "cors: sem header Origin nao quebra"
+    "name": "cors: subdominio arbitrario de lovable.app nao e aceito por padrao"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
+    "name": "cors: preview da Lovable em uso continua liberado pela lista"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
+    "name": "cors: localhost segue liberado para o desenvolvimento"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
+    "name": "cors: sem header Origin nao emite Access-Control-Allow-Origin"
    },
    {
     "file": "supabase/functions/_shared/__tests__/cors.test.ts",
@@ -72723,7 +72735,7 @@
    },
    {
     "file": "supabase/functions/search-calls/__tests__/index.test.ts",
-    "name": "search-calls: preflight OPTIONS de origem desconhecida nao ecoa a origem"
+    "name": "search-calls: preflight OPTIONS de origem desconhecida nao emite CORS"
    },
    {
     "file": "supabase/functions/send-notification/__tests__/index.test.ts",
@@ -116308,7 +116320,7 @@
   },
   "supabase/functions/_shared/cors.ts": {
    "path": "supabase/functions/_shared/cors.ts",
-   "lines": 45,
+   "lines": 48,
    "exports": [
     "function getCorsOrigin",
     "function buildCorsHeaders",
@@ -116320,7 +116332,7 @@
    "rule_comments": [
     "* @deprecated Use buildCorsHeaders(req) instead for proper origin validation */"
    ],
-   "doc": "Centralized CORS configuration for all Edge Functions Restrict to known origins in production; fallback to first allowed origin"
+   "doc": "Centralized CORS configuration for all Edge Functions Only known origins are echoed back; unknown origins get no CORS header"
   },
   "supabase/functions/_shared/external-payload-schemas.ts": {
    "path": "supabase/functions/_shared/external-payload-schemas.ts",
@@ -116713,15 +116725,18 @@
   },
   "supabase/functions/_shared/__tests__/cors.test.ts": {
    "path": "supabase/functions/_shared/__tests__/cors.test.ts",
-   "lines": 51,
+   "lines": 69,
    "is_test": true,
    "env": [
     "CORS_EXTRA_ORIGINS"
    ],
    "tests": [
     "cors: origem de producao (Vercel) e ecoada",
-    "cors: origem desconhecida nao e ecoada (cai no default)",
-    "cors: sem header Origin nao quebra",
+    "cors: origem desconhecida nao recebe Access-Control-Allow-Origin",
+    "cors: subdominio arbitrario de lovable.app nao e aceito por padrao",
+    "cors: preview da Lovable em uso continua liberado pela lista",
+    "cors: localhost segue liberado para o desenvolvimento",
+    "cors: sem header Origin nao emite Access-Control-Allow-Origin",
     "cors: CORS_EXTRA_ORIGINS libera origem adicional",
     "cors: preflight anuncia os headers usados pelo front",
     "cors: deprecado corsHeaders reflete origem de producao"
@@ -120791,7 +120806,7 @@
     "search-calls: sem header Authorization devolve 401 antes de qualquer consulta",
     "search-calls: header Authorization vazio tambem devolve 401",
     "search-calls: preflight OPTIONS responde com CORS da origem permitida",
-    "search-calls: preflight OPTIONS de origem desconhecida nao ecoa a origem"
+    "search-calls: preflight OPTIONS de origem desconhecida nao emite CORS"
    ]
   },
   "supabase/functions/send-notification/index.ts": {
@@ -124438,10 +124453,24 @@
   }
  },
  "git": {
-  "sha": "ed1d3244589a9d66ecf3d63b78cf6fb5b951ed6e",
+  "sha": "e42050a8092d55634c8622b9e37bee557b762506",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e42050a",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: CORS so ecoa origens conhecidas e omite o header nas desconhecidas (E027) (#194)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/_shared/__tests__/cors.test.ts",
+     "supabase/functions/_shared/cors.ts",
+     "supabase/functions/health-check/__tests__/index.test.ts",
+     "supabase/functions/search-calls/__tests__/index.test.ts",
+     "supabase/functions/voip-trunks-healthcheck/index.test.ts"
+    ]
+   },
    {
     "sha": "ed1d324",
     "date": "2026-11-23",
@@ -124811,21 +124840,12 @@
      "src/components/executive/ConversationIntelligenceCard.tsx",
      "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx"
     ]
-   },
-   {
-    "sha": "2e77319",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "feat: humor da chamada ativa vem do dado real, nao de \"Positivo\" fixo (#163)",
-    "files": [
-     "src/components/calls/softphone/ActiveCallDisplay.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    24
+    25
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124834,6 +124854,10 @@
    [
     "src/components/calls/ActiveCallBar.tsx",
     3
+   ],
+   [
+    "supabase/functions/search-calls/__tests__/index.test.ts",
+    2
    ],
    [
     "src/pages/Login.tsx",
@@ -124848,8 +124872,20 @@
     2
    ],
    [
-    "src/components/calls/softphone/ActiveCallDisplay.tsx",
-    2
+    "supabase/functions/_shared/__tests__/cors.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/_shared/cors.ts",
+    1
+   ],
+   [
+    "supabase/functions/health-check/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/voip-trunks-healthcheck/index.test.ts",
+    1
    ],
    [
     "bun.lock",
@@ -124885,22 +124921,6 @@
    ],
    [
     "supabase/functions/send-notification/__tests__/index.test.ts",
-    1
-   ],
-   [
-    "supabase/functions/send-notification/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
-    1
-   ],
-   [
-    "supabase/functions/notify-blocked-ip/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/html.ts",
     1
    ]
   ]

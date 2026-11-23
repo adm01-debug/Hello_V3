@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: CORS so ecoa origens conhecidas e omite o header nas desconhecidas (E027) (#194)",
    "chore: remove xlsx, dependencia sem uso e com duas falhas altas sem correcao (E045) (#193)",
    "fix: request-password-reset responde o mesmo corpo nos quatro caminhos (E031) (#192)",
    "fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)",
-   "fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)",
-   "fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)"
+   "fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)"
   ]
  },
  "pr_template": null,
