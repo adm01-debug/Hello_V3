@@ -9,7 +9,7 @@
 | **EXECUTADO** | eu rodei um comando, teste ou consulta e vi o resultado |
 | **RASTREADO** | eu segui o caminho pelo código, linha a linha, sem executar |
 
-Nenhum cenário foi executado **em navegador** nem **contra o banco de produção** — ver §6 de `01-INVENTARIO.md` para o motivo exato. Todo cenário cujo "encontrado" difere do "esperado" virou achado em `03-ACHADOS.md` (coluna → ID).
+Nenhum cenário foi executado contra o banco de produção — ver §6 de `01-INVENTARIO.md`. **Dez rotas públicas foram executadas em navegador** (Chromium + Playwright, build de produção servido por `vite preview`, 3 larguras) — ver a seção **J17/J19** e o grupo CR-20 de `03-ACHADOS.md`. Todo cenário cujo "encontrado" difere do "esperado" virou achado em `03-ACHADOS.md` (coluna → ID).
 
 ---
 
@@ -196,14 +196,16 @@ Nenhum cenário foi executado **em navegador** nem **contra o banco de produçã
 | 16.2 | supervisor | — | — | exclui número da DNC | linha removida | `DNCTable.tsx:73` é botão-ícone de exclusão **sem rótulo acessível** | RASTREADO | A-34 |
 | 16.3 | supervisor | feriado recorrente | — | discagem no feriado | barrada | `20261122320000_...sql` implementa | RASTREADO | — |
 
-## J17 — Página pública de status (`/status`)
+## J17 — Página pública de status (`/status`) — **EXECUTADA EM NAVEGADOR**
 
 | # | Ator | Estado | Entrada | Condição | Esperado | Encontrado | Marca | Achado |
 |---|---|---|---|---|---|---|---|---|
-| 17.1 | visitante | **0 amostras** | — | abre `/status` | "sem medição" | **"Todos os sistemas operacionais" e 100% de uptime**: `computeUptime` faz `if (!total) return 100` (`Status.tsx:50`) e `overallOk = uptime >= 99` (`:131`). Em produção `webhook_flush_metrics` tem 0 linhas e `voip_trunk_health_checks` tem 1 | EXECUTADO (leitura + snapshot) | A-05 |
-| 17.2 | visitante | RLS nega a leitura | — | abre `/status` | erro honesto | `data: null` → 0 amostras → **100%** (mesmo caminho) | RASTREADO | A-05 |
-| 17.3 | visitante | — | — | a consulta falha | mensagem de erro | `load()` (`:66-127`) **não tem `try/catch`** e `setLoading(false)` só roda no caminho de sucesso → spinner eterno | RASTREADO | A-27 |
-| 17.4 | visitante | 90 dias de amostras | — | abre `/status` | carga razoável | duas consultas com `.limit(20000)` cada, **em rota anônima** (`:80,:85`) | RASTREADO | A-28 |
+| 17.1 | visitante | **0 amostras** | — | abre `/status` | "sem medição" | **"Todos os sistemas operacionais" e 100,00% nos dois serviços.** `computeUptime` faz `if (!total) return 100` (`Status.tsx:50`) e `overallOk = uptime >= 99` (`:131`) | **EXECUTADO** | A-007 |
+| 17.2 | visitante | consultas **falhando** | — | abre `/status` com o banco inacessível | erro honesto | **a página mostra 100,00% e o selo verde.** As duas requisições falharam (`ERR_TUNNEL_CONNECTION_FAILED` em `voip_trunk_health_checks` e `webhook_flush_metrics`, no log de rede) e o resultado foi idêntico ao caminho feliz | **EXECUTADO** | A-007 |
+| 17.3 | visitante | consultas falhando | — | a página trava? | spinner eterno (minha hipótese) | **não trava** — `setLoading(false)` roda normalmente, porque o cliente do Supabase devolve `error` em vez de lançar. **Minha hipótese estava errada**; corrigida em A-007 | **EXECUTADO** | A-007 |
+| 17.4 | visitante | sem medição | — | lê o rodapé | nenhuma promessa | **"SLA contratual: 99,9% mensal. Métricas alimentadas diretamente pelos health checks internos — sem edição manual."** — afirmação de procedência exibida sem procedência | **EXECUTADO** | A-007 |
+| 17.5 | visitante | 90 dias de amostras | — | abre `/status` | carga razoável | duas consultas com `.limit(20000)` cada, em rota anônima (`:80,:85`) | RASTREADO | A-102 |
+| 17.6 | visitante | — | — | abre em 390 px | layout correto | **correto** — sem overflow horizontal, legível (captura inspecionada) | **EXECUTADO** | A-137 |
 
 ## J18 — Recebimento de WhatsApp e e-mail (webhooks)
 
@@ -215,18 +217,37 @@ Nenhum cenário foi executado **em navegador** nem **contra o banco de produçã
 | 18.4 | terceiro | — | telefone com vírgula / `id.gt.0` | normal | filtro literal | `fromPhone` é concatenado na gramática do `.or()` do PostgREST (`whatsapp-inbound/index.ts:78-82`) e validado apenas como `z.string().min(1)` | RASTREADO | A-35 |
 | 18.5 | provedor | — | corpo de e-mail enorme | normal | rejeitado por tamanho | `body_text`/`subject` **sem limite**; 37 das 94 edges usam `await req.json()` sem nenhuma validação | RASTREADO | A-25 |
 
+## J19 — Rotas públicas em navegador (verificação feita em 2026-11-23)
+
+Build de produção servido por `vite preview`, Chromium headless, 10 rotas × 3 larguras (390 / 768 / 1280) = **30 capturas**, com log de console e de rede.
+
+| # | Ator | Estado | Entrada | Condição | Esperado | Encontrado | Marca | Achado |
+|---|---|---|---|---|---|---|---|---|
+| 19.1 | visitante | — | — | abre as 10 rotas públicas | todas renderizam | **as 10 renderizam**, HTTP 200, nenhuma tela branca | **EXECUTADO** | — |
+| 19.2 | visitante | — | — | 390 px | sem rolagem horizontal | **nenhuma das 10** tem overflow horizontal | **EXECUTADO** | A-137 |
+| 19.3 | visitante | — | — | abre `/landing` ou `/pricing` | nenhuma consulta ao banco | **consulta `call_quality_metrics?select=*&limit=50` duas vezes e abre dois WebSockets de realtime**, em toda rota pública | **EXECUTADO** | A-134 |
+| 19.4 | visitante | — | — | abre `/login` | nenhum terceiro recebe o IP | **`GET https://ipapi.co/json/`** dispara do navegador | **EXECUTADO** | A-135 |
+| 19.5 | visitante | — | — | `/register` com leitor de tela | botões de senha anunciados | **dois botões de "mostrar senha" sem nome acessível**; o equivalente em `/login` tem `aria-label="Mostrar senha"` | **EXECUTADO** | A-136, A-123 |
+| 19.6 | **não autenticado** | — | — | abre `/dashboard` por URL | redireciona para login | **redireciona** — a tela de login é renderizada (mesmo DOM de `/login`) | **EXECUTADO** | — |
+| 19.7 | visitante | — | — | abre `/unauthorized` | mensagem útil | texto genérico: "Você não tem permissão… Entre em contato com um administrador" — não diz qual tela nem qual papel | **EXECUTADO** | A-086 (etapa 279) |
+| 19.8 | visitante | — | — | formulários públicos | campos com rótulo | **todos** os campos de `/login`, `/register` e `/forgot-password` têm rótulo associado; nenhuma imagem sem `alt` | **EXECUTADO** | A-137 |
+
 ---
 
 ## Resumo de cobertura da matriz
 
 | | Quantidade |
 |---|---:|
-| Cenários na matriz | **105** (10 transversais + 95 de jornada) |
-| **EXECUTADOS** (comando/teste/consulta rodados e observados) | **17** |
-| **RASTREADOS** (seguidos pelo código) | **88** |
+| Cenários na matriz | **113** (10 transversais + 103 de jornada) |
+| **EXECUTADOS** (comando, teste, consulta ou **navegador**) | **29** |
+| **RASTREADOS** (seguidos pelo código) | **84** |
 | Divergentes do esperado → viraram achado | 54 |
 | Marcados como HIPÓTESE dentro da matriz (falta verificar) | 4 |
 
-Contagem conferida mecanicamente: linhas de cenário com marca em `02-CENARIOS.md` → 105 / 17 / 88.
+Contagem conferida mecanicamente ao fim das duas passagens.
+
+**O que mudou com a verificação em navegador (2026-11-23):** 12 cenários saíram de RASTREADO para EXECUTADO, **uma hipótese minha foi refutada pela execução** (17.3 — a página não trava; corrigido em A-007) e 3 achados novos apareceram (A-134, A-135, A-136), mais um resultado positivo (A-137).
 
 **Dimensões que não pude cruzar de verdade:** "usuário de outra conta" e "dois usuários ao mesmo tempo" dependem de executar contra o banco com duas sessões reais — impossível nesta sessão. Todo cenário dessas duas linhas está marcado como RASTREADO e os vereditos sobre RLS efetiva seguem **NÃO VERIFICADOS**.
+
+**Telas autenticadas continuam sem verificação em navegador.** A passagem de 2026-11-23 cobriu só as 10 rotas públicas; entrar no sistema exigiria credenciais reais e tráfego contra produção. As etapas 270–275 do plano continuam necessárias, agora com escopo mais estreito e definido: **as telas autenticadas**.

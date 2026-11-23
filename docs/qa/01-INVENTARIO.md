@@ -36,6 +36,7 @@ Se qualquer uma dessas suposições estiver errada, a ordem das ondas do plano (
 | E2E | Playwright, `testDir: './tests/e2e'` | `playwright.config.ts:4` |
 | Testes de edge | `deno test -A supabase/functions/` | `.github/workflows/ci.yml:71-76` |
 | Build | `vite build` → `dist/`, **221 assets** | execução própria: `✓ built in 17.94s` |
+| Navegador | Chromium + Playwright **disponíveis neste ambiente** (`/opt/pw-browsers/chromium`) | usado em 2026-11-23 para capturar as 10 rotas públicas |
 | Deploy | **duas trilhas**: Lovable (commita direto em `main` como `gpt-engineer-app[bot]`) e Vercel (`homepage: https://hello-v3.vercel.app` na API do GitHub); `vercel.json` tem **só** um rewrite de SPA | `vercel.json` (3 linhas), `AGENTS.md`, metadados do repo |
 | Ambientes | `main` → produção. **Não há ambiente de staging versionado.** O CI usa o GitHub Environment `e2e` apenas para injetar secrets | `.github/workflows/ci.yml:16` (`environment: e2e`) |
 | Gerenciador de pacotes | **três lockfiles coexistem**: `bun.lock` (usado pelo CI), `bun.lockb`, `package-lock.json` | raiz do repo; `ci.yml:25` (`bun install`) |
@@ -173,6 +174,7 @@ Comandos rodados por mim neste ambiente, com a saída observada:
 | Testes unitários | `npx vitest run` | **3.289 testes passam; 2 arquivos de teste FALHAM na coleta** (`useFinancialImpact.property.test.ts`, `executive-dashboard-utils.test.ts`) por `Missing VITE_SUPABASE_URL` |
 | Build | `npx vite build` | exit 0, 221 assets, `✓ built in 17.94s`, aviso de chunk > 900 kB |
 | Orçamento de bundle | `node scripts/check-bundle-budget.mjs` | exit 0 — "nenhum asset acima do orçamento" (`index.js` = 319,6 kB gzip, 92% de um limite de 346 kB) |
+| **Rotas públicas em navegador** | `vite preview` + Playwright, 10 rotas × 3 larguras | **30 capturas**, todas HTTP 200, zero overflow horizontal a 390 px; log de console e de rede coletado |
 | CI real | API do GitHub, workflow runs de `main` | run **45063328728** em `b712310` = **success**. O CI está **verde**, não mais vermelho |
 | PRs abertas | API do GitHub | **1 aberta**: PR #160 (`feat: 'Alterar foto' do perfil`), toca `ProfileSettings.tsx`, `useAvatar.ts` e uma migration — **sem conflito** com esta auditoria (só escrevo em `docs/qa/`) |
 

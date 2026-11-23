@@ -116,8 +116,22 @@ Esta causa raiz é o que impede a CR-1 de ser percebida. `AGENTS.md` proíbe pai
 ```
 Com base zerada: 0,4·75 + 0,3·75 + 0,2·100 + 0,1·100 = **82,5 → 83**, exibido em verde com rótulo `SAUDÁVEL` (`src/components/network/VoipHealthScoreCard.tsx:26-29`). Dado que a CR-1 garante base zerada, **é exatamente este o número que o dono vê hoje**.
 
-### A-007 — Página pública `/status`: 100% de uptime a partir de nenhuma amostra, e spinner eterno em caso de erro
-**Severidade: Alta · Confiança: CONFIRMADO · Marca: EXECUTADO (leitura + snapshot do banco)**
+### A-007 — Página pública `/status` anuncia "Todos os sistemas operacionais" e 100% com as consultas falhando
+**Severidade: Alta · Confiança: CONFIRMADO · Marca: EXECUTADO — *verificado em navegador em 2026-11-23***
+
+> **Esta é a única afirmação da auditoria provada com a tela aberta.** Servi o build de produção (`vite preview`) com credenciais inválidas, de modo que **as duas consultas ao banco falharam** (`ERR_TUNNEL_CONNECTION_FAILED` em `voip_trunk_health_checks` e `webhook_flush_metrics`, capturado no log de rede). A página renderizou:
+> - selo verde **"Todos os sistemas operacionais"**;
+> - **Trunks VoIP — 100.00%**, "sem incidentes";
+> - **Webhooks & Integrações — 100.00%**, "sem incidentes";
+> - e, ao pé: **"SLA contratual: 99,9% mensal. Métricas alimentadas diretamente pelos health checks internos — sem edição manual."**
+>
+> Essa última frase é uma afirmação **contratual** de que os números vêm de medição real — exibida exatamente quando não houve medição nenhuma. É o que separa este achado de um painel decorativo interno: está numa página pública, voltada a cliente, e afirma a própria procedência.
+>
+> **Correção à primeira redação deste achado:** eu havia escrito que o erro deixaria a página "em spinner eterno". **Está errado e a execução mostrou.** O cliente do Supabase não lança: as duas consultas voltam com `error` preenchido e `data: null`, o código segue pelo caminho normal e `setLoading(false)` (`:124`) **roda**. O spinner eterno exigiria uma exceção de verdade, não um erro de consulta — passa a ser HIPÓTESE. O que é fato, e pior, é que a falha total vira 100%.
+>
+> O horário exibido ("atualizado 01:20") é o `lastUpdate` do render, não a hora do dado — o mesmo padrão da A-005.
+
+**Severidade original mantida (Alta) · Confiança: CONFIRMADO · Marca: EXECUTADO**
 
 ```ts
 src/pages/Status.tsx:50   if (!total) return 100;                      // computeUptime
@@ -1045,15 +1059,59 @@ Padrão `error: err instanceof Error ? err.message : …` em 28 `index.ts` (`ocr
 
 ---
 
+---
+
+# CR-20 — Achados da verificação em navegador (2026-11-23)
+
+**Como foram obtidos.** Depois de fechar a primeira versão desta auditoria, descobri que este ambiente tem **Chromium e Playwright instalados** — ou seja, a camada que eu havia declarado como não coberta era, em parte, alcançável. Servi o build de produção com `vite preview` e capturei **10 rotas públicas em 3 larguras (390 / 768 / 1280) = 30 telas**, com log de console e de rede. Tudo o que segue é **EXECUTADO**.
+
+Isto não substitui as etapas 270–275 do plano: elas cobrem as **telas autenticadas**, que continuam sem verificação (exigiriam credenciais reais e tráfego contra produção).
+
+### A-134 — Toda página pública consulta `call_quality_metrics` e abre um canal de realtime, duas vezes
+**Severidade: Média · Confiança: CONFIRMADO · Marca: EXECUTADO (log de rede das 30 capturas)**
+
+Em **todas as 10 rotas**, inclusive `/landing`, `/pricing`, `/vs/3cplus`, `/marketplace` e `/unauthorized`, o navegador de um visitante **anônimo** dispara:
+```
+GET  /rest/v1/call_quality_metrics?select=*&order=created_at.desc&limit=50      (duas vezes por carga)
+WSS  /realtime/v1/websocket?apikey=…&vsn=2.0.0                                  (duas vezes por carga)
+```
+Um hook de monitoramento de qualidade VoIP está montado **acima** do roteador, então ele roda em página de marketing. Três problemas somados: (1) `select=*` numa tabela operacional, para visitante que não logou — se a policy de leitura permitir, é exposição de métrica interna (as policies dessa tabela estão entre as 263 sem cláusula `TO`, A-069); (2) a chamada é **duplicada** a cada carga, o que sugere montagem dupla do hook (`StrictMode` ou dois consumidores); (3) um canal WebSocket por visitante de página de marketing é custo de conexão sem contrapartida — e o banco tem `max_connections: 60` (A-105, etapa 257).
+
+**Impacto.** Quem visita a página de preços abre conexão e consulta no banco de produção sem nunca ter entrado no sistema.
+
+### A-135 — A tela de login chama um terceiro de geolocalização direto do navegador
+**Severidade: Média · Confiança: CONFIRMADO · Marca: EXECUTADO (log de rede)**
+
+`/login` e `/dashboard` disparam `GET https://ipapi.co/json/` do navegador do usuário. Três consequências: (1) o **IP de cada pessoa que abre a tela de login** é enviado a um terceiro que não é fornecedor declarado do produto; (2) é um ponto de falha externo no caminho de entrada — se o provedor cair ou limitar, o login pode degradar (não verifiquei o tratamento de falha); (3) **é um segundo provedor de geolocalização**: a edge `validate-geo/index.ts:73` usa `ip-api.com`, em HTTP puro (A-104, etapa 228). Dois provedores diferentes, um no cliente e outro no servidor, para a mesma pergunta.
+
+**Impacto.** Dado pessoal (IP) de todo visitante da tela de login sai para um terceiro não declarado — com implicação de LGPD — e a entrada no sistema depende de um serviço de fora.
+
+### A-136 — Os dois botões de "mostrar senha" do cadastro não têm nome acessível, e a tela ao lado tem
+**Severidade: Média · Confiança: CONFIRMADO · Marca: EXECUTADO (árvore de acessibilidade das 30 capturas)**
+
+Em `/register`, os **dois** botões de revelar senha (campos "Senha" e "Confirmar Senha") não têm texto, `aria-label`, `title` nem `sr-only` — são `<button>` com um `<svg>` dentro. Em `/login`, o botão equivalente **tem** `aria-label="Mostrar senha"`. O padrão correto existe na tela irmã e não foi aplicado.
+
+É a confirmação executada da A-123 (71 botões-ícone sem rótulo), agora com o agravante de estar na **rota pública de criação de conta**: quem usa leitor de tela não consegue conferir a senha que digitou ao se cadastrar.
+
+### A-137 — Resultado positivo: nenhuma das 10 rotas públicas quebra em largura de celular
+**Severidade: — (não é defeito) · Confiança: CONFIRMADO · Marca: EXECUTADO**
+
+Medido em 390 px nas 10 rotas: **zero overflow horizontal** (`scrollWidth > clientWidth` falso em todas), nenhuma imagem sem `alt`, nenhum campo de formulário sem rótulo associado, e todas as páginas renderizaram conteúdo (nenhuma tela branca). A inspeção visual das capturas de `/status`, `/login` e `/register` em 390 px mostra layout correto e legível.
+
+**Por que registro um resultado positivo:** a etapa 271 do plano ("corrigir o que a conferência de celular encontrar") pode ser desnecessária para as rotas públicas. Quem executar o plano deve começar pelas telas **autenticadas**, que continuam sem verificação — não repetir o que já está medido aqui.
+
+
 ## Contagem
 
 | Severidade | Quantidade |
 |---|---:|
 | **Crítica** | **9** (A-001, A-002, A-012, A-019, A-023, A-024, A-025, A-042, A-057) |
 | **Alta** | **55** |
-| **Média** | **51** |
+| **Média** | **54** |
 | **Baixa** | **18** |
-| **Total** | **133** |
+| **Total** | **136** + 1 resultado positivo registrado (A-137) |
+
+Os três últimos (A-134, A-135, A-136) vieram da verificação em navegador feita depois do fechamento da primeira versão — ver **CR-20**.
 
 Contagem conferida mecanicamente: `grep -c "^### A-" 03-ACHADOS.md` → 133; `grep -oE "\*\*Severidade: [A-Za-zéí]+" | sort | uniq -c` → 9 / 55 / 51 / 18. IDs de A-001 a A-133 sem lacuna.
 

@@ -22,7 +22,7 @@ O sistema é grande e bem construído na base — mas **as ligações não estã
 | # | Risco | O que acontece na prática |
 |---|---|---|
 | 1 | **As ligações não são gravadas** | Nenhum atendimento entra no histórico. Relatório, ranking, avaliação e cobrança de meta ficam sem base. |
-| 2 | **Os painéis não conseguem ficar vermelhos** | Uma queda real de telefonia, de segurança ou de desempenho não gera chamado: o painel continua verde. Monitor que nunca alarma é pior que não ter monitor. |
+| 2 | **Os painéis não conseguem ficar vermelhos** — *provado com a tela aberta* | Abri a página pública `/status` com o banco **inacessível**: ela anunciou **"Todos os sistemas operacionais"**, **100,00%** nos dois serviços, e no rodapé *"SLA contratual: 99,9% mensal. Métricas alimentadas diretamente pelos health checks internos — sem edição manual"*. Uma queda real não gera chamado, e a página promete ao cliente que o número veio de medição. |
 | 3 | **Qualquer estranho trava o acesso de qualquer operador** | Sabendo só o e-mail de um funcionário, uma pessoa de fora consegue bloquear a conta dele — e também zerar o contador de tentativas para testar senhas sem limite. |
 | 4 | **A busca nas gravações de chamada não pede login** | Quem alcançar esse endereço consegue pesquisar o conteúdo das ligações gravadas, com privilégio de serviço (sem as restrições por usuário). |
 | 5 | **Uma das telas de discagem ignora a lista "não perturbe"** | Discando pela tela `/calls` em vez da `/phone-dialer`, é possível ligar para quem pediu para não ser ligado e fora do horário legal. Risco de multa. |
@@ -40,9 +40,9 @@ O sistema é grande e bem construído na base — mas **as ligações não estã
 |---|---:|---|
 | **Crítica** | **9** | perda ou vazamento de dado, falha de segurança, ou fluxo principal quebrado |
 | **Alta** | **55** | função importante falha ou dá resultado errado |
-| **Média** | **51** | funciona com defeito ou fragilidade |
+| **Média** | **54** | funciona com defeito ou fragilidade |
 | **Baixa** | **18** | acabamento e organização |
-| **Total** | **133** | |
+| **Total** | **136** | mais 1 resultado positivo registrado |
 
 **O plano:** 300 passos, em 8 ondas, na ordem em que devem ser feitos. Cada passo é uma mudança pequena, com o endereço no código, como verificar que funcionou, e o que **não** mexer. **107 deles precisam da sua aprovação** antes de entrar em produção (mudança no banco, segredos, infraestrutura, exclusão de dado, ou decisão de custo) — esses ficam esperando você.
 
@@ -66,10 +66,16 @@ Declarado, não escondido — e importante, porque limita o que afirmo:
 | Não coberto | Por quê |
 |---|---|
 | **O banco de dados por dentro** (dados reais, quais regras de acesso valem de fato, quais alterações de estrutura foram aplicadas) | Não existe conexão com o banco oficial nesta sessão: as conexões disponíveis apontam para outros produtos seus, e usá-las seria ler banco alheio. O endereço do banco certo é bloqueado pela rede do ambiente. **Tudo o que afirmo sobre o banco vem de arquivos ou de um retrato automático de 2026-11-20.** |
-| **Qualquer tela aberta em navegador** | Nenhuma tela foi aberta. Problemas de layout, de celular, de teclado e de tema escuro **não têm um único achado nesta auditoria** — é a maior lacuna, e os passos 270 a 275 do plano existem exatamente para preenchê-la. |
+| **As telas de dentro do sistema** | Abri **as 10 páginas públicas** em navegador, em 3 larguras (30 capturas) — e isso rendeu 3 problemas novos e um resultado positivo. As telas **de dentro** (que exigem login) continuam sem verificação: entrar exigiria credenciais reais e tráfego contra produção. Os passos 270 a 275 existem para isso. |
 | **Testes das funções de backend** | A ferramenta necessária não está instalada no ambiente. Os arquivos foram lidos, nunca executados. |
 | **Qual endereço serve a produção** | O projeto tem duas formas de publicar (Lovable e Vercel) e nada no código diz qual é a oficial. Isso bloqueia três passos do plano e é a pergunta do passo 030. |
 | **Se o telefone funciona de verdade hoje** | A única linha telefônica cadastrada é `sip.exemplo.com`, de teste, sem nenhuma verificação de saúde, e com zero chamadas em 7 dias. **Pelo que o banco mostra, não há operação telefônica acontecendo.** Se isso estiver errado, me diga: muda a prioridade do plano. |
+
+## 6b. Uma correção na própria auditoria
+
+Depois de fechar a primeira versão, percebi que este ambiente tinha navegador instalado — ou seja, a camada que eu havia declarado como impossível de verificar era, em parte, alcançável. Abri as 10 páginas públicas. O resultado justificou: **provei em execução** o risco nº 2 (que antes era leitura de código), achei 3 problemas novos (toda página pública consulta o banco e abre conexão de tempo real; a tela de login manda o IP de quem entra para um serviço de fora; os dois botões de "mostrar senha" do cadastro não funcionam com leitor de tela) — e **uma hipótese minha foi refutada pela execução**: eu havia escrito que a página de status travaria em "carregando" quando o banco falhasse, e ela não trava; mostra 100%. Está corrigido no documento de achados.
+
+Fica a lição para o plano: onde houver como executar, executar — ler o código é a segunda melhor coisa.
 
 ## 7. Por onde começar
 
@@ -89,7 +95,7 @@ O resto está em ordem de impacto no arquivo `04-PLANO.md`.
 |---|---|
 | **`00-RESUMO.md`** | este documento |
 | `01-INVENTARIO.md` | o mapa do sistema e o registro honesto do que foi e do que não foi revisado |
-| `02-CENARIOS.md` | 105 situações testadas por jornada (17 executadas de verdade, 88 seguidas pelo código) |
-| `03-ACHADOS.md` | os 133 problemas, agrupados por causa, cada um com o endereço no código |
+| `02-CENARIOS.md` | 113 situações testadas por jornada (29 executadas de verdade, 84 seguidas pelo código) |
+| `03-ACHADOS.md` | os 136 problemas, agrupados por causa, cada um com o endereço no código |
 | `04-PLANO.md` | os 300 passos e as instruções para quem vai executar |
 | `05-PROGRESSO.md` | a lista que o executor vai marcando, mais as 19 decisões que dependem de você |

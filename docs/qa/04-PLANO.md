@@ -4577,13 +4577,14 @@ const handleBeforeUnload = async () => {
 [ ] deploy confirmado, quando se aplica
 [ ] etapa marcada no arquivo de progresso
 
-## Etapa 228 — Trocar HTTP por HTTPS na consulta que decide bloqueio geográfico
-**Onda / Severidade / Camada:** 5 / Baixa / Edge Function
-**Achados resolvidos:** A-104
+## Etapa 228 — Unificar e proteger a consulta de geolocalização (servidor e navegador)
+**Onda / Severidade / Camada:** 5 / Média / Edge Function + Frontend
+**Achados resolvidos:** A-104, A-135
 **Problema hoje:** `supabase/functions/validate-geo/index.ts:73` chama `http://ip-api.com/json/${clientIp}?fields=…` — **sem TLS** e sem prazo. A resposta que decide se o login é permitido viaja em claro e pode ser alterada no caminho; e se o provedor travar, a tela de login pendura. (Não há SSRF aqui: `clientIp` é validado como literal em `_shared/client-ip.ts:6-14`.)
 **Causa raiz:** o plano gratuito do `ip-api.com` não oferece HTTPS.
 **Caminho recomendado:** não dá para só trocar o esquema — o provedor gratuito não aceita. Três saídas, em ordem de preferência: (1) usar o país que o **próprio provedor de borda** já informa (Vercel envia `x-vercel-ip-country`; Cloudflare, `cf-ipcountry`) — é grátis, confiável e não tem salto de rede; (2) assinar um provedor com HTTPS; (3) manter o atual **com prazo** e tratar falha como "não sei" (que, pela etapa 142, tem comportamento definido). Verifique a opção (1) primeiro: ela provavelmente resolve sem custo.
-**Arquivos e objetos a tocar:** `supabase/functions/validate-geo/index.ts`.
+**Além disso (A-135):** medido em navegador em 2026-11-23 — `/login` e `/dashboard` disparam `GET https://ipapi.co/json/` **do navegador do usuário**. São **dois provedores de geolocalização diferentes** para a mesma pergunta (este no cliente, `ip-api.com` no servidor), e o do cliente envia o **IP de toda pessoa que abre a tela de login** para um terceiro não declarado — implicação de LGPD, e um ponto de falha externo no caminho de entrada. Remova a chamada do cliente: se a informação é necessária, ela vem da mesma fonte do servidor, pela edge já autenticada. Confirme o que o front faz com a resposta antes de remover (pode estar alimentando o bloqueio geográfico ou um registro de acesso).
+**Arquivos e objetos a tocar:** `supabase/functions/validate-geo/index.ts`; o ponto do front que chama `ipapi.co` (`grep -rn "ipapi" src/`).
 **Não tocar / armadilhas:** o cabeçalho do provedor de borda **só existe** se a requisição passar por ele — uma chamada direta à edge do Supabase não tem. Trate a ausência.
 **Depende de:** 142, 208 · **Libera:** —
 **Risco e como reverter:** médio (decide acesso).
@@ -5066,13 +5067,14 @@ Cada evento dispara `fetchMetrics`, que faz **3 consultas**. Em call center as l
 [ ] deploy confirmado, quando se aplica
 [ ] etapa marcada no arquivo de progresso
 
-## Etapa 253 — Pausar realtime e poll quando a aba está oculta
+## Etapa 253 — Pausar realtime e poll quando a aba está oculta, e tirar o monitoramento das páginas públicas
 **Onda / Severidade / Camada:** 6 / Média / Hooks
-**Achados resolvidos:** A-105
+**Achados resolvidos:** A-105, A-134
 **Problema hoje:** `usePageVisibility` existe e está integrado em `useSecurityMonitoringData` e `useExtensionsOverview` (item B7 das pendências) — **só nesses dois**. Os demais hooks com poll e realtime continuam consultando com a aba em segundo plano, o que num call center significa dezenas de abas abertas consumindo banco sem ninguém olhando.
 **Causa raiz:** a integração foi feita onde doía e não generalizada.
 **Caminho recomendado:** aplique `usePageVisibility` aos hooks com `setInterval` ou `refetchInterval`, começando pelos de painel (`useQueueMetrics`, `useVoipAnomalies`, `useExecutiveDashboard`). Use também `refetchIntervalInBackground: false` no React Query, como o B7 já fez. **Exceção importante:** o softphone e a chamada ativa **não** devem pausar — o agente pode estar em outra aba durante a ligação.
-**Arquivos e objetos a tocar:** os hooks de painel; `src/hooks/usePageVisibility.ts` (sem mudança).
+**Além disso (A-134), e faça esta parte primeiro:** medido em navegador em 2026-11-23 — **toda** rota pública (`/landing`, `/pricing`, `/vs/3cplus`, `/marketplace`, `/unauthorized`, `/login`…) dispara `GET /rest/v1/call_quality_metrics?select=*&order=created_at.desc&limit=50` **duas vezes** e abre **dois** WebSockets de realtime, para visitante anônimo. Um hook de monitoramento de qualidade VoIP está montado acima do roteador. Mova-o para dentro da área autenticada (ou condicione-o à sessão), troque `select=*` pelas colunas usadas, e descubra por que a chamada é duplicada — montagem dupla do hook é o suspeito. **Verifique também** a policy de leitura de `call_quality_metrics`: se ela permite `anon`, métrica operacional está pública (ver A-069 e etapa 144).
+**Arquivos e objetos a tocar:** os hooks de painel; o ponto de montagem do monitor de qualidade (`src/App.tsx` ou `AppLayout`); `src/hooks/usePageVisibility.ts` (sem mudança).
 **Não tocar / armadilhas:** pausar o canal de chamada ativa perderia eventos de uma ligação em curso. Liste explicitamente os hooks que **não** devem pausar, e escreva por quê.
 **Depende de:** 244 · **Libera:** —
 **Risco e como reverter:** baixo.
@@ -5260,12 +5262,13 @@ Cada evento dispara `fetchMetrics`, que faz **3 consultas**. Em call center as l
 [ ] deploy confirmado, quando se aplica
 [ ] etapa marcada no arquivo de progresso
 
-## Etapa 263 — Varrer os botões-ícone restantes
-**Onda / Severidade / Camada:** 7 / Baixa / Frontend
-**Achados resolvidos:** A-123
+## Etapa 263 — Varrer os botões-ícone restantes, começando pelo cadastro
+**Onda / Severidade / Camada:** 7 / Média / Frontend
+**Achados resolvidos:** A-123, A-136
 **Problema hoje:** das 71 ocorrências, as etapas 259–262 cobrem as 10 mais usadas. Restam ~61 espalhadas.
 **Causa raiz:** idem.
-**Caminho recomendado:** refaça a varredura para ter a lista atual e corrija em 3 ou 4 PRs por área de tela. Não é trabalho interessante, mas é mecânico e rápido — e cada um que fica é uma tela que um operador com deficiência visual não consegue usar.
+**Comece por este, que está medido em navegador (A-136):** em `/register`, os **dois** botões de revelar senha (campos "Senha" e "Confirmar Senha") não têm texto, `aria-label`, `title` nem `sr-only` — enquanto o equivalente em `/login` **tem** `aria-label="Mostrar senha"`. Copie o do login. É rota pública de criação de conta: quem usa leitor de tela não consegue conferir a senha que digitou ao se cadastrar.
+**Caminho recomendado:** depois desse, refaça a varredura para ter a lista atual e corrija em 3 ou 4 PRs por área de tela. Não é trabalho interessante, mas é mecânico e rápido — e cada um que fica é uma tela que um operador com deficiência visual não consegue usar.
 **Arquivos e objetos a tocar:** conforme a varredura.
 **Não tocar / armadilhas:** `src/components/ui/` é shadcn vendorizado — se o botão sem rótulo estiver lá, o rótulo vem de quem o usa, não do componente base. Não edite o shadcn.
 **Depende de:** 262 · **Libera:** 264
@@ -5394,12 +5397,12 @@ Cada evento dispara `fetchMetrics`, que faz **3 consultas**. Em call center as l
 [ ] deploy confirmado, quando se aplica
 [ ] etapa marcada no arquivo de progresso
 
-## Etapa 270 — Conferir a interface em largura de celular
+## Etapa 270 — Conferir as telas autenticadas em largura de celular
 **Onda / Severidade / Camada:** 7 / Média / Frontend
-**Achados resolvidos:** nenhum confirmado — **esta etapa produz achados**
-**Problema hoje:** **nenhuma tela foi aberta em navegador nesta auditoria** (§6 de `01-INVENTARIO.md`), então não há um único achado de responsividade com evidência. Para um produto que agentes usam em turno, e cujo softphone pode ser usado em tablet, isso é uma camada inteira sem cobertura.
+**Achados resolvidos:** A-137 (escopo) — **esta etapa produz achados**
+**Problema hoje:** as **10 rotas públicas já foram verificadas** em navegador (2026-11-23, 3 larguras, 30 capturas): **nenhuma tem overflow horizontal a 390 px**, nenhuma imagem sem `alt`, nenhum campo sem rótulo (A-137). **O que continua sem verificação são as telas de dentro do sistema** — discador, chamada ativa, histórico, fila, painéis —, que exigem login. Para um produto que agentes usam em turno, e cujo softphone pode ser usado em tablet, isso é uma camada inteira sem cobertura.
 **Causa raiz:** n/a — é lacuna de verificação.
-**Caminho recomendado:** use o Playwright, que **já roda no CI** (7 testes em `tests/e2e/`), para capturar as telas do fluxo central em três larguras (390, 768, 1280) e **olhe as imagens**. Registre os problemas encontrados como achados novos no progresso, não os corrija aqui — corrigir layout sem ver o conjunto produz remendo. Priorize: login, discador, chamada ativa, histórico, fila. Automatize a captura num script, para repetir depois de cada onda.
+**Caminho recomendado:** use o Playwright, que **já roda no CI** (7 testes em `tests/e2e/`) e cujo navegador está disponível no ambiente (`executablePath: '/opt/pw-browsers/chromium'` quando a versão do projeto não casar com a instalada). Autentique com as credenciais de teste do ambiente `e2e` e capture o fluxo central em três larguras (390, 768, 1280): discador, chamada ativa, histórico, fila, painel executivo. **Olhe as imagens** — não automatize comparação ainda. Registre os problemas como achados novos no progresso, não os corrija aqui. **Não repita as rotas públicas:** elas já estão medidas (A-137).
 **Arquivos e objetos a tocar:** novo `tests/e2e/screenshots.spec.ts` ou `scripts/capturas/`.
 **Não tocar / armadilhas:** não transforme isso em teste de regressão visual na primeira passada — comparação de pixel gera falso positivo constante. Primeiro **veja**; automatize comparação depois, se valer.
 **Depende de:** 269 · **Libera:** 271
