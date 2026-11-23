@@ -180,11 +180,16 @@ export function useMultiChannelCall() {
 
   // Persist hold event to database
   const persistHoldEvent = useCallback(async (_callId: string, callSessionId: string | undefined, agentName: string | undefined, action: 'start' | 'end', durationSeconds?: number) => {
+    // E066: sem dbSessionId a chamada ainda não foi gravada — não persiste hold_event órfão
+    if (!callSessionId) {
+      log.error('persistHoldEvent: callSessionId ausente, hold_event não gravado');
+      return;
+    }
     try {
       if (action === 'start') {
-        await supabase.from('hold_events').insert({ call_session_id: callSessionId || null, agent_name: agentName || null, started_at: new Date().toISOString() });
+        await supabase.from('hold_events').insert({ call_session_id: callSessionId, agent_name: agentName || null, started_at: new Date().toISOString() });
       } else {
-        const { data: ev } = await supabase.from('hold_events').select('id').eq('call_session_id', callSessionId ?? '').is('ended_at', null).order('started_at', { ascending: false }).limit(1).maybeSingle();
+        const { data: ev } = await supabase.from('hold_events').select('id').eq('call_session_id', callSessionId).is('ended_at', null).order('started_at', { ascending: false }).limit(1).maybeSingle();
         if (ev) await supabase.from('hold_events').update({ ended_at: new Date().toISOString(), duration_seconds: durationSeconds || 0 }).eq('id', ev.id);
       }
     } catch (error) { log.error('Error persisting hold event:', error); }
