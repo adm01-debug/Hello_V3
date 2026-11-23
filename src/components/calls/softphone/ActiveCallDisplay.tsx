@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play, Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines, Zap, Activity, Smile, Meh, Frown } from 'lucide-react';
+import { PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play, Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines, Zap, Activity, Smile, Meh, Frown, Check, X } from 'lucide-react';
 
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
 import { Button } from '@/components/ui/button';
@@ -237,16 +237,41 @@ export function ActiveCallDisplay({
           <TooltipContent>{isListening ? 'Parar comando de voz' : isProcessing ? 'Processando...' : 'Comando de voz'}</TooltipContent>
         </Tooltip>
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="outline" size="icon" className="h-11 w-11 rounded-full"
-              onClick={() => currentCall.isTransferring ? onCancelTransfer(currentCall.id) : setTransferDialogOpen(true)}
-            >
-              <PhoneForwarded className="h-5 w-5" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>{currentCall.isTransferring ? 'Cancelar transferência' : 'Transferir'}</TooltipContent>
-        </Tooltip>
+        {currentCall.isTransferring ? (
+          <>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full text-success border-success/40"
+                  onClick={() => onCompleteTransfer(currentCall.id)}
+                >
+                  <Check className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Confirmar transferência</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full"
+                  onClick={() => onCancelTransfer(currentCall.id)}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Cancelar transferência</TooltipContent>
+            </Tooltip>
+          </>
+        ) : (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="outline" size="icon" className="h-11 w-11 rounded-full"
+                onClick={() => setTransferDialogOpen(true)}
+              >
+                <PhoneForwarded className="h-5 w-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Transferir</TooltipContent>
+          </Tooltip>
+        )}
 
         <Button variant="destructive" size="icon" className="h-11 w-11 rounded-full" onClick={onEndCall}>
           <PhoneOff className="h-5 w-5" />
@@ -261,10 +286,8 @@ export function ActiveCallDisplay({
       callerName={currentCall.contactName || currentCall.phoneNumber}
       onTransfer={(callId, target, type) => {
         onTransferCall(callId, target, type);
-        if (type === 'blind') {
-          // Transferência cega: confirma automaticamente
-          setTimeout(() => onCompleteTransfer(callId), 500);
-        }
+        // Transferência assistida: aguarda confirmação explícita (via botão do botão no estado isTransferring)
+        // Transferência cega: também exige confirmação explícita — ver useCallTransfer.ts:7-11
       }}
     />
     </>

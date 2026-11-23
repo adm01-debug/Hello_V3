@@ -38,7 +38,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     isInCall, canAddCall, setActiveChannel, initiateCall, switchToCall, updateCallStatus,
     endCall, toggleMute, toggleHold, toggleRecording, addTranscript, configureChannel,
     startConference, addToConference, removeFromConference, endConference, transferCall,
-    completeTransfer, cancelTransfer, toggleConferenceRecording,
+    completeTransfer, cancelTransfer, toggleConferenceRecording, currentSession,
   } = useCallContext();
 
   const wavoip = useWavoipCall();
@@ -55,6 +55,10 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   useEffect(() => { if (wavoip.isConfigured) configureChannel('wavoip', { enabled: true, configured: true }); }, [wavoip.isConfigured, configureChannel]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (activeChannel === 'sip' && !sipCall.isRegistered && sipCall.status === 'disconnected') sipCall.connect(); }, [activeChannel, sipCall.isRegistered, sipCall.status]);
+  // E070: injeta o UUID real do banco para evitar id sintético no relato de tronco
+  // sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { sipCall.setDbSessionId(currentSession?.id ?? null); }, [currentSession?.id]);
 
   const conversation = useConversation({
     onConnect: () => { logger.create('Softphone').debug('WebRTC connected'); updateCallStatus('active'); toast.success('Conectado'); },

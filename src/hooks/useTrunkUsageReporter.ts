@@ -50,7 +50,8 @@ export function useTrunkUsageReporter() {
       });
       if (error) throw error;
     } catch (err) {
-      log.warn('Falha ao registrar uso de trunk', err);
+      // E070: falha de rateio de custo é erro, não aviso
+      log.error('Falha ao registrar uso de trunk', err);
     }
   }, []);
 

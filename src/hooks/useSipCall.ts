@@ -54,6 +54,8 @@ export interface SipCallState {
   const remoteAudioRef = useRef<HTMLAudioElement | null>(null);
   const serverRef = useRef<string>('');
   const [activePc, setActivePc] = useState<RTCPeerConnection | null>(null);
+  // E070: ref para o UUID real da sessão no banco (evita closure obsoleta e id sintético)
+  const dbSessionIdRef = useRef<string | null>(null);
   const usageReporter = useTrunkUsageReporter();
 
   // Monitora qualidade VoIP em tempo real e persiste em call_quality_metrics ao final da chamada
@@ -281,10 +283,11 @@ export interface SipCallState {
         if (session.connection) setActivePc(session.connection);
       });
       session.on('confirmed', () => { log.debug('Call confirmed'); attachRemoteStream(session); if (session.connection) setActivePc(session.connection); });
-      session.on('ended', (e: { cause?: string }) => { log.debug('Call ended', { cause: e?.cause }); stopDurationTimer(); void usageReporter.endTracking(state.callId); sessionRef.current = null; setActivePc(null); setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null })); });
+      // E070: usa dbSessionIdRef para evitar closure obsoleta e id sintético
+      session.on('ended', (e: { cause?: string }) => { log.debug('Call ended', { cause: e?.cause }); stopDurationTimer(); void usageReporter.endTracking(dbSessionIdRef.current); dbSessionIdRef.current = null; sessionRef.current = null; setActivePc(null); setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null })); });
       session.on('failed', (e: { cause?: string }) => {
         log.error('Call failed', { cause: e?.cause });
-        stopDurationTimer(); void usageReporter.endTracking(state.callId); sessionRef.current = null; setActivePc(null);
+        stopDurationTimer(); void usageReporter.endTracking(dbSessionIdRef.current); dbSessionIdRef.current = null; sessionRef.current = null; setActivePc(null);
         const cause = e?.cause || 'Chamada falhou';
         setState(prev => ({ ...prev, status: state.isRegistered ? 'registered' : 'disconnected', callId: null, phoneNumber: null, error: cause }));
         toast.error(`Chamada falhou: ${cause}`);
@@ -327,6 +330,9 @@ export interface SipCallState {
       session.on('confirmed', () => { attachRemoteStream(session); if (session.connection) setActivePc(session.connection); });
       const finish = (cause?: string) => {
         stopDurationTimer();
+        // E070: usa dbSessionIdRef (UUID real) em vez de id sintético capturado
+        void usageReporter.endTracking(dbSessionIdRef.current);
+        dbSessionIdRef.current = null;
         sessionRef.current = null;
         setActivePc(null);
         setState(prev => ({
@@ -399,6 +405,9 @@ export interface SipCallState {
 
   useEffect(() => { return () => { disconnect(); }; }, [disconnect]);
 
+   // E070: exposto para que o pai injete o UUID real do banco antes do fim da chamada
+   const setDbSessionId = (id: string | null) => { dbSessionIdRef.current = id; };
+
    return {
      ...state,
      ...controls,
@@ -407,5 +416,6 @@ export interface SipCallState {
       quality,
       pc: activePc,
       connect, disconnect, startCall, endCall, answerCall, rejectCall, toggleMute, toggleHold, sendDTMF,
+      setDbSessionId,
    };
 }

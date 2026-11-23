@@ -1,6 +1,7 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import * as pendingCallWrites from '@/lib/pendingCallWrites';
 
 const log = logger.create('CallSession');
 
@@ -196,6 +197,8 @@ export function useCallSession() {
       result = { ok: true };
     } catch (error) {
       log.error('Error ending call session', error);
+      // E072: enfileira para retentativa na próxima carga ou quando a conexão voltar
+      pendingCallWrites.enqueue({ sessionId: currentSession.id, durationSeconds });
       result = { ok: false, reason: (error as Error).message };
     } finally {
       // Limpeza do estado sempre acontece — independente de sucesso ou falha (E071)
@@ -206,6 +209,35 @@ export function useCallSession() {
     }
     return result;
   }, [currentSession, saveTranscripts, saveAnalyses, runPostCallIntelligence]);
+
+  // E072: retenta gravações que falharam (ao montar e quando a conexão voltar)
+  const retryPending = useCallback(async () => {
+    if (pendingCallWrites.count() === 0) return;
+    if (!navigator.onLine) return;
+    let item = pendingCallWrites.dequeue();
+    while (item) {
+      log.info('Retentando encerramento pendente', { sessionId: item.sessionId });
+      try {
+        const { error } = await supabase.from('call_sessions')
+          .update({ status: 'completed', duration_seconds: item.durationSeconds })
+          .eq('id', item.sessionId)
+          .is('ended_at', null);
+        if (error) throw error;
+        log.info('Encerramento pendente salvo', { sessionId: item.sessionId });
+      } catch (e) {
+        log.error('Falha ao retentar encerramento pendente', e);
+        pendingCallWrites.enqueue({ sessionId: item.sessionId, durationSeconds: item.durationSeconds });
+        break;
+      }
+      item = pendingCallWrites.dequeue();
+    }
+  }, []);
+
+  useEffect(() => {
+    void retryPending();
+    window.addEventListener('online', retryPending);
+    return () => window.removeEventListener('online', retryPending);
+  }, [retryPending]);
 
   return { currentSession, isSaving, startSession, endSession, addTranscript, addAnalysis };
 }
