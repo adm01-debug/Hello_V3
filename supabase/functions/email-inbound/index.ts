@@ -14,7 +14,7 @@ interface EmailInboundPayload {
   headers?: Record<string, string>;
 }
 
-Deno.serve(async (req) => {
+export async function handler(req: Request): Promise<Response> {
   const cors = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
@@ -35,10 +35,40 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Sem message_id nao existe chave de deduplicacao: o provedor reentrega em
+    // 5xx e cada volta criava uma conversa nova. Melhor recusar na entrada.
+    if (!body.message_id) {
+      return new Response(
+        JSON.stringify({ error: 'Campo obrigatório: message_id (idempotência)' }),
+        { status: 422, headers: { ...cors, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
+
+    // Reentrega do provedor: o ticket ja existe, entao devolvemos 200 para ele
+    // parar de reenviar (5xx aqui e o que alimentava o laco).
+    const { data: existingTicket, error: existingErr } = await supabase
+      .from('email_tickets')
+      .select('conversation_id')
+      .eq('message_id', body.message_id)
+      .maybeSingle();
+
+    if (existingErr) throw existingErr;
+
+    if (existingTicket) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          idempotent_replay: true,
+          conversation_id: existingTicket.conversation_id,
+        }),
+        { status: 200, headers: { ...cors, 'Content-Type': 'application/json' } }
+      );
+    }
 
     // Threading: tenta encontrar ticket existente por in_reply_to → conversation_id
     let conversationId: string | null = null;
@@ -142,10 +172,29 @@ Deno.serve(async (req) => {
       headers: body.headers || {},
     });
 
-    if (ticketErr) throw ticketErr;
+    if (ticketErr) {
+      // 23505 = unique_violation em email_tickets.message_id: duas entregas
+      // simultaneas passaram pelo pre-check. Trata como replay para nao gerar laco.
+      if ((ticketErr as { code?: string }).code === '23505') {
+        const { data: raced } = await supabase
+          .from('email_tickets')
+          .select('conversation_id')
+          .eq('message_id', body.message_id)
+          .maybeSingle();
+        return new Response(
+          JSON.stringify({
+            success: true,
+            idempotent_replay: true,
+            conversation_id: raced?.conversation_id ?? conversationId,
+          }),
+          { status: 200, headers: { ...cors, 'Content-Type': 'application/json' } }
+        );
+      }
+      throw ticketErr;
+    }
 
     // Inserir mensagem na conversa
-    await supabase.from('conversation_messages').insert({
+    const { error: messageErr } = await supabase.from('conversation_messages').insert({
       conversation_id: conversationId,
       direction: 'inbound',
       sender_type: 'contact',
@@ -155,6 +204,8 @@ Deno.serve(async (req) => {
       content_type: body.body_html ? 'html' : 'text',
       metadata: { message_id: body.message_id, subject: body.subject },
     });
+
+    if (messageErr) throw messageErr;
 
     return new Response(
       JSON.stringify({ success: true, conversation_id: conversationId }),
@@ -167,4 +218,6 @@ Deno.serve(async (req) => {
       { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } }
     );
   }
-});
+}
+
+Deno.serve(handler);
