@@ -2875,9 +2875,11 @@
   {
    "arquivo": "supabase/functions/enforce-sla/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 66,
-   "testa": [],
-   "casos": 6
+   "linhas": 103,
+   "testa": [
+    "supabase/functions/enforce-sla/index.ts"
+   ],
+   "casos": 10
   },
   {
    "arquivo": "supabase/functions/export-data-lake/__tests__/csv.test.ts",
@@ -3415,6 +3417,7 @@
   "supabase/functions/_shared/validator.ts": 1,
   "supabase/functions/analyze-call/schema.ts": 3,
   "supabase/functions/bitrix-api/index.ts": 2,
+  "supabase/functions/enforce-sla/index.ts": 1,
   "supabase/functions/export-data-lake/csv.ts": 1,
   "supabase/functions/health-check/index.ts": 1,
   "supabase/functions/health-check/slo-budget.ts": 1,

@@ -4,11 +4,11 @@
  "presente": true,
  "como_gerar": "uvx --from \"graphifyy[sql]\" graphify update .  (ou: bun run graph:update); saída em graphify-out/ — graph.json e graph.html NÃO são versionados (dezenas de MB); use `graphify query/path/explain` localmente",
  "relatorio": null,
- "commit_do_grafo": "3407137b96643628b878ac44ceafb7178776f74d",
+ "commit_do_grafo": "cdae222baa7cae5d4f76aef8ab16d7ec78f60446",
  "grafo_atual": true,
  "nos": 9828,
- "arestas": 25270,
- "comunidades_total": 782,
+ "arestas": 25272,
+ "comunidades_total": 783,
  "relacoes": {
   "calls": 2358,
   "cites": 9,
@@ -16,8 +16,8 @@
   "defines": 6,
   "dynamic_import": 157,
   "implements": 1,
-  "imports": 6684,
-  "imports_from": 5953,
+  "imports": 6685,
+  "imports_from": 5954,
   "indexes": 419,
   "indirect_call": 215,
   "inherits": 12,
@@ -29,7 +29,7 @@
   "triggers": 113
  },
  "origem": {
-  "EXTRACTED": 23793,
+  "EXTRACTED": 23795,
   "INFERRED": 1477
  },
  "comunidades": [
@@ -260,9 +260,9 @@
   {
    "id": 14,
    "nome": "buildCorsHeaders",
-   "nos": 82,
-   "callables": 30,
-   "arquivos": 42,
+   "nos": 80,
+   "callables": 29,
+   "arquivos": 41,
    "exemplos_arquivos": [
     "docs/estado/edge-functions-parte1.md",
     "docs/estado/edge-functions-parte2.md",
@@ -313,23 +313,6 @@
   },
   {
    "id": 18,
-   "nome": "ref_https",
-   "nos": 71,
-   "callables": 26,
-   "arquivos": 33,
-   "exemplos_arquivos": [
-    "supabase/functions/__tests__/optimistic-lock.test.ts",
-    "supabase/functions/_shared/__tests__/local-supabase.ts",
-    "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
-    "supabase/functions/analyze-call/__tests__/integration_test.ts",
-    "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
-    "supabase/functions/analyze-call/__tests__/schema_test.ts",
-    "supabase/functions/analyze-call/analyze-call_test.ts",
-    "supabase/functions/analyze-call/schema.ts"
-   ]
-  },
-  {
-   "id": 19,
    "nome": "UnifiedSoftphone.tsx",
    "nos": 67,
    "callables": 41,
@@ -343,6 +326,23 @@
     "src/components/calls/UnifiedSoftphone.tsx",
     "src/components/calls/softphone/ActiveCallDisplay.tsx",
     "src/components/calls/softphone/DialpadTab.tsx"
+   ]
+  },
+  {
+   "id": 19,
+   "nome": "ref_https",
+   "nos": 66,
+   "callables": 23,
+   "arquivos": 32,
+   "exemplos_arquivos": [
+    "supabase/functions/__tests__/optimistic-lock.test.ts",
+    "supabase/functions/_shared/__tests__/local-supabase.ts",
+    "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
+    "supabase/functions/analyze-call/__tests__/integration_test.ts",
+    "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
+    "supabase/functions/analyze-call/__tests__/schema_test.ts",
+    "supabase/functions/analyze-call/analyze-call_test.ts",
+    "supabase/functions/analyze-call/schema.ts"
    ]
   },
   {
@@ -3419,7 +3419,7 @@
   "supabase/functions/email-inbound/index.ts": "buildCorsHeaders",
   "supabase/functions/embed-kb-article/index.ts": "resilience.ts",
   "supabase/functions/enforce-sla/__tests__/index.test.ts": "ref_https",
-  "supabase/functions/enforce-sla/index.ts": "buildCorsHeaders",
+  "supabase/functions/enforce-sla/index.ts": "ref_https",
   "supabase/functions/enroll-voice/index.ts": "cors.ts",
   "supabase/functions/export-data-lake/__tests__/csv.test.ts": "ref_https",
   "supabase/functions/export-data-lake/csv.ts": "ref_https",
@@ -3494,8 +3494,8 @@
   "supabase/functions/voip-quality-forecast/index.ts": "voip-quality-forecast/index.ts",
   "supabase/functions/voip-quality-heatmap/__tests__/index.test.ts": "ref_https",
   "supabase/functions/voip-quality-heatmap/index.ts": "cors.ts",
-  "supabase/functions/voip-recommendation-history/__tests__/index.test.ts": "ref_https",
-  "supabase/functions/voip-recommendation-history/index.ts": "ref_https",
+  "supabase/functions/voip-recommendation-history/__tests__/index.test.ts": "voip-recommendation-history/index.ts",
+  "supabase/functions/voip-recommendation-history/index.ts": "voip-recommendation-history/index.ts",
   "supabase/functions/voip-recommendation-insights/__tests__/index.test.ts": "voip-recommendation-insights/index.ts",
   "supabase/functions/voip-recommendation-insights/index.ts": "voip-recommendation-insights/index.ts",
   "supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts": "cors.ts",

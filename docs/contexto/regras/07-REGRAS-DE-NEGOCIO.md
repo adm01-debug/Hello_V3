@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3407137b96` · branch `main` · 2026-11-23 19:39 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `cdae222baa` · branch `main` · 2026-11-23 19:46 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2449,7 +2449,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4094 testes em 342 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4098 testes em 342 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2560,6 +2560,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/language-detection.test.ts` | 10 | language-detection · detects Portuguese with diacritics · detects English stopwords · detects Spanish via ñ … |
 | `src/lib/__tests__/security-alerts-webhook-validation.property.test.ts` | 10 | validateWebhookConfig — property-based (fast-check) · draft canônico válido nunca bloqueia (sem errors) · qualquer inteiro fora de faixa produz erro no campo · espaços em URL sempre produzem erro em url … |
 | `src/lib/__tests__/utils.test.ts` | 10 | cn (classname utility) · merges class names · handles conditional classes · handles undefined and null … |
+| `supabase/functions/enforce-sla/__tests__/index.test.ts` | 10 | enforce-sla: prioriza política de canal específico sobre  · enforce-sla: prioriza prioridade específica sobre  · enforce-sla: canal exato vence combinação genérica · enforce-sla: cai no fallback  … |
 | `e2e/dashboard.spec.ts` | 9 | Dashboard · Unauthenticated · should redirect to login when not authenticated · Authenticated … |
 | `src/components/ui/__tests__/search-input.test.tsx` | 9 | SearchInput · renderiza com placeholder e valor · chama onValueChange ao digitar · mostra botão limpar somente quando há valor … |
 | `src/hooks/__tests__/useAlerts.coverage.test.tsx` | 9 | useAlerts · loads alerts and computes counts · applies filters · checks for new alerts (success and none) … |
@@ -2680,7 +2681,6 @@ _nenhum item encontrado_
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
 | `supabase/functions/_shared/__tests__/cors.test.ts` | 6 | cors: origem de producao (Vercel) e ecoada · cors: origem desconhecida nao e ecoada (cai no default) · cors: sem header Origin nao quebra · cors: CORS_EXTRA_ORIGINS libera origem adicional … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
-| `supabase/functions/enforce-sla/__tests__/index.test.ts` | 6 | enforce-sla: prioriza política de canal específico sobre  · enforce-sla: cai no fallback  · enforce-sla: calcula due dates a partir de created_at · enforce-sla: detecta breach de primeira resposta … |
 | `supabase/functions/record-consent/__tests__/index.test.ts` | 6 | record-consent: OPTIONS devolve preflight · record-consent: sem Authorization responde 401 · record-consent: token invalido nao grava consentimento · record-consent: canal fora do enum nao e aceito … |
 | `supabase/functions/validate-ip/__tests__/index.test.ts` | 6 | validate-ip: CORS preflight retorna headers válidos · validate-ip: rejeita requisição sem Authorization header · validate-ip: extrai IP de cf-connecting-ip prioritariamente · validate-ip: fallback para x-forwarded-for quando cf/real ausentes … |
 | `supabase/functions/voip-sla-report/__tests__/index.test.ts` | 6 | voip-sla-report: exige Authorization · voip-sla-report: rejeita token inválido · voip-sla-report: rejeita period inválido · voip-sla-report: aceita period=day/week/month na shape … |

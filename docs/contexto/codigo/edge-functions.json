@@ -1129,7 +1129,7 @@
    "nome": "enforce-sla",
    "entrada": "supabase/functions/enforce-sla/index.ts",
    "arquivos": 1,
-   "linhas": 164,
+   "linhas": 185,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
