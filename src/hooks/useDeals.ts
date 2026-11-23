@@ -72,7 +72,14 @@ export function useDeals() {
   }, []);
 
   const updateDeal = useCallback(async (id: string, patch: Partial<Deal>) => {
-    const { error } = await supabase.from("deals").update(patch as DealUpdate).eq("id", id);
+    // Lock otimista: sem enviar `version`, NEW.version fica igual a OLD.version e
+    // o gatilho enforce_optimistic_lock nunca detecta a sobrescrita.
+    const payload: Partial<Deal> = { ...patch };
+    if (payload.version === undefined) {
+      const current = deals.find((d) => d.id === id);
+      if (current && typeof current.version === "number") payload.version = current.version;
+    }
+    const { error } = await supabase.from("deals").update(payload as DealUpdate).eq("id", id);
     if (error) {
       if (error.message?.includes("OPTIMISTIC_LOCK_CONFLICT")) {
         toast.error("Esta oportunidade foi alterada por outro usuário. Recarregando...");
@@ -82,7 +89,7 @@ export function useDeals() {
       toast.error("Erro ao atualizar"); logger.error("updateDeal", error); return false;
     }
     return true;
-  }, [fetchDeals]);
+  }, [deals, fetchDeals]);
 
   const updateStage = useCallback(async (id: string, stage: string) => {
     return updateDeal(id, { stage });

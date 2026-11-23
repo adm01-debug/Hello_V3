@@ -23,6 +23,7 @@ export interface Account {
   notes: string | null;
   tags: string[] | null;
   metadata: Record<string, unknown>;
+  version: number;
   created_at: string;
   updated_at: string;
 }
@@ -68,16 +69,29 @@ export function useAccounts() {
 
   const update = useCallback(async (id: string, patch: Partial<Account>) => {
     try {
+      // Lock otimista: o gatilho só compara version quando a coluna é enviada.
+      const payload: Record<string, unknown> = { ...patch };
+      if (payload.version === undefined) {
+        const current = accounts.find((a) => a.id === id);
+        if (current && typeof current.version === 'number') payload.version = current.version;
+      }
       const { error } = await supabase
-        .from('accounts').update(patch as never).eq('id', id);
-      if (error) throw error;
+        .from('accounts').update(payload as never).eq('id', id);
+      if (error) {
+        if (error.message?.includes('OPTIMISTIC_LOCK_CONFLICT')) {
+          toast.error('Esta conta foi alterada por outro usuário. Recarregando...');
+          await load();
+          return;
+        }
+        throw error;
+      }
       toast.success('Conta atualizada');
       await load();
     } catch (err) {
       logger.error('update account failed', err);
       toast.error('Falha ao atualizar conta');
     }
-  }, [load]);
+  }, [accounts, load]);
 
   const recomputeHealth = useCallback(async (id: string) => {
     try {
