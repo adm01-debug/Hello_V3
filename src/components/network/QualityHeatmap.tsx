@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
+import { MOS_THRESHOLDS, isPoorMos } from '@/lib/metrics/mos';
 
 const log = logger.create('QualityHeatmap');
 
@@ -23,8 +24,8 @@ const DAYS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
 function colorFor(mos: number | null, count: number): string {
   if (count === 0 || mos === null) return 'bg-muted/20 border border-border/30';
-  if (mos >= 4.0) return 'bg-success/70 border border-success';
-  if (mos >= 3.5) return 'bg-warning/70 border border-warning';
+  if (mos >= MOS_THRESHOLDS.good) return 'bg-success/70 border border-success';
+  if (!isPoorMos(mos)) return 'bg-warning/70 border border-warning';
   return 'bg-destructive/70 border border-destructive';
 }
 
@@ -59,8 +60,8 @@ export function QualityHeatmap() {
       for (const c of row) {
         if (c.count === 0 || c.mos_avg === null) continue;
         totalCells++;
-        if (c.mos_avg >= 4.0) healthy++;
-        else if (c.mos_avg < 3.5) degraded++;
+        if (c.mos_avg >= MOS_THRESHOLDS.good) healthy++;
+        else if (isPoorMos(c.mos_avg)) degraded++;
       }
     }
     return { totalCells, healthy, degraded };
@@ -127,9 +128,9 @@ export function QualityHeatmap() {
                 ))}
                 {/* Legenda */}
                 <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-success/70 border border-success" /> MOS ≥ 4.0</span>
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-warning/70 border border-warning" /> 3.5–4.0</span>
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-destructive/70 border border-destructive" /> &lt; 3.5</span>
+                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-success/70 border border-success" /> MOS ≥ {MOS_THRESHOLDS.good.toFixed(1)}</span>
+                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-warning/70 border border-warning" /> {MOS_THRESHOLDS.poor.toFixed(1)}–{MOS_THRESHOLDS.good.toFixed(1)}</span>
+                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-destructive/70 border border-destructive" /> &lt; {MOS_THRESHOLDS.poor.toFixed(1)}</span>
                   <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-muted/20 border border-border/30" /> Sem dados</span>
                 </div>
               </div>
