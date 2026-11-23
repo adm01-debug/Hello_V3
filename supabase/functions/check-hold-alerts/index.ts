@@ -46,10 +46,15 @@ serve(async (req) => {
       });
     }
 
+    // E067: janela de 24h — holds mais antigos são dados corrompidos, não alertas operacionais
+    const windowHours = settingsData?.window_hours ?? 24;
+    const windowStart = new Date(Date.now() - windowHours * 3600 * 1000).toISOString();
+
     const { data: activeHolds, error: holdsError } = await supabaseAdmin
       .from('hold_events')
       .select('id, call_session_id, started_at, agent_name, call_sessions(caller_name)')
-      .is('ended_at', null);
+      .is('ended_at', null)
+      .gte('started_at', windowStart);
 
     if (holdsError) throw holdsError;
 

@@ -231,6 +231,9 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                onMuteToggle={handleMuteToggle} onHoldToggle={handleHoldToggle}
                onVolumeToggle={handleToggleVolume} onRecordToggle={handleRecordToggle}
                onEndCall={handleEndCall}
+               onTransferCall={transferCall}
+               onCompleteTransfer={completeTransfer}
+               onCancelTransfer={cancelTransfer}
                pc={activeChannel === 'sip' ? sipCall.pc : null}
             />
           )}
