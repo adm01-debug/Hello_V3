@@ -67,7 +67,7 @@
 - [ ] **028** — Migrar as 16 edges que ainda respondem com origem fixa — onda 1 — Média — Edge Function
 - [ ] **029** — Policies de UPDATE e DELETE para `rate_limit_logs` — onda 1 — Alta — Banco 🔒
 - [ ] **030** — Descobrir e documentar qual trilha serve produção — onda 1 — Média — Infraestrutura
-- [ ] **031** — Parar de revelar a existência da conta no pedido de reset de senha — onda 1 — Baixa — Edge Function
+- [x] **031** — Parar de revelar a existência da conta no pedido de reset de senha — onda 1 — Baixa — Edge Function
 - [ ] **032** — Verificar e atualizar o contador do autenticador no login por passkey — onda 1 — Baixa — Edge Function
 - [ ] **033** — Rate limit no login por passkey — onda 1 — Baixa — Edge Function
 - [ ] **034** — Mover a checagem de DNC e horário para dentro de `initiateCall` — onda 1 — Crítica — Hooks
