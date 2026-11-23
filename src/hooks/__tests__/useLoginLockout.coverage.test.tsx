@@ -38,7 +38,7 @@ describe('useLoginLockout', () => {
     const { result } = renderHook(() => useLoginLockout());
     let status;
     await act(async () => { status = await result.current.checkLockout('a@b.com'); });
-    expect(status).toEqual({ locked: false, attempts: 0 });
+    expect(status).toEqual({ locked: false, attempts: 0, unknown: true });
     expect(logger.error).toHaveBeenCalled();
   });
 
@@ -47,7 +47,7 @@ describe('useLoginLockout', () => {
     const { result } = renderHook(() => useLoginLockout());
     let status;
     await act(async () => { status = await result.current.checkLockout('a@b.com'); });
-    expect(status).toEqual({ locked: false, attempts: 0 });
+    expect(status).toEqual({ locked: false, attempts: 0, unknown: true });
   });
 
   it('recordFailedAttempt success', async () => {
@@ -66,7 +66,7 @@ describe('useLoginLockout', () => {
     const { result } = renderHook(() => useLoginLockout());
     let status;
     await act(async () => { status = await result.current.recordFailedAttempt('a@b.com'); });
-    expect(status).toEqual({ locked: false, attempts: 0 });
+    expect(status).toEqual({ locked: false, attempts: 0, unknown: true });
   });
 
   it('recordFailedAttempt thrown exception', async () => {
@@ -74,7 +74,7 @@ describe('useLoginLockout', () => {
     const { result } = renderHook(() => useLoginLockout());
     let status;
     await act(async () => { status = await result.current.recordFailedAttempt('a@b.com'); });
-    expect(status).toEqual({ locked: false, attempts: 0 });
+    expect(status).toEqual({ locked: false, attempts: 0, unknown: true });
   });
 
   it('recordSuccessfulLogin resets status', async () => {

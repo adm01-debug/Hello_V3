@@ -17,6 +17,7 @@ import { isWebAuthnSupported } from '@/lib/webauthn/webauthn-utils';
 import { lovable } from '@/integrations/lovable/index';
 import { motion } from 'framer-motion';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { logger } from '@/lib/logger';
 
 export default function Login() {
   usePageTitle('Login');
@@ -75,6 +76,11 @@ export default function Login() {
     e.preventDefault();
     const currentLockout = await checkLockout(email);
     if (currentLockout.locked) { toast.error('Conta temporariamente bloqueada', { description: `Tente novamente em ${formatRemainingTime(currentLockout.remainingSeconds || 60)}` }); return; }
+    if (currentLockout.unknown) {
+      logger.error('LoginLockout: não foi possível verificar o bloqueio da conta; tentativa recusada', { email });
+      toast.error('Não foi possível verificar a segurança da conta', { description: 'Tente novamente em instantes.', duration: 8000 });
+      return;
+    }
     setIsLoading(true); setIpBlocked(false);
     try {
       const { data, error } = await signIn(email, password);
