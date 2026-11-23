@@ -6,7 +6,7 @@
    "src/pages (105)"
   ],
   "componentes": [
-   "src/components (319)",
+   "src/components (318)",
    "src/pages (126)",
    "src/contexts (4)"
   ],
@@ -47,7 +47,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (450)"
+  ".tsx (449)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: remove painel decorativo e corrige relatório de segurança (#175)",
    "fix: status sem medicao em vez de 100%% e erro tratado (E092-E093) (#173)",
    "feat: filtrar menu por papel (E088-E089) (#172)",
    "feat: gravar e fechar call_sessions + transcricoes no banco (E061-E073) (#170)",
-   "feat: E060 CallContext provider singleton — resolve A-001 (múltiplas instâncias)",
-   "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)"
+   "feat: E060 CallContext provider singleton — resolve A-001 (múltiplas instâncias)"
   ]
  },
  "pr_template": null,

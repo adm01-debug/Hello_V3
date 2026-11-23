@@ -1066,13 +1066,13 @@
   },
   {
    "modulo": "components/dashboard",
-   "arquivos": 13,
+   "arquivos": 12,
    "testes": 0,
-   "linhas": 1333,
+   "linhas": 1281,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 13,
+   "componentes": 12,
    "hooks_locais": [
     "useActiveCallsRealtime",
     "useAgentsListData",
@@ -1140,7 +1140,6 @@
     "@dnd-kit/sortable",
     "@dnd-kit/utilities",
     "date-fns",
-    "framer-motion",
     "lucide-react",
     "recharts"
    ]
@@ -4695,7 +4694,7 @@
    "modulo": "lib",
    "arquivos": 50,
    "testes": 0,
-   "linhas": 6437,
+   "linhas": 6419,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5493,7 +5492,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 16599,
+   "linhas": 16590,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fe57120464` · branch `main` · 2026-11-23 14:53 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `61a323baac` · branch `main` · 2026-11-23 14:59 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1655,8 +1655,6 @@ _nenhum item encontrado_
 | `oscillator.stop(audioContext.currentTime + i * 0.15 + 0.2);` | `src/components/agent/BargeInNotification.tsx` |
 | `setOverallSentiment((prev) => Math.round(prev * 0.7 + sentimentValue * 0.3));` | `src/components/ai/live-call/useLiveInsights.ts` |
 | `Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}` | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
-| `Eficiência +5.2%` | `src/components/dashboard/PerformanceNarrative.tsx` |
-| `Sua operação apresenta um <strong>crescimento de 12%</strong> no volume de chamadas em comparação ao mesmo período de ontem.` | `src/components/dashboard/PerformanceNarrative.tsx` |
 | `delay: Math.random() * 0.5,` | `src/components/gamification/AchievementCelebration.tsx` |
 | `value: +(baseline + (Math.sin(i * 1.3 + a.bucket_hour) * a.std * 0.4)).toFixed(2),` | `src/components/network/AnomalyDetectionCard.tsx` |
 | `: `hsl(var(--primary) / ${0.2 + intensity * 0.8})`,` | `src/components/network/RecommendationInsightsCard.tsx` |

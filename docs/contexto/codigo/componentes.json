@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 450,
+ "total": 449,
  "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
@@ -1796,20 +1796,6 @@
     "call_sessions",
     "hold_events"
    ],
-   "edges": [],
-   "usado_por": 1,
-   "orfao": false
-  },
-  {
-   "arquivo": "src/components/dashboard/PerformanceNarrative.tsx",
-   "exports": [
-    "PerformanceNarrative"
-   ],
-   "export_default": null,
-   "linhas": 52,
-   "dominio": "components/dashboard",
-   "hooks_locais": [],
-   "tabelas": [],
    "edges": [],
    "usado_por": 1,
    "orfao": false
@@ -4119,7 +4105,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 204,
+   "usado_por": 203,
    "orfao": false
   },
   {
@@ -4204,7 +4190,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 235,
+   "usado_por": 234,
    "orfao": false
   },
   {
@@ -6159,7 +6145,7 @@
     "Index"
    ],
    "export_default": "Index",
-   "linhas": 195,
+   "linhas": 192,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",
@@ -6945,7 +6931,7 @@
     "SecurityReport"
    ],
    "export_default": "SecurityReport",
-   "linhas": 201,
+   "linhas": 195,
    "dominio": "pages",
    "hooks_locais": [
     "useAuth",

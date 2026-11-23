@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "fe57120464ca83a4a3e213324c7f74212a9a614b",
+  "commit": "61a323baac0f0afe27c117e2407d44f319b0f3df",
   "branch": "main",
-  "data_commit": "2026-11-23T11:36:06-03:00",
+  "data_commit": "2026-11-23T11:55:29-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "61a323b",
+    "data": "2026-11-23",
+    "assunto": "fix: remove painel decorativo e corrige relatório de segurança (#175)"
+   },
    {
     "sha": "fe57120",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "49ee377",
     "data": "2026-11-22",
     "assunto": "fix: troca teste falso de optimistic lock por guarda real do contrato (#148)"
-   },
-   {
-    "sha": "df7171f",
-    "data": "2026-11-22",
-    "assunto": "docs: corrige roadmap desatualizado e registra verificacoes de 22/11 (#147)"
    }
   ],
-  "arquivos_mudados_7d": 920,
+  "arquivos_mudados_7d": 922,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -192,7 +192,7 @@
     "mudancas": 7
    },
    {
-    "pasta": "src/components/supervisor",
+    "pasta": "src/components/dashboard",
     "mudancas": 7
    }
   ],
@@ -234,6 +234,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "docs/qa/05-PROGRESSO.md",
+    "mudancas": 5
+   },
+   {
     "arquivo": "inventario/estado/edges.json",
     "mudancas": 5
    },
@@ -251,10 +255,6 @@
    },
    {
     "arquivo": "docs/pendencias/_ordem.md",
-    "mudancas": 4
-   },
-   {
-    "arquivo": "docs/qa/05-PROGRESSO.md",
     "mudancas": 4
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 152
+    "commits": 153
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,15 +314,15 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1662,
-  "arquivos_codigo": 1260,
-  "linhas_codigo": 171061,
+  "arquivos_total": 1661,
+  "arquivos_codigo": 1259,
+  "linhas_codigo": 170982,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "modulos": 79,
-  "componentes": 450,
+  "componentes": 449,
   "hooks": 193,
   "edge_functions": 98,
   "tabelas": 169,
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 357,
-   "linhas": 42532
+   "arquivos": 356,
+   "linhas": 42480
   },
   "src/contexts": {
    "arquivos": 4,
@@ -500,7 +500,7 @@
   },
   "src/lib": {
    "arquivos": 170,
-   "linhas": 21127
+   "linhas": 21109
   },
   "src/main.tsx": {
    "arquivos": 1,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 133,
-   "linhas": 21187
+   "linhas": 21178
   },
   "src/routes": {
    "arquivos": 2,

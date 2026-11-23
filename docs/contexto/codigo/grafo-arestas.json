@@ -931,10 +931,6 @@
    "src/components/ui/card.tsx",
    "src/integrations/supabase/client.ts"
   ],
-  "src/components/dashboard/PerformanceNarrative.tsx": [
-   "src/components/ui/badge.tsx",
-   "src/components/ui/card.tsx"
-  ],
   "src/components/dashboard/QueueStatus.tsx": [
    "src/components/ui/card.tsx",
    "src/components/ui/progress.tsx",
@@ -3578,7 +3574,6 @@
    "src/components/dashboard/AgentsList.tsx",
    "src/components/dashboard/CallVolumeChart.tsx",
    "src/components/dashboard/HoldTrendChart.tsx",
-   "src/components/dashboard/PerformanceNarrative.tsx",
    "src/components/dashboard/QueueStatus.tsx",
    "src/components/dashboard/RecentCalls.tsx",
    "src/components/dashboard/SortableWidget.tsx",

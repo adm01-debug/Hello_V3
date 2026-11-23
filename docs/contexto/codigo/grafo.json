@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 910,
- "arestas": 3484,
+ "nos": 909,
+ "arestas": 3481,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -14,11 +14,11 @@
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 235
+   "importado_por": 234
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 204
+   "importado_por": 203
   },
   {
    "arquivo": "src/lib/logger.ts",

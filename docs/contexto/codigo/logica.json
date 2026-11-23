@@ -1885,12 +1885,11 @@
    "exports": [
     "SecurityDecision",
     "SecurityFeature",
-    "rlsPolicies",
     "securityDecisions",
     "securityFeatures"
    ],
    "export_default": null,
-   "linhas": 81,
+   "linhas": 63,
    "tabelas": [],
    "rpcs": [],
    "edges": [],
