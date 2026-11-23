@@ -114,6 +114,8 @@
 - [x] **071** — Parar de afirmar "Chamada salva" quando a gravação falhou — onda 2 — Alta — Hooks + Frontend · (PR #170; endSession retorna {ok}; tsc=0)
 - [x] **072** — Fila de retentativa para o encerramento de chamada — onda 2 — Média — Hooks · (PR #170; pendingCallWrites 3/3)
 - [x] **073** — Ligar o botão "Transferir" do softphone — onda 2 — Alta — Frontend · (PR #170; TransferCallDialog conectado; tsc=0)
+- [x] **074** — Exportar histórico de chamadas em CSV — onda 2 — Alta — Frontend · (PR #170; downloadCallHistoryCsv ligado; tsc=0, 3/3)
+- [x] **075** — Ligar o "Exportar" dos relatórios — onda 2 — Alta — Frontend · (PR #170; downloadReportCsv ligado; tsc=0, 6/6, build OK sem violar orçamento)
 - [ ] **074** — Ligar o "Exportar" do histórico de chamadas — onda 2 — Alta — Frontend
 - [ ] **075** — Ligar o "Exportar" dos relatórios — onda 2 — Alta — Frontend
 - [ ] **076** — Fazer o "Salvar" das Configurações salvar de verdade — onda 2 — Alta — Frontend + Hooks 🔒
