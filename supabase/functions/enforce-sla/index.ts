@@ -48,11 +48,7 @@ Deno.serve(async (req) => {
 
     for (const conv of conversations || []) {
       // Encontrar política mais específica (canal exato + prioridade exata > all)
-      const matched = policies.find(
-        (p) =>
-          (p.channel === conv.channel || p.channel === "all") &&
-          (p.priority === conv.priority || p.priority === "all"),
-      );
+      const matched = pickPolicy(policies, conv);
       if (!matched) continue;
 
       const createdAt = new Date(conv.created_at);
@@ -132,6 +128,31 @@ Deno.serve(async (req) => {
     );
   }
 });
+
+/**
+ * Escolhe a política SLA mais específica para a conversa.
+ *
+ * O `find` anterior dependia da ordem devolvida pelo PostgREST: se a política
+ * genérica `all/all` viesse primeiro, ela vencia a política específica do canal
+ * e o SLA aplicado era o errado. Aqui a escolha é por pontuação (canal exato +
+ * prioridade exata), independente da ordem do banco.
+ */
+export function pickPolicy<
+  T extends { channel: string; priority: string },
+>(policies: T[], conv: { channel: string | null; priority: string | null }): T | undefined {
+  let best: T | undefined;
+  let bestScore = -1;
+  for (const p of policies) {
+    if (p.channel !== conv.channel && p.channel !== "all") continue;
+    if (p.priority !== conv.priority && p.priority !== "all") continue;
+    const score = (p.channel === conv.channel ? 2 : 0) + (p.priority === conv.priority ? 1 : 0);
+    if (score > bestScore) {
+      best = p;
+      bestScore = score;
+    }
+  }
+  return best;
+}
 
 // Rejeita chamada sem JWT valido. As edges abaixo escrevem com service_role,
 // entao a anon key publica nao pode ser suficiente para invoca-las.
