@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1225)",
+   "TypeScript (1226)",
    "SQL (245)",
    "Markdown (120)",
    "JavaScript (29)",
@@ -736,7 +736,7 @@
   "papeis_no_codigo": [
    {
     "papel": "admin",
-    "ocorrencias": 34
+    "ocorrencias": 35
    },
    {
     "papel": "user",
@@ -744,7 +744,7 @@
    },
    {
     "papel": "agent",
-    "ocorrencias": 18
+    "ocorrencias": 19
    },
    {
     "papel": "system",
@@ -755,11 +755,11 @@
     "ocorrencias": 13
    },
    {
-    "papel": "alert",
-    "ocorrencias": 7
+    "papel": "supervisor",
+    "ocorrencias": 8
    },
    {
-    "papel": "supervisor",
+    "papel": "alert",
     "ocorrencias": 7
    },
    {

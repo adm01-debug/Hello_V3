@@ -1293,7 +1293,8 @@
    "src/contexts/AuthContext.tsx",
    "src/hooks/useUnreadConflicts.ts",
    "src/lib/route-prefetch.ts",
-   "src/lib/utils.ts"
+   "src/lib/utils.ts",
+   "src/routes/protectedRoutes.tsx"
   ],
   "src/components/layout/CommandPalette.tsx": [
    "src/components/ui/command.tsx",

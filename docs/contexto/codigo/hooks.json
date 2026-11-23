@@ -280,7 +280,7 @@
     "src/components/layout/AppLayout.tsx",
     "src/components/layout/AppSidebar.tsx"
    ],
-   "coberto_por_testes": 0
+   "coberto_por_testes": 1
   },
   {
    "arquivo": "src/components/ui/use-toast.ts",

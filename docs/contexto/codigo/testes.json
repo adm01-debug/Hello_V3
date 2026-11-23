@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 349,
+ "total": 350,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 332
+  "unit": 333
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 326
+   "arquivos": 327
   },
   {
    "padrao": "e2e/",
@@ -231,6 +231,17 @@
     "src/components/executive/OmnichannelCard.tsx"
    ],
    "casos": 3
+  },
+  {
+   "arquivo": "src/components/layout/__tests__/AppSidebar.test.tsx",
+   "tipo": "unit",
+   "linhas": 88,
+   "testa": [
+    "src/components/layout/AppSidebar.tsx",
+    "src/components/ui/sidebar.tsx",
+    "src/routes/protectedRoutes.tsx"
+   ],
+   "casos": 4
   },
   {
    "arquivo": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
@@ -3147,9 +3158,11 @@
   "src/components/error-boundary/ErrorBoundary.tsx": 1,
   "src/components/executive/ConversationIntelligenceCard.tsx": 1,
   "src/components/executive/OmnichannelCard.tsx": 1,
+  "src/components/layout/AppSidebar.tsx": 1,
   "src/components/supervisor/panel/TrendChartToggle.tsx": 1,
   "src/components/supervisor/panel/types.ts": 1,
   "src/components/ui/search-input.tsx": 1,
+  "src/components/ui/sidebar.tsx": 1,
   "src/components/voice/voice-intent.ts": 1,
   "src/contexts/ReauthContext.tsx": 2,
   "src/data/mockData.ts": 1,
@@ -3374,6 +3387,7 @@
   "src/pages/Login.tsx": 1,
   "src/pages/PhoneDialer.tsx": 1,
   "src/pages/roles/useRoles.ts": 1,
+  "src/routes/protectedRoutes.tsx": 1,
   "supabase/functions/_shared/allowed-hosts.ts": 1,
   "supabase/functions/_shared/constant-time.ts": 2,
   "supabase/functions/_shared/cors.ts": 2,
@@ -3517,7 +3531,6 @@
    "src/components/queue-alerts/useQueueMetricsSettings.ts",
    "src/components/ui/form.tsx",
    "src/components/ui/keyboard-navigation.tsx",
-   "src/components/ui/sidebar.tsx",
    "src/components/ui/use-toast.ts",
    "src/components/voice/overlay/usePhaseColors.ts",
    "src/contexts/AuthContext.tsx",

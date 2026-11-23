@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a81e53528d093535c04de5d3fdd665d6747261e4",
+  "commit": "a1a6cb41aebb207018440c96e23698be1edccb0a",
   "branch": "main",
-  "data_commit": "2026-11-23T10:50:21-03:00",
+  "data_commit": "2026-11-23T11:34:26-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a1a6cb4",
+    "data": "2026-11-23",
+    "assunto": "feat: filtrar menu por papel (E088-E089) (#172)"
+   },
    {
     "sha": "a81e535",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "025ada5",
     "data": "2026-11-22",
     "assunto": "fix: exclusao de conta de usuario (8 FKs em NO ACTION bloqueavam o DELETE) (#146)"
-   },
-   {
-    "sha": "0e60f41",
-    "data": "2026-11-22",
-    "assunto": "docs: scorecards entregues e cron do data-lake endurecido (#145)"
    }
   ],
-  "arquivos_mudados_7d": 917,
+  "arquivos_mudados_7d": 918,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "src/components/layout",
-    "mudancas": 14
+    "mudancas": 16
    },
    {
     "pasta": "supabase/functions/_shared",
@@ -202,11 +202,11 @@
     "mudancas": 27
    },
    {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
-    "mudancas": 8
+    "arquivo": "src/components/layout/AppSidebar.tsx",
+    "mudancas": 9
    },
    {
-    "arquivo": "src/components/layout/AppSidebar.tsx",
+    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 8
    },
    {
@@ -242,6 +242,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "src/routes/protectedRoutes.tsx",
+    "mudancas": 5
+   },
+   {
     "arquivo": "docs/estado/infra-ci-rotas-integracoes.md",
     "mudancas": 4
    },
@@ -255,10 +259,6 @@
    },
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
-    "mudancas": 4
-   },
-   {
-    "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 4
    },
    {
@@ -294,14 +294,14 @@
     "mudancas": 3
    },
    {
-    "arquivo": "scripts/inventario/gerar-banco.mjs",
+    "arquivo": "docs/qa/05-PROGRESSO.md",
     "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 150
+    "commits": 151
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1660,
-  "arquivos_codigo": 1258,
-  "linhas_codigo": 170855,
+  "arquivos_total": 1661,
+  "arquivos_codigo": 1259,
+  "linhas_codigo": 170976,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 349,
+  "testes": 350,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 356,
-   "linhas": 42417
+   "arquivos": 357,
+   "linhas": 42532
   },
   "src/contexts": {
    "arquivos": 4,
@@ -512,7 +512,7 @@
   },
   "src/routes": {
    "arquivos": 2,
-   "linhas": 240
+   "linhas": 246
   },
   "src/test": {
    "arquivos": 2,
@@ -577,6 +577,10 @@
    "linhas": 383
   },
   {
+   "arquivo": "src/components/layout/AppSidebar.tsx",
+   "linhas": 382
+  },
+  {
    "arquivo": "src/pages/Inbox.tsx",
    "linhas": 382
   },
@@ -615,10 +619,6 @@
   {
    "arquivo": "src/components/callbacks/ScheduledCallbacksList.tsx",
    "linhas": 356
-  },
-  {
-   "arquivo": "src/components/layout/AppSidebar.tsx",
-   "linhas": 355
   },
   {
    "arquivo": "src/contexts/ReauthContext.tsx",

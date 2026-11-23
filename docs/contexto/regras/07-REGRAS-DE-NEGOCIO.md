@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a81e53528d` · branch `main` · 2026-11-23 13:59 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a1a6cb41ae` · branch `main` · 2026-11-23 14:44 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2414,6 +2414,7 @@ _nenhum item encontrado_
 |---|---|
 | `user` | `src/components/calls/softphone/ActiveCallDisplay.tsx` |
 | `admin` | `src/components/layout/AppSidebar.tsx` |
+| `profile` | `src/components/layout/AppSidebar.tsx` |
 | `denied` | `src/components/security/NotificationPermissionBanner.tsx` |
 | `granted` | `src/components/security/NotificationPermissionBanner.tsx` |
 | `authState` | `src/hooks/useAuth.ts` |
@@ -2452,7 +2453,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4075 testes em 339 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4081 testes em 340 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2654,6 +2655,7 @@ _nenhum item encontrado_
 | `src/__tests__/rls/learning-completions.test.ts` | 6 | RLS — learning_completions · agente só vê próprias conclusões · supervisor vê todas · agente NÃO pode inserir conclusão de outro agente … |
 | `src/__tests__/rls/storage-recordings.test.ts` | 6 | Storage — call-recordings (ownership por path) · bucket é privado: anônimo é bloqueado · agente lê apenas próprias gravações · agente faz upload apenas no próprio prefixo … |
 | `src/components/calls/__tests__/PostCallSummary.test.tsx` | 6 | PostCallSummary · mostra mensagem quando não há amostras · agrega MOS, jitter, perda e classifica qualidade · classifica como Ruim quando MOS médio < 3.6 … |
+| `src/components/layout/__tests__/AppSidebar.test.tsx` | 6 | routeRoles (E088) · declara papéis para rota admin e undefined para rota aberta · AppSidebar — filtro por papel (E089) · agente não vê itens de rota com roles (Executivo, Logs de Auditoria) … |
 | `src/hooks/__tests__/useAudioOutputDevices.test.tsx` | 6 | useAudioOutputDevices · reporta não suportado quando setSinkId ausente · enumera dispositivos de saída e ignora inputs · persiste a preferência ao chamar setSinkId com sucesso … |
 | `src/hooks/__tests__/useBattleCardDetection.test.ts` | 6 | useBattleCardDetection · does nothing when inactive · matches contains keyword · matches exact keyword as a whole word … |
 | `src/hooks/__tests__/useBitrixAndWebAuthn.test.ts` | 6 | useBitrix · gets contacts from Bitrix · handles unconfigured service · useWebAuthn … |
@@ -2755,8 +2757,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-capacity-forecast/__tests__/index.test.ts` | 4 | buildHistory — agrupa sessões por dia e identifica pico · forecastNextDays — vazio quando histórico < 7 dias · forecastNextDays — gera 7 dias com confiança quando há histórico · forecastNextDays — sinaliza exceeds_capacity quando peak > cap |
 | `supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts` | 4 | voice-qa rejeita sem JWT (401) · voice-qa rejeita question curta (400) · voice-qa rejeita period inválido (400) · voice-qa responde OPTIONS com CORS |
 | `supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts` | 4 | voip-quality-alerts-summary: exige Authorization · voip-quality-alerts-summary: aceita period válido · voip-quality-alerts-summary: rejeita period inválido · voip-quality-alerts-summary: responde com x-request-id |
-| `supabase/functions/voip-quality-forecast/__tests__/index.test.ts` | 4 | linearSlope — detecta tendência decrescente · forecast — gera horizonte solicitado com MOS válido · forecast — sinaliza risco quando MOS previsto < 3.5 · forecast — buckets agrupam corretamente por (dow, hour) |
-| … +39 linhas — lista completa em `context.json` | | |
+| … +40 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2909,6 +2910,8 @@ _nenhum item encontrado_
 | sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno | `src/components/calls/UnifiedSoftphone.tsx` |
 | LGPD Consent Required */} | `src/components/compliance/ComplianceSettings.tsx` |
 | Renderiza nada quando há apenas a opção "Todos" (nenhuma etiqueta em uso), | `src/components/dialer/phone/FavoriteTagFilter.tsx` |
+| não carrega (profile === null), mantém apenas os itens sem `roles`, | `src/components/layout/AppSidebar.tsx` |
+| não carrega, cada grupo mantém apenas os itens sem `roles` (menu mínimo). | `src/components/layout/AppSidebar.tsx` |
 | e usa `location.pathname` apenas para reiniciar a animação ao trocar de página. | `src/components/navigation/NavigationProgress.tsx` |
 | Total alerts (não distribuímos por agente — apenas total para contexto) | `src/components/network/AgentQualityRanking.tsx` |
 | Lógica de auto-apply: apenas critical + function (categoria infra implícita) | `src/components/network/VoipRecommendationsPanel.tsx` |

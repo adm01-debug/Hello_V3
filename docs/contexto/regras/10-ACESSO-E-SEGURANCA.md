@@ -1,11 +1,11 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a81e53528d` · branch `main` · 2026-11-23 13:59 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a1a6cb41ae` · branch `main` · 2026-11-23 14:44 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
 
-`admin`, `agent`, `customer`, `default`, `denied`, `granted`, `role`, `string`, `supervisor`, `user`, `viewer`
+`admin`, `agent`, `customer`, `default`, `denied`, `granted`, `profile`, `role`, `string`, `supervisor`, `user`, `viewer`
 
 - Tabelas de perfil/permissão: `user_roles`, `permissions`, `role_permissions`, `call_queue_members`, `ring_group_members`
 - Colunas de perfil: `user_profiles.role` (string not null), `user_roles.role` (public.app_role NOT NULL DEFAULT 'agent'), `role_permissions.role` (app_role NOT NULL)

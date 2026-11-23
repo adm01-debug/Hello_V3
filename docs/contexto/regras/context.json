@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a81e53528d093535c04de5d3fdd665d6747261e4",
+  "sha": "a1a6cb41aebb207018440c96e23698be1edccb0a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 13:59 UTC",
-  "files_total": 1707,
-  "code_files": 1504,
-  "code_lines": 186867
+  "generated_at": "2026-11-23 14:44 UTC",
+  "files_total": 1708,
+  "code_files": 1505,
+  "code_lines": 186988
  },
  "version": "1.3.2",
- "facts_hash": "bb8dc756463557d4",
+ "facts_hash": "101bbf3b9eff4467",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 615,
-   ".tsx": 610,
+   ".tsx": 611,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -32160,7 +32160,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 356,
+  "components_count": 357,
   "hooks": [
    {
     "name": "useContacts",
@@ -33305,8 +33305,8 @@
   },
   {
    "module": "src/components",
-   "files": 356,
-   "lines": 42417,
+   "files": 357,
+   "lines": 42532,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33427,7 +33427,8 @@
     "src/contexts",
     "src/hooks",
     "src/integrations",
-    "src/lib"
+    "src/lib",
+    "src/routes"
    ],
    "file_list": [
     "src/components/SearchInput.tsx",
@@ -34226,10 +34227,10 @@
   {
    "module": "src/routes",
    "files": 2,
-   "lines": 240,
+   "lines": 246,
    "tables": [],
    "exports": [
-    "protectedRoutes.tsx: RouteConfig, protectedRoutes",
+    "protectedRoutes.tsx: RouteConfig, protectedRoutes, routeRoles",
     "publicRoutes.tsx: publicRoutes"
    ],
    "docs": [],
@@ -41962,6 +41963,10 @@
     "value": "admin"
    },
    {
+    "file": "src/components/layout/AppSidebar.tsx",
+    "value": "profile"
+   },
+   {
     "file": "src/components/security/NotificationPermissionBanner.tsx",
     "value": "denied"
    },
@@ -42130,6 +42135,14 @@
    {
     "file": "src/components/dialer/phone/FavoriteTagFilter.tsx",
     "text": "Renderiza nada quando há apenas a opção \"Todos\" (nenhuma etiqueta em uso),"
+   },
+   {
+    "file": "src/components/layout/AppSidebar.tsx",
+    "text": "não carrega (profile === null), mantém apenas os itens sem `roles`,"
+   },
+   {
+    "file": "src/components/layout/AppSidebar.tsx",
+    "text": "não carrega, cada grupo mantém apenas os itens sem `roles` (menu mínimo)."
    },
    {
     "file": "src/components/navigation/NavigationProgress.tsx",
@@ -57062,6 +57075,30 @@
    {
     "file": "src/components/executive/__tests__/OmnichannelCard.test.tsx",
     "name": "lista todos os canais com contagem"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "routeRoles (E088)"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "declara papéis para rota admin e undefined para rota aberta"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "AppSidebar — filtro por papel (E089)"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "agente não vê itens de rota com roles (Executivo, Logs de Auditoria)"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "supervisor vê Executivo mas não Logs de Auditoria"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "admin vê Executivo e Logs de Auditoria"
    },
    {
     "file": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
@@ -83194,6 +83231,7 @@
    "default",
    "denied",
    "granted",
+   "profile",
    "role",
    "string",
    "supervisor",
@@ -94662,7 +94700,7 @@
   },
   "src/components/layout/AppSidebar.tsx": {
    "path": "src/components/layout/AppSidebar.tsx",
-   "lines": 355,
+   "lines": 382,
    "exports": [
     "function AppSidebar"
    ],
@@ -94679,7 +94717,12 @@
     }
    ],
    "role_checks": [
-    "admin"
+    "admin",
+    "profile"
+   ],
+   "rule_comments": [
+    "não carrega (profile === null), mantém apenas os itens sem `roles`,",
+    "não carrega, cada grupo mantém apenas os itens sem `roles` (menu mínimo)."
    ]
   },
   "src/components/layout/CommandPalette.tsx": {
@@ -94739,6 +94782,22 @@
    "lines": 81,
    "exports": [
     "function ThemeToggle"
+   ]
+  },
+  "src/components/layout/__tests__/AppSidebar.test.tsx": {
+   "path": "src/components/layout/__tests__/AppSidebar.test.tsx",
+   "lines": 88,
+   "is_test": true,
+   "role_checks": [
+    "authMock"
+   ],
+   "tests": [
+    "routeRoles (E088)",
+    "declara papéis para rota admin e undefined para rota aberta",
+    "AppSidebar — filtro por papel (E089)",
+    "agente não vê itens de rota com roles (Executivo, Logs de Auditoria)",
+    "supervisor vê Executivo mas não Logs de Auditoria",
+    "admin vê Executivo e Logs de Auditoria"
    ]
   },
   "src/components/lazy/LazyComponent.tsx": {
@@ -115686,10 +115745,11 @@
   },
   "src/routes/protectedRoutes.tsx": {
    "path": "src/routes/protectedRoutes.tsx",
-   "lines": 209,
+   "lines": 215,
    "exports": [
     "interface RouteConfig",
-    "const protectedRoutes"
+    "const protectedRoutes",
+    "const routeRoles"
    ]
   },
   "src/routes/publicRoutes.tsx": {
@@ -123638,10 +123698,22 @@
   }
  },
  "git": {
-  "sha": "a81e53528d093535c04de5d3fdd665d6747261e4",
+  "sha": "a1a6cb41aebb207018440c96e23698be1edccb0a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a1a6cb4",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "feat: filtrar menu por papel (E088-E089) (#172)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/layout/AppSidebar.tsx",
+     "src/components/layout/__tests__/AppSidebar.test.tsx",
+     "src/routes/protectedRoutes.tsx"
+    ]
+   },
    {
     "sha": "a81e535",
     "date": "2026-11-23",
@@ -123972,21 +124044,20 @@
      "src/components/layout/AppSidebar.tsx",
      "src/components/layout/CommandPalette.tsx"
     ]
-   },
-   {
-    "sha": "d9ee2d8",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: corrige rotulos defasados de D3/D5 e dos testes Deno (#141)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/estado/funcionalidades-planejadas.md",
-    5
+    4
+   ],
+   [
+    "docs/qa/05-PROGRESSO.md",
+    3
+   ],
+   [
+    "src/components/layout/AppSidebar.tsx",
+    3
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
@@ -124005,7 +124076,7 @@
     3
    ],
    [
-    "docs/qa/05-PROGRESSO.md",
+    "src/routes/protectedRoutes.tsx",
     2
    ],
    [
@@ -124025,12 +124096,12 @@
     2
    ],
    [
-    "src/components/layout/AppSidebar.tsx",
+    "src/components/layout/CommandPalette.tsx",
     2
    ],
    [
-    "src/components/layout/CommandPalette.tsx",
-    2
+    "src/components/layout/__tests__/AppSidebar.test.tsx",
+    1
    ],
    [
     "src/hooks/__tests__/callLifecycle-integration.test.tsx",
@@ -124054,14 +124125,6 @@
    ],
    [
     "src/lib/__tests__/pendingCallWrites.test.ts",
-    1
-   ],
-   [
-    "src/lib/__tests__/reportCsv.test.ts",
-    1
-   ],
-   [
-    "src/lib/export/callHistoryCsv.ts",
     1
    ]
   ]
