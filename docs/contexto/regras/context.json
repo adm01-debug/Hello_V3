@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "e7889cb3c56ec94d61fbbc846516a818f271590e",
+  "sha": "0942091ccb3b0836a256dd195912440ee0c481a2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 15:24 UTC",
-  "files_total": 1708,
-  "code_files": 1505,
-  "code_lines": 187093
+  "generated_at": "2026-11-23 15:48 UTC",
+  "files_total": 1707,
+  "code_files": 1504,
+  "code_lines": 187162
  },
  "version": "1.3.2",
- "facts_hash": "87ad1268bf62908e",
+ "facts_hash": "3537715d406142c7",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 615,
-   ".tsx": 611,
+   ".tsx": 610,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -28790,8 +28790,10 @@
      "health-check",
      "voip-trunks-manage"
     ],
-    "rpc_transitive": [],
-    "deps_count": 31
+    "rpc_transitive": [
+     "check_all_tables_rls_status"
+    ],
+    "deps_count": 30
    },
    {
     "path": "",
@@ -32160,7 +32162,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 356,
+  "components_count": 355,
   "hooks": [
    {
     "name": "useContacts",
@@ -33305,8 +33307,8 @@
   },
   {
    "module": "src/components",
-   "files": 356,
-   "lines": 42512,
+   "files": 355,
+   "lines": 42581,
    "tables": [
     "accounts",
     "agent_goals",
@@ -37924,6 +37926,7 @@
     "src/hooks/usePredictivePacing.ts"
    ],
    "check_all_tables_rls_status": [
+    "src/components/dashboard/SystemIntegrityDashboard.tsx",
     "src/pages/ObservabilityDashboard.tsx",
     "src/pages/SecurityReport.tsx",
     "supabase/functions/rls-audit/index.ts"
@@ -38168,6 +38171,7 @@
     "scripts/ai-context/gerar.unit.mjs"
    ],
    "health-check": [
+    "src/components/dashboard/SystemIntegrityDashboard.tsx",
     "src/hooks/useHealthCheck.ts",
     "src/pages/admin/SloDashboard.tsx"
    ],
@@ -50758,26 +50762,44 @@
    {
     "file": "src/components/dashboard/SystemIntegrityDashboard.tsx",
     "field": "status",
-    "value": "Otimizado",
+    "value": "operational",
     "kind": "escreve"
    },
    {
     "file": "src/components/dashboard/SystemIntegrityDashboard.tsx",
     "field": "status",
-    "value": "Online",
+    "value": "operational",
     "kind": "escreve"
    },
    {
     "file": "src/components/dashboard/SystemIntegrityDashboard.tsx",
     "field": "status",
-    "value": "Seguro",
-    "kind": "escreve"
+    "value": "unknown",
+    "kind": "compara"
    },
    {
     "file": "src/components/dashboard/SystemIntegrityDashboard.tsx",
     "field": "status",
-    "value": "Auto-Clean",
-    "kind": "escreve"
+    "value": "operational",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/dashboard/SystemIntegrityDashboard.tsx",
+    "field": "status",
+    "value": "degraded",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/dashboard/SystemIntegrityDashboard.tsx",
+    "field": "status",
+    "value": "unknown",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/dashboard/SystemIntegrityDashboard.tsx",
+    "field": "status",
+    "value": "unknown",
+    "kind": "compara"
    },
    {
     "file": "src/components/dialer/CreateCampaignDialog.tsx",
@@ -50898,30 +50920,6 @@
     "field": "status",
     "value": "pending",
     "kind": "filtra"
-   },
-   {
-    "file": "src/components/executive/SecurityAuditCard.tsx",
-    "field": "status",
-    "value": "Ativo",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/components/executive/SecurityAuditCard.tsx",
-    "field": "status",
-    "value": "Validado",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/components/executive/SecurityAuditCard.tsx",
-    "field": "status",
-    "value": "Ativo",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/components/executive/SecurityAuditCard.tsx",
-    "field": "status",
-    "value": "Imutável",
-    "kind": "escreve"
    },
    {
     "file": "src/components/executive/VoipInfrastructureTab.tsx",
@@ -72887,6 +72885,10 @@
     "call": "notify_on_warning"
    },
    {
+    "file": "src/components/dashboard/SystemIntegrityDashboard.tsx",
+    "call": "invoke("
+   },
+   {
     "file": "src/components/network/CapacityForecastChart.tsx",
     "call": "invoke("
    },
@@ -82535,17 +82537,24 @@
       "filtra:supabase/functions/check-goals/index.ts",
       "filtra:supabase/functions/check-queue-metrics/index.ts"
      ],
-     "Otimizado": [
-      "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx"
+     "operational": [
+      "compara:src/components/dashboard/SystemIntegrityDashboard.tsx",
+      "compara:src/pages/admin/SloDashboard.tsx",
+      "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx",
+      "escreve:src/pages/admin/SloDashboard.tsx"
      ],
-     "Online": [
-      "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx"
+     "unknown": [
+      "compara:src/components/dashboard/SystemIntegrityDashboard.tsx",
+      "compara:supabase/functions/health-check/index.ts",
+      "escreve:supabase/functions/health-check/index.ts",
+      "escreve:supabase/functions/health-check/slo-budget.ts"
      ],
-     "Seguro": [
-      "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx"
-     ],
-     "Auto-Clean": [
-      "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx"
+     "degraded": [
+      "compara:src/components/dashboard/SystemIntegrityDashboard.tsx",
+      "compara:src/components/executive/VoipInfrastructureTab.tsx",
+      "compara:src/components/observability/HealthTab.tsx",
+      "compara:src/pages/admin/SloDashboard.tsx",
+      "compara:supabase/functions/health-check/index.ts"
      ],
      "dialing": [
       "compara:src/components/dialer/PredictiveDialerPanel.tsx",
@@ -82572,15 +82581,6 @@
       "filtra:supabase/functions/generate-coaching-track/index.ts",
       "filtra:supabase/functions/whatsapp-inbound/index.ts"
      ],
-     "Ativo": [
-      "escreve:src/components/executive/SecurityAuditCard.tsx"
-     ],
-     "Validado": [
-      "escreve:src/components/executive/SecurityAuditCard.tsx"
-     ],
-     "Imutável": [
-      "escreve:src/components/executive/SecurityAuditCard.tsx"
-     ],
      "healthy": [
       "compara:src/components/executive/VoipInfrastructureTab.tsx",
       "compara:src/components/observability/HealthTab.tsx",
@@ -82588,12 +82588,6 @@
       "compara:src/pages/admin/SloDashboard.tsx",
       "escreve:src/hooks/useHealthCheck.ts",
       "escreve:src/pages/admin/SloDashboard.tsx"
-     ],
-     "degraded": [
-      "compara:src/components/executive/VoipInfrastructureTab.tsx",
-      "compara:src/components/observability/HealthTab.tsx",
-      "compara:src/pages/admin/SloDashboard.tsx",
-      "compara:supabase/functions/health-check/index.ts"
      ],
      "online": [
       "compara:src/components/network/NetworkStatusIndicator.tsx",
@@ -82787,10 +82781,6 @@
      "sent": [
       "compara:src/pages/VirtualFax.tsx"
      ],
-     "operational": [
-      "compara:src/pages/admin/SloDashboard.tsx",
-      "escreve:src/pages/admin/SloDashboard.tsx"
-     ],
      "exhausted": [
       "compara:src/pages/admin/SloDashboard.tsx",
       "compara:supabase/functions/health-check/index.ts"
@@ -82807,11 +82797,6 @@
      ],
      "system": [
       "escreve:supabase/functions/check-goals/index.ts"
-     ],
-     "unknown": [
-      "compara:supabase/functions/health-check/index.ts",
-      "escreve:supabase/functions/health-check/index.ts",
-      "escreve:supabase/functions/health-check/slo-budget.ts"
      ],
      "fulfilled": [
       "compara:supabase/functions/health-check/index.ts"
@@ -89221,30 +89206,22 @@
    },
    {
     "kind": "status",
-    "msg": "valor `Otimizado` para `status` usado no código não existe em nenhum enum do banco/TS",
+    "msg": "valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
-     "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx"
+     "compara:src/components/dashboard/SystemIntegrityDashboard.tsx",
+     "compara:src/pages/admin/SloDashboard.tsx",
+     "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx",
+     "escreve:src/pages/admin/SloDashboard.tsx"
     ]
    },
    {
     "kind": "status",
-    "msg": "valor `Online` para `status` usado no código não existe em nenhum enum do banco/TS",
+    "msg": "valor `degraded` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
-     "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `Seguro` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `Auto-Clean` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:src/components/dashboard/SystemIntegrityDashboard.tsx"
+     "compara:src/components/dashboard/SystemIntegrityDashboard.tsx",
+     "compara:src/components/executive/VoipInfrastructureTab.tsx",
+     "compara:src/components/observability/HealthTab.tsx",
+     "compara:src/pages/admin/SloDashboard.tsx"
     ]
    },
    {
@@ -89261,37 +89238,6 @@
     "where": [
      "compara:src/components/dialer/PredictiveDialerPanel.tsx",
      "escreve:src/hooks/predictive-dialer/api.ts"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `Ativo` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:src/components/executive/SecurityAuditCard.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `Validado` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:src/components/executive/SecurityAuditCard.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `Imutável` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:src/components/executive/SecurityAuditCard.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `degraded` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "compara:src/components/executive/VoipInfrastructureTab.tsx",
-     "compara:src/components/observability/HealthTab.tsx",
-     "compara:src/pages/admin/SloDashboard.tsx",
-     "compara:supabase/functions/health-check/index.ts"
     ]
    },
    {
@@ -89434,14 +89380,6 @@
     "msg": "valor `sent` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/pages/VirtualFax.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "compara:src/pages/admin/SloDashboard.tsx",
-     "escreve:src/pages/admin/SloDashboard.tsx"
     ]
    },
    {
@@ -93928,31 +93866,55 @@
   },
   "src/components/dashboard/SystemIntegrityDashboard.tsx": {
    "path": "src/components/dashboard/SystemIntegrityDashboard.tsx",
-   "lines": 37,
+   "lines": 159,
    "exports": [
     "function SystemIntegrityDashboard"
+   ],
+   "rpc": [
+    "check_all_tables_rls_status"
+   ],
+   "invokes": [
+    "health-check"
    ],
    "status_values": [
     {
      "field": "status",
-     "value": "Otimizado",
+     "value": "operational",
      "kind": "escreve"
     },
     {
      "field": "status",
-     "value": "Online",
+     "value": "operational",
      "kind": "escreve"
     },
     {
      "field": "status",
-     "value": "Seguro",
-     "kind": "escreve"
+     "value": "unknown",
+     "kind": "compara"
     },
     {
      "field": "status",
-     "value": "Auto-Clean",
-     "kind": "escreve"
+     "value": "operational",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "degraded",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "unknown",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "unknown",
+     "kind": "compara"
     }
+   ],
+   "side_effects": [
+    "invoke("
    ]
   },
   "src/components/dashboard/WidgetLibrary.tsx": {
@@ -94509,38 +94471,9 @@
   },
   "src/components/executive/RealtimeQualityDashboard.tsx": {
    "path": "src/components/executive/RealtimeQualityDashboard.tsx",
-   "lines": 188,
+   "lines": 182,
    "exports": [
     "function RealtimeQualityDashboard"
-   ]
-  },
-  "src/components/executive/SecurityAuditCard.tsx": {
-   "path": "src/components/executive/SecurityAuditCard.tsx",
-   "lines": 47,
-   "exports": [
-    "function SecurityAuditCard"
-   ],
-   "status_values": [
-    {
-     "field": "status",
-     "value": "Ativo",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "Validado",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "Ativo",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "Imutável",
-     "kind": "escreve"
-    }
    ]
   },
   "src/components/executive/TrendIndicator.tsx": {
@@ -123751,10 +123684,22 @@
   }
  },
  "git": {
-  "sha": "e7889cb3c56ec94d61fbbc846516a818f271590e",
+  "sha": "0942091ccb3b0836a256dd195912440ee0c481a2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "0942091",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: liga painel de integridade a dados reais e remove cartao decorativo (E097-E098) (#176)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/dashboard/SystemIntegrityDashboard.tsx",
+     "src/components/executive/RealtimeQualityDashboard.tsx",
+     "src/components/executive/SecurityAuditCard.tsx"
+    ]
+   },
    {
     "sha": "e7889cb",
     "date": "2026-11-23",
@@ -124092,22 +124037,12 @@
      "docs/audits/pendencias-2026-07.md",
      "docs/estado/funcionalidades-planejadas.md"
     ]
-   },
-   {
-    "sha": "67d0180",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: cron data-lake-flush usa token dedicado em vez da anon key (#144)",
-    "files": [
-     "supabase/functions/data-lake-flush/index.ts",
-     "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    6
+    7
    ],
    [
     "docs/estado/funcionalidades-planejadas.md",
@@ -124146,6 +124081,18 @@
     2
    ],
    [
+    "src/components/dashboard/SystemIntegrityDashboard.tsx",
+    1
+   ],
+   [
+    "src/components/executive/RealtimeQualityDashboard.tsx",
+    1
+   ],
+   [
+    "src/components/executive/SecurityAuditCard.tsx",
+    1
+   ],
+   [
     "src/components/network/ExecutiveReportExport.tsx",
     1
    ],
@@ -124171,18 +124118,6 @@
    ],
    [
     "supabase/functions/voip-executive-summary/index.ts",
-    1
-   ],
-   [
-    "src/components/dashboard/PerformanceNarrative.tsx",
-    1
-   ],
-   [
-    "src/lib/security-report-data.ts",
-    1
-   ],
-   [
-    "src/pages/Index.tsx",
     1
    ]
   ]

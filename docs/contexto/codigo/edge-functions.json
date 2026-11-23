@@ -1601,6 +1601,7 @@
     "observability.ts"
    ],
    "chamada_pelo_front": [
+    "src/components/dashboard/SystemIntegrityDashboard.tsx",
     "src/hooks/useHealthCheck.ts",
     "src/pages/admin/SloDashboard.tsx"
    ],

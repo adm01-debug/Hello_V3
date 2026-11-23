@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e7889cb3c5` · branch `main` · 2026-11-23 15:24 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0942091ccb` · branch `main` · 2026-11-23 15:48 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -838,17 +838,10 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 |---|---|---|---|
 | `last_health_status` | `healthy` | compara, escreve, filtra | `src/components/admin/extensions/BulkAssignTrunkDialog.tsx`<br>`src/components/executive/VoipInfrastructureTab.tsx`<br>`supabase/functions/voip-trunks-healthcheck/index.ts` |
 | `last_health_status` | `offline` | compara | `src/pages/admin/VoipTrunksAdmin.tsx`<br>`supabase/functions/sip-config/index.ts` |
-| `status` | `Ativo` | escreve | `src/components/executive/SecurityAuditCard.tsx` |
-| `status` | `Auto-Clean` | escreve | `src/components/dashboard/SystemIntegrityDashboard.tsx` |
 | `status` | `CHANNEL_ERROR` | compara | `src/hooks/useHealthCheck.ts` |
 | `status` | `CLOSED` | compara | `src/hooks/useHealthCheck.ts` |
-| `status` | `Imutável` | escreve | `src/components/executive/SecurityAuditCard.tsx` |
-| `status` | `Online` | escreve | `src/components/dashboard/SystemIntegrityDashboard.tsx` |
-| `status` | `Otimizado` | escreve | `src/components/dashboard/SystemIntegrityDashboard.tsx` |
 | `status` | `SUBSCRIBED` | compara | `src/hooks/useHealthCheck.ts` |
-| `status` | `Seguro` | escreve | `src/components/dashboard/SystemIntegrityDashboard.tsx` |
 | `status` | `TIMED_OUT` | compara | `src/hooks/useHealthCheck.ts` |
-| `status` | `Validado` | escreve | `src/components/executive/SecurityAuditCard.tsx` |
 | `status` | `abandoned` | compara, filtra | `src/components/dashboard/RecentCalls.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>`src/pages/CallHistory.tsx`<br>`supabase/functions/check-goals/index.ts`<br>… +1 |
 | `status` | `accepted` | escreve | `src/hooks/useCrmFieldSuggestions.ts` |
 | `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>… +21 |
@@ -869,7 +862,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>… +3 |
 | `status` | `created` | escreve | `supabase/functions/auto-scorecard/index.ts` |
 | `status` | `critical` | compara | `src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`supabase/functions/check-goals/index.ts` |
-| `status` | `degraded` | compara | `src/components/executive/VoipInfrastructureTab.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
+| `status` | `degraded` | compara | `src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`src/components/executive/VoipInfrastructureTab.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
 | `status` | `dialing` | compara, escreve | `src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/hooks/predictive-dialer/api.ts` |
 | `status` | `disconnected` | compara, escreve | `src/components/calls/UnifiedSoftphone.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>`src/lib/elevenlabs-stub.ts` |
 | `status` | `disponivel` | escreve | `src/pages/Marketplace.tsx` |
@@ -900,7 +893,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `on_hold` | compara | `src/hooks/useQueueMetrics.ts` |
 | `status` | `online` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
 | `status` | `open` | compara, escreve, filtra | `src/components/executive/CustomerSuccessCard.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/hooks/useRenewals.ts`<br>`src/lib/security/penetration-test-reporter.ts`<br>`src/pages/Deals.tsx`<br>… +8 |
-| `status` | `operational` | compara, escreve | `src/pages/admin/SloDashboard.tsx` |
+| `status` | `operational` | compara, escreve | `src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`src/pages/admin/SloDashboard.tsx` |
 | `status` | `optimal` | compara | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `status` | `outage` | compara | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
 | `status` | `overdue` | compara, escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
@@ -926,7 +919,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `today` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `tomorrow` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `transferring` | compara, escreve | `src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
-| `status` | `unknown` | compara, escreve | `supabase/functions/health-check/index.ts`<br>`supabase/functions/health-check/slo-budget.ts` |
+| `status` | `unknown` | compara, escreve | `src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`supabase/functions/health-check/index.ts`<br>`supabase/functions/health-check/slo-budget.ts` |
 | `status` | `unstable` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
 | `status` | `verified` | compara, escreve | `src/components/auth/ReauthDialog.tsx`<br>`src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx`<br>`src/pages/two-factor/DevicesCard.tsx` |
 | `status` | `voicemail` | escreve | `src/data/mockData.ts` |
@@ -2774,6 +2767,7 @@ _nenhum item encontrado_
 | `invoke(` | `src/components/contacts/ContactDetailSheet.tsx` |
 | `notify_on_critical` | `src/components/dashboard/DashboardGoalsSettings.tsx` |
 | `notify_on_warning` | `src/components/dashboard/DashboardGoalsSettings.tsx` |
+| `invoke(` | `src/components/dashboard/SystemIntegrityDashboard.tsx` |
 | `invoke(` | `src/components/network/CapacityForecastChart.tsx` |
 | `invoke(` | `src/components/network/QualityHeatmap.tsx` |
 | `invoke(` | `src/components/network/SlaReportCards.tsx` |

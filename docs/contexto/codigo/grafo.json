@@ -1,28 +1,28 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 909,
+ "nos": 908,
  "arestas": 3481,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 263
+   "importado_por": 264
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 243
+   "importado_por": 244
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 234
+   "importado_por": 233
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 203
+   "importado_por": 202
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 195
+   "importado_por": 196
   },
   {
    "arquivo": "src/lib/utils.ts",

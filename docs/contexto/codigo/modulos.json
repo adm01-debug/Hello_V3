@@ -1068,7 +1068,7 @@
    "modulo": "components/dashboard",
    "arquivos": 12,
    "testes": 0,
-   "linhas": 1281,
+   "linhas": 1403,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1087,7 +1087,9 @@
     "useRecentCallsData"
    ],
    "hooks_definidos": [],
-   "edges": [],
+   "edges": [
+    "health-check"
+   ],
    "tabelas": [
     "call_sessions",
     "dashboard_goals",
@@ -1096,6 +1098,7 @@
     "hold_events"
    ],
    "rpcs": [
+    "check_all_tables_rls_status",
     "get_agents_with_active_calls",
     "get_call_volume_stats",
     "get_dashboard_stats",
@@ -1119,12 +1122,16 @@
     "status"
    ],
    "diretos": {
-    "edges": [],
+    "edges": [
+     "health-check"
+    ],
     "tabelas": [
      "call_sessions",
      "hold_events"
     ],
-    "rpcs": []
+    "rpcs": [
+     "check_all_tables_rls_status"
+    ]
    },
    "importado_por_outros_modulos": [
     "hooks",
@@ -1264,13 +1271,13 @@
   },
   {
    "modulo": "components/executive",
-   "arquivos": 18,
+   "arquivos": 17,
    "testes": 2,
-   "linhas": 1928,
+   "linhas": 1875,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 18,
+   "componentes": 17,
    "hooks_locais": [
     "useAgentAssistHistory",
     "useAutoMeetingSummary",

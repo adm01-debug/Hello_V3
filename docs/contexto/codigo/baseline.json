@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e7889cb3c56ec94d61fbbc846516a818f271590e",
+  "commit": "0942091ccb3b0836a256dd195912440ee0c481a2",
   "branch": "main",
-  "data_commit": "2026-11-23T12:16:35-03:00",
+  "data_commit": "2026-11-23T12:34:34-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "0942091",
+    "data": "2026-11-23",
+    "assunto": "fix: liga painel de integridade a dados reais e remove cartao decorativo (E097-E098) (#176)"
+   },
    {
     "sha": "e7889cb",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "66b53b9",
     "data": "2026-11-22",
     "assunto": "docs: registra 8 edges de IA provadas ponta a ponta (#150)"
-   },
-   {
-    "sha": "433f7b6",
-    "data": "2026-11-22",
-    "assunto": "chore: atualiza pendencias com medicoes de 22/11 (B1, B6, C3, C4) (#149)"
    }
   ],
-  "arquivos_mudados_7d": 927,
+  "arquivos_mudados_7d": 928,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -176,6 +176,10 @@
     "mudancas": 8
    },
    {
+    "pasta": "src/components/dashboard",
+    "mudancas": 8
+   },
+   {
     "pasta": "src/pages/admin",
     "mudancas": 8
    },
@@ -188,11 +192,7 @@
     "mudancas": 7
    },
    {
-    "pasta": "src/components/compliance",
-    "mudancas": 7
-   },
-   {
-    "pasta": "src/components/contacts",
+    "pasta": "docs/qa/05-PROGRESSO.md",
     "mudancas": 7
    }
   ],
@@ -218,11 +218,11 @@
     "mudancas": 7
    },
    {
-    "arquivo": ".github/workflows/contexto.yml",
-    "mudancas": 6
+    "arquivo": "docs/qa/05-PROGRESSO.md",
+    "mudancas": 7
    },
    {
-    "arquivo": "docs/qa/05-PROGRESSO.md",
+    "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 6
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 154
+    "commits": 155
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,15 +314,15 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1661,
-  "arquivos_codigo": 1259,
-  "linhas_codigo": 171081,
+  "arquivos_total": 1660,
+  "arquivos_codigo": 1258,
+  "linhas_codigo": 171150,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "modulos": 79,
-  "componentes": 449,
+  "componentes": 448,
   "hooks": 193,
   "edge_functions": 98,
   "tabelas": 169,
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 356,
-   "linhas": 42512
+   "arquivos": 355,
+   "linhas": 42581
   },
   "src/contexts": {
    "arquivos": 4,

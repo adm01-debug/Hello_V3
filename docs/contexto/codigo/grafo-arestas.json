@@ -959,7 +959,10 @@
   ],
   "src/components/dashboard/SystemIntegrityDashboard.tsx": [
    "src/components/ui/badge.tsx",
-   "src/components/ui/card.tsx"
+   "src/components/ui/button.tsx",
+   "src/components/ui/card.tsx",
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts"
   ],
   "src/components/dashboard/WidgetLibrary.tsx": [
    "src/components/ui/badge.tsx",
@@ -1176,16 +1179,11 @@
    "src/lib/safe-date.ts"
   ],
   "src/components/executive/RealtimeQualityDashboard.tsx": [
-   "src/components/executive/SecurityAuditCard.tsx",
    "src/components/ui/badge.tsx",
    "src/components/ui/card.tsx",
    "src/components/ui/progress.tsx",
    "src/hooks/useQualityMetrics.ts",
    "src/lib/safe-date.ts"
-  ],
-  "src/components/executive/SecurityAuditCard.tsx": [
-   "src/components/ui/badge.tsx",
-   "src/components/ui/card.tsx"
   ],
   "src/components/executive/VoipInfrastructureTab.tsx": [
    "src/components/ui/badge.tsx",

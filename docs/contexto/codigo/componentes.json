@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 449,
+ "total": 448,
  "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
@@ -1868,11 +1868,13 @@
     "SystemIntegrityDashboard"
    ],
    "export_default": null,
-   "linhas": 37,
+   "linhas": 159,
    "dominio": "components/dashboard",
    "hooks_locais": [],
    "tabelas": [],
-   "edges": [],
+   "edges": [
+    "health-check"
+   ],
    "usado_por": 1,
    "orfao": false
   },
@@ -2358,26 +2360,12 @@
     "RealtimeQualityDashboard"
    ],
    "export_default": null,
-   "linhas": 188,
+   "linhas": 182,
    "dominio": "components/executive",
    "hooks_locais": [
     "useQualityMetrics",
     "useTrunkUsageMetrics"
    ],
-   "tabelas": [],
-   "edges": [],
-   "usado_por": 1,
-   "orfao": false
-  },
-  {
-   "arquivo": "src/components/executive/SecurityAuditCard.tsx",
-   "exports": [
-    "SecurityAuditCard"
-   ],
-   "export_default": null,
-   "linhas": 47,
-   "dominio": "components/executive",
-   "hooks_locais": [],
    "tabelas": [],
    "edges": [],
    "usado_por": 1,
@@ -4105,7 +4093,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 203,
+   "usado_por": 202,
    "orfao": false
   },
   {
@@ -4155,7 +4143,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 243,
+   "usado_por": 244,
    "orfao": false
   },
   {
@@ -4190,7 +4178,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 234,
+   "usado_por": 233,
    "orfao": false
   },
   {

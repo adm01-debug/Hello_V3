@@ -23947,7 +23947,7 @@
   {
    "nome": "check_all_tables_rls_status",
    "definida": true,
-   "usada_em": 3
+   "usada_em": 4
   },
   {
    "nome": "check_calling_hours",

@@ -317,7 +317,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 233,
+   "usado_por": 234,
    "usado_por_modulos": [
     "components/admin",
     "components/agent",
@@ -1156,7 +1156,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 187,
+   "usado_por": 188,
    "usado_por_modulos": [
     "components/admin",
     "components/ai",
@@ -1168,6 +1168,7 @@
     "components/compliance",
     "components/contacts",
     "components/conversation-intelligence",
+    "components/dashboard",
     "components/error-boundary",
     "components/executive",
     "components/network",

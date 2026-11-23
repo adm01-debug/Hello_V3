@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e7889cb3c5` · branch `main` · 2026-11-23 15:24 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0942091ccb` · branch `main` · 2026-11-23 15:48 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -289,16 +289,10 @@
 | status | valor `future` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/callbacks/ScheduledCallbacksList.tsx` |
 | status | valor `optimal` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | status | valor `agent_high` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/conversation-intelligence/TalkRatioChart.tsx` |
-| status | valor `Otimizado` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/dashboard/SystemIntegrityDashboard.tsx` |
-| status | valor `Online` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/dashboard/SystemIntegrityDashboard.tsx` |
-| status | valor `Seguro` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/dashboard/SystemIntegrityDashboard.tsx` |
-| status | valor `Auto-Clean` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/dashboard/SystemIntegrityDashboard.tsx` |
+| status | valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`compara:src/pages/admin/SloDashboard.tsx`<br>`escreve:src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`escreve:src/pages/admin/SloDashboard.tsx` |
+| status | valor `degraded` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`compara:src/components/executive/VoipInfrastructureTab.tsx`<br>`compara:src/components/observability/HealthTab.tsx`<br>`compara:src/pages/admin/SloDashboard.tsx` |
 | status | valor `dialing` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dialer/PredictiveDialerPanel.tsx`<br>`escreve:src/hooks/predictive-dialer/api.ts` |
 | status | valor `paused` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dialer/PredictiveDialerPanel.tsx`<br>`escreve:src/hooks/predictive-dialer/api.ts` |
-| status | valor `Ativo` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/executive/SecurityAuditCard.tsx` |
-| status | valor `Validado` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/executive/SecurityAuditCard.tsx` |
-| status | valor `Imutável` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/executive/SecurityAuditCard.tsx` |
-| status | valor `degraded` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/executive/VoipInfrastructureTab.tsx`<br>`compara:src/components/observability/HealthTab.tsx`<br>`compara:src/pages/admin/SloDashboard.tsx`<br>`compara:supabase/functions/health-check/index.ts` |
 | status | valor `down` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/observability/HealthTab.tsx`<br>`compara:src/hooks/useHealthCheck.ts`<br>`escreve:src/hooks/useHealthCheck.ts` |
 | status | valor `ok` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/queue/QueueGoalsTab.tsx`<br>`compara:src/pages/QueueMetricsDashboard.tsx`<br>`compara:supabase/functions/check-goals/index.ts`<br>`escreve:src/components/queue/QueueGoalsTab.tsx` |
 | status | valor `accepted` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/hooks/useCrmFieldSuggestions.ts` |
@@ -318,7 +312,6 @@
 | status | valor `submitted` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/Scorecards.tsx`<br>`escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `loading` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VerifyEmail.tsx` |
 | status | valor `sent` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VirtualFax.tsx` |
-| status | valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/admin/SloDashboard.tsx`<br>`escreve:src/pages/admin/SloDashboard.tsx` |
 | status | valor `skipped` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `created` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `fulfilled` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:supabase/functions/health-check/index.ts` |
