@@ -1,11 +1,10 @@
 // Tick do discador preditivo — invocado por pg_cron a cada minuto ou manualmente.
-import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { mesmaString } from "../_shared/constant-time.ts";
 
-const CORS = corsHeaders as Record<string, string>;
-
 Deno.serve(async (req) => {
+  const CORS = buildCorsHeaders(req);
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: CORS });
   }
@@ -13,7 +12,7 @@ Deno.serve(async (req) => {
   const url = Deno.env.get("SUPABASE_URL")!;
   const service = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-  const negado = await exigirPermissao(req, url, service);
+  const negado = await exigirPermissao(req, url, service, CORS);
   if (negado) return negado;
 
   try {
@@ -40,11 +39,12 @@ async function exigirPermissao(
   req: Request,
   supabaseUrl: string,
   serviceKey: string,
+  cors: Record<string, string>,
 ): Promise<Response | null> {
   const negar = (status: number, msg: string) =>
     new Response(JSON.stringify({ error: msg }), {
       status,
-      headers: { ...CORS, "Content-Type": "application/json" },
+      headers: { ...cors, "Content-Type": "application/json" },
     });
 
   const authHeader = req.headers.get("Authorization");

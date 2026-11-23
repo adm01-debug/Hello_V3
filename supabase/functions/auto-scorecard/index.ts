@@ -1,6 +1,6 @@
 // Auto-Scorecard — Gera scorecard automático via IA para chamadas com resumo
 // Invocado por trigger em call_summaries (pg_net) ou manualmente.
-import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
+import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 interface Criterion {
@@ -18,6 +18,14 @@ interface AIScore {
 }
 
 Deno.serve(async (req) => {
+  const corsHeaders = buildCorsHeaders(req);
+
+function json(payload: unknown, status = 200): Response {
+  return new Response(JSON.stringify(payload), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    status,
+  });
+}
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
@@ -192,9 +200,3 @@ function safeParse(s: string): { scores?: AIScore[]; feedback?: string } | null 
   try { return JSON.parse(s); } catch { return null; }
 }
 
-function json(payload: unknown, status = 200): Response {
-  return new Response(JSON.stringify(payload), {
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    status,
-  });
-}

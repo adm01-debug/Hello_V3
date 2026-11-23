@@ -43,5 +43,3 @@ export function buildCorsHeaders(req?: Request): Record<string, string> {
   return headers;
 }
 
-/** @deprecated Use buildCorsHeaders(req) instead for proper origin validation */
-export const corsHeaders = buildCorsHeaders();

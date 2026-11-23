@@ -59,10 +59,3 @@ Deno.test("cors: preflight anuncia os headers usados pelo front", () => {
     assert(headers["Access-Control-Allow-Headers"].includes(esperado));
   }
 });
-
-Deno.test("cors: deprecado corsHeaders reflete origem de producao", async () => {
-  // `corsHeaders` e avaliado uma unica vez no import; por isso o modulo e
-  // importado com cache-buster para cada cenario.
-  const mod = await import(`../cors.ts?v=${Date.now()}`);
-  assertEquals(mod.corsHeaders["Access-Control-Allow-Origin"], "https://hello-v3.vercel.app");
-});

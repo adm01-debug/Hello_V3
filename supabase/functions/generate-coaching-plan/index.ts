@@ -1,5 +1,5 @@
 // Coaching Copilot — Gera plano semanal de coaching baseado nas últimas chamadas do agente
-import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
+import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 interface CallSummary {
@@ -9,6 +9,14 @@ interface CallSummary {
 }
 
 Deno.serve(async (req) => {
+  const corsHeaders = buildCorsHeaders(req);
+
+function json(payload: unknown, status = 200): Response {
+  return new Response(JSON.stringify(payload), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    status,
+  });
+}
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
@@ -106,9 +114,3 @@ function avg(nums: number[]): number {
   return valid.length ? valid.reduce((s, v) => s + v, 0) / valid.length : 0;
 }
 
-function json(payload: unknown, status = 200): Response {
-  return new Response(JSON.stringify(payload), {
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    status,
-  });
-}
