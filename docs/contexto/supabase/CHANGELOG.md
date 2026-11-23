@@ -2,6 +2,10 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-23 02:20 UTC
+
+- **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_26`
+
 ## 2026-11-22 18:14 UTC
 
 - **constraints** alterado (7): `public.entity_versions.entity_versions_changed_by_fkey`, `public.kb_article_history.kb_article_history_changed_by_fkey`, `public.performance_metrics.performance_metrics_user_id_fkey`, `public.rate_limit_alerts.rate_limit_alerts_resolved_by_fkey`, `public.rate_limit_alerts.rate_limit_alerts_user_id_fkey`, `public.rate_limit_logs.rate_limit_logs_user_id_fkey`, `public.user_roles.user_roles_granted_by_fkey`
