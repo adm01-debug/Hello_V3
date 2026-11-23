@@ -4613,6 +4613,11 @@
    "src/pages/marketing/Pricing.tsx",
    "src/pages/marketing/VsThreeCPlus.tsx"
   ],
+  "supabase/functions/_shared/auth.ts": [
+   "supabase/functions/_shared/constant-time.ts",
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/validator.ts"
+  ],
   "supabase/functions/_shared/business-hours_test.ts": [
    "supabase/functions/_shared/business-hours.ts"
   ],

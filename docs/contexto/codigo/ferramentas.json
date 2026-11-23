@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1235)",
+   "TypeScript (1237)",
    "SQL (245)",
    "Markdown (120)",
    "JavaScript (29)",
@@ -424,6 +424,8 @@
    "SUPABASE_ANON_KEY",
    "SUPABASE_SERVICE_ROLE_KEY",
    "SUPABASE_URL",
+   "TESTE_CRON_AUSENTE",
+   "TESTE_CRON_TOKEN",
    "VITE_SUPABASE_PUBLISHABLE_KEY",
    "VITE_SUPABASE_URL",
    "WAVOIP_TOKEN",
@@ -506,11 +508,11 @@
    },
    {
     "host": "hello-v3.vercel.app",
-    "arquivos": 10
+    "arquivos": 11
    },
    {
     "host": "cfmlmcdyjuotqobjapng.supabase.co",
-    "arquivos": 9
+    "arquivos": 10
    },
    {
     "host": "lovable.dev",
@@ -677,6 +679,7 @@
    "SENTRY_ENVIRONMENT",
    "STORAGE_BUCKET",
    "STORAGE_SECRET_KEY",
+   "TESTE_CRON_TOKEN",
    "TEST_REDIS_HOST",
    "TEST_REDIS_PORT",
    "WAVOIP_TOKEN"
@@ -803,6 +806,10 @@
     "ocorrencias": 2
    },
    {
+    "papel": "string",
+    "ocorrencias": 2
+   },
+   {
     "papel": "god",
     "ocorrencias": 1
    },
@@ -831,10 +838,6 @@
     "ocorrencias": 1
    },
    {
-    "papel": "string",
-    "ocorrencias": 1
-   },
-   {
     "papel": "sup",
     "ocorrencias": 1
    },
@@ -855,6 +858,7 @@
    }
   ],
   "rpcs_de_autorizacao": [
+   "get_user_role",
    "is_admin_user"
   ],
   "guards": [

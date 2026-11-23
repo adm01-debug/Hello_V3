@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ba0ddcf553` · branch `main` · 2026-11-23 21:37 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3d4db074fb` · branch `main` · 2026-11-23 21:48 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1018,7 +1018,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `role` | `agent` | compara, escreve | `src/lib/talkRatio.ts`<br>`src/pages/roles/RoleStatsCards.tsx`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `button` | escreve | `src/lib/a11y-clickable.ts` |
 | `role` | `customer` | compara | `src/lib/talkRatio.ts`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
-| `role` | `string` | compara | `src/pages/roles/RoleAuditTrail.tsx` |
+| `role` | `string` | compara | `src/pages/roles/RoleAuditTrail.tsx`<br>`supabase/functions/_shared/auth.ts` |
 | `role` | `supervisor` | compara | `src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/roles/RoleStatsCards.tsx` |
 | `role` | `system` | escreve | `supabase/functions/analyze-call/index.ts`<br>`supabase/functions/analyze-live-utterance/index.ts`<br>`supabase/functions/auto-scorecard/index.ts`<br>`supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/detect-key-moments/index.ts`<br>… +12 |
 | `role` | `user` | compara, escreve | `src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`supabase/functions/analyze-call/index.ts`<br>`supabase/functions/analyze-contact-profile/index.ts`<br>`supabase/functions/analyze-live-utterance/index.ts`<br>… +18 |
@@ -2446,6 +2446,8 @@ _nenhum item encontrado_
 | `agent` | `src/pages/roles/RoleStatsCards.tsx` |
 | `supervisor` | `src/pages/roles/RoleStatsCards.tsx` |
 | `viewer` | `src/pages/roles/RoleStatsCards.tsx` |
+| `role` | `supabase/functions/_shared/auth.ts` |
+| `string` | `supabase/functions/_shared/auth.ts` |
 | `agent` | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `customer` | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `supabase/functions/analyze-talk-ratio/index.ts` |
@@ -2454,7 +2456,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4126 testes em 346 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4135 testes em 347 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2591,6 +2593,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/device-identity.test.ts` | 9 | device-identity · sanitize sempre respeita o CHECK do banco (trim + limite) · sanitize é idempotente · sanitize rejeita não-strings … |
 | `src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts` | 9 | voipProactiveSnapshot · isProactiveEnabled reflects localStorage pref · setProactiveEnabled writes the pref · shouldRunProactiveCheck false when disabled … |
 | `src/lib/security/__tests__/https-enforcer.coverage.test.ts` | 9 | https-enforcer · does not enforce on localhost · does not enforce on 127.0.0.1 · does not enforce when already https … |
+| `supabase/functions/_shared/__tests__/auth_test.ts` | 9 | auth: requireUser sem header Authorization devolve 401 · auth: requireUser com header que nao e Bearer devolve 401 · auth: header Bearer vazio devolve 401 · auth: erro de credencial devolve o envelope com CORS da origem do chamador … |
 | `supabase/functions/_shared/__tests__/resilience.test.ts` | 9 | retry: sucesso na primeira tentativa não dorme · retry: exponencial sem jitter é determinístico · retry: respeita shouldRetry (não repete em 4xx) · retry: repete em 429 e 5xx … |
 | `supabase/functions/compute-deal-health/__tests__/index.test.ts` | 9 | compute-deal-health: recencyScore decresce 5 pts/dia, mín 0 · compute-deal-health: recencyScore = 100 quando hoje · compute-deal-health: sentimentScore neutro = 50 · compute-deal-health: sentimentScore 100% positivo = 100 … |
 | `supabase/functions/voip-recommendation-insights/__tests__/index.test.ts` | 9 | rejeita requisição sem JWT · rejeita período inválido (validação oneOf) · buildHeatmap gera 7×24 = 168 buckets · buildHeatmap incrementa bucket correto … |
@@ -2757,8 +2760,7 @@ _nenhum item encontrado_
 | `supabase/functions/analyze-talk-ratio/__tests__/index.test.ts` | 4 | chamada com duração 0 é insuficiente, nunca  · duração positiva sem fala é insuficiente · NaN do quociente não cai em optimal · com áudio, classifica pelo intervalo 40–60% |
 | `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
 | `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 4 | check-queue-metrics: cálculo de avg wait time (contrato) · check-queue-metrics: cálculo de abandonment rate (contrato) · check-queue-metrics: service level (≤30s contrato) · check-queue-metrics: thresholds default (contrato) |
-| `supabase/functions/export-data-lake/__tests__/csv.test.ts` | 4 | toCsv: vazio devolve string vazia · toCsv: cabecalho e a uniao das colunas, sem perder dados · toCsv: escapa virgula, aspas e quebra de linha · toCsv: nulo e undefined viram vazio |
-| … +46 linhas — lista completa em `context.json` | | |
+| … +47 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

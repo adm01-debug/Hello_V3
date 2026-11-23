@@ -12,6 +12,7 @@
  ],
  "shared": [
   "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
+  "supabase/functions/_shared/__tests__/auth_test.ts",
   "supabase/functions/_shared/__tests__/capture-handler.ts",
   "supabase/functions/_shared/__tests__/cors.test.ts",
   "supabase/functions/_shared/__tests__/local-supabase.ts",
@@ -19,6 +20,7 @@
   "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
   "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
   "supabase/functions/_shared/allowed-hosts.ts",
+  "supabase/functions/_shared/auth.ts",
   "supabase/functions/_shared/business-hours.ts",
   "supabase/functions/_shared/business-hours_test.ts",
   "supabase/functions/_shared/client-ip.ts",

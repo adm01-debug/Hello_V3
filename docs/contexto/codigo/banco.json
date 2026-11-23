@@ -24044,6 +24044,11 @@
    "usada_em": 1
   },
   {
+   "nome": "get_user_role",
+   "definida": true,
+   "usada_em": 1
+  },
+  {
    "nome": "is_admin_user",
    "definida": true,
    "usada_em": 11
