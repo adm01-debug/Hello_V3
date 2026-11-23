@@ -14,6 +14,8 @@ import { CallSessionsList } from '@/components/call-history/CallSessionsList';
 import { CallDetailDialog } from '@/components/call-history/CallDetailDialog';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
+import { toast } from 'sonner';
+import { downloadCallHistoryCsv } from '@/lib/export/callHistoryCsv';
 
 export default function CallHistory() {
   usePageTitle('Histórico de Chamadas');
@@ -59,7 +61,17 @@ export default function CallHistory() {
            </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" onClick={() => fetchSessions(0)}>Atualizar</Button>
-              <Button variant="neon" size="sm" className="gap-2">
+              <Button variant="neon" size="sm" className="gap-2"
+                onClick={() => {
+                  if (!sessions || sessions.length === 0) {
+                    toast.info('Nenhuma chamada para exportar');
+                    return;
+                  }
+                  const n = downloadCallHistoryCsv(sessions);
+                  toast.success(`${n} chamada(s) exportada(s)`);
+                }}
+                disabled={!sessions || sessions.length === 0}
+              >
                 <Download className="h-4 w-4" /> Exportar
               </Button>
             </div>
