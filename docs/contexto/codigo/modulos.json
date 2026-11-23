@@ -5493,7 +5493,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 16575,
+   "linhas": 16599,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -6286,7 +6286,7 @@
   {
    "modulo": "pages/__tests__",
    "arquivos": 0,
-   "testes": 1,
+   "testes": 2,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],

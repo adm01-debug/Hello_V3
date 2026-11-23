@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a1a6cb41ae` · branch `main` · 2026-11-23 14:44 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fe57120464` · branch `main` · 2026-11-23 14:53 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1589,7 +1589,7 @@ _nenhum item encontrado_
   ```
 - **computeUptime(samples: DailySample[])** — `src/pages/Status.tsx`
   ```
-  let ok = 0; let total = 0; for (const s of samples) { ok += s.ok; total += s.total; } if (!total) return 100; return Math.round((ok / total) * 10000) / 100;
+  let ok = 0; let total = 0; for (const s of samples) { ok += s.ok; total += s.total; } if (!total) return null; return Math.round((ok / total) * 10000) / 100;
   ```
 - **computeBackoff(attempt: number, baseDelayMs: number, maxDelayMs: number, jitter: boolean, rng: ()** — `supabase/functions/_shared/resilience.ts`
   ```
@@ -2453,7 +2453,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4081 testes em 340 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4086 testes em 341 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2720,6 +2720,7 @@ _nenhum item encontrado_
 | `src/lib/export/__tests__/index.coverage.test.ts` | 5 | export/index · exportToCSV downloads with BOM and formatting · exportToCSV no-ops on empty data · exportToJSON downloads … |
 | `src/lib/security/__tests__/encryption.coverage.test.ts` | 5 | encryption (coverage) · round-trips encrypt/decrypt with a generated key · hashData returns base64 string with real crypto · arrayBufferToBase64 and base64ToArrayBuffer are inverse operations … |
 | `src/lib/security/__tests__/security-headers-validator.coverage.test.ts` | 5 | security-headers-validator · returns all headers present when fetch succeeds · returns all headers absent when fetch rejects · handles a mixed set of present/absent headers … |
+| `src/pages/__tests__/Status.test.tsx` | 5 | Status — sem medição (E092) · mostra  · mostra  · Status — erro no carregamento (E093) … |
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
@@ -2756,8 +2757,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts` | 4 | planRemediation — mos:outage retorna ação crítica de codec · planRemediation — jitter:outage pausa campanhas · planRemediation — combinação desconhecida vira noop · idempotencyKey — chave estável e derivada do id |
 | `supabase/functions/voip-capacity-forecast/__tests__/index.test.ts` | 4 | buildHistory — agrupa sessões por dia e identifica pico · forecastNextDays — vazio quando histórico < 7 dias · forecastNextDays — gera 7 dias com confiança quando há histórico · forecastNextDays — sinaliza exceeds_capacity quando peak > cap |
 | `supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts` | 4 | voice-qa rejeita sem JWT (401) · voice-qa rejeita question curta (400) · voice-qa rejeita period inválido (400) · voice-qa responde OPTIONS com CORS |
-| `supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts` | 4 | voip-quality-alerts-summary: exige Authorization · voip-quality-alerts-summary: aceita period válido · voip-quality-alerts-summary: rejeita period inválido · voip-quality-alerts-summary: responde com x-request-id |
-| … +40 linhas — lista completa em `context.json` | | |
+| … +41 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

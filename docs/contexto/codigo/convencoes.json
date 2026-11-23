@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (327)",
+   "co-localizado (__tests__) (328)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: status sem medicao em vez de 100%% e erro tratado (E092-E093) (#173)",
    "feat: filtrar menu por papel (E088-E089) (#172)",
    "feat: gravar e fechar call_sessions + transcricoes no banco (E061-E073) (#170)",
    "feat: E060 CallContext provider singleton — resolve A-001 (múltiplas instâncias)",
-   "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)",
-   "feat: 'Alterar foto' do perfil passa a enviar e exibir a foto"
+   "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)"
   ]
  },
  "pr_template": null,

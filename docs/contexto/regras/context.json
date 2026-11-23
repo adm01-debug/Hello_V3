@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a1a6cb41aebb207018440c96e23698be1edccb0a",
+  "sha": "fe57120464ca83a4a3e213324c7f74212a9a614b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 14:44 UTC",
-  "files_total": 1708,
-  "code_files": 1505,
-  "code_lines": 186988
+  "generated_at": "2026-11-23 14:53 UTC",
+  "files_total": 1709,
+  "code_files": 1506,
+  "code_lines": 187073
  },
  "version": "1.3.2",
- "facts_hash": "101bbf3b9eff4467",
+ "facts_hash": "86ad9061c7022ae7",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -159,7 +159,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 615,
-   ".tsx": 611,
+   ".tsx": 612,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -34039,8 +34039,8 @@
   },
   {
    "module": "src/pages",
-   "files": 132,
-   "lines": 21102,
+   "files": 133,
+   "lines": 21187,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -55626,7 +55626,7 @@
     "file": "src/pages/Status.tsx",
     "name": "computeUptime",
     "params": "samples: DailySample[]",
-    "body": "let ok = 0; let total = 0; for (const s of samples) { ok += s.ok; total += s.total; } if (!total) return 100; return Math.round((ok / total) * 10000) / 100;"
+    "body": "let ok = 0; let total = 0; for (const s of samples) { ok += s.ok; total += s.total; } if (!total) return null; return Math.round((ok / total) * 10000) / 100;"
    },
    {
     "file": "supabase/functions/_shared/resilience.ts",
@@ -71795,6 +71795,26 @@
    {
     "file": "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
     "name": "inicia a chamada quando o pre-dial check aprova"
+   },
+   {
+    "file": "src/pages/__tests__/Status.test.tsx",
+    "name": "Status — sem medição (E092)"
+   },
+   {
+    "file": "src/pages/__tests__/Status.test.tsx",
+    "name": "mostra "
+   },
+   {
+    "file": "src/pages/__tests__/Status.test.tsx",
+    "name": "mostra "
+   },
+   {
+    "file": "src/pages/__tests__/Status.test.tsx",
+    "name": "Status — erro no carregamento (E093)"
+   },
+   {
+    "file": "src/pages/__tests__/Status.test.tsx",
+    "name": "sai do spinner e mostra mensagem de erro quando a consulta falha"
    },
    {
     "file": "src/pages/roles/__tests__/useRoles.test.ts",
@@ -114666,7 +114686,7 @@
   },
   "src/pages/Status.tsx": {
    "path": "src/pages/Status.tsx",
-   "lines": 213,
+   "lines": 237,
    "exports": [
     "function Status"
    ],
@@ -114701,7 +114721,7 @@
     {
      "name": "computeUptime",
      "params": "samples: DailySample[]",
-     "body": "let ok = 0; let total = 0; for (const s of samples) { ok += s.ok; total += s.total; } if (!total) return 100; return Math.round((ok / total) * 10000) / 100;"
+     "body": "let ok = 0; let total = 0; for (const s of samples) { ok += s.ok; total += s.total; } if (!total) return null; return Math.round((ok / total) * 10000) / 100;"
     }
    ],
    "temporal": [
@@ -115132,6 +115152,18 @@
     "PhoneDialer compliance guard",
     "bloqueia a chamada quando o pre-dial check reprova",
     "inicia a chamada quando o pre-dial check aprova"
+   ]
+  },
+  "src/pages/__tests__/Status.test.tsx": {
+   "path": "src/pages/__tests__/Status.test.tsx",
+   "lines": 61,
+   "is_test": true,
+   "tests": [
+    "Status — sem medição (E092)",
+    "mostra ",
+    "mostra ",
+    "Status — erro no carregamento (E093)",
+    "sai do spinner e mostra mensagem de erro quando a consulta falha"
    ]
   },
   "src/pages/admin/DataExport.tsx": {
@@ -123698,10 +123730,21 @@
   }
  },
  "git": {
-  "sha": "a1a6cb41aebb207018440c96e23698be1edccb0a",
+  "sha": "fe57120464ca83a4a3e213324c7f74212a9a614b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "fe57120",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: status sem medicao em vez de 100%% e erro tratado (E092-E093) (#173)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/pages/Status.tsx",
+     "src/pages/__tests__/Status.test.tsx"
+    ]
+   },
    {
     "sha": "a1a6cb4",
     "date": "2026-11-23",
@@ -124034,30 +124077,16 @@
      "supabase/functions/cleanup-recordings/index.ts",
      "supabase/migrations/20261122230000_recordings_retention_cron.sql"
     ]
-   },
-   {
-    "sha": "36732f9",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "feat: adiciona Qualidade de Voz ao menu e a paleta de comandos (#142)",
-    "files": [
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
-    "docs/estado/funcionalidades-planejadas.md",
+    "docs/qa/05-PROGRESSO.md",
     4
    ],
    [
-    "docs/qa/05-PROGRESSO.md",
-    3
-   ],
-   [
-    "src/components/layout/AppSidebar.tsx",
-    3
+    "docs/estado/funcionalidades-planejadas.md",
+    4
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
@@ -124074,6 +124103,10 @@
    [
     "docs/audits/pendencias-2026-07.md",
     3
+   ],
+   [
+    "src/components/layout/AppSidebar.tsx",
+    2
    ],
    [
     "src/routes/protectedRoutes.tsx",
@@ -124096,8 +124129,12 @@
     2
    ],
    [
-    "src/components/layout/CommandPalette.tsx",
-    2
+    "src/pages/Status.tsx",
+    1
+   ],
+   [
+    "src/pages/__tests__/Status.test.tsx",
+    1
    ],
    [
     "src/components/layout/__tests__/AppSidebar.test.tsx",
@@ -124121,10 +124158,6 @@
    ],
    [
     "src/lib/__tests__/callHistoryCsv.test.ts",
-    1
-   ],
-   [
-    "src/lib/__tests__/pendingCallWrites.test.ts",
     1
    ]
   ]
