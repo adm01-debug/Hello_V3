@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `61a323baac` · branch `main` · 2026-11-23 14:59 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e7889cb3c5` · branch `main` · 2026-11-23 15:24 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -318,7 +318,7 @@
 | status | valor `submitted` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/Scorecards.tsx`<br>`escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `loading` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VerifyEmail.tsx` |
 | status | valor `sent` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/VirtualFax.tsx` |
-| status | valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/admin/SloDashboard.tsx`<br>`escreve:src/pages/admin/SloDashboard.tsx`<br>`escreve:supabase/functions/health-check/index.ts` |
+| status | valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/admin/SloDashboard.tsx`<br>`escreve:src/pages/admin/SloDashboard.tsx` |
 | status | valor `skipped` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `created` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `fulfilled` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:supabase/functions/health-check/index.ts` |

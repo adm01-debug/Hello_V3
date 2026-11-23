@@ -2992,7 +2992,7 @@
     "VoipHealthScoreCard"
    ],
    "export_default": null,
-   "linhas": 194,
+   "linhas": 226,
    "dominio": "components/network",
    "hooks_locais": [
     "useVoipExecutiveSummary"

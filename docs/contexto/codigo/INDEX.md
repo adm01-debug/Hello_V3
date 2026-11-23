@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `61a323baac0f0afe27c117e2407d44f319b0f3df` (2026-11-23T11:55:29-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `e7889cb3c56ec94d61fbbc846516a818f271590e` (2026-11-23T12:16:35-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1661 |
 | arquivos_codigo | 1259 |
-| linhas_codigo | 170982 |
+| linhas_codigo | 171081 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,7 +370,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9821 nós · 25263 arestas · 765 comunidades · grafo do commit `61a323ba`
+- 9821 nós · 25263 arestas · 765 comunidades · grafo do commit `e7889cb3`
 - comunidades maiores: lucide-react (287), client.ts (232), react (196), usePageTitle (188), traceHeaders (163), badge.tsx (117), usePageTitle.ts (117), vitest (113), utils.ts (109), cn (106), safe-date.ts (105), snapshot.py (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -382,10 +382,10 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
 - .github/workflows/contexto.yml (6)
+- docs/qa/05-PROGRESSO.md (6)
 - src/components/layout/CommandPalette.tsx (6)
 - deno.lock (5)
 - docs/prod-readiness.md (5)
-- docs/qa/05-PROGRESSO.md (5)
 - inventario/estado/edges.json (5)
 - src/components/calls/UnifiedSoftphone.tsx (5)
 - src/routes/protectedRoutes.tsx (5)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `e7889cb` fix: health-check e score VoIP nao reportam sem medir (E094-E095) (#174)
 - 2026-11-23 `61a323b` fix: remove painel decorativo e corrige relatório de segurança (#175)
 - 2026-11-23 `fe57120` fix: status sem medicao em vez de 100%% e erro tratado (E092-E093) (#173)
 - 2026-11-23 `a1a6cb4` feat: filtrar menu por papel (E088-E089) (#172)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-22 `975df81` fix: barra de progresso reflete o carregamento real do chunk da rota (#162)
 - 2026-11-22 `da58d29` fix: transferencia de chamada nao conclui mais sozinha por timer (#161)
 - 2026-11-22 `8fa0938` fix: salvar 2FA pela segunda vez falhava por upsert sem onConflict (#159)
-- 2026-11-22 `b27cc88` fix: configuracoes de metricas de fila ficavam presas em nao encontradas (#158)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

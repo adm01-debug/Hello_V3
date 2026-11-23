@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "61a323baac0f0afe27c117e2407d44f319b0f3df",
+  "sha": "e7889cb3c56ec94d61fbbc846516a818f271590e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 14:59 UTC",
+  "generated_at": "2026-11-23 15:24 UTC",
   "files_total": 1708,
   "code_files": 1505,
-  "code_lines": 186994
+  "code_lines": 187093
  },
  "version": "1.3.2",
- "facts_hash": "d8172fc4c18d8312",
+ "facts_hash": "87ad1268bf62908e",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33306,7 +33306,7 @@
   {
    "module": "src/components",
    "files": 356,
-   "lines": 42480,
+   "lines": 42512,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33563,7 +33563,7 @@
   {
    "module": "src/hooks",
    "files": 353,
-   "lines": 45990,
+   "lines": 45992,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34267,7 +34267,7 @@
   {
    "module": "supabase/functions",
    "files": 174,
-   "lines": 19845,
+   "lines": 19910,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -37221,6 +37221,7 @@
    ],
    "voip_trunk_health_checks": [
     "checked_at",
+    "id",
     "latency_ms",
     "reachable",
     "trunk_id"
@@ -54885,14 +54886,14 @@
    {
     "file": "supabase/functions/health-check/index.ts",
     "field": "status",
-    "value": "operational",
+    "value": "unknown",
     "kind": "escreve"
    },
    {
     "file": "supabase/functions/health-check/index.ts",
     "field": "status",
-    "value": "unknown",
-    "kind": "escreve"
+    "value": "fulfilled",
+    "kind": "compara"
    },
    {
     "file": "supabase/functions/health-check/index.ts",
@@ -54916,6 +54917,12 @@
     "file": "supabase/functions/health-check/index.ts",
     "field": "status",
     "value": "degraded",
+    "kind": "compara"
+   },
+   {
+    "file": "supabase/functions/health-check/index.ts",
+    "field": "status",
+    "value": "unknown",
     "kind": "compara"
    },
    {
@@ -55313,20 +55320,20 @@
    {
     "file": "src/components/network/VoipHealthScoreCard.tsx",
     "name": "scoreColor",
-    "params": "score: number",
-    "body": "if (score >= 80) return 'text-success'; if (score >= 60) return 'text-warning'; return 'text-destructive';"
+    "params": "score: number | null",
+    "body": "if (score === null) return 'text-muted-foreground'; if (score >= 80) return 'text-success'; if (score >= 60) return 'text-warning'; return 'text-destructive';"
    },
    {
     "file": "src/components/network/VoipHealthScoreCard.tsx",
     "name": "scoreBadgeClass",
-    "params": "score: number",
-    "body": "if (score >= 80) return 'bg-success/15 text-success border-success/30'; if (score >= 60) return 'bg-warning/15 text-warning border-warning/30'; return 'bg-destructive/15 text-destructive border-destructive/30';"
+    "params": "score: number | null",
+    "body": "if (score === null) return 'bg-muted/15 text-muted-foreground border-border/30'; if (score >= 80) return 'bg-success/15 text-success border-success/30'; if (score >= 60) return 'bg-warning/15 text-warning border-warning/30'; return 'bg-destructive/15 text-destructive border-destructive/30';"
    },
    {
     "file": "src/components/network/VoipHealthScoreCard.tsx",
     "name": "scoreLabel",
-    "params": "score: number",
-    "body": "if (score >= 80) return 'SAUDÁVEL'; if (score >= 60) return 'ATENÇÃO'; return 'CRÍTICO';"
+    "params": "score: number | null",
+    "body": "if (score === null) return 'SEM MEDIÇÃO'; if (score >= 80) return 'SAUDÁVEL'; if (score >= 60) return 'ATENÇÃO'; return 'CRÍTICO';"
    },
    {
     "file": "src/components/network/WhatIfSimulatorDialog.tsx",
@@ -55668,7 +55675,7 @@
     "file": "supabase/functions/voip-executive-summary/index.ts",
     "name": "computeHealthScore",
     "params": "b: HealthBreakdown",
-    "body": "const score = 0.4 * b.sla_score + 0.3 * b.mos_score + 0.2 * b.alerts_score + 0.1 * b.capacity_score; return Math.round(Math.max(0, Math.min(100, score)));"
+    "body": "const dims: Array<[number | null, number]> = [ [b.sla_score, 0.4], [b.mos_score, 0.3], [b.alerts_score, 0.2], [b.capacity_score, 0.1], ]; const measured = dims.filter(([v]) => v !== null) as Array<[number, number]>; if (measured.length < 2) return null; const weightSum = measured.reduce((s, [, w]) => s + w, 0); const score = measured.reduce((s, [v, w]) => s + v * w, 0) / weightSum; return Math.round(Math.max(0, Math.min(100, score)));"
    },
    {
     "file": "supabase/functions/voip-executive-summary/index.ts",
@@ -72490,7 +72497,15 @@
    },
    {
     "file": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
-    "name": "normalizeMos — null retorna neutro 75"
+    "name": "computeHealthScore — cobre só as dimensões medidas"
+   },
+   {
+    "file": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
+    "name": "computeHealthScore — cobertura < 2 devolve null"
+   },
+   {
+    "file": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
+    "name": "normalizeMos — null retorna null (sem medição)"
    },
    {
     "file": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
@@ -72498,11 +72513,15 @@
    },
    {
     "file": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
-    "name": "normalizeAlerts — sem chamadas retorna 100"
+    "name": "normalizeAlerts — sem chamadas retorna null (sem medição)"
    },
    {
     "file": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
     "name": "normalizeAlerts — 10% unack zera o score"
+   },
+   {
+    "file": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
+    "name": "normalizeCapacity — sem sessões retorna null"
    },
    {
     "file": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
@@ -81663,6 +81682,10 @@
     "limit": "2000"
    },
    {
+    "file": "supabase/functions/health-check/index.ts",
+    "limit": "1"
+   },
+   {
     "file": "supabase/functions/ldap-sync/index.ts",
     "limit": "20"
    },
@@ -82766,8 +82789,7 @@
      ],
      "operational": [
       "compara:src/pages/admin/SloDashboard.tsx",
-      "escreve:src/pages/admin/SloDashboard.tsx",
-      "escreve:supabase/functions/health-check/index.ts"
+      "escreve:src/pages/admin/SloDashboard.tsx"
      ],
      "exhausted": [
       "compara:src/pages/admin/SloDashboard.tsx",
@@ -82787,6 +82809,7 @@
       "escreve:supabase/functions/check-goals/index.ts"
      ],
      "unknown": [
+      "compara:supabase/functions/health-check/index.ts",
       "escreve:supabase/functions/health-check/index.ts",
       "escreve:supabase/functions/health-check/slo-budget.ts"
      ],
@@ -89418,8 +89441,7 @@
     "msg": "valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/pages/admin/SloDashboard.tsx",
-     "escreve:src/pages/admin/SloDashboard.tsx",
-     "escreve:supabase/functions/health-check/index.ts"
+     "escreve:src/pages/admin/SloDashboard.tsx"
     ]
    },
    {
@@ -95101,25 +95123,25 @@
   },
   "src/components/network/VoipHealthScoreCard.tsx": {
    "path": "src/components/network/VoipHealthScoreCard.tsx",
-   "lines": 194,
+   "lines": 226,
    "exports": [
     "function VoipHealthScoreCard"
    ],
    "calc_fns": [
     {
      "name": "scoreColor",
-     "params": "score: number",
-     "body": "if (score >= 80) return 'text-success'; if (score >= 60) return 'text-warning'; return 'text-destructive';"
+     "params": "score: number | null",
+     "body": "if (score === null) return 'text-muted-foreground'; if (score >= 80) return 'text-success'; if (score >= 60) return 'text-warning'; return 'text-destructive';"
     },
     {
      "name": "scoreBadgeClass",
-     "params": "score: number",
-     "body": "if (score >= 80) return 'bg-success/15 text-success border-success/30'; if (score >= 60) return 'bg-warning/15 text-warning border-warning/30'; return 'bg-destructive/15 text-destructive border-destructive/30';"
+     "params": "score: number | null",
+     "body": "if (score === null) return 'bg-muted/15 text-muted-foreground border-border/30'; if (score >= 80) return 'bg-success/15 text-success border-success/30'; if (score >= 60) return 'bg-warning/15 text-warning border-warning/30'; return 'bg-destructive/15 text-destructive border-destructive/30';"
     },
     {
      "name": "scoreLabel",
-     "params": "score: number",
-     "body": "if (score >= 80) return 'SAUDÁVEL'; if (score >= 60) return 'ATENÇÃO'; return 'CRÍTICO';"
+     "params": "score: number | null",
+     "body": "if (score === null) return 'SEM MEDIÇÃO'; if (score >= 80) return 'SAUDÁVEL'; if (score >= 60) return 'ATENÇÃO'; return 'CRÍTICO';"
     }
    ],
    "percents": [
@@ -103724,7 +103746,7 @@
   },
   "src/hooks/useVoipExecutiveSummary.ts": {
    "path": "src/hooks/useVoipExecutiveSummary.ts",
-   "lines": 69,
+   "lines": 71,
    "exports": [
     "type ExecutivePeriod",
     "interface ExecutiveBreakdown",
@@ -119347,7 +119369,7 @@
   },
   "supabase/functions/health-check/index.ts": {
    "path": "supabase/functions/health-check/index.ts",
-   "lines": 122,
+   "lines": 152,
    "exports": [
     "const handler"
    ],
@@ -119359,11 +119381,16 @@
     {
      "table": "webhook_flush_metrics",
      "op": "select"
+    },
+    {
+     "table": "voip_trunk_health_checks",
+     "op": "select"
     }
    ],
    "table_cols": {
     "voip_trunk_health_checks": [
      "checked_at",
+     "id",
      "latency_ms",
      "reachable"
     ],
@@ -119381,13 +119408,13 @@
    "status_values": [
     {
      "field": "status",
-     "value": "operational",
+     "value": "unknown",
      "kind": "escreve"
     },
     {
      "field": "status",
-     "value": "unknown",
-     "kind": "escreve"
+     "value": "fulfilled",
+     "kind": "compara"
     },
     {
      "field": "status",
@@ -119411,6 +119438,11 @@
     },
     {
      "field": "status",
+     "value": "unknown",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
      "value": "exhausted",
      "kind": "compara"
     }
@@ -119421,6 +119453,9 @@
    "doc": "Health check consolidado — endpoint público retornando status dos componentes",
    "temporal": [
     "const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();"
+   ],
+   "pagination": [
+    "1"
    ],
    "uses_service_role": true
   },
@@ -121116,7 +121151,7 @@
   },
   "supabase/functions/voip-executive-summary/index.ts": {
    "path": "supabase/functions/voip-executive-summary/index.ts",
-   "lines": 219,
+   "lines": 239,
    "exports": [
     "interface HealthBreakdown",
     "function computeHealthScore",
@@ -121179,7 +121214,7 @@
     {
      "name": "computeHealthScore",
      "params": "b: HealthBreakdown",
-     "body": "const score = 0.4 * b.sla_score + 0.3 * b.mos_score + 0.2 * b.alerts_score + 0.1 * b.capacity_score; return Math.round(Math.max(0, Math.min(100, score)));"
+     "body": "const dims: Array<[number | null, number]> = [ [b.sla_score, 0.4], [b.mos_score, 0.3], [b.alerts_score, 0.2], [b.capacity_score, 0.1], ]; const measured = dims.filter(([v]) => v !== null) as Array<[number, number]>; if (measured.length < 2) return null; const weightSum = measured.reduce((s, [, w]) => s + w, 0); const score = measured.reduce((s, [v, w]) => s + v * w, 0) / weightSum; return Math.round(Math.max(0, Math.min(100, score)));"
     },
     {
      "name": "computePeakConcurrent",
@@ -121200,15 +121235,18 @@
   },
   "supabase/functions/voip-executive-summary/__tests__/index.test.ts": {
    "path": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
-   "lines": 41,
+   "lines": 56,
    "is_test": true,
    "tests": [
     "computeHealthScore — perfeito = 100",
     "computeHealthScore — fórmula ponderada correta",
-    "normalizeMos — null retorna neutro 75",
+    "computeHealthScore — cobre só as dimensões medidas",
+    "computeHealthScore — cobertura < 2 devolve null",
+    "normalizeMos — null retorna null (sem medição)",
     "normalizeMos — MOS 4.0 ≈ 75",
-    "normalizeAlerts — sem chamadas retorna 100",
+    "normalizeAlerts — sem chamadas retorna null (sem medição)",
     "normalizeAlerts — 10% unack zera o score",
+    "normalizeCapacity — sem sessões retorna null",
     "normalizeCapacity — pico baixo retorna 100",
     "normalizeCapacity — atingir cap penaliza forte"
    ]
@@ -123713,10 +123751,26 @@
   }
  },
  "git": {
-  "sha": "61a323baac0f0afe27c117e2407d44f319b0f3df",
+  "sha": "e7889cb3c56ec94d61fbbc846516a818f271590e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e7889cb",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: health-check e score VoIP nao reportam sem medir (E094-E095) (#174)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/network/ExecutiveReportExport.tsx",
+     "src/components/network/VoipHealthScoreCard.tsx",
+     "src/hooks/useVoipExecutiveSummary.ts",
+     "src/pages/admin/SloDashboard.tsx",
+     "supabase/functions/health-check/index.ts",
+     "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
+     "supabase/functions/voip-executive-summary/index.ts"
+    ]
+   },
    {
     "sha": "61a323b",
     "date": "2026-11-23",
@@ -124048,25 +124102,12 @@
      "supabase/functions/data-lake-flush/index.ts",
      "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql"
     ]
-   },
-   {
-    "sha": "d3a6f69",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "feat: pagina de avaliacoes de chamada com geracao por IA (#143)",
-    "files": [
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx",
-     "src/hooks/useScorecards.ts",
-     "src/pages/Scorecards.tsx",
-     "src/routes/protectedRoutes.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    5
+    6
    ],
    [
     "docs/estado/funcionalidades-planejadas.md",
@@ -124089,14 +124130,6 @@
     3
    ],
    [
-    "src/components/layout/AppSidebar.tsx",
-    2
-   ],
-   [
-    "src/routes/protectedRoutes.tsx",
-    2
-   ],
-   [
     "src/components/calls/softphone/ActiveCallDisplay.tsx",
     2
    ],
@@ -124113,6 +124146,34 @@
     2
    ],
    [
+    "src/components/network/ExecutiveReportExport.tsx",
+    1
+   ],
+   [
+    "src/components/network/VoipHealthScoreCard.tsx",
+    1
+   ],
+   [
+    "src/hooks/useVoipExecutiveSummary.ts",
+    1
+   ],
+   [
+    "src/pages/admin/SloDashboard.tsx",
+    1
+   ],
+   [
+    "supabase/functions/health-check/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/voip-executive-summary/index.ts",
+    1
+   ],
+   [
     "src/components/dashboard/PerformanceNarrative.tsx",
     1
    ],
@@ -124122,26 +124183,6 @@
    ],
    [
     "src/pages/Index.tsx",
-    1
-   ],
-   [
-    "src/pages/SecurityReport.tsx",
-    1
-   ],
-   [
-    "src/pages/Status.tsx",
-    1
-   ],
-   [
-    "src/pages/__tests__/Status.test.tsx",
-    1
-   ],
-   [
-    "src/components/layout/__tests__/AppSidebar.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/callLifecycle-integration.test.tsx",
     1
    ]
   ]

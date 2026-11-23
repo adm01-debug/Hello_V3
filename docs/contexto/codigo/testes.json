@@ -2991,11 +2991,11 @@
   {
    "arquivo": "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 41,
+   "linhas": 56,
    "testa": [
     "supabase/functions/voip-executive-summary/index.ts"
    ],
-   "casos": 8
+   "casos": 11
   },
   {
    "arquivo": "supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts",

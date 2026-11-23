@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `61a323baac` · branch `main` · 2026-11-23 14:59 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e7889cb3c5` · branch `main` · 2026-11-23 15:24 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -900,7 +900,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `on_hold` | compara | `src/hooks/useQueueMetrics.ts` |
 | `status` | `online` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
 | `status` | `open` | compara, escreve, filtra | `src/components/executive/CustomerSuccessCard.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/hooks/useRenewals.ts`<br>`src/lib/security/penetration-test-reporter.ts`<br>`src/pages/Deals.tsx`<br>… +8 |
-| `status` | `operational` | compara, escreve | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
+| `status` | `operational` | compara, escreve | `src/pages/admin/SloDashboard.tsx` |
 | `status` | `optimal` | compara | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `status` | `outage` | compara | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
 | `status` | `overdue` | compara, escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
@@ -926,7 +926,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `today` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `tomorrow` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `transferring` | compara, escreve | `src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
-| `status` | `unknown` | escreve | `supabase/functions/health-check/index.ts`<br>`supabase/functions/health-check/slo-budget.ts` |
+| `status` | `unknown` | compara, escreve | `supabase/functions/health-check/index.ts`<br>`supabase/functions/health-check/slo-budget.ts` |
 | `status` | `unstable` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
 | `status` | `verified` | compara, escreve | `src/components/auth/ReauthDialog.tsx`<br>`src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx`<br>`src/pages/two-factor/DevicesCard.tsx` |
 | `status` | `voicemail` | escreve | `src/data/mockData.ts` |
@@ -1379,17 +1379,17 @@ _nenhum item encontrado_
   ```
   try { const weekStart = new Date(); weekStart.setDate(weekStart.getDate() - weekStart.getDay()); weekStart.setHours(0, 0, 0, 0); const { data: stats } = await supabase .from("agent_weekly_stats") .select("*, agents(name)") .gte("week_start", weekStart.toISOString().split("T")[0]) .order("points_earned", { ascending: false }); if (stats) { setRanking( stats.map((s) => ({ agent_id: s.agent_id, agent_name: s.agents?.name || "Agente", total_calls: s.total_calls, points_earned: s.points_earned, badge …
   ```
-- **scoreColor(score: number)** — `src/components/network/VoipHealthScoreCard.tsx`
+- **scoreColor(score: number | null)** — `src/components/network/VoipHealthScoreCard.tsx`
   ```
-  if (score >= 80) return 'text-success'; if (score >= 60) return 'text-warning'; return 'text-destructive';
+  if (score === null) return 'text-muted-foreground'; if (score >= 80) return 'text-success'; if (score >= 60) return 'text-warning'; return 'text-destructive';
   ```
-- **scoreBadgeClass(score: number)** — `src/components/network/VoipHealthScoreCard.tsx`
+- **scoreBadgeClass(score: number | null)** — `src/components/network/VoipHealthScoreCard.tsx`
   ```
-  if (score >= 80) return 'bg-success/15 text-success border-success/30'; if (score >= 60) return 'bg-warning/15 text-warning border-warning/30'; return 'bg-destructive/15 text-destructive border-destructive/30';
+  if (score === null) return 'bg-muted/15 text-muted-foreground border-border/30'; if (score >= 80) return 'bg-success/15 text-success border-success/30'; if (score >= 60) return 'bg-warning/15 text-warning border-warning/30'; return 'bg-destructive/15 text-destructive border-destructive/30';
   ```
-- **scoreLabel(score: number)** — `src/components/network/VoipHealthScoreCard.tsx`
+- **scoreLabel(score: number | null)** — `src/components/network/VoipHealthScoreCard.tsx`
   ```
-  if (score >= 80) return 'SAUDÁVEL'; if (score >= 60) return 'ATENÇÃO'; return 'CRÍTICO';
+  if (score === null) return 'SEM MEDIÇÃO'; if (score >= 80) return 'SAUDÁVEL'; if (score >= 60) return 'ATENÇÃO'; return 'CRÍTICO';
   ```
 - **applyPreset(p: Preset)** — `src/components/network/WhatIfSimulatorDialog.tsx`
   ```
@@ -1617,7 +1617,7 @@ _nenhum item encontrado_
   ```
 - **computeHealthScore(b: HealthBreakdown)** — `supabase/functions/voip-executive-summary/index.ts`
   ```
-  const score = 0.4 * b.sla_score + 0.3 * b.mos_score + 0.2 * b.alerts_score + 0.1 * b.capacity_score; return Math.round(Math.max(0, Math.min(100, score)));
+  const dims: Array<[number | null, number]> = [ [b.sla_score, 0.4], [b.mos_score, 0.3], [b.alerts_score, 0.2], [b.capacity_score, 0.1], ]; const measured = dims.filter(([v]) => v !== null) as Array<[number, number]>; if (measured.length < 2) return null; const weightSum = measured.reduce((s, [, w]) => s + w, 0); const score = measured.reduce((s, [v, w]) => s + v * w, 0) / weightSum; return Math.round(Math.max(0, Math.min(100, score)));
   ```
 - **computePeakConcurrent(sessions: SessionRow[])** — `supabase/functions/voip-executive-summary/index.ts`
   ```
@@ -2070,6 +2070,7 @@ _nenhum item encontrado_
 | 80 | `supabase/functions/generate-coaching/index.ts` |
 | 20 | `supabase/functions/generate-coaching-plan/index.ts` |
 | 2000 | `supabase/functions/generate-coaching-track/index.ts` |
+| 1 | `supabase/functions/health-check/index.ts` |
 | 20 | `supabase/functions/ldap-sync/index.ts` |
 | 50 | `supabase/functions/process-digest/index.ts` |
 | 500 | `supabase/functions/suggest-shift-swaps/index.ts` |
@@ -2451,7 +2452,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4086 testes em 341 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4089 testes em 341 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2547,6 +2548,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/tracing.coverage.test.ts` | 11 | tracing (coverage) · exports header name constants · returns undefined trace id/operation when no scope is active · withTrace generates id, sets operation, and clears on success … |
 | `src/lib/__tests__/voice-biometrics.coverage.test.ts` | 11 | voice-biometrics: isValidEmbedding · accepts an array of correct dimension with finite numbers · rejects non-arrays · rejects wrong-length arrays … |
 | `supabase/functions/health-check/__tests__/slo-budget_test.ts` | 11 | budget - sem falhas mantem o budget intacto · budget - falha igual a tolerancia zera o budget · budget - falha acima da tolerancia escala o burn rate · budget - metade da tolerancia entra em warning … |
+| `supabase/functions/voip-executive-summary/__tests__/index.test.ts` | 11 | computeHealthScore — perfeito = 100 · computeHealthScore — fórmula ponderada correta · computeHealthScore — cobre só as dimensões medidas · computeHealthScore — cobertura < 2 devolve null … |
 | `src/components/dialer/phone/__tests__/phone-dialer.test.ts` | 10 | phone-utils · sanitiza entrada removendo caracteres inválidos · formata número BR no display · valida se o número é discável … |
 | `src/hooks/__tests__/useDashboardGoals.coverage.test.tsx` | 10 | useDashboardGoals · fetches goals on mount · handles fetch error · opens dialog for new and for editing … |
 | `src/hooks/__tests__/useGamification.coverage.test.tsx` | 10 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
@@ -2610,7 +2612,6 @@ _nenhum item encontrado_
 | `src/lib/__tests__/voice-command-history.test.ts` | 8 | voice-command-history · sanitiza qualquer entrada sem lançar e respeita o limite de tamanho · nunca excede o número máximo de entradas · faz dedupe case-insensitive mantendo o comando no topo … |
 | `src/pages/roles/__tests__/useRoles.test.ts` | 8 | useRoles · carrega roles e enriquece com email/nome · mostra erro ao carregar falhar · addRole retorna false quando usuário não existe … |
 | `supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts` | 8 | cron: aceita o bearer exato do Vault · cron: rejeita quando o secret nao esta configurado · cron: rejeita token errado de mesmo tamanho · cron: rejeita token com tamanho diferente … |
-| `supabase/functions/voip-executive-summary/__tests__/index.test.ts` | 8 | computeHealthScore — perfeito = 100 · computeHealthScore — fórmula ponderada correta · normalizeMos — null retorna neutro 75 · normalizeMos — MOS 4.0 ≈ 75 … |
 | `e2e/login.spec.ts` | 7 | Login Flow · should display login form · should show validation errors for empty fields · should show error for invalid credentials … |
 | `e2e/sip-flow.spec.ts` | 7 | Fluxo SIP end-to-end · carrega softphone e exibe badge de status SIP · permite digitar número no dialpad e limpar via backspace · inicia tentativa de chamada SIP e atualiza UI … |
 | `src/__tests__/rls/deals.test.ts` | 7 | RLS — deals · agent enxerga apenas próprias deals · supervisor enxerga todas · admin enxerga todas … |

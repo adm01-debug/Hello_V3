@@ -1579,7 +1579,7 @@
    "nome": "health-check",
    "entrada": "supabase/functions/health-check/index.ts",
    "arquivos": 2,
-   "linhas": 205,
+   "linhas": 235,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2758,7 +2758,7 @@
    "nome": "voip-executive-summary",
    "entrada": "supabase/functions/voip-executive-summary/index.ts",
    "arquivos": 1,
-   "linhas": 219,
+   "linhas": 239,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
