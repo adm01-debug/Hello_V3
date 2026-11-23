@@ -19,6 +19,8 @@
   "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
   "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
   "supabase/functions/_shared/allowed-hosts.ts",
+  "supabase/functions/_shared/business-hours.ts",
+  "supabase/functions/_shared/business-hours_test.ts",
   "supabase/functions/_shared/client-ip.ts",
   "supabase/functions/_shared/client-ip_test.ts",
   "supabase/functions/_shared/constant-time.ts",
@@ -1129,13 +1131,15 @@
    "nome": "enforce-sla",
    "entrada": "supabase/functions/enforce-sla/index.ts",
    "arquivos": 1,
-   "linhas": 185,
+   "linhas": 210,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
    ],
    "tabelas": [
+    "calling_hours_config",
     "conversations",
+    "holidays",
     "notifications",
     "sla_policies"
    ],
@@ -1149,6 +1153,7 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "business-hours.ts",
     "cors.ts"
    ],
    "chamada_pelo_front": [

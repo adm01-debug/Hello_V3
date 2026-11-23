@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `74c525c07b` · branch `main` · 2026-11-23 19:51 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5e20177278` · branch `main` · 2026-11-23 20:39 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1793,6 +1793,8 @@ _nenhum item encontrado_
 | `DAYS` | `90` | `src/pages/Status.tsx` |
 | `ALL_SOURCES` | `"__all__"` | `src/pages/admin/SecurityAlerts.tsx` |
 | `PAGE_SIZE` | `25` | `src/pages/roles/RoleAuditTrail.tsx` |
+| `MINUTE_MS` | `60` | `supabase/functions/_shared/business-hours.ts` |
+| `MAX_ITERATIONS` | `400` | `supabase/functions/_shared/business-hours.ts` |
 | `DEFAULT_THRESHOLD` | `0.7` | `supabase/functions/chatbot-respond/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/chatbot-respond/index.ts` |
 | `RETENCAO_DIAS` | `180` | `supabase/functions/cleanup-recordings/index.ts` |
@@ -2992,6 +2994,8 @@ _nenhum item encontrado_
 | * Regra: nenhum `fetch` com URL derivada de dado do usuário ou de configuração | `supabase/functions/_shared/allowed-hosts.ts` |
 | deve sair sem passar por `assertSafeOutboundUrl`. | `supabase/functions/_shared/allowed-hosts.ts` |
 | `allowPrivate` remove apenas o bloqueio de faixas privadas. | `supabase/functions/_shared/allowed-hosts.ts` |
+| * Cálculo de prazo em minutos úteis, respeitando o horário comercial da | `supabase/functions/_shared/business-hours.ts` |
+| Agenda sem nenhuma janela utilizável não pode travar o job: cai no prazo | `supabase/functions/_shared/business-hours.ts` |
 | * Retorna o IP do cliente apenas quando ele e um literal valido; senao null. */ | `supabase/functions/_shared/client-ip.ts` |
 | * @deprecated Use buildCorsHeaders(req) instead for proper origin validation */ | `supabase/functions/_shared/cors.ts` |
 | Webhook também não deve lançar | `supabase/functions/_shared/external-payload-schemas_test.ts` |
@@ -3014,6 +3018,7 @@ _nenhum item encontrado_
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/detect-churn-risk/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/detect-key-moments/index.ts` |
 | 2. Se for trigger, atualizar o banco. Se for busca, apenas retornar. | `supabase/functions/embed-kb-article/index.ts` |
+| Sem configuração ativa, `business_hours_only` cai no prazo por tempo | `supabase/functions/enforce-sla/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/enforce-sla/index.ts` |
 | ').limit(50000); | `supabase/functions/export-data-lake/index.ts` |
 | Alvos permitidos: apenas Edge Functions deste projeto. Um `target` arbitrário | `supabase/functions/fuzz-test-runner/index.ts` |

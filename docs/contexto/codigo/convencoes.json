@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: SLA passa a respeitar horario comercial e feriados (E111) (#181)",
    "fix: envia version nos updates e liga o lock otimista (E110) (#180)",
    "fix: escolhe a politica SLA mais especifica sem depender da ordem do banco (E109) (#179)",
    "fix: limita a nota da IA ao maximo do criterio no score-call (E106) (#178)",
-   "fix: rotula corretamente os canais do softphone (E100) (#177)",
-   "fix: liga painel de integridade a dados reais e remove cartao decorativo (E097-E098) (#176)"
+   "fix: rotula corretamente os canais do softphone (E100) (#177)"
   ]
  },
  "pr_template": null,

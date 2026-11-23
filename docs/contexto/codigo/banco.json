@@ -7164,7 +7164,9 @@
     "so_no_types": []
    },
    "usada_no_front": 2,
-   "usada_em_edges": [],
+   "usada_em_edges": [
+    "enforce-sla"
+   ],
    "triggers": [
     "update_calling_hours_updated_at"
    ],
@@ -12758,7 +12760,9 @@
     "so_no_types": []
    },
    "usada_no_front": 1,
-   "usada_em_edges": [],
+   "usada_em_edges": [
+    "enforce-sla"
+   ],
    "triggers": [],
    "sem_rls": false,
    "nao_usada": false
