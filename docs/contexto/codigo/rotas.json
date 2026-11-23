@@ -135,7 +135,7 @@
     "status",
     "user"
    ],
-   "arquivos_puxados": 71
+   "arquivos_puxados": 72
   },
   {
    "protegida": false,
@@ -1096,7 +1096,7 @@
     "button",
     "searchbox"
    ],
-   "arquivos_puxados": 39
+   "arquivos_puxados": 40
   },
   {
    "protegida": false,
@@ -1406,7 +1406,7 @@
     "button",
     "user"
    ],
-   "arquivos_puxados": 67
+   "arquivos_puxados": 68
   },
   {
    "protegida": false,
@@ -2265,7 +2265,7 @@
     "button",
     "searchbox"
    ],
-   "arquivos_puxados": 39
+   "arquivos_puxados": 40
   },
   {
    "protegida": false,
@@ -3709,7 +3709,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 11
+   "arquivos_puxados": 12
   },
   {
    "protegida": false,

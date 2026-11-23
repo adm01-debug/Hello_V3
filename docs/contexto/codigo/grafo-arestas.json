@@ -564,6 +564,7 @@
    "src/lib/logger.ts"
   ],
   "src/components/calls/softphone/ActiveCallDisplay.tsx": [
+   "src/components/calls/TransferCallDialog.tsx",
    "src/components/calls/VoipQualityIndicator.tsx",
    "src/components/calls/softphone/constants.tsx",
    "src/components/ui/badge.tsx",
@@ -2360,7 +2361,8 @@
   ],
   "src/hooks/useCallSession.ts": [
    "src/integrations/supabase/client.ts",
-   "src/lib/logger.ts"
+   "src/lib/logger.ts",
+   "src/lib/pendingCallWrites.ts"
   ],
   "src/hooks/useCallTimers.ts": [
    "src/hooks/useMultiChannelCall.ts"
@@ -3000,6 +3002,9 @@
   "src/lib/outbound-scoring.ts": [
    "src/lib/safe-number.ts"
   ],
+  "src/lib/pendingCallWrites.ts": [
+   "src/lib/logger.ts"
+  ],
   "src/lib/ringtone-presets.ts": [
    "src/lib/logger.ts"
   ],
@@ -3291,7 +3296,8 @@
    "src/components/ui/select.tsx",
    "src/hooks/useCallHistory.ts",
    "src/hooks/useDebouncedSearchParam.ts",
-   "src/hooks/usePageTitle.ts"
+   "src/hooks/usePageTitle.ts",
+   "src/lib/export/callHistoryCsv.ts"
   ],
   "src/pages/CallLibrary.tsx": [
    "src/components/call-library/CallPlaylistsPanel.tsx",
@@ -3927,6 +3933,7 @@
    "src/hooks/useDashboardData.ts",
    "src/hooks/usePageTitle.ts",
    "src/integrations/supabase/client.ts",
+   "src/lib/export/reportCsv.ts",
    "src/lib/utils.ts"
   ],
   "src/pages/ResetPassword.tsx": [

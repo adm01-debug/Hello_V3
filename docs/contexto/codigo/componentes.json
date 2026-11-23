@@ -818,7 +818,7 @@
     "ActiveCallBar"
    ],
    "export_default": null,
-   "linhas": 370,
+   "linhas": 377,
    "dominio": "components/calls",
    "hooks_locais": [
     "useCallContext",
@@ -1049,7 +1049,7 @@
     "ActiveCallDisplay"
    ],
    "export_default": null,
-   "linhas": 248,
+   "linhas": 296,
    "dominio": "components/calls",
    "hooks_locais": [
     "useLiveSentiment",
@@ -1115,7 +1115,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 1,
+   "usado_por": 2,
    "orfao": false
   },
   {
@@ -1124,7 +1124,7 @@
     "UnifiedSoftphone"
    ],
    "export_default": null,
-   "linhas": 278,
+   "linhas": 285,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAgentStatus",
@@ -5756,7 +5756,7 @@
     "CallHistory"
    ],
    "export_default": "CallHistory",
-   "linhas": 203,
+   "linhas": 215,
    "dominio": "pages",
    "hooks_locais": [
     "useCallHistory",
@@ -6721,7 +6721,7 @@
     "Reports"
    ],
    "export_default": "Reports",
-   "linhas": 290,
+   "linhas": 302,
    "dominio": "pages",
    "hooks_locais": [
     "useCallVolumeData",

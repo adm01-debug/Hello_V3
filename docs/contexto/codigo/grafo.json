@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 907,
- "arestas": 3478,
+ "nos": 910,
+ "arestas": 3483,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -22,7 +22,7 @@
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 194
+   "importado_por": 195
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -89,6 +89,10 @@
    "importado_por": 27
   },
   {
+   "arquivo": "src/hooks/useMultiChannelCall.ts",
+   "importado_por": 24
+  },
+  {
    "arquivo": "src/components/layout/NeonPageLayout.tsx",
    "importado_por": 23
   },
@@ -98,10 +102,6 @@
   },
   {
    "arquivo": "src/components/ui/tooltip.tsx",
-   "importado_por": 23
-  },
-  {
-   "arquivo": "src/hooks/useMultiChannelCall.ts",
    "importado_por": 23
   },
   {
@@ -223,14 +223,14 @@
    "importado_por": 50
   },
   {
+   "modulo": "pages",
+   "depende_de": 52,
+   "importado_por": 2
+  },
+  {
    "modulo": "hooks",
    "depende_de": 13,
    "importado_por": 40
-  },
-  {
-   "modulo": "pages",
-   "depende_de": 51,
-   "importado_por": 2
   },
   {
    "modulo": "components/ui",

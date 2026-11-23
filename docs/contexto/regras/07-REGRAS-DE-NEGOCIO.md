@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9b30ac81da` · branch `main` · 2026-11-23 12:04 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a81e53528d` · branch `main` · 2026-11-23 13:59 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1756,6 +1756,7 @@ _nenhum item encontrado_
 | `MASK_VISIBLE_DIGITS` | `4` | `src/lib/favorite-sync-labels.ts` |
 | `RING_ON_MS` | `1000` | `src/lib/incoming-call-alert.ts` |
 | `RING_CYCLE_MS` | `5000` | `src/lib/incoming-call-alert.ts` |
+| `MAX_ITEMS` | `20` | `src/lib/pendingCallWrites.ts` |
 | `MIN_VOLUME` | `0` | `src/lib/ringtone-presets.ts` |
 | `MAX_VOLUME` | `1` | `src/lib/ringtone-presets.ts` |
 | `DEFAULT_VOLUME` | `0.12` | `src/lib/ringtone-presets.ts` |
@@ -2160,6 +2161,7 @@ _nenhum item encontrado_
 | ; import {   Dialog,   DialogContent,   DialogDescription,   DialogFooter,   DialogHeader,   DialogTitle,   DialogTrigger, } from  | `src/components/auth/PasskeyManager.tsx` |
 | Senha comprometida detectada | `src/components/auth/PasswordStrength.tsx` |
 | Callback em ${minutesUntil} minutos! | `src/components/callbacks/ScheduledCallbacksList.tsx` |
+| A chamada foi encerrada, mas não foi possível salvar o histórico | `src/components/calls/ActiveCallBar.tsx` |
 | Erro ao gerar resumo, salvando sem resumo | `src/components/calls/ActiveCallBar.tsx` |
 | Não foi possível alterar a saída de áudio | `src/components/calls/AudioOutputSelector.tsx` |
 | ⚠️ Qualidade da chamada degradada | `src/components/calls/CallQualityIndicator.tsx` |
@@ -2404,8 +2406,7 @@ _nenhum item encontrado_
 | Falha ao marcar como resolvido | `src/hooks/useSecurityAlertNotifications.ts` |
 | Falha ao marcar todos como lidos | `src/hooks/useSecurityAlertNotifications.ts` |
 | Alerta de Segurança: ${newAlert.title} | `src/hooks/useSecurityMonitoringData.ts` |
-| Acesso bloqueado detectado | `src/hooks/useSecurityNotifications.ts` |
-| … +244 linhas — lista completa em `context.json` | |
+| … +245 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2451,7 +2452,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4059 testes em 335 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4075 testes em 339 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2721,6 +2722,7 @@ _nenhum item encontrado_
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
+| `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
 | `src/hooks/__tests__/use-mobile.coverage.test.tsx` | 4 | useIsMobile · returns false for desktop width · returns true for mobile width and reacts to change · cleans up listener on unmount |
 | `src/hooks/__tests__/useAccounts.test.ts` | 4 | useAccounts · loads accounts on mount · recomputes health via edge function · triggers churn detection |
 | `src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx` | 4 | useActiveCallsRealtime (coverage) · loads active calls and holds, computes derived data · filters by selected agent and hold status · starts a tick interval when there are active calls |
@@ -2742,6 +2744,9 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipRecommendations.coverage.test.tsx` | 4 | useVoipRecommendations · loads recommendations successfully · defaults period to week and supports day · throws and surfaces error when invoke returns error |
 | `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
+| `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
+| `src/lib/__tests__/pendingCallWrites.test.ts` | 4 | pendingCallWrites · enfileira e retira em ordem FIFO · descarta o mais antigo quando chega a 20 itens · clear() esvazia a fila |
+| `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
 | `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
 | `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 4 | check-queue-metrics: cálculo de avg wait time (contrato) · check-queue-metrics: cálculo de abandonment rate (contrato) · check-queue-metrics: service level (≤30s contrato) · check-queue-metrics: thresholds default (contrato) |
 | `supabase/functions/export-data-lake/__tests__/csv.test.ts` | 4 | toCsv: vazio devolve string vazia · toCsv: cabecalho e a uniao das colunas, sem perder dados · toCsv: escapa virgula, aspas e quebra de linha · toCsv: nulo e undefined viram vazio |
@@ -2751,11 +2756,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts` | 4 | voice-qa rejeita sem JWT (401) · voice-qa rejeita question curta (400) · voice-qa rejeita period inválido (400) · voice-qa responde OPTIONS com CORS |
 | `supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts` | 4 | voip-quality-alerts-summary: exige Authorization · voip-quality-alerts-summary: aceita period válido · voip-quality-alerts-summary: rejeita period inválido · voip-quality-alerts-summary: responde com x-request-id |
 | `supabase/functions/voip-quality-forecast/__tests__/index.test.ts` | 4 | linearSlope — detecta tendência decrescente · forecast — gera horizonte solicitado com MOS válido · forecast — sinaliza risco quando MOS previsto < 3.5 · forecast — buckets agrupam corretamente por (dow, hour) |
-| `supabase/functions/voip-quality-heatmap/__tests__/index.test.ts` | 4 | voip-quality-heatmap: rejects without auth · voip-quality-heatmap: handles OPTIONS · voip-quality-heatmap: rejects invalid days · voip-quality-heatmap: returns x-request-id header |
-| `supabase/functions/voip-recommendation-history/__tests__/index.test.ts` | 4 | aggregate: lista vazia retorna 14 dias zerados · aggregate: contagens por categoria e outcome · aggregate: perDay em ordem cronológica ascendente · aggregate: contabiliza ação no dia correto |
-| `supabase/functions/voip-recommendations/__tests__/index.test.ts` | 4 | buildRecommendations - sistema saudável retorna lista vazia · buildRecommendations - capacidade saturada gera crítico de prioridade máxima · buildRecommendations - múltiplos sinais ordenados por prioridade descendente · buildRecommendations - jitter alto gera ação de função (testar conexão) |
-| `supabase/functions/webauthn-authenticate/__tests__/index.test.ts` | 4 | webauthn-authenticate: OPTIONS devolve preflight CORS vazio · webauthn-authenticate: sem campos obrigatorios responde 400 · webauthn-authenticate: nao aceita email do request · webauthn-authenticate: passkey desconhecida e recusada (400, nunca 200) |
-| … +35 linhas — lista completa em `context.json` | | |
+| … +39 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2785,6 +2786,7 @@ _nenhum item encontrado_
 | `invoke(` | `src/hooks/useBitrix.ts` |
 | `invoke(` | `src/hooks/useCallScoring.ts` |
 | `invoke(` | `src/hooks/useCallSearch.ts` |
+| `enqueue(` | `src/hooks/useCallSession.ts` |
 | `invoke(` | `src/hooks/useCallSession.ts` |
 | `invoke(` | `src/hooks/useChatbot.ts` |
 | `invoke(` | `src/hooks/useCoaching.ts` |
@@ -2846,6 +2848,7 @@ _nenhum item encontrado_
 | `notify_on_block` | `src/integrations/supabase/types.ts` |
 | `notify_on_critical` | `src/integrations/supabase/types.ts` |
 | `notify_on_warning` | `src/integrations/supabase/types.ts` |
+| `enqueue(` | `src/lib/pendingCallWrites.ts` |
 | `invoke(` | `src/lib/tracing.ts` |
 | `invoke(` | `src/lib/notifications/index.ts` |
 | `sendNotification` | `src/lib/notifications/index.ts` |
@@ -2903,6 +2906,7 @@ _nenhum item encontrado_
 |---|---|
 | Envia apenas os primeiros 5 caracteres (k-anonymity) | `src/components/auth/PasswordStrength.tsx` |
 | Requer mínimo de 8 caracteres e caractere especial como obrigatórios | `src/components/auth/PasswordStrength.tsx` |
+| sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno | `src/components/calls/UnifiedSoftphone.tsx` |
 | LGPD Consent Required */} | `src/components/compliance/ComplianceSettings.tsx` |
 | Renderiza nada quando há apenas a opção "Todos" (nenhuma etiqueta em uso), | `src/components/dialer/phone/FavoriteTagFilter.tsx` |
 | e usa `location.pathname` apenas para reiniciar a animação ao trocar de página. | `src/components/navigation/NavigationProgress.tsx` |
@@ -2954,6 +2958,7 @@ _nenhum item encontrado_
 | * Solicita permissão de notificação a partir de um gesto do usuário. */ | `src/lib/incoming-call-alert.ts` |
 | - Dev: console com prefixo estruturado. Prod: apenas warn/error. | `src/lib/logger.ts` |
 | * Store mínimo do estado de navegação, alimentado pelo Suspense das rotas. | `src/lib/navigation-progress-store.ts` |
+| Limite de 20 itens; o mais antigo é descartado quando excede. | `src/lib/pendingCallWrites.ts` |
 | * Erros de negócio antecipados na UI (o banco também os rejeitaria). */ | `src/lib/queue-audio.ts` |
 | nenhum CHECK constraint nem o trigger de validação pode falhar depois disto. | `src/lib/ring-group.ts` |
 | * Erros de negócio que o banco também rejeitaria — antecipados na UI | `src/lib/ring-group.ts` |

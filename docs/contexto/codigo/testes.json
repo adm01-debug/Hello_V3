@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 345,
+ "total": 349,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 328
+  "unit": 332
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 322
+   "arquivos": 326
   },
   {
    "padrao": "e2e/",
@@ -250,6 +250,15 @@
     "src/components/ui/search-input.tsx"
    ],
    "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/callLifecycle-integration.test.tsx",
+   "tipo": "unit",
+   "linhas": 167,
+   "testa": [
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "casos": 3
   },
   {
    "arquivo": "src/hooks/__tests__/use-mobile.coverage.test.tsx",
@@ -1908,6 +1917,15 @@
    "casos": 12
   },
   {
+   "arquivo": "src/lib/__tests__/callHistoryCsv.test.ts",
+   "tipo": "unit",
+   "linhas": 40,
+   "testa": [
+    "src/lib/export/callHistoryCsv.ts"
+   ],
+   "casos": 3
+  },
+  {
    "arquivo": "src/lib/__tests__/csv-export.property.test.ts",
    "tipo": "unit",
    "linhas": 92,
@@ -2148,6 +2166,15 @@
    "casos": 7
   },
   {
+   "arquivo": "src/lib/__tests__/pendingCallWrites.test.ts",
+   "tipo": "unit",
+   "linhas": 34,
+   "testa": [
+    "src/lib/pendingCallWrites.ts"
+   ],
+   "casos": 3
+  },
+  {
    "arquivo": "src/lib/__tests__/performance-optimizations.test.ts",
    "tipo": "unit",
    "linhas": 147,
@@ -2180,6 +2207,15 @@
     "src/lib/queue-audio.ts"
    ],
    "casos": 16
+  },
+  {
+   "arquivo": "src/lib/__tests__/reportCsv.test.ts",
+   "tipo": "unit",
+   "linhas": 31,
+   "testa": [
+    "src/lib/export/reportCsv.ts"
+   ],
+   "casos": 3
   },
   {
    "arquivo": "src/lib/__tests__/ring-group.test.ts",
@@ -3199,7 +3235,7 @@
   "src/hooks/useLoginLockout.ts": 1,
   "src/hooks/useMFA.ts": 1,
   "src/hooks/useMeetingSummary.ts": 3,
-  "src/hooks/useMultiChannelCall.ts": 6,
+  "src/hooks/useMultiChannelCall.ts": 7,
   "src/hooks/useMultiChannelCallConference.ts": 1,
   "src/hooks/useMultiDeviceRing.ts": 1,
   "src/hooks/useNetworkMonitor.ts": 1,
@@ -3276,7 +3312,9 @@
   "src/lib/dialer-filter-storage.ts": 1,
   "src/lib/dialer/predictive-pace.ts": 1,
   "src/lib/error-tracking.ts": 1,
+  "src/lib/export/callHistoryCsv.ts": 1,
   "src/lib/export/index.ts": 4,
+  "src/lib/export/reportCsv.ts": 1,
   "src/lib/favorite-sync-labels.ts": 1,
   "src/lib/health-score.ts": 2,
   "src/lib/holdReminderSounds.ts": 1,
@@ -3289,6 +3327,7 @@
   "src/lib/notifications/index.ts": 4,
   "src/lib/outbound-scoring.ts": 1,
   "src/lib/password/index.ts": 2,
+  "src/lib/pendingCallWrites.ts": 1,
   "src/lib/phone-normalization.ts": 1,
   "src/lib/queue-audio.ts": 1,
   "src/lib/ring-group.ts": 1,

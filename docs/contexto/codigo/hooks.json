@@ -1425,7 +1425,7 @@
    "hooks_exportados": [
     "useCallSession"
    ],
-   "linhas": 205,
+   "linhas": 244,
    "dominio": "hooks",
    "tabelas": [
     "call_analyses",
@@ -1442,6 +1442,7 @@
    ],
    "hooks_internos": [
     "useCallback",
+    "useEffect",
     "useState"
    ],
    "canais_realtime": [],
@@ -2880,7 +2881,7 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 288,
+   "linhas": 293,
    "dominio": "hooks",
    "tabelas": [
     "hold_events"
@@ -2916,7 +2917,7 @@
     "src/hooks/useMultiChannelCallConference.ts",
     "src/pages/PhoneDialer.tsx"
    ],
-   "coberto_por_testes": 6
+   "coberto_por_testes": 7
   },
   {
    "arquivo": "src/hooks/useMultiChannelCallConference.ts",
@@ -3854,7 +3855,7 @@
    "hooks_exportados": [
     "useSipCall"
    ],
-   "linhas": 412,
+   "linhas": 422,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
@@ -4245,7 +4246,7 @@
    "hooks_exportados": [
     "useTrunkUsageReporter"
    ],
-   "linhas": 59,
+   "linhas": 60,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [

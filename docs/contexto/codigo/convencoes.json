@@ -16,12 +16,12 @@
    "src/contexts (4)"
   ],
   "servicos_logica": [
-   "src/lib (81)",
+   "src/lib (84)",
    "src/integrations (3)",
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (322)",
+   "co-localizado (__tests__) (326)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -41,7 +41,7 @@
  "nomenclatura": {
   "componentes": "PascalCase (88%)",
   "hooks": "use + PascalCase",
-  "servicos": "kebab-case (69%)",
+  "servicos": "kebab-case (67%)",
   "edge_functions": "kebab-case (100%)",
   "tabelas": "snake_case (90%)"
  },
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: gravar e fechar call_sessions + transcricoes no banco (E061-E073) (#170)",
    "feat: E060 CallContext provider singleton — resolve A-001 (múltiplas instâncias)",
    "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)",
    "feat: 'Alterar foto' do perfil passa a enviar e exibir a foto",
-   "docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)",
-   "fix: snapshots de sentimento gravam com o call_session_id real (#165)"
+   "docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)"
   ]
  },
  "pr_template": null,

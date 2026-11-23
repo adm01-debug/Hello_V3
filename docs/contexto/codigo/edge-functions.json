@@ -556,7 +556,7 @@
    "nome": "check-hold-alerts",
    "entrada": "supabase/functions/check-hold-alerts/index.ts",
    "arquivos": 1,
-   "linhas": 121,
+   "linhas": 126,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"

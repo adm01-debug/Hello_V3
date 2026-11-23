@@ -638,7 +638,7 @@
    "modulo": "components/calls",
    "arquivos": 27,
    "testes": 4,
-   "linhas": 3813,
+   "linhas": 3875,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3226,7 +3226,7 @@
    "modulo": "hooks",
    "arquivos": 168,
    "testes": 0,
-   "linhas": 20777,
+   "linhas": 20832,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4182,7 +4182,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 172,
+   "testes": 173,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -4468,9 +4468,9 @@
   },
   {
    "modulo": "lib",
-   "arquivos": 49,
+   "arquivos": 50,
    "testes": 0,
-   "linhas": 6373,
+   "linhas": 6437,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4850,7 +4850,7 @@
   {
    "modulo": "lib/__tests__",
    "arquivos": 0,
-   "testes": 71,
+   "testes": 74,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -4984,9 +4984,9 @@
   },
   {
    "modulo": "lib/export",
-   "arquivos": 1,
+   "arquivos": 3,
    "testes": 1,
-   "linhas": 113,
+   "linhas": 260,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5008,10 +5008,13 @@
    },
    "importado_por_outros_modulos": [
     "components/network",
-    "hooks"
+    "hooks",
+    "pages"
    ],
    "depende_de_modulos": [],
-   "pacotes_externos": []
+   "pacotes_externos": [
+    "date-fns"
+   ]
   },
   {
    "modulo": "lib/mfa",
@@ -5265,7 +5268,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 16551,
+   "linhas": 16575,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -6034,6 +6037,7 @@
     "integrations/lovable",
     "integrations/supabase",
     "lib",
+    "lib/export",
     "lib/webauthn",
     "pages/call-analytics",
     "pages/marketing",

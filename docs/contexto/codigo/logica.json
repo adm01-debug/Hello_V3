@@ -1,11 +1,11 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 88,
+ "total": 91,
  "por_camada": {
   "data": 1,
   "integrations": 3,
-  "lib": 81,
+  "lib": 84,
   "python": 3
  },
  "arquivos": [
@@ -880,6 +880,33 @@
    "orfao": false
   },
   {
+   "arquivo": "src/lib/export/callHistoryCsv.ts",
+   "camada": "lib",
+   "exports": [
+    "CallHistoryCsvRow",
+    "buildCallHistoryCsv",
+    "downloadCallHistoryCsv"
+   ],
+   "export_default": null,
+   "linhas": 67,
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "env": [],
+   "externos": [
+    "date-fns"
+   ],
+   "zod_schemas": 0,
+   "flags": [],
+   "papeis": [],
+   "usado_por": 1,
+   "usado_por_modulos": [
+    "pages"
+   ],
+   "coberto_por_testes": 1,
+   "orfao": false
+  },
+  {
    "arquivo": "src/lib/export/index.ts",
    "camada": "lib",
    "exports": [
@@ -904,6 +931,33 @@
     "hooks"
    ],
    "coberto_por_testes": 4,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/lib/export/reportCsv.ts",
+   "camada": "lib",
+   "exports": [
+    "ReportAgentRow",
+    "ReportKpis",
+    "ReportVolumeRow",
+    "buildReportCsv",
+    "downloadReportCsv"
+   ],
+   "export_default": null,
+   "linhas": 80,
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "env": [],
+   "externos": [],
+   "zod_schemas": 0,
+   "flags": [],
+   "papeis": [],
+   "usado_por": 1,
+   "usado_por_modulos": [
+    "pages"
+   ],
+   "coberto_por_testes": 1,
    "orfao": false
   },
   {
@@ -1102,7 +1156,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 186,
+   "usado_por": 187,
    "usado_por_modulos": [
     "components/admin",
     "components/ai",
@@ -1288,6 +1342,33 @@
    "usado_por": 0,
    "usado_por_modulos": [],
    "coberto_por_testes": 2,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/lib/pendingCallWrites.ts",
+   "camada": "lib",
+   "exports": [
+    "PendingCallWrite",
+    "clear",
+    "count",
+    "dequeue",
+    "enqueue"
+   ],
+   "export_default": null,
+   "linhas": 64,
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "env": [],
+   "externos": [],
+   "zod_schemas": 0,
+   "flags": [],
+   "papeis": [],
+   "usado_por": 1,
+   "usado_por_modulos": [
+    "hooks"
+   ],
+   "coberto_por_testes": 1,
    "orfao": false
   },
   {
