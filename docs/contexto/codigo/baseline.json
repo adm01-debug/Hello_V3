@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "cf786766d378b8ee4f6ec90d78c31546dbc1a3f6",
+  "commit": "7375845ef783a79d51786915b5b9a092709fce56",
   "branch": "main",
-  "data_commit": "2026-11-23T20:27:56-03:00",
+  "data_commit": "2026-11-23T20:38:27-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "7375845",
+    "data": "2026-11-23",
+    "assunto": "chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)"
+   },
    {
     "sha": "cf78676",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "a1a6cb4",
     "data": "2026-11-23",
     "assunto": "feat: filtrar menu por papel (E088-E089) (#172)"
-   },
-   {
-    "sha": "a81e535",
-    "data": "2026-11-23",
-    "assunto": "feat: gravar e fechar call_sessions + transcricoes no banco (E061-E073) (#170)"
    }
   ],
-  "arquivos_mudados_7d": 977,
+  "arquivos_mudados_7d": 979,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 26
+    "mudancas": 27
    },
    {
     "pasta": "src/lib/__tests__",
@@ -161,7 +161,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 23
+    "mudancas": 25
    },
    {
     "pasta": "src/components/calls",
@@ -203,7 +203,7 @@
    },
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 26
+    "mudancas": 27
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -254,6 +254,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "mudancas": 5
+   },
+   {
     "arquivo": "docs/estado/infra-ci-rotas-integracoes.md",
     "mudancas": 4
    },
@@ -266,7 +270,7 @@
     "mudancas": 4
    },
    {
-    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
     "mudancas": 4
    },
    {
@@ -278,30 +282,26 @@
     "mudancas": 4
    },
    {
+    "arquivo": "supabase/functions/score-call/index.ts",
+    "mudancas": 4
+   },
+   {
+    "arquivo": "supabase/functions/voip-load-test/index.ts",
+    "mudancas": 4
+   },
+   {
     "arquivo": "AGENTS.md",
     "mudancas": 3
    },
    {
     "arquivo": "docs/agentes/edge-functions.md",
     "mudancas": 3
-   },
-   {
-    "arquivo": "docs/estado/edge-functions-parte1.md",
-    "mudancas": 3
-   },
-   {
-    "arquivo": "docs/observabilidade/SLI_SLO.md",
-    "mudancas": 3
-   },
-   {
-    "arquivo": "docs/pendencias/WIRING-04-gamificationdashboard.md",
-    "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 174
+    "commits": 175
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1679,
   "arquivos_codigo": 1277,
-  "linhas_codigo": 172873,
+  "linhas_codigo": 172860,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 190,
-   "linhas": 21385
+   "linhas": 21372
   },
   "tailwind.config.ts": {
    "arquivos": 1,

@@ -2762,11 +2762,11 @@
   {
    "arquivo": "supabase/functions/_shared/__tests__/cors.test.ts",
    "tipo": "unit",
-   "linhas": 69,
+   "linhas": 62,
    "testa": [
     "supabase/functions/_shared/cors.ts"
    ],
-   "casos": 9
+   "casos": 8
   },
   {
    "arquivo": "supabase/functions/_shared/__tests__/local-supabase.ts",

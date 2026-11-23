@@ -4680,6 +4680,9 @@
   "supabase/functions/approve-password-reset/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
+  "supabase/functions/auto-scorecard/index.ts": [
+   "supabase/functions/_shared/cors.ts"
+  ],
   "supabase/functions/bitrix-api/index.ts": [
    "supabase/functions/_shared/allowed-hosts.ts",
    "supabase/functions/_shared/cors.ts",
@@ -4731,12 +4734,19 @@
   "supabase/functions/compute-account-health/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
+  "supabase/functions/compute-adherence/index.ts": [
+   "supabase/functions/_shared/cors.ts"
+  ],
   "supabase/functions/compute-best-time/index.ts": [
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
+  "supabase/functions/compute-deal-health/index.ts": [
+   "supabase/functions/_shared/cors.ts"
+  ],
   "supabase/functions/data-lake-flush/index.ts": [
    "supabase/functions/_shared/constant-time.ts",
+   "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/observability.ts"
   ],
   "supabase/functions/database-backup/index.ts": [
@@ -4754,7 +4764,8 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/dialer-pacing-tick/index.ts": [
-   "supabase/functions/_shared/constant-time.ts"
+   "supabase/functions/_shared/constant-time.ts",
+   "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/elevenlabs-conversation-token/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -4789,7 +4800,16 @@
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/validate.ts"
   ],
+  "supabase/functions/forecast-call-volume/index.ts": [
+   "supabase/functions/_shared/cors.ts"
+  ],
+  "supabase/functions/forecast-deals/index.ts": [
+   "supabase/functions/_shared/cors.ts"
+  ],
   "supabase/functions/fuzz-test-runner/index.ts": [
+   "supabase/functions/_shared/cors.ts"
+  ],
+  "supabase/functions/generate-coaching-plan/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/generate-coaching-track/index.ts": [
@@ -4812,6 +4832,9 @@
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/resilience.ts"
+  ],
+  "supabase/functions/global-load-test/index.ts": [
+   "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/health-check/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4872,6 +4895,7 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/score-call/index.ts": [
+   "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/search-calls/index.ts": [
@@ -4957,6 +4981,9 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/voip-failover-notifier/index.ts": [
+   "supabase/functions/_shared/cors.ts"
+  ],
+  "supabase/functions/voip-load-test/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/voip-quality-alerts-summary/index.ts": [

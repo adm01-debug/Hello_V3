@@ -202,7 +202,7 @@
    "nome": "analyze-talk-ratio",
    "entrada": "supabase/functions/analyze-talk-ratio/index.ts",
    "arquivos": 1,
-   "linhas": 136,
+   "linhas": 137,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -265,7 +265,7 @@
    "nome": "auto-scorecard",
    "entrada": "supabase/functions/auto-scorecard/index.ts",
    "arquivos": 1,
-   "linhas": 201,
+   "linhas": 203,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -288,7 +288,9 @@
    "hosts_externos": [
     "openrouter.ai"
    ],
-   "usa_shared": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": true,
@@ -735,7 +737,7 @@
    "nome": "compute-adherence",
    "entrada": "supabase/functions/compute-adherence/index.ts",
    "arquivos": 1,
-   "linhas": 94,
+   "linhas": 92,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -752,7 +754,9 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [],
-   "usa_shared": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
    "chamada_pelo_front": [
     "src/hooks/useAdherence.ts"
    ],
@@ -799,7 +803,7 @@
    "nome": "compute-deal-health",
    "entrada": "supabase/functions/compute-deal-health/index.ts",
    "arquivos": 1,
-   "linhas": 111,
+   "linhas": 110,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -818,7 +822,9 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [],
-   "usa_shared": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
    "chamada_pelo_front": [
     "src/hooks/useDeals.ts"
    ],
@@ -831,7 +837,7 @@
    "nome": "data-lake-flush",
    "entrada": "supabase/functions/data-lake-flush/index.ts",
    "arquivos": 1,
-   "linhas": 178,
+   "linhas": 180,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -852,6 +858,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "constant-time.ts",
+    "cors.ts",
     "observability.ts"
    ],
    "chamada_pelo_front": [],
@@ -968,7 +975,7 @@
    "nome": "detect-key-moments",
    "entrada": "supabase/functions/detect-key-moments/index.ts",
    "arquivos": 1,
-   "linhas": 198,
+   "linhas": 199,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1026,7 +1033,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "constant-time.ts"
+    "constant-time.ts",
+    "cors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/usePredictivePacing.ts"
@@ -1292,7 +1300,7 @@
    "nome": "forecast-call-volume",
    "entrada": "supabase/functions/forecast-call-volume/index.ts",
    "arquivos": 1,
-   "linhas": 87,
+   "linhas": 85,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1308,7 +1316,9 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [],
-   "usa_shared": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
    "chamada_pelo_front": [
     "src/hooks/useForecastVolume.ts"
    ],
@@ -1321,7 +1331,7 @@
    "nome": "forecast-deals",
    "entrada": "supabase/functions/forecast-deals/index.ts",
    "arquivos": 1,
-   "linhas": 86,
+   "linhas": 85,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1337,7 +1347,9 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [],
-   "usa_shared": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
    "chamada_pelo_front": [
     "src/hooks/useDealForecast.ts"
    ],
@@ -1426,7 +1438,7 @@
    "nome": "generate-coaching-plan",
    "entrada": "supabase/functions/generate-coaching-plan/index.ts",
    "arquivos": 1,
-   "linhas": 115,
+   "linhas": 117,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1445,7 +1457,9 @@
    "hosts_externos": [
     "openrouter.ai"
    ],
-   "usa_shared": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
    "chamada_pelo_front": [
     "src/components/coaching/CoachingCopilotCard.tsx"
    ],
@@ -1498,7 +1512,7 @@
    "nome": "generate-meeting-summary",
    "entrada": "supabase/functions/generate-meeting-summary/index.ts",
    "arquivos": 1,
-   "linhas": 309,
+   "linhas": 310,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1571,7 +1585,7 @@
    "nome": "global-load-test",
    "entrada": "supabase/functions/global-load-test/index.ts",
    "arquivos": 1,
-   "linhas": 150,
+   "linhas": 147,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1588,7 +1602,9 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [],
-   "usa_shared": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
@@ -1987,7 +2003,7 @@
    "nome": "score-call",
    "entrada": "supabase/functions/score-call/index.ts",
    "arquivos": 1,
-   "linhas": 145,
+   "linhas": 143,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2012,6 +2028,7 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "cors.ts",
     "resilience.ts"
    ],
    "chamada_pelo_front": [
@@ -2265,7 +2282,7 @@
    "nome": "teams-fetch-recordings",
    "entrada": "supabase/functions/teams-fetch-recordings/index.ts",
    "arquivos": 1,
-   "linhas": 193,
+   "linhas": 194,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2857,7 +2874,7 @@
    "nome": "voip-load-test",
    "entrada": "supabase/functions/voip-load-test/index.ts",
    "arquivos": 1,
-   "linhas": 138,
+   "linhas": 135,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2876,7 +2893,9 @@
    "buckets": [],
    "chama_edges": [],
    "hosts_externos": [],
-   "usa_shared": [],
+   "usa_shared": [
+    "cors.ts"
+   ],
    "chamada_pelo_front": [
     "src/pages/ObservabilityDashboard.tsx"
    ],

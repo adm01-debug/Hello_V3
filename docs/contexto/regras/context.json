@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "cf786766d378b8ee4f6ec90d78c31546dbc1a3f6",
+  "sha": "7375845ef783a79d51786915b5b9a092709fce56",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 23:28 UTC",
+  "generated_at": "2026-11-23 23:41 UTC",
   "files_total": 1726,
   "code_files": 1523,
-  "code_lines": 188885
+  "code_lines": 188872
  },
  "version": "1.3.2",
- "facts_hash": "d9e3b2ce9d2f25bf",
+ "facts_hash": "473b9fc558516b41",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34282,7 +34282,7 @@
   {
    "module": "supabase/functions",
    "files": 190,
-   "lines": 21385,
+   "lines": 21372,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34378,7 +34378,7 @@
     "business-hours.ts: BusinessSchedule, addBusinessMinutes, scheduleFromRows",
     "client-ip.ts: isIpLiteral, clientIpFromHeaders",
     "constant-time.ts: mesmaString",
-    "cors.ts: getCorsOrigin, buildCorsHeaders, corsHeaders",
+    "cors.ts: getCorsOrigin, buildCorsHeaders",
     "external-payload-schemas.ts: BitrixActionSchema, BitrixAction, BitrixRequestSchema, BitrixRequest, paramsSchemaFor, WebhookEventSchema",
     "hmac.ts: verifyWebhookSignature",
     "html.ts: escapeHtml",
@@ -42580,10 +42580,6 @@
    {
     "file": "supabase/functions/_shared/client-ip.ts",
     "text": "* Retorna o IP do cliente apenas quando ele e um literal valido; senao null. */"
-   },
-   {
-    "file": "supabase/functions/_shared/cors.ts",
-    "text": "* @deprecated Use buildCorsHeaders(req) instead for proper origin validation */"
    },
    {
     "file": "supabase/functions/_shared/external-payload-schemas_test.ts",
@@ -72172,10 +72168,6 @@
    {
     "file": "supabase/functions/_shared/__tests__/cors.test.ts",
     "name": "cors: preflight anuncia os headers usados pelo front"
-   },
-   {
-    "file": "supabase/functions/_shared/__tests__/cors.test.ts",
-    "name": "cors: deprecado corsHeaders reflete origem de producao"
    },
    {
     "file": "supabase/functions/_shared/__tests__/rate-limit.test.ts",
@@ -116341,17 +116333,13 @@
   },
   "supabase/functions/_shared/cors.ts": {
    "path": "supabase/functions/_shared/cors.ts",
-   "lines": 48,
+   "lines": 46,
    "exports": [
     "function getCorsOrigin",
-    "function buildCorsHeaders",
-    "const corsHeaders"
+    "function buildCorsHeaders"
    ],
    "env": [
     "CORS_EXTRA_ORIGINS"
-   ],
-   "rule_comments": [
-    "* @deprecated Use buildCorsHeaders(req) instead for proper origin validation */"
    ],
    "doc": "Centralized CORS configuration for all Edge Functions Only known origins are echoed back; unknown origins get no CORS header"
   },
@@ -116747,7 +116735,7 @@
   },
   "supabase/functions/_shared/__tests__/cors.test.ts": {
    "path": "supabase/functions/_shared/__tests__/cors.test.ts",
-   "lines": 69,
+   "lines": 62,
    "is_test": true,
    "env": [
     "CORS_EXTRA_ORIGINS"
@@ -116760,8 +116748,7 @@
     "cors: localhost segue liberado para o desenvolvimento",
     "cors: sem header Origin nao emite Access-Control-Allow-Origin",
     "cors: CORS_EXTRA_ORIGINS libera origem adicional",
-    "cors: preflight anuncia os headers usados pelo front",
-    "cors: deprecado corsHeaders reflete origem de producao"
+    "cors: preflight anuncia os headers usados pelo front"
    ]
   },
   "supabase/functions/_shared/__tests__/local-supabase.ts": {
@@ -117119,7 +117106,7 @@
   },
   "supabase/functions/analyze-talk-ratio/index.ts": {
    "path": "supabase/functions/analyze-talk-ratio/index.ts",
-   "lines": 136,
+   "lines": 137,
    "exports": [
     "type TalkRatioStatus",
     "function talkRatioStatus"
@@ -117234,7 +117221,7 @@
   },
   "supabase/functions/auto-scorecard/index.ts": {
    "path": "supabase/functions/auto-scorecard/index.ts",
-   "lines": 201,
+   "lines": 203,
    "tables": [
     {
      "table": "call_scorecards",
@@ -118289,7 +118276,7 @@
   },
   "supabase/functions/compute-adherence/index.ts": {
    "path": "supabase/functions/compute-adherence/index.ts",
-   "lines": 94,
+   "lines": 92,
    "tables": [
     {
      "table": "agent_shifts",
@@ -118379,7 +118366,7 @@
   },
   "supabase/functions/compute-deal-health/index.ts": {
    "path": "supabase/functions/compute-deal-health/index.ts",
-   "lines": 111,
+   "lines": 110,
    "tables": [
     {
      "table": "deals",
@@ -118455,7 +118442,7 @@
   },
   "supabase/functions/data-lake-flush/index.ts": {
    "path": "supabase/functions/data-lake-flush/index.ts",
-   "lines": 178,
+   "lines": 180,
    "tables": [
     {
      "table": "user_profiles",
@@ -118741,7 +118728,7 @@
   },
   "supabase/functions/detect-key-moments/index.ts": {
    "path": "supabase/functions/detect-key-moments/index.ts",
-   "lines": 198,
+   "lines": 199,
    "tables": [
     {
      "table": "call_key_moments",
@@ -119314,7 +119301,7 @@
   },
   "supabase/functions/forecast-call-volume/index.ts": {
    "path": "supabase/functions/forecast-call-volume/index.ts",
-   "lines": 87,
+   "lines": 85,
    "tables": [
     {
      "table": "call_sessions",
@@ -119353,7 +119340,7 @@
   },
   "supabase/functions/forecast-deals/index.ts": {
    "path": "supabase/functions/forecast-deals/index.ts",
-   "lines": 86,
+   "lines": 85,
    "tables": [
     {
      "table": "deals",
@@ -119517,7 +119504,7 @@
   },
   "supabase/functions/generate-coaching-plan/index.ts": {
    "path": "supabase/functions/generate-coaching-plan/index.ts",
-   "lines": 115,
+   "lines": 117,
    "tables": [
     {
      "table": "call_sessions",
@@ -119704,7 +119691,7 @@
   },
   "supabase/functions/generate-meeting-summary/index.ts": {
    "path": "supabase/functions/generate-meeting-summary/index.ts",
-   "lines": 309,
+   "lines": 310,
    "tables": [
     {
      "table": "meeting_summaries",
@@ -119974,7 +119961,7 @@
   },
   "supabase/functions/global-load-test/index.ts": {
    "path": "supabase/functions/global-load-test/index.ts",
-   "lines": 150,
+   "lines": 147,
    "dyn_from": 1,
    "rpc": [
     "is_admin_user"
@@ -120664,7 +120651,7 @@
   },
   "supabase/functions/score-call/index.ts": {
    "path": "supabase/functions/score-call/index.ts",
-   "lines": 145,
+   "lines": 143,
    "exports": [
     "function computeWeightedTotal"
    ],
@@ -121111,7 +121098,7 @@
   },
   "supabase/functions/teams-fetch-recordings/index.ts": {
    "path": "supabase/functions/teams-fetch-recordings/index.ts",
-   "lines": 193,
+   "lines": 194,
    "tables": [
     {
      "table": "call_recordings",
@@ -122044,7 +122031,7 @@
   },
   "supabase/functions/voip-load-test/index.ts": {
    "path": "supabase/functions/voip-load-test/index.ts",
-   "lines": 138,
+   "lines": 135,
    "tables": [
     {
      "table": "call_quality_metrics",
@@ -124488,10 +124475,36 @@
   }
  },
  "git": {
-  "sha": "cf786766d378b8ee4f6ec90d78c31546dbc1a3f6",
+  "sha": "7375845ef783a79d51786915b5b9a092709fce56",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "7375845",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/_shared/__tests__/cors.test.ts",
+     "supabase/functions/_shared/cors.ts",
+     "supabase/functions/analyze-talk-ratio/index.ts",
+     "supabase/functions/auto-scorecard/index.ts",
+     "supabase/functions/compute-adherence/index.ts",
+     "supabase/functions/compute-deal-health/index.ts",
+     "supabase/functions/data-lake-flush/index.ts",
+     "supabase/functions/detect-key-moments/index.ts",
+     "supabase/functions/dialer-pacing-tick/index.ts",
+     "supabase/functions/forecast-call-volume/index.ts",
+     "supabase/functions/forecast-deals/index.ts",
+     "supabase/functions/generate-coaching-plan/index.ts",
+     "supabase/functions/generate-meeting-summary/index.ts",
+     "supabase/functions/global-load-test/index.ts",
+     "supabase/functions/score-call/index.ts",
+     "supabase/functions/teams-fetch-recordings/index.ts",
+     "supabase/functions/voip-load-test/index.ts"
+    ]
+   },
    {
     "sha": "cf78676",
     "date": "2026-11-23",
@@ -124870,29 +124883,32 @@
      "docs/qa/04-PLANO.md",
      "docs/qa/05-PROGRESSO.md"
     ]
-   },
-   {
-    "sha": "b712310",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: snapshots de sentimento gravam com o call_session_id real (#165)",
-    "files": [
-     "src/components/calls/ActiveCallBar.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    26
+    27
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
     4
    ],
    [
-    "src/components/calls/ActiveCallBar.tsx",
-    3
+    "supabase/functions/_shared/__tests__/cors.test.ts",
+    2
+   ],
+   [
+    "supabase/functions/_shared/cors.ts",
+    2
+   ],
+   [
+    "supabase/functions/analyze-talk-ratio/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/score-call/index.ts",
+    2
    ],
    [
     "supabase/functions/embed-kb-article/index.ts",
@@ -124919,47 +124935,35 @@
     2
    ],
    [
+    "src/components/calls/ActiveCallBar.tsx",
+    2
+   ],
+   [
     "src/components/calls/UnifiedSoftphone.tsx",
     2
    ],
    [
-    "supabase/functions/_shared/__tests__/rate-limit.test.ts",
+    "supabase/functions/auto-scorecard/index.ts",
     1
    ],
    [
-    "supabase/functions/_shared/rate-limit.ts",
+    "supabase/functions/compute-adherence/index.ts",
     1
    ],
    [
-    "supabase/functions/_shared/__tests__/cors.test.ts",
+    "supabase/functions/compute-deal-health/index.ts",
     1
    ],
    [
-    "supabase/functions/_shared/cors.ts",
+    "supabase/functions/data-lake-flush/index.ts",
     1
    ],
    [
-    "supabase/functions/health-check/__tests__/index.test.ts",
+    "supabase/functions/detect-key-moments/index.ts",
     1
    ],
    [
-    "supabase/functions/voip-trunks-healthcheck/index.test.ts",
-    1
-   ],
-   [
-    "bun.lock",
-    1
-   ],
-   [
-    "package-lock.json",
-    1
-   ],
-   [
-    "package.json",
-    1
-   ],
-   [
-    "supabase/functions/request-password-reset/index.ts",
+    "supabase/functions/dialer-pacing-tick/index.ts",
     1
    ]
   ]

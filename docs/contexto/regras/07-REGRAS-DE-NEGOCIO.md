@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `cf786766d3` · branch `main` · 2026-11-23 23:28 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `7375845ef7` · branch `main` · 2026-11-23 23:41 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2457,7 +2457,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4162 testes em 353 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4161 testes em 353 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2595,7 +2595,6 @@ _nenhum item encontrado_
 | `src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts` | 9 | voipProactiveSnapshot · isProactiveEnabled reflects localStorage pref · setProactiveEnabled writes the pref · shouldRunProactiveCheck false when disabled … |
 | `src/lib/security/__tests__/https-enforcer.coverage.test.ts` | 9 | https-enforcer · does not enforce on localhost · does not enforce on 127.0.0.1 · does not enforce when already https … |
 | `supabase/functions/_shared/__tests__/auth_test.ts` | 9 | auth: requireUser sem header Authorization devolve 401 · auth: requireUser com header que nao e Bearer devolve 401 · auth: header Bearer vazio devolve 401 · auth: erro de credencial devolve o envelope com CORS da origem do chamador … |
-| `supabase/functions/_shared/__tests__/cors.test.ts` | 9 | cors: origem de producao (Vercel) e ecoada · cors: origem desconhecida nao recebe Access-Control-Allow-Origin · cors: subdominio arbitrario de lovable.app nao e aceito por padrao · cors: preview da Lovable em uso continua liberado pela lista … |
 | `supabase/functions/_shared/__tests__/resilience.test.ts` | 9 | retry: sucesso na primeira tentativa não dorme · retry: exponencial sem jitter é determinístico · retry: respeita shouldRetry (não repete em 4xx) · retry: repete em 429 e 5xx … |
 | `supabase/functions/compute-deal-health/__tests__/index.test.ts` | 9 | compute-deal-health: recencyScore decresce 5 pts/dia, mín 0 · compute-deal-health: recencyScore = 100 quando hoje · compute-deal-health: sentimentScore neutro = 50 · compute-deal-health: sentimentScore 100% positivo = 100 … |
 | `supabase/functions/voip-recommendation-insights/__tests__/index.test.ts` | 9 | rejeita requisição sem JWT · rejeita período inválido (validação oneOf) · buildHeatmap gera 7×24 = 168 buckets · buildHeatmap incrementa bucket correto … |
@@ -2620,6 +2619,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/security-alerts-webhook.property.test.ts` | 8 | sendExportWebhook — property-based (fast-check) · URL inválida sempre curto-circuita sem tentativas · 4xx não-retriável (exceto 408/429) ⇒ attempts === 1 · status retriável persistente ⇒ attempts === maxAttempts … |
 | `src/lib/__tests__/voice-command-history.test.ts` | 8 | voice-command-history · sanitiza qualquer entrada sem lançar e respeita o limite de tamanho · nunca excede o número máximo de entradas · faz dedupe case-insensitive mantendo o comando no topo … |
 | `src/pages/roles/__tests__/useRoles.test.ts` | 8 | useRoles · carrega roles e enriquece com email/nome · mostra erro ao carregar falhar · addRole retorna false quando usuário não existe … |
+| `supabase/functions/_shared/__tests__/cors.test.ts` | 8 | cors: origem de producao (Vercel) e ecoada · cors: origem desconhecida nao recebe Access-Control-Allow-Origin · cors: subdominio arbitrario de lovable.app nao e aceito por padrao · cors: preview da Lovable em uso continua liberado pela lista … |
 | `supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts` | 8 | cron: aceita o bearer exato do Vault · cron: rejeita quando o secret nao esta configurado · cron: rejeita token errado de mesmo tamanho · cron: rejeita token com tamanho diferente … |
 | `e2e/login.spec.ts` | 7 | Login Flow · should display login form · should show validation errors for empty fields · should show error for invalid credentials … |
 | `e2e/sip-flow.spec.ts` | 7 | Fluxo SIP end-to-end · carrega softphone e exibe badge de status SIP · permite digitar número no dialpad e limpar via backspace · inicia tentativa de chamada SIP e atualiza UI … |
@@ -3007,7 +3007,6 @@ _nenhum item encontrado_
 | * Cálculo de prazo em minutos úteis, respeitando o horário comercial da | `supabase/functions/_shared/business-hours.ts` |
 | Agenda sem nenhuma janela utilizável não pode travar o job: cai no prazo | `supabase/functions/_shared/business-hours.ts` |
 | * Retorna o IP do cliente apenas quando ele e um literal valido; senao null. */ | `supabase/functions/_shared/client-ip.ts` |
-| * @deprecated Use buildCorsHeaders(req) instead for proper origin validation */ | `supabase/functions/_shared/cors.ts` |
 | Webhook também não deve lançar | `supabase/functions/_shared/external-payload-schemas_test.ts` |
 | * Classifica um MOS. O antigo limite de 3,6 para "mediano" foi dobrado em | `supabase/functions/_shared/mos.ts` |
 | e garante que apenas números finitos sejam aceitos. | `supabase/functions/_shared/numeric-schemas_test.ts` |

@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `cf786766d378b8ee4f6ec90d78c31546dbc1a3f6` (2026-11-23T20:27:56-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `7375845ef783a79d51786915b5b9a092709fce56` (2026-11-23T20:38:27-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1679 |
 | arquivos_codigo | 1277 |
-| linhas_codigo | 172873 |
+| linhas_codigo | 172860 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,14 +370,14 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9901 nós · 25447 arestas · 782 comunidades · grafo do commit `cf786766`
-- comunidades maiores: lucide-react (262), react (211), client.ts (209), @tanstack/react-query (172), usePageTitle (172), utils.ts (162), vitest (162), cn (126), ref_https (117), badge.tsx (108), generate.py (91), Tabela de funcionalidades (87)
+- 9892 nós · 25460 arestas · 766 comunidades · grafo do commit `7375845e`
+- comunidades maiores: lucide-react (279), client.ts (197), usePageTitle (185), safe-date.ts (182), vitest (182), logger.ts (161), react (156), usePageTitle.ts (117), ref_https (114), validate.ts (114), @tanstack/react-query (113), cn (110)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/estado/funcionalidades-planejadas.md (27)
-- docs/qa/05-PROGRESSO.md (26)
+- docs/qa/05-PROGRESSO.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
 - .github/workflows/ci.yml (7)
@@ -390,7 +390,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - src/components/calls/UnifiedSoftphone.tsx (5)
 - src/hooks/useMultiChannelCall.ts (5)
 - src/routes/protectedRoutes.tsx (5)
-- docs/estado/infra-ci-rotas-integracoes.md (4)
+- supabase/functions/data-lake-flush/index.ts (5)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `7375845` chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)
 - 2026-11-23 `cf78676` fix: rate limit passa a falhar fechado nos endpoints que gastam dinheiro (E012) (#195)
 - 2026-11-23 `e42050a` fix: CORS so ecoa origens conhecidas e omite o header nas desconhecidas (E027) (#194)
 - 2026-11-23 `ed1d324` chore: remove xlsx, dependencia sem uso e com duas falhas altas sem correcao (E045) (#193)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `9e81eea` fix: bloqueio de login falha fechado quando a verificacao nao responde (E003) (#184)
 - 2026-11-23 `727dead` fix: chamada sem audio deixa de ser classificada como ideal (E115) (#183)
 - 2026-11-23 `560302d` fix: unifica o limiar de qualidade MOS em uma lib (E113) (#182)
-- 2026-11-23 `5e20177` fix: SLA passa a respeitar horario comercial e feriados (E111) (#181)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
