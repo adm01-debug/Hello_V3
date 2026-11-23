@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "fa2c38da09d4b3b4a0a837d4a49de84faedda663",
+  "commit": "5e774047041cff0608457a35846da92bd74a0bb8",
   "branch": "main",
-  "data_commit": "2026-11-23T19:19:09-03:00",
+  "data_commit": "2026-11-23T19:28:08-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "5e77404",
+    "data": "2026-11-23",
+    "assunto": "fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)"
+   },
    {
     "sha": "fa2c38d",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "1b9ec21",
     "data": "2026-11-22",
     "assunto": "fix: talk ratio do card executivo usa transcricao real, nao 50% fixo (#164)"
-   },
-   {
-    "sha": "2e77319",
-    "data": "2026-11-22",
-    "assunto": "feat: humor da chamada ativa vem do dado real, nao de \"Positivo\" fixo (#163)"
    }
   ],
-  "arquivos_mudados_7d": 966,
+  "arquivos_mudados_7d": 968,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -161,7 +161,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 19
+    "mudancas": 20
    },
    {
     "pasta": "supabase/functions/_shared",
@@ -203,7 +203,7 @@
    },
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 19
+    "mudancas": 20
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 167
+    "commits": 168
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1675,
-  "arquivos_codigo": 1273,
-  "linhas_codigo": 172492,
+  "arquivos_total": 1676,
+  "arquivos_codigo": 1274,
+  "linhas_codigo": 172547,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 359,
+  "testes": 360,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 186,
-   "linhas": 21004
+   "arquivos": 187,
+   "linhas": 21059
   },
   "tailwind.config.ts": {
    "arquivos": 1,

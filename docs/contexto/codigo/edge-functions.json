@@ -2084,7 +2084,7 @@
    "nome": "send-notification",
    "entrada": "supabase/functions/send-notification/index.ts",
    "arquivos": 1,
-   "linhas": 130,
+   "linhas": 151,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2103,6 +2103,7 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "auth.ts",
     "cors.ts",
     "validate.ts"
    ],
@@ -2112,7 +2113,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "send-survey",

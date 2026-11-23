@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "fa2c38da09d4b3b4a0a837d4a49de84faedda663",
+  "sha": "5e774047041cff0608457a35846da92bd74a0bb8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 22:20 UTC",
-  "files_total": 1722,
-  "code_files": 1519,
-  "code_lines": 188504
+  "generated_at": "2026-11-23 22:28 UTC",
+  "files_total": 1723,
+  "code_files": 1520,
+  "code_lines": 188559
  },
  "version": "1.3.2",
- "facts_hash": "dee6f51af741599b",
+ "facts_hash": "28871c3dd7c4fc4a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 629,
+   ".ts": 630,
    ".tsx": 611,
    ".sql": 245,
    ".mjs": 27,
@@ -30900,6 +30900,7 @@
     ],
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
+     "audit_logs",
      "notification_preferences",
      "notifications"
     ],
@@ -30913,7 +30914,8 @@
     "doc": "",
     "errors": [
      "Dados inválidos",
-     "Não autorizado"
+     "Não autorizado",
+     "Texto da notificação não pode conter HTML"
     ],
     "side_effects": [],
     "webhook_events": [],
@@ -34280,8 +34282,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 186,
-   "lines": 21004,
+   "files": 187,
+   "lines": 21059,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34402,6 +34404,7 @@
     "index.ts: buildNewDeviceEmail, handler",
     "index.ts: computeWeightedTotal",
     "index.ts: handler",
+    "index.ts: contemHtml, handler",
     "index.ts: detectAnomalies",
     "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
     "index.ts: ForecastDay, HistoryDay, buildHistory, forecastNextDays",
@@ -34410,8 +34413,7 @@
     "index.ts: ExecKpis, ExecutiveNarrativeResponse",
     "index.ts: HealthBreakdown, computeHealthScore, normalizeMos, normalizeAlerts, normalizeCapacity",
     "index.ts: handler",
-    "index.ts: QualitySample, ForecastPoint, ForecastResult, linearSlope, buildBuckets, forecast",
-    "index.ts: ActionRow, HistoryAggregations, aggregate"
+    "index.ts: QualitySample, ForecastPoint, ForecastResult, linearSlope, buildBuckets, forecast"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -41780,6 +41782,10 @@
     "msg": "Não autorizado"
    },
    {
+    "file": "supabase/functions/send-notification/index.ts",
+    "msg": "Texto da notificação não pode conter HTML"
+   },
+   {
     "file": "supabase/functions/suggest-shift-swaps/index.ts",
     "msg": "Acesso negado"
    },
@@ -42714,6 +42720,10 @@
    {
     "file": "supabase/functions/search-calls/index.ts",
     "text": "busca passa a devolver apenas as chamadas que aquele agente pode ver."
+   },
+   {
+    "file": "supabase/functions/send-notification/index.ts",
+    "text": "de sistema e nao deve carregar markup (E011)."
    },
    {
     "file": "supabase/functions/send-survey/index.ts",
@@ -72685,6 +72695,18 @@
    {
     "file": "supabase/functions/search-calls/__tests__/index.test.ts",
     "name": "search-calls: preflight OPTIONS de origem desconhecida nao ecoa a origem"
+   },
+   {
+    "file": "supabase/functions/send-notification/__tests__/index.test.ts",
+    "name": "send-notification: sem header Authorization devolve 401"
+   },
+   {
+    "file": "supabase/functions/send-notification/__tests__/index.test.ts",
+    "name": "send-notification: preflight OPTIONS responde com CORS da origem permitida"
+   },
+   {
+    "file": "supabase/functions/send-notification/__tests__/index.test.ts",
+    "name": "send-notification: contemHtml barra markup e libera texto comum"
    },
    {
     "file": "supabase/functions/translate-utterance/__tests__/index.test.ts",
@@ -120696,7 +120718,11 @@
   },
   "supabase/functions/send-notification/index.ts": {
    "path": "supabase/functions/send-notification/index.ts",
-   "lines": 130,
+   "lines": 151,
+   "exports": [
+    "function contemHtml",
+    "function handler"
+   ],
    "tables": [
     {
      "table": "notification_preferences",
@@ -120719,9 +120745,23 @@
    ],
    "errors": [
     "Dados inválidos",
-    "Não autorizado"
+    "Não autorizado",
+    "Texto da notificação não pode conter HTML"
+   ],
+   "rule_comments": [
+    "de sistema e nao deve carregar markup (E011)."
    ],
    "uses_service_role": true
+  },
+  "supabase/functions/send-notification/__tests__/index.test.ts": {
+   "path": "supabase/functions/send-notification/__tests__/index.test.ts",
+   "lines": 34,
+   "is_test": true,
+   "tests": [
+    "send-notification: sem header Authorization devolve 401",
+    "send-notification: preflight OPTIONS responde com CORS da origem permitida",
+    "send-notification: contemHtml barra markup e libera texto comum"
+   ]
   },
   "supabase/functions/send-survey/index.ts": {
    "path": "supabase/functions/send-survey/index.ts",
@@ -124320,10 +124360,21 @@
   }
  },
  "git": {
-  "sha": "fa2c38da09d4b3b4a0a837d4a49de84faedda663",
+  "sha": "5e774047041cff0608457a35846da92bd74a0bb8",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "5e77404",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/send-notification/__tests__/index.test.ts",
+     "supabase/functions/send-notification/index.ts"
+    ]
+   },
    {
     "sha": "fa2c38d",
     "date": "2026-11-23",
@@ -124690,21 +124741,12 @@
     "files": [
      "src/components/queue-alerts/useQueueMetricsSettings.ts"
     ]
-   },
-   {
-    "sha": "2ec2c44",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "feat: sino do header passa a mostrar a tabela notifications (#157)",
-    "files": [
-     "src/components/notifications/UnifiedNotificationDropdown.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    19
+    20
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124733,6 +124775,14 @@
    [
     "src/App.tsx",
     2
+   ],
+   [
+    "supabase/functions/send-notification/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/send-notification/index.ts",
+    1
    ],
    [
     "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
@@ -124772,14 +124822,6 @@
    ],
    [
     "src/hooks/__tests__/useLoginLockout.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useLoginLockout.ts",
-    1
-   ],
-   [
-    "src/pages/__tests__/Login.lockout.test.tsx",
     1
    ]
   ]

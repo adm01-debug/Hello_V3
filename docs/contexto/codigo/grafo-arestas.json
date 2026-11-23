@@ -4871,6 +4871,7 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/send-notification/index.ts": [
+   "supabase/functions/_shared/auth.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
