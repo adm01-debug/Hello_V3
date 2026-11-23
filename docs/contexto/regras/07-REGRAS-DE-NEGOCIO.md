@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `cdae222baa` · branch `main` · 2026-11-23 19:46 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `74c525c07b` · branch `main` · 2026-11-23 19:51 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2229,6 +2229,7 @@ _nenhum item encontrado_
 | useCallContext must be used within CallProvider | `src/contexts/CallContext.tsx` |
 | useReauthContext must be used within a ReauthProvider | `src/contexts/ReauthContext.tsx` |
 | useTheme must be used within ThemeProvider | `src/contexts/ThemeContext.tsx` |
+| Esta conta foi alterada por outro usuário. Recarregando... | `src/hooks/useAccounts.ts` |
 | Falha ao atualizar conta | `src/hooks/useAccounts.ts` |
 | Falha ao carregar contas | `src/hooks/useAccounts.ts` |
 | Falha ao criar conta | `src/hooks/useAccounts.ts` |
@@ -2401,8 +2402,7 @@ _nenhum item encontrado_
 | Falha ao marcar como lida | `src/hooks/useSecurityAlertNotifications.ts` |
 | Falha ao marcar como resolvido | `src/hooks/useSecurityAlertNotifications.ts` |
 | Falha ao marcar todos como lidos | `src/hooks/useSecurityAlertNotifications.ts` |
-| Alerta de Segurança: ${newAlert.title} | `src/hooks/useSecurityMonitoringData.ts` |
-| … +245 linhas — lista completa em `context.json` | |
+| … +246 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2449,7 +2449,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4098 testes em 342 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4101 testes em 342 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2693,6 +2693,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAuditLog.coverage.test.tsx` | 5 | useAuditLog · logEvent chama rpc com os parâmetros corretos · logEvent registra erro quando rpc retorna error · logEvent captura exceção lançada … |
 | `src/hooks/__tests__/useBlockedAccessLogs.coverage.test.tsx` | 5 | useBlockedAccessLogs · fetches logs and processes stats · handles fetch error · filters logs by search, country, reason; clears filters … |
 | `src/hooks/__tests__/useConsent.coverage.test.tsx` | 5 | useConsent · carrega registros sem contactId · carrega registros filtrando por contactId · registra consentimento com sucesso … |
+| `src/hooks/__tests__/useDeals.conflict.test.ts` | 5 | useDeals — OPTIMISTIC_LOCK_CONFLICT · trata conflito com toast PT-BR e dispara refetch · envia version da linha lida no update (lock otimista ativo) · updateStage (kanban) também envia version … |
 | `src/hooks/__tests__/useExtensionAuditHistory.coverage.test.tsx` | 5 | useExtensionAuditHistory · fica desabilitado quando agentId é null · carrega histórico com sucesso · retorna lista vazia quando data é null … |
 | `src/hooks/__tests__/useExtensionsOverview.coverage.test.tsx` | 5 | useExtensionsOverview · aggregates agents with trunks, devices, profiles and calls · handles empty datasets · throws when agents query errors … |
 | `src/hooks/__tests__/useHoldSoundAlert.coverage.test.tsx` | 5 | useHoldSoundAlert · toggles sound and persists to localStorage · reads persisted disabled state · plays test sounds … |
@@ -2752,7 +2753,6 @@ _nenhum item encontrado_
 | `supabase/functions/export-data-lake/__tests__/csv.test.ts` | 4 | toCsv: vazio devolve string vazia · toCsv: cabecalho e a uniao das colunas, sem perder dados · toCsv: escapa virgula, aspas e quebra de linha · toCsv: nulo e undefined viram vazio |
 | `supabase/functions/voip-anomaly-detector/__tests__/index.test.ts` | 4 | detectAnomalies — sem anomalias quando obs próximo da média · detectAnomalies — MOS muito baixo gera anomaly critical · detectAnomalies — jitter elevado gera warning · detectAnomalies — baseline insuficiente não gera anomaly |
 | `supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts` | 4 | planRemediation — mos:outage retorna ação crítica de codec · planRemediation — jitter:outage pausa campanhas · planRemediation — combinação desconhecida vira noop · idempotencyKey — chave estável e derivada do id |
-| `supabase/functions/voip-capacity-forecast/__tests__/index.test.ts` | 4 | buildHistory — agrupa sessões por dia e identifica pico · forecastNextDays — vazio quando histórico < 7 dias · forecastNextDays — gera 7 dias com confiança quando há histórico · forecastNextDays — sinaliza exceeds_capacity quando peak > cap |
 | … +42 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)

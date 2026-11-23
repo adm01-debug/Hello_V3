@@ -621,7 +621,7 @@
    "hooks_exportados": [
     "useAccounts"
    ],
-   "linhas": 115,
+   "linhas": 129,
    "dominio": "hooks",
    "tabelas": [
     "accounts"
@@ -2019,7 +2019,7 @@
    "hooks_exportados": [
     "useDeals"
    ],
-   "linhas": 105,
+   "linhas": 112,
    "dominio": "hooks",
    "tabelas": [
     "deals"

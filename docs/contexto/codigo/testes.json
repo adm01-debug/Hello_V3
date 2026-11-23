@@ -821,12 +821,12 @@
   {
    "arquivo": "src/hooks/__tests__/useDeals.conflict.test.ts",
    "tipo": "unit",
-   "linhas": 56,
+   "linhas": 93,
    "testa": [
     "src/hooks/useDeals.ts",
     "src/integrations/supabase/client.ts"
    ],
-   "casos": 1
+   "casos": 4
   },
   {
    "arquivo": "src/hooks/__tests__/useDeals.test.ts",

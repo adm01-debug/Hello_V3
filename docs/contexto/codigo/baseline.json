@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "cdae222baa7cae5d4f76aef8ab16d7ec78f60446",
+  "commit": "74c525c07b31c550d052f3d5880de05cfc9ea36e",
   "branch": "main",
-  "data_commit": "2026-11-23T16:45:37-03:00",
+  "data_commit": "2026-11-23T16:46:55-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "74c525c",
+    "data": "2026-11-23",
+    "assunto": "fix: envia version nos updates e liga o lock otimista (E110) (#180)"
+   },
    {
     "sha": "cdae222",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "33cb310",
     "data": "2026-11-22",
     "assunto": "docs: 11 falsos positivos de codigo morto nos docs de estado (#154)"
-   },
-   {
-    "sha": "505cb99",
-    "data": "2026-11-22",
-    "assunto": "chore: zera os 5 warnings de ESLint extraindo constantes de .tsx (#153)"
    }
   ],
-  "arquivos_mudados_7d": 934,
+  "arquivos_mudados_7d": 938,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 28
+    "mudancas": 29
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
@@ -173,10 +173,14 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 10
+    "mudancas": 11
    },
    {
     "pasta": "docs/audits/pendencias-2026-07.md",
+    "mudancas": 8
+   },
+   {
+    "pasta": "src/components/contacts",
     "mudancas": 8
    },
    {
@@ -190,10 +194,6 @@
    {
     "pasta": ".github/workflows/ci.yml",
     "mudancas": 7
-   },
-   {
-    "pasta": "docs/edge-functions/README.md",
-    "mudancas": 7
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -203,7 +203,7 @@
    },
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 10
+    "mudancas": 11
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 158
+    "commits": 159
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1661,
   "arquivos_codigo": 1259,
-  "linhas_codigo": 171243,
+  "linhas_codigo": 171301,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 353,
-   "linhas": 45967
+   "linhas": 46025
   },
   "src/integrations": {
    "arquivos": 3,
