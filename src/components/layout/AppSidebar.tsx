@@ -4,12 +4,13 @@ import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar,
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
-import { useAuthContext } from '@/contexts/AuthContext';
+import { useAuthContext, type UserRole } from '@/contexts/AuthContext';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useState, useCallback, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { useUnreadConflicts } from '@/hooks/useUnreadConflicts';
 import { prefetchHandlers } from '@/lib/route-prefetch';
+import { routeRoles } from '@/routes/protectedRoutes';
 
 const mainNavItems = [
   { title: 'Discador', url: '/', icon: PhoneOutgoing },
@@ -259,7 +260,18 @@ function useFavorites() {
   return { favorites, toggle };
 }
 
-const allItems = [...mainNavItems, ...crmNavItems, ...omnichannelNavItems, ...toolsNavItems, ...securityNavItems, ...settingsNavItems, ...adminNavItems];
+// Filtra itens cuja rota exige um papel que o usuário não tem.
+// Itens sem `roles` declarado são visíveis para todos. Enquanto o perfil
+// não carrega (profile === null), mantém apenas os itens sem `roles`,
+// para o menu não piscar.
+function filterItemsByRole(items: NavItemType[], profile: UserRole | null | undefined): NavItemType[] {
+  return items.filter((item) => {
+    const roles = routeRoles[item.url];
+    if (!roles || roles.length === 0) return true;
+    if (!profile) return false;
+    return roles.includes(profile);
+  });
+}
 
 export function AppSidebar() {
   const { state } = useSidebar();
@@ -267,9 +279,24 @@ export function AppSidebar() {
    const { profile } = useAuthContext();
   const { favorites, toggle } = useFavorites();
 
+  // Filtra os itens de cada grupo pelo papel do usuário. Enquanto o perfil
+  // não carrega, cada grupo mantém apenas os itens sem `roles` (menu mínimo).
+  const role = profile?.role;
+  const visibleMain = useMemo(() => filterItemsByRole(mainNavItems, role), [role]);
+  const visibleCrm = useMemo(() => filterItemsByRole(crmNavItems, role), [role]);
+  const visibleOmni = useMemo(() => filterItemsByRole(omnichannelNavItems, role), [role]);
+  const visibleTools = useMemo(() => filterItemsByRole(toolsNavItems, role), [role]);
+  const visibleSecurity = useMemo(() => filterItemsByRole(securityNavItems, role), [role]);
+  const visibleSettings = useMemo(() => filterItemsByRole(settingsNavItems, role), [role]);
+  const visibleAdmin = useMemo(() => filterItemsByRole(adminNavItems, role), [role]);
+  const visibleItems = useMemo(
+    () => [...visibleMain, ...visibleCrm, ...visibleOmni, ...visibleTools, ...visibleSecurity, ...visibleSettings, ...visibleAdmin],
+    [visibleMain, visibleCrm, visibleOmni, visibleTools, visibleSecurity, visibleSettings, visibleAdmin]
+  );
+
   const favoriteItems = useMemo(
-    () => allItems.filter(item => favorites.includes(item.url)),
-    [favorites]
+    () => visibleItems.filter(item => favorites.includes(item.url)),
+    [visibleItems, favorites]
   );
 
   return (
@@ -312,13 +339,13 @@ export function AppSidebar() {
           </SidebarGroup>
         )}
 
-        <NavGroup label="Principal" items={mainNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
-        <NavGroup label="CRM" items={crmNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
-        <NavGroup label="Atendimento" items={omnichannelNavItems} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />
-        <NavGroup label="Ferramentas" items={toolsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
-        <NavGroup label="Segurança" items={securityNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
-        <NavGroup label="Sistema" items={settingsNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
-        <NavGroup label="Administração" items={adminNavItems} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />
+        {visibleMain.length > 0 && <NavGroup label="Principal" items={visibleMain} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />}
+        {visibleCrm.length > 0 && <NavGroup label="CRM" items={visibleCrm} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />}
+        {visibleOmni.length > 0 && <NavGroup label="Atendimento" items={visibleOmni} collapsed={collapsed} defaultOpen favorites={favorites} onToggleFavorite={toggle} />}
+        {visibleTools.length > 0 && <NavGroup label="Ferramentas" items={visibleTools} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />}
+        {visibleSecurity.length > 0 && <NavGroup label="Segurança" items={visibleSecurity} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />}
+        {visibleSettings.length > 0 && <NavGroup label="Sistema" items={visibleSettings} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />}
+        {visibleAdmin.length > 0 && <NavGroup label="Administração" items={visibleAdmin} collapsed={collapsed} favorites={favorites} onToggleFavorite={toggle} />}
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border/50 p-4">
