@@ -155,7 +155,7 @@
 - [ ] **106** — Limitar a nota da IA ao máximo do critério no scorecard — onda 3 — Alta — Edge Function
 - [ ] **107** — Uma fórmula só para o score do scorecard — onda 3 — Alta — Edge Function 🔒
 - [ ] **108** — Um scorecard automático não deve nascer "enviado" — onda 3 — Alta — Edge Function 🔒
-- [ ] **109** — Escolher a política de SLA mais específica, não a primeira — onda 3 — Alta — Edge Function
+- [x] **109** — Escolher a política de SLA mais específica, não a primeira — onda 3 — Alta — Edge Function
 - [ ] **110** — Enviar `version` nos updates e tirar o lock otimista da inércia — onda 3 — Alta — Hooks
 - [ ] **111** — Fazer o SLA respeitar o horário comercial — onda 3 — Alta — Edge Function
 - [ ] **112** — Parar de premiar quem adia ou fecha conversa atrasada — onda 3 — Alta — Hooks + Edge Function 🔒
