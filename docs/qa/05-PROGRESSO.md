@@ -138,10 +138,10 @@
 - [x] **093** — `/status`: tratar erro em vez de ficar carregando para sempre — onda 2 — Alta — Frontend
 - [ ] **094** — `health-check`: parar de reportar "operacional" sem medir — onda 2 — Alta — Edge Function
 - [ ] **095** — Score de saúde VoIP: parar de dar 83/100 sem dado — onda 2 — Alta — Edge Function
-- [ ] **096** — Remover ou ligar o painel "Análise IA de Performance" — onda 2 — Alta — Frontend
+- [x] **096** — Remover ou ligar o painel "Análise IA de Performance" — onda 2 — Alta — Frontend
 - [ ] **097** — Ligar o painel "Integridade da Infraestrutura (10/10)" aos dados reais — onda 2 — Alta — Frontend
 - [ ] **098** — Corrigir o cartão "Auditoria de Segurança (10/10)" — onda 2 — Alta — Frontend
-- [ ] **099** — Corrigir a contagem de RLS do relatório de conformidade — onda 2 — Média — Frontend
+- [x] **099** — Corrigir a contagem de RLS do relatório de conformidade — onda 2 — Média — Frontend
 - [ ] **100** — Rotular corretamente os canais do softphone — onda 2 — Alta — Hooks + Frontend
 
 
@@ -404,7 +404,7 @@ Várias etapas dependem de uma escolha de negócio. Registre cada resposta aqui,
 | 068 | Os `hold_events` órfãos devem ser marcados ou apagados? | | |
 | 077 | O que é o "Programa Beta" da tela de Configurações? | | |
 | 091 | O papel `viewer` é necessário? | | |
-| 096 | O painel "Análise IA de Performance": remover ou ligar a dados reais? | | |
+| 096 | O painel "Análise IA de Performance": remover ou ligar a dados reais? | Removido (opção a) — o painel era mock puro sem fonte; ligar a uma narrativa real ficou como feature própria | |
 | 100 | Qual canal o softphone deve abrir por padrão? | | |
 | 103 | A taxa de abandono deve entrar no denominador do nível de serviço? | | |
 | 142 | Com o bloqueio geográfico ligado e nenhum país cadastrado: libera ou bloqueia? | | |

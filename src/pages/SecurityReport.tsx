@@ -85,12 +85,6 @@ ${rlsStatus.map(t => `- ${t.table_name.padEnd(30)} | Status: ${t.rls_enabled ? '
 - Supervisores: Acesso a relatórios de equipe.
 - Admins: Acesso total de auditoria.
 
-4. RESULTADO DO TESTE DE CARGA (SIMULAÇÃO)
------------------------------------------
-- Resposta de Inserção: < 50ms (Meta 10/10)
-- Resposta de Busca: < 100ms (Meta 10/10)
-- Gargalos Identificados: Nenhum no momento (Escalabilidade Supabase OK)
-
 ------------------------------------------
 Fim do Relatório Corporativo
 `;
@@ -98,7 +92,7 @@ Fim do Relatório Corporativo
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `auditoria-voip-10-10-${format(reportDate, 'yyyy-MM-dd')}.txt`;
+    a.download = `relatorio-seguranca-${format(reportDate, 'yyyy-MM-dd')}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -124,12 +118,12 @@ Fim do Relatório Corporativo
       <div className="grid gap-4 md:grid-cols-4">
         <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Tabelas Protegidas</CardTitle><Database className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{protectedCount}</div><p className="text-xs text-muted-foreground">Com RLS ativo</p></CardContent></Card>
         <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Cobertura RLS</CardTitle><Lock className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{totalCount > 0 ? Math.round((protectedCount / totalCount) * 100) : 0}%</div><Progress value={totalCount > 0 ? (protectedCount / totalCount) * 100 : 0} className="mt-2 h-1" /></CardContent></Card>
-        <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Features de Segurança</CardTitle><ShieldCheck className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{securityFeatures.filter(f => f.status === 'implemented').length}/{securityFeatures.length}</div><p className="text-xs text-muted-foreground">Implementadas</p></CardContent></Card>
-        <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Decisões Documentadas</CardTitle><FileText className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{securityDecisions.length}</div><p className="text-xs text-muted-foreground">Com justificativa</p></CardContent></Card>
+        <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Features de Segurança</CardTitle><ShieldCheck className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{securityFeatures.filter(f => f.status === 'implemented').length}/{securityFeatures.length}</div><p className="text-xs text-muted-foreground">Implementadas · Catálogo curado</p></CardContent></Card>
+        <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Decisões Documentadas</CardTitle><FileText className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{securityDecisions.length}</div><p className="text-xs text-muted-foreground">Com justificativa · Catálogo curado</p></CardContent></Card>
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" />Funcionalidades de Segurança</CardTitle><CardDescription>Status de implementação das principais features de segurança</CardDescription></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" />Funcionalidades de Segurança</CardTitle><CardDescription>Status de implementação das principais features de segurança (catálogo curado)</CardDescription></CardHeader>
         <CardContent>
           <div className="space-y-4">
             {securityFeatures.map((feature, index) => (
@@ -163,7 +157,7 @@ Fim do Relatório Corporativo
       </Card>
 
       <Card>
-        <CardHeader><CardTitle className="flex items-center gap-2"><Lock className="h-5 w-5" />Políticas RLS por Tabela</CardTitle><CardDescription>Status de proteção em tempo real das tabelas do banco de dados</CardDescription></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2"><Lock className="h-5 w-5" />Políticas RLS por Tabela</CardTitle><CardDescription>Status de proteção em tempo real das tabelas do banco de dados (medição via RPC)</CardDescription></CardHeader>
         <CardContent>
           <ScrollArea className="h-[400px]">
             <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
