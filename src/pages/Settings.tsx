@@ -45,6 +45,13 @@
      sound: true,
    });
  
+   const [audio, setAudio] = useState({
+     echoCancellation: true,
+     noiseSuppression: true,
+     autoGainControl: true,
+     betaProgram: false,
+   });
+
    useEffect(() => {
      if (preferences) {
        setNotifications({
@@ -52,6 +59,12 @@
          missedCalls: preferences.notify_missed_calls,
          voicemail: preferences.notify_voicemail,
          sound: preferences.notify_sound,
+       });
+       setAudio({
+         echoCancellation: preferences.audio_echo_cancellation,
+         noiseSuppression: preferences.audio_noise_suppression,
+         autoGainControl: preferences.audio_auto_gain_control,
+         betaProgram: preferences.beta_program,
        });
      }
    }, [preferences]);
@@ -62,6 +75,10 @@
        notify_missed_calls: notifications.missedCalls,
        notify_voicemail: notifications.voicemail,
        notify_sound: notifications.sound,
+       audio_echo_cancellation: audio.echoCancellation,
+       audio_noise_suppression: audio.noiseSuppression,
+       audio_auto_gain_control: audio.autoGainControl,
+       beta_program: audio.betaProgram,
      });
    };
 
@@ -162,7 +179,10 @@
                    </h4>
                    <p className="text-xs text-muted-foreground mt-1">Ative o acesso antecipado a novas funcionalidades de IA e automação.</p>
                  </div>
-                 <Switch />
+                 <Switch
+                   checked={audio.betaProgram}
+                   onCheckedChange={(checked) => setAudio((prev) => ({ ...prev, betaProgram: checked }))}
+                 />
                </div>
              </CardContent>
            </Card>
@@ -323,7 +343,10 @@
                     <Label className="text-base">Cancelamento de eco</Label>
                     <p className="text-sm text-muted-foreground">Reduz eco durante chamadas</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch
+                    checked={audio.echoCancellation}
+                    onCheckedChange={(checked) => setAudio((prev) => ({ ...prev, echoCancellation: checked }))}
+                  />
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -331,7 +354,10 @@
                     <Label className="text-base">Supressão de ruído</Label>
                     <p className="text-sm text-muted-foreground">Remove ruídos de fundo</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch
+                    checked={audio.noiseSuppression}
+                    onCheckedChange={(checked) => setAudio((prev) => ({ ...prev, noiseSuppression: checked }))}
+                  />
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -339,7 +365,10 @@
                     <Label className="text-base">Ganho automático</Label>
                     <p className="text-sm text-muted-foreground">Ajusta volume automaticamente</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch
+                    checked={audio.autoGainControl}
+                    onCheckedChange={(checked) => setAudio((prev) => ({ ...prev, autoGainControl: checked }))}
+                  />
                 </div>
               </div>
 
