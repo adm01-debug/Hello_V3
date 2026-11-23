@@ -130,8 +130,8 @@
 - [ ] **085** — Executor das cadências (hoje elas nunca disparam) — onda 2 — Alta — Edge Function + Banco 🔒
 - [ ] **086** — Editar e excluir cadência e etapa — onda 2 — Média — Frontend + Hooks 🔒
 - [ ] **087** — Policy de UPDATE para `learning_completions` — onda 2 — Média — Banco 🔒
-- [ ] **088** — Declarar o papel exigido em cada item do menu — onda 2 — Alta — Frontend
-- [ ] **089** — Filtrar o menu pelo papel do usuário — onda 2 — Alta — Frontend
+- [x] **088** — Declarar o papel exigido em cada item do menu — onda 2 — Alta — Frontend · (routeRoles exportado de protectedRoutes; tsc=0, eslint=0, 4/4)
+- [x] **089** — Filtrar o menu pelo papel do usuário — onda 2 — Alta — Frontend · (AppSidebar filtra por hasRole e esconde grupos vazios; tsc=0, 4/4, build OK sem violar orçamento)
 - [ ] **090** — Classificar as 49 rotas que não declaram papel — onda 2 — Média — Frontend
 - [ ] **091** — Decidir o que o papel `viewer` significa — onda 2 — Alta — Banco + Frontend 🔒
 - [ ] **092** — `/status`: dizer "sem medição" em vez de 100% — onda 2 — Alta — Frontend

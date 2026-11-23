@@ -206,3 +206,9 @@ export const protectedRoutes: RouteConfig[] = [
   // Catch-all
   { path: "*", element: NotFound },
 ];
+
+// Mapa path -> papéis exigidos, derivado da própria tabela de rotas.
+// Exporta só strings (sem arrastar os componentes lazy() para o bundle).
+export const routeRoles: Record<string, UserRole[] | undefined> = Object.fromEntries(
+  protectedRoutes.map((route) => [route.path, route.roles])
+);
