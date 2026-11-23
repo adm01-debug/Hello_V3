@@ -9,6 +9,8 @@ interface LockoutStatus {
   remainingAttempts?: number;
   remainingSeconds?: number;
   lockedUntil?: string;
+  /** A RPC falhou: não sabemos se a conta está bloqueada. Quem consome deve recusar a tentativa. */
+  unknown?: boolean;
 }
 
 export function useLoginLockout() {
@@ -24,7 +26,7 @@ export function useLoginLockout() {
 
       if (error) {
         logger.error('Error checking lockout:', error);
-        return { locked: false, attempts: 0 };
+        return { locked: false, attempts: 0, unknown: true };
       }
 
       const parsed = data as Record<string, unknown> | null;
@@ -39,7 +41,7 @@ export function useLoginLockout() {
       return status;
     } catch (err) {
       logger.error('Error checking lockout:', err);
-      return { locked: false, attempts: 0 };
+      return { locked: false, attempts: 0, unknown: true };
     } finally {
       setIsChecking(false);
     }
@@ -58,7 +60,7 @@ export function useLoginLockout() {
 
       if (error) {
         logger.error('Error recording failed attempt:', error);
-        return { locked: false, attempts: 0 };
+        return { locked: false, attempts: 0, unknown: true };
       }
 
       const parsed = data as Record<string, unknown> | null;
@@ -74,7 +76,7 @@ export function useLoginLockout() {
       return status;
     } catch (err) {
       logger.error('Error recording failed attempt:', err);
-      return { locked: false, attempts: 0 };
+      return { locked: false, attempts: 0, unknown: true };
     }
   }, []);
 
