@@ -7,6 +7,7 @@
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
+| 2026-11-23 03:15:00 | succeeded | 0.00 | 1 row |
 | 2026-11-22 03:15:00 | succeeded | 0.01 | 1 row |
 
 
@@ -14,9 +15,9 @@
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-23 02:20:00 | succeeded | 0.03 | 1 row |
-| 2026-11-23 02:19:00 | succeeded | 0.01 | 1 row |
-| 2026-11-23 02:18:00 | succeeded | 0.03 | 1 row |
+| 2026-11-23 03:18:00 | succeeded | 0.02 | 1 row |
+| 2026-11-23 03:17:00 | succeeded | 0.01 | 1 row |
+| 2026-11-23 03:16:00 | succeeded | 0.02 | 1 row |
 
 
 ## 14 · cleanup-lock-conflicts-weekly
@@ -31,4 +32,6 @@ _nenhum_
 
 ## 16 · data-lake-flush-daily
 
-_nenhum_
+| início (UTC) | status | duração (s) | mensagem |
+|---|---|---|---|
+| 2026-11-23 03:00:00 | succeeded | 0.01 | 1 row |
