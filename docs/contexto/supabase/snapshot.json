@@ -31830,6 +31830,10 @@
         "callers": {
           "code": [
             {
+              "file": "src/components/dashboard/SystemIntegrityDashboard.tsx",
+              "hits": 1
+            },
+            {
               "file": "src/pages/ObservabilityDashboard.tsx",
               "hits": 1
             },
@@ -31846,7 +31850,7 @@
               "hits": 1
             }
           ],
-          "code_total_files": 4,
+          "code_total_files": 5,
           "cron": [],
           "db": [],
           "triggers": [],
