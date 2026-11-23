@@ -159,7 +159,7 @@
 - [x] **110** — Enviar `version` nos updates e tirar o lock otimista da inércia — onda 3 — Alta — Hooks
 - [x] **111** — Fazer o SLA respeitar o horário comercial — onda 3 — Alta — Edge Function
 - [ ] **112** — Parar de premiar quem adia ou fecha conversa atrasada — onda 3 — Alta — Hooks + Edge Function 🔒
-- [ ] **113** — Um limiar só para "qualidade ruim" de chamada — onda 3 — Média — Lib
+- [x] **113** — Um limiar só para "qualidade ruim" de chamada — onda 3 — Média — Lib
 - [ ] **114** — Aplicar o limite de ritmo na função que realmente roda — onda 3 — Média — Banco 🔒
 - [ ] **115** — Parar de elogiar chamada sem áudio — onda 3 — Média — Edge Function
 - [ ] **116** — Corrigir as 3 horas de erro na "melhor hora para contatar" — onda 3 — Média — Edge Function 🔒

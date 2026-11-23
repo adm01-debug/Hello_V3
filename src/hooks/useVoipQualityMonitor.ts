@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { classifyMos } from '@/lib/metrics/mos';
 
 const log = logger.create('VoipQuality');
 
@@ -49,11 +50,7 @@ function calculateMos(rttMs: number, jitterMs: number, lossPct: number): number 
 }
 
 function labelFromMos(mos: number | null): QualityLabel {
-  if (mos == null) return 'unknown';
-  if (mos >= 4.3) return 'excellent';
-  if (mos >= 4.0) return 'good';
-  if (mos >= 3.6) return 'fair';
-  return 'poor';
+  return classifyMos(mos);
 }
 
 export function useVoipQualityMonitor(

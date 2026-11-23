@@ -9,9 +9,9 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, string, number, optional } from '../_shared/validate.ts';
+import { MOS_THRESHOLDS } from '../_shared/mos.ts';
 
 const BASELINE_DAYS = 7;
-const POOR_MOS_THRESHOLD = 3.6;
 
 export interface QualityRow {
   mos_avg: number | null;
@@ -74,7 +74,7 @@ export function projectImpact(
     : null;
 
   const poorAlerts = alerts.filter(a =>
-    (a.mos_at_alert ?? 5) < POOR_MOS_THRESHOLD
+    (a.mos_at_alert ?? 5) < MOS_THRESHOLDS.poor
   ).length;
 
   const dMos = delta.mos ?? 0;
@@ -89,7 +89,7 @@ export function projectImpact(
   // Alertas evitados: aqueles cujo mos_at_alert + dMos passaria do threshold.
   const alertsAvoided = alerts.filter(a => {
     const m = a.mos_at_alert ?? 5;
-    return m < POOR_MOS_THRESHOLD && (m + dMos) >= POOR_MOS_THRESHOLD;
+    return m < MOS_THRESHOLDS.poor && (m + dMos) >= MOS_THRESHOLDS.poor;
   }).length;
 
   const uniqueAgents = new Set(
@@ -98,8 +98,8 @@ export function projectImpact(
 
   // Usuários impactados: % das amostras cujo MOS estava abaixo do threshold
   // e seria recuperado pela projeção.
-  const sub = validMos.filter(q => (q.mos_avg ?? 5) < POOR_MOS_THRESHOLD);
-  const recovered = sub.filter(q => ((q.mos_avg ?? 0) + dMos) >= POOR_MOS_THRESHOLD).length;
+  const sub = validMos.filter(q => (q.mos_avg ?? 5) < MOS_THRESHOLDS.poor);
+  const recovered = sub.filter(q => ((q.mos_avg ?? 0) + dMos) >= MOS_THRESHOLDS.poor).length;
   const affectedUsersPct = validMos.length === 0
     ? 0
     : Math.round((recovered / validMos.length) * 100);

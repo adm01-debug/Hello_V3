@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
+import { MOS_THRESHOLDS, isPoorMos } from '@/lib/metrics/mos';
 
 const log = logger.create('AgentQualityRanking');
 
@@ -151,7 +152,7 @@ export function AgentQualityRanking() {
               </thead>
               <tbody>
                 {sorted.map((r) => {
-                  const isWorst = r.mos_avg < 3.5;
+                  const isWorst = isPoorMos(r.mos_avg);
                   return (
                     <tr key={r.agent_name} className={cn('border-b border-border/20 hover:bg-muted/30 transition-colors', isWorst && 'bg-destructive/5')}>
                       <td className="py-2 px-2 font-medium">
@@ -165,7 +166,7 @@ export function AgentQualityRanking() {
                         </span>
                       </td>
                       <td className="py-2 px-2 font-mono">{r.total_calls}</td>
-                      <td className={cn('py-2 px-2 font-mono', r.mos_avg >= 4 ? 'text-success' : r.mos_avg >= 3.5 ? 'text-warning' : 'text-destructive')}>
+                      <td className={cn('py-2 px-2 font-mono', r.mos_avg >= MOS_THRESHOLDS.good ? 'text-success' : isPoorMos(r.mos_avg) ? 'text-destructive' : 'text-warning')}>
                         {r.mos_avg.toFixed(2)}
                       </td>
                       <td className="py-2 px-2 font-mono">{r.alerts_count}</td>

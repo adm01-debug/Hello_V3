@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { MOS_THRESHOLDS, isPoorMos } from '@/lib/metrics/mos';
 
 const log = logger.create('QualityTrend');
 
@@ -11,7 +12,7 @@ interface TrendOptions {
   callSessionId?: string | null;
   jitterMs?: number | null;
   rttMs?: number | null;
-  /** Callback invocado quando degradação severa é detectada (slope ≤ -0.15 e MOS < 3.5) */
+  /** Callback invocado quando degradação severa é detectada (inclinação ≤ -0.15 com MOS em faixa ruim) */
   onSevereDegradation?: (info: { mos: number; slope: number }) => void;
 }
 
@@ -57,9 +58,9 @@ export function useQualityTrendAnalyzer(
     }
     const slope = den === 0 ? 0 : num / den;
 
-    const stillAcceptable = currentMos >= 3.6;
+    const stillAcceptable = currentMos >= MOS_THRESHOLDS.poor;
     const degrading = slope <= -0.15 && stillAcceptable;
-    const severe = slope <= -0.15 && currentMos < 3.5;
+    const severe = slope <= -0.15 && isPoorMos(currentMos);
 
     if (degrading && !warnedRef.current) {
       warnedRef.current = true;
