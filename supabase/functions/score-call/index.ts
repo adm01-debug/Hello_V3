@@ -83,11 +83,7 @@ Responda em JSON: {"responses":[{"criterion_id":"<id>","score":<num>,"comment":"
     const validIds = new Set(criteria.map((c) => c.id));
     const validResponses = responses.filter((r) => validIds.has(r.criterion_id));
 
-    const total = validResponses.reduce((s, r) => {
-      const crit = criteria.find((c) => c.id === r.criterion_id)!;
-      return s + Number(r.score) * Number(crit.weight); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
-    }, 0);
-    const max = criteria.reduce((s, c) => s + c.max_score * Number(c.weight), 0); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
+    const { total, max } = computeWeightedTotal(validResponses, criteria);
 
     const { data: scorecard, error: scErr } = await supabase
       .from("call_scorecards").insert({
@@ -124,4 +120,25 @@ function json(b: unknown, status = 200) {
   return new Response(JSON.stringify(b), {
     status, headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
+}
+
+/**
+ * Soma ponderada das respostas do scorecard, limitando a nota de cada resposta
+ * ao max_score do critério — a IA pode devolver nota acima do máximo (A-029).
+ * Mesma regra de clamp de auto-scorecard/index.ts.
+ */
+export function computeWeightedTotal(
+  responses: Array<{ criterion_id: string; score: number }>,
+  criteria: Array<{ id: string; max_score: number; weight: number }>,
+): { total: number; max: number } {
+  const byId = new Map(criteria.map((c) => [c.id, c]));
+  let total = 0;
+  for (const r of responses) {
+    const crit = byId.get(r.criterion_id);
+    if (!crit) continue;
+    const clamped = Math.max(0, Math.min(Number(crit.max_score), Number(r.score) || 0)); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
+    total += clamped * Number(crit.weight); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
+  }
+  const max = criteria.reduce((s, c) => s + Number(c.max_score) * Number(c.weight), 0); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
+  return { total, max };
 }

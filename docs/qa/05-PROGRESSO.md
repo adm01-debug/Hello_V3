@@ -152,7 +152,7 @@
 - [ ] **103** — Unificar o nível de serviço: um limiar, uma janela, um denominador — onda 3 — Alta — Hooks + Edge Function 🔒
 - [ ] **104** — Unificar a taxa de abandono — onda 3 — Alta — Hooks + Banco 🔒
 - [ ] **105** — Alinhar o freio do discador à meta de abandono configurada — onda 3 — Alta — Banco 🔒
-- [ ] **106** — Limitar a nota da IA ao máximo do critério no scorecard — onda 3 — Alta — Edge Function
+- [x] **106** — Limitar a nota da IA ao máximo do critério no scorecard — onda 3 — Alta — Edge Function
 - [ ] **107** — Uma fórmula só para o score do scorecard — onda 3 — Alta — Edge Function 🔒
 - [ ] **108** — Um scorecard automático não deve nascer "enviado" — onda 3 — Alta — Edge Function 🔒
 - [ ] **109** — Escolher a política de SLA mais específica, não a primeira — onda 3 — Alta — Edge Function
