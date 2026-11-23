@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a5e32decad7b9b19d40d559847d51d7a49bbc8db` (2026-11-23T19:57:26-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ed1d3244589a9d66ecf3d63b78cf6fb5b951ed6e` (2026-11-23T19:58:05-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1678 |
 | arquivos_codigo | 1276 |
-| linhas_codigo | 172749 |
+| linhas_codigo | 172744 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,14 +370,14 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9898 nós · 25442 arestas · 759 comunidades · grafo do commit `a5e32dec`
-- comunidades maiores: lucide-react (257), usePageTitle (204), client.ts (190), react (176), utils.ts (146), traceHeaders (137), safe-date.ts (129), ref_https (122), @tanstack/react-query (120), cn (111), vitest (108), sonner (105)
+- 9897 nós · 25441 arestas · 766 comunidades · grafo do commit `ed1d3244`
+- comunidades maiores: client.ts (212), vitest (178), lucide-react (159), traceHeaders (151), badge.tsx (147), protectedRoutes.tsx (144), @tanstack/react-query (128), react-router-dom (122), react (113), usePageTitle.ts (112), usePageTitle (103), cn (103)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/estado/funcionalidades-planejadas.md (27)
-- docs/qa/05-PROGRESSO.md (22)
+- docs/qa/05-PROGRESSO.md (24)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
 - .github/workflows/ci.yml (7)
@@ -429,6 +429,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `ed1d324` chore: remove xlsx, dependencia sem uso e com duas falhas altas sem correcao (E045) (#193)
+- 2026-11-23 `22cb928` fix: request-password-reset responde o mesmo corpo nos quatro caminhos (E031) (#192)
 - 2026-11-23 `a5e32de` fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)
 - 2026-11-23 `32923f9` fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)
 - 2026-11-23 `5e77404` fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)
@@ -442,8 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `5e20177` fix: SLA passa a respeitar horario comercial e feriados (E111) (#181)
 - 2026-11-23 `74c525c` fix: envia version nos updates e liga o lock otimista (E110) (#180)
 - 2026-11-23 `cdae222` fix: escolhe a politica SLA mais especifica sem depender da ordem do banco (E109) (#179)
-- 2026-11-23 `3407137` fix: limita a nota da IA ao maximo do criterio no score-call (E106) (#178)
-- 2026-11-23 `00fa64c` fix: rotula corretamente os canais do softphone (E100) (#177)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

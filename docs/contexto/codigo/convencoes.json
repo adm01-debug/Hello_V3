@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: remove xlsx, dependencia sem uso e com duas falhas altas sem correcao (E045) (#193)",
+   "fix: request-password-reset responde o mesmo corpo nos quatro caminhos (E031) (#192)",
    "fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)",
    "fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)",
-   "fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)",
-   "fix: notify-blocked-ip exige sessao autenticada, valida corpo e escapa HTML (E010) (#188)",
-   "fix: notify-new-device exige sessao autenticada e nao aceita destinatario do corpo (E009) (#187)"
+   "fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)"
   ]
  },
  "pr_template": null,

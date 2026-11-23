@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a5e32decad7b9b19d40d559847d51d7a49bbc8db",
+  "commit": "ed1d3244589a9d66ecf3d63b78cf6fb5b951ed6e",
   "branch": "main",
-  "data_commit": "2026-11-23T19:57:26-03:00",
+  "data_commit": "2026-11-23T19:58:05-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ed1d324",
+    "data": "2026-11-23",
+    "assunto": "chore: remove xlsx, dependencia sem uso e com duas falhas altas sem correcao (E045) (#193)"
+   },
+   {
+    "sha": "22cb928",
+    "data": "2026-11-23",
+    "assunto": "fix: request-password-reset responde o mesmo corpo nos quatro caminhos (E031) (#192)"
+   },
    {
     "sha": "a5e32de",
     "data": "2026-11-23",
@@ -121,19 +131,9 @@
     "sha": "2e60683",
     "data": "2026-11-23",
     "assunto": "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)"
-   },
-   {
-    "sha": "7df1b5b",
-    "data": "2026-11-23",
-    "assunto": "feat: 'Alterar foto' do perfil passa a enviar e exibir a foto"
-   },
-   {
-    "sha": "d768fc8",
-    "data": "2026-11-23",
-    "assunto": "docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)"
    }
   ],
-  "arquivos_mudados_7d": 970,
+  "arquivos_mudados_7d": 973,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 22
+    "mudancas": 24
    },
    {
     "pasta": "src/components/calls",
@@ -203,7 +203,7 @@
    },
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 22
+    "mudancas": 24
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 170
+    "commits": 172
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1678,
   "arquivos_codigo": 1276,
-  "linhas_codigo": 172749,
+  "linhas_codigo": 172744,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 189,
-   "linhas": 21261
+   "linhas": 21256
   },
   "tailwind.config.ts": {
    "arquivos": 1,

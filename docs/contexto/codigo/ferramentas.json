@@ -62,7 +62,7 @@
    "preview": "vite preview",
    "type-check": "tsc --noEmit"
   },
-  "dependencias": 82,
+  "dependencias": 81,
   "dev_dependencias": 13,
   "principais": {
    "@supabase/supabase-js": "^2.98.0",

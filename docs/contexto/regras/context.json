@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a5e32decad7b9b19d40d559847d51d7a49bbc8db",
+  "sha": "ed1d3244589a9d66ecf3d63b78cf6fb5b951ed6e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 22:59 UTC",
+  "generated_at": "2026-11-23 23:00 UTC",
   "files_total": 1725,
   "code_files": 1522,
-  "code_lines": 188761
+  "code_lines": 188756
  },
  "version": "1.3.2",
- "facts_hash": "114e72147130c820",
+ "facts_hash": "87851bfa30656dfb",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -79,11 +79,6 @@
    "vitest": {
     "version": "^4.1.0",
     "role": "Testes Vitest",
-    "in": "package.json"
-   },
-   "xlsx": {
-    "version": "^0.18.5",
-    "role": "Excel (xlsx)",
     "in": "package.json"
    },
    "zod": {
@@ -34287,7 +34282,7 @@
   {
    "module": "supabase/functions",
    "files": 189,
-   "lines": 21261,
+   "lines": 21256,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -120517,7 +120512,7 @@
   },
   "supabase/functions/request-password-reset/index.ts": {
    "path": "supabase/functions/request-password-reset/index.ts",
-   "lines": 138,
+   "lines": 133,
    "tables": [
     {
      "table": "password_reset_requests",
@@ -124443,10 +124438,32 @@
   }
  },
  "git": {
-  "sha": "a5e32decad7b9b19d40d559847d51d7a49bbc8db",
+  "sha": "ed1d3244589a9d66ecf3d63b78cf6fb5b951ed6e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ed1d324",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "chore: remove xlsx, dependencia sem uso e com duas falhas altas sem correcao (E045) (#193)",
+    "files": [
+     "bun.lock",
+     "docs/qa/05-PROGRESSO.md",
+     "package-lock.json",
+     "package.json"
+    ]
+   },
+   {
+    "sha": "22cb928",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: request-password-reset responde o mesmo corpo nos quatro caminhos (E031) (#192)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/request-password-reset/index.ts"
+    ]
+   },
    {
     "sha": "a5e32de",
     "date": "2026-11-23",
@@ -124803,37 +124820,12 @@
     "files": [
      "src/components/calls/softphone/ActiveCallDisplay.tsx"
     ]
-   },
-   {
-    "sha": "975df81",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: barra de progresso reflete o carregamento real do chunk da rota (#162)",
-    "files": [
-     "src/App.tsx",
-     "src/components/navigation/NavigationProgress.tsx",
-     "src/components/navigation/NavigationProgressMarker.tsx",
-     "src/lib/__tests__/navigation-progress-store.test.ts",
-     "src/lib/navigation-progress-store.ts"
-    ]
-   },
-   {
-    "sha": "da58d29",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: transferencia de chamada nao conclui mais sozinha por timer (#161)",
-    "files": [
-     "src/components/calls/ActiveCallsIndicator.tsx",
-     "src/components/calls/UnifiedSoftphone.tsx",
-     "src/hooks/__tests__/useCallTransfer.coverage.test.tsx",
-     "src/hooks/useCallTransfer.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    22
+    24
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124841,10 +124833,6 @@
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
-    3
-   ],
-   [
-    "src/components/calls/UnifiedSoftphone.tsx",
     3
    ],
    [
@@ -124856,12 +124844,28 @@
     2
    ],
    [
+    "src/components/calls/UnifiedSoftphone.tsx",
+    2
+   ],
+   [
     "src/components/calls/softphone/ActiveCallDisplay.tsx",
     2
    ],
    [
-    "src/App.tsx",
-    2
+    "bun.lock",
+    1
+   ],
+   [
+    "package-lock.json",
+    1
+   ],
+   [
+    "package.json",
+    1
+   ],
+   [
+    "supabase/functions/request-password-reset/index.ts",
+    1
    ],
    [
     "supabase/functions/chatbot-respond/__tests__/index.test.ts",
@@ -124897,18 +124901,6 @@
    ],
    [
     "supabase/functions/_shared/html.ts",
-    1
-   ],
-   [
-    "supabase/functions/notify-new-device/__tests__/index.test.ts",
-    1
-   ],
-   [
-    "supabase/functions/notify-new-device/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/__tests__/auth_test.ts",
     1
    ]
   ]
