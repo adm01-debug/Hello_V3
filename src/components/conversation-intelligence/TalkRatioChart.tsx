@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { Headphones, User, Clock, AlertTriangle, CheckCircle2, ArrowUpDown } from 'lucide-react';
+import { Headphones, User, Clock, AlertTriangle, CheckCircle2, ArrowUpDown, MicOff } from 'lucide-react';
 import type { TalkRatioResult } from '@/hooks/useTalkRatio';
 import { cn } from '@/lib/utils';
 
@@ -20,11 +20,14 @@ export function TalkRatioChart({ data, loading }: Props) {
   const customerPct = Math.round(data.customerTalkRatio * 100);
   const silencePct = Math.round(data.silenceRatio * 100);
 
-  const statusLabel = data.benchmark.status === 'optimal' ? 'Equilibrado'
+  const insufficient = data.benchmark.status === 'insufficient_data';
+  const statusLabel = insufficient ? 'Sem áudio suficiente'
+    : data.benchmark.status === 'optimal' ? 'Equilibrado'
     : data.benchmark.status === 'agent_high' ? 'Agente fala demais'
     : 'Agente fala pouco';
-  const statusColor = data.benchmark.status === 'optimal' ? 'text-success' : 'text-warning';
-  const StatusIcon = data.benchmark.status === 'optimal' ? CheckCircle2 : AlertTriangle;
+  const statusColor = insufficient ? 'text-muted-foreground'
+    : data.benchmark.status === 'optimal' ? 'text-success' : 'text-warning';
+  const StatusIcon = insufficient ? MicOff : data.benchmark.status === 'optimal' ? CheckCircle2 : AlertTriangle;
 
   return (
     <Card className="p-6 space-y-5">
@@ -78,7 +81,9 @@ export function TalkRatioChart({ data, loading }: Props) {
       </div>
 
       <p className="text-xs text-muted-foreground">
-        Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}
+        {insufficient
+          ? 'Sem áudio suficiente nesta chamada para avaliar o equilíbrio da conversa.'
+          : <>Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}</>}
       </p>
     </Card>
   );

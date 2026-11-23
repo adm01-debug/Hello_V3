@@ -9,6 +9,27 @@ interface Segment {
   role?: 'agent' | 'customer';
 }
 
+export type TalkRatioStatus = 'agent_low' | 'agent_high' | 'optimal' | 'insufficient_data';
+
+/**
+ * Classifica o talk ratio. Chamada sem áudio não tem razão para avaliar: antes
+ * `agentTime / totalDuration` dava NaN, as duas comparações falhavam e o
+ * resultado caía em "optimal" — elogiava a chamada sem áudio.
+ */
+export function talkRatioStatus(
+  agentTime: number,
+  totalSpeech: number,
+  totalDuration: number,
+): TalkRatioStatus {
+  if (!Number.isFinite(totalDuration) || totalDuration <= 0) return 'insufficient_data';
+  if (!Number.isFinite(totalSpeech) || totalSpeech <= 0) return 'insufficient_data';
+  const ratio = agentTime / totalDuration;
+  if (!Number.isFinite(ratio)) return 'insufficient_data';
+  if (ratio < 0.4) return 'agent_low';
+  if (ratio > 0.6) return 'agent_high';
+  return 'optimal';
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
 
@@ -98,8 +119,7 @@ Deno.serve(async (req) => {
       interruptions,
       benchmark: {
         idealAgentRatio: [0.4, 0.6],
-        status: agentTime / totalDuration < 0.4 ? 'agent_low'
-              : agentTime / totalDuration > 0.6 ? 'agent_high' : 'optimal',
+        status: talkRatioStatus(agentTime, totalSpeech, totalDuration),
       },
     };
 

@@ -161,7 +161,7 @@
 - [ ] **112** — Parar de premiar quem adia ou fecha conversa atrasada — onda 3 — Alta — Hooks + Edge Function 🔒
 - [x] **113** — Um limiar só para "qualidade ruim" de chamada — onda 3 — Média — Lib
 - [ ] **114** — Aplicar o limite de ritmo na função que realmente roda — onda 3 — Média — Banco 🔒
-- [ ] **115** — Parar de elogiar chamada sem áudio — onda 3 — Média — Edge Function
+- [x] **115** — Parar de elogiar chamada sem áudio — onda 3 — Média — Edge Function
 - [ ] **116** — Corrigir as 3 horas de erro na "melhor hora para contatar" — onda 3 — Média — Edge Function 🔒
 - [ ] **117** — Um vocabulário só para o status do agente — onda 3 — Alta — Hooks + Banco 🔒
 - [ ] **118** — Respeitar o limite de chamadas simultâneas do agente — onda 3 — Média — Hooks
