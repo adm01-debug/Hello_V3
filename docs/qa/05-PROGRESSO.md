@@ -64,7 +64,7 @@
 - [ ] **025** — Cabeçalhos de segurança no deploy — onda 1 — Alta — Infraestrutura 🔒
 - [ ] **026** — Content-Security-Policy em modo somente-relatório, depois bloqueante — onda 1 — Alta — Infraestrutura 🔒
 - [x] **027** — Restringir o CORS a origens conhecidas — onda 1 — Média — Edge Function
-- [ ] **028** — Migrar as 16 edges que ainda respondem com origem fixa — onda 1 — Média — Edge Function
+- [x] **028** — Migrar as 16 edges que ainda respondem com origem fixa — onda 1 — Média — Edge Function
 - [ ] **029** — Policies de UPDATE e DELETE para `rate_limit_logs` — onda 1 — Alta — Banco 🔒
 - [ ] **030** — Descobrir e documentar qual trilha serve produção — onda 1 — Média — Infraestrutura
 - [x] **031** — Parar de revelar a existência da conta no pedido de reset de senha — onda 1 — Baixa — Edge Function

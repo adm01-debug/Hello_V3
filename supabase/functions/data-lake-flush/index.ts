@@ -1,7 +1,7 @@
 // edge-public-ok — invocado por cron (`pg_cron` com service_role) ou admin autenticado.
 // Data Lake Flush — Exporta incremental de datasets críticos em NDJSON para o bucket data-lake-exports.
 // Invocado por cron diário (03:00 UTC) ou manualmente por admin.
-import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { logError, withRequestLog } from "../_shared/observability.ts";
 import { mesmaString } from "../_shared/constant-time.ts";
@@ -11,6 +11,14 @@ const DATASETS: Dataset[] = ["call_sessions", "call_summaries", "deals"];
 const PAGE_SIZE = 1000;
 
 Deno.serve(withRequestLog("data-lake-flush", async (req) => {
+  const corsHeaders = buildCorsHeaders(req);
+
+function json(payload: unknown, status = 200): Response {
+  return new Response(JSON.stringify(payload), {
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+    status,
+  });
+}
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
@@ -169,9 +177,3 @@ async function flushDataset(
   }
 }
 
-function json(payload: unknown, status = 200): Response {
-  return new Response(JSON.stringify(payload), {
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
-    status,
-  });
-}

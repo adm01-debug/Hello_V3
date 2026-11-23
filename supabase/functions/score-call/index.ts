@@ -1,13 +1,17 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id, x-correlation-id, x-trace-id, x-trace-operation",
-};
+import { buildCorsHeaders } from "../_shared/cors.ts";
 
 interface Body { callSessionId: string; templateId: string }
 
 Deno.serve(async (req) => {
+  const corsHeaders = buildCorsHeaders(req);
+
+function json(b: unknown, status = 200) {
+  return new Response(JSON.stringify(b), {
+    status, headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+}
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   try {
     const authHeader = req.headers.get("Authorization");
@@ -115,12 +119,6 @@ Responda em JSON: {"responses":[{"criterion_id":"<id>","score":<num>,"comment":"
     return json({ error: String(e) }, 500);
   }
 });
-
-function json(b: unknown, status = 200) {
-  return new Response(JSON.stringify(b), {
-    status, headers: { ...corsHeaders, "Content-Type": "application/json" },
-  });
-}
 
 /**
  * Soma ponderada das respostas do scorecard, limitando a nota de cada resposta
