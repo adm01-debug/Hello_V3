@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { computeTalkRatio } from '@/lib/talkRatio';
+import { computeTalkRatio, classifyTalkRatio } from '@/lib/talkRatio';
 
 describe('computeTalkRatio', () => {
   it('returns zeros for empty input', () => {
@@ -7,7 +7,29 @@ describe('computeTalkRatio', () => {
     expect(r.totalDuration).toBe(0);
     expect(r.agentTalkSeconds).toBe(0);
     expect(r.customerTalkSeconds).toBe(0);
-    expect(r.benchmark.status).toBe('agent_low');
+    expect(r.benchmark.status).toBe('insufficient_data');
+  });
+
+  it('chamada sem áudio não é classificada como ideal', () => {
+    const r = computeTalkRatio([], 0);
+    expect(r.benchmark.status).toBe('insufficient_data');
+    expect(Number.isNaN(r.agentTalkRatio)).toBe(false);
+    expect(r.agentTalkRatio).toBe(0);
+  });
+
+  it('duração zero com segmentos não gera NaN nem veredito', () => {
+    const r = computeTalkRatio([
+      { speaker: 'a', start: 0, end: 5 },
+      { speaker: 'b', start: 5, end: 10 },
+    ], 0);
+    expect(Number.isNaN(r.agentTalkRatio)).toBe(false);
+    expect(Number.isNaN(r.customerTalkRatio)).toBe(false);
+    expect(r.benchmark.status).toBe('insufficient_data');
+  });
+
+  it('duração positiva sem nenhuma fala é insuficiente, não "agente fala pouco"', () => {
+    const r = computeTalkRatio([], 30);
+    expect(r.benchmark.status).toBe('insufficient_data');
   });
 
   it('maps first speaker to agent and second to customer', () => {
@@ -54,5 +76,24 @@ describe('computeTalkRatio', () => {
     ], 30);
     expect(r.longestAgentMonologueSeconds).toBe(25);
     expect(r.longestCustomerMonologueSeconds).toBe(5);
+  });
+});
+
+describe('classifyTalkRatio', () => {
+  it('sem duração ou sem fala devolve insufficient_data', () => {
+    expect(classifyTalkRatio(0, 0, 0)).toBe('insufficient_data');
+    expect(classifyTalkRatio(10, 10, 0)).toBe('insufficient_data');
+    expect(classifyTalkRatio(0, 0, 60)).toBe('insufficient_data');
+  });
+
+  it('classifica quando há áudio', () => {
+    expect(classifyTalkRatio(30, 100, 100)).toBe('agent_low');
+    expect(classifyTalkRatio(50, 100, 100)).toBe('optimal');
+    expect(classifyTalkRatio(70, 100, 100)).toBe('agent_high');
+  });
+
+  it('NaN não vira optimal', () => {
+    expect(classifyTalkRatio(Number.NaN, Number.NaN, Number.NaN)).toBe('insufficient_data');
+    expect(classifyTalkRatio(Number.NaN, 10, 10)).toBe('insufficient_data');
   });
 });

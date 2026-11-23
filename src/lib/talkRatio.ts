@@ -17,7 +17,26 @@ export interface TalkRatioComputation {
   longestAgentMonologueSeconds: number;
   longestCustomerMonologueSeconds: number;
   interruptions: number;
-  benchmark: { idealAgentRatio: [number, number]; status: 'agent_low' | 'agent_high' | 'optimal' };
+  benchmark: { idealAgentRatio: [number, number]; status: 'agent_low' | 'agent_high' | 'optimal' | 'insufficient_data' };
+}
+
+/**
+ * Classifica o talk ratio. Sem duração ou sem fala não existe razão para
+ * avaliar — devolve `insufficient_data` em vez de opinar sobre uma chamada
+ * que não tem áudio. Espelha `talkRatioStatus` da edge `analyze-talk-ratio`.
+ */
+export function classifyTalkRatio(
+  agentTime: number,
+  totalSpeech: number,
+  totalDuration: number,
+): TalkRatioComputation['benchmark']['status'] {
+  if (!Number.isFinite(totalDuration) || totalDuration <= 0) return 'insufficient_data';
+  if (!Number.isFinite(totalSpeech) || totalSpeech <= 0) return 'insufficient_data';
+  const ratio = agentTime / totalDuration;
+  if (!Number.isFinite(ratio)) return 'insufficient_data';
+  if (ratio < 0.4) return 'agent_low';
+  if (ratio > 0.6) return 'agent_high';
+  return 'optimal';
 }
 
 export function computeTalkRatio(
@@ -85,7 +104,7 @@ export function computeTalkRatio(
     interruptions,
     benchmark: {
       idealAgentRatio: [0.4, 0.6],
-      status: agentRatio < 0.4 ? 'agent_low' : agentRatio > 0.6 ? 'agent_high' : 'optimal',
+      status: classifyTalkRatio(agentTime, totalSpeech, totalDuration),
     },
   };
 }

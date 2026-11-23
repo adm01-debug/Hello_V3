@@ -16,7 +16,7 @@ export interface TalkRatioResult {
   longestAgentMonologueSeconds: number;
   longestCustomerMonologueSeconds: number;
   interruptions: number;
-  benchmark: { idealAgentRatio: [number, number]; status: 'agent_low' | 'agent_high' | 'optimal' };
+  benchmark: { idealAgentRatio: [number, number]; status: 'agent_low' | 'agent_high' | 'optimal' | 'insufficient_data' };
 }
 
 export function useTalkRatio() {
