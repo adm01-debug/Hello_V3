@@ -1,11 +1,33 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { corsHeaders } from "../_shared/cors.ts";
+import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, string, optional, number } from "../_shared/validate.ts";
 
-Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+export async function handler(req: Request): Promise<Response> {
+  const cors = buildCorsHeaders(req);
+  if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
   try {
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401, headers: { ...cors, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    // Cliente com a chave anonima + o JWT do chamador: a RLS volta a valer, e a
+    // busca passa a devolver apenas as chamadas que aquele agente pode ver.
+    const supabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
+      global: { headers: { Authorization: authHeader } },
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+        status: 401, headers: { ...cors, 'Content-Type': 'application/json' },
+      });
+    }
+
     const body = await req.json();
     const parsed = validate(body, {
       query: string({ min: 1, max: 200 }),
@@ -20,17 +42,9 @@ Deno.serve(async (req) => {
 
     if (!parsed.ok) {
       return new Response(JSON.stringify({ error: 'Invalid input', details: parsed.errors }), {
-        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400, headers: { ...cors, 'Content-Type': 'application/json' },
       });
     }
-
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const authHeader = req.headers.get('Authorization');
-
-    const supabase = createClient(supabaseUrl, serviceKey, {
-      global: { headers: { Authorization: authHeader || '' } },
-    });
 
     const { query, agentName, dateFrom, dateTo, minDurationSeconds, momentType } = parsed.data;
     const limit = parsed.data.limit ?? 20;
@@ -45,7 +59,7 @@ Deno.serve(async (req) => {
 
     if (!tsQuery) {
       return new Response(JSON.stringify({ results: [], count: 0 }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200,
+        headers: { ...cors, 'Content-Type': 'application/json' }, status: 200,
       });
     }
 
@@ -58,7 +72,7 @@ Deno.serve(async (req) => {
       sessionIdsFromMoments = Array.from(new Set((km || []).map((m: { call_session_id: string }) => m.call_session_id)));
       if (sessionIdsFromMoments.length === 0) {
         return new Response(JSON.stringify({ results: [], count: 0 }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200,
+          headers: { ...cors, 'Content-Type': 'application/json' }, status: 200,
         });
       }
     }
@@ -79,7 +93,7 @@ Deno.serve(async (req) => {
     const { data, error, count } = await q;
     if (error) {
       return new Response(JSON.stringify({ error: error.message }), {
-        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 500, headers: { ...cors, 'Content-Type': 'application/json' },
       });
     }
 
@@ -111,12 +125,14 @@ Deno.serve(async (req) => {
     });
 
     return new Response(JSON.stringify({ results, count: count ?? results.length, offset, limit }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200,
+      headers: { ...cors, 'Content-Type': 'application/json' }, status: 200,
     });
   } catch (err) {
     console.error('[search-calls] error:', err);
     return new Response(JSON.stringify({ error: err instanceof Error ? err.message : 'Internal error' }), {
-      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500, headers: { ...cors, 'Content-Type': 'application/json' },
     });
   }
-});
+}
+
+Deno.serve(handler);

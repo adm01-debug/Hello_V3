@@ -40,7 +40,7 @@
 - [ ] **001** — Ligar secret scanning, push protection e Dependabot no repositório público — onda 1 — Crítica — Infraestrutura 🔒
 - [ ] **002** — Revogar o EXECUTE de `record_failed_login` e `record_successful_login` para `anon` — onda 1 — Crítica — Banco 🔒
 - [x] **003** — Fazer o bloqueio de login falhar fechado — onda 1 — Média — Hooks
-- [ ] **004** — Exigir autenticação em `search-calls` e parar de usar a service_role — onda 1 — Crítica — Edge Function
+- [x] **004** — Exigir autenticação em `search-calls` e parar de usar a service_role — onda 1 — Crítica — Edge Function
 - [ ] **005** — Criar o módulo compartilhado de autenticação de edge function — onda 1 — Alta — Edge Function
 - [ ] **006** — Exigir token de cron (ou papel de supervisor) em `auto-scorecard` — onda 1 — Alta — Edge Function 🔒
 - [ ] **007** — Exigir autenticação de visitante em `chatbot-respond` — onda 1 — Alta — Edge Function
