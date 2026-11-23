@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 360,
+ "total": 361,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 343
+  "unit": 344
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 336
+   "arquivos": 337
   },
   {
    "padrao": "e2e/",
@@ -2909,6 +2909,15 @@
    "casos": 9
   },
   {
+   "arquivo": "supabase/functions/embed-kb-article/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 37,
+   "testa": [
+    "supabase/functions/embed-kb-article/index.ts"
+   ],
+   "casos": 3
+  },
+  {
    "arquivo": "supabase/functions/enforce-sla/__tests__/index.test.ts",
    "tipo": "unit",
    "linhas": 103,
@@ -3492,6 +3501,7 @@
   "supabase/functions/analyze-call/schema.ts": 3,
   "supabase/functions/analyze-talk-ratio/index.ts": 1,
   "supabase/functions/bitrix-api/index.ts": 2,
+  "supabase/functions/embed-kb-article/index.ts": 1,
   "supabase/functions/enforce-sla/index.ts": 1,
   "supabase/functions/export-data-lake/csv.ts": 1,
   "supabase/functions/health-check/index.ts": 1,
@@ -3691,7 +3701,6 @@
    "dialer-pacing-tick",
    "elevenlabs-conversation-token",
    "email-inbound",
-   "embed-kb-article",
    "enroll-voice",
    "extract-crm-fields",
    "forecast-call-volume",

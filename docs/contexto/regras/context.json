@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "5e774047041cff0608457a35846da92bd74a0bb8",
+  "sha": "32923f95434e2137e9017e9e4c1a0aa4bc102d37",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 22:28 UTC",
-  "files_total": 1723,
-  "code_files": 1520,
-  "code_lines": 188559
+  "generated_at": "2026-11-23 22:37 UTC",
+  "files_total": 1724,
+  "code_files": 1521,
+  "code_lines": 188648
  },
  "version": "1.3.2",
- "facts_hash": "28871c3dd7c4fc4a",
+ "facts_hash": "5bc02d95bf7e30b9",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 630,
+   ".ts": 631,
    ".tsx": 611,
    ".sql": 245,
    ".mjs": 27,
@@ -30175,7 +30175,9 @@
     ],
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
-     "kb_articles"
+     "audit_logs",
+     "kb_articles",
+     "rate_limit_logs"
     ],
     "env": [
      "OPENROUTER_API_KEY",
@@ -30186,8 +30188,7 @@
     "invokes": [],
     "doc": "",
     "errors": [
-     "Gateway error: ${await embedResp.text()}",
-     "Missing input"
+     "Gateway error: ${await embedResp.text()}"
     ],
     "side_effects": [],
     "webhook_events": [],
@@ -34282,8 +34283,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 187,
-   "lines": 21059,
+   "files": 188,
+   "lines": 21148,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34395,6 +34396,7 @@
     "local-supabase.ts: edgeLocalDisponivel, MOTIVO_IGNORADO",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
     "index.ts: TalkRatioStatus, talkRatioStatus",
+    "index.ts: recordKb, handler",
     "index.ts: pickPolicy",
     "csv.ts: toCsv",
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
@@ -34412,8 +34414,7 @@
     "index.ts: VoiceQAResponse",
     "index.ts: ExecKpis, ExecutiveNarrativeResponse",
     "index.ts: HealthBreakdown, computeHealthScore, normalizeMos, normalizeAlerts, normalizeCapacity",
-    "index.ts: handler",
-    "index.ts: QualitySample, ForecastPoint, ForecastResult, linearSlope, buildBuckets, forecast"
+    "index.ts: handler"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -34508,7 +34509,7 @@
     "supabase/functions/elevenlabs-conversation-token/index.ts",
     "supabase/functions/email-inbound/index.ts",
     "supabase/functions/embed-kb-article/index.ts",
-    "supabase/functions/enforce-sla/index.ts"
+    "supabase/functions/embed-kb-article/__tests__/index.test.ts"
    ]
   },
   {
@@ -41700,10 +41701,6 @@
    {
     "file": "supabase/functions/embed-kb-article/index.ts",
     "msg": "Gateway error: ${await embedResp.text()}"
-   },
-   {
-    "file": "supabase/functions/embed-kb-article/index.ts",
-    "msg": "Missing input"
    },
    {
     "file": "supabase/functions/export-data-lake/index.ts",
@@ -50040,6 +50037,11 @@
     "file": "supabase/functions/data-lake-flush/index.ts",
     "name": "PAGE_SIZE",
     "value": "1000"
+   },
+   {
+    "file": "supabase/functions/embed-kb-article/index.ts",
+    "name": "MAX_TEXT",
+    "value": "20"
    },
    {
     "file": "supabase/functions/forecast-call-volume/index.ts",
@@ -72463,6 +72465,18 @@
    {
     "file": "supabase/functions/compute-deal-health/__tests__/index.test.ts",
     "name": "compute-deal-health: probability default = 50 quando ausente"
+   },
+   {
+    "file": "supabase/functions/embed-kb-article/__tests__/index.test.ts",
+    "name": "embed-kb-article: sem header Authorization devolve 401"
+   },
+   {
+    "file": "supabase/functions/embed-kb-article/__tests__/index.test.ts",
+    "name": "embed-kb-article: preflight OPTIONS responde com CORS da origem permitida"
+   },
+   {
+    "file": "supabase/functions/embed-kb-article/__tests__/index.test.ts",
+    "name": "embed-kb-article: recordKb exige record.id em formato UUID"
    },
    {
     "file": "supabase/functions/enforce-sla/__tests__/index.test.ts",
@@ -118808,7 +118822,11 @@
   },
   "supabase/functions/embed-kb-article/index.ts": {
    "path": "supabase/functions/embed-kb-article/index.ts",
-   "lines": 67,
+   "lines": 119,
+   "exports": [
+    "function recordKb",
+    "function handler"
+   ],
    "tables": [
     {
      "table": "kb_articles",
@@ -118826,13 +118844,28 @@
     "SUPABASE_URL"
    ],
    "errors": [
-    "Gateway error: ${await embedResp.text()}",
-    "Missing input"
+    "Gateway error: ${await embedResp.text()}"
+   ],
+   "params": [
+    {
+     "name": "MAX_TEXT",
+     "value": "20"
+    }
    ],
    "rule_comments": [
     "2. Se for trigger, atualizar o banco. Se for busca, apenas retornar."
    ],
    "uses_service_role": true
+  },
+  "supabase/functions/embed-kb-article/__tests__/index.test.ts": {
+   "path": "supabase/functions/embed-kb-article/__tests__/index.test.ts",
+   "lines": 37,
+   "is_test": true,
+   "tests": [
+    "embed-kb-article: sem header Authorization devolve 401",
+    "embed-kb-article: preflight OPTIONS responde com CORS da origem permitida",
+    "embed-kb-article: recordKb exige record.id em formato UUID"
+   ]
   },
   "supabase/functions/enforce-sla/index.ts": {
    "path": "supabase/functions/enforce-sla/index.ts",
@@ -124360,10 +124393,21 @@
   }
  },
  "git": {
-  "sha": "5e774047041cff0608457a35846da92bd74a0bb8",
+  "sha": "32923f95434e2137e9017e9e4c1a0aa4bc102d37",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "32923f9",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/embed-kb-article/__tests__/index.test.ts",
+     "supabase/functions/embed-kb-article/index.ts"
+    ]
+   },
    {
     "sha": "5e77404",
     "date": "2026-11-23",
@@ -124732,21 +124776,12 @@
     "files": [
      "src/hooks/useMFA.ts"
     ]
-   },
-   {
-    "sha": "b27cc88",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: configuracoes de metricas de fila ficavam presas em nao encontradas (#158)",
-    "files": [
-     "src/components/queue-alerts/useQueueMetricsSettings.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    20
+    21
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124775,6 +124810,14 @@
    [
     "src/App.tsx",
     2
+   ],
+   [
+    "supabase/functions/embed-kb-article/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/embed-kb-article/index.ts",
+    1
    ],
    [
     "supabase/functions/send-notification/__tests__/index.test.ts",
@@ -124814,14 +124857,6 @@
    ],
    [
     "supabase/functions/search-calls/__tests__/index.test.ts",
-    1
-   ],
-   [
-    "supabase/functions/search-calls/index.ts",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useLoginLockout.coverage.test.tsx",
     1
    ]
   ]

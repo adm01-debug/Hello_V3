@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5e77404704` · branch `main` · 2026-11-23 22:28 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `32923f9543` · branch `main` · 2026-11-23 22:37 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1804,6 +1804,7 @@ _nenhum item encontrado_
 | `RETENCAO_DIAS` | `180` | `supabase/functions/cleanup-recordings/index.ts` |
 | `BATCH` | `100` | `supabase/functions/cleanup-recordings/index.ts` |
 | `PAGE_SIZE` | `1000` | `supabase/functions/data-lake-flush/index.ts` |
+| `MAX_TEXT` | `20` | `supabase/functions/embed-kb-article/index.ts` |
 | `AHT` | `240` | `supabase/functions/forecast-call-volume/index.ts` |
 | `TARGET_SL` | `0.8` | `supabase/functions/forecast-call-volume/index.ts` |
 | `SCORE_THRESHOLD` | `3.0` | `supabase/functions/generate-coaching-track/track-engine.ts` |
@@ -2407,7 +2408,7 @@ _nenhum item encontrado_
 | Falha ao marcar como lida | `src/hooks/useSecurityAlertNotifications.ts` |
 | Falha ao marcar como resolvido | `src/hooks/useSecurityAlertNotifications.ts` |
 | Falha ao marcar todos como lidos | `src/hooks/useSecurityAlertNotifications.ts` |
-| … +248 linhas — lista completa em `context.json` | |
+| … +247 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2456,7 +2457,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4147 testes em 350 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4150 testes em 351 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2760,7 +2761,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
 | `supabase/functions/analyze-talk-ratio/__tests__/index.test.ts` | 4 | chamada com duração 0 é insuficiente, nunca  · duração positiva sem fala é insuficiente · NaN do quociente não cai em optimal · com áudio, classifica pelo intervalo 40–60% |
 | `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
-| … +50 linhas — lista completa em `context.json` | | |
+| … +51 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

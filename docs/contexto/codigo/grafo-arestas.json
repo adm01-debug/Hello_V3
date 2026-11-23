@@ -4759,8 +4759,12 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/embed-kb-article/index.ts": [
+   "supabase/functions/_shared/auth.ts",
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validate.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/enforce-sla/index.ts": [
    "supabase/functions/_shared/business-hours.ts",

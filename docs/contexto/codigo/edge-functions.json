@@ -1101,7 +1101,7 @@
    "nome": "embed-kb-article",
    "entrada": "supabase/functions/embed-kb-article/index.ts",
    "arquivos": 1,
-   "linhas": 67,
+   "linhas": 119,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1121,8 +1121,12 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "auth.ts",
     "cors.ts",
-    "resilience.ts"
+    "rate-limit.ts",
+    "resilience.ts",
+    "validate.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useKnowledgeBase.ts"
@@ -1130,7 +1134,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "enforce-sla",

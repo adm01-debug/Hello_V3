@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 915,
- "arestas": 3504,
+ "arestas": 3508,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -70,7 +70,7 @@
   },
   {
    "arquivo": "supabase/functions/_shared/validate.ts",
-   "importado_por": 32
+   "importado_por": 33
   },
   {
    "arquivo": "src/components/ui/switch.tsx",
@@ -113,11 +113,11 @@
    "importado_por": 20
   },
   {
-   "arquivo": "src/lib/safe-number.ts",
-   "importado_por": 19
+   "arquivo": "supabase/functions/_shared/rate-limit.ts",
+   "importado_por": 20
   },
   {
-   "arquivo": "supabase/functions/_shared/rate-limit.ts",
+   "arquivo": "src/lib/safe-number.ts",
    "importado_por": 19
   },
   {
