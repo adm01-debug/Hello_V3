@@ -23,6 +23,23 @@ vi.mock('@/hooks/useMultiChannelCall', () => ({
     setActiveChannel: vi.fn(),
   }),
 }));
+vi.mock('@/contexts/CallContext', () => ({
+  useCallContext: () => ({
+    activeChannel: 'sip',
+    currentCall: null,
+    activeCalls: [],
+    activeCallId: null,
+    initiateCall,
+    updateCallStatus,
+    endCall,
+    toggleMute: vi.fn(),
+    setActiveChannel: vi.fn(),
+    currentSession: null,
+    endDbSession: vi.fn(),
+    addCallAnalysis: vi.fn(),
+    addDbTranscript: vi.fn(),
+  }),
+}));
 vi.mock('@/hooks/useCallHistory', () => ({ useCallHistory: () => ({ sessions: [], isLoading: false }) }));
 vi.mock('@/hooks/useSipCall', () => ({
   useSipCall: () => ({ startCall: vi.fn(() => Promise.resolve(true)), endCall: vi.fn(), toggleMute: vi.fn(), answerCall: vi.fn(), rejectCall: vi.fn(), incomingCall: null }),

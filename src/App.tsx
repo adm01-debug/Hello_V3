@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
  import { GlobalServices } from "@/components/layout/GlobalServices";
 import { AchievementNotificationProvider } from "@/components/gamification/AchievementNotificationProvider";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CallProvider } from "@/contexts/CallContext";
 import { ReauthProvider } from "@/contexts/ReauthContext";
 import { ReauthDialog } from "@/components/auth/ReauthDialog";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
@@ -55,6 +56,7 @@ const App = () => (
         <BrowserRouter>
           <ThemeProvider>
             <AuthProvider>
+              <CallProvider>
               <ReauthProvider>
               <Routes>
                 {/* Public routes */}
@@ -106,6 +108,7 @@ const App = () => (
               </Routes>
               <ReauthDialog />
               </ReauthProvider>
+              </CallProvider>
             </AuthProvider>
           </ThemeProvider>
         </BrowserRouter>

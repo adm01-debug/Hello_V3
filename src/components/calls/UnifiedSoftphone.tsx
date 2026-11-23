@@ -8,7 +8,8 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { useMultiChannelCall, type CallSession } from '@/hooks/useMultiChannelCall';
+import { type CallSession } from '@/hooks/useMultiChannelCall';
+import { useCallContext } from '@/contexts/CallContext';
 import { useCallRecording } from '@/hooks/useCallRecording';
 import { useWavoipCall } from '@/hooks/useWavoipCall';
 import { useConferenceRecording } from '@/hooks/useConferenceRecording';
@@ -38,7 +39,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     endCall, toggleMute, toggleHold, toggleRecording, addTranscript, configureChannel,
     startConference, addToConference, removeFromConference, endConference, transferCall,
     completeTransfer, cancelTransfer, toggleConferenceRecording,
-  } = useMultiChannelCall();
+  } = useCallContext();
 
   const wavoip = useWavoipCall();
   const sipCall = useSipCall();
