@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `00fa64c498` · branch `main` · 2026-11-23 19:21 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3407137b96` · branch `main` · 2026-11-23 19:39 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1604,6 +1604,10 @@ _nenhum item encontrado_
   ```
   return Math.round(n * 10000) / 10000;
   ```
+- **computeWeightedTotal(responses: Array<{ criterion_id: string; score: number }>, criteria: Array<{ id: string; max_score: number; weight: numb)** — `supabase/functions/score-call/index.ts`
+  ```
+  total: number; max: number
+  ```
 - **zScore(observed: number, mu: number, sigma: number)** — `supabase/functions/voip-anomaly-detector/index.ts`
   ```
   if (sigma === 0) return 0; return (observed - mu) / sigma;
@@ -2445,7 +2449,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4089 testes em 341 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4094 testes em 342 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2713,6 +2717,7 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/encryption.coverage.test.ts` | 5 | encryption (coverage) · round-trips encrypt/decrypt with a generated key · hashData returns base64 string with real crypto · arrayBufferToBase64 and base64ToArrayBuffer are inverse operations … |
 | `src/lib/security/__tests__/security-headers-validator.coverage.test.ts` | 5 | security-headers-validator · returns all headers present when fetch succeeds · returns all headers absent when fetch rejects · handles a mixed set of present/absent headers … |
 | `src/pages/__tests__/Status.test.tsx` | 5 | Status — sem medição (E092) · mostra  · mostra  · Status — erro no carregamento (E093) … |
+| `supabase/functions/score-call/index.test.ts` | 5 | computeWeightedTotal — limita a nota ao max_score do critério · computeWeightedTotal — nota negativa vira zero · computeWeightedTotal — soma ponderada normal · computeWeightedTotal — critério desconhecido é ignorado … |
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
@@ -2748,8 +2753,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-anomaly-detector/__tests__/index.test.ts` | 4 | detectAnomalies — sem anomalias quando obs próximo da média · detectAnomalies — MOS muito baixo gera anomaly critical · detectAnomalies — jitter elevado gera warning · detectAnomalies — baseline insuficiente não gera anomaly |
 | `supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts` | 4 | planRemediation — mos:outage retorna ação crítica de codec · planRemediation — jitter:outage pausa campanhas · planRemediation — combinação desconhecida vira noop · idempotencyKey — chave estável e derivada do id |
 | `supabase/functions/voip-capacity-forecast/__tests__/index.test.ts` | 4 | buildHistory — agrupa sessões por dia e identifica pico · forecastNextDays — vazio quando histórico < 7 dias · forecastNextDays — gera 7 dias com confiança quando há histórico · forecastNextDays — sinaliza exceeds_capacity quando peak > cap |
-| `supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts` | 4 | voice-qa rejeita sem JWT (401) · voice-qa rejeita question curta (400) · voice-qa rejeita period inválido (400) · voice-qa responde OPTIONS com CORS |
-| … +41 linhas — lista completa em `context.json` | | |
+| … +42 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3020,6 +3024,8 @@ _nenhum item encontrado_
 | Input validation | `supabase/functions/notify-blocked-ip/index.ts` |
 | Input validation | `supabase/functions/notify-new-device/index.ts` |
 | Endpoint publico (usuario deslogado precisa resetar). Sem rate limit, o | `supabase/functions/request-password-reset/index.ts` |
+| ao max_score do critério — a IA pode devolver nota acima do máximo (A-029). | `supabase/functions/score-call/index.ts` |
+| Mesma regra de clamp de auto-scorecard/index.ts. | `supabase/functions/score-call/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/send-survey/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/sync-crm-queue/index.ts` |
 | Token app-only nao resolve /me; usar /groups (Application permission Group.Read.All) | `supabase/functions/teams-fetch-recordings/index.ts` |

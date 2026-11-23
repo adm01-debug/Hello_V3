@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "00fa64c498e930bc7470e52cb7715a4936c126f4",
+  "sha": "3407137b96643628b878ac44ceafb7178776f74d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 19:21 UTC",
-  "files_total": 1707,
-  "code_files": 1504,
-  "code_lines": 187137
+  "generated_at": "2026-11-23 19:39 UTC",
+  "files_total": 1708,
+  "code_files": 1505,
+  "code_lines": 187197
  },
  "version": "1.3.2",
- "facts_hash": "a97d30067e2f8687",
+ "facts_hash": "08a942e9f82bb11c",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 615,
+   ".ts": 616,
    ".tsx": 610,
    ".sql": 245,
    ".mjs": 27,
@@ -34268,8 +34268,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 174,
-   "lines": 19910,
+   "files": 175,
+   "lines": 19970,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34378,6 +34378,7 @@
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
     "index.ts: handler",
     "slo-budget.ts: BudgetStatus, BudgetInput, BudgetResult, budget",
+    "index.ts: computeWeightedTotal",
     "index.ts: detectAnomalies",
     "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
     "index.ts: ForecastDay, HistoryDay, buildHistory, forecastNextDays",
@@ -42608,6 +42609,14 @@
    {
     "file": "supabase/functions/request-password-reset/index.ts",
     "text": "Endpoint publico (usuario deslogado precisa resetar). Sem rate limit, o"
+   },
+   {
+    "file": "supabase/functions/score-call/index.ts",
+    "text": "ao max_score do critério — a IA pode devolver nota acima do máximo (A-029)."
+   },
+   {
+    "file": "supabase/functions/score-call/index.ts",
+    "text": "Mesma regra de clamp de auto-scorecard/index.ts."
    },
    {
     "file": "supabase/functions/send-survey/index.ts",
@@ -55654,6 +55663,12 @@
     "name": "round",
     "params": "n: number",
     "body": "return Math.round(n * 10000) / 10000;"
+   },
+   {
+    "file": "supabase/functions/score-call/index.ts",
+    "name": "computeWeightedTotal",
+    "params": "responses: Array<{ criterion_id: string; score: number }>, criteria: Array<{ id: string; max_score: number; weight: numb",
+    "body": "total: number; max: number"
    },
    {
     "file": "supabase/functions/voip-anomaly-detector/index.ts",
@@ -72308,6 +72323,26 @@
    {
     "file": "supabase/functions/record-consent/__tests__/index.test.ts",
     "name": "record-consent: JSON quebrado nao vira 200"
+   },
+   {
+    "file": "supabase/functions/score-call/index.test.ts",
+    "name": "computeWeightedTotal — limita a nota ao max_score do critério"
+   },
+   {
+    "file": "supabase/functions/score-call/index.test.ts",
+    "name": "computeWeightedTotal — nota negativa vira zero"
+   },
+   {
+    "file": "supabase/functions/score-call/index.test.ts",
+    "name": "computeWeightedTotal — soma ponderada normal"
+   },
+   {
+    "file": "supabase/functions/score-call/index.test.ts",
+    "name": "computeWeightedTotal — critério desconhecido é ignorado"
+   },
+   {
+    "file": "supabase/functions/score-call/index.test.ts",
+    "name": "computeWeightedTotal — denominador permanece max_score ponderado"
    },
    {
     "file": "supabase/functions/score-call-attempt/__tests__/index.test.ts",
@@ -119886,9 +119921,27 @@
    "doc": "RLS Audit — Relatorio de RLS nas tabelas criticas. Restrito a admin/supervisor.",
    "uses_service_role": true
   },
+  "supabase/functions/score-call/index.test.ts": {
+   "path": "supabase/functions/score-call/index.test.ts",
+   "lines": 43,
+   "is_test": true,
+   "rule_comments": [
+    "exibido não pode passar de 100% (mesma regra de auto-scorecard/index.ts)."
+   ],
+   "tests": [
+    "computeWeightedTotal — limita a nota ao max_score do critério",
+    "computeWeightedTotal — nota negativa vira zero",
+    "computeWeightedTotal — soma ponderada normal",
+    "computeWeightedTotal — critério desconhecido é ignorado",
+    "computeWeightedTotal — denominador permanece max_score ponderado"
+   ]
+  },
   "supabase/functions/score-call/index.ts": {
    "path": "supabase/functions/score-call/index.ts",
-   "lines": 128,
+   "lines": 145,
+   "exports": [
+    "function computeWeightedTotal"
+   ],
    "tables": [
     {
      "table": "call_sessions",
@@ -119951,6 +120004,17 @@
      "field": "status",
      "value": "draft",
      "kind": "escreve"
+    }
+   ],
+   "rule_comments": [
+    "ao max_score do critério — a IA pode devolver nota acima do máximo (A-029).",
+    "Mesma regra de clamp de auto-scorecard/index.ts."
+   ],
+   "calc_fns": [
+    {
+     "name": "computeWeightedTotal",
+     "params": "responses: Array<{ criterion_id: string; score: number }>, criteria: Array<{ id: string; max_score: number; weight: numb",
+     "body": "total: number; max: number"
     }
    ],
    "uses_service_role": true
@@ -123668,10 +123732,21 @@
   }
  },
  "git": {
-  "sha": "00fa64c498e930bc7470e52cb7715a4936c126f4",
+  "sha": "3407137b96643628b878ac44ceafb7178776f74d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "3407137",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: limita a nota da IA ao maximo do criterio no score-call (E106) (#178)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/score-call/index.test.ts",
+     "supabase/functions/score-call/index.ts"
+    ]
+   },
    {
     "sha": "00fa64c",
     "date": "2026-11-23",
@@ -124016,21 +124091,12 @@
      "docs/audits/pendencias-2026-07.md",
      "docs/estado/funcionalidades-planejadas.md"
     ]
-   },
-   {
-    "sha": "025ada5",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: exclusao de conta de usuario (8 FKs em NO ACTION bloqueavam o DELETE) (#146)",
-    "files": [
-     "supabase/migrations/20261123010000_fix_user_delete_cascade.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    8
+    9
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124069,6 +124135,14 @@
     2
    ],
    [
+    "supabase/functions/score-call/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/score-call/index.ts",
+    1
+   ],
+   [
     "src/components/calls/softphone/HeaderDropdowns.tsx",
     1
    ],
@@ -124098,14 +124172,6 @@
    ],
    [
     "src/components/network/ExecutiveReportExport.tsx",
-    1
-   ],
-   [
-    "src/components/network/VoipHealthScoreCard.tsx",
-    1
-   ],
-   [
-    "src/hooks/useVoipExecutiveSummary.ts",
     1
    ]
   ]
