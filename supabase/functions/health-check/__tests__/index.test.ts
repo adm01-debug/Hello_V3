@@ -2,11 +2,11 @@
  import { handler } from "../index.ts";
  
  Deno.test("health-check: handles OPTIONS", async () => {
-   const req = new Request("http://localhost", { method: "OPTIONS" });
+   const req = new Request("http://localhost", { method: "OPTIONS", headers: { Origin: "https://hello-v3.vercel.app" } });
    const res = await handler(req);
    assertEquals(res.status, 200);
-   // Should return the first allowed origin by default
-   assert(res.headers.get("Access-Control-Allow-Origin"));
+   // Origem da lista de permitidas e ecoada de volta
+   assertEquals(res.headers.get("Access-Control-Allow-Origin"), "https://hello-v3.vercel.app");
  });
  
  Deno.test("health-check: returns health status", async () => {

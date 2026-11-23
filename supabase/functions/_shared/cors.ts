@@ -1,5 +1,5 @@
 // Centralized CORS configuration for all Edge Functions
-// Restrict to known origins in production; fallback to first allowed origin
+// Only known origins are echoed back; unknown origins get no CORS header
 const ALLOWED_ORIGINS = [
   // Front em producao roda na Vercel; sem ela aqui o browser bloqueia toda
   // chamada de edge function por CORS (resposta saia como localhost:8086).
@@ -23,21 +23,24 @@ const ALLOWED_HEADERS =
   'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version, x-request-id, x-correlation-id, x-trace-id, x-trace-operation';
 
 export function getCorsOrigin(req?: Request): string {
+  // Sem `req` (uso legado) mantem a origem de producao fixa.
   if (!req) return ALLOWED_ORIGINS[0];
   const origin = req.headers.get('origin') || '';
+  if (!origin) return '';
   if (ALLOWED_ORIGINS.includes(origin) || originsExtras().includes(origin)) return origin;
-  // Allow any *.lovable.app subdomain
-  if (/^https:\/\/[a-z0-9-]+\.lovable\.app$/.test(origin)) return origin;
-  return ALLOWED_ORIGINS[0];
+  // Origem desconhecida: sem header, em vez de devolver uma origem que nao e dela.
+  return '';
 }
 
 export function buildCorsHeaders(req?: Request): Record<string, string> {
-  return {
-    'Access-Control-Allow-Origin': getCorsOrigin(req),
+  const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': ALLOWED_HEADERS,
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Max-Age': '86400',
   };
+  const origin = getCorsOrigin(req);
+  if (origin) headers['Access-Control-Allow-Origin'] = origin;
+  return headers;
 }
 
 /** @deprecated Use buildCorsHeaders(req) instead for proper origin validation */
