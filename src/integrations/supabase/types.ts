@@ -6860,6 +6860,51 @@ export type Database = {
         }
         Relationships: []
       }
+      user_preferences: {
+        Row: {
+          audio_auto_gain_control: boolean
+          audio_echo_cancellation: boolean
+          audio_noise_suppression: boolean
+          beta_program: boolean
+          created_at: string | null
+          id: string
+          notify_incoming_calls: boolean
+          notify_missed_calls: boolean
+          notify_sound: boolean
+          notify_voicemail: boolean
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          audio_auto_gain_control?: boolean
+          audio_echo_cancellation?: boolean
+          audio_noise_suppression?: boolean
+          beta_program?: boolean
+          created_at?: string | null
+          id?: string
+          notify_incoming_calls?: boolean
+          notify_missed_calls?: boolean
+          notify_sound?: boolean
+          notify_voicemail?: boolean
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          audio_auto_gain_control?: boolean
+          audio_echo_cancellation?: boolean
+          audio_noise_suppression?: boolean
+          beta_program?: boolean
+          created_at?: string | null
+          id?: string
+          notify_incoming_calls?: boolean
+          notify_missed_calls?: boolean
+          notify_sound?: boolean
+          notify_voicemail?: boolean
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_mfa_settings: {
         Row: {
           backup_codes: string[] | null

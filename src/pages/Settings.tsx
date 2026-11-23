@@ -31,10 +31,13 @@
    startMicLevel,
    type MicTestHandle,
  } from '@/lib/audio/deviceTest';
+ import { useNotificationPreferences } from '@/hooks/useNotificationPreferences';
  
  const Settings = () => {
    usePageTitle('Configurações');
  
+   const { preferences, savePreferences } = useNotificationPreferences();
+
    const [notifications, setNotifications] = useState({
      incomingCalls: true,
      missedCalls: true,
@@ -42,8 +45,24 @@
      sound: true,
    });
  
+   useEffect(() => {
+     if (preferences) {
+       setNotifications({
+         incomingCalls: preferences.notify_incoming_calls,
+         missedCalls: preferences.notify_missed_calls,
+         voicemail: preferences.notify_voicemail,
+         sound: preferences.notify_sound,
+       });
+     }
+   }, [preferences]);
+
    const handleSave = () => {
-     toast.success('✓ Configurações salvas', { description: 'Suas preferências foram atualizadas' });
+     savePreferences({
+       notify_incoming_calls: notifications.incomingCalls,
+       notify_missed_calls: notifications.missedCalls,
+       notify_voicemail: notifications.voicemail,
+       notify_sound: notifications.sound,
+     });
    };
 
    const [micTesting, setMicTesting] = useState(false);
