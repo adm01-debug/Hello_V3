@@ -845,7 +845,7 @@ Somadas às 729 `CREATE POLICY` (que no Postgres não têm forma `IF NOT EXISTS`
 ### A-099 — Nenhum cabeçalho de segurança no deploy, e 17 módulos de segurança sem importador
 **Severidade: Alta · Confiança: CONFIRMADO (repo) / HIPÓTESE (runtime) · Marca: EXECUTADO (grep)**
 
-`vercel.json` tem 3 linhas, só um `rewrite`; nenhum bloco `headers`. `index.html` não tem meta de CSP. E `git grep "getSecurityHeaders|buildCSPHeader|DEFAULT_SECURITY_HEADERS" -- src/` fora de testes retorna **apenas as próprias definições** (`src/lib/security/helmet-config.ts:16,27`) e o re-export (`src/lib/security/index.ts:10`): os 17 arquivos de `src/lib/security/` (CSP, HSTS, `https-enforcer`, `rate-limiter`, `input-sanitizer`, `xss-prevention`, `csrf-token`, `sql-sanitizer`, `jwt-handler`) **não têm nenhum importador de produção**, enquanto 4 arquivos de teste verdes dão a impressão de que os headers estão aplicados. Foram escritos como se houvesse um servidor Node com helmet; numa SPA estática os headers só podem vir da plataforma. **Não li os headers realmente servidos** — `curl https://hello-v3.vercel.app/` é bloqueado pela rede deste ambiente.
+`vercel.json` tem 3 linhas, só um `rewrite`; nenhum bloco `headers`. `index.html` não tem meta de CSP. E `git grep "getSecurityHeaders|buildCSPHeader|DEFAULT_SECURITY_HEADERS" -- src/` fora de testes retorna **apenas as próprias definições** (`src/lib/security/helmet-config.ts:16,27`) e o re-export (`src/lib/security/index.ts:10`): os 17 arquivos de `src/lib/security/` (CSP, HSTS, `https-enforcer`, `rate-limiter`, `input-sanitizer`, `xss-prevention`, `csrf-token`, `sql-sanitizer`, `jwt-handler`) **não têm nenhum importador de produção**, enquanto 4 arquivos de teste verdes dão a impressão de que os headers estão aplicados. Foram escritos como se houvesse um servidor Node com helmet; numa SPA estática os headers só podem vir da plataforma. **Não li os cabeçalhos realmente servidos**, e agora sei exatamente por quê: `curl` em `https://hello-v3.vercel.app/` **e** na URL de preview da PR devolve `403 (agent proxy: no rule or network setting allows this host)`, e o MCP da Vercel devolve `404` no lookup porque a conta conectada não tem acesso ao projeto (A-138). **Enquanto nenhum dos dois caminhos abrir, ninguém nesta configuração consegue confirmar que os cabeçalhos das etapas 025–026 chegaram ao navegador do usuário** — a etapa só pode ser fechada pelo dono ou com a conta Vercel certa conectada.
 
 ### A-100 — CORS aceita qualquer `*.lovable.app`, e 16 edges respondem com origem fixa
 **Severidade: Média · Confiança: CONFIRMADO · Marca: EXECUTADO**
@@ -855,10 +855,14 @@ supabase/functions/_shared/cors.ts:29  if (/^https:\/\/[a-z0-9-]+\.lovable\.app$
 ```
 Qualquer pessoa com um projeto na Lovable tem esse subdomínio. Atenua: `Access-Control-Allow-Credentials` não é emitido. Agrava: `corsHeaders` (deprecated, construído **sem** `req`) é usado por **16 funções** — `analyze-talk-ratio`, `auto-scorecard`, `compute-adherence`, `compute-deal-health`, `data-lake-flush`, `detect-key-moments`, `dialer-pacing-tick`, `forecast-call-volume`, `forecast-deals`, `generate-coaching-plan`, `generate-meeting-summary`, `global-load-test`, `score-call`, `search-calls`, `teams-fetch-recordings`, `voip-load-test` —, que então devolvem sempre `hello-v3.vercel.app`. **Se a trilha que serve produção for a do Lovable, essas 16 funcionalidades quebram no navegador por CORS.**
 
-### A-101 — Qual trilha serve produção é desconhecido
-**Severidade: Média · Confiança: HIPÓTESE · Marca: RASTREADO**
+### A-101 — A trilha Vercel está ativa, mas qual domínio serve produção continua desconhecido
+**Severidade: Média · Confiança: CONFIRMADO (a trilha existe) / HIPÓTESE (qual serve produção) · Marca: EXECUTADO (evento do GitHub + duas tentativas de acesso)**
 
-O repositório declara `homepage: https://hello-v3.vercel.app` e tem `vercel.json`; `AGENTS.md` diz que o Lovable commita direto na `main` e que há **duas** trilhas de publicação. A conta Vercel conectada a esta sessão devolve `projects: []` (escopo diferente) e o host é bloqueado pela rede. **Enquanto isso não for respondido, nenhuma afirmação de "deploy confirmado" tem lastro** — e a A-100 depende da resposta.
+O repositório declara `homepage: https://hello-v3.vercel.app` e tem `vercel.json`; `AGENTS.md` diz que o Lovable commita direto na `main` e que há **duas** trilhas de publicação.
+
+**Medido em 2026-11-23, pelo evento que a própria Vercel postou na PR #166:** a trilha Vercel **está ativa e publica cada PR deste repositório** — projeto `hello-v3`, team `juca1`, e o deploy do commit `b9c9d9f` ficou `Ready` com URL de preview por branch. Isso não prova que a Vercel serve o domínio de produção, mas **tira a trilha do campo da especulação**: ela constrói e publica, hoje, a cada push.
+
+**O que continua sem resposta, e por quê:** tentei ler os cabeçalhos servidos por dois caminhos e os dois falharam — `curl` na URL de preview e na de produção devolve `403 (agent proxy: no rule or network setting allows this host)`, e o MCP da Vercel devolve `404 lookup_deployment` porque a conta conectada não alcança esse projeto (ver A-138). Falta o dono dizer **qual URL ele e os usuários abrem**.
 
 ---
 
@@ -1100,6 +1104,21 @@ Medido em 390 px nas 10 rotas: **zero overflow horizontal** (`scrollWidth > clie
 
 **Por que registro um resultado positivo:** a etapa 271 do plano ("corrigir o que a conferência de celular encontrar") pode ser desnecessária para as rotas públicas. Quem executar o plano deve começar pelas telas **autenticadas**, que continuam sem verificação — não repetir o que já está medido aqui.
 
+### A-138 — Nenhum agente nesta configuração consegue verificar deploy, cabeçalhos ou logs de runtime
+**Severidade: Média · Confiança: CONFIRMADO · Marca: EXECUTADO**
+
+Duas medições de 2026-11-23, com os identificadores que a própria Vercel publicou na PR (`projectId: prj_i2sRUa…`, `teamId: team_QyN41X…`):
+```
+list_project_domains  → 404 not_found "Project not found."
+list_deployments      → 403 forbidden "You don't have permission to list the deployment."
+curl <preview>, curl <produção> → 403 (agent proxy: no rule or network setting allows this host)
+```
+A conta Vercel conectada a esta sessão **não é a conta que hospeda o produto**, e a rede do ambiente bloqueia `*.vercel.app`. Some-se a isso que o host do Supabase oficial também é bloqueado e que não há MCP de SQL para `cfmlmcdyjuotqobjapng`.
+
+**Causa raiz.** As credenciais e a política de rede do ambiente de agente não cobrem os dois serviços onde o produto roda.
+
+**Impacto no negócio.** A regra do próprio repositório diz que "pronto" exige **deploy confirmado + comportamento verificado**. Com esta configuração, nenhum agente pode cumprir essa regra — o melhor que consegue é dizer "mergeado". Isso explica, em parte, como o sistema chegou a ter documentos declarando conclusão sem verificação: a verificação era literalmente inalcançável. **Das 300 etapas do plano, as que exigem confirmar deploy, consulta ao banco ou cabeçalho servido vão terminar como `[~] parcial`** até que o dono conecte a conta Vercel do projeto, libere o host do Supabase na política de rede do ambiente, ou rode as verificações ele mesmo.
+
 
 ## Contagem
 
@@ -1107,11 +1126,11 @@ Medido em 390 px nas 10 rotas: **zero overflow horizontal** (`scrollWidth > clie
 |---|---:|
 | **Crítica** | **9** (A-001, A-002, A-012, A-019, A-023, A-024, A-025, A-042, A-057) |
 | **Alta** | **55** |
-| **Média** | **54** |
+| **Média** | **55** |
 | **Baixa** | **18** |
-| **Total** | **136** + 1 resultado positivo registrado (A-137) |
+| **Total** | **137** + 1 resultado positivo registrado (A-137) |
 
-Os três últimos (A-134, A-135, A-136) vieram da verificação em navegador feita depois do fechamento da primeira versão — ver **CR-20**.
+A-134 a A-137 vieram da verificação em navegador feita depois do fechamento da primeira versão (**CR-20**); A-138 veio da tentativa de ler os cabeçalhos reais pela Vercel, no mesmo dia.
 
 Contagem conferida mecanicamente: `grep -c "^### A-" 03-ACHADOS.md` → 133; `grep -oE "\*\*Severidade: [A-Za-zéí]+" | sort | uniq -c` → 9 / 55 / 51 / 18. IDs de A-001 a A-133 sem lacuna.
 
