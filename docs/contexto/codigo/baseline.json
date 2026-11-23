@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "7375845ef783a79d51786915b5b9a092709fce56",
+  "commit": "4e8548ec7f0063dc2fd1ee1042702c0181a1b139",
   "branch": "main",
-  "data_commit": "2026-11-23T20:38:27-03:00",
+  "data_commit": "2026-11-23T20:46:02-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4e8548e",
+    "data": "2026-11-23",
+    "assunto": "fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)"
+   },
    {
     "sha": "7375845",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "fe57120",
     "data": "2026-11-23",
     "assunto": "fix: status sem medicao em vez de 100%% e erro tratado (E092-E093) (#173)"
-   },
-   {
-    "sha": "a1a6cb4",
-    "data": "2026-11-23",
-    "assunto": "feat: filtrar menu por papel (E088-E089) (#172)"
    }
   ],
-  "arquivos_mudados_7d": 979,
+  "arquivos_mudados_7d": 981,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -148,11 +148,11 @@
     "mudancas": 30
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 27
+    "pasta": "docs/qa/05-PROGRESSO.md",
+    "mudancas": 28
    },
    {
-    "pasta": "docs/qa/05-PROGRESSO.md",
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 27
    },
    {
@@ -198,11 +198,11 @@
   ],
   "arquivos_mais_mudados_90d": [
    {
-    "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 27
+    "arquivo": "docs/qa/05-PROGRESSO.md",
+    "mudancas": 28
    },
    {
-    "arquivo": "docs/qa/05-PROGRESSO.md",
+    "arquivo": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 27
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 175
+    "commits": 176
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1679,
-  "arquivos_codigo": 1277,
-  "linhas_codigo": 172860,
+  "arquivos_total": 1680,
+  "arquivos_codigo": 1278,
+  "linhas_codigo": 173051,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 363,
+  "testes": 364,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 190,
-   "linhas": 21372
+   "arquivos": 191,
+   "linhas": 21563
   },
   "tailwind.config.ts": {
    "arquivos": 1,

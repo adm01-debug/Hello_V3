@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "7375845ef783a79d51786915b5b9a092709fce56",
+  "sha": "4e8548ec7f0063dc2fd1ee1042702c0181a1b139",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 23:41 UTC",
-  "files_total": 1726,
-  "code_files": 1523,
-  "code_lines": 188872
+  "generated_at": "2026-11-23 23:46 UTC",
+  "files_total": 1727,
+  "code_files": 1524,
+  "code_lines": 189063
  },
  "version": "1.3.2",
- "facts_hash": "473b9fc558516b41",
+ "facts_hash": "4dae055ddce15645",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 633,
+   ".ts": 634,
    ".tsx": 611,
    ".sql": 245,
    ".mjs": 27,
@@ -30163,7 +30163,7 @@
     "errors": [],
     "side_effects": [],
     "webhook_events": [],
-    "idempotency": false
+    "idempotency": true
    },
    {
     "name": "embed-kb-article",
@@ -34281,8 +34281,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 190,
-   "lines": 21372,
+   "files": 191,
+   "lines": 21563,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34395,6 +34395,7 @@
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
     "index.ts: TalkRatioStatus, talkRatioStatus",
     "index.ts: handler",
+    "index.ts: handler",
     "index.ts: recordKb, handler",
     "index.ts: pickPolicy",
     "csv.ts: toCsv",
@@ -34411,8 +34412,7 @@
     "index.ts: ForecastDay, HistoryDay, buildHistory, forecastNextDays",
     "index.ts: CapacityRecommendation, CapacityResult, buildRecommendations",
     "index.ts: VoiceQAResponse",
-    "index.ts: ExecKpis, ExecutiveNarrativeResponse",
-    "index.ts: HealthBreakdown, computeHealthScore, normalizeMos, normalizeAlerts, normalizeCapacity"
+    "index.ts: ExecKpis, ExecutiveNarrativeResponse"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -37705,6 +37705,7 @@
     "supabase/functions/detect-churn-risk/index.ts",
     "supabase/functions/detect-key-moments/index.ts",
     "supabase/functions/dialer-pacing-tick/index.ts",
+    "supabase/functions/email-inbound/__tests__/index.test.ts",
     "supabase/functions/email-inbound/index.ts",
     "supabase/functions/embed-kb-article/index.ts",
     "supabase/functions/enforce-sla/index.ts",
@@ -37796,6 +37797,7 @@
     "supabase/functions/detect-key-moments/index.ts",
     "supabase/functions/dialer-pacing-tick/index.ts",
     "supabase/functions/elevenlabs-conversation-token/index.ts",
+    "supabase/functions/email-inbound/__tests__/index.test.ts",
     "supabase/functions/email-inbound/index.ts",
     "supabase/functions/embed-kb-article/index.ts",
     "supabase/functions/enforce-sla/index.ts",
@@ -72506,6 +72508,26 @@
     "name": "compute-deal-health: probability default = 50 quando ausente"
    },
    {
+    "file": "supabase/functions/email-inbound/__tests__/index.test.ts",
+    "name": "email-inbound: sem message_id devolve 422 (sem chave nao ha idempotencia)"
+   },
+   {
+    "file": "supabase/functions/email-inbound/__tests__/index.test.ts",
+    "name": "email-inbound: from/subject ausentes continuam devolvendo 400"
+   },
+   {
+    "file": "supabase/functions/email-inbound/__tests__/index.test.ts",
+    "name": "email-inbound: ticket ja existente responde 200 idempotent_replay sem escrever"
+   },
+   {
+    "file": "supabase/functions/email-inbound/__tests__/index.test.ts",
+    "name": "email-inbound: primeira entrega cria conversa, ticket e mensagem"
+   },
+   {
+    "file": "supabase/functions/email-inbound/__tests__/index.test.ts",
+    "name": "email-inbound: preflight OPTIONS responde com CORS da origem permitida"
+   },
+   {
     "file": "supabase/functions/embed-kb-article/__tests__/index.test.ts",
     "name": "embed-kb-article: sem header Authorization devolve 401"
    },
@@ -86409,6 +86431,7 @@
    "supabase/functions/detect-churn-risk/index.ts",
    "supabase/functions/detect-key-moments/index.ts",
    "supabase/functions/dialer-pacing-tick/index.ts",
+   "supabase/functions/email-inbound/__tests__/index.test.ts",
    "supabase/functions/email-inbound/index.ts",
    "supabase/functions/embed-kb-article/index.ts",
    "supabase/functions/enforce-sla/index.ts",
@@ -118804,8 +118827,15 @@
   },
   "supabase/functions/email-inbound/index.ts": {
    "path": "supabase/functions/email-inbound/index.ts",
-   "lines": 171,
+   "lines": 224,
+   "exports": [
+    "function handler"
+   ],
    "tables": [
+    {
+     "table": "email_tickets",
+     "op": "select"
+    },
     {
      "table": "email_tickets",
      "op": "select"
@@ -118837,6 +118867,10 @@
     {
      "table": "email_tickets",
      "op": "insert"
+    },
+    {
+     "table": "email_tickets",
+     "op": "select"
     },
     {
      "table": "conversation_messages",
@@ -118899,6 +118933,23 @@
    "pagination": [
     "1",
     "10"
+   ],
+   "uses_service_role": true
+  },
+  "supabase/functions/email-inbound/__tests__/index.test.ts": {
+   "path": "supabase/functions/email-inbound/__tests__/index.test.ts",
+   "lines": 138,
+   "is_test": true,
+   "env": [
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "tests": [
+    "email-inbound: sem message_id devolve 422 (sem chave nao ha idempotencia)",
+    "email-inbound: from/subject ausentes continuam devolvendo 400",
+    "email-inbound: ticket ja existente responde 200 idempotent_replay sem escrever",
+    "email-inbound: primeira entrega cria conversa, ticket e mensagem",
+    "email-inbound: preflight OPTIONS responde com CORS da origem permitida"
    ],
    "uses_service_role": true
   },
@@ -124475,10 +124526,21 @@
   }
  },
  "git": {
-  "sha": "7375845ef783a79d51786915b5b9a092709fce56",
+  "sha": "4e8548ec7f0063dc2fd1ee1042702c0181a1b139",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4e8548e",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/email-inbound/__tests__/index.test.ts",
+     "supabase/functions/email-inbound/index.ts"
+    ]
+   },
    {
     "sha": "7375845",
     "date": "2026-11-23",
@@ -124869,20 +124931,6 @@
      "src/hooks/useProfile.ts",
      "supabase/migrations/20261123020000_add_avatar_storage.sql"
     ]
-   },
-   {
-    "sha": "d768fc8",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)",
-    "files": [
-     "docs/qa/00-RESUMO.md",
-     "docs/qa/01-INVENTARIO.md",
-     "docs/qa/02-CENARIOS.md",
-     "docs/qa/03-ACHADOS.md",
-     "docs/qa/04-PLANO.md",
-     "docs/qa/05-PROGRESSO.md"
-    ]
    }
   ],
   "hot_files": [
@@ -124943,6 +124991,14 @@
     2
    ],
    [
+    "supabase/functions/email-inbound/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/email-inbound/index.ts",
+    1
+   ],
+   [
     "supabase/functions/auto-scorecard/index.ts",
     1
    ],
@@ -124956,14 +125012,6 @@
    ],
    [
     "supabase/functions/data-lake-flush/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/detect-key-moments/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/dialer-pacing-tick/index.ts",
     1
    ]
   ]

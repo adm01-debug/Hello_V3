@@ -1081,7 +1081,7 @@
    "nome": "email-inbound",
    "entrada": "supabase/functions/email-inbound/index.ts",
    "arquivos": 1,
-   "linhas": 171,
+   "linhas": 224,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",
@@ -1109,7 +1109,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": true,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "embed-kb-article",
