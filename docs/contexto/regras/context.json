@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "3d4db074fbf60432ba3edf9cf7915a15d5c12bc9",
+  "sha": "22ca6d0430791a595ccbf5c28899a977da54c5a4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 21:48 UTC",
-  "files_total": 1719,
-  "code_files": 1516,
-  "code_lines": 188257
+  "generated_at": "2026-11-23 22:04 UTC",
+  "files_total": 1721,
+  "code_files": 1518,
+  "code_lines": 188397
  },
  "version": "1.3.2",
- "facts_hash": "83b2d3ca4a39fa27",
+ "facts_hash": "8b878601cac80fb1",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 626,
+   ".ts": 628,
    ".tsx": 611,
    ".sql": 245,
    ".mjs": 27,
@@ -30610,8 +30610,11 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "JWT do usuário",
-    "tables": [],
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "tables": [
+     "audit_logs",
+     "rate_limit_logs"
+    ],
     "env": [
      "FROM_EMAIL",
      "RESEND_API_KEY"
@@ -30622,7 +30625,9 @@
     "invokes": [],
     "doc": "",
     "errors": [],
-    "side_effects": [],
+    "side_effects": [
+     "notify"
+    ],
     "webhook_events": [],
     "idempotency": false
    },
@@ -34270,8 +34275,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 183,
-   "lines": 20758,
+   "files": 185,
+   "lines": 20898,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34370,6 +34375,7 @@
     "cors.ts: getCorsOrigin, buildCorsHeaders, corsHeaders",
     "external-payload-schemas.ts: BitrixActionSchema, BitrixAction, BitrixRequestSchema, BitrixRequest, paramsSchemaFor, WebhookEventSchema",
     "hmac.ts: verifyWebhookSignature",
+    "html.ts: escapeHtml",
     "mos.ts: MOS_THRESHOLDS, MosLabel, classifyMos, isPoorMos",
     "numeric-schemas.ts: finiteNumber, finiteInt, nonNegativeInt, positiveInt, percent, latitude",
     "observability.ts: logInfo, logError, logRequest, withRequestLog, trackMetric, logStructuredError",
@@ -34387,6 +34393,7 @@
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
     "index.ts: handler",
     "slo-budget.ts: BudgetStatus, BudgetInput, BudgetResult, budget",
+    "index.ts: buildNewDeviceEmail, handler",
     "index.ts: computeWeightedTotal",
     "index.ts: handler",
     "index.ts: detectAnomalies",
@@ -34399,9 +34406,7 @@
     "index.ts: handler",
     "index.ts: QualitySample, ForecastPoint, ForecastResult, linearSlope, buildBuckets, forecast",
     "index.ts: ActionRow, HistoryAggregations, aggregate",
-    "index.ts: ActionRow, QualityRow, InsightsResponse, buildHeatmap, calcEffectiveness, computeRecurring",
-    "index.ts: QualityRow, AlertRow, SimulationDelta, SimulationResult, projectImpact",
-    "index.ts: RecommendationCategory, RecommendationSeverity, RecommendationActionType, Recommendation, SignalContext, buildRecommendations"
+    "index.ts: ActionRow, QualityRow, InsightsResponse, buildHeatmap, calcEffectiveness, computeRecurring"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -34429,6 +34434,7 @@
     "supabase/functions/_shared/external-payload-schemas.ts",
     "supabase/functions/_shared/external-payload-schemas_test.ts",
     "supabase/functions/_shared/hmac.ts",
+    "supabase/functions/_shared/html.ts",
     "supabase/functions/_shared/mos.ts",
     "supabase/functions/_shared/mos_test.ts",
     "supabase/functions/_shared/numeric-schemas.ts",
@@ -34495,8 +34501,7 @@
     "supabase/functions/elevenlabs-conversation-token/index.ts",
     "supabase/functions/email-inbound/index.ts",
     "supabase/functions/embed-kb-article/index.ts",
-    "supabase/functions/enforce-sla/index.ts",
-    "supabase/functions/enforce-sla/__tests__/index.test.ts"
+    "supabase/functions/enforce-sla/index.ts"
    ]
   },
   {
@@ -42691,10 +42696,6 @@
    },
    {
     "file": "supabase/functions/notify-blocked-ip/index.ts",
-    "text": "Input validation"
-   },
-   {
-    "file": "supabase/functions/notify-new-device/index.ts",
     "text": "Input validation"
    },
    {
@@ -72561,6 +72562,26 @@
     "name": "budget - total nao finito vira unknown"
    },
    {
+    "file": "supabase/functions/notify-new-device/__tests__/index.test.ts",
+    "name": "notify-new-device: sem header Authorization devolve 401"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/__tests__/index.test.ts",
+    "name": "notify-new-device: header Authorization vazio tambem devolve 401"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/__tests__/index.test.ts",
+    "name": "notify-new-device: preflight OPTIONS responde com CORS da origem permitida"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/__tests__/index.test.ts",
+    "name": "notify-new-device: HTML do aviso escapa todo valor vindo do corpo"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/__tests__/index.test.ts",
+    "name": "notify-new-device: template visual permanece igual para dados normais"
+   },
+   {
     "file": "supabase/functions/record-consent/__tests__/index.test.ts",
     "name": "record-consent: OPTIONS devolve preflight"
    },
@@ -73554,6 +73575,10 @@
    {
     "file": "supabase/functions/check-goals/index.ts",
     "call": "notify_on_warning"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/index.ts",
+    "call": "notify"
    },
    {
     "file": "supabase/functions/sync-crm-queue/index.ts",
@@ -116313,6 +116338,14 @@
    ],
    "uses_service_role": true
   },
+  "supabase/functions/_shared/html.ts": {
+   "path": "supabase/functions/_shared/html.ts",
+   "lines": 11,
+   "exports": [
+    "function escapeHtml"
+   ],
+   "doc": "Escapa valores interpolados em HTML (e-mail, templates) para impedir injecao."
+  },
   "supabase/functions/_shared/mos.ts": {
    "path": "supabase/functions/_shared/mos.ts",
    "lines": 35,
@@ -120082,7 +120115,11 @@
   },
   "supabase/functions/notify-new-device/index.ts": {
    "path": "supabase/functions/notify-new-device/index.ts",
-   "lines": 120,
+   "lines": 171,
+   "exports": [
+    "function buildNewDeviceEmail",
+    "function handler"
+   ],
    "external_urls": [
     "https://api.resend.com/emails"
    ],
@@ -120090,8 +120127,23 @@
     "FROM_EMAIL",
     "RESEND_API_KEY"
    ],
-   "rule_comments": [
-    "Input validation"
+   "side_effects": [
+    "notify"
+   ]
+  },
+  "supabase/functions/notify-new-device/__tests__/index.test.ts": {
+   "path": "supabase/functions/notify-new-device/__tests__/index.test.ts",
+   "lines": 78,
+   "is_test": true,
+   "tests": [
+    "notify-new-device: sem header Authorization devolve 401",
+    "notify-new-device: header Authorization vazio tambem devolve 401",
+    "notify-new-device: preflight OPTIONS responde com CORS da origem permitida",
+    "notify-new-device: HTML do aviso escapa todo valor vindo do corpo",
+    "notify-new-device: template visual permanece igual para dados normais"
+   ],
+   "side_effects": [
+    "notify"
    ]
   },
   "supabase/functions/ocr-virtual-fax/index.ts": {
@@ -124229,10 +124281,22 @@
   }
  },
  "git": {
-  "sha": "3d4db074fbf60432ba3edf9cf7915a15d5c12bc9",
+  "sha": "22ca6d0430791a595ccbf5c28899a977da54c5a4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "22ca6d0",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: notify-new-device exige sessao autenticada e nao aceita destinatario do corpo (E009) (#187)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/_shared/html.ts",
+     "supabase/functions/notify-new-device/__tests__/index.test.ts",
+     "supabase/functions/notify-new-device/index.ts"
+    ]
+   },
    {
     "sha": "3d4db07",
     "date": "2026-11-23",
@@ -124593,22 +124657,12 @@
     "files": [
      "docs/estado/hooks-parte3.md"
     ]
-   },
-   {
-    "sha": "ef1134d",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: 2 falsos parciais (useBusinessLogic importa SUT, AppSidebar tem RBAC) (#155)",
-    "files": [
-     "docs/estado/componentes-parte3.md",
-     "docs/estado/hooks-parte1.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    17
+    18
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124633,6 +124687,18 @@
    [
     "src/App.tsx",
     2
+   ],
+   [
+    "supabase/functions/_shared/html.ts",
+    1
+   ],
+   [
+    "supabase/functions/notify-new-device/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/notify-new-device/index.ts",
+    1
    ],
    [
     "supabase/functions/_shared/__tests__/auth_test.ts",
@@ -124672,18 +124738,6 @@
    ],
    [
     "src/hooks/useTalkRatio.ts",
-    1
-   ],
-   [
-    "src/lib/__tests__/talkRatio.test.ts",
-    1
-   ],
-   [
-    "src/lib/talkRatio.ts",
-    1
-   ],
-   [
-    "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
     1
    ]
   ]

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3d4db074fb` · branch `main` · 2026-11-23 21:48 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `22ca6d0430` · branch `main` · 2026-11-23 22:04 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2456,7 +2456,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4135 testes em 347 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4140 testes em 348 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2727,6 +2727,7 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/encryption.coverage.test.ts` | 5 | encryption (coverage) · round-trips encrypt/decrypt with a generated key · hashData returns base64 string with real crypto · arrayBufferToBase64 and base64ToArrayBuffer are inverse operations … |
 | `src/lib/security/__tests__/security-headers-validator.coverage.test.ts` | 5 | security-headers-validator · returns all headers present when fetch succeeds · returns all headers absent when fetch rejects · handles a mixed set of present/absent headers … |
 | `src/pages/__tests__/Status.test.tsx` | 5 | Status — sem medição (E092) · mostra  · mostra  · Status — erro no carregamento (E093) … |
+| `supabase/functions/notify-new-device/__tests__/index.test.ts` | 5 | notify-new-device: sem header Authorization devolve 401 · notify-new-device: header Authorization vazio tambem devolve 401 · notify-new-device: preflight OPTIONS responde com CORS da origem permitida · notify-new-device: HTML do aviso escapa todo valor vindo do corpo … |
 | `supabase/functions/score-call/index.test.ts` | 5 | computeWeightedTotal — limita a nota ao max_score do critério · computeWeightedTotal — nota negativa vira zero · computeWeightedTotal — soma ponderada normal · computeWeightedTotal — critério desconhecido é ignorado … |
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
@@ -2759,8 +2760,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
 | `supabase/functions/analyze-talk-ratio/__tests__/index.test.ts` | 4 | chamada com duração 0 é insuficiente, nunca  · duração positiva sem fala é insuficiente · NaN do quociente não cai em optimal · com áudio, classifica pelo intervalo 40–60% |
 | `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
-| `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 4 | check-queue-metrics: cálculo de avg wait time (contrato) · check-queue-metrics: cálculo de abandonment rate (contrato) · check-queue-metrics: service level (≤30s contrato) · check-queue-metrics: thresholds default (contrato) |
-| … +47 linhas — lista completa em `context.json` | | |
+| … +48 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2870,6 +2870,7 @@ _nenhum item encontrado_
 | `invoke(` | `src/pages/admin/SloDashboard.tsx` |
 | `notify_on_critical` | `supabase/functions/check-goals/index.ts` |
 | `notify_on_warning` | `supabase/functions/check-goals/index.ts` |
+| `notify` | `supabase/functions/notify-new-device/index.ts` |
 | `invoke(` | `supabase/functions/sync-crm-queue/index.ts` |
 | `notify_on_block` | `supabase/functions/validate-geo/index.ts` |
 | `notify_ops_volume_drop` | `supabase/functions/voip-anomaly-remediation/index.ts` |
@@ -3035,7 +3036,6 @@ _nenhum item encontrado_
 | Budget esgotado alerta mesmo com status ainda dentro do limite: e o sinal | `supabase/functions/health-check/index.ts` |
 | que uma tendencia: burn_rate de 1 e o alvo, nao o limite. | `supabase/functions/health-check/slo-budget.ts` |
 | Input validation | `supabase/functions/notify-blocked-ip/index.ts` |
-| Input validation | `supabase/functions/notify-new-device/index.ts` |
 | Endpoint publico (usuario deslogado precisa resetar). Sem rate limit, o | `supabase/functions/request-password-reset/index.ts` |
 | ao max_score do critério — a IA pode devolver nota acima do máximo (A-029). | `supabase/functions/score-call/index.ts` |
 | Mesma regra de clamp de auto-scorecard/index.ts. | `supabase/functions/score-call/index.ts` |

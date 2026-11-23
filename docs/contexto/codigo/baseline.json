@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "3d4db074fbf60432ba3edf9cf7915a15d5c12bc9",
+  "commit": "22ca6d0430791a595ccbf5c28899a977da54c5a4",
   "branch": "main",
-  "data_commit": "2026-11-23T18:48:17-03:00",
+  "data_commit": "2026-11-23T19:04:11-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "22ca6d0",
+    "data": "2026-11-23",
+    "assunto": "fix: notify-new-device exige sessao autenticada e nao aceita destinatario do corpo (E009) (#187)"
+   },
    {
     "sha": "3d4db07",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "975df81",
     "data": "2026-11-22",
     "assunto": "fix: barra de progresso reflete o carregamento real do chunk da rota (#162)"
-   },
-   {
-    "sha": "da58d29",
-    "data": "2026-11-22",
-    "assunto": "fix: transferencia de chamada nao conclui mais sozinha por timer (#161)"
    }
   ],
-  "arquivos_mudados_7d": 961,
+  "arquivos_mudados_7d": 964,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -160,16 +160,16 @@
     "mudancas": 22
    },
    {
+    "pasta": "supabase/functions/_shared",
+    "mudancas": 19
+   },
+   {
     "pasta": "covout/lib/security",
     "mudancas": 18
    },
    {
-    "pasta": "supabase/functions/_shared",
-    "mudancas": 18
-   },
-   {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 17
+    "mudancas": 18
    },
    {
     "pasta": "src/components/layout",
@@ -203,7 +203,7 @@
    },
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 17
+    "mudancas": 18
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 165
+    "commits": 166
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1672,
-  "arquivos_codigo": 1270,
-  "linhas_codigo": 172245,
+  "arquivos_total": 1674,
+  "arquivos_codigo": 1272,
+  "linhas_codigo": 172385,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 357,
+  "testes": 358,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 183,
-   "linhas": 20758
+   "arquivos": 185,
+   "linhas": 20898
   },
   "tailwind.config.ts": {
    "arquivos": 1,
