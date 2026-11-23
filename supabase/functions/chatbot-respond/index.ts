@@ -1,5 +1,9 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
+import { requireUser } from '../_shared/auth.ts';
+import { mesmaString } from '../_shared/constant-time.ts';
+import { checkRateLimitDB, getClientIp } from '../_shared/rate-limit.ts';
+import { uuid } from '../_shared/validate.ts';
 
 interface ChatbotPayload {
   conversation_id: string;
@@ -10,7 +14,7 @@ interface ChatbotPayload {
  const DEFAULT_THRESHOLD = 0.7;
 const MODEL = 'google/gemini-2.5-flash';
 
-Deno.serve(async (req) => {
+export async function handler(req: Request): Promise<Response> {
   const cors = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
@@ -26,10 +30,58 @@ Deno.serve(async (req) => {
       );
     }
 
+    const convId = uuid()(body.conversation_id);
+    if (!convId.ok) {
+      return new Response(JSON.stringify({ error: 'conversation_id invalido' }), {
+        status: 400,
+        headers: { ...cors, 'Content-Type': 'application/json' },
+      });
+    }
+
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
+
+    // A-014: quem chega pelo widget prova a posse da conversa com o visitor_token da sessao
+    // anonima; quem ja esta logado (Inbox) atende a conversa como equipe.
+    let actorUserId: string | undefined;
+    const visitorToken = typeof body.visitor_token === 'string' ? body.visitor_token.trim() : '';
+
+    if (visitorToken) {
+      const { data: session } = await supabase
+        .from('chat_sessions')
+        .select('visitor_token, conversation_id')
+        .eq('visitor_token', visitorToken)
+        .maybeSingle();
+
+      if (!session) {
+        return new Response(JSON.stringify({ error: 'visitor_token invalido' }), {
+          status: 401,
+          headers: { ...cors, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const daSessao = String(session.conversation_id || '').toLowerCase();
+      if (!daSessao || !mesmaString(daSessao, convId.data.toLowerCase())) {
+        return new Response(JSON.stringify({ error: 'Conversa nao pertence a esta sessao' }), {
+          status: 403,
+          headers: { ...cors, 'Content-Type': 'application/json' },
+        });
+      }
+    } else {
+      const auth = await requireUser(req);
+      if (auth instanceof Response) return auth;
+      actorUserId = auth.user.id;
+    }
+
+    const rl = await checkRateLimitDB(getClientIp(req), 'chatbot-respond', actorUserId);
+    if (!rl.allowed) {
+      return new Response(JSON.stringify({ error: 'Limite de requisicoes excedido' }), {
+        status: 429,
+        headers: { ...cors, 'Content-Type': 'application/json' },
+      });
+    }
 
     const apiKey = Deno.env.get('OPENROUTER_API_KEY');
     if (!apiKey) throw new Error('OPENROUTER_API_KEY não configurada');
@@ -213,4 +265,6 @@ Responda de forma clara, cordial e objetiva. Use markdown leve quando útil.`;
       { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } }
     );
   }
-});
+}
+
+Deno.serve(handler);
