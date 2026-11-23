@@ -2598,6 +2598,8 @@
    "src/lib/tracing.ts"
   ],
   "src/hooks/useMultiChannelCall.ts": [
+   "src/contexts/AuthContext.tsx",
+   "src/hooks/useCallSession.ts",
    "src/hooks/useCallTimers.ts",
    "src/hooks/useCallTransfer.ts",
    "src/integrations/supabase/client.ts",

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "7df1b5bb99239d26955108a2a2671dd88e4be9f8",
+  "commit": "2e606838437092b5796dbcc7bfd3bb6b9f4cd1ef",
   "branch": "main",
-  "data_commit": "2026-11-23T07:52:57-03:00",
+  "data_commit": "2026-11-23T08:15:09-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "2e60683",
+    "data": "2026-11-23",
+    "assunto": "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)"
+   },
    {
     "sha": "7df1b5b",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "d3a6f69",
     "data": "2026-11-22",
     "assunto": "feat: pagina de avaliacoes de chamada com geracao por IA (#143)"
-   },
-   {
-    "sha": "76e30b7",
-    "data": "2026-11-22",
-    "assunto": "feat: retencao de 180 dias para as gravacoes de chamada (#138)"
    }
   ],
-  "arquivos_mudados_7d": 902,
+  "arquivos_mudados_7d": 904,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 24
+    "mudancas": 25
    },
    {
     "pasta": "src/lib/__tests__",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 147
+    "commits": 148
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1652,
   "arquivos_codigo": 1250,
-  "linhas_codigo": 170122,
+  "linhas_codigo": 170196,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 352,
-   "linhas": 45692
+   "linhas": 45766
   },
   "src/integrations": {
    "arquivos": 3,

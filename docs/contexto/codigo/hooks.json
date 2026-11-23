@@ -337,7 +337,7 @@
     "useContext"
    ],
    "canais_realtime": [],
-   "usado_por": 28,
+   "usado_por": 29,
    "usado_por_arquivos": [
     "src/App.tsx",
     "src/components/auth/ProtectedRoute.tsx",
@@ -347,6 +347,7 @@
     "src/hooks/telemetry/useTelemetry.ts",
     "src/hooks/useAvatar.ts",
     "src/hooks/useMFA.ts",
+    "src/hooks/useMultiChannelCall.ts",
     "src/hooks/useMultiDeviceRing.ts",
     "src/hooks/usePermissions.ts",
     "src/hooks/useProfile.ts",
@@ -1420,9 +1421,10 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 1,
+   "usado_por": 2,
    "usado_por_arquivos": [
-    "src/components/calls/ActiveCallBar.tsx"
+    "src/components/calls/ActiveCallBar.tsx",
+    "src/hooks/useMultiChannelCall.ts"
    ],
    "coberto_por_testes": 1
   },
@@ -2855,7 +2857,7 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 244,
+   "linhas": 286,
    "dominio": "hooks",
    "tabelas": [
     "hold_events"
@@ -2863,6 +2865,8 @@
    "rpcs": [],
    "edges": [],
    "hooks_internos": [
+    "useAuthContext",
+    "useCallSession",
     "useCallTimers",
     "useCallTransfer",
     "useCallback",

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `7df1b5bb99` · branch `main` · 2026-11-23 10:53 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `2e60683843` · branch `main` · 2026-11-23 11:26 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -864,7 +864,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `cancelled` | escreve | `src/hooks/useScheduledCallbacks.ts` |
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
 | `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +32 |
-| `status` | `conference` | escreve | `src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
+| `status` | `conference` | compara, escreve | `src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
 | `status` | `connected` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>… +3 |
 | `status` | `created` | escreve | `supabase/functions/auto-scorecard/index.ts` |
@@ -915,7 +915,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `rejected` | compara, escreve | `src/hooks/useCrmFieldSuggestions.ts`<br>`src/pages/NumberPorting.tsx`<br>`src/pages/PasswordResetApproval.tsx`<br>`src/pages/Scheduling.tsx`<br>`src/pages/ShiftSwapSuggestions.tsx` |
 | `status` | `resolved` | compara, escreve | `src/pages/Inbox.tsx`<br>`supabase/functions/enforce-sla/index.ts` |
 | `status` | `retrieved` | escreve | `src/hooks/useCallPark.ts` |
-| `status` | `ringing` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +4 |
+| `status` | `ringing` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +5 |
 | `status` | `scheduled` | compara, escreve | `src/pages/Scheduling.tsx`<br>`src/pages/VideoConference.tsx` |
 | `status` | `sent` | compara | `src/pages/VirtualFax.tsx` |
 | `status` | `skipped` | escreve | `supabase/functions/auto-scorecard/index.ts` |
@@ -925,7 +925,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `system` | escreve | `supabase/functions/check-goals/index.ts` |
 | `status` | `today` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `tomorrow` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
-| `status` | `transferring` | escreve | `src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
+| `status` | `transferring` | compara, escreve | `src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
 | `status` | `unknown` | escreve | `supabase/functions/health-check/index.ts`<br>`supabase/functions/health-check/slo-budget.ts` |
 | `status` | `unstable` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
 | `status` | `verified` | compara, escreve | `src/components/auth/ReauthDialog.tsx`<br>`src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx`<br>`src/pages/two-factor/DevicesCard.tsx` |
@@ -2451,7 +2451,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4056 testes em 335 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4059 testes em 335 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2552,6 +2552,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useGamification.coverage.test.tsx` | 10 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useLiveTranslation.coverage.test.tsx` | 10 | useLiveTranslation · returns initial state · does nothing without callSessionId or empty text · queues short utterances below minWords without invoking … |
 | `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 10 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
+| `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 10 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
 | `src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx` | 10 | useMultiChannelCallConference · startConference requires at least 2 calls · starts, adds, removes, toggles recording and ends conference · removeFromConference auto-ends when below 2 participants … |
 | `src/hooks/__tests__/useReauth.grant.test.tsx` | 10 | Reauth grant persistido (HMAC) · grava grant assinado no sessionStorage apos verificar · rehidrata lastVerified em nova montagem (nao exige reauth) · descarta grant com assinatura invalida … |
 | `src/hooks/__tests__/useTrackers.coverage.test.tsx` | 10 | useTrackers · loads trackers on mount (success) · logs error when load fails · createTracker success path … |
@@ -2629,7 +2630,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useExtensionAudit.scenarios.test.ts` | 7 | useExtensionAudit — cenários (fire-and-forget) · envia RPC log_audit_event com payload correto · lida com erro do RPC sem lançar (fire-and-forget) · lida com exception do RPC sem propagar … |
 | `src/hooks/__tests__/useHealthCheck.coverage.test.tsx` | 7 | useHealthCheck · estado inicial: todos checking · runChecks com todos saudáveis => overall healthy · uma falha => degraded … |
 | `src/hooks/__tests__/useKeyMoments.coverage.test.tsx` | 7 | useKeyMoments · fetches moments when callSessionId provided · does not fetch without id · handles fetch error … |
-| `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 7 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
 | `src/hooks/__tests__/useObjectionLibrary.coverage.test.tsx` | 7 | useObjectionLibrary (coverage) · loads objections · list error throws · upsert success and error … |
 | `src/hooks/__tests__/usePermissions.coverage.test.tsx` | 7 | usePermissions (coverage) · loads permissions for active roles · returns empty when no user · returns empty when user has no roles … |
 | `src/hooks/__tests__/useRealtimeHoldAlerts.coverage.test.tsx` | 7 | useRealtimeHoldAlerts · initializes and fetches unread count · toggles notifications on and off · requests browser notification permission … |

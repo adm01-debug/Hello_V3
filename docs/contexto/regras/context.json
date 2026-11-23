@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "7df1b5bb99239d26955108a2a2671dd88e4be9f8",
+  "sha": "2e606838437092b5796dbcc7bfd3bb6b9f4cd1ef",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 10:53 UTC",
+  "generated_at": "2026-11-23 11:26 UTC",
   "files_total": 1699,
   "code_files": 1496,
-  "code_lines": 186134
+  "code_lines": 186208
  },
  "version": "1.3.2",
- "facts_hash": "13b1a903db563ebf",
+ "facts_hash": "8b42d7bf672266cd",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -28289,16 +28289,24 @@
     "component": "Calls",
     "tables_transitive": [
      "agents",
+     "call_analyses",
      "call_quality_metrics",
      "call_recordings",
+     "call_sessions",
+     "call_summaries",
+     "call_transcriptions",
+     "call_transcripts_searchable",
      "cultural_hints",
      "hold_events",
      "live_sentiment_snapshots",
      "voip_quality_alerts"
     ],
     "invokes_transitive": [
+     "analyze-talk-ratio",
      "charge",
+     "detect-key-moments",
      "elevenlabs-conversation-token",
+     "generate-meeting-summary",
      "sip-config",
      "translate-utterance",
      "voice-command",
@@ -28308,7 +28316,7 @@
     "rpc_transitive": [
      "record_trunk_usage"
     ],
-    "deps_count": 57
+    "deps_count": 60
    },
    {
     "path": "",
@@ -28856,8 +28864,10 @@
     "tables_transitive": [
      "call_analyses",
      "call_quality_metrics",
+     "call_sessions",
      "call_summaries",
      "call_transcriptions",
+     "call_transcripts_searchable",
      "calling_hours_config",
      "compliance_settings",
      "dialer_favorites",
@@ -28868,6 +28878,9 @@
      "voip_quality_alerts"
     ],
     "invokes_transitive": [
+     "analyze-talk-ratio",
+     "detect-key-moments",
+     "generate-meeting-summary",
      "sip-config",
      "voice-command",
      "voice-transcribe"
@@ -28880,7 +28893,7 @@
      "log_audit_event",
      "record_trunk_usage"
     ],
-    "deps_count": 68
+    "deps_count": 70
    },
    {
     "path": "",
@@ -33543,7 +33556,7 @@
   {
    "module": "src/hooks",
    "files": 352,
-   "lines": 45692,
+   "lines": 45766,
    "tables": [
     "accounts",
     "active_sessions",
@@ -52096,6 +52109,48 @@
    {
     "file": "src/hooks/useMultiChannelCall.ts",
     "field": "status",
+    "value": "active",
+    "kind": "compara"
+   },
+   {
+    "file": "src/hooks/useMultiChannelCall.ts",
+    "field": "status",
+    "value": "active",
+    "kind": "compara"
+   },
+   {
+    "file": "src/hooks/useMultiChannelCall.ts",
+    "field": "status",
+    "value": "on-hold",
+    "kind": "compara"
+   },
+   {
+    "file": "src/hooks/useMultiChannelCall.ts",
+    "field": "status",
+    "value": "conference",
+    "kind": "compara"
+   },
+   {
+    "file": "src/hooks/useMultiChannelCall.ts",
+    "field": "status",
+    "value": "transferring",
+    "kind": "compara"
+   },
+   {
+    "file": "src/hooks/useMultiChannelCall.ts",
+    "field": "status",
+    "value": "ringing",
+    "kind": "compara"
+   },
+   {
+    "file": "src/hooks/useMultiChannelCall.ts",
+    "field": "status",
+    "value": "active",
+    "kind": "compara"
+   },
+   {
+    "file": "src/hooks/useMultiChannelCall.ts",
+    "field": "status",
     "value": "on-hold",
     "kind": "compara"
    },
@@ -62386,6 +62441,18 @@
    {
     "file": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
     "name": "runs full conference lifecycle"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
+    "name": "E057: dbSessionId é preenchido após setCallDbSession"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
+    "name": "E058: updateCallStatus para active muda o status da chamada sem crash"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
+    "name": "E059: endCall com chamada active termina sem crash e remove da lista"
    },
    {
     "file": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
@@ -82222,6 +82289,7 @@
       "compara:src/components/calls/WebRTCCall.tsx",
       "compara:src/components/calls/softphone/ActiveCallDisplay.tsx",
       "compara:src/components/dashboard/RecentCalls.tsx",
+      "compara:src/hooks/useMultiChannelCall.ts",
       "compara:src/hooks/useQueueMetrics.ts",
       "compara:src/hooks/useSipCall.ts",
       "compara:src/pages/PhoneDialer.tsx",
@@ -82430,6 +82498,7 @@
       "escreve:src/hooks/useCallPark.ts"
      ],
      "transferring": [
+      "compara:src/hooks/useMultiChannelCall.ts",
       "escreve:src/hooks/useCallTransfer.ts",
       "escreve:src/hooks/useMultiChannelCallConference.ts"
      ],
@@ -82478,6 +82547,7 @@
       "filtra:supabase/functions/chatbot-respond/index.ts"
      ],
      "conference": [
+      "compara:src/hooks/useMultiChannelCall.ts",
       "escreve:src/hooks/useMultiChannelCall.ts",
       "escreve:src/hooks/useMultiChannelCallConference.ts"
      ],
@@ -100684,7 +100754,7 @@
   },
   "src/hooks/useMultiChannelCall.ts": {
    "path": "src/hooks/useMultiChannelCall.ts",
-   "lines": 244,
+   "lines": 286,
    "exports": [
     "type CallChannel",
     "type CallStatus",
@@ -100810,6 +100880,41 @@
     {
      "field": "status",
      "value": "active",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "active",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "active",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "active",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "on-hold",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "conference",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "transferring",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "ringing",
      "kind": "compara"
     },
     {
@@ -106234,7 +106339,7 @@
   },
   "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
-   "lines": 292,
+   "lines": 324,
    "is_test": true,
    "rule_comments": [
     "Hit the max limit -> returns null"
@@ -106246,6 +106351,9 @@
     "handles no-op branches when no active call id",
     "configures channels and endAllCalls",
     "runs full conference lifecycle",
+    "E057: dbSessionId é preenchido após setCallDbSession",
+    "E058: updateCallStatus para active muda o status da chamada sem crash",
+    "E059: endCall com chamada active termina sem crash e remove da lista",
     "endConference directly and conference no-op guards"
    ]
   },
@@ -123343,10 +123451,21 @@
   }
  },
  "git": {
-  "sha": "7df1b5bb99239d26955108a2a2671dd88e4be9f8",
+  "sha": "2e606838437092b5796dbcc7bfd3bb6b9f4cd1ef",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "2e60683",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)",
+    "files": [
+     "docs/agentes/telefonia-voip.md",
+     "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
+     "src/hooks/useMultiChannelCall.ts"
+    ]
+   },
    {
     "sha": "7df1b5b",
     "date": "2026-11-23",
@@ -123653,17 +123772,6 @@
     "files": [
      "docs/audits/pendencias-2026-07.md"
     ]
-   },
-   {
-    "sha": "80115e5",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "fix: cron de retencao de lock-conflicts nunca autenticava (#137)",
-    "files": [
-     "supabase/functions/_shared/constant-time.ts",
-     "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
-     "supabase/functions/cleanup-lock-conflicts/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -123690,6 +123798,18 @@
    [
     "src/components/layout/CommandPalette.tsx",
     2
+   ],
+   [
+    "docs/agentes/telefonia-voip.md",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useMultiChannelCall.ts",
+    1
    ],
    [
     "src/components/settings/ProfileSettings.tsx",
@@ -123733,18 +123853,6 @@
    ],
    [
     "docs/qa/05-PROGRESSO.md",
-    1
-   ],
-   [
-    "src/components/calls/ActiveCallBar.tsx",
-    1
-   ],
-   [
-    "src/components/executive/ConversationIntelligenceCard.tsx",
-    1
-   ],
-   [
-    "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx",
     1
    ]
   ]

@@ -1141,11 +1141,11 @@
   {
    "arquivo": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 292,
+   "linhas": 324,
    "testa": [
     "src/hooks/useMultiChannelCall.ts"
    ],
-   "casos": 6
+   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useMultiChannelCall.test.ts",

@@ -24,13 +24,16 @@
     "useAuditLog",
     "useAuth",
     "useAuthActions",
+    "useAuthContext",
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
     "useCallHistory",
+    "useCallSession",
     "useCallTimers",
     "useCallTransfer",
     "useCallback",
+    "useContext",
     "useDNCCompliance",
     "useDeviceLabel",
     "useDialerFavorites",
@@ -61,10 +64,12 @@
     "useAuditLog",
     "useAuth",
     "useAuthActions",
+    "useAuthContext",
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
     "useCallHistory",
+    "useCallSession",
     "useCallTimers",
     "useCallTransfer",
     "useDNCCompliance",
@@ -87,8 +92,10 @@
    "tabelas": [
     "call_analyses",
     "call_quality_metrics",
+    "call_sessions",
     "call_summaries",
     "call_transcriptions",
+    "call_transcripts_searchable",
     "calling_hours_config",
     "compliance_settings",
     "dialer_favorites",
@@ -107,6 +114,9 @@
     "record_trunk_usage"
    ],
    "edges": [
+    "analyze-talk-ratio",
+    "detect-key-moments",
+    "generate-meeting-summary",
     "sip-config",
     "voice-command",
     "voice-transcribe"
@@ -123,7 +133,7 @@
     "status",
     "user"
    ],
-   "arquivos_puxados": 68
+   "arquivos_puxados": 70
   },
   {
    "protegida": false,
@@ -1290,7 +1300,14 @@
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
     "useAgentStatus",
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
     "useCallRecording",
+    "useCallSession",
     "useCallTimers",
     "useCallTransfer",
     "useCallback",
@@ -1302,6 +1319,7 @@
     "useHoldReminder",
     "useLiveSentiment",
     "useLiveTranslation",
+    "useMemo",
     "useMultiChannelCall",
     "useNetworkMonitor",
     "usePageTitle",
@@ -1317,7 +1335,14 @@
    ],
    "hooks_locais": [
     "useAgentStatus",
+    "useAuth",
+    "useAuthActions",
+    "useAuthContext",
+    "useAuthProfile",
+    "useAuthSession",
+    "useAuthState",
     "useCallRecording",
+    "useCallSession",
     "useCallTimers",
     "useCallTransfer",
     "useConferenceRecording",
@@ -1339,18 +1364,28 @@
    ],
    "tabelas": [
     "agents",
+    "call_analyses",
     "call_quality_metrics",
     "call_recordings",
+    "call_sessions",
+    "call_summaries",
+    "call_transcriptions",
+    "call_transcripts_searchable",
     "cultural_hints",
     "hold_events",
     "live_sentiment_snapshots",
+    "user_profiles",
+    "user_roles",
     "voip_quality_alerts"
    ],
    "rpcs": [
     "record_trunk_usage"
    ],
    "edges": [
+    "analyze-talk-ratio",
+    "detect-key-moments",
     "elevenlabs-conversation-token",
+    "generate-meeting-summary",
     "sip-config",
     "translate-utterance",
     "voice-command",
@@ -1367,7 +1402,7 @@
     "button",
     "user"
    ],
-   "arquivos_puxados": 59
+   "arquivos_puxados": 66
   },
   {
    "protegida": false,

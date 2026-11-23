@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)",
    "feat: 'Alterar foto' do perfil passa a enviar e exibir a foto",
    "docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)",
    "fix: snapshots de sentimento gravam com o call_session_id real (#165)",
-   "fix: talk ratio do card executivo usa transcricao real, nao 50% fixo (#164)",
-   "feat: humor da chamada ativa vem do dado real, nao de \"Positivo\" fixo (#163)"
+   "fix: talk ratio do card executivo usa transcricao real, nao 50% fixo (#164)"
   ]
  },
  "pr_template": null,
