@@ -47,7 +47,7 @@
 - [ ] **008** — Exigir papel de staff e limitar tamanho em `embed-kb-article` — onda 1 — Alta — Edge Function
 - [x] **009** — Fechar o relay de e-mail aberto em `notify-new-device` — onda 1 — Alta — Edge Function 🔒
 - [x] **010** — Fechar o relay de e-mail aberto em `notify-blocked-ip` — onda 1 — Alta — Edge Function
-- [ ] **011** — Impedir que um usuário notifique outro em `send-notification` — onda 1 — Média — Edge Function
+- [x] **011** — Impedir que um usuário notifique outro em `send-notification` — onda 1 — Média — Edge Function
 - [ ] **012** — Fazer o rate limit falhar fechado nos endpoints que gastam dinheiro — onda 1 — Média — Edge Function
 - [ ] **013** — Verificar assinatura HMAC em `whatsapp-inbound` — onda 1 — Alta — Edge Function 🔒
 - [ ] **014** — Verificar assinatura em `email-inbound` — onda 1 — Alta — Edge Function 🔒
