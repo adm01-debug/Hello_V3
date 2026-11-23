@@ -15,7 +15,7 @@ interface DailySample {
 interface ServiceStatus {
   label: string;
   description: string;
-  uptime: number;
+  uptime: number | null;
   samples: DailySample[];
   incidents: number;
 }
@@ -42,14 +42,14 @@ function groupByDay(rows: { at: string; healthy: boolean }[]): DailySample[] {
   return Array.from(map.values());
 }
 
-function computeUptime(samples: DailySample[]): number {
+function computeUptime(samples: DailySample[]): number | null {
   let ok = 0;
   let total = 0;
   for (const s of samples) {
     ok += s.ok;
     total += s.total;
   }
-  if (!total) return 100;
+  if (!total) return null;
   return Math.round((ok / total) * 10000) / 100;
 }
 
@@ -65,71 +65,83 @@ export default function Status() {
   const [loading, setLoading] = useState(true);
   const [services, setServices] = useState<ServiceStatus[]>([]);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const load = async () => {
-      const since = new Date();
-      since.setDate(since.getDate() - DAYS);
-      const sinceIso = since.toISOString();
+      try {
+        const since = new Date();
+        since.setDate(since.getDate() - DAYS);
+        const sinceIso = since.toISOString();
 
-      const [trunkRes, webhookRes] = await Promise.all([
-        supabase
-          .from("voip_trunk_health_checks")
-          .select("checked_at, reachable")
-          .gte("checked_at", sinceIso)
-          .limit(20000),
-        supabase
-          .from("webhook_flush_metrics")
-          .select("created_at, sent, failed")
-          .gte("created_at", sinceIso)
-          .limit(20000),
-      ]);
+        const [trunkRes, webhookRes] = await Promise.all([
+          supabase
+            .from("voip_trunk_health_checks")
+            .select("checked_at, reachable")
+            .gte("checked_at", sinceIso)
+            .limit(20000),
+          supabase
+            .from("webhook_flush_metrics")
+            .select("created_at, sent, failed")
+            .gte("created_at", sinceIso)
+            .limit(20000),
+        ]);
 
-      const trunkRows = (trunkRes.data ?? []).map((r) => ({
-        at: (r.checked_at as string) ?? new Date().toISOString(),
-        healthy: Boolean(r.reachable),
-      }));
-      const trunkSamples = groupByDay(trunkRows);
+        if (trunkRes.error || webhookRes.error) {
+          throw new Error(trunkRes.error?.message || webhookRes.error?.message || "Falha ao carregar status");
+        }
 
-      const webhookRows: { at: string; healthy: boolean }[] = [];
-      for (const r of webhookRes.data ?? []) {
-        const at = (r.created_at as string) ?? new Date().toISOString();
-        const ok = Number(r.sent ?? 0);
-        const err = Number(r.failed ?? 0);
-        for (let i = 0; i < ok; i++) webhookRows.push({ at, healthy: true });
-        for (let i = 0; i < err; i++) webhookRows.push({ at, healthy: false });
+        const trunkRows = (trunkRes.data ?? []).map((r) => ({
+          at: (r.checked_at as string) ?? new Date().toISOString(),
+          healthy: Boolean(r.reachable),
+        }));
+        const trunkSamples = groupByDay(trunkRows);
+
+        const webhookRows: { at: string; healthy: boolean }[] = [];
+        for (const r of webhookRes.data ?? []) {
+          const at = (r.created_at as string) ?? new Date().toISOString();
+          const ok = Number(r.sent ?? 0);
+          const err = Number(r.failed ?? 0);
+          for (let i = 0; i < ok; i++) webhookRows.push({ at, healthy: true });
+          for (let i = 0; i < err; i++) webhookRows.push({ at, healthy: false });
+        }
+        const webhookSamples = groupByDay(webhookRows);
+
+        const trunkUptime = computeUptime(trunkSamples);
+        const webhookUptime = computeUptime(webhookSamples);
+
+        setServices([
+          {
+            label: "Trunks VoIP",
+            description: "Registro SIP e chamadas em tempo real",
+            uptime: trunkUptime,
+            samples: trunkSamples,
+            incidents: trunkSamples.filter((s) => s.total > 0 && s.ok / s.total < 0.99).length,
+          },
+          {
+            label: "Webhooks & Integrações",
+            description: "Bitrix24, WhatsApp e integrações externas",
+            uptime: webhookUptime,
+            samples: webhookSamples,
+            incidents: webhookSamples.filter((s) => s.total > 0 && s.ok / s.total < 0.99).length,
+          },
+        ]);
+        setError(null);
+        setLastUpdate(new Date());
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Não foi possível carregar o status");
+      } finally {
+        setLoading(false);
       }
-      const webhookSamples = groupByDay(webhookRows);
-
-      const trunkUptime = computeUptime(trunkSamples);
-      const webhookUptime = computeUptime(webhookSamples);
-
-      setServices([
-        {
-          label: "Trunks VoIP",
-          description: "Registro SIP e chamadas em tempo real",
-          uptime: trunkUptime,
-          samples: trunkSamples,
-          incidents: trunkSamples.filter((s) => s.total > 0 && s.ok / s.total < 0.99).length,
-        },
-        {
-          label: "Webhooks & Integrações",
-          description: "Bitrix24, WhatsApp e integrações externas",
-          uptime: webhookUptime,
-          samples: webhookSamples,
-          incidents: webhookSamples.filter((s) => s.total > 0 && s.ok / s.total < 0.99).length,
-        },
-      ]);
-      setLastUpdate(new Date());
-      setLoading(false);
     };
     load();
     const interval = setInterval(load, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
-  const overallOk = services.every((s) => s.uptime >= 99);
-  const overallWarn = services.some((s) => s.uptime >= 95 && s.uptime < 99);
+  const overallOk = services.length > 0 && services.every((s) => s.uptime !== null && s.uptime >= 99);
+  const overallWarn = services.some((s) => s.uptime !== null && s.uptime >= 95 && s.uptime < 99);
+  const overallUnknown = services.some((s) => s.uptime === null) && !overallWarn && !overallOk;
 
   return (
     <MarketingLayout
@@ -144,6 +156,10 @@ export default function Status() {
                 <Badge variant="secondary" className="gap-2">
                   <Activity className="h-4 w-4 animate-pulse" /> Carregando métricas…
                 </Badge>
+              ) : error ? (
+                <Badge variant="destructive" className="gap-2">
+                  <XCircle className="h-4 w-4" /> Não foi possível carregar o status
+                </Badge>
               ) : overallOk ? (
                 <Badge className="gap-2 bg-success text-success-foreground">
                   <CheckCircle2 className="h-4 w-4" /> Todos os sistemas operacionais
@@ -151,6 +167,10 @@ export default function Status() {
               ) : overallWarn ? (
                 <Badge variant="secondary" className="gap-2 border-warning/40 bg-warning/10 text-warning">
                   <AlertTriangle className="h-4 w-4" /> Desempenho degradado
+                </Badge>
+              ) : overallUnknown ? (
+                <Badge variant="secondary" className="gap-2">
+                  <Activity className="h-4 w-4" /> Sem medição no período
                 </Badge>
               ) : (
                 <Badge variant="destructive" className="gap-2">
@@ -174,7 +194,11 @@ export default function Status() {
                     <p className="text-xs text-muted-foreground">{svc.description}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-primary">{svc.uptime.toFixed(2)}%</p>
+                    {svc.uptime === null ? (
+                      <p className="text-2xl font-bold text-muted-foreground">Sem medição</p>
+                    ) : (
+                      <p className="text-2xl font-bold text-primary">{svc.uptime.toFixed(2)}%</p>
+                    )}
                     <p className="text-xs text-muted-foreground">
                       {svc.incidents === 0
                         ? "sem incidentes"
