@@ -28,6 +28,8 @@
   "supabase/functions/_shared/external-payload-schemas.ts",
   "supabase/functions/_shared/external-payload-schemas_test.ts",
   "supabase/functions/_shared/hmac.ts",
+  "supabase/functions/_shared/mos.ts",
+  "supabase/functions/_shared/mos_test.ts",
   "supabase/functions/_shared/numeric-schemas.ts",
   "supabase/functions/_shared/numeric-schemas_test.ts",
   "supabase/functions/_shared/observability.ts",
@@ -3044,6 +3046,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "mos.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [

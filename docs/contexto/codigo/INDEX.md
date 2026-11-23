@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `5e20177278c31a28cfb7db2355c995e85bc7ca4a` (2026-11-23T17:37:31-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `560302de488363f05ba6f7195574653b899ae143` (2026-11-23T17:56:51-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1228), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1232), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,21 +34,21 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1663 |
-| arquivos_codigo | 1261 |
-| linhas_codigo | 171658 |
+| arquivos_total | 1667 |
+| arquivos_codigo | 1265 |
+| linhas_codigo | 171792 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
 | itens_menu | 96 |
-| modulos | 79 |
+| modulos | 80 |
 | componentes | 448 |
 | hooks | 193 |
 | edge_functions | 98 |
 | tabelas | 169 |
 | migrations | 242 |
 | cron_jobs | 11 |
-| testes | 352 |
+| testes | 353 |
 | workflows | 3 |
 | scripts | 34 |
 | docs_md | 120 |
@@ -57,13 +57,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - telas: src/pages (105)
 - componentes: src/components (317), src/pages (126), src/contexts (4)
 - hooks: src/hooks (174), src/components (12), src/contexts (4)
-- servicos_logica: src/lib (84), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (328), e2e/ (7), tests/ (6)
+- servicos_logica: src/lib (85), src/integrations (3), scripts/regras_negocio (2)
+- testes: co-localizado (__tests__) (329), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (6), scripts/regras_negocio (3), scripts/ai-context (2)
 - docs: (raiz) (5), docs (3), .github (1)
-- nomenclatura: {"componentes":"PascalCase (88%)","hooks":"use + PascalCase","servicos":"kebab-case (67%)","edge_functions":"kebab-case (100%)","tabelas":"snake_case (90%)"}
+- nomenclatura: {"componentes":"PascalCase (88%)","hooks":"use + PascalCase","servicos":"kebab-case (66%)","edge_functions":"kebab-case (100%)","tabelas":"snake_case (90%)"}
 - instruções para agentes no repo: AGENTS.md, CLAUDE.md
 
 ## Módulos (menu → domínio)
@@ -370,14 +370,14 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9842 nós · 25302 arestas · 747 comunidades · grafo do commit `5e201772`
-- comunidades maiores: lucide-react (291), client.ts (236), vitest (187), react (175), usePageTitle (166), traceHeaders (164), utils.ts (137), @tanstack/react-query (135), protectedRoutes.tsx (128), cn (115), react-router-dom (109), gerar.mjs (108)
+- 9854 nós · 25338 arestas · 751 comunidades · grafo do commit `560302de`
+- comunidades maiores: lucide-react (271), usePageTitle (245), client.ts (207), vitest (181), traceHeaders (155), react (148), utils.ts (140), cn (123), safe-date.ts (120), @tanstack/react-query (95), cors.ts (88), dependencies (83)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), excluded_sql() (scripts/supabase_snapshot/snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/estado/funcionalidades-planejadas.md (27)
-- docs/qa/05-PROGRESSO.md (12)
+- docs/qa/05-PROGRESSO.md (13)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
 - .github/workflows/ci.yml (7)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `560302d` fix: unifica o limiar de qualidade MOS em uma lib (E113) (#182)
 - 2026-11-23 `5e20177` fix: SLA passa a respeitar horario comercial e feriados (E111) (#181)
 - 2026-11-23 `74c525c` fix: envia version nos updates e liga o lock otimista (E110) (#180)
 - 2026-11-23 `cdae222` fix: escolhe a politica SLA mais especifica sem depender da ordem do banco (E109) (#179)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `9b30ac8` feat: E060 CallContext provider singleton — resolve A-001 (múltiplas instâncias)
 - 2026-11-23 `2e60683` feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)
 - 2026-11-23 `7df1b5b` feat: 'Alterar foto' do perfil passa a enviar e exibir a foto
-- 2026-11-23 `d768fc8` docs(qa): auditoria de QA completa e plano de correção em 300 etapas (#166)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -135,7 +135,7 @@
     "status",
     "user"
    ],
-   "arquivos_puxados": 72
+   "arquivos_puxados": 73
   },
   {
    "protegida": false,
@@ -1406,7 +1406,7 @@
     "button",
     "user"
    ],
-   "arquivos_puxados": 68
+   "arquivos_puxados": 69
   },
   {
    "protegida": false,
@@ -1865,7 +1865,7 @@
    "papeis": [
     "button"
    ],
-   "arquivos_puxados": 38
+   "arquivos_puxados": 39
   },
   {
    "protegida": false,
@@ -2966,7 +2966,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 56
+   "arquivos_puxados": 57
   },
   {
    "protegida": false,

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5e20177278` · branch `main` · 2026-11-23 20:39 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `560302de48` · branch `main` · 2026-11-23 20:57 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1118,9 +1118,11 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | AuditAction | create \| read \| update \| delete \| login \| logout \| export \| import \| view \| search \| transfer \| hold \| unhold | `src/lib/audit/index.ts` |
 | CircuitState | closed \| open \| half-open | `src/lib/bitrix/circuit-breaker.ts` |
 | SyncAttemptStatus | in_progress \| success \| failed \| pending | `src/lib/bitrix/sync-log.ts` |
+| MosLabel | poor \| fair \| good \| excellent \| unknown | `src/lib/metrics/mos.ts` |
 | NotificationCategory | system \| call \| security \| coaching \| gamification | `src/lib/notifications/index.ts` |
 | NotificationSeverity | info \| warning \| critical | `src/lib/notifications/index.ts` |
 | Severity | critical \| high \| medium \| low \| info | `src/lib/security/penetration-test-reporter.ts` |
+| MosLabel | poor \| fair \| good \| excellent \| unknown | `supabase/functions/_shared/mos.ts` |
 | CircuitState | CLOSED \| OPEN \| HALF_OPEN | `supabase/functions/_shared/resilience.ts` |
 | BudgetStatus | healthy \| warning \| exhausted \| unknown | `supabase/functions/health-check/slo-budget.ts` |
 | AnomalyKind | spike \| drift \| outage | `supabase/functions/voip-anomaly-remediation/index.ts` |
@@ -1817,7 +1819,6 @@ _nenhum item encontrado_
 | `MOS_RISK_THRESHOLD` | `3.5` | `supabase/functions/voip-quality-forecast/index.ts` |
 | `EFFECTIVENESS_WINDOW_MS` | `2` | `supabase/functions/voip-recommendation-insights/index.ts` |
 | `BASELINE_DAYS` | `7` | `supabase/functions/voip-recommendation-simulate/index.ts` |
-| `POOR_MOS_THRESHOLD` | `3.6` | `supabase/functions/voip-recommendation-simulate/index.ts` |
 | `CONCURRENT_CAP` | `3` | `supabase/functions/voip-recommendations/index.ts` |
 
 ### H.2 Prazos, expirações e janelas de tempo
@@ -2451,7 +2452,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4101 testes em 342 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4108 testes em 343 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2643,6 +2644,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/safe-number.instrumentation.test.ts` | 7 | safe-number instrumentation · emite evento com motivo e helper para input inválido · reporta clamp de min/max sem descartar o valor · propaga requestId ativo para os eventos … |
 | `src/lib/__tests__/security-alerts-webhook-queue.property.test.ts` | 7 | security-alerts-webhook-queue — property-based (fast-check) · enqueue nunca excede MAX_QUEUE (50) · clearWebhookQueue sempre esvazia · hashEndpoint é determinístico e sempre 12 chars hex … |
 | `src/lib/__tests__/talkRatio.test.ts` | 7 | computeTalkRatio · returns zeros for empty input · maps first speaker to agent and second to customer · detects interruptions when overlap > 0.3s … |
+| `src/lib/metrics/__tests__/mos.test.ts` | 7 | classifyMos · usa 3.5 como fronteira de ruim · separa mediano, bom e excelente · trata ausência e valores inválidos como unknown … |
 | `src/lib/mfa/__tests__/index.coverage.test.ts` | 7 | mfa (coverage) · returns disabled default when no settings row · maps existing settings row including backup codes · handles settings row with falsy/missing fields … |
 | `src/lib/security/__tests__/helmet-config.coverage.test.ts` | 7 | helmet-config (coverage) · DEFAULT_SECURITY_HEADERS has expected secure defaults · getSecurityHeaders returns defaults when no overrides · getSecurityHeaders merges overrides … |
 | `src/lib/session/__tests__/index.coverage.test.ts` | 7 | session/index · getActiveSessions maps rows · getActiveSessions handles null data and is_active falsy · terminateSession returns true when no error … |
@@ -2754,8 +2756,7 @@ _nenhum item encontrado_
 | `supabase/functions/check-queue-metrics/__tests__/index.test.ts` | 4 | check-queue-metrics: cálculo de avg wait time (contrato) · check-queue-metrics: cálculo de abandonment rate (contrato) · check-queue-metrics: service level (≤30s contrato) · check-queue-metrics: thresholds default (contrato) |
 | `supabase/functions/export-data-lake/__tests__/csv.test.ts` | 4 | toCsv: vazio devolve string vazia · toCsv: cabecalho e a uniao das colunas, sem perder dados · toCsv: escapa virgula, aspas e quebra de linha · toCsv: nulo e undefined viram vazio |
 | `supabase/functions/voip-anomaly-detector/__tests__/index.test.ts` | 4 | detectAnomalies — sem anomalias quando obs próximo da média · detectAnomalies — MOS muito baixo gera anomaly critical · detectAnomalies — jitter elevado gera warning · detectAnomalies — baseline insuficiente não gera anomaly |
-| `supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts` | 4 | planRemediation — mos:outage retorna ação crítica de codec · planRemediation — jitter:outage pausa campanhas · planRemediation — combinação desconhecida vira noop · idempotencyKey — chave estável e derivada do id |
-| … +42 linhas — lista completa em `context.json` | | |
+| … +43 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2984,6 +2985,7 @@ _nenhum item encontrado_
 | caracteres de controle ou acima do limite do banco). | `src/lib/voice-preferences.ts` |
 | * Retorna true se a chamada deve ser bloqueada (circuito aberto). */ | `src/lib/bitrix/circuit-breaker.ts` |
 | property-based testing (Onda D4). Deve espelhar 1:1 a lógica em produção. | `src/lib/dialer/predictive-pace.ts` |
+| * Classifica um MOS. O antigo limite de 3,6 para "mediano" foi dobrado em | `src/lib/metrics/mos.ts` |
 | * Zod schemas for runtime validation of API responses and form inputs. | `src/lib/validation/schemas.ts` |
 | Extraído do componente para a camada central de validação. | `src/lib/validation/voip-trunk.ts` |
 | Gesto do usuário: momento válido para pedir permissão de notificação. | `src/pages/PhoneDialer.tsx` |
@@ -2999,6 +3001,7 @@ _nenhum item encontrado_
 | * Retorna o IP do cliente apenas quando ele e um literal valido; senao null. */ | `supabase/functions/_shared/client-ip.ts` |
 | * @deprecated Use buildCorsHeaders(req) instead for proper origin validation */ | `supabase/functions/_shared/cors.ts` |
 | Webhook também não deve lançar | `supabase/functions/_shared/external-payload-schemas_test.ts` |
+| * Classifica um MOS. O antigo limite de 3,6 para "mediano" foi dobrado em | `supabase/functions/_shared/mos.ts` |
 | e garante que apenas números finitos sejam aceitos. | `supabase/functions/_shared/numeric-schemas_test.ts` |
 | * Check rate limit using persistent DB function. | `supabase/functions/_shared/rate-limit.ts` |
 | * Lightweight input validation helpers for Edge Functions. | `supabase/functions/_shared/validate.ts` |

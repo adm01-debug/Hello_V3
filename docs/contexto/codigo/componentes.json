@@ -2769,7 +2769,7 @@
     "AgentQualityRanking"
    ],
    "export_default": null,
-   "linhas": 186,
+   "linhas": 187,
    "dominio": "components/network",
    "hooks_locais": [],
    "tabelas": [
@@ -2916,7 +2916,7 @@
     "QualityHeatmap"
    ],
    "export_default": null,
-   "linhas": 143,
+   "linhas": 144,
    "dominio": "components/network",
    "hooks_locais": [],
    "tabelas": [],

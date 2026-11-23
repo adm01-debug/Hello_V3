@@ -2210,7 +2210,7 @@
    "modulo": "components/network",
    "arquivos": 17,
    "testes": 0,
-   "linhas": 3077,
+   "linhas": 3079,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2283,7 +2283,8 @@
     "hooks",
     "integrations/supabase",
     "lib",
-    "lib/export"
+    "lib/export",
+    "lib/metrics"
    ],
    "pacotes_externos": [
     "@tanstack/react-query",
@@ -3457,7 +3458,7 @@
    "modulo": "hooks",
    "arquivos": 168,
    "testes": 0,
-   "linhas": 20835,
+   "linhas": 20833,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4399,6 +4400,7 @@
     "lib",
     "lib/bitrix",
     "lib/export",
+    "lib/metrics",
     "lib/validation",
     "lib/webauthn"
    ],
@@ -5246,6 +5248,37 @@
    "pacotes_externos": [
     "date-fns"
    ]
+  },
+  {
+   "modulo": "lib/metrics",
+   "arquivos": 1,
+   "testes": 1,
+   "linhas": 35,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 0,
+   "hooks_locais": [],
+   "hooks_definidos": [],
+   "edges": [],
+   "tabelas": [],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [
+    "components/network",
+    "hooks"
+   ],
+   "depende_de_modulos": [],
+   "pacotes_externos": []
   },
   {
    "modulo": "lib/mfa",

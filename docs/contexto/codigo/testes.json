@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 352,
+ "total": 353,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 335
+  "unit": 336
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 328
+   "arquivos": 329
   },
   {
    "padrao": "e2e/",
@@ -2577,6 +2577,15 @@
    "casos": 4
   },
   {
+   "arquivo": "src/lib/metrics/__tests__/mos.test.ts",
+   "tipo": "unit",
+   "linhas": 40,
+   "testa": [
+    "src/lib/metrics/mos.ts"
+   ],
+   "casos": 5
+  },
+  {
    "arquivo": "src/lib/mfa/__tests__/index.coverage.test.ts",
    "tipo": "unit",
    "linhas": 67,
@@ -3356,6 +3365,7 @@
   "src/lib/language-detection.ts": 1,
   "src/lib/logger.ts": 8,
   "src/lib/meeting-summary-utils.ts": 1,
+  "src/lib/metrics/mos.ts": 1,
   "src/lib/mfa/index.ts": 3,
   "src/lib/navigation-progress-store.ts": 1,
   "src/lib/notifications/index.ts": 4,

@@ -3312,7 +3312,7 @@
    "hooks_exportados": [
     "useQualityTrendAnalyzer"
    ],
-   "linhas": 116,
+   "linhas": 117,
    "dominio": "hooks",
    "tabelas": [
     "voip_quality_alerts"
@@ -4587,7 +4587,7 @@
    "hooks_exportados": [
     "useVoipQualityMonitor"
    ],
-   "linhas": 206,
+   "linhas": 203,
    "dominio": "hooks",
    "tabelas": [
     "call_quality_metrics"

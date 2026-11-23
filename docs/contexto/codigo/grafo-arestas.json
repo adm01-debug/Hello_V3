@@ -1339,6 +1339,7 @@
    "src/components/ui/skeleton.tsx",
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts",
+   "src/lib/metrics/mos.ts",
    "src/lib/utils.ts"
   ],
   "src/components/network/AnomalyDetectionCard.tsx": [
@@ -1419,6 +1420,7 @@
    "src/components/ui/tooltip.tsx",
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts",
+   "src/lib/metrics/mos.ts",
    "src/lib/utils.ts"
   ],
   "src/components/network/RecommendationHistoryDrawer.tsx": [
@@ -2667,7 +2669,8 @@
   ],
   "src/hooks/useQualityTrendAnalyzer.ts": [
    "src/integrations/supabase/client.ts",
-   "src/lib/logger.ts"
+   "src/lib/logger.ts",
+   "src/lib/metrics/mos.ts"
   ],
   "src/hooks/useQueueAudioPrompts.ts": [
    "src/integrations/supabase/client.ts",
@@ -2898,7 +2901,8 @@
   ],
   "src/hooks/useVoipQualityMonitor.ts": [
    "src/integrations/supabase/client.ts",
-   "src/lib/logger.ts"
+   "src/lib/logger.ts",
+   "src/lib/metrics/mos.ts"
   ],
   "src/hooks/useVoipRecommendationHistory.ts": [
    "src/integrations/supabase/client.ts",
@@ -4620,6 +4624,9 @@
   "supabase/functions/_shared/external-payload-schemas_test.ts": [
    "supabase/functions/_shared/external-payload-schemas.ts"
   ],
+  "supabase/functions/_shared/mos_test.ts": [
+   "supabase/functions/_shared/mos.ts"
+  ],
   "supabase/functions/_shared/numeric-schemas.ts": [
    "supabase/functions/_shared/observability.ts"
   ],
@@ -4949,6 +4956,7 @@
   ],
   "supabase/functions/voip-recommendation-simulate/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/mos.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/voip-recommendations/index.ts": [

@@ -16,12 +16,12 @@
    "src/contexts (4)"
   ],
   "servicos_logica": [
-   "src/lib (84)",
+   "src/lib (85)",
    "src/integrations (3)",
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (328)",
+   "co-localizado (__tests__) (329)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -41,7 +41,7 @@
  "nomenclatura": {
   "componentes": "PascalCase (88%)",
   "hooks": "use + PascalCase",
-  "servicos": "kebab-case (67%)",
+  "servicos": "kebab-case (66%)",
   "edge_functions": "kebab-case (100%)",
   "tabelas": "snake_case (90%)"
  },
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: unifica o limiar de qualidade MOS em uma lib (E113) (#182)",
    "fix: SLA passa a respeitar horario comercial e feriados (E111) (#181)",
    "fix: envia version nos updates e liga o lock otimista (E110) (#180)",
    "fix: escolhe a politica SLA mais especifica sem depender da ordem do banco (E109) (#179)",
-   "fix: limita a nota da IA ao maximo do criterio no score-call (E106) (#178)",
-   "fix: rotula corretamente os canais do softphone (E100) (#177)"
+   "fix: limita a nota da IA ao maximo do criterio no score-call (E106) (#178)"
   ]
  },
  "pr_template": null,

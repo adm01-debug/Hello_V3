@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5e20177278` · branch `main` · 2026-11-23 20:39 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `560302de48` · branch `main` · 2026-11-23 20:57 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -256,9 +256,11 @@
 | `AuditAction` (TS) | create \| read \| update \| delete \| login \| logout \| export \| import \| view \| search \| transfer \| hold \| unhold |  | `src/lib/audit/index.ts` |
 | `CircuitState` (TS) | closed \| open \| half-open |  | `src/lib/bitrix/circuit-breaker.ts` |
 | `SyncAttemptStatus` (TS) | in_progress \| success \| failed \| pending |  | `src/lib/bitrix/sync-log.ts` |
+| `MosLabel` (TS) | poor \| fair \| good \| excellent \| unknown |  | `src/lib/metrics/mos.ts` |
 | `NotificationCategory` (TS) | system \| call \| security \| coaching \| gamification |  | `src/lib/notifications/index.ts` |
 | `NotificationSeverity` (TS) | info \| warning \| critical |  | `src/lib/notifications/index.ts` |
 | `Severity` (TS) | critical \| high \| medium \| low \| info |  | `src/lib/security/penetration-test-reporter.ts` |
+| `MosLabel` (TS) | poor \| fair \| good \| excellent \| unknown |  | `supabase/functions/_shared/mos.ts` |
 | `CircuitState` (TS) | CLOSED \| OPEN \| HALF_OPEN |  | `supabase/functions/_shared/resilience.ts` |
 | `BudgetStatus` (TS) | healthy \| warning \| exhausted \| unknown |  | `supabase/functions/health-check/slo-budget.ts` |
 | `AnomalyKind` (TS) | spike \| drift \| outage |  | `supabase/functions/voip-anomaly-remediation/index.ts` |
