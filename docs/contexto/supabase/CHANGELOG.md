@@ -2,6 +2,10 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-23 22:12 UTC
+
+- **functions** alterado (1): `public.get_user_role()`
+
 ## 2026-11-23 16:15 UTC
 
 - **functions** alterado (1): `public.check_all_tables_rls_status()`

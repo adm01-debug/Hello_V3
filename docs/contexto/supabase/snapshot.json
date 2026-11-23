@@ -33282,6 +33282,10 @@
         "callers": {
           "code": [
             {
+              "file": "supabase/functions/_shared/auth.ts",
+              "hits": 1
+            },
+            {
               "file": "supabase/migrations/20251224124524_38968a99-a0bc-4cff-a5c2-2fd2590d2e8e.sql",
               "hits": 1
             },
@@ -33326,7 +33330,7 @@
               "hits": 1
             }
           ],
-          "code_total_files": 11,
+          "code_total_files": 12,
           "cron": [],
           "db": [],
           "triggers": [],
