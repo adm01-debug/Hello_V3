@@ -87,7 +87,7 @@
 - [ ] **048** — Validar o corpo nas edges de IA e transcrição — onda 1 — Média — Edge Function
 - [ ] **049** — Validar o corpo nas edges de cálculo e exportação — onda 1 — Média — Edge Function
 - [ ] **050** — Parar de devolver a mensagem de erro interna ao cliente — onda 1 — Média — Edge Function
-- [ ] **051** — Tirar o host de produção dos scripts destrutivos — onda 1 — Média — Scripts
+- [x] **051** — Tirar o host de produção dos scripts destrutivos — onda 1 — Média — Scripts
 - [ ] **052** — Declarar `TO authenticated` nas policies que governam as tabelas mais sensíveis — onda 1 — Média — Banco 🔒
 - [ ] **053** — Teste de RLS que realmente toca o banco — onda 1 — Alta — Testes 🔒
 - [ ] **054** — Versionar o `verify_jwt` de todas as edge functions — onda 1 — Alta — Edge Function 🔒

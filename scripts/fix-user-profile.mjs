@@ -1,3 +1,5 @@
+// ATENCAO: grava em public.user_profiles e public.user_roles (INSERT ... ON CONFLICT DO UPDATE)
+// do banco apontado. Nao assume host de producao.
 import { Client } from 'pg';
 
 const clientConfig = (() => {
@@ -5,7 +7,9 @@ const clientConfig = (() => {
   const password = process.env.DB_PASSWORD;
   if (!password) throw new Error('Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente.');
   return {
-    host: process.env.DB_HOST ?? 'db.cfmlmcdyjuotqobjapng.supabase.co',
+    host: process.env.DB_HOST ?? (() => {
+      throw new Error('Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao.');
+    })(),
     port: Number(process.env.DB_PORT ?? 5432),
     database: process.env.DB_NAME ?? 'postgres',
     user: process.env.DB_USER ?? 'postgres',
