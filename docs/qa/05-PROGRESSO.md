@@ -41,7 +41,7 @@
 - [ ] **002** — Revogar o EXECUTE de `record_failed_login` e `record_successful_login` para `anon` — onda 1 — Crítica — Banco 🔒
 - [x] **003** — Fazer o bloqueio de login falhar fechado — onda 1 — Média — Hooks
 - [x] **004** — Exigir autenticação em `search-calls` e parar de usar a service_role — onda 1 — Crítica — Edge Function
-- [ ] **005** — Criar o módulo compartilhado de autenticação de edge function — onda 1 — Alta — Edge Function
+- [x] **005** — Criar o módulo compartilhado de autenticação de edge function — onda 1 — Alta — Edge Function
 - [ ] **006** — Exigir token de cron (ou papel de supervisor) em `auto-scorecard` — onda 1 — Alta — Edge Function 🔒
 - [ ] **007** — Exigir autenticação de visitante em `chatbot-respond` — onda 1 — Alta — Edge Function
 - [ ] **008** — Exigir papel de staff e limitar tamanho em `embed-kb-article` — onda 1 — Alta — Edge Function
