@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 358,
+ "total": 359,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 341
+  "unit": 342
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 334
+   "arquivos": 335
   },
   {
    "padrao": "e2e/",
@@ -2945,6 +2945,15 @@
    "casos": 11
   },
   {
+   "arquivo": "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
+   "tipo": "unit",
+   "linhas": 60,
+   "testa": [
+    "supabase/functions/notify-blocked-ip/index.ts"
+   ],
+   "casos": 4
+  },
+  {
    "arquivo": "supabase/functions/notify-new-device/__tests__/index.test.ts",
    "tipo": "unit",
    "linhas": 78,
@@ -3478,6 +3487,7 @@
   "supabase/functions/export-data-lake/csv.ts": 1,
   "supabase/functions/health-check/index.ts": 1,
   "supabase/functions/health-check/slo-budget.ts": 1,
+  "supabase/functions/notify-blocked-ip/index.ts": 1,
   "supabase/functions/notify-new-device/index.ts": 1,
   "supabase/functions/record-consent/index.ts": 1,
   "supabase/functions/score-call/index.ts": 1,
@@ -3684,7 +3694,6 @@
    "generate-summary",
    "global-load-test",
    "ldap-sync",
-   "notify-blocked-ip",
    "ocr-virtual-fax",
    "process-digest",
    "realtime-analysis",

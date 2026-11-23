@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "22ca6d0430791a595ccbf5c28899a977da54c5a4",
+  "sha": "fa2c38da09d4b3b4a0a837d4a49de84faedda663",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 22:04 UTC",
-  "files_total": 1721,
-  "code_files": 1518,
-  "code_lines": 188397
+  "generated_at": "2026-11-23 22:20 UTC",
+  "files_total": 1722,
+  "code_files": 1519,
+  "code_lines": 188504
  },
  "version": "1.3.2",
- "facts_hash": "8b878601cac80fb1",
+ "facts_hash": "dee6f51af741599b",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -158,7 +158,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 628,
+   ".ts": 629,
    ".tsx": 611,
    ".sql": 245,
    ".mjs": 27,
@@ -30587,8 +30587,11 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "JWT do usuário",
-    "tables": [],
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "tables": [
+     "audit_logs",
+     "rate_limit_logs"
+    ],
     "env": [
      "ADMIN_EMAIL",
      "FROM_EMAIL",
@@ -30600,7 +30603,9 @@
     "invokes": [],
     "doc": "",
     "errors": [],
-    "side_effects": [],
+    "side_effects": [
+     "notify"
+    ],
     "webhook_events": [],
     "idempotency": false
    },
@@ -34049,7 +34054,7 @@
   {
    "module": "src/pages",
    "files": 134,
-   "lines": 21250,
+   "lines": 21251,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -34275,8 +34280,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 185,
-   "lines": 20898,
+   "files": 186,
+   "lines": 21004,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34393,6 +34398,7 @@
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
     "index.ts: handler",
     "slo-budget.ts: BudgetStatus, BudgetInput, BudgetResult, budget",
+    "index.ts: buildBlockedIpEmail, handler",
     "index.ts: buildNewDeviceEmail, handler",
     "index.ts: computeWeightedTotal",
     "index.ts: handler",
@@ -34405,8 +34411,7 @@
     "index.ts: HealthBreakdown, computeHealthScore, normalizeMos, normalizeAlerts, normalizeCapacity",
     "index.ts: handler",
     "index.ts: QualitySample, ForecastPoint, ForecastResult, linearSlope, buildBuckets, forecast",
-    "index.ts: ActionRow, HistoryAggregations, aggregate",
-    "index.ts: ActionRow, QualityRow, InsightsResponse, buildHeatmap, calcEffectiveness, computeRecurring"
+    "index.ts: ActionRow, HistoryAggregations, aggregate"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -42693,10 +42698,6 @@
    {
     "file": "supabase/functions/health-check/slo-budget.ts",
     "text": "que uma tendencia: burn_rate de 1 e o alvo, nao o limite."
-   },
-   {
-    "file": "supabase/functions/notify-blocked-ip/index.ts",
-    "text": "Input validation"
    },
    {
     "file": "supabase/functions/request-password-reset/index.ts",
@@ -72562,6 +72563,22 @@
     "name": "budget - total nao finito vira unknown"
    },
    {
+    "file": "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
+    "name": "notify-blocked-ip: sem header Authorization devolve 401"
+   },
+   {
+    "file": "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
+    "name": "notify-blocked-ip: preflight OPTIONS responde com CORS da origem permitida"
+   },
+   {
+    "file": "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
+    "name": "notify-blocked-ip: HTML do alerta escapa todo valor vindo do corpo"
+   },
+   {
+    "file": "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
+    "name": "notify-blocked-ip: template do alerta permanece igual para dados normais"
+   },
+   {
     "file": "supabase/functions/notify-new-device/__tests__/index.test.ts",
     "name": "notify-new-device: sem header Authorization devolve 401"
    },
@@ -73575,6 +73592,10 @@
    {
     "file": "supabase/functions/check-goals/index.ts",
     "call": "notify_on_warning"
+   },
+   {
+    "file": "supabase/functions/notify-blocked-ip/index.ts",
+    "call": "notify"
    },
    {
     "file": "supabase/functions/notify-new-device/index.ts",
@@ -114078,7 +114099,7 @@
   },
   "src/pages/Login.tsx": {
    "path": "src/pages/Login.tsx",
-   "lines": 187,
+   "lines": 188,
    "exports": [
     "function Login"
    ],
@@ -120100,7 +120121,11 @@
   },
   "supabase/functions/notify-blocked-ip/index.ts": {
    "path": "supabase/functions/notify-blocked-ip/index.ts",
-   "lines": 102,
+   "lines": 148,
+   "exports": [
+    "function buildBlockedIpEmail",
+    "function handler"
+   ],
    "external_urls": [
     "https://api.resend.com/emails"
    ],
@@ -120109,8 +120134,22 @@
     "FROM_EMAIL",
     "RESEND_API_KEY"
    ],
-   "rule_comments": [
-    "Input validation"
+   "side_effects": [
+    "notify"
+   ]
+  },
+  "supabase/functions/notify-blocked-ip/__tests__/index.test.ts": {
+   "path": "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
+   "lines": 60,
+   "is_test": true,
+   "tests": [
+    "notify-blocked-ip: sem header Authorization devolve 401",
+    "notify-blocked-ip: preflight OPTIONS responde com CORS da origem permitida",
+    "notify-blocked-ip: HTML do alerta escapa todo valor vindo do corpo",
+    "notify-blocked-ip: template do alerta permanece igual para dados normais"
+   ],
+   "side_effects": [
+    "notify"
    ]
   },
   "supabase/functions/notify-new-device/index.ts": {
@@ -124281,10 +124320,22 @@
   }
  },
  "git": {
-  "sha": "22ca6d0430791a595ccbf5c28899a977da54c5a4",
+  "sha": "fa2c38da09d4b3b4a0a837d4a49de84faedda663",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "fa2c38d",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: notify-blocked-ip exige sessao autenticada, valida corpo e escapa HTML (E010) (#188)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/pages/Login.tsx",
+     "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
+     "supabase/functions/notify-blocked-ip/index.ts"
+    ]
+   },
    {
     "sha": "22ca6d0",
     "date": "2026-11-23",
@@ -124648,21 +124699,12 @@
     "files": [
      "src/components/notifications/UnifiedNotificationDropdown.tsx"
     ]
-   },
-   {
-    "sha": "08ee7a3",
-    "date": "2026-11-22",
-    "author": "adm01-debug",
-    "subject": "docs: createTestData tem gate DEV duplo; 6 hooks orfaos estao wired (#156)",
-    "files": [
-     "docs/estado/hooks-parte3.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    18
+    19
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -124677,6 +124719,10 @@
     3
    ],
    [
+    "src/pages/Login.tsx",
+    2
+   ],
+   [
     "supabase/functions/enforce-sla/index.ts",
     2
    ],
@@ -124687,6 +124733,14 @@
    [
     "src/App.tsx",
     2
+   ],
+   [
+    "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
+    1
+   ],
+   [
+    "supabase/functions/notify-blocked-ip/index.ts",
+    1
    ],
    [
     "supabase/functions/_shared/html.ts",
@@ -124725,19 +124779,7 @@
     1
    ],
    [
-    "src/pages/Login.tsx",
-    1
-   ],
-   [
     "src/pages/__tests__/Login.lockout.test.tsx",
-    1
-   ],
-   [
-    "src/components/conversation-intelligence/TalkRatioChart.tsx",
-    1
-   ],
-   [
-    "src/hooks/useTalkRatio.ts",
     1
    ]
   ]

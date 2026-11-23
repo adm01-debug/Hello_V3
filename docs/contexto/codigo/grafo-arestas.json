@@ -4814,7 +4814,12 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/notify-blocked-ip/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/auth.ts",
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/html.ts",
+   "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/validate.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/notify-new-device/index.ts": [
    "supabase/functions/_shared/auth.ts",

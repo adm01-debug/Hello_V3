@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `22ca6d0430` · branch `main` · 2026-11-23 22:04 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fa2c38da09` · branch `main` · 2026-11-23 22:20 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2456,7 +2456,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4140 testes em 348 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4144 testes em 349 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2760,7 +2760,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
 | `supabase/functions/analyze-talk-ratio/__tests__/index.test.ts` | 4 | chamada com duração 0 é insuficiente, nunca  · duração positiva sem fala é insuficiente · NaN do quociente não cai em optimal · com áudio, classifica pelo intervalo 40–60% |
 | `supabase/functions/bitrix-api/__tests__/index.test.ts` | 4 | bitrix-api: OPTIONS devolve preflight CORS vazio · bitrix-api: sem Authorization responde 401 · bitrix-api: token invalido responde 401, nunca 500 · bitrix-api: acao desconhecida e recusada pelo schema |
-| … +48 linhas — lista completa em `context.json` | | |
+| … +49 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2870,6 +2870,7 @@ _nenhum item encontrado_
 | `invoke(` | `src/pages/admin/SloDashboard.tsx` |
 | `notify_on_critical` | `supabase/functions/check-goals/index.ts` |
 | `notify_on_warning` | `supabase/functions/check-goals/index.ts` |
+| `notify` | `supabase/functions/notify-blocked-ip/index.ts` |
 | `notify` | `supabase/functions/notify-new-device/index.ts` |
 | `invoke(` | `supabase/functions/sync-crm-queue/index.ts` |
 | `notify_on_block` | `supabase/functions/validate-geo/index.ts` |
@@ -3035,7 +3036,6 @@ _nenhum item encontrado_
 | Rate-limit: uma trilha aberta por agente (evita duplicar). | `supabase/functions/generate-coaching-track/index.ts` |
 | Budget esgotado alerta mesmo com status ainda dentro do limite: e o sinal | `supabase/functions/health-check/index.ts` |
 | que uma tendencia: burn_rate de 1 e o alvo, nao o limite. | `supabase/functions/health-check/slo-budget.ts` |
-| Input validation | `supabase/functions/notify-blocked-ip/index.ts` |
 | Endpoint publico (usuario deslogado precisa resetar). Sem rate limit, o | `supabase/functions/request-password-reset/index.ts` |
 | ao max_score do critério — a IA pode devolver nota acima do máximo (A-029). | `supabase/functions/score-call/index.ts` |
 | Mesma regra de clamp de auto-scorecard/index.ts. | `supabase/functions/score-call/index.ts` |

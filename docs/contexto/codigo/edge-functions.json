@@ -1662,7 +1662,7 @@
    "nome": "notify-blocked-ip",
    "entrada": "supabase/functions/notify-blocked-ip/index.ts",
    "arquivos": 1,
-   "linhas": 102,
+   "linhas": 148,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1680,7 +1680,12 @@
     "api.resend.com"
    ],
    "usa_shared": [
-    "cors.ts"
+    "auth.ts",
+    "cors.ts",
+    "html.ts",
+    "rate-limit.ts",
+    "validate.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/pages/Login.tsx"
@@ -1688,7 +1693,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "notify-new-device",
