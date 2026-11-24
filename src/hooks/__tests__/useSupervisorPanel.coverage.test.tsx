@@ -251,4 +251,49 @@ describe('useSupervisorPanel (coverage)', () => {
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.queueMetrics.totalCompleted).toBe(0);
   });
+
+  it('startListening avisa quando a auditoria falha', async () => {
+    setSingle('barge_in_sessions', {
+      id: 'bi-1', call_session_id: 'call-1', supervisor_name: 'Sup',
+      agent_name: 'Agent A', status: 'listening', started_at: new Date().toISOString(),
+    });
+    setTable('call_control_audit_logs', null, { message: 'denied' });
+    const { result } = renderHook(() => useSupervisorPanel());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    act(() => result.current.setSelectedCall(activeCall));
+    await waitFor(() => expect(result.current.selectedCall).not.toBeNull());
+    await act(async () => { await result.current.startListening(); });
+    expect(toast.warning).toHaveBeenCalledWith('Ação concluída, mas não foi registrada na auditoria');
+    expect(toast.success).not.toHaveBeenCalled();
+  });
+
+  it('startListening confirma sucesso quando a auditoria grava', async () => {
+    setSingle('barge_in_sessions', {
+      id: 'bi-2', call_session_id: 'call-1', supervisor_name: 'Sup',
+      agent_name: 'Agent A', status: 'listening', started_at: new Date().toISOString(),
+    });
+    const { result } = renderHook(() => useSupervisorPanel());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    act(() => result.current.setSelectedCall(activeCall));
+    await waitFor(() => expect(result.current.selectedCall).not.toBeNull());
+    await act(async () => { await result.current.startListening(); });
+    expect(toast.success).toHaveBeenCalledWith('Escuta registrada na chamada de Agent A');
+    expect(toast.warning).not.toHaveBeenCalled();
+  });
+
+  it('stopListening avisa quando a auditoria falha', async () => {
+    setSingle('barge_in_sessions', {
+      id: 'bi-3', call_session_id: 'call-1', supervisor_name: 'Sup',
+      agent_name: 'Agent A', status: 'listening', started_at: new Date().toISOString(),
+    });
+    const { result } = renderHook(() => useSupervisorPanel());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    act(() => result.current.setSelectedCall(activeCall));
+    await waitFor(() => expect(result.current.selectedCall).not.toBeNull());
+    await act(async () => { await result.current.startListening(); });
+    vi.clearAllMocks();
+    setTable('call_control_audit_logs', null, { message: 'denied' });
+    await act(async () => { await result.current.stopListening(); });
+    expect(toast.warning).toHaveBeenCalledWith('Ação concluída, mas não foi registrada na auditoria');
+  });
 });

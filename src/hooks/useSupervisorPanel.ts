@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useCriticalAlertNotifications, AlertSoundConfig } from '@/hooks/useCriticalAlertNotifications';
 import { logger } from '@/lib/logger';
+import type { Json } from '@/integrations/supabase/types';
 
 import { safeToLocaleTimeString } from "@/lib/safe-date";
 export interface ActiveCall {
@@ -191,6 +192,21 @@ export function useSupervisorPanel() {
     else { setActiveBargeIn(null); toast.info('Você saiu da conferência'); }
   };
 
+  const auditOrWarn = async (entry: {
+    call_session_id: string;
+    event_type: 'listen_start' | 'listen_stop';
+    source: string;
+    details: Json;
+  }): Promise<boolean> => {
+    const { error } = await supabase.from('call_control_audit_logs').insert(entry);
+    if (error) {
+      logger.error('Falha ao gravar auditoria de controle de chamada', { entry, error });
+      toast.warning('Ação concluída, mas não foi registrada na auditoria');
+      return false;
+    }
+    return true;
+  };
+
   const startListening = async () => {
     if (!selectedCall || !selectedCall.agent_name) { toast.error('Selecione uma chamada primeiro'); return; }
     if (activeListen) return;
@@ -203,14 +219,14 @@ export function useSupervisorPanel() {
       toast.error('Erro ao registrar sessão de escuta');
       return;
     }
-    await supabase.from('call_control_audit_logs').insert({
+    const audited = await auditOrWarn({
       call_session_id: selectedCall.id,
       event_type: 'listen_start',
       source: 'supervisor_panel',
       details: { supervisor: supervisorName, agent: selectedCall.agent_name },
     });
     if (data) setActiveListen(data as BargeInSession);
-    toast.success(`Escuta registrada na chamada de ${selectedCall.agent_name}`);
+    if (audited) toast.success(`Escuta registrada na chamada de ${selectedCall.agent_name}`);
   };
 
   const stopListening = async () => {
@@ -222,7 +238,7 @@ export function useSupervisorPanel() {
       toast.error('Erro ao encerrar sessão de escuta');
       return;
     }
-    await supabase.from('call_control_audit_logs').insert({
+    await auditOrWarn({
       call_session_id: activeListen.call_session_id,
       event_type: 'listen_stop',
       source: 'supervisor_panel',
