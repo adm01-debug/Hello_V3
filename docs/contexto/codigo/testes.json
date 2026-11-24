@@ -5,10 +5,10 @@
   "vitest",
   "playwright"
  ],
- "total": 396,
+ "total": 397,
  "por_tipo": {
   "contrato": 1,
-  "e2e": 13,
+  "e2e": 14,
   "pytest": 2,
   "unit": 379
  },
@@ -23,7 +23,7 @@
   },
   {
    "padrao": "tests/",
-   "arquivos": 6
+   "arquivos": 7
   },
   {
    "padrao": "co-localizado (*.test)",
@@ -3604,6 +3604,13 @@
    "linhas": 73,
    "testa": [],
    "casos": 6
+  },
+  {
+   "arquivo": "tests/e2e/screenshots.spec.ts",
+   "tipo": "e2e",
+   "linhas": 124,
+   "testa": [],
+   "casos": 2
   },
   {
    "arquivo": "tests/e2e/webhook-audit-ndjson.spec.ts",

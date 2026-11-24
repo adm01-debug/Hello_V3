@@ -24,7 +24,7 @@
   "testes": [
    "co-localizado (__tests__) (372)",
    "e2e/ (7)",
-   "tests/ (6)"
+   "tests/ (7)"
   ],
   "edge_functions": "supabase/functions",
   "migrations": "supabase/migrations",
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)",
+   "chore: remove i18n.json e public/locales sem consumidores (#303)",
    "chore: estados vazios que explicam o que falta (#302)",
    "chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)",
-   "fix: meta de SLO unica na edge (99,9%) e painel lendo do servidor (#300)",
-   "test: prova a resiliencia das edges com upstream fora do ar (#298)",
-   "fix: guard de CI contra fetch sem prazo e migra os 5 ultimos fetch (#297)"
+   "fix: meta de SLO unica na edge (99,9%) e painel lendo do servidor (#300)"
   ]
  },
  "pr_template": null,

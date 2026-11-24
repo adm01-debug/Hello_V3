@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "045527091582bc39ee3d12ae150fb53fd469a644",
+  "sha": "a0781e26e7e61b02f1c1d4b2d55cbf96ac114990",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 18:14 UTC",
-  "files_total": 1791,
-  "code_files": 1587,
-  "code_lines": 194170
+  "generated_at": "2026-11-24 19:11 UTC",
+  "files_total": 1790,
+  "code_files": 1588,
+  "code_lines": 194294
  },
  "version": "1.3.2",
- "facts_hash": "1e1eabd7d64cfbc3",
+ "facts_hash": "0cead8ca0388b7b9",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 654,
+   ".ts": 655,
    ".tsx": 652,
    ".sql": 246,
    ".mjs": 28,
@@ -34851,8 +34851,8 @@
   },
   {
    "module": "tests",
-   "files": 6,
-   "lines": 369,
+   "files": 7,
+   "lines": 493,
    "tables": [],
    "exports": [
     "adminSession.ts: SeedAdminSessionOptions, seedAdminSession",
@@ -34860,12 +34860,15 @@
    ],
    "docs": [],
    "deps": [
-    "@playwright/test"
+    "@playwright/test",
+    "node:fs",
+    "node:path"
    ],
    "imports_modules": [],
    "file_list": [
     "tests/e2e/auth.spec.ts",
     "tests/e2e/performance.spec.ts",
+    "tests/e2e/screenshots.spec.ts",
     "tests/e2e/webhook-audit-ndjson.spec.ts",
     "tests/e2e/workflow.spec.ts",
     "tests/e2e/helpers/adminSession.ts",
@@ -71926,6 +71929,14 @@
    {
     "file": "tests/e2e/performance.spec.ts",
     "name": "should handle rapid requests to analyze-call"
+   },
+   {
+    "file": "tests/e2e/screenshots.spec.ts",
+    "name": "Etapa 270 — telas internas em largura de celular"
+   },
+   {
+    "file": "tests/e2e/screenshots.spec.ts",
+    "name": "captura 5 telas em 3 larguras e mede transbordo horizontal"
    },
    {
     "file": "tests/e2e/webhook-audit-ndjson.spec.ts",
@@ -123732,6 +123743,15 @@
     "should handle rapid requests to analyze-call"
    ]
   },
+  "tests/e2e/screenshots.spec.ts": {
+   "path": "tests/e2e/screenshots.spec.ts",
+   "lines": 124,
+   "is_test": true,
+   "tests": [
+    "Etapa 270 — telas internas em largura de celular",
+    "captura 5 telas em 3 larguras e mede transbordo horizontal"
+   ]
+  },
   "tests/e2e/webhook-audit-ndjson.spec.ts": {
    "path": "tests/e2e/webhook-audit-ndjson.spec.ts",
    "lines": 113,
@@ -123803,10 +123823,34 @@
   }
  },
  "git": {
-  "sha": "045527091582bc39ee3d12ae150fb53fd469a644",
+  "sha": "a0781e26e7e61b02f1c1d4b2d55cbf96ac114990",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a0781e2",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)",
+    "files": [
+     ".gitignore",
+     "docs/qa/05-PROGRESSO.md",
+     "tests/e2e/screenshots.spec.ts"
+    ]
+   },
+   {
+    "sha": "0413e5a",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: remove i18n.json e public/locales sem consumidores (#303)",
+    "files": [
+     "docs/adr/016-multilingual-translation.md",
+     "docs/agentes/mapa-repo.md",
+     "docs/qa/05-PROGRESSO.md",
+     "i18n.json",
+     "public/locales/en/common.json"
+    ]
+   },
    {
     "sha": "0455270",
     "date": "2026-11-24",
@@ -124233,33 +124277,6 @@
      "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
      "src/hooks/useHoldReminder.ts"
     ]
-   },
-   {
-    "sha": "9b4d4b9",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
-     "src/hooks/__tests__/useCallRecording.coverage.test.tsx",
-     "src/hooks/__tests__/useRecordings.coverage.test.tsx",
-     "src/hooks/useActiveCallsRealtime.ts",
-     "src/hooks/useCallRecording.ts",
-     "src/hooks/useRecordings.ts",
-     "src/pages/Recordings.tsx",
-     "src/pages/__tests__/Recordings.pagination.test.tsx"
-    ]
-   },
-   {
-    "sha": "a7041fc",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/integrations/supabase/types.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -124269,7 +124286,7 @@
    ],
    [
     "docs/agentes/mapa-repo.md",
-    5
+    6
    ],
    [
     "src/hooks/useContacts.ts",
@@ -124308,10 +124325,6 @@
     2
    ],
    [
-    "src/hooks/useActiveCallsRealtime.ts",
-    2
-   ],
-   [
     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
     2
    ],
@@ -124320,27 +124333,31 @@
     2
    ],
    [
+    ".gitignore",
+    1
+   ],
+   [
+    "tests/e2e/screenshots.spec.ts",
+    1
+   ],
+   [
+    "docs/adr/016-multilingual-translation.md",
+    1
+   ],
+   [
+    "i18n.json",
+    1
+   ],
+   [
+    "public/locales/en/common.json",
+    1
+   ],
+   [
     "src/components/call-history/CallSessionsList.tsx",
     1
    ],
    [
     "src/components/call-history/__tests__/CallSessionsList.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/pages/roles/__tests__/useRoles.test.ts",
-    1
-   ],
-   [
-    "src/pages/roles/useRoles.ts",
-    1
-   ],
-   [
-    "docs/observabilidade/SLI_SLO.md",
     1
    ]
   ]

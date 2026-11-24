@@ -3,11 +3,11 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1306)",
+   "TypeScript (1307)",
    "SQL (246)",
    "Markdown (121)",
    "JavaScript (30)",
-   "JSON (18)",
+   "JSON (16)",
    "Python (5)",
    "YAML (3)",
    "Shell (2)"
@@ -1022,10 +1022,8 @@
   ]
  },
  "i18n": {
-  "arquivos": 1,
-  "idiomas": [
-   "en"
-  ],
+  "arquivos": 0,
+  "idiomas": [],
   "lib": []
  }
 }
