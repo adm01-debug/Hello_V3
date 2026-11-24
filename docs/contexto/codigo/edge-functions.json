@@ -28,6 +28,8 @@
   "supabase/functions/_shared/client-ip_test.ts",
   "supabase/functions/_shared/constant-time.ts",
   "supabase/functions/_shared/cors.ts",
+  "supabase/functions/_shared/errors.ts",
+  "supabase/functions/_shared/errors_test.ts",
   "supabase/functions/_shared/external-payload-schemas.ts",
   "supabase/functions/_shared/external-payload-schemas_test.ts",
   "supabase/functions/_shared/hmac.ts",
@@ -268,7 +270,7 @@
    "nome": "auto-scorecard",
    "entrada": "supabase/functions/auto-scorecard/index.ts",
    "arquivos": 1,
-   "linhas": 209,
+   "linhas": 210,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -293,6 +295,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "resilience.ts"
    ],
    "chamada_pelo_front": [],
@@ -342,7 +345,7 @@
    "nome": "chat-widget-session",
    "entrada": "supabase/functions/chat-widget-session/index.ts",
    "arquivos": 3,
-   "linhas": 242,
+   "linhas": 239,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -363,6 +366,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "rate-limit.ts",
     "validator.ts"
    ],
@@ -1088,7 +1092,7 @@
    "nome": "email-inbound",
    "entrada": "supabase/functions/email-inbound/index.ts",
    "arquivos": 3,
-   "linhas": 284,
+   "linhas": 281,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",
@@ -1111,6 +1115,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validator.ts"
    ],
    "chamada_pelo_front": [],
@@ -1772,7 +1777,7 @@
    "nome": "ocr-virtual-fax",
    "entrada": "supabase/functions/ocr-virtual-fax/index.ts",
    "arquivos": 1,
-   "linhas": 94,
+   "linhas": 95,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1795,7 +1800,8 @@
     "openrouter.ai"
    ],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useVirtualFaxOcr.ts"
@@ -2227,7 +2233,7 @@
    "nome": "suggest-shift-swaps",
    "entrada": "supabase/functions/suggest-shift-swaps/index.ts",
    "arquivos": 1,
-   "linhas": 110,
+   "linhas": 111,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2248,7 +2254,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useShiftSwapSuggestions.ts"
@@ -2425,6 +2432,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "resilience.ts"
    ],
    "chamada_pelo_front": [
@@ -2923,7 +2931,7 @@
    "nome": "voip-quality-alerts-summary",
    "entrada": "supabase/functions/voip-quality-alerts-summary/index.ts",
    "arquivos": 1,
-   "linhas": 107,
+   "linhas": 108,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2941,6 +2949,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [],

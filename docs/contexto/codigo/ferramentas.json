@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1279)",
+   "TypeScript (1281)",
    "SQL (245)",
    "Markdown (120)",
    "JavaScript (29)",
@@ -508,7 +508,7 @@
    },
    {
     "host": "hello-v3.vercel.app",
-    "arquivos": 18
+    "arquivos": 19
    },
    {
     "host": "cfmlmcdyjuotqobjapng.supabase.co",
@@ -592,6 +592,10 @@
    },
    {
     "host": "evil.com.br",
+    "arquivos": 1
+   },
+   {
+    "host": "exemplo.test",
     "arquivos": 1
    },
    {

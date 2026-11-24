@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ea6b0f0f81` · branch `main` · 2026-11-24 04:22 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `668bf69765` · branch `main` · 2026-11-24 04:34 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1820,6 +1820,7 @@ _nenhum item encontrado_
 | `PAGE_SIZE` | `25` | `src/pages/roles/RoleAuditTrail.tsx` |
 | `MINUTE_MS` | `60` | `supabase/functions/_shared/business-hours.ts` |
 | `MAX_ITERATIONS` | `400` | `supabase/functions/_shared/business-hours.ts` |
+| `GENERIC_INTERNAL_MESSAGE` | `"Erro interno"` | `supabase/functions/_shared/errors.ts` |
 | `DEFAULT_FETCH_TIMEOUT_MS` | `15` | `supabase/functions/_shared/resilience.ts` |
 | `DEFAULT_THRESHOLD` | `0.7` | `supabase/functions/chatbot-respond/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/chatbot-respond/index.ts` |
@@ -2430,7 +2431,7 @@ _nenhum item encontrado_
 | Falha ao remover regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao salvar regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao executar enforcement de SLA | `src/hooks/useSLA.ts` |
-| … +258 linhas — lista completa em `context.json` | |
+| … +259 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 

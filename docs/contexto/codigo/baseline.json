@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ea6b0f0f81970be2e1949325b3e0fb0f57f10f59",
+  "commit": "668bf69765cb442366d31e658a71276115af8ffd",
   "branch": "main",
-  "data_commit": "2026-11-24T01:22:03-03:00",
+  "data_commit": "2026-11-24T01:33:44-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "668bf69",
+    "data": "2026-11-24",
+    "assunto": "fix: nao vazar mensagem de erro interna nas edges (E050 onda 1) (#230)"
+   },
    {
     "sha": "ea6b0f0",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "6be7a63",
     "data": "2026-11-23",
     "assunto": "fix: importacao de DNC passa a conferir o resultado real da RPC (#206)"
-   },
-   {
-    "sha": "9add2c1",
-    "data": "2026-11-23",
-    "assunto": "fix: grava o desfecho real da chamada em call_sessions (#205)"
    }
   ],
-  "arquivos_mudados_7d": 1070,
+  "arquivos_mudados_7d": 1072,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 59
+    "mudancas": 60
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -152,11 +152,11 @@
     "mudancas": 54
    },
    {
-    "pasta": "src/lib/__tests__",
-    "mudancas": 29
+    "pasta": "supabase/functions/_shared",
+    "mudancas": 31
    },
    {
-    "pasta": "supabase/functions/_shared",
+    "pasta": "src/lib/__tests__",
     "mudancas": 29
    },
    {
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 59
+    "mudancas": 60
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -290,18 +290,18 @@
     "mudancas": 4
    },
    {
-    "arquivo": "supabase/functions/chatbot-respond/index.ts",
+    "arquivo": "supabase/functions/auto-scorecard/index.ts",
     "mudancas": 4
    },
    {
-    "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
+    "arquivo": "supabase/functions/chatbot-respond/index.ts",
     "mudancas": 4
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 208
+    "commits": 209
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1714,
-  "arquivos_codigo": 1312,
-  "linhas_codigo": 176712,
+  "arquivos_total": 1716,
+  "arquivos_codigo": 1314,
+  "linhas_codigo": 176869,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -519,8 +519,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 200,
-   "linhas": 22355
+   "arquivos": 202,
+   "linhas": 22512
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -670,7 +670,7 @@
   },
   {
    "arquivo": "supabase/functions/ocr-virtual-fax/index.ts",
-   "linha": 59,
+   "linha": 60,
    "tipo": "TODO",
    "texto": "o texto do documento fornecido em português. Preserve quebras de linha. Sem comentários.' },"
   },

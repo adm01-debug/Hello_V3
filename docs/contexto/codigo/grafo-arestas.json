@@ -4662,6 +4662,12 @@
   "supabase/functions/_shared/client-ip_test.ts": [
    "supabase/functions/_shared/client-ip.ts"
   ],
+  "supabase/functions/_shared/errors.ts": [
+   "supabase/functions/_shared/observability.ts"
+  ],
+  "supabase/functions/_shared/errors_test.ts": [
+   "supabase/functions/_shared/errors.ts"
+  ],
   "supabase/functions/_shared/external-payload-schemas.ts": [
    "supabase/functions/_shared/numeric-schemas.ts"
   ],
@@ -4724,6 +4730,7 @@
   ],
   "supabase/functions/auto-scorecard/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/bitrix-api/index.ts": [
@@ -4736,6 +4743,7 @@
   ],
   "supabase/functions/chat-widget-session/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/validator.ts",
    "supabase/functions/chat-widget-session/schema.ts"
@@ -4826,6 +4834,7 @@
   ],
   "supabase/functions/email-inbound/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/validator.ts",
    "supabase/functions/email-inbound/schema.ts"
   ],
@@ -4923,7 +4932,8 @@
    "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/ocr-virtual-fax/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/process-digest/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -4977,7 +4987,8 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/suggest-shift-swaps/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/sync-crm-queue/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -4995,6 +5006,7 @@
   ],
   "supabase/functions/translate-utterance/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/validate-geo/index.ts": [
@@ -5054,6 +5066,7 @@
   ],
   "supabase/functions/voip-quality-alerts-summary/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/voip-quality-forecast/index.ts": [
