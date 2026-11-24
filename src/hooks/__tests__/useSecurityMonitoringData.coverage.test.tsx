@@ -70,12 +70,26 @@ describe('useSecurityMonitoringData', () => {
     expect(result.current.stats.criticalAlerts).toBe(1);
   });
 
-  it('handles null data from queries', async () => {
+  it('erro de leitura vira alarme, nao tranquilidade', async () => {
+    // A-009: o hook descartava o error das duas consultas, entao "0 eventos de
+    // seguranca" podia ser cegueira e a tela mostrava tudo em ordem.
     h.logsLimitMock.mockResolvedValue({ data: null, error: { message: 'x' } });
     h.alertsLimitMock.mockResolvedValue({ data: null, error: { message: 'y' } });
     const { result } = renderHook(() => useSecurityMonitoringData('me@x.com'));
-    await waitFor(() => expect(result.current.recentLogs).toEqual([]));
+    await waitFor(() => expect(result.current.error).toBe('x'));
+    expect(result.current.recentLogs).toEqual([]);
     expect(result.current.stats.totalEvents).toBe(0);
+  });
+
+  it('limpa o erro na leitura seguinte bem-sucedida', async () => {
+    h.logsLimitMock.mockResolvedValue({ data: null, error: { message: 'db fora' } });
+    const { result } = renderHook(() => useSecurityMonitoringData('me@x.com'));
+    await waitFor(() => expect(result.current.error).toBe('db fora'));
+
+    h.logsLimitMock.mockResolvedValue({ data: logs, error: null });
+    await act(async () => { await result.current.fetchData(); });
+    await waitFor(() => expect(result.current.error).toBeNull());
+    expect(result.current.recentLogs.length).toBe(3);
   });
 
   it('processes realtime log and alert insert payloads', async () => {

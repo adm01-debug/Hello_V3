@@ -17,7 +17,7 @@ export default function SecurityDashboard() {
   const navigate = useNavigate();
   const { user } = useAuthContext();
   const {
-    securityScore, recentAlerts, blockedAccess, ipRestrictionEnabled, isLoading,
+    securityScore, recentAlerts, blockedAccess, ipRestrictionEnabled, isLoading, error,
     sessions, currentSessionId, mfaSettings, loadSecurityData,
   } = useSecurityDashboard(user?.id);
 
@@ -58,7 +58,19 @@ export default function SecurityDashboard() {
         <Button variant="outline" onClick={loadSecurityData}><RefreshCw className="h-4 w-4 mr-2" />Atualizar</Button>
       </div>
 
+      {error && (
+        <Alert variant="destructive">
+          <ShieldX className="h-4 w-4" />
+          <AlertTitle>Monitoramento indisponível</AlertTitle>
+          <AlertDescription>
+            Não foi possível ler o estado de segurança da conta: {error}. A pontuação fica oculta porque não existe leitura confiável — não porque está tudo em ordem.
+            <Button variant="outline" size="sm" className="ml-2" onClick={loadSecurityData}><RefreshCw className="h-4 w-4 mr-2" />Tentar novamente</Button>
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Security Score */}
+      {!error && (
       <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
         <CardContent className="pt-6">
           <div className="flex items-center gap-8">
@@ -79,6 +91,7 @@ export default function SecurityDashboard() {
           </div>
         </CardContent>
       </Card>
+      )}
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -92,7 +105,7 @@ export default function SecurityDashboard() {
           <CardContent className="pt-6"><div className="flex items-center justify-between"><div><p className="text-sm text-muted-foreground">Restrição de IP</p><p className="text-3xl font-bold flex items-center gap-2">{ipRestrictionEnabled ? <><Lock className="h-6 w-6 text-success" /><span className="text-success">Ativo</span></> : <><Unlock className="h-6 w-6 text-warning" /><span className="text-warning">Inativo</span></>}</p></div><Globe className="h-10 w-10 text-primary opacity-50" /></div></CardContent>
         </Card>
         <Card className="cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => navigate('/audit-logs')}>
-          <CardContent className="pt-6"><div className="flex items-center justify-between"><div><p className="text-sm text-muted-foreground">Acessos Bloqueados</p><p className="text-3xl font-bold">{blockedAccess}</p></div><ShieldAlert className="h-10 w-10 text-destructive opacity-50" /></div></CardContent>
+          <CardContent className="pt-6"><div className="flex items-center justify-between"><div><p className="text-sm text-muted-foreground">Acessos Bloqueados</p><p className="text-3xl font-bold">{error ? '—' : blockedAccess}</p></div><ShieldAlert className="h-10 w-10 text-destructive opacity-50" /></div></CardContent>
         </Card>
       </div>
 
@@ -110,7 +123,7 @@ export default function SecurityDashboard() {
             {sessions.length > 3 && (
               <Alert className="border-warning/30 bg-warning/5"><Monitor className="h-4 w-4 text-warning" /><AlertTitle className="text-warning">{sessions.length} Sessões Ativas</AlertTitle><AlertDescription className="text-muted-foreground"><Button variant="link" className="px-0 h-auto text-warning" onClick={() => navigate('/sessions')}>Gerenciar →</Button></AlertDescription></Alert>
             )}
-            {securityScore.total >= 80 && (
+            {!error && securityScore.total >= 80 && (
               <Alert className="border-success/30 bg-success/5"><CheckCircle2 className="h-4 w-4 text-success" /><AlertTitle className="text-success">Excelente!</AlertTitle><AlertDescription className="text-muted-foreground">Sua conta está bem protegida.</AlertDescription></Alert>
             )}
           </CardContent>
@@ -121,7 +134,7 @@ export default function SecurityDashboard() {
           <CardHeader><CardTitle className="flex items-center gap-2"><AlertTriangle className="h-5 w-5" />Alertas Recentes</CardTitle></CardHeader>
           <CardContent>
             <ScrollArea className="h-[250px]">
-              {recentAlerts.length > 0 ? (
+              {error ? (<div className="flex flex-col items-center justify-center h-full text-muted-foreground"><ShieldX className="h-12 w-12 mb-2 text-destructive/40" /><p>Monitoramento indisponível</p></div>) : recentAlerts.length > 0 ? (
                 <div className="space-y-3">{recentAlerts.map((alert) => (
                   <div key={alert.id} className={`p-3 rounded-lg border ${getSeverityColor(alert.severity)}`}>
                     <div className="flex items-start justify-between">

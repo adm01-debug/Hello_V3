@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { usePageVisibility } from '@/hooks/usePageVisibility';
+import { mensagemDeErro } from '@/lib/error-message';
 
 export interface AuditLog {
   id: string;
@@ -44,9 +45,21 @@ export function useSecurityMonitoringData(profileEmail: string | undefined) {
   const [alerts, setAlerts] = useState<SecurityAlertItem[]>([]);
   const [stats, setStats] = useState<ActivityStats>({ totalEvents: 0, viewEvents: 0, exportEvents: 0, downloadEvents: 0, uniqueUsers: 0, criticalAlerts: 0 });
   const [isLive, setIsLive] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
-    const { data: logsData } = await supabase.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(50);
+    const { data: logsData, error: logsError } = await supabase.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(50);
+    const { data: alertsData, error: alertsError } = await supabase.from('security_alerts').select('*').order('created_at', { ascending: false }).limit(20);
+
+    // Em painel de seguranca "zero eventos" e "nao sei" nao podem ter o mesmo
+    // desenho: se a leitura falhar, a tela precisa alarmar, nao tranquilizar.
+    const falhaLeitura = logsError || alertsError;
+    if (falhaLeitura) {
+      setError(mensagemDeErro(falhaLeitura));
+      return;
+    }
+    setError(null);
+
     if (logsData) {
       const typedLogs = logsData as unknown as AuditLog[];
       setRecentLogs(typedLogs);
@@ -61,7 +74,6 @@ export function useSecurityMonitoringData(profileEmail: string | undefined) {
         criticalAlerts: 0,
       });
     }
-    const { data: alertsData } = await supabase.from('security_alerts').select('*').order('created_at', { ascending: false }).limit(20);
     if (alertsData) {
       setAlerts(alertsData as SecurityAlertItem[]);
       setStats(prev => ({ ...prev, criticalAlerts: (alertsData as SecurityAlertItem[]).filter(a => !a.is_resolved && a.severity === 'critical').length }));
@@ -103,5 +115,5 @@ export function useSecurityMonitoringData(profileEmail: string | undefined) {
     }
   };
 
-  return { recentLogs, alerts, stats, isLive, setIsLive, fetchData, resolveAlert };
+  return { recentLogs, alerts, stats, isLive, setIsLive, fetchData, resolveAlert, error };
 }
