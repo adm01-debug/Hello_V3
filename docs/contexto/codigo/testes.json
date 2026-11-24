@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 369,
+ "total": 371,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 352
+  "unit": 354
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 345
+   "arquivos": 347
   },
   {
    "padrao": "e2e/",
@@ -175,6 +175,24 @@
     "src/components/calls/AudioOutputSelector.tsx"
    ],
    "casos": 4
+  },
+  {
+   "arquivo": "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+   "tipo": "unit",
+   "linhas": 67,
+   "testa": [
+    "src/components/calls/CrmSuggestionsCard.tsx"
+   ],
+   "casos": 4
+  },
+  {
+   "arquivo": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+   "tipo": "unit",
+   "linhas": 71,
+   "testa": [
+    "src/components/calls/NextBestActionPanel.tsx"
+   ],
+   "casos": 3
   },
   {
    "arquivo": "src/components/calls/__tests__/PostCallSummary.test.tsx",
@@ -3323,6 +3341,8 @@
   "src/components/admin/extensions/HealthScoreBadge.tsx": 1,
   "src/components/auth/ProtectedRoute.tsx": 1,
   "src/components/calls/AudioOutputSelector.tsx": 1,
+  "src/components/calls/CrmSuggestionsCard.tsx": 1,
+  "src/components/calls/NextBestActionPanel.tsx": 1,
   "src/components/calls/PostCallSummary.tsx": 1,
   "src/components/calls/WebRTCCall.tsx": 1,
   "src/components/calls/live-transcription/useLiveTranscription.ts": 1,

@@ -637,8 +637,8 @@
   {
    "modulo": "components/calls",
    "arquivos": 27,
-   "testes": 4,
-   "linhas": 3878,
+   "testes": 6,
+   "linhas": 3907,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -751,6 +751,7 @@
    ],
    "flags": [],
    "papeis": [
+    "alert",
     "button",
     "dialog",
     "status",
@@ -3481,7 +3482,7 @@
    "modulo": "hooks",
    "arquivos": 168,
    "testes": 0,
-   "linhas": 20919,
+   "linhas": 20921,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "1dcca432ef098ae125287255632913744fd6c2c4",
+  "sha": "8e8690826b67400abf480dd2a81861aa31b9bc0c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 01:12 UTC",
-  "files_total": 1735,
-  "code_files": 1532,
-  "code_lines": 190243
+  "generated_at": "2026-11-24 01:15 UTC",
+  "files_total": 1737,
+  "code_files": 1534,
+  "code_lines": 190412
  },
  "version": "1.3.2",
- "facts_hash": "f456581190ab64d4",
+ "facts_hash": "35cf96c41a7a677a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 639,
-   ".tsx": 614,
+   ".tsx": 616,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -32188,7 +32188,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 357,
+  "components_count": 359,
   "hooks": [
    {
     "name": "useContacts",
@@ -33333,8 +33333,8 @@
   },
   {
    "module": "src/components",
-   "files": 357,
-   "lines": 42763,
+   "files": 359,
+   "lines": 42930,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33533,12 +33533,12 @@
     "src/components/calls/WebRTCCall.tsx",
     "src/components/calls/WebRTCMetricsPanel.tsx",
     "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
+    "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+    "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
     "src/components/calls/__tests__/PostCallSummary.test.tsx",
     "src/components/calls/__tests__/WebRTCCall.test.tsx",
     "src/components/calls/live-transcription/TranscriptList.tsx",
-    "src/components/calls/live-transcription/TranscriptionHeader.tsx",
-    "src/components/calls/live-transcription/types.ts",
-    "src/components/calls/live-transcription/useLiveTranscription.ts"
+    "src/components/calls/live-transcription/TranscriptionHeader.tsx"
    ]
   },
   {
@@ -33591,7 +33591,7 @@
   {
    "module": "src/hooks",
    "files": 354,
-   "lines": 46340,
+   "lines": 46342,
    "tables": [
     "accounts",
     "active_sessions",
@@ -40126,6 +40126,14 @@
    {
     "file": "src/components/calls/CallQualityIndicator.tsx",
     "msg": "⚠️ Qualidade da chamada degradada"
+   },
+   {
+    "file": "src/components/calls/CrmSuggestionsCard.tsx",
+    "msg": " className="
+   },
+   {
+    "file": "src/components/calls/NextBestActionPanel.tsx",
+    "msg": " className="
    },
    {
     "file": "src/components/calls/PostCallSummary.tsx",
@@ -57124,6 +57132,42 @@
    {
     "file": "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
     "name": "chama toast.error quando onChange lança"
+   },
+   {
+    "file": "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+    "name": "CrmSuggestionsCard"
+   },
+   {
+    "file": "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+    "name": "explica o vazio em vez de sumir da tela"
+   },
+   {
+    "file": "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+    "name": "mostra carregando enquanto a consulta roda"
+   },
+   {
+    "file": "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+    "name": "mostra o erro da consulta"
+   },
+   {
+    "file": "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+    "name": "lista a sugestao pendente com o rotulo do campo"
+   },
+   {
+    "file": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+    "name": "NextBestActionPanel"
+   },
+   {
+    "file": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+    "name": "mostra o erro da consulta em vez de um painel vazio"
+   },
+   {
+    "file": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+    "name": "distingue carregando de sem sugestao"
+   },
+   {
+    "file": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+    "name": "lista o sinal e marca como usado"
    },
    {
     "file": "src/components/calls/__tests__/PostCallSummary.test.tsx",
@@ -93262,9 +93306,12 @@
   },
   "src/components/calls/CrmSuggestionsCard.tsx": {
    "path": "src/components/calls/CrmSuggestionsCard.tsx",
-   "lines": 111,
+   "lines": 134,
    "exports": [
     "function CrmSuggestionsCard"
+   ],
+   "errors": [
+    " className="
    ],
    "calc_fns": [
     {
@@ -93321,9 +93368,12 @@
   },
   "src/components/calls/NextBestActionPanel.tsx": {
    "path": "src/components/calls/NextBestActionPanel.tsx",
-   "lines": 126,
+   "lines": 132,
    "exports": [
     "function NextBestActionPanel"
+   ],
+   "errors": [
+    " className="
    ]
   },
   "src/components/calls/PostCallSummary.tsx": {
@@ -93586,6 +93636,35 @@
     "renderiza o combobox quando suportado",
     "desabilita quando não há dispositivos disponíveis (usa fallback padrão)",
     "chama toast.error quando onChange lança"
+   ]
+  },
+  "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx": {
+   "path": "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+   "lines": 67,
+   "is_test": true,
+   "errors": [
+    ")).toHaveTextContent("
+   ],
+   "tests": [
+    "CrmSuggestionsCard",
+    "explica o vazio em vez de sumir da tela",
+    "mostra carregando enquanto a consulta roda",
+    "mostra o erro da consulta",
+    "lista a sugestao pendente com o rotulo do campo"
+   ]
+  },
+  "src/components/calls/__tests__/NextBestActionPanel.test.tsx": {
+   "path": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+   "lines": 71,
+   "is_test": true,
+   "errors": [
+    ")).toHaveTextContent("
+   ],
+   "tests": [
+    "NextBestActionPanel",
+    "mostra o erro da consulta em vez de um painel vazio",
+    "distingue carregando de sem sugestao",
+    "lista o sinal e marca como usado"
    ]
   },
   "src/components/calls/__tests__/PostCallSummary.test.tsx": {
@@ -99741,7 +99820,7 @@
   },
   "src/hooks/useCrmFieldSuggestions.ts": {
    "path": "src/hooks/useCrmFieldSuggestions.ts",
-   "lines": 139,
+   "lines": 140,
    "exports": [
     "interface CrmFieldSuggestion",
     "function useCrmFieldSuggestions"
@@ -101258,7 +101337,7 @@
   },
   "src/hooks/useLiveAssist.ts": {
    "path": "src/hooks/useLiveAssist.ts",
-   "lines": 157,
+   "lines": 158,
    "exports": [
     "interface LiveAssistSignal",
     "function useLiveAssist",
@@ -124943,10 +125022,25 @@
   }
  },
  "git": {
-  "sha": "1dcca432ef098ae125287255632913744fd6c2c4",
+  "sha": "8e8690826b67400abf480dd2a81861aa31b9bc0c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "8e86908",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/calls/CrmSuggestionsCard.tsx",
+     "src/components/calls/NextBestActionPanel.tsx",
+     "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+     "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+     "src/hooks/useCrmFieldSuggestions.ts",
+     "src/hooks/useLiveAssist.ts"
+    ]
+   },
    {
     "sha": "1dcca43",
     "date": "2026-11-23",
@@ -125322,17 +125416,6 @@
      "supabase/functions/enforce-sla/__tests__/index.test.ts",
      "supabase/functions/enforce-sla/index.ts"
     ]
-   },
-   {
-    "sha": "3407137",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: limita a nota da IA ao maximo do criterio no score-call (E106) (#178)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/score-call/index.test.ts",
-     "supabase/functions/score-call/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125369,10 +125452,6 @@
     2
    ],
    [
-    "supabase/functions/score-call/index.ts",
-    2
-   ],
-   [
     "supabase/functions/embed-kb-article/index.ts",
     2
    ],
@@ -125397,23 +125476,27 @@
     2
    ],
    [
-    "src/components/dashboard/HoldTrendChart.tsx",
+    "src/components/calls/CrmSuggestionsCard.tsx",
     1
    ],
    [
-    "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
+    "src/components/calls/NextBestActionPanel.tsx",
     1
    ],
    [
-    "src/components/compliance/DNCListManager.tsx",
+    "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
     1
    ],
    [
-    "src/components/compliance/dnc/ImportDNCDialog.tsx",
+    "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
     1
    ],
    [
-    "src/components/compliance/dnc/__tests__/ImportDNCDialog.test.tsx",
+    "src/hooks/useCrmFieldSuggestions.ts",
+    1
+   ],
+   [
+    "src/hooks/useLiveAssist.ts",
     1
    ]
   ]

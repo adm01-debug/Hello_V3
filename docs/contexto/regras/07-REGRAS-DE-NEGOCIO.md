@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1dcca432ef` · branch `main` · 2026-11-24 01:12 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8e8690826b` · branch `main` · 2026-11-24 01:15 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2177,6 +2177,8 @@ _nenhum item encontrado_
 | Erro ao gerar resumo, salvando sem resumo | `src/components/calls/ActiveCallBar.tsx` |
 | Não foi possível alterar a saída de áudio | `src/components/calls/AudioOutputSelector.tsx` |
 | ⚠️ Qualidade da chamada degradada | `src/components/calls/CallQualityIndicator.tsx` |
+|  className= | `src/components/calls/CrmSuggestionsCard.tsx` |
+|  className= | `src/components/calls/NextBestActionPanel.tsx` |
 | Falha ao exportar CSV | `src/components/calls/PostCallSummary.tsx` |
 | Digite um número WhatsApp para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
 | Digite um número para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
@@ -2412,9 +2414,7 @@ _nenhum item encontrado_
 | Erro ao atualizar callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao cancelar callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao carregar callbacks | `src/hooks/useScheduledCallbacks.ts` |
-| Erro ao concluir callback | `src/hooks/useScheduledCallbacks.ts` |
-| Erro ao remover callback | `src/hooks/useScheduledCallbacks.ts` |
-| … +254 linhas — lista completa em `context.json` | |
+| … +256 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2463,7 +2463,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4208 testes em 359 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4217 testes em 361 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2706,6 +2706,7 @@ _nenhum item encontrado_
 | `e2e/observability.spec.ts` | 5 | Observability Dashboard · should display observability page · should display Web Vitals cards · should display health check results … |
 | `src/__tests__/rls/contacts.test.ts` | 5 | RLS — contacts (matriz por role) · %s pode SELECT contacts · %s pode INSERT contacts · %s pode UPDATE contacts … |
 | `src/components/calls/__tests__/AudioOutputSelector.test.tsx` | 5 | AudioOutputSelector · mostra mensagem quando não suportado · renderiza o combobox quando suportado · desabilita quando não há dispositivos disponíveis (usa fallback padrão) … |
+| `src/components/calls/__tests__/CrmSuggestionsCard.test.tsx` | 5 | CrmSuggestionsCard · explica o vazio em vez de sumir da tela · mostra carregando enquanto a consulta roda · mostra o erro da consulta … |
 | `src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx` | 5 | TrendChartToggle · não monta o gráfico antes do primeiro clique · conserva o gráfico montado ao fechar, para o histórico não zerar · não reinicia o gráfico quando o pai reflete o fechamento … |
 | `src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx` | 5 | useAnimatedCounter · returns 0 initially and animates toward the end value · respects decimals option · early-returns when diff is zero … |
 | `src/hooks/__tests__/useAuditLog.coverage.test.tsx` | 5 | useAuditLog · logEvent chama rpc com os parâmetros corretos · logEvent registra erro quando rpc retorna error · logEvent captura exceção lançada … |
@@ -2743,6 +2744,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
+| `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 4 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado |
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
 | `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
 | `src/hooks/__tests__/use-mobile.coverage.test.tsx` | 4 | useIsMobile · returns false for desktop width · returns true for mobile width and reacts to change · cleans up listener on unmount |
@@ -2765,9 +2767,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipRecommendationInsights.coverage.test.tsx` | 4 | useVoipRecommendationInsights · carrega insights com sucesso (default week) · aceita período month · propaga erro da edge function |
 | `src/hooks/__tests__/useVoipRecommendations.coverage.test.tsx` | 4 | useVoipRecommendations · loads recommendations successfully · defaults period to week and supports day · throws and surfaces error when invoke returns error |
 | `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
-| `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
-| `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
-| … +59 linhas — lista completa em `context.json` | | |
+| … +61 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

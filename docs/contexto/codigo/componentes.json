@@ -897,7 +897,7 @@
     "CrmSuggestionsCard"
    ],
    "export_default": null,
-   "linhas": 111,
+   "linhas": 134,
    "dominio": "components/calls",
    "hooks_locais": [
     "useCrmFieldSuggestions"
@@ -1004,7 +1004,7 @@
     "NextBestActionPanel"
    ],
    "export_default": null,
-   "linhas": 126,
+   "linhas": 132,
    "dominio": "components/calls",
    "hooks_locais": [
     "useLiveAssist"

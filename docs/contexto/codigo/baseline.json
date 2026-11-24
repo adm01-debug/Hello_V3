@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "1dcca432ef098ae125287255632913744fd6c2c4",
+  "commit": "8e8690826b67400abf480dd2a81861aa31b9bc0c",
   "branch": "main",
-  "data_commit": "2026-11-23T22:11:12-03:00",
+  "data_commit": "2026-11-23T22:11:16-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8e86908",
+    "data": "2026-11-23",
+    "assunto": "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)"
+   },
    {
     "sha": "1dcca43",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "9e81eea",
     "data": "2026-11-23",
     "assunto": "fix: bloqueio de login falha fechado quando a verificacao nao responde (E003) (#184)"
-   },
-   {
-    "sha": "727dead",
-    "data": "2026-11-23",
-    "assunto": "fix: chamada sem audio deixa de ser classificada como ideal (E115) (#183)"
    }
   ],
-  "arquivos_mudados_7d": 999,
+  "arquivos_mudados_7d": 1005,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 38
+    "mudancas": 39
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -156,16 +156,16 @@
     "mudancas": 27
    },
    {
+    "pasta": "src/components/calls",
+    "mudancas": 27
+   },
+   {
     "pasta": "src/lib/__tests__",
     "mudancas": 27
    },
    {
     "pasta": "supabase/functions/_shared",
     "mudancas": 27
-   },
-   {
-    "pasta": "src/components/calls",
-    "mudancas": 23
    },
    {
     "pasta": "covout/lib/security",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 38
+    "mudancas": 39
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 186
+    "commits": 187
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1688,
-  "arquivos_codigo": 1286,
-  "linhas_codigo": 174231,
+  "arquivos_total": 1690,
+  "arquivos_codigo": 1288,
+  "linhas_codigo": 174400,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 369,
+  "testes": 371,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 357,
-   "linhas": 42763
+   "arquivos": 359,
+   "linhas": 42930
   },
   "src/contexts": {
    "arquivos": 4,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 46340
+   "linhas": 46342
   },
   "src/integrations": {
    "arquivos": 3,

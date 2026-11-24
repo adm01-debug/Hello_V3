@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (345)",
+   "co-localizado (__tests__) (347)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)",
    "fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)",
    "fix: importacao de DNC passa a conferir o resultado real da RPC (#206)",
    "fix: grava o desfecho real da chamada em call_sessions (#205)",
-   "feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)",
-   "feat: discador preditivo passa pela barreira de DNC e horario legal (#203)"
+   "feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)"
   ]
  },
  "pr_template": null,

@@ -1838,7 +1838,7 @@
    "hooks_exportados": [
     "useCrmFieldSuggestions"
    ],
-   "linhas": 139,
+   "linhas": 140,
    "dominio": "hooks",
    "tabelas": [
     "contacts",
@@ -2713,7 +2713,7 @@
     "useAgentAssistHistory",
     "useLiveAssist"
    ],
-   "linhas": 157,
+   "linhas": 158,
    "dominio": "hooks",
    "tabelas": [
     "live_assist_signals"
