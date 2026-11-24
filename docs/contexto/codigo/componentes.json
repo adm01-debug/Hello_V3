@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 448,
+ "total": 449,
  "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
@@ -1403,6 +1403,22 @@
    "orfao": false
   },
   {
+   "arquivo": "src/components/compliance/dnc/ReconcileDNCDialog.tsx",
+   "exports": [
+    "ReconcileDNCDialog"
+   ],
+   "export_default": null,
+   "linhas": 143,
+   "dominio": "components/compliance",
+   "hooks_locais": [],
+   "tabelas": [
+    "dnc_list"
+   ],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
    "arquivo": "src/components/compliance/DNCImportLogs.tsx",
    "exports": [
     "DNCImportLogs"
@@ -1424,7 +1440,7 @@
     "DNCListManager"
    ],
    "export_default": null,
-   "linhas": 96,
+   "linhas": 100,
    "dominio": "components/compliance",
    "hooks_locais": [
     "useDNCCompliance"
@@ -4144,7 +4160,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 244,
+   "usado_por": 245,
    "orfao": false
   },
   {
@@ -4304,7 +4320,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 47,
+   "usado_por": 48,
    "orfao": false
   },
   {
@@ -4479,7 +4495,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 67,
+   "usado_por": 68,
    "orfao": false
   },
   {
@@ -4874,7 +4890,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 23,
+   "usado_por": 24,
    "orfao": false
   },
   {

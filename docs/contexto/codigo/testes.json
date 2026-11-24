@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 371,
+ "total": 374,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 354
+  "unit": 357
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 347
+   "arquivos": 350
   },
   {
    "padrao": "e2e/",
@@ -231,6 +231,15 @@
     "src/hooks/useDNCCompliance.ts"
    ],
    "casos": 2
+  },
+  {
+   "arquivo": "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
+   "tipo": "unit",
+   "linhas": 85,
+   "testa": [
+    "src/components/compliance/dnc/ReconcileDNCDialog.tsx"
+   ],
+   "casos": 3
   },
   {
    "arquivo": "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
@@ -2050,6 +2059,15 @@
    "casos": 18
   },
   {
+   "arquivo": "src/lib/__tests__/dnc-reconcile.test.ts",
+   "tipo": "unit",
+   "linhas": 72,
+   "testa": [
+    "src/lib/dnc/reconcile.ts"
+   ],
+   "casos": 11
+  },
+  {
    "arquivo": "src/lib/__tests__/edge-cases-stress.test.ts",
    "tipo": "unit",
    "linhas": 324,
@@ -2082,6 +2100,15 @@
     "src/components/error-boundary/ErrorBoundary.tsx"
    ],
    "casos": 33
+  },
+  {
+   "arquivo": "src/lib/__tests__/error-message.test.ts",
+   "tipo": "unit",
+   "linhas": 18,
+   "testa": [
+    "src/lib/error-message.ts"
+   ],
+   "casos": 2
   },
   {
    "arquivo": "src/lib/__tests__/error-tracking.test.ts",
@@ -3348,6 +3375,7 @@
   "src/components/calls/live-transcription/useLiveTranscription.ts": 1,
   "src/components/calls/softphone/constants.tsx": 1,
   "src/components/compliance/dnc/ImportDNCDialog.tsx": 1,
+  "src/components/compliance/dnc/ReconcileDNCDialog.tsx": 1,
   "src/components/dashboard/CallVolumeChart.tsx": 1,
   "src/components/dashboard/HoldTrendChart.tsx": 1,
   "src/components/dashboard/StatsCard.tsx": 1,
@@ -3521,6 +3549,8 @@
   "src/lib/dialer-favorites-order.ts": 1,
   "src/lib/dialer-filter-storage.ts": 1,
   "src/lib/dialer/predictive-pace.ts": 1,
+  "src/lib/dnc/reconcile.ts": 1,
+  "src/lib/error-message.ts": 1,
   "src/lib/error-tracking.ts": 1,
   "src/lib/export/callHistoryCsv.ts": 1,
   "src/lib/export/index.ts": 4,

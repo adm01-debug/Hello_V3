@@ -862,13 +862,13 @@
   },
   {
    "modulo": "components/compliance",
-   "arquivos": 17,
-   "testes": 1,
-   "linhas": 2042,
+   "arquivos": 18,
+   "testes": 2,
+   "linhas": 2189,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 14,
+   "componentes": 15,
    "hooks_locais": [
     "useCallingHoursManager",
     "useComplianceRules",
@@ -900,6 +900,7 @@
    ],
    "flags": [],
    "papeis": [
+    "alert",
     "status"
    ],
    "diretos": {
@@ -908,6 +909,7 @@
      "calling_hours_config",
      "consent_history",
      "dnc_import_logs",
+     "dnc_list",
      "holidays"
     ],
     "rpcs": [
@@ -921,7 +923,8 @@
     "components/ui",
     "hooks",
     "integrations/supabase",
-    "lib"
+    "lib",
+    "lib/dnc"
    ],
    "pacotes_externos": [
     "@tanstack/react-query",
@@ -4725,9 +4728,9 @@
   },
   {
    "modulo": "lib",
-   "arquivos": 50,
+   "arquivos": 51,
    "testes": 0,
-   "linhas": 6442,
+   "linhas": 6459,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5080,6 +5083,7 @@
     "hooks/auth",
     "lib/audit",
     "lib/bitrix",
+    "lib/dnc",
     "lib/validation",
     "pages",
     "pages/admin",
@@ -5107,7 +5111,7 @@
   {
    "modulo": "lib/__tests__",
    "arquivos": 0,
-   "testes": 75,
+   "testes": 77,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -5237,6 +5241,38 @@
    },
    "importado_por_outros_modulos": [],
    "depende_de_modulos": [],
+   "pacotes_externos": []
+  },
+  {
+   "modulo": "lib/dnc",
+   "arquivos": 1,
+   "testes": 0,
+   "linhas": 61,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 0,
+   "hooks_locais": [],
+   "hooks_definidos": [],
+   "edges": [],
+   "tabelas": [],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [
+    "components/compliance"
+   ],
+   "depende_de_modulos": [
+    "lib"
+   ],
    "pacotes_externos": []
   },
   {

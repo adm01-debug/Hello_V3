@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "8e8690826b67400abf480dd2a81861aa31b9bc0c",
+  "sha": "de29d5d4667afda6e2e451bdacc5f6b523ec3596",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 01:15 UTC",
-  "files_total": 1737,
-  "code_files": 1534,
-  "code_lines": 190412
+  "generated_at": "2026-11-24 01:22 UTC",
+  "files_total": 1743,
+  "code_files": 1540,
+  "code_lines": 190812
  },
  "version": "1.3.2",
- "facts_hash": "35cf96c41a7a677a",
+ "facts_hash": "d16478d62d421bef",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,8 +153,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 639,
-   ".tsx": 616,
+   ".ts": 643,
+   ".tsx": 618,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -28359,7 +28359,7 @@
      "check_calling_hours",
      "check_dnc"
     ],
-    "deps_count": 40
+    "deps_count": 44
    },
    {
     "path": "",
@@ -32188,7 +32188,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 359,
+  "components_count": 361,
   "hooks": [
    {
     "name": "useContacts",
@@ -33333,8 +33333,8 @@
   },
   {
    "module": "src/components",
-   "files": 359,
-   "lines": 42930,
+   "files": 361,
+   "lines": 43162,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33359,6 +33359,7 @@
     "contact_engagement_patterns",
     "crm_sync_queue",
     "dnc_import_logs",
+    "dnc_list",
     "hold_events",
     "holidays",
     "live_sentiment_snapshots",
@@ -33895,8 +33896,8 @@
   },
   {
    "module": "src/lib",
-   "files": 174,
-   "lines": 21423,
+   "files": 178,
+   "lines": 21591,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -33914,6 +33915,7 @@
     "dialer-favorites-order.ts: OrderableFavorite, moveItem, normalizePositions, diffPositions, reorderFavorites",
     "dialer-filter-storage.ts: FilterStorageLike, buildFilterStorageKey, sanitizeStoredFilter, loadTagFilter, saveTagFilter",
     "elevenlabs-stub.ts: useConversation",
+    "error-message.ts: mensagemDeErro",
     "error-tracking.ts: reportError, initErrorTracking, getErrorReports",
     "favorite-sync-labels.ts: MASK_VISIBLE_DIGITS, maskPhone, describeFavorite",
     "geo-countries.ts: COUNTRIES",
@@ -33942,8 +33944,7 @@
     "security-alerts-webhook.ts: WEBHOOK_MAX_ATTEMPTS_MIN, WEBHOOK_MAX_ATTEMPTS_MAX, WEBHOOK_MAX_ATTEMPTS_DEFAULT, WEBHOOK_BASE_DELAY_MIN, WEBHOOK_BASE_DELAY_MAX, WEBHOOK_BASE_DELAY_DEFAULT",
     "security-report-data.ts: SecurityFeature, SecurityDecision, securityFeatures, securityDecisions",
     "sync-history.ts: MAX_SYNC_HISTORY_ENTRIES, SyncHistoryEntry, SyncHistoryStorageLike, buildSyncHistoryKey, sanitizeEntry, appendEntry",
-    "talkRatio.ts: TalkRatioSegment, TalkRatioComputation, classifyTalkRatio, computeTalkRatio",
-    "tracing.ts: getTraceId, getTraceOperation, traceHeaders, withTrace, startTrace, endTrace"
+    "talkRatio.ts: TalkRatioSegment, TalkRatioComputation, classifyTalkRatio, computeTalkRatio"
    ],
    "docs": [
     "agent-assist-utils.ts: Utilitários puros para Real-Time Agent Assist. Sem efeitos colaterais — fáceis de testar.",
@@ -33993,6 +33994,7 @@
     "src/lib/dialer-favorites-order.ts",
     "src/lib/dialer-filter-storage.ts",
     "src/lib/elevenlabs-stub.ts",
+    "src/lib/error-message.ts",
     "src/lib/error-tracking.ts",
     "src/lib/favorite-sync-labels.ts",
     "src/lib/geo-countries.ts",
@@ -34049,9 +34051,11 @@
     "src/lib/__tests__/dialer-filter-storage.test.ts",
     "src/lib/__tests__/dialer-tag-filter.test.ts",
     "src/lib/__tests__/dialer-tags-and-ringtone.test.ts",
+    "src/lib/__tests__/dnc-reconcile.test.ts",
     "src/lib/__tests__/edge-cases-stress.test.ts",
     "src/lib/__tests__/encryption-webauthn.test.ts",
     "src/lib/__tests__/error-boundaries.test.tsx",
+    "src/lib/__tests__/error-message.test.ts",
     "src/lib/__tests__/error-tracking.test.ts",
     "src/lib/__tests__/executive-dashboard-utils.test.ts",
     "src/lib/__tests__/export-audit-notifications.test.ts",
@@ -34059,10 +34063,7 @@
     "src/lib/__tests__/fixes-exhaustive.test.ts",
     "src/lib/__tests__/guard-edge-numeric.test.ts",
     "src/lib/__tests__/hash-endpoint.test.ts",
-    "src/lib/__tests__/health-score.property.test.ts",
-    "src/lib/__tests__/holdReminderSounds.coverage.test.tsx",
-    "src/lib/__tests__/language-detection.test.ts",
-    "src/lib/__tests__/logger.test.ts"
+    "src/lib/__tests__/health-score.property.test.ts"
    ]
   },
   {
@@ -35576,6 +35577,7 @@
    },
    "dnc_list": {
     "select": [
+     "src/components/compliance/dnc/ReconcileDNCDialog.tsx",
      "src/hooks/useDNCCompliance.ts"
     ],
     "update": [
@@ -36930,7 +36932,8 @@
     "status"
    ],
    "dnc_list": [
-    "id"
+    "id",
+    "phone_normalized"
    ],
    "email_tickets": [
     "conversation_id",
@@ -40224,6 +40227,10 @@
     "msg": "Você não tem permissão para criar regiões"
    },
    {
+    "file": "src/components/compliance/dnc/ReconcileDNCDialog.tsx",
+    "msg": " className="
+   },
+   {
     "file": "src/components/contacts/ContactDetailSheet.tsx",
     "msg": "Erro ao analisar perfil"
    },
@@ -42598,6 +42605,10 @@
    {
     "file": "src/lib/dialer/predictive-pace.ts",
     "text": "property-based testing (Onda D4). Deve espelhar 1:1 a lógica em produção."
+   },
+   {
+    "file": "src/lib/dnc/reconcile.ts",
+    "text": "* Lotes para o `.in()` do PostgREST, que tem limite de tamanho de URL. */"
    },
    {
     "file": "src/lib/metrics/mos.ts",
@@ -50050,6 +50061,16 @@
     "value": "30"
    },
    {
+    "file": "src/lib/dnc/reconcile.ts",
+    "name": "MIN_DIGITOS",
+    "value": "8"
+   },
+   {
+    "file": "src/lib/dnc/reconcile.ts",
+    "name": "LOTE_CONSULTA",
+    "value": "200"
+   },
+   {
     "file": "src/lib/export/index.ts",
     "name": "BOM",
     "value": "'\\uFEFF'"
@@ -57260,6 +57281,22 @@
    {
     "file": "src/components/compliance/dnc/__tests__/ImportDNCDialog.test.tsx",
     "name": "mantem o dialogo aberto e mostra as falhas"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
+    "name": "ReconcileDNCDialog"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
+    "name": "aponta exatamente o numero ausente da lista"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
+    "name": "reenvia apenas os ausentes e recontabiliza"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
+    "name": "mostra o erro da consulta em vez de dizer que esta tudo certo"
    },
    {
     "file": "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
@@ -67162,6 +67199,62 @@
     "name": "não lança quando o storage está indisponível"
    },
    {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "normalizarTelefone"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "leva o numero BR para a forma canonica +55"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "cai para digitos quando nao da para reconhecer a forma BR"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "reconciliarDNC"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "aponta exatamente o numero que nao esta na lista"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "compara pelo telefone normalizado, ignorando a mascara"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "reconhece o mesmo numero com e sem o +55"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "nao trata numeros de DDDs diferentes como iguais"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "separra o que nem telefone e"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "remove repetidos do proprio arquivo"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "lista vazia nao explode"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "lotesParaConsulta"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "quebra em lotes de 200 para o .in() do PostgREST"
+   },
+   {
+    "file": "src/lib/__tests__/dnc-reconcile.test.ts",
+    "name": "lista vazia nao gera lote"
+   },
+   {
     "file": "src/lib/__tests__/edge-cases-stress.test.ts",
     "name": "Edge Cases & Boundary Tests"
    },
@@ -67684,6 +67777,18 @@
    {
     "file": "src/lib/__tests__/error-boundaries.test.tsx",
     "name": "SectionBoundary passes compact and section props"
+   },
+   {
+    "file": "src/lib/__tests__/error-message.test.ts",
+    "name": "mensagemDeErro"
+   },
+   {
+    "file": "src/lib/__tests__/error-message.test.ts",
+    "name": "le o message de erro do PostgREST, que nao e uma instancia de Error"
+   },
+   {
+    "file": "src/lib/__tests__/error-message.test.ts",
+    "name": "aceita Error, string e valores soltos"
    },
    {
     "file": "src/lib/__tests__/error-tracking.test.ts",
@@ -94007,7 +94112,7 @@
   },
   "src/components/compliance/DNCListManager.tsx": {
    "path": "src/components/compliance/DNCListManager.tsx",
-   "lines": 96,
+   "lines": 100,
    "exports": [
     "function DNCListManager"
    ]
@@ -94193,6 +94298,27 @@
     "function ImportDNCDialog"
    ]
   },
+  "src/components/compliance/dnc/ReconcileDNCDialog.tsx": {
+   "path": "src/components/compliance/dnc/ReconcileDNCDialog.tsx",
+   "lines": 143,
+   "exports": [
+    "function ReconcileDNCDialog"
+   ],
+   "tables": [
+    {
+     "table": "dnc_list",
+     "op": "select"
+    }
+   ],
+   "table_cols": {
+    "dnc_list": [
+     "phone_normalized"
+    ]
+   },
+   "errors": [
+    " className="
+   ]
+  },
   "src/components/compliance/dnc/constants.ts": {
    "path": "src/components/compliance/dnc/constants.ts",
    "lines": 27,
@@ -94216,6 +94342,20 @@
     "ImportDNCDialog",
     "fecha o dialogo quando tudo foi importado",
     "mantem o dialogo aberto e mostra as falhas"
+   ]
+  },
+  "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx": {
+   "path": "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
+   "lines": 85,
+   "is_test": true,
+   "errors": [
+    ")).toHaveTextContent("
+   ],
+   "tests": [
+    "ReconcileDNCDialog",
+    "aponta exatamente o numero ausente da lista",
+    "reenvia apenas os ausentes e recontabiliza",
+    "mostra o erro da consulta em vez de dizer que esta tudo certo"
    ]
   },
   "src/components/contacts/ContactAlertsDropdown.tsx": {
@@ -109512,6 +109652,14 @@
     "useConversation"
    ]
   },
+  "src/lib/error-message.ts": {
+   "path": "src/lib/error-message.ts",
+   "lines": 17,
+   "exports": [
+    "function mensagemDeErro"
+   ],
+   "doc": "Mensagem legivel de um erro desconhecido. Erros do PostgREST e do supabase-js NAO sao instancias de Error: sao objetos com { message, code, details, hint }. `error instanceof Error ? message : String(error)` imprimia \"[object Object]\" na tela nesses casos."
+  },
   "src/lib/error-tracking.ts": {
    "path": "src/lib/error-tracking.ts",
    "lines": 78,
@@ -111053,6 +111201,27 @@
     "não lança quando o storage está indisponível"
    ]
   },
+  "src/lib/__tests__/dnc-reconcile.test.ts": {
+   "path": "src/lib/__tests__/dnc-reconcile.test.ts",
+   "lines": 72,
+   "is_test": true,
+   "tests": [
+    "normalizarTelefone",
+    "leva o numero BR para a forma canonica +55",
+    "cai para digitos quando nao da para reconhecer a forma BR",
+    "reconciliarDNC",
+    "aponta exatamente o numero que nao esta na lista",
+    "compara pelo telefone normalizado, ignorando a mascara",
+    "reconhece o mesmo numero com e sem o +55",
+    "nao trata numeros de DDDs diferentes como iguais",
+    "separra o que nem telefone e",
+    "remove repetidos do proprio arquivo",
+    "lista vazia nao explode",
+    "lotesParaConsulta",
+    "quebra em lotes de 200 para o .in() do PostgREST",
+    "lista vazia nao gera lote"
+   ]
+  },
   "src/lib/__tests__/edge-cases-stress.test.ts": {
    "path": "src/lib/__tests__/edge-cases-stress.test.ts",
    "lines": 324,
@@ -111209,6 +111378,16 @@
     "has handleRetry method",
     "uses logger for error reporting",
     "SectionBoundary passes compact and section props"
+   ]
+  },
+  "src/lib/__tests__/error-message.test.ts": {
+   "path": "src/lib/__tests__/error-message.test.ts",
+   "lines": 18,
+   "is_test": true,
+   "tests": [
+    "mensagemDeErro",
+    "le o message de erro do PostgREST, que nao e uma instancia de Error",
+    "aceita Error, string e valores soltos"
    ]
   },
   "src/lib/__tests__/error-tracking.test.ts": {
@@ -112962,6 +113141,30 @@
    "percents": [
     "targetAbandonRate: number; // percentual, ex: 3 = 3%"
    ]
+  },
+  "src/lib/dnc/reconcile.ts": {
+   "path": "src/lib/dnc/reconcile.ts",
+   "lines": 61,
+   "exports": [
+    "interface ReconciliacaoDNC",
+    "function normalizarTelefone",
+    "function reconciliarDNC",
+    "function lotesParaConsulta"
+   ],
+   "params": [
+    {
+     "name": "MIN_DIGITOS",
+     "value": "8"
+    },
+    {
+     "name": "LOTE_CONSULTA",
+     "value": "200"
+    }
+   ],
+   "rule_comments": [
+    "* Lotes para o `.in()` do PostgREST, que tem limite de tamanho de URL. */"
+   ],
+   "doc": "Conferencia de uma importacao de DNC contra o que esta de fato em `dnc_list`. A comparacao usa `normalizeBrPhone` (forma canonica +55DDNNNNNNNNN) para que \"11999990001\" e \"5511999990001\" sejam reconhecidos como o mesmo numero, e cai para digitos puros em numeros que nao sejam BR. Comparar mal aqui f …"
   },
   "src/lib/export/callHistoryCsv.ts": {
    "path": "src/lib/export/callHistoryCsv.ts",
@@ -125022,10 +125225,26 @@
   }
  },
  "git": {
-  "sha": "8e8690826b67400abf480dd2a81861aa31b9bc0c",
+  "sha": "de29d5d4667afda6e2e451bdacc5f6b523ec3596",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "de29d5d",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "feat: conferir lista DNC antes de confiar na importacao (#209)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/compliance/DNCListManager.tsx",
+     "src/components/compliance/dnc/ReconcileDNCDialog.tsx",
+     "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
+     "src/lib/__tests__/dnc-reconcile.test.ts",
+     "src/lib/__tests__/error-message.test.ts",
+     "src/lib/dnc/reconcile.ts",
+     "src/lib/error-message.ts"
+    ]
+   },
    {
     "sha": "8e86908",
     "date": "2026-11-23",
@@ -125405,23 +125624,16 @@
      "src/hooks/useAccounts.ts",
      "src/hooks/useDeals.ts"
     ]
-   },
-   {
-    "sha": "cdae222",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: escolhe a politica SLA mais especifica sem depender da ordem do banco (E109) (#179)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/enforce-sla/__tests__/index.test.ts",
-     "supabase/functions/enforce-sla/index.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
     30
+   ],
+   [
+    "src/components/compliance/DNCListManager.tsx",
+    2
    ],
    [
     "src/hooks/useMultiChannelCall.ts",
@@ -125472,31 +125684,27 @@
     2
    ],
    [
-    "supabase/functions/enforce-sla/index.ts",
-    2
-   ],
-   [
-    "src/components/calls/CrmSuggestionsCard.tsx",
+    "src/components/compliance/dnc/ReconcileDNCDialog.tsx",
     1
    ],
    [
-    "src/components/calls/NextBestActionPanel.tsx",
+    "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
     1
    ],
    [
-    "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+    "src/lib/__tests__/dnc-reconcile.test.ts",
     1
    ],
    [
-    "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+    "src/lib/__tests__/error-message.test.ts",
     1
    ],
    [
-    "src/hooks/useCrmFieldSuggestions.ts",
+    "src/lib/dnc/reconcile.ts",
     1
    ],
    [
-    "src/hooks/useLiveAssist.ts",
+    "src/lib/error-message.ts",
     1
    ]
   ]

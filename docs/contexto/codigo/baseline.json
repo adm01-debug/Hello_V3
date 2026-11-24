@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "8e8690826b67400abf480dd2a81861aa31b9bc0c",
+  "commit": "de29d5d4667afda6e2e451bdacc5f6b523ec3596",
   "branch": "main",
-  "data_commit": "2026-11-23T22:11:16-03:00",
+  "data_commit": "2026-11-23T22:21:53-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "de29d5d",
+    "data": "2026-11-23",
+    "assunto": "feat: conferir lista DNC antes de confiar na importacao (#209)"
+   },
    {
     "sha": "8e86908",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "ba0ddcf",
     "data": "2026-11-23",
     "assunto": "fix: search-calls exige autenticacao e deixa de usar a service_role (E004) (#185)"
-   },
-   {
-    "sha": "9e81eea",
-    "data": "2026-11-23",
-    "assunto": "fix: bloqueio de login falha fechado quando a verificacao nao responde (E003) (#184)"
    }
   ],
-  "arquivos_mudados_7d": 1005,
+  "arquivos_mudados_7d": 1011,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,15 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 39
+    "mudancas": 40
    },
    {
     "pasta": "src/hooks/__tests__",
     "mudancas": 36
+   },
+   {
+    "pasta": "src/lib/__tests__",
+    "mudancas": 29
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
@@ -157,10 +161,6 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 27
-   },
-   {
-    "pasta": "src/lib/__tests__",
     "mudancas": 27
    },
    {
@@ -177,7 +177,7 @@
    },
    {
     "pasta": "src/components/compliance",
-    "mudancas": 10
+    "mudancas": 13
    },
    {
     "pasta": "src/components/dashboard",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 39
+    "mudancas": 40
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 187
+    "commits": 188
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,21 +314,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1690,
-  "arquivos_codigo": 1288,
-  "linhas_codigo": 174400,
+  "arquivos_total": 1696,
+  "arquivos_codigo": 1294,
+  "linhas_codigo": 174800,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 96,
-  "modulos": 80,
-  "componentes": 448,
+  "modulos": 81,
+  "componentes": 449,
   "hooks": 193,
   "edge_functions": 98,
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 371,
+  "testes": 374,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 359,
-   "linhas": 42930
+   "arquivos": 361,
+   "linhas": 43162
   },
   "src/contexts": {
    "arquivos": 4,
@@ -499,8 +499,8 @@
    "linhas": 7847
   },
   "src/lib": {
-   "arquivos": 174,
-   "linhas": 21423
+   "arquivos": 178,
+   "linhas": 21591
   },
   "src/main.tsx": {
    "arquivos": 1,

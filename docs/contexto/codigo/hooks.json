@@ -2171,11 +2171,12 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 6,
+   "usado_por": 7,
    "usado_por_arquivos": [
     "src/components/compliance/ComplianceSettings.tsx",
     "src/components/compliance/DNCListManager.tsx",
     "src/components/compliance/dnc/ImportDNCDialog.tsx",
+    "src/components/compliance/dnc/ReconcileDNCDialog.tsx",
     "src/components/dialer/PredictiveDialerPanel.tsx",
     "src/contexts/CallContext.tsx",
     "src/pages/PhoneDialer.tsx"

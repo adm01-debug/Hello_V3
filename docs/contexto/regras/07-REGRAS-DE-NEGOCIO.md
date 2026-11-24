@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8e8690826b` · branch `main` · 2026-11-24 01:15 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `de29d5d466` · branch `main` · 2026-11-24 01:22 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1796,6 +1796,8 @@ _nenhum item encontrado_
 | `MAX_BUFFER` | `100` | `src/lib/web-vitals.ts` |
 | `SPARK_HOURS` | `24` | `src/lib/webhook-health-utils.ts` |
 | `AUTO_REFRESH_MS` | `30` | `src/lib/webhook-health-utils.ts` |
+| `MIN_DIGITOS` | `8` | `src/lib/dnc/reconcile.ts` |
+| `LOTE_CONSULTA` | `200` | `src/lib/dnc/reconcile.ts` |
 | `BOM` | `'\uFEFF'` | `src/lib/export/index.ts` |
 | `DEFAULT_ROTATION_INTERVAL_DAYS` | `90` | `src/lib/security/api-key-rotation.ts` |
 | `PAGE_SIZE` | `20` | `src/pages/CallLibrary.tsx` |
@@ -2201,6 +2203,7 @@ _nenhum item encontrado_
 | Falha ao excluir | `src/components/compliance/calling-hours/useCallingHoursManager.ts` |
 | Não foi possível verificar o horário agora | `src/components/compliance/calling-hours/useCallingHoursManager.ts` |
 | Você não tem permissão para criar regiões | `src/components/compliance/calling-hours/useCallingHoursManager.ts` |
+|  className= | `src/components/compliance/dnc/ReconcileDNCDialog.tsx` |
 | Erro ao analisar perfil | `src/components/contacts/ContactDetailSheet.tsx` |
 | Bitrix24 não configurado | `src/components/contacts/useBitrixSync.ts` |
 | Erro ao sincronizar com Bitrix24 | `src/components/contacts/useBitrixSync.ts` |
@@ -2413,8 +2416,7 @@ _nenhum item encontrado_
 | Erro ao agendar callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao atualizar callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao cancelar callback | `src/hooks/useScheduledCallbacks.ts` |
-| Erro ao carregar callbacks | `src/hooks/useScheduledCallbacks.ts` |
-| … +256 linhas — lista completa em `context.json` | |
+| … +257 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2463,7 +2465,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4217 testes em 361 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4238 testes em 364 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2535,6 +2537,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useConversations.coverage.test.tsx` | 14 | useConversations · fetches with filters applied · handles fetch error · useConversationMessages … |
 | `src/hooks/__tests__/useReauth.coverage.test.tsx` | 14 | useReauth · needsReauth true sem verificação prévia · requestReauth marca isRequired · verifyWithPassword sucesso atualiza lastVerified e dispensa reauth … |
 | `src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx` | 14 | useSupervisorPanel (coverage) · loads active calls and queue metrics on mount · selecting a call fetches whisper history · sendWhisper errors when no call/message selected … |
+| `src/lib/__tests__/dnc-reconcile.test.ts` | 14 | normalizarTelefone · leva o numero BR para a forma canonica +55 · cai para digitos quando nao da para reconhecer a forma BR · reconciliarDNC … |
 | `src/lib/__tests__/safe-date.test.ts` | 14 | safe-date · entradas hostis nunca lançam · PBT: qualquer string arbitrária é tolerada · PBT: qualquer número (inclui NaN, ±Infinity, valores fora do range) é tolerado · null / undefined /  … |
 | `src/lib/__tests__/sync-history.test.ts` | 14 | sync-history · sanitizeEntry só aceita timestamps finitos e positivos · nunca ultrapassa o limite de entradas · appendEntry mantém a entrada mais recente no topo … |
 | `src/lib/__tests__/talkRatio.test.ts` | 14 | computeTalkRatio · returns zeros for empty input · chamada sem áudio não é classificada como ideal · duração zero com segmentos não gera NaN nem veredito … |
@@ -2745,6 +2748,7 @@ _nenhum item encontrado_
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
 | `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 4 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado |
+| `src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx` | 4 | ReconcileDNCDialog · aponta exatamente o numero ausente da lista · reenvia apenas os ausentes e recontabiliza · mostra o erro da consulta em vez de dizer que esta tudo certo |
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
 | `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
 | `src/hooks/__tests__/use-mobile.coverage.test.tsx` | 4 | useIsMobile · returns false for desktop width · returns true for mobile width and reacts to change · cleans up listener on unmount |
@@ -2765,9 +2769,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
 | `src/hooks/__tests__/useVoipRecommendationInsights.coverage.test.tsx` | 4 | useVoipRecommendationInsights · carrega insights com sucesso (default week) · aceita período month · propaga erro da edge function |
-| `src/hooks/__tests__/useVoipRecommendations.coverage.test.tsx` | 4 | useVoipRecommendations · loads recommendations successfully · defaults period to week and supports day · throws and surfaces error when invoke returns error |
-| `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
-| … +61 linhas — lista completa em `context.json` | | |
+| … +64 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3000,6 +3002,7 @@ _nenhum item encontrado_
 | caracteres de controle ou acima do limite do banco). | `src/lib/voice-preferences.ts` |
 | * Retorna true se a chamada deve ser bloqueada (circuito aberto). */ | `src/lib/bitrix/circuit-breaker.ts` |
 | property-based testing (Onda D4). Deve espelhar 1:1 a lógica em produção. | `src/lib/dialer/predictive-pace.ts` |
+| * Lotes para o `.in()` do PostgREST, que tem limite de tamanho de URL. */ | `src/lib/dnc/reconcile.ts` |
 | * Classifica um MOS. O antigo limite de 3,6 para "mediano" foi dobrado em | `src/lib/metrics/mos.ts` |
 | * Espera media em segundos, apenas sobre chamadas com espera mensuravel. */ | `src/lib/metrics/queue.ts` |
 | * Zod schemas for runtime validation of API responses and form inputs. | `src/lib/validation/schemas.ts` |

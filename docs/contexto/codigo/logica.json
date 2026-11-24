@@ -1,11 +1,11 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 93,
+ "total": 95,
  "por_camada": {
   "data": 1,
   "integrations": 3,
-  "lib": 86,
+  "lib": 88,
   "python": 3
  },
  "arquivos": [
@@ -317,7 +317,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 234,
+   "usado_por": 235,
    "usado_por_modulos": [
     "components/admin",
     "components/agent",
@@ -829,6 +829,32 @@
    "orfao": true
   },
   {
+   "arquivo": "src/lib/dnc/reconcile.ts",
+   "camada": "lib",
+   "exports": [
+    "ReconciliacaoDNC",
+    "lotesParaConsulta",
+    "normalizarTelefone",
+    "reconciliarDNC"
+   ],
+   "export_default": null,
+   "linhas": 61,
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "env": [],
+   "externos": [],
+   "zod_schemas": 0,
+   "flags": [],
+   "papeis": [],
+   "usado_por": 1,
+   "usado_por_modulos": [
+    "components/compliance"
+   ],
+   "coberto_por_testes": 1,
+   "orfao": false
+  },
+  {
    "arquivo": "src/lib/elevenlabs-stub.ts",
    "camada": "lib",
    "exports": [
@@ -849,6 +875,29 @@
     "components/calls"
    ],
    "coberto_por_testes": 0,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/lib/error-message.ts",
+   "camada": "lib",
+   "exports": [
+    "mensagemDeErro"
+   ],
+   "export_default": null,
+   "linhas": 17,
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "env": [],
+   "externos": [],
+   "zod_schemas": 0,
+   "flags": [],
+   "papeis": [],
+   "usado_por": 1,
+   "usado_por_modulos": [
+    "components/compliance"
+   ],
+   "coberto_por_testes": 1,
    "orfao": false
   },
   {
@@ -1443,9 +1492,10 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 2,
+   "usado_por": 3,
    "usado_por_modulos": [
     "hooks",
+    "lib/dnc",
     "lib/validation"
    ],
    "coberto_por_testes": 1,

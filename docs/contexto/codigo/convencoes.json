@@ -6,7 +6,7 @@
    "src/pages (105)"
   ],
   "componentes": [
-   "src/components (317)",
+   "src/components (318)",
    "src/pages (126)",
    "src/contexts (4)"
   ],
@@ -16,12 +16,12 @@
    "src/contexts (4)"
   ],
   "servicos_logica": [
-   "src/lib (86)",
+   "src/lib (88)",
    "src/integrations (3)",
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (347)",
+   "co-localizado (__tests__) (350)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -41,13 +41,13 @@
  "nomenclatura": {
   "componentes": "PascalCase (88%)",
   "hooks": "use + PascalCase",
-  "servicos": "kebab-case (66%)",
+  "servicos": "kebab-case (65%)",
   "edge_functions": "kebab-case (100%)",
   "tabelas": "snake_case (90%)"
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (448)"
+  ".tsx (449)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: conferir lista DNC antes de confiar na importacao (#209)",
    "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)",
    "fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)",
    "fix: importacao de DNC passa a conferir o resultado real da RPC (#206)",
-   "fix: grava o desfecho real da chamada em call_sessions (#205)",
-   "feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)"
+   "fix: grava o desfecho real da chamada em call_sessions (#205)"
   ]
  },
  "pr_template": null,
