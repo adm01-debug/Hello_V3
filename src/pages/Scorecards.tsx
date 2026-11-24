@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { useScorecards, type CallScorecard } from "@/hooks/useScorecards";
+import { EmptyErrorState } from '@/components/ui/empty-state';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -106,9 +107,11 @@ export default function Scorecards() {
       </div>
 
       {error && (
-        <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
-          Não foi possível ler os modelos de avaliação e os critérios: {error}
-        </div>
+        <EmptyErrorState
+          title="Não foi possível ler os modelos de avaliação e os critérios"
+          description={error}
+          size="sm"
+        />
       )}
 
       <Card>

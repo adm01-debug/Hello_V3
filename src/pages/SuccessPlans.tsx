@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { EmptyErrorState, EmptyState } from '@/components/ui/empty-state';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -21,13 +22,12 @@ export default function SuccessPlans() {
       {loading ? (
         <p className="text-muted-foreground">Carregando...</p>
       ) : error ? (
-        <Card><CardContent className="pt-6">
-          <p className="text-destructive text-center py-8">Não foi possível carregar os planos de sucesso: {error}</p>
-        </CardContent></Card>
+        <EmptyErrorState
+          title="Não foi possível carregar os planos de sucesso"
+          description={error}
+        />
       ) : plans.length === 0 ? (
-        <Card><CardContent className="pt-6">
-          <p className="text-muted-foreground text-center py-8">Nenhum plano de sucesso ainda</p>
-        </CardContent></Card>
+        <EmptyState iconType="analytics" title="Nenhum plano de sucesso ainda" description="Crie um plano para acompanhar marcos e objetivos por conta." />
       ) : (
         <div className="grid gap-4 lg:grid-cols-2">
           {plans.map((p) => {

@@ -16,6 +16,7 @@ import {
   Bell,
   BarChart3,
   Settings,
+  ShieldAlert,
   type LucideIcon
 } from "lucide-react";
 
@@ -27,6 +28,7 @@ const emptyStateVariants = cva(
         default: "bg-muted/30 border border-dashed border-border",
         search: "bg-muted/20",
         error: "bg-destructive/5 border border-dashed border-destructive/20",
+        denied: "bg-warning/5 border border-dashed border-warning/20",
         success: "bg-success/5 border border-dashed border-success/20",
         minimal: "",
         card: "bg-card border shadow-sm",
@@ -52,6 +54,7 @@ const iconContainerVariants = cva(
         default: "bg-muted text-muted-foreground",
         search: "bg-primary/10 text-primary",
         error: "bg-destructive/10 text-destructive",
+        denied: "bg-warning/10 text-warning",
         success: "bg-success/10 text-success",
         minimal: "text-muted-foreground",
         card: "bg-muted text-muted-foreground",
@@ -80,6 +83,7 @@ const presetIcons: Record<string, LucideIcon> = {
   default: Inbox,
   search: Search,
   error: AlertCircle,
+  denied: ShieldAlert,
   success: CheckCircle2,
   calls: Phone,
   contacts: Users,
@@ -111,6 +115,8 @@ export interface EmptyStateProps
   title: string;
   /** Description text */
   description?: string;
+  /** Linha extra de orientacao (ex.: o que NAO concluir a partir do erro) */
+  hint?: string;
   /** Primary action button */
   action?: EmptyStateAction;
   /** Secondary action button */
@@ -129,6 +135,7 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
       iconType,
       title,
       description,
+      hint,
       action,
       secondaryAction,
       animated = true,
@@ -180,6 +187,14 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
               size === "lg" && "text-base"
             )}>
               {description}
+            </p>
+          )}
+          {hint && (
+            <p className={cn(
+              "text-muted-foreground/80",
+              size === "sm" ? "text-[11px]" : "text-xs"
+            )}>
+              {hint}
             </p>
           )}
         </div>
@@ -267,17 +282,46 @@ export function EmptySearchState({
 
 export function EmptyErrorState({
   onRetry,
+  title,
+  description,
+  hint,
   ...props
-}: Omit<EmptyStateProps, "title" | "variant" | "iconType"> & {
+}: Omit<EmptyStateProps, "variant" | "iconType" | "title" | "description"> & {
+  title?: string;
+  description?: string;
+  hint?: string;
   onRetry?: () => void;
 }) {
   return (
     <EmptyState
       variant="error"
       iconType="error"
-      title="Erro ao carregar dados"
-      description="Ocorreu um erro ao carregar as informações. Por favor, tente novamente."
+      title={title ?? "Erro ao carregar dados"}
+      description={description ?? "Ocorreu um erro ao carregar as informações. Por favor, tente novamente."}
+      hint={hint}
       action={onRetry ? { label: "Tentar novamente", onClick: onRetry } : undefined}
+      {...props}
+    />
+  );
+}
+
+export function EmptyPermissionState({
+  onBack,
+  title,
+  description,
+  ...props
+}: Omit<EmptyStateProps, "variant" | "iconType" | "title" | "description"> & {
+  title?: string;
+  description?: string;
+  onBack?: () => void;
+}) {
+  return (
+    <EmptyState
+      variant="denied"
+      iconType="denied"
+      title={title ?? "Sem permissão para acessar"}
+      description={description ?? "Sua conta não tem a permissão necessária para ver este conteúdo. Fale com um administrador se precisar de acesso."}
+      action={onBack ? { label: "Voltar", onClick: onBack, variant: "outline" } : undefined}
       {...props}
     />
   );
