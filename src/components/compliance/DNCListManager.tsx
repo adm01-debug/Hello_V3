@@ -9,6 +9,7 @@ import { safeFormatDate } from '@/lib/safe-date';
 import { DNCStats } from './dnc/DNCStats';
 import { AddDNCDialog } from './dnc/AddDNCDialog';
 import { ImportDNCDialog } from './dnc/ImportDNCDialog';
+import { ReconcileDNCDialog } from './dnc/ReconcileDNCDialog';
 import { DNCTable } from './dnc/DNCTable';
 
 export function DNCListManager() {
@@ -57,6 +58,9 @@ export function DNCListManager() {
             <div className="flex gap-2">
               <ImportDNCDialog
                 onImport={(phones, reason) => bulkImportDNC(phones, reason, 'bulk_import')}
+              />
+              <ReconcileDNCDialog
+                onResend={(phones) => bulkImportDNC(phones, 'reconcile', 'reconcile')}
               />
               <Button variant="outline" size="sm" onClick={handleExport}>
                 <Download className="h-4 w-4 mr-2" />

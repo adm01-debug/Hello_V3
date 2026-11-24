@@ -75,7 +75,7 @@
 - [x] **036** — Barreira de compliance no discador preditivo — onda 1 — Crítica — Hooks
 - [ ] **037** — Barreira de compliance no servidor, não só no cliente — onda 1 — Crítica — Edge Function + Banco 🔒
 - [x] **038** — Fazer a importação em lote de DNC verificar o resultado de verdade — onda 1 — Crítica — Hooks
-- [ ] **039** — Reconciliar a lista DNC depois da importação — onda 1 — Alta — Hooks
+- [x] **039** — Reconciliar a lista DNC depois da importação — onda 1 — Alta — Hooks
 - [ ] **040** — Tirar a chave `anon` e o host fixo de dentro das migrations — onda 1 — Média — Banco 🔒
 - [ ] **041** — Fazer a auditoria de dependências reprovar de verdade — onda 1 — Alta — CI 🔒
 - [ ] **042** — Proteger a branch `main` — onda 1 — Média — Infraestrutura 🔒
