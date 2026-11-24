@@ -2,6 +2,7 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { clientIpFromHeaders } from "../_shared/client-ip.ts";
 import { checkRateLimitDB } from "../_shared/rate-limit.ts";
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -175,9 +176,9 @@ Deno.serve(async (req) => {
 
   } catch (error: unknown) {
     console.error('Geo validation error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    // Falha aberta por decisao de negocio: nao bloqueia o usuario se a checagem cair.
     return new Response(
-      JSON.stringify({ allowed: true, error: errorMessage }),
+      JSON.stringify({ allowed: true, code: 'internal_error', message: GENERIC_INTERNAL_MESSAGE, correlation_id: getCorrelationId(req) }),
       { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
   }

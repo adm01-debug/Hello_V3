@@ -4,6 +4,7 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, string, optional } from "../_shared/validate.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 import { fetchComPrazo } from "../_shared/resilience.ts";
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
 type Tone = "profissional" | "amigavel" | "conciso" | "empatico";
 
@@ -127,8 +128,8 @@ serve(async (req) => {
       { status: 200, headers: { ...cors, "Content-Type": "application/json" } },
     );
   } catch (error) {
-    const msg = error instanceof Error ? error.message : "Erro desconhecido";
-    return new Response(JSON.stringify({ error: "Erro interno", details: msg }), {
+    console.error("[whatsapp-rewrite] error:", error);
+    return new Response(JSON.stringify({ code: 'internal_error', message: GENERIC_INTERNAL_MESSAGE, correlation_id: getCorrelationId(req) }), {
       status: 500,
       headers: { ...cors, "Content-Type": "application/json" },
     });

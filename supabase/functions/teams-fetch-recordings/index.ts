@@ -1,6 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
-import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 const GRAPH_URL = "https://graph.microsoft.com/v1.0";
 
@@ -61,7 +61,8 @@ Deno.serve(async (req) => {
       return new Response(
         JSON.stringify({
           error: "Falha na autenticacao com o Microsoft Graph",
-          detail: e instanceof Error ? e.message : String(e),
+          code: 'internal_error',
+          correlation_id: getCorrelationId(req),
         }),
         {
           status: 502,
@@ -132,7 +133,8 @@ Deno.serve(async (req) => {
         if (insErr) errors.push(insErr.message);
         else imported++;
       } catch (e) {
-        errors.push(e instanceof Error ? e.message : String(e));
+        console.error('[teams-fetch-recordings] falha ao importar gravacao', e);
+        errors.push('Falha ao importar esta gravacao');
       }
     }
 

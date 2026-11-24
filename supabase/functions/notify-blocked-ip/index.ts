@@ -4,6 +4,7 @@ import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 import { requireUser } from "../_shared/auth.ts";
 import { escapeHtml } from "../_shared/html.ts";
 import { optional, string, uuid, validate } from "../_shared/validate.ts";
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
 const bodySchema = {
   user_id: optional(uuid()),
@@ -135,10 +136,9 @@ export async function handler(req: Request): Promise<Response> {
       { status: 200, headers: { "Content-Type": "application/json", ...cors } }
     );
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error("[BLOCKED-IP] Erro:", errorMessage);
+    console.error("[BLOCKED-IP] Erro:", error);
     return new Response(
-      JSON.stringify({ success: false, error: errorMessage, logged: true, emailSent: false }),
+      JSON.stringify({ success: false, code: 'internal_error', message: GENERIC_INTERNAL_MESSAGE, correlation_id: getCorrelationId(req), logged: true, emailSent: false }),
       { status: 500, headers: { "Content-Type": "application/json", ...cors } }
     );
   }
