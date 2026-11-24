@@ -3,14 +3,17 @@ import { buildCorsHeaders } from '../_shared/cors.ts';
 import { requireUser } from '../_shared/auth.ts';
 import { mesmaString } from '../_shared/constant-time.ts';
 import { checkRateLimitDB, getClientIp } from '../_shared/rate-limit.ts';
+import { createErrorResponse } from '../_shared/validator.ts';
+import { ChatbotRespondSchema } from './schema.ts';
 import { uuid } from '../_shared/validate.ts';
-import { fetchComPrazo } from "../_shared/resilience.ts";
 
 interface ChatbotPayload {
   conversation_id: string;
   user_message: string;
   visitor_token?: string;
 }
+import { fetchComPrazo } from "../_shared/resilience.ts";
+
 
  const DEFAULT_THRESHOLD = 0.7;
 const MODEL = 'google/gemini-2.5-flash';
@@ -22,22 +25,36 @@ export async function handler(req: Request): Promise<Response> {
   const startTime = Date.now();
 
   try {
-    const body = (await req.json()) as ChatbotPayload;
+    const raw = (await req.json()) as Partial<ChatbotPayload>;
 
-    if (!body.conversation_id || !body.user_message) {
+    // Contrato historico desta edge (400), preservado para nao quebrar o chamador.
+    if (!raw.conversation_id || !raw.user_message) {
       return new Response(
         JSON.stringify({ error: 'conversation_id e user_message obrigatórios' }),
         { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } }
       );
     }
 
-    const convId = uuid()(body.conversation_id);
+    const convId = uuid()(raw.conversation_id);
     if (!convId.ok) {
       return new Response(JSON.stringify({ error: 'conversation_id invalido' }), {
         status: 400,
         headers: { ...cors, 'Content-Type': 'application/json' },
       });
     }
+
+    // Tetos de tamanho e tipos: 422 com `fields` apontando o campo (A-129).
+    const schemaCheck = ChatbotRespondSchema.safeParse(raw);
+    if (!schemaCheck.success) {
+      return createErrorResponse(
+        'Dados inválidos',
+        'VALIDATION_ERROR',
+        schemaCheck.error.errors.map((e) => ({ field: e.path.join('.'), error: e.message })),
+        422,
+        cors,
+      );
+    }
+    const body = schemaCheck.data;
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
@@ -64,7 +81,7 @@ export async function handler(req: Request): Promise<Response> {
       }
 
       const daSessao = String(session.conversation_id || '').toLowerCase();
-      if (!daSessao || !mesmaString(daSessao, convId.data.toLowerCase())) {
+      if (!daSessao || !mesmaString(daSessao, body.conversation_id.toLowerCase())) {
         return new Response(JSON.stringify({ error: 'Conversa nao pertence a esta sessao' }), {
           status: 403,
           headers: { ...cors, 'Content-Type': 'application/json' },

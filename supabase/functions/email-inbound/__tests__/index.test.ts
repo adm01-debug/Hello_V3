@@ -35,6 +35,15 @@ Deno.test('email-inbound: from/subject ausentes continuam devolvendo 400', async
   assertEquals(res.status, 400);
 });
 
+Deno.test('email-inbound: subject acima do teto devolve 422 com o campo apontado', async () => {
+  const res = await handler(post({ ...payload, subject: 'x'.repeat(999) }));
+
+  assertEquals(res.status, 422);
+  const body = await res.json();
+  assertEquals(body.code, 'VALIDATION_ERROR');
+  assertEquals(body.fields[0].field, 'subject');
+});
+
 Deno.test('email-inbound: ticket ja existente responde 200 idempotent_replay sem escrever', async () => {
   const chamadas: { method: string; url: string }[] = [];
   const server = Deno.serve(

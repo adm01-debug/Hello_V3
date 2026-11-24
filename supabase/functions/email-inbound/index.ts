@@ -1,18 +1,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
+import { createErrorResponse } from '../_shared/validator.ts';
+import { EmailInboundSchema } from './schema.ts';
 
-interface EmailInboundPayload {
-  from: string;
-  from_name?: string;
-  to: string[];
-  cc?: string[];
-  subject: string;
-  body_text?: string;
-  body_html?: string;
-  message_id?: string;
-  in_reply_to?: string;
-  headers?: Record<string, string>;
-}
 
 export async function handler(req: Request): Promise<Response> {
   const cors = buildCorsHeaders(req);
@@ -26,9 +16,10 @@ export async function handler(req: Request): Promise<Response> {
       });
     }
 
-    const body = (await req.json()) as EmailInboundPayload;
+    const raw = await req.json();
 
-    if (!body.from || !body.subject) {
+    // Contrato historico desta edge (400/422), preservado para o provedor de e-mail.
+    if (!raw?.from || !raw?.subject) {
       return new Response(
         JSON.stringify({ error: 'Campos obrigatórios: from, subject' }),
         { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } }
@@ -37,12 +28,25 @@ export async function handler(req: Request): Promise<Response> {
 
     // Sem message_id nao existe chave de deduplicacao: o provedor reentrega em
     // 5xx e cada volta criava uma conversa nova. Melhor recusar na entrada.
-    if (!body.message_id) {
+    if (!raw.message_id) {
       return new Response(
         JSON.stringify({ error: 'Campo obrigatório: message_id (idempotência)' }),
         { status: 422, headers: { ...cors, 'Content-Type': 'application/json' } }
       );
     }
+
+    // Tetos de tamanho e tipos: 422 com `fields` apontando o campo (A-129).
+    const parsed = EmailInboundSchema.safeParse(raw);
+    if (!parsed.success) {
+      return createErrorResponse(
+        'Dados inválidos',
+        'VALIDATION_ERROR',
+        parsed.error.errors.map((e) => ({ field: e.path.join('.'), error: e.message })),
+        422,
+        cors,
+      );
+    }
+    const body = parsed.data;
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
