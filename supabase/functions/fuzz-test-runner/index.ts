@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 import fc from "https://esm.sh/fast-check"
 import { buildCorsHeaders } from "../_shared/cors.ts"
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { fetchComPrazo } from '../_shared/resilience.ts';
 
 // Alvos permitidos: apenas Edge Functions deste projeto. Um `target` arbitrário
 // permitiria usar a função como proxy de requisições para qualquer host.
@@ -105,7 +106,7 @@ serve(async (req) => {
         ? hostileNumericSamples[i % hostileNumericSamples.length]
         : fc.sample(fc.anything(), 1)[0]
 
-      const res = await fetch(endpoint, {
+      const res = await fetchComPrazo(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

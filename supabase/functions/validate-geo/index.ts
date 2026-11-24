@@ -4,6 +4,7 @@ import { clientIpFromHeaders } from "../_shared/client-ip.ts";
 import { checkRateLimitDB } from "../_shared/rate-limit.ts";
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 import { decideGeoAccess } from './decide.ts';
+import { fetchComPrazo } from '../_shared/resilience.ts';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -72,7 +73,7 @@ Deno.serve(async (req) => {
 
     if (!countryCode && clientIp) {
       try {
-        const geoResponse = await fetch(`http://ip-api.com/json/${clientIp}?fields=status,country,countryCode,regionName,city`);
+        const geoResponse = await fetchComPrazo(`http://ip-api.com/json/${clientIp}?fields=status,country,countryCode,regionName,city`);
         if (geoResponse.ok) {
           const geoData = await geoResponse.json();
           if (geoData.status === 'success') {
