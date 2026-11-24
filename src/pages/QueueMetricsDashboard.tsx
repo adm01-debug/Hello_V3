@@ -1,5 +1,5 @@
 import { Activity, RefreshCw, CheckCircle, AlertTriangle, AlertCircle, Target, Settings, Zap, History } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -50,6 +50,27 @@ const QueueMetricsDashboard = () => {
         </div>
       </div>
 
+      {q.error && (
+        <Card className="border-destructive bg-destructive/5">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-lg text-destructive">
+              <AlertCircle className="h-5 w-5" />Não foi possível carregar as métricas
+            </CardTitle>
+            <CardDescription>{q.error}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+              {q.hasLoaded
+                ? `Os números abaixo são da última leitura bem-sucedida (${format(q.lastUpdate, 'HH:mm:ss')}) e não foram atualizados desde então.`
+                : 'Nenhuma leitura bem-sucedida até agora — por isso nenhum número é exibido aqui, nem zero.'}
+            </p>
+            <Button onClick={q.fetchMetrics} size="sm" variant="outline">
+              <RefreshCw className="h-4 w-4 mr-2" />Tentar novamente
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
       <Tabs value={q.activeTab} onValueChange={q.setActiveTab}>
         <TabsList>
           <TabsTrigger value="dashboard" className="flex items-center gap-2"><Activity className="h-4 w-4" />Dashboard</TabsTrigger>
@@ -87,8 +108,12 @@ const QueueMetricsDashboard = () => {
               </CardContent>
             </Card>
           )}
-          <QueueMetricsCards metrics={q.metrics} formatTime={q.formatTime} />
-          <QueueRealtimeCharts realtimeData={q.realtimeData} metrics={q.metrics} />
+          {q.hasLoaded && (
+            <>
+              <QueueMetricsCards metrics={q.metrics} formatTime={q.formatTime} />
+              <QueueRealtimeCharts realtimeData={q.realtimeData} metrics={q.metrics} />
+            </>
+          )}
         </TabsContent>
 
         <TabsContent value="goals" className="space-y-6">

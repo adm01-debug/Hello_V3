@@ -6,6 +6,7 @@ let activeCallsData: unknown[] = [];
 let agentsData: unknown[] = [];
 let recentCallsData: unknown[] = [];
 let invokeResult: { data: unknown; error: unknown } = { data: { alertsCreated: 2 }, error: null };
+let readError: string | null = null;
 
 vi.mock('@/components/dashboard/DashboardGoalsSettings', () => ({}));
 
@@ -15,16 +16,16 @@ vi.mock('@/integrations/supabase/client', () => {
     b.select = vi.fn(() => b);
     b.eq = vi.fn(() => {
       if (table === 'dashboard_goals') return Promise.resolve({ data: goalsData, error: null });
-      if (table === 'call_sessions') return Promise.resolve({ data: activeCallsData, error: null });
+      if (table === 'call_sessions') return Promise.resolve({ data: activeCallsData, error: readError ? { message: readError } : null });
       return b;
     });
     b.in = vi.fn(() => {
-      if (table === 'call_sessions') return Promise.resolve({ data: activeCallsData, error: null });
+      if (table === 'call_sessions') return Promise.resolve({ data: activeCallsData, error: readError ? { message: readError } : null });
       return b;
     });
-    b.gte = vi.fn(() => Promise.resolve({ data: recentCallsData, error: null }));
+    b.gte = vi.fn(() => Promise.resolve({ data: recentCallsData, error: readError ? { message: readError } : null }));
     b.then = (resolve: (v: unknown) => void) => {
-      if (table === 'agents') return resolve({ data: agentsData, error: null });
+      if (table === 'agents') return resolve({ data: agentsData, error: readError ? { message: readError } : null });
       return resolve({ data: [], error: null });
     };
     return b;
@@ -55,6 +56,7 @@ describe('useQueueMetrics', () => {
       { status: 'abandoned', duration_seconds: 0, hold_time_seconds: 0 },
     ];
     invokeResult = { data: { alertsCreated: 2 }, error: null };
+    readError = null;
   });
   it('fetches metrics and computes values', async () => {
     const { result } = renderHook(() => useQueueMetrics());
@@ -170,5 +172,33 @@ describe('useQueueMetrics', () => {
     const { result } = renderHook(() => useQueueMetrics());
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.metrics.serviceLevel).toBe(100);
+  });
+  it('falha de leitura nao vira zero: publica erro e preserva o estado desconhecido', async () => {
+    // A-009: com data null o calculo seguia com `|| 0` e o painel anunciava
+    // "0 chamadas ativas, 0 agentes" — o mesmo desenho de um dia calmo.
+    readError = 'permission denied for table call_sessions';
+    const { result } = renderHook(() => useQueueMetrics());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.error).toBe('permission denied for table call_sessions');
+    expect(result.current.hasLoaded).toBe(false);
+    expect(result.current.metrics.activeCalls).toBe(0);
+    expect(result.current.realtimeData).toHaveLength(0);
+  });
+
+  it('mantem os ultimos numeros bons ao falhar depois de um sucesso, com erro visivel', async () => {
+    const { result } = renderHook(() => useQueueMetrics());
+    await waitFor(() => expect(result.current.hasLoaded).toBe(true));
+    expect(result.current.metrics.activeCalls).toBe(2);
+    expect(result.current.error).toBeNull();
+
+    readError = 'timeout';
+    await act(async () => { await result.current.fetchMetrics(); });
+    expect(result.current.error).toBe('timeout');
+    expect(result.current.hasLoaded).toBe(true);
+    expect(result.current.metrics.activeCalls).toBe(2);
+
+    readError = null;
+    await act(async () => { await result.current.fetchMetrics(); });
+    expect(result.current.error).toBeNull();
   });
 });
