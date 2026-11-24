@@ -941,8 +941,8 @@
   {
    "modulo": "components/contacts",
    "arquivos": 13,
-   "testes": 0,
-   "linhas": 1472,
+   "testes": 1,
+   "linhas": 1528,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5598,7 +5598,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 16839,
+   "linhas": 16841,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",

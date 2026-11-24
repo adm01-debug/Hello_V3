@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "5bae12541d71aa68100e3b60f256e6933ea71a0a",
+  "sha": "0b5b0b3eeffae733dedb331a5ca80b656edce96b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 06:12 UTC",
-  "files_total": 1767,
-  "code_files": 1564,
-  "code_lines": 193390
+  "generated_at": "2026-11-24 06:22 UTC",
+  "files_total": 1768,
+  "code_files": 1565,
+  "code_lines": 193521
  },
  "version": "1.3.2",
- "facts_hash": "26bdb7d4a7277149",
+ "facts_hash": "24135226cc74f6ff",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 655,
-   ".tsx": 630,
+   ".tsx": 631,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -28402,7 +28402,7 @@
     "rpc_transitive": [
      "log_audit_event"
     ],
-    "deps_count": 44
+    "deps_count": 45
    },
    {
     "path": "",
@@ -32198,7 +32198,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 364,
+  "components_count": 365,
   "hooks": [
    {
     "name": "useContacts",
@@ -33343,8 +33343,8 @@
   },
   {
    "module": "src/components",
-   "files": 364,
-   "lines": 43465,
+   "files": 365,
+   "lines": 43594,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34079,7 +34079,7 @@
   {
    "module": "src/pages",
    "files": 144,
-   "lines": 22063,
+   "lines": 22065,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -57654,6 +57654,22 @@
    {
     "file": "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
     "name": "mostra o erro da consulta em vez de dizer que esta tudo certo"
+   },
+   {
+    "file": "src/components/contacts/__tests__/ContactCard.test.tsx",
+    "name": "ContactCard - menu "
+   },
+   {
+    "file": "src/components/contacts/__tests__/ContactCard.test.tsx",
+    "name": "expõe o acionador "
+   },
+   {
+    "file": "src/components/contacts/__tests__/ContactCard.test.tsx",
+    "name": "o botão de e-mail aponta para mailto e não seleciona o cartão"
+   },
+   {
+    "file": "src/components/contacts/__tests__/ContactCard.test.tsx",
+    "name": "clicar no cartão continua selecionando o contato"
    },
    {
     "file": "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
@@ -95002,7 +95018,7 @@
   },
   "src/components/contacts/ContactCard.tsx": {
    "path": "src/components/contacts/ContactCard.tsx",
-   "lines": 157,
+   "lines": 207,
    "exports": [
     "const ContactCard"
    ]
@@ -95032,7 +95048,7 @@
   },
   "src/components/contacts/ContactGrid.tsx": {
    "path": "src/components/contacts/ContactGrid.tsx",
-   "lines": 46,
+   "lines": 52,
    "exports": [
     "const ContactGrid"
    ]
@@ -95118,6 +95134,17 @@
    ],
    "hooks": [
     "useBitrixSync"
+   ]
+  },
+  "src/components/contacts/__tests__/ContactCard.test.tsx": {
+   "path": "src/components/contacts/__tests__/ContactCard.test.tsx",
+   "lines": 73,
+   "is_test": true,
+   "tests": [
+    "ContactCard - menu ",
+    "expõe o acionador ",
+    "o botão de e-mail aponta para mailto e não seleciona o cartão",
+    "clicar no cartão continua selecionando o contato"
    ]
   },
   "src/components/conversation-intelligence/BattleCardAlert.tsx": {
@@ -115136,7 +115163,7 @@
   },
   "src/pages/Contacts.tsx": {
    "path": "src/pages/Contacts.tsx",
-   "lines": 343,
+   "lines": 345,
    "exports": [
     "default Contacts"
    ],
@@ -126340,10 +126367,23 @@
   }
  },
  "git": {
-  "sha": "5bae12541d71aa68100e3b60f256e6933ea71a0a",
+  "sha": "0b5b0b3eeffae733dedb331a5ca80b656edce96b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "0b5b0b3",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: resolve o menu mais opcoes do cartao de contato (etapa 166) (#240)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/contacts/ContactCard.tsx",
+     "src/components/contacts/ContactGrid.tsx",
+     "src/components/contacts/__tests__/ContactCard.test.tsx",
+     "src/pages/Contacts.tsx"
+    ]
+   },
    {
     "sha": "5bae125",
     "date": "2026-11-24",
@@ -126806,17 +126846,6 @@
      "docs/qa/05-PROGRESSO.md",
      "src/pages/ConcurrencyConflicts.tsx",
      "src/pages/__tests__/ConcurrencyConflicts.test.tsx"
-    ]
-   },
-   {
-    "sha": "046acb3",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: remediacao de anomalia atualiza a lista (#210)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
-     "src/hooks/useAnomalyRemediation.ts"
     ]
    }
   ],

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5bae12541d` · branch `main` · 2026-11-24 06:12 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0b5b0b3eef` · branch `main` · 2026-11-24 06:22 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4306 testes em 376 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4310 testes em 377 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2915,6 +2915,7 @@ _nenhum item encontrado_
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
 | `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 4 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado |
 | `src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx` | 4 | ReconcileDNCDialog · aponta exatamente o numero ausente da lista · reenvia apenas os ausentes e recontabiliza · mostra o erro da consulta em vez de dizer que esta tudo certo |
+| `src/components/contacts/__tests__/ContactCard.test.tsx` | 4 | ContactCard - menu  · expõe o acionador  · o botão de e-mail aponta para mailto e não seleciona o cartão · clicar no cartão continua selecionando o contato |
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
 | `src/components/network/__tests__/QualityForecastCard.test.tsx` | 4 | QualityForecastCard — recomendacao de capacity registra leitura (E178) · nao promete execucao: o botao diz  · grava a acao com outcome dismissed e os dados da recomendacao · nao afirma sucesso quando o insert falha |
 | `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
@@ -2932,8 +2933,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useTrunkMetrics.coverage.test.tsx` | 4 | useTrunkMetrics · aggregates usage by trunk and by day · returns empty for no data with default days · throws on usage error |
 | `src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx` | 4 | useVoipAnomalies · classifies anomalies (outage/drift/spike) and builds ids · returns empty array when no anomalies present · throws on error |
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
-| `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
-| … +76 linhas — lista completa em `context.json` | | |
+| … +77 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

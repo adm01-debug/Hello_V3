@@ -1504,7 +1504,7 @@
     "ContactCard"
    ],
    "export_default": null,
-   "linhas": 157,
+   "linhas": 207,
    "dominio": "components/contacts",
    "hooks_locais": [],
    "tabelas": [],
@@ -1551,7 +1551,7 @@
     "ContactGrid"
    ],
    "export_default": null,
-   "linhas": 46,
+   "linhas": 52,
    "dominio": "components/contacts",
    "hooks_locais": [],
    "tabelas": [],
@@ -4387,7 +4387,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 10,
+   "usado_por": 11,
    "orfao": false
   },
   {
@@ -5920,7 +5920,7 @@
     "Contacts"
    ],
    "export_default": "Contacts",
-   "linhas": 343,
+   "linhas": 345,
    "dominio": "pages",
    "hooks_locais": [
     "useBitrixSync",

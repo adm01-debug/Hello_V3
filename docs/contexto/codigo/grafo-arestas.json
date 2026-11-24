@@ -785,6 +785,7 @@
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/card.tsx",
+   "src/components/ui/dropdown-menu.tsx",
    "src/hooks/useContacts.ts",
    "src/lib/utils.ts"
   ],
