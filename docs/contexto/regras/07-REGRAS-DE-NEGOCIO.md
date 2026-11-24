@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3717f08c30` · branch `main` · 2026-11-24 07:19 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e08bab6ed4` · branch `main` · 2026-11-24 07:28 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4346 testes em 384 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4349 testes em 385 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2933,7 +2933,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
 | `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
-| … +84 linhas — lista completa em `context.json` | | |
+| … +85 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

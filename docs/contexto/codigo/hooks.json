@@ -3324,7 +3324,7 @@
    "hooks_exportados": [
     "useQueueAudioPrompts"
    ],
-   "linhas": 159,
+   "linhas": 168,
    "dominio": "hooks",
    "tabelas": [
     "queue_audio_prompts"
@@ -3343,7 +3343,7 @@
     "src/components/queues/QueueAudioLibrary.tsx",
     "src/pages/CallQueues.tsx"
    ],
-   "coberto_por_testes": 0
+   "coberto_por_testes": 1
   },
   {
    "arquivo": "src/hooks/useQueueMetrics.ts",

@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 394,
+ "total": 395,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 377
+  "unit": 378
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 370
+   "arquivos": 371
   },
   {
    "padrao": "e2e/",
@@ -1419,6 +1419,15 @@
     "src/hooks/useQualityTrendAnalyzer.ts"
    ],
    "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx",
+   "tipo": "unit",
+   "linhas": 90,
+   "testa": [
+    "src/hooks/useQueueAudioPrompts.ts"
+   ],
+   "casos": 2
   },
   {
    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
@@ -3683,6 +3692,7 @@
   "src/hooks/useQualityAlerts.ts": 1,
   "src/hooks/useQualityMetrics.ts": 1,
   "src/hooks/useQualityTrendAnalyzer.ts": 1,
+  "src/hooks/useQueueAudioPrompts.ts": 1,
   "src/hooks/useQueueMetrics.ts": 1,
   "src/hooks/useRateLimitData.ts": 1,
   "src/hooks/useRealtimeHoldAlerts.ts": 2,
@@ -3988,7 +3998,6 @@
    "src/hooks/usePageVisibility.ts",
    "src/hooks/usePersistedTagFilter.ts",
    "src/hooks/usePredictivePacing.ts",
-   "src/hooks/useQueueAudioPrompts.ts",
    "src/hooks/useRingGroups.ts",
    "src/hooks/useRingtoneSettings.ts",
    "src/hooks/useSecurityAlertNotifications.ts",

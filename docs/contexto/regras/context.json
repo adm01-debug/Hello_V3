@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "3717f08c30b063a61664c9424eee6a2eea83a25c",
+  "sha": "e08bab6ed453cec3166bae89cb8ba3c12909763c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 07:19 UTC",
-  "files_total": 1778,
-  "code_files": 1574,
-  "code_lines": 194993
+  "generated_at": "2026-11-24 07:28 UTC",
+  "files_total": 1779,
+  "code_files": 1575,
+  "code_lines": 195092
  },
  "version": "1.3.2",
- "facts_hash": "4e4900680a356d30",
+ "facts_hash": "759f2504e4ae2072",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 657,
-   ".tsx": 637,
+   ".tsx": 638,
    ".sql": 245,
    ".mjs": 28,
    ".py": 5,
@@ -33601,8 +33601,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 353,
-   "lines": 47052,
+   "files": 354,
+   "lines": 47151,
    "tables": [
     "accounts",
     "active_sessions",
@@ -38602,7 +38602,7 @@
    },
    {
     "file": "src/hooks/useQueueAudioPrompts.ts",
-    "count": 1
+    "count": 2
    },
    {
     "file": "src/hooks/__tests__/useExtensionsOverview.coverage.test.tsx",
@@ -64073,6 +64073,18 @@
    {
     "file": "src/hooks/__tests__/useQualityTrendAnalyzer.coverage.test.tsx",
     "name": "lida com exceção em getUser sem lançar"
+   },
+   {
+    "file": "src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx",
+    "name": "useQueueAudioPrompts.deletePrompt"
+   },
+   {
+    "file": "src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx",
+    "name": "remove o objeto do bucket antes da linha e avisa sucesso"
+   },
+   {
+    "file": "src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx",
+    "name": "mantém a linha e avisa quando o bucket recusa a remoção"
    },
    {
     "file": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
@@ -91447,7 +91459,7 @@
    },
    {
     "kind": "dinâmico",
-    "msg": "1 chamada(s) `.from(variável)` — tabela só conhecida em runtime",
+    "msg": "2 chamada(s) `.from(variável)` — tabela só conhecida em runtime",
     "where": [
      "src/hooks/useQueueAudioPrompts.ts"
     ]
@@ -103381,7 +103393,7 @@
   },
   "src/hooks/useQueueAudioPrompts.ts": {
    "path": "src/hooks/useQueueAudioPrompts.ts",
-   "lines": 159,
+   "lines": 168,
    "exports": [
     "interface UploadPromptInput",
     "function useQueueAudioPrompts"
@@ -103419,7 +103431,7 @@
      "updated_at"
     ]
    },
-   "dyn_from": 1,
+   "dyn_from": 2,
    "errors": [
     "Não foi possível atualizar o áudio",
     "Não foi possível remover o áudio"
@@ -108661,6 +108673,16 @@
     "não persiste se usuário ausente",
     "lida com erro de insert sem lançar",
     "lida com exceção em getUser sem lançar"
+   ]
+  },
+  "src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx": {
+   "path": "src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx",
+   "lines": 90,
+   "is_test": true,
+   "tests": [
+    "useQueueAudioPrompts.deletePrompt",
+    "remove o objeto do bucket antes da linha e avisa sucesso",
+    "mantém a linha e avisa quando o bucket recusa a remoção"
    ]
   },
   "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx": {
@@ -126769,10 +126791,21 @@
   }
  },
  "git": {
-  "sha": "3717f08c30b063a61664c9424eee6a2eea83a25c",
+  "sha": "e08bab6ed453cec3166bae89cb8ba3c12909763c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e08bab6",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: remocao de audio de fila checa storage antes do banco (etapa 186) (#253)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx",
+     "src/hooks/useQueueAudioPrompts.ts"
+    ]
+   },
    {
     "sha": "3717f08",
     "date": "2026-11-24",
@@ -127209,17 +127242,6 @@
      "AGENTS.md",
      "docs/qa/05-PROGRESSO.md",
      "src/test/setup.ts"
-    ]
-   },
-   {
-    "sha": "e1e227d",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: agente fica offline ao fechar o navegador (etapa 204) (#222)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useAgentStatus.coverage.test.tsx",
-     "src/hooks/useAgentStatus.ts"
     ]
    }
   ],

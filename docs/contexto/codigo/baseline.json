@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "3717f08c30b063a61664c9424eee6a2eea83a25c",
+  "commit": "e08bab6ed453cec3166bae89cb8ba3c12909763c",
   "branch": "main",
-  "data_commit": "2026-11-24T04:18:52-03:00",
+  "data_commit": "2026-11-24T04:28:10-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "e08bab6",
+    "data": "2026-11-24",
+    "assunto": "fix: remocao de audio de fila checa storage antes do banco (etapa 186) (#253)"
+   },
    {
     "sha": "3717f08",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "564451c",
     "data": "2026-11-24",
     "assunto": "fix: teto em todo campo de texto das edges publicas que gastam dinheiro (E047) (#228)"
-   },
-   {
-    "sha": "5118972",
-    "data": "2026-11-24",
-    "assunto": "fix: prazo e 503 unico nas 11 edges de IA que chamavam o provedor direto (E209) (#227)"
    }
   ],
-  "arquivos_mudados_7d": 1115,
+  "arquivos_mudados_7d": 1117,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 80
+    "mudancas": 81
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 62
+    "mudancas": 63
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 80
+    "mudancas": 81
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 230
+    "commits": 231
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1731,
-  "arquivos_codigo": 1328,
-  "linhas_codigo": 178981,
+  "arquivos_total": 1732,
+  "arquivos_codigo": 1329,
+  "linhas_codigo": 179080,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 394,
+  "testes": 395,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -491,8 +491,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 353,
-   "linhas": 47052
+   "arquivos": 354,
+   "linhas": 47151
   },
   "src/integrations": {
    "arquivos": 3,

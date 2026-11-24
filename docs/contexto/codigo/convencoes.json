@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (370)",
+   "co-localizado (__tests__) (371)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: remocao de audio de fila checa storage antes do banco (etapa 186) (#253)",
    "fix: falha em sessao e passkey passa a ser visivel (etapa 183) (#250)",
    "fix: estatisticas da semana nao falham mais em silencio (etapa 185) (#252)",
    "fix: falha na trilha de auditoria passa a ser visivel (etapa 182) (#249)",
-   "feat: botao Ver Alertas abre a lista de alertas na propria tela (etapa 167) (#247)",
-   "feat: estados de falha visiveis no softphone (etapa 233) (#246)"
+   "feat: botao Ver Alertas abre a lista de alertas na propria tela (etapa 167) (#247)"
   ]
  },
  "pr_template": null,
