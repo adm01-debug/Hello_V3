@@ -12,10 +12,15 @@ export function SurveysPanel() {
   const { responses, loading, sendSurvey, npsScore } = useSurveys();
   const [contactId, setContactId] = useState('');
   const [channel, setChannel] = useState('whatsapp');
+  const [sending, setSending] = useState(false);
 
-  const handleSend = () => {
-    sendSurvey({ survey_id: 'nps', contact_id: contactId.trim() || undefined, channel });
-    setContactId('');
+  const handleSend = async () => {
+    if (sending) return;
+    setSending(true);
+    try {
+      await sendSurvey({ survey_id: 'nps', contact_id: contactId.trim() || undefined, channel });
+      setContactId('');
+    } finally { setSending(false); }
   };
 
   return (
@@ -52,7 +57,7 @@ export function SurveysPanel() {
             <option value="sms">SMS</option>
             <option value="email">E-mail</option>
           </select>
-          <Button onClick={handleSend}>Enviar</Button>
+          <Button onClick={handleSend} disabled={sending}>Enviar</Button>
         </CardContent>
       </Card>
 

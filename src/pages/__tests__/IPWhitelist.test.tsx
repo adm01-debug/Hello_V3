@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useIPWhitelist } from '@/hooks/useIPWhitelist';
 import IPWhitelist from '../IPWhitelist';
 
@@ -52,5 +52,28 @@ describe('IPWhitelist', () => {
 
     fireEvent.mouseDown(screen.getByRole('tab', { name: /Restrições por Usuário/ }));
     expect(screen.getByText('Não foi possível carregar os usuários.')).toBeInTheDocument();
+  });
+
+  it('grava um único IP quando o botão é clicado duas vezes antes da resposta', async () => {
+    let resolveAdd: (value: boolean) => void = () => {};
+    const addGlobalIP = vi.fn(
+      () => new Promise<boolean>((resolve) => { resolveAdd = resolve; }),
+    );
+    vi.mocked(useIPWhitelist).mockReturnValue({ ...baseHook, addGlobalIP } as unknown as ReturnType<typeof useIPWhitelist>);
+    render(<IPWhitelist />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Adicionar IP' }));
+    fireEvent.change(screen.getByPlaceholderText('192.168.1.100'), { target: { value: '10.0.0.5' } });
+
+    const confirmButton = screen.getByRole('button', { name: 'Adicionar' });
+    fireEvent.click(confirmButton);
+    fireEvent.click(confirmButton);
+
+    expect(addGlobalIP).toHaveBeenCalledTimes(1);
+    expect(addGlobalIP).toHaveBeenCalledWith('10.0.0.5', '', false);
+
+    resolveAdd(true);
+    await waitFor(() => expect(screen.queryByText('Adicionar IP à Whitelist Global')).not.toBeInTheDocument());
+    expect(addGlobalIP).toHaveBeenCalledTimes(1);
   });
 });

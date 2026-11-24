@@ -32,15 +32,24 @@ export default function IPWhitelist() {
   const [newIP, setNewIP] = useState('');
   const [newDescription, setNewDescription] = useState('');
   const [isCIDR, setIsCIDR] = useState(false);
+  const [savingIP, setSavingIP] = useState(false);
 
   const handleAddGlobalIP = async () => {
-    const ok = await addGlobalIP(newIP, newDescription, isCIDR);
-    if (ok) { setNewIP(''); setNewDescription(''); setIsCIDR(false); setAddIPDialogOpen(false); }
+    if (savingIP) return;
+    setSavingIP(true);
+    try {
+      const ok = await addGlobalIP(newIP, newDescription, isCIDR);
+      if (ok) { setNewIP(''); setNewDescription(''); setIsCIDR(false); setAddIPDialogOpen(false); }
+    } finally { setSavingIP(false); }
   };
 
   const handleAddUserIP = async () => {
-    const ok = await addUserIP(selectedUserId, newIP, newDescription, isCIDR);
-    if (ok) { setNewIP(''); setNewDescription(''); setIsCIDR(false); setAddUserIPDialogOpen(false); }
+    if (savingIP) return;
+    setSavingIP(true);
+    try {
+      const ok = await addUserIP(selectedUserId, newIP, newDescription, isCIDR);
+      if (ok) { setNewIP(''); setNewDescription(''); setIsCIDR(false); setAddUserIPDialogOpen(false); }
+    } finally { setSavingIP(false); }
   };
 
   if (!isAdmin) {
@@ -94,7 +103,7 @@ export default function IPWhitelist() {
                     <div className="space-y-2"><Label>Descrição (opcional)</Label><Input placeholder="Ex: Escritório principal" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} /></div>
                     <div className="flex items-center space-x-2"><Switch checked={isCIDR} onCheckedChange={setIsCIDR} /><Label>Range CIDR</Label><Badge variant="outline" className="ml-2"><Network className="h-3 w-3 mr-1" />{isCIDR ? 'Range de rede' : 'IP único'}</Badge></div>
                   </div>
-                  <DialogFooter><Button variant="outline" onClick={() => setAddIPDialogOpen(false)}>Cancelar</Button><Button onClick={handleAddGlobalIP}>Adicionar</Button></DialogFooter>
+                  <DialogFooter><Button variant="outline" onClick={() => setAddIPDialogOpen(false)}>Cancelar</Button><Button onClick={handleAddGlobalIP} disabled={savingIP}>Adicionar</Button></DialogFooter>
                 </DialogContent>
               </Dialog>
             </CardHeader>
@@ -157,7 +166,7 @@ export default function IPWhitelist() {
                 <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2"><Label>Novo IP</Label><Input placeholder={isCIDR ? "192.168.1.0/24" : "192.168.1.100"} value={newIP} onChange={(e) => setNewIP(e.target.value)} /></div>
                   <div className="space-y-2"><Label>Descrição</Label><Input placeholder="Ex: Casa" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} /></div>
-                  <div className="space-y-2"><Label>Tipo</Label><div className="flex items-center gap-2 h-10"><Switch checked={isCIDR} onCheckedChange={setIsCIDR} /><span className="text-sm">{isCIDR ? 'CIDR' : 'IP'}</span><Button size="sm" onClick={handleAddUserIP}><Plus className="h-4 w-4" /></Button></div></div>
+                  <div className="space-y-2"><Label>Tipo</Label><div className="flex items-center gap-2 h-10"><Switch checked={isCIDR} onCheckedChange={setIsCIDR} /><span className="text-sm">{isCIDR ? 'CIDR' : 'IP'}</span><Button size="sm" onClick={handleAddUserIP} disabled={savingIP}><Plus className="h-4 w-4" /></Button></div></div>
                 </div>
                 <div className="border rounded-lg">
                   <Table>

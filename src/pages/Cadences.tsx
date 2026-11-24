@@ -30,26 +30,35 @@ export default function Cadences() {
   const [stepForm, setStepForm] = useState<Partial<CadenceStep>>({
     step_type: "call", delay_days: 1, delay_hours: 0, subject: "", body: "",
   });
+    const [submitting, setSubmitting] = useState(false);
 
   const handleCreate = async () => {
-    const c = await createCadence(name, description);
-    if (c) { setName(""); setDescription(""); setOpen(false); }
+      if (submitting) return;
+      setSubmitting(true);
+      try {
+        const c = await createCadence(name, description);
+        if (c) { setName(""); setDescription(""); setOpen(false); }
+      } finally { setSubmitting(false); }
   };
 
   const handleAddStep = async (cadenceId: string) => {
-    const order = (steps.filter((s) => s.cadence_id === cadenceId).length) + 1;
-    await addStep({
-      cadence_id: cadenceId,
-      step_order: order,
-      step_type: (stepForm.step_type ?? "call") as CadenceStep["step_type"],
-      delay_days: stepForm.delay_days ?? 1,
-      delay_hours: stepForm.delay_hours ?? 0,
-      subject: stepForm.subject ?? null,
-      body: stepForm.body ?? null,
-      metadata: null as never,
-    } as never);
-    setStepOpen(null);
-    setStepForm({ step_type: "call", delay_days: 1, delay_hours: 0, subject: "", body: "" });
+      if (submitting) return;
+      setSubmitting(true);
+      try {
+        const order = (steps.filter((s) => s.cadence_id === cadenceId).length) + 1;
+        await addStep({
+          cadence_id: cadenceId,
+          step_order: order,
+          step_type: (stepForm.step_type ?? "call") as CadenceStep["step_type"],
+          delay_days: stepForm.delay_days ?? 1,
+          delay_hours: stepForm.delay_hours ?? 0,
+          subject: stepForm.subject ?? null,
+          body: stepForm.body ?? null,
+          metadata: null as never,
+        } as never);
+        setStepOpen(null);
+        setStepForm({ step_type: "call", delay_days: 1, delay_hours: 0, subject: "", body: "" });
+      } finally { setSubmitting(false); }
   };
 
   return (
@@ -66,7 +75,7 @@ export default function Cadences() {
             <div className="space-y-3">
               <div><Label>Nome</Label><Input value={name} onChange={(e) => setName(e.target.value)} /></div>
               <div><Label>Descrição</Label><Textarea value={description} onChange={(e) => setDescription(e.target.value)} /></div>
-              <Button onClick={handleCreate} disabled={!name}>Criar</Button>
+              <Button onClick={handleCreate} disabled={!name || submitting}>Criar</Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -125,7 +134,7 @@ export default function Cadences() {
                         </div>
                         <div><Label>Assunto</Label><Input value={stepForm.subject ?? ""} onChange={(e) => setStepForm({ ...stepForm, subject: e.target.value })} /></div>
                         <div><Label>Conteúdo</Label><Textarea value={stepForm.body ?? ""} onChange={(e) => setStepForm({ ...stepForm, body: e.target.value })} /></div>
-                        <Button onClick={() => handleAddStep(c.id)}>Adicionar</Button>
+                        <Button onClick={() => handleAddStep(c.id)} disabled={submitting}>Adicionar</Button>
                       </div>
                     </DialogContent>
                   </Dialog>

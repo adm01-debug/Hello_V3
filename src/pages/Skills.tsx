@@ -17,10 +17,12 @@ export default function Skills() {
   const { skills, agentSkills, createSkill } = useSkills();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ name: '', category: 'general', description: '' });
+  const [creating, setCreating] = useState(false);
 
   const handleCreate = () => {
-    if (!form.name.trim()) return;
-    createSkill({ ...form, is_active: true });
+    if (creating || !form.name.trim()) return;
+    setCreating(true);
+    createSkill({ ...form, is_active: true }, { onSettled: () => setCreating(false) });
     setForm({ name: '', category: 'general', description: '' });
     setOpen(false);
   };
@@ -57,7 +59,7 @@ export default function Skills() {
                 <div><Label>Categoria</Label><Input value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} /></div>
                 <div><Label>Descrição</Label><Input value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} /></div>
               </div>
-              <DialogFooter><Button onClick={handleCreate}>Criar</Button></DialogFooter>
+              <DialogFooter><Button onClick={handleCreate} disabled={creating}>Criar</Button></DialogFooter>
             </DialogContent>
           </Dialog>
 
