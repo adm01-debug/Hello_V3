@@ -21,7 +21,7 @@ export default function IPWhitelist() {
   const { hasRole } = useAuthContext();
   const isAdmin = hasRole(['admin']);
   const {
-    globalIPs, userRestrictions, blockedLogs, users, userIPs,
+    globalIPs, userRestrictions, blockedLogs, users, userIPs, error,
     addGlobalIP, removeGlobalIP, toggleUserRestriction, fetchUserIPs, addUserIP, removeUserIP,
   } = useIPWhitelist(isAdmin);
 
@@ -65,6 +65,18 @@ export default function IPWhitelist() {
         </div>
       </div>
 
+      {error && (
+        <Card className="border-destructive bg-destructive/5">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-lg text-destructive"><AlertTriangle className="h-5 w-5" />Não foi possível carregar a whitelist</CardTitle>
+            <CardDescription>{error}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">Não conclua que não existe restrição configurada: esta tela não conseguiu ler as tabelas. Recarregue antes de mexer em qualquer regra de acesso.</p>
+          </CardContent>
+        </Card>
+      )}
+
       <Tabs defaultValue="global" className="space-y-4">
         <TabsList>
           <TabsTrigger value="global" className="flex items-center gap-2"><Globe className="h-4 w-4" />IPs Globais</TabsTrigger>
@@ -91,7 +103,11 @@ export default function IPWhitelist() {
             </CardHeader>
             <CardContent>
               {globalIPs.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground"><Globe className="h-12 w-12 mx-auto mb-4 opacity-50" /><p>Nenhum IP na whitelist global.</p></div>
+                error ? (
+                  <div className="text-center py-8 text-destructive"><AlertTriangle className="h-12 w-12 mx-auto mb-4 opacity-60" /><p>Não foi possível carregar os IPs — a lista não está vazia por falta de cadastro.</p></div>
+                ) : (
+                  <div className="text-center py-8 text-muted-foreground"><Globe className="h-12 w-12 mx-auto mb-4 opacity-50" /><p>Nenhum IP na whitelist global.</p></div>
+                )
               ) : (
                 <Table>
                   <TableHeader><TableRow><TableHead>IP / CIDR</TableHead><TableHead>Descrição</TableHead><TableHead>Tipo</TableHead><TableHead>Adicionado em</TableHead><TableHead className="w-[80px]">Ações</TableHead></TableRow></TableHeader>
@@ -119,7 +135,9 @@ export default function IPWhitelist() {
               <Table>
                 <TableHeader><TableRow><TableHead>Usuário</TableHead><TableHead>Email</TableHead><TableHead>Restrição Ativa</TableHead><TableHead>IPs Específicos</TableHead><TableHead>Status</TableHead></TableRow></TableHeader>
                 <TableBody>
-                  {users.map((user) => {
+                  {users.length === 0 ? (
+                    <TableRow><TableCell colSpan={5} className={`text-center py-4 ${error ? 'text-destructive' : 'text-muted-foreground'}`}>{error ? 'Não foi possível carregar os usuários.' : 'Nenhum usuário cadastrado.'}</TableCell></TableRow>
+                  ) : users.map((user) => {
                     const restriction = userRestrictions.find(r => r.user_id === user.id);
                     return (
                       <TableRow key={user.id}>
@@ -171,7 +189,7 @@ export default function IPWhitelist() {
             <CardHeader><CardTitle className="flex items-center gap-2"><AlertTriangle className="h-5 w-5 text-destructive" />Tentativas de Acesso Bloqueadas</CardTitle></CardHeader>
             <CardContent>
               {blockedLogs.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground"><Shield className="h-12 w-12 mx-auto mb-4 opacity-50" /><p>Nenhuma tentativa bloqueada.</p></div>
+                <div className={`text-center py-8 ${error ? 'text-destructive' : 'text-muted-foreground'}`}>{error ? <AlertTriangle className="h-12 w-12 mx-auto mb-4 opacity-60" /> : <Shield className="h-12 w-12 mx-auto mb-4 opacity-50" />}<p>{error ? 'Não foi possível carregar os acessos bloqueados.' : 'Nenhuma tentativa bloqueada.'}</p></div>
               ) : (
                 <Table>
                   <TableHeader><TableRow><TableHead>Data/Hora</TableHead><TableHead>Usuário</TableHead><TableHead>IP</TableHead><TableHead>Motivo</TableHead><TableHead>User Agent</TableHead></TableRow></TableHeader>

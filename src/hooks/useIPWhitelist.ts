@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { mensagemDeErro } from '@/lib/error-message';
 
 export interface IPEntry {
   id: string;
@@ -37,6 +38,7 @@ export function useIPWhitelist(isAdmin: boolean) {
   const [users, setUsers] = useState<{ id: string; email: string; full_name: string | null }[]>([]);
   const [loading, setLoading] = useState(true);
   const [userIPs, setUserIPs] = useState<IPEntry[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isAdmin) fetchData();
@@ -45,23 +47,35 @@ export function useIPWhitelist(isAdmin: boolean) {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const { data: ips } = await supabase.from('ip_whitelist').select('*').order('created_at', { ascending: false });
-      setGlobalIPs(ips || []);
+      const { data: ips, error: ipsError } = await supabase.from('ip_whitelist').select('*').order('created_at', { ascending: false });
+      const { data: userProfiles, error: usersError } = await supabase.from('user_profiles').select('id, email, full_name');
+      const { data: restrictions, error: restrictionsError } = await supabase.from('user_ip_restrictions').select('*');
+      const { data: logs, error: logsError } = await supabase.from('blocked_access_logs').select('*').order('created_at', { ascending: false }).limit(100);
 
-      const { data: userProfiles } = await supabase.from('user_profiles').select('id, email, full_name');
+      // Lista de IPs vazia por falha de consulta faz o admin concluir que nao
+      // existe restricao configurada — a acao dele e o oposto do caso real.
+      const falhaLeitura = ipsError || usersError || restrictionsError || logsError;
+      if (falhaLeitura) {
+        logger.error('Error fetching data:', falhaLeitura);
+        setError(mensagemDeErro(falhaLeitura));
+        toast.error('Erro ao carregar dados');
+        return;
+      }
+      setError(null);
+
+      setGlobalIPs(ips || []);
       setUsers(userProfiles || []);
 
-      const { data: restrictions } = await supabase.from('user_ip_restrictions').select('*');
       const mappedRestrictions = (restrictions || []).map(r => {
         const user = userProfiles?.find(u => u.id === r.user_id);
         return { ...r, user_email: user?.email, user_name: user?.full_name };
       });
       setUserRestrictions(mappedRestrictions);
 
-      const { data: logs } = await supabase.from('blocked_access_logs').select('*').order('created_at', { ascending: false }).limit(100);
       setBlockedLogs(logs || []);
     } catch (error) {
       logger.error('Error fetching data:', error);
+      setError(mensagemDeErro(error));
       toast.error('Erro ao carregar dados');
     } finally {
       setLoading(false);
@@ -144,7 +158,7 @@ export function useIPWhitelist(isAdmin: boolean) {
   };
 
   return {
-    globalIPs, userRestrictions, blockedLogs, users, loading, userIPs,
+    globalIPs, userRestrictions, blockedLogs, users, loading, userIPs, error,
     addGlobalIP, removeGlobalIP, toggleUserRestriction, fetchUserIPs, addUserIP, removeUserIP,
   };
 }
