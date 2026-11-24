@@ -376,13 +376,14 @@
    "hooks_exportados": [
     "useCallContext"
    ],
-   "linhas": 18,
+   "linhas": 22,
    "dominio": "contexts",
    "tabelas": [],
    "rpcs": [],
    "edges": [],
    "hooks_internos": [
     "useContext",
+    "useDNCCompliance",
     "useMultiChannelCall"
    ],
    "canais_realtime": [],
@@ -2170,10 +2171,11 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 3,
+   "usado_por": 4,
    "usado_por_arquivos": [
     "src/components/compliance/ComplianceSettings.tsx",
     "src/components/compliance/DNCListManager.tsx",
+    "src/contexts/CallContext.tsx",
     "src/pages/PhoneDialer.tsx"
    ],
    "coberto_por_testes": 1
@@ -2881,7 +2883,7 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 293,
+   "linhas": 332,
    "dominio": "hooks",
    "tabelas": [
     "hold_events"
@@ -2917,7 +2919,7 @@
     "src/hooks/useMultiChannelCallConference.ts",
     "src/pages/PhoneDialer.tsx"
    ],
-   "coberto_por_testes": 7
+   "coberto_por_testes": 8
   },
   {
    "arquivo": "src/hooks/useMultiChannelCallConference.ts",

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "adaa1e721b778af41e9e9ff40dcee71c61b43026",
+  "commit": "5eb96955ac99e51fb745f8ee78c94b64c4a5710b",
   "branch": "main",
-  "data_commit": "2026-11-23T21:32:31-03:00",
+  "data_commit": "2026-11-23T21:45:21-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "5eb9695",
+    "data": "2026-11-23",
+    "assunto": "feat: barreira de DNC e horario legal dentro de initiateCall (#202)"
+   },
    {
     "sha": "adaa1e7",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "3407137",
     "data": "2026-11-23",
     "assunto": "fix: limita a nota da IA ao maximo do criterio no score-call (E106) (#178)"
-   },
-   {
-    "sha": "00fa64c",
-    "data": "2026-11-23",
-    "assunto": "fix: rotula corretamente os canais do softphone (E100) (#177)"
    }
   ],
-  "arquivos_mudados_7d": 984,
+  "arquivos_mudados_7d": 985,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 32
+    "mudancas": 33
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 30
+    "mudancas": 33
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 22
+    "mudancas": 23
    },
    {
     "pasta": "covout/lib/security",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 32
+    "mudancas": 33
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -226,7 +226,15 @@
     "mudancas": 6
    },
    {
+    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
+    "mudancas": 6
+   },
+   {
     "arquivo": "src/components/layout/CommandPalette.tsx",
+    "mudancas": 6
+   },
+   {
+    "arquivo": "src/hooks/useMultiChannelCall.ts",
     "mudancas": 6
    },
    {
@@ -239,14 +247,6 @@
    },
    {
     "arquivo": "inventario/estado/edges.json",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "src/hooks/useMultiChannelCall.ts",
     "mudancas": 5
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 180
+    "commits": 181
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1681,
-  "arquivos_codigo": 1279,
-  "linhas_codigo": 173415,
+  "arquivos_total": 1682,
+  "arquivos_codigo": 1280,
+  "linhas_codigo": 173593,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 365,
+  "testes": 366,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -480,19 +480,19 @@
   },
   "src/components": {
    "arquivos": 355,
-   "linhas": 42588
+   "linhas": 42591
   },
   "src/contexts": {
    "arquivos": 4,
-   "linhas": 482
+   "linhas": 486
   },
   "src/data": {
    "arquivos": 1,
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 353,
-   "linhas": 46025
+   "arquivos": 354,
+   "linhas": 46184
   },
   "src/integrations": {
    "arquivos": 3,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 134,
-   "linhas": 21251
+   "linhas": 21263
   },
   "src/routes": {
    "arquivos": 2,

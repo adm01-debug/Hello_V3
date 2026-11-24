@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 915,
- "arestas": 3524,
+ "arestas": 3525,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -90,7 +90,7 @@
   },
   {
    "arquivo": "src/hooks/useMultiChannelCall.ts",
-   "importado_por": 24
+   "importado_por": 25
   },
   {
    "arquivo": "src/components/layout/NeonPageLayout.tsx",

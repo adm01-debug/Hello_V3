@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `adaa1e721b` · branch `main` · 2026-11-24 00:33 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5eb96955ac` · branch `main` · 2026-11-24 00:45 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2359,6 +2359,7 @@ _nenhum item encontrado_
 | Erro ao salvar configurações | `src/hooks/useMFA.ts` |
 | Resumo inexistente | `src/hooks/useMeetingSummary.ts` |
 | callSessionId ausente | `src/hooks/useMeetingSummary.ts` |
+| Chamada bloqueada por compliance | `src/hooks/useMultiChannelCall.ts` |
 | Erro ao adicionar dispositivo | `src/hooks/useMultiDeviceRing.ts` |
 | Erro ao adicionar à fila | `src/hooks/usePredictiveDialer.ts` |
 | Erro ao carregar campanhas | `src/hooks/usePredictiveDialer.ts` |
@@ -2412,8 +2413,7 @@ _nenhum item encontrado_
 | Erro ao remover callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao atualizar a avaliação | `src/hooks/useScorecards.ts` |
 | Erro ao criar o modelo | `src/hooks/useScorecards.ts` |
-| Erro ao gerar avaliação | `src/hooks/useScorecards.ts` |
-| … +251 linhas — lista completa em `context.json` | |
+| … +252 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2462,7 +2462,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4170 testes em 355 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4176 testes em 356 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2682,6 +2682,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useHoldReminder.coverage.test.tsx` | 6 | useHoldReminder (coverage) · exposes settings and toggles · triggers warning then critical alerts as hold time crosses thresholds · requestBrowserNotifications resolves to granted … |
 | `src/hooks/__tests__/useLiveSentiment.coverage.test.tsx` | 6 | useLiveSentiment · does nothing without callSessionId · loads snapshots and subscribes to realtime channel · handles null data from initial load … |
 | `src/hooks/__tests__/useMeetingSummary.test.ts` | 6 | useMeetingSummary - parse · normaliza arrays nulos para [] · useMeetingSummary - generate · sucesso → toast.success … |
+| `src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx` | 6 | useMultiChannelCall — barreira de compliance (etapa 034) · bloqueia a discagem quando o pre-dial check reprova · libera a discagem quando ha mais de um motivo aprovado · chamada recebida ignora a barreira (skipComplianceCheck) … |
 | `src/hooks/__tests__/useNetworkMonitor.coverage.test.tsx` | 6 | useNetworkMonitor (coverage) · pings /favicon.ico and classifies as online on success · reports offline when navigator is offline · handles ping error -> unstable then offline after repeated failures … |
 | `src/hooks/__tests__/useSurveys.coverage.test.tsx` | 6 | useSurveys · carrega respostas e calcula nps · npsScore null quando sem scores válidos · trata erro de carregamento … |
 | `src/hooks/__tests__/useTrunkHealth.coverage.test.tsx` | 6 | useTrunkHealth (coverage) · loads health history for a trunk · is disabled without trunkId · history fetch error throws … |
@@ -2765,8 +2766,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
 | `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
 | `src/lib/__tests__/pendingCallWrites.test.ts` | 4 | pendingCallWrites · enfileira e retira em ordem FIFO · descarta o mais antigo quando chega a 20 itens · clear() esvazia a fila |
-| `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
-| … +55 linhas — lista completa em `context.json` | | |
+| … +56 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2920,6 +2920,7 @@ _nenhum item encontrado_
 | Envia apenas os primeiros 5 caracteres (k-anonymity) | `src/components/auth/PasswordStrength.tsx` |
 | Requer mínimo de 8 caracteres e caractere especial como obrigatórios | `src/components/auth/PasswordStrength.tsx` |
 | sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno | `src/components/calls/UnifiedSoftphone.tsx` |
+| Sem call aqui o motivo ja foi dito ao operador: limite de linhas no | `src/components/calls/UnifiedSoftphone.tsx` |
 | LGPD Consent Required */} | `src/components/compliance/ComplianceSettings.tsx` |
 | Renderiza nada quando há apenas a opção "Todos" (nenhuma etiqueta em uso), | `src/components/dialer/phone/FavoriteTagFilter.tsx` |
 | não carrega (profile === null), mantém apenas os itens sem `roles`, | `src/components/layout/AppSidebar.tsx` |

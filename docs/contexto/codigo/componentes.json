@@ -1124,7 +1124,7 @@
     "UnifiedSoftphone"
    ],
    "export_default": null,
-   "linhas": 285,
+   "linhas": 288,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAgentStatus",
@@ -5093,10 +5093,11 @@
     "CallProvider"
    ],
    "export_default": null,
-   "linhas": 18,
+   "linhas": 22,
    "dominio": "contexts",
    "hooks_locais": [
     "useCallContext",
+    "useDNCCompliance",
     "useMultiChannelCall"
    ],
    "tabelas": [],
@@ -6535,7 +6536,7 @@
     "PhoneDialer"
    ],
    "export_default": "PhoneDialer",
-   "linhas": 334,
+   "linhas": 346,
    "dominio": "pages",
    "hooks_locais": [
     "useCallContext",

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "adaa1e721b778af41e9e9ff40dcee71c61b43026",
+  "sha": "5eb96955ac99e51fb745f8ee78c94b64c4a5710b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 00:33 UTC",
-  "files_total": 1728,
-  "code_files": 1525,
-  "code_lines": 189427
+  "generated_at": "2026-11-24 00:45 UTC",
+  "files_total": 1729,
+  "code_files": 1526,
+  "code_lines": 189605
  },
  "version": "1.3.2",
- "facts_hash": "86312957dfb3596f",
+ "facts_hash": "cc4027507fd2acd7",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 635,
-   ".tsx": 611,
+   ".tsx": 612,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -28291,7 +28291,10 @@
      "call_summaries",
      "call_transcriptions",
      "call_transcripts_searchable",
+     "calling_hours_config",
+     "compliance_settings",
      "cultural_hints",
+     "dnc_list",
      "hold_events",
      "live_sentiment_snapshots",
      "voip_quality_alerts"
@@ -28309,9 +28312,12 @@
      "wavoip-call"
     ],
     "rpc_transitive": [
+     "add_to_dnc",
+     "check_calling_hours",
+     "check_dnc",
      "record_trunk_usage"
     ],
-    "deps_count": 63
+    "deps_count": 64
    },
    {
     "path": "",
@@ -33322,7 +33328,7 @@
   {
    "module": "src/components",
    "files": 355,
-   "lines": 42588,
+   "lines": 42591,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33532,7 +33538,7 @@
   {
    "module": "src/contexts",
    "files": 4,
-   "lines": 482,
+   "lines": 486,
    "tables": [],
    "exports": [
     "AuthContext.tsx: UserRole, UserProfile, AuthProvider, useAuthContext",
@@ -33578,8 +33584,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 353,
-   "lines": 46025,
+   "files": 354,
+   "lines": 46184,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34056,7 +34062,7 @@
   {
    "module": "src/pages",
    "files": 134,
-   "lines": 21251,
+   "lines": 21263,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -40843,6 +40849,10 @@
     "msg": "callSessionId ausente"
    },
    {
+    "file": "src/hooks/useMultiChannelCall.ts",
+    "msg": "Chamada bloqueada por compliance"
+   },
+   {
     "file": "src/hooks/useMultiDeviceRing.ts",
     "msg": "Erro ao adicionar dispositivo"
    },
@@ -42245,6 +42255,10 @@
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
     "text": "sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno"
+   },
+   {
+    "file": "src/components/calls/UnifiedSoftphone.tsx",
+    "text": "Sem call aqui o motivo ja foi dito ao operador: limite de linhas no"
    },
    {
     "file": "src/components/compliance/ComplianceSettings.tsx",
@@ -62653,6 +62667,30 @@
    {
     "file": "src/hooks/__tests__/useMeetingSummary.test.ts",
     "name": "erro → toast.error"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
+    "name": "useMultiChannelCall — barreira de compliance (etapa 034)"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
+    "name": "bloqueia a discagem quando o pre-dial check reprova"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
+    "name": "libera a discagem quando ha mais de um motivo aprovado"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
+    "name": "chamada recebida ignora a barreira (skipComplianceCheck)"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
+    "name": "falha do check nao impede a chamada (fail-open ate a etapa 035)"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
+    "name": "sem preDialCheck injetado mantem o comportamento antigo"
    },
    {
     "file": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
@@ -93192,7 +93230,7 @@
   },
   "src/components/calls/UnifiedSoftphone.tsx": {
    "path": "src/components/calls/UnifiedSoftphone.tsx",
-   "lines": 285,
+   "lines": 288,
    "exports": [
     "function UnifiedSoftphone"
    ],
@@ -93251,7 +93289,8 @@
     }
    ],
    "rule_comments": [
-    "sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno"
+    "sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno",
+    "Sem call aqui o motivo ja foi dito ao operador: limite de linhas no"
    ],
    "temporal": [
     "await new Promise(r => setTimeout(r, 3000));",
@@ -97222,7 +97261,7 @@
   },
   "src/contexts/CallContext.tsx": {
    "path": "src/contexts/CallContext.tsx",
-   "lines": 18,
+   "lines": 22,
    "exports": [
     "function CallProvider",
     "function useCallContext"
@@ -101358,7 +101397,7 @@
   },
   "src/hooks/useMultiChannelCall.ts": {
    "path": "src/hooks/useMultiChannelCall.ts",
-   "lines": 293,
+   "lines": 332,
    "exports": [
     "type CallChannel",
     "type CallStatus",
@@ -101368,6 +101407,8 @@
     "interface CallSession",
     "interface ConferenceCall",
     "interface ChannelConfig",
+    "type PreDialCheck",
+    "interface InitiateCallOptions",
     "function useMultiChannelCall"
    ],
    "tables": [
@@ -101391,6 +101432,9 @@
      "id"
     ]
    },
+   "errors": [
+    "Chamada bloqueada por compliance"
+   ],
    "enums": [
     {
      "name": "CallChannel",
@@ -106950,6 +106994,19 @@
     "sucesso → toast.success",
     "skipped → toast.info",
     "erro → toast.error"
+   ]
+  },
+  "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx": {
+   "path": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
+   "lines": 120,
+   "is_test": true,
+   "tests": [
+    "useMultiChannelCall — barreira de compliance (etapa 034)",
+    "bloqueia a discagem quando o pre-dial check reprova",
+    "libera a discagem quando ha mais de um motivo aprovado",
+    "chamada recebida ignora a barreira (skipComplianceCheck)",
+    "falha do check nao impede a chamada (fail-open ate a etapa 035)",
+    "sem preDialCheck injetado mantem o comportamento antigo"
    ]
   },
   "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx": {
@@ -114638,7 +114695,7 @@
   },
   "src/pages/PhoneDialer.tsx": {
    "path": "src/pages/PhoneDialer.tsx",
-   "lines": 334,
+   "lines": 346,
    "exports": [
     "default PhoneDialer"
    ],
@@ -124633,10 +124690,26 @@
   }
  },
  "git": {
-  "sha": "adaa1e721b778af41e9e9ff40dcee71c61b43026",
+  "sha": "5eb96955ac99e51fb745f8ee78c94b64c4a5710b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "5eb9695",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "feat: barreira de DNC e horario legal dentro de initiateCall (#202)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/calls/UnifiedSoftphone.tsx",
+     "src/contexts/CallContext.tsx",
+     "src/hooks/__tests__/callLifecycle-integration.test.tsx",
+     "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
+     "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
+     "src/hooks/useMultiChannelCall.ts",
+     "src/pages/PhoneDialer.tsx"
+    ]
+   },
    {
     "sha": "adaa1e7",
     "date": "2026-11-23",
@@ -125009,24 +125082,16 @@
      "src/pages/Status.tsx",
      "src/pages/__tests__/Status.test.tsx"
     ]
-   },
-   {
-    "sha": "a1a6cb4",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "feat: filtrar menu por papel (E088-E089) (#172)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/__tests__/AppSidebar.test.tsx",
-     "src/routes/protectedRoutes.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
     30
+   ],
+   [
+    "src/hooks/useMultiChannelCall.ts",
+    2
    ],
    [
     "bun.lock",
@@ -125081,27 +125146,23 @@
     2
    ],
    [
-    "supabase/functions/webauthn-authenticate/__tests__/contador.test.ts",
+    "src/components/calls/UnifiedSoftphone.tsx",
     1
    ],
    [
-    "supabase/functions/webauthn-authenticate/index.ts",
+    "src/contexts/CallContext.tsx",
     1
    ],
    [
-    "supabase/functions/whatsapp-inbound/index.ts",
+    "src/hooks/__tests__/callLifecycle-integration.test.tsx",
     1
    ],
    [
-    "supabase/functions/whatsapp-inbound/schema.ts",
+    "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
     1
    ],
    [
-    "supabase/functions/whatsapp-inbound/schema_test.ts",
-    1
-   ],
-   [
-    "scripts/apply-call-volume-fix.mjs",
+    "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
     1
    ]
   ]

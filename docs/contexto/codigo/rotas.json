@@ -1318,15 +1318,19 @@
     "useContext",
     "useConversation",
     "useCulturalHints",
+    "useDNCCompliance",
     "useEffect",
     "useHoldReminder",
     "useLiveSentiment",
     "useLiveTranslation",
     "useMemo",
     "useMultiChannelCall",
+    "useMutation",
     "useNetworkMonitor",
     "usePageTitle",
     "useQualityTrendAnalyzer",
+    "useQuery",
+    "useQueryClient",
     "useRef",
     "useSipCall",
     "useState",
@@ -1352,6 +1356,7 @@
     "useConferenceRecording",
     "useConversation",
     "useCulturalHints",
+    "useDNCCompliance",
     "useHoldReminder",
     "useLiveSentiment",
     "useLiveTranslation",
@@ -1375,7 +1380,10 @@
     "call_summaries",
     "call_transcriptions",
     "call_transcripts_searchable",
+    "calling_hours_config",
+    "compliance_settings",
     "cultural_hints",
+    "dnc_list",
     "hold_events",
     "live_sentiment_snapshots",
     "user_profiles",
@@ -1383,6 +1391,9 @@
     "voip_quality_alerts"
    ],
    "rpcs": [
+    "add_to_dnc",
+    "check_calling_hours",
+    "check_dnc",
     "record_trunk_usage"
    ],
    "edges": [
@@ -1406,7 +1417,7 @@
     "button",
     "user"
    ],
-   "arquivos_puxados": 69
+   "arquivos_puxados": 70
   },
   {
    "protegida": false,
