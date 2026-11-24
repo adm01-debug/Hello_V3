@@ -5744,7 +5744,6 @@
     "/blocked-access-logs",
     "/cadences",
     "/call-flow-designer",
-    "/call-history",
     "/call-library",
     "/call-park",
     "/call-queues",
@@ -6804,13 +6803,15 @@
   },
   {
    "modulo": "routes",
-   "arquivos": 2,
+   "arquivos": 3,
    "testes": 0,
-   "linhas": 246,
+   "linhas": 258,
    "itens_menu": [],
-   "telas": [],
+   "telas": [
+    "/call-history"
+   ],
    "rotas_http": [],
-   "componentes": 0,
+   "componentes": 1,
    "hooks_locais": [
     "useAccounts",
     "useActiveCallsRealtime",
@@ -7349,6 +7350,36 @@
     "pages/admin",
     "pages/marketing"
    ],
+   "pacotes_externos": [
+    "react-router-dom"
+   ]
+  },
+  {
+   "modulo": "routes/__tests__",
+   "arquivos": 0,
+   "testes": 1,
+   "linhas": 0,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 0,
+   "hooks_locais": [],
+   "hooks_definidos": [],
+   "edges": [],
+   "tabelas": [],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [],
+   "depende_de_modulos": [],
    "pacotes_externos": []
   },
   {

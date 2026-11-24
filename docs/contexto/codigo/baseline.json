@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e34a65b4e03dd801bbafbe2a3fbbba9eda518284",
+  "commit": "9ad7ed6bc187b358f63662d35a1fc592a62f79a8",
   "branch": "main",
-  "data_commit": "2026-11-24T08:34:05-03:00",
+  "data_commit": "2026-11-24T09:33:25-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "9ad7ed6",
+    "data": "2026-11-24",
+    "assunto": "fix: unifica /history e /call-history num alias com redirect (etapa 266) (#281)"
+   },
    {
     "sha": "e34a65b",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "f82596f",
     "data": "2026-11-24",
     "assunto": "fix: edges de infra registram falha de gravacao em vez de ignora-la (etapa 188) (#257)"
-   },
-   {
-    "sha": "3c97282",
-    "data": "2026-11-24",
-    "assunto": "fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)"
    }
   ],
-  "arquivos_mudados_7d": 1189,
+  "arquivos_mudados_7d": 1191,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 104
+    "mudancas": 105
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 27
+    "mudancas": 28
    },
    {
     "pasta": "covout/lib/security",
@@ -173,7 +173,7 @@
    },
    {
     "pasta": "src/components/layout",
-    "mudancas": 17
+    "mudancas": 18
    },
    {
     "pasta": "src/pages/__tests__",
@@ -199,11 +199,11 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 104
+    "mudancas": 105
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 27
+    "mudancas": 28
    },
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
@@ -222,6 +222,10 @@
     "mudancas": 8
    },
    {
+    "arquivo": "src/components/layout/CommandPalette.tsx",
+    "mudancas": 8
+   },
+   {
     "arquivo": ".github/workflows/ci.yml",
     "mudancas": 7
    },
@@ -234,10 +238,6 @@
     "mudancas": 7
    },
    {
-    "arquivo": "src/components/layout/CommandPalette.tsx",
-    "mudancas": 7
-   },
-   {
     "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 6
    },
@@ -247,6 +247,10 @@
    },
    {
     "arquivo": "src/hooks/useQueueMetrics.ts",
+    "mudancas": 6
+   },
+   {
+    "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 6
    },
    {
@@ -278,6 +282,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "docs/agentes/mapa-repo.md",
+    "mudancas": 5
+   },
+   {
     "arquivo": "docs/prod-readiness.md",
     "mudancas": 5
    },
@@ -288,20 +296,12 @@
    {
     "arquivo": "src/components/calls/ActiveCallBar.tsx",
     "mudancas": 5
-   },
-   {
-    "arquivo": "src/components/dialer/PredictiveDialerPanel.tsx",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "src/routes/protectedRoutes.tsx",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 258
+    "commits": 259
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,21 +314,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1743,
-  "arquivos_codigo": 1340,
-  "linhas_codigo": 181162,
+  "arquivos_total": 1745,
+  "arquivos_codigo": 1342,
+  "linhas_codigo": 181249,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 96,
-  "modulos": 82,
-  "componentes": 450,
+  "modulos": 83,
+  "componentes": 451,
   "hooks": 193,
   "edge_functions": 98,
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 401,
+  "testes": 402,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -511,8 +511,8 @@
    "linhas": 22425
   },
   "src/routes": {
-   "arquivos": 2,
-   "linhas": 246
+   "arquivos": 4,
+   "linhas": 333
   },
   "src/test": {
    "arquivos": 2,

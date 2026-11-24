@@ -4655,7 +4655,8 @@
    "src/pages/admin/SloDashboard.tsx",
    "src/pages/admin/VoiceQuality.tsx",
    "src/pages/admin/VoipTrunksAdmin.tsx",
-   "src/pages/admin/WebhookHealth.tsx"
+   "src/pages/admin/WebhookHealth.tsx",
+   "src/routes/CallHistoryAlias.tsx"
   ],
   "src/routes/publicRoutes.tsx": [
    "src/pages/ForgotPassword.tsx",

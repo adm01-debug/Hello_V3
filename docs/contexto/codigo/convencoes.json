@@ -3,7 +3,8 @@
  "format_version": 2,
  "onde_ficam": {
   "telas": [
-   "src/pages (105)"
+   "src/pages (105)",
+   "src/routes (1)"
   ],
   "componentes": [
    "src/components (319)",
@@ -21,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (377)",
+   "co-localizado (__tests__) (378)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -47,7 +48,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (450)"
+  ".tsx (451)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -58,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: unifica /history e /call-history num alias com redirect (etapa 266) (#281)",
    "fix: pausa o poll dos paineis com a aba oculta e tira o monitor de VoIP das rotas publicas (etapa 253) (#280)",
    "fix: le o resumo de notificacoes em lote em vez de por usuario (etapa 249) (#279)",
    "fix: valida IP numa consulta por lista em vez de uma por faixa (etapa 247) (#278)",
-   "fix: avisa meta por transicao em vez de repetir o toast (etapa 246) (#277)",
-   "fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)"
+   "fix: avisa meta por transicao em vez de repetir o toast (etapa 246) (#277)"
   ]
  },
  "pr_template": null,

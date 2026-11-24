@@ -1032,75 +1032,20 @@
    "lazy": false,
    "tipo": "tela",
    "caminho": "/call-history",
-   "componente": "CallHistory",
-   "arquivo": "src/pages/CallHistory.tsx",
+   "componente": "CallHistoryAlias",
+   "arquivo": "src/routes/CallHistoryAlias.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
-    "useAuditLog",
-    "useAutoMeetingSummary",
-    "useCallHistory",
-    "useCallback",
-    "useDebouncedSearchParam",
-    "useEffect",
-    "useKeyMoments",
-    "useLiveSentiment",
-    "useMeetingSummariesList",
-    "useMeetingSummary",
-    "useMemo",
-    "useMutation",
-    "usePageTitle",
-    "usePendingActionItems",
-    "useQuery",
-    "useQueryClient",
-    "useRef",
-    "useSearchParams",
-    "useState",
-    "useTalkRatio",
-    "useVirtualizer"
+    "useLocation"
    ],
-   "hooks_locais": [
-    "useAuditLog",
-    "useAutoMeetingSummary",
-    "useCallHistory",
-    "useDebouncedSearchParam",
-    "useKeyMoments",
-    "useLiveSentiment",
-    "useMeetingSummariesList",
-    "useMeetingSummary",
-    "usePageTitle",
-    "usePendingActionItems",
-    "useTalkRatio"
-   ],
-   "tabelas": [
-    "call_analyses",
-    "call_key_moments",
-    "call_recordings",
-    "call_summaries",
-    "call_transcriptions",
-    "coaching_timestamps",
-    "live_sentiment_snapshots",
-    "meeting_summaries"
-   ],
-   "rpcs": [
-    "get_call_history_with_summaries",
-    "log_audit_event"
-   ],
-   "edges": [
-    "analyze-talk-ratio",
-    "detect-key-moments",
-    "generate-meeting-summary"
-   ],
-   "canais_realtime": [
-    "meeting-summary-${callSessionId}",
-    "sentiment-${callSessionId}"
-   ],
+   "hooks_locais": [],
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
    "flags": [],
-   "papeis": [
-    "button",
-    "searchbox",
-    "status"
-   ],
-   "arquivos_puxados": 41
+   "papeis": [],
+   "arquivos_puxados": 0
   },
   {
    "protegida": false,

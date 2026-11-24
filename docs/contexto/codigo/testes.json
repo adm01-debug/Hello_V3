@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 401,
+ "total": 402,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 384
+  "unit": 385
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 377
+   "arquivos": 378
   },
   {
    "padrao": "e2e/",
@@ -3043,6 +3043,16 @@
    "casos": 7
   },
   {
+   "arquivo": "src/routes/__tests__/callHistoryAlias.test.tsx",
+   "tipo": "unit",
+   "linhas": 75,
+   "testa": [
+    "src/routes/CallHistoryAlias.tsx",
+    "src/routes/protectedRoutes.tsx"
+   ],
+   "casos": 5
+  },
+  {
    "arquivo": "src/test/__mocks__/supabase.ts",
    "tipo": "unit",
    "linhas": 71,
@@ -3903,7 +3913,8 @@
   "src/pages/SuccessPlans.tsx": 1,
   "src/pages/Trackers.tsx": 1,
   "src/pages/roles/useRoles.ts": 1,
-  "src/routes/protectedRoutes.tsx": 1,
+  "src/routes/CallHistoryAlias.tsx": 1,
+  "src/routes/protectedRoutes.tsx": 2,
   "supabase/functions/_shared/allowed-hosts.ts": 1,
   "supabase/functions/_shared/auth.ts": 1,
   "supabase/functions/_shared/constant-time.ts": 2,

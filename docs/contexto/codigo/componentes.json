@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 450,
+ "total": 451,
  "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
@@ -7340,6 +7340,20 @@
     "useRedactCall",
     "useVoicePrints"
    ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/routes/CallHistoryAlias.tsx",
+   "exports": [
+    "CallHistoryAlias"
+   ],
+   "export_default": null,
+   "linhas": 11,
+   "dominio": "routes",
+   "hooks_locais": [],
    "tabelas": [],
    "edges": [],
    "usado_por": 1,
