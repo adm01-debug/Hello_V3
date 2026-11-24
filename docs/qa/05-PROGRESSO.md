@@ -180,7 +180,7 @@
 - [ ] **133** — Desfazer o empate de timestamp entre migrations — onda 3 — Média — Banco 🔒
 - [ ] **134** — Tornar as migrations reaplicáveis (ou documentar quais não são) — onda 3 — Média — Banco
 - [ ] **135** — Responder "esta migration está aplicada?" de forma confiável — onda 3 — Alta — Banco 🔒
-- [ ] **136** — Regenerar `types.ts` e explicar as 4 tabelas de diferença — onda 3 — Média — Banco
+- [x] **136** — Regenerar `types.ts` e explicar as 4 tabelas de diferença — onda 3 — Média — Banco · (`supabase gen types typescript --project-id cfmlmcdyjuotqobjapng` com a CLI 2.115.0; **159 → 165** tabelas no arquivo, igual a `SELECT count(*) FROM pg_tables WHERE schemaname='public'` = 165. Entraram as 6 tabelas que faltavam do A-092 `call_records`, `entity_versions`, `migration_rollbacks`, `queue_items`, `saved_filters`, `schema_migrations` + a coluna `contacts.favorite` (existe no banco e não no arquivo) + 10 funções de `public` (`apply_migration`, `rollback_migration`, `migration_status`, `exec_sql`, `graphql`, `index_usage`, `unused_indexes` e as `dblink_*`). Nada foi removido em tabela comum (comparador por tabela/coluna em Row/Insert/Update: 0 colunas só no arquivo antigo); a única mudança de valor é `PostgrestVersion` `14.5` → `14.15`. `bunx tsc --noEmit` **rc=0** com o arquivo regenerado — nenhum código dependia dos tipos antigos por engano. `bunx eslint` rc=0.)
 - [ ] **137** — Reescrever (ou remover) o arquivo de índices que não cria nada — onda 3 — Baixa — Banco 🔒
 - [ ] **138** — Remover os dois índices exatamente redundantes — onda 3 — Baixa — Banco 🔒
 - [ ] **139** — `CHECK` nas 11 colunas de tipo mais usadas em regra de negócio — onda 3 — Média — Banco 🔒
@@ -383,6 +383,8 @@ Problema novo achado no caminho **não é corrigido na hora** — vira linha aqu
 | A-213 | 141 | `deno.lock` | `deno.lock` está dessincronizado do `package.json` (pin `react-router-dom@^7.13.1` vs `^7.18.6`; `xlsx` já removido) — qualquer `deno check`/`deno test` reescreve o arquivo, que entra no diff sem relação com a tarefa (restaurar com `git checkout -- deno.lock`). | Média (churn) |
 
 | A-215 | 141 | `bunx vitest run` (ambiente local) | 4 suítes falham com `TypeError: undefined is not an object (evaluating 'z.string')` — `validation-schemas`, `zod-schemas.property`, `useContacts.conflict`, `useContacts.coverage` — mas **todas as 3435 asserções passam**; reproduzido em worktree limpo de `origin/main` e o CI do mesmo commit está verde. É incompatibilidade do bun local (1.3.11) com o runner, não regressão. | Baixa (ruído local) |
+| A-216 | 136 | `docs/pendencias/_verificado-banco.md:24` | O documento afirma que `call_records` e `queue_items` “nem existem mais como tabelas → 404”. **Falso no banco vivo:** as duas existem, com RLS ligado e 2 policies cada (`is_admin_or_supervisor()` / `auth.uid() = user_id`). Documento de apuração contradiz o estado real. | Média (doc) |
+| A-217 | 136 | `migration_rollbacks`, `schema_migrations` | `relrowsecurity = true` com **0 policies** — ninguém além de `service_role` lê/escreve. Para tabela de controle de migração é o estado correto (deny-all), mas é o `rls_sem_policy` que o snapshot do inventário acusa todo dia: vale decidir entre documentar como intencional ou revogar a RLS. | Baixa |
 ---
 
 ## Etapas em que o código já não correspondia à evidência
