@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a0781e26e7e61b02f1c1d4b2d55cbf96ac114990` (2026-11-24T15:37:03-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `fc9a215e2a3c001b54e05eedf41b75bb38fee080` (2026-11-24T16:32:09-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1743 |
 | arquivos_codigo | 1341 |
-| linhas_codigo | 178244 |
+| linhas_codigo | 178406 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -371,13 +371,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10299 nós · 27263 arestas · 768 comunidades · grafo do commit `a0781e26`
-- comunidades maiores: lucide-react (260), client.ts (224), vitest (189), react (162), traceHeaders (159), buildCorsHeaders (141), utils.ts (141), cn (132), select.tsx (129), @tanstack/react-query (113), react-router-dom (112), 5. Em uso por rota (105)
+- 10301 nós · 27266 arestas · 782 comunidades · grafo do commit `fc9a215e`
+- comunidades maiores: lucide-react (293), react (174), utils.ts (158), protectedRoutes.tsx (157), traceHeaders (152), vitest (137), buildCorsHeaders (131), safe-date.ts (117), logger.ts (114), @tanstack/react-query (112), client.ts (112), cn (111)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), useAuthContext() (src/contexts/AuthContext.tsx), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (127)
+- docs/qa/05-PROGRESSO.md (128)
 - docs/estado/funcionalidades-planejadas.md (30)
 - src/components/layout/AppSidebar.tsx (10)
 - src/hooks/useMultiChannelCall.ts (10)
@@ -430,6 +430,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `fc9a215` fix: telas internas cabem na largura do celular (etapa 271) (#306)
 - 2026-11-24 `a0781e2` test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)
 - 2026-11-24 `0413e5a` chore: remove i18n.json e public/locales sem consumidores (#303)
 - 2026-11-24 `0455270` chore: estados vazios que explicam o que falta (#302)
@@ -444,7 +445,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `07dfba7` fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)
 - 2026-11-24 `ba7d901` fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)
 - 2026-11-24 `8cf611e` fix: remove 13 testes-espelho de hooks e de cache (etapa 284 parte 2) (#290)
-- 2026-11-24 `9660f91` fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

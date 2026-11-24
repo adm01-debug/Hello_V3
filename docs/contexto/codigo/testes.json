@@ -3608,7 +3608,7 @@
   {
    "arquivo": "tests/e2e/screenshots.spec.ts",
    "tipo": "e2e",
-   "linhas": 124,
+   "linhas": 286,
    "testa": [],
    "casos": 2
   },

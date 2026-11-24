@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a0781e26e7e61b02f1c1d4b2d55cbf96ac114990",
+  "commit": "fc9a215e2a3c001b54e05eedf41b75bb38fee080",
   "branch": "main",
-  "data_commit": "2026-11-24T15:37:03-03:00",
+  "data_commit": "2026-11-24T16:32:09-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "fc9a215",
+    "data": "2026-11-24",
+    "assunto": "fix: telas internas cabem na largura do celular (etapa 271) (#306)"
+   },
    {
     "sha": "a0781e2",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "9ad7ed6",
     "data": "2026-11-24",
     "assunto": "fix: unifica /history e /call-history num alias com redirect (etapa 266) (#281)"
-   },
-   {
-    "sha": "e34a65b",
-    "data": "2026-11-24",
-    "assunto": "fix: pausa o poll dos paineis com a aba oculta e tira o monitor de VoIP das rotas publicas (etapa 253) (#280)"
    }
   ],
-  "arquivos_mudados_7d": 1256,
+  "arquivos_mudados_7d": 1257,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 127
+    "mudancas": 128
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -169,7 +169,7 @@
    },
    {
     "pasta": "src/components/layout",
-    "mudancas": 21
+    "mudancas": 22
    },
    {
     "pasta": "src/pages/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 127
+    "mudancas": 128
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 282
+    "commits": 283
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1743,
   "arquivos_codigo": 1341,
-  "linhas_codigo": 178244,
+  "linhas_codigo": 178406,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -528,7 +528,7 @@
   },
   "tests/e2e": {
    "arquivos": 7,
-   "linhas": 493
+   "linhas": 655
   },
   "vite.config.ts": {
    "arquivos": 1,

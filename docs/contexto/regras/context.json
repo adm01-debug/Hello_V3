@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a0781e26e7e61b02f1c1d4b2d55cbf96ac114990",
+  "sha": "fc9a215e2a3c001b54e05eedf41b75bb38fee080",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 19:11 UTC",
+  "generated_at": "2026-11-24 19:32 UTC",
   "files_total": 1790,
   "code_files": 1588,
-  "code_lines": 194294
+  "code_lines": 194456
  },
  "version": "1.3.2",
- "facts_hash": "0cead8ca0388b7b9",
+ "facts_hash": "9eaff38064941e07",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34852,7 +34852,7 @@
   {
    "module": "tests",
    "files": 7,
-   "lines": 493,
+   "lines": 655,
    "tables": [],
    "exports": [
     "adminSession.ts: SeedAdminSessionOptions, seedAdminSession",
@@ -71932,7 +71932,7 @@
    },
    {
     "file": "tests/e2e/screenshots.spec.ts",
-    "name": "Etapa 270 — telas internas em largura de celular"
+    "name": "Etapa 270/271 — telas internas em largura de celular"
    },
    {
     "file": "tests/e2e/screenshots.spec.ts",
@@ -123745,10 +123745,10 @@
   },
   "tests/e2e/screenshots.spec.ts": {
    "path": "tests/e2e/screenshots.spec.ts",
-   "lines": 124,
+   "lines": 286,
    "is_test": true,
    "tests": [
-    "Etapa 270 — telas internas em largura de celular",
+    "Etapa 270/271 — telas internas em largura de celular",
     "captura 5 telas em 3 larguras e mede transbordo horizontal"
    ]
   },
@@ -123823,10 +123823,26 @@
   }
  },
  "git": {
-  "sha": "a0781e26e7e61b02f1c1d4b2d55cbf96ac114990",
+  "sha": "fc9a215e2a3c001b54e05eedf41b75bb38fee080",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "fc9a215",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: telas internas cabem na largura do celular (etapa 271) (#306)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/layout/AppLayout.tsx",
+     "src/components/queue/QueueMetricsCards.tsx",
+     "src/pages/CallHistory.tsx",
+     "src/pages/Calls.tsx",
+     "src/pages/ExecutiveDashboard.tsx",
+     "src/pages/QueueMetricsDashboard.tsx",
+     "tests/e2e/screenshots.spec.ts"
+    ]
+   },
    {
     "sha": "a0781e2",
     "date": "2026-11-24",
@@ -124266,17 +124282,6 @@
      "src/hooks/usePredictiveDialer.ts",
      "src/hooks/useQueueMetrics.ts"
     ]
-   },
-   {
-    "sha": "e376b95",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
-     "src/hooks/useHoldReminder.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -124295,6 +124300,10 @@
    [
     "docs/estado/funcionalidades-planejadas.md",
     3
+   ],
+   [
+    "tests/e2e/screenshots.spec.ts",
+    2
    ],
    [
     "src/pages/Contacts.tsx",
@@ -124333,31 +124342,27 @@
     2
    ],
    [
-    ".gitignore",
+    "src/components/layout/AppLayout.tsx",
     1
    ],
    [
-    "tests/e2e/screenshots.spec.ts",
+    "src/components/queue/QueueMetricsCards.tsx",
     1
    ],
    [
-    "docs/adr/016-multilingual-translation.md",
+    "src/pages/CallHistory.tsx",
     1
    ],
    [
-    "i18n.json",
+    "src/pages/Calls.tsx",
     1
    ],
    [
-    "public/locales/en/common.json",
+    "src/pages/ExecutiveDashboard.tsx",
     1
    ],
    [
-    "src/components/call-history/CallSessionsList.tsx",
-    1
-   ],
-   [
-    "src/components/call-history/__tests__/CallSessionsList.test.tsx",
+    "src/pages/QueueMetricsDashboard.tsx",
     1
    ]
   ]

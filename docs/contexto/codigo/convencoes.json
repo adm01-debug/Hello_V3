@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: telas internas cabem na largura do celular (etapa 271) (#306)",
    "test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)",
    "chore: remove i18n.json e public/locales sem consumidores (#303)",
    "chore: estados vazios que explicam o que falta (#302)",
-   "chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)",
-   "fix: meta de SLO unica na edge (99,9%) e painel lendo do servidor (#300)"
+   "chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)"
   ]
  },
  "pr_template": null,
