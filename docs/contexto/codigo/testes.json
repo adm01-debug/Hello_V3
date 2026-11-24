@@ -3615,7 +3615,7 @@
   {
    "arquivo": "tests/e2e/teclado.spec.ts",
    "tipo": "e2e",
-   "linhas": 293,
+   "linhas": 340,
    "testa": [],
    "casos": 4
   },

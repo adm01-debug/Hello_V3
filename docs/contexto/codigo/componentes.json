@@ -5077,7 +5077,7 @@
     "VoiceAssistantDialog"
    ],
    "export_default": null,
-   "linhas": 619,
+   "linhas": 632,
    "dominio": "components/voice",
    "hooks_locais": [
     "usePhaseColors",
