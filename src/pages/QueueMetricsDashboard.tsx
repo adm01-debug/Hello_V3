@@ -1,5 +1,5 @@
 import { Activity, RefreshCw, CheckCircle, AlertTriangle, AlertCircle, Target, Settings, Zap, History } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,6 +11,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { QueueMetricsCards } from '@/components/queue/QueueMetricsCards';
 import { QueueGoalsTab } from '@/components/queue/QueueGoalsTab';
 import { QueueRealtimeCharts } from '@/components/queue/QueueRealtimeCharts';
+import { EmptyErrorState } from '@/components/ui/empty-state';
 
 const QueueMetricsDashboard = () => {
   usePageTitle('Métricas de Fila');
@@ -51,24 +52,16 @@ const QueueMetricsDashboard = () => {
       </div>
 
       {q.error && (
-        <Card className="border-destructive bg-destructive/5">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-lg text-destructive">
-              <AlertCircle className="h-5 w-5" />Não foi possível carregar as métricas
-            </CardTitle>
-            <CardDescription>{q.error}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-sm text-muted-foreground">
-              {q.hasLoaded
-                ? `Os números abaixo são da última leitura bem-sucedida (${format(q.lastUpdate, 'HH:mm:ss')}) e não foram atualizados desde então.`
-                : 'Nenhuma leitura bem-sucedida até agora — por isso nenhum número é exibido aqui, nem zero.'}
-            </p>
-            <Button onClick={q.fetchMetrics} size="sm" variant="outline">
-              <RefreshCw className="h-4 w-4 mr-2" />Tentar novamente
-            </Button>
-          </CardContent>
-        </Card>
+        <EmptyErrorState
+          title="Não foi possível carregar as métricas"
+          description={q.error}
+          hint={
+            q.hasLoaded
+              ? `Os números abaixo são da última leitura bem-sucedida (${format(q.lastUpdate, 'HH:mm:ss')}) e não foram atualizados desde então.`
+              : 'Nenhuma leitura bem-sucedida até agora — por isso nenhum número é exibido aqui, nem zero.'
+          }
+          onRetry={q.fetchMetrics}
+        />
       )}
 
       <Tabs value={q.activeTab} onValueChange={q.setActiveTab}>

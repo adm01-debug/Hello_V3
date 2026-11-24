@@ -19,10 +19,16 @@ export function useRoles(currentUserId: string | undefined) {
       if (error) throw error;
 
       const userIds = [...new Set(roles?.map((r) => r.user_id) || [])];
-      const { data: profiles } = await supabase
+      const { data: profiles, error: profilesError } = await supabase
         .from('user_profiles')
         .select('id, email, full_name')
         .in('id', userIds);
+
+      if (profilesError) {
+        // Enriquecimento: a lista de roles segue util, mas sem nome/email ela
+        // pareceria conter usuarios sem identificacao (A-009, etapa 201).
+        logger.warn('useRoles: falha ao carregar perfis dos usuários', profilesError);
+      }
 
       const profileMap = new Map(profiles?.map((p) => [p.id, p]) || []);
 

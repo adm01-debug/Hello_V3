@@ -10,6 +10,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Shield, ShieldCheck, ShieldAlert, ShieldX, Lock, Unlock, Key, Smartphone, Monitor, Globe, MapPin, Clock, AlertTriangle, CheckCircle2, XCircle, ChevronRight, FileText, Settings, RefreshCw, Loader2 } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { EmptyErrorState } from '@/components/ui/empty-state';
 
 export default function SecurityDashboard() {
   usePageTitle('Central de Segurança');
@@ -59,14 +60,11 @@ export default function SecurityDashboard() {
       </div>
 
       {error && (
-        <Alert variant="destructive">
-          <ShieldX className="h-4 w-4" />
-          <AlertTitle>Monitoramento indisponível</AlertTitle>
-          <AlertDescription>
-            Não foi possível ler o estado de segurança da conta: {error}. A pontuação fica oculta porque não existe leitura confiável — não porque está tudo em ordem.
-            <Button variant="outline" size="sm" className="ml-2" onClick={loadSecurityData}><RefreshCw className="h-4 w-4 mr-2" />Tentar novamente</Button>
-          </AlertDescription>
-        </Alert>
+        <EmptyErrorState
+          title="Monitoramento indisponível"
+          description={`Não foi possível ler o estado de segurança da conta: ${error}. A pontuação fica oculta porque não existe leitura confiável — não porque está tudo em ordem.`}
+          onRetry={loadSecurityData}
+        />
       )}
 
       {/* Security Score */}

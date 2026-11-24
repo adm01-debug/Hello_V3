@@ -107,6 +107,8 @@ export function AlertsDropdown() {
     // First, get or create a test session
     let sessionId: string;
     
+    // Pega-ou-cria sessão de teste: falha de leitura cai no insert abaixo de
+    // propósito, então o erro dessa consulta não é propagado (etapa 201).
     const { data: existingSession } = await supabase
       .from('call_sessions')
       .select('id')
