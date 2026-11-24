@@ -116,8 +116,8 @@
 - [x] **073** — Ligar o botão "Transferir" do softphone — onda 2 — Alta — Frontend · (PR #170; TransferCallDialog conectado; tsc=0)
 - [x] **074** — Ligar o "Exportar" do histórico de chamadas — onda 2 — Alta — Frontend · (PR #170; downloadCallHistoryCsv ligado; tsc=0, 3/3)
 - [x] **075** — Ligar o "Exportar" dos relatórios — onda 2 — Alta — Frontend · (PR #170; downloadReportCsv ligado; tsc=0, 6/6, build OK sem violar orçamento)
-- [x] **076** — Fazer o "Salvar" das Configurações salvar de verdade — onda 2 — Alta — Frontend + Hooks · (PR #171; migration user_preferences + useNotificationPreferences; tsc=0, 3/3)
-- [x] **077** — Resolver os quatro switches decorativos das Configurações — onda 2 — Média — Frontend · (PR #171; switches de áudio ligados a user_preferences e aplicados em WebRTCCall; tsc=0, build OK)
+- [x] **076** — Fazer o "Salvar" das Configurações salvar de verdade — onda 2 — Alta — Frontend + Hooks · (PR #171 rebasada; migration `20261123120000_user_preferences` + `useNotificationPreferences` persistindo no banco, sem localStorage; tsc=0, testes do hook 3/3)
+- [x] **077** — Resolver os quatro switches decorativos das Configurações — onda 2 — Média — Frontend · (PR #171 rebasada; os 4 switches agora têm `onCheckedChange` e persistem em `user_preferences`; eco/ruído/ganho aplicados em `getUserMedia` via `RECOMMENDED_AUDIO_CONSTRAINTS`; `WebRTCCall.test` prova as constraints na captura)
 - [ ] **078** — Fazer o discador preditivo efetivamente discar — onda 2 — Alta — Hooks 🔒
 - [ ] **079** — Reivindicação atômica do contato no discador — onda 2 — Crítica — Hooks 🔒
 - [x] **080** — Verificar o erro nas escritas do discador — onda 2 — Alta — Hooks · (5 escritas em `api.ts` agora fazem `if (error) throw error`; falha do claim para a campanha com toast — teste novo falha sem o fix; vitest 20/20, tsc=0, eslint=0)

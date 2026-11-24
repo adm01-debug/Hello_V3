@@ -25,6 +25,10 @@ CREATE TRIGGER set_user_preferences_updated_at
 
 ALTER TABLE public.user_preferences ENABLE ROW LEVEL SECURITY;
 
+-- Sem GRANT explicito a tabela nova pode ficar inacessivel para `authenticated`
+-- mesmo com a policy correta.
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.user_preferences TO authenticated;
+
 -- policies: cada usuário só vê/insere/atualiza as próprias preferências
 DROP POLICY IF EXISTS "Users can view own preferences" ON public.user_preferences;
 CREATE POLICY "Users can view own preferences"

@@ -6,7 +6,7 @@ import { Phone, PhoneOff, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
 import { formatDuration } from "@/lib/utils";
 import { logger } from "@/lib/logger";
 import { toast } from "sonner";
-import { getIceServers } from "@/lib/webrtc-config";
+import { getIceServers, RECOMMENDED_AUDIO_CONSTRAINTS } from "@/lib/webrtc-config";
 import { useNotificationPreferences } from "@/hooks/useNotificationPreferences";
 import { useVoipQualityMonitor } from "@/hooks/useVoipQualityMonitor";
 import { useAudioOutputDevices } from "@/hooks/useAudioOutputDevices";
@@ -57,9 +57,13 @@ export function WebRTCCall({
   const { preferences } = useNotificationPreferences();
 
   const audioConstraints: MediaTrackConstraints = {
-    echoCancellation: preferences?.audio_echo_cancellation ?? true,
-    noiseSuppression: preferences?.audio_noise_suppression ?? true,
-    autoGainControl: preferences?.audio_auto_gain_control ?? true,
+    ...RECOMMENDED_AUDIO_CONSTRAINTS,
+    echoCancellation:
+      preferences?.audio_echo_cancellation ?? RECOMMENDED_AUDIO_CONSTRAINTS.echoCancellation,
+    noiseSuppression:
+      preferences?.audio_noise_suppression ?? RECOMMENDED_AUDIO_CONSTRAINTS.noiseSuppression,
+    autoGainControl:
+      preferences?.audio_auto_gain_control ?? RECOMMENDED_AUDIO_CONSTRAINTS.autoGainControl,
   };
 
   const quality = useVoipQualityMonitor(pc, {
