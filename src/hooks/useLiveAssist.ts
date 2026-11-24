@@ -96,9 +96,10 @@ export function useLiveAssist(callSessionId?: string) {
       lastWordCount.current = args.latestUtterance.trim().split(/\s+/).length;
       setIsAnalyzing(true);
       try {
-        await supabase.functions.invoke('analyze-live-utterance', {
+        const { error } = await supabase.functions.invoke('analyze-live-utterance', {
           body: { callSessionId, ...args },
         });
+        if (error) log.error('analyze failed', error);
       } catch (e) {
         log.error('analyze failed', e);
       } finally {
@@ -111,10 +112,14 @@ export function useLiveAssist(callSessionId?: string) {
   const markUsed = useCallback(
     async (signalId: string) => {
       try {
-        await supabase
+        const { error } = await supabase
           .from('live_assist_signals')
           .update({ was_used: true, used_at: new Date().toISOString() })
           .eq('id', signalId);
+        if (error) {
+          log.error('markUsed failed', error);
+          return;
+        }
         queryClient.invalidateQueries({ queryKey: ['live-assist-signals', callSessionId] });
       } catch (e) {
         log.error('markUsed failed', e);

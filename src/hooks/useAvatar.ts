@@ -97,13 +97,18 @@ export function useAvatar(path: string | null | undefined) {
 
         if (updateError) {
           // Sem a coluna, o objeto ficaria órfão no bucket.
-          await supabase.storage.from(BUCKET).remove([newPath]);
+          const { error: rollbackError } = (await supabase.storage.from(BUCKET).remove([newPath])) ?? {};
+          if (rollbackError) {
+            logger.error('Avatar: falha ao remover o objeto após erro de gravação:', rollbackError);
+          }
           throw updateError;
         }
 
         // Remove o avatar anterior depois de o novo estar persistido.
         if (path && path !== newPath) {
-          await supabase.storage.from(BUCKET).remove([path]);
+          // Best-effort: o avatar novo já está no perfil; um órfão antigo não quebra a tela.
+          const { error: oldError } = (await supabase.storage.from(BUCKET).remove([path])) ?? {};
+          if (oldError) logger.error('Avatar: falha ao remover o arquivo anterior:', oldError);
         }
 
         toast.success('Foto atualizada');
@@ -131,7 +136,11 @@ export function useAvatar(path: string | null | undefined) {
         .eq('id', user.id);
       if (updateError) throw updateError;
 
-      await supabase.storage.from(BUCKET).remove([path]);
+      const { error: removeError } = (await supabase.storage.from(BUCKET).remove([path])) ?? {};
+      if (removeError) {
+        // O perfil já está sem foto; o objeto pode ter ficado no bucket.
+        logger.error('Avatar: falha ao remover o objeto do bucket:', removeError);
+      }
       toast.success('Foto removida');
       return true;
     } catch (error) {
