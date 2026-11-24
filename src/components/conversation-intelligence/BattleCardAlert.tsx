@@ -31,7 +31,7 @@ export function BattleCardAlert({ card, onDismiss, callSessionId, agentName, aut
   const markAsUsed = async () => {
     if (!card || !callSessionId) { setMarked(true); return; }
     try {
-      await supabase.from('coaching_timestamps').insert({
+      const { error } = await supabase.from('coaching_timestamps').insert({
         call_session_id: callSessionId,
         agent_name: agentName || null,
         timestamp_seconds: 0,
@@ -40,6 +40,11 @@ export function BattleCardAlert({ card, onDismiss, callSessionId, agentName, aut
         severity: 'info',
         message: `Battle card "${card.competitor_name}" utilizado pelo agente.`,
       });
+      if (error) {
+        log.error('Falha ao registrar uso', error);
+        toast.error('Não foi possível registrar uso');
+        return;
+      }
       setMarked(true);
       toast.success('Battle card marcado como usado');
     } catch (e) {

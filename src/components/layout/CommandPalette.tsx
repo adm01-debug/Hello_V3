@@ -14,6 +14,7 @@ import {
  import { useTheme } from '@/contexts/ThemeContext';
  import { supabase } from '@/integrations/supabase/client';
  import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 const allRoutes = [
   { title: 'Discador', url: '/', icon: LayoutDashboard, group: 'Principal' },
@@ -121,7 +122,12 @@ export function CommandPalette() {
        title: 'Sair do sistema',
        icon: LogOut,
        onSelect: async () => {
-         await supabase.auth.signOut();
+         const { error } = (await supabase.auth.signOut()) ?? {};
+         if (error) {
+           logger.error('CommandPalette: falha ao sair:', error);
+           toast.error('Não foi possível encerrar a sessão');
+           return;
+         }
          navigate('/login');
        }
      }
