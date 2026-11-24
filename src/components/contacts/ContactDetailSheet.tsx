@@ -92,8 +92,8 @@ export function ContactDetailSheet({ contact, open, onOpenChange, onEdit, onDele
           </div>
           <div className="flex gap-2">
             <Button onClick={() => onCall?.(contact)} className="flex-1 gap-2"><Phone className="h-4 w-4" />Ligar</Button>
-            <Button variant="outline" size="icon" onClick={() => onEdit?.(contact)}><Edit className="h-4 w-4" /></Button>
-            <Button variant="outline" size="icon" onClick={() => onDelete?.(contact)}><Edit className="h-4 w-4" /></Button>
+            <Button variant="outline" size="icon" aria-label="Editar contato" onClick={() => onEdit?.(contact)}><Edit className="h-4 w-4" aria-hidden="true" /></Button>
+            <Button variant="outline" size="icon" aria-label="Excluir contato" onClick={() => onDelete?.(contact)}><Edit className="h-4 w-4" aria-hidden="true" /></Button>
           </div>
         </SheetHeader>
         <Separator className="my-4" />

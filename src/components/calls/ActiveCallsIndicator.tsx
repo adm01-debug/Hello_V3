@@ -75,8 +75,10 @@ export function ActiveCallsIndicator({
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button variant="ghost" size="icon" className={cn("h-7 w-7", holdReminder.isEnabled ? "text-primary" : "text-muted-foreground")}
+                      aria-label={holdReminder.isEnabled ? 'Desativar lembrete sonoro' : 'Ativar lembrete sonoro'}
+                      aria-pressed={holdReminder.isEnabled}
                       onClick={(e) => { e.stopPropagation(); holdReminder.initAudio(); holdReminder.toggleReminder(); }}>
-                      {holdReminder.isEnabled ? <Bell className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+                      {holdReminder.isEnabled ? <Bell className="h-4 w-4" aria-hidden="true" /> : <VolumeX className="h-4 w-4" aria-hidden="true" />}
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>{holdReminder.isEnabled ? 'Desativar lembrete sonoro' : 'Ativar lembrete sonoro'}</TooltipContent>
@@ -98,7 +100,7 @@ export function ActiveCallsIndicator({
             <div className="p-2 bg-primary/5 border border-primary/20 rounded-md space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-primary">Selecione chamadas para mesclar:</span>
-                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => { setSelectedForConference([]); setIsSelectingForConference(false); }}><X className="h-3 w-3" /></Button>
+                <Button variant="ghost" size="icon" className="h-6 w-6" aria-label="Fechar a seleção de chamadas" onClick={() => { setSelectedForConference([]); setIsSelectingForConference(false); }}><X className="h-3 w-3" aria-hidden="true" /></Button>
               </div>
               <Button variant="default" size="sm" className="w-full gap-1" disabled={selectedForConference.length < 2} onClick={handleStartConference}>
                 <Merge className="h-3 w-3" />Mesclar ({selectedForConference.length})
@@ -154,9 +156,9 @@ export function ActiveCallsIndicator({
               </div>
               {!isSelectingForConference && !call.isInConference && (
                 <div className="flex items-center gap-1">
-                  <Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); setTransferCallId(call.id); setTransferDialogOpen(true); }} disabled={call.isTransferring}><PhoneForwarded className="h-3.5 w-3.5" /></Button></TooltipTrigger><TooltipContent>Transferir</TooltipContent></Tooltip>
-                  <Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); onToggleHold(call.id); }}>{call.isOnHold ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}</Button>
-                  <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive" onClick={(e) => { e.stopPropagation(); onEndCall(call.id); }}><PhoneOff className="h-3.5 w-3.5" /></Button>
+                  <Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); setTransferCallId(call.id); setTransferDialogOpen(true); }} disabled={call.isTransferring} aria-label="Transferir chamada"><PhoneForwarded className="h-3.5 w-3.5" aria-hidden="true" /></Button></TooltipTrigger><TooltipContent>Transferir</TooltipContent></Tooltip>
+                  <Button variant="ghost" size="icon" className="h-7 w-7" aria-label={call.isOnHold ? 'Retomar a chamada' : 'Colocar a chamada em espera'} aria-pressed={call.isOnHold} onClick={(e) => { e.stopPropagation(); onToggleHold(call.id); }}>{call.isOnHold ? <Play className="h-3.5 w-3.5" aria-hidden="true" /> : <Pause className="h-3.5 w-3.5" aria-hidden="true" />}</Button>
+                  <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive" aria-label="Encerrar a chamada" onClick={(e) => { e.stopPropagation(); onEndCall(call.id); }}><PhoneOff className="h-3.5 w-3.5" aria-hidden="true" /></Button>
                 </div>
               )}
               {call.isTransferring && (
@@ -164,8 +166,8 @@ export function ActiveCallsIndicator({
                   <Badge variant="outline" className="text-xs animate-pulse">
                     {call.transferTarget?.name ? `Transferindo para ${call.transferTarget.name}` : 'Transferindo...'}
                   </Badge>
-                  <Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" className="h-7 w-7 text-success hover:text-success" onClick={(e) => { e.stopPropagation(); onCompleteTransfer(call.id); }}><Check className="h-3.5 w-3.5" /></Button></TooltipTrigger><TooltipContent>Confirmar transferência</TooltipContent></Tooltip>
-                  <Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); onCancelTransfer(call.id); }}><X className="h-3.5 w-3.5" /></Button></TooltipTrigger><TooltipContent>Cancelar transferência</TooltipContent></Tooltip>
+                  <Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" className="h-7 w-7 text-success hover:text-success" aria-label="Confirmar a transferência" onClick={(e) => { e.stopPropagation(); onCompleteTransfer(call.id); }}><Check className="h-3.5 w-3.5" aria-hidden="true" /></Button></TooltipTrigger><TooltipContent>Confirmar transferência</TooltipContent></Tooltip>
+                  <Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" className="h-7 w-7" aria-label="Cancelar a transferência" onClick={(e) => { e.stopPropagation(); onCancelTransfer(call.id); }}><X className="h-3.5 w-3.5" aria-hidden="true" /></Button></TooltipTrigger><TooltipContent>Cancelar transferência</TooltipContent></Tooltip>
                 </div>
               )}
             </div>

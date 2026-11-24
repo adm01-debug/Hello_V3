@@ -83,12 +83,15 @@ export const ContactCard = ({
                   variant="ghost"
                   size="icon"
                   className="h-6 w-6"
+                  aria-label={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                  aria-pressed={isFavorite}
                   onClick={(e) => {
                     e.stopPropagation();
                     onToggleFavorite(contact.id);
                   }}
                 >
                   <Star
+                    aria-hidden="true"
                     className={cn(
                       'h-4 w-4 transition-all',
                       isFavorite
