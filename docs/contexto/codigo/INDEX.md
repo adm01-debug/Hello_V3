@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `d2f80cb2e9b962aa998439c4729e164d4ee6614d` (2026-11-24T00:07:31-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `e1e227dfc55eaad466d8c53bee9706730a286459` (2026-11-24T00:22:11-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1708 |
 | arquivos_codigo | 1306 |
-| linhas_codigo | 176156 |
+| linhas_codigo | 176225 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10016 nós · 25785 arestas · 781 comunidades · grafo do commit `d2f80cb2`
-- comunidades maiores: lucide-react (248), usePageTitle (228), logger.ts (189), client.ts (185), vitest (174), react (170), badge.tsx (142), cn (142), Tabela de funcionalidades (123), ref_https (119), utils.ts (117), validate.ts (97)
+- 10017 nós · 25786 arestas · 774 comunidades · grafo do commit `e1e227df`
+- comunidades maiores: card.tsx (202), logger.ts (182), usePageTitle (172), react (139), CallDetailDialog.tsx (138), vitest (136), @tanstack/react-query (131), ref_https (121), badge.tsx (113), cn (112), client.ts (111), validate.ts (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (51)
+- docs/qa/05-PROGRESSO.md (52)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `e1e227d` fix: agente fica offline ao fechar o navegador (etapa 204) (#222)
 - 2026-11-24 `d2f80cb` fix: telas do fluxo central distinguem falha de leitura de lista vazia (etapa 203) (#221)
 - 2026-11-23 `85a73de` feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)
 - 2026-11-23 `d1b586c` fix: whitelist de IPs avisa quando a leitura falha em vez de parecer vazia (#216)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `046acb3` fix: remediacao de anomalia atualiza a lista (#210)
 - 2026-11-23 `de29d5d` feat: conferir lista DNC antes de confiar na importacao (#209)
 - 2026-11-23 `8e86908` fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)
-- 2026-11-23 `1dcca43` fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

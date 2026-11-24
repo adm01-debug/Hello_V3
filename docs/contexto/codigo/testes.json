@@ -421,11 +421,11 @@
   {
    "arquivo": "src/hooks/__tests__/useAgentStatus.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 93,
+   "linhas": 121,
    "testa": [
     "src/hooks/useAgentStatus.ts"
    ],
-   "casos": 6
+   "casos": 7
   },
   {
    "arquivo": "src/hooks/__tests__/useAlertHistory.coverage.test.tsx",
