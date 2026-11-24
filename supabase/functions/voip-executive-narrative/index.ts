@@ -4,6 +4,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, oneOf, optional } from '../_shared/validate.ts';
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 const PERIOD_DAYS: Record<string, number> = { week: 7, month: 30 };
 const AI_GATEWAY = 'https://openrouter.ai/api/v1/chat/completions';
@@ -124,7 +125,8 @@ Deno.serve(async (req) => {
       pendingHints.length ? `Pontos de atenção: ${pendingHints.join('; ')}` : '',
     ].filter(Boolean).join('\n');
 
-    const aiRes = await fetch(AI_GATEWAY, {
+    let aiRes: Response;
+    try { aiRes = await fetchComPrazo(AI_GATEWAY, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -134,17 +136,15 @@ Deno.serve(async (req) => {
           { role: 'user', content: `<kpis>\n${kpiBlock}\n</kpis>\n\nGere o resumo executivo agora.` },
         ],
       }),
-    });
+    }); } catch (err) {
+      console.error('[voip-executive-narrative] IA sem resposta no prazo:', err);
+      return new Response(JSON.stringify({ error: 'Serviço de IA indisponível', requestId }), { status: 503, headers });
+    }
 
-    if (aiRes.status === 429) {
-      return new Response(JSON.stringify({ error: 'Limite de requisições atingido.', requestId }), { status: 429, headers });
-    }
-    if (aiRes.status === 402) {
-      return new Response(JSON.stringify({ error: 'Créditos de IA esgotados.', requestId }), { status: 402, headers });
-    }
     if (!aiRes.ok) {
       const text = await aiRes.text().catch(() => '');
-      return new Response(JSON.stringify({ error: 'Falha no AI Gateway', detail: text.slice(0, 200), requestId }), { status: 502, headers });
+      console.error('[voip-executive-narrative] AI gateway error', aiRes.status, text.slice(0, 200));
+      return new Response(JSON.stringify({ error: 'Serviço de IA indisponível', requestId }), { status: 503, headers });
     }
 
     const aiJson = await aiRes.json();

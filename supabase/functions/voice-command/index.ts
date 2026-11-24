@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 
 Deno.serve(async (req) => {
@@ -50,7 +51,8 @@ Deno.serve(async (req) => {
       );
     }
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    let response: Response;
+    try { response = await fetchComPrazo("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${openRouterApiKey}`,
@@ -70,7 +72,21 @@ Deno.serve(async (req) => {
           },
         ],
       }),
-    });
+    }); } catch (err) {
+      console.error("[voice-command] IA sem resposta no prazo:", err);
+      return new Response(
+        JSON.stringify({ error: "Serviço de IA indisponível" }),
+        { status: 503, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } },
+      );
+    }
+
+    if (!response.ok) {
+      console.error("[voice-command] AI gateway error", response.status);
+      return new Response(
+        JSON.stringify({ error: "Serviço de IA indisponível" }),
+        { status: 503, headers: { ...buildCorsHeaders(req), "Content-Type": "application/json" } },
+      );
+    }
 
     const aiResult = await response.json();
     const content = aiResult.choices?.[0]?.message?.content || "{}";

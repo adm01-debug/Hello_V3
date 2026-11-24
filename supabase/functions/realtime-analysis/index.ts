@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, string, optional } from "../_shared/validate.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -63,7 +64,8 @@ Responda APENAS com um JSON válido:
   "riskReason": "motivo do alerta se houver"
 }`;
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    let response: Response;
+    try { response = await fetchComPrazo('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${OPENROUTER_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -73,11 +75,14 @@ Responda APENAS com um JSON válido:
           { role: 'user', content: `Contexto:\n${conversationContext.slice(0, 2000)}\n\nÚltima mensagem (${speakerRole}):\n"${latestMessage.slice(0, 1000)}"` }
         ],
       }),
-    });
+    }); } catch (err) {
+      console.error('[realtime-analysis] IA sem resposta no prazo:', err);
+      return new Response(JSON.stringify({ error: 'Serviço de IA indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
+    }
 
     if (!response.ok) {
-      if (response.status === 429) return new Response(JSON.stringify({ error: 'Limite excedido' }), { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } });
-      return new Response(JSON.stringify({ error: 'Serviço indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
+      console.error('[realtime-analysis] AI gateway error', response.status);
+      return new Response(JSON.stringify({ error: 'Serviço de IA indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const aiResponse = await response.json();

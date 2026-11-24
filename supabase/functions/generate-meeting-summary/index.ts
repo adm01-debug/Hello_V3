@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 const SYSTEM_PROMPT = `Você é um assistente especializado em gerar notas executivas de reuniões e chamadas de atendimento em português brasileiro.
 Analise a transcrição fornecida e extraia, de forma estruturada e objetiva:
@@ -197,7 +198,8 @@ Gere o resumo estruturado chamando a função save_meeting_summary.`;
 
     const model = "google/gemini-2.5-flash";
 
-    const aiResp = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    let aiResp: Response;
+    try { aiResp = await fetchComPrazo("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${openRouterKey}`,
@@ -212,37 +214,27 @@ Gere o resumo estruturado chamando a função save_meeting_summary.`;
         tools: [TOOL_SCHEMA],
         tool_choice: { type: "function", function: { name: "save_meeting_summary" } },
       }),
-    });
+    }); } catch (err) {
+      console.error("[generate-meeting-summary] IA sem resposta no prazo:", err);
+      await admin
+        .from("meeting_summaries")
+        .update({ status: "failed", error_message: "Timeout IA" })
+        .eq("call_session_id", callSessionId);
+      return new Response(JSON.stringify({ error: "Serviço de IA indisponível" }), {
+        status: 503,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
-    if (aiResp.status === 429) {
-      await admin
-        .from("meeting_summaries")
-        .update({ status: "failed", error_message: "Rate limit IA" })
-        .eq("call_session_id", callSessionId);
-      return new Response(
-        JSON.stringify({ error: "Limite de IA atingido. Tente novamente em instantes." }),
-        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-    if (aiResp.status === 402) {
-      await admin
-        .from("meeting_summaries")
-        .update({ status: "failed", error_message: "Créditos esgotados" })
-        .eq("call_session_id", callSessionId);
-      return new Response(
-        JSON.stringify({ error: "Créditos da IA esgotados. Adicione créditos no workspace." }),
-        { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
     if (!aiResp.ok) {
       const t = await aiResp.text();
-      console.error("AI gateway error", aiResp.status, t);
+      console.error("[generate-meeting-summary] AI gateway error", aiResp.status, t);
       await admin
         .from("meeting_summaries")
         .update({ status: "failed", error_message: `AI ${aiResp.status}` })
         .eq("call_session_id", callSessionId);
-      return new Response(JSON.stringify({ error: "Falha na IA" }), {
-        status: 500,
+      return new Response(JSON.stringify({ error: "Serviço de IA indisponível" }), {
+        status: 503,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }

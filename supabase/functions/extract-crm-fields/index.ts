@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, string, optional } from "../_shared/validate.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -102,7 +103,8 @@ serve(async (req) => {
       },
     }];
 
-    const aiResp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    let aiResp: Response;
+    try { aiResp = await fetchComPrazo('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${OPENROUTER_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -114,15 +116,16 @@ serve(async (req) => {
         tools,
         tool_choice: { type: 'function', function: { name: 'extract_crm_fields' } },
       }),
-    });
+    }); } catch (err) {
+      console.error('[extract-crm-fields] IA sem resposta no prazo:', err);
+      return new Response(JSON.stringify({ error: 'Serviço de IA indisponível' }), {
+        status: 503, headers: { ...cors, 'Content-Type': 'application/json' },
+      });
+    }
 
     if (!aiResp.ok) {
-      if (aiResp.status === 429) {
-        return new Response(JSON.stringify({ error: 'Limite de IA excedido' }), {
-          status: 429, headers: { ...cors, 'Content-Type': 'application/json' },
-        });
-      }
-      return new Response(JSON.stringify({ error: 'Falha na IA' }), {
+      console.error('[extract-crm-fields] AI gateway error', aiResp.status);
+      return new Response(JSON.stringify({ error: 'Serviço de IA indisponível' }), {
         status: 503, headers: { ...cors, 'Content-Type': 'application/json' },
       });
     }

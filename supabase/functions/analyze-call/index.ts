@@ -6,6 +6,7 @@ import { AnalyzeCallSchema } from "./schema.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 import { trackMetric, withRequestLog, logError } from "../_shared/observability.ts";
 import { verifyWebhookSignature } from "../_shared/hmac.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 interface AnalysisResult {
   summary: string;
@@ -104,14 +105,18 @@ ${callInfo ? `- Contato: ${String(callInfo.contactName || '').slice(0, 100)}
 Transcrição:
 ${transcript.slice(0, 10000)}`;
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    let response: Response;
+    try { response = await fetchComPrazo('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${OPENROUTER_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model,
         messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }],
       }),
-    });
+    }); } catch (err) {
+      console.error('[analyze-call] IA sem resposta no prazo:', err);
+      return createErrorResponse('Serviço de IA indisponível', 'AI_UNAVAILABLE', undefined, 503, cors);
+    }
 
     if (!response.ok) {
       await trackMetric('ai_service_error', 1, { status: String(response.status) });
