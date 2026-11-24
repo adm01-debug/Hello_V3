@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ee1f10094fa38e2c43f8a6e976fa649032962add",
+  "sha": "46cc92e95eda6b34df78cd755f033f3ae6e77b2c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 08:23 UTC",
+  "generated_at": "2026-11-24 08:51 UTC",
   "files_total": 1782,
   "code_files": 1578,
-  "code_lines": 195618
+  "code_lines": 195626
  },
  "version": "1.3.2",
- "facts_hash": "d615480de7c3ca1f",
+ "facts_hash": "c69e3f75111db792",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -28293,7 +28293,6 @@
      "call_transcripts_searchable",
      "calling_hours_config",
      "compliance_settings",
-     "cultural_hints",
      "dnc_list",
      "hold_events",
      "live_sentiment_snapshots",
@@ -28301,12 +28300,10 @@
     ],
     "invokes_transitive": [
      "analyze-talk-ratio",
-     "charge",
      "detect-key-moments",
      "elevenlabs-conversation-token",
      "generate-meeting-summary",
      "sip-config",
-     "translate-utterance",
      "voice-command",
      "voice-transcribe",
      "wavoip-call"
@@ -28317,7 +28314,7 @@
      "check_dnc",
      "record_trunk_usage"
     ],
-    "deps_count": 65
+    "deps_count": 60
    },
    {
     "path": "",
@@ -34073,7 +34070,7 @@
   {
    "module": "src/pages",
    "files": 146,
-   "lines": 22333,
+   "lines": 22341,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -115718,7 +115715,7 @@
   },
   "src/pages/Calls.tsx": {
    "path": "src/pages/Calls.tsx",
-   "lines": 206,
+   "lines": 214,
    "exports": [
     "default Calls"
    ],
@@ -127002,10 +126999,19 @@
   }
  },
  "git": {
-  "sha": "ee1f10094fa38e2c43f8a6e976fa649032962add",
+  "sha": "46cc92e95eda6b34df78cd755f033f3ae6e77b2c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "46cc92e",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: painel de traducao sob demanda tira a rota Calls do teto do bundle (#269)",
+    "files": [
+     "src/pages/Calls.tsx"
+    ]
+   },
    {
     "sha": "ee1f100",
     "date": "2026-11-24",
@@ -127396,25 +127402,16 @@
      "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
      "src/hooks/usePredictiveDialer.ts"
     ]
-   },
-   {
-    "sha": "b21f44f",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/pages/CallHistory.tsx",
-     "src/pages/Trackers.tsx",
-     "src/pages/__tests__/CallHistory.deeplink.test.tsx",
-     "src/pages/__tests__/Trackers.matches.test.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    27
+    26
+   ],
+   [
+    "src/pages/Calls.tsx",
+    2
    ],
    [
     "src/components/contacts/ContactCard.tsx",
@@ -127486,10 +127483,6 @@
    ],
    [
     "src/integrations/lovable/index.ts",
-    1
-   ],
-   [
-    "src/hooks/telemetry/useTelemetry.ts",
     1
    ]
   ]

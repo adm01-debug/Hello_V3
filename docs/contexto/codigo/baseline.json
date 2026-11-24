@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ee1f10094fa38e2c43f8a6e976fa649032962add",
+  "commit": "46cc92e95eda6b34df78cd755f033f3ae6e77b2c",
   "branch": "main",
-  "data_commit": "2026-11-24T05:22:29-03:00",
+  "data_commit": "2026-11-24T05:51:06-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "46cc92e",
+    "data": "2026-11-24",
+    "assunto": "chore: painel de traducao sob demanda tira a rota Calls do teto do bundle (#269)"
+   },
    {
     "sha": "ee1f100",
     "data": "2026-11-24",
@@ -126,11 +131,6 @@
     "sha": "0526bc2",
     "data": "2026-11-24",
     "assunto": "fix: ligar botoes de navegacao do dashboard sem acao (E165) (#244)"
-   },
-   {
-    "sha": "a032d25",
-    "data": "2026-11-24",
-    "assunto": "fix: tratar o erro de banco nas gravacoes do ciclo de chamada (#243)"
    }
   ],
   "arquivos_mudados_7d": 1146,
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 246
+    "commits": 247
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1735,
   "arquivos_codigo": 1332,
-  "linhas_codigo": 179606,
+  "linhas_codigo": 179614,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 146,
-   "linhas": 22333
+   "linhas": 22341
   },
   "src/routes": {
    "arquivos": 2,

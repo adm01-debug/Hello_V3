@@ -6,7 +6,7 @@
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 96,
-  "lazy": 105
+  "lazy": 106
  },
  "urls": [
   {
@@ -6148,6 +6148,7 @@
   "LDAPSync": "src/pages/LDAPSync.tsx",
   "Landing": "src/pages/marketing/Landing.tsx",
   "Learning": "src/pages/Learning.tsx",
+  "LiveTranslationPanel": "src/components/translation/LiveTranslationPanel.tsx",
   "Login": "src/pages/Login.tsx",
   "Marketplace": "src/pages/Marketplace.tsx",
   "MeetingSummaries": "src/pages/MeetingSummaries.tsx",

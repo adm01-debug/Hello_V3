@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: painel de traducao sob demanda tira a rota Calls do teto do bundle (#269)",
    "fix: rotulos acessiveis nos botoes-icone de discador, chamada, contatos e transcricao (etapas 259-261) (#267)",
    "fix: gravacoes cegas em componentes e login reportam erro (etapa 187) (#255)",
    "chore: veredito explicito nos catch que escondem escrita (etapas 194-195) (#262)",
-   "fix: avisar quando a interacao nao entra no historico do contato (etapa 190) (#260)",
-   "fix: registrar falha nas gravacoes das edge functions (etapa 188) (#258)"
+   "fix: avisar quando a interacao nao entra no historico do contato (etapa 190) (#260)"
   ]
  },
  "pr_template": null,
