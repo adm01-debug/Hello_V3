@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 385,
+ "total": 386,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 368
+  "unit": 369
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 361
+   "arquivos": 362
   },
   {
    "padrao": "e2e/",
@@ -985,6 +985,15 @@
     "src/hooks/useDeviceDetection.ts"
    ],
    "casos": 6
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useDialerFavorites.rollback.test.tsx",
+   "tipo": "unit",
+   "linhas": 108,
+   "testa": [
+    "src/hooks/useDialerFavorites.ts"
+   ],
+   "casos": 2
   },
   {
    "arquivo": "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
@@ -3614,6 +3623,7 @@
   "src/hooks/useDeals.ts": 2,
   "src/hooks/useDebouncedSearchParam.ts": 1,
   "src/hooks/useDeviceDetection.ts": 1,
+  "src/hooks/useDialerFavorites.ts": 1,
   "src/hooks/useExecutiveDashboard.ts": 2,
   "src/hooks/useExtensionAudit.ts": 1,
   "src/hooks/useExtensionAuditHistory.ts": 1,
@@ -3952,7 +3962,6 @@
    "src/hooks/useCallQueues.ts",
    "src/hooks/useDataLakeExports.ts",
    "src/hooks/useDeviceLabel.ts",
-   "src/hooks/useDialerFavorites.ts",
    "src/hooks/useExtensionsAdmin.ts",
    "src/hooks/useLDAPSync.ts",
    "src/hooks/usePageVisibility.ts",

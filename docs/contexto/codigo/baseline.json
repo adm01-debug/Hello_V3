@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "48f36449ddaf678714048481818d9e34080a3d95",
+  "commit": "ca6e6dc109837f6ffb0e8a8bb60ccc62aea3c758",
   "branch": "main",
-  "data_commit": "2026-11-24T13:05:47-03:00",
+  "data_commit": "2026-11-24T13:49:00-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ca6e6dc",
+    "data": "2026-11-24",
+    "assunto": "fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)"
+   },
    {
     "sha": "48f3644",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "b887757",
     "data": "2026-11-24",
     "assunto": "fix: validate-geo e a tela de geo honram o modo allowlist/blocklist (etapa 141) (#270)"
-   },
-   {
-    "sha": "c771af6",
-    "data": "2026-11-24",
-    "assunto": "fix: rótulo acessível nos botões-ícone restantes (etapas 262 e 263) (#268)"
    }
   ],
-  "arquivos_mudados_7d": 1233,
+  "arquivos_mudados_7d": 1234,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 117
+    "mudancas": 118
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 104
+    "mudancas": 105
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 117
+    "mudancas": 118
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 272
+    "commits": 273
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1729,
-  "arquivos_codigo": 1325,
-  "linhas_codigo": 176585,
+  "arquivos_total": 1730,
+  "arquivos_codigo": 1326,
+  "linhas_codigo": 176703,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 243,
   "cron_jobs": 11,
-  "testes": 385,
+  "testes": 386,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -491,8 +491,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 338,
-   "linhas": 42852
+   "arquivos": 339,
+   "linhas": 42970
   },
   "src/integrations": {
    "arquivos": 3,

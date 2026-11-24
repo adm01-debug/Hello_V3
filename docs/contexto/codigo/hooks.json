@@ -2128,7 +2128,7 @@
    "hooks_exportados": [
     "useDialerFavorites"
    ],
-   "linhas": 258,
+   "linhas": 268,
    "dominio": "hooks",
    "tabelas": [
     "dialer_favorites"
@@ -2148,7 +2148,7 @@
    "usado_por_arquivos": [
     "src/pages/PhoneDialer.tsx"
    ],
-   "coberto_por_testes": 0
+   "coberto_por_testes": 1
   },
   {
    "arquivo": "src/hooks/useDNCCompliance.ts",
