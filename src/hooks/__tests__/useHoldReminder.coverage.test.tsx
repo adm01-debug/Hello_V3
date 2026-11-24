@@ -113,4 +113,28 @@ describe('useHoldReminder (coverage)', () => {
     vi.useRealTimers();
     await waitFor(() => expect(toast).toHaveBeenCalled());
   });
+
+  // E245: `alertedCalls`/`lastReminderTime` eram useState e cada tick de 1 s
+  // gravava um objeto novo, o que re-renderizava o hook e recriava o próprio
+  // setInterval. Com nada em espera o laço rodava para sempre sem nada a fazer.
+  it('does not re-render or recreate the 1 Hz interval when no call is on hold', () => {
+    vi.useFakeTimers();
+    const setIntervalSpy = vi.spyOn(window, 'setInterval');
+    const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
+    let renders = 0;
+    renderHook(() => { renders += 1; return useHoldReminder(EMPTY); });
+
+    expect(setIntervalSpy).toHaveBeenCalledTimes(1);
+    const rendersAfterMount = renders;
+
+    act(() => { vi.advanceTimersByTime(3000); });
+
+    expect(renders).toBe(rendersAfterMount);
+    expect(setIntervalSpy).toHaveBeenCalledTimes(1);
+    expect(clearIntervalSpy).not.toHaveBeenCalled();
+
+    setIntervalSpy.mockRestore();
+    clearIntervalSpy.mockRestore();
+    vi.useRealTimers();
+  });
 });
