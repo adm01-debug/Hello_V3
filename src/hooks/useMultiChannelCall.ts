@@ -154,7 +154,9 @@ export function useMultiChannelCall() {
           ended.status === 'conference' || ended.status === 'transferring';
         const wasRinging = ended.status === 'ringing';
         const finalStatus = wasAnswered ? 'completed' : wasRinging ? 'missed' : 'abandoned';
-        void endSession(ended.duration, undefined).catch(err => {
+        // E059: o desfecho vai para o banco, nao so para o log — a taxa de
+        // abandono e o nivel de servico (etapas 103/104) dependem dele.
+        void endSession(ended.duration, undefined, finalStatus).catch(err => {
           log.error(`endSession falhou (${finalStatus}):`, err);
         });
       }

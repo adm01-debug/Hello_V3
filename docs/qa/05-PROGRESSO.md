@@ -96,10 +96,10 @@
 
 ## Onda 2 — Fluxos principais quebrados (056–100, 45 etapas)
 
-- [ ] **056** — Mapear quem é o dono da chamada ativa, antes de mexer em qualquer código — onda 2 — Crítica — Frontend + Hooks
-- [ ] **057** — Dar a `useMultiChannelCall` um campo para o id da chamada no banco — onda 2 — Crítica — Hooks
-- [ ] **058** — Gravar `call_sessions` quando a chamada é atendida — onda 2 — Crítica — Hooks
-- [ ] **059** — Fechar a chamada no banco quando ela termina — onda 2 — Crítica — Hooks
+- [x] **056** — Mapear quem é o dono da chamada ativa, antes de mexer em qualquer código — onda 2 — Crítica — Frontend + Hooks
+- [x] **057** — Dar a `useMultiChannelCall` um campo para o id da chamada no banco — onda 2 — Crítica — Hooks
+- [x] **058** — Gravar `call_sessions` quando a chamada é atendida — onda 2 — Crítica — Hooks
+- [x] **059** — Fechar a chamada no banco quando ela termina — onda 2 — Crítica — Hooks
 - [x] **060** — Fazer a barra de chamada ativa renderizar a chamada real — onda 2 — Crítica — Frontend · (PR #168; tsc=0, eslint=0, testes 24/24)
 - [x] **061** — Religar a transcrição ao vivo — onda 2 — Alta — Frontend · (PR #170; handleTranscript chama addDbTranscript; tsc=0)
 - [ ] **062** — Religar a próxima melhor ação e as sugestões de CRM — onda 2 — Alta — Frontend
@@ -116,8 +116,8 @@
 - [x] **073** — Ligar o botão "Transferir" do softphone — onda 2 — Alta — Frontend · (PR #170; TransferCallDialog conectado; tsc=0)
 - [x] **074** — Exportar histórico de chamadas em CSV — onda 2 — Alta — Frontend · (PR #170; downloadCallHistoryCsv ligado; tsc=0, 3/3)
 - [x] **075** — Ligar o "Exportar" dos relatórios — onda 2 — Alta — Frontend · (PR #170; downloadReportCsv ligado; tsc=0, 6/6, build OK sem violar orçamento)
-- [ ] **074** — Ligar o "Exportar" do histórico de chamadas — onda 2 — Alta — Frontend
-- [ ] **075** — Ligar o "Exportar" dos relatórios — onda 2 — Alta — Frontend
+- [x] **074** — Ligar o "Exportar" do histórico de chamadas — onda 2 — Alta — Frontend
+- [x] **075** — Ligar o "Exportar" dos relatórios — onda 2 — Alta — Frontend
 - [ ] **076** — Fazer o "Salvar" das Configurações salvar de verdade — onda 2 — Alta — Frontend + Hooks 🔒
 - [ ] **077** — Resolver os quatro switches decorativos das Configurações — onda 2 — Média — Frontend
 - [ ] **078** — Fazer o discador preditivo efetivamente discar — onda 2 — Alta — Hooks 🔒

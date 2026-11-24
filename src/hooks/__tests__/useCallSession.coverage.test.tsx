@@ -1,10 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 
-const { insertMock, insertSelectSingleMock, updateEqMock, upsertMock, invokeMock } = vi.hoisted(() => ({
+const { insertMock, insertSelectSingleMock, updateEqMock, updatePatchMock, upsertMock, invokeMock } = vi.hoisted(() => ({
   insertMock: vi.fn(),
   insertSelectSingleMock: vi.fn(),
   updateEqMock: vi.fn(),
+  updatePatchMock: vi.fn(),
   upsertMock: vi.fn(),
   invokeMock: vi.fn(),
 }));
@@ -20,7 +21,10 @@ vi.mock('@/integrations/supabase/client', () => ({
       if (table === 'call_sessions') {
         return {
           insert: vi.fn(() => ({ select: vi.fn(() => ({ single: insertSelectSingleMock })) })),
-          update: vi.fn(() => ({ eq: updateEqMock })),
+          update: vi.fn((patch: unknown) => {
+            updatePatchMock(patch);
+            return { eq: updateEqMock };
+          }),
         };
       }
       if (table === 'call_transcripts_searchable') {
@@ -162,5 +166,23 @@ describe('useCallSession', () => {
     await act(async () => { await vi.advanceTimersByTimeAsync(2100); });
     await act(async () => { await result.current.endSession(90); });
     expect(result.current.currentSession).toBeNull();
+  });
+
+  it('grava o desfecho informado em vez de sempre completed (etapa 059)', async () => {
+    const { result } = renderHook(() => useCallSession());
+    await act(async () => { await result.current.startSession('John', '123'); });
+    await act(async () => { await result.current.endSession(0, undefined, 'missed'); });
+    expect(updatePatchMock).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'missed', duration_seconds: 0 }),
+    );
+  });
+
+  it('sem desfecho informado continua gravando completed', async () => {
+    const { result } = renderHook(() => useCallSession());
+    await act(async () => { await result.current.startSession('John', '123'); });
+    await act(async () => { await result.current.endSession(42); });
+    expect(updatePatchMock).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'completed', duration_seconds: 42 }),
+    );
   });
 });

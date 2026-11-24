@@ -2,6 +2,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import * as pendingCallWrites from '@/lib/pendingCallWrites';
+import type { EndedCallStatus } from '@/lib/pendingCallWrites';
 
 const log = logger.create('CallSession');
 
@@ -170,14 +171,14 @@ export function useCallSession() {
   const endSession = useCallback(async (durationSeconds: number, summary?: {
     summary: string; mainTopics: string[]; overallSentiment: string;
     customerSatisfaction: number; agentPerformance: number; nextSteps: string[];
-  }): Promise<{ ok: boolean; reason?: string }> => {
+  }, finalStatus: EndedCallStatus = 'completed'): Promise<{ ok: boolean; reason?: string }> => {
     if (!currentSession) return { ok: false, reason: 'sem sessão ativa' };
     setIsSaving(true);
     let result: { ok: boolean; reason?: string } = { ok: false };
     try {
       await Promise.all([saveTranscripts(), saveAnalyses()]);
       const { error: sessionError } = await supabase.from('call_sessions')
-        .update({ ended_at: new Date().toISOString(), duration_seconds: durationSeconds, status: 'completed' })
+        .update({ ended_at: new Date().toISOString(), duration_seconds: durationSeconds, status: finalStatus })
         .eq('id', currentSession.id);
       if (sessionError) throw sessionError;
 
@@ -198,7 +199,7 @@ export function useCallSession() {
     } catch (error) {
       log.error('Error ending call session', error);
       // E072: enfileira para retentativa na próxima carga ou quando a conexão voltar
-      pendingCallWrites.enqueue({ sessionId: currentSession.id, durationSeconds });
+      pendingCallWrites.enqueue({ sessionId: currentSession.id, durationSeconds, status: finalStatus });
       result = { ok: false, reason: (error as Error).message };
     } finally {
       // Limpeza do estado sempre acontece — independente de sucesso ou falha (E071)
@@ -219,7 +220,7 @@ export function useCallSession() {
       log.info('Retentando encerramento pendente', { sessionId: item.sessionId });
       try {
         const { error } = await supabase.from('call_sessions')
-          .update({ status: 'completed', duration_seconds: item.durationSeconds })
+          .update({ status: item.status ?? 'completed', duration_seconds: item.durationSeconds })
           .eq('id', item.sessionId)
           .is('ended_at', null);
         if (error) throw error;

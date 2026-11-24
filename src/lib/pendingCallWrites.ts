@@ -9,9 +9,13 @@ const STORAGE_KEY = 'pendingCallWrites_v1';
 const MAX_ITEMS = 20;
 const log = logger.create('PendingCallWrites');
 
+export type EndedCallStatus = 'completed' | 'missed' | 'abandoned';
+
 export interface PendingCallWrite {
   sessionId: string;
   durationSeconds: number;
+  /** Desfecho da chamada; ausente em itens gravados antes da etapa 059. */
+  status?: EndedCallStatus;
   enqueuedAt: string;
   summaryRef?: {
     overallSentiment: string;
