@@ -178,6 +178,8 @@ export function useVoipQualityMonitor(
       if (metricsError) log.error('Failed to persist quality metrics', metricsError);
       else log.info('Quality metrics persisted', { samples: s.length, mosAvg });
     } catch (err) {
+      // Mesmo caso do insert acima: metrica de qualidade pode ser perdida
+      // sem interromper a chamada em andamento.
       log.error('Failed to persist quality metrics', err);
     }
   }, [options.persistOnEnd, options.callSessionId, options.agentName, options.channel]);

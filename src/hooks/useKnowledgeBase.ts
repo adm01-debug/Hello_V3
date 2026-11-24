@@ -80,6 +80,8 @@ export function useKbCategories() {
            if (error) throw error;
            return (data ?? []) as unknown as KbArticle[];
          } catch (err) {
+           // Fallback intencional: a busca por palavra-chave logo abaixo cobre
+           // o caso (embedding indisponivel, edge fora, RPC recusada).
            logger.error('Semantic search failed, falling back to keyword search', err);
          }
        }

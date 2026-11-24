@@ -163,7 +163,7 @@ export function useNotifications() {
       }
       audioRef.current.play().catch(() => {});
     } catch {
-      // Silently fail
+      // Autoplay bloqueado pelo navegador nao pode quebrar o painel: o som e acessorio.
     }
   }, [preferences.sound_enabled]);
 

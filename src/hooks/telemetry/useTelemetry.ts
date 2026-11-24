@@ -31,6 +31,8 @@
            console.warn('[Telemetry] Failed to send metric:', error.message);
          }
        } catch (err) {
+         // Este catch so pega excecao sincrona (o builder resolve com { error }).
+         // Telemetria e acessoria: nao pode quebrar a pagina do usuario.
          console.error('[Telemetry] Error:', err);
        }
      };
