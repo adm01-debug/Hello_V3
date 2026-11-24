@@ -63,7 +63,11 @@ export async function apiAddToQueue(items: AddToQueueInput[]): Promise<void> {
 }
 
 export async function apiUpdateCampaignTotal(campaignId: string, total: number): Promise<void> {
-  await supabase.from('dialer_campaigns').update({ total_contacts: total }).eq('id', campaignId);
+  const { error } = await supabase
+    .from('dialer_campaigns')
+    .update({ total_contacts: total })
+    .eq('id', campaignId);
+  if (error) throw error;
 }
 
 export async function apiStartCampaign(campaignId: string): Promise<DialerCampaign> {
@@ -102,7 +106,7 @@ export async function apiGetNextContact(campaignId: string): Promise<DialerQueue
 }
 
 export async function apiMarkDialing(item: DialerQueueItem): Promise<void> {
-  await supabase
+  const { error } = await supabase
     .from('dialer_queue')
     .update({
       status: 'dialing',
@@ -110,6 +114,9 @@ export async function apiMarkDialing(item: DialerQueueItem): Promise<void> {
       attempts: item.attempts + 1,
     })
     .eq('id', item.id);
+  // Sem checar o erro, um claim que falhou deixava a linha `pending` e ela era
+  // discada de novo no ciclo seguinte (etapa 080).
+  if (error) throw error;
 }
 
 /**
@@ -118,20 +125,22 @@ export async function apiMarkDialing(item: DialerQueueItem): Promise<void> {
  * em vez de sumir sem registro.
  */
 export async function apiMarkSkipped(item: DialerQueueItem, reason: string): Promise<void> {
-  await supabase
+  const { error } = await supabase
     .from('dialer_queue')
     .update({
       status: 'skipped',
       result: `compliance: ${reason}`,
     })
     .eq('id', item.id);
+  if (error) throw error;
 }
 
 export async function apiUpdateQueueItem(
   id: string,
   patch: Partial<DialerQueueItem>,
 ): Promise<void> {
-  await supabase.from('dialer_queue').update(patch).eq('id', id);
+  const { error } = await supabase.from('dialer_queue').update(patch).eq('id', id);
+  if (error) throw error;
 }
 
 export async function apiUpdateCampaignStats(
@@ -139,10 +148,11 @@ export async function apiUpdateCampaignStats(
   completed: number,
   successful: number,
 ): Promise<void> {
-  await supabase
+  const { error } = await supabase
     .from('dialer_campaigns')
     .update({ completed_contacts: completed, successful_contacts: successful })
     .eq('id', campaignId);
+  if (error) throw error;
 }
 
 export async function apiDeleteCampaign(campaignId: string): Promise<void> {

@@ -186,7 +186,14 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
         description: queueItem.phone,
       });
     } catch (err) {
+      // Um claim que falhou deixa a linha em estado desconhecido: seguir
+      // discando poderia duplicar a ligacao. Para a campanha (etapa 080).
       log.error('Error dialing contact:', err);
+      setIsDialing(false);
+      setActiveCampaign(null);
+      toast.error('Não foi possível reservar o contato na fila. Campanha pausada.', {
+        description: 'A fila pode estar inconsistente. Retome quando o erro cessar.',
+      });
     }
   }, [preDialCheck]);
 
