@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { toast } from 'sonner';
@@ -28,26 +28,59 @@ export interface Account {
   updated_at: string;
 }
 
+const ACCOUNTS_PAGE_SIZE = 50;
+
 export function useAccounts() {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalCount, setTotalCount] = useState<number | null>(null);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const pageRef = useRef(0);
 
-  const load = useCallback(async () => {
-    setLoading(true);
+  // Paginas de 50: sem range() o PostgREST corta em 1000 linhas em silencio e a
+  // tela mostra o resultado como se fosse a carteira inteira.
+  const fetchPage = useCallback(async (pageToFetch: number) => {
+    const from = pageToFetch * ACCOUNTS_PAGE_SIZE;
     try {
-      const { data, error } = await supabase
+      const { data, error, count } = await supabase
         .from('accounts')
-        .select('*')
-        .order('updated_at', { ascending: false });
+        .select('*', pageToFetch === 0 ? { count: 'exact' } : undefined)
+        // Desempate por id: sem ordem estavel a paginacao repete/pula linha.
+        .order('updated_at', { ascending: false })
+        .order('id', { ascending: false })
+        .range(from, from + ACCOUNTS_PAGE_SIZE - 1);
       if (error) throw error;
-      setAccounts((data ?? []) as unknown as Account[]);
+      const rows = (data ?? []) as unknown as Account[];
+      if (pageToFetch === 0 && typeof count === 'number') setTotalCount(count);
+      setHasMore(rows.length === ACCOUNTS_PAGE_SIZE);
+      setAccounts((prev) => (pageToFetch === 0 ? rows : [...prev, ...rows]));
     } catch (err) {
       logger.error('useAccounts load failed', err);
       toast.error('Falha ao carregar contas');
+    }
+  }, []);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    pageRef.current = 0;
+    try {
+      await fetchPage(0);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [fetchPage]);
+
+  const loadMore = useCallback(async () => {
+    if (!hasMore || loadingMore) return;
+    setLoadingMore(true);
+    try {
+      pageRef.current += 1;
+      await fetchPage(pageRef.current);
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [fetchPage, hasMore, loadingMore]);
 
   const create = useCallback(async (payload: Partial<Account>) => {
     try {
@@ -124,5 +157,8 @@ export function useAccounts() {
 
   useEffect(() => { load(); }, [load]);
 
-  return { accounts, loading, refresh: load, create, update, recomputeHealth, detectChurn };
+  return {
+    accounts, loading, totalCount, hasMore, loadingMore, loadMore,
+    refresh: load, create, update, recomputeHealth, detectChurn,
+  };
 }

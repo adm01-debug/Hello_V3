@@ -22,7 +22,7 @@ const STEP_ICONS: Record<string, typeof Phone> = {
 
 export default function Cadences() {
   usePageTitle("Cadências");
-  const { cadences, steps, loading, createCadence, addStep } = useCadences();
+  const { cadences, steps, loading, totalCount, hasMore, loadingMore, loadMore, createCadence, addStep } = useCadences();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -133,6 +133,16 @@ export default function Cadences() {
               </Card>
             );
           })}
+        </div>
+      )}
+      {hasMore && (
+        <div className="text-center">
+          <Button variant="outline" size="sm" onClick={loadMore} disabled={loadingMore}>
+            {loadingMore ? "Carregando..." : "Carregar mais cadências"}
+          </Button>
+          <p className="mt-2 text-xs text-muted-foreground">
+            {cadences.length} de {totalCount ?? cadences.length} cadências carregadas.
+          </p>
         </div>
       )}
     </NeonPageLayout>

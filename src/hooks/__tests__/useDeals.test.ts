@@ -23,10 +23,11 @@ describe("useDeals", () => {
     vi.clearAllMocks();
     (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue({
       select: vi.fn().mockReturnThis(),
-      order: vi.fn().mockResolvedValue({ data: [
+      order: vi.fn().mockReturnThis(),
+      range: vi.fn().mockResolvedValue({ data: [
         { id: "d1", name: "Deal 1", value_cents: 10000, stage: "prospecting", probability: 50,
           owner_agent_name: "Alice", currency: "BRL", status: "open" },
-      ], error: null }),
+      ], error: null, count: 1 }),
       insert: vi.fn().mockResolvedValue({ error: null }),
       update: vi.fn().mockReturnThis(),
       eq: vi.fn().mockResolvedValue({ error: null }),

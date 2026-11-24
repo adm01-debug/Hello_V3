@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
@@ -65,30 +65,50 @@ export interface CreateContactInput {
   source?: string;
 }
 
+const CONTACTS_PAGE_SIZE = 50;
+
 export const useContacts = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [totalCount, setTotalCount] = useState<number | null>(null);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const pageRef = useRef(0);
+  const searchRef = useRef<string | undefined>(undefined);
+
+  const fetchPage = useCallback(async (search: string | undefined, pageToFetch: number) => {
+    const from = pageToFetch * CONTACTS_PAGE_SIZE;
+    let query = supabase
+      .from('contacts')
+      .select('*', pageToFetch === 0 ? { count: 'exact' } : undefined)
+      // Desempate por id: sem ordem estavel a paginacao repete/pula linha.
+      .order('updated_at', { ascending: false })
+      .order('id', { ascending: false })
+      .range(from, from + CONTACTS_PAGE_SIZE - 1);
+
+    if (search) {
+      query = query.or(`name.ilike.%${search}%,phone.ilike.%${search}%,company.ilike.%${search}%`);
+    }
+
+    const { data, error: fetchError, count } = await query;
+
+    if (fetchError) throw fetchError;
+    const rows = (data || []) as Contact[];
+    if (pageToFetch === 0 && typeof count === 'number') setTotalCount(count);
+    setHasMore(rows.length === CONTACTS_PAGE_SIZE);
+    setContacts((prev) => (pageToFetch === 0 ? rows : [...prev, ...rows]));
+    return rows;
+  }, []);
 
   const fetchContacts = useCallback(async (search?: string) => {
     setIsLoading(true);
     setError(null);
+    searchRef.current = search;
+    pageRef.current = 0;
     try {
-      let query = supabase
-        .from('contacts')
-        .select('*')
-        .order('updated_at', { ascending: false });
-
-      if (search) {
-        query = query.or(`name.ilike.%${search}%,phone.ilike.%${search}%,company.ilike.%${search}%`);
-      }
-
-      const { data, error: fetchError } = await query;
-
-      if (fetchError) throw fetchError;
-      
-      setContacts((data || []) as Contact[]);
-      return data as Contact[];
+      return await fetchPage(search, 0);
+    
     } catch (err: unknown) {
       log.error('Error fetching contacts', err);
       // Silent error reporting for background refresh
@@ -108,6 +128,19 @@ export const useContacts = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const loadMore = useCallback(async () => {
+    if (!hasMore || isLoading || loadingMore) return;
+    setLoadingMore(true);
+    try {
+      pageRef.current += 1;
+      await fetchPage(searchRef.current, pageRef.current);
+    } catch (err: unknown) {
+      log.error('Error loading more contacts', err);
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [fetchPage, hasMore, isLoading, loadingMore]);
 
   const getContactByPhone = useCallback(async (phone: string): Promise<Contact | null> => {
     try {
@@ -365,6 +398,10 @@ export const useContacts = () => {
     contacts,
     isLoading,
     error,
+      totalCount,
+      hasMore,
+      loadingMore,
+      loadMore,
     fetchContacts,
     getContactByPhone,
     createContact,

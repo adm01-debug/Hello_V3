@@ -26,10 +26,11 @@ describe("useDeals — OPTIMISTIC_LOCK_CONFLICT", () => {
     updateMock = vi.fn().mockReturnThis();
     const selectChain = {
       select: vi.fn().mockReturnThis(),
-      order: vi.fn().mockResolvedValue({ data: [
+      order: vi.fn().mockReturnThis(),
+      range: vi.fn().mockResolvedValue({ data: [
         { id: "d1", name: "Deal 1", value_cents: 10000, stage: "prospecting",
           probability: 50, owner_agent_name: "Alice", currency: "BRL", status: "open", version: 1 },
-      ], error: null }),
+      ], error: null, count: 1 }),
       update: updateMock,
       eq: vi.fn().mockResolvedValue({
         error: { message: "OPTIMISTIC_LOCK_CONFLICT: registro alterado" },
