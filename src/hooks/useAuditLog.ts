@@ -35,7 +35,7 @@ export function useAuditLog() {
     resourceType: ResourceType,
     resourceId?: string,
     details?: Record<string, Json>
-  ) => {
+  ): Promise<boolean> => {
     try {
       const { error } = await supabase.rpc('log_audit_event', {
         p_action: action,
@@ -45,10 +45,13 @@ export function useAuditLog() {
       });
 
       if (error) {
-        log.error('Failed to log audit event:', error);
+        log.error('Failed to log audit event:', { action, resourceType, resourceId, error });
+        return false;
       }
+      return true;
     } catch (err) {
-      log.error('Error logging audit event:', err);
+      log.error('Error logging audit event:', { action, resourceType, resourceId, err });
+      return false;
     }
   }, []);
 

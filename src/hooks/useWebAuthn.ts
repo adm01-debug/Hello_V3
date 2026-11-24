@@ -124,7 +124,10 @@ export function useWebAuthn() {
           friendly_name: friendlyName || getDefaultFriendlyName(),
         });
 
-      if (saveError) throw saveError;
+      if (saveError) {
+        log.error('Falha ao salvar a passkey', saveError);
+        throw new Error('A passkey foi criada no dispositivo mas não foi salva aqui. Remova-a nas configurações do dispositivo e registre de novo.');
+      }
 
       toast.success('Passkey registrada com sucesso!');
       await loadPasskeys();
@@ -211,10 +214,11 @@ export function useWebAuthn() {
       }
 
       // Marca uso da passkey apos a assinatura verificada.
-      await supabase
+      const { error: touchError } = await supabase
         .from('user_passkeys')
         .update({ last_used_at: new Date().toISOString() })
         .eq('credential_id', result.credentialId);
+      if (touchError) log.warn('Falha ao registrar o uso da passkey', touchError);
 
       toast.success('Login realizado com sucesso!');
       return { success: true, userId: authData.userId as string | undefined };

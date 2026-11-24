@@ -342,4 +342,18 @@ describe('useWebAuthn', () => {
     await act(async () => { await result.current.refreshPasskeys(); });
     expect(typeof result.current.refreshPasskeys).toBe('function');
   });
+
+  it('avisa que a passkey ficou no dispositivo quando o insert falha', async () => {
+    setTable('user_passkeys', { data: null, error: new Error('save fail') });
+    const { result } = renderHook(() => useWebAuthn());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    let ok = true;
+    await act(async () => { ok = await result.current.registerPasskey('K'); });
+    expect(ok).toBe(false);
+    expect(toast.error).toHaveBeenCalledWith(
+      'Erro ao registrar passkey',
+      expect.objectContaining({ description: expect.stringContaining('criada no dispositivo') }),
+    );
+    expect(toast.success).not.toHaveBeenCalledWith('Passkey registrada com sucesso!');
+  });
 });
