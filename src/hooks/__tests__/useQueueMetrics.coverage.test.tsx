@@ -231,6 +231,45 @@ describe('useQueueMetrics', () => {
     expect(fromMock).toHaveBeenCalledTimes(3);
   });
 
+  // E246: o aviso era derivado do estado, entao uma meta critica reaparecia a
+  // cada leitura (a cada 5 s antes da etapa 244). Agora avisa na transicao.
+  describe('aviso de meta por transicao (E246)', () => {
+    const metaCritica = () => ([{
+      id: 'g1', name: 'Nivel de servico', metric_type: 'service_level', comparison_operator: 'gte',
+      critical_threshold: 90, warning_threshold: 80, notify_on_critical: true, notify_on_warning: true,
+    }]);
+
+    it('avisa uma vez enquanto a meta segue critica', async () => {
+      goalsData = metaCritica();
+      const { result } = renderHook(() => useQueueMetrics());
+      await waitFor(() => expect(result.current.loading).toBe(false));
+      for (let i = 0; i < 5; i += 1) {
+        await act(async () => { await result.current.fetchMetrics(); });
+      }
+      expect(toast.error).toHaveBeenCalledTimes(1);
+    });
+
+    it('avisa a volta ao normal e o intervalo minimo barra a oscilacao', async () => {
+      goalsData = metaCritica();
+      const { result } = renderHook(() => useQueueMetrics());
+      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => expect(toast.error).toHaveBeenCalledTimes(1));
+
+      // Espera curta: as duas chamadas passam a contar como atendidas rapidamente.
+      recentCallsData = [
+        { status: 'completed', duration_seconds: 40, hold_time_seconds: 5 },
+        { status: 'completed', duration_seconds: 30, hold_time_seconds: 5 },
+      ];
+      await act(async () => { await result.current.fetchMetrics(); });
+      expect(toast.success).toHaveBeenCalledWith('Meta normalizada: Nivel de servico', expect.anything());
+
+      // Voltou a ficar critica dentro dos 15 min: nao repete o aviso.
+      recentCallsData = [{ status: 'completed', duration_seconds: 40, hold_time_seconds: 300 }];
+      await act(async () => { await result.current.fetchMetrics(); });
+      expect(toast.error).toHaveBeenCalledTimes(1);
+    });
+  });
+
   // E244: o poll era de 5 s por cima do realtime; virou rede de seguranca de 60 s.
   it('usa poll de seguranca de 60 s em vez de 5 s', async () => {
     const setIntervalSpy = vi.spyOn(window, 'setInterval');

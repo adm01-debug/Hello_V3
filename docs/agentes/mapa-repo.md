@@ -94,6 +94,16 @@ instala mais pacotes que `bun install` em ambiente sem credencial da Lovable.
 - Os 4 testes vermelhos conhecidos estão em `src/hooks/__tests__/useSessionManager.coverage.test.tsx`
   (reproduzível em isolamento — **não é flaky**).
 
+## Alertas derivados de métrica (etapa 246)
+
+Regra que vale para qualquer alerta disparado a partir de um número, não de um evento: **avise na
+transição, não no estado**. Um limiar é avaliado a cada leitura (realtime agrupado + rede de segurança),
+então notificar sempre que `valor > limite` entrega o mesmo toast dezenas de vezes por hora e ensina o
+supervisor a ignorá-lo. O desenho usado em `src/hooks/useQueueMetrics.ts` (`checkAndNotifyGoals` +
+`goalStateRef`): estado anterior em `useRef` (nunca em `useState` — vira laço de re-render, ver etapa
+245), aviso ao entrar em aviso/crítico, aviso de normalização na volta, e intervalo mínimo de 15 min por
+meta para métrica que oscila em cima do limiar.
+
 ## Rotas protegidas sem `roles:` (etapa 090)
 
 **Estado em 24/11/2026** (verificado no arquivo, nao no relatorio antigo): `src/routes/protectedRoutes.tsx` tem **95 rotas**, das quais **49 declaram `roles:` e 46 nao declaram** (45 telas + o catch-all `*`). O plano (A-088) falava em 49 sem papel no momento da auditoria; entre a auditoria e hoje 3 rotas passaram a declarar papel.
