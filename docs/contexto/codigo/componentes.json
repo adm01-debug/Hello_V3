@@ -5184,7 +5184,7 @@
     "Accounts"
    ],
    "export_default": "Accounts",
-   "linhas": 139,
+   "linhas": 149,
    "dominio": "pages",
    "hooks_locais": [
     "useAccounts",
@@ -5613,7 +5613,7 @@
     "Cadences"
    ],
    "export_default": "Cadences",
-   "linhas": 141,
+   "linhas": 151,
    "dominio": "pages",
    "hooks_locais": [
     "useCadences",
@@ -5920,7 +5920,7 @@
     "Contacts"
    ],
    "export_default": "Contacts",
-   "linhas": 345,
+   "linhas": 355,
    "dominio": "pages",
    "hooks_locais": [
     "useBitrixSync",
@@ -5939,7 +5939,7 @@
     "Deals"
    ],
    "export_default": "Deals",
-   "linhas": 146,
+   "linhas": 156,
    "dominio": "pages",
    "hooks_locais": [
     "useDeals",

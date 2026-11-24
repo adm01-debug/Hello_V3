@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `cf8c57b9b5` · branch `main` · 2026-11-24 13:03 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `711098f57e` · branch `main` · 2026-11-24 13:32 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1887,6 +1887,7 @@ _nenhum item encontrado_
 | `MOBILE_BREAKPOINT` | `768` | `src/hooks/use-mobile.tsx` |
 | `TOAST_LIMIT` | `1` | `src/hooks/use-toast.ts` |
 | `TOAST_REMOVE_DELAY` | `1000000` | `src/hooks/use-toast.ts` |
+| `ACCOUNTS_PAGE_SIZE` | `50` | `src/hooks/useAccounts.ts` |
 | `ACTIVE_ROWS_LIMIT` | `200` | `src/hooks/useActiveCallsRealtime.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useAlertPresets.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useAlertsExport.ts` |
@@ -1894,8 +1895,11 @@ _nenhum item encontrado_
 | `MAX_ROWS` | `20000` | `src/hooks/useAlertsExport.ts` |
 | `BUCKET` | `'avatars'` | `src/hooks/useAvatar.ts` |
 | `MAX_BYTES` | `2` | `src/hooks/useAvatar.ts` |
+| `CADENCES_PAGE_SIZE` | `50` | `src/hooks/useCadences.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useCallHistory.ts` |
 | `RECORDINGS_LIMIT` | `200` | `src/hooks/useCallRecording.ts` |
+| `CONTACTS_PAGE_SIZE` | `50` | `src/hooks/useContacts.ts` |
+| `DEALS_PAGE_SIZE` | `50` | `src/hooks/useDeals.ts` |
 | `MAX_FAVORITES` | `12` | `src/hooks/useDialerFavorites.ts` |
 | `ANALYSIS_THROTTLE_MS` | `5000` | `src/hooks/useLiveAssist.ts` |
 | `MIN_NEW_WORDS` | `30` | `src/hooks/useLiveAssist.ts` |
@@ -2647,7 +2651,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4402 testes em 392 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4403 testes em 392 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2773,6 +2777,7 @@ _nenhum item encontrado_
 | `supabase/functions/enforce-sla/__tests__/index.test.ts` | 10 | enforce-sla: prioriza política de canal específico sobre  · enforce-sla: prioriza prioridade específica sobre  · enforce-sla: canal exato vence combinação genérica · enforce-sla: cai no fallback  … |
 | `e2e/dashboard.spec.ts` | 9 | Dashboard · Unauthenticated · should redirect to login when not authenticated · Authenticated … |
 | `src/components/ui/__tests__/search-input.test.tsx` | 9 | SearchInput · renderiza com placeholder e valor · chama onValueChange ao digitar · mostra botão limpar somente quando há valor … |
+| `src/hooks/__tests__/useAccounts.coverage.test.tsx` | 9 | useAccounts coverage · handles load error · create success · create error returns null … |
 | `src/hooks/__tests__/useAlertsExport.test.ts` | 9 | useAlertsExport · exporta CSV com escopo  · filtra por scope= · filtra por scope= … |
 | `src/hooks/__tests__/useCallPlaylists.coverage.test.tsx` | 9 | useCallPlaylists (coverage) · loads playlists on mount · handles list error · createPlaylist success and error … |
 | `src/hooks/__tests__/useCallTimers.coverage.test.tsx` | 9 | useCallTimers · startDurationTimer increments duration each second · startDurationTimer clears existing timer when restarted · stopDurationTimer stops increments … |
@@ -2799,7 +2804,6 @@ _nenhum item encontrado_
 | `supabase/functions/webauthn-authenticate/__tests__/verify.test.ts` | 9 | verify: assercao legitima e aceita e devolve signCount · verify: assinatura de OUTRA chave e rejeitada · verify: desafio diferente e rejeitado (replay) · verify: origem estranha e rejeitada (phishing) … |
 | `src/__tests__/rls/audit-logs.test.ts` | 8 | RLS — audit_logs (imutabilidade + admin-only read) · admin pode ler logs de auditoria · admin pode inserir via função RPC · admin NÃO pode atualizar logs (imutabilidade) … |
 | `src/hooks/__tests__/pageVisibility.gating.test.tsx` | 8 | etapa 253: poll de painel respeita a visibilidade da aba · ${file} usa usePageVisibility · ${file} nao tem refetchInterval sempre ligado · useQualityMetrics entrega refetchInterval falso com a aba oculta … |
-| `src/hooks/__tests__/useAccounts.coverage.test.tsx` | 8 | useAccounts coverage · handles load error · create success · create error returns null … |
 | `src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx` | 8 | useAchievementNotifications (coverage) · não injeta badge inválida quando o enriquecimento falha · subscribes to channels and exposes initial state · handles a new badge award and shows a toast (no agent filter) … |
 | `src/hooks/__tests__/useAgentStatus.coverage.test.tsx` | 8 | useAgentStatus (coverage) · fetches agents on mount · setAgent selects and toasts; clearAgent clears · updateStatus returns false without selected agent … |
 | `src/hooks/__tests__/useAuth.coverage.test.tsx` | 8 | useAuth · calls getSession on mount and exposes API · hasRole false without profile, true with matching role · handles SIGNED_OUT auth state change … |
@@ -3121,6 +3125,7 @@ _nenhum item encontrado_
 | ').is('ended_at', null).order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT); | `src/hooks/useActiveCallsRealtime.ts` |
 | trocar o filtro durante um "carregar mais" nao pode anexar a pagina antiga na lista nova. | `src/hooks/useCallHistory.ts` |
 | ').order('recorded_at', { ascending: false }).limit(RECORDINGS_LIMIT); | `src/hooks/useCallRecording.ts` |
+| Paginas de 50 + desempate por id: o kanban nao pode receber o corte de 1000 | `src/hooks/useDeals.ts` |
 | * - Digitar rapidamente atualiza `inputValue` imediatamente e enfileira apenas | `src/hooks/useDebouncedSearchParam.ts` |
 | ').limit(1).maybeSingle(); | `src/hooks/useGeoBlocking.ts` |
 | ').order('created_at', { ascending: false }).limit(50); | `src/hooks/useGeoBlocking.ts` |

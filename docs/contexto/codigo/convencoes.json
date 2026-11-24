@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: pagina contatos, negocios e contas de 50 em 50 (etapa 237) (#285)",
+   "chore: fixa o orcamento de bundle a mao a partir da meta (etapa 252) (#284)",
    "feat: reduz o chunk de entrada do front em ~15% (etapa 251) (#283)",
    "feat: guard de CI contra N+1 em edge function (etapa 250) (#282)",
-   "fix: unifica /history e /call-history num alias com redirect (etapa 266) (#281)",
-   "fix: pausa o poll dos paineis com a aba oculta e tira o monitor de VoIP das rotas publicas (etapa 253) (#280)",
-   "fix: le o resumo de notificacoes em lote em vez de por usuario (etapa 249) (#279)"
+   "fix: unifica /history e /call-history num alias com redirect (etapa 266) (#281)"
   ]
  },
  "pr_template": null,

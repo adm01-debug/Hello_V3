@@ -454,16 +454,16 @@
   {
    "arquivo": "src/hooks/__tests__/useAccounts.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 132,
+   "linhas": 158,
    "testa": [
     "src/hooks/useAccounts.ts"
    ],
-   "casos": 7
+   "casos": 8
   },
   {
    "arquivo": "src/hooks/__tests__/useAccounts.test.ts",
    "tipo": "unit",
-   "linhas": 63,
+   "linhas": 64,
    "testa": [
     "src/hooks/useAccounts.ts",
     "src/integrations/supabase/client.ts"
@@ -673,7 +673,7 @@
   {
    "arquivo": "src/hooks/__tests__/useCadences.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 68,
+   "linhas": 73,
    "testa": [
     "src/hooks/useCadences.ts"
    ],
@@ -892,7 +892,7 @@
   {
    "arquivo": "src/hooks/__tests__/useContacts.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 161,
+   "linhas": 162,
    "testa": [
     "src/hooks/useContacts.ts"
    ],
@@ -984,7 +984,7 @@
   {
    "arquivo": "src/hooks/__tests__/useDeals.conflict.test.ts",
    "tipo": "unit",
-   "linhas": 93,
+   "linhas": 94,
    "testa": [
     "src/hooks/useDeals.ts",
     "src/integrations/supabase/client.ts"
@@ -994,7 +994,7 @@
   {
    "arquivo": "src/hooks/__tests__/useDeals.test.ts",
    "tipo": "unit",
-   "linhas": 61,
+   "linhas": 62,
    "testa": [
     "src/hooks/useDeals.ts",
     "src/integrations/supabase/client.ts"
