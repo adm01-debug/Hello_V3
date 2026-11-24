@@ -28,7 +28,7 @@ export function BackButton() {
           variant="ghost"
           size="icon"
           onClick={handleBack}
-          className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+          className="h-8 w-8 max-md:h-11 max-md:w-11 shrink-0 text-muted-foreground hover:text-foreground transition-colors"
           aria-label="Voltar para a página anterior"
         >
           <ArrowLeft className="h-4 w-4" />

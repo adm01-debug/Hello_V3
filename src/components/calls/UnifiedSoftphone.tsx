@@ -308,7 +308,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
               <AlertTitle>{sipAlertTitle}</AlertTitle>
               <AlertDescription>
                 <p>{sipAlertDescription}</p>
-                <Button size="sm" variant="outline" className="mt-2" onClick={handleSipRetryNow}>
+                <Button size="sm" variant="outline" className="mt-2 max-md:h-11" onClick={handleSipRetryNow}>
                   Tentar agora
                 </Button>
               </AlertDescription>
@@ -330,10 +330,10 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
           )}
 
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'dialpad' | 'contacts' | 'history')} className="p-4">
-            <TabsList className="grid w-full grid-cols-3 mb-4">
-              <TabsTrigger value="dialpad" className="gap-1 text-xs"><Phone className="h-3 w-3" />Teclado</TabsTrigger>
-              <TabsTrigger value="contacts" className="gap-1 text-xs"><Users className="h-3 w-3" />Contatos</TabsTrigger>
-              <TabsTrigger value="history" className="gap-1 text-xs"><History className="h-3 w-3" />Recentes</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 mb-4 max-md:h-11">
+              <TabsTrigger value="dialpad" className="gap-1 text-xs max-md:h-11"><Phone className="h-3 w-3" />Teclado</TabsTrigger>
+              <TabsTrigger value="contacts" className="gap-1 text-xs max-md:h-11"><Users className="h-3 w-3" />Contatos</TabsTrigger>
+              <TabsTrigger value="history" className="gap-1 text-xs max-md:h-11"><History className="h-3 w-3" />Recentes</TabsTrigger>
             </TabsList>
 
             <TabsContent value="dialpad" className="mt-0">

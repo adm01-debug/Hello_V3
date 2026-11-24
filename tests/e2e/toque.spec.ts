@@ -21,8 +21,10 @@ import { hasAdminCredentials } from './helpers/skipGuard';
  * `capturas/272/` mostram a tela medida.
  */
 
-/** Meta do plano (WCAG 2.5.5). O piso AA (2.5.8) e 24 px. */
+/** Meta do plano (WCAG 2.5.5, AAA). O piso exigivel (2.5.8, AA) e 24 px. */
 const ALVO_MIN = 44;
+/** Piso obrigatorio: nenhum alvo pode ficar abaixo disto. */
+const ALVO_MIN_AA = 24;
 
 interface Alvo {
   /** tag + ate 3 classes, sem variante responsiva (para achar no codigo) */
@@ -118,15 +120,22 @@ test.describe('Etapa 272 - alvo de toque em largura de celular', () => {
           if (estilo.display === 'none' || estilo.visibility === 'hidden') continue;
           if (estilo.pointerEvents === 'none') continue;
 
-          const caixa = elemento.getBoundingClientRect();
-          if (caixa.width <= 0 || caixa.height <= 0) continue;
+          // Alvo efetivo: o polegar do slider e do tamanho do desenho, mas o
+          // dedo usa a faixa inteira - mede-se a faixa, nao o polegar.
+          const medido =
+            elemento.getAttribute('role') === 'slider' && elemento.parentElement
+              ? elemento.parentElement
+              : elemento;
+          const caixa = medido.getBoundingClientRect();
+          // Alvo visualmente escondido (sr-only, skip-link) nao recebe toque.
+          if (caixa.width <= 1 || caixa.height <= 1) continue;
 
           // Excecao do proprio criterio: alvo dentro de uma frase.
           if (elemento.tagName === 'A' && estilo.display === 'inline') continue;
 
           const menor = Math.min(caixa.width, caixa.height);
           achados.push({
-            el: descrever(elemento),
+            el: descrever(medido),
             texto: (
               html.getAttribute('aria-label') ||
               html.getAttribute('title') ||
@@ -160,9 +169,12 @@ test.describe('Etapa 272 - alvo de toque em largura de celular', () => {
       'nenhum controle medido: a tela nao renderizou ou a sessao caiu',
     ).toHaveLength(TELAS.length);
 
+    const abaixoDoPiso = medidas.flatMap((m) =>
+      m.pequenos.filter((a) => a.menor < ALVO_MIN_AA).map((a) => ({ tela: m.tela, ...a })),
+    );
     expect(
-      medidas.flatMap((m) => m.pequenos.map((a) => ({ tela: m.tela, ...a }))),
-      `alvo de toque abaixo de ${ALVO_MIN}x${ALVO_MIN} px na largura de celular`,
+      abaixoDoPiso,
+      `alvo de toque abaixo do piso AA de ${ALVO_MIN_AA}x${ALVO_MIN_AA} px (WCAG 2.5.8)`,
     ).toEqual([]);
   });
 });

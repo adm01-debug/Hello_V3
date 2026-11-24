@@ -94,7 +94,7 @@ export function BreadcrumbNav({
             <li>
               <Link 
                 to="/"
-                className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors max-md:h-11 max-md:w-11 max-md:justify-center"
                 aria-label="Ir para página inicial"
               >
                 <Home className="h-4 w-4" />
@@ -161,7 +161,7 @@ export function BreadcrumbCompact({ className }: { className?: string }) {
     >
       <Link
         to={parentHref}
-        className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+        className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors max-md:h-11 max-md:w-11 max-md:justify-center"
       >
         <ChevronRight className="h-4 w-4 rotate-180" />
         <span className="sr-only">Voltar</span>

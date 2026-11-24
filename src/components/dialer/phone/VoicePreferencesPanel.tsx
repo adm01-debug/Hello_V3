@@ -40,7 +40,7 @@ export function VoicePreferencesPanel() {
           type="button"
           variant="outline"
           size="icon"
-          className="h-8 w-8 shrink-0"
+          className="h-8 w-8 max-md:h-11 max-md:w-11 shrink-0"
           aria-label="Ouvir prévia da voz do assistente"
           disabled={!supported || !ttsEnabled}
           onClick={() => speak(PREVIEW_TEXT, { rate: ttsRate, voiceUri: ttsVoice })}
@@ -85,7 +85,7 @@ export function VoicePreferencesPanel() {
             type="button"
             variant="outline"
             size="sm"
-            className="h-7 px-3 text-[11px]"
+            className="h-7 max-md:h-11 px-3 text-[11px]"
             disabled={!supported}
             onClick={() => cycleRate()}
             aria-label={`Alterar velocidade da fala. Atual: ${formatTtsRate(ttsRate)}`}
@@ -102,7 +102,7 @@ export function VoicePreferencesPanel() {
             type="button"
             variant="outline"
             size="sm"
-            className="h-7 max-w-[60%] truncate px-3 text-[11px]"
+            className="h-7 max-md:h-11 max-w-[60%] truncate px-3 text-[11px]"
             disabled={!supported || voices.length === 0}
             onClick={() => cycleVoice()}
             aria-label={`Alterar voz do assistente. Atual: ${voiceLabel}`}

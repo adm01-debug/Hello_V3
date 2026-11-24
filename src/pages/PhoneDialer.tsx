@@ -246,7 +246,7 @@ const PhoneDialer = () => {
           <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Discador</h1>
           <p className="text-sm text-muted-foreground">Faça chamadas por teclado ou por voz</p>
         </div>
-        <Button type="button" variant="outline" onClick={() => setAssistantOpen(true)}>
+        <Button type="button" variant="outline" className="max-md:h-11" onClick={() => setAssistantOpen(true)}>
           <Sparkles className="mr-2 h-4 w-4" />
           Assistente de voz
         </Button>
@@ -290,7 +290,7 @@ const PhoneDialer = () => {
                     onClick={() => call.setActiveChannel(id)}
                     aria-pressed={call.activeChannel === id}
                     className={cn(
-                      'flex items-center gap-1.5 rounded-full border border-border/50 px-3 py-1.5 text-xs transition-colors',
+                      'flex items-center gap-1.5 rounded-full border border-border/50 px-3 py-1.5 text-xs transition-colors max-md:h-11 max-md:px-4',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                       call.activeChannel === id
                         ? 'bg-primary text-primary-foreground'
