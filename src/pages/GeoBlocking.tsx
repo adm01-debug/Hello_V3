@@ -18,9 +18,11 @@ export default function GeoBlocking() {
     settings, settingsLoading, restrictionsLoading,
     selectedCountry, setSelectedCountry, reason, setReason,
     testIp, setTestIp, testResult,
-    allowedCountries, availableCountries, blockedLogs,
+    mode, listLabel, modeCountries, availableCountries, blockedLogs,
     updateSettings, addCountry, removeCountry, testGeoValidation,
   } = useGeoBlocking();
+
+  const isBlocklist = mode === 'blocklist';
 
   if (settingsLoading || restrictionsLoading) {
     return (<div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" /></div>);
@@ -32,7 +34,7 @@ export default function GeoBlocking() {
         <Globe className="h-8 w-8 text-primary" />
         <div>
           <h1 className="text-2xl font-bold">Bloqueio Geográfico</h1>
-          <p className="text-muted-foreground">Whitelist global - Apenas países permitidos podem acessar</p>
+          <p className="text-muted-foreground">{isBlocklist ? 'Blacklist global — apenas os países listados são bloqueados' : 'Whitelist global — apenas os países listados podem acessar'}</p>
         </div>
       </div>
 
@@ -46,6 +48,16 @@ export default function GeoBlocking() {
             <div className="space-y-0.5"><Label htmlFor="geo-enabled">Bloqueio Geográfico Ativo</Label><p className="text-sm text-muted-foreground">Quando ativo, apenas países na whitelist podem acessar</p></div>
             <Switch id="geo-enabled" checked={settings?.enabled ?? false} onCheckedChange={(checked) => updateSettings.mutate({ enabled: checked })} />
           </div>
+          <div className="flex items-center justify-between gap-4">
+            <div className="space-y-0.5"><Label htmlFor="geo-mode">Modo do bloqueio</Label><p className="text-sm text-muted-foreground">Whitelist libera só os países listados; blacklist bloqueia só os listados</p></div>
+            <Select value={mode} onValueChange={(value) => updateSettings.mutate({ mode: value })}>
+              <SelectTrigger id="geo-mode" className="w-[190px]"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="allowlist">Whitelist (permitir)</SelectItem>
+                <SelectItem value="blocklist">Blacklist (bloquear)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="flex items-center justify-between">
             <div className="space-y-0.5"><Label htmlFor="log-blocked">Registrar Tentativas Bloqueadas</Label><p className="text-sm text-muted-foreground">Mantém log de todas as tentativas de acesso bloqueadas</p></div>
             <Switch id="log-blocked" checked={settings?.log_blocked_attempts ?? true} onCheckedChange={(checked) => updateSettings.mutate({ log_blocked_attempts: checked })} />
@@ -55,13 +67,13 @@ export default function GeoBlocking() {
             <Switch id="notify-block" checked={settings?.notify_on_block ?? false} onCheckedChange={(checked) => updateSettings.mutate({ notify_on_block: checked })} />
           </div>
           {settings?.enabled && (
-            <div className="p-3 bg-primary/10 rounded-lg flex items-center gap-2"><Check className="h-5 w-5 text-primary" /><span className="text-sm font-medium">Modo Whitelist: {allowedCountries.length} países permitidos</span></div>
+            <div className="p-3 bg-primary/10 rounded-lg flex items-center gap-2"><Check className="h-5 w-5 text-primary" /><span className="text-sm font-medium">Modo {isBlocklist ? 'Blacklist' : 'Whitelist'}: {modeCountries.length} países {isBlocklist ? 'bloqueados' : 'permitidos'}</span></div>
           )}
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader><CardTitle className="flex items-center gap-2"><Plus className="h-5 w-5" />Adicionar País à Whitelist</CardTitle><CardDescription>Países na whitelist terão acesso permitido ao sistema</CardDescription></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2"><Plus className="h-5 w-5" />Adicionar País à {isBlocklist ? 'Blacklist' : 'Whitelist'}</CardTitle><CardDescription>{isBlocklist ? 'Países na blacklist terão o acesso bloqueado' : 'Países na whitelist terão acesso permitido ao sistema'}</CardDescription></CardHeader>
         <CardContent>
           <div className="flex gap-4 flex-wrap">
             <div className="flex-1 min-w-[200px]"><Label>País</Label>
@@ -74,14 +86,14 @@ export default function GeoBlocking() {
       </Card>
 
       <Card>
-        <CardHeader><CardTitle className="flex items-center gap-2"><MapPin className="h-5 w-5" />Países Permitidos ({allowedCountries.length})</CardTitle><CardDescription>Apenas usuários destes países podem acessar o sistema</CardDescription></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2"><MapPin className="h-5 w-5" />Países {isBlocklist ? 'Bloqueados' : 'Permitidos'} ({modeCountries.length})</CardTitle><CardDescription>{isBlocklist ? 'Usuários destes países não conseguem acessar o sistema' : 'Apenas usuários destes países podem acessar o sistema'}</CardDescription></CardHeader>
         <CardContent>
-          {allowedCountries.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground"><Globe className="h-12 w-12 mx-auto mb-3 opacity-50" /><p>Nenhum país na whitelist</p><p className="text-sm">Adicione países acima para permitir acesso</p></div>
+          {modeCountries.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground"><Globe className="h-12 w-12 mx-auto mb-3 opacity-50" /><p>Nenhum país na {listLabel}</p><p className="text-sm">{isBlocklist ? 'Adicione países acima para bloquear o acesso deles' : 'Adicione países acima para permitir acesso'}</p></div>
           ) : (
             <Table><TableHeader><TableRow><TableHead>País</TableHead><TableHead>Código</TableHead><TableHead>Motivo</TableHead><TableHead>Adicionado em</TableHead><TableHead className="w-[80px]">Ações</TableHead></TableRow></TableHeader>
-              <TableBody>{allowedCountries.map(c => (
-                <TableRow key={c.id}><TableCell className="font-medium">{c.country_name}</TableCell><TableCell><Badge variant="secondary">{c.country_code}</Badge></TableCell><TableCell className="text-muted-foreground">{c.reason || '-'}</TableCell><TableCell className="text-muted-foreground">{safeToLocaleDateString(c.created_at, 'pt-BR')}</TableCell><TableCell><Button aria-label="Remover o bloqueio do país" variant="ghost" size="icon" onClick={() => removeCountry.mutate(c.id)} disabled={removeCountry.isPending}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell></TableRow>
+              <TableBody>{modeCountries.map(c => (
+                <TableRow key={c.id}><TableCell className="font-medium">{c.country_name}</TableCell><TableCell><Badge variant="secondary">{c.country_code}</Badge></TableCell><TableCell className="text-muted-foreground">{c.reason || '-'}</TableCell><TableCell className="text-muted-foreground">{safeToLocaleDateString(c.created_at, 'pt-BR')}</TableCell><TableCell><Button aria-label="Remover o país da lista" variant="ghost" size="icon" onClick={() => removeCountry.mutate(c.id)} disabled={removeCountry.isPending}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell></TableRow>
               ))}</TableBody></Table>
           )}
         </CardContent>
