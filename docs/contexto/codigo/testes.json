@@ -5,10 +5,10 @@
   "vitest",
   "playwright"
  ],
- "total": 397,
+ "total": 398,
  "por_tipo": {
   "contrato": 1,
-  "e2e": 14,
+  "e2e": 15,
   "pytest": 2,
   "unit": 379
  },
@@ -18,11 +18,11 @@
    "arquivos": 372
   },
   {
-   "padrao": "e2e/",
-   "arquivos": 7
+   "padrao": "tests/",
+   "arquivos": 8
   },
   {
-   "padrao": "tests/",
+   "padrao": "e2e/",
    "arquivos": 7
   },
   {
@@ -3609,6 +3609,13 @@
    "arquivo": "tests/e2e/screenshots.spec.ts",
    "tipo": "e2e",
    "linhas": 286,
+   "testa": [],
+   "casos": 2
+  },
+  {
+   "arquivo": "tests/e2e/toque.spec.ts",
+   "tipo": "e2e",
+   "linhas": 181,
    "testa": [],
    "casos": 2
   },

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "fc9a215e2a3c001b54e05eedf41b75bb38fee080",
+  "commit": "61fd9f9174aaf4e345e3801fe556f38668f2cf48",
   "branch": "main",
-  "data_commit": "2026-11-24T16:32:09-03:00",
+  "data_commit": "2026-11-24T17:15:41-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "61fd9f9",
+    "data": "2026-11-24",
+    "assunto": "fix: alvo de toque de 44 px no celular (etapa 272) (#307)"
+   },
    {
     "sha": "fc9a215",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "43fa2c8",
     "data": "2026-11-24",
     "assunto": "feat: guard de CI contra N+1 em edge function (etapa 250) (#282)"
-   },
-   {
-    "sha": "9ad7ed6",
-    "data": "2026-11-24",
-    "assunto": "fix: unifica /history e /call-history num alias com redirect (etapa 266) (#281)"
    }
   ],
-  "arquivos_mudados_7d": 1257,
+  "arquivos_mudados_7d": 1266,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 128
+    "mudancas": 129
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 41
+    "mudancas": 45
    },
    {
     "pasta": "supabase/functions/_shared",
@@ -169,7 +169,7 @@
    },
    {
     "pasta": "src/components/layout",
-    "mudancas": 22
+    "mudancas": 23
    },
    {
     "pasta": "src/pages/__tests__",
@@ -199,11 +199,15 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 128
+    "mudancas": 129
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 30
+   },
+   {
+    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
+    "mudancas": 10
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
@@ -215,10 +219,6 @@
    },
    {
     "arquivo": "docs/audits/pendencias-2026-07.md",
-    "mudancas": 9
-   },
-   {
-    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
     "mudancas": 9
    },
    {
@@ -262,6 +262,14 @@
     "mudancas": 6
    },
    {
+    "arquivo": "src/pages/Calls.tsx",
+    "mudancas": 6
+   },
+   {
+    "arquivo": "src/pages/PhoneDialer.tsx",
+    "mudancas": 6
+   },
+   {
     "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 6
    },
@@ -288,20 +296,12 @@
    {
     "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
     "mudancas": 6
-   },
-   {
-    "arquivo": "supabase/functions/voip-load-test/index.ts",
-    "mudancas": 6
-   },
-   {
-    "arquivo": "AGENTS.md",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 283
+    "commits": 284
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1743,
-  "arquivos_codigo": 1341,
-  "linhas_codigo": 178406,
+  "arquivos_total": 1744,
+  "arquivos_codigo": 1342,
+  "linhas_codigo": 178587,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 243,
   "cron_jobs": 11,
-  "testes": 397,
+  "testes": 398,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -527,8 +527,8 @@
    "linhas": 232
   },
   "tests/e2e": {
-   "arquivos": 7,
-   "linhas": 655
+   "arquivos": 8,
+   "linhas": 836
   },
   "vite.config.ts": {
    "arquivos": 1,

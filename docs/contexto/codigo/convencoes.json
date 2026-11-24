@@ -23,8 +23,8 @@
   ],
   "testes": [
    "co-localizado (__tests__) (372)",
-   "e2e/ (7)",
-   "tests/ (7)"
+   "tests/ (8)",
+   "e2e/ (7)"
   ],
   "edge_functions": "supabase/functions",
   "migrations": "supabase/migrations",
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: alvo de toque de 44 px no celular (etapa 272) (#307)",
    "fix: telas internas cabem na largura do celular (etapa 271) (#306)",
    "test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)",
    "chore: remove i18n.json e public/locales sem consumidores (#303)",
-   "chore: estados vazios que explicam o que falta (#302)",
-   "chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)"
+   "chore: estados vazios que explicam o que falta (#302)"
   ]
  },
  "pr_template": null,

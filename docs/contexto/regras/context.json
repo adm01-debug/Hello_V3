@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "fc9a215e2a3c001b54e05eedf41b75bb38fee080",
+  "sha": "61fd9f9174aaf4e345e3801fe556f38668f2cf48",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 19:32 UTC",
-  "files_total": 1790,
-  "code_files": 1588,
-  "code_lines": 194456
+  "generated_at": "2026-11-24 20:16 UTC",
+  "files_total": 1791,
+  "code_files": 1589,
+  "code_lines": 194637
  },
  "version": "1.3.2",
- "facts_hash": "9eaff38064941e07",
+ "facts_hash": "26bb2a0c2cf20937",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 655,
+   ".ts": 656,
    ".tsx": 652,
    ".sql": 246,
    ".mjs": 28,
@@ -34851,8 +34851,8 @@
   },
   {
    "module": "tests",
-   "files": 7,
-   "lines": 655,
+   "files": 8,
+   "lines": 836,
    "tables": [],
    "exports": [
     "adminSession.ts: SeedAdminSessionOptions, seedAdminSession",
@@ -34869,6 +34869,7 @@
     "tests/e2e/auth.spec.ts",
     "tests/e2e/performance.spec.ts",
     "tests/e2e/screenshots.spec.ts",
+    "tests/e2e/toque.spec.ts",
     "tests/e2e/webhook-audit-ndjson.spec.ts",
     "tests/e2e/workflow.spec.ts",
     "tests/e2e/helpers/adminSession.ts",
@@ -71937,6 +71938,14 @@
    {
     "file": "tests/e2e/screenshots.spec.ts",
     "name": "captura 5 telas em 3 larguras e mede transbordo horizontal"
+   },
+   {
+    "file": "tests/e2e/toque.spec.ts",
+    "name": "Etapa 272 - alvo de toque em largura de celular"
+   },
+   {
+    "file": "tests/e2e/toque.spec.ts",
+    "name": "mede a area clicavel dos controles em 390 px"
    },
    {
     "file": "tests/e2e/webhook-audit-ndjson.spec.ts",
@@ -123752,6 +123761,32 @@
     "captura 5 telas em 3 larguras e mede transbordo horizontal"
    ]
   },
+  "tests/e2e/toque.spec.ts": {
+   "path": "tests/e2e/toque.spec.ts",
+   "lines": 181,
+   "is_test": true,
+   "params": [
+    {
+     "name": "ALVO_MIN",
+     "value": "44"
+    },
+    {
+     "name": "ALVO_MIN_AA",
+     "value": "24"
+    },
+    {
+     "name": "LARGURA",
+     "value": "390"
+    }
+   ],
+   "rule_comments": [
+    "(WCAG 2.5.5, AAA) - o minimo exigivel de 24x24 (WCAG 2.5.8, AA) e a rede de"
+   ],
+   "tests": [
+    "Etapa 272 - alvo de toque em largura de celular",
+    "mede a area clicavel dos controles em 390 px"
+   ]
+  },
   "tests/e2e/webhook-audit-ndjson.spec.ts": {
    "path": "tests/e2e/webhook-audit-ndjson.spec.ts",
    "lines": 113,
@@ -123823,10 +123858,36 @@
   }
  },
  "git": {
-  "sha": "fc9a215e2a3c001b54e05eedf41b75bb38fee080",
+  "sha": "61fd9f9174aaf4e345e3801fe556f38668f2cf48",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "61fd9f9",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: alvo de toque de 44 px no celular (etapa 272) (#307)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/calls/UnifiedSoftphone.tsx",
+     "src/components/calls/softphone/DialpadTab.tsx",
+     "src/components/calls/softphone/HeaderDropdowns.tsx",
+     "src/components/calls/softphone/TabContents.tsx",
+     "src/components/dialer/phone/DeviceNameSetting.tsx",
+     "src/components/dialer/phone/PhoneQuickAccess.tsx",
+     "src/components/dialer/phone/RingtoneSettings.tsx",
+     "src/components/dialer/phone/VoicePreferencesPanel.tsx",
+     "src/components/layout/ThemeToggle.tsx",
+     "src/components/navigation/BackButton.tsx",
+     "src/components/notifications/UnifiedNotificationDropdown.tsx",
+     "src/components/ui/breadcrumb-nav.tsx",
+     "src/components/ui/sidebar.tsx",
+     "src/components/ui/slider.tsx",
+     "src/pages/Calls.tsx",
+     "src/pages/PhoneDialer.tsx",
+     "tests/e2e/toque.spec.ts"
+    ]
+   },
    {
     "sha": "fc9a215",
     "date": "2026-11-24",
@@ -124269,19 +124330,6 @@
      "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
      "src/hooks/useQueueMetrics.ts"
     ]
-   },
-   {
-    "sha": "efbd573",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-     "src/hooks/usePredictiveDialer.ts",
-     "src/hooks/useQueueMetrics.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -124298,8 +124346,20 @@
     4
    ],
    [
+    "src/components/calls/UnifiedSoftphone.tsx",
+    3
+   ],
+   [
     "docs/estado/funcionalidades-planejadas.md",
     3
+   ],
+   [
+    "src/pages/Calls.tsx",
+    2
+   ],
+   [
+    "src/pages/PhoneDialer.tsx",
+    2
    ],
    [
     "tests/e2e/screenshots.spec.ts",
@@ -124307,10 +124367,6 @@
    ],
    [
     "src/pages/Contacts.tsx",
-    2
-   ],
-   [
-    "src/components/calls/UnifiedSoftphone.tsx",
     2
    ],
    [
@@ -124334,35 +124390,27 @@
     2
    ],
    [
-    "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-    2
-   ],
-   [
-    "src/hooks/useQueueMetrics.ts",
-    2
-   ],
-   [
-    "src/components/layout/AppLayout.tsx",
+    "src/components/calls/softphone/DialpadTab.tsx",
     1
    ],
    [
-    "src/components/queue/QueueMetricsCards.tsx",
+    "src/components/calls/softphone/HeaderDropdowns.tsx",
     1
    ],
    [
-    "src/pages/CallHistory.tsx",
+    "src/components/calls/softphone/TabContents.tsx",
     1
    ],
    [
-    "src/pages/Calls.tsx",
+    "src/components/dialer/phone/DeviceNameSetting.tsx",
     1
    ],
    [
-    "src/pages/ExecutiveDashboard.tsx",
+    "src/components/dialer/phone/PhoneQuickAccess.tsx",
     1
    ],
    [
-    "src/pages/QueueMetricsDashboard.tsx",
+    "src/components/dialer/phone/RingtoneSettings.tsx",
     1
    ]
   ]
