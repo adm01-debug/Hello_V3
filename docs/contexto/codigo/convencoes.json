@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (363)",
+   "co-localizado (__tests__) (364)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: explica na tela a regra do coaching automatico (etapa 169) (#241)",
    "fix: resolve o menu mais opcoes do cartao de contato (etapa 166) (#240)",
    "feat: liga Priorizar no discador preditivo (etapa 163) (#239)",
    "feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)",
-   "chore: remove o hook de conferencia orfao e defeituoso (etapa 158) (#237)",
-   "docs: mapa das 46 rotas protegidas sem papel (etapa 090) (#236)"
+   "chore: remove o hook de conferencia orfao e defeituoso (etapa 158) (#237)"
   ]
  },
  "pr_template": null,

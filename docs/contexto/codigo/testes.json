@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 387,
+ "total": 388,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 370
+  "unit": 371
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 363
+   "arquivos": 364
   },
   {
    "padrao": "e2e/",
@@ -239,6 +239,16 @@
     "src/components/calls/live-transcription/useLiveTranscription.ts"
    ],
    "casos": 6
+  },
+  {
+   "arquivo": "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx",
+   "tipo": "unit",
+   "linhas": 68,
+   "testa": [
+    "src/components/coaching/CoachingAssignmentsPanel.tsx",
+    "src/hooks/useCoachingTrack.ts"
+   ],
+   "casos": 3
   },
   {
    "arquivo": "src/components/compliance/dnc/__tests__/ImportDNCDialog.test.tsx",
@@ -3498,6 +3508,7 @@
   "src/components/calls/WebRTCCall.tsx": 1,
   "src/components/calls/live-transcription/useLiveTranscription.ts": 1,
   "src/components/calls/softphone/constants.tsx": 1,
+  "src/components/coaching/CoachingAssignmentsPanel.tsx": 1,
   "src/components/compliance/dnc/ImportDNCDialog.tsx": 1,
   "src/components/compliance/dnc/ReconcileDNCDialog.tsx": 1,
   "src/components/contacts/ContactCard.tsx": 1,
@@ -3558,6 +3569,7 @@
   "src/hooks/useChurnRisk.ts": 1,
   "src/hooks/useCoaching.ts": 1,
   "src/hooks/useCoachingAssignments.ts": 1,
+  "src/hooks/useCoachingTrack.ts": 1,
   "src/hooks/useComplianceRules.ts": 1,
   "src/hooks/useConferenceRecording.ts": 1,
   "src/hooks/useConsent.ts": 1,
@@ -3909,7 +3921,6 @@
    "src/hooks/useBlfBoard.ts",
    "src/hooks/useCallPark.ts",
    "src/hooks/useCallQueues.ts",
-   "src/hooks/useCoachingTrack.ts",
    "src/hooks/useDataLakeExports.ts",
    "src/hooks/useDeviceLabel.ts",
    "src/hooks/useDialerFavorites.ts",

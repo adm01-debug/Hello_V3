@@ -1599,7 +1599,7 @@
    "hooks_exportados": [
     "useCoachingTrack"
    ],
-   "linhas": 51,
+   "linhas": 71,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
@@ -1615,7 +1615,7 @@
    "usado_por_arquivos": [
     "src/components/coaching/CoachingAssignmentsPanel.tsx"
    ],
-   "coberto_por_testes": 0
+   "coberto_por_testes": 1
   },
   {
    "arquivo": "src/hooks/useComplianceRules.ts",

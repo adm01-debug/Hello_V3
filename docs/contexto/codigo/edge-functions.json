@@ -1535,7 +1535,7 @@
    "nome": "generate-coaching-track",
    "entrada": "supabase/functions/generate-coaching-track/index.ts",
    "arquivos": 3,
-   "linhas": 379,
+   "linhas": 396,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"

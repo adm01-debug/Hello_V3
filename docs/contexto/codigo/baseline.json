@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0b5b0b3eeffae733dedb331a5ca80b656edce96b",
+  "commit": "024aa1eed8a9d8d5fddcdae3696247ee0197e304",
   "branch": "main",
-  "data_commit": "2026-11-24T03:22:12-03:00",
+  "data_commit": "2026-11-24T03:26:08-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "024aa1e",
+    "data": "2026-11-24",
+    "assunto": "feat: explica na tela a regra do coaching automatico (etapa 169) (#241)"
+   },
    {
     "sha": "0b5b0b3",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "ac329a7",
     "data": "2026-11-23",
     "assunto": "fix: nao gravar dado derivado quando a leitura falha (#218)"
-   },
-   {
-    "sha": "9d457f8",
-    "data": "2026-11-23",
-    "assunto": "fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)"
    }
   ],
-  "arquivos_mudados_7d": 1096,
+  "arquivos_mudados_7d": 1097,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 69
+    "mudancas": 70
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 69
+    "mudancas": 70
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -242,6 +242,10 @@
     "mudancas": 6
    },
    {
+    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
+    "mudancas": 6
+   },
+   {
     "arquivo": "deno.lock",
     "mudancas": 5
    },
@@ -274,10 +278,6 @@
     "mudancas": 5
    },
    {
-    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
-    "mudancas": 5
-   },
-   {
     "arquivo": "supabase/functions/generate-meeting-summary/index.ts",
     "mudancas": 5
    },
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 219
+    "commits": 220
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1721,
-  "arquivos_codigo": 1319,
-  "linhas_codigo": 177509,
+  "arquivos_total": 1722,
+  "arquivos_codigo": 1320,
+  "linhas_codigo": 177635,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 387,
+  "testes": 388,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 365,
-   "linhas": 43594
+   "arquivos": 366,
+   "linhas": 43683
   },
   "src/contexts": {
    "arquivos": 4,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 353,
-   "linhas": 46832
+   "linhas": 46852
   },
   "src/integrations": {
    "arquivos": 3,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 206,
-   "linhas": 23008
+   "linhas": 23025
   },
   "tailwind.config.ts": {
    "arquivos": 1,

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "0b5b0b3eeffae733dedb331a5ca80b656edce96b",
+  "sha": "024aa1eed8a9d8d5fddcdae3696247ee0197e304",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 06:23 UTC",
-  "files_total": 1768,
-  "code_files": 1565,
-  "code_lines": 193521
+  "generated_at": "2026-11-24 06:26 UTC",
+  "files_total": 1769,
+  "code_files": 1566,
+  "code_lines": 193647
  },
  "version": "1.3.2",
- "facts_hash": "24135226cc74f6ff",
+ "facts_hash": "4c2c65d6a8b540c0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 655,
-   ".tsx": 631,
+   ".tsx": 632,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -32198,7 +32198,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 365,
+  "components_count": 366,
   "hooks": [
    {
     "name": "useContacts",
@@ -33343,8 +33343,8 @@
   },
   {
    "module": "src/components",
-   "files": 365,
-   "lines": 43594,
+   "files": 366,
+   "lines": 43683,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33601,7 +33601,7 @@
   {
    "module": "src/hooks",
    "files": 353,
-   "lines": 46832,
+   "lines": 46852,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34306,7 +34306,7 @@
   {
    "module": "supabase/functions",
    "files": 206,
-   "lines": 23008,
+   "lines": 23025,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -56725,7 +56725,7 @@
    },
    {
     "file": "supabase/functions/generate-coaching-track/index.ts",
-    "line": "const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();"
+    "line": "const since = new Date(Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();"
    },
    {
     "file": "supabase/functions/generate-coaching-track/track-engine.ts",
@@ -57626,6 +57626,22 @@
    {
     "file": "src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts",
     "name": "stopRecording é idempotente quando nada foi iniciado"
+   },
+   {
+    "file": "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx",
+    "name": "CoachingAssignmentsPanel - regra do coaching automático (A-131)"
+   },
+   {
+    "file": "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx",
+    "name": "explica a regra com os números que vieram da edge"
+   },
+   {
+    "file": "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx",
+    "name": "mostra a contagem atual de cada agente que ficou de fora"
+   },
+   {
+    "file": "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx",
+    "name": "sem regra conhecida, orienta a rodar a geração"
    },
    {
     "file": "src/components/compliance/dnc/__tests__/ImportDNCDialog.test.tsx",
@@ -94612,7 +94628,7 @@
   },
   "src/components/coaching/CoachingAssignmentsPanel.tsx": {
    "path": "src/components/coaching/CoachingAssignmentsPanel.tsx",
-   "lines": 104,
+   "lines": 125,
    "exports": [
     "function CoachingAssignmentsPanel"
    ],
@@ -94677,6 +94693,17 @@
      "value": "in_progress",
      "kind": "compara"
     }
+   ]
+  },
+  "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx": {
+   "path": "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx",
+   "lines": 68,
+   "is_test": true,
+   "tests": [
+    "CoachingAssignmentsPanel - regra do coaching automático (A-131)",
+    "explica a regra com os números que vieram da edge",
+    "mostra a contagem atual de cada agente que ficou de fora",
+    "sem regra conhecida, orienta a rodar a geração"
    ]
   },
   "src/components/compliance/CallingHoursConfig.tsx": {
@@ -100222,8 +100249,11 @@
   },
   "src/hooks/useCoachingTrack.ts": {
    "path": "src/hooks/useCoachingTrack.ts",
-   "lines": 51,
+   "lines": 71,
    "exports": [
+    "interface CoachingRules",
+    "interface TrackResult",
+    "const COACHING_RULES_QUERY_KEY",
     "function useCoachingTrack"
    ],
    "invokes": [
@@ -121405,7 +121435,7 @@
   },
   "supabase/functions/generate-coaching-track/index.ts": {
    "path": "supabase/functions/generate-coaching-track/index.ts",
-   "lines": 161,
+   "lines": 164,
    "tables": [
     {
      "table": "call_sessions",
@@ -121486,7 +121516,7 @@
     "Rate-limit: uma trilha aberta por agente (evita duplicar)."
    ],
    "temporal": [
-    "const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();"
+    "const since = new Date(Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();"
    ],
    "pagination": [
     "2000"
@@ -121495,7 +121525,7 @@
   },
   "supabase/functions/generate-coaching-track/track-engine.ts": {
    "path": "supabase/functions/generate-coaching-track/track-engine.ts",
-   "lines": 120,
+   "lines": 134,
    "exports": [
     "interface CallSummary",
     "interface CallSession",
@@ -121503,10 +121533,12 @@
     "interface Weakness",
     "interface TrackCandidate",
     "interface Skipped",
+    "interface CoachingRules",
     "interface TrackResult",
     "const SCORE_THRESHOLD",
     "const MIN_SAMPLES",
     "const WINDOW_DAYS",
+    "const COACHING_RULES",
     "function aggregateStats",
     "function computeWeaknesses",
     "function buildTrackCandidates"
@@ -126367,10 +126399,24 @@
   }
  },
  "git": {
-  "sha": "0b5b0b3eeffae733dedb331a5ca80b656edce96b",
+  "sha": "024aa1eed8a9d8d5fddcdae3696247ee0197e304",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "024aa1e",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "feat: explica na tela a regra do coaching automatico (etapa 169) (#241)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/coaching/CoachingAssignmentsPanel.tsx",
+     "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx",
+     "src/hooks/useCoachingTrack.ts",
+     "supabase/functions/generate-coaching-track/index.ts",
+     "supabase/functions/generate-coaching-track/track-engine.ts"
+    ]
+   },
    {
     "sha": "0b5b0b3",
     "date": "2026-11-24",
@@ -126836,17 +126882,6 @@
      "src/pages/SecurityReport.tsx",
      "src/pages/__tests__/SecurityReport.test.tsx"
     ]
-   },
-   {
-    "sha": "52e0392",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/pages/ConcurrencyConflicts.tsx",
-     "src/pages/__tests__/ConcurrencyConflicts.test.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -126873,6 +126908,10 @@
    [
     "supabase/functions/chatbot-respond/index.ts",
     3
+   ],
+   [
+    "supabase/functions/generate-coaching-track/index.ts",
+    2
    ],
    [
     "src/components/dialer/PredictiveDialerPanel.tsx",
@@ -126924,10 +126963,6 @@
    ],
    [
     "supabase/functions/translate-summary/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/voice-command/index.ts",
     2
    ]
   ]
