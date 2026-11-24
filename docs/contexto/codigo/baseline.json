@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "46cc92e95eda6b34df78cd755f033f3ae6e77b2c",
+  "commit": "c771af6fb135471d7df73256a66771204a328f67",
   "branch": "main",
-  "data_commit": "2026-11-24T05:51:06-03:00",
+  "data_commit": "2026-11-24T05:58:57-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c771af6",
+    "data": "2026-11-24",
+    "assunto": "fix: rótulo acessível nos botões-ícone restantes (etapas 262 e 263) (#268)"
+   },
    {
     "sha": "46cc92e",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "a097cd7",
     "data": "2026-11-24",
     "assunto": "chore: inventario dos hooks dormentes e rotas.json atualizado (etapa 159) (#245)"
-   },
-   {
-    "sha": "0526bc2",
-    "data": "2026-11-24",
-    "assunto": "fix: ligar botoes de navegacao do dashboard sem acao (E165) (#244)"
    }
   ],
-  "arquivos_mudados_7d": 1146,
+  "arquivos_mudados_7d": 1168,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 93
+    "mudancas": 94
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 35
+    "mudancas": 39
    },
    {
     "pasta": "supabase/functions/_shared",
@@ -176,20 +176,20 @@
     "mudancas": 17
    },
    {
+    "pasta": "src/components/compliance",
+    "mudancas": 16
+   },
+   {
     "pasta": "src/pages/__tests__",
     "mudancas": 16
    },
    {
     "pasta": "src/components/contacts",
-    "mudancas": 14
-   },
-   {
-    "pasta": "src/components/compliance",
-    "mudancas": 13
+    "mudancas": 15
    },
    {
     "pasta": "src/components/dashboard",
-    "mudancas": 12
+    "mudancas": 15
    },
    {
     "pasta": "src/components/network",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 93
+    "mudancas": 94
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -274,6 +274,14 @@
     "mudancas": 5
    },
    {
+    "arquivo": "src/components/calls/ActiveCallBar.tsx",
+    "mudancas": 5
+   },
+   {
+    "arquivo": "src/components/dialer/PredictiveDialerPanel.tsx",
+    "mudancas": 5
+   },
+   {
     "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 5
    },
@@ -288,20 +296,12 @@
    {
     "arquivo": "supabase/functions/enforce-sla/index.ts",
     "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/export-data-lake/index.ts",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/generate-coaching-plan/index.ts",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 247
+    "commits": 248
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1735,
   "arquivos_codigo": 1332,
-  "linhas_codigo": 179614,
+  "linhas_codigo": 179618,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 146,
-   "linhas": 22341
+   "linhas": 22345
   },
   "src/routes": {
    "arquivos": 2,

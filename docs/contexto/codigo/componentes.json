@@ -6696,7 +6696,7 @@
     "Register"
    ],
    "export_default": "Register",
-   "linhas": 214,
+   "linhas": 216,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",
@@ -6749,7 +6749,7 @@
     "ResetPassword"
    ],
    "export_default": "ResetPassword",
-   "linhas": 269,
+   "linhas": 271,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
