@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a7041fc406` · branch `main` · 2026-11-24 09:27 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9b4d4b9c18` · branch `main` · 2026-11-24 09:35 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1887,6 +1887,7 @@ _nenhum item encontrado_
 | `MOBILE_BREAKPOINT` | `768` | `src/hooks/use-mobile.tsx` |
 | `TOAST_LIMIT` | `1` | `src/hooks/use-toast.ts` |
 | `TOAST_REMOVE_DELAY` | `1000000` | `src/hooks/use-toast.ts` |
+| `ACTIVE_ROWS_LIMIT` | `200` | `src/hooks/useActiveCallsRealtime.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useAlertPresets.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useAlertsExport.ts` |
 | `CHUNK` | `1000` | `src/hooks/useAlertsExport.ts` |
@@ -1894,6 +1895,7 @@ _nenhum item encontrado_
 | `BUCKET` | `'avatars'` | `src/hooks/useAvatar.ts` |
 | `MAX_BYTES` | `2` | `src/hooks/useAvatar.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useCallHistory.ts` |
+| `RECORDINGS_LIMIT` | `200` | `src/hooks/useCallRecording.ts` |
 | `MAX_FAVORITES` | `12` | `src/hooks/useDialerFavorites.ts` |
 | `ANALYSIS_THROTTLE_MS` | `5000` | `src/hooks/useLiveAssist.ts` |
 | `MIN_NEW_WORDS` | `30` | `src/hooks/useLiveAssist.ts` |
@@ -1904,6 +1906,7 @@ _nenhum item encontrado_
 | `LATENCY_OK` | `150` | `src/hooks/useNetworkMonitor.ts` |
 | `LATENCY_UNSTABLE` | `400` | `src/hooks/useNetworkMonitor.ts` |
 | `BUCKET` | `'queue-audio'` | `src/hooks/useQueueAudioPrompts.ts` |
+| `PAGE_SIZE` | `50` | `src/hooks/useRecordings.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `SESSION_DURATION_HOURS` | `24` | `src/hooks/useSessionManager.ts` |
@@ -2633,7 +2636,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4376 testes em 389 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4381 testes em 390 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2748,6 +2751,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 10 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
 | `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 10 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
 | `src/hooks/__tests__/useReauth.grant.test.tsx` | 10 | Reauth grant persistido (HMAC) · grava grant assinado no sessionStorage apos verificar · rehidrata lastVerified em nova montagem (nao exige reauth) · descarta grant com assinatura invalida … |
+| `src/hooks/__tests__/useRecordings.coverage.test.tsx` | 10 | useRecordings · fetches recordings and filters · handles fetch error · pagina as gravacoes em blocos de 50 e carrega a proxima pagina … |
 | `src/hooks/__tests__/useScorecards.coverage.test.tsx` | 10 | useScorecards · loads templates and criteria without callSessionId · exposes the template read error instead of an empty model list · clears the template error on the next successful read … |
 | `src/hooks/__tests__/useSessionManager.coverage.test.tsx` | 10 | useSessionManager · loads sessions and creates current session · revokes a non-current session · revokes the current session and signs out … |
 | `src/hooks/auth/__tests__/useAuthActions.coverage.test.tsx` | 10 | useAuthActions · signIn success returns data and loads profile · signIn returns supabase error branch · signIn catch branch when request throws … |
@@ -2770,7 +2774,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useMFA.coverage.test.tsx` | 9 | useMFA · loads factors and settings · enrollTOTP success and error · enrollPhone success and error … |
 | `src/hooks/__tests__/useNotifications.coverage.test.tsx` | 9 | useNotifications · loads notifications and unread count · marks single and all as read · archives a notification … |
 | `src/hooks/__tests__/useQualityTrendAnalyzer.coverage.test.tsx` | 9 | useQualityTrendAnalyzer · não faz nada quando desabilitado · ignora MOS null ou não finito · detecta degradação progressiva e persiste alerta … |
-| `src/hooks/__tests__/useRecordings.coverage.test.tsx` | 9 | useRecordings · fetches recordings and filters · handles fetch error · plays, toggles pause/play, seeks, skips … |
 | `src/hooks/__tests__/useSLA.coverage.test.tsx` | 9 | useSLA · useSlaPolicies loads policies · useSlaPolicies surfaces error · useSlaCompliance computes compliance … |
 | `src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx` | 9 | useSecurityDashboard · returns early without userId · loads data and computes full score · computes lower score branches (no mfa, many sessions, ip off, no alerts) … |
 | `src/hooks/__tests__/useShifts.coverage.test.tsx` | 9 | useShifts coverage · loads shifts and templates without weekStart · loads shifts with weekStart (gte/lt branch) · exposes CRUD mutations and runs createShift success … |
@@ -2845,6 +2848,7 @@ _nenhum item encontrado_
 | `src/components/auth/__tests__/PermissionGate.test.tsx` | 6 | PermissionGate · nao renderiza nada enquanto as permissoes carregam · mostra o estado padrao de sem permissao quando nao ha fallback · respeita fallback explicito, inclusive null … |
 | `src/components/calls/__tests__/PostCallSummary.test.tsx` | 6 | PostCallSummary · mostra mensagem quando não há amostras · agrega MOS, jitter, perda e classifica qualidade · classifica como Ruim quando MOS médio < 3.6 … |
 | `src/components/layout/__tests__/AppSidebar.test.tsx` | 6 | routeRoles (E088) · declara papéis para rota admin e undefined para rota aberta · AppSidebar — filtro por papel (E089) · agente não vê itens de rota com roles (Executivo, Logs de Auditoria) … |
+| `src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx` | 6 | useActiveCallsRealtime (coverage) · loads active calls and holds, computes derived data · filters by selected agent and hold status · starts a tick interval when there are active calls … |
 | `src/hooks/__tests__/useAudioOutputDevices.test.tsx` | 6 | useAudioOutputDevices · reporta não suportado quando setSinkId ausente · enumera dispositivos de saída e ignora inputs · persiste a preferência ao chamar setSinkId com sucesso … |
 | `src/hooks/__tests__/useBattleCardDetection.test.ts` | 6 | useBattleCardDetection · does nothing when inactive · matches contains keyword · matches exact keyword as a whole word … |
 | `src/hooks/__tests__/useBitrixAndWebAuthn.test.ts` | 6 | useBitrix · gets contacts from Bitrix · handles unconfigured service · useWebAuthn … |
@@ -2885,7 +2889,6 @@ _nenhum item encontrado_
 | `src/components/calls/__tests__/CrmSuggestionsCard.test.tsx` | 5 | CrmSuggestionsCard · explica o vazio em vez de sumir da tela · mostra carregando enquanto a consulta roda · mostra o erro da consulta … |
 | `src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx` | 5 | UnifiedSoftphone — estados de falha (etapa 233) · mostra o estado do registro SIP da propria linha no cabecalho · mostra o motivo da falha e tenta de novo quando o operador clica em Tentar agora · repete o registro automaticamente com espera crescente … |
 | `src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx` | 5 | TrendChartToggle · não monta o gráfico antes do primeiro clique · conserva o gráfico montado ao fechar, para o histórico não zerar · não reinicia o gráfico quando o pai reflete o fechamento … |
-| `src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx` | 5 | useActiveCallsRealtime (coverage) · loads active calls and holds, computes derived data · filters by selected agent and hold status · starts a tick interval when there are active calls … |
 | `src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx` | 5 | useAnimatedCounter · returns 0 initially and animates toward the end value · respects decimals option · early-returns when diff is zero … |
 | `src/hooks/__tests__/useBlockedAccessLogs.coverage.test.tsx` | 5 | useBlockedAccessLogs · fetches logs and processes stats · handles fetch error · filters logs by search, country, reason; clears filters … |
 | `src/hooks/__tests__/useConsent.coverage.test.tsx` | 5 | useConsent · carrega registros sem contactId · carrega registros filtrando por contactId · registra consentimento com sucesso … |
@@ -2937,7 +2940,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
 | `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
-| … +89 linhas — lista completa em `context.json` | | |
+| … +90 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3101,7 +3104,11 @@ _nenhum item encontrado_
 | Total alerts (não distribuímos por agente — apenas total para contexto) | `src/components/network/AgentQualityRanking.tsx` |
 | Lógica de auto-apply: apenas critical + function (categoria infra implícita) | `src/components/network/VoipRecommendationsPanel.tsx` |
 | Uma faixa desativada depois de salva não pode permanecer selecionada. | `src/components/queues/QueueAudioSlotSelect.tsx` |
+| Teto explicito: sem .limit() o PostgREST devolve no maximo 1000 linhas e o painel | `src/hooks/useActiveCallsRealtime.ts` |
+| ').eq('status', 'active').order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT); | `src/hooks/useActiveCallsRealtime.ts` |
+| ').is('ended_at', null).order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT); | `src/hooks/useActiveCallsRealtime.ts` |
 | trocar o filtro durante um "carregar mais" nao pode anexar a pagina antiga na lista nova. | `src/hooks/useCallHistory.ts` |
+| ').order('recorded_at', { ascending: false }).limit(RECORDINGS_LIMIT); | `src/hooks/useCallRecording.ts` |
 | * - Digitar rapidamente atualiza `inputValue` imediatamente e enfileira apenas | `src/hooks/useDebouncedSearchParam.ts` |
 | ').limit(1).maybeSingle(); | `src/hooks/useGeoBlocking.ts` |
 | ').order('created_at', { ascending: false }).limit(50); | `src/hooks/useGeoBlocking.ts` |

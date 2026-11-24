@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 399,
+ "total": 400,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 382
+  "unit": 383
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 375
+   "arquivos": 376
   },
   {
    "padrao": "e2e/",
@@ -472,12 +472,12 @@
   {
    "arquivo": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 89,
+   "linhas": 106,
    "testa": [
     "src/hooks/useActiveCallsRealtime.ts",
     "src/integrations/supabase/client.ts"
    ],
-   "casos": 4
+   "casos": 5
   },
   {
    "arquivo": "src/hooks/__tests__/useAdherence.test.tsx",
@@ -700,7 +700,7 @@
   {
    "arquivo": "src/hooks/__tests__/useCallRecording.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 150,
+   "linhas": 152,
    "testa": [
     "src/hooks/useCallRecording.ts"
    ],
@@ -1514,11 +1514,11 @@
   {
    "arquivo": "src/hooks/__tests__/useRecordings.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 210,
+   "linhas": 233,
    "testa": [
     "src/hooks/useRecordings.ts"
    ],
-   "casos": 8
+   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useRenewals.test.ts",
@@ -2958,6 +2958,15 @@
    "casos": 1
   },
   {
+   "arquivo": "src/pages/__tests__/Recordings.pagination.test.tsx",
+   "tipo": "unit",
+   "linhas": 55,
+   "testa": [
+    "src/pages/Recordings.tsx"
+   ],
+   "casos": 2
+  },
+  {
    "arquivo": "src/pages/__tests__/SecurityDashboard.test.tsx",
    "tipo": "unit",
    "linhas": 55,
@@ -3876,6 +3885,7 @@
   "src/pages/PhoneDialer.tsx": 1,
   "src/pages/QueueMetricsDashboard.tsx": 1,
   "src/pages/RateLimitDashboard.tsx": 1,
+  "src/pages/Recordings.tsx": 1,
   "src/pages/SecurityDashboard.tsx": 1,
   "src/pages/SecurityMonitoring.tsx": 1,
   "src/pages/SecurityReport.tsx": 1,
@@ -3979,7 +3989,6 @@
    "src/pages/PredictiveDialer.tsx",
    "src/pages/QRProvisioning.tsx",
    "src/pages/QueueMetricsAlertSettings.tsx",
-   "src/pages/Recordings.tsx",
    "src/pages/Register.tsx",
    "src/pages/Renewals.tsx",
    "src/pages/Reports.tsx",

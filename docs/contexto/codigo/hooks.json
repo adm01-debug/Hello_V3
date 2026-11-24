@@ -676,7 +676,7 @@
    "hooks_exportados": [
     "useActiveCallsRealtime"
    ],
-   "linhas": 107,
+   "linhas": 120,
    "dominio": "hooks",
    "tabelas": [
     "call_sessions",
@@ -1360,7 +1360,7 @@
    "hooks_exportados": [
     "useCallRecording"
    ],
-   "linhas": 96,
+   "linhas": 99,
    "dominio": "hooks",
    "tabelas": [
     "call_recordings"
@@ -3462,7 +3462,7 @@
    "hooks_exportados": [
     "useRecordings"
    ],
-   "linhas": 164,
+   "linhas": 188,
    "dominio": "hooks",
    "tabelas": [
     "call_recordings"
@@ -3475,6 +3475,7 @@
    "hooks_internos": [
     "useAuditLog",
     "useEffect",
+    "useRef",
     "useState"
    ],
    "canais_realtime": [],

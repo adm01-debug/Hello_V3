@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (375)",
+   "co-localizado (__tests__) (376)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)",
    "chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)",
    "docs: registra o desfecho da apuracao de exclusao de conta LGPD (etapa 132) (#271)",
    "fix: validate-geo e a tela de geo honram o modo allowlist/blocklist (etapa 141) (#270)",
-   "fix: rótulo acessível nos botões-ícone restantes (etapas 262 e 263) (#268)",
-   "chore: painel de traducao sob demanda tira a rota Calls do teto do bundle (#269)"
+   "fix: rótulo acessível nos botões-ícone restantes (etapas 262 e 263) (#268)"
   ]
  },
  "pr_template": null,

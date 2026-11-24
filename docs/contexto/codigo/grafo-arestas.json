@@ -2252,7 +2252,8 @@
   ],
   "src/hooks/useActiveCallsRealtime.ts": [
    "src/hooks/useHoldSoundAlert.ts",
-   "src/integrations/supabase/client.ts"
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts"
   ],
   "src/hooks/useAdherence.ts": [
    "src/integrations/supabase/client.ts"
