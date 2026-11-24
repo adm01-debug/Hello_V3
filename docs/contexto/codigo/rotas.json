@@ -1711,6 +1711,7 @@
     "useMemo",
     "useNavigate",
     "usePageTitle",
+    "usePageVisibility",
     "useQueryClient",
     "useQueueMetrics",
     "useQueueStatsData",
@@ -1740,6 +1741,7 @@
     "useDashboardStats",
     "useHoldSoundAlert",
     "usePageTitle",
+    "usePageVisibility",
     "useQueueMetrics",
     "useQueueStatsData",
     "useRecentCallsData",
@@ -1788,7 +1790,7 @@
     "img",
     "status"
    ],
-   "arquivos_puxados": 73
+   "arquivos_puxados": 74
   },
   {
    "protegida": false,
@@ -3432,13 +3434,16 @@
     "useEffect",
     "useGoalViolations",
     "usePageTitle",
+    "usePageVisibility",
     "useQueueMetrics",
+    "useRef",
     "useState"
    ],
    "hooks_locais": [
     "useDashboardGoals",
     "useGoalViolations",
     "usePageTitle",
+    "usePageVisibility",
     "useQueueMetrics"
    ],
    "tabelas": [
@@ -3459,7 +3464,7 @@
    "papeis": [
     "status"
    ],
-   "arquivos_puxados": 28
+   "arquivos_puxados": 29
   },
   {
    "protegida": false,

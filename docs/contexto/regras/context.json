@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "e376b9500988da1a768adc250acce641c128cb2e",
+  "sha": "efbd57398226f27f168dcb9ec123330021ce0918",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 09:49 UTC",
+  "generated_at": "2026-11-24 10:06 UTC",
   "files_total": 1785,
   "code_files": 1581,
-  "code_lines": 196394
+  "code_lines": 196511
  },
  "version": "1.3.2",
- "facts_hash": "7e93eefd118a86b8",
+ "facts_hash": "8c421d85ca6eaa86",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -29105,7 +29105,7 @@
      "check-goals"
     ],
     "rpc_transitive": [],
-    "deps_count": 28
+    "deps_count": 29
    },
    {
     "path": "",
@@ -33749,7 +33749,7 @@
   {
    "module": "src/hooks",
    "files": 354,
-   "lines": 47491,
+   "lines": 47608,
    "tables": [
     "accounts",
     "active_sessions",
@@ -50497,6 +50497,16 @@
     "value": "'queue-audio'"
    },
    {
+    "file": "src/hooks/useQueueMetrics.ts",
+    "name": "SAFETY_POLL_MS",
+    "value": "60"
+   },
+   {
+    "file": "src/hooks/useQueueMetrics.ts",
+    "name": "REALTIME_DEBOUNCE_MS",
+    "value": "1"
+   },
+   {
     "file": "src/hooks/useRecordings.ts",
     "name": "PAGE_SIZE",
     "value": "50"
@@ -64234,6 +64244,10 @@
    },
    {
     "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+    "name": "agrupa rajada de eventos de realtime numa unica leitura"
+   },
+   {
+    "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
     "name": "pula o contato e grava o motivo quando o compliance bloqueia"
    },
    {
@@ -64523,6 +64537,14 @@
    {
     "file": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
     "name": "mantem os ultimos numeros bons ao falhar depois de um sucesso, com erro visivel"
+   },
+   {
+    "file": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "name": "agrupa uma rajada de eventos de realtime numa unica leitura"
+   },
+   {
+    "file": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "name": "usa poll de seguranca de 60 s em vez de 5 s"
    },
    {
     "file": "src/hooks/__tests__/useRateLimitData.coverage.test.tsx",
@@ -103800,7 +103822,7 @@
   },
   "src/hooks/usePredictiveDialer.ts": {
    "path": "src/hooks/usePredictiveDialer.ts",
-   "lines": 364,
+   "lines": 387,
    "exports": [
     "type PreDialCheck",
     "const usePredictiveDialer"
@@ -103994,7 +104016,7 @@
   },
   "src/hooks/useQueueMetrics.ts": {
    "path": "src/hooks/useQueueMetrics.ts",
-   "lines": 212,
+   "lines": 246,
    "exports": [
     "interface QueueMetrics",
     "interface RealtimeData",
@@ -104043,6 +104065,16 @@
     "Erro ao verificar metas",
     "Meta Crítica: ${goal.name}",
     "Meta em Aviso: ${goal.name}"
+   ],
+   "params": [
+    {
+     "name": "SAFETY_POLL_MS",
+     "value": "60"
+    },
+    {
+     "name": "REALTIME_DEBOUNCE_MS",
+     "value": "1"
+    }
    ],
    "status_values": [
     {
@@ -109110,7 +109142,7 @@
   },
   "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx": {
    "path": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-   "lines": 600,
+   "lines": 622,
    "is_test": true,
    "rule_comments": [
     "Falha do update nao pode deixar a tela mostrando prioridade que o banco recusou."
@@ -109137,6 +109169,7 @@
     "auto-dial loop with empty queue pauses campaign",
     "getNextContact error branch returns null",
     "realtime subscription callbacks fire fetchers",
+    "agrupa rajada de eventos de realtime numa unica leitura",
     "pula o contato e grava o motivo quando o compliance bloqueia",
     "disca normalmente quando o compliance aprova e mantem a tentativa",
     "falha do preDialCheck nao bloqueia a campanha (fail-open ate a etapa 035)",
@@ -109249,7 +109282,7 @@
   },
   "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-   "lines": 205,
+   "lines": 243,
    "is_test": true,
    "tests": [
     "useQueueMetrics",
@@ -109264,7 +109297,9 @@
     "setActiveTab updates state",
     "handles empty data sets (zero branches)",
     "falha de leitura nao vira zero: publica erro e preserva o estado desconhecido",
-    "mantem os ultimos numeros bons ao falhar depois de um sucesso, com erro visivel"
+    "mantem os ultimos numeros bons ao falhar depois de um sucesso, com erro visivel",
+    "agrupa uma rajada de eventos de realtime numa unica leitura",
+    "usa poll de seguranca de 60 s em vez de 5 s"
    ],
    "side_effects": [
     "notify_on_critical",
@@ -127425,10 +127460,23 @@
   }
  },
  "git": {
-  "sha": "e376b9500988da1a768adc250acce641c128cb2e",
+  "sha": "efbd57398226f27f168dcb9ec123330021ce0918",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "efbd573",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+     "src/hooks/usePredictiveDialer.ts",
+     "src/hooks/useQueueMetrics.ts"
+    ]
+   },
    {
     "sha": "e376b95",
     "date": "2026-11-24",
@@ -127857,18 +127905,6 @@
      "src/pages/Knowledge.tsx",
      "src/pages/__tests__/Knowledge.reader.test.tsx"
     ]
-   },
-   {
-    "sha": "a097cd7",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: inventario dos hooks dormentes e rotas.json atualizado (etapa 159) (#245)",
-    "files": [
-     "docs/estado/hooks-dormentes.md",
-     "docs/qa/05-PROGRESSO.md",
-     "inventario/estado/rotas.json",
-     "scripts/inventario/gerar-hooks-dormentes.mjs"
-    ]
    }
   ],
   "hot_files": [
@@ -127905,6 +127941,22 @@
     2
    ],
    [
+    "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/usePredictiveDialer.ts",
+    1
+   ],
+   [
+    "src/hooks/useQueueMetrics.ts",
+    1
+   ],
+   [
     "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
     1
    ],
@@ -127934,22 +127986,6 @@
    ],
    [
     "src/pages/__tests__/Recordings.pagination.test.tsx",
-    1
-   ],
-   [
-    "src/integrations/supabase/types.ts",
-    1
-   ],
-   [
-    "docs/agentes/banco.md",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useGeoBlocking.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useGeoBlocking.ts",
     1
    ]
   ]

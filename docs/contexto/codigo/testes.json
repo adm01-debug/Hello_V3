@@ -1402,11 +1402,11 @@
   {
    "arquivo": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 600,
+   "linhas": 622,
    "testa": [
     "src/hooks/usePredictiveDialer.ts"
    ],
-   "casos": 21
+   "casos": 22
   },
   {
    "arquivo": "src/hooks/__tests__/usePredictiveDialer.test.ts",
@@ -1464,12 +1464,12 @@
   {
    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 205,
+   "linhas": 243,
    "testa": [
     "src/hooks/useQueueMetrics.ts",
     "src/integrations/supabase/client.ts"
    ],
-   "casos": 12
+   "casos": 14
   },
   {
    "arquivo": "src/hooks/__tests__/useRateLimitData.coverage.test.tsx",

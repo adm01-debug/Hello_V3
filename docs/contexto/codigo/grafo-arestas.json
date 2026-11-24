@@ -2708,6 +2708,7 @@
   ],
   "src/hooks/useQueueMetrics.ts": [
    "src/components/dashboard/DashboardGoalsSettings.tsx",
+   "src/hooks/usePageVisibility.ts",
    "src/integrations/supabase/client.ts",
    "src/lib/error-message.ts",
    "src/lib/logger.ts",

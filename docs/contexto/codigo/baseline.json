@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e376b9500988da1a768adc250acce641c128cb2e",
+  "commit": "efbd57398226f27f168dcb9ec123330021ce0918",
   "branch": "main",
-  "data_commit": "2026-11-24T06:48:36-03:00",
+  "data_commit": "2026-11-24T07:06:09-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "efbd573",
+    "data": "2026-11-24",
+    "assunto": "fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)"
+   },
    {
     "sha": "e376b95",
     "data": "2026-11-24",
@@ -126,11 +131,6 @@
     "sha": "3717f08",
     "data": "2026-11-24",
     "assunto": "fix: falha em sessao e passkey passa a ser visivel (etapa 183) (#250)"
-   },
-   {
-    "sha": "6ba5cb0",
-    "data": "2026-11-24",
-    "assunto": "fix: estatisticas da semana nao falham mais em silencio (etapa 185) (#252)"
    }
   ],
   "arquivos_mudados_7d": 1181,
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 99
+    "mudancas": 100
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 74
+    "mudancas": 76
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 99
+    "mudancas": 100
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -286,22 +286,22 @@
     "mudancas": 5
    },
    {
+    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "mudancas": 5
+   },
+   {
+    "arquivo": "src/hooks/useQueueMetrics.ts",
+    "mudancas": 5
+   },
+   {
     "arquivo": "src/routes/protectedRoutes.tsx",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/auto-scorecard/index.ts",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
     "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 253
+    "commits": 254
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1738,
   "arquivos_codigo": 1335,
-  "linhas_codigo": 180382,
+  "linhas_codigo": 180499,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 47491
+   "linhas": 47608
   },
   "src/integrations": {
    "arquivos": 3,
@@ -573,6 +573,10 @@
    "linhas": 396
   },
   {
+   "arquivo": "src/hooks/usePredictiveDialer.ts",
+   "linhas": 387
+  },
+  {
    "arquivo": "src/pages/marketing/Landing.tsx",
    "linhas": 383
   },
@@ -623,10 +627,6 @@
   {
    "arquivo": "src/pages/TopicDetection.tsx",
    "linhas": 370
-  },
-  {
-   "arquivo": "src/hooks/usePredictiveDialer.ts",
-   "linhas": 364
   },
   {
    "arquivo": "src/lib/security-alerts-webhook.ts",

@@ -2527,6 +2527,7 @@
    "componentes": 3,
    "hooks_locais": [
     "useDashboardGoals",
+    "usePageVisibility",
     "useQueueMetrics"
    ],
    "hooks_definidos": [],
@@ -3034,6 +3035,7 @@
    "hooks_locais": [
     "useCriticalAlertNotifications",
     "useDashboardGoals",
+    "usePageVisibility",
     "useQueueMetrics",
     "useSupervisorPanel"
    ],
@@ -3492,7 +3494,7 @@
    "modulo": "hooks",
    "arquivos": 168,
    "testes": 0,
-   "linhas": 21328,
+   "linhas": 21385,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4821,6 +4823,7 @@
     "useMultiChannelCall",
     "useNetworkMonitor",
     "usePageTitle",
+    "usePageVisibility",
     "usePendingActionItems",
     "usePermissions",
     "usePersistedTagFilter",

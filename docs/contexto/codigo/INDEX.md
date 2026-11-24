@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `e376b9500988da1a768adc250acce641c128cb2e` (2026-11-24T06:48:36-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `efbd57398226f27f168dcb9ec123330021ce0918` (2026-11-24T07:06:09-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1738 |
 | arquivos_codigo | 1335 |
-| linhas_codigo | 180382 |
+| linhas_codigo | 180499 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -88,12 +88,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/ranking | 0 | 0 | 6 | 1 | 0 | 5 |
 | components/security-alerts | 0 | 0 | 11 | 0 | 0 | 0 |
 | components/settings | 0 | 0 | 6 | 9 | 1 | 7 |
-| components/supervisor | 0 | 0 | 11 | 4 | 1 | 6 |
+| components/supervisor | 0 | 0 | 11 | 5 | 1 | 6 |
 | components/ui | 0 | 0 | 56 | 7 | 0 | 0 |
 | components/voice | 0 | 0 | 7 | 4 | 2 | 1 |
 | hooks | 0 | 0 | 168 | 209 | 57 | 123 |
 | hooks/auth | 0 | 0 | 5 | 5 | 0 | 2 |
-| lib | 0 | 0 | 51 | 115 | 30 | 70 |
+| lib | 0 | 0 | 51 | 116 | 30 | 70 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
 | pages | 87 | 94 | 93 | 193 | 67 | 138 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10174 nós · 26797 arestas · 765 comunidades · grafo do commit `e376b950`
-- comunidades maiores: vitest (183), client.ts (171), lucide-react (161), card.tsx (153), react (150), CardContent (148), usePageTitle (135), tabs.tsx (129), cn (120), badge.tsx (115), getCorrelationId (113), @tanstack/react-query (110)
+- 10176 nós · 26804 arestas · 767 comunidades · grafo do commit `efbd5739`
+- comunidades maiores: lucide-react (263), client.ts (218), vitest (197), react (186), protectedRoutes.tsx (179), utils.ts (178), traceHeaders (152), getCorrelationId (113), cn (110), @tanstack/react-query (106), badge.tsx (103), snapshot.py (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (99)
+- docs/qa/05-PROGRESSO.md (100)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/hooks/useMultiChannelCall.ts (10)
 - src/components/layout/AppSidebar.tsx (9)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `efbd573` fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)
 - 2026-11-24 `e376b95` fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)
 - 2026-11-24 `9b4d4b9` fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)
 - 2026-11-24 `a7041fc` chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `14bbc21` fix: registrar falha nas gravacoes das edge functions (etapa 188) (#258)
 - 2026-11-24 `9cc710b` fix: orcamento de tempo na cadeia edge->edge e no QA de voz (etapa 211) (#265)
 - 2026-11-24 `94ed302` chore: verificacao dos timers de realtime nos hooks (etapa 216) (#266)
-- 2026-11-24 `55b1736` fix: avisar quando o alerta de contato nao foi gravado (etapa 189) (#259)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

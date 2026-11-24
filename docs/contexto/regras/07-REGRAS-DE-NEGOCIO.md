@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e376b95009` · branch `main` · 2026-11-24 09:49 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `efbd573982` · branch `main` · 2026-11-24 10:06 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1906,6 +1906,8 @@ _nenhum item encontrado_
 | `LATENCY_OK` | `150` | `src/hooks/useNetworkMonitor.ts` |
 | `LATENCY_UNSTABLE` | `400` | `src/hooks/useNetworkMonitor.ts` |
 | `BUCKET` | `'queue-audio'` | `src/hooks/useQueueAudioPrompts.ts` |
+| `SAFETY_POLL_MS` | `60` | `src/hooks/useQueueMetrics.ts` |
+| `REALTIME_DEBOUNCE_MS` | `1` | `src/hooks/useQueueMetrics.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useRecordings.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useSecurityAlertNotifications.ts` |
@@ -2636,7 +2638,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4382 testes em 390 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4385 testes em 390 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2676,9 +2678,9 @@ _nenhum item encontrado_
 | `src/lib/__tests__/agent-assist-utils.test.ts` | 26 | agent-assist-utils · rankSignals · ordena por prioridade × confiança · lida com array vazio … |
 | `src/lib/__tests__/webhook-health-and-export.simulation.test.ts` | 26 | webhook-health-utils · simulação massiva · ratioColor sempre retorna classe válida para qualquer entrada · aggregateEndpoints preserva invariante attempts = sent+failed acumulados · aggregateEndpoints: sortMode  … |
 | `src/lib/__tests__/call-park.test.ts` | 25 | call-park :: clampInt · nunca lança e respeita a faixa · tolera símbolos, objetos sem primitivo e NaN · call-park :: normalizeOrbitDraft … |
+| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 23 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/lib/__tests__/dialer-tags-and-ringtone.test.ts` | 23 | normalizeTag · sempre devolve null ou string válida para o CHECK do banco · é idempotente · rejeita entradas não textuais e vazias … |
 | `src/lib/__tests__/queue-audio.test.ts` | 23 | queue-audio :: clampNumber · nunca lança e respeita a faixa para qualquer entrada · tolera símbolos e objetos sem conversão primitiva · queue-audio :: sanitizeFileName … |
-| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 22 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/lib/__tests__/performance-optimizations.test.ts` | 22 | Performance: React.memo wrapping · ${name} is wrapped with React.memo · ${name} imports memo from react · ${name} exports as named export with memo … |
 | `src/lib/__tests__/ring-group.test.ts` | 22 | sanitizeExtension · sempre produz null ou uma string aceita pelo CHECK do banco · descarta caracteres inválidos preservando os válidos · clampInt … |
 | `src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx` | 21 | useKbCategories · returns published categories · surfaces a query error · useKbArticles … |
@@ -2703,6 +2705,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAvatar.test.ts` | 15 | useAvatar · does not request a signed url when there is no path · resolves a signed url for an existing avatar · clears the url when signing fails … |
 | `src/hooks/__tests__/useCallSession.test.ts` | 15 | Call Session Logic · Session lifecycle · creates session with correct initial status · session ends with completed status … |
 | `src/hooks/__tests__/useCrmFieldSuggestions.coverage.test.tsx` | 15 | useCrmFieldSuggestions · returns empty defaults when no callSessionId (query disabled, no channel) · fetches suggestions and computes pending, wires realtime channel · query error branch throws … |
+| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 15 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useWavoipCall.coverage.test.tsx` | 15 | useWavoipCall · checks configuration on mount (connected) · checkConfiguration when not connected sets disconnected · checkConfiguration with supabase error sets error state … |
 | `src/lib/__tests__/call-queue.test.ts` | 15 | call-queue :: clampInt · sempre devolve inteiro dentro da faixa · usa o fallback para valores não finitos · call-queue :: normalizeQueueDraft … |
 | `src/lib/__tests__/safe-number.test.ts` | 15 | safe-number · safeParseInt · PBT: nunca retorna NaN, mesmo com entrada hostil · PBT: números válidos são truncados · PBT: respeita min/max clamp … |
@@ -2720,7 +2723,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
 | `src/hooks/__tests__/useGamification.coverage.test.tsx` | 13 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useMeetingSummary.coverage.test.tsx` | 13 | useMeetingSummary · loads summary and runs generate/update/share · disabled when no callSessionId · generate handles skipped response … |
-| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 13 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/lib/__tests__/executive-dashboard-utils.test.ts` | 13 | getPeriodLabel · returns correct label for today · returns correct label for week · returns correct label for month … |
 | `src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts` | 13 | voipRecommendationCoaching · schedules a coaching check with mosBefore captured · does not schedule duplicates for the same recommendation · captures null mosBefore when supabase returns empty data … |
 | `src/lib/__tests__/guard-edge-numeric.test.ts` | 12 | guard-edge-numeric — Regra 1 (z.number sem .finite) · detecta z.number() em qualquer disposição de whitespace · aceita z.number().finite() com whitespace variável · ignora z.number() dentro de comentários e strings … |
