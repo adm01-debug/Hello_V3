@@ -4,6 +4,7 @@ import { requireUser } from '../_shared/auth.ts';
 import { mesmaString } from '../_shared/constant-time.ts';
 import { checkRateLimitDB, getClientIp } from '../_shared/rate-limit.ts';
 import { uuid } from '../_shared/validate.ts';
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 interface ChatbotPayload {
   conversation_id: string;
@@ -148,7 +149,8 @@ ${kbContext}
 
 Responda de forma clara, cordial e objetiva. Use markdown leve quando útil.`;
 
-    const aiResp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    let aiResp: Response;
+    try { aiResp = await fetchComPrazo('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -190,22 +192,21 @@ Responda de forma clara, cordial e objetiva. Use markdown leve quando útil.`;
         ],
         tool_choice: { type: 'function', function: { name: 'respond_to_user' } },
       }),
-    });
+    }); } catch (err) {
+      console.error('[chatbot-respond] IA sem resposta no prazo:', err);
+      return new Response(
+        JSON.stringify({ error: 'Serviço de IA indisponível' }),
+        { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } }
+      );
+    }
 
     if (!aiResp.ok) {
-      if (aiResp.status === 429) {
-        return new Response(
-          JSON.stringify({ error: 'Limite de requisições excedido, tente em instantes.' }),
-          { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } }
-        );
-      }
-      if (aiResp.status === 402) {
-        return new Response(
-          JSON.stringify({ error: 'Créditos esgotados. Adicione créditos no workspace Lovable AI.' }),
-          { status: 402, headers: { ...cors, 'Content-Type': 'application/json' } }
-        );
-      }
-      throw new Error(`AI gateway error: ${aiResp.status}`);
+      // 402/429 do provedor nao sao erro do cliente: para nos e indisponibilidade.
+      console.error('[chatbot-respond] AI gateway error', aiResp.status);
+      return new Response(
+        JSON.stringify({ error: 'Serviço de IA indisponível' }),
+        { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } }
+      );
     }
 
     const aiData = await aiResp.json();

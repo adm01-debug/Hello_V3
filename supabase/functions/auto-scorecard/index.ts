@@ -2,6 +2,7 @@
 // Invocado por trigger em call_summaries (pg_net) ou manualmente.
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 interface Criterion {
   id: string;
@@ -86,7 +87,8 @@ function json(payload: unknown, status = 200): Response {
     if (!OPENROUTER_API_KEY) return json({ error: 'AI key missing' }, 500);
 
     const prompt = buildPrompt(summaryRow, criteria as Criterion[]);
-    const aiRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    let aiRes: Response;
+    try { aiRes = await fetchComPrazo('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${OPENROUTER_API_KEY}`,
@@ -100,12 +102,16 @@ function json(payload: unknown, status = 200): Response {
         ],
         response_format: { type: 'json_object' },
       }),
-    });
+    }); } catch (err) {
+      console.error('[auto-scorecard] IA sem resposta no prazo:', err);
+      return json({ error: 'Serviço de IA indisponível' }, 503);
+    }
 
     if (!aiRes.ok) {
       const errBody = await aiRes.text();
       console.error(`[auto-scorecard] AI failed [${aiRes.status}]: ${errBody}`);
-      return json({ error: 'AI request failed', status: aiRes.status, details: errBody }, aiRes.status);
+      // Status e corpo do provedor ficam no log; o cliente nao recebe o erro do terceiro.
+      return json({ error: 'Serviço de IA indisponível' }, 503);
     }
 
     const aiData = await aiRes.json();

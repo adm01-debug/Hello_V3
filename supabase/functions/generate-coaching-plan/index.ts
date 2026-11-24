@@ -1,6 +1,7 @@
 // Coaching Copilot — Gera plano semanal de coaching baseado nas últimas chamadas do agente
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 interface CallSummary {
   agent_performance_score: number | null;
@@ -77,7 +78,8 @@ ${summaries.slice(0, 10).map((s, i) => `${i + 1}. ${s.summary?.slice(0, 300)}`).
 
 Responda em Markdown estruturado, tom motivador e direto.`;
 
-    const aiRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    let aiRes: Response;
+    try { aiRes = await fetchComPrazo('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${OPENROUTER_API_KEY}`,
@@ -87,11 +89,15 @@ Responda em Markdown estruturado, tom motivador e direto.`;
         model: 'google/gemini-2.5-flash',
         messages: [{ role: 'user', content: prompt }],
       }),
-    });
+    }); } catch (err) {
+      console.error('[generate-coaching-plan] IA sem resposta no prazo:', err);
+      return json({ error: 'Serviço de IA indisponível' }, 503);
+    }
 
     if (!aiRes.ok) {
       const body = await aiRes.text();
-      return json({ error: 'AI request failed', status: aiRes.status, details: body }, aiRes.status);
+      console.error(`[generate-coaching-plan] AI failed [${aiRes.status}]: ${body}`);
+      return json({ error: 'Serviço de IA indisponível' }, 503);
     }
 
     const aiData = await aiRes.json();

@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, string, optional } from "../_shared/validate.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 type Tone = "profissional" | "amigavel" | "conciso" | "empatico";
 
@@ -80,7 +81,8 @@ serve(async (req) => {
       ? `Contexto do atendimento: ${context}\n\nMensagem original:\n${message}`
       : `Mensagem original:\n${message}`;
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    let response: Response;
+    try { response = await fetchComPrazo("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${OPENROUTER_API_KEY}`,
@@ -93,26 +95,21 @@ serve(async (req) => {
           { role: "user", content: userPrompt },
         ],
       }),
-    });
+    }); } catch (err) {
+      console.error("[whatsapp-rewrite] IA sem resposta no prazo:", err);
+      return new Response(JSON.stringify({ error: "Serviço de IA indisponível" }), {
+        status: 503,
+        headers: { ...cors, "Content-Type": "application/json" },
+      });
+    }
 
     if (!response.ok) {
       const errText = await response.text();
-      if (response.status === 429) {
-        return new Response(JSON.stringify({ error: "Limite de IA excedido" }), {
-          status: 429,
-          headers: { ...cors, "Content-Type": "application/json" },
-        });
-      }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "Créditos de IA insuficientes" }), {
-          status: 402,
-          headers: { ...cors, "Content-Type": "application/json" },
-        });
-      }
-      return new Response(
-        JSON.stringify({ error: "Falha na IA", details: errText.slice(0, 300) }),
-        { status: 502, headers: { ...cors, "Content-Type": "application/json" } },
-      );
+      console.error("[whatsapp-rewrite] AI gateway error", response.status, errText.slice(0, 300));
+      return new Response(JSON.stringify({ error: "Serviço de IA indisponível" }), {
+        status: 503,
+        headers: { ...cors, "Content-Type": "application/json" },
+      });
     }
 
     const data = await response.json();

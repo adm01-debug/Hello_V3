@@ -1,5 +1,6 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 interface Body {
   callSessionId: string;
@@ -50,25 +51,23 @@ Deno.serve(async (req) => {
     const sys = `Você é um tradutor profissional para call centers. Responda APENAS com a tradução, sem comentários, sem aspas, sem prefixos. Preserve nomes próprios, números e tom.`;
     const usr = `Idioma de origem: ${sourceLangHint}\nIdioma de destino: ${body.targetLang}\nTexto: ${body.text}`;
 
-    const aiRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    let aiRes: Response;
+    try { aiRes = await fetchComPrazo('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash-lite',
         messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }],
       }),
-    });
+    }); } catch (err) {
+      console.error('[translate-utterance] IA sem resposta no prazo:', err);
+      return new Response(JSON.stringify({ error: 'Serviço de IA indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
+    }
 
-    if (aiRes.status === 429) {
-      return new Response(JSON.stringify({ error: 'Rate limit excedido, tente novamente.' }), { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } });
-    }
-    if (aiRes.status === 402) {
-      return new Response(JSON.stringify({ error: 'Créditos esgotados.' }), { status: 402, headers: { ...cors, 'Content-Type': 'application/json' } });
-    }
     if (!aiRes.ok) {
       const t = await aiRes.text();
-      console.error('AI error', aiRes.status, t);
-      return new Response(JSON.stringify({ error: 'AI gateway error' }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
+      console.error('[translate-utterance] AI gateway error', aiRes.status, t);
+      return new Response(JSON.stringify({ error: 'Serviço de IA indisponível' }), { status: 503, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
     const json = await aiRes.json();
