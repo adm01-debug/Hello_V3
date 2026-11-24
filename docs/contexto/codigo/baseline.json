@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "60701bffac18d9e4b470b8d63ae706c4bed98fa9",
+  "commit": "695f5efe79ca11bd81a2a6307adbee6f2ef5acaf",
   "branch": "main",
-  "data_commit": "2026-11-24T00:38:11-03:00",
+  "data_commit": "2026-11-24T00:44:44-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "695f5ef",
+    "data": "2026-11-24",
+    "assunto": "feat: prazo de fetch nas chamadas externas das edges (#226)"
+   },
    {
     "sha": "60701bf",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "adaa1e7",
     "data": "2026-11-23",
     "assunto": "fix: webauthn-authenticate valida o contador do autenticador e ganha rate limit (#201)"
-   },
-   {
-    "sha": "581cd3a",
-    "data": "2026-11-23",
-    "assunto": "fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)"
    }
   ],
-  "arquivos_mudados_7d": 1061,
+  "arquivos_mudados_7d": 1063,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 54
+    "mudancas": 55
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -156,15 +156,15 @@
     "mudancas": 29
    },
    {
+    "pasta": "supabase/functions/_shared",
+    "mudancas": 29
+   },
+   {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 27
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 27
-   },
-   {
-    "pasta": "supabase/functions/_shared",
     "mudancas": 27
    },
    {
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 54
+    "mudancas": 55
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 203
+    "commits": 204
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1708,
   "arquivos_codigo": 1306,
-  "linhas_codigo": 176305,
+  "linhas_codigo": 176393,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 194,
-   "linhas": 22042
+   "linhas": 22130
   },
   "tailwind.config.ts": {
    "arquivos": 1,

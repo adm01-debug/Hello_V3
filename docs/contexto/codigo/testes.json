@@ -2982,11 +2982,11 @@
   {
    "arquivo": "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
    "tipo": "unit",
-   "linhas": 135,
+   "linhas": 199,
    "testa": [
     "supabase/functions/_shared/resilience.ts"
    ],
-   "casos": 7
+   "casos": 11
   },
   {
    "arquivo": "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",

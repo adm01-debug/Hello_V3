@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `60701bffac18d9e4b470b8d63ae706c4bed98fa9` (2026-11-24T00:38:11-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `695f5efe79ca11bd81a2a6307adbee6f2ef5acaf` (2026-11-24T00:44:44-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1708 |
 | arquivos_codigo | 1306 |
-| linhas_codigo | 176305 |
+| linhas_codigo | 176393 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10018 nós · 25790 arestas · 764 comunidades · grafo do commit `60701bff`
-- comunidades maiores: lucide-react (277), usePageTitle (223), client.ts (202), react (172), vitest (153), traceHeaders (137), badge.tsx (131), ref_https (118), cn (115), utils.ts (110), snapshot.py (102), validate.ts (102)
+- 10022 nós · 25800 arestas · 778 comunidades · grafo do commit `695f5efe`
+- comunidades maiores: usePageTitle (212), card.tsx (169), logger.ts (159), vitest (146), client.ts (144), lucide-react (131), CardHeader (125), react (120), sonner (119), ref_https (119), cn (111), PredictiveDialerPanel.tsx (106)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (54)
+- docs/qa/05-PROGRESSO.md (55)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `695f5ef` feat: prazo de fetch nas chamadas externas das edges (#226)
 - 2026-11-24 `60701bf` fix: confirma o retorno agendado com a data gravada e nao reporta escrita que nao gravou nada (#223)
 - 2026-11-24 `87d013e` chore: suite de testes roda sem .env e sem configuracao manual (#224)
 - 2026-11-24 `e1e227d` fix: agente fica offline ao fechar o navegador (etapa 204) (#222)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `fd7ebb0` fix: recomendacao de capacity registra leitura em vez de fingir aplicacao (#213)
 - 2026-11-23 `b99cdc8` Catalogo de seguranca declara a origem de cada estado (remove KPI literal) (#212)
 - 2026-11-23 `52e0392` fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)
-- 2026-11-23 `046acb3` fix: remediacao de anomalia atualiza a lista (#210)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

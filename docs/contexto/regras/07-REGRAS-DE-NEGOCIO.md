@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `60701bffac` · branch `main` · 2026-11-24 03:38 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `695f5efe79` · branch `main` · 2026-11-24 03:45 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1808,6 +1808,7 @@ _nenhum item encontrado_
 | `PAGE_SIZE` | `25` | `src/pages/roles/RoleAuditTrail.tsx` |
 | `MINUTE_MS` | `60` | `supabase/functions/_shared/business-hours.ts` |
 | `MAX_ITERATIONS` | `400` | `supabase/functions/_shared/business-hours.ts` |
+| `DEFAULT_FETCH_TIMEOUT_MS` | `15` | `supabase/functions/_shared/resilience.ts` |
 | `DEFAULT_THRESHOLD` | `0.7` | `supabase/functions/chatbot-respond/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/chatbot-respond/index.ts` |
 | `RETENCAO_DIAS` | `180` | `supabase/functions/cleanup-recordings/index.ts` |
@@ -2466,7 +2467,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4300 testes em 375 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4304 testes em 375 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2567,6 +2568,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/holdReminderSounds.coverage.test.tsx` | 11 | holdReminderSounds · createNotificationSound plays two oscillators (timer branch) · createUrgentSound plays three beeps over time · formatHoldTime formats both branches … |
 | `src/lib/__tests__/tracing.coverage.test.ts` | 11 | tracing (coverage) · exports header name constants · returns undefined trace id/operation when no scope is active · withTrace generates id, sets operation, and clears on success … |
 | `src/lib/__tests__/voice-biometrics.coverage.test.ts` | 11 | voice-biometrics: isValidEmbedding · accepts an array of correct dimension with finite numbers · rejects non-arrays · rejects wrong-length arrays … |
+| `supabase/functions/_shared/__tests__/resilient-fetch.test.ts` | 11 | resilientFetch: sucesso em 2xx passa direto · resilientFetch: 500 é reciclado e sucede na 3ª tentativa · resilientFetch: 404 NÃO é reciclado · resilientFetch: 500 esgota retries e propaga … |
 | `supabase/functions/health-check/__tests__/slo-budget_test.ts` | 11 | budget - sem falhas mantem o budget intacto · budget - falha igual a tolerancia zera o budget · budget - falha acima da tolerancia escala o burn rate · budget - metade da tolerancia entra em warning … |
 | `supabase/functions/voip-executive-summary/__tests__/index.test.ts` | 11 | computeHealthScore — perfeito = 100 · computeHealthScore — fórmula ponderada correta · computeHealthScore — cobre só as dimensões medidas · computeHealthScore — cobertura < 2 devolve null … |
 | `src/components/dialer/phone/__tests__/phone-dialer.test.ts` | 10 | phone-utils · sanitiza entrada removendo caracteres inválidos · formata número BR no display · valida se o número é discável … |
@@ -2666,7 +2668,6 @@ _nenhum item encontrado_
 | `src/lib/mfa/__tests__/index.coverage.test.ts` | 7 | mfa (coverage) · returns disabled default when no settings row · maps existing settings row including backup codes · handles settings row with falsy/missing fields … |
 | `src/lib/security/__tests__/helmet-config.coverage.test.ts` | 7 | helmet-config (coverage) · DEFAULT_SECURITY_HEADERS has expected secure defaults · getSecurityHeaders returns defaults when no overrides · getSecurityHeaders merges overrides … |
 | `src/lib/session/__tests__/index.coverage.test.ts` | 7 | session/index · getActiveSessions maps rows · getActiveSessions handles null data and is_active falsy · terminateSession returns true when no error … |
-| `supabase/functions/_shared/__tests__/resilient-fetch.test.ts` | 7 | resilientFetch: sucesso em 2xx passa direto · resilientFetch: 500 é reciclado e sucede na 3ª tentativa · resilientFetch: 404 NÃO é reciclado · resilientFetch: 500 esgota retries e propaga … |
 | `supabase/functions/cleanup-recordings/__tests__/retencao_test.ts` | 7 | corte de retencao fica exatamente 180 dias atras · gravacao com 179 dias ainda nao vence · gravacao com 181 dias vence · cron: aceita bearer exato do token configurado … |
 | `supabase/functions/score-call-attempt/__tests__/index.test.ts` | 7 | score-call-attempt: 401 sem Authorization · score-call-attempt: validação rejeita phone curto demais · score-call-attempt: DNC força score=0 e recommendation=block · score-call-attempt: fora de horário multiplica score por 0.1 … |
 | `supabase/functions/translate-utterance/__tests__/index.test.ts` | 7 | translate-utterance: 401 sem Authorization · translate-utterance: 400 com body inválido (sem callSessionId) · translate-utterance: rejeita idioma não suportado · translate-utterance: trata 429 (rate limit) sem expor stack … |
@@ -3024,6 +3025,10 @@ _nenhum item encontrado_
 | e garante que apenas números finitos sejam aceitos. | `supabase/functions/_shared/numeric-schemas_test.ts` |
 | * Espera media em segundos, apenas sobre chamadas com espera mensuravel. */ | `supabase/functions/_shared/queue-metrics.ts` |
 | * Check rate limit using persistent DB function. | `supabase/functions/_shared/rate-limit.ts` |
+| ---------- Prazo de fetch ---------- | `supabase/functions/_shared/resilience.ts` |
+| * Prazo padrao de uma chamada externa: 15 s. */ | `supabase/functions/_shared/resilience.ts` |
+| * `fetch` com prazo. Sem signal do chamador, uma chamada pendurada aborta em | `supabase/functions/_shared/resilience.ts` |
+| `timeoutMs` em vez de esperar o limite da plataforma. O erro e um | `supabase/functions/_shared/resilience.ts` |
 | * Lightweight input validation helpers for Edge Functions. | `supabase/functions/_shared/validate.ts` |
 | Provides Zod-like schema validation without external dependencies. | `supabase/functions/_shared/validate.ts` |
 | Limit is 10000 | `supabase/functions/analyze-call/analyze-call_test.ts` |
