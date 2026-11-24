@@ -8,7 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
  import { format } from 'date-fns';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useCallHistory, DateRangePreset, SentimentFilter, DurationFilter } from '@/hooks/useCallHistory';
 import { CallSessionsList } from '@/components/call-history/CallSessionsList';
 import { CallDetailDialog } from '@/components/call-history/CallDetailDialog';
@@ -40,6 +41,20 @@ export default function CallHistory() {
    useEffect(() => {
      if (debouncedSearch !== searchQuery) setSearchQuery(debouncedSearch);
    }, [debouncedSearch, searchQuery, setSearchQuery]);
+
+   // Deep link vindo dos "acertos" dos trackers (`/history?session=<id>`): abre a chamada.
+   const [searchParams] = useSearchParams();
+   const sessionParam = searchParams.get('session');
+   const deepLinkHandledRef = useRef(false);
+
+   useEffect(() => {
+     if (!sessionParam || deepLinkHandledRef.current || isLoading) return;
+     deepLinkHandledRef.current = true;
+     if (selectedSession?.id === sessionParam) return;
+     const target = (sessions ?? []).find((s) => s.id === sessionParam);
+     if (target) handleSessionClick(target);
+     else toast.error('Chamada não encontrada no histórico');
+   }, [sessionParam, isLoading, sessions, selectedSession?.id, handleSessionClick]);
  
    const stats = useMemo(() => {
      const s = sessions || [];
