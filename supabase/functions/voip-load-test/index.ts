@@ -62,10 +62,11 @@ serve(async (req) => {
 
     // Limpeza: as amostras do teste nao podem se acumular no historico de qualidade.
     if (metrics.length) {
-      await supabaseClient.from("call_quality_metrics").delete().in(
+      const { error: cleanupErr } = await supabaseClient.from("call_quality_metrics").delete().in(
         "id",
         metrics,
       );
+      if (cleanupErr) console.error('voip-load-test: falha ao limpar amostras do teste de carga', cleanupErr);
     }
 
     const totalTime = performance.now() - startTime;

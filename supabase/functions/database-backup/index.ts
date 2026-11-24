@@ -77,13 +77,14 @@ Deno.serve(async (req) => {
       triggered_by: user.email,
     };
 
-    await supabase.from("audit_logs").insert({
+    const { error: backupAuditErr } = await supabase.from("audit_logs").insert({
       user_id: user.id,
       user_email: user.email,
       action: "database_backup",
       resource_type: "system",
       details: backupMetadata,
     });
+    if (backupAuditErr) console.error('database-backup: falha ao auditar backup', backupAuditErr);
 
     return new Response(
       JSON.stringify({ success: true, backup: backupMetadata }),
