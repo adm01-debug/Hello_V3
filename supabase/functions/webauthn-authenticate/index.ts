@@ -131,8 +131,9 @@ Deno.serve(async (req) => {
     // O contador de assinaturas do autenticador e monotonico e e o sinal
     // anti-clonagem do WebAuthn: sem compara-lo, um autenticador clonado
     // entra na conta. A coluna era lida e nunca usada.
-    // safe-numeric-ok: `counter` e coluna integer do banco, nao entrada do usuario.
-    const counterAnterior = Number(passkey.counter ?? 0);
+    // `counter` e coluna integer do banco: checagem de tipo em vez de coerção,
+    // que o guard-edge-numeric proibe em index.ts.
+    const counterAnterior = typeof passkey.counter === 'number' ? passkey.counter : 0;
     if (signCount === 0) {
       // Excecao contraintuitiva e intencional: alguns Apple/Windows Hello
       // devolvem sempre 0. Nao ha contador confiavel nesses autenticadores, e
