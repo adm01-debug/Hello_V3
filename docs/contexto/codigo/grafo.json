@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 930,
- "arestas": 3625,
+ "arestas": 3634,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -57,16 +57,16 @@
    "importado_por": 61
   },
   {
+   "arquivo": "supabase/functions/_shared/errors.ts",
+   "importado_por": 56
+  },
+  {
    "arquivo": "src/components/ui/dialog.tsx",
    "importado_por": 48
   },
   {
    "arquivo": "src/components/ui/scroll-area.tsx",
    "importado_por": 48
-  },
-  {
-   "arquivo": "supabase/functions/_shared/errors.ts",
-   "importado_por": 47
   },
   {
    "arquivo": "src/components/ui/tabs.tsx",

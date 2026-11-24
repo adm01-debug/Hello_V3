@@ -4928,15 +4928,18 @@
   ],
   "supabase/functions/health-check/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/observability.ts",
    "supabase/functions/health-check/slo-budget.ts"
   ],
   "supabase/functions/ldap-sync/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/notify-blocked-ip/index.ts": [
    "supabase/functions/_shared/auth.ts",
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/html.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/validate.ts",
@@ -4945,6 +4948,7 @@
   "supabase/functions/notify-new-device/index.ts": [
    "supabase/functions/_shared/auth.ts",
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/html.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/validate.ts",
@@ -5039,11 +5043,13 @@
   "supabase/functions/validate-geo/index.ts": [
    "supabase/functions/_shared/client-ip.ts",
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/rate-limit.ts"
   ],
   "supabase/functions/validate-ip/index.ts": [
    "supabase/functions/_shared/client-ip.ts",
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/verify-voice/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -5154,6 +5160,7 @@
   ],
   "supabase/functions/webauthn-challenge/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/validate.ts"
   ],
@@ -5168,6 +5175,7 @@
   ],
   "supabase/functions/whatsapp-inbound/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/validator.ts",
    "supabase/functions/whatsapp-inbound/idempotency.ts",
    "supabase/functions/whatsapp-inbound/schema.ts"
@@ -5177,6 +5185,7 @@
   ],
   "supabase/functions/whatsapp-rewrite/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts"

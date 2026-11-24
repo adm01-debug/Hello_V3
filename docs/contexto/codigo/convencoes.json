@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: onda 4 e fechamento da E050 - erro interno nunca chega ao cliente (#233)",
    "fix: onda 3 da E050 - erro interno generico em 26 edges (#232)",
    "fix: onda 2 da E050 - nao vazar erro interno em mais 13 edges (#231)",
    "fix: nao vazar mensagem de erro interna nas edges (E050 onda 1) (#230)",
-   "fix: checar erro nas escritas do discador e parar a campanha quando o claim falha (etapa 080) (#229)",
-   "fix: teto em todo campo de texto das edges publicas que gastam dinheiro (E047) (#228)"
+   "fix: checar erro nas escritas do discador e parar a campanha quando o claim falha (etapa 080) (#229)"
   ]
  },
  "pr_template": null,

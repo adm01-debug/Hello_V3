@@ -856,7 +856,7 @@
    "nome": "data-lake-flush",
    "entrada": "supabase/functions/data-lake-flush/index.ts",
    "arquivos": 1,
-   "linhas": 179,
+   "linhas": 181,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -1669,6 +1669,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "observability.ts"
    ],
    "chamada_pelo_front": [
@@ -1685,7 +1686,7 @@
    "nome": "ldap-sync",
    "entrada": "supabase/functions/ldap-sync/index.ts",
    "arquivos": 1,
-   "linhas": 367,
+   "linhas": 368,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1709,7 +1710,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useLDAPSync.ts"
@@ -1743,6 +1745,7 @@
    "usa_shared": [
     "auth.ts",
     "cors.ts",
+    "errors.ts",
     "html.ts",
     "rate-limit.ts",
     "validate.ts",
@@ -1779,6 +1782,7 @@
    "usa_shared": [
     "auth.ts",
     "cors.ts",
+    "errors.ts",
     "html.ts",
     "rate-limit.ts",
     "validate.ts",
@@ -2293,7 +2297,7 @@
    "nome": "sync-crm-queue",
    "entrada": "supabase/functions/sync-crm-queue/index.ts",
    "arquivos": 1,
-   "linhas": 125,
+   "linhas": 126,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2326,7 +2330,7 @@
    "nome": "teams-fetch-recordings",
    "entrada": "supabase/functions/teams-fetch-recordings/index.ts",
    "arquivos": 1,
-   "linhas": 187,
+   "linhas": 189,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2474,7 +2478,7 @@
    "nome": "validate-geo",
    "entrada": "supabase/functions/validate-geo/index.ts",
    "arquivos": 1,
-   "linhas": 185,
+   "linhas": 186,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2499,6 +2503,7 @@
    "usa_shared": [
     "client-ip.ts",
     "cors.ts",
+    "errors.ts",
     "rate-limit.ts"
    ],
    "chamada_pelo_front": [
@@ -2537,7 +2542,8 @@
    "hosts_externos": [],
    "usa_shared": [
     "client-ip.ts",
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useIPValidation.ts"
@@ -3377,7 +3383,7 @@
    "nome": "webauthn-challenge",
    "entrada": "supabase/functions/webauthn-challenge/index.ts",
    "arquivos": 1,
-   "linhas": 83,
+   "linhas": 85,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3397,6 +3403,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "rate-limit.ts",
     "validate.ts"
    ],
@@ -3444,7 +3451,7 @@
    "nome": "whatsapp-inbound",
    "entrada": "supabase/functions/whatsapp-inbound/index.ts",
    "arquivos": 5,
-   "linhas": 420,
+   "linhas": 423,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",
@@ -3466,6 +3473,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validator.ts"
    ],
    "chamada_pelo_front": [],
@@ -3478,7 +3486,7 @@
    "nome": "whatsapp-rewrite",
    "entrada": "supabase/functions/whatsapp-rewrite/index.ts",
    "arquivos": 1,
-   "linhas": 137,
+   "linhas": 138,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3497,6 +3505,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "rate-limit.ts",
     "resilience.ts",
     "validate.ts"

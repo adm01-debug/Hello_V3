@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a3a8463a924e09aa17593a044e3832d6a1798f9d",
+  "sha": "1929b04d36548d852a5dda1439c860ad1eb51884",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 05:00 UTC",
+  "generated_at": "2026-11-24 05:07 UTC",
   "files_total": 1763,
   "code_files": 1560,
-  "code_lines": 192816
+  "code_lines": 192829
  },
  "version": "1.3.2",
- "facts_hash": "64d551b92fca4d55",
+ "facts_hash": "5b2b86175cd4535e",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34277,7 +34277,7 @@
   {
    "module": "supabase/functions",
    "files": 202,
-   "lines": 22447,
+   "lines": 22460,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -42859,6 +42859,10 @@
    {
     "file": "supabase/functions/validate-geo/index.ts",
     "text": "limite, cada request anonimo consumia uma chamada ao provedor externo."
+   },
+   {
+    "file": "supabase/functions/validate-geo/index.ts",
+    "text": "Falha aberta por decisao de negocio: nao bloqueia o usuario se a checagem cair."
    },
    {
     "file": "supabase/functions/validate-ip/index.ts",
@@ -119669,7 +119673,7 @@
   },
   "supabase/functions/data-lake-flush/index.ts": {
    "path": "supabase/functions/data-lake-flush/index.ts",
-   "lines": 179,
+   "lines": 181,
    "tables": [
     {
      "table": "user_profiles",
@@ -121419,7 +121423,7 @@
   },
   "supabase/functions/ldap-sync/index.ts": {
    "path": "supabase/functions/ldap-sync/index.ts",
-   "lines": 367,
+   "lines": 368,
    "tables": [
     {
      "table": "system_settings",
@@ -122274,7 +122278,7 @@
   },
   "supabase/functions/sync-crm-queue/index.ts": {
    "path": "supabase/functions/sync-crm-queue/index.ts",
-   "lines": 125,
+   "lines": 126,
    "tables": [
     {
      "table": "crm_sync_queue",
@@ -122354,7 +122358,7 @@
   },
   "supabase/functions/teams-fetch-recordings/index.ts": {
    "path": "supabase/functions/teams-fetch-recordings/index.ts",
-   "lines": 187,
+   "lines": 189,
    "tables": [
     {
      "table": "call_recordings",
@@ -122522,7 +122526,7 @@
   },
   "supabase/functions/validate-geo/index.ts": {
    "path": "supabase/functions/validate-geo/index.ts",
-   "lines": 185,
+   "lines": 186,
    "tables": [
     {
      "table": "geo_settings",
@@ -122567,7 +122571,8 @@
     }
    ],
    "rule_comments": [
-    "limite, cada request anonimo consumia uma chamada ao provedor externo."
+    "limite, cada request anonimo consumia uma chamada ao provedor externo.",
+    "Falha aberta por decisao de negocio: nao bloqueia o usuario se a checagem cair."
    ],
    "side_effects": [
     "notify_on_block"
@@ -124268,7 +124273,7 @@
   },
   "supabase/functions/webauthn-challenge/index.ts": {
    "path": "supabase/functions/webauthn-challenge/index.ts",
-   "lines": 83,
+   "lines": 85,
    "tables": [
     {
      "table": "user_profiles",
@@ -124375,7 +124380,7 @@
   },
   "supabase/functions/whatsapp-inbound/index.ts": {
    "path": "supabase/functions/whatsapp-inbound/index.ts",
-   "lines": 181,
+   "lines": 184,
    "tables": [
     {
      "table": "conversation_messages",
@@ -124524,7 +124529,7 @@
   },
   "supabase/functions/whatsapp-rewrite/index.ts": {
    "path": "supabase/functions/whatsapp-rewrite/index.ts",
-   "lines": 137,
+   "lines": 138,
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -125765,10 +125770,31 @@
   }
  },
  "git": {
-  "sha": "a3a8463a924e09aa17593a044e3832d6a1798f9d",
+  "sha": "1929b04d36548d852a5dda1439c860ad1eb51884",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "1929b04",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: onda 4 e fechamento da E050 - erro interno nunca chega ao cliente (#233)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/data-lake-flush/index.ts",
+     "supabase/functions/health-check/index.ts",
+     "supabase/functions/ldap-sync/index.ts",
+     "supabase/functions/notify-blocked-ip/index.ts",
+     "supabase/functions/notify-new-device/index.ts",
+     "supabase/functions/sync-crm-queue/index.ts",
+     "supabase/functions/teams-fetch-recordings/index.ts",
+     "supabase/functions/validate-geo/index.ts",
+     "supabase/functions/validate-ip/index.ts",
+     "supabase/functions/webauthn-challenge/index.ts",
+     "supabase/functions/whatsapp-inbound/index.ts",
+     "supabase/functions/whatsapp-rewrite/index.ts"
+    ]
+   },
    {
     "sha": "a3a8463",
     "date": "2026-11-24",
@@ -126206,19 +126232,6 @@
      "supabase/functions/_shared/queue-metrics.ts",
      "supabase/functions/_shared/queue-metrics_test.ts"
     ]
-   },
-   {
-    "sha": "6f3a7bf",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "feat: discador preditivo passa pela barreira de DNC e horario legal (#203)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/dialer/PredictiveDialerPanel.tsx",
-     "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-     "src/hooks/predictive-dialer/api.ts",
-     "src/hooks/usePredictiveDialer.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -126229,6 +126242,22 @@
    [
     "supabase/functions/chatbot-respond/index.ts",
     3
+   ],
+   [
+    "supabase/functions/data-lake-flush/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/sync-crm-queue/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/teams-fetch-recordings/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/whatsapp-rewrite/index.ts",
+    2
    ],
    [
     "supabase/functions/generate-coaching-plan/index.ts",
@@ -126259,27 +126288,11 @@
     2
    ],
    [
-    "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-    2
-   ],
-   [
-    "src/hooks/predictive-dialer/api.ts",
-    2
-   ],
-   [
-    "src/hooks/usePredictiveDialer.ts",
-    2
-   ],
-   [
     "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
     2
    ],
    [
     "src/hooks/useCallHistory.ts",
-    2
-   ],
-   [
-    "src/components/dialer/PredictiveDialerPanel.tsx",
     2
    ],
    [

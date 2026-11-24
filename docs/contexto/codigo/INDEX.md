@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a3a8463a924e09aa17593a044e3832d6a1798f9d` (2026-11-24T01:59:42-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `1929b04d36548d852a5dda1439c860ad1eb51884` (2026-11-24T02:07:12-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1716 |
 | arquivos_codigo | 1314 |
-| linhas_codigo | 176804 |
+| linhas_codigo | 176817 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,23 +370,23 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10044 nós · 26024 arestas · 784 comunidades · grafo do commit `a3a8463a`
-- comunidades maiores: cn (247), card.tsx (223), usePageTitle (206), vitest (189), client.ts (182), logger.ts (161), badge.tsx (158), button.tsx (132), safe-date.ts (125), react (118), buildCorsHeaders (114), validate.ts (111)
+- 10044 nós · 26057 arestas · 782 comunidades · grafo do commit `1929b04d`
+- comunidades maiores: cn (247), card.tsx (223), usePageTitle (206), vitest (189), client.ts (182), logger.ts (161), badge.tsx (158), button.tsx (132), safe-date.ts (125), buildCorsHeaders (125), react (118), validate.ts (106)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (61)
+- docs/qa/05-PROGRESSO.md (62)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
 - src/hooks/useMultiChannelCall.ts (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
+- supabase/functions/data-lake-flush/index.ts (7)
 - .github/workflows/contexto.yml (6)
 - src/components/calls/UnifiedSoftphone.tsx (6)
 - src/components/layout/CommandPalette.tsx (6)
-- supabase/functions/data-lake-flush/index.ts (6)
 - deno.lock (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `1929b04` fix: onda 4 e fechamento da E050 - erro interno nunca chega ao cliente (#233)
 - 2026-11-24 `a3a8463` fix: onda 3 da E050 - erro interno generico em 26 edges (#232)
 - 2026-11-24 `48a60a2` fix: onda 2 da E050 - nao vazar erro interno em mais 13 edges (#231)
 - 2026-11-24 `668bf69` fix: nao vazar mensagem de erro interna nas edges (E050 onda 1) (#230)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `d2f80cb` fix: telas do fluxo central distinguem falha de leitura de lista vazia (etapa 203) (#221)
 - 2026-11-23 `85a73de` feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)
 - 2026-11-23 `d1b586c` fix: whitelist de IPs avisa quando a leitura falha em vez de parecer vazia (#216)
-- 2026-11-23 `da41888` fix: registrar falha de leitura onde o erro era descartado (#219)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

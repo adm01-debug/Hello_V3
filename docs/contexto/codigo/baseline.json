@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a3a8463a924e09aa17593a044e3832d6a1798f9d",
+  "commit": "1929b04d36548d852a5dda1439c860ad1eb51884",
   "branch": "main",
-  "data_commit": "2026-11-24T01:59:42-03:00",
+  "data_commit": "2026-11-24T02:07:12-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "1929b04",
+    "data": "2026-11-24",
+    "assunto": "fix: onda 4 e fechamento da E050 - erro interno nunca chega ao cliente (#233)"
+   },
    {
     "sha": "a3a8463",
     "data": "2026-11-24",
@@ -126,11 +131,6 @@
     "sha": "de29d5d",
     "data": "2026-11-23",
     "assunto": "feat: conferir lista DNC antes de confiar na importacao (#209)"
-   },
-   {
-    "sha": "8e86908",
-    "data": "2026-11-23",
-    "assunto": "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)"
    }
   ],
   "arquivos_mudados_7d": 1081,
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 61
+    "mudancas": 62
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 61
+    "mudancas": 62
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -226,6 +226,10 @@
     "mudancas": 7
    },
    {
+    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "mudancas": 7
+   },
+   {
     "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 6
    },
@@ -235,10 +239,6 @@
    },
    {
     "arquivo": "src/components/layout/CommandPalette.tsx",
-    "mudancas": 6
-   },
-   {
-    "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 6
    },
    {
@@ -270,6 +270,14 @@
     "mudancas": 5
    },
    {
+    "arquivo": "supabase/functions/health-check/index.ts",
+    "mudancas": 5
+   },
+   {
+    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
+    "mudancas": 5
+   },
+   {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 5
    },
@@ -288,20 +296,12 @@
    {
     "arquivo": "src/components/calls/ActiveCallBar.tsx",
     "mudancas": 4
-   },
-   {
-    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-    "mudancas": 4
-   },
-   {
-    "arquivo": "src/hooks/useQueueMetrics.ts",
-    "mudancas": 4
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 211
+    "commits": 212
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1716,
   "arquivos_codigo": 1314,
-  "linhas_codigo": 176804,
+  "linhas_codigo": 176817,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 202,
-   "linhas": 22447
+   "linhas": 22460
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -614,7 +614,7 @@
   },
   {
    "arquivo": "supabase/functions/ldap-sync/index.ts",
-   "linhas": 367
+   "linhas": 368
   },
   {
    "arquivo": "src/lib/security-alerts-webhook.ts",

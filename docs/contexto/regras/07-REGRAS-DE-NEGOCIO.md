@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a3a8463a92` · branch `main` · 2026-11-24 05:00 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1929b04d36` · branch `main` · 2026-11-24 05:07 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -3078,6 +3078,7 @@ _nenhum item encontrado_
 | Token app-only nao resolve /me; usar /groups (Application permission Group.Read.All) | `supabase/functions/teams-fetch-recordings/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/teams-fetch-recordings/index.ts` |
 | limite, cada request anonimo consumia uma chamada ao provedor externo. | `supabase/functions/validate-geo/index.ts` |
+| Falha aberta por decisao de negocio: nao bloqueia o usuario se a checagem cair. | `supabase/functions/validate-geo/index.ts` |
 | Header e controlado pelo cliente: sem validação, a whitelist de IP é | `supabase/functions/validate-ip/index.ts` |
 | * Whitelist rígida — apenas ações não destrutivas. */ | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-executive-summary/index.ts` |

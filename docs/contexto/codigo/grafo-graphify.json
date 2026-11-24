@@ -4,20 +4,20 @@
  "presente": true,
  "como_gerar": "uvx --from \"graphifyy[sql]\" graphify update .  (ou: bun run graph:update); saída em graphify-out/ — graph.json e graph.html NÃO são versionados (dezenas de MB); use `graphify query/path/explain` localmente",
  "relatorio": null,
- "commit_do_grafo": "a3a8463a924e09aa17593a044e3832d6a1798f9d",
+ "commit_do_grafo": "1929b04d36548d852a5dda1439c860ad1eb51884",
  "grafo_atual": true,
  "nos": 10044,
- "arestas": 26024,
- "comunidades_total": 784,
+ "arestas": 26057,
+ "comunidades_total": 782,
  "relacoes": {
-  "calls": 2472,
+  "calls": 2475,
   "cites": 9,
   "contains": 7404,
   "defines": 6,
   "dynamic_import": 158,
   "implements": 1,
-  "imports": 6971,
-  "imports_from": 6211,
+  "imports": 6993,
+  "imports_from": 6220,
   "indexes": 419,
   "indirect_call": 143,
   "inherits": 12,
@@ -25,12 +25,12 @@
   "rationale_for": 26,
   "re_exports": 72,
   "reads_from": 114,
-  "references": 1730,
+  "references": 1729,
   "triggers": 113
  },
  "origem": {
-  "EXTRACTED": 24610,
-  "INFERRED": 1414
+  "EXTRACTED": 24644,
+  "INFERRED": 1413
  },
  "comunidades": [
   {
@@ -188,6 +188,23 @@
   },
   {
    "id": 9,
+   "nome": "buildCorsHeaders",
+   "nos": 125,
+   "callables": 54,
+   "arquivos": 58,
+   "exemplos_arquivos": [
+    "docs/qa/05-PROGRESSO.md",
+    "supabase/functions/_shared/__tests__/cors.test.ts",
+    "supabase/functions/_shared/client-ip.ts",
+    "supabase/functions/_shared/client-ip_test.ts",
+    "supabase/functions/_shared/constant-time.ts",
+    "supabase/functions/_shared/cors.ts",
+    "supabase/functions/_shared/errors.ts",
+    "supabase/functions/_shared/errors_test.ts"
+   ]
+  },
+  {
+   "id": 10,
    "nome": "react",
    "nos": 118,
    "callables": 42,
@@ -204,28 +221,11 @@
    ]
   },
   {
-   "id": 10,
-   "nome": "buildCorsHeaders",
-   "nos": 114,
-   "callables": 50,
-   "arquivos": 52,
-   "exemplos_arquivos": [
-    "docs/qa/05-PROGRESSO.md",
-    "supabase/functions/_shared/__tests__/cors.test.ts",
-    "supabase/functions/_shared/cors.ts",
-    "supabase/functions/_shared/errors.ts",
-    "supabase/functions/_shared/errors_test.ts",
-    "supabase/functions/approve-password-reset/index.ts",
-    "supabase/functions/auto-scorecard/index.ts",
-    "supabase/functions/chat-widget-session/index.ts"
-   ]
-  },
-  {
    "id": 11,
    "nome": "validate.ts",
-   "nos": 111,
-   "callables": 62,
-   "arquivos": 38,
+   "nos": 106,
+   "callables": 58,
+   "arquivos": 37,
    "exemplos_arquivos": [
     "supabase/functions/_shared/__tests__/rate-limit.test.ts",
     "supabase/functions/_shared/html.ts",
@@ -354,6 +354,22 @@
   },
   {
    "id": 20,
+   "nome": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
+   "nos": 73,
+   "callables": 18,
+   "arquivos": 7,
+   "exemplos_arquivos": [
+    "docs/qa/04-PLANO.md",
+    "supabase/functions/_shared/constant-time.ts",
+    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
+    "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
+    "supabase/functions/dialer-pacing-tick/index.ts",
+    "supabase/functions/ldap-sync/index.ts",
+    "supabase/functions/voip-trunks-manage/index.ts"
+   ]
+  },
+  {
+   "id": 21,
    "nome": "generate.py",
    "nos": 72,
    "callables": 63,
@@ -363,24 +379,11 @@
    ]
   },
   {
-   "id": 21,
-   "nome": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
-   "nos": 64,
-   "callables": 13,
-   "arquivos": 4,
-   "exemplos_arquivos": [
-    "docs/estado/infra-ci-rotas-integracoes.md",
-    "docs/qa/04-PLANO.md",
-    "supabase/functions/ldap-sync/index.ts",
-    "supabase/functions/voip-trunks-manage/index.ts"
-   ]
-  },
-  {
    "id": 22,
    "nome": "ref_https",
-   "nos": 64,
-   "callables": 22,
-   "arquivos": 32,
+   "nos": 70,
+   "callables": 26,
+   "arquivos": 36,
    "exemplos_arquivos": [
     "supabase/functions/__tests__/optimistic-lock.test.ts",
     "supabase/functions/_shared/__tests__/local-supabase.ts",
@@ -445,6 +448,23 @@
   },
   {
    "id": 26,
+   "nome": "chatbot-respond/index.ts",
+   "nos": 57,
+   "callables": 31,
+   "arquivos": 17,
+   "exemplos_arquivos": [
+    "docs/edge-functions/README.md",
+    "docs/qa/03-ACHADOS.md",
+    "docs/qa/04-PLANO.md",
+    "supabase/functions/_shared/__tests__/auth_test.ts",
+    "supabase/functions/_shared/auth.ts",
+    "supabase/functions/_shared/observability.ts",
+    "supabase/functions/_shared/validator.ts",
+    "supabase/functions/_shared/validator_test.ts"
+   ]
+  },
+  {
+   "id": 27,
    "nome": "package.json",
    "nos": 57,
    "callables": 0,
@@ -457,7 +477,7 @@
    ]
   },
   {
-   "id": 27,
+   "id": 28,
    "nome": "useBitrix.ts",
    "nos": 55,
    "callables": 36,
@@ -474,7 +494,7 @@
    ]
   },
   {
-   "id": 28,
+   "id": 29,
    "nome": "sidebar.tsx",
    "nos": 52,
    "callables": 12,
@@ -491,7 +511,7 @@
    ]
   },
   {
-   "id": 29,
+   "id": 30,
    "nome": "VoiceAssistantDialog.tsx",
    "nos": 50,
    "callables": 32,
@@ -508,7 +528,7 @@
    ]
   },
   {
-   "id": 30,
+   "id": 31,
    "nome": "useConversations.ts",
    "nos": 50,
    "callables": 26,
@@ -525,7 +545,24 @@
    ]
   },
   {
-   "id": 31,
+   "id": 32,
+   "nome": "external-payload-schemas.ts",
+   "nos": 49,
+   "callables": 24,
+   "arquivos": 10,
+   "exemplos_arquivos": [
+    "docs/estado/edge-functions-parte1.md",
+    "supabase/functions/_shared/external-payload-schemas.ts",
+    "supabase/functions/_shared/external-payload-schemas_test.ts",
+    "supabase/functions/_shared/hmac.ts",
+    "supabase/functions/_shared/numeric-schemas.ts",
+    "supabase/functions/_shared/numeric-schemas_test.ts",
+    "supabase/functions/bitrix-api/__tests__/index.test.ts",
+    "supabase/functions/bitrix-api/index.test.ts"
+   ]
+  },
+  {
+   "id": 33,
    "nome": "ONDA 3 — Integridade de dados e regras de negócio (101–150)",
    "nos": 49,
    "callables": 0,
@@ -535,7 +572,7 @@
    ]
   },
   {
-   "id": 32,
+   "id": 34,
    "nome": "PhoneQuickAccess.tsx",
    "nos": 48,
    "callables": 32,
@@ -552,7 +589,7 @@
    ]
   },
   {
-   "id": 33,
+   "id": 35,
    "nome": "PhoneDialer.tsx",
    "nos": 48,
    "callables": 27,
@@ -569,7 +606,7 @@
    ]
   },
   {
-   "id": 34,
+   "id": 36,
    "nome": "ONDA 5 — Robustez: erros, estados e concorrência (181–235)",
    "nos": 45,
    "callables": 0,
@@ -579,7 +616,7 @@
    ]
   },
   {
-   "id": 35,
+   "id": 37,
    "nome": "usePredictiveDialer.ts",
    "nos": 44,
    "callables": 24,
@@ -594,7 +631,7 @@
    ]
   },
   {
-   "id": 36,
+   "id": 38,
    "nome": "useRealtimeHoldAlerts.ts",
    "nos": 43,
    "callables": 17,
@@ -611,7 +648,7 @@
    ]
   },
   {
-   "id": 37,
+   "id": 39,
    "nome": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
    "nos": 43,
    "callables": 0,
@@ -621,7 +658,7 @@
    ]
   },
   {
-   "id": 38,
+   "id": 40,
    "nome": "schemas.ts",
    "nos": 42,
    "callables": 16,
@@ -634,7 +671,7 @@
    ]
   },
   {
-   "id": 39,
+   "id": 41,
    "nome": "useConsent.coverage.test.tsx",
    "nos": 42,
    "callables": 20,
@@ -651,24 +688,7 @@
    ]
   },
   {
-   "id": 40,
-   "nome": "validator.ts",
-   "nos": 42,
-   "callables": 23,
-   "arquivos": 11,
-   "exemplos_arquivos": [
-    "docs/edge-functions/README.md",
-    "docs/qa/03-ACHADOS.md",
-    "supabase/functions/_shared/observability.ts",
-    "supabase/functions/_shared/validator.ts",
-    "supabase/functions/_shared/validator_test.ts",
-    "supabase/functions/analyze-call/index.ts",
-    "supabase/functions/data-lake-flush/index.ts",
-    "supabase/functions/health-check/__tests__/index.test.ts"
-   ]
-  },
-  {
-   "id": 41,
+   "id": 42,
    "nome": "02 — Matriz de cenários por jornada",
    "nos": 41,
    "callables": 4,
@@ -685,7 +705,7 @@
    ]
   },
   {
-   "id": 42,
+   "id": 43,
    "nome": "safe-number.ts",
    "nos": 40,
    "callables": 21,
@@ -702,30 +722,13 @@
    ]
   },
   {
-   "id": 43,
+   "id": 44,
    "nome": ".collect",
    "nos": 40,
    "callables": 38,
    "arquivos": 1,
    "exemplos_arquivos": [
     "scripts/supabase_snapshot/test_snapshot.py"
-   ]
-  },
-  {
-   "id": 44,
-   "nome": "external-payload-schemas.ts",
-   "nos": 40,
-   "callables": 24,
-   "arquivos": 9,
-   "exemplos_arquivos": [
-    "supabase/functions/_shared/external-payload-schemas.ts",
-    "supabase/functions/_shared/external-payload-schemas_test.ts",
-    "supabase/functions/_shared/hmac.ts",
-    "supabase/functions/_shared/numeric-schemas.ts",
-    "supabase/functions/_shared/numeric-schemas_test.ts",
-    "supabase/functions/bitrix-api/__tests__/index.test.ts",
-    "supabase/functions/bitrix-api/index.test.ts",
-    "supabase/functions/bitrix-api/index.ts"
    ]
   },
   {
@@ -1117,28 +1120,12 @@
   },
   {
    "id": 70,
-   "nome": "chatbot-respond/index.ts",
-   "nos": 33,
-   "callables": 16,
-   "arquivos": 12,
-   "exemplos_arquivos": [
-    "docs/qa/04-PLANO.md",
-    "supabase/functions/_shared/__tests__/auth_test.ts",
-    "supabase/functions/_shared/auth.ts",
-    "supabase/functions/_shared/constant-time.ts",
-    "supabase/functions/chatbot-respond/__tests__/index.test.ts",
-    "supabase/functions/chatbot-respond/index.ts",
-    "supabase/functions/chatbot-respond/schema.ts",
-    "supabase/functions/chatbot-respond/schema_test.ts"
-   ]
-  },
-  {
-   "id": 71,
    "nome": "resilience.ts",
-   "nos": 31,
+   "nos": 32,
    "callables": 22,
-   "arquivos": 5,
+   "arquivos": 6,
    "exemplos_arquivos": [
+    "docs/estado/infra-ci-rotas-integracoes.md",
     "docs/qa/05-PROGRESSO.md",
     "supabase/functions/_shared/__tests__/resilience.test.ts",
     "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
@@ -1147,7 +1134,7 @@
    ]
   },
   {
-   "id": 72,
+   "id": 71,
    "nome": "useLiveSentiment.coverage.test.tsx",
    "nos": 30,
    "callables": 10,
@@ -1164,7 +1151,7 @@
    ]
   },
   {
-   "id": 73,
+   "id": 72,
    "nome": "Scorecard — Maturidade Técnica (re-avaliação E2)",
    "nos": 30,
    "callables": 4,
@@ -1179,7 +1166,7 @@
    ]
   },
   {
-   "id": 74,
+   "id": 73,
    "nome": "web-vitals.ts",
    "nos": 30,
    "callables": 18,
@@ -1195,7 +1182,7 @@
    ]
   },
   {
-   "id": 75,
+   "id": 74,
    "nome": "sync-history.ts",
    "nos": 29,
    "callables": 21,
@@ -1208,7 +1195,7 @@
    ]
   },
   {
-   "id": 76,
+   "id": 75,
    "nome": "Auditoria Back-End Sênior — 2026-07-12",
    "nos": 29,
    "callables": 0,
@@ -1218,7 +1205,7 @@
    ]
   },
   {
-   "id": 77,
+   "id": 76,
    "nome": "CommandPalette.tsx",
    "nos": 29,
    "callables": 10,
@@ -1233,7 +1220,7 @@
    ]
   },
   {
-   "id": 78,
+   "id": 77,
    "nome": "20260711194619_238a08b8-a42e-49cd-8856-32a4c1db5c50.sql",
    "nos": 29,
    "callables": 0,
@@ -1243,7 +1230,7 @@
    ]
   },
   {
-   "id": 79,
+   "id": 78,
    "nome": "ref_pg",
    "nos": 29,
    "callables": 7,
@@ -1256,6 +1243,23 @@
     "scripts/fix-user-profile.mjs",
     "scripts/inspect-schema.mjs",
     "scripts/test-rls-access.mjs"
+   ]
+  },
+  {
+   "id": 79,
+   "nome": "RecommendationInsightsCard",
+   "nos": 28,
+   "callables": 10,
+   "arquivos": 9,
+   "exemplos_arquivos": [
+    ".lovable/memory/features/voip-recommendation-insights.md",
+    "docs/adr/033-onda-18-coaching-insights-recomendacoes.md",
+    "mem/features/voip-anomaly-detection.md",
+    "mem/features/voip-recommendation-insights.md",
+    "src/components/network/RecommendationHistoryDrawer.tsx",
+    "src/components/network/RecommendationInsightsCard.tsx",
+    "src/hooks/useVoipRecommendationInsights.ts",
+    "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts"
    ]
   }
  ],
@@ -1597,6 +1601,13 @@
    "comunidade": "card.tsx"
   },
   {
+   "id": "supabase_functions_shared_errors_getcorrelationid",
+   "rotulo": "getCorrelationId()",
+   "arquivo": "supabase/functions/_shared/errors.ts",
+   "grau": 65,
+   "comunidade": "buildCorsHeaders"
+  },
+  {
    "id": "src_components_ui_skeleton",
    "rotulo": "skeleton.tsx",
    "arquivo": "src/components/ui/skeleton.tsx",
@@ -1616,6 +1627,13 @@
    "arquivo": "src/components/ui/skeleton.tsx",
    "grau": 63,
    "comunidade": "card.tsx"
+  },
+  {
+   "id": "supabase_functions_shared_errors",
+   "rotulo": "errors.ts",
+   "arquivo": "supabase/functions/_shared/errors.ts",
+   "grau": 63,
+   "comunidade": "buildCorsHeaders"
   },
   {
    "id": "src_lib_safe_date_safeformatdistancetonow",
@@ -1664,20 +1682,6 @@
    "rotulo": "OutboundCompliance.tsx",
    "arquivo": "src/pages/OutboundCompliance.tsx",
    "grau": 59,
-   "comunidade": "safe-date.ts"
-  },
-  {
-   "id": "src_components_dialer_predictivedialerpanel",
-   "rotulo": "PredictiveDialerPanel.tsx",
-   "arquivo": "src/components/dialer/PredictiveDialerPanel.tsx",
-   "grau": 58,
-   "comunidade": "safeFormatDistanceToNow"
-  },
-  {
-   "id": "src_pages_admin_securityauditdashboard",
-   "rotulo": "SecurityAuditDashboard.tsx",
-   "arquivo": "src/pages/admin/SecurityAuditDashboard.tsx",
-   "grau": 58,
    "comunidade": "safe-date.ts"
   }
  ],
@@ -1815,6 +1819,10 @@
    "chamadas": 8
   },
   {
+   "simbolo": "getCorrelationId() (supabase/functions/_shared/errors.ts)",
+   "chamadas": 8
+  },
+  {
    "simbolo": "invoke() (src/hooks/useVoipTrunks.ts)",
    "chamadas": 8
   },
@@ -1916,10 +1924,6 @@
   },
   {
    "simbolo": "files_cell() (scripts/regras_negocio/generate.py)",
-   "chamadas": 5
-  },
-  {
-   "simbolo": "getClientIp() (supabase/functions/_shared/rate-limit.ts)",
    "chamadas": 5
   }
  ],
@@ -2169,13 +2173,13 @@
   "docs/audits/pendencias-2026-07.md": "useExtensionsOverview.ts",
   "docs/contexto/regras/manual/README.md": "manual/README.md",
   "docs/contexto/regras/manual/TEMPLATE-regras-de-negocio.md": "Regras de negócio — preencha o que o código não diz",
-  "docs/edge-functions/README.md": "validator.ts",
+  "docs/edge-functions/README.md": "chatbot-respond/index.ts",
   "docs/estado/componentes-parte1.md": "useSipCall",
   "docs/estado/componentes-parte2.md": "ESTADO_ATUAL.md",
   "docs/estado/componentes-parte3.md": "Tabela de funcionalidades",
   "docs/estado/componentes-parte4.md": "ESTADO_ATUAL.md",
   "docs/estado/dados-schema-migrations.md": "ESTADO_ATUAL.md",
-  "docs/estado/edge-functions-parte1.md": "Lote F1 — supabase/functions (parte 1)",
+  "docs/estado/edge-functions-parte1.md": "external-payload-schemas.ts",
   "docs/estado/edge-functions-parte2.md": "ESTADO_ATUAL.md",
   "docs/estado/funcionalidades-planejadas.md": "useWhatsappRewrite.ts",
   "docs/estado/hooks-parte1.md": "Tabela de funcionalidades",
@@ -2207,7 +2211,7 @@
   "docs/qa/02-CENARIOS.md": "useQueueMetrics",
   "docs/qa/03-ACHADOS.md": "card.tsx",
   "docs/qa/04-PLANO.md": "cn",
-  "docs/qa/05-PROGRESSO.md": "buildCorsHeaders",
+  "docs/qa/05-PROGRESSO.md": "useKnowledgeBase.coverage.test.tsx",
   "docs/qa/onda-37-relatorio-massivo.md": "useContacts.ts",
   "docs/qa/onda-38-auditoria-producao.md": "error-tracking.ts",
   "docs/runbooks/incident-response.md": "Runbook — Resposta a Incidentes",
@@ -2445,7 +2449,7 @@
   "src/components/contacts/ContactHistoryTab.tsx": "useContacts.ts",
   "src/components/contacts/ContactPagination.tsx": "usePageTitle",
   "src/components/contacts/ContactProfileTab.tsx": "badge.tsx",
-  "src/components/contacts/CreateContactDialog.tsx": "Contact",
+  "src/components/contacts/CreateContactDialog.tsx": "react",
   "src/components/contacts/CustomerJourneyTimeline.tsx": "badge.tsx",
   "src/components/contacts/contactFiltersState.ts": "usePageTitle",
   "src/components/contacts/pagination.ts": "usePageTitle",
@@ -2539,7 +2543,7 @@
   "src/components/network/AnomalyDetectionCard.tsx": "button.tsx",
   "src/components/network/CapacityForecastChart.tsx": "card.tsx",
   "src/components/network/ExecutiveReportExport.tsx": "ExecutiveReportExport.tsx",
-  "src/components/network/ExecutiveSummaryDialog.tsx": "ExecutiveSummaryDialog",
+  "src/components/network/ExecutiveSummaryDialog.tsx": "react",
   "src/components/network/NetworkStatusIndicator.tsx": "cn",
   "src/components/network/QualityAlertsCard.tsx": "card.tsx",
   "src/components/network/QualityAlertsSummaryCard.tsx": "card.tsx",
@@ -2549,7 +2553,7 @@
   "src/components/network/RecommendationInsightsCard.tsx": "logger.ts",
   "src/components/network/SlaReportCards.tsx": "card.tsx",
   "src/components/network/VoipHealthScoreCard.tsx": "ExecutiveReportExport.tsx",
-  "src/components/network/VoipRecommendationsPanel.tsx": "logger.ts",
+  "src/components/network/VoipRecommendationsPanel.tsx": "react",
   "src/components/network/VoipVoiceQAPanel.tsx": "VoipVoiceQAPanel.tsx",
   "src/components/network/WhatIfSimulatorDialog.tsx": "react",
   "src/components/network/__tests__/QualityForecastCard.test.tsx": "Memories",
@@ -3039,7 +3043,7 @@
   "src/hooks/useVoipRecommendationHistory.ts": "@tanstack/react-query",
   "src/hooks/useVoipRecommendationInsights.ts": "logger.ts",
   "src/hooks/useVoipRecommendationSimulate.ts": "logger.ts",
-  "src/hooks/useVoipRecommendations.ts": "logger.ts",
+  "src/hooks/useVoipRecommendations.ts": "react",
   "src/hooks/useVoipTrunks.ts": "lib/schema.ts",
   "src/hooks/useWavoipCall.ts": "client.ts",
   "src/hooks/useWebAuthn.ts": "useWebAuthn.ts",
@@ -3394,12 +3398,12 @@
   "supabase/functions/_shared/__tests__/resilient-fetch.test.ts": "resilience.ts",
   "supabase/functions/_shared/__tests__/validate.fuzz.test.ts": "ref_https",
   "supabase/functions/_shared/allowed-hosts.ts": "allowed-hosts.ts",
-  "supabase/functions/_shared/auth.ts": "02 — Matriz de cenários por jornada",
-  "supabase/functions/_shared/business-hours.ts": "enforce-sla/index.ts",
-  "supabase/functions/_shared/business-hours_test.ts": "enforce-sla/index.ts",
-  "supabase/functions/_shared/client-ip.ts": "client-ip.ts",
-  "supabase/functions/_shared/client-ip_test.ts": "client-ip.ts",
-  "supabase/functions/_shared/constant-time.ts": "chatbot-respond/index.ts",
+  "supabase/functions/_shared/auth.ts": "chatbot-respond/index.ts",
+  "supabase/functions/_shared/business-hours.ts": "business-hours.ts",
+  "supabase/functions/_shared/business-hours_test.ts": "business-hours.ts",
+  "supabase/functions/_shared/client-ip.ts": "buildCorsHeaders",
+  "supabase/functions/_shared/client-ip_test.ts": "buildCorsHeaders",
+  "supabase/functions/_shared/constant-time.ts": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
   "supabase/functions/_shared/cors.ts": "buildCorsHeaders",
   "supabase/functions/_shared/errors.ts": "buildCorsHeaders",
   "supabase/functions/_shared/errors_test.ts": "buildCorsHeaders",
@@ -3411,20 +3415,20 @@
   "supabase/functions/_shared/mos_test.ts": "voip-recommendation-simulate/index.ts",
   "supabase/functions/_shared/numeric-schemas.ts": "external-payload-schemas.ts",
   "supabase/functions/_shared/numeric-schemas_test.ts": "external-payload-schemas.ts",
-  "supabase/functions/_shared/observability.ts": "validator.ts",
+  "supabase/functions/_shared/observability.ts": "chatbot-respond/index.ts",
   "supabase/functions/_shared/queue-metrics.ts": "queue-metrics.ts",
   "supabase/functions/_shared/queue-metrics_test.ts": "queue-metrics.ts",
   "supabase/functions/_shared/rate-limit.ts": "validate.ts",
   "supabase/functions/_shared/resilience.ts": "resilience.ts",
   "supabase/functions/_shared/validate.ts": "validate.ts",
-  "supabase/functions/_shared/validator.ts": "validator.ts",
-  "supabase/functions/_shared/validator_test.ts": "validator.ts",
+  "supabase/functions/_shared/validator.ts": "chatbot-respond/index.ts",
+  "supabase/functions/_shared/validator_test.ts": "chatbot-respond/index.ts",
   "supabase/functions/_shared/voice-utils.ts": "validate.ts",
   "supabase/functions/analyze-call/__tests__/integration_test.ts": "ref_https",
   "supabase/functions/analyze-call/__tests__/schema.property.test.ts": "ref_https",
   "supabase/functions/analyze-call/__tests__/schema_test.ts": "ref_https",
   "supabase/functions/analyze-call/analyze-call_test.ts": "ref_https",
-  "supabase/functions/analyze-call/index.ts": "validator.ts",
+  "supabase/functions/analyze-call/index.ts": "chatbot-respond/index.ts",
   "supabase/functions/analyze-call/schema.ts": "ref_https",
   "supabase/functions/analyze-contact-profile/index.ts": "validate.ts",
   "supabase/functions/analyze-live-utterance/index.ts": "validate.ts",
@@ -3436,7 +3440,7 @@
   "supabase/functions/bitrix-api/__tests__/index.test.ts": "external-payload-schemas.ts",
   "supabase/functions/bitrix-api/index.test.ts": "external-payload-schemas.ts",
   "supabase/functions/bitrix-api/index.ts": "external-payload-schemas.ts",
-  "supabase/functions/chat-widget-session/index.ts": "buildCorsHeaders",
+  "supabase/functions/chat-widget-session/index.ts": "ref_https",
   "supabase/functions/chat-widget-session/schema.ts": "ref_https",
   "supabase/functions/chat-widget-session/schema_test.ts": "ref_https",
   "supabase/functions/chatbot-respond/__tests__/index.test.ts": "chatbot-respond/index.ts",
@@ -3453,22 +3457,22 @@
   "supabase/functions/check-hold-alerts/index.ts": "buildCorsHeaders",
   "supabase/functions/check-queue-metrics/__tests__/index.test.ts": "ref_https",
   "supabase/functions/check-queue-metrics/index.ts": "buildCorsHeaders",
-  "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts": "chatbot-respond/index.ts",
+  "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
   "supabase/functions/cleanup-lock-conflicts/index.test.ts": "ref_https",
-  "supabase/functions/cleanup-lock-conflicts/index.ts": "chatbot-respond/index.ts",
-  "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts": "chatbot-respond/index.ts",
+  "supabase/functions/cleanup-lock-conflicts/index.ts": "buildCorsHeaders",
+  "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
   "supabase/functions/cleanup-recordings/index.ts": "buildCorsHeaders",
-  "supabase/functions/compute-account-health/index.ts": "buildCorsHeaders",
+  "supabase/functions/compute-account-health/index.ts": "ref_https",
   "supabase/functions/compute-adherence/index.ts": "buildCorsHeaders",
   "supabase/functions/compute-best-time/index.ts": "validate.ts",
   "supabase/functions/compute-deal-health/__tests__/index.test.ts": "ref_https",
   "supabase/functions/compute-deal-health/index.ts": "ref_https",
-  "supabase/functions/data-lake-flush/index.ts": "validator.ts",
+  "supabase/functions/data-lake-flush/index.ts": "buildCorsHeaders",
   "supabase/functions/database-backup/index.ts": "buildCorsHeaders",
   "supabase/functions/database-cleanup/index.ts": "buildCorsHeaders",
-  "supabase/functions/detect-churn-risk/index.ts": "buildCorsHeaders",
+  "supabase/functions/detect-churn-risk/index.ts": "ref_https",
   "supabase/functions/detect-key-moments/index.ts": "validate.ts",
-  "supabase/functions/dialer-pacing-tick/index.ts": "chatbot-respond/index.ts",
+  "supabase/functions/dialer-pacing-tick/index.ts": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
   "supabase/functions/elevenlabs-conversation-token/index.ts": "buildCorsHeaders",
   "supabase/functions/email-inbound/__tests__/index.test.ts": "buildCorsHeaders",
   "supabase/functions/email-inbound/index.ts": "buildCorsHeaders",
@@ -3476,15 +3480,15 @@
   "supabase/functions/email-inbound/schema_test.ts": "ref_https",
   "supabase/functions/embed-kb-article/__tests__/index.test.ts": "validate.ts",
   "supabase/functions/embed-kb-article/index.ts": "validate.ts",
-  "supabase/functions/enforce-sla/__tests__/index.test.ts": "enforce-sla/index.ts",
-  "supabase/functions/enforce-sla/index.ts": "enforce-sla/index.ts",
+  "supabase/functions/enforce-sla/__tests__/index.test.ts": "ref_https",
+  "supabase/functions/enforce-sla/index.ts": "ref_https",
   "supabase/functions/enroll-voice/index.ts": "validate.ts",
   "supabase/functions/export-data-lake/__tests__/csv.test.ts": "ref_https",
   "supabase/functions/export-data-lake/csv.ts": "ref_https",
   "supabase/functions/export-data-lake/index.ts": "buildCorsHeaders",
   "supabase/functions/extract-crm-fields/index.ts": "validate.ts",
   "supabase/functions/forecast-call-volume/index.ts": "buildCorsHeaders",
-  "supabase/functions/forecast-deals/index.ts": "buildCorsHeaders",
+  "supabase/functions/forecast-deals/index.ts": "ref_https",
   "supabase/functions/fuzz-test-runner/index.ts": "buildCorsHeaders",
   "supabase/functions/generate-coaching-plan/index.ts": "buildCorsHeaders",
   "supabase/functions/generate-coaching-track/index.ts": "track-engine.ts",
@@ -3494,10 +3498,10 @@
   "supabase/functions/generate-meeting-summary/index.ts": "buildCorsHeaders",
   "supabase/functions/generate-summary/index.ts": "validate.ts",
   "supabase/functions/global-load-test/index.ts": "buildCorsHeaders",
-  "supabase/functions/health-check/__tests__/index.test.ts": "validator.ts",
-  "supabase/functions/health-check/__tests__/slo-budget_test.ts": "validator.ts",
-  "supabase/functions/health-check/index.ts": "validator.ts",
-  "supabase/functions/health-check/slo-budget.ts": "validator.ts",
+  "supabase/functions/health-check/__tests__/index.test.ts": "chatbot-respond/index.ts",
+  "supabase/functions/health-check/__tests__/slo-budget_test.ts": "chatbot-respond/index.ts",
+  "supabase/functions/health-check/index.ts": "chatbot-respond/index.ts",
+  "supabase/functions/health-check/slo-budget.ts": "chatbot-respond/index.ts",
   "supabase/functions/ldap-sync/index.ts": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
   "supabase/functions/notify-blocked-ip/__tests__/index.test.ts": "validate.ts",
   "supabase/functions/notify-blocked-ip/index.ts": "validate.ts",
@@ -3528,9 +3532,9 @@
   "supabase/functions/translate-summary/index.ts": "buildCorsHeaders",
   "supabase/functions/translate-utterance/__tests__/index.test.ts": "ref_https",
   "supabase/functions/translate-utterance/index.ts": "buildCorsHeaders",
-  "supabase/functions/validate-geo/index.ts": "client-ip.ts",
+  "supabase/functions/validate-geo/index.ts": "buildCorsHeaders",
   "supabase/functions/validate-ip/__tests__/index.test.ts": "buildCorsHeaders",
-  "supabase/functions/validate-ip/index.ts": "client-ip.ts",
+  "supabase/functions/validate-ip/index.ts": "buildCorsHeaders",
   "supabase/functions/verify-voice/index.ts": "validate.ts",
   "supabase/functions/voice-command/index.ts": "buildCorsHeaders",
   "supabase/functions/voice-transcribe/index.ts": "buildCorsHeaders",
@@ -3555,9 +3559,9 @@
   "supabase/functions/voip-quality-forecast/__tests__/index.test.ts": "voip-quality-forecast/index.ts",
   "supabase/functions/voip-quality-forecast/index.ts": "voip-quality-forecast/index.ts",
   "supabase/functions/voip-quality-heatmap/__tests__/index.test.ts": "ref_https",
-  "supabase/functions/voip-quality-heatmap/index.ts": "validate.ts",
-  "supabase/functions/voip-recommendation-history/__tests__/index.test.ts": "ref_https",
-  "supabase/functions/voip-recommendation-history/index.ts": "ref_https",
+  "supabase/functions/voip-quality-heatmap/index.ts": "buildCorsHeaders",
+  "supabase/functions/voip-recommendation-history/__tests__/index.test.ts": "voip-recommendation-history/index.ts",
+  "supabase/functions/voip-recommendation-history/index.ts": "voip-recommendation-history/index.ts",
   "supabase/functions/voip-recommendation-insights/__tests__/index.test.ts": "voip-recommendation-insights/index.ts",
   "supabase/functions/voip-recommendation-insights/index.ts": "voip-recommendation-insights/index.ts",
   "supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts": "voip-recommendation-simulate/index.ts",
@@ -3568,7 +3572,7 @@
   "supabase/functions/voip-sla-report/index.ts": "validate.ts",
   "supabase/functions/voip-trunks-healthcheck/index.test.ts": "allowed-hosts.ts",
   "supabase/functions/voip-trunks-healthcheck/index.ts": "allowed-hosts.ts",
-  "supabase/functions/voip-trunks-manage/index.ts": "buildCorsHeaders",
+  "supabase/functions/voip-trunks-manage/index.ts": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
   "supabase/functions/wavoip-call/index.ts": "buildCorsHeaders",
   "supabase/functions/webauthn-authenticate/__tests__/contador.test.ts": "webauthn-authenticate/index.ts",
   "supabase/functions/webauthn-authenticate/__tests__/index.test.ts": "webauthn-authenticate/index.ts",
