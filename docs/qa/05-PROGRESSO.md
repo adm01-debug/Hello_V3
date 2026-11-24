@@ -262,7 +262,7 @@
 - [x] **205** — Parar de engolir falha no agendamento de retorno ao cliente — onda 5 — Alta — Hooks · (`useScheduledCallbacks.ts` já registrava e avisava nos 5 catch desde a onda das etapas 189/194/195 — evidência: as linhas 108/132/154/173/192 têm `log.error` + `toast.error`; o que faltava era a confirmação com data e hora e a gravação que não grava nada: `createCallback`/`updateCallback` passam a confirmar com o `scheduled_at` devolvido pelo banco, e complete/cancel/delete usam `.select('id')` para não reportar sucesso com 0 linhas afetadas. Verificação: `bunx vitest run src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` 10/10 com o fix e 2 falhando sem ele; `bunx tsc --noEmit` rc=0; `bunx eslint` rc=0)
 - [ ] **206** — Evitar a corrida entre "carregar mais" e troca de filtro no histórico — onda 5 — Baixa — Hooks
 - [ ] **207** — Registrar a reordenação de favoritos só depois de persistir — onda 5 — Baixa — Hooks 🔒
-- [ ] **208** — Criar o utilitário de `fetch` com prazo para as edges — onda 5 — Média — Edge Function
+- [x] **208** — Criar o utilitário de `fetch` com prazo para as edges — onda 5 — Média — Edge Function · (`DEFAULT_FETCH_TIMEOUT_MS` 15 s e `fetchComPrazo()` em `_shared/resilience.ts`, combinando o signal do chamador com `AbortSignal.timeout`; `resilientFetch` passou a usar o prazo; 11/11 nos testes Deno — sem o fix a suíte fica pendurada e so o `timeout` de 20 s a mata (rc=124); `deno check` e `deno lint` sem problema novo)
 - [ ] **209** — Prazo nas edges de IA — onda 5 — Média — Edge Function
 - [ ] **210** — Prazo nas edges de e-mail e de integração — onda 5 — Média — Edge Function
 - [ ] **211** — Prazo e proteção na cadeia edge→edge — onda 5 — Média — Edge Function

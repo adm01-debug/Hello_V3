@@ -185,6 +185,29 @@ export async function resilientCall<T>(
   return retry(() => withCircuitBreaker(key, fn, opts.breaker), opts.retry);
 }
 
+// ---------- Prazo de fetch ----------
+
+/** Prazo padrao de uma chamada externa: 15 s. */
+export const DEFAULT_FETCH_TIMEOUT_MS = 15_000;
+
+function sinalComPrazo(init: RequestInit | undefined, timeoutMs: number): AbortSignal {
+  const prazo = AbortSignal.timeout(timeoutMs);
+  return init?.signal ? AbortSignal.any([init.signal, prazo]) : prazo;
+}
+
+/**
+ * `fetch` com prazo. Sem signal do chamador, uma chamada pendurada aborta em
+ * `timeoutMs` em vez de esperar o limite da plataforma. O erro e um
+ * `TimeoutError` (upstream indisponivel), nao um erro interno.
+ */
+export async function fetchComPrazo(
+  input: string | URL | Request,
+  init?: RequestInit,
+  timeoutMs: number = DEFAULT_FETCH_TIMEOUT_MS,
+): Promise<Response> {
+  return await fetch(input, { ...init, signal: sinalComPrazo(init, timeoutMs) });
+}
+
 /**
  * Convenience wrapper: fetch com retry + circuit breaker.
  * Trata 429/5xx como erro para reciclar via retry.
@@ -193,10 +216,11 @@ export async function resilientFetch(
   key: string,
   input: string | URL | Request,
   init?: RequestInit,
-  opts: { retry?: RetryOptions; breaker?: CircuitBreakerOptions } = {},
+  opts: { retry?: RetryOptions; breaker?: CircuitBreakerOptions; timeoutMs?: number } = {},
 ): Promise<Response> {
+  const { timeoutMs = DEFAULT_FETCH_TIMEOUT_MS, ...restOpts } = opts;
   return resilientCall(key, async () => {
-    const res = await fetch(input, init);
+    const res = await fetchComPrazo(input, init, timeoutMs);
     if (res.status === 429 || res.status >= 500) {
       try { await res.clone().text(); } catch { /* ignore */ }
       const err = new Error(`HTTP ${res.status}`) as Error & { status: number };
@@ -204,6 +228,6 @@ export async function resilientFetch(
       throw err;
     }
     return res;
-  }, opts);
+  }, restOpts);
 }
 

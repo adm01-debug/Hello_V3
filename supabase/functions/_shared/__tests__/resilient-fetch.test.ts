@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { assertEquals, assertRejects, assert } from "https://deno.land/std@0.208.0/assert/mod.ts";
-import { _resetAllCircuits, resilientFetch, CircuitOpenError } from "../resilience.ts";
+import { _resetAllCircuits, resilientFetch, fetchComPrazo, CircuitOpenError } from "../resilience.ts";
 
 function mockFetchSequence(responses: Array<{ status: number; body?: string } | Error>) {
   let i = 0;
@@ -131,4 +131,68 @@ Deno.test("resilientFetch: fuzz 200 cenários de status HTTP variados", async ()
   // deve haver pelo menos alguns de cada categoria
   assert(ok > 0, "esperava sucessos");
   assert(permanent > 0, "esperava falhas terminais");
+});
+
+// ---------- E208: prazo de fetch ----------
+
+/** Servidor que aceita a conexao e so encerra quando o cliente desiste. */
+function servidorMudo() {
+  const server = Deno.serve({ port: 0, hostname: "127.0.0.1", onListen: () => {} }, async (req) => {
+    await new Promise<void>((resolve) => {
+      if (req.signal.aborted) return resolve();
+      req.signal.addEventListener("abort", () => resolve(), { once: true });
+    });
+    return new Response("", { status: 499 });
+  });
+  server.unref();
+  return {
+    url: `http://127.0.0.1:${server.addr.port}/mudo`,
+    shutdown: () => Promise.race([server.shutdown(), new Promise((r) => setTimeout(r, 500))]),
+  };
+}
+
+Deno.test("fetchComPrazo: provedor pendurado aborta no prazo (E208)", async () => {
+  const { url, shutdown } = await servidorMudo();
+  const inicio = Date.now();
+  try {
+    const err = await assertRejects(() => fetchComPrazo(url, undefined, 150));
+    assertEquals((err as DOMException).name, "TimeoutError");
+    const gasto = Date.now() - inicio;
+    assert(gasto >= 100, `abortou cedo demais (${gasto}ms)`);
+    assert(gasto < 3000, `nao abortou no prazo (${gasto}ms)`);
+  } finally { await shutdown(); }
+});
+
+Deno.test("resilientFetch: respeita o prazo e nao fica pendurado (E208)", async () => {
+  _resetAllCircuits();
+  const { url, shutdown } = await servidorMudo();
+  const inicio = Date.now();
+  try {
+    await assertRejects(() => resilientFetch("prazo-1", url, undefined, {
+      retry: { retries: 0, sleep: async () => {} },
+      timeoutMs: 150,
+    }));
+    assert(Date.now() - inicio < 3000, "deveria abortar no prazo");
+  } finally { await shutdown(); }
+});
+
+Deno.test("fetchComPrazo: signal do chamador continua valendo (E208)", async () => {
+  const { url, shutdown } = await servidorMudo();
+  try {
+    const ctrl = new AbortController();
+    const pendente = fetchComPrazo(url, { signal: ctrl.signal }, 10_000);
+    const timer = setTimeout(() => ctrl.abort(), 80);
+    const err = await assertRejects(() => pendente);
+    clearTimeout(timer);
+    assert((err as DOMException).name === "AbortError", `nome inesperado: ${(err as DOMException).name}`);
+  } finally { await shutdown(); }
+});
+
+Deno.test("fetchComPrazo: resposta normal nao e afetada (E208)", async () => {
+  const server = Deno.serve({ port: 0, hostname: "127.0.0.1", onListen: () => {} }, () => new Response("ok", { status: 200 }));
+  try {
+    const res = await fetchComPrazo(`http://127.0.0.1:${server.addr.port}/ok`);
+    assertEquals(res.status, 200);
+    assertEquals(await res.text(), "ok");
+  } finally { await server.shutdown(); }
 });
