@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
@@ -35,6 +35,8 @@ interface RemediationInput {
 }
 
 export function useAnomalyRemediation() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async ({ silent: _silent, ...payload }: RemediationInput): Promise<RemediationResponse> => {
       const { data, error } = await supabase.functions.invoke<RemediationResponse>(
@@ -47,6 +49,7 @@ export function useAnomalyRemediation() {
     },
     onSuccess: (data, vars) => {
       if (vars.silent) return;
+      void queryClient.invalidateQueries({ queryKey: ['voip-anomalies'] });
       if (data.applied) {
         toast.success('Remediação aplicada', { description: data.plan.description });
       } else if (data.reason === 'idempotent_skip') {

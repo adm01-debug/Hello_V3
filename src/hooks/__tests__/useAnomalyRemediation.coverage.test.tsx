@@ -65,6 +65,31 @@ describe('useAnomalyRemediation', () => {
     await waitFor(() => expect(toast.error).toHaveBeenCalled());
   });
 
+  it('invalida a lista de anomalias depois de aplicar', async () => {
+    invoke.mockResolvedValue({ data: { applied: true, plan, request_id: 'r' }, error: null });
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
+    const spy = vi.spyOn(client, 'invalidateQueries');
+    const shared = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={client}>{children}</QueryClientProvider>
+    );
+    const { result } = renderHook(() => useAnomalyRemediation(), { wrapper: shared });
+    await act(async () => { result.current.mutate(baseInput); });
+    await waitFor(() => expect(spy).toHaveBeenCalledWith({ queryKey: ['voip-anomalies'] }));
+  });
+
+  it('modo silencioso nao invalida a lista', async () => {
+    invoke.mockResolvedValue({ data: { applied: true, plan, request_id: 'r' }, error: null });
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
+    const spy = vi.spyOn(client, 'invalidateQueries');
+    const shared = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={client}>{children}</QueryClientProvider>
+    );
+    const { result } = renderHook(() => useAnomalyRemediation(), { wrapper: shared });
+    await act(async () => { result.current.mutate({ ...baseInput, silent: true }); });
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('empty data throws', async () => {
     invoke.mockResolvedValue({ data: null, error: null });
     const { result } = renderHook(() => useAnomalyRemediation(), { wrapper });
