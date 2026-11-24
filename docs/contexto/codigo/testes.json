@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 385,
+ "total": 384,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 368
+  "unit": 367
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 361
+   "arquivos": 360
   },
   {
    "padrao": "e2e/",
@@ -1255,16 +1255,6 @@
    "linhas": 208,
    "testa": [],
    "casos": 25
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-   "tipo": "unit",
-   "linhas": 113,
-   "testa": [
-    "src/hooks/useMultiChannelCall.ts",
-    "src/hooks/useMultiChannelCallConference.ts"
-   ],
-   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx",
@@ -3581,8 +3571,7 @@
   "src/hooks/useLoginLockout.ts": 1,
   "src/hooks/useMFA.ts": 1,
   "src/hooks/useMeetingSummary.ts": 3,
-  "src/hooks/useMultiChannelCall.ts": 8,
-  "src/hooks/useMultiChannelCallConference.ts": 1,
+  "src/hooks/useMultiChannelCall.ts": 7,
   "src/hooks/useMultiDeviceRing.ts": 1,
   "src/hooks/useNetworkMonitor.ts": 1,
   "src/hooks/useNotifications.ts": 1,

@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 194,
+ "total": 193,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -2905,7 +2905,7 @@
     "useEffect"
    ],
    "canais_realtime": [],
-   "usado_por": 17,
+   "usado_por": 16,
    "usado_por_arquivos": [
     "src/components/calls/ActiveCallsIndicator.tsx",
     "src/components/calls/ConferenceSection.tsx",
@@ -2922,28 +2922,9 @@
     "src/hooks/useCallTransfer.ts",
     "src/hooks/useConferenceRecording.ts",
     "src/hooks/useHoldReminder.ts",
-    "src/hooks/useMultiChannelCallConference.ts",
     "src/pages/PhoneDialer.tsx"
    ],
-   "coberto_por_testes": 8
-  },
-  {
-   "arquivo": "src/hooks/useMultiChannelCallConference.ts",
-   "hooks_exportados": [
-    "useMultiChannelCallConference"
-   ],
-   "linhas": 135,
-   "dominio": "hooks",
-   "tabelas": [],
-   "rpcs": [],
-   "edges": [],
-   "hooks_internos": [
-    "useCallback"
-   ],
-   "canais_realtime": [],
-   "usado_por": 0,
-   "usado_por_arquivos": [],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 7
   },
   {
    "arquivo": "src/hooks/useMultiDeviceRing.ts",

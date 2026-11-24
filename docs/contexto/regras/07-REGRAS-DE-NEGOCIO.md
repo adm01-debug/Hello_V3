@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e78a64b0fd` · branch `main` · 2026-11-24 05:42 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `92474f77dd` · branch `main` · 2026-11-24 05:57 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -844,7 +844,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `TIMED_OUT` | compara | `src/hooks/useHealthCheck.ts` |
 | `status` | `abandoned` | compara, filtra | `src/components/dashboard/RecentCalls.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>`src/pages/CallHistory.tsx`<br>`supabase/functions/check-goals/index.ts`<br>… +1 |
 | `status` | `accepted` | escreve | `src/hooks/useCrmFieldSuggestions.ts` |
-| `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>… +21 |
+| `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>… +20 |
 | `status` | `agent_high` | compara | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `status` | `agent_low` | escreve | `src/hooks/useTalkRatio.ts`<br>`src/lib/talkRatio.ts` |
 | `status` | `approved` | compara, escreve | `src/hooks/useScorecards.ts`<br>`src/hooks/useShiftSwapSuggestions.ts`<br>`src/hooks/useTimeOff.ts`<br>`src/pages/PasswordResetApproval.tsx`<br>`src/pages/Scheduling.tsx`<br>… +2 |
@@ -857,7 +857,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `cancelled` | escreve | `src/hooks/useScheduledCallbacks.ts` |
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
 | `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +31 |
-| `status` | `conference` | compara, escreve | `src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
+| `status` | `conference` | compara, escreve | `src/hooks/useMultiChannelCall.ts` |
 | `status` | `connected` | escreve | `src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>… +3 |
 | `status` | `created` | escreve | `supabase/functions/auto-scorecard/index.ts` |
@@ -868,7 +868,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `disponivel` | escreve | `src/pages/Marketplace.tsx` |
 | `status` | `down` | compara, escreve | `src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts` |
 | `status` | `draft` | compara, escreve | `src/hooks/useKnowledgeBase.ts`<br>`src/hooks/useScorecards.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Scorecards.tsx`<br>`supabase/functions/score-call/index.ts` |
-| `status` | `ended` | compara, escreve | `src/components/calls/WebRTCCall.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>… +2 |
+| `status` | `ended` | compara, escreve | `src/components/calls/WebRTCCall.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>`src/pages/VideoConference.tsx`<br>… +1 |
 | `status` | `error` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>`src/pages/VerifyEmail.tsx` |
 | `status` | `exhausted` | compara | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
 | `status` | `expired` | compara, escreve | `src/pages/PasswordResetApproval.tsx`<br>`src/pages/VerifyEmail.tsx`<br>`supabase/functions/approve-password-reset/index.ts` |
@@ -889,7 +889,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `number` | compara | `src/lib/security-alerts-webhook-history.ts`<br>`supabase/functions/_shared/resilience.ts` |
 | `status` | `offline` | compara, escreve | `src/components/admin/extensions/ExtensionStatusBadge.tsx`<br>`src/components/executive/VoipInfrastructureTab.tsx`<br>`src/components/network/NetworkStatusIndicator.tsx`<br>`src/hooks/useAgentStatus.ts`<br>`src/hooks/useExtensionsAdmin.ts`<br>… +4 |
 | `status` | `ok` | compara, escreve | `src/components/queue/QueueGoalsTab.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`supabase/functions/check-goals/index.ts`<br>`supabase/functions/data-lake-flush/index.ts` |
-| `status` | `on-hold` | compara, escreve | `src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
+| `status` | `on-hold` | compara, escreve | `src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts` |
 | `status` | `on_call` | compara | `src/hooks/useQueueMetrics.ts` |
 | `status` | `on_hold` | compara | `src/hooks/useQueueMetrics.ts` |
 | `status` | `online` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
@@ -919,7 +919,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `system` | escreve | `supabase/functions/check-goals/index.ts` |
 | `status` | `today` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `tomorrow` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
-| `status` | `transferring` | compara, escreve | `src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
+| `status` | `transferring` | compara, escreve | `src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts` |
 | `status` | `unknown` | compara, escreve | `src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`supabase/functions/health-check/index.ts`<br>`supabase/functions/health-check/slo-budget.ts` |
 | `status` | `unstable` | compara | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/pages/NetworkDiagnostics.tsx` |
 | `status` | `verified` | compara, escreve | `src/components/auth/ReauthDialog.tsx`<br>`src/hooks/useMFA.ts`<br>`src/pages/TwoFactorAuth.tsx`<br>`src/pages/two-factor/DevicesCard.tsx` |
@@ -2053,7 +2053,6 @@ _nenhum item encontrado_
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useFinancialImpact.ts` |
 | `const timer = setTimeout(() => settle(() => { throw new Error('Timeout'); }), 5000);` | `src/hooks/useHealthCheck.ts` |
 | `if (alert.severity !== 'critical') setTimeout(() => n.close(), 10000);` | `src/hooks/useHoldReminder.ts` |
-| `setTimeout(() => { completeTransfer(callId); }, 2000);` | `src/hooks/useMultiChannelCallConference.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useOptimisticLockConflicts.ts` |
 | `dialerIntervalRef.current = setTimeout(dial, 2000);` | `src/hooks/usePredictiveDialer.ts` |
 | `nextAttempt = new Date(Date.now() + 60 * 60 * 1000).toISOString();` | `src/hooks/usePredictiveDialer.ts` |
@@ -2630,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4308 testes em 375 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4298 testes em 374 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2742,7 +2741,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useLiveTranslation.coverage.test.tsx` | 10 | useLiveTranslation · returns initial state · does nothing without callSessionId or empty text · queues short utterances below minWords without invoking … |
 | `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 10 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
 | `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 10 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
-| `src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx` | 10 | useMultiChannelCallConference · startConference requires at least 2 calls · starts, adds, removes, toggles recording and ends conference · removeFromConference auto-ends when below 2 participants … |
 | `src/hooks/__tests__/useReauth.grant.test.tsx` | 10 | Reauth grant persistido (HMAC) · grava grant assinado no sessionStorage apos verificar · rehidrata lastVerified em nova montagem (nao exige reauth) · descarta grant com assinatura invalida … |
 | `src/hooks/__tests__/useScorecards.coverage.test.tsx` | 10 | useScorecards · loads templates and criteria without callSessionId · exposes the template read error instead of an empty model list · clears the template error on the next successful read … |
 | `src/hooks/__tests__/useTrackers.coverage.test.tsx` | 10 | useTrackers · loads trackers on mount (success) · logs error when load fails · createTracker success path … |
@@ -2934,7 +2932,8 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useTrunkMetrics.coverage.test.tsx` | 4 | useTrunkMetrics · aggregates usage by trunk and by day · returns empty for no data with default days · throws on usage error |
 | `src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx` | 4 | useVoipAnomalies · classifies anomalies (outage/drift/spike) and builds ids · returns empty array when no anomalies present · throws on error |
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
-| … +75 linhas — lista completa em `context.json` | | |
+| `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
+| … +74 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "e78a64b0fd3692b58d31487ac5ee782f49e8dd91",
+  "sha": "92474f77dd8e102a19cbe439842e17a5e74dea58",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 05:42 UTC",
-  "files_total": 1767,
-  "code_files": 1564,
-  "code_lines": 193377
+  "generated_at": "2026-11-24 05:57 UTC",
+  "files_total": 1765,
+  "code_files": 1562,
+  "code_lines": 193129
  },
  "version": "1.3.2",
- "facts_hash": "e1dbcb56f3f858a6",
+ "facts_hash": "cca484e9700f5a09",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,8 +153,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 656,
-   ".tsx": 629,
+   ".ts": 655,
+   ".tsx": 628,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -32685,10 +32685,6 @@
     "file": "src/hooks/useMultiChannelCall.ts"
    },
    {
-    "name": "useMultiChannelCallConference",
-    "file": "src/hooks/useMultiChannelCallConference.ts"
-   },
-   {
     "name": "useMultiDeviceRing",
     "file": "src/hooks/useMultiDeviceRing.ts"
    },
@@ -33604,8 +33600,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 355,
-   "lines": 47042,
+   "files": 353,
+   "lines": 46794,
    "tables": [
     "accounts",
     "active_sessions",
@@ -52798,66 +52794,6 @@
     "kind": "compara"
    },
    {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "conference",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "conference",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "active",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "active",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "transferring",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "on-hold",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "ended",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "active",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "active",
-    "kind": "compara"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "field": "status",
-    "value": "on-hold",
-    "kind": "compara"
-   },
-   {
     "file": "src/hooks/useNetworkMonitor.ts",
     "field": "status",
     "value": "checking",
@@ -56530,10 +56466,6 @@
    {
     "file": "src/hooks/useHoldReminder.ts",
     "line": "if (alert.severity !== 'critical') setTimeout(() => n.close(), 10000);"
-   },
-   {
-    "file": "src/hooks/useMultiChannelCallConference.ts",
-    "line": "setTimeout(() => { completeTransfer(callId); }, 2000);"
    },
    {
     "file": "src/hooks/useOptimisticLockConflicts.ts",
@@ -63482,46 +63414,6 @@
    {
     "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
     "name": "system messages are allowed"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "useMultiChannelCallConference"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "startConference requires at least 2 calls"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "starts, adds, removes, toggles recording and ends conference"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "removeFromConference auto-ends when below 2 participants"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "no-op guards when no conference"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "getCallsAvailableForConference filters correctly"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "blind transfer completes after timeout"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "attended transfer then completeTransfer and cancelTransfer"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "completeTransfer with unknown call is a no-op"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-    "name": "cleanupConference clears interval"
    },
    {
     "file": "src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx",
@@ -83809,7 +83701,6 @@
       "compara:src/components/dashboard/RecentCalls.tsx",
       "compara:src/components/dialer/PredictiveDialerPanel.tsx",
       "compara:src/hooks/useMultiChannelCall.ts",
-      "compara:src/hooks/useMultiChannelCallConference.ts",
       "compara:src/hooks/useQueueMetrics.ts",
       "compara:src/hooks/useSipCall.ts",
       "compara:src/hooks/useWavoipCall.ts",
@@ -83822,7 +83713,6 @@
       "escreve:src/hooks/useCallSession.ts",
       "escreve:src/hooks/useCallTransfer.ts",
       "escreve:src/hooks/useMultiChannelCall.ts",
-      "escreve:src/hooks/useMultiChannelCallConference.ts",
       "escreve:src/hooks/useSipCall.ts",
       "escreve:src/hooks/useSupervisorPanel.ts",
       "escreve:src/pages/VideoConference.tsx",
@@ -83991,17 +83881,14 @@
       "compara:src/pages/VideoConference.tsx",
       "escreve:src/hooks/useCallTransfer.ts",
       "escreve:src/hooks/useMultiChannelCall.ts",
-      "escreve:src/hooks/useMultiChannelCallConference.ts",
       "escreve:src/hooks/useSupervisorPanel.ts",
       "escreve:supabase/functions/wavoip-call/index.ts"
      ],
      "on-hold": [
       "compara:src/components/calls/softphone/ActiveCallDisplay.tsx",
       "compara:src/hooks/useMultiChannelCall.ts",
-      "compara:src/hooks/useMultiChannelCallConference.ts",
       "escreve:src/hooks/useCallTransfer.ts",
-      "escreve:src/hooks/useMultiChannelCall.ts",
-      "escreve:src/hooks/useMultiChannelCallConference.ts"
+      "escreve:src/hooks/useMultiChannelCall.ts"
      ],
      "in_progress": [
       "compara:src/components/coaching/CoachingPanel.tsx",
@@ -84140,8 +84027,7 @@
      ],
      "transferring": [
       "compara:src/hooks/useMultiChannelCall.ts",
-      "escreve:src/hooks/useCallTransfer.ts",
-      "escreve:src/hooks/useMultiChannelCallConference.ts"
+      "escreve:src/hooks/useCallTransfer.ts"
      ],
      "accepted": [
       "escreve:src/hooks/useCrmFieldSuggestions.ts"
@@ -84189,8 +84075,7 @@
      ],
      "conference": [
       "compara:src/hooks/useMultiChannelCall.ts",
-      "escreve:src/hooks/useMultiChannelCall.ts",
-      "escreve:src/hooks/useMultiChannelCallConference.ts"
+      "escreve:src/hooks/useMultiChannelCall.ts"
      ],
      "critical": [
       "compara:src/hooks/useQueueMetrics.ts",
@@ -102672,71 +102557,6 @@
     "1"
    ]
   },
-  "src/hooks/useMultiChannelCallConference.ts": {
-   "path": "src/hooks/useMultiChannelCallConference.ts",
-   "lines": 135,
-   "exports": [
-    "function useMultiChannelCallConference"
-   ],
-   "status_values": [
-    {
-     "field": "status",
-     "value": "conference",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "conference",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "active",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "active",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "transferring",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "on-hold",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "ended",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "active",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "active",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "on-hold",
-     "kind": "compara"
-    }
-   ],
-   "hooks": [
-    "useMultiChannelCallConference"
-   ],
-   "temporal": [
-    "setTimeout(() => { completeTransfer(callId); }, 2000);"
-   ]
-  },
   "src/hooks/useMultiDeviceRing.ts": {
    "path": "src/hooks/useMultiDeviceRing.ts",
    "lines": 86,
@@ -108215,23 +108035,6 @@
     "Transcript management",
     "adds transcript with correct structure",
     "system messages are allowed"
-   ]
-  },
-  "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx": {
-   "path": "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-   "lines": 113,
-   "is_test": true,
-   "tests": [
-    "useMultiChannelCallConference",
-    "startConference requires at least 2 calls",
-    "starts, adds, removes, toggles recording and ends conference",
-    "removeFromConference auto-ends when below 2 participants",
-    "no-op guards when no conference",
-    "getCallsAvailableForConference filters correctly",
-    "blind transfer completes after timeout",
-    "attended transfer then completeTransfer and cancelTransfer",
-    "completeTransfer with unknown call is a no-op",
-    "cleanupConference clears interval"
    ]
   },
   "src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx": {
@@ -126466,10 +126269,31 @@
   }
  },
  "git": {
-  "sha": "e78a64b0fd3692b58d31487ac5ee782f49e8dd91",
+  "sha": "92474f77dd8e102a19cbe439842e17a5e74dea58",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "92474f7",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: remove o hook de conferencia orfao e defeituoso (etapa 158) (#237)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
+     "src/hooks/useMultiChannelCallConference.ts"
+    ]
+   },
+   {
+    "sha": "58ca27a",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "docs: mapa das 46 rotas protegidas sem papel (etapa 090) (#236)",
+    "files": [
+     "docs/agentes/mapa-repo.md",
+     "docs/qa/05-PROGRESSO.md"
+    ]
+   },
    {
     "sha": "e78a64b",
     "date": "2026-11-24",
@@ -126928,31 +126752,6 @@
      "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
      "src/hooks/useCrmFieldSuggestions.ts",
      "src/hooks/useLiveAssist.ts"
-    ]
-   },
-   {
-    "sha": "1dcca43",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/dashboard/HoldTrendChart.tsx",
-     "src/components/dashboard/__tests__/HoldTrendChart.test.tsx"
-    ]
-   },
-   {
-    "sha": "6be7a63",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: importacao de DNC passa a conferir o resultado real da RPC (#206)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/compliance/DNCListManager.tsx",
-     "src/components/compliance/dnc/ImportDNCDialog.tsx",
-     "src/components/compliance/dnc/__tests__/ImportDNCDialog.test.tsx",
-     "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
-     "src/hooks/useDNCCompliance.ts"
     ]
    }
   ],

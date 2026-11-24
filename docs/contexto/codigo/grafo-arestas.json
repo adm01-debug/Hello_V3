@@ -2629,10 +2629,6 @@
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
   ],
-  "src/hooks/useMultiChannelCallConference.ts": [
-   "src/hooks/useMultiChannelCall.ts",
-   "src/lib/logger.ts"
-  ],
   "src/hooks/useMultiDeviceRing.ts": [
    "src/contexts/AuthContext.tsx",
    "src/integrations/supabase/client.ts"
