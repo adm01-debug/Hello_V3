@@ -99,4 +99,26 @@ describe('PhoneDialer compliance guard', () => {
     fireEvent.click(screen.getByText('ligar'));
     await waitFor(() => expect(initiateCall).toHaveBeenCalled());
   });
+
+  it('não abre duas chamadas quando o botão de ligar é tocado duas vezes', async () => {
+    let releaseCheck: (value: { canDial: boolean; reasons: string[] }) => void = () => {};
+    preDialCheck.mockImplementation(
+      () => new Promise<{ canDial: boolean; reasons: string[] }>((resolve) => { releaseCheck = resolve; }),
+    );
+    renderPage();
+    const tecla = screen.getByText('tecla-5');
+    fireEvent.click(tecla);
+    fireEvent.click(tecla);
+    fireEvent.click(tecla);
+
+    const ligar = screen.getByText('ligar');
+    fireEvent.click(ligar);
+    fireEvent.click(ligar);
+
+    expect(preDialCheck).toHaveBeenCalledTimes(1);
+
+    releaseCheck({ canDial: true, reasons: [] });
+    await waitFor(() => expect(initiateCall).toHaveBeenCalledTimes(1));
+    expect(preDialCheck).toHaveBeenCalledTimes(1);
+  });
 });

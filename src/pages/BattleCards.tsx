@@ -46,6 +46,7 @@ export default function BattleCards() {
   const [form, setForm] = useState(empty);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [search, setSearch] = useState('');
+  const [saving, setSaving] = useState(false);
 
   const load = async () => {
     const [{ data: c }, { data: t }] = await Promise.all([
@@ -69,39 +70,45 @@ export default function BattleCards() {
   }, [cards, triggers, search]);
 
   const handleSave = async () => {
+    if (saving) return;
     if (!form.competitor_name.trim()) { toast.error('Nome do concorrente é obrigatório'); return; }
-    const payload = {
-      competitor_name: form.competitor_name.trim(),
-      description: form.description || null,
-      our_strengths: form.our_strengths.split('\n').map(s => s.trim()).filter(Boolean),
-      their_weaknesses: form.their_weaknesses.split('\n').map(s => s.trim()).filter(Boolean),
-      talking_points: form.talking_points.split('\n').map(s => s.trim()).filter(Boolean),
-      is_active: true,
-    };
+    setSaving(true);
+    try {
+      const payload = {
+        competitor_name: form.competitor_name.trim(),
+        description: form.description || null,
+        our_strengths: form.our_strengths.split('\n').map(s => s.trim()).filter(Boolean),
+        their_weaknesses: form.their_weaknesses.split('\n').map(s => s.trim()).filter(Boolean),
+        talking_points: form.talking_points.split('\n').map(s => s.trim()).filter(Boolean),
+        is_active: true,
+      };
 
-    let cardId = editingId;
-    if (editingId) {
-      const { error } = await db.from('battle_cards').update(payload).eq('id', editingId);
-      if (error) { toast.error(error.message); return; }
-    } else {
-      const { data, error } = await db.from('battle_cards').insert(payload).select().single();
-      if (error) { toast.error(error.message); return; }
-      cardId = data.id;
-    }
-
-    if (cardId) {
-      await db.from('battle_card_triggers').delete().eq('battle_card_id', cardId);
-      const kws = form.keywords.split(',').map(k => k.trim()).filter(Boolean);
-      if (kws.length > 0) {
-        await db.from('battle_card_triggers').insert(
-          kws.map(keyword => ({ battle_card_id: cardId, keyword, match_type: 'contains', is_active: true }))
-        );
+      let cardId = editingId;
+      if (editingId) {
+        const { error } = await db.from('battle_cards').update(payload).eq('id', editingId);
+        if (error) { toast.error(error.message); return; }
+      } else {
+        const { data, error } = await db.from('battle_cards').insert(payload).select().single();
+        if (error) { toast.error(error.message); return; }
+        cardId = data.id;
       }
-    }
 
-    toast.success(editingId ? 'Battle card atualizado' : 'Battle card criado');
-    setOpen(false); setForm(empty); setEditingId(null);
-    load();
+      if (cardId) {
+        await db.from('battle_card_triggers').delete().eq('battle_card_id', cardId);
+        const kws = form.keywords.split(',').map(k => k.trim()).filter(Boolean);
+        if (kws.length > 0) {
+          await db.from('battle_card_triggers').insert(
+            kws.map(keyword => ({ battle_card_id: cardId, keyword, match_type: 'contains', is_active: true }))
+          );
+        }
+      }
+
+      toast.success(editingId ? 'Battle card atualizado' : 'Battle card criado');
+      setOpen(false); setForm(empty); setEditingId(null);
+      load();
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -145,7 +152,7 @@ export default function BattleCards() {
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
-          <Button onClick={handleSave}><Check className="h-4 w-4 mr-2" />Salvar</Button>
+          <Button onClick={handleSave} disabled={saving}><Check className="h-4 w-4 mr-2" />Salvar</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

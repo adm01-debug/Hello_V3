@@ -29,6 +29,7 @@ export default function Scheduling() {
   const [weekStart, setWeekStart] = useState(getWeekStart());
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ agent_name: '', shift_date: '', start_time: '09:00', end_time: '18:00', break_minutes: 60 });
+  const [creating, setCreating] = useState(false);
   const { shifts, templates, isLoading, createShift, deleteShift } = useShifts(weekStart);
   const { requests, review } = useTimeOff();
 
@@ -38,7 +39,8 @@ export default function Scheduling() {
   });
 
   const handleCreate = () => {
-    if (!form.agent_name || !form.shift_date) return;
+    if (creating || !form.agent_name || !form.shift_date) return;
+    setCreating(true);
     const start = new Date(`${form.shift_date}T${form.start_time}:00`).toISOString();
     const end = new Date(`${form.shift_date}T${form.end_time}:00`).toISOString();
     createShift({
@@ -50,7 +52,7 @@ export default function Scheduling() {
       template_id: null,
       status: 'scheduled',
       notes: null,
-    });
+    }, { onSettled: () => setCreating(false) });
     setOpen(false);
   };
 
@@ -92,7 +94,7 @@ export default function Scheduling() {
                   </div>
                   <div><Label>Intervalo (min)</Label><Input type="number" value={form.break_minutes} onChange={e => setForm({ ...form, break_minutes: Number(e.target.value) })} /></div>
                 </div>
-                <DialogFooter><Button onClick={handleCreate}>Criar</Button></DialogFooter>
+                <DialogFooter><Button onClick={handleCreate} disabled={creating}>Criar</Button></DialogFooter>
               </DialogContent>
             </Dialog>
           </div>
