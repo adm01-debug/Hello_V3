@@ -108,6 +108,7 @@ interface Props {
                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input 
                       placeholder="Pesquisar na transcrição (Enter para pular)..." 
+                      aria-label="Pesquisar na transcrição"
                       value={searchQuery}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
                       className="pl-10"
@@ -116,11 +117,12 @@ interface Props {
                  {matches.length > 0 && (
                    <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap bg-muted px-2 py-1 rounded-md">
                      <span>{currentIndex + 1} / {matches.length}</span>
-                     <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => { const i = (currentIndex - 1 + matches.length) % matches.length; setCurrentIndex(i); jumpToMatch(i); }}>
-                       <ChevronUp className="h-4 w-4" />
+                     <span className="sr-only" aria-live="polite" aria-atomic="true">Ocorrência {currentIndex + 1} de {matches.length}</span>
+                     <Button variant="ghost" size="icon" className="h-6 w-6" aria-label="Ocorrência anterior" onClick={() => { const i = (currentIndex - 1 + matches.length) % matches.length; setCurrentIndex(i); jumpToMatch(i); }}>
+                       <ChevronUp className="h-4 w-4" aria-hidden="true" />
                      </Button>
-                     <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => { const i = (currentIndex + 1) % matches.length; setCurrentIndex(i); jumpToMatch(i); }}>
-                       <ChevronDown className="h-4 w-4" />
+                     <Button variant="ghost" size="icon" className="h-6 w-6" aria-label="Próxima ocorrência" onClick={() => { const i = (currentIndex + 1) % matches.length; setCurrentIndex(i); jumpToMatch(i); }}>
+                       <ChevronDown className="h-4 w-4" aria-hidden="true" />
                      </Button>
                    </div>
                  )}

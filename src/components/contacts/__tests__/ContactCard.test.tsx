@@ -70,3 +70,22 @@ describe('ContactCard - menu "mais opções" (A-084)', () => {
     expect(onSelect).toHaveBeenCalledWith(contact);
   });
 });
+
+describe('ContactCard - favoritar com nome acessível (A-123)', () => {
+  it('anuncia a ação e o estado do botão de favoritos', () => {
+    const { onToggleFavorite } = setup(false);
+
+    const botao = screen.getByRole('button', { name: 'Adicionar aos favoritos' });
+    expect(botao).toHaveAttribute('aria-pressed', 'false');
+
+    fireEvent.click(botao);
+    expect(onToggleFavorite).toHaveBeenCalledWith('c1');
+  });
+
+  it('inverte o rótulo e o aria-pressed quando já é favorito', () => {
+    setup(true);
+
+    const botao = screen.getByRole('button', { name: 'Remover dos favoritos' });
+    expect(botao).toHaveAttribute('aria-pressed', 'true');
+  });
+});

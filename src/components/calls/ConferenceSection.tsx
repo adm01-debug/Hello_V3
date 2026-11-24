@@ -59,8 +59,8 @@ export function ConferenceSection({
               <span>{call.contactName || call.phoneNumber || 'Chamada'}</span>
               {call.isRecording && <div className="h-1.5 w-1.5 rounded-full bg-destructive animate-pulse" />}
             </div>
-            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onRemoveFromConference(call.id)}>
-              <X className="h-3 w-3" />
+            <Button variant="ghost" size="icon" className="h-6 w-6" aria-label={`Remover ${call.contactName || call.phoneNumber || 'a chamada'} da conferência`} onClick={() => onRemoveFromConference(call.id)}>
+              <X className="h-3 w-3" aria-hidden="true" />
             </Button>
           </div>
         ))}

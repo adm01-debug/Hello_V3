@@ -326,9 +326,9 @@
 
 ## Onda 7 — Experiência de uso e consistência (259–281, 23 etapas)
 
-- [ ] **259** — Rótulo acessível nos botões-ícone do discador e da chamada — onda 7 — Média — Frontend
-- [ ] **260** — Rótulo acessível nos botões-ícone de contatos — onda 7 — Média — Frontend
-- [ ] **261** — Rótulo acessível na navegação da transcrição — onda 7 — Média — Frontend
+- [x] **259** — Rótulo acessível nos botões-ícone do discador e da chamada — onda 7 — Média — Frontend · (botões-ícone com nome acessível: `softphone/DialpadTab.tsx:44` "Apagar o último dígito"; `ConferenceSection.tsx:62` "Remover <nome do contato> da conferência"; `ActiveCallsIndicator.tsx` 7 botões — `:77` lembrete sonoro com `aria-pressed`, `:101` fechar seleção, `:157` transferir, `:158` espera com `aria-pressed`, `:159` encerrar, `:167`/`:168` confirmar/cancelar transferência — mais `aria-hidden="true"` nos ícones. Verificação: teste novo `src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx` consulta por nome acessível (`getByRole('button',{name:'Apagar o último dígito'})` e `{name:'Remover Ana Souza da conferência'}`) e passa 2/2; `bunx vitest run` dos 3 arquivos tocados = 8 passed/0 failed; `bunx tsc --noEmit` rc=0; `bunx eslint` nos 9 arquivos sem saída)
+- [x] **260** — Rótulo acessível nos botões-ícone de contatos — onda 7 — Média — Frontend · (`ContactCard.tsx:86` favoritar com rótulo que muda com o estado — "Adicionar aos favoritos"/"Remover dos favoritos" — mais `aria-pressed={isFavorite}`; `ContactDetailSheet.tsx:95` "Editar contato" e `:96` "Excluir contato". Verificação: `src/components/contacts/__tests__/ContactCard.test.tsx` 5/5, incluindo os 2 casos novos — `aria-pressed` "false" com "Adicionar aos favoritos" e "true" com "Remover dos favoritos", e o clique chamando `onToggleFavorite('c1')`)
+- [x] **261** — Rótulo acessível na navegação da transcrição — onda 7 — Média — Frontend · (`TranscriptionDialog.tsx:119` "Ocorrência anterior", `:122` "Próxima ocorrência", campo de busca com `aria-label="Pesquisar na transcrição"` e região `className="sr-only" aria-live="polite" aria-atomic="true"` que anuncia "Ocorrência N de M" sem mudar o visual "N / M". Verificação: teste novo `src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx` busca pelo rótulo do campo, digita "fatura" e confirma a região em "Ocorrência 1 de 2" → clica em "Próxima ocorrência" → "2 de 2" → "Ocorrência anterior" → "1 de 2"; passa 1/1)
 - [ ] **262** — Rótulo acessível nos botões de exclusão — onda 7 — Média — Frontend
 - [ ] **263** — Varrer os botões-ícone restantes — onda 7 — Baixa — Frontend
 - [ ] **264** — Regra de lint para botão-ícone sem nome acessível — onda 7 — Média — CI
@@ -382,7 +382,7 @@ Problema novo achado no caminho **não é corrigido na hora** — vira linha aqu
 
 | ID | Encontrado na etapa | Arquivo:linha | O que é | Severidade proposta |
 |---|---|---|---|---|
-| | | | | |
+| A-210 | 260 | `src/components/contacts/ContactDetailSheet.tsx:96` | Botão de **excluir** contato usa o ícone de lápis (`<Edit>`), igual ao de editar ao lado — o usuário que clica no lápis esperando editar pode apagar o contato. Agora tem `aria-label="Excluir contato"`, mas o ícone segue errado. | Alta (risco de perda de dado) |
 
 ---
 
