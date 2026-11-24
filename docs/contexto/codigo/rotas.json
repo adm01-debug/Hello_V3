@@ -3456,8 +3456,10 @@
     "queue-metrics"
    ],
    "flags": [],
-   "papeis": [],
-   "arquivos_puxados": 27
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 28
   },
   {
    "protegida": false,
@@ -4103,9 +4105,10 @@
    ],
    "flags": [],
    "papeis": [
-    "alert"
+    "alert",
+    "status"
    ],
-   "arquivos_puxados": 24
+   "arquivos_puxados": 25
   },
   {
    "protegida": false,

@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (371)",
+   "co-localizado (__tests__) (372)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: consultas cegas restantes e estado de erro padronizado (etapas 201-202) (#263)",
+   "docs: etapas 191-193 verificadas (ja corrigidas por #180 e #170) (#261)",
    "fix: edges de infra registram falha de gravacao em vez de ignora-la (etapa 188) (#257)",
    "fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)",
-   "fix: gravacoes cegas em hooks de dados passam a reportar erro (etapa 187) (#254)",
-   "fix: edges de entrada nao devolvem 200 com escrita perdida (etapa 188) (#256)",
-   "fix: remocao de audio de fila checa storage antes do banco (etapa 186) (#253)"
+   "fix: gravacoes cegas em hooks de dados passam a reportar erro (etapa 187) (#254)"
   ]
  },
  "pr_template": null,

@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 935,
- "arestas": 3705,
+ "arestas": 3707,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -109,6 +109,10 @@
    "importado_por": 23
   },
   {
+   "arquivo": "src/components/ui/empty-state.tsx",
+   "importado_por": 23
+  },
+  {
    "arquivo": "src/components/ui/tooltip.tsx",
    "importado_por": 23
   },
@@ -126,10 +130,6 @@
   },
   {
    "arquivo": "src/components/ui/alert.tsx",
-   "importado_por": 21
-  },
-  {
-   "arquivo": "src/components/ui/empty-state.tsx",
    "importado_por": 21
   },
   {

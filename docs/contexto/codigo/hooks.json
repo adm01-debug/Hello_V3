@@ -4948,7 +4948,7 @@
    "hooks_exportados": [
     "useRoles"
    ],
-   "linhas": 110,
+   "linhas": 116,
    "dominio": "pages/roles",
    "tabelas": [
     "user_profiles",

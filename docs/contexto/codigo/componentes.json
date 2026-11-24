@@ -516,7 +516,7 @@
     "AlertsDropdown"
    ],
    "export_default": null,
-   "linhas": 286,
+   "linhas": 288,
    "dominio": "components/alerts",
    "hooks_locais": [],
    "tabelas": [
@@ -734,7 +734,7 @@
     "CallDetailDialog"
    ],
    "export_default": null,
-   "linhas": 274,
+   "linhas": 279,
    "dominio": "components/call-history",
    "hooks_locais": [
     "useKeyMoments",
@@ -2194,7 +2194,7 @@
     "ConversationIntelligenceCard"
    ],
    "export_default": null,
-   "linhas": 151,
+   "linhas": 157,
    "dominio": "components/executive",
    "hooks_locais": [],
    "tabelas": [
@@ -2563,7 +2563,7 @@
     "WeeklyRanking"
    ],
    "export_default": null,
-   "linhas": 90,
+   "linhas": 106,
    "dominio": "components/gamification",
    "hooks_locais": [],
    "tabelas": [
@@ -4409,7 +4409,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 21,
+   "usado_por": 23,
    "orfao": false
   },
   {
@@ -6644,7 +6644,7 @@
     "QueueMetricsDashboard"
    ],
    "export_default": "QueueMetricsDashboard",
-   "linhas": 131,
+   "linhas": 124,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
@@ -6917,7 +6917,7 @@
     "SecurityDashboard"
    ],
    "export_default": "SecurityDashboard",
-   "linhas": 185,
+   "linhas": 183,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",

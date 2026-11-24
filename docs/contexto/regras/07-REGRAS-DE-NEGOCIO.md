@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f82596ff73` · branch `main` · 2026-11-24 07:36 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `608aa86b88` · branch `main` · 2026-11-24 07:49 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1537,7 +1537,7 @@ _nenhum item encontrado_
   ```
 - **fetchRanking()** — `src/components/gamification/WeeklyRanking.tsx`
   ```
-  try { const weekStart = new Date(); weekStart.setDate(weekStart.getDate() - weekStart.getDay()); weekStart.setHours(0, 0, 0, 0); const { data: stats } = await supabase .from("agent_weekly_stats") .select("*, agents(name)") .gte("week_start", weekStart.toISOString().split("T")[0]) .order("points_earned", { ascending: false }); if (stats) { setRanking( stats.map((s) => ({ agent_id: s.agent_id, agent_name: s.agents?.name || "Agente", total_calls: s.total_calls, points_earned: s.points_earned, badge …
+  try { const weekStart = new Date(); weekStart.setDate(weekStart.getDate() - weekStart.getDay()); weekStart.setHours(0, 0, 0, 0); const { data: stats, error: statsError } = await supabase .from("agent_weekly_stats") .select("*, agents(name)") .gte("week_start", weekStart.toISOString().split("T")[0]) .order("points_earned", { ascending: false }); if (statsError) { // Ranking vazio por falha de consulta parece desempenho ("ninguém // produziu nada"), não cegueira (A-009, etapa 201). setError(statsE …
   ```
 - **scoreColor(score: number | null)** — `src/components/network/VoipHealthScoreCard.tsx`
   ```
@@ -1819,6 +1819,7 @@ _nenhum item encontrado_
 | `oscillator.stop(audioContext.currentTime + i * 0.15 + 0.2);` | `src/components/agent/BargeInNotification.tsx` |
 | `setOverallSentiment((prev) => Math.round(prev * 0.7 + sentimentValue * 0.3));` | `src/components/ai/live-call/useLiveInsights.ts` |
 | `: <>Ideal: agente fala entre 40% e 60%. {data.benchmark.status !== 'optimal' && 'Ajuste para escutar mais o cliente ou conduzir melhor a conversa.'}</>}` | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
+| `// Sem transcrições o talk ratio fica 0%: registro o motivo para o` | `src/components/executive/ConversationIntelligenceCard.tsx` |
 | `delay: Math.random() * 0.5,` | `src/components/gamification/AchievementCelebration.tsx` |
 | `value: +(baseline + (Math.sin(i * 1.3 + a.bucket_hour) * a.std * 0.4)).toFixed(2),` | `src/components/network/AnomalyDetectionCard.tsx` |
 | `: `hsl(var(--primary) / ${0.2 + intensity * 0.8})`,` | `src/components/network/RecommendationInsightsCard.tsx` |
@@ -2629,7 +2630,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4353 testes em 385 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4356 testes em 386 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2933,7 +2934,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
 | `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
-| … +85 linhas — lista completa em `context.json` | | |
+| … +86 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

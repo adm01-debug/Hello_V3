@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "f82596ff73b9dfeff51ff1ea370ea843fd5f9075",
+  "commit": "608aa86b885be4d184e21de9e0e55c68dc915b63",
   "branch": "main",
-  "data_commit": "2026-11-24T04:35:11-03:00",
+  "data_commit": "2026-11-24T04:48:55-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "608aa86",
+    "data": "2026-11-24",
+    "assunto": "fix: consultas cegas restantes e estado de erro padronizado (etapas 201-202) (#263)"
+   },
+   {
+    "sha": "52ae9bb",
+    "data": "2026-11-24",
+    "assunto": "docs: etapas 191-193 verificadas (ja corrigidas por #180 e #170) (#261)"
+   },
    {
     "sha": "f82596f",
     "data": "2026-11-24",
@@ -121,19 +131,9 @@
     "sha": "0bba9fb",
     "data": "2026-11-24",
     "assunto": "fix: teto de tamanho e validacao de corpo nas 12 edges de IA e transcricao (#234)"
-   },
-   {
-    "sha": "1929b04",
-    "data": "2026-11-24",
-    "assunto": "fix: onda 4 e fechamento da E050 - erro interno nunca chega ao cliente (#233)"
-   },
-   {
-    "sha": "a3a8463",
-    "data": "2026-11-24",
-    "assunto": "fix: onda 3 da E050 - erro interno generico em 26 edges (#232)"
    }
   ],
-  "arquivos_mudados_7d": 1125,
+  "arquivos_mudados_7d": 1129,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 82
+    "mudancas": 84
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 82
+    "mudancas": 84
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 235
+    "commits": 237
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1732,
-  "arquivos_codigo": 1329,
-  "linhas_codigo": 179250,
+  "arquivos_total": 1733,
+  "arquivos_codigo": 1330,
+  "linhas_codigo": 179316,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 395,
+  "testes": 396,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 369,
-   "linhas": 44049
+   "arquivos": 370,
+   "linhas": 44118
   },
   "src/contexts": {
    "arquivos": 4,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 146,
-   "linhas": 22336
+   "linhas": 22333
   },
   "src/routes": {
    "arquivos": 2,
