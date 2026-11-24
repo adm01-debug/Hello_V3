@@ -6,9 +6,12 @@ import type { NotificationRow } from './constants';
 
 export function useNotificationCenter(user: User | null, tab: string) {
   const queryClient = useQueryClient();
+  // O id entra na chave: sem ele a lista e as preferencias de um usuario ficariam no cache
+  // do outro quando a sessao troca no mesmo navegador.
+  const userId = user?.id ?? 'anon';
 
   const notificationsQuery = useQuery({
-    queryKey: ['notifications-center', tab],
+    queryKey: ['notifications-center', userId, tab],
     queryFn: async () => {
       if (!user) return [];
       let query = supabase
@@ -30,7 +33,7 @@ export function useNotificationCenter(user: User | null, tab: string) {
   });
 
   const preferencesQuery = useQuery({
-    queryKey: ['notification-preferences'],
+    queryKey: ['notification-preferences', userId],
     queryFn: async () => {
       if (!user) return null;
       const { data } = await supabase
