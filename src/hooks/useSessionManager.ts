@@ -130,10 +130,11 @@ export function useSessionManager() {
     if (!currentSessionId) return;
 
     try {
-      await supabase
+      const { error } = await supabase
         .from('active_sessions')
         .update({ last_activity_at: new Date().toISOString() })
         .eq('id', currentSessionId);
+      if (error) logger.warn('Falha ao atualizar atividade da sessão', error);
     } catch (error) {
       logger.error('Error updating activity:', error);
     }
@@ -149,8 +150,13 @@ export function useSessionManager() {
       if (error) throw error;
 
       if (sessionId === currentSessionId) {
-        await supabase.auth.signOut();
-        toast.success('Sessão encerrada');
+        const { error: signOutError } = (await supabase.auth.signOut()) ?? {};
+        if (signOutError) {
+          logger.error('Falha ao encerrar a sessão no dispositivo', signOutError);
+          toast.warning('Sessão revogada no servidor, mas este navegador não confirmou a saída. Saia novamente para encerrar aqui.');
+        } else {
+          toast.success('Sessão encerrada');
+        }
       } else {
         toast.success('Sessão revogada');
         await loadSessions();
