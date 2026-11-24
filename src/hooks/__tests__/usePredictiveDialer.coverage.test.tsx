@@ -538,4 +538,38 @@ describe('usePredictiveDialer', () => {
     expect(preDialCheck).toHaveBeenCalledTimes(1);
     expect(result.current.currentCall).toBeTruthy();
   });
+
+  it('para a campanha quando o claim da fila falha (A-057)', async () => {
+    // Qualquer update em `dialer_queue` falha: o claim de apiMarkDialing.
+    mockSupabase.from.mockImplementation((table: string) => {
+      const builder = makeFrom();
+      if (table === 'dialer_queue') {
+        builder.update = vi.fn(() => ({
+          eq: vi.fn(() => Promise.resolve({ error: new Error('claim falhou') })),
+        }));
+      }
+      return builder;
+    });
+
+    const { result } = renderHook(() => usePredictiveDialer());
+    await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
+
+    await act(async () => {
+      await result.current.startCampaign('c1');
+    });
+    expect(result.current.isDialing).toBe(true);
+    expect(result.current.activeCampaign).toBeTruthy();
+
+    await act(async () => {
+      await result.current.dialContact(sampleQueueItem as never);
+    });
+
+    expect(result.current.currentCall).toBeNull();
+    expect(result.current.activeCampaign).toBeNull();
+    expect(result.current.isDialing).toBe(false);
+    expect(mockToast.error).toHaveBeenCalledWith(
+      expect.stringContaining('Campanha pausada'),
+      expect.anything()
+    );
+  });
 });

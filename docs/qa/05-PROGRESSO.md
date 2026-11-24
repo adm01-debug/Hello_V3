@@ -122,7 +122,7 @@
 - [ ] **077** — Resolver os quatro switches decorativos das Configurações — onda 2 — Média — Frontend
 - [ ] **078** — Fazer o discador preditivo efetivamente discar — onda 2 — Alta — Hooks 🔒
 - [ ] **079** — Reivindicação atômica do contato no discador — onda 2 — Crítica — Hooks 🔒
-- [ ] **080** — Verificar o erro nas escritas do discador — onda 2 — Alta — Hooks
+- [x] **080** — Verificar o erro nas escritas do discador — onda 2 — Alta — Hooks · (5 escritas em `api.ts` agora fazem `if (error) throw error`; falha do claim para a campanha com toast — teste novo falha sem o fix; vitest 20/20, tsc=0, eslint=0)
 - [ ] **081** — Registrar a chamada no Bitrix (a proposta do produto) — onda 2 — Alta — Hooks 🔒
 - [ ] **082** — Policy de UPDATE para `crm_sync_queue` — onda 2 — Alta — Banco 🔒
 - [ ] **083** — Dar um gatilho à fila de sincronização do CRM — onda 2 — Alta — Banco + Edge Function 🔒
