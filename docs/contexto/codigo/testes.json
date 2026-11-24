@@ -614,11 +614,11 @@
   {
    "arquivo": "src/hooks/__tests__/useAuth.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 103,
+   "linhas": 146,
    "testa": [
     "src/hooks/useAuth.ts"
    ],
-   "casos": 7
+   "casos": 10
   },
   {
    "arquivo": "src/hooks/__tests__/useAvatar.test.ts",

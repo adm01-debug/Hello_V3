@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4a65b1f401` · branch `main` · 2026-11-24 17:00 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8aeb115129` · branch `main` · 2026-11-24 17:10 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2655,7 +2655,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3535 testes em 379 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3538 testes em 379 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2730,6 +2730,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/security-alerts-webhook-validation.test.ts` | 12 | validateWebhookConfig · aceita config mínima válida sem erros nem avisos · aceita URL vazia (= remover config) · rejeita URL inválida: %s … |
 | `src/lib/security/__tests__/hsts-headers.coverage.test.ts` | 12 | buildHSTSHeader · builds header from default config · omits includeSubDomains and preload when false · includes only includeSubDomains when preload is false … |
 | `src/lib/validation/__tests__/zod-schemas.property.test.ts` | 12 | Zod schemas — property-based (1000 runs cada) · uuidSchema aceita UUIDs válidos · uuidSchema rejeita strings arbitrárias não-UUID · emailSchema aceita emails válidos … |
+| `src/hooks/__tests__/useAuth.coverage.test.tsx` | 11 | useAuth · calls getSession on mount and exposes API · hasRole false without profile, true with matching role · handles SIGNED_OUT auth state change … |
 | `src/hooks/__tests__/useContacts.coverage.test.tsx` | 11 | useContacts (coverage) · fetches contacts on mount · fetchContacts with search filter · getContactByPhone success and not found … |
 | `src/hooks/__tests__/useLiveAssist.coverage.test.tsx` | 11 | useLiveAssist · is disabled (no fetch) without callSessionId · loads signals and subscribes to realtime when callSessionId present · analyze invokes edge function when throttle allows … |
 | `src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` | 11 | useScheduledCallbacks · loads pending callbacks and upcoming count on mount · fetchCallbacks with status filter and error branch · fetchUpcomingCount error branch … |
@@ -2794,7 +2795,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/pageVisibility.gating.test.tsx` | 8 | etapa 253: poll de painel respeita a visibilidade da aba · ${file} usa usePageVisibility · ${file} nao tem refetchInterval sempre ligado · useQualityMetrics entrega refetchInterval falso com a aba oculta … |
 | `src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx` | 8 | useAchievementNotifications (coverage) · não injeta badge inválida quando o enriquecimento falha · subscribes to channels and exposes initial state · handles a new badge award and shows a toast (no agent filter) … |
 | `src/hooks/__tests__/useAgentStatus.coverage.test.tsx` | 8 | useAgentStatus (coverage) · fetches agents on mount · setAgent selects and toasts; clearAgent clears · updateStatus returns false without selected agent … |
-| `src/hooks/__tests__/useAuth.coverage.test.tsx` | 8 | useAuth · calls getSession on mount and exposes API · hasRole false without profile, true with matching role · handles SIGNED_OUT auth state change … |
 | `src/hooks/__tests__/useCallHistory.coverage.test.tsx` | 8 | useCallHistory · fetches sessions on mount and maps summary · handles fetch error branch · exercises filters, setters, presets and clearFilters … |
 | `src/hooks/__tests__/useCallRecording.coverage.test.tsx` | 8 | useCallRecording · starts recording successfully · handles start recording failure · stopAndSaveRecording returns null when no recorder … |
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
@@ -3130,6 +3130,7 @@ _nenhum item encontrado_
 | Teto explicito: sem .limit() o PostgREST devolve no maximo 1000 linhas e o painel | `src/hooks/useActiveCallsRealtime.ts` |
 | ').eq('status', 'active').order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT); | `src/hooks/useActiveCallsRealtime.ts` |
 | ').is('ended_at', null).order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT); | `src/hooks/useActiveCallsRealtime.ts` |
+| autenticada ate a proxima consulta falhar. Reagimos apenas a remocao do | `src/hooks/useAuth.ts` |
 | trocar o filtro durante um "carregar mais" nao pode anexar a pagina antiga na lista nova. | `src/hooks/useCallHistory.ts` |
 | ').order('recorded_at', { ascending: false }).limit(RECORDINGS_LIMIT); | `src/hooks/useCallRecording.ts` |
 | Paginas de 50 + desempate por id: o kanban nao pode receber o corte de 1000 | `src/hooks/useDeals.ts` |

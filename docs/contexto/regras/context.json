@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "4a65b1f401e1bc3c72c9d7644cafe02ec9b702ca",
+  "sha": "8aeb115129c8cf37611d35dcbe51815a8c9f3603",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 17:00 UTC",
+  "generated_at": "2026-11-24 17:10 UTC",
   "files_total": 1783,
   "code_files": 1579,
-  "code_lines": 193252
+  "code_lines": 193319
  },
  "version": "1.3.2",
- "facts_hash": "05c3a0060b584067",
+ "facts_hash": "4e06e81382453ef0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33808,7 +33808,7 @@
   {
    "module": "src/hooks",
    "files": 339,
-   "lines": 42970,
+   "lines": 43037,
    "tables": [
     "accounts",
     "active_sessions",
@@ -43014,6 +43014,10 @@
    {
     "file": "src/hooks/useActiveCallsRealtime.ts",
     "text": "').is('ended_at', null).order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT);"
+   },
+   {
+    "file": "src/hooks/useAuth.ts",
+    "text": "autenticada ate a proxima consulta falhar. Reagimos apenas a remocao do"
    },
    {
     "file": "src/hooks/useCallHistory.ts",
@@ -59151,6 +59155,18 @@
    {
     "file": "src/hooks/__tests__/useAuth.coverage.test.tsx",
     "name": "clears session when getProfile throws"
+   },
+   {
+    "file": "src/hooks/__tests__/useAuth.coverage.test.tsx",
+    "name": "encerra a sessao quando o token do Supabase some em outra aba"
+   },
+   {
+    "file": "src/hooks/__tests__/useAuth.coverage.test.tsx",
+    "name": "nao encerra a sessao quando outra aba renova o token"
+   },
+   {
+    "file": "src/hooks/__tests__/useAuth.coverage.test.tsx",
+    "name": "ignora remocao de chave que nao e de autenticacao"
    },
    {
     "file": "src/hooks/__tests__/useAuth.coverage.test.tsx",
@@ -97039,12 +97055,15 @@
   },
   "src/hooks/useAuth.ts": {
    "path": "src/hooks/useAuth.ts",
-   "lines": 96,
+   "lines": 120,
    "exports": [
     "function useAuth"
    ],
    "role_checks": [
     "authState"
+   ],
+   "rule_comments": [
+    "autenticada ate a proxima consulta falhar. Reagimos apenas a remocao do"
    ],
    "hooks": [
     "useAuth"
@@ -104040,7 +104059,7 @@
   },
   "src/hooks/__tests__/useAuth.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useAuth.coverage.test.tsx",
-   "lines": 103,
+   "lines": 146,
    "is_test": true,
    "tests": [
     "useAuth",
@@ -104050,6 +104069,9 @@
     "ignores INITIAL_SESSION event",
     "handles SIGNED_IN with session and profile",
     "clears session when getProfile throws",
+    "encerra a sessao quando o token do Supabase some em outra aba",
+    "nao encerra a sessao quando outra aba renova o token",
+    "ignora remocao de chave que nao e de autenticacao",
     "unsubscribes on unmount"
    ]
   },
@@ -123488,10 +123510,21 @@
   }
  },
  "git": {
-  "sha": "4a65b1f401e1bc3c72c9d7644cafe02ec9b702ca",
+  "sha": "8aeb115129c8cf37611d35dcbe51815a8c9f3603",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "8aeb115",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useAuth.coverage.test.tsx",
+     "src/hooks/useAuth.ts"
+    ]
+   },
    {
     "sha": "4a65b1f",
     "date": "2026-11-24",
@@ -123969,20 +124002,6 @@
      "src/components/recordings/TranscriptionDialog.tsx",
      "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx"
     ]
-   },
-   {
-    "sha": "f3b6cf1",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: gravacoes cegas em componentes e login reportam erro (etapa 187) (#255)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/agent/WhisperNotification.tsx",
-     "src/components/conversation-intelligence/BattleCardAlert.tsx",
-     "src/components/layout/CommandPalette.tsx",
-     "src/components/settings/SystemMaintenancePanel.tsx",
-     "src/integrations/lovable/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -123995,16 +124014,16 @@
     4
    ],
    [
-    "src/components/agent/WhisperNotification.tsx",
-    3
-   ],
-   [
     "src/hooks/useContacts.ts",
     3
    ],
    [
     "docs/estado/funcionalidades-planejadas.md",
     3
+   ],
+   [
+    "src/hooks/useAuth.ts",
+    2
    ],
    [
     "src/App.tsx",
@@ -124020,6 +124039,10 @@
    ],
    [
     "src/pages/IPWhitelist.tsx",
+    2
+   ],
+   [
+    "src/components/agent/WhisperNotification.tsx",
     2
    ],
    [
@@ -124039,10 +124062,6 @@
     2
    ],
    [
-    "src/components/layout/CommandPalette.tsx",
-    2
-   ],
-   [
     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
     2
    ],
@@ -124059,11 +124078,11 @@
     2
    ],
    [
-    "src/components/auth/ProtectedRoute.tsx",
+    "src/hooks/__tests__/useAuth.coverage.test.tsx",
     1
    ],
    [
-    "src/components/auth/SessionExpiredDialog.tsx",
+    "src/components/auth/ProtectedRoute.tsx",
     1
    ]
   ]

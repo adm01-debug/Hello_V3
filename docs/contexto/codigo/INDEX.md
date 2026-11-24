@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `4a65b1f401e1bc3c72c9d7644cafe02ec9b702ca` (2026-11-24T13:59:27-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `8aeb115129c8cf37611d35dcbe51815a8c9f3603` (2026-11-24T14:09:53-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1736 |
 | arquivos_codigo | 1332 |
-| linhas_codigo | 177202 |
+| linhas_codigo | 177269 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -371,13 +371,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10246 nós · 27098 arestas · 780 comunidades · grafo do commit `4a65b1f4`
+- 10246 nós · 27098 arestas · 780 comunidades · grafo do commit `8aeb1151`
 - comunidades maiores: lucide-react (295), client.ts (235), vitest (198), react (198), traceHeaders (171), buildCorsHeaders (153), badge.tsx (139), protectedRoutes.tsx (127), cn (116), usePageTitle (115), react-router-dom (113), @tanstack/react-query (111)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), useAuthContext() (src/contexts/AuthContext.tsx), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (119)
+- docs/qa/05-PROGRESSO.md (120)
 - docs/estado/funcionalidades-planejadas.md (30)
 - src/components/layout/AppSidebar.tsx (10)
 - src/hooks/useMultiChannelCall.ts (10)
@@ -430,6 +430,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `8aeb115` fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)
 - 2026-11-24 `4a65b1f` feat: preserva o formulario e reautentica quando a sessao expira (#295)
 - 2026-11-24 `ca6e6dc` fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)
 - 2026-11-24 `48f3644` fix: separa o cache de notificacoes por usuario (etapa 221) (#293)
@@ -444,7 +445,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `711098f` feat: pagina contatos, negocios e contas de 50 em 50 (etapa 237) (#285)
 - 2026-11-24 `d32534f` chore: fixa o orcamento de bundle a mao a partir da meta (etapa 252) (#284)
 - 2026-11-24 `cf8c57b` feat: reduz o chunk de entrada do front em ~15% (etapa 251) (#283)
-- 2026-11-24 `43fa2c8` feat: guard de CI contra N+1 em edge function (etapa 250) (#282)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

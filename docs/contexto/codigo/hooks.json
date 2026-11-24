@@ -1022,7 +1022,7 @@
    "hooks_exportados": [
     "useAuth"
    ],
-   "linhas": 96,
+   "linhas": 120,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
