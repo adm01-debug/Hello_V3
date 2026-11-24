@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "3c972829924dfb7a047ccd212686d1968c987b91",
+  "sha": "f82596ff73b9dfeff51ff1ea370ea843fd5f9075",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 07:35 UTC",
+  "generated_at": "2026-11-24 07:36 UTC",
   "files_total": 1779,
   "code_files": 1575,
-  "code_lines": 195244
+  "code_lines": 195262
  },
  "version": "1.3.2",
- "facts_hash": "16fbdc3a8c158c5f",
+ "facts_hash": "1eaff37cc3d5af32",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31499,7 +31499,9 @@
     "invokes": [],
     "doc": "",
     "errors": [],
-    "side_effects": [],
+    "side_effects": [
+     "notifyInsertErr"
+    ],
     "webhook_events": [],
     "idempotency": false
    },
@@ -34307,7 +34309,7 @@
   {
    "module": "supabase/functions",
    "files": 206,
-   "lines": 23057,
+   "lines": 23075,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -74984,6 +74986,10 @@
    {
     "file": "supabase/functions/voip-anomaly-remediation/index.ts",
     "call": "notify_supervisor_quality_drift"
+   },
+   {
+    "file": "supabase/functions/voip-failover-notifier/index.ts",
+    "call": "notifyInsertErr"
    },
    {
     "file": "supabase/migrations/20250103000000_triggers.sql",
@@ -120714,7 +120720,7 @@
   },
   "supabase/functions/data-lake-flush/index.ts": {
    "path": "supabase/functions/data-lake-flush/index.ts",
-   "lines": 185,
+   "lines": 187,
    "tables": [
     {
      "table": "user_profiles",
@@ -120809,7 +120815,7 @@
   },
   "supabase/functions/database-backup/index.ts": {
    "path": "supabase/functions/database-backup/index.ts",
-   "lines": 100,
+   "lines": 101,
    "tables": [
     {
      "table": "user_roles",
@@ -120849,7 +120855,7 @@
   },
   "supabase/functions/database-cleanup/index.ts": {
    "path": "supabase/functions/database-cleanup/index.ts",
-   "lines": 111,
+   "lines": 112,
    "tables": [
     {
      "table": "user_roles",
@@ -121273,7 +121279,7 @@
   },
   "supabase/functions/enforce-sla/index.ts": {
    "path": "supabase/functions/enforce-sla/index.ts",
-   "lines": 206,
+   "lines": 209,
    "exports": [
     "function pickPolicy"
    ],
@@ -122698,7 +122704,7 @@
   },
   "supabase/functions/process-digest/index.ts": {
    "path": "supabase/functions/process-digest/index.ts",
-   "lines": 108,
+   "lines": 109,
    "tables": [
     {
      "table": "notification_preferences",
@@ -123328,7 +123334,7 @@
   },
   "supabase/functions/sync-crm-queue/index.ts": {
    "path": "supabase/functions/sync-crm-queue/index.ts",
-   "lines": 126,
+   "lines": 129,
    "tables": [
     {
      "table": "crm_sync_queue",
@@ -124288,7 +124294,7 @@
   },
   "supabase/functions/voip-failover-notifier/index.ts": {
    "path": "supabase/functions/voip-failover-notifier/index.ts",
-   "lines": 67,
+   "lines": 68,
    "exports": [
     "const handler"
    ],
@@ -124334,11 +124340,14 @@
    "rule_comments": [
     "3. Insere notificações na tabela (que deve disparar Realtime)"
    ],
+   "side_effects": [
+    "notifyInsertErr"
+   ],
    "uses_service_role": true
   },
   "supabase/functions/voip-load-test/index.ts": {
    "path": "supabase/functions/voip-load-test/index.ts",
-   "lines": 128,
+   "lines": 129,
    "tables": [
     {
      "table": "call_quality_metrics",
@@ -124941,7 +124950,7 @@
   },
   "supabase/functions/voip-trunks-healthcheck/index.ts": {
    "path": "supabase/functions/voip-trunks-healthcheck/index.ts",
-   "lines": 184,
+   "lines": 185,
    "tables": [
     {
      "table": "voip_trunks",
@@ -125016,7 +125025,7 @@
   },
   "supabase/functions/voip-trunks-manage/index.ts": {
    "path": "supabase/functions/voip-trunks-manage/index.ts",
-   "lines": 209,
+   "lines": 213,
    "tables": [
     {
      "table": "user_roles",
@@ -126826,10 +126835,28 @@
   }
  },
  "git": {
-  "sha": "3c972829924dfb7a047ccd212686d1968c987b91",
+  "sha": "f82596ff73b9dfeff51ff1ea370ea843fd5f9075",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "f82596f",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: edges de infra registram falha de gravacao em vez de ignora-la (etapa 188) (#257)",
+    "files": [
+     "supabase/functions/data-lake-flush/index.ts",
+     "supabase/functions/database-backup/index.ts",
+     "supabase/functions/database-cleanup/index.ts",
+     "supabase/functions/enforce-sla/index.ts",
+     "supabase/functions/process-digest/index.ts",
+     "supabase/functions/sync-crm-queue/index.ts",
+     "supabase/functions/voip-failover-notifier/index.ts",
+     "supabase/functions/voip-load-test/index.ts",
+     "supabase/functions/voip-trunks-healthcheck/index.ts",
+     "supabase/functions/voip-trunks-manage/index.ts"
+    ]
+   },
    {
     "sha": "3c97282",
     "date": "2026-11-24",
@@ -127277,27 +127304,32 @@
      "supabase/functions/voip-executive-narrative/index.ts",
      "supabase/functions/whatsapp-rewrite/index.ts"
     ]
-   },
-   {
-    "sha": "890ceeb",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: descarta pagina do historico que chega depois da troca de filtro (#225)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
-     "src/hooks/useCallHistory.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    27
+    26
+   ],
+   [
+    "supabase/functions/data-lake-flush/index.ts",
+    4
    ],
    [
     "supabase/functions/chatbot-respond/index.ts",
     4
+   ],
+   [
+    "supabase/functions/sync-crm-queue/index.ts",
+    3
+   ],
+   [
+    "supabase/functions/voip-failover-notifier/index.ts",
+    3
+   ],
+   [
+    "supabase/functions/voip-trunks-manage/index.ts",
+    3
    ],
    [
     "supabase/functions/approve-password-reset/index.ts",
@@ -127312,10 +127344,6 @@
     3
    ],
    [
-    "supabase/functions/data-lake-flush/index.ts",
-    3
-   ],
-   [
     "supabase/functions/generate-coaching-plan/index.ts",
     3
    ],
@@ -127326,6 +127354,14 @@
    [
     "supabase/functions/translate-utterance/index.ts",
     3
+   ],
+   [
+    "supabase/functions/enforce-sla/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/voip-load-test/index.ts",
+    2
    ],
    [
     "supabase/functions/record-consent/index.ts",
@@ -127349,26 +127385,6 @@
    ],
    [
     "src/hooks/usePredictiveDialer.ts",
-    2
-   ],
-   [
-    "supabase/functions/check-calling-hours/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/check-dnc/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/export-data-lake/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/ldap-sync/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/voip-failover-notifier/index.ts",
     2
    ]
   ]

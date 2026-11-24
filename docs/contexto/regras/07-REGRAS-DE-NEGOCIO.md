@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3c97282992` · branch `main` · 2026-11-24 07:35 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f82596ff73` · branch `main` · 2026-11-24 07:36 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -3049,6 +3049,7 @@ _nenhum item encontrado_
 | `notify_on_block` | `supabase/functions/validate-geo/index.ts` |
 | `notify_ops_volume_drop` | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | `notify_supervisor_quality_drift` | `supabase/functions/voip-anomaly-remediation/index.ts` |
+| `notifyInsertErr` | `supabase/functions/voip-failover-notifier/index.ts` |
 | `notify_critical_event` | `supabase/migrations/20250103000000_triggers.sql` |
 | `notify_critical_event_trigger` | `supabase/migrations/20250103000000_triggers.sql` |
 | `notify_on_critical` | `supabase/migrations/20251223220228_f4ebbaa7-ea1c-447d-a07b-e1c0f583963d.sql` |

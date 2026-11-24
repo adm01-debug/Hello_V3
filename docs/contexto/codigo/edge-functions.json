@@ -874,7 +874,7 @@
    "nome": "data-lake-flush",
    "entrada": "supabase/functions/data-lake-flush/index.ts",
    "arquivos": 1,
-   "linhas": 185,
+   "linhas": 187,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -911,7 +911,7 @@
    "nome": "database-backup",
    "entrada": "supabase/functions/database-backup/index.ts",
    "arquivos": 1,
-   "linhas": 100,
+   "linhas": 101,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -942,7 +942,7 @@
    "nome": "database-cleanup",
    "entrada": "supabase/functions/database-cleanup/index.ts",
    "arquivos": 1,
-   "linhas": 111,
+   "linhas": 112,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1203,7 +1203,7 @@
    "nome": "enforce-sla",
    "entrada": "supabase/functions/enforce-sla/index.ts",
    "arquivos": 1,
-   "linhas": 206,
+   "linhas": 209,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1878,7 +1878,7 @@
    "nome": "process-digest",
    "entrada": "supabase/functions/process-digest/index.ts",
    "arquivos": 1,
-   "linhas": 108,
+   "linhas": 109,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2343,7 +2343,7 @@
    "nome": "sync-crm-queue",
    "entrada": "supabase/functions/sync-crm-queue/index.ts",
    "arquivos": 1,
-   "linhas": 126,
+   "linhas": 129,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2956,7 +2956,7 @@
    "nome": "voip-failover-notifier",
    "entrada": "supabase/functions/voip-failover-notifier/index.ts",
    "arquivos": 1,
-   "linhas": 67,
+   "linhas": 68,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2992,7 +2992,7 @@
    "nome": "voip-load-test",
    "entrada": "supabase/functions/voip-load-test/index.ts",
    "arquivos": 1,
-   "linhas": 128,
+   "linhas": 129,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3296,7 +3296,7 @@
    "nome": "voip-trunks-healthcheck",
    "entrada": "supabase/functions/voip-trunks-healthcheck/index.ts",
    "arquivos": 1,
-   "linhas": 184,
+   "linhas": 185,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3335,7 +3335,7 @@
    "nome": "voip-trunks-manage",
    "entrada": "supabase/functions/voip-trunks-manage/index.ts",
    "arquivos": 1,
-   "linhas": 209,
+   "linhas": 213,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"

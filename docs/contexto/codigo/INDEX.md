@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `3c972829924dfb7a047ccd212686d1968c987b91` (2026-11-24T04:35:07-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `f82596ff73b9dfeff51ff1ea370ea843fd5f9075` (2026-11-24T04:35:11-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1732 |
 | arquivos_codigo | 1329 |
-| linhas_codigo | 179232 |
+| linhas_codigo | 179250 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,7 +370,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10152 nós · 26708 arestas · 778 comunidades · grafo do commit `3c972829`
+- 10152 nós · 26708 arestas · 778 comunidades · grafo do commit `f82596ff`
 - comunidades maiores: card.tsx (227), react (215), vitest (206), @tanstack/react-query (186), usePageTitle (172), button.tsx (153), safe-date.ts (134), buildCorsHeaders (133), cn (118), lucide-react (118), badge.tsx (117), CallDetailDialog.tsx (110)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -380,8 +380,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - src/hooks/useMultiChannelCall.ts (9)
+- supabase/functions/data-lake-flush/index.ts (9)
 - docs/audits/pendencias-2026-07.md (8)
-- supabase/functions/data-lake-flush/index.ts (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
 - src/components/calls/UnifiedSoftphone.tsx (7)
@@ -389,8 +389,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - src/components/layout/CommandPalette.tsx (6)
 - supabase/functions/chatbot-respond/index.ts (6)
 - supabase/functions/generate-coaching-track/index.ts (6)
+- supabase/functions/voip-load-test/index.ts (6)
 - deno.lock (5)
-- docs/prod-readiness.md (5)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `f82596f` fix: edges de infra registram falha de gravacao em vez de ignora-la (etapa 188) (#257)
 - 2026-11-24 `3c97282` fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)
 - 2026-11-24 `df0b30e` fix: gravacoes cegas em hooks de dados passam a reportar erro (etapa 187) (#254)
 - 2026-11-24 `5215414` fix: edges de entrada nao devolvem 200 com escrita perdida (etapa 188) (#256)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `0526bc2` fix: ligar botoes de navegacao do dashboard sem acao (E165) (#244)
 - 2026-11-24 `a032d25` fix: tratar o erro de banco nas gravacoes do ciclo de chamada (#243)
 - 2026-11-24 `95304bc` feat: ligar botões Configurar e adicionar testes de áudio (#242)
-- 2026-11-24 `024aa1e` feat: explica na tela a regra do coaching automatico (etapa 169) (#241)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

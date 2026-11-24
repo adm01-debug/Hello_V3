@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "3c972829924dfb7a047ccd212686d1968c987b91",
+  "commit": "f82596ff73b9dfeff51ff1ea370ea843fd5f9075",
   "branch": "main",
-  "data_commit": "2026-11-24T04:35:07-03:00",
+  "data_commit": "2026-11-24T04:35:11-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f82596f",
+    "data": "2026-11-24",
+    "assunto": "fix: edges de infra registram falha de gravacao em vez de ignora-la (etapa 188) (#257)"
+   },
    {
     "sha": "3c97282",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "a3a8463",
     "data": "2026-11-24",
     "assunto": "fix: onda 3 da E050 - erro interno generico em 26 edges (#232)"
-   },
-   {
-    "sha": "48a60a2",
-    "data": "2026-11-24",
-    "assunto": "fix: onda 2 da E050 - nao vazar erro interno em mais 13 edges (#231)"
    }
   ],
-  "arquivos_mudados_7d": 1122,
+  "arquivos_mudados_7d": 1125,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -214,11 +214,11 @@
     "mudancas": 9
    },
    {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
-    "mudancas": 8
+    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "mudancas": 9
    },
    {
-    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 8
    },
    {
@@ -250,6 +250,10 @@
     "mudancas": 6
    },
    {
+    "arquivo": "supabase/functions/voip-load-test/index.ts",
+    "mudancas": 6
+   },
+   {
     "arquivo": "deno.lock",
     "mudancas": 5
    },
@@ -267,6 +271,10 @@
    },
    {
     "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
+    "mudancas": 5
+   },
+   {
+    "arquivo": "supabase/functions/enforce-sla/index.ts",
     "mudancas": 5
    },
    {
@@ -288,20 +296,12 @@
    {
     "arquivo": "supabase/functions/request-password-reset/index.ts",
     "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/score-call/index.ts",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 234
+    "commits": 235
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1732,
   "arquivos_codigo": 1329,
-  "linhas_codigo": 179232,
+  "linhas_codigo": 179250,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 206,
-   "linhas": 23057
+   "linhas": 23075
   },
   "tailwind.config.ts": {
    "arquivos": 1,

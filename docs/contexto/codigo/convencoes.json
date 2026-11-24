@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: edges de infra registram falha de gravacao em vez de ignora-la (etapa 188) (#257)",
    "fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)",
    "fix: gravacoes cegas em hooks de dados passam a reportar erro (etapa 187) (#254)",
    "fix: edges de entrada nao devolvem 200 com escrita perdida (etapa 188) (#256)",
-   "fix: remocao de audio de fila checa storage antes do banco (etapa 186) (#253)",
-   "fix: falha em sessao e passkey passa a ser visivel (etapa 183) (#250)"
+   "fix: remocao de audio de fila checa storage antes do banco (etapa 186) (#253)"
   ]
  },
  "pr_template": null,
