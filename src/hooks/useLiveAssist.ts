@@ -126,6 +126,7 @@ export function useLiveAssist(callSessionId?: string) {
   return {
     signals: query.data ?? [],
     isLoading: query.isLoading,
+    error: query.error,
     isAnalyzing,
     analyze,
     markUsed,

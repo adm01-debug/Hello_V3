@@ -131,6 +131,7 @@ export function useCrmFieldSuggestions(callSessionId?: string) {
     suggestions: query.data ?? [],
     pending: (query.data ?? []).filter((s) => s.status === 'pending'),
     isLoading: query.isLoading,
+    error: query.error,
     accept: accept.mutate,
     reject: reject.mutate,
     triggerExtraction: triggerExtraction.mutate,

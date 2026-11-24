@@ -102,7 +102,7 @@
 - [ ] **059** — Fechar a chamada no banco quando ela termina — onda 2 — Crítica — Hooks
 - [x] **060** — Fazer a barra de chamada ativa renderizar a chamada real — onda 2 — Crítica — Frontend · (PR #168; tsc=0, eslint=0, testes 24/24)
 - [x] **061** — Religar a transcrição ao vivo — onda 2 — Alta — Frontend · (PR #170; handleTranscript chama addDbTranscript; tsc=0)
-- [ ] **062** — Religar a próxima melhor ação e as sugestões de CRM — onda 2 — Alta — Frontend
+- [x] **062** — Religar a próxima melhor ação e as sugestões de CRM — onda 2 — Alta — Frontend
 - [x] **063** — Garantir que o resumo automático da chamada seja gerado e gravado — onda 2 — Alta — Hooks · (PR #170; allTranscriptsRef.push antes do insert; tsc=0)
 - [x] **064** — Teste de ponta a ponta do ciclo de vida da chamada — onda 2 — Alta — Testes · (PR #170; callLifecycle-integration.test.tsx 3/3)
 - [ ] **065** — Confirmar em produção que a chamada está sendo gravada — onda 2 — Crítica — Verificação
