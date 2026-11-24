@@ -1056,7 +1056,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 1,
+   "usado_por": 2,
    "orfao": false
   },
   {
@@ -1140,7 +1140,7 @@
     "UnifiedSoftphone"
    ],
    "export_default": null,
-   "linhas": 288,
+   "linhas": 371,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAgentStatus",
@@ -4081,7 +4081,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 20,
+   "usado_por": 21,
    "orfao": false
   },
   {
@@ -4176,7 +4176,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 245,
+   "usado_por": 246,
    "orfao": false
   },
   {

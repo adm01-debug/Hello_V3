@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "b5df75fe0da31244a52c7265945b54ae3af8c2a9",
+  "sha": "8aa5275b04273a9df91dc44492a4ff3a40130fc6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 07:01 UTC",
-  "files_total": 1776,
-  "code_files": 1572,
-  "code_lines": 194549
+  "generated_at": "2026-11-24 07:04 UTC",
+  "files_total": 1777,
+  "code_files": 1573,
+  "code_lines": 194775
  },
  "version": "1.3.2",
- "facts_hash": "965261600cf357ba",
+ "facts_hash": "9f4fa6bacd055d70",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 657,
-   ".tsx": 635,
+   ".tsx": 636,
    ".sql": 245,
    ".mjs": 28,
    ".py": 5,
@@ -28317,7 +28317,7 @@
      "check_dnc",
      "record_trunk_usage"
     ],
-    "deps_count": 64
+    "deps_count": 65
    },
    {
     "path": "",
@@ -32198,7 +32198,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 368,
+  "components_count": 369,
   "hooks": [
    {
     "name": "useContacts",
@@ -33344,8 +33344,8 @@
   },
   {
    "module": "src/components",
-   "files": 368,
-   "lines": 43823,
+   "files": 369,
+   "lines": 44049,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33549,7 +33549,7 @@
     "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
     "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
     "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "src/components/calls/__tests__/WebRTCCall.test.tsx"
+    "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx"
    ]
   },
   {
@@ -40464,6 +40464,10 @@
    },
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
+    "msg": ";\nimport { Button } from "
+   },
+   {
+    "file": "src/components/calls/UnifiedSoftphone.tsx",
     "msg": "Digite um número WhatsApp para ligar"
    },
    {
@@ -40477,6 +40481,10 @@
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
     "msg": "Falha ao salvar a gravação"
+   },
+   {
+    "file": "src/components/calls/UnifiedSoftphone.tsx",
+    "msg": "Microfone indisponível"
    },
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
@@ -51011,7 +51019,43 @@
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
     "field": "status",
+    "value": "error",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/calls/UnifiedSoftphone.tsx",
+    "field": "status",
+    "value": "error",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/calls/UnifiedSoftphone.tsx",
+    "field": "status",
     "value": "active",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/calls/UnifiedSoftphone.tsx",
+    "field": "status",
+    "value": "error",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/calls/UnifiedSoftphone.tsx",
+    "field": "status",
+    "value": "disconnected",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/calls/UnifiedSoftphone.tsx",
+    "field": "status",
+    "value": "error",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/calls/UnifiedSoftphone.tsx",
+    "field": "status",
+    "value": "error",
     "kind": "compara"
    },
    {
@@ -57601,6 +57645,26 @@
    {
     "file": "src/components/calls/__tests__/PostCallSummary.test.tsx",
     "name": "botão Baixar CSV fica desabilitado quando não há dados"
+   },
+   {
+    "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+    "name": "UnifiedSoftphone — estados de falha (etapa 233)"
+   },
+   {
+    "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+    "name": "mostra o estado do registro SIP da propria linha no cabecalho"
+   },
+   {
+    "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+    "name": "mostra o motivo da falha e tenta de novo quando o operador clica em Tentar agora"
+   },
+   {
+    "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+    "name": "repete o registro automaticamente com espera crescente"
+   },
+   {
+    "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+    "name": "instrui o agente quando o microfone e negado"
    },
    {
     "file": "src/components/calls/__tests__/WebRTCCall.test.tsx",
@@ -83851,6 +83915,7 @@
      "error": [
       "compara:src/components/admin/ldap/LDAPLogsTab.tsx",
       "compara:src/components/calls/SipConnectionStatus.tsx",
+      "compara:src/components/calls/UnifiedSoftphone.tsx",
       "compara:src/pages/VerifyEmail.tsx",
       "escreve:src/hooks/useSipCall.ts",
       "escreve:src/hooks/useWavoipCall.ts"
@@ -94275,7 +94340,7 @@
   },
   "src/components/calls/UnifiedSoftphone.tsx": {
    "path": "src/components/calls/UnifiedSoftphone.tsx",
-   "lines": 288,
+   "lines": 371,
    "exports": [
     "function UnifiedSoftphone"
    ],
@@ -94283,10 +94348,12 @@
     "elevenlabs-conversation-token"
    ],
    "errors": [
+    ";\nimport { Button } from ",
     "Digite um número WhatsApp para ligar",
     "Digite um número para ligar",
     "Falha ao conectar ao servidor SIP",
     "Falha ao salvar a gravação",
+    "Microfone indisponível",
     "Máximo de 3 chamadas simultâneas atingido",
     "Não foi possível iniciar a chamada",
     "Não foi possível iniciar a gravação"
@@ -94299,7 +94366,37 @@
     },
     {
      "field": "status",
+     "value": "error",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "error",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
      "value": "active",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "error",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "disconnected",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "error",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "error",
      "kind": "compara"
     },
     {
@@ -94523,6 +94620,18 @@
     "classifica como Ruim quando MOS médio < 3.6",
     "dispara download de CSV ao clicar em Baixar CSV",
     "botão Baixar CSV fica desabilitado quando não há dados"
+   ]
+  },
+  "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx": {
+   "path": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+   "lines": 143,
+   "is_test": true,
+   "tests": [
+    "UnifiedSoftphone — estados de falha (etapa 233)",
+    "mostra o estado do registro SIP da propria linha no cabecalho",
+    "mostra o motivo da falha e tenta de novo quando o operador clica em Tentar agora",
+    "repete o registro automaticamente com espera crescente",
+    "instrui o agente quando o microfone e negado"
    ]
   },
   "src/components/calls/__tests__/WebRTCCall.test.tsx": {
@@ -126577,10 +126686,21 @@
   }
  },
  "git": {
-  "sha": "b5df75fe0da31244a52c7265945b54ae3af8c2a9",
+  "sha": "8aa5275b04273a9df91dc44492a4ff3a40130fc6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "8aa5275",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "feat: estados de falha visiveis no softphone (etapa 233) (#246)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/calls/UnifiedSoftphone.tsx",
+     "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx"
+    ]
+   },
    {
     "sha": "b5df75f",
     "date": "2026-11-24",
@@ -127035,26 +127155,12 @@
      "src/hooks/useAlerts.ts",
      "src/hooks/useMultiChannelCall.ts"
     ]
-   },
-   {
-    "sha": "ac329a7",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: nao gravar dado derivado quando a leitura falha (#218)",
-    "files": [
-     "src/hooks/__tests__/useConversations.coverage.test.tsx",
-     "src/hooks/__tests__/useGamification.coverage.test.tsx",
-     "src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx",
-     "src/hooks/useConversations.ts",
-     "src/hooks/useGamification.ts",
-     "src/hooks/useMultiDeviceRing.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    28
+    29
    ],
    [
     "supabase/functions/data-lake-flush/index.ts",

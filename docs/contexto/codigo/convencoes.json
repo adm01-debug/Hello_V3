@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (368)",
+   "co-localizado (__tests__) (369)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: estados de falha visiveis no softphone (etapa 233) (#246)",
    "feat: leitura do artigo da base de conhecimento (etapa 153) (#248)",
    "chore: inventario dos hooks dormentes e rotas.json atualizado (etapa 159) (#245)",
    "fix: ligar botoes de navegacao do dashboard sem acao (E165) (#244)",
-   "fix: tratar o erro de banco nas gravacoes do ciclo de chamada (#243)",
-   "feat: ligar botões Configurar e adicionar testes de áudio (#242)"
+   "fix: tratar o erro de banco nas gravacoes do ciclo de chamada (#243)"
   ]
  },
  "pr_template": null,

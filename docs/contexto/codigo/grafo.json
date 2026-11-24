@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 935,
- "arestas": 3700,
+ "arestas": 3704,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -10,7 +10,7 @@
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 245
+   "importado_por": 246
   },
   {
    "arquivo": "src/components/ui/card.tsx",
@@ -125,12 +125,12 @@
    "importado_por": 22
   },
   {
-   "arquivo": "src/components/ui/empty-state.tsx",
+   "arquivo": "src/components/ui/alert.tsx",
    "importado_por": 21
   },
   {
-   "arquivo": "src/components/ui/alert.tsx",
-   "importado_por": 20
+   "arquivo": "src/components/ui/empty-state.tsx",
+   "importado_por": 21
   },
   {
    "arquivo": "src/lib/safe-number.ts",
@@ -252,7 +252,7 @@
   },
   {
    "modulo": "components/calls",
-   "depende_de": 7,
+   "depende_de": 8,
    "importado_por": 3
   },
   {

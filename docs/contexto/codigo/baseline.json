@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "b5df75fe0da31244a52c7265945b54ae3af8c2a9",
+  "commit": "8aa5275b04273a9df91dc44492a4ff3a40130fc6",
   "branch": "main",
-  "data_commit": "2026-11-24T04:01:32-03:00",
+  "data_commit": "2026-11-24T04:03:56-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8aa5275",
+    "data": "2026-11-24",
+    "assunto": "feat: estados de falha visiveis no softphone (etapa 233) (#246)"
+   },
    {
     "sha": "b5df75f",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "87d013e",
     "data": "2026-11-24",
     "assunto": "chore: suite de testes roda sem .env e sem configuracao manual (#224)"
-   },
-   {
-    "sha": "e1e227d",
-    "data": "2026-11-24",
-    "assunto": "fix: agente fica offline ao fechar o navegador (etapa 204) (#222)"
    }
   ],
-  "arquivos_mudados_7d": 1108,
+  "arquivos_mudados_7d": 1109,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 75
+    "mudancas": 76
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 29
+    "mudancas": 31
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 75
+    "mudancas": 76
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -230,11 +230,11 @@
     "mudancas": 7
    },
    {
-    "arquivo": ".github/workflows/contexto.yml",
-    "mudancas": 6
+    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
+    "mudancas": 7
    },
    {
-    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
+    "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 6
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 225
+    "commits": 226
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1729,
-  "arquivos_codigo": 1326,
-  "linhas_codigo": 178537,
+  "arquivos_total": 1730,
+  "arquivos_codigo": 1327,
+  "linhas_codigo": 178763,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 392,
+  "testes": 393,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 368,
-   "linhas": 43823
+   "arquivos": 369,
+   "linhas": 44049
   },
   "src/contexts": {
    "arquivos": 4,
@@ -613,6 +613,10 @@
    "linhas": 372
   },
   {
+   "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
+   "linhas": 371
+  },
+  {
    "arquivo": "src/components/ui/empty-state.tsx",
    "linhas": 371
   },
@@ -635,10 +639,6 @@
   {
    "arquivo": "src/contexts/ReauthContext.tsx",
    "linhas": 354
-  },
-  {
-   "arquivo": "scripts/inventario/gerar-banco.mjs",
-   "linhas": 352
   }
  ],
  "qualidade": {

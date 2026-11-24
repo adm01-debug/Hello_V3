@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b5df75fe0da31244a52c7265945b54ae3af8c2a9` (2026-11-24T04:01:32-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `8aa5275b04273a9df91dc44492a4ff3a40130fc6` (2026-11-24T04:03:56-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1292), SQL (245), Markdown (121), JavaScript (30), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1293), SQL (245), Markdown (121), JavaScript (30), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1729 |
-| arquivos_codigo | 1326 |
-| linhas_codigo | 178537 |
+| arquivos_total | 1730 |
+| arquivos_codigo | 1327 |
+| linhas_codigo | 178763 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 169 |
 | migrations | 242 |
 | cron_jobs | 11 |
-| testes | 392 |
+| testes | 393 |
 | workflows | 3 |
 | scripts | 35 |
 | docs_md | 121 |
@@ -58,7 +58,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - componentes: src/components (319), src/pages (126), src/contexts (4)
 - hooks: src/hooks (174), src/components (12), src/contexts (4)
 - servicos_logica: src/lib (89), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (368), e2e/ (7), tests/ (6)
+- testes: co-localizado (__tests__) (369), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (7), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10142 nós · 26659 arestas · 763 comunidades · grafo do commit `b5df75fe`
-- comunidades maiores: lucide-react (299), client.ts (240), vitest (182), 5. Em uso por rota (181), usePageTitle (173), button.tsx (163), badge.tsx (131), react (124), @tanstack/react-query (118), CallDetailDialog.tsx (117), cn (108), validator.ts (101)
+- 10146 nós · 26684 arestas · 775 comunidades · grafo do commit `8aa5275b`
+- comunidades maiores: card.tsx (291), protectedRoutes.tsx (208), client.ts (188), vitest (171), traceHeaders (157), react (155), lucide-react (133), safe-date.ts (130), sonner (125), cn (119), buildCorsHeaders (104), snapshot.py (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (75)
+- docs/qa/05-PROGRESSO.md (76)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - src/hooks/useMultiChannelCall.ts (9)
@@ -384,8 +384,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - supabase/functions/data-lake-flush/index.ts (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
+- src/components/calls/UnifiedSoftphone.tsx (7)
 - .github/workflows/contexto.yml (6)
-- src/components/calls/UnifiedSoftphone.tsx (6)
 - src/components/layout/CommandPalette.tsx (6)
 - supabase/functions/generate-coaching-track/index.ts (6)
 - deno.lock (5)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `8aa5275` feat: estados de falha visiveis no softphone (etapa 233) (#246)
 - 2026-11-24 `b5df75f` feat: leitura do artigo da base de conhecimento (etapa 153) (#248)
 - 2026-11-24 `a097cd7` chore: inventario dos hooks dormentes e rotas.json atualizado (etapa 159) (#245)
 - 2026-11-24 `0526bc2` fix: ligar botoes de navegacao do dashboard sem acao (E165) (#244)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `e78a64b` fix: valida o corpo nas 18 edges de calculo e exportacao (etapa 049) (#235)
 - 2026-11-24 `0bba9fb` fix: teto de tamanho e validacao de corpo nas 12 edges de IA e transcricao (#234)
 - 2026-11-24 `1929b04` fix: onda 4 e fechamento da E050 - erro interno nunca chega ao cliente (#233)
-- 2026-11-24 `a3a8463` fix: onda 3 da E050 - erro interno generico em 26 edges (#232)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

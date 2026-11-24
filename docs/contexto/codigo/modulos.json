@@ -639,8 +639,8 @@
   {
    "modulo": "components/calls",
    "arquivos": 27,
-   "testes": 7,
-   "linhas": 3921,
+   "testes": 8,
+   "linhas": 4004,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -781,7 +781,8 @@
     "contexts",
     "hooks",
     "integrations/supabase",
-    "lib"
+    "lib",
+    "lib/audio"
    ],
    "pacotes_externos": [
     "lucide-react",
@@ -5169,6 +5170,7 @@
     "rpcs": []
    },
    "importado_por_outros_modulos": [
+    "components/calls",
     "pages"
    ],
    "depende_de_modulos": [],

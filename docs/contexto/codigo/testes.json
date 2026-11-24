@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 392,
+ "total": 393,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 375
+  "unit": 376
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 368
+   "arquivos": 369
   },
   {
    "padrao": "e2e/",
@@ -221,6 +221,15 @@
     "src/hooks/useVoipQualityMonitor.ts"
    ],
    "casos": 5
+  },
+  {
+   "arquivo": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+   "tipo": "unit",
+   "linhas": 143,
+   "testa": [
+    "src/components/calls/UnifiedSoftphone.tsx"
+   ],
+   "casos": 4
   },
   {
    "arquivo": "src/components/calls/__tests__/WebRTCCall.test.tsx",
@@ -3542,6 +3551,7 @@
   "src/components/calls/CrmSuggestionsCard.tsx": 1,
   "src/components/calls/NextBestActionPanel.tsx": 1,
   "src/components/calls/PostCallSummary.tsx": 1,
+  "src/components/calls/UnifiedSoftphone.tsx": 1,
   "src/components/calls/WebRTCCall.tsx": 1,
   "src/components/calls/live-transcription/useLiveTranscription.ts": 1,
   "src/components/calls/softphone/TabContents.tsx": 1,

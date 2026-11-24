@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b5df75fe0d` · branch `main` · 2026-11-24 07:01 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8aa5275b04` · branch `main` · 2026-11-24 07:04 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -869,7 +869,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `down` | compara, escreve | `src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts` |
 | `status` | `draft` | compara, escreve | `src/hooks/useKnowledgeBase.ts`<br>`src/hooks/useScorecards.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Scorecards.tsx`<br>`supabase/functions/score-call/index.ts` |
 | `status` | `ended` | compara, escreve | `src/components/calls/WebRTCCall.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>`src/pages/VideoConference.tsx`<br>… +1 |
-| `status` | `error` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>`src/pages/VerifyEmail.tsx` |
+| `status` | `error` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>… +1 |
 | `status` | `exhausted` | compara | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
 | `status` | `expired` | compara, escreve | `src/pages/PasswordResetApproval.tsx`<br>`src/pages/VerifyEmail.tsx`<br>`supabase/functions/approve-password-reset/index.ts` |
 | `status` | `failed` | compara, escreve | `src/components/calls/MeetingSummaryCard.tsx`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/lib/bitrix/sync-log.ts`<br>`src/pages/VirtualFax.tsx`<br>`supabase/functions/compute-best-time/index.ts`<br>… +4 |
@@ -2346,10 +2346,12 @@ _nenhum item encontrado_
 |  className= | `src/components/calls/CrmSuggestionsCard.tsx` |
 |  className= | `src/components/calls/NextBestActionPanel.tsx` |
 | Falha ao exportar CSV | `src/components/calls/PostCallSummary.tsx` |
+| ; import { Button } from  | `src/components/calls/UnifiedSoftphone.tsx` |
 | Digite um número WhatsApp para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
 | Digite um número para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
 | Falha ao conectar ao servidor SIP | `src/components/calls/UnifiedSoftphone.tsx` |
 | Falha ao salvar a gravação | `src/components/calls/UnifiedSoftphone.tsx` |
+| Microfone indisponível | `src/components/calls/UnifiedSoftphone.tsx` |
 | Máximo de 3 chamadas simultâneas atingido | `src/components/calls/UnifiedSoftphone.tsx` |
 | Não foi possível iniciar a chamada | `src/components/calls/UnifiedSoftphone.tsx` |
 | Não foi possível iniciar a gravação | `src/components/calls/UnifiedSoftphone.tsx` |
@@ -2578,9 +2580,7 @@ _nenhum item encontrado_
 | Não foi possível criar o grupo | `src/hooks/useRingGroups.ts` |
 | Não foi possível remover o grupo | `src/hooks/useRingGroups.ts` |
 | Não foi possível remover o participante | `src/hooks/useRingGroups.ts` |
-| ; import { getCurrentDeviceLabel, sanitizeDeviceLabel } from  | `src/hooks/useRingtoneSettings.ts` |
-| Falha ao remover regra | `src/hooks/useRoutingRules.ts` |
-| … +268 linhas — lista completa em `context.json` | |
+| … +270 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4329 testes em 382 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4334 testes em 383 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2876,6 +2876,7 @@ _nenhum item encontrado_
 | `src/__tests__/rls/contacts.test.ts` | 5 | RLS — contacts (matriz por role) · %s pode SELECT contacts · %s pode INSERT contacts · %s pode UPDATE contacts … |
 | `src/components/calls/__tests__/AudioOutputSelector.test.tsx` | 5 | AudioOutputSelector · mostra mensagem quando não suportado · renderiza o combobox quando suportado · desabilita quando não há dispositivos disponíveis (usa fallback padrão) … |
 | `src/components/calls/__tests__/CrmSuggestionsCard.test.tsx` | 5 | CrmSuggestionsCard · explica o vazio em vez de sumir da tela · mostra carregando enquanto a consulta roda · mostra o erro da consulta … |
+| `src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx` | 5 | UnifiedSoftphone — estados de falha (etapa 233) · mostra o estado do registro SIP da propria linha no cabecalho · mostra o motivo da falha e tenta de novo quando o operador clica em Tentar agora · repete o registro automaticamente com espera crescente … |
 | `src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx` | 5 | TrendChartToggle · não monta o gráfico antes do primeiro clique · conserva o gráfico montado ao fechar, para o histórico não zerar · não reinicia o gráfico quando o pai reflete o fechamento … |
 | `src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx` | 5 | useAnimatedCounter · returns 0 initially and animates toward the end value · respects decimals option · early-returns when diff is zero … |
 | `src/hooks/__tests__/useAuditLog.coverage.test.tsx` | 5 | useAuditLog · logEvent chama rpc com os parâmetros corretos · logEvent registra erro quando rpc retorna error · logEvent captura exceção lançada … |
@@ -2932,8 +2933,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
 | `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
-| `src/hooks/__tests__/useTalkRatio.test.ts` | 4 | useTalkRatio · estado inicial é vazio · analisa com sucesso · captura erro do backend |
-| … +82 linhas — lista completa em `context.json` | | |
+| … +83 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
