@@ -1,8 +1,12 @@
 import { logger } from '@/lib/logger';
 import { useState, useCallback, useEffect } from 'react';
 import { useConversation } from '@/lib/elevenlabs-stub';
-import { Phone, Users, History } from 'lucide-react';
+import { AlertTriangle, Phone, Users, History } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { describeMicError } from '@/lib/audio/deviceTest';
+import { SipConnectionStatus } from './SipConnectionStatus';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
@@ -28,10 +32,17 @@ interface UnifiedSoftphoneProps {
   onTranscript?: (text: string, speaker: 'user' | 'agent') => void;
 }
 
+/** Espera antes da próxima tentativa de registro SIP: imediata, 5s, 10s, 20s e 30s (teto). */
+function sipRetryDelayMs(attempt: number): number {
+  return attempt === 0 ? 0 : Math.min(5000 * 2 ** (attempt - 1), 30000);
+}
+
 export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: UnifiedSoftphoneProps) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [activeTab, setActiveTab] = useState<'dialpad' | 'contacts' | 'history'>('dialpad');
   const [volume, setVolume] = useState(1);
+  const [micError, setMicError] = useState<string | null>(null);
+  const [sipAttempt, setSipAttempt] = useState(0);
 
   const {
     activeChannel, currentCall, activeCalls, activeCallId, callHistory, channels, conference,
@@ -43,6 +54,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
 
   const wavoip = useWavoipCall();
   const sipCall = useSipCall();
+  const sipConnect = sipCall.connect;
   const recording = useCallRecording();
   const { currentAgent, agents, setAgent, clearAgent, setStatusBusy, setStatusAvailable, setStatusAway } = useAgentStatus();
 
@@ -53,8 +65,20 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   });
 
   useEffect(() => { if (wavoip.isConfigured) configureChannel('wavoip', { enabled: true, configured: true }); }, [wavoip.isConfigured, configureChannel]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { if (activeChannel === 'sip' && !sipCall.isRegistered && sipCall.status === 'disconnected') sipCall.connect(); }, [activeChannel, sipCall.isRegistered, sipCall.status]);
+  // Registro SIP perdido: repete com espera crescente (5s → 30s) em vez de uma única tentativa muda.
+  // sipConnect é estável (useCallback sem dependências em useSipCall), então pode entrar nas deps.
+  useEffect(() => {
+    if (activeChannel !== 'sip') return;
+    if (sipCall.isRegistered) { setSipAttempt(0); return; }
+    if (sipCall.status !== 'disconnected' && sipCall.status !== 'error') return;
+    // Sem credencial configurada não há o que repetir: o banner orienta a cadastrar o tronco.
+    if (sipCall.status === 'error' && !sipCall.isConfigured) return;
+    const timer = window.setTimeout(() => {
+      setSipAttempt(n => n + 1);
+      void sipConnect();
+    }, sipRetryDelayMs(sipAttempt));
+    return () => window.clearTimeout(timer);
+  }, [activeChannel, sipCall.isRegistered, sipCall.status, sipCall.isConfigured, sipAttempt, sipConnect]);
   // E070: injeta o UUID real do banco para evitar id sintético no relato de tronco
   // sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,6 +111,16 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     if (activeChannel === 'webrtc') {
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (error) {
+        // Microfone negado/ausente: instrui o agente em vez de deixar a tela em silêncio.
+        const motivo = describeMicError(error);
+        logger.error('Microfone indisponível para chamada WebRTC:', error);
+        setMicError(motivo);
+        toast.error('Microfone indisponível', { description: motivo });
+        if (activeCalls.length === 0) setStatusAvailable();
+        return;
+      }
+      try {
         const call = await initiateCall('webrtc', undefined, 'Agente IA');
         if (!call) { toast.error('Não foi possível iniciar a chamada'); if (activeCalls.length === 0) setStatusAvailable(); return; }
         onCallStart?.(call);
@@ -179,6 +213,27 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     toast.info('Gravação iniciada');
   }, [recording, toggleRecording, currentCall, activeCalls.length]);
 
+  const handleSipRetryNow = useCallback(() => {
+    setSipAttempt(n => n + 1);
+    void sipConnect();
+  }, [sipConnect]);
+
+  // Estado do registro SIP do próprio softphone (a página usa outra instância do hook,
+  // então o badge da página não reflete o que esta linha está fazendo).
+  const sipDown = activeChannel === 'sip' && !sipCall.isRegistered
+    && (sipCall.status === 'error' || sipCall.status === 'disconnected');
+  const sipNextRetrySeconds = sipAttempt > 0 ? sipRetryDelayMs(sipAttempt) / 1000 : 0;
+  const sipAlertTitle = sipDown && isInCall && currentCall?.channel === 'sip'
+    ? 'A chamada caiu — a linha SIP saiu do ar'
+    : sipCall.status === 'error' ? 'Linha SIP fora do ar' : 'Reconectando a linha SIP';
+  const sipAlertDescription = sipCall.status === 'error'
+    ? (sipCall.isConfigured
+      ? `${sipCall.error ?? 'Não foi possível registrar no servidor SIP.'}${sipNextRetrySeconds > 0 ? ` Nova tentativa automática em ${sipNextRetrySeconds}s.` : ' Tentando novamente.'}`
+      : 'A linha SIP não está configurada. Cadastre o tronco em Configurações → Telefonia para voltar a receber chamadas.')
+    : sipNextRetrySeconds > 0
+      ? `Sem registro no servidor SIP. Nova tentativa automática em ${sipNextRetrySeconds}s — as chamadas não entram enquanto a linha estiver fora do ar.`
+      : 'Sem registro no servidor SIP no momento. Reconectando — as chamadas não entram enquanto a linha estiver fora do ar.';
+
   const ChannelIcon = channelIcons[activeChannel];
   const isSpeaking = conversation.isSpeaking;
 
@@ -226,10 +281,38 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
               channels={channels} activeChannel={activeChannel}
               isInCall={isInCall} onSetChannel={setActiveChannel}
             />
+
+            <SipConnectionStatus status={sipCall.status} isRegistered={sipCall.isRegistered} error={sipCall.error} />
           </div>
         </CardHeader>
 
         <CardContent className="p-0">
+          {micError && (
+            <Alert variant="destructive" className="m-4 mb-0">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertTitle>Microfone bloqueado</AlertTitle>
+              <AlertDescription>
+                <p>{micError}</p>
+                <p>Clique no ícone de cadeado na barra de endereço, permita o microfone e ligue de novo.</p>
+                <Button size="sm" variant="outline" className="mt-2" onClick={() => setMicError(null)}>
+                  Fechar aviso
+                </Button>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {sipDown && (
+            <Alert variant="destructive" className="m-4 mb-0">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertTitle>{sipAlertTitle}</AlertTitle>
+              <AlertDescription>
+                <p>{sipAlertDescription}</p>
+                <Button size="sm" variant="outline" className="mt-2" onClick={handleSipRetryNow}>
+                  Tentar agora
+                </Button>
+              </AlertDescription>
+            </Alert>
+          )}
           {isInCall && currentCall && (
             <ActiveCallDisplay
               currentCall={currentCall} activeChannel={activeChannel}
