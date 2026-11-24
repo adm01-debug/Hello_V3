@@ -5765,7 +5765,7 @@
     "CallHistory"
    ],
    "export_default": "CallHistory",
-   "linhas": 215,
+   "linhas": 230,
    "dominio": "pages",
    "hooks_locais": [
     "useCallHistory",
@@ -7132,10 +7132,11 @@
     "Trackers"
    ],
    "export_default": "Trackers",
-   "linhas": 103,
+   "linhas": 160,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
+    "useTrackerMatches",
     "useTrackers"
    ],
    "tabelas": [],

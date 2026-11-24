@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `92474f77dd` · branch `main` · 2026-11-24 05:57 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b21f44f9c3` · branch `main` · 2026-11-24 06:09 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2580,7 +2580,7 @@ _nenhum item encontrado_
 | Falha ao remover regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao salvar regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao executar enforcement de SLA | `src/hooks/useSLA.ts` |
-| … +260 linhas — lista completa em `context.json` | |
+| … +261 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4298 testes em 374 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4305 testes em 376 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2933,7 +2933,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx` | 4 | useVoipAnomalies · classifies anomalies (outage/drift/spike) and builds ids · returns empty array when no anomalies present · throws on error |
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
-| … +74 linhas — lista completa em `context.json` | | |
+| … +76 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

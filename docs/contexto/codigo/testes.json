@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 384,
+ "total": 386,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 367
+  "unit": 369
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 360
+   "arquivos": 362
   },
   {
    "padrao": "e2e/",
@@ -2776,6 +2776,15 @@
    "casos": 14
   },
   {
+   "arquivo": "src/pages/__tests__/CallHistory.deeplink.test.tsx",
+   "tipo": "unit",
+   "linhas": 87,
+   "testa": [
+    "src/pages/CallHistory.tsx"
+   ],
+   "casos": 3
+  },
+  {
    "arquivo": "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
    "tipo": "unit",
    "linhas": 68,
@@ -2877,6 +2886,15 @@
    "testa": [
     "src/hooks/useSuccessPlans.ts",
     "src/pages/SuccessPlans.tsx"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/pages/__tests__/Trackers.matches.test.tsx",
+   "tipo": "unit",
+   "linhas": 54,
+   "testa": [
+    "src/pages/Trackers.tsx"
    ],
    "casos": 2
   },
@@ -3711,6 +3729,7 @@
   "src/lib/webauthn/webauthn-utils.ts": 2,
   "src/lib/webhook-health-utils.ts": 2,
   "src/lib/webrtc-config.ts": 1,
+  "src/pages/CallHistory.tsx": 1,
   "src/pages/ConcurrencyConflicts.tsx": 1,
   "src/pages/ExecutiveDashboard.tsx": 1,
   "src/pages/IPWhitelist.tsx": 1,
@@ -3722,6 +3741,7 @@
   "src/pages/SecurityReport.tsx": 1,
   "src/pages/Status.tsx": 1,
   "src/pages/SuccessPlans.tsx": 1,
+  "src/pages/Trackers.tsx": 1,
   "src/pages/roles/useRoles.ts": 1,
   "src/routes/protectedRoutes.tsx": 1,
   "supabase/functions/_shared/allowed-hosts.ts": 1,
@@ -3778,7 +3798,6 @@
    "src/pages/Cadences.tsx",
    "src/pages/CallAnalytics.tsx",
    "src/pages/CallFlowDesigner.tsx",
-   "src/pages/CallHistory.tsx",
    "src/pages/CallLibrary.tsx",
    "src/pages/CallPark.tsx",
    "src/pages/CallQueues.tsx",
@@ -3838,7 +3857,6 @@
    "src/pages/Skills.tsx",
    "src/pages/TollFreeNumbers.tsx",
    "src/pages/TopicDetection.tsx",
-   "src/pages/Trackers.tsx",
    "src/pages/TranslationCenter.tsx",
    "src/pages/TwoFactorAuth.tsx",
    "src/pages/Unauthorized.tsx",

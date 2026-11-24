@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (360)",
+   "co-localizado (__tests__) (362)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)",
    "chore: remove o hook de conferencia orfao e defeituoso (etapa 158) (#237)",
    "docs: mapa das 46 rotas protegidas sem papel (etapa 090) (#236)",
    "fix: valida o corpo nas 18 edges de calculo e exportacao (etapa 049) (#235)",
-   "fix: teto de tamanho e validacao de corpo nas 12 edges de IA e transcricao (#234)",
-   "fix: onda 4 e fechamento da E050 - erro interno nunca chega ao cliente (#233)"
+   "fix: teto de tamanho e validacao de corpo nas 12 edges de IA e transcricao (#234)"
   ]
  },
  "pr_template": null,

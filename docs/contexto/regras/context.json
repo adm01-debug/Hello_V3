@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "92474f77dd8e102a19cbe439842e17a5e74dea58",
+  "sha": "b21f44f9c311455388dedf2d22445e74ad0f0852",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 05:57 UTC",
-  "files_total": 1765,
-  "code_files": 1562,
-  "code_lines": 193129
+  "generated_at": "2026-11-24 06:09 UTC",
+  "files_total": 1767,
+  "code_files": 1564,
+  "code_lines": 193342
  },
  "version": "1.3.2",
- "facts_hash": "cca484e9700f5a09",
+ "facts_hash": "b1916a6d21aa2654",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 655,
-   ".tsx": 628,
+   ".tsx": 630,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -29272,7 +29272,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 16
+    "deps_count": 17
    },
    {
     "path": "",
@@ -34078,8 +34078,8 @@
   },
   {
    "module": "src/pages",
-   "files": 142,
-   "lines": 21850,
+   "files": 144,
+   "lines": 22063,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -41804,6 +41804,10 @@
    {
     "file": "src/pages/BlfBoard.tsx",
     "msg": ";\nimport { AlertTriangle, LayoutGrid, RefreshCw, Search } from "
+   },
+   {
+    "file": "src/pages/CallHistory.tsx",
+    "msg": "Chamada não encontrada no histórico"
    },
    {
     "file": "src/pages/ForgotPassword.tsx",
@@ -72772,6 +72776,22 @@
     "name": "throws when get returns null"
    },
    {
+    "file": "src/pages/__tests__/CallHistory.deeplink.test.tsx",
+    "name": "CallHistory - deep link dos acertos (etapa 157)"
+   },
+   {
+    "file": "src/pages/__tests__/CallHistory.deeplink.test.tsx",
+    "name": "sem o parametro session nao abre nenhuma chamada"
+   },
+   {
+    "file": "src/pages/__tests__/CallHistory.deeplink.test.tsx",
+    "name": "com ?session=<id> abre a chamada correspondente"
+   },
+   {
+    "file": "src/pages/__tests__/CallHistory.deeplink.test.tsx",
+    "name": "nao repete a abertura quando a lista e re-renderizada"
+   },
+   {
     "file": "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
     "name": "ConcurrencyConflicts — estado vazio honesto (E174)"
    },
@@ -72922,6 +72942,18 @@
    {
     "file": "src/pages/__tests__/SuccessPlans.test.tsx",
     "name": "shows the genuine empty state when the read succeeded"
+   },
+   {
+    "file": "src/pages/__tests__/Trackers.matches.test.tsx",
+    "name": "Trackers - acertos dos trackers (etapa 157)"
+   },
+   {
+    "file": "src/pages/__tests__/Trackers.matches.test.tsx",
+    "name": "mostra o estado vazio explicando que falta transcricao no periodo"
+   },
+   {
+    "file": "src/pages/__tests__/Trackers.matches.test.tsx",
+    "name": "lista os acertos e leva ao detalhe da chamada no historico"
    },
    {
     "file": "src/pages/roles/__tests__/useRoles.test.ts",
@@ -114980,9 +115012,12 @@
   },
   "src/pages/CallHistory.tsx": {
    "path": "src/pages/CallHistory.tsx",
-   "lines": 215,
+   "lines": 230,
    "exports": [
     "function CallHistory"
+   ],
+   "errors": [
+    "Chamada não encontrada no histórico"
    ],
    "status_values": [
     {
@@ -116429,7 +116464,7 @@
   },
   "src/pages/Trackers.tsx": {
    "path": "src/pages/Trackers.tsx",
-   "lines": 103,
+   "lines": 160,
    "exports": [
     "function Trackers"
    ]
@@ -116740,6 +116775,17 @@
     ]
    }
   },
+  "src/pages/__tests__/CallHistory.deeplink.test.tsx": {
+   "path": "src/pages/__tests__/CallHistory.deeplink.test.tsx",
+   "lines": 87,
+   "is_test": true,
+   "tests": [
+    "CallHistory - deep link dos acertos (etapa 157)",
+    "sem o parametro session nao abre nenhuma chamada",
+    "com ?session=<id> abre a chamada correspondente",
+    "nao repete a abertura quando a lista e re-renderizada"
+   ]
+  },
   "src/pages/__tests__/ConcurrencyConflicts.test.tsx": {
    "path": "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
    "lines": 68,
@@ -116859,6 +116905,16 @@
     "SuccessPlans",
     "shows the read error instead of ",
     "shows the genuine empty state when the read succeeded"
+   ]
+  },
+  "src/pages/__tests__/Trackers.matches.test.tsx": {
+   "path": "src/pages/__tests__/Trackers.matches.test.tsx",
+   "lines": 54,
+   "is_test": true,
+   "tests": [
+    "Trackers - acertos dos trackers (etapa 157)",
+    "mostra o estado vazio explicando que falta transcricao no periodo",
+    "lista os acertos e leva ao detalhe da chamada no historico"
    ]
   },
   "src/pages/admin/DataExport.tsx": {
@@ -126269,10 +126325,23 @@
   }
  },
  "git": {
-  "sha": "92474f77dd8e102a19cbe439842e17a5e74dea58",
+  "sha": "b21f44f9c311455388dedf2d22445e74ad0f0852",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "b21f44f",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/pages/CallHistory.tsx",
+     "src/pages/Trackers.tsx",
+     "src/pages/__tests__/CallHistory.deeplink.test.tsx",
+     "src/pages/__tests__/Trackers.matches.test.tsx"
+    ]
+   },
    {
     "sha": "92474f7",
     "date": "2026-11-24",
@@ -126738,21 +126807,6 @@
      "src/lib/dnc/reconcile.ts",
      "src/lib/error-message.ts"
     ]
-   },
-   {
-    "sha": "8e86908",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/calls/CrmSuggestionsCard.tsx",
-     "src/components/calls/NextBestActionPanel.tsx",
-     "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
-     "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
-     "src/hooks/useCrmFieldSuggestions.ts",
-     "src/hooks/useLiveAssist.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -126779,6 +126833,10 @@
    [
     "supabase/functions/chatbot-respond/index.ts",
     3
+   ],
+   [
+    "src/pages/CallHistory.tsx",
+    2
    ],
    [
     "supabase/functions/approve-password-reset/index.ts",
@@ -126830,10 +126888,6 @@
    ],
    [
     "supabase/functions/whatsapp-rewrite/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/voip-executive-narrative/index.ts",
     2
    ]
   ]
