@@ -110,4 +110,24 @@ describe('useSessionManager', () => {
     await waitFor(() => expect(result.current.currentSessionId).toBeNull());
     expect(result.current.sessions).toEqual([]);
   });
+
+  it('avisa quando o signOut do dispositivo falha', async () => {
+    signOutMock.mockResolvedValueOnce({ error: { message: 'network' } });
+    const { result } = renderHook(() => useSessionManager());
+    await waitFor(() => expect(result.current.currentSessionId).toBe('sess1'));
+    await act(async () => { await result.current.revokeSession('sess1'); });
+    const { toast } = await import('sonner');
+    expect(toast.warning).toHaveBeenCalledWith(expect.stringContaining('não confirmou a saída'));
+    expect(toast.success).not.toHaveBeenCalledWith('Sessão encerrada');
+  });
+
+  it('confirma a saída quando o signOut funciona', async () => {
+    signOutMock.mockResolvedValueOnce({ error: null });
+    const { result } = renderHook(() => useSessionManager());
+    await waitFor(() => expect(result.current.currentSessionId).toBe('sess1'));
+    await act(async () => { await result.current.revokeSession('sess1'); });
+    const { toast } = await import('sonner');
+    expect(toast.success).toHaveBeenCalledWith('Sessão encerrada');
+    expect(toast.warning).not.toHaveBeenCalled();
+  });
 });
