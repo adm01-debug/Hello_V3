@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { ElevenLabsTokenBodySchema } from "../_shared/numeric-body-schemas.ts";
 import { validateBody } from "../_shared/validator.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 
 serve(async (req) => {
@@ -60,11 +61,12 @@ serve(async (req) => {
         { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
-    const response = await fetch(
+    const response = await fetchComPrazo(
       `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(resolvedAgentId)}`,
       {
         headers: { "xi-api-key": ELEVENLABS_API_KEY },
-      }
+      },
+      8_000,
     );
 
     if (!response.ok) {
