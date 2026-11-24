@@ -65,7 +65,7 @@ const formatTimer = (seconds: number) => {
 const getProgressPercent = (c: DialerCampaign) => c.total_contacts ? Math.round((c.completed_contacts / c.total_contacts) * 100) : 0;
 const getSuccessRate = (c: DialerCampaign) => c.completed_contacts ? Math.round((c.successful_contacts / c.completed_contacts) * 100) : 0;
 
-function QueueItemCard({ item, index, onRemove, statusColor }: { item: DialerQueueItem; index: number; onRemove: () => void; statusColor: string }) {
+function QueueItemCard({ item, index, onRemove, onPrioritize, statusColor }: { item: DialerQueueItem; index: number; onRemove: () => void; onPrioritize: () => void; statusColor: string }) {
   return (
     <div className="flex items-center justify-between rounded-lg border p-3">
       <div className="flex items-center gap-3">
@@ -78,7 +78,7 @@ function QueueItemCard({ item, index, onRemove, statusColor }: { item: DialerQue
         <DropdownMenu>
           <DropdownMenuTrigger asChild><Button variant="ghost" size="icon" className="h-8 w-8"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem><SkipForward className="h-4 w-4 mr-2" />Priorizar</DropdownMenuItem>
+            <DropdownMenuItem onClick={onPrioritize}><SkipForward className="h-4 w-4 mr-2" />Priorizar</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive" onClick={onRemove}><Trash2 className="h-4 w-4 mr-2" />Remover</DropdownMenuItem>
           </DropdownMenuContent>
@@ -92,7 +92,7 @@ export function PredictiveDialerPanel() {
   // A barreira de DNC/horario e injetada no discador: sem isto o laco
   // automatico discaria para a fila inteira sem nenhuma checagem.
   const { preDialCheck } = useDNCCompliance();
-  const { campaigns, queue, isDialing, currentCall, isLoading, fetchQueue, startCampaign, pauseCampaign, completeCall, deleteCampaign, removeFromQueue, setActiveCampaign } = usePredictiveDialer(preDialCheck);
+  const { campaigns, queue, isDialing, currentCall, isLoading, fetchQueue, startCampaign, pauseCampaign, completeCall, deleteCampaign, removeFromQueue, setPriority, setActiveCampaign } = usePredictiveDialer(preDialCheck);
   const [selectedCampaignId, setSelectedCampaignId] = useState<string>('');
   const [callTimer, setCallTimer] = useState(0);
 
@@ -118,6 +118,16 @@ export function PredictiveDialerPanel() {
     if (!currentCall) return;
      await completeCall(currentCall.id, result, notes, callTimer);
     toast.success('Chamada registrada');
+  };
+
+  const handlePrioritize = async (item: DialerQueueItem) => {
+    const highest = queue.reduce((max, q) => Math.max(max, q.priority ?? 0), 0);
+    const ok = await setPriority(item.id, highest + 1);
+    if (!ok) { toast.error('Erro ao priorizar contato'); return; }
+    toast.success(`${item.name || item.phone} é o próximo da fila`);
+    // A lista le do banco ordenada por priority: sem recarregar, a nova ordem
+    // nao apareceria mesmo com o update gravado.
+    if (selectedCampaignId) await fetchQueue(selectedCampaignId);
   };
 
   return (
@@ -160,7 +170,7 @@ export function PredictiveDialerPanel() {
                 <TabsContent value="pending" className="mt-4">
                   <ScrollArea className="h-[350px]">
                     {pendingQueue.length === 0 ? (<div className="flex flex-col items-center justify-center py-12 text-muted-foreground"><Users className="h-12 w-12 mb-4 opacity-50" /><p className="text-sm">Fila vazia</p></div>)
-                    : (<div className="space-y-2">{pendingQueue.map((item, i) => (<QueueItemCard key={item.id} item={item} index={i + 1} onRemove={() => removeFromQueue(item.id)} statusColor={getQueueStatusColor(item.status)} />))}</div>)}
+                    : (<div className="space-y-2">{pendingQueue.map((item, i) => (<QueueItemCard key={item.id} item={item} index={i + 1} onRemove={() => removeFromQueue(item.id)} onPrioritize={() => handlePrioritize(item)} statusColor={getQueueStatusColor(item.status)} />))}</div>)}
                   </ScrollArea>
                 </TabsContent>
                 <TabsContent value="completed" className="mt-4">
