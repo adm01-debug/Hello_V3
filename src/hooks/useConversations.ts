@@ -184,12 +184,29 @@ export function useSendMessage() {
       } else if (!conv?.first_response_at && !params.isPrivateNote) {
         updates.first_response_at = new Date().toISOString();
       }
-      await supabase.from('conversations').update(updates).eq('id', params.conversationId);
+      // `.select()` no update é a defesa contra RLS sem policy: nesse caso o
+      // Postgrest devolve 0 linhas com `error: null`, e o envio pareceria ok.
+      const { data: updatedConversation, error: updateError } = await supabase
+        .from('conversations')
+        .update(updates)
+        .eq('id', params.conversationId)
+        .select('id');
+      if (updateError) {
+        logger.error('useSendMessage.conversationUpdate', {
+          err: updateError,
+          conversationId: params.conversationId,
+        });
+      }
+      return { conversationUpdated: !updateError && (updatedConversation?.length ?? 0) > 0 };
     },
-    onSuccess: (_, params) => {
+    onSuccess: ({ conversationUpdated }, params) => {
       queryClient.invalidateQueries({ queryKey: ['conversation-messages', params.conversationId] });
       queryClient.invalidateQueries({ queryKey: ['conversations'] });
-      toast.success('Mensagem enviada');
+      if (conversationUpdated) {
+        toast.success('Mensagem enviada');
+      } else {
+        toast.warning('Mensagem enviada, mas a conversa não foi atualizada na lista. Recarregue antes de continuar.');
+      }
     },
     onError: (err) => {
       logger.error('useSendMessage.error', { err });
@@ -202,11 +219,15 @@ export function useUpdateConversation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (params: { id: string; updates: Partial<Conversation> }) => {
-      const { error } = await supabase
+      const { data: updatedConversation, error } = await supabase
         .from('conversations')
         .update(params.updates)
-        .eq('id', params.id);
+        .eq('id', params.id)
+        .select('id');
       if (error) throw error;
+      if (!updatedConversation || updatedConversation.length === 0) {
+        throw new Error('Conversa não atualizada: sem permissão ou conversa inexistente');
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['conversations'] });

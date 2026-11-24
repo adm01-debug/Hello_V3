@@ -13,6 +13,7 @@ const h = vi.hoisted(() => ({
   insertMock: vi.fn(),
   singleMock: vi.fn(),
   updateEqMock: vi.fn(),
+  updateSelectMock: vi.fn(),
   onMock: vi.fn(),
   subscribeMock: vi.fn(),
   removeChannelMock: vi.fn(),
@@ -54,7 +55,7 @@ vi.mock('@/integrations/supabase/client', () => {
           })),
           update: vi.fn((payload: Record<string, unknown>) => {
             h.updates.push(payload);
-            return { eq: h.updateEqMock };
+            return { eq: vi.fn(() => ({ select: h.updateSelectMock })) };
           }),
         };
       }),
@@ -89,7 +90,7 @@ beforeEach(() => {
   h.msgLimitMock.mockResolvedValue({ data: [{ id: 'm1' }], error: null });
   h.insertMock.mockResolvedValue({ error: null });
   h.singleMock.mockResolvedValue({ data: { first_response_at: null }, error: null });
-  h.updateEqMock.mockResolvedValue({ error: null });
+  h.updateSelectMock.mockResolvedValue({ data: [{ id: 'c1' }], error: null });
 });
 
 describe('useConversations', () => {
@@ -163,6 +164,18 @@ describe('useSendMessage', () => {
     expect(toast.error).toHaveBeenCalledWith('Falha ao enviar mensagem');
   });
 
+  it('avisa quando o update da conversa não afeta nenhuma linha (RLS sem policy)', async () => {
+    h.updateSelectMock.mockResolvedValueOnce({ data: [], error: null });
+    const { result } = renderHook(() => useSendMessage(), { wrapper });
+    await act(async () => {
+      await result.current.mutateAsync({ conversationId: 'c1', content: 'hi', senderName: 'Ana' });
+    });
+    expect(toast.warning).toHaveBeenCalledWith(
+      'Mensagem enviada, mas a conversa não foi atualizada na lista. Recarregue antes de continuar.',
+    );
+    expect(toast.success).not.toHaveBeenCalledWith('Mensagem enviada');
+  });
+
   it('não grava first_response_at quando a leitura da conversa falha', async () => {
     h.singleMock.mockResolvedValueOnce({ data: null, error: { message: 'permission denied' } });
     const { result } = renderHook(() => useSendMessage(), { wrapper });
@@ -183,8 +196,20 @@ describe('useUpdateConversation', () => {
     expect(toast.success).toHaveBeenCalledWith('Conversa atualizada');
   });
 
+  it('falha quando o update não afeta nenhuma linha', async () => {
+    h.updateSelectMock.mockResolvedValueOnce({ data: [], error: null });
+    const { result } = renderHook(() => useUpdateConversation(), { wrapper });
+    await act(async () => {
+      await expect(
+        result.current.mutateAsync({ id: 'c1', updates: { status: 'closed' } }),
+      ).rejects.toBeTruthy();
+    });
+    expect(toast.error).toHaveBeenCalledWith('Falha ao atualizar');
+    expect(toast.success).not.toHaveBeenCalledWith('Conversa atualizada');
+  });
+
   it('handles error', async () => {
-    h.updateEqMock.mockResolvedValueOnce({ error: { message: 'nope' } });
+    h.updateSelectMock.mockResolvedValueOnce({ data: null, error: { message: 'nope' } });
     const { result } = renderHook(() => useUpdateConversation(), { wrapper });
     await act(async () => {
       await expect(
