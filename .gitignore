@@ -35,6 +35,9 @@ supabase/.temp/
 *.sln
 *.sw?
 
+# Capturas da conferencia de largura de celular (etapa 270) — geradas, nunca commitadas
+capturas/
+
 # Grafo de codigo (graphify) — gerado, nunca commitado
 graphify-out/
 
