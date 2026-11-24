@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **174** |
+| `[ ]` | **173** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
 | `[~]` | 0 |
-| `[x]` | 126 |
+| `[x]` | 127 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -28,7 +28,7 @@
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **174** |
+| `[ ]` não iniciadas | **173** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -328,7 +328,7 @@
 - [x] **263** — Varrer os botões-ícone restantes — onda 7 — Baixa — Frontend · (a primeira varredura era **por linha** e errou nos dois sentidos: acusou botão que já tinha `aria-label` em outra linha (`SyncHistoryPanel.tsx:68`) e **não viu os 50 botões com `<Button` e `size="icon"` em linhas diferentes** — a varredura foi refeita lendo o elemento `<Button …>` inteiro. Esta PR corrige **52 botões** em 35 arquivos: 36 rótulos estáticos + 14 dinâmicos com `aria-pressed` (mudo, espera, alto-falante, gravação, comando de voz, campainha do supervisor, som das chamadas, ativar/desativar regra e marco de plano) + os **4 do `Register.tsx`/`ResetPassword.tsx`** que são o A-136 medido no navegador — o mesmo defeito existia na redefinição de senha, que o achado não citava; copiado o padrão do `/login` (`aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}`). Onde o alvo importa, o rótulo diz o alvo (`Excluir o tronco ${t.name}`, `Excluir a gravação`, `Remover o bloqueio do país`, `Marcar o alerta de espera como lido`). Nada de `src/components/ui/` foi tocado. Verificação: a varredura devolve **0 ocorrências** fora de `src/components/ui/` nos 35 arquivos desta PR — as 4 que ainda aparecem no repositório são as das etapas 259–261, que estão na PR #267 e cujos 6 arquivos **não** foram tocados aqui de propósito (para não conflitar com ela); `bunx tsc --noEmit` rc=0; `bunx eslint` rc=0; `bunx vitest run` 317 arquivos / 3505 testes passed / 0 failed)
 - [ ] **264** — Regra de lint para botão-ícone sem nome acessível — onda 7 — Média — CI
 - [ ] **265** — Resolver as rotas que não têm entrada em nenhum menu — onda 7 — Média — Frontend
-- [ ] **266** — Resolver a duplicata `/history` e `/call-history` — onda 7 — Baixa — Frontend
+- [x] **266** — Resolver a duplicata `/history` e `/call-history` — onda 7 — Baixa — Frontend · (Diagnóstico: `src/routes/protectedRoutes.tsx` registrava **o mesmo componente** duas vezes — `/history` e `/call-history` ambas com `element: CallHistory` — e os dois consumidores discordavam de qual era a boa: o menu lateral aponta para `/history` (`AppSidebar.tsx:27`, "Histórico Completo") enquanto a Command Palette apontava para `/call-history` (`CommandPalette.tsx:49`), e `CallLibrary.tsx:164` linka `/call-history?session=…`. Correção com o diff mínimo que não quebra link antigo (a etapa proíbe apagar sem redirecionar): `/history` ficou canônica e `/call-history` virou `CallHistoryAlias` (`src/routes/CallHistoryAlias.tsx`, componente novo) — `<Navigate to={{ pathname: "/history", search }} replace />`; o `search` no destino é o detalhe que preserva `/call-history?session=…` (um `<Navigate to="/history">` seco descartaria a query e o deep link do dialog pararia de abrir). O alias mora em arquivo próprio porque, com um componente exportado dentro de `protectedRoutes.tsx`, o ESLint liga `react-refresh/only-export-components` e acusa 2 warnings nos exports de config que já existiam (arquivo só de configs não dispara a regra); `RouteConfig.element` passou a aceitar `React.ComponentType` além de `LazyExoticComponent` (o alias não é lazy); `CommandPalette` agora aponta direto para `/history`, sem pulo de redirect. `src/lib/route-prefetch.ts` ficou como está: a entrada `/call-history → import("@/pages/CallHistory")` continua sendo o chunk certo para o destino do redirect. Prova de que o defeito era real: os 5 testes novos de `src/routes/__tests__/callHistoryAlias.test.tsx` (alias ≠ componente de `/history`; redirect simples; `?session=abc-123`; dois parâmetros) rodados **contra o código anterior** (`/call-history` apontando para `CallHistory` e paleta em `/call-history`, restaurado e conferido por `md5sum` idêntico: `ee1050ae…`, `532adee2…`) dão **4 falhas de 5** — `nenhuma rota /history foi renderizada`. Testes: `bunx vitest run src/routes/__tests__/callHistoryAlias.test.tsx src/pages/__tests__/CallHistory.deeplink.test.tsx src/components/layout/__tests__/AppSidebar.test.tsx` — **12 passed / 0 failed**; `bunx tsc --noEmit` rc=0; `bunx eslint` nos 3 arquivos rc=0, **0 warnings**. Doc: tabela de rotas e observações de `docs/agentes/mapa-repo.md` e a linha de `/history`+`/call-history` em `docs/estado/funcionalidades-planejadas.md` atualizadas; `docs/estado/paginas-parte1.md` e `docs/estado/infra-ci-rotas-integracoes.md` são laudos datados da auditoria anterior e ficaram intactos.)
 - [ ] **267** — Padronizar as mensagens de confirmação de sucesso — onda 7 — Baixa — Frontend
 - [ ] **268** — Estados vazios que explicam, não que só dizem "vazio" — onda 7 — Média — Frontend
 - [ ] **269** — Remover o que promete internacionalização e não entrega — onda 7 — Baixa — Frontend

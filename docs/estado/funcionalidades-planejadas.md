@@ -190,7 +190,7 @@ Estado após a varredura de 21/11 (menu lateral + Command Palette):
 | `/admin/security-audit` | ✅ No menu **Segurança** |
 | `/onboarding` | ✅ Agora no menu **Configurações** e na Command Palette ("Configuração Inicial") |
 | `/admin/voice-quality`, `/scorecards` | ✅ Ambas no menu **Administração** e na Command Palette (PRs #142 e #143) |
-| `/history` + `/call-history` | ⬛ Duas rotas para `CallHistory`. O rótulo "Transcrições" na Command Palette virou "Histórico de Chamadas", eliminando o contraditório. As duas rotas foram preservadas para não quebrar links existentes (`/call-history?session=…` é usado em `/call-library`). |
+| `/history` + `/call-history` | ✅ `/history` é a rota canônica; `/call-history` é alias (`CallHistoryAlias`) que redireciona com `replace` preservando a query string, então `/call-history?session=…` (usado em `/call-library`) continua funcionando e cai na tela certa. A Command Palette aponta direto para `/history`. Coberto por `src/routes/__tests__/callHistoryAlias.test.tsx`. |
 
 ---
 
