@@ -10,6 +10,7 @@ interface QueryResult {
 // that resolves to the next queued result for that table (or a default).
 const tableResults: Record<string, QueryResult[]> = {};
 const defaultResult: QueryResult = { data: [], error: null };
+const writes: string[] = [];
 
 function nextResult(table: string): QueryResult {
   const queue = tableResults[table];
@@ -28,11 +29,14 @@ function makeBuilder(table: string) {
   builder.eq = vi.fn(chain);
   builder.gte = vi.fn(chain);
   builder.lte = vi.fn(chain);
-  builder.update = vi.fn(chain);
-  builder.insert = vi.fn(() => ({
-    select: vi.fn(() => ({ single: vi.fn(() => result()) })),
-    then: (cb: (r: QueryResult) => unknown) => result().then(cb),
-  }));
+  builder.update = vi.fn(() => { writes.push(table); return chain(); });
+  builder.insert = vi.fn(() => {
+    writes.push(table);
+    return {
+      select: vi.fn(() => ({ single: vi.fn(() => result()) })),
+      then: (cb: (r: QueryResult) => unknown) => result().then(cb),
+    };
+  });
   builder.maybeSingle = vi.fn(() => result());
   builder.single = vi.fn(() => result());
   // Make the builder itself awaitable (thenable) for direct `await query`.
@@ -63,6 +67,7 @@ function setResults(map: Record<string, QueryResult[]>) {
 describe('useGamification', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    writes.length = 0;
     for (const k of Object.keys(tableResults)) delete tableResults[k];
   });
 
@@ -144,6 +149,18 @@ describe('useGamification', () => {
     await act(async () => {
       await result.current.updateWeeklyStats({ total_calls: 2, total_duration_seconds: 30, badges_earned: 1, points_earned: 5, avg_satisfaction: 9, avg_performance: 7 });
     });
+  });
+
+  it('não regrava a semana quando a leitura das estatísticas falha', async () => {
+    setResults({ badges: [{ data: [], error: null }], agent_badges: [{ data: [], error: null }], agent_weekly_stats: [{ data: [], error: null }], agents: [{ data: [], error: null }] });
+    const { result } = renderHook(() => useGamification('a1'));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    writes.length = 0;
+
+    setResults({ agent_weekly_stats: [{ data: null, error: { message: 'permission denied' } }] });
+    await act(async () => { await result.current.updateWeeklyStats({ total_calls: 1 }); });
+
+    expect(writes).not.toContain('agent_weekly_stats');
   });
 
   it('updateWeeklyStats returns early without agentId', async () => {

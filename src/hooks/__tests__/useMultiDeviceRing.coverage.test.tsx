@@ -19,7 +19,7 @@ vi.mock('@/integrations/supabase/client', () => ({
     from: vi.fn((table: string) => ({
       select: vi.fn(() => ({
         order: vi.fn(() => Promise.resolve(devicesResult)),
-        maybeSingle: vi.fn(() => Promise.resolve(table === 'agent_ring_settings' ? (existingSettings.data ? existingSettings : settingsResult) : settingsResult)),
+        maybeSingle: vi.fn(() => Promise.resolve(table === 'agent_ring_settings' ? ((existingSettings.data || existingSettings.error) ? existingSettings : settingsResult) : settingsResult)),
       })),
       insert: (...a: unknown[]) => insertFn(...a),
       update: vi.fn(() => ({ eq: (...a: unknown[]) => updateEq(...a) })),
@@ -70,6 +70,15 @@ describe('useMultiDeviceRing', () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     await act(async () => { result.current.updateSettings.mutate({ dnd_enabled: true }); });
     await waitFor(() => expect(updateEq).toHaveBeenCalled());
+  });
+
+  it('não cria outra linha de configurações quando a leitura falha', async () => {
+    existingSettings = { data: null, error: { message: 'permission denied' } };
+    const { result } = renderHook(() => useMultiDeviceRing(), { wrapper });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    await act(async () => { result.current.updateSettings.mutate({ ring_timeout_seconds: 25 }); });
+    await waitFor(() => expect(result.current.updateSettings.isError).toBe(true));
+    expect(insertFn).not.toHaveBeenCalled();
   });
 
   it('addDevice error path', async () => {
