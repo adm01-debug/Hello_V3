@@ -4,6 +4,9 @@ import { logger } from '@/lib/logger';
 
 const log = logger.create('CallRecording');
 
+// Teto explicito para nao depender do corte silencioso de 1000 linhas do PostgREST.
+const RECORDINGS_LIMIT = 200;
+
 interface SaveRecordingOptions {
   callSessionId?: string;
   conferenceId?: string;
@@ -80,7 +83,7 @@ export function useCallRecording() {
   }, []);
 
   const getRecordings = useCallback(async (sessionOrConferenceId?: string): Promise<Recording[]> => {
-    let query = supabase.from('call_recordings').select('*').order('recorded_at', { ascending: false });
+    let query = supabase.from('call_recordings').select('*').order('recorded_at', { ascending: false }).limit(RECORDINGS_LIMIT);
     if (sessionOrConferenceId) query = query.or(`call_session_id.eq.${sessionOrConferenceId},conference_id.eq.${sessionOrConferenceId}`);
     const { data } = await query;
     return (data || []) as Recording[];

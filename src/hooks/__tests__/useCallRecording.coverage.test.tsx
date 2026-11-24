@@ -7,6 +7,7 @@ const h = vi.hoisted(() => ({
   createSignedUrlMock: vi.fn(),
   orderMock: vi.fn(),
   orMock: vi.fn(),
+  limitCalls: [] as number[],
 }));
 
 vi.mock('@/lib/logger', () => {
@@ -19,7 +20,7 @@ vi.mock('@/integrations/supabase/client', () => ({
     from: vi.fn(() => ({
       select: vi.fn(() => ({
         order: vi.fn(() => {
-          const obj: Record<string, unknown> = { or: h.orMock };
+          const obj: Record<string, unknown> = { or: h.orMock, limit: (n: number) => { h.limitCalls.push(n); return obj; } };
           obj.then = (resolve: (v: unknown) => unknown) => h.orderMock().then(resolve);
           return obj;
         }),
@@ -130,6 +131,7 @@ describe('useCallRecording', () => {
     let all: unknown[] = [];
     await act(async () => { all = await result.current.getRecordings(); });
     expect(all).toEqual([{ id: 'rec1' }]);
+    expect(h.limitCalls).toEqual([200]);
 
     let filtered: unknown[] = [];
     await act(async () => { filtered = await result.current.getRecordings('id-123'); });

@@ -35,9 +35,9 @@ describe('useActiveCallsRealtime (coverage)', () => {
     vi.clearAllMocks();
     fromMock.mockImplementation((table: string) => {
       if (table === 'call_sessions') {
-        return { select: vi.fn(() => ({ eq: vi.fn(() => ({ order: vi.fn().mockResolvedValue({ data: calls, error: null }) })) })) };
+        return { select: vi.fn(() => ({ eq: vi.fn(() => ({ order: vi.fn(() => ({ limit: vi.fn().mockResolvedValue({ data: calls, error: null }) })) })) })) };
       }
-      return { select: vi.fn(() => ({ is: vi.fn(() => ({ order: vi.fn().mockResolvedValue({ data: holds, error: null }) })) })) };
+      return { select: vi.fn(() => ({ is: vi.fn(() => ({ order: vi.fn(() => ({ limit: vi.fn().mockResolvedValue({ data: holds, error: null }) })) })) })) };
     });
   });
 
@@ -84,5 +84,22 @@ describe('useActiveCallsRealtime (coverage)', () => {
     }
     expect(supabase.channel).toHaveBeenCalledTimes(50);
     expect(supabase.removeChannel).toHaveBeenCalledTimes(50);
+  });
+
+  it('aplica teto explicito de 200 linhas nas chamadas ativas e nas esperas', async () => {
+    const limites: number[] = [];
+    fromMock.mockImplementation((table: string) => {
+      const dados = table === 'call_sessions' ? calls : holds;
+      const limit = vi.fn((n: number) => { limites.push(n); return Promise.resolve({ data: dados, error: null }); });
+      const order = vi.fn(() => ({ limit }));
+      if (table === 'call_sessions') return { select: vi.fn(() => ({ eq: vi.fn(() => ({ order })) })) };
+      return { select: vi.fn(() => ({ is: vi.fn(() => ({ order })) })) };
+    });
+
+    const { result } = renderHook(() => useActiveCallsRealtime());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(limites).toEqual([200, 200]);
+    expect(result.current.statusCounts.total).toBe(2);
   });
 });

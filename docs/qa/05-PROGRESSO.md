@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 118 |
+| `[x]` concluídas | 120 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **182** |
+| `[ ]` não iniciadas | **180** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -294,7 +294,7 @@
 
 ## Onda 6 — Performance (236–258, 23 etapas)
 
-- [ ] **236** — Paginação nas listagens do histórico e das gravações — onda 6 — Alta — Hooks
+- [x] **236** — Paginação nas listagens do histórico e das gravações — onda 6 — Alta — Hooks · (O histórico **já paginava**: `useCallHistory.ts:73-88` usa a RPC `get_call_history_with_summaries` com `p_limit: 50`/`p_offset` e `CallSessionsList.tsx:122-135` mostra "Carregar mais chamadas" — faltava só a lista de gravações. `useRecordings.ts:57-77`: `.range()` com páginas de 50 e `count: 'exact'` no primeiro lote (antes era `select('*')` sem limite — o PostgREST cortava em 1000 linhas e o crachá da tela mostrava "50 gravações" como se fosse o total da conta); `hasMore` pela quantidade devolvida na página, `loadMore` acumula e não repete a chamada quando já não há mais; `Recordings.tsx:51` passou a mostrar "N de M gravações" e ganhou o botão "Carregar mais gravações" (some quando não há mais páginas e quando a lista está vazia) com o aviso de que a busca considera apenas o que já foi carregado. `useActiveCallsRealtime.ts:26,37`: `.limit(200)` explícito nas duas consultas (teto de 200 linhas) com `logger.warn` quando o teto é atingido e quando a leitura falha — antes o erro era engolido (`if (!error && data)`) e o painel diria "sem chamadas ativas" com o banco fora do ar (achado A-218). `useCallRecording.ts:88`: `.limit(200)` na lista por sessão/conferência. Testes: `bunx vitest run` 4 arquivos — 23/23 (`useRecordings.coverage` 9/9 inclui o caso novo que confere `range(0,49)`, `range(50,99)`, o total real e que `loadMore` para no fim; `useActiveCallsRealtime.coverage` 5/5 confere o teto 200 nas duas consultas; `Recordings.pagination` 2/2 renderiza a tela, vê "50 de 120 gravações" e clica em "Carregar mais gravações"; `useCallRecording.coverage` 7/7 confere o `.limit(200)`); `bunx tsc --noEmit` rc=0; `bunx eslint` nos 7 arquivos rc=0.)
 - [ ] **237** — Paginação nas listagens de contatos, negócios e contas — onda 6 — Média — Hooks
 - [ ] **238** — Paginação nas listagens administrativas e de auditoria — onda 6 — Média — Hooks 🔒
 - [ ] **239** — Agregar no banco as métricas de insights de contato — onda 6 — Baixa — Hooks 🔒
@@ -385,6 +385,7 @@ Problema novo achado no caminho **não é corrigido na hora** — vira linha aqu
 | A-215 | 141 | `bunx vitest run` (ambiente local) | 4 suítes falham com `TypeError: undefined is not an object (evaluating 'z.string')` — `validation-schemas`, `zod-schemas.property`, `useContacts.conflict`, `useContacts.coverage` — mas **todas as 3435 asserções passam**; reproduzido em worktree limpo de `origin/main` e o CI do mesmo commit está verde. É incompatibilidade do bun local (1.3.11) com o runner, não regressão. | Baixa (ruído local) |
 | A-216 | 136 | `docs/pendencias/_verificado-banco.md:24` | O documento afirma que `call_records` e `queue_items` “nem existem mais como tabelas → 404”. **Falso no banco vivo:** as duas existem, com RLS ligado e 2 policies cada (`is_admin_or_supervisor()` / `auth.uid() = user_id`). Documento de apuração contradiz o estado real. | Média (doc) |
 | A-217 | 136 | `migration_rollbacks`, `schema_migrations` | `relrowsecurity = true` com **0 policies** — ninguém além de `service_role` lê/escreve. Para tabela de controle de migração é o estado correto (deny-all), mas é o `rls_sem_policy` que o snapshot do inventário acusa todo dia: vale decidir entre documentar como intencional ou revogar a RLS. | Baixa |
+| A-218 | 236 | `src/hooks/useActiveCallsRealtime.ts:26,37` | As duas consultas do painel de chamadas ativas engoliam o erro (`if (!error && data) set...`): banco fora do ar ou permissão negada viravam "sem chamadas ativas" na tela. Nesta etapa passaram a registrar `logger.warn` e a aplicar teto explícito de 200 linhas, mas o painel ainda não avisa o usuário que a leitura falhou — mesma classe do A-009. | Alta |
 ---
 
 ## Etapas em que o código já não correspondia à evidência
@@ -393,7 +394,7 @@ Quando a etapa descrever algo que o código atual não tem mais (porque alguém 
 
 | Etapa | O que o plano dizia | O que você encontrou | Data |
 |---|---|---|---|
-| | | | |
+| 236 | "Paginação nas listagens do histórico e das gravações" | O histórico já estava paginado (RPC com `p_limit`/`p_offset` + botão "Carregar mais chamadas"); só a lista de gravações ainda carregava tudo de uma vez. | 2026-11-24 |
 
 ---
 

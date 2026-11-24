@@ -1,6 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useHoldSoundAlert } from '@/hooks/useHoldSoundAlert';
+import { logger } from '@/lib/logger';
+
+// Teto explicito: sem .limit() o PostgREST devolve no maximo 1000 linhas e o painel
+// passaria a esconder chamadas ativas sem avisar ninguem.
+const ACTIVE_ROWS_LIMIT = 200;
 
 interface ActiveCall {
   id: string;
@@ -32,13 +37,21 @@ export function useActiveCallsRealtime() {
   const { soundEnabled, toggleSound, settings } = useHoldSoundAlert(activeHolds);
 
   const fetchActiveCalls = async () => {
-    const { data, error } = await supabase.from('call_sessions').select('*').eq('status', 'active').order('started_at', { ascending: false });
-    if (!error && data) setActiveCalls(data);
+    const { data, error } = await supabase.from('call_sessions').select('*').eq('status', 'active').order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT);
+    if (error) { logger.warn('[useActiveCallsRealtime] falha ao listar chamadas ativas', error); return; }
+    if (data) {
+      if (data.length === ACTIVE_ROWS_LIMIT) logger.warn(`[useActiveCallsRealtime] call_sessions atingiu o teto de ${ACTIVE_ROWS_LIMIT} linhas; parte das chamadas ativas fica fora do painel`);
+      setActiveCalls(data);
+    }
   };
 
   const fetchActiveHolds = async () => {
-    const { data, error } = await supabase.from('hold_events').select('*').is('ended_at', null).order('started_at', { ascending: false });
-    if (!error && data) setActiveHolds(data);
+    const { data, error } = await supabase.from('hold_events').select('*').is('ended_at', null).order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT);
+    if (error) { logger.warn('[useActiveCallsRealtime] falha ao listar esperas ativas', error); return; }
+    if (data) {
+      if (data.length === ACTIVE_ROWS_LIMIT) logger.warn(`[useActiveCallsRealtime] hold_events atingiu o teto de ${ACTIVE_ROWS_LIMIT} linhas; parte das esperas fica fora do painel`);
+      setActiveHolds(data);
+    }
   };
 
   useEffect(() => {
