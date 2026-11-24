@@ -1,6 +1,7 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { clientIpFromHeaders } from "../_shared/client-ip.ts";
+import { ipMatchesAny } from "../_shared/ip-range.ts";
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
 Deno.serve(async (req) => {
@@ -58,55 +59,26 @@ Deno.serve(async (req) => {
       );
     }
     
-    // Check if IP is in global whitelist
-    const { data: globalWhitelist } = await supabase
-      .from('ip_whitelist')
-      .select('*');
-    
+    // Uma consulta por lista. Antes cada faixa cadastrada custava uma ida ao
+    // banco (`check_ip_in_cidr` em laco) no caminho que libera o acesso.
     let isAllowed = false;
-    
-    if (globalWhitelist && clientIp) {
-      for (const entry of globalWhitelist) {
-        if (entry.is_cidr) {
-          const { data: cidrCheck } = await supabase.rpc('check_ip_in_cidr', {
-            p_ip: clientIp,
-            p_cidr: entry.ip_address
-          });
-          if (cidrCheck) {
-            isAllowed = true;
-            break;
-          }
-        } else if (entry.ip_address === clientIp) {
-          isAllowed = true;
-          break;
-        }
-      }
+
+    if (clientIp) {
+      const { data: globalWhitelist } = await supabase
+        .from('ip_whitelist')
+        .select('ip_address, is_cidr');
+
+      isAllowed = ipMatchesAny(clientIp, globalWhitelist);
     }
-    
+
     // If not in global, check user-specific whitelist
     if (!isAllowed && clientIp) {
       const { data: userWhitelist } = await supabase
         .from('user_allowed_ips')
-        .select('*')
+        .select('ip_address, is_cidr')
         .eq('user_id', userId);
-      
-      if (userWhitelist) {
-        for (const entry of userWhitelist) {
-          if (entry.is_cidr) {
-            const { data: cidrCheck } = await supabase.rpc('check_ip_in_cidr', {
-              p_ip: clientIp,
-              p_cidr: entry.ip_address
-            });
-            if (cidrCheck) {
-              isAllowed = true;
-              break;
-            }
-          } else if (entry.ip_address === clientIp) {
-            isAllowed = true;
-            break;
-          }
-        }
-      }
+
+      isAllowed = ipMatchesAny(clientIp, userWhitelist);
     }
     
     // Log blocked access
