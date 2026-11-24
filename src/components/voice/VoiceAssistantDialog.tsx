@@ -60,6 +60,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const textInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
+  const devolverFocoRef = useRef<HTMLElement | null>(null);
   const wasOpenRef = useRef(false);
   const ttsEnabledRef = useRef(ttsEnabled);
   ttsEnabledRef.current = ttsEnabled;
@@ -195,11 +196,23 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
     document.addEventListener('focusin', onFocusIn);
     return () => {
       document.removeEventListener('focusin', onFocusIn);
-      const alvo = returnFocusRef.current;
+      devolverFocoRef.current = returnFocusRef.current;
       returnFocusRef.current = null;
+      const alvo = devolverFocoRef.current;
       if (alvo && document.contains(alvo)) alvo.focus();
     };
   }, [open]);
+
+  // O conteudo do dialogo so sai do DOM quando a animacao de fechamento termina e o
+  // foco pode ficar preso dentro dele ou perdido no body. Devolver ao gatilho neste
+  // ponto e o ultimo momento possivel: nada mais mexe no foco depois do desmonte.
+  useEffect(() => {
+    if (open || isClosing) return;
+    const alvo = devolverFocoRef.current;
+    if (!alvo) return;
+    devolverFocoRef.current = null;
+    if (document.contains(alvo) && document.activeElement !== alvo) alvo.focus();
+  }, [open, isClosing]);
 
   // Atalhos de teclado
   useEffect(() => {

@@ -66,6 +66,19 @@ async function lerFoco(page: Page, ordem: number): Promise<Parada | null> {
 }
 
 test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
+  test.beforeEach(async ({ context }) => {
+    // O tour de onboarding (OnboardingWizard) abre sozinho 2 s depois do mount e
+    // move o foco para o proprio botao "Pular tour". Sem isso o teste mede o tour,
+    // nao a navegacao do disco - foi a causa do foco lido fora do gatilho.
+    await context.addInitScript(() => {
+      try {
+        window.localStorage.setItem('voip-onboarding-seen', 'true');
+      } catch {
+        /* about:blank sem localStorage */
+      }
+    });
+  });
+
   test('percorre o discador com Tab e mede o foco', async ({ page, context }) => {
     test.setTimeout(300_000);
 
@@ -226,6 +239,15 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
       );
       if (rotulo.includes('assistente de voz')) {
         achou = true;
+        // Marca o proprio gatilho: no fim comparamos identidade de elemento sem
+        // resolver locator nenhum.
+        await comPrazo(
+          page.evaluate(() => {
+            (document.activeElement as HTMLElement | null)?.setAttribute('data-marco273', 'gatilho');
+          }),
+          15_000,
+          'marcar-gatilho',
+        );
         break;
       }
     }
@@ -280,11 +302,36 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
     );
     marco('dialogo-fechado');
 
-    const devolveu = await comPrazo(
-      gatilho.evaluate((el) => el === document.activeElement),
-      15_000,
-      'ler-foco-final',
-    );
+    // Ler o foco pelo locator aqui custa um snapshot da arvore ARIA inteira com o
+    // modal saindo de cena, e o runner travava nesse passo ("sem resposta"). O
+    // evaluate leve na pagina mede o mesmo sem esse custo. O overlay so sai do DOM
+    // no fim da animacao de fechamento, entao o retorno do foco e lido ate 5 s.
+    const lerFocoFinal = () =>
+      page.evaluate(() => {
+        const el = document.activeElement as HTMLElement | null;
+        const dialogos = Array.from(document.querySelectorAll('[role="dialog"][aria-modal="true"]'));
+        const inertes = document.querySelectorAll('[inert]').length;
+        if (!el) return { ok: false, ativo: 'null', extra: `dialogos=${dialogos.length} inert=${inertes}` };
+        const rotulo = `${el.getAttribute('aria-label') ?? ''} ${el.textContent ?? ''}`
+          .replace(/\s+/g, ' ')
+          .trim();
+        const marca = el.getAttribute('data-marco273');
+        const dentroDialogo = !!el.closest('[role="dialog"][aria-modal="true"]');
+        return {
+          ok: marca === 'gatilho' || (!dentroDialogo && rotulo.toLowerCase().includes('assistente de voz')),
+          ativo: `${el.tagName.toLowerCase()}[${rotulo.slice(0, 60)}]`,
+          extra: `marca=${marca} noDialogo=${dentroDialogo} dialogos=${dialogos.length} inert=${inertes}`,
+        };
+      });
+
+    let leitura = { ok: false, ativo: 'nao lido', extra: '' };
+    const limiteFoco = Date.now() + 5_000;
+    while (!leitura.ok && Date.now() < limiteFoco) {
+      leitura = await comPrazo(lerFocoFinal(), 15_000, 'ler-foco-final');
+      process.stdout.write(`FOCO-273 ativo=${leitura.ativo} ${leitura.extra} gatilho=${leitura.ok}\n`);
+      if (!leitura.ok) await new Promise((seguir) => setTimeout(seguir, 100));
+    }
+    const devolveu = leitura.ok;
     process.stdout.write(`ESC-273 dialogoFechou=true focoNoGatilho=${devolveu}\n`);
     expect(devolveu, 'o foco nao voltou ao gatilho depois de fechar com Esc').toBe(true);
     marco('fim');
