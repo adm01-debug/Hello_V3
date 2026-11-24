@@ -13,6 +13,7 @@ const contactAlertsData = [
 ];
 
 let invokeResult: QueryResult = { data: { alerts_created: 2 }, error: null };
+let limitResult: QueryResult = { data: { id: 'session1' }, error: null };
 const mutationOk = { error: null };
 
 const channelObj = {
@@ -30,7 +31,7 @@ const makeFrom = (table: string) => {
     insert: vi.fn(() => q),
     eq: vi.fn(() => Promise.resolve(mutationOk)),
     in: vi.fn(() => Promise.resolve(mutationOk)),
-    limit: vi.fn(() => ({ maybeSingle: vi.fn(() => Promise.resolve({ data: { id: 'session1' }, error: null })) })),
+    limit: vi.fn(() => ({ maybeSingle: vi.fn(() => Promise.resolve(limitResult)) })),
   };
   // insert(...).select().single() for call_sessions
   q.insert = vi.fn(() => ({
@@ -50,8 +51,14 @@ vi.mock('@/integrations/supabase/client', () => ({
 }));
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn(), info: vi.fn(), warning: vi.fn() } }));
 
+import { toast } from 'sonner';
+
 describe('useAlerts', () => {
-  beforeEach(() => { vi.clearAllMocks(); invokeResult = { data: { alerts_created: 2 }, error: null }; });
+  beforeEach(() => {
+    vi.clearAllMocks();
+    invokeResult = { data: { alerts_created: 2 }, error: null };
+    limitResult = { data: { id: 'session1' }, error: null };
+  });
 
   it('loads alerts and computes counts', async () => {
     const { result } = renderHook(() => useAlerts());
@@ -145,5 +152,16 @@ describe('useAlerts', () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     await act(async () => { await result.current.createTestAlerts(); });
     expect(true).toBe(true);
+  });
+
+  it('nao cria sessao de teste quando a leitura da sessao falha', async () => {
+    limitResult = { data: null, error: { message: 'permission denied' } };
+    const { result } = renderHook(() => useAlerts());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    await act(async () => { await result.current.createTestAlerts(); });
+
+    expect(toast.error).toHaveBeenCalledWith('Erro ao consultar a sessão de teste');
+    expect(toast.success).not.toHaveBeenCalled();
   });
 });

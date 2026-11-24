@@ -37,18 +37,29 @@ export function useAchievementNotifications(agentId?: string) {
           const newBadge = payload.new as { id: string; agent_id: string; badge_id: string; earned_at: string };
           
           // Fetch badge details
-          const { data: badge } = await supabase
+          const { data: badge, error: badgeError } = await supabase
             .from('badges')
             .select('*')
             .eq('id', newBadge.badge_id)
             .maybeSingle();
 
           // Fetch agent details
-          const { data: agent } = await supabase
+          const { data: agent, error: agentError } = await supabase
             .from('agents')
             .select('name')
             .eq('id', newBadge.agent_id)
             .maybeSingle();
+
+          if (badgeError || agentError) {
+            // Enriquecimento opcional: sem ele a notificação não é exibida.
+            // Registrar o motivo evita "badge concedida mas nada apareceu".
+            logger.create('Achievements').warn('Falha ao enriquecer a notificação de badge:', {
+              badgeError,
+              agentError,
+              badgeId: newBadge.badge_id,
+              agentId: newBadge.agent_id,
+            });
+          }
 
           if (badge && agent) {
             const notification: BadgeNotification = {
