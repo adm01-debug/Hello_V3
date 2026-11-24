@@ -180,7 +180,21 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
     const anterior = document.activeElement;
     returnFocusRef.current = anterior instanceof HTMLElement ? anterior : null;
     containerRef.current?.focus();
+    // Se um re-render trocar o elemento focado, o foco cai no body e o Tab
+    // seguinte escaparia do dialogo: puxa de volta para dentro.
+    const onFocusIn = (event: FocusEvent) => {
+      const container = containerRef.current;
+      const alvo = event.target;
+      if (!container || !(alvo instanceof Node) || container.contains(alvo)) return;
+      if (alvo === anterior) return;
+      const primeiro = container.querySelector<HTMLElement>(
+        'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])',
+      );
+      (primeiro ?? container).focus();
+    };
+    document.addEventListener('focusin', onFocusIn);
     return () => {
+      document.removeEventListener('focusin', onFocusIn);
       const alvo = returnFocusRef.current;
       returnFocusRef.current = null;
       if (alvo && document.contains(alvo)) alvo.focus();
@@ -207,7 +221,9 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
           container.querySelectorAll<HTMLElement>(
             'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])',
           ),
-        ).filter((el) => el.offsetParent !== null || el === document.activeElement || el === container);
+        // offsetParent e null para tudo dentro de um container fixed, entao a
+        // visibilidade tem que ser medida por layout.
+        ).filter((el) => el.getClientRects().length > 0);
         if (focaveis.length === 0) {
           event.preventDefault();
           container.focus();
@@ -219,7 +235,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
         if (event.shiftKey && (atual === primeiro || atual === container || !container.contains(atual))) {
           event.preventDefault();
           ultimo.focus();
-        } else if (!event.shiftKey && (atual === ultimo || !container.contains(atual))) {
+        } else if (!event.shiftKey && (atual === ultimo || atual === container || !container.contains(atual))) {
           event.preventDefault();
           primeiro.focus();
         }

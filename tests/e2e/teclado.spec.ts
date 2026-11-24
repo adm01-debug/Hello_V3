@@ -170,7 +170,11 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
     // O overlay do assistente e blur de tela cheia com cor animada: no headless
     // sem GPU isso satura o renderer e engasga o teclado. Desligar o blur aqui
     // mede o comportamento de foco, nao o custo de pintura.
-    await page.addStyleTag({ content: '*{backdrop-filter:none !important;}' });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.addStyleTag({
+      content:
+        '*,*::before,*::after{animation:none !important;transition:none !important;backdrop-filter:none !important;}',
+    });
     marco('disco-pronto');
 
     const gatilho = page.getByRole('button', { name: /assistente de voz/i }).first();
