@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { useSessionExpiry } from '@/contexts/SessionExpiryContext';
 import { Loader2 } from 'lucide-react';
 
 type UserRole = 'admin' | 'supervisor' | 'agent' | 'viewer';
@@ -12,6 +13,7 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute({ children, requiredRoles }: ProtectedRouteProps) {
   const { isAuthenticated, loading, hasRole } = useAuthContext();
+  const { expired } = useSessionExpiry();
   const location = useLocation();
 
   if (loading) {
@@ -25,7 +27,10 @@ export function ProtectedRoute({ children, requiredRoles }: ProtectedRouteProps)
     );
   }
 
-  if (!isAuthenticated) {
+  // Sessão expirada: a tela (e o rascunho do usuário) fica montada enquanto o
+  // diálogo pede a senha. Redirecionar aqui é o que fazia o usuário perder o
+  // que tinha digitado.
+  if (!isAuthenticated && !expired) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
