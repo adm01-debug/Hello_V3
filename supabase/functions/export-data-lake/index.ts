@@ -6,6 +6,8 @@ type Format = 'csv' | 'ndjson' | 'parquet';
 
 import { toCsv } from './csv.ts';
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { ExportDataLakeBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: buildCorsHeaders(req) });
@@ -28,7 +30,9 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: 'Apenas admin' }), { status: 403, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
     }
 
-    const body = await req.json().catch(() => ({}));
+    const validation = await validateBody(req, ExportDataLakeBodySchema, buildCorsHeaders(req), { endpoint: 'export-data-lake' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     const dataset = body.dataset as Dataset;
     const format = (body.format as Format) ?? 'ndjson';
     const since = typeof body.since === 'string' ? body.since : null;

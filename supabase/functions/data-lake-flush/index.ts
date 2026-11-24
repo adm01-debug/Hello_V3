@@ -6,6 +6,8 @@ import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { logError, withRequestLog } from "../_shared/observability.ts";
 import { mesmaString } from "../_shared/constant-time.ts";
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { DataLakeFlushBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 type Dataset = "call_sessions" | "call_summaries" | "deals";
 const DATASETS: Dataset[] = ["call_sessions", "call_summaries", "deals"];
@@ -55,7 +57,9 @@ function json(payload: unknown, status = 200): Response {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
-    const body = await req.json().catch(() => ({}));
+    const validation = await validateBody(req, DataLakeFlushBodySchema, buildCorsHeaders(req), { endpoint: 'data-lake-flush' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     const only: Dataset[] = Array.isArray(body.datasets) && body.datasets.length
       ? (body.datasets as Dataset[]).filter((d) => DATASETS.includes(d))
       : DATASETS;

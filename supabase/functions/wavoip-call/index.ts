@@ -6,13 +6,9 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { WavoipCallBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
-
-interface WavoipCallRequest {
-  action: 'start' | 'end' | 'status' | 'connect';
-  whatsappId?: string;
-  callId?: string;
-}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -53,7 +49,9 @@ serve(async (req) => {
       );
     }
 
-    const body: WavoipCallRequest = await req.json();
+    const validation = await validateBody(req, WavoipCallBodySchema, buildCorsHeaders(req), { endpoint: 'wavoip-call' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     
     if (!body.action || typeof body.action !== 'string') {
       return new Response(

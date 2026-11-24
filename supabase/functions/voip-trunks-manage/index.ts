@@ -2,6 +2,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { VoipTrunksManageBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 // Cifragem simétrica simples (XOR + base64) usando segredo do servidor.
 // Nunca trafega senha em claro fora do Edge.
@@ -60,7 +62,9 @@ serve(async (req) => {
       }
     }
 
-    const body = await req.json().catch(() => ({}));
+    const validation = await validateBody(req, VoipTrunksManageBodySchema, buildCorsHeaders(req), { endpoint: 'voip-trunks-manage' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     const action = body.action as string;
 
     if (action === "list") {

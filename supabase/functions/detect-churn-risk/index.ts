@@ -1,6 +1,8 @@
 // Detect churn risk signals deterministically + persist + bump churn score
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { AccountIdBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 interface DetectedSignal {
   signal_type: string;
@@ -17,7 +19,9 @@ Deno.serve(async (req: Request) => {
   if (negado) return negado;
 
   try {
-    const { account_id } = await req.json().catch(() => ({}));
+    const validation = await validateBody(req, AccountIdBodySchema, buildCorsHeaders(req), { endpoint: 'detect-churn-risk' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const { account_id } = validation.data!;
     if (!account_id || typeof account_id !== "string") {
       return new Response(JSON.stringify({ error: "account_id required" }), {
         status: 400,

@@ -3,6 +3,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { Client } from "https://esm.sh/ldapts@9.3.1";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { LdapSyncBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "fallback-key";
 const SETTINGS_KEY = "ldap_config";
@@ -180,7 +182,9 @@ serve(async (req) => {
     }
     if (!isAdmin) return json({ error: "Acesso restrito a administradores" }, cors, 403);
 
-    const body = await req.json().catch(() => ({}));
+    const validation = await validateBody(req, LdapSyncBodySchema, buildCorsHeaders(req), { endpoint: 'ldap-sync' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     const action = (body.action as string) ?? "get-config";
 
     if (action === "get-config") {

@@ -1,6 +1,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { ForecastDealsBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 interface Body { period?: "week" | "month" | "quarter" }
 
@@ -29,7 +31,9 @@ function json(b: unknown, status = 200) {
 
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    const { period = "month" } = ((await req.json().catch(() => ({}))) as Body);
+    const validation = await validateBody(req, ForecastDealsBodySchema, buildCorsHeaders(req), { endpoint: 'forecast-deals' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const { period = "month" } = validation.data!;
     const days = period === "week" ? 7 : period === "quarter" ? 90 : 30;
     const horizon = new Date(Date.now() + days * 86400000).toISOString().slice(0, 10);
 

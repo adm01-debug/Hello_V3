@@ -1,6 +1,8 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { ElevenLabsTokenBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 
 serve(async (req) => {
@@ -42,7 +44,9 @@ serve(async (req) => {
       );
     }
 
-    const body = await req.json();
+    const validation = await validateBody(req, ElevenLabsTokenBodySchema, buildCorsHeaders(req), { endpoint: 'elevenlabs-conversation-token' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     const { agentId, useDefaultAgent } = body;
 
     // Allow either explicit agentId or useDefaultAgent flag

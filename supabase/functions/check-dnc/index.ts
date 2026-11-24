@@ -4,6 +4,8 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { CheckDncBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 function json(body: unknown, status: number, req: Request): Response {
   return new Response(JSON.stringify(body), {
@@ -30,7 +32,9 @@ Deno.serve(async (req) => {
     const { data: { user }, error: authError } = await userClient.auth.getUser();
     if (authError || !user) return json({ error: "Não autorizado" }, 401, req);
 
-    const body = await req.json().catch(() => ({}));
+    const validation = await validateBody(req, CheckDncBodySchema, buildCorsHeaders(req), { endpoint: 'check-dnc' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     const phone = typeof body.phone === "string" ? body.phone.trim() : "";
     if (!phone) return json({ error: "phone é obrigatório" }, 400, req);
 

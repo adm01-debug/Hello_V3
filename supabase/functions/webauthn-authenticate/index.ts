@@ -2,18 +2,9 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 import { verificarAssercao, WebAuthnError } from "./verify.ts";
+import { WebauthnAuthBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
-
-interface AuthRequest {
-  credentialId: string;
-  /** Opcional: a edge deriva o dono pela credential_id registrada. */
-  userId?: string;
-  clientDataJSON: string;
-  authenticatorData: string;
-  signature: string;
-  /** Ignorado: o e-mail vem do dono da passkey, nunca do request. */
-  email?: string;
-}
 
 Deno.serve(async (req) => {
   // Handle CORS preflight
@@ -40,8 +31,9 @@ Deno.serve(async (req) => {
       );
     }
 
-    const { credentialId, clientDataJSON, authenticatorData, signature } =
-      await req.json() as AuthRequest;
+    const validation = await validateBody(req, WebauthnAuthBodySchema, buildCorsHeaders(req), { endpoint: 'webauthn-authenticate' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const { credentialId, clientDataJSON, authenticatorData, signature } = validation.data!;
     if (!credentialId || !clientDataJSON || !authenticatorData || !signature) {
       throw new Error('Missing required fields');
     }
