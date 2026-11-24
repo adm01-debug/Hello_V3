@@ -16,6 +16,8 @@ interface Props {
   onToggleFavorite: (id: string) => void;
   onSelect: (contact: Contact) => void;
   onCall: (contact: Contact) => void;
+  onEdit?: (contact: Contact) => void;
+  onDelete?: (contact: Contact) => void;
 }
 
 export const ContactGrid = ({
@@ -24,6 +26,8 @@ export const ContactGrid = ({
   onToggleFavorite,
   onSelect,
   onCall,
+  onEdit,
+  onDelete,
 }: Props) => (
   <motion.div
     variants={containerVariants}
@@ -39,6 +43,8 @@ export const ContactGrid = ({
         onToggleFavorite={onToggleFavorite}
         onSelect={onSelect}
         onCall={onCall}
+        onEdit={onEdit}
+        onDelete={onDelete}
       />
     ))}
   </motion.div>
