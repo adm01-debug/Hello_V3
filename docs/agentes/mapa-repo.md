@@ -37,7 +37,7 @@ Ler quando precisar saber onde fica algo antes de buscar por texto.
 | `scripts/` | 19 arquivos flat. **Só 2 são usados** (o CI chama `codemod-safe-number.mjs` e `guard-edge-numeric.mjs`); os outros 17 são órfãos e 7 carregam JWT `service_role` de produção |
 | `scripts/ci/` | guardas do CI mantidos à mão: `check-claude-md-integrity.mjs` (vigia `AGENTS.md` + `docs/agentes/`) |
 | `coverage/` + `covout/` | **466 arquivos versionados** (23% dos 2.016 rastreados) — saída de build do Istanbul/v8, com o código-fonte duplicado dentro de HTML. Ruído em todo `git grep`: ao buscar por texto, exclua as duas pastas |
-| `public/locales/en/common.json` | 10 strings. `i18n.json` declara `en`/`pt-BR`/`es` e **nada lê nenhum dos dois**; não há biblioteca de i18n no `package.json` e a interface é hardcoded em português |
+| ~~`i18n.json`~~ + ~~`public/locales/`~~ | **Removidos na etapa 269.** Declaravam 3 locales sem nenhum consumidor (nem lib de i18n no `package.json`) e a interface é hardcoded em pt-BR. Localização da interface **não existe** — ver ADR-016. A tradução de conversas (`useLiveTranslation`, `TranslationCenter`, edge `translate-utterance`) é outra feature e continua |
 
 ## Automações
 
