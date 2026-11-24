@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1929b04d36` · branch `main` · 2026-11-24 05:07 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0bba9fbc1f` · branch `main` · 2026-11-24 05:28 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1256,6 +1256,66 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
   ```ts
   { name: z.string().trim().min(1, 'Nome obrigatório').max(100), provider: voipProviderSchema, sip_server: z.string().trim().min(1, 'Servidor obrigatório').max(255), sip_username: z.string().trim().min(1, 'Usuário obrigatório').max(100), sip_password: z.string().min(0).max(255).optional(), sip_realm: z.string().max(255).optional(), transport: z.enum(['wss', 'tcp', 'udp']), max_channels: z.coerce.number().min(1).max(1000), priority: z.coerce.number().min(0).max(9999), is_active: z.boolean(), notes: z.string().max(500).optional(), }
   ```
+- **id** (`supabase/functions/_shared/ai-body-schemas.ts`, z.string):
+  ```ts
+  
+  ```
+- **requiredId** (`supabase/functions/_shared/ai-body-schemas.ts`, z.string):
+  ```ts
+  
+  ```
+- **lang** (`supabase/functions/_shared/ai-body-schemas.ts`, z.string):
+  ```ts
+  
+  ```
+- **ScoreCallBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { callSessionId: requiredId, templateId: requiredId, }
+  ```
+- **GenerateSummaryBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { callInfo: z .object({ transcripts: z .array( z.object({ speaker: z.string().max(50), text: z.string().max(PROMPT_TEXT_MAX), }), ) .max(200) .optional(), callerName: z.string().max(200).optional(), duration: z.number().min(0).max(86_400).optional(), }) .optional(), }
+  ```
+- **GenerateCoachingBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { agentId: requiredId, }
+  ```
+- **GenerateCoachingPlanBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { agent_name: id.optional(), }
+  ```
+- **GenerateMeetingSummaryBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { callSessionId: id.optional(), force: z.boolean().optional(), }
+  ```
+- **TranslateSummaryBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { callSessionId: id.optional(), targetLang: lang.optional(), }
+  ```
+- **TranslateUtteranceBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { callSessionId: id.optional(), text: z.string().max(UTTERANCE_TEXT_MAX).optional(), speaker: z.enum(["agent", "customer"]).optional(), sourceLang: lang.optional(), targetLang: lang.optional(), segmentId: id.optional(), }
+  ```
+- **VoiceCommandBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { audio: z.string().max(VOICE_COMMAND_TEXT_MAX).optional(), }
+  ```
+- **VerifyVoiceBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { embedding: z.array(z.unknown()).max(1024).optional(), callSessionId: id.optional(), label: z.string().max(50).optional(), }
+  ```
+- **TranscribeRecordingBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { recordingId: id.optional(), filePath: z.string().max(STORAGE_PATH_MAX).optional(), }
+  ```
+- **OcrVirtualFaxBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { fax_id: id.optional(), }
+  ```
+- **SendSurveyBodySchema** (`supabase/functions/_shared/ai-body-schemas.ts`, z.object):
+  ```ts
+  { survey_id: id.optional(), account_id: id.optional(), contact_id: id.optional(), call_session_id: id.optional(), channel: z.string().max(30).optional(), }
+  ```
 - **BitrixActionSchema** (`supabase/functions/_shared/external-payload-schemas.ts`, z.enum):
   ```ts
   [ "get_contacts", "get_leads", "create_lead", "update_lead", "get_deals", "create_call", "register_call", "finish_call", "get_user", "get_users", "get_departments", ]
@@ -1818,6 +1878,10 @@ _nenhum item encontrado_
 | `DAYS` | `90` | `src/pages/Status.tsx` |
 | `ALL_SOURCES` | `"__all__"` | `src/pages/admin/SecurityAlerts.tsx` |
 | `PAGE_SIZE` | `25` | `src/pages/roles/RoleAuditTrail.tsx` |
+| `PROMPT_TEXT_MAX` | `20` | `supabase/functions/_shared/ai-body-schemas.ts` |
+| `UTTERANCE_TEXT_MAX` | `5` | `supabase/functions/_shared/ai-body-schemas.ts` |
+| `VOICE_COMMAND_TEXT_MAX` | `4` | `supabase/functions/_shared/ai-body-schemas.ts` |
+| `ID_MAX` | `100` | `supabase/functions/_shared/ai-body-schemas.ts` |
 | `MINUTE_MS` | `60` | `supabase/functions/_shared/business-hours.ts` |
 | `MAX_ITERATIONS` | `400` | `supabase/functions/_shared/business-hours.ts` |
 | `GENERIC_INTERNAL_MESSAGE` | `"Erro interno"` | `supabase/functions/_shared/errors.ts` |
@@ -1836,6 +1900,8 @@ _nenhum item encontrado_
 | `DEFAULT_MIN_SAMPLES` | `10` | `supabase/functions/health-check/slo-budget.ts` |
 | `MAX_ENTRIES` | `5000` | `supabase/functions/ldap-sync/index.ts` |
 | `LDAP_TIMEOUT_MS` | `15000` | `supabase/functions/ldap-sync/index.ts` |
+| `MAX_FAX_BYTES` | `20` | `supabase/functions/ocr-virtual-fax/index.ts` |
+| `MAX_AUDIO_BYTES` | `25` | `supabase/functions/transcribe-recording/index.ts` |
 | `CONCURRENT_CAP` | `3` | `supabase/functions/voip-capacity-forecast/index.ts` |
 | `AI_GATEWAY` | `'https://openrouter.ai/api/v1/chat/completions'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
@@ -2431,7 +2497,7 @@ _nenhum item encontrado_
 | Falha ao remover regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao salvar regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao executar enforcement de SLA | `src/hooks/useSLA.ts` |
-| … +259 linhas — lista completa em `context.json` | |
+| … +260 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 

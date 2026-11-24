@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 930,
- "arestas": 3634,
+ "nos": 932,
+ "arestas": 3659,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -117,6 +117,10 @@
    "importado_por": 23
   },
   {
+   "arquivo": "supabase/functions/_shared/validator.ts",
+   "importado_por": 23
+  },
+  {
    "arquivo": "supabase/functions/_shared/resilience.ts",
    "importado_por": 22
   },
@@ -145,6 +149,10 @@
    "importado_por": 14
   },
   {
+   "arquivo": "supabase/functions/_shared/ai-body-schemas.ts",
+   "importado_por": 13
+  },
+  {
    "arquivo": "src/hooks/useAuth.ts",
    "importado_por": 12
   },
@@ -153,15 +161,7 @@
    "importado_por": 11
   },
   {
-   "arquivo": "supabase/functions/_shared/validator.ts",
-   "importado_por": 11
-  },
-  {
    "arquivo": "src/components/ui/dropdown-menu.tsx",
-   "importado_por": 10
-  },
-  {
-   "arquivo": "src/components/ui/popover.tsx",
    "importado_por": 10
   }
  ],

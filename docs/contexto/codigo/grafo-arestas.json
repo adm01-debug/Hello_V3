@@ -4651,6 +4651,9 @@
    "src/pages/marketing/Pricing.tsx",
    "src/pages/marketing/VsThreeCPlus.tsx"
   ],
+  "supabase/functions/_shared/ai-body-schemas_test.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts"
+  ],
   "supabase/functions/_shared/auth.ts": [
    "supabase/functions/_shared/constant-time.ts",
    "supabase/functions/_shared/cors.ts",
@@ -4894,9 +4897,11 @@
    "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/generate-coaching-plan/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/errors.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/generate-coaching-track/index.ts": [
    "supabase/functions/_shared/constant-time.ts",
@@ -4908,19 +4913,25 @@
    "supabase/functions/generate-coaching-track/track-engine.ts"
   ],
   "supabase/functions/generate-coaching/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/generate-meeting-summary/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/rate-limit.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/generate-summary/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/rate-limit.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/global-load-test/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4955,8 +4966,10 @@
    "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/ocr-virtual-fax/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/errors.ts"
+   "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/process-digest/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -4995,8 +5008,10 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/score-call/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/search-calls/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -5009,7 +5024,9 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/send-survey/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/ai-body-schemas.ts",
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/sip-config/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -5027,18 +5044,24 @@
    "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/transcribe-recording/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/translate-summary/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/errors.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/translate-utterance/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/errors.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/validate-geo/index.ts": [
    "supabase/functions/_shared/client-ip.ts",
@@ -5052,13 +5075,17 @@
    "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/verify-voice/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/validator.ts",
    "supabase/functions/_shared/voice-utils.ts"
   ],
   "supabase/functions/voice-command/index.ts": [
+   "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/resilience.ts"
+   "supabase/functions/_shared/resilience.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/voice-transcribe/index.ts": [
    "supabase/functions/_shared/cors.ts"

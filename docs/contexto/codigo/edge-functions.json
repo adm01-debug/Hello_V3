@@ -20,6 +20,8 @@
   "supabase/functions/_shared/__tests__/resilience.test.ts",
   "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
   "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
+  "supabase/functions/_shared/ai-body-schemas.ts",
+  "supabase/functions/_shared/ai-body-schemas_test.ts",
   "supabase/functions/_shared/allowed-hosts.ts",
   "supabase/functions/_shared/auth.ts",
   "supabase/functions/_shared/business-hours.ts",
@@ -1423,7 +1425,7 @@
    "nome": "generate-coaching",
    "entrada": "supabase/functions/generate-coaching/index.ts",
    "arquivos": 1,
-   "linhas": 279,
+   "linhas": 282,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1452,8 +1454,10 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
-    "resilience.ts"
+    "resilience.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useCoaching.ts"
@@ -1467,7 +1471,7 @@
    "nome": "generate-coaching-plan",
    "entrada": "supabase/functions/generate-coaching-plan/index.ts",
    "arquivos": 1,
-   "linhas": 123,
+   "linhas": 127,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1487,9 +1491,11 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
     "errors.ts",
-    "resilience.ts"
+    "resilience.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/components/coaching/CoachingCopilotCard.tsx"
@@ -1544,7 +1550,7 @@
    "nome": "generate-meeting-summary",
    "entrada": "supabase/functions/generate-meeting-summary/index.ts",
    "arquivos": 1,
-   "linhas": 300,
+   "linhas": 303,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1567,10 +1573,12 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
     "errors.ts",
     "rate-limit.ts",
-    "resilience.ts"
+    "resilience.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useCallSession.ts",
@@ -1585,7 +1593,7 @@
    "nome": "generate-summary",
    "entrada": "supabase/functions/generate-summary/index.ts",
    "arquivos": 1,
-   "linhas": 96,
+   "linhas": 100,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1603,9 +1611,11 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
     "rate-limit.ts",
-    "resilience.ts"
+    "resilience.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/components/calls/ActiveCallBar.tsx"
@@ -1800,7 +1810,7 @@
    "nome": "ocr-virtual-fax",
    "entrada": "supabase/functions/ocr-virtual-fax/index.ts",
    "arquivos": 1,
-   "linhas": 95,
+   "linhas": 104,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1823,8 +1833,10 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useVirtualFaxOcr.ts"
@@ -2047,7 +2059,7 @@
    "nome": "score-call",
    "entrada": "supabase/functions/score-call/index.ts",
    "arquivos": 1,
-   "linhas": 143,
+   "linhas": 145,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2072,8 +2084,10 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
-    "resilience.ts"
+    "resilience.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useScorecards.ts"
@@ -2192,7 +2206,7 @@
    "nome": "send-survey",
    "entrada": "supabase/functions/send-survey/index.ts",
    "arquivos": 1,
-   "linhas": 105,
+   "linhas": 108,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2211,7 +2225,9 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "ai-body-schemas.ts",
+    "cors.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useSurveys.ts"
@@ -2369,7 +2385,7 @@
    "nome": "transcribe-recording",
    "entrada": "supabase/functions/transcribe-recording/index.ts",
    "arquivos": 1,
-   "linhas": 172,
+   "linhas": 185,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2391,8 +2407,10 @@
     "api.elevenlabs.io"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
-    "resilience.ts"
+    "resilience.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useRecordings.ts"
@@ -2406,7 +2424,7 @@
    "nome": "translate-summary",
    "entrada": "supabase/functions/translate-summary/index.ts",
    "arquivos": 1,
-   "linhas": 116,
+   "linhas": 115,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2427,9 +2445,11 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
     "errors.ts",
-    "resilience.ts"
+    "resilience.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -2441,7 +2461,7 @@
    "nome": "translate-utterance",
    "entrada": "supabase/functions/translate-utterance/index.ts",
    "arquivos": 1,
-   "linhas": 100,
+   "linhas": 95,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2462,9 +2482,11 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
     "errors.ts",
-    "resilience.ts"
+    "resilience.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useLiveTranslation.ts"
@@ -2557,7 +2579,7 @@
    "nome": "verify-voice",
    "entrada": "supabase/functions/verify-voice/index.ts",
    "arquivos": 1,
-   "linhas": 93,
+   "linhas": 97,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2577,8 +2599,10 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
     "rate-limit.ts",
+    "validator.ts",
     "voice-utils.ts"
    ],
    "chamada_pelo_front": [
@@ -2593,7 +2617,7 @@
    "nome": "voice-command",
    "entrada": "supabase/functions/voice-command/index.ts",
    "arquivos": 1,
-   "linhas": 113,
+   "linhas": 117,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2612,8 +2636,10 @@
     "openrouter.ai"
    ],
    "usa_shared": [
+    "ai-body-schemas.ts",
     "cors.ts",
-    "resilience.ts"
+    "resilience.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useVoiceCommand.ts"
