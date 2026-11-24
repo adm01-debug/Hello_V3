@@ -185,4 +185,41 @@ describe('useCallHistory', () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(rpcMock).toHaveBeenCalled();
   });
+
+  it('descarta a pagina que chega depois da troca de filtro (E206)', async () => {
+    // pagina cheia para haver o que "carregar mais"
+    rpcMock.mockResolvedValue({
+      data: new Array(50).fill(0).map((_, i) => ({ ...sampleRow, id: `r${i}` })),
+      error: null,
+    });
+    const { result } = renderHook(() => useCallHistory());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.hasMore).toBe(true);
+
+    // "carregar mais" disparado e deixado em voo
+    let responderPaginaAntiga: (valor: { data: unknown; error: null }) => void = () => {};
+    rpcMock.mockImplementationOnce(
+      () => new Promise((resolve) => { responderPaginaAntiga = resolve; })
+    );
+    act(() => {
+      result.current.loadMore();
+    });
+
+    // o filtro muda antes da resposta da pagina 2
+    rpcMock.mockResolvedValue({ data: [{ ...sampleRow, id: 'novo' }], error: null });
+    await act(async () => {
+      result.current.setStatusFilter('completed');
+    });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    // a pagina antiga so chega agora
+    await act(async () => {
+      responderPaginaAntiga({
+        data: new Array(50).fill(0).map((_, i) => ({ ...sampleRow, id: `velho${i}` })),
+        error: null,
+      });
+    });
+
+    expect(result.current.sessions.map((s) => s.id)).toEqual(['novo']);
+  });
 });

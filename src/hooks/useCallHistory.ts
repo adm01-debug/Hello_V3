@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuditLog } from '@/hooks/useAuditLog';
 import { logger } from '@/lib/logger';
@@ -75,14 +75,12 @@ export function useCallHistory() {
     return Array.from(topics).sort();
   }, [sessions]);
 
-  useEffect(() => { 
-    setPage(0);
-    setSessions([]);
-    fetchSessions(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery, statusFilter, sentimentFilter]);
+  const requestIdRef = useRef(0);
 
-  const fetchSessions = async (pageToFetch: number = 0) => {
+  const fetchSessions = useCallback(async (pageToFetch: number = 0) => {
+    // Cada busca recebe um id. Resposta de busca que nao e mais a vigente e descartada:
+    // trocar o filtro durante um "carregar mais" nao pode anexar a pagina antiga na lista nova.
+    const requestId = ++requestIdRef.current;
     setIsLoading(true);
     setError(null);
     try {
@@ -95,6 +93,7 @@ export function useCallHistory() {
       });
 
       if (error) throw error;
+      if (requestId !== requestIdRef.current) return;
 
       type CallHistoryRow = CallSession & {
         overall_sentiment?: string | null;
@@ -119,12 +118,19 @@ export function useCallHistory() {
       setHasMore(mappedData.length === PAGE_SIZE);
       setPage(pageToFetch);
     } catch (error) {
+      if (requestId !== requestIdRef.current) return;
       logger.error('Error fetching sessions:', error);
       setError(error instanceof Error ? error.message : 'Falha ao carregar o histórico de chamadas');
     } finally {
-      setIsLoading(false);
+      if (requestId === requestIdRef.current) setIsLoading(false);
     }
-  };
+  }, [searchQuery, statusFilter, sentimentFilter]);
+
+  useEffect(() => {
+    setPage(0);
+    setSessions([]);
+    fetchSessions(0);
+  }, [fetchSessions]);
 
   const loadMore = () => {
     if (!isLoading && hasMore) {
