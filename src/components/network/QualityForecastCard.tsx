@@ -10,7 +10,8 @@ import {
 } from 'recharts';
 import { toast } from 'sonner';
 import { useVoipQualityForecastFetch, type ForecastHorizon } from '@/hooks/useVoipQualityForecast';
-import { useVoipCapacityRecommendations } from '@/hooks/useVoipCapacityRecommendations';
+import { useVoipCapacityRecommendations, type CapacityRecommendation } from '@/hooks/useVoipCapacityRecommendations';
+import { useRecordVoipRecommendationAction } from '@/hooks/useVoipRecommendationActions';
 import { logger } from '@/lib/logger';
 
 const log = logger.create('QualityForecastCard');
@@ -30,6 +31,8 @@ export const QualityForecastCard = () => {
   const [horizon, setHorizon] = useState<ForecastHorizon>(24);
   const { data: forecast, isLoading } = useVoipQualityForecastFetch(horizon);
   const { data: capacity } = useVoipCapacityRecommendations(horizon);
+  const recordAction = useRecordVoipRecommendationAction();
+  const [readIds, setReadIds] = useState<string[]>([]);
 
   const chartData = useMemo(() => {
     if (!forecast?.forecast) return [];
@@ -45,9 +48,30 @@ export const QualityForecastCard = () => {
       }));
   }, [forecast]);
 
-  const handleApply = (rec: { id: string; title: string }) => {
-    log.info('Aplicando recomendação de capacity', { id: rec.id });
-    toast.success('Recomendação registrada', {
+  // A recomendacao de capacity e informativa: aumentar agentes/canais e decisao humana.
+  // O botao registra que o supervisor leu, com outcome 'dismissed' — nao afirma execucao.
+  const handleMarkAsRead = async (rec: CapacityRecommendation) => {
+    log.info('Marcando recomendacao de capacity como lida', { id: rec.id });
+    const ok = await recordAction({
+      recommendation_id: rec.id,
+      category: 'capacity',
+      severity: rec.severity,
+      action_type: rec.action_type,
+      action_payload: {
+        window_start: rec.window_start,
+        window_end: rec.window_end,
+        confidence: rec.confidence,
+        evidence: rec.evidence,
+      },
+      outcome: 'dismissed',
+      notes: 'Marcada como lida — execucao depende de decisao humana',
+    });
+    if (!ok) {
+      toast.error('Não foi possível registrar a leitura', { description: rec.title });
+      return;
+    }
+    setReadIds((prev) => (prev.includes(rec.id) ? prev : [...prev, rec.id]));
+    toast.success('Leitura registrada', {
       description: rec.title,
       icon: <CheckCircle2 className="h-4 w-4" />,
     });
@@ -164,8 +188,13 @@ export const QualityForecastCard = () => {
                         <p className="text-sm font-medium">{rec.title}</p>
                         <p className="text-xs text-muted-foreground mt-1">{rec.description}</p>
                       </div>
-                      <Button size="sm" variant="outline" onClick={() => handleApply(rec)}>
-                        Aplicar
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        disabled={readIds.includes(rec.id)}
+                        onClick={() => void handleMarkAsRead(rec)}
+                      >
+                        {readIds.includes(rec.id) ? 'Lida' : 'Marcar como lida'}
                       </Button>
                     </div>
                   ))}

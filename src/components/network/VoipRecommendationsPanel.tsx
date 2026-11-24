@@ -8,11 +8,13 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useVoipRecommendations, type VoipRecommendation, type RecPeriod } from '@/hooks/useVoipRecommendations';
+import {
+  useRecordVoipRecommendationAction,
+  type RecommendationOutcome,
+} from '@/hooks/useVoipRecommendationActions';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
-import { supabase } from '@/integrations/supabase/client';
-import { useQueryClient } from '@tanstack/react-query';
 import { RecommendationHistoryDrawer } from './RecommendationHistoryDrawer';
 import { WhatIfSimulatorDialog } from './WhatIfSimulatorDialog';
 import { scheduleCoachingCheck, processCoachingQueue } from '@/lib/voipRecommendationCoaching';
@@ -61,7 +63,6 @@ interface Props {
 export function VoipRecommendationsPanel({ period = 'week' }: Props) {
   const { data, isLoading, error, refetch } = useVoipRecommendations(period);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [snoozed, setSnoozed] = useState<SnoozedMap>(() => loadJsonMap(SNOOZE_KEY));
   const [autoApply, setAutoApply] = useState<boolean>(() => {
     try { return localStorage.getItem(AUTO_APPLY_KEY) === '1'; } catch { return false; }
@@ -75,30 +76,18 @@ export function VoipRecommendationsPanel({ period = 'week' }: Props) {
     return list.filter(r => !snoozed[r.id]);
   }, [data, snoozed]);
 
-  const recordAction = useCallback(async (
-    rec: VoipRecommendation,
-    outcome: 'applied' | 'snoozed' | 'dismissed' | 'auto_applied',
-    notes?: string,
-  ) => {
-    try {
-      const { data: userData } = await supabase.auth.getUser();
-      const userId = userData?.user?.id;
-      if (!userId) return;
-      await supabase.from('voip_recommendation_actions').insert([{
-        user_id: userId,
-        recommendation_id: rec.id,
-        category: rec.category,
-        severity: rec.severity,
-        action_type: rec.action_type,
-        action_payload: rec.action_payload as never,
-        outcome,
-        notes: notes ?? null,
-      }]);
-      queryClient.invalidateQueries({ queryKey: ['voip-recommendation-history'] });
-    } catch (err) {
-      log.warn('Falha ao registrar ação no histórico', err);
-    }
-  }, [queryClient]);
+  const recordVoipAction = useRecordVoipRecommendationAction();
+
+  const recordAction = useCallback((rec: VoipRecommendation, outcome: RecommendationOutcome, notes?: string) =>
+    recordVoipAction({
+      recommendation_id: rec.id,
+      category: rec.category,
+      severity: rec.severity,
+      action_type: rec.action_type,
+      action_payload: rec.action_payload as Record<string, unknown>,
+      outcome,
+      notes,
+    }), [recordVoipAction]);
 
   const executeAction = useCallback((rec: VoipRecommendation) => {
     if (rec.action_type === 'link') {

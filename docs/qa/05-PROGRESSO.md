@@ -228,7 +228,7 @@
 - [ ] **175** — Completar o CRUD da lista DNC — onda 4 — Média — Frontend 🔒
 - [x] **176** — Fazer a remediação de anomalia atualizar a lista — onda 4 — Média — Hooks
 - [ ] **177** — Parar de responder "aplicado" sem aplicar nada — onda 4 — Alta — Edge Function 🔒
-- [ ] **178** — Fazer o "Aplicar" da recomendação de capacidade registrar algo — onda 4 — Média — Frontend
+- [x] **178** — Fazer o "Aplicar" da recomendação de capacidade registrar algo — onda 4 — Média — Frontend
 - [ ] **179** — Mostrar as violações de SLA numa tela — onda 4 — Média — Frontend
 - [ ] **180** — Fechar a onda 4 com o inventário de fios ligados — onda 4 — Média — Documentação
 
