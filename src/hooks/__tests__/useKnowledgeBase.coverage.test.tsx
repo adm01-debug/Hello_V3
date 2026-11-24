@@ -185,6 +185,24 @@ describe('useUpsertArticle', () => {
     await waitFor(() => expect(result.current.isError).toBe(true));
     expect(toast.error).toHaveBeenCalledWith('Falha ao salvar artigo');
   });
+
+  it('invalida a lista e o artigo aberto depois de salvar', async () => {
+    tableResults['kb_articles'] = { data: { id: 'a1' }, error: null };
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
+    const invalidateSpy = vi.spyOn(client, 'invalidateQueries');
+    const localWrapper = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={client}>{children}</QueryClientProvider>
+    );
+
+    const { result } = renderHook(() => useUpsertArticle(), { wrapper: localWrapper });
+    result.current.mutate({ title: 'T', slug: 's', content: 'c' });
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    const keys = invalidateSpy.mock.calls.map((c) => JSON.stringify((c[0] as { queryKey?: unknown })?.queryKey));
+    expect(keys).toContain(JSON.stringify(['kb-articles']));
+    // prefix match: invalida ['kb-article', id] de useKbArticle
+    expect(keys).toContain(JSON.stringify(['kb-article']));
+  });
 });
 
 describe('useRecordKbView', () => {
