@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: avisa meta por transicao em vez de repetir o toast (etapa 246) (#277)",
    "fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)",
    "fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)",
    "fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)",
-   "chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)",
-   "docs: registra o desfecho da apuracao de exclusao de conta LGPD (etapa 132) (#271)"
+   "chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)"
   ]
  },
  "pr_template": null,

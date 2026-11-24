@@ -3351,7 +3351,7 @@
    "hooks_exportados": [
     "useQueueMetrics"
    ],
-   "linhas": 246,
+   "linhas": 280,
    "dominio": "hooks",
    "tabelas": [
     "agents",

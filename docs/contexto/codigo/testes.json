@@ -1464,12 +1464,12 @@
   {
    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 243,
+   "linhas": 282,
    "testa": [
     "src/hooks/useQueueMetrics.ts",
     "src/integrations/supabase/client.ts"
    ],
-   "casos": 14
+   "casos": 16
   },
   {
    "arquivo": "src/hooks/__tests__/useRateLimitData.coverage.test.tsx",

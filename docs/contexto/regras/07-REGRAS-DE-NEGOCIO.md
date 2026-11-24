@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `efbd573982` · branch `main` · 2026-11-24 10:06 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4204df7f86` · branch `main` · 2026-11-24 10:28 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1908,6 +1908,7 @@ _nenhum item encontrado_
 | `BUCKET` | `'queue-audio'` | `src/hooks/useQueueAudioPrompts.ts` |
 | `SAFETY_POLL_MS` | `60` | `src/hooks/useQueueMetrics.ts` |
 | `REALTIME_DEBOUNCE_MS` | `1` | `src/hooks/useQueueMetrics.ts` |
+| `GOAL_NOTIFY_COOLDOWN_MS` | `15` | `src/hooks/useQueueMetrics.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useRecordings.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useSecurityAlertNotifications.ts` |
@@ -2067,6 +2068,7 @@ _nenhum item encontrado_
 | `nextAttempt = new Date(Date.now() + 60 * 60 * 1000).toISOString();` | `src/hooks/usePredictiveDialer.ts` |
 | `gcTime: 30 * 60 * 1000,` | `src/hooks/useQueueAudioPrompts.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useQueueAudioPrompts.ts` |
+| `const GOAL_NOTIFY_COOLDOWN_MS = 15 * 60 * 1000;` | `src/hooks/useQueueMetrics.ts` |
 | `const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();` | `src/hooks/useQueueMetrics.ts` |
 | `setTimeout(() => notification.close(), 10000);` | `src/hooks/useRealtimeHoldAlerts.ts` |
 | `gcTime: 30 * 60 * 1000,` | `src/hooks/useRingGroups.ts` |
@@ -2638,7 +2640,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4385 testes em 390 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4388 testes em 390 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2692,6 +2694,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/dialer-favorites-and-alert.test.ts` | 19 | dialer-favorites-order — simulação de centenas de cenários · preserva o conjunto de itens em qualquer movimento (PBT) · sempre gera posições densas 0..n-1 (PBT) · é imutável: nunca altera o array original … |
 | `src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts` | 19 | webauthn-utils (coverage) · base64 helpers · round-trips a buffer through base64url · accepts a plain ArrayBuffer input … |
 | `src/hooks/__tests__/useBitrix.coverage.test.tsx` | 18 | useBitrix · checkConfiguration returns true when configured · callBitrixApi returns null when configured === false · getContacts / getLeads / getDeals populate state … |
+| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 18 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useSecurityHooks.test.ts` | 18 | usePermissions · Permission checking logic · hasPermission returns true for existing permission · hasPermission returns false for missing permission … |
 | `src/lib/__tests__/security-alerts-presets.test.ts` | 18 | security-alerts-presets · loadPresets · retorna [] quando storage vazio · retorna [] quando JSON inválido … |
 | `src/hooks/__tests__/useContactAlerts.coverage.test.tsx` | 17 | useContactAlerts · fetches alerts on mount and computes unread count · fetchAlerts with unreadOnly applies eq filter · fetchAlerts handles error and returns empty … |
@@ -2705,7 +2708,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAvatar.test.ts` | 15 | useAvatar · does not request a signed url when there is no path · resolves a signed url for an existing avatar · clears the url when signing fails … |
 | `src/hooks/__tests__/useCallSession.test.ts` | 15 | Call Session Logic · Session lifecycle · creates session with correct initial status · session ends with completed status … |
 | `src/hooks/__tests__/useCrmFieldSuggestions.coverage.test.tsx` | 15 | useCrmFieldSuggestions · returns empty defaults when no callSessionId (query disabled, no channel) · fetches suggestions and computes pending, wires realtime channel · query error branch throws … |
-| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 15 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useWavoipCall.coverage.test.tsx` | 15 | useWavoipCall · checks configuration on mount (connected) · checkConfiguration when not connected sets disconnected · checkConfiguration with supabase error sets error state … |
 | `src/lib/__tests__/call-queue.test.ts` | 15 | call-queue :: clampInt · sempre devolve inteiro dentro da faixa · usa o fallback para valores não finitos · call-queue :: normalizeQueueDraft … |
 | `src/lib/__tests__/safe-number.test.ts` | 15 | safe-number · safeParseInt · PBT: nunca retorna NaN, mesmo com entrada hostil · PBT: números válidos são truncados · PBT: respeita min/max clamp … |
@@ -3119,6 +3121,9 @@ _nenhum item encontrado_
 | * mínimo de palavras para disparar tradução */ | `src/hooks/useLiveTranslation.ts` |
 | * A RPC falhou: não sabemos se a conta está bloqueada. Quem consome deve recusar a tentativa. */ | `src/hooks/useLoginLockout.ts` |
 | Autoplay bloqueado pelo navegador nao pode quebrar o painel: o som e acessorio. | `src/hooks/useNotifications.ts` |
+| critica nao repetimos o toast. O intervalo minimo existe para o caso de a | `src/hooks/useQueueMetrics.ts` |
+| pelo intervalo minimo, ele nao pode reaparecer no ciclo seguinte. | `src/hooks/useQueueMetrics.ts` |
+| No maximo um alarme por meta a cada 15 min: e o que impede a metrica que | `src/hooks/useQueueMetrics.ts` |
 | ').order('created_at', { ascending: false }).limit(100), | `src/hooks/useRateLimitData.ts` |
 | ').order('created_at', { ascending: false }).limit(50), | `src/hooks/useRateLimitData.ts` |
 | Falhar aqui nao pode impedir o usuario de atender a chamada. | `src/hooks/useRingtoneSettings.ts` |

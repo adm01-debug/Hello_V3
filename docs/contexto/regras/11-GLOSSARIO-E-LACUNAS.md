@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `efbd573982` · branch `main` · 2026-11-24 10:06 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4204df7f86` · branch `main` · 2026-11-24 10:28 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -300,7 +300,7 @@
 | status | valor `dialing` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dialer/PredictiveDialerPanel.tsx`<br>`escreve:src/hooks/predictive-dialer/api.ts` |
 | status | valor `paused` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dialer/PredictiveDialerPanel.tsx`<br>`escreve:src/hooks/predictive-dialer/api.ts` |
 | status | valor `down` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/observability/HealthTab.tsx`<br>`compara:src/hooks/useHealthCheck.ts`<br>`escreve:src/hooks/useHealthCheck.ts` |
-| status | valor `ok` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/queue/QueueGoalsTab.tsx`<br>`compara:src/pages/QueueMetricsDashboard.tsx`<br>`compara:supabase/functions/check-goals/index.ts`<br>`escreve:src/components/queue/QueueGoalsTab.tsx` |
+| status | valor `ok` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/queue/QueueGoalsTab.tsx`<br>`compara:src/hooks/useQueueMetrics.ts`<br>`compara:src/pages/QueueMetricsDashboard.tsx`<br>`compara:supabase/functions/check-goals/index.ts` |
 | status | valor `accepted` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/hooks/useCrmFieldSuggestions.ts` |
 | status | valor `SUBSCRIBED` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useHealthCheck.ts` |
 | status | valor `CHANNEL_ERROR` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useHealthCheck.ts` |
