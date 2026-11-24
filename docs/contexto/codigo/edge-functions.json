@@ -94,7 +94,7 @@
    "nome": "analyze-contact-profile",
    "entrada": "supabase/functions/analyze-contact-profile/index.ts",
    "arquivos": 1,
-   "linhas": 99,
+   "linhas": 100,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -173,7 +173,7 @@
    "nome": "analyze-sentiment",
    "entrada": "supabase/functions/analyze-sentiment/index.ts",
    "arquivos": 1,
-   "linhas": 89,
+   "linhas": 90,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -278,7 +278,7 @@
    "nome": "auto-scorecard",
    "entrada": "supabase/functions/auto-scorecard/index.ts",
    "arquivos": 1,
-   "linhas": 210,
+   "linhas": 211,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -498,7 +498,7 @@
    "nome": "check-contact-alerts",
    "entrada": "supabase/functions/check-contact-alerts/index.ts",
    "arquivos": 1,
-   "linhas": 99,
+   "linhas": 100,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -600,7 +600,7 @@
    "nome": "check-hold-alerts",
    "entrada": "supabase/functions/check-hold-alerts/index.ts",
    "arquivos": 1,
-   "linhas": 126,
+   "linhas": 127,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -731,7 +731,7 @@
    "nome": "compute-account-health",
    "entrada": "supabase/functions/compute-account-health/index.ts",
    "arquivos": 1,
-   "linhas": 177,
+   "linhas": 178,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -838,7 +838,7 @@
    "nome": "compute-deal-health",
    "entrada": "supabase/functions/compute-deal-health/index.ts",
    "arquivos": 1,
-   "linhas": 114,
+   "linhas": 115,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -979,7 +979,7 @@
    "nome": "detect-churn-risk",
    "entrada": "supabase/functions/detect-churn-risk/index.ts",
    "arquivos": 1,
-   "linhas": 194,
+   "linhas": 196,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2091,7 +2091,7 @@
    "nome": "score-call",
    "entrada": "supabase/functions/score-call/index.ts",
    "arquivos": 1,
-   "linhas": 145,
+   "linhas": 149,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2420,7 +2420,7 @@
    "nome": "transcribe-recording",
    "entrada": "supabase/functions/transcribe-recording/index.ts",
    "arquivos": 1,
-   "linhas": 185,
+   "linhas": 187,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2535,7 +2535,7 @@
    "nome": "validate-geo",
    "entrada": "supabase/functions/validate-geo/index.ts",
    "arquivos": 1,
-   "linhas": 186,
+   "linhas": 189,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2575,7 +2575,7 @@
    "nome": "validate-ip",
    "entrada": "supabase/functions/validate-ip/index.ts",
    "arquivos": 1,
-   "linhas": 146,
+   "linhas": 147,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3414,7 +3414,7 @@
    "nome": "webauthn-authenticate",
    "entrada": "supabase/functions/webauthn-authenticate/index.ts",
    "arquivos": 2,
-   "linhas": 398,
+   "linhas": 405,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"

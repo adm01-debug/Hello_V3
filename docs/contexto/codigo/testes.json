@@ -860,7 +860,7 @@
   {
    "arquivo": "src/hooks/__tests__/useContacts.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 158,
+   "linhas": 161,
    "testa": [
     "src/hooks/useContacts.ts"
    ],

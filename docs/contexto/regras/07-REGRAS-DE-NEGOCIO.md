@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9cc710b3b2` · branch `main` · 2026-11-24 08:05 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d34fadc96f` · branch `main` · 2026-11-24 08:06 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2487,6 +2487,7 @@ _nenhum item encontrado_
 | Erro ao remover contato | `src/hooks/useContacts.ts` |
 | Este contato foi alterado por outro usuário. Recarregando... | `src/hooks/useContacts.ts` |
 | ID de contato inválido | `src/hooks/useContacts.ts` |
+| Não foi possível registrar a interação no histórico do contato | `src/hooks/useContacts.ts` |
 | Conversa não atualizada: sem permissão ou conversa inexistente | `src/hooks/useConversations.ts` |
 | Falha ao atualizar | `src/hooks/useConversations.ts` |
 | Falha ao enviar mensagem | `src/hooks/useConversations.ts` |
@@ -2582,8 +2583,7 @@ _nenhum item encontrado_
 | Erro ao carregar áudio | `src/hooks/useRecordings.ts` |
 | Erro ao excluir gravação | `src/hooks/useRecordings.ts` |
 | Erro ao transcrever gravação | `src/hooks/useRecordings.ts` |
-| Falha ao carregar renovações | `src/hooks/useRenewals.ts` |
-| … +282 linhas — lista completa em `context.json` | |
+| … +284 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -3107,8 +3107,10 @@ _nenhum item encontrado_
 | ').order('created_at', { ascending: false }).limit(100); | `src/hooks/useIPWhitelist.ts` |
 | * mínimo de palavras para disparar tradução */ | `src/hooks/useLiveTranslation.ts` |
 | * A RPC falhou: não sabemos se a conta está bloqueada. Quem consome deve recusar a tentativa. */ | `src/hooks/useLoginLockout.ts` |
+| Autoplay bloqueado pelo navegador nao pode quebrar o painel: o som e acessorio. | `src/hooks/useNotifications.ts` |
 | ').order('created_at', { ascending: false }).limit(100), | `src/hooks/useRateLimitData.ts` |
 | ').order('created_at', { ascending: false }).limit(50), | `src/hooks/useRateLimitData.ts` |
+| Falhar aqui nao pode impedir o usuario de atender a chamada. | `src/hooks/useRingtoneSettings.ts` |
 | ').order('created_at', { ascending: false }).limit(5); | `src/hooks/useSecurityDashboard.ts` |
 | ').order('created_at', { ascending: false }).limit(50); | `src/hooks/useSecurityMonitoringData.ts` |
 | ').order('created_at', { ascending: false }).limit(20); | `src/hooks/useSecurityMonitoringData.ts` |
@@ -3125,6 +3127,7 @@ _nenhum item encontrado_
 | validação (para UI inline) | `src/hooks/useWebhookConfig.ts` |
 | Le apenas papeis ativos e nao expirados, aplicando precedencia | `src/hooks/auth/useAuthProfile.ts` |
 | somente se o usuario nao tiver nenhum papel em user_roles. | `src/hooks/auth/useAuthProfile.ts` |
+| Telemetria e acessoria: nao pode quebrar a pagina do usuario. | `src/hooks/telemetry/useTelemetry.ts` |
 | — apenas duplicatas próximas no tempo (ruído da IA) são colapsadas. | `src/lib/agent-assist-utils.ts` |
 | * Mascara telefone preservando apenas os 4 últimos dígitos. */ | `src/lib/blf.ts` |
 | * slot_end - slot_start <= 99 → no máximo 100 vagas por órbita. */ | `src/lib/call-park.ts` |

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "9cc710b3b2818502df60ccefdac0e188e27828ab",
+  "sha": "d34fadc96f9c49f6235c131c7cfe864e9d655222",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 08:05 UTC",
+  "generated_at": "2026-11-24 08:06 UTC",
   "files_total": 1780,
   "code_files": 1576,
-  "code_lines": 195395
+  "code_lines": 195448
  },
  "version": "1.3.2",
- "facts_hash": "37ba19f0e0c5dde5",
+ "facts_hash": "96b36ea31f3bbaf5",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -31821,6 +31821,7 @@
      "Challenge expirado. Tente novamente.",
      "Failed to generate authentication token",
      "Failed to resolve passkey owner",
+     "Falha ao consumir o desafio",
      "Invalid passkey",
      "Missing required fields",
      "Passkey invalida (${codigo})"
@@ -33594,7 +33595,7 @@
   {
    "module": "src/hooks",
    "files": 354,
-   "lines": 47309,
+   "lines": 47336,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34299,7 +34300,7 @@
   {
    "module": "supabase/functions",
    "files": 206,
-   "lines": 23104,
+   "lines": 23130,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -41000,6 +41001,10 @@
     "msg": "ID de contato inválido"
    },
    {
+    "file": "src/hooks/useContacts.ts",
+    "msg": "Não foi possível registrar a interação no histórico do contato"
+   },
+   {
     "file": "src/hooks/useConversations.ts",
     "msg": "Conversa não atualizada: sem permissão ou conversa inexistente"
    },
@@ -42449,6 +42454,10 @@
    },
    {
     "file": "supabase/functions/webauthn-authenticate/index.ts",
+    "msg": "Falha ao consumir o desafio"
+   },
+   {
+    "file": "supabase/functions/webauthn-authenticate/index.ts",
     "msg": "Invalid passkey"
    },
    {
@@ -42760,12 +42769,20 @@
     "text": "* A RPC falhou: não sabemos se a conta está bloqueada. Quem consome deve recusar a tentativa. */"
    },
    {
+    "file": "src/hooks/useNotifications.ts",
+    "text": "Autoplay bloqueado pelo navegador nao pode quebrar o painel: o som e acessorio."
+   },
+   {
     "file": "src/hooks/useRateLimitData.ts",
     "text": "').order('created_at', { ascending: false }).limit(100),"
    },
    {
     "file": "src/hooks/useRateLimitData.ts",
     "text": "').order('created_at', { ascending: false }).limit(50),"
+   },
+   {
+    "file": "src/hooks/useRingtoneSettings.ts",
+    "text": "Falhar aqui nao pode impedir o usuario de atender a chamada."
    },
    {
     "file": "src/hooks/useSecurityDashboard.ts",
@@ -42830,6 +42847,10 @@
    {
     "file": "src/hooks/auth/useAuthProfile.ts",
     "text": "somente se o usuario nao tiver nenhum papel em user_roles."
+   },
+   {
+    "file": "src/hooks/telemetry/useTelemetry.ts",
+    "text": "Telemetria e acessoria: nao pode quebrar a pagina do usuario."
    },
    {
     "file": "src/lib/agent-assist-utils.ts",
@@ -100380,7 +100401,7 @@
   },
   "src/hooks/useCallSession.ts": {
    "path": "src/hooks/useCallSession.ts",
-   "lines": 249,
+   "lines": 250,
    "exports": [
     "function useCallSession"
    ],
@@ -100835,7 +100856,7 @@
   },
   "src/hooks/useContacts.ts": {
    "path": "src/hooks/useContacts.ts",
-   "lines": 372,
+   "lines": 375,
    "exports": [
     "interface Contact",
     "interface ContactInteraction",
@@ -100887,7 +100908,8 @@
     "Erro ao carregar lista de contatos",
     "Erro ao remover contato",
     "Este contato foi alterado por outro usuário. Recarregando...",
-    "ID de contato inválido"
+    "ID de contato inválido",
+    "Não foi possível registrar a interação no histórico do contato"
    ],
    "status_values": [
     {
@@ -101645,7 +101667,7 @@
   },
   "src/hooks/useExtensionAudit.ts": {
    "path": "src/hooks/useExtensionAudit.ts",
-   "lines": 43,
+   "lines": 45,
    "exports": [
     "type ExtensionBulkAction",
     "function useExtensionAudit"
@@ -102427,7 +102449,7 @@
   },
   "src/hooks/useKnowledgeBase.ts": {
    "path": "src/hooks/useKnowledgeBase.ts",
-   "lines": 187,
+   "lines": 189,
    "exports": [
     "interface KbCategory",
     "interface KbArticle",
@@ -102877,7 +102899,7 @@
   },
   "src/hooks/useMultiChannelCall.ts": {
    "path": "src/hooks/useMultiChannelCall.ts",
-   "lines": 343,
+   "lines": 347,
    "exports": [
     "type CallChannel",
     "type CallStatus",
@@ -103195,6 +103217,9 @@
    "role_checks": [
     "granted"
    ],
+   "rule_comments": [
+    "Autoplay bloqueado pelo navegador nao pode quebrar o painel: o som e acessorio."
+   ],
    "hooks": [
     "useNotifications"
    ],
@@ -103325,7 +103350,7 @@
   },
   "src/hooks/usePersistedTagFilter.ts": {
    "path": "src/hooks/usePersistedTagFilter.ts",
-   "lines": 169,
+   "lines": 171,
    "exports": [
     "function usePersistedTagFilter"
    ],
@@ -103470,7 +103495,7 @@
   },
   "src/hooks/useQualityTrendAnalyzer.ts": {
    "path": "src/hooks/useQualityTrendAnalyzer.ts",
-   "lines": 117,
+   "lines": 118,
    "exports": [
     "function useQualityTrendAnalyzer"
    ],
@@ -104018,7 +104043,7 @@
   },
   "src/hooks/useRingtoneSettings.ts": {
    "path": "src/hooks/useRingtoneSettings.ts",
-   "lines": 284,
+   "lines": 286,
    "exports": [
     "function useRingtoneSettings"
    ],
@@ -104044,6 +104069,9 @@
    ],
    "errors": [
     ";\nimport { getCurrentDeviceLabel, sanitizeDeviceLabel } from "
+   ],
+   "rule_comments": [
+    "Falhar aqui nao pode impedir o usuario de atender a chamada."
    ],
    "hooks": [
     "useRingtoneSettings"
@@ -104511,7 +104539,7 @@
   },
   "src/hooks/useSessionManager.ts": {
    "path": "src/hooks/useSessionManager.ts",
-   "lines": 257,
+   "lines": 259,
    "exports": [
     "function useSessionManager"
    ],
@@ -105487,7 +105515,7 @@
   },
   "src/hooks/useVoicePreferences.ts": {
    "path": "src/hooks/useVoicePreferences.ts",
-   "lines": 199,
+   "lines": 200,
    "exports": [
     "interface UseVoicePreferences",
     "function useVoicePreferences"
@@ -105756,7 +105784,7 @@
   },
   "src/hooks/useVoipQualityMonitor.ts": {
    "path": "src/hooks/useVoipQualityMonitor.ts",
-   "lines": 205,
+   "lines": 207,
    "exports": [
     "type QualityLabel",
     "interface VoipQualitySample",
@@ -107336,7 +107364,7 @@
   },
   "src/hooks/__tests__/useContacts.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useContacts.coverage.test.tsx",
-   "lines": 158,
+   "lines": 161,
    "is_test": true,
    "tests": [
     "useContacts (coverage)",
@@ -110359,12 +110387,15 @@
   },
   "src/hooks/telemetry/useTelemetry.ts": {
    "path": "src/hooks/telemetry/useTelemetry.ts",
-   "lines": 46,
+   "lines": 48,
    "tables": [
     {
      "table": "performance_metrics",
      "op": "insert"
     }
+   ],
+   "rule_comments": [
+    "Telemetria e acessoria: nao pode quebrar a pagina do usuario."
    ]
   },
   "src/hooks/telemetry/__tests__/useTelemetry.coverage.test.tsx": {
@@ -119249,7 +119280,7 @@
   },
   "supabase/functions/analyze-contact-profile/index.ts": {
    "path": "supabase/functions/analyze-contact-profile/index.ts",
-   "lines": 99,
+   "lines": 100,
    "tables": [
     {
      "table": "contacts",
@@ -119383,7 +119414,7 @@
   },
   "supabase/functions/analyze-sentiment/index.ts": {
    "path": "supabase/functions/analyze-sentiment/index.ts",
-   "lines": 89,
+   "lines": 90,
    "tables": [
     {
      "table": "call_summaries",
@@ -119527,7 +119558,7 @@
   },
   "supabase/functions/auto-scorecard/index.ts": {
    "path": "supabase/functions/auto-scorecard/index.ts",
-   "lines": 210,
+   "lines": 211,
    "tables": [
     {
      "table": "call_scorecards",
@@ -120054,7 +120085,7 @@
   },
   "supabase/functions/check-contact-alerts/index.ts": {
    "path": "supabase/functions/check-contact-alerts/index.ts",
-   "lines": 99,
+   "lines": 100,
    "tables": [
     {
      "table": "contacts",
@@ -120246,7 +120277,7 @@
   },
   "supabase/functions/check-hold-alerts/index.ts": {
    "path": "supabase/functions/check-hold-alerts/index.ts",
-   "lines": 126,
+   "lines": 127,
    "tables": [
     {
      "table": "hold_alert_settings",
@@ -120550,7 +120581,7 @@
   },
   "supabase/functions/compute-account-health/index.ts": {
    "path": "supabase/functions/compute-account-health/index.ts",
-   "lines": 177,
+   "lines": 178,
    "tables": [
     {
      "table": "accounts",
@@ -120708,7 +120739,7 @@
   },
   "supabase/functions/compute-deal-health/index.ts": {
    "path": "supabase/functions/compute-deal-health/index.ts",
-   "lines": 114,
+   "lines": 115,
    "tables": [
     {
      "table": "deals",
@@ -120994,7 +121025,7 @@
   },
   "supabase/functions/detect-churn-risk/index.ts": {
    "path": "supabase/functions/detect-churn-risk/index.ts",
-   "lines": 194,
+   "lines": 196,
    "tables": [
     {
      "table": "call_sessions",
@@ -123031,7 +123062,7 @@
   },
   "supabase/functions/score-call/index.ts": {
    "path": "supabase/functions/score-call/index.ts",
-   "lines": 145,
+   "lines": 149,
    "exports": [
     "function computeWeightedTotal"
    ],
@@ -123504,7 +123535,7 @@
   },
   "supabase/functions/transcribe-recording/index.ts": {
    "path": "supabase/functions/transcribe-recording/index.ts",
-   "lines": 185,
+   "lines": 187,
    "tables": [
     {
      "table": "call_recordings",
@@ -123649,7 +123680,7 @@
   },
   "supabase/functions/validate-geo/index.ts": {
    "path": "supabase/functions/validate-geo/index.ts",
-   "lines": 186,
+   "lines": 189,
    "tables": [
     {
      "table": "geo_settings",
@@ -123707,7 +123738,7 @@
   },
   "supabase/functions/validate-ip/index.ts": {
    "path": "supabase/functions/validate-ip/index.ts",
-   "lines": 146,
+   "lines": 147,
    "tables": [
     {
      "table": "user_ip_restrictions",
@@ -125223,7 +125254,7 @@
   },
   "supabase/functions/webauthn-authenticate/index.ts": {
    "path": "supabase/functions/webauthn-authenticate/index.ts",
-   "lines": 225,
+   "lines": 232,
    "tables": [
     {
      "table": "user_passkeys",
@@ -125275,6 +125306,7 @@
     "Challenge expirado. Tente novamente.",
     "Failed to generate authentication token",
     "Failed to resolve passkey owner",
+    "Falha ao consumir o desafio",
     "Invalid passkey",
     "Missing required fields",
     "Passkey invalida (${codigo})"
@@ -126899,10 +126931,64 @@
   }
  },
  "git": {
-  "sha": "9cc710b3b2818502df60ccefdac0e188e27828ab",
+  "sha": "d34fadc96f9c49f6235c131c7cfe864e9d655222",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "d34fadc",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: veredito explicito nos catch que escondem escrita (etapas 194-195) (#262)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/telemetry/useTelemetry.ts",
+     "src/hooks/useCallSession.ts",
+     "src/hooks/useExtensionAudit.ts",
+     "src/hooks/useKnowledgeBase.ts",
+     "src/hooks/useMultiChannelCall.ts",
+     "src/hooks/useNotifications.ts",
+     "src/hooks/usePersistedTagFilter.ts",
+     "src/hooks/useQualityTrendAnalyzer.ts",
+     "src/hooks/useRingtoneSettings.ts",
+     "src/hooks/useSessionManager.ts",
+     "src/hooks/useVoicePreferences.ts",
+     "src/hooks/useVoipQualityMonitor.ts"
+    ]
+   },
+   {
+    "sha": "3de40b2",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: avisar quando a interacao nao entra no historico do contato (etapa 190) (#260)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useContacts.coverage.test.tsx",
+     "src/hooks/useContacts.ts"
+    ]
+   },
+   {
+    "sha": "14bbc21",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: registrar falha nas gravacoes das edge functions (etapa 188) (#258)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/analyze-contact-profile/index.ts",
+     "supabase/functions/analyze-sentiment/index.ts",
+     "supabase/functions/auto-scorecard/index.ts",
+     "supabase/functions/check-contact-alerts/index.ts",
+     "supabase/functions/check-hold-alerts/index.ts",
+     "supabase/functions/compute-account-health/index.ts",
+     "supabase/functions/compute-deal-health/index.ts",
+     "supabase/functions/detect-churn-risk/index.ts",
+     "supabase/functions/score-call/index.ts",
+     "supabase/functions/transcribe-recording/index.ts",
+     "supabase/functions/validate-geo/index.ts",
+     "supabase/functions/validate-ip/index.ts",
+     "supabase/functions/webauthn-authenticate/index.ts"
+    ]
+   },
    {
     "sha": "9cc710b",
     "date": "2026-11-24",
@@ -127241,79 +127327,6 @@
      "docs/agentes/mapa-repo.md",
      "docs/qa/05-PROGRESSO.md"
     ]
-   },
-   {
-    "sha": "e78a64b",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: valida o corpo nas 18 edges de calculo e exportacao (etapa 049) (#235)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/_shared/numeric-body-schemas.ts",
-     "supabase/functions/_shared/numeric-body-schemas_test.ts",
-     "supabase/functions/approve-password-reset/index.ts",
-     "supabase/functions/check-alerts/index.ts",
-     "supabase/functions/check-calling-hours/index.ts",
-     "supabase/functions/check-dnc/index.ts",
-     "supabase/functions/compute-account-health/index.ts",
-     "supabase/functions/compute-adherence/index.ts",
-     "supabase/functions/compute-deal-health/index.ts",
-     "supabase/functions/data-lake-flush/index.ts",
-     "supabase/functions/detect-churn-risk/index.ts",
-     "supabase/functions/elevenlabs-conversation-token/index.ts",
-     "supabase/functions/export-data-lake/index.ts",
-     "supabase/functions/forecast-deals/index.ts",
-     "supabase/functions/ldap-sync/index.ts",
-     "supabase/functions/sip-config/index.ts",
-     "supabase/functions/voip-failover-notifier/index.ts",
-     "supabase/functions/voip-trunks-manage/index.ts",
-     "supabase/functions/wavoip-call/index.ts",
-     "supabase/functions/webauthn-authenticate/index.ts"
-    ]
-   },
-   {
-    "sha": "0bba9fb",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: teto de tamanho e validacao de corpo nas 12 edges de IA e transcricao (#234)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/_shared/ai-body-schemas.ts",
-     "supabase/functions/_shared/ai-body-schemas_test.ts",
-     "supabase/functions/generate-coaching-plan/index.ts",
-     "supabase/functions/generate-coaching/index.ts",
-     "supabase/functions/generate-meeting-summary/index.ts",
-     "supabase/functions/generate-summary/index.ts",
-     "supabase/functions/ocr-virtual-fax/index.ts",
-     "supabase/functions/score-call/index.ts",
-     "supabase/functions/send-survey/index.ts",
-     "supabase/functions/transcribe-recording/index.ts",
-     "supabase/functions/translate-summary/index.ts",
-     "supabase/functions/translate-utterance/index.ts",
-     "supabase/functions/verify-voice/index.ts",
-     "supabase/functions/voice-command/index.ts"
-    ]
-   },
-   {
-    "sha": "1929b04",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: onda 4 e fechamento da E050 - erro interno nunca chega ao cliente (#233)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/data-lake-flush/index.ts",
-     "supabase/functions/health-check/index.ts",
-     "supabase/functions/ldap-sync/index.ts",
-     "supabase/functions/notify-blocked-ip/index.ts",
-     "supabase/functions/notify-new-device/index.ts",
-     "supabase/functions/sync-crm-queue/index.ts",
-     "supabase/functions/teams-fetch-recordings/index.ts",
-     "supabase/functions/validate-geo/index.ts",
-     "supabase/functions/validate-ip/index.ts",
-     "supabase/functions/webauthn-challenge/index.ts",
-     "supabase/functions/whatsapp-inbound/index.ts",
-     "supabase/functions/whatsapp-rewrite/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -127322,79 +127335,79 @@
     27
    ],
    [
-    "supabase/functions/data-lake-flush/index.ts",
-    3
-   ],
-   [
-    "supabase/functions/elevenlabs-conversation-token/index.ts",
+    "src/hooks/useCallSession.ts",
     2
    ],
    [
-    "supabase/functions/notify-blocked-ip/index.ts",
+    "src/hooks/useMultiChannelCall.ts",
     2
    ],
    [
-    "supabase/functions/notify-new-device/index.ts",
+    "src/hooks/useSessionManager.ts",
     2
    ],
    [
-    "supabase/functions/ocr-virtual-fax/index.ts",
+    "src/hooks/useVoipQualityMonitor.ts",
     2
    ],
    [
-    "supabase/functions/teams-fetch-recordings/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/sync-crm-queue/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/voip-failover-notifier/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/voip-trunks-manage/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/approve-password-reset/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/whatsapp-inbound/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/ldap-sync/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/voip-capacity-recommendations/index.ts",
+    "src/hooks/telemetry/useTelemetry.ts",
     1
    ],
    [
-    "supabase/functions/voip-diagnostic-voice-qa/index.ts",
+    "src/hooks/useExtensionAudit.ts",
     1
    ],
    [
-    "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
+    "src/hooks/useKnowledgeBase.ts",
     1
    ],
    [
-    "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
+    "src/hooks/useNotifications.ts",
     1
    ],
    [
-    "src/hooks/useContactAlerts.ts",
+    "src/hooks/usePersistedTagFilter.ts",
     1
    ],
    [
-    "src/components/alerts/AlertsDropdown.tsx",
+    "src/hooks/useQualityTrendAnalyzer.ts",
     1
    ],
    [
-    "src/components/call-history/CallDetailDialog.tsx",
+    "src/hooks/useRingtoneSettings.ts",
+    1
+   ],
+   [
+    "src/hooks/useVoicePreferences.ts",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useContacts.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useContacts.ts",
+    1
+   ],
+   [
+    "supabase/functions/analyze-contact-profile/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/analyze-sentiment/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/auto-scorecard/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/check-contact-alerts/index.ts",
+    1
+   ],
+   [
+    "supabase/functions/check-hold-alerts/index.ts",
     1
    ]
   ]

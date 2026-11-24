@@ -558,7 +558,7 @@
    "hooks_exportados": [
     "useTelemetry"
    ],
-   "linhas": 46,
+   "linhas": 48,
    "dominio": "hooks/telemetry",
    "tabelas": [
     "performance_metrics"
@@ -1429,7 +1429,7 @@
    "hooks_exportados": [
     "useCallSession"
    ],
-   "linhas": 249,
+   "linhas": 250,
    "dominio": "hooks",
    "tabelas": [
     "call_analyses",
@@ -1748,7 +1748,7 @@
    "hooks_exportados": [
     "useContacts"
    ],
-   "linhas": 372,
+   "linhas": 375,
    "dominio": "hooks",
    "tabelas": [
     "contact_interactions",
@@ -2224,7 +2224,7 @@
    "hooks_exportados": [
     "useExtensionAudit"
    ],
-   "linhas": 43,
+   "linhas": 45,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [
@@ -2637,7 +2637,7 @@
     "useRecordKbView",
     "useUpsertArticle"
    ],
-   "linhas": 187,
+   "linhas": 189,
    "dominio": "hooks",
    "tabelas": [
     "kb_article_views",
@@ -2889,7 +2889,7 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 343,
+   "linhas": 347,
    "dominio": "hooks",
    "tabelas": [
     "hold_events"
@@ -3151,7 +3151,7 @@
    "hooks_exportados": [
     "usePersistedTagFilter"
    ],
-   "linhas": 169,
+   "linhas": 171,
    "dominio": "hooks",
    "tabelas": [
     "user_profiles"
@@ -3301,7 +3301,7 @@
    "hooks_exportados": [
     "useQualityTrendAnalyzer"
    ],
-   "linhas": 117,
+   "linhas": 118,
    "dominio": "hooks",
    "tabelas": [
     "voip_quality_alerts"
@@ -3544,7 +3544,7 @@
    "hooks_exportados": [
     "useRingtoneSettings"
    ],
-   "linhas": 284,
+   "linhas": 286,
    "dominio": "hooks",
    "tabelas": [
     "user_profiles"
@@ -3765,7 +3765,7 @@
    "hooks_exportados": [
     "useSessionManager"
    ],
-   "linhas": 257,
+   "linhas": 259,
    "dominio": "hooks",
    "tabelas": [
     "active_sessions"
@@ -4361,7 +4361,7 @@
    "hooks_exportados": [
     "useVoicePreferences"
    ],
-   "linhas": 199,
+   "linhas": 200,
    "dominio": "hooks",
    "tabelas": [
     "user_profiles"
@@ -4576,7 +4576,7 @@
    "hooks_exportados": [
     "useVoipQualityMonitor"
    ],
-   "linhas": 205,
+   "linhas": 207,
    "dominio": "hooks",
    "tabelas": [
     "call_quality_metrics"

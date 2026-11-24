@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: veredito explicito nos catch que escondem escrita (etapas 194-195) (#262)",
+   "fix: avisar quando a interacao nao entra no historico do contato (etapa 190) (#260)",
+   "fix: registrar falha nas gravacoes das edge functions (etapa 188) (#258)",
    "fix: orcamento de tempo na cadeia edge->edge e no QA de voz (etapa 211) (#265)",
-   "chore: verificacao dos timers de realtime nos hooks (etapa 216) (#266)",
-   "fix: avisar quando o alerta de contato nao foi gravado (etapa 189) (#259)",
-   "fix: prazo de resposta nas edges de e-mail e integracao (etapa 210) (#264)",
-   "fix: consultas cegas restantes e estado de erro padronizado (etapas 201-202) (#263)"
+   "chore: verificacao dos timers de realtime nos hooks (etapa 216) (#266)"
   ]
  },
  "pr_template": null,

@@ -2,11 +2,26 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "9cc710b3b2818502df60ccefdac0e188e27828ab",
+  "commit": "d34fadc96f9c49f6235c131c7cfe864e9d655222",
   "branch": "main",
-  "data_commit": "2026-11-24T05:05:01-03:00",
+  "data_commit": "2026-11-24T05:06:02-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d34fadc",
+    "data": "2026-11-24",
+    "assunto": "chore: veredito explicito nos catch que escondem escrita (etapas 194-195) (#262)"
+   },
+   {
+    "sha": "3de40b2",
+    "data": "2026-11-24",
+    "assunto": "fix: avisar quando a interacao nao entra no historico do contato (etapa 190) (#260)"
+   },
+   {
+    "sha": "14bbc21",
+    "data": "2026-11-24",
+    "assunto": "fix: registrar falha nas gravacoes das edge functions (etapa 188) (#258)"
+   },
    {
     "sha": "9cc710b",
     "data": "2026-11-24",
@@ -116,24 +131,9 @@
     "sha": "024aa1e",
     "data": "2026-11-24",
     "assunto": "feat: explica na tela a regra do coaching automatico (etapa 169) (#241)"
-   },
-   {
-    "sha": "0b5b0b3",
-    "data": "2026-11-24",
-    "assunto": "fix: resolve o menu mais opcoes do cartao de contato (etapa 166) (#240)"
-   },
-   {
-    "sha": "5bae125",
-    "data": "2026-11-24",
-    "assunto": "feat: liga Priorizar no discador preditivo (etapa 163) (#239)"
-   },
-   {
-    "sha": "b21f44f",
-    "data": "2026-11-24",
-    "assunto": "feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)"
    }
   ],
-  "arquivos_mudados_7d": 1133,
+  "arquivos_mudados_7d": 1140,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 88
+    "mudancas": 91
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 68
+    "mudancas": 69
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,18 +199,18 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 88
+    "mudancas": 91
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 27
    },
    {
-    "arquivo": "src/components/layout/AppSidebar.tsx",
-    "mudancas": 9
+    "arquivo": "src/hooks/useMultiChannelCall.ts",
+    "mudancas": 10
    },
    {
-    "arquivo": "src/hooks/useMultiChannelCall.ts",
+    "arquivo": "src/components/layout/AppSidebar.tsx",
     "mudancas": 9
    },
    {
@@ -250,6 +250,10 @@
     "mudancas": 6
    },
    {
+    "arquivo": "supabase/functions/score-call/index.ts",
+    "mudancas": 6
+   },
+   {
     "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
     "mudancas": 6
    },
@@ -274,6 +278,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "supabase/functions/auto-scorecard/index.ts",
+    "mudancas": 5
+   },
+   {
     "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
     "mudancas": 5
    },
@@ -288,20 +296,12 @@
    {
     "arquivo": "supabase/functions/generate-coaching-plan/index.ts",
     "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/generate-meeting-summary/index.ts",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/health-check/index.ts",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 241
+    "commits": 244
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1733,
   "arquivos_codigo": 1330,
-  "linhas_codigo": 179383,
+  "linhas_codigo": 179436,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 47309
+   "linhas": 47336
   },
   "src/integrations": {
    "arquivos": 3,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 206,
-   "linhas": 23104
+   "linhas": 23130
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -597,15 +597,15 @@
    "linhas": 376
   },
   {
+   "arquivo": "src/hooks/useContacts.ts",
+   "linhas": 375
+  },
+  {
    "arquivo": "src/components/ai/AICallAnalysis.tsx",
    "linhas": 373
   },
   {
    "arquivo": "src/components/calls/WebRTCCall.tsx",
-   "linhas": 372
-  },
-  {
-   "arquivo": "src/hooks/useContacts.ts",
    "linhas": 372
   },
   {
