@@ -241,7 +241,10 @@
 - [ ] **183** — Verificar o erro nas gravações de sessão e autenticação — onda 5 — Alta — Hooks
 - [ ] **184** — Verificar o erro nas gravações de conversas e mensagens — onda 5 — Média — Hooks
 - [ ] **185** — Verificar o erro nas gravações de gamificação e ranking — onda 5 — Média — Hooks
-- [ ] **186** — Verificar o erro nas operações de armazenamento — onda 5 — Média — Hooks
+- [x] **186** — Verificar o erro nas operações de armazenamento — onda 5 — Média — Hooks
+  - `src/hooks/useQueueAudioPrompts.ts` `deletePrompt`: o objeto do bucket agora sai **antes** da linha do banco (mesma ordem da edge `cleanup-recordings`); falha no `storage.remove` lança e a linha permanece, com toast de erro. Antes a linha era apagada primeiro e o `remove` não era checado — objeto órfão inalcançável.
+  - Rollback do `uploadPrompt`: falha ao remover o áudio órfão agora é logada (`log.warn('Áudio órfão no bucket após falha de registro')`) em vez de sumir.
+  - Teste novo `src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx` (2 casos): ordem `storage.remove` → `db.delete` com sucesso; e falha no bucket mantendo a linha e sem toast de sucesso.
 - [ ] **187** — Varrer e corrigir as gravações cegas restantes — onda 5 — Média — Hooks
 - [ ] **188** — Fazer o mesmo nas edge functions — onda 5 — Média — Edge Function
 - [ ] **189** — Parar de engolir falha nos alertas de contato — onda 5 — Média — Hooks
