@@ -373,6 +373,30 @@ describe('usePredictiveDialer', () => {
     });
   });
 
+  it('setPriority grava a prioridade e reflete na fila (A-084)', async () => {
+    const { result } = renderHook(() => usePredictiveDialer());
+    await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
+
+    selectResult = { data: [sampleQueueItem], error: null };
+    await act(async () => {
+      await result.current.fetchQueue('c1');
+    });
+
+    await act(async () => {
+      const ok = await result.current.setPriority('q1', 7);
+      expect(ok).toBe(true);
+    });
+    expect(result.current.queue.find((q) => q.id === 'q1')?.priority).toBe(7);
+
+    // Falha do update nao pode deixar a tela mostrando prioridade que o banco recusou.
+    updateResult = { error: new Error('prio fail') };
+    await act(async () => {
+      const ok = await result.current.setPriority('q1', 9);
+      expect(ok).toBe(false);
+    });
+    expect(result.current.queue.find((q) => q.id === 'q1')?.priority).toBe(7);
+  });
+
   it('dialContact updates state and handles error', async () => {
     const { result } = renderHook(() => usePredictiveDialer());
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));

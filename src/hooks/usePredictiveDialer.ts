@@ -282,6 +282,19 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
     }
   }, []);
 
+  // "Priorizar" e so mudar `priority`: a fila e a escolha do proximo contato
+  // (apiFetchQueue e apiGetNextContact) ordenam por priority desc.
+  const setPriority = useCallback(async (queueItemId: string, priority: number): Promise<boolean> => {
+    try {
+      await apiUpdateQueueItem(queueItemId, { priority });
+      setQueue((prev) => prev.map((q) => (q.id === queueItemId ? { ...q, priority } : q)));
+      return true;
+    } catch (err) {
+      log.error('Error setting priority:', err);
+      return false;
+    }
+  }, []);
+
   // Auto-dial loop
   useEffect(() => {
     if (isDialing && activeCampaign && !currentCall) {
@@ -344,6 +357,7 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
     completeCall,
     deleteCampaign,
     removeFromQueue,
+    setPriority,
     setActiveCampaign,
   };
 };
