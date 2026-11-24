@@ -148,7 +148,7 @@
 ## Onda 3 — Integridade de dados e regras de negócio (101–150, 50 etapas)
 
 - [ ] **101** — Marcar como `STABLE` as três funções que governam 270 policies — onda 3 — Alta — Banco 🔒
-- [ ] **102** — Criar o módulo único de métricas de fila — onda 3 — Alta — Lib
+- [x] **102** — Criar o módulo único de métricas de fila — onda 3 — Alta — Lib
 - [ ] **103** — Unificar o nível de serviço: um limiar, uma janela, um denominador — onda 3 — Alta — Hooks + Edge Function 🔒
 - [ ] **104** — Unificar a taxa de abandono — onda 3 — Alta — Hooks + Banco 🔒
 - [ ] **105** — Alinhar o freio do discador à meta de abandono configurada — onda 3 — Alta — Banco 🔒
