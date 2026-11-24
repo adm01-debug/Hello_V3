@@ -116,11 +116,12 @@ describe('useDNCCompliance', () => {
     const { result } = renderHook(() => useDNCCompliance(), { wrapper });
     await waitFor(() => expect(result.current.isLoadingSettings).toBe(false));
 
+    // O cliente postgrest-js devolve { error } no resultado, nunca lanca.
     let call = 0;
     rpcMock.mockImplementation(() => {
       call += 1;
-      if (call === 2) return Promise.reject(new Error('duplicate key'));
-      if (call === 3) return Promise.reject(new Error('other'));
+      if (call === 2) return Promise.resolve({ data: null, error: { message: 'duplicate key value violates unique constraint' } });
+      if (call === 3) return Promise.resolve({ data: null, error: { message: 'permission denied for function add_to_dnc' } });
       return Promise.resolve({ data: null, error: null });
     });
 

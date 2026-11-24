@@ -56,7 +56,7 @@ export function DNCListManager() {
 
             <div className="flex gap-2">
               <ImportDNCDialog
-                onImport={async (phones, reason) => { await bulkImportDNC(phones, reason, 'bulk_import'); }}
+                onImport={(phones, reason) => bulkImportDNC(phones, reason, 'bulk_import')}
               />
               <Button variant="outline" size="sm" onClick={handleExport}>
                 <Download className="h-4 w-4 mr-2" />

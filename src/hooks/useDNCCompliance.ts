@@ -7,6 +7,12 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
+export interface DNCBulkImportResult {
+  success: number;
+  failed: number;
+  duplicates: number;
+}
+
 interface DNCEntry {
   id: string;
   phone: string;
@@ -200,29 +206,29 @@ export function useDNCCompliance() {
   });
 
   // Bulk import DNC
-  const bulkImportDNC = useCallback(async (phones: string[], reason: string = 'import', source: string = 'bulk_import') => {
-    const results = {
+  const bulkImportDNC = useCallback(async (phones: string[], reason: string = 'import', source: string = 'bulk_import'): Promise<DNCBulkImportResult> => {
+    const results: DNCBulkImportResult = {
       success: 0,
       failed: 0,
       duplicates: 0,
     };
 
     for (const phone of phones) {
-      try {
-        await supabase.rpc('add_to_dnc', {
-          p_phone: phone,
-          p_reason: reason,
-          p_source: source,
-          p_notes: undefined,
-          p_expires_at: undefined,
-        });
+      // postgrest-js nao lanca: devolve { error } (shouldThrowOnError = false).
+      // O try/catch anterior contava todo telefone recusado pelo banco como sucesso (A-025).
+      const { error } = await supabase.rpc('add_to_dnc', {
+        p_phone: phone,
+        p_reason: reason,
+        p_source: source,
+        p_notes: undefined,
+        p_expires_at: undefined,
+      });
+      if (!error) {
         results.success++;
-      } catch (error: unknown) {
-        if ((error instanceof Error ? error.message : String(error))?.includes('duplicate')) {
-          results.duplicates++;
-        } else {
-          results.failed++;
-        }
+      } else if (String(error.message ?? '').includes('duplicate')) {
+        results.duplicates++;
+      } else {
+        results.failed++;
       }
     }
 
