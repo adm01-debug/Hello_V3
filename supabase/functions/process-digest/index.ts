@@ -1,4 +1,5 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { lerNotificacoesEmLote, montarMensagem, type LeitorNotificacoes } from "../_shared/digest.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 Deno.serve(async (req) => {
@@ -42,49 +43,46 @@ Deno.serve(async (req) => {
       throw prefError;
     }
 
+    // Uma leitura por lote de usuarios (etapa 249), no lugar de um select por
+    // usuario. O recorte da janela e do teto de 50 continua em memoria e a
+    // mensagem do digest nao muda.
+    const ler: LeitorNotificacoes = async (lote, desde, inicio, fim) => {
+      const { data, error } = await supabase
+        .from("notifications")
+        .select("id, user_id, title, message, category, severity, created_at")
+        .in("user_id", [...lote])
+        .eq("is_read", false)
+        .gte("created_at", desde)
+        .order("created_at", { ascending: false })
+        .order("id", { ascending: false })
+        .range(inicio, fim);
+      return { data, error: error ? { message: error.message } : null };
+    };
+
+    const { porUsuario, lotesComFalha } = await lerNotificacoesEmLote(digestUsers || [], ler);
+    if (lotesComFalha > 0) {
+      console.error(`process-digest: ${lotesComFalha} lote(s) falharam na leitura de notificacoes`);
+    }
+
     const results = [];
 
     for (const userPref of digestUsers || []) {
-      const hoursBack = userPref.digest_frequency === "daily" ? 24 : 168;
-      const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
-
-      const { data: notifications, error: notifError } = await supabase
-        .from("notifications")
-        .select("id, title, message, category, severity, created_at")
-        .eq("user_id", userPref.user_id)
-        .eq("is_read", false)
-        .gte("created_at", since)
-        .order("created_at", { ascending: false })
-        .limit(50);
-
-      if (notifError) {
-        console.error(`Digest error for user ${userPref.user_id}:`, notifError);
-        continue;
-      }
+      const notifications = porUsuario.get(userPref.user_id);
 
       if (!notifications || notifications.length === 0) {
         continue;
       }
 
-      const grouped: Record<string, typeof notifications> = {};
-      for (const n of notifications) {
-        const cat = n.category || "system";
-        if (!grouped[cat]) grouped[cat] = [];
-        grouped[cat].push(n);
-      }
-
-      const summary = Object.entries(grouped)
-        .map(([cat, items]) => `${cat}: ${items.length} notificação(ões)`)
-        .join(", ");
+      const { message, metadata } = montarMensagem(notifications);
 
       const { error: digestErr } = await supabase.from("notifications").insert({
         user_id: userPref.user_id,
         title: `Resumo ${userPref.digest_frequency === "daily" ? "Diário" : "Semanal"}`,
-        message: `Você tem ${notifications.length} notificações não lidas. ${summary}`,
+        message,
         type: "digest",
         category: "system",
         severity: "info",
-        metadata: { grouped_count: notifications.length, categories: grouped },
+        metadata,
       });
       if (digestErr) console.error('process-digest: falha ao criar notificacao de resumo', digestErr);
 
