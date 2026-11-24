@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "48a60a2d695b11ad8ae86e79247f6c7e0cedf990",
+  "sha": "a3a8463a924e09aa17593a044e3832d6a1798f9d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 04:48 UTC",
+  "generated_at": "2026-11-24 05:00 UTC",
   "files_total": 1763,
   "code_files": 1560,
-  "code_lines": 192876
+  "code_lines": 192816
  },
  "version": "1.3.2",
- "facts_hash": "cadd64ec365cebdf",
+ "facts_hash": "64d551b92fca4d55",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34277,7 +34277,7 @@
   {
    "module": "supabase/functions",
    "files": 202,
-   "lines": 22507,
+   "lines": 22447,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -118354,7 +118354,7 @@
   },
   "supabase/functions/approve-password-reset/index.ts": {
    "path": "supabase/functions/approve-password-reset/index.ts",
-   "lines": 150,
+   "lines": 147,
    "tables": [
     {
      "table": "password_reset_requests",
@@ -118698,7 +118698,7 @@
   },
   "supabase/functions/chatbot-respond/index.ts": {
    "path": "supabase/functions/chatbot-respond/index.ts",
-   "lines": 289,
+   "lines": 287,
    "exports": [
     "function handler"
    ],
@@ -119004,7 +119004,7 @@
   },
   "supabase/functions/check-goals/index.ts": {
    "path": "supabase/functions/check-goals/index.ts",
-   "lines": 297,
+   "lines": 291,
    "tables": [
     {
      "table": "dashboard_goals",
@@ -119180,7 +119180,7 @@
   },
   "supabase/functions/check-queue-metrics/index.ts": {
    "path": "supabase/functions/check-queue-metrics/index.ts",
-   "lines": 243,
+   "lines": 240,
    "tables": [
     {
      "table": "queue_metrics_settings",
@@ -119669,7 +119669,7 @@
   },
   "supabase/functions/data-lake-flush/index.ts": {
    "path": "supabase/functions/data-lake-flush/index.ts",
-   "lines": 180,
+   "lines": 179,
    "tables": [
     {
      "table": "user_profiles",
@@ -119955,7 +119955,7 @@
   },
   "supabase/functions/detect-key-moments/index.ts": {
    "path": "supabase/functions/detect-key-moments/index.ts",
-   "lines": 199,
+   "lines": 192,
    "tables": [
     {
      "table": "call_key_moments",
@@ -120228,7 +120228,7 @@
   },
   "supabase/functions/enforce-sla/index.ts": {
    "path": "supabase/functions/enforce-sla/index.ts",
-   "lines": 210,
+   "lines": 206,
    "exports": [
     "function pickPolicy"
    ],
@@ -120817,7 +120817,7 @@
   },
   "supabase/functions/generate-coaching-track/index.ts": {
    "path": "supabase/functions/generate-coaching-track/index.ts",
-   "lines": 164,
+   "lines": 161,
    "tables": [
     {
      "table": "call_sessions",
@@ -120962,7 +120962,7 @@
   },
   "supabase/functions/generate-meeting-summary/index.ts": {
    "path": "supabase/functions/generate-meeting-summary/index.ts",
-   "lines": 302,
+   "lines": 300,
    "tables": [
     {
      "table": "meeting_summaries",
@@ -121220,7 +121220,7 @@
   },
   "supabase/functions/global-load-test/index.ts": {
    "path": "supabase/functions/global-load-test/index.ts",
-   "lines": 147,
+   "lines": 140,
    "dyn_from": 1,
    "rpc": [
     "is_admin_user"
@@ -121805,7 +121805,7 @@
   },
   "supabase/functions/request-password-reset/index.ts": {
    "path": "supabase/functions/request-password-reset/index.ts",
-   "lines": 133,
+   "lines": 130,
    "tables": [
     {
      "table": "password_reset_requests",
@@ -121853,7 +121853,7 @@
   },
   "supabase/functions/rls-audit/index.ts": {
    "path": "supabase/functions/rls-audit/index.ts",
-   "lines": 99,
+   "lines": 98,
    "tables": [
     {
      "table": "user_roles",
@@ -122274,7 +122274,7 @@
   },
   "supabase/functions/sync-crm-queue/index.ts": {
    "path": "supabase/functions/sync-crm-queue/index.ts",
-   "lines": 129,
+   "lines": 125,
    "tables": [
     {
      "table": "crm_sync_queue",
@@ -122354,7 +122354,7 @@
   },
   "supabase/functions/teams-fetch-recordings/index.ts": {
    "path": "supabase/functions/teams-fetch-recordings/index.ts",
-   "lines": 194,
+   "lines": 187,
    "tables": [
     {
      "table": "call_recordings",
@@ -123277,7 +123277,7 @@
   },
   "supabase/functions/voip-load-test/index.ts": {
    "path": "supabase/functions/voip-load-test/index.ts",
-   "lines": 135,
+   "lines": 128,
    "tables": [
     {
      "table": "call_quality_metrics",
@@ -125765,10 +125765,44 @@
   }
  },
  "git": {
-  "sha": "48a60a2d695b11ad8ae86e79247f6c7e0cedf990",
+  "sha": "a3a8463a924e09aa17593a044e3832d6a1798f9d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a3a8463",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: onda 3 da E050 - erro interno generico em 26 edges (#232)",
+    "files": [
+     "supabase/functions/approve-password-reset/index.ts",
+     "supabase/functions/chatbot-respond/index.ts",
+     "supabase/functions/check-goals/index.ts",
+     "supabase/functions/check-queue-metrics/index.ts",
+     "supabase/functions/data-lake-flush/index.ts",
+     "supabase/functions/detect-key-moments/index.ts",
+     "supabase/functions/enforce-sla/index.ts",
+     "supabase/functions/generate-coaching-plan/index.ts",
+     "supabase/functions/generate-coaching-track/index.ts",
+     "supabase/functions/generate-meeting-summary/index.ts",
+     "supabase/functions/global-load-test/index.ts",
+     "supabase/functions/request-password-reset/index.ts",
+     "supabase/functions/rls-audit/index.ts",
+     "supabase/functions/sync-crm-queue/index.ts",
+     "supabase/functions/teams-fetch-recordings/index.ts",
+     "supabase/functions/voip-diagnostic-voice-qa/index.ts",
+     "supabase/functions/voip-executive-narrative/index.ts",
+     "supabase/functions/voip-executive-summary/index.ts",
+     "supabase/functions/voip-load-test/index.ts",
+     "supabase/functions/voip-quality-heatmap/index.ts",
+     "supabase/functions/voip-recommendation-history/index.ts",
+     "supabase/functions/voip-recommendation-insights/index.ts",
+     "supabase/functions/voip-recommendation-simulate/index.ts",
+     "supabase/functions/voip-recommendations/index.ts",
+     "supabase/functions/voip-sla-report/index.ts",
+     "supabase/functions/voip-trunks-manage/index.ts"
+    ]
+   },
    {
     "sha": "48a60a2",
     "date": "2026-11-24",
@@ -126185,32 +126219,28 @@
      "src/hooks/predictive-dialer/api.ts",
      "src/hooks/usePredictiveDialer.ts"
     ]
-   },
-   {
-    "sha": "5eb9695",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "feat: barreira de DNC e horario legal dentro de initiateCall (#202)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/calls/UnifiedSoftphone.tsx",
-     "src/contexts/CallContext.tsx",
-     "src/hooks/__tests__/callLifecycle-integration.test.tsx",
-     "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
-     "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
-     "src/hooks/useMultiChannelCall.ts",
-     "src/pages/PhoneDialer.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    29
+    28
    ],
    [
-    "src/hooks/useMultiChannelCall.ts",
+    "supabase/functions/chatbot-respond/index.ts",
     3
+   ],
+   [
+    "supabase/functions/generate-coaching-plan/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/generate-meeting-summary/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/voip-executive-narrative/index.ts",
+    2
    ],
    [
     "supabase/functions/auto-scorecard/index.ts",
@@ -126241,10 +126271,6 @@
     2
    ],
    [
-    "supabase/functions/chatbot-respond/index.ts",
-    2
-   ],
-   [
     "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
     2
    ],
@@ -126254,10 +126280,6 @@
    ],
    [
     "src/components/dialer/PredictiveDialerPanel.tsx",
-    2
-   ],
-   [
-    "src/pages/PhoneDialer.tsx",
     2
    ],
    [
@@ -126278,10 +126300,6 @@
    ],
    [
     "src/pages/SuccessPlans.tsx",
-    2
-   ],
-   [
-    "src/hooks/useAgentRanking.ts",
     2
    ]
   ]

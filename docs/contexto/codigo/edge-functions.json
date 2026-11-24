@@ -236,7 +236,7 @@
    "nome": "approve-password-reset",
    "entrada": "supabase/functions/approve-password-reset/index.ts",
    "arquivos": 1,
-   "linhas": 150,
+   "linhas": 147,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -257,7 +257,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/pages/PasswordResetApproval.tsx"
@@ -381,7 +382,7 @@
    "nome": "chatbot-respond",
    "entrada": "supabase/functions/chatbot-respond/index.ts",
    "arquivos": 3,
-   "linhas": 326,
+   "linhas": 324,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -409,6 +410,7 @@
     "auth.ts",
     "constant-time.ts",
     "cors.ts",
+    "errors.ts",
     "rate-limit.ts",
     "resilience.ts",
     "validate.ts",
@@ -550,7 +552,7 @@
    "nome": "check-goals",
    "entrada": "supabase/functions/check-goals/index.ts",
    "arquivos": 1,
-   "linhas": 297,
+   "linhas": 291,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -571,7 +573,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useQueueMetrics.ts"
@@ -617,7 +620,7 @@
    "nome": "check-queue-metrics",
    "entrada": "supabase/functions/check-queue-metrics/index.ts",
    "arquivos": 1,
-   "linhas": 243,
+   "linhas": 240,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -637,7 +640,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -852,7 +856,7 @@
    "nome": "data-lake-flush",
    "entrada": "supabase/functions/data-lake-flush/index.ts",
    "arquivos": 1,
-   "linhas": 180,
+   "linhas": 179,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -874,6 +878,7 @@
    "usa_shared": [
     "constant-time.ts",
     "cors.ts",
+    "errors.ts",
     "observability.ts"
    ],
    "chamada_pelo_front": [],
@@ -990,7 +995,7 @@
    "nome": "detect-key-moments",
    "entrada": "supabase/functions/detect-key-moments/index.ts",
    "arquivos": 1,
-   "linhas": 199,
+   "linhas": 192,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1012,6 +1017,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "resilience.ts",
     "validate.ts"
    ],
@@ -1173,7 +1179,7 @@
    "nome": "enforce-sla",
    "entrada": "supabase/functions/enforce-sla/index.ts",
    "arquivos": 1,
-   "linhas": 210,
+   "linhas": 206,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1196,7 +1202,8 @@
    "hosts_externos": [],
    "usa_shared": [
     "business-hours.ts",
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useSLA.ts"
@@ -1481,6 +1488,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "resilience.ts"
    ],
    "chamada_pelo_front": [
@@ -1495,7 +1503,7 @@
    "nome": "generate-coaching-track",
    "entrada": "supabase/functions/generate-coaching-track/index.ts",
    "arquivos": 3,
-   "linhas": 382,
+   "linhas": 379,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -1521,7 +1529,8 @@
    "hosts_externos": [],
    "usa_shared": [
     "constant-time.ts",
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useCoachingTrack.ts"
@@ -1535,7 +1544,7 @@
    "nome": "generate-meeting-summary",
    "entrada": "supabase/functions/generate-meeting-summary/index.ts",
    "arquivos": 1,
-   "linhas": 302,
+   "linhas": 300,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1559,6 +1568,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "rate-limit.ts",
     "resilience.ts"
    ],
@@ -1609,7 +1619,7 @@
    "nome": "global-load-test",
    "entrada": "supabase/functions/global-load-test/index.ts",
    "arquivos": 1,
-   "linhas": 147,
+   "linhas": 140,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1627,7 +1637,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -1963,7 +1974,7 @@
    "nome": "request-password-reset",
    "entrada": "supabase/functions/request-password-reset/index.ts",
    "arquivos": 1,
-   "linhas": 133,
+   "linhas": 130,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1983,6 +1994,7 @@
    "usa_shared": [
     "client-ip.ts",
     "cors.ts",
+    "errors.ts",
     "rate-limit.ts"
    ],
    "chamada_pelo_front": [
@@ -1997,7 +2009,7 @@
    "nome": "rls-audit",
    "entrada": "supabase/functions/rls-audit/index.ts",
    "arquivos": 1,
-   "linhas": 99,
+   "linhas": 98,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2018,7 +2030,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -2280,7 +2293,7 @@
    "nome": "sync-crm-queue",
    "entrada": "supabase/functions/sync-crm-queue/index.ts",
    "arquivos": 1,
-   "linhas": 129,
+   "linhas": 125,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2300,7 +2313,8 @@
    ],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -2312,7 +2326,7 @@
    "nome": "teams-fetch-recordings",
    "entrada": "supabase/functions/teams-fetch-recordings/index.ts",
    "arquivos": 1,
-   "linhas": 194,
+   "linhas": 187,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2336,7 +2350,8 @@
     "login.microsoftonline.com"
    ],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/pages/ExternalRecordingsImport.tsx"
@@ -2789,6 +2804,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -2827,6 +2843,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "resilience.ts",
     "validate.ts"
    ],
@@ -2862,6 +2879,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -2910,7 +2928,7 @@
    "nome": "voip-load-test",
    "entrada": "supabase/functions/voip-load-test/index.ts",
    "arquivos": 1,
-   "linhas": 135,
+   "linhas": 128,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2930,7 +2948,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/pages/ObservabilityDashboard.tsx"
@@ -3027,6 +3046,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -3059,6 +3079,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -3092,6 +3113,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -3126,6 +3148,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "mos.ts",
     "validate.ts"
    ],
@@ -3161,6 +3184,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -3193,6 +3217,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -3269,7 +3294,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useVoipTrunks.ts"

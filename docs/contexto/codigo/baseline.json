@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "48a60a2d695b11ad8ae86e79247f6c7e0cedf990",
+  "commit": "a3a8463a924e09aa17593a044e3832d6a1798f9d",
   "branch": "main",
-  "data_commit": "2026-11-24T01:47:46-03:00",
+  "data_commit": "2026-11-24T01:59:42-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a3a8463",
+    "data": "2026-11-24",
+    "assunto": "fix: onda 3 da E050 - erro interno generico em 26 edges (#232)"
+   },
    {
     "sha": "48a60a2",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "8e86908",
     "data": "2026-11-23",
     "assunto": "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)"
-   },
-   {
-    "sha": "1dcca43",
-    "data": "2026-11-23",
-    "assunto": "fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)"
    }
   ],
-  "arquivos_mudados_7d": 1074,
+  "arquivos_mudados_7d": 1081,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -192,8 +192,8 @@
     "mudancas": 10
    },
    {
-    "pasta": "docs/audits/pendencias-2026-07.md",
-    "mudancas": 8
+    "pasta": "supabase/functions/chatbot-respond",
+    "mudancas": 9
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -238,6 +238,10 @@
     "mudancas": 6
    },
    {
+    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "mudancas": 6
+   },
+   {
     "arquivo": "deno.lock",
     "mudancas": 5
    },
@@ -254,11 +258,19 @@
     "mudancas": 5
    },
    {
-    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "arquivo": "supabase/functions/chatbot-respond/index.ts",
     "mudancas": 5
    },
    {
     "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
+    "mudancas": 5
+   },
+   {
+    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
+    "mudancas": 5
+   },
+   {
+    "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 5
    },
    {
@@ -284,24 +296,12 @@
    {
     "arquivo": "src/hooks/useQueueMetrics.ts",
     "mudancas": 4
-   },
-   {
-    "arquivo": "src/pages/AgentRanking.tsx",
-    "mudancas": 4
-   },
-   {
-    "arquivo": "src/pages/PhoneDialer.tsx",
-    "mudancas": 4
-   },
-   {
-    "arquivo": "supabase/functions/auto-scorecard/index.ts",
-    "mudancas": 4
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 210
+    "commits": 211
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1716,
   "arquivos_codigo": 1314,
-  "linhas_codigo": 176864,
+  "linhas_codigo": 176804,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 202,
-   "linhas": 22507
+   "linhas": 22447
   },
   "tailwind.config.ts": {
    "arquivos": 1,
