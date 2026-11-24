@@ -1015,6 +1015,7 @@
    "src/components/ui/scroll-area.tsx",
    "src/components/ui/select.tsx",
    "src/components/ui/tabs.tsx",
+   "src/hooks/useDNCCompliance.ts",
    "src/hooks/usePredictiveDialer.ts",
    "src/lib/safe-date.ts"
   ],
@@ -4639,6 +4640,9 @@
   ],
   "supabase/functions/_shared/numeric-schemas_test.ts": [
    "supabase/functions/_shared/numeric-schemas.ts"
+  ],
+  "supabase/functions/_shared/queue-metrics_test.ts": [
+   "supabase/functions/_shared/queue-metrics.ts"
   ],
   "supabase/functions/_shared/validator.ts": [
    "supabase/functions/_shared/cors.ts",

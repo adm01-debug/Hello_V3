@@ -37,6 +37,8 @@
   "supabase/functions/_shared/numeric-schemas.ts",
   "supabase/functions/_shared/numeric-schemas_test.ts",
   "supabase/functions/_shared/observability.ts",
+  "supabase/functions/_shared/queue-metrics.ts",
+  "supabase/functions/_shared/queue-metrics_test.ts",
   "supabase/functions/_shared/rate-limit.ts",
   "supabase/functions/_shared/resilience.ts",
   "supabase/functions/_shared/validate.ts",

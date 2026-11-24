@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "5eb96955ac99e51fb745f8ee78c94b64c4a5710b",
+  "sha": "c1e7859369532d89263d194e4287ea4682332ce1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 00:45 UTC",
-  "files_total": 1729,
-  "code_files": 1526,
-  "code_lines": 189605
+  "generated_at": "2026-11-24 00:47 UTC",
+  "files_total": 1733,
+  "code_files": 1530,
+  "code_lines": 190039
  },
  "version": "1.3.2",
- "facts_hash": "cc4027507fd2acd7",
+ "facts_hash": "7928c64066f80e2c",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 635,
+   ".ts": 639,
    ".tsx": 612,
    ".sql": 245,
    ".mjs": 27,
@@ -28424,19 +28424,25 @@
     "component": "Dialer",
     "tables_transitive": [
      "call_quality_metrics",
+     "calling_hours_config",
+     "compliance_settings",
      "contact_interactions",
      "contacts",
      "dialer_campaigns",
      "dialer_queue",
+     "dnc_list",
      "voip_quality_alerts"
     ],
     "invokes_transitive": [
      "sip-config"
     ],
     "rpc_transitive": [
+     "add_to_dnc",
+     "check_calling_hours",
+     "check_dnc",
      "record_trunk_usage"
     ],
-    "deps_count": 38
+    "deps_count": 39
    },
    {
     "path": "",
@@ -33328,7 +33334,7 @@
   {
    "module": "src/components",
    "files": 355,
-   "lines": 42591,
+   "lines": 42595,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33585,7 +33591,7 @@
   {
    "module": "src/hooks",
    "files": 354,
-   "lines": 46184,
+   "lines": 46308,
    "tables": [
     "accounts",
     "active_sessions",
@@ -33889,8 +33895,8 @@
   },
   {
    "module": "src/lib",
-   "files": 172,
-   "lines": 21244,
+   "files": 174,
+   "lines": 21419,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -34288,8 +34294,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 192,
-   "lines": 21911,
+   "files": 194,
+   "lines": 22042,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34392,6 +34398,7 @@
     "mos.ts: MOS_THRESHOLDS, MosLabel, classifyMos, isPoorMos",
     "numeric-schemas.ts: finiteNumber, finiteInt, nonNegativeInt, positiveInt, percent, latitude",
     "observability.ts: logInfo, logError, logRequest, withRequestLog, trackMetric, logStructuredError",
+    "queue-metrics.ts: QueueCallSample, serviceLevel, abandonmentRate, averageWaitTime",
     "rate-limit.ts: RateLimitResult, RateLimitOptions, checkRateLimitDB, getClientIp",
     "resilience.ts: CircuitState, CircuitBreakerOptions, getCircuitState, resetCircuit, _resetAllCircuits, CircuitOpenError",
     "validate.ts: string, uuid, number, boolean, optional, array",
@@ -34418,8 +34425,7 @@
     "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
     "index.ts: ForecastDay, HistoryDay, buildHistory, forecastNextDays",
     "index.ts: CapacityRecommendation, CapacityResult, buildRecommendations",
-    "index.ts: VoiceQAResponse",
-    "index.ts: ExecKpis, ExecutiveNarrativeResponse"
+    "index.ts: VoiceQAResponse"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -34453,6 +34459,8 @@
     "supabase/functions/_shared/numeric-schemas.ts",
     "supabase/functions/_shared/numeric-schemas_test.ts",
     "supabase/functions/_shared/observability.ts",
+    "supabase/functions/_shared/queue-metrics.ts",
+    "supabase/functions/_shared/queue-metrics_test.ts",
     "supabase/functions/_shared/rate-limit.ts",
     "supabase/functions/_shared/resilience.ts",
     "supabase/functions/_shared/validate.ts",
@@ -34512,9 +34520,7 @@
     "supabase/functions/database-cleanup/index.ts",
     "supabase/functions/detect-churn-risk/index.ts",
     "supabase/functions/detect-key-moments/index.ts",
-    "supabase/functions/dialer-pacing-tick/index.ts",
-    "supabase/functions/elevenlabs-conversation-token/index.ts",
-    "supabase/functions/email-inbound/index.ts"
+    "supabase/functions/dialer-pacing-tick/index.ts"
    ]
   },
   {
@@ -40858,6 +40864,10 @@
    },
    {
     "file": "src/hooks/usePredictiveDialer.ts",
+    "msg": "Contato ${queueItem.name || queueItem.phone} pulado"
+   },
+   {
+    "file": "src/hooks/usePredictiveDialer.ts",
     "msg": "Erro ao adicionar à fila"
    },
    {
@@ -42577,6 +42587,10 @@
     "text": "* Classifica um MOS. O antigo limite de 3,6 para \"mediano\" foi dobrado em"
    },
    {
+    "file": "src/lib/metrics/queue.ts",
+    "text": "* Espera media em segundos, apenas sobre chamadas com espera mensuravel. */"
+   },
+   {
     "file": "src/lib/validation/schemas.ts",
     "text": "* Zod schemas for runtime validation of API responses and form inputs."
    },
@@ -42639,6 +42653,10 @@
    {
     "file": "supabase/functions/_shared/numeric-schemas_test.ts",
     "text": "e garante que apenas números finitos sejam aceitos."
+   },
+   {
+    "file": "supabase/functions/_shared/queue-metrics.ts",
+    "text": "* Espera media em segundos, apenas sobre chamadas com espera mensuravel. */"
    },
    {
     "file": "supabase/functions/_shared/rate-limit.ts",
@@ -52957,6 +52975,12 @@
    {
     "file": "src/hooks/predictive-dialer/api.ts",
     "field": "status",
+    "value": "skipped",
+    "kind": "escreve"
+   },
+   {
+    "file": "src/hooks/predictive-dialer/api.ts",
+    "field": "status",
     "value": "pending",
     "kind": "filtra"
    },
@@ -63145,6 +63169,18 @@
     "name": "realtime subscription callbacks fire fetchers"
    },
    {
+    "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+    "name": "pula o contato e grava o motivo quando o compliance bloqueia"
+   },
+   {
+    "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+    "name": "disca normalmente quando o compliance aprova e mantem a tentativa"
+   },
+   {
+    "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+    "name": "falha do preDialCheck nao bloqueia a campanha (fail-open ate a etapa 035)"
+   },
+   {
     "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
     "name": "Predictive Dialer Logic"
    },
@@ -69019,6 +69055,90 @@
    {
     "file": "src/lib/__tests__/queue-audio.test.ts",
     "name": "formata valores conhecidos"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "serviceLevel"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "devolve null para lista vazia"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "conta atendida dentro do limiar como 100%"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "limiar e inclusivo"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "abandonada entra no denominador e nao conta como sucesso"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "todas abandonadas = 0, nao null"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "ignora chamadas sem espera mensuravel"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "devolve null quando nenhuma chamada tem espera mensuravel"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "rejeita limiar invalido"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "abandonmentRate"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "devolve null para lista vazia (divisao por zero)"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "devolve null quando so ha chamadas sem desfecho"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "1 de 4 = 25%"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "todas abandonadas = 100"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "todas atendidas = 0, nao null"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "averageWaitTime"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "devolve null para lista vazia"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "media simples"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "ignora espera nula sem dividir pelo total"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "devolve null quando ninguem tem espera medida"
+   },
+   {
+    "file": "src/lib/__tests__/queue-metrics.test.ts",
+    "name": "espera zero e medida valida"
    },
    {
     "file": "src/lib/__tests__/reportCsv.test.ts",
@@ -83279,6 +83399,10 @@
       "escreve:src/hooks/useTalkRatio.ts",
       "escreve:src/lib/talkRatio.ts"
      ],
+     "skipped": [
+      "escreve:src/hooks/predictive-dialer/api.ts",
+      "escreve:supabase/functions/auto-scorecard/index.ts"
+     ],
      "number": [
       "compara:src/lib/security-alerts-webhook-history.ts",
       "compara:supabase/functions/_shared/resilience.ts"
@@ -83325,9 +83449,6 @@
      "outage": [
       "compara:src/pages/admin/SloDashboard.tsx",
       "compara:supabase/functions/health-check/index.ts"
-     ],
-     "skipped": [
-      "escreve:supabase/functions/auto-scorecard/index.ts"
      ],
      "created": [
       "escreve:supabase/functions/auto-scorecard/index.ts"
@@ -89851,6 +89972,14 @@
    },
    {
     "kind": "status",
+    "msg": "valor `skipped` para `status` usado no código não existe em nenhum enum do banco/TS",
+    "where": [
+     "escreve:src/hooks/predictive-dialer/api.ts",
+     "escreve:supabase/functions/auto-scorecard/index.ts"
+    ]
+   },
+   {
+    "kind": "status",
     "msg": "valor `number` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/lib/security-alerts-webhook-history.ts",
@@ -89899,13 +90028,6 @@
     "msg": "valor `sent` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/pages/VirtualFax.tsx"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `skipped` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:supabase/functions/auto-scorecard/index.ts"
     ]
    },
    {
@@ -94495,7 +94617,7 @@
   },
   "src/components/dialer/PredictiveDialerPanel.tsx": {
    "path": "src/components/dialer/PredictiveDialerPanel.tsx",
-   "lines": 211,
+   "lines": 215,
    "exports": [
     "function PredictiveDialerPanel"
    ],
@@ -101939,14 +102061,16 @@
   },
   "src/hooks/usePredictiveDialer.ts": {
    "path": "src/hooks/usePredictiveDialer.ts",
-   "lines": 307,
+   "lines": 343,
    "exports": [
+    "type PreDialCheck",
     "const usePredictiveDialer"
    ],
    "channels": [
     "dialer-changes"
    ],
    "errors": [
+    "Contato ${queueItem.name || queueItem.phone} pulado",
     "Erro ao adicionar à fila",
     "Erro ao carregar campanhas",
     "Erro ao criar campanha",
@@ -107195,7 +107319,7 @@
   },
   "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx": {
    "path": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-   "lines": 469,
+   "lines": 542,
    "is_test": true,
    "temporal": [
     "// Start dialing -> effect schedules setTimeout(dial, 2000)"
@@ -107217,7 +107341,10 @@
     "auto-dial loop dials next contact then finishes queue",
     "auto-dial loop with empty queue pauses campaign",
     "getNextContact error branch returns null",
-    "realtime subscription callbacks fire fetchers"
+    "realtime subscription callbacks fire fetchers",
+    "pula o contato e grava o motivo quando o compliance bloqueia",
+    "disca normalmente quando o compliance aprova e mantem a tentativa",
+    "falha do preDialCheck nao bloqueia a campanha (fail-open ate a etapa 035)"
    ]
   },
   "src/hooks/__tests__/usePredictiveDialer.test.ts": {
@@ -108727,7 +108854,7 @@
   },
   "src/hooks/predictive-dialer/api.ts": {
    "path": "src/hooks/predictive-dialer/api.ts",
-   "lines": 142,
+   "lines": 157,
    "exports": [
     "function apiFetchCampaigns",
     "function apiFetchQueue",
@@ -108738,6 +108865,7 @@
     "function apiPauseCampaign",
     "function apiGetNextContact",
     "function apiMarkDialing",
+    "function apiMarkSkipped",
     "function apiUpdateQueueItem",
     "function apiUpdateCampaignStats",
     "function apiDeleteCampaign",
@@ -108775,6 +108903,10 @@
     {
      "table": "dialer_queue",
      "op": "select"
+    },
+    {
+     "table": "dialer_queue",
+     "op": "update"
     },
     {
      "table": "dialer_queue",
@@ -108826,6 +108958,11 @@
     {
      "field": "status",
      "value": "dialing",
+     "kind": "escreve"
+    },
+    {
+     "field": "status",
+     "value": "skipped",
      "kind": "escreve"
     },
     {
@@ -111499,6 +111636,34 @@
     "formata valores conhecidos"
    ]
   },
+  "src/lib/__tests__/queue-metrics.test.ts": {
+   "path": "src/lib/__tests__/queue-metrics.test.ts",
+   "lines": 103,
+   "is_test": true,
+   "tests": [
+    "serviceLevel",
+    "devolve null para lista vazia",
+    "conta atendida dentro do limiar como 100%",
+    "limiar e inclusivo",
+    "abandonada entra no denominador e nao conta como sucesso",
+    "todas abandonadas = 0, nao null",
+    "ignora chamadas sem espera mensuravel",
+    "devolve null quando nenhuma chamada tem espera mensuravel",
+    "rejeita limiar invalido",
+    "abandonmentRate",
+    "devolve null para lista vazia (divisao por zero)",
+    "devolve null quando so ha chamadas sem desfecho",
+    "1 de 4 = 25%",
+    "todas abandonadas = 100",
+    "todas atendidas = 0, nao null",
+    "averageWaitTime",
+    "devolve null para lista vazia",
+    "media simples",
+    "ignora espera nula sem dividir pelo total",
+    "devolve null quando ninguem tem espera medida",
+    "espera zero e medida valida"
+   ]
+  },
   "src/lib/__tests__/reportCsv.test.ts": {
    "path": "src/lib/__tests__/reportCsv.test.ts",
    "lines": 31,
@@ -112730,6 +112895,19 @@
     "* Classifica um MOS. O antigo limite de 3,6 para \"mediano\" foi dobrado em"
    ],
    "doc": "Fonte única dos limiares de MOS (escala 1–5, E-Model). Antes havia 3,5 em quatro arquivos e 3,6 em dois: a mesma chamada de 3,55 era \"degradada\" no mapa, \"aceitável\" no detector de tendência e \"recuperada\" na simulação. Agora tudo passa por aqui."
+  },
+  "src/lib/metrics/queue.ts": {
+   "path": "src/lib/metrics/queue.ts",
+   "lines": 72,
+   "exports": [
+    "interface QueueCallSample",
+    "function serviceLevel",
+    "function abandonmentRate",
+    "function averageWaitTime"
+   ],
+   "rule_comments": [
+    "* Espera media em segundos, apenas sobre chamadas com espera mensuravel. */"
+   ]
   },
   "src/lib/metrics/__tests__/mos.test.ts": {
    "path": "src/lib/metrics/__tests__/mos.test.ts",
@@ -116644,6 +116822,24 @@
     "function logStructuredError"
    ],
    "doc": "Observabilidade estruturada para edge functions (JSON em 1 linha). Logs parseáveis por ferramentas de observabilidade (Supabase Logs, Logflare)."
+  },
+  "supabase/functions/_shared/queue-metrics.ts": {
+   "path": "supabase/functions/_shared/queue-metrics.ts",
+   "lines": 62,
+   "exports": [
+    "interface QueueCallSample",
+    "function serviceLevel",
+    "function abandonmentRate",
+    "function averageWaitTime"
+   ],
+   "rule_comments": [
+    "* Espera media em segundos, apenas sobre chamadas com espera mensuravel. */"
+   ],
+   "doc": "Metricas de fila — copia consciente de `src/lib/metrics/queue.ts` para uso nas Edge Functions (Deno nao importa de `src/`). As duas copias tem os mesmos testes e precisam mudar juntas; divergencia entre elas e bug. Todas as funcoes sao puras e devolvem `null` quando nao existe amostra — `0` e uma me …"
+  },
+  "supabase/functions/_shared/queue-metrics_test.ts": {
+   "path": "supabase/functions/_shared/queue-metrics_test.ts",
+   "lines": 69
   },
   "supabase/functions/_shared/rate-limit.ts": {
    "path": "supabase/functions/_shared/rate-limit.ts",
@@ -124690,10 +124886,36 @@
   }
  },
  "git": {
-  "sha": "5eb96955ac99e51fb745f8ee78c94b64c4a5710b",
+  "sha": "c1e7859369532d89263d194e4287ea4682332ce1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "c1e7859",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/lib/__tests__/queue-metrics.test.ts",
+     "src/lib/metrics/queue.ts",
+     "supabase/functions/_shared/queue-metrics.ts",
+     "supabase/functions/_shared/queue-metrics_test.ts"
+    ]
+   },
+   {
+    "sha": "6f3a7bf",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "feat: discador preditivo passa pela barreira de DNC e horario legal (#203)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/dialer/PredictiveDialerPanel.tsx",
+     "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+     "src/hooks/predictive-dialer/api.ts",
+     "src/hooks/usePredictiveDialer.ts"
+    ]
+   },
    {
     "sha": "5eb9695",
     "date": "2026-11-23",
@@ -125058,30 +125280,6 @@
      "supabase/functions/voip-executive-summary/__tests__/index.test.ts",
      "supabase/functions/voip-executive-summary/index.ts"
     ]
-   },
-   {
-    "sha": "61a323b",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: remove painel decorativo e corrige relatório de segurança (#175)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/dashboard/PerformanceNarrative.tsx",
-     "src/lib/security-report-data.ts",
-     "src/pages/Index.tsx",
-     "src/pages/SecurityReport.tsx"
-    ]
-   },
-   {
-    "sha": "fe57120",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: status sem medicao em vez de 100%% e erro tratado (E092-E093) (#173)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/pages/Status.tsx",
-     "src/pages/__tests__/Status.test.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -125146,23 +125344,23 @@
     2
    ],
    [
-    "src/components/calls/UnifiedSoftphone.tsx",
+    "src/lib/__tests__/queue-metrics.test.ts",
     1
    ],
    [
-    "src/contexts/CallContext.tsx",
+    "src/lib/metrics/queue.ts",
     1
    ],
    [
-    "src/hooks/__tests__/callLifecycle-integration.test.tsx",
+    "supabase/functions/_shared/queue-metrics.ts",
     1
    ],
    [
-    "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
+    "supabase/functions/_shared/queue-metrics_test.ts",
     1
    ],
    [
-    "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
+    "src/components/dialer/PredictiveDialerPanel.tsx",
     1
    ]
   ]

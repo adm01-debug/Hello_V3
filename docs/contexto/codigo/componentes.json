@@ -2114,9 +2114,10 @@
     "PredictiveDialerPanel"
    ],
    "export_default": null,
-   "linhas": 211,
+   "linhas": 215,
    "dominio": "components/dialer",
    "hooks_locais": [
+    "useDNCCompliance",
     "usePredictiveDialer"
    ],
    "tabelas": [],

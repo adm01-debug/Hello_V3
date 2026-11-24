@@ -2171,10 +2171,11 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 4,
+   "usado_por": 5,
    "usado_por_arquivos": [
     "src/components/compliance/ComplianceSettings.tsx",
     "src/components/compliance/DNCListManager.tsx",
+    "src/components/dialer/PredictiveDialerPanel.tsx",
     "src/contexts/CallContext.tsx",
     "src/pages/PhoneDialer.tsx"
    ],
@@ -3189,7 +3190,7 @@
    "hooks_exportados": [
     "usePredictiveDialer"
    ],
-   "linhas": 307,
+   "linhas": 343,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],

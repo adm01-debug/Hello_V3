@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 915,
- "arestas": 3525,
+ "nos": 918,
+ "arestas": 3527,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -205,6 +205,7 @@
   "src/lib/audit/index.ts",
   "src/lib/dialer/predictive-pace.ts",
   "src/lib/meeting-summary-utils.ts",
+  "src/lib/metrics/queue.ts",
   "src/lib/mfa/index.ts",
   "src/lib/notifications/index.ts",
   "src/lib/password/index.ts",

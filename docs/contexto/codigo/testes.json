@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 366,
+ "total": 367,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 349
+  "unit": 350
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 342
+   "arquivos": 343
   },
   {
    "padrao": "e2e/",
@@ -1259,11 +1259,11 @@
   {
    "arquivo": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 469,
+   "linhas": 542,
    "testa": [
     "src/hooks/usePredictiveDialer.ts"
    ],
-   "casos": 16
+   "casos": 19
   },
   {
    "arquivo": "src/hooks/__tests__/usePredictiveDialer.test.ts",
@@ -2227,6 +2227,15 @@
     "src/lib/queue-audio.ts"
    ],
    "casos": 16
+  },
+  {
+   "arquivo": "src/lib/__tests__/queue-metrics.test.ts",
+   "tipo": "unit",
+   "linhas": 103,
+   "testa": [
+    "src/lib/metrics/queue.ts"
+   ],
+   "casos": 18
   },
   {
    "arquivo": "src/lib/__tests__/reportCsv.test.ts",
@@ -3483,6 +3492,7 @@
   "src/lib/logger.ts": 8,
   "src/lib/meeting-summary-utils.ts": 1,
   "src/lib/metrics/mos.ts": 1,
+  "src/lib/metrics/queue.ts": 1,
   "src/lib/mfa/index.ts": 3,
   "src/lib/navigation-progress-store.ts": 1,
   "src/lib/notifications/index.ts": 4,

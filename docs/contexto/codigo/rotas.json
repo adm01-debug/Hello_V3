@@ -1832,11 +1832,15 @@
    "hooks": [
     "useCallback",
     "useContacts",
+    "useDNCCompliance",
     "useEffect",
     "useMemo",
+    "useMutation",
     "usePageTitle",
     "usePredictiveDialer",
     "useQualityTrendAnalyzer",
+    "useQuery",
+    "useQueryClient",
     "useRef",
     "useSipCall",
     "useState",
@@ -1847,6 +1851,7 @@
    ],
    "hooks_locais": [
     "useContacts",
+    "useDNCCompliance",
     "usePageTitle",
     "usePredictiveDialer",
     "useQualityTrendAnalyzer",
@@ -1857,13 +1862,19 @@
    ],
    "tabelas": [
     "call_quality_metrics",
+    "calling_hours_config",
+    "compliance_settings",
     "contact_interactions",
     "contacts",
     "dialer_campaigns",
     "dialer_queue",
+    "dnc_list",
     "voip_quality_alerts"
    ],
    "rpcs": [
+    "add_to_dnc",
+    "check_calling_hours",
+    "check_dnc",
     "record_trunk_usage"
    ],
    "edges": [
@@ -1876,7 +1887,7 @@
    "papeis": [
     "button"
    ],
-   "arquivos_puxados": 39
+   "arquivos_puxados": 40
   },
   {
    "protegida": false,

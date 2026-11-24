@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "5eb96955ac99e51fb745f8ee78c94b64c4a5710b",
+  "commit": "c1e7859369532d89263d194e4287ea4682332ce1",
   "branch": "main",
-  "data_commit": "2026-11-23T21:45:21-03:00",
+  "data_commit": "2026-11-23T21:45:30-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c1e7859",
+    "data": "2026-11-23",
+    "assunto": "feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)"
+   },
+   {
+    "sha": "6f3a7bf",
+    "data": "2026-11-23",
+    "assunto": "feat: discador preditivo passa pela barreira de DNC e horario legal (#203)"
+   },
    {
     "sha": "5eb9695",
     "data": "2026-11-23",
@@ -121,19 +131,9 @@
     "sha": "74c525c",
     "data": "2026-11-23",
     "assunto": "fix: envia version nos updates e liga o lock otimista (E110) (#180)"
-   },
-   {
-    "sha": "cdae222",
-    "data": "2026-11-23",
-    "assunto": "fix: escolhe a politica SLA mais especifica sem depender da ordem do banco (E109) (#179)"
-   },
-   {
-    "sha": "3407137",
-    "data": "2026-11-23",
-    "assunto": "fix: limita a nota da IA ao maximo do criterio no score-call (E106) (#178)"
    }
   ],
-  "arquivos_mudados_7d": 985,
+  "arquivos_mudados_7d": 992,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 33
+    "mudancas": 35
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 33
+    "mudancas": 34
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
@@ -157,11 +157,11 @@
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 26
+    "mudancas": 27
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 25
+    "mudancas": 27
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 33
+    "mudancas": 35
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 181
+    "commits": 183
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1682,
-  "arquivos_codigo": 1280,
-  "linhas_codigo": 173593,
+  "arquivos_total": 1686,
+  "arquivos_codigo": 1284,
+  "linhas_codigo": 174027,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 366,
+  "testes": 367,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 355,
-   "linhas": 42591
+   "linhas": 42595
   },
   "src/contexts": {
    "arquivos": 4,
@@ -492,15 +492,15 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 46184
+   "linhas": 46308
   },
   "src/integrations": {
    "arquivos": 3,
    "linhas": 7847
   },
   "src/lib": {
-   "arquivos": 172,
-   "linhas": 21244
+   "arquivos": 174,
+   "linhas": 21419
   },
   "src/main.tsx": {
    "arquivos": 1,
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 192,
-   "linhas": 21911
+   "arquivos": 194,
+   "linhas": 22042
   },
   "tailwind.config.ts": {
    "arquivos": 1,

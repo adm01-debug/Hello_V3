@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `5eb96955ac99e51fb745f8ee78c94b64c4a5710b` (2026-11-23T21:45:21-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c1e7859369532d89263d194e4287ea4682332ce1` (2026-11-23T21:45:30-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1247), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1251), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1682 |
-| arquivos_codigo | 1280 |
-| linhas_codigo | 173593 |
+| arquivos_total | 1686 |
+| arquivos_codigo | 1284 |
+| linhas_codigo | 174027 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 169 |
 | migrations | 242 |
 | cron_jobs | 11 |
-| testes | 366 |
+| testes | 367 |
 | workflows | 3 |
 | scripts | 34 |
 | docs_md | 120 |
@@ -57,8 +57,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - telas: src/pages (105)
 - componentes: src/components (317), src/pages (126), src/contexts (4)
 - hooks: src/hooks (174), src/components (12), src/contexts (4)
-- servicos_logica: src/lib (85), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (342), e2e/ (7), tests/ (6)
+- servicos_logica: src/lib (86), src/integrations (3), scripts/regras_negocio (2)
+- testes: co-localizado (__tests__) (343), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (6), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -78,7 +78,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/contacts | 0 | 0 | 13 | 6 | 3 | 6 |
 | components/conversation-intelligence | 0 | 0 | 7 | 4 | 2 | 5 |
 | components/dashboard | 0 | 0 | 12 | 11 | 1 | 5 |
-| components/dialer | 0 | 0 | 16 | 17 | 1 | 8 |
+| components/dialer | 0 | 0 | 16 | 18 | 1 | 11 |
 | components/executive | 0 | 0 | 17 | 26 | 6 | 21 |
 | components/gamification | 0 | 0 | 7 | 3 | 0 | 5 |
 | components/layout | 0 | 0 | 9 | 223 | 68 | 146 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9910 nós · 25497 arestas · 763 comunidades · grafo do commit `5eb96955`
-- comunidades maiores: card.tsx (274), react (181), usePageTitle.ts (163), traceHeaders (158), usePageTitle (157), vitest (148), sonner (147), lucide-react (140), ref_https (120), safe-date.ts (119), client.ts (110), cn (108)
+- 9932 nós · 25536 arestas · 766 comunidades · grafo do commit `c1e78593`
+- comunidades maiores: lucide-react (248), usePageTitle (173), react (168), traceHeaders (161), cn (160), client.ts (151), vitest (129), ref_https (123), safeFormatDistanceToNow (115), badge.tsx (108), useAuthContext (106), validate.ts (104)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (33)
+- docs/qa/05-PROGRESSO.md (35)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
@@ -429,6 +429,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `c1e7859` feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)
+- 2026-11-23 `6f3a7bf` feat: discador preditivo passa pela barreira de DNC e horario legal (#203)
 - 2026-11-23 `5eb9695` feat: barreira de DNC e horario legal dentro de initiateCall (#202)
 - 2026-11-23 `adaa1e7` fix: webauthn-authenticate valida o contador do autenticador e ganha rate limit (#201)
 - 2026-11-23 `581cd3a` fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)
@@ -442,8 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `22cb928` fix: request-password-reset responde o mesmo corpo nos quatro caminhos (E031) (#192)
 - 2026-11-23 `a5e32de` fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)
 - 2026-11-23 `32923f9` fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)
-- 2026-11-23 `5e77404` fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)
-- 2026-11-23 `fa2c38d` fix: notify-blocked-ip exige sessao autenticada, valida corpo e escapa HTML (E010) (#188)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5eb96955ac` · branch `main` · 2026-11-24 00:45 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c1e7859369` · branch `main` · 2026-11-24 00:47 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -912,7 +912,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `ringing` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +5 |
 | `status` | `scheduled` | compara, escreve | `src/pages/Scheduling.tsx`<br>`src/pages/VideoConference.tsx` |
 | `status` | `sent` | compara | `src/pages/VirtualFax.tsx` |
-| `status` | `skipped` | escreve | `supabase/functions/auto-scorecard/index.ts` |
+| `status` | `skipped` | escreve | `src/hooks/predictive-dialer/api.ts`<br>`supabase/functions/auto-scorecard/index.ts` |
 | `status` | `soon` | compara, escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `submitted` | compara, escreve | `src/pages/Scorecards.tsx`<br>`supabase/functions/auto-scorecard/index.ts` |
 | `status` | `success` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/admin/ldap/types.ts`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/lib/bitrix/sync-log.ts`<br>`src/pages/VerifyEmail.tsx`<br>… +2 |
@@ -2361,6 +2361,7 @@ _nenhum item encontrado_
 | callSessionId ausente | `src/hooks/useMeetingSummary.ts` |
 | Chamada bloqueada por compliance | `src/hooks/useMultiChannelCall.ts` |
 | Erro ao adicionar dispositivo | `src/hooks/useMultiDeviceRing.ts` |
+| Contato ${queueItem.name \|\| queueItem.phone} pulado | `src/hooks/usePredictiveDialer.ts` |
 | Erro ao adicionar à fila | `src/hooks/usePredictiveDialer.ts` |
 | Erro ao carregar campanhas | `src/hooks/usePredictiveDialer.ts` |
 | Erro ao criar campanha | `src/hooks/usePredictiveDialer.ts` |
@@ -2412,8 +2413,7 @@ _nenhum item encontrado_
 | Erro ao concluir callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao remover callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao atualizar a avaliação | `src/hooks/useScorecards.ts` |
-| Erro ao criar o modelo | `src/hooks/useScorecards.ts` |
-| … +252 linhas — lista completa em `context.json` | |
+| … +253 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2462,7 +2462,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4176 testes em 356 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4200 testes em 357 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2510,6 +2510,8 @@ _nenhum item encontrado_
 | `src/lib/__tests__/blf.test.ts` | 21 | blf: helpers puros · safeText normaliza tipos inesperados · agentKey ignora acentos, caixa e espaços múltiplos · maskPhone preserva no máximo os 4 últimos dígitos … |
 | `src/lib/__tests__/error-tracking.test.ts` | 21 | Error Tracking Module · Module exports · exports initErrorTracking function · exports getErrorReports function … |
 | `src/lib/__tests__/logger.test.ts` | 21 | Logger Module · Basic logging methods · logger.debug calls console.debug · logger.info calls console.info … |
+| `src/lib/__tests__/queue-metrics.test.ts` | 21 | serviceLevel · devolve null para lista vazia · conta atendida dentro do limiar como 100% · limiar e inclusivo … |
+| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 20 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/__tests__/rls/rls-policies.test.ts` | 19 | RLS — call_sessions · agent vê apenas as próprias sessões · supervisor lê todas as sessões da equipe · admin tem acesso total (delete incluído) … |
 | `src/lib/__tests__/dialer-favorites-and-alert.test.ts` | 19 | dialer-favorites-order — simulação de centenas de cenários · preserva o conjunto de itens em qualquer movimento (PBT) · sempre gera posições densas 0..n-1 (PBT) · é imutável: nunca altera o array original … |
 | `src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts` | 19 | webauthn-utils (coverage) · base64 helpers · round-trips a buffer through base64url · accepts a plain ArrayBuffer input … |
@@ -2517,7 +2519,6 @@ _nenhum item encontrado_
 | `src/lib/__tests__/security-alerts-presets.test.ts` | 18 | security-alerts-presets · loadPresets · retorna [] quando storage vazio · retorna [] quando JSON inválido … |
 | `src/hooks/__tests__/useBitrix.coverage.test.tsx` | 17 | useBitrix · checkConfiguration returns true when configured · callBitrixApi returns null when configured === false · getContacts / getLeads / getDeals populate state … |
 | `src/hooks/__tests__/useContactAlerts.coverage.test.tsx` | 17 | useContactAlerts · fetches alerts on mount and computes unread count · fetchAlerts with unreadOnly applies eq filter · fetchAlerts handles error and returns empty … |
-| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 17 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx` | 17 | useVoicePrints · loads voice prints list · enrolls successfully · enroll error path triggers toast.error … |
 | `src/lib/__tests__/softphone-utils.test.ts` | 17 | formatCallDuration · formats 0 seconds · formats under a minute · formats exact minutes … |
 | `src/hooks/__tests__/useLoginLockout.test.ts` | 16 | useLoginLockout · check_login_lockout RPC · returns unlocked for unknown email · returns locked after 5 failed attempts … |
@@ -2765,8 +2766,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
 | `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
-| `src/lib/__tests__/pendingCallWrites.test.ts` | 4 | pendingCallWrites · enfileira e retira em ordem FIFO · descarta o mais antigo quando chega a 20 itens · clear() esvazia a fila |
-| … +56 linhas — lista completa em `context.json` | | |
+| … +57 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3000,6 +3000,7 @@ _nenhum item encontrado_
 | * Retorna true se a chamada deve ser bloqueada (circuito aberto). */ | `src/lib/bitrix/circuit-breaker.ts` |
 | property-based testing (Onda D4). Deve espelhar 1:1 a lógica em produção. | `src/lib/dialer/predictive-pace.ts` |
 | * Classifica um MOS. O antigo limite de 3,6 para "mediano" foi dobrado em | `src/lib/metrics/mos.ts` |
+| * Espera media em segundos, apenas sobre chamadas com espera mensuravel. */ | `src/lib/metrics/queue.ts` |
 | * Zod schemas for runtime validation of API responses and form inputs. | `src/lib/validation/schemas.ts` |
 | Extraído do componente para a camada central de validação. | `src/lib/validation/voip-trunk.ts` |
 | Gesto do usuário: momento válido para pedir permissão de notificação. | `src/pages/PhoneDialer.tsx` |
@@ -3016,6 +3017,7 @@ _nenhum item encontrado_
 | Webhook também não deve lançar | `supabase/functions/_shared/external-payload-schemas_test.ts` |
 | * Classifica um MOS. O antigo limite de 3,6 para "mediano" foi dobrado em | `supabase/functions/_shared/mos.ts` |
 | e garante que apenas números finitos sejam aceitos. | `supabase/functions/_shared/numeric-schemas_test.ts` |
+| * Espera media em segundos, apenas sobre chamadas com espera mensuravel. */ | `supabase/functions/_shared/queue-metrics.ts` |
 | * Check rate limit using persistent DB function. | `supabase/functions/_shared/rate-limit.ts` |
 | * Lightweight input validation helpers for Edge Functions. | `supabase/functions/_shared/validate.ts` |
 | Provides Zod-like schema validation without external dependencies. | `supabase/functions/_shared/validate.ts` |
