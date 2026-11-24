@@ -176,11 +176,11 @@ export default function VoicemailPage() {
                 </div>
                 <div className="flex items-center gap-1">
                   {!msg.is_read && (
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => markRead.mutate(msg.id)}>
+                    <Button aria-label="Marcar como lida" variant="ghost" size="icon" className="h-8 w-8" onClick={() => markRead.mutate(msg.id)}>
                       <Check className="h-4 w-4" />
                     </Button>
                   )}
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => deleteMessage.mutate(msg.id)}>
+                  <Button aria-label="Excluir a mensagem" variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => deleteMessage.mutate(msg.id)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>

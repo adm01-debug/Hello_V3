@@ -51,7 +51,7 @@ export function AgentGoalsGrid({ agents, getGoalsForAgent, onEditGoals }: Props)
                       )}
                     </div>
                   </div>
-                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onEditGoals(goals)}>
+                  <Button aria-label={`Editar as metas de ${agent.name}`} variant="ghost" size="icon" className="h-8 w-8" onClick={() => onEditGoals(goals)}>
                     <Settings2 className="h-4 w-4" />
                   </Button>
                 </div>

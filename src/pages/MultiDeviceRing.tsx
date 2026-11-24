@@ -125,7 +125,7 @@ const MultiDeviceRing = () => {
                         </div>
                       </div>
                       <Switch checked={device.is_enabled} onCheckedChange={(enabled) => toggleDevice.mutate({ id: device.id, enabled })} />
-                      <Button variant="ghost" size="icon" className="text-destructive" onClick={() => deleteDevice.mutate(device.id)}><Trash2 className="h-4 w-4" /></Button>
+                      <Button aria-label="Remover este dispositivo" variant="ghost" size="icon" className="text-destructive" onClick={() => deleteDevice.mutate(device.id)}><Trash2 className="h-4 w-4" /></Button>
                     </div>
                   );
                 })}

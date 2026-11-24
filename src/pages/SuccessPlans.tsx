@@ -49,7 +49,7 @@ export default function SuccessPlans() {
                   <div className="space-y-2">
                     {ms.map((m) => (
                       <div key={m.id} className="flex items-center gap-2 text-sm">
-                        <Button variant="ghost" size="icon" className="h-6 w-6"
+                        <Button aria-label={m.status === 'completed' ? 'Desmarcar o marco como concluído' : 'Marcar o marco como concluído'} aria-pressed={m.status === 'completed'} variant="ghost" size="icon" className="h-6 w-6"
                           onClick={() => toggleMilestone(m.id, m.status === 'completed' ? 'pending' : 'completed')}>
                           {m.status === 'completed'
                             ? <CheckCircle2 className="h-4 w-4 text-emerald-500" />

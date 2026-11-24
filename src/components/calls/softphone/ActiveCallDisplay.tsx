@@ -178,7 +178,7 @@ export function ActiveCallDisplay({
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="icon"
+            <Button aria-label={currentCall.isMuted ? 'Ativar o microfone' : 'Silenciar o microfone'} aria-pressed={currentCall.isMuted} variant="outline" size="icon"
               className={cn("h-11 w-11 rounded-full", currentCall.isMuted && "bg-destructive/10 text-destructive border-destructive/30")}
               onClick={onMuteToggle}
             >
@@ -190,7 +190,7 @@ export function ActiveCallDisplay({
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="icon"
+            <Button aria-label={currentCall.isOnHold ? 'Retomar a chamada' : 'Colocar a chamada em espera'} aria-pressed={currentCall.isOnHold} variant="outline" size="icon"
               className={cn("h-11 w-11 rounded-full", currentCall.isOnHold && "bg-warning/10 text-warning border-warning/30")}
               onClick={onHoldToggle}
             >
@@ -202,7 +202,7 @@ export function ActiveCallDisplay({
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="icon"
+            <Button aria-label={volume > 0 ? 'Desligar o alto-falante' : 'Ligar o alto-falante'} aria-pressed={volume === 0} variant="outline" size="icon"
               className={cn("h-11 w-11 rounded-full", volume === 0 && "bg-muted")}
               onClick={onVolumeToggle}
             >
@@ -214,7 +214,7 @@ export function ActiveCallDisplay({
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="icon"
+            <Button aria-label={currentCall.isRecording ? 'Parar a gravação' : 'Iniciar a gravação'} aria-pressed={currentCall.isRecording} variant="outline" size="icon"
               className={cn("h-11 w-11 rounded-full", currentCall.isRecording && "bg-destructive/10 text-destructive border-destructive/30")}
               onClick={onRecordToggle}
             >
@@ -226,7 +226,7 @@ export function ActiveCallDisplay({
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="icon"
+            <Button aria-label={isListening ? 'Parar o comando de voz' : 'Comando de voz'} aria-pressed={isListening} variant="outline" size="icon"
               className={cn("h-11 w-11 rounded-full", (isListening || isProcessing) && "bg-primary/10 text-primary border-primary/30")}
               onClick={isListening ? stopListening : startListening}
               disabled={isProcessing}
@@ -241,7 +241,7 @@ export function ActiveCallDisplay({
           <>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full text-success border-success/40"
+                <Button aria-label="Confirmar a transferência" variant="outline" size="icon" className="h-11 w-11 rounded-full text-success border-success/40"
                   onClick={() => onCompleteTransfer(currentCall.id)}
                 >
                   <Check className="h-5 w-5" />
@@ -251,7 +251,7 @@ export function ActiveCallDisplay({
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full"
+                <Button aria-label="Cancelar a transferência" variant="outline" size="icon" className="h-11 w-11 rounded-full"
                   onClick={() => onCancelTransfer(currentCall.id)}
                 >
                   <X className="h-5 w-5" />
@@ -263,7 +263,7 @@ export function ActiveCallDisplay({
         ) : (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="outline" size="icon" className="h-11 w-11 rounded-full"
+              <Button aria-label="Transferir a chamada" variant="outline" size="icon" className="h-11 w-11 rounded-full"
                 onClick={() => setTransferDialogOpen(true)}
               >
                 <PhoneForwarded className="h-5 w-5" />
@@ -273,7 +273,7 @@ export function ActiveCallDisplay({
           </Tooltip>
         )}
 
-        <Button variant="destructive" size="icon" className="h-11 w-11 rounded-full" onClick={onEndCall}>
+        <Button aria-label="Encerrar a chamada" variant="destructive" size="icon" className="h-11 w-11 rounded-full" onClick={onEndCall}>
           <PhoneOff className="h-5 w-5" />
         </Button>
       </div>

@@ -153,7 +153,7 @@ export function HolidaysManager() {
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">{h.region_code || '—'}</TableCell>
                     <TableCell>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => deleteHoliday.mutate(h.id)}>
+                      <Button aria-label="Excluir o feriado" variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => deleteHoliday.mutate(h.id)}>
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </TableCell>

@@ -26,7 +26,7 @@ export function PanelHeader({ s }: { s: SupervisorPanelState }) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
+                <Button aria-label={s.soundEnabled ? 'Desativar o som dos alertas' : 'Ativar o som dos alertas'} aria-pressed={s.soundEnabled}
                   variant={s.soundEnabled ? 'default' : 'outline'}
                   size="icon"
                   className="h-8 w-8"

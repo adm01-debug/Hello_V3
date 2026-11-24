@@ -86,7 +86,7 @@ const formatTimer = (seconds: number) => {
                </div>
 
                <div className="flex items-center justify-center gap-4 mt-4">
-                 <Button
+                 <Button aria-label={isMuted ? 'Desativar o mudo' : 'Ativar o mudo'} aria-pressed={isMuted}
                    variant={isMuted ? "destructive" : "outline"}
                    size="icon"
                    onClick={handleToggleMute}
@@ -95,7 +95,7 @@ const formatTimer = (seconds: number) => {
                  >
                    {isMuted ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
                  </Button>
-                 <Button
+                 <Button aria-label={isOnHold ? 'Retomar a chamada' : 'Colocar a chamada em espera'} aria-pressed={isOnHold}
                    variant={isOnHold ? "secondary" : "outline"}
                    size="icon"
                    onClick={handleToggleHold}

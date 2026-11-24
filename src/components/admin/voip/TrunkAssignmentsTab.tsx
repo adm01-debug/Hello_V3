@@ -101,7 +101,7 @@ export function TrunkAssignmentsTab() {
                   </div>
                   <div className="flex items-center gap-2">
                     {a.is_primary && <Badge variant="secondary">Primária</Badge>}
-                    <Button variant="ghost" size="icon" onClick={() => del.mutate(a.id)} disabled={del.isPending}>
+                    <Button aria-label="Remover a atribuição deste ramal" variant="ghost" size="icon" onClick={() => del.mutate(a.id)} disabled={del.isPending}>
                       <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>
                   </div>

@@ -81,7 +81,7 @@ export default function GeoBlocking() {
           ) : (
             <Table><TableHeader><TableRow><TableHead>País</TableHead><TableHead>Código</TableHead><TableHead>Motivo</TableHead><TableHead>Adicionado em</TableHead><TableHead className="w-[80px]">Ações</TableHead></TableRow></TableHeader>
               <TableBody>{allowedCountries.map(c => (
-                <TableRow key={c.id}><TableCell className="font-medium">{c.country_name}</TableCell><TableCell><Badge variant="secondary">{c.country_code}</Badge></TableCell><TableCell className="text-muted-foreground">{c.reason || '-'}</TableCell><TableCell className="text-muted-foreground">{safeToLocaleDateString(c.created_at, 'pt-BR')}</TableCell><TableCell><Button variant="ghost" size="icon" onClick={() => removeCountry.mutate(c.id)} disabled={removeCountry.isPending}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell></TableRow>
+                <TableRow key={c.id}><TableCell className="font-medium">{c.country_name}</TableCell><TableCell><Badge variant="secondary">{c.country_code}</Badge></TableCell><TableCell className="text-muted-foreground">{c.reason || '-'}</TableCell><TableCell className="text-muted-foreground">{safeToLocaleDateString(c.created_at, 'pt-BR')}</TableCell><TableCell><Button aria-label="Remover o bloqueio do país" variant="ghost" size="icon" onClick={() => removeCountry.mutate(c.id)} disabled={removeCountry.isPending}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell></TableRow>
               ))}</TableBody></Table>
           )}
         </CardContent>

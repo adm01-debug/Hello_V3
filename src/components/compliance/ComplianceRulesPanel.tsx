@@ -85,10 +85,10 @@ export function ComplianceRulesPanel() {
                 </div>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <Button size="icon" variant="ghost" title={r.is_active ? 'Desativar' : 'Ativar'} onClick={() => toggleActive({ id: r.id, is_active: !r.is_active })}>
+                <Button aria-label={r.is_active ? 'Desativar a regra' : 'Ativar a regra'} aria-pressed={r.is_active} size="icon" variant="ghost" title={r.is_active ? 'Desativar' : 'Ativar'} onClick={() => toggleActive({ id: r.id, is_active: !r.is_active })}>
                   <Power className={`h-4 w-4 ${r.is_active ? 'text-success' : 'text-muted-foreground'}`} />
                 </Button>
-                <Button size="icon" variant="ghost" title="Remover" onClick={() => remove(r.id)}>
+                <Button aria-label="Excluir a regra" size="icon" variant="ghost" title="Remover" onClick={() => remove(r.id)}>
                   <Trash2 className="h-4 w-4 text-destructive" />
                 </Button>
               </div>

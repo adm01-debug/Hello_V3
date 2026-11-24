@@ -81,7 +81,7 @@ export default function VoipTrunksAdmin() {
             <p className="text-muted-foreground">Gerencie operadoras e atribuições de agentes</p>
           </div>
            <div className="flex gap-2 items-center">
-             <Button onClick={() => setSettingsOpen(true)} variant="ghost" size="icon" title="Configurações de Alertas">
+             <Button aria-label="Configurações dos alertas" onClick={() => setSettingsOpen(true)} variant="ghost" size="icon" title="Configurações de Alertas">
                <Settings2 className="h-5 w-5" />
              </Button>
             <Button onClick={() => runHealth.mutate()} disabled={runHealth.isPending} variant="outline" className="gap-2">
@@ -173,10 +173,10 @@ export default function VoipTrunksAdmin() {
                           <Button variant="ghost" size="sm" onClick={() => test.mutate(t.id)} disabled={test.isPending} className="gap-1">
                             <Zap className="h-4 w-4" /> Testar
                           </Button>
-                          <Button variant="ghost" size="icon" onClick={() => openEdit(t)}>
+                          <Button aria-label={`Editar o tronco ${t.name}`} variant="ghost" size="icon" onClick={() => openEdit(t)}>
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" onClick={() => handleDelete(t.id, t.name)} disabled={del.isPending}>
+                          <Button aria-label={`Excluir o tronco ${t.name}`} variant="ghost" size="icon" onClick={() => handleDelete(t.id, t.name)} disabled={del.isPending}>
                             <Trash2 className="h-4 w-4 text-destructive" />
                           </Button>
                         </div>

@@ -180,7 +180,7 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
             ) : (
               <ChevronUp className="h-4 w-4" />
             )}
-            <Button
+            <Button aria-label="Marcar todos os sussurros como lidos"
               variant="ghost"
               size="icon"
               className="h-6 w-6"
@@ -205,7 +205,7 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
                     {latestWhisper.supervisor_name} • {formatTime(latestWhisper.created_at)}
                   </span>
                 </div>
-                <Button
+                <Button aria-label="Marcar o sussurro como lido"
                   variant="ghost"
                   size="icon"
                   className="h-6 w-6"
@@ -231,7 +231,7 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
                       <span className="text-xs text-muted-foreground">
                         {whisper.supervisor_name} • {formatTime(whisper.created_at)}
                       </span>
-                      <Button
+                      <Button aria-label="Marcar o sussurro como lido"
                         variant="ghost"
                         size="icon"
                         className="h-5 w-5"

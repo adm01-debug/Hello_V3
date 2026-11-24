@@ -52,7 +52,7 @@ export function HoldReminderSettings({ interval, alertThreshold, alertsEnabled, 
         <div className="flex items-center gap-1">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" className={cn("h-5 w-5", alertsEnabled ? "text-destructive" : "text-muted-foreground")}
+              <Button aria-label={alertsEnabled ? 'Desativar o lembrete sonoro de espera' : 'Ativar o lembrete sonoro de espera'} aria-pressed={alertsEnabled} variant="ghost" size="icon" className={cn("h-5 w-5", alertsEnabled ? "text-destructive" : "text-muted-foreground")}
                 onClick={(e) => { e.stopPropagation(); initAudio(); toggleAlerts(); }}>
                 {alertsEnabled ? <AlertTriangle className="h-3 w-3" /> : <BellRing className="h-3 w-3" />}
               </Button>

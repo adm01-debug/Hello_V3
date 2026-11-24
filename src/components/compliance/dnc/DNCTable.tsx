@@ -70,7 +70,7 @@ export function DNCTable({ items, isLoading, onRemove }: Props) {
                 <TableCell>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button variant="ghost" size="icon" className="text-destructive">
+                      <Button aria-label={`Remover ${item.phone} da lista DNC`} variant="ghost" size="icon" className="text-destructive">
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </AlertDialogTrigger>

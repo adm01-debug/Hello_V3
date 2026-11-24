@@ -48,7 +48,7 @@ export function TotpCard({
               <Key className="h-4 w-4" />
               <AlertDescription className="flex items-center justify-between">
                 <span className="font-mono text-sm">{enrollment.secret}</span>
-                <Button
+                <Button aria-label="Copiar o código secreto"
                   variant="ghost"
                   size="icon"
                   onClick={() => enrollment.secret && onCopy(enrollment.secret)}

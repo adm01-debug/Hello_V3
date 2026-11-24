@@ -159,7 +159,7 @@ export default function VideoConference() {
                    {conf.status === 'scheduled' ? 'Agendada' : conf.status === 'active' ? 'Ativa' : 'Encerrada'}
                  </Badge>
                  {conf.meeting_url && (
-                  <Button 
+                  <Button aria-label="Copiar o link da reunião" 
                     variant="ghost" 
                     size="icon" 
                     className="h-8 w-8" 

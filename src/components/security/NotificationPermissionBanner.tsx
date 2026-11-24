@@ -43,7 +43,7 @@ export function NotificationPermissionBanner() {
       <Bell className="h-4 w-4 text-primary" />
       <AlertTitle className="flex items-center justify-between">
         <span>Ativar Notificações de Segurança</span>
-        <Button
+        <Button aria-label="Dispensar o aviso de notificações"
           variant="ghost"
           size="icon"
           className="h-6 w-6"

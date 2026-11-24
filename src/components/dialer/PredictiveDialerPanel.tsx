@@ -76,7 +76,7 @@ function QueueItemCard({ item, index, onRemove, onPrioritize, statusColor }: { i
         <Badge className={`text-xs ${statusColor}`}>{item.status === 'pending' ? 'Pendente' : item.status === 'dialing' ? 'Discando' : item.status}</Badge>
         {item.attempts > 0 && <Badge variant="outline" className="text-xs">{item.attempts}x</Badge>}
         <DropdownMenu>
-          <DropdownMenuTrigger asChild><Button variant="ghost" size="icon" className="h-8 w-8"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild><Button aria-label="Mais opções da campanha" variant="ghost" size="icon" className="h-8 w-8"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={onPrioritize}><SkipForward className="h-4 w-4 mr-2" />Priorizar</DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -211,7 +211,7 @@ export function PredictiveDialerPanel() {
                       <div className="flex items-center justify-between text-xs text-muted-foreground"><span>{c.completed_contacts}/{c.total_contacts} contatos</span><span>Criada {safeFormatDistanceToNow(c.created_at, { addSuffix: true, locale: ptBR })}</span></div>
                       <div className="flex justify-end mt-3">
                         <DropdownMenu>
-                          <DropdownMenuTrigger asChild><Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => e.stopPropagation()}><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
+                          <DropdownMenuTrigger asChild><Button aria-label="Mais opções da chamada" variant="ghost" size="icon" className="h-8 w-8" onClick={e => e.stopPropagation()}><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
                           <DropdownMenuContent><DropdownMenuItem className="text-destructive" onClick={(e) => { e.stopPropagation(); deleteCampaign(c.id); }}><Trash2 className="h-4 w-4 mr-2" />Excluir</DropdownMenuItem></DropdownMenuContent>
                         </DropdownMenu>
                       </div>

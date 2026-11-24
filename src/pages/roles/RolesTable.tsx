@@ -63,7 +63,7 @@ export function RolesTable({ roles, onToggle, onRemove }: Props) {
                   {role.expires_at ? safeToLocaleDateString(role.expires_at, 'pt-BR') : 'Permanente'}
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button variant="ghost" size="icon" onClick={() => onRemove(role.id)}>
+                  <Button aria-label="Excluir este papel" variant="ghost" size="icon" onClick={() => onRemove(role.id)}>
                     <Trash2 className="h-4 w-4 text-destructive" />
                   </Button>
                 </TableCell>

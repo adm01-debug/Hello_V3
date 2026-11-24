@@ -56,11 +56,11 @@ export default function Recordings() {
           <CardContent className="p-4">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon" onClick={() => handleSkip(-10)}><SkipBack className="h-4 w-4" /></Button>
-                <Button variant="default" size="icon" className="h-12 w-12" onClick={() => handlePlay(currentRecording)}>
+                <Button aria-label="Voltar 10 segundos" variant="ghost" size="icon" onClick={() => handleSkip(-10)}><SkipBack className="h-4 w-4" /></Button>
+                <Button aria-label={playingId === currentRecording?.id && isPlaying ? 'Pausar a gravação' : 'Reproduzir a gravação'} variant="default" size="icon" className="h-12 w-12" onClick={() => handlePlay(currentRecording)}>
                   {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
                 </Button>
-                <Button variant="ghost" size="icon" onClick={() => handleSkip(10)}><SkipForward className="h-4 w-4" /></Button>
+                <Button aria-label="Avançar 10 segundos" variant="ghost" size="icon" onClick={() => handleSkip(10)}><SkipForward className="h-4 w-4" /></Button>
               </div>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
@@ -71,7 +71,7 @@ export default function Recordings() {
                 <Slider value={[currentTime]} max={duration || 100} step={0.1} onValueChange={handleSeek} className="cursor-pointer" />
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon" onClick={() => setIsMuted(!isMuted)}>{isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}</Button>
+                <Button aria-label={isMuted ? 'Ativar o som' : 'Silenciar o som'} aria-pressed={isMuted} variant="ghost" size="icon" onClick={() => setIsMuted(!isMuted)}>{isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}</Button>
                 <Slider value={[isMuted ? 0 : volume]} max={1} step={0.1} onValueChange={(v) => setVolume(v[0])} className="w-24" />
               </div>
             </div>
@@ -114,14 +114,14 @@ export default function Recordings() {
                     <TableCell>{recording.conference_id ? <Badge variant="outline" className="font-mono text-xs">{recording.conference_id.slice(0, 8)}...</Badge> : <span className="text-muted-foreground">-</span>}</TableCell>
                     <TableCell>
                       <div className="flex items-center justify-end gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => handlePlay(recording)} className={playingId === recording.id && isPlaying ? 'text-primary' : ''}>
+                        <Button aria-label={playingId === recording.id && isPlaying ? 'Pausar a gravação' : 'Reproduzir a gravação'} variant="ghost" size="icon" onClick={() => handlePlay(recording)} className={playingId === recording.id && isPlaying ? 'text-primary' : ''}>
                           {playingId === recording.id && isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleTranscribe(recording)} disabled={transcribing === recording.id} title="Transcrever gravação">
+                        <Button aria-label="Transcrever a gravação" variant="ghost" size="icon" onClick={() => handleTranscribe(recording)} disabled={transcribing === recording.id} title="Transcrever gravação">
                           {transcribing === recording.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileText className="h-4 w-4" />}
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleDownload(recording)}><Download className="h-4 w-4" /></Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleDelete(recording)} className="text-destructive hover:text-destructive"><Trash2 className="h-4 w-4" /></Button>
+                        <Button aria-label="Baixar a gravação" variant="ghost" size="icon" onClick={() => handleDownload(recording)}><Download className="h-4 w-4" /></Button>
+                        <Button aria-label="Excluir a gravação" variant="ghost" size="icon" onClick={() => handleDelete(recording)} className="text-destructive hover:text-destructive"><Trash2 className="h-4 w-4" /></Button>
                       </div>
                     </TableCell>
                   </TableRow>

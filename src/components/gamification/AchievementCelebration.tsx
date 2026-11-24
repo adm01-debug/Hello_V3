@@ -95,7 +95,7 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
         )}
       >
         {/* Close button */}
-        <Button
+        <Button aria-label="Fechar a comemoração"
           variant="ghost"
           size="icon"
           className="absolute top-2 right-2"

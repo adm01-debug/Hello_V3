@@ -198,8 +198,8 @@ export default function BattleCards() {
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="font-bold text-lg">{c.competitor_name}</h3>
                   <div className="flex gap-1">
-                    <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => startEdit(c)}><Edit className="h-3.5 w-3.5" /></Button>
-                    <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => handleDelete(c.id)}><Trash2 className="h-3.5 w-3.5" /></Button>
+                    <Button aria-label="Editar o card" size="icon" variant="ghost" className="h-7 w-7" onClick={() => startEdit(c)}><Edit className="h-3.5 w-3.5" /></Button>
+                    <Button aria-label="Excluir o card" size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => handleDelete(c.id)}><Trash2 className="h-3.5 w-3.5" /></Button>
                   </div>
                 </div>
                 {c.description && <p className="text-sm text-muted-foreground mb-2">{c.description}</p>}
