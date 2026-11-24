@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (370)",
+   "co-localizado (__tests__) (372)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: meta de SLO unica na edge (99,9%) e painel lendo do servidor (#300)",
    "test: prova a resiliencia das edges com upstream fora do ar (#298)",
    "fix: guard de CI contra fetch sem prazo e migra os 5 ultimos fetch (#297)",
    "fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)",
-   "feat: preserva o formulario e reautentica quando a sessao expira (#295)",
-   "fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)"
+   "feat: preserva o formulario e reautentica quando a sessao expira (#295)"
   ]
  },
  "pr_template": null,

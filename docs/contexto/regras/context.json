@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "6272242cc5c43571cee35a4bc986515e3bff43db",
+  "sha": "43be772f23228e92858b764d9bdfa41c23e319d4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 17:32 UTC",
-  "files_total": 1789,
-  "code_files": 1585,
-  "code_lines": 193966
+  "generated_at": "2026-11-24 17:51 UTC",
+  "files_total": 1791,
+  "code_files": 1587,
+  "code_lines": 194142
  },
  "version": "1.3.2",
- "facts_hash": "573a456ea529d76e",
+ "facts_hash": "d5a9c0ff541f7b71",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,8 +153,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 653,
-   ".tsx": 651,
+   ".ts": 654,
+   ".tsx": 652,
    ".sql": 246,
    ".mjs": 28,
    ".py": 5,
@@ -34280,8 +34280,8 @@
   },
   {
    "module": "src/pages",
-   "files": 147,
-   "lines": 22552,
+   "files": 148,
+   "lines": 22642,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -34358,7 +34358,9 @@
     "Knowledge.tsx: Knowledge",
     "LDAPSync.tsx: LDAPSync"
    ],
-   "docs": [],
+   "docs": [
+    "SloDashboard.meta.test.tsx: Etapa 170 - o painel admin nao declara meta propria: exibe a que a edge devolve."
+   ],
    "deps": [
     "@dnd-kit/core",
     "@dnd-kit/sortable",
@@ -34513,8 +34515,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 218,
-   "lines": 24421,
+   "files": 219,
+   "lines": 24507,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34644,7 +34646,7 @@
     "index.ts: pickPolicy",
     "csv.ts: toCsv",
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
-    "index.ts: handler"
+    "index.ts: SLO_TARGETS, handler"
    ],
    "docs": [
     "geo-decision.test.ts: Etapa 141: as quatro combinacoes modo x pais + os casos de borda que nao podem ficar silenciosos (modo desconhecido, lista vazia, pais ausente).",
@@ -57358,10 +57360,6 @@
     "line": "const dueAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();"
    },
    {
-    "file": "supabase/functions/health-check/index.ts",
-    "line": "const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();"
-   },
-   {
     "file": "supabase/functions/request-password-reset/index.ts",
     "line": "expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()"
    },
@@ -57606,14 +57604,6 @@
    {
     "file": "src/pages/Status.tsx",
     "line": "SLA contratual: 99,9% mensal. Métricas alimentadas diretamente pelos health checks internos —"
-   },
-   {
-    "file": "src/pages/admin/SloDashboard.tsx",
-    "line": "Objetivos de nível de serviço em janela de 15 min. Metas: uptime trunks &ge; 99.9%,"
-   },
-   {
-    "file": "src/pages/admin/SloDashboard.tsx",
-    "line": "erro webhook &lt; 1%, latência p95 &lt; 2s."
    },
    {
     "file": "supabase/functions/compute-deal-health/index.ts",
@@ -70458,6 +70448,18 @@
     "name": "lista os acertos e leva ao detalhe da chamada no historico"
    },
    {
+    "file": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
+    "name": "SloDashboard - meta de SLO"
+   },
+   {
+    "file": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
+    "name": "mostra a meta que veio da edge, nao uma constante da tela"
+   },
+   {
+    "file": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
+    "name": "usa a meta padrao apenas quando a edge antiga nao envia slo_targets"
+   },
+   {
     "file": "src/pages/roles/__tests__/useRoles.test.ts",
     "name": "useRoles"
    },
@@ -71248,6 +71250,18 @@
    {
     "file": "supabase/functions/health-check/__tests__/slo-budget_test.ts",
     "name": "budget - total nao finito vira unknown"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-targets_test.ts",
+    "name": "170 - a resposta publica a meta do SLO (contrato 99,9%)"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-targets_test.ts",
+    "name": "170 - error budget e status usam a meta de 99,9% (nao 99%)"
+   },
+   {
+    "file": "supabase/functions/health-check/__tests__/slo-targets_test.ts",
+    "name": "170 - webhook: alvo de 1% de erro continua tolerancia de 1%"
    },
    {
     "file": "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
@@ -85138,6 +85152,7 @@
    "supabase/functions/generate-meeting-summary/index.ts",
    "supabase/functions/global-load-test/index.ts",
    "supabase/functions/health-check/__tests__/index.test.ts",
+   "supabase/functions/health-check/__tests__/slo-targets_test.ts",
    "supabase/functions/health-check/index.ts",
    "supabase/functions/ldap-sync/index.ts",
    "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
@@ -114219,7 +114234,7 @@
   },
   "src/pages/admin/SloDashboard.tsx": {
    "path": "src/pages/admin/SloDashboard.tsx",
-   "lines": 242,
+   "lines": 255,
    "exports": [
     "function SloDashboard"
    ],
@@ -114278,10 +114293,6 @@
      "kind": "compara"
     }
    ],
-   "percents": [
-    "Objetivos de nível de serviço em janela de 15 min. Metas: uptime trunks &ge; 99.9%,",
-    "erro webhook &lt; 1%, latência p95 &lt; 2s."
-   ],
    "side_effects": [
     "invoke("
    ]
@@ -114330,6 +114341,17 @@
    "lines": 156,
    "exports": [
     "function WebhookHealth"
+   ]
+  },
+  "src/pages/admin/__tests__/SloDashboard.meta.test.tsx": {
+   "path": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
+   "lines": 77,
+   "is_test": true,
+   "doc": "Etapa 170 - o painel admin nao declara meta propria: exibe a que a edge devolve.",
+   "tests": [
+    "SloDashboard - meta de SLO",
+    "mostra a meta que veio da edge, nao uma constante da tela",
+    "usa a meta padrao apenas quando a edge antiga nao envia slo_targets"
    ]
   },
   "src/pages/admin/database-health/ActivityCards.tsx": {
@@ -119198,8 +119220,9 @@
   },
   "supabase/functions/health-check/index.ts": {
    "path": "supabase/functions/health-check/index.ts",
-   "lines": 152,
+   "lines": 167,
    "exports": [
+    "const SLO_TARGETS",
     "const handler"
    ],
    "tables": [
@@ -119280,9 +119303,6 @@
     "Budget esgotado alerta mesmo com status ainda dentro do limite: e o sinal"
    ],
    "doc": "Health check consolidado — endpoint público retornando status dos componentes",
-   "temporal": [
-    "const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();"
-   ],
    "pagination": [
     "1"
    ],
@@ -119358,6 +119378,18 @@
     "budget - alvo de 100% esgota com qualquer falha",
     "budget - total nao finito vira unknown"
    ]
+  },
+  "supabase/functions/health-check/__tests__/slo-targets_test.ts": {
+   "path": "supabase/functions/health-check/__tests__/slo-targets_test.ts",
+   "lines": 71,
+   "is_test": true,
+   "doc": "Etapa 170 - meta de SLO unica. O contrato publico (src/pages/Status.tsx: \"SLA contratual: 99,9% mensal\") passa a ser a fonte da meta: a edge devolve `slo_targets` e usa a MESMA meta no error budget e no status dos componentes. Antes a edge usava 99% e o painel declarava 99,9% por conta.",
+   "tests": [
+    "170 - a resposta publica a meta do SLO (contrato 99,9%)",
+    "170 - error budget e status usam a meta de 99,9% (nao 99%)",
+    "170 - webhook: alvo de 1% de erro continua tolerancia de 1%"
+   ],
+   "uses_service_role": true
   },
   "supabase/functions/ldap-sync/index.ts": {
    "path": "supabase/functions/ldap-sync/index.ts",
@@ -123766,10 +123798,24 @@
   }
  },
  "git": {
-  "sha": "6272242cc5c43571cee35a4bc986515e3bff43db",
+  "sha": "43be772f23228e92858b764d9bdfa41c23e319d4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "43be772",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: meta de SLO unica na edge (99,9%) e painel lendo do servidor (#300)",
+    "files": [
+     "docs/observabilidade/SLI_SLO.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/pages/admin/SloDashboard.tsx",
+     "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
+     "supabase/functions/health-check/__tests__/slo-targets_test.ts",
+     "supabase/functions/health-check/index.ts"
+    ]
+   },
    {
     "sha": "6272242",
     "date": "2026-11-24",
@@ -124206,63 +124252,6 @@
      "supabase/functions/validate-geo/decide.ts",
      "supabase/functions/validate-geo/index.ts"
     ]
-   },
-   {
-    "sha": "c771af6",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: rótulo acessível nos botões-ícone restantes (etapas 262 e 263) (#268)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/SearchInput.tsx",
-     "src/components/admin/extensions/ExtensionsTable.tsx",
-     "src/components/admin/voip/TrunkAssignmentsTab.tsx",
-     "src/components/agent/WhisperNotification.tsx",
-     "src/components/ai/CallSimulation.tsx",
-     "src/components/ai/LiveCallAnalysis.tsx",
-     "src/components/alerts/AlertsDropdown.tsx",
-     "src/components/auth/PasskeyManager.tsx",
-     "src/components/callbacks/ScheduledCallbacksList.tsx",
-     "src/components/calls/ActiveCallBar.tsx",
-     "src/components/calls/HoldReminderSettings.tsx",
-     "src/components/calls/NextBestActionPanel.tsx",
-     "src/components/calls/softphone/ActiveCallDisplay.tsx",
-     "src/components/compliance/ComplianceRulesPanel.tsx",
-     "src/components/compliance/HolidaysManager.tsx",
-     "src/components/compliance/dnc/DNCTable.tsx",
-     "src/components/contacts/ContactAlertsDropdown.tsx",
-     "src/components/dashboard/ActiveCallsRealtime.tsx",
-     "src/components/dashboard/DashboardGoalsSettings.tsx",
-     "src/components/dashboard/SortableWidget.tsx",
-     "src/components/dialer/DialerControlPanel.tsx",
-     "src/components/dialer/PredictiveDialerPanel.tsx",
-     "src/components/gamification/AchievementCelebration.tsx",
-     "src/components/hold-alerts/HoldAlertsTable.tsx",
-     "src/components/notification-center/NotificationList.tsx",
-     "src/components/ranking/AgentGoalsGrid.tsx",
-     "src/components/security-alerts/PresetsMenu.tsx",
-     "src/components/security/NotificationPermissionBanner.tsx",
-     "src/components/supervisor/AlertSoundSettings.tsx",
-     "src/components/supervisor/SoundProfileManager.tsx",
-     "src/components/supervisor/panel/PanelHeader.tsx",
-     "src/pages/BattleCards.tsx",
-     "src/pages/BlockedAccessLogs.tsx",
-     "src/pages/CallFlowDesigner.tsx",
-     "src/pages/GeoBlocking.tsx",
-     "src/pages/IPWhitelist.tsx",
-     "src/pages/MultiDeviceRing.tsx",
-     "src/pages/Recordings.tsx",
-     "src/pages/Register.tsx",
-     "src/pages/ResetPassword.tsx",
-     "src/pages/SuccessPlans.tsx",
-     "src/pages/VideoConference.tsx",
-     "src/pages/VoiceSecurity.tsx",
-     "src/pages/Voicemail.tsx",
-     "src/pages/admin/DataExport.tsx",
-     "src/pages/admin/VoipTrunksAdmin.tsx",
-     "src/pages/roles/RolesTable.tsx",
-     "src/pages/two-factor/TotpCard.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -124299,23 +124288,7 @@
     2
    ],
    [
-    "src/pages/BattleCards.tsx",
-    2
-   ],
-   [
     "src/pages/Cadences.tsx",
-    2
-   ],
-   [
-    "src/pages/IPWhitelist.tsx",
-    2
-   ],
-   [
-    "src/components/agent/WhisperNotification.tsx",
-    2
-   ],
-   [
-    "src/components/gamification/AchievementCelebration.tsx",
     2
    ],
    [
@@ -124335,15 +124308,31 @@
     2
    ],
    [
-    "src/pages/Recordings.tsx",
-    2
+    "docs/observabilidade/SLI_SLO.md",
+    1
    ],
    [
-    "src/pages/GeoBlocking.tsx",
-    2
+    "src/pages/admin/SloDashboard.tsx",
+    1
+   ],
+   [
+    "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
+    1
+   ],
+   [
+    "supabase/functions/health-check/__tests__/slo-targets_test.ts",
+    1
+   ],
+   [
+    "supabase/functions/health-check/index.ts",
+    1
    ],
    [
     "supabase/functions/_shared/testing/backend-falso.ts",
+    1
+   ],
+   [
+    "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
     1
    ]
   ]

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6272242cc5` · branch `main` · 2026-11-24 17:32 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `43be772f23` · branch `main` · 2026-11-24 17:51 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1852,8 +1852,6 @@ _nenhum item encontrado_
 | `Webhooks, REST e edge functions abertas. Fale com a equipe — 80% das integrações` | `src/pages/Marketplace.tsx` |
 | `Meta Anatel: abandono &lt; 3%.` | `src/pages/PredictiveDialer.tsx` |
 | `SLA contratual: 99,9% mensal. Métricas alimentadas diretamente pelos health checks internos —` | `src/pages/Status.tsx` |
-| `Objetivos de nível de serviço em janela de 15 min. Metas: uptime trunks &ge; 99.9%,` | `src/pages/admin/SloDashboard.tsx` |
-| `erro webhook &lt; 1%, latência p95 &lt; 2s.` | `src/pages/admin/SloDashboard.tsx` |
 | `recencyScore * 0.2 + sentimentScore * 0.25 + momentScore * 0.25 +` | `supabase/functions/compute-deal-health/index.ts` |
 | `satScore * 0.15 + probabilityScore * 0.15` | `supabase/functions/compute-deal-health/index.ts` |
 | `const TARGET_SL = 0.8; // 80% atendidas em 30s` | `supabase/functions/forecast-call-volume/index.ts` |
@@ -2148,7 +2146,6 @@ _nenhum item encontrado_
 | `const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/database-cleanup/index.ts` |
 | `const since = new Date(Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/generate-coaching-track/index.ts` |
 | `const dueAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/generate-coaching-track/track-engine.ts` |
-| `const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();` | `supabase/functions/health-check/index.ts` |
 | `expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()` | `supabase/functions/request-password-reset/index.ts` |
 | `const EFFECTIVENESS_WINDOW_MS = 2 * 60 * 60 * 1000; // 2h` | `supabase/functions/voip-recommendation-insights/index.ts` |
 | `const timeout = setTimeout(() => ctrl.abort(), 4000);` | `supabase/functions/voip-trunks-healthcheck/index.ts` |
@@ -2658,7 +2655,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3564 testes em 384 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3570 testes em 386 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2962,7 +2959,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
-| … +84 linhas — lista completa em `context.json` | | |
+| … +86 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

@@ -6,7 +6,7 @@
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 267
+   "importado_por": 268
   },
   {
    "arquivo": "src/components/ui/button.tsx",

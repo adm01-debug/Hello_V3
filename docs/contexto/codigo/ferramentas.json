@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1304)",
+   "TypeScript (1306)",
    "SQL (246)",
    "Markdown (121)",
    "JavaScript (30)",
@@ -516,7 +516,7 @@
    },
    {
     "host": "mock.supabase.co",
-    "arquivos": 9
+    "arquivos": 10
    },
    {
     "host": "lovable.dev",

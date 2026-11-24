@@ -6463,8 +6463,8 @@
   {
    "modulo": "pages/admin",
    "arquivos": 16,
-   "testes": 0,
-   "linhas": 2168,
+   "testes": 1,
+   "linhas": 2181,
    "itens_menu": [
     "Alertas de Segurança",
     "Auditoria de Segurança",

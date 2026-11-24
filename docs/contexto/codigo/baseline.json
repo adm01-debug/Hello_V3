@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6272242cc5c43571cee35a4bc986515e3bff43db",
+  "commit": "43be772f23228e92858b764d9bdfa41c23e319d4",
   "branch": "main",
-  "data_commit": "2026-11-24T14:31:53-03:00",
+  "data_commit": "2026-11-24T14:50:53-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "43be772",
+    "data": "2026-11-24",
+    "assunto": "fix: meta de SLO unica na edge (99,9%) e painel lendo do servidor (#300)"
+   },
    {
     "sha": "6272242",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "efbd573",
     "data": "2026-11-24",
     "assunto": "fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)"
-   },
-   {
-    "sha": "e376b95",
-    "data": "2026-11-24",
-    "assunto": "fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)"
    }
   ],
-  "arquivos_mudados_7d": 1249,
+  "arquivos_mudados_7d": 1251,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 122
+    "mudancas": 123
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 122
+    "mudancas": 123
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -274,6 +274,10 @@
     "mudancas": 6
    },
    {
+    "arquivo": "supabase/functions/health-check/index.ts",
+    "mudancas": 6
+   },
+   {
     "arquivo": "supabase/functions/score-call/index.ts",
     "mudancas": 6
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "deno.lock",
     "mudancas": 5
-   },
-   {
-    "arquivo": "docs/prod-readiness.md",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 277
+    "commits": 278
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1742,
-  "arquivos_codigo": 1338,
-  "linhas_codigo": 177916,
+  "arquivos_total": 1744,
+  "arquivos_codigo": 1340,
+  "linhas_codigo": 178092,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 243,
   "cron_jobs": 11,
-  "testes": 394,
+  "testes": 396,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -507,8 +507,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 147,
-   "linhas": 22552
+   "arquivos": 148,
+   "linhas": 22642
   },
   "src/routes": {
    "arquivos": 4,
@@ -519,8 +519,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 218,
-   "linhas": 24421
+   "arquivos": 219,
+   "linhas": 24507
   },
   "tailwind.config.ts": {
    "arquivos": 1,
