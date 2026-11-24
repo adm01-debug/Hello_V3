@@ -172,11 +172,14 @@ describe('useContactAlerts', () => {
     await waitFor(() => expect(result.current.alerts.length).toBe(2));
 
     state.updateResult = { data: null, error: new Error('update failed') };
+    let outcome: { ok: boolean } | undefined;
     await act(async () => {
-      await result.current.markAsRead('1');
+      outcome = await result.current.markAsRead('1');
     });
-    // On error the alert should NOT be flipped
+    // On error the alert should NOT be flipped, and the caller must see the failure
     expect(result.current.alerts.find((a) => a.id === '1')?.is_read).toBe(false);
+    expect(outcome?.ok).toBe(false);
+    expect(toast.error).toHaveBeenCalledWith('Não foi possível marcar o alerta como lido');
   });
 
   it('markAllAsRead flips all and shows toast', async () => {
@@ -198,10 +201,13 @@ describe('useContactAlerts', () => {
     await waitFor(() => expect(result.current.alerts.length).toBe(2));
 
     state.updateResult = { data: null, error: new Error('fail') };
+    let outcome: { ok: boolean } | undefined;
     await act(async () => {
-      await result.current.markAllAsRead();
+      outcome = await result.current.markAllAsRead();
     });
     expect(result.current.alerts.some((a) => !a.is_read)).toBe(true);
+    expect(outcome?.ok).toBe(false);
+    expect(toast.error).toHaveBeenCalledWith('Não foi possível marcar os alertas como lidos');
   });
 
   it('markAsActioned updates state and shows toast', async () => {
@@ -227,10 +233,13 @@ describe('useContactAlerts', () => {
     });
 
     state.updateResult = { data: null, error: new Error('fail') };
+    let outcome: { ok: boolean } | undefined;
     await act(async () => {
-      await result.current.markAsActioned('1');
+      outcome = await result.current.markAsActioned('1');
     });
     expect(result.current.alerts.find((a) => a.id === '1')?.is_actioned).toBe(false);
+    expect(outcome?.ok).toBe(false);
+    expect(toast.error).toHaveBeenCalledWith('Não foi possível marcar o alerta como resolvido');
   });
 
   it('deleteAlert removes from state and shows toast', async () => {
@@ -251,10 +260,13 @@ describe('useContactAlerts', () => {
     await waitFor(() => expect(result.current.alerts.length).toBe(2));
 
     state.deleteResult = { data: null, error: new Error('fail') };
+    let outcome: { ok: boolean } | undefined;
     await act(async () => {
-      await result.current.deleteAlert('1');
+      outcome = await result.current.deleteAlert('1');
     });
     expect(result.current.alerts.find((a) => a.id === '1')).toBeDefined();
+    expect(outcome?.ok).toBe(false);
+    expect(toast.error).toHaveBeenCalledWith('Não foi possível remover o alerta');
   });
 
   it('checkForNewAlerts triggers info toast and refetch when alerts created', async () => {
@@ -291,6 +303,7 @@ describe('useContactAlerts', () => {
       data = await result.current.checkForNewAlerts();
     });
     expect(data).toBeNull();
+    expect(toast.error).toHaveBeenCalledWith('Não foi possível verificar novos alertas');
   });
 
   it('realtime INSERT prepends alert, increments unread, and shows toast', async () => {
