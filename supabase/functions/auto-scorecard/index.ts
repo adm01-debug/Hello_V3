@@ -165,7 +165,8 @@ function json(payload: unknown, status = 200): Response {
       })),
     );
     if (respErr) {
-      await supabase.from('call_scorecards').delete().eq('id', card.id);
+      const { error: rollbackErr } = await supabase.from('call_scorecards').delete().eq('id', card.id);
+      if (rollbackErr) console.error('auto-scorecard: falha ao desfazer scorecard apos falha nas respostas', rollbackErr);
       throw respErr;
     }
 

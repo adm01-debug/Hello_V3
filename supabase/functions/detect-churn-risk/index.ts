@@ -114,7 +114,7 @@ Deno.serve(async (req: Request) => {
         .eq("is_active", true)
         .maybeSingle();
       if (existing) continue;
-      await supabase.from("churn_risk_signals").insert({
+      const { error: signalErr } = await supabase.from("churn_risk_signals").insert({
         account_id,
         signal_type: sig.signal_type,
         severity: sig.severity,
@@ -122,6 +122,7 @@ Deno.serve(async (req: Request) => {
         description: sig.description,
         evidence: sig.evidence,
       });
+      if (signalErr) console.error('detect-churn-risk: falha ao gravar sinal de churn', signalErr);
       createdCount++;
     }
 
@@ -137,7 +138,7 @@ Deno.serve(async (req: Request) => {
     );
 
     const status = churnScore >= 70 ? "at_risk" : "active";
-    await supabase
+    const { error: churnErr } = await supabase
       .from("accounts")
       .update({
         churn_risk_score: churnScore,
@@ -145,6 +146,7 @@ Deno.serve(async (req: Request) => {
         updated_at: new Date().toISOString(),
       })
       .eq("id", account_id);
+    if (churnErr) console.error('detect-churn-risk: falha ao gravar score de churn', churnErr);
 
     return new Response(
       JSON.stringify({

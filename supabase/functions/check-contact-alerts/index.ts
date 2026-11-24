@@ -83,7 +83,8 @@ serve(async (req) => {
     }
 
     if (alertsToCreate.length > 0) {
-      await supabaseAdmin.from('contact_alerts').insert(alertsToCreate);
+      const { error: alertsErr } = await supabaseAdmin.from('contact_alerts').insert(alertsToCreate);
+      if (alertsErr) console.error('check-contact-alerts: falha ao criar alertas de contato', alertsErr);
     }
 
     return new Response(JSON.stringify({ success: true, contacts_checked: contacts.length, alerts_created: alertsToCreate.length }), {

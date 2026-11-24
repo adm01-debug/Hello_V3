@@ -126,7 +126,7 @@ Deno.serve(async (req: Request) => {
       ),
     );
 
-    await supabase
+    const { error: healthErr } = await supabase
       .from("accounts")
       .update({
         health_score: health,
@@ -134,6 +134,7 @@ Deno.serve(async (req: Request) => {
         updated_at: new Date().toISOString(),
       })
       .eq("id", account_id);
+    if (healthErr) console.error('compute-account-health: falha ao gravar saude da conta', healthErr);
 
     return new Response(JSON.stringify({ health_score: health, factors }), {
       headers: { ...cors, "Content-Type": "application/json" },
