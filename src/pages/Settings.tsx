@@ -1,4 +1,4 @@
- import { useState } from 'react';
+ import { useEffect, useRef, useState } from 'react';
  import { SystemMaintenancePanel } from '@/components/settings/SystemMaintenancePanel';
  import { ProfileSettings } from '@/components/settings/ProfileSettings';
  import { BitrixIntegration } from '@/components/settings/BitrixIntegration';
@@ -25,6 +25,12 @@
   } from 'lucide-react';
  import { toast } from 'sonner';
  import { usePageTitle } from '@/hooks/usePageTitle';
+ import {
+   AudioTestError,
+   playTestTone,
+   startMicLevel,
+   type MicTestHandle,
+ } from '@/lib/audio/deviceTest';
  
  const Settings = () => {
    usePageTitle('Configurações');
@@ -39,6 +45,50 @@
    const handleSave = () => {
      toast.success('✓ Configurações salvas', { description: 'Suas preferências foram atualizadas' });
    };
+
+   const [micTesting, setMicTesting] = useState(false);
+   const [micLevel, setMicLevel] = useState(0);
+   const micTestRef = useRef<MicTestHandle | null>(null);
+
+   const handleStopMicTest = () => {
+     micTestRef.current?.stop();
+     micTestRef.current = null;
+     setMicTesting(false);
+     setMicLevel(0);
+   };
+
+   const handleTestMicrophone = async () => {
+     try {
+       micTestRef.current = await startMicLevel(setMicLevel);
+       setMicTesting(true);
+     } catch (error) {
+       micTestRef.current = null;
+       setMicTesting(false);
+       toast.error('Teste de microfone', {
+         description:
+           error instanceof AudioTestError
+             ? error.message
+             : 'Não foi possível acessar o microfone.',
+       });
+     }
+   };
+
+   const handleTestAudio = async () => {
+     try {
+       await playTestTone();
+       toast.success('Tom reproduzido', {
+         description: 'Se você ouviu o bipe, a saída de áudio está funcionando.',
+       });
+     } catch (error) {
+       toast.error('Teste de áudio', {
+         description:
+           error instanceof AudioTestError ? error.message : 'Não foi possível tocar o áudio.',
+       });
+     }
+   };
+
+   // Libera o microfone se o usuário sair da tela com o teste aberto.
+   useEffect(() => () => micTestRef.current?.stop(), []);
  
    return (
      <div className="space-y-6 relative">
@@ -274,16 +324,38 @@
                 </div>
               </div>
 
-              <div className="flex gap-3">
-                <Button variant="outline" className="gap-2">
+              <div className="flex gap-3 flex-wrap">
+                <Button
+                  variant="outline"
+                  className="gap-2"
+                  onClick={micTesting ? handleStopMicTest : handleTestMicrophone}
+                >
                   <Mic className="h-4 w-4" />
-                  Testar microfone
+                  {micTesting ? 'Parar teste' : 'Testar microfone'}
                 </Button>
-                <Button variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2" onClick={handleTestAudio}>
                   <Volume2 className="h-4 w-4" />
                   Testar áudio
                 </Button>
               </div>
+
+              {micTesting && (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>Nível do microfone</span>
+                    <span>{Math.round(micLevel * 100)}%</span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-primary transition-[width] duration-75"
+                      style={{ width: `${Math.round(micLevel * 100)}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Fale algo: a barra precisa reagir à sua voz.
+                  </p>
+                </div>
+              )}
 
               <Button className="gap-2" onClick={handleSave}>
                 <Save className="h-4 w-4" />
