@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d34fadc96f` · branch `main` · 2026-11-24 08:06 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f3b6cf19d8` · branch `main` · 2026-11-24 08:08 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2383,6 +2383,7 @@ _nenhum item encontrado_
 | Não foi possível exportar o histórico | `src/components/dialer/phone/SyncHistoryPanel.tsx` |
 | >           <div className= | `src/components/error-boundary/ErrorBoundary.tsx` |
 | >         <Card className= | `src/components/error-boundary/ErrorBoundary.tsx` |
+| Não foi possível encerrar a sessão | `src/components/layout/CommandPalette.tsx` |
 | Falha ao carregar ranking de agentes | `src/components/network/AgentQualityRanking.tsx` |
 | Falha ao exportar relatório | `src/components/network/ExecutiveReportExport.tsx` |
 | Sem dados para exportar | `src/components/network/ExecutiveReportExport.tsx` |
@@ -2412,6 +2413,7 @@ _nenhum item encontrado_
 | ; day: string; alert: SecurityNotification; key: string }   \| { kind:  | `src/components/security-alerts/VirtualTimeline.tsx` |
 |  className= | `src/components/security-alerts/WebhookConfigDialog.tsx` |
 | Não foi possível copiar | `src/components/security-alerts/WebhookHistoryEntryRow.tsx` |
+| ${fnName} executado, mas a auditoria não registrou a ação | `src/components/settings/SystemMaintenancePanel.tsx` |
 | Erro ao executar ${fnName} | `src/components/settings/SystemMaintenancePanel.tsx` |
 | ; import { useLiveTranslation } from  | `src/components/translation/LiveTranslationPanel.tsx` |
 |  className={cn(alertVariants({ variant }), className)} {...props} /> )); Alert.displayName =  | `src/components/ui/alert.tsx` |
@@ -2581,9 +2583,7 @@ _nenhum item encontrado_
 | Erro ao baixar gravação | `src/hooks/useRecordings.ts` |
 | Erro ao carregar gravações | `src/hooks/useRecordings.ts` |
 | Erro ao carregar áudio | `src/hooks/useRecordings.ts` |
-| Erro ao excluir gravação | `src/hooks/useRecordings.ts` |
-| Erro ao transcrever gravação | `src/hooks/useRecordings.ts` |
-| … +284 linhas — lista completa em `context.json` | |
+| … +286 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 

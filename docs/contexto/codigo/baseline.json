@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d34fadc96f9c49f6235c131c7cfe864e9d655222",
+  "commit": "f3b6cf19d89cc2e849883a58a845bc65c2b8b5e5",
   "branch": "main",
-  "data_commit": "2026-11-24T05:06:02-03:00",
+  "data_commit": "2026-11-24T05:06:24-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f3b6cf1",
+    "data": "2026-11-24",
+    "assunto": "fix: gravacoes cegas em componentes e login reportam erro (etapa 187) (#255)"
+   },
    {
     "sha": "d34fadc",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "95304bc",
     "data": "2026-11-24",
     "assunto": "feat: ligar botões Configurar e adicionar testes de áudio (#242)"
-   },
-   {
-    "sha": "024aa1e",
-    "data": "2026-11-24",
-    "assunto": "feat: explica na tela a regra do coaching automatico (etapa 169) (#241)"
    }
   ],
-  "arquivos_mudados_7d": 1140,
+  "arquivos_mudados_7d": 1143,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 91
+    "mudancas": 92
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -173,7 +173,7 @@
    },
    {
     "pasta": "src/components/layout",
-    "mudancas": 16
+    "mudancas": 17
    },
    {
     "pasta": "src/pages/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 91
+    "mudancas": 92
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -234,11 +234,11 @@
     "mudancas": 7
    },
    {
-    "arquivo": ".github/workflows/contexto.yml",
-    "mudancas": 6
+    "arquivo": "src/components/layout/CommandPalette.tsx",
+    "mudancas": 7
    },
    {
-    "arquivo": "src/components/layout/CommandPalette.tsx",
+    "arquivo": ".github/workflows/contexto.yml",
     "mudancas": 6
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 244
+    "commits": 245
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1733,
   "arquivos_codigo": 1330,
-  "linhas_codigo": 179436,
+  "linhas_codigo": 179475,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 370,
-   "linhas": 44118
+   "linhas": 44153
   },
   "src/contexts": {
    "arquivos": 4,
@@ -496,7 +496,7 @@
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 7847
+   "linhas": 7851
   },
   "src/lib": {
    "arquivos": 180,

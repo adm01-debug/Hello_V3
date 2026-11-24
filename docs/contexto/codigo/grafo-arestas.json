@@ -185,6 +185,7 @@
    "src/components/ui/scroll-area.tsx",
    "src/integrations/supabase/client.ts",
    "src/lib/a11y-clickable.ts",
+   "src/lib/logger.ts",
    "src/lib/safe-date.ts"
   ],
   "src/components/ai/AICallAnalysis.tsx": [
@@ -1318,7 +1319,8 @@
   "src/components/layout/CommandPalette.tsx": [
    "src/components/ui/command.tsx",
    "src/contexts/ThemeContext.tsx",
-   "src/integrations/supabase/client.ts"
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts"
   ],
   "src/components/layout/GlobalServices.tsx": [
    "src/hooks/useQualityAlerts.ts",
@@ -1904,7 +1906,8 @@
    "src/components/settings/SystemLogs.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/card.tsx",
-   "src/integrations/supabase/client.ts"
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts"
   ],
   "src/components/settings/VoipSettings.tsx": [
    "src/components/ui/button.tsx",

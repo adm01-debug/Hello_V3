@@ -410,7 +410,7 @@
     "WhisperNotification"
    ],
    "export_default": null,
-   "linhas": 251,
+   "linhas": 265,
    "dominio": "components/agent",
    "hooks_locais": [],
    "tabelas": [
@@ -1637,7 +1637,7 @@
     "BattleCardAlert"
    ],
    "export_default": null,
-   "linhas": 136,
+   "linhas": 141,
    "dominio": "components/conversation-intelligence",
    "hooks_locais": [],
    "tabelas": [
@@ -2658,7 +2658,7 @@
     "CommandPalette"
    ],
    "export_default": null,
-   "linhas": 201,
+   "linhas": 207,
    "dominio": "components/layout",
    "hooks_locais": [
     "useTheme"
@@ -3844,7 +3844,7 @@
     "SystemMaintenancePanel"
    ],
    "export_default": null,
-   "linhas": 87,
+   "linhas": 97,
    "dominio": "components/settings",
    "hooks_locais": [],
    "tabelas": [],
