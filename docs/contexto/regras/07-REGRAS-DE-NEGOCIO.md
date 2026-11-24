@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ac329a7ec4` · branch `main` · 2026-11-24 02:27 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `da41888b12` · branch `main` · 2026-11-24 02:36 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2263,6 +2263,7 @@ _nenhum item encontrado_
 | Erro ao criar dados de teste | `src/hooks/useAgentRanking.ts` |
 | Erro ao salvar metas | `src/hooks/useAgentRanking.ts` |
 | Erro ao atualizar status | `src/hooks/useAgentStatus.ts` |
+| Erro ao consultar a sessão de teste | `src/hooks/useAlerts.ts` |
 | Erro ao criar alertas de teste | `src/hooks/useAlerts.ts` |
 | Erro ao criar sessão de teste | `src/hooks/useAlerts.ts` |
 | Erro ao verificar alertas | `src/hooks/useAlerts.ts` |
@@ -2416,8 +2417,7 @@ _nenhum item encontrado_
 | Falha ao salvar regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao executar enforcement de SLA | `src/hooks/useSLA.ts` |
 | Falha ao salvar política | `src/hooks/useSLA.ts` |
-| Erro ao agendar callback | `src/hooks/useScheduledCallbacks.ts` |
-| … +259 linhas — lista completa em `context.json` | |
+| … +260 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2466,7 +2466,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4278 testes em 371 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4280 testes em 371 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2569,6 +2569,7 @@ _nenhum item encontrado_
 | `supabase/functions/health-check/__tests__/slo-budget_test.ts` | 11 | budget - sem falhas mantem o budget intacto · budget - falha igual a tolerancia zera o budget · budget - falha acima da tolerancia escala o burn rate · budget - metade da tolerancia entra em warning … |
 | `supabase/functions/voip-executive-summary/__tests__/index.test.ts` | 11 | computeHealthScore — perfeito = 100 · computeHealthScore — fórmula ponderada correta · computeHealthScore — cobre só as dimensões medidas · computeHealthScore — cobertura < 2 devolve null … |
 | `src/components/dialer/phone/__tests__/phone-dialer.test.ts` | 10 | phone-utils · sanitiza entrada removendo caracteres inválidos · formata número BR no display · valida se o número é discável … |
+| `src/hooks/__tests__/useAlerts.coverage.test.tsx` | 10 | useAlerts · loads alerts and computes counts · applies filters · checks for new alerts (success and none) … |
 | `src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx` | 10 | useAnomalyRemediation · applied success · idempotent_skip → info · dryRun → info … |
 | `src/hooks/__tests__/useDashboardGoals.coverage.test.tsx` | 10 | useDashboardGoals · fetches goals on mount · handles fetch error · opens dialog for new and for editing … |
 | `src/hooks/__tests__/useLiveTranslation.coverage.test.tsx` | 10 | useLiveTranslation · returns initial state · does nothing without callSessionId or empty text · queues short utterances below minWords without invoking … |
@@ -2586,7 +2587,6 @@ _nenhum item encontrado_
 | `supabase/functions/enforce-sla/__tests__/index.test.ts` | 10 | enforce-sla: prioriza política de canal específico sobre  · enforce-sla: prioriza prioridade específica sobre  · enforce-sla: canal exato vence combinação genérica · enforce-sla: cai no fallback  … |
 | `e2e/dashboard.spec.ts` | 9 | Dashboard · Unauthenticated · should redirect to login when not authenticated · Authenticated … |
 | `src/components/ui/__tests__/search-input.test.tsx` | 9 | SearchInput · renderiza com placeholder e valor · chama onValueChange ao digitar · mostra botão limpar somente quando há valor … |
-| `src/hooks/__tests__/useAlerts.coverage.test.tsx` | 9 | useAlerts · loads alerts and computes counts · applies filters · checks for new alerts (success and none) … |
 | `src/hooks/__tests__/useAlertsExport.test.ts` | 9 | useAlertsExport · exporta CSV com escopo  · filtra por scope= · filtra por scope= … |
 | `src/hooks/__tests__/useCallPlaylists.coverage.test.tsx` | 9 | useCallPlaylists (coverage) · loads playlists on mount · handles list error · createPlaylist success and error … |
 | `src/hooks/__tests__/useCallTimers.coverage.test.tsx` | 9 | useCallTimers · startDurationTimer increments duration each second · startDurationTimer clears existing timer when restarted · stopDurationTimer stops increments … |
@@ -2615,6 +2615,7 @@ _nenhum item encontrado_
 | `supabase/functions/webauthn-authenticate/__tests__/verify.test.ts` | 9 | verify: assercao legitima e aceita e devolve signCount · verify: assinatura de OUTRA chave e rejeitada · verify: desafio diferente e rejeitado (replay) · verify: origem estranha e rejeitada (phishing) … |
 | `src/__tests__/rls/audit-logs.test.ts` | 8 | RLS — audit_logs (imutabilidade + admin-only read) · admin pode ler logs de auditoria · admin pode inserir via função RPC · admin NÃO pode atualizar logs (imutabilidade) … |
 | `src/hooks/__tests__/useAccounts.coverage.test.tsx` | 8 | useAccounts coverage · handles load error · create success · create error returns null … |
+| `src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx` | 8 | useAchievementNotifications (coverage) · não injeta badge inválida quando o enriquecimento falha · subscribes to channels and exposes initial state · handles a new badge award and shows a toast (no agent filter) … |
 | `src/hooks/__tests__/useAuth.coverage.test.tsx` | 8 | useAuth · calls getSession on mount and exposes API · hasRole false without profile, true with matching role · handles SIGNED_OUT auth state change … |
 | `src/hooks/__tests__/useCallRecording.coverage.test.tsx` | 8 | useCallRecording · starts recording successfully · handles start recording failure · stopAndSaveRecording returns null when no recorder … |
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
@@ -2641,7 +2642,6 @@ _nenhum item encontrado_
 | `src/components/calls/__tests__/WebRTCCall.test.tsx` | 7 | WebRTCCall · anexa o stream remoto ao elemento <audio> quando ontrack dispara · configura transceiver bidirecional e injeta a track local no sender · alterna a track do sender ao clicar em silenciar/ativar microfone … |
 | `src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts` | 7 | useLiveTranscription · estado inicial é seguro · define erro quando getUserMedia falha · startRecording ativa gravação e stopRecording faz cleanup … |
 | `src/hooks/__tests__/use-toast.coverage.test.tsx` | 7 | use-toast (coverage) · adds a toast and exposes state via useToast · dismisses a toast and removes it after delay · updates a toast in place … |
-| `src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx` | 7 | useAchievementNotifications (coverage) · subscribes to channels and exposes initial state · handles a new badge award and shows a toast (no agent filter) · does not toast when agentId filter does not match … |
 | `src/hooks/__tests__/useAgentStatus.coverage.test.tsx` | 7 | useAgentStatus (coverage) · fetches agents on mount · setAgent selects and toasts; clearAgent clears · updateStatus returns false without selected agent … |
 | `src/hooks/__tests__/useAlertHistory.coverage.test.tsx` | 7 | useAlertHistory · loads with empty stats when there are no alerts · computes severity counts, read rate, types and daily stats · applies search, severity and type filters … |
 | `src/hooks/__tests__/useBestTimeToContact.coverage.test.tsx` | 7 | useBestTimeToContact (coverage) · loads pattern and top patterns when contactId provided · does not query single pattern when no contactId (disabled) · recompute success path … |

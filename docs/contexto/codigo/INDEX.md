@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ac329a7ec41f39460fb6880cc667d2fd97fa2f2e` (2026-11-23T23:27:18-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `da41888b124e7a450f4ab4e4f06c7cbc93a11c27` (2026-11-23T23:36:28-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1704 |
 | arquivos_codigo | 1302 |
-| linhas_codigo | 175722 |
+| linhas_codigo | 175783 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,19 +370,19 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10005 nós · 25736 arestas · 777 comunidades · grafo do commit `ac329a7e`
-- comunidades maiores: lucide-react (287), client.ts (223), vitest (203), react (193), traceHeaders (183), usePageTitle (174), CallDetailDialog.tsx (169), badge.tsx (168), ref_https (119), Tabela de funcionalidades (114), cn (109), @tanstack/react-query (108)
+- 10006 nós · 25738 arestas · 778 comunidades · grafo do commit `da41888b`
+- comunidades maiores: card.tsx (237), client.ts (194), react (177), vitest (169), traceHeaders (158), usePageTitle (146), ref_https (119), utils.ts (118), safeFormatDistanceToNow (114), cn (114), useAuthContext (106), lucide-react (106)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (47)
+- docs/qa/05-PROGRESSO.md (48)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
+- src/hooks/useMultiChannelCall.ts (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
-- src/hooks/useMultiChannelCall.ts (7)
 - .github/workflows/contexto.yml (6)
 - src/components/calls/UnifiedSoftphone.tsx (6)
 - src/components/layout/CommandPalette.tsx (6)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `da41888` fix: registrar falha de leitura onde o erro era descartado (#219)
 - 2026-11-23 `ac329a7` fix: nao gravar dado derivado quando a leitura falha (#218)
 - 2026-11-23 `9d457f8` fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)
 - 2026-11-23 `747a161` fix: paineis de seguranca alarmam quando a leitura falha (#215)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `6be7a63` fix: importacao de DNC passa a conferir o resultado real da RPC (#206)
 - 2026-11-23 `9add2c1` fix: grava o desfecho real da chamada em call_sessions (#205)
 - 2026-11-23 `c1e7859` feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)
-- 2026-11-23 `6f3a7bf` feat: discador preditivo passa pela barreira de DNC e horario legal (#203)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ac329a7ec41f39460fb6880cc667d2fd97fa2f2e",
+  "sha": "da41888b124e7a450f4ab4e4f06c7cbc93a11c27",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 02:27 UTC",
+  "generated_at": "2026-11-24 02:36 UTC",
   "files_total": 1751,
   "code_files": 1548,
-  "code_lines": 191734
+  "code_lines": 191795
  },
  "version": "1.3.2",
- "facts_hash": "8949e543a05192a0",
+ "facts_hash": "0143fbdafce17459",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33595,7 +33595,7 @@
   {
    "module": "src/hooks",
    "files": 355,
-   "lines": 46693,
+   "lines": 46754,
    "tables": [
     "accounts",
     "active_sessions",
@@ -40470,6 +40470,10 @@
    {
     "file": "src/hooks/useAgentStatus.ts",
     "msg": "Erro ao atualizar status"
+   },
+   {
+    "file": "src/hooks/useAlerts.ts",
+    "msg": "Erro ao consultar a sessão de teste"
    },
    {
     "file": "src/hooks/useAlerts.ts",
@@ -57593,6 +57597,10 @@
    },
    {
     "file": "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
+    "name": "não injeta badge inválida quando o enriquecimento falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
     "name": "subscribes to channels and exposes initial state"
    },
    {
@@ -58102,6 +58110,10 @@
    {
     "file": "src/hooks/__tests__/useAlerts.coverage.test.tsx",
     "name": "creates test alerts (existing session path)"
+   },
+   {
+    "file": "src/hooks/__tests__/useAlerts.coverage.test.tsx",
+    "name": "nao cria sessao de teste quando a leitura da sessao falha"
    },
    {
     "file": "src/hooks/__tests__/useAlertsExport.test.ts",
@@ -98200,7 +98212,7 @@
   },
   "src/hooks/useAchievementNotifications.ts": {
    "path": "src/hooks/useAchievementNotifications.ts",
-   "lines": 114,
+   "lines": 125,
    "exports": [
     "function useAchievementNotifications"
    ],
@@ -98306,7 +98318,7 @@
   },
   "src/hooks/useAgentRanking.ts": {
    "path": "src/hooks/useAgentRanking.ts",
-   "lines": 333,
+   "lines": 336,
    "exports": [
     "interface AgentStats",
     "interface AgentGoals",
@@ -98517,7 +98529,7 @@
   },
   "src/hooks/useAlerts.ts": {
    "path": "src/hooks/useAlerts.ts",
-   "lines": 279,
+   "lines": 286,
    "exports": [
     "interface CallAlert",
     "interface ContactAlert",
@@ -98601,6 +98613,7 @@
     "alerts_page_contacts"
    ],
    "errors": [
+    "Erro ao consultar a sessão de teste",
     "Erro ao criar alertas de teste",
     "Erro ao criar sessão de teste",
     "Erro ao verificar alertas"
@@ -101962,7 +101975,7 @@
   },
   "src/hooks/useMultiChannelCall.ts": {
    "path": "src/hooks/useMultiChannelCall.ts",
-   "lines": 334,
+   "lines": 341,
    "exports": [
     "type CallChannel",
     "type CallStatus",
@@ -105495,10 +105508,11 @@
   },
   "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
-   "lines": 125,
+   "lines": 140,
    "is_test": true,
    "tests": [
     "useAchievementNotifications (coverage)",
+    "não injeta badge inválida quando o enriquecimento falha",
     "subscribes to channels and exposes initial state",
     "handles a new badge award and shows a toast (no agent filter)",
     "does not toast when agentId filter does not match",
@@ -105671,7 +105685,7 @@
   },
   "src/hooks/__tests__/useAlerts.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useAlerts.coverage.test.tsx",
-   "lines": 150,
+   "lines": 168,
    "is_test": true,
    "tests": [
     "useAlerts",
@@ -105682,7 +105696,8 @@
     "runs mark/batch/select/delete actions",
     "toggle removes existing selection",
     "batch no-ops with empty selection",
-    "creates test alerts (existing session path)"
+    "creates test alerts (existing session path)",
+    "nao cria sessao de teste quando a leitura da sessao falha"
    ]
   },
   "src/hooks/__tests__/useAlertsExport.test.ts": {
@@ -125496,10 +125511,25 @@
   }
  },
  "git": {
-  "sha": "ac329a7ec41f39460fb6880cc667d2fd97fa2f2e",
+  "sha": "da41888b124e7a450f4ab4e4f06c7cbc93a11c27",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "da41888",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: registrar falha de leitura onde o erro era descartado (#219)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
+     "src/hooks/__tests__/useAlerts.coverage.test.tsx",
+     "src/hooks/useAchievementNotifications.ts",
+     "src/hooks/useAgentRanking.ts",
+     "src/hooks/useAlerts.ts",
+     "src/hooks/useMultiChannelCall.ts"
+    ]
+   },
    {
     "sha": "ac329a7",
     "date": "2026-11-23",
@@ -125888,18 +125918,6 @@
      "supabase/functions/send-notification/__tests__/index.test.ts",
      "supabase/functions/send-notification/index.ts"
     ]
-   },
-   {
-    "sha": "fa2c38d",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: notify-blocked-ip exige sessao autenticada, valida corpo e escapa HTML (E010) (#188)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/pages/Login.tsx",
-     "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
-     "supabase/functions/notify-blocked-ip/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125908,11 +125926,15 @@
     29
    ],
    [
-    "src/components/compliance/DNCListManager.tsx",
+    "src/hooks/useMultiChannelCall.ts",
+    3
+   ],
+   [
+    "src/hooks/useAgentRanking.ts",
     2
    ],
    [
-    "src/hooks/useMultiChannelCall.ts",
+    "src/components/compliance/DNCListManager.tsx",
     2
    ],
    [
@@ -125940,8 +125962,20 @@
     2
    ],
    [
-    "supabase/functions/notify-blocked-ip/index.ts",
-    2
+    "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useAlerts.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useAchievementNotifications.ts",
+    1
+   ],
+   [
+    "src/hooks/useAlerts.ts",
+    1
    ],
    [
     "src/hooks/__tests__/useConversations.coverage.test.tsx",
@@ -125965,22 +125999,6 @@
    ],
    [
     "src/hooks/useMultiDeviceRing.ts",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useScorecards.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useAgentRanking.ts",
     1
    ]
   ]

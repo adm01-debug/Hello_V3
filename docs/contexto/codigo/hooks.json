@@ -649,7 +649,7 @@
    "hooks_exportados": [
     "useAchievementNotifications"
    ],
-   "linhas": 114,
+   "linhas": 125,
    "dominio": "hooks",
    "tabelas": [
     "agents",
@@ -746,7 +746,7 @@
    "hooks_exportados": [
     "useAgentRanking"
    ],
-   "linhas": 333,
+   "linhas": 336,
    "dominio": "hooks",
    "tabelas": [
     "agent_goals",
@@ -852,7 +852,7 @@
    "hooks_exportados": [
     "useAlerts"
    ],
-   "linhas": 279,
+   "linhas": 286,
    "dominio": "hooks",
    "tabelas": [
     "call_alerts",
@@ -2887,7 +2887,7 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 334,
+   "linhas": 341,
    "dominio": "hooks",
    "tabelas": [
     "hold_events"

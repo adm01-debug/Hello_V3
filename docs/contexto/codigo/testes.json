@@ -366,11 +366,11 @@
   {
    "arquivo": "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 125,
+   "linhas": 140,
    "testa": [
     "src/hooks/useAchievementNotifications.ts"
    ],
-   "casos": 6
+   "casos": 7
   },
   {
    "arquivo": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
@@ -421,11 +421,11 @@
   {
    "arquivo": "src/hooks/__tests__/useAlerts.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 150,
+   "linhas": 168,
    "testa": [
     "src/hooks/useAlerts.ts"
    ],
-   "casos": 8
+   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useAlertsExport.test.ts",
