@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "61fd9f9174aaf4e345e3801fe556f38668f2cf48",
+  "commit": "a67d70869d3d78c8792bdfeda875805d5a303c2b",
   "branch": "main",
-  "data_commit": "2026-11-24T17:15:41-03:00",
+  "data_commit": "2026-11-24T18:26:32-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a67d708",
+    "data": "2026-11-24",
+    "assunto": "fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)"
+   },
    {
     "sha": "61fd9f9",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "cf8c57b",
     "data": "2026-11-24",
     "assunto": "feat: reduz o chunk de entrada do front em ~15% (etapa 251) (#283)"
-   },
-   {
-    "sha": "43fa2c8",
-    "data": "2026-11-24",
-    "assunto": "feat: guard de CI contra N+1 em edge function (etapa 250) (#282)"
    }
   ],
-  "arquivos_mudados_7d": 1266,
+  "arquivos_mudados_7d": 1268,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 129
+    "mudancas": 130
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 129
+    "mudancas": 130
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 284
+    "commits": 285
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1744,
-  "arquivos_codigo": 1342,
-  "linhas_codigo": 178587,
+  "arquivos_total": 1745,
+  "arquivos_codigo": 1343,
+  "linhas_codigo": 178948,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 243,
   "cron_jobs": 11,
-  "testes": 398,
+  "testes": 399,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 376,
-   "linhas": 44680
+   "linhas": 44748
   },
   "src/contexts": {
    "arquivos": 5,
@@ -527,8 +527,8 @@
    "linhas": 232
   },
   "tests/e2e": {
-   "arquivos": 8,
-   "linhas": 836
+   "arquivos": 9,
+   "linhas": 1129
   },
   "vite.config.ts": {
    "arquivos": 1,
@@ -562,7 +562,7 @@
   },
   {
    "arquivo": "src/components/voice/VoiceAssistantDialog.tsx",
-   "linhas": 551
+   "linhas": 619
   },
   {
    "arquivo": "src/hooks/useSipCall.ts",

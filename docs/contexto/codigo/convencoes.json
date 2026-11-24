@@ -23,7 +23,7 @@
   ],
   "testes": [
    "co-localizado (__tests__) (372)",
-   "tests/ (8)",
+   "tests/ (9)",
    "e2e/ (7)"
   ],
   "edge_functions": "supabase/functions",
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)",
    "fix: alvo de toque de 44 px no celular (etapa 272) (#307)",
    "fix: telas internas cabem na largura do celular (etapa 271) (#306)",
    "test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)",
-   "chore: remove i18n.json e public/locales sem consumidores (#303)",
-   "chore: estados vazios que explicam o que falta (#302)"
+   "chore: remove i18n.json e public/locales sem consumidores (#303)"
   ]
  },
  "pr_template": null,

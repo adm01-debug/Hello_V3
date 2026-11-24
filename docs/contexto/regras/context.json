@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "61fd9f9174aaf4e345e3801fe556f38668f2cf48",
+  "sha": "a67d70869d3d78c8792bdfeda875805d5a303c2b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 20:16 UTC",
-  "files_total": 1791,
-  "code_files": 1589,
-  "code_lines": 194637
+  "generated_at": "2026-11-24 21:27 UTC",
+  "files_total": 1792,
+  "code_files": 1590,
+  "code_lines": 194998
  },
  "version": "1.3.2",
- "facts_hash": "26bb2a0c2cf20937",
+ "facts_hash": "21eb3ba56f7669c5",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 656,
+   ".ts": 657,
    ".tsx": 652,
    ".sql": 246,
    ".mjs": 28,
@@ -33541,7 +33541,7 @@
   {
    "module": "src/components",
    "files": 376,
-   "lines": 44680,
+   "lines": 44748,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34851,8 +34851,8 @@
   },
   {
    "module": "tests",
-   "files": 8,
-   "lines": 836,
+   "files": 9,
+   "lines": 1129,
    "tables": [],
    "exports": [
     "adminSession.ts: SeedAdminSessionOptions, seedAdminSession",
@@ -34869,6 +34869,7 @@
     "tests/e2e/auth.spec.ts",
     "tests/e2e/performance.spec.ts",
     "tests/e2e/screenshots.spec.ts",
+    "tests/e2e/teclado.spec.ts",
     "tests/e2e/toque.spec.ts",
     "tests/e2e/webhook-audit-ndjson.spec.ts",
     "tests/e2e/workflow.spec.ts",
@@ -71940,6 +71941,18 @@
     "name": "captura 5 telas em 3 larguras e mede transbordo horizontal"
    },
    {
+    "file": "tests/e2e/teclado.spec.ts",
+    "name": "Etapa 273 - navegacao por teclado no fluxo de chamada"
+   },
+   {
+    "file": "tests/e2e/teclado.spec.ts",
+    "name": "percorre o discador com Tab e mede o foco"
+   },
+   {
+    "file": "tests/e2e/teclado.spec.ts",
+    "name": "dialogo do assistente prende o foco, fecha com Esc e devolve ao gatilho"
+   },
+   {
     "file": "tests/e2e/toque.spec.ts",
     "name": "Etapa 272 - alvo de toque em largura de celular"
    },
@@ -96086,7 +96099,7 @@
   },
   "src/components/voice/VoiceAssistantDialog.tsx": {
    "path": "src/components/voice/VoiceAssistantDialog.tsx",
-   "lines": 551,
+   "lines": 619,
    "exports": [
     "function VoiceAssistantDialog"
    ],
@@ -123761,6 +123774,34 @@
     "captura 5 telas em 3 larguras e mede transbordo horizontal"
    ]
   },
+  "tests/e2e/teclado.spec.ts": {
+   "path": "tests/e2e/teclado.spec.ts",
+   "lines": 293,
+   "is_test": true,
+   "params": [
+    {
+     "name": "MAX_TABS",
+     "value": "40"
+    },
+    {
+     "name": "ROTA_DISCADOR",
+     "value": "'/'"
+    }
+   ],
+   "rule_comments": [
+    "pode ficar na fila para sempre. Prazo por passo = fail rapido com o",
+    "Tres Tabs: o foco nao pode escapar do modal."
+   ],
+   "temporal": [
+    "expect(dialogo, 'Enter no gatilho nao abriu o dialogo').toBeVisible({ timeout: 10_000 }),",
+    "expect(dialogo, 'Esc nao fechou o dialogo').toBeHidden({ timeout: 10_000 }),"
+   ],
+   "tests": [
+    "Etapa 273 - navegacao por teclado no fluxo de chamada",
+    "percorre o discador com Tab e mede o foco",
+    "dialogo do assistente prende o foco, fecha com Esc e devolve ao gatilho"
+   ]
+  },
   "tests/e2e/toque.spec.ts": {
    "path": "tests/e2e/toque.spec.ts",
    "lines": 181,
@@ -123858,10 +123899,21 @@
   }
  },
  "git": {
-  "sha": "61fd9f9174aaf4e345e3801fe556f38668f2cf48",
+  "sha": "a67d70869d3d78c8792bdfeda875805d5a303c2b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a67d708",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/voice/VoiceAssistantDialog.tsx",
+     "tests/e2e/teclado.spec.ts"
+    ]
+   },
    {
     "sha": "61fd9f9",
     "date": "2026-11-24",
@@ -124318,18 +124370,6 @@
      "supabase/functions/_shared/ip-range_test.ts",
      "supabase/functions/validate-ip/index.ts"
     ]
-   },
-   {
-    "sha": "4204df7",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: avisa meta por transicao em vez de repetir o toast (etapa 246) (#277)",
-    "files": [
-     "docs/agentes/mapa-repo.md",
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-     "src/hooks/useQueueMetrics.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -124339,7 +124379,7 @@
    ],
    [
     "docs/agentes/mapa-repo.md",
-    6
+    5
    ],
    [
     "src/hooks/useContacts.ts",
@@ -124390,6 +124430,14 @@
     2
    ],
    [
+    "src/components/voice/VoiceAssistantDialog.tsx",
+    1
+   ],
+   [
+    "tests/e2e/teclado.spec.ts",
+    1
+   ],
+   [
     "src/components/calls/softphone/DialpadTab.tsx",
     1
    ],
@@ -124403,14 +124451,6 @@
    ],
    [
     "src/components/dialer/phone/DeviceNameSetting.tsx",
-    1
-   ],
-   [
-    "src/components/dialer/phone/PhoneQuickAccess.tsx",
-    1
-   ],
-   [
-    "src/components/dialer/phone/RingtoneSettings.tsx",
     1
    ]
   ]

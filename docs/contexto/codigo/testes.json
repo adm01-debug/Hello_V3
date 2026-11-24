@@ -5,10 +5,10 @@
   "vitest",
   "playwright"
  ],
- "total": 398,
+ "total": 399,
  "por_tipo": {
   "contrato": 1,
-  "e2e": 15,
+  "e2e": 16,
   "pytest": 2,
   "unit": 379
  },
@@ -19,7 +19,7 @@
   },
   {
    "padrao": "tests/",
-   "arquivos": 8
+   "arquivos": 9
   },
   {
    "padrao": "e2e/",
@@ -3611,6 +3611,13 @@
    "linhas": 286,
    "testa": [],
    "casos": 2
+  },
+  {
+   "arquivo": "tests/e2e/teclado.spec.ts",
+   "tipo": "e2e",
+   "linhas": 293,
+   "testa": [],
+   "casos": 4
   },
   {
    "arquivo": "tests/e2e/toque.spec.ts",

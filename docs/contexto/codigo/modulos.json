@@ -2102,6 +2102,7 @@
     "status",
     "string",
     "supervisor",
+    "tab",
     "user",
     "viewer"
    ],
@@ -3287,7 +3288,7 @@
    "modulo": "components/voice",
    "arquivos": 7,
    "testes": 0,
-   "linhas": 1371,
+   "linhas": 1439,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3319,7 +3320,8 @@
    "papeis": [
     "button",
     "dialog",
-    "status"
+    "status",
+    "tab"
    ],
    "diretos": {
     "edges": [],
@@ -5046,6 +5048,7 @@
     "searchbox",
     "status",
     "supervisor",
+    "tab",
     "user"
    ],
    "diretos": {
@@ -6314,6 +6317,7 @@
     "status",
     "string",
     "supervisor",
+    "tab",
     "user",
     "viewer"
    ],
@@ -7335,6 +7339,7 @@
     "status",
     "string",
     "supervisor",
+    "tab",
     "user",
     "viewer"
    ],
