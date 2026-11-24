@@ -150,7 +150,7 @@ Esta tabela **nao** declara papel nenhum — e insumo para a decisao. "O que a t
 | `/blf` | `BlfBoard` | Painel de status dos ramais da equipe (`useBlfBoard`) — expoe presenca de colegas | `agent` | sim |
 | `/contacts/insights` | `ContactInsights` | Insights agregados de contatos/leads (`useContactInsights`) | `supervisor` | sim |
 | `/history` | `CallHistory` | Historico de chamadas do proprio atendente | `agent` | nao |
-| `/call-history` | `CallHistory` | Mesma tela de `/history` (rota duplicada — ver Observacoes) | `agent` | nao |
+| `/call-history` | `CallHistoryAlias` | Alias de `/history`: redireciona preservando a query string (`?session=…`) | `agent` | nao |
 | `/analytics` | `CallAnalytics` | Analytics agregado de chamadas da operacao | `supervisor` | nao |
 | `/alerts` | `Alerts` | Central de alertas (fila, espera, sentimento) de toda a operacao | `supervisor` | sim |
 | `/alert-history` | `AlertHistory` | Historico dos alertas da operacao (`useAlertHistory`) | `supervisor` | nao |
@@ -198,6 +198,6 @@ Esta tabela **nao** declara papel nenhum — e insumo para a decisao. "O que a t
 
 ### Observacoes que sairam deste levantamento
 
-- `/history` e `/call-history` apontam para o **mesmo componente** (`CallHistory`): e uma rota duplicada, nao duas telas.
+- `/history` e a rota canonica do `CallHistory`; `/call-history` e **alias** (`CallHistoryAlias`, `protectedRoutes.tsx`) que redireciona para `/history` preservando a query string — nao e mais uma segunda montagem do mesmo componente (etapa 266).
 - `/dashboard` (`Index`) e `/` (`PhoneDialer`) coexistem: a raiz autenticada e o discador, e o menu aponta para `/dashboard`.
 - O catch-all `*` (`NotFound`) nao deve receber `roles:`: precisa continuar acessivel a qualquer sessao autenticada.

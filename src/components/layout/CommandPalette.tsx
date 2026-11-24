@@ -46,7 +46,7 @@ const allRoutes = [
   { title: 'Multi-device Ring', url: '/multi-device-ring', icon: PhoneCall, group: 'Ferramentas' },
   { title: 'Hot Desking', url: '/hot-desking', icon: Headphones, group: 'Ferramentas' },
   { title: 'Callbacks', url: '/callbacks', icon: Calendar, group: 'Ferramentas' },
-  { title: 'Histórico de Chamadas', url: '/call-history', icon: FileText, group: 'Ferramentas' },
+  { title: 'Histórico de Chamadas', url: '/history', icon: FileText, group: 'Ferramentas' },
   { title: 'Gravações', url: '/recordings', icon: Disc, group: 'Ferramentas' },
   { title: 'Biblioteca de Calls', url: '/call-library', icon: Library, group: 'Ferramentas' },
   { title: 'Battle Cards', url: '/battle-cards', icon: Swords, group: 'Ferramentas' },

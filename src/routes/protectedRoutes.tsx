@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import type { UserRole } from "@/hooks/useAuth";
+import { CallHistoryAlias } from "@/routes/CallHistoryAlias";
 
 const Index = lazy(() => import("@/pages/Index"));
 const PhoneDialer = lazy(() => import("@/pages/PhoneDialer"));
@@ -98,7 +99,7 @@ const SloDashboard = lazy(() => import("@/pages/admin/SloDashboard"));
 
 export interface RouteConfig {
   path: string;
-  element: React.LazyExoticComponent<React.ComponentType>;
+  element: React.ComponentType | React.LazyExoticComponent<React.ComponentType>;
   roles?: UserRole[];
 }
 
@@ -113,7 +114,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/blf", element: BlfBoard },
   { path: "/contacts/insights", element: ContactInsights },
    { path: "/history", element: CallHistory },
-  { path: "/call-history", element: CallHistory },
+  { path: "/call-history", element: CallHistoryAlias },
   { path: "/analytics", element: CallAnalytics },
   { path: "/alerts", element: Alerts },
   { path: "/alert-history", element: AlertHistory },
