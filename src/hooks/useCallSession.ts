@@ -134,12 +134,16 @@ export function useCallSession() {
 
     // Populate searchable transcripts (trigger keeps tsvector updated).
     try {
-      await supabase.from('call_transcripts_searchable').upsert({
+      // O builder do Postgrest resolve com `{ error }` — await sozinho não lança em
+      // erro de banco, então o catch abaixo só pegaria falha de rede.
+      const { error } = await supabase.from('call_transcripts_searchable').upsert({
         call_session_id: sessionId,
         full_text: fullText,
         agent_name: agentName ?? null,
         duration_seconds: durationSeconds,
       }, { onConflict: 'call_session_id' });
+      // Índice de busca pode degradar sem interromper a chamada.
+      if (error) log.error('Failed to populate searchable transcripts', error);
     } catch (e) {
       log.error('Failed to populate searchable transcripts', e);
     }
