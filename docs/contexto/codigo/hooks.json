@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 193,
+ "total": 194,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -332,13 +332,15 @@
     "useContext"
    ],
    "canais_realtime": [],
-   "usado_por": 29,
+   "usado_por": 31,
    "usado_por_arquivos": [
     "src/App.tsx",
     "src/components/auth/ProtectedRoute.tsx",
     "src/components/auth/ReauthDialog.tsx",
+    "src/components/auth/SessionExpiredDialog.tsx",
     "src/components/layout/AppSidebar.tsx",
     "src/contexts/ReauthContext.tsx",
+    "src/contexts/SessionExpiryContext.tsx",
     "src/hooks/telemetry/useTelemetry.ts",
     "src/hooks/useAvatar.ts",
     "src/hooks/useMFA.ts",
@@ -361,8 +363,7 @@
     "src/pages/PasswordResetApproval.tsx",
     "src/pages/Register.tsx",
     "src/pages/Roles.tsx",
-    "src/pages/SecurityDashboard.tsx",
-    "src/pages/admin/SecurityAuditDashboard.tsx"
+    "src/pages/SecurityDashboard.tsx"
    ],
    "coberto_por_testes": 1
   },
@@ -415,6 +416,34 @@
     "src/hooks/useReauth.ts"
    ],
    "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/contexts/SessionExpiryContext.tsx",
+   "hooks_exportados": [
+    "useSessionExpiry"
+   ],
+   "linhas": 102,
+   "dominio": "contexts",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useCallback",
+    "useContext",
+    "useEffect",
+    "useMemo",
+    "useQueryClient",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 3,
+   "usado_por_arquivos": [
+    "src/App.tsx",
+    "src/components/auth/ProtectedRoute.tsx",
+    "src/components/auth/SessionExpiredDialog.tsx"
+   ],
+   "coberto_por_testes": 1
   },
   {
    "arquivo": "src/contexts/ThemeContext.tsx",

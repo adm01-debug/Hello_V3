@@ -7,22 +7,22 @@
    "src/routes (1)"
   ],
   "componentes": [
-   "src/components (319)",
+   "src/components (320)",
    "src/pages (126)",
-   "src/contexts (4)"
+   "src/contexts (5)"
   ],
   "hooks": [
    "src/hooks (174)",
    "src/components (12)",
-   "src/contexts (4)"
+   "src/contexts (5)"
   ],
   "servicos_logica": [
-   "src/lib (89)",
+   "src/lib (90)",
    "src/integrations (3)",
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (362)",
+   "co-localizado (__tests__) (365)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -48,7 +48,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (451)"
+  ".tsx (453)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: preserva o formulario e reautentica quando a sessao expira (#295)",
    "fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)",
    "fix: separa o cache de notificacoes por usuario (etapa 221) (#293)",
    "fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)",
-   "fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)",
-   "fix: remove 13 testes-espelho de hooks e de cache (etapa 284 parte 2) (#290)"
+   "fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)"
   ]
  },
  "pr_template": null,

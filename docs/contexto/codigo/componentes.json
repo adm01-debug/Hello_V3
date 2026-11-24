@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 451,
+ "total": 453,
  "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
@@ -28,7 +28,7 @@
     "App"
    ],
    "export_default": "App",
-   "linhas": 124,
+   "linhas": 139,
    "dominio": null,
    "hooks_locais": [],
    "tabelas": [],
@@ -671,10 +671,11 @@
     "ProtectedRoute"
    ],
    "export_default": null,
-   "linhas": 38,
+   "linhas": 43,
    "dominio": "components/auth",
    "hooks_locais": [
-    "useAuthContext"
+    "useAuthContext",
+    "useSessionExpiry"
    ],
    "tabelas": [],
    "edges": [],
@@ -693,6 +694,23 @@
     "useAuthContext",
     "useMFA",
     "useReauth"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/auth/SessionExpiredDialog.tsx",
+   "exports": [
+    "SessionExpiredDialog"
+   ],
+   "export_default": null,
+   "linhas": 103,
+   "dominio": "components/auth",
+   "hooks_locais": [
+    "useAuthContext",
+    "useSessionExpiry"
    ],
    "tabelas": [],
    "edges": [],
@@ -4176,7 +4194,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 246,
+   "usado_por": 247,
    "orfao": false
   },
   {
@@ -4336,7 +4354,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 48,
+   "usado_por": 49,
    "orfao": false
   },
   {
@@ -4479,7 +4497,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 93,
+   "usado_por": 94,
    "orfao": false
   },
   {
@@ -4512,7 +4530,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 68,
+   "usado_por": 69,
    "orfao": false
   },
   {
@@ -5118,7 +5136,7 @@
    ],
    "tabelas": [],
    "edges": [],
-   "usado_por": 29,
+   "usado_por": 31,
    "orfao": false
   },
   {
@@ -5158,6 +5176,23 @@
    "tabelas": [],
    "edges": [],
    "usado_por": 2,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/contexts/SessionExpiryContext.tsx",
+   "exports": [
+    "SessionExpiryProvider"
+   ],
+   "export_default": null,
+   "linhas": 102,
+   "dominio": "contexts",
+   "hooks_locais": [
+    "useAuthContext",
+    "useSessionExpiry"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 3,
    "orfao": false
   },
   {

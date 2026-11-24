@@ -354,13 +354,13 @@
   },
   {
    "modulo": "components/auth",
-   "arquivos": 7,
-   "testes": 1,
-   "linhas": 1066,
+   "arquivos": 8,
+   "testes": 3,
+   "linhas": 1174,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 7,
+   "componentes": 8,
    "hooks_locais": [
     "useAuth",
     "useAuthActions",
@@ -373,6 +373,7 @@
     "usePermissions",
     "useReauth",
     "useReauthContext",
+    "useSessionExpiry",
     "useWebAuthn"
    ],
    "hooks_definidos": [
@@ -3379,13 +3380,13 @@
   },
   {
    "modulo": "contexts",
-   "arquivos": 4,
+   "arquivos": 5,
    "testes": 0,
-   "linhas": 486,
+   "linhas": 588,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 4,
+   "componentes": 5,
    "hooks_locais": [
     "useAuth",
     "useAuthActions",
@@ -3400,12 +3401,14 @@
     "useDNCCompliance",
     "useMultiChannelCall",
     "useReauthContext",
+    "useSessionExpiry",
     "useTheme"
    ],
    "hooks_definidos": [
     "useAuthContext",
     "useCallContext",
     "useReauthContext",
+    "useSessionExpiry",
     "useTheme"
    ],
    "edges": [
@@ -3461,7 +3464,8 @@
     "lib"
    ],
    "pacotes_externos": [
-    "@supabase/supabase-js"
+    "@supabase/supabase-js",
+    "@tanstack/react-query"
    ]
   },
   {
@@ -4741,9 +4745,9 @@
   },
   {
    "modulo": "lib",
-   "arquivos": 51,
+   "arquivos": 52,
    "testes": 0,
-   "linhas": 6467,
+   "linhas": 6497,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5125,7 +5129,7 @@
   {
    "modulo": "lib/__tests__",
    "arquivos": 0,
-   "testes": 76,
+   "testes": 77,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],

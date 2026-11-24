@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ca6e6dc109` · branch `main` · 2026-11-24 16:49 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4a65b1f401` · branch `main` · 2026-11-24 17:00 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1471,6 +1471,8 @@ _nenhum item encontrado_
 | `reauth-password` | type=password | `src/components/auth/ReauthDialog.tsx` |
 | `mfa-code` | max | `src/components/auth/ReauthDialog.tsx` |
 | `reauth-password-only` | type=password | `src/components/auth/ReauthDialog.tsx` |
+| `session-expired-email` | type=email | `src/components/auth/SessionExpiredDialog.tsx` |
+| `session-expired-password` | type=password | `src/components/auth/SessionExpiredDialog.tsx` |
 | `scheduled_date` | type=date | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
 | `max_concurrent_calls` | max, type=number, min=1, max=10, max | `src/components/dialer/CreateCampaignDialog.tsx` |
 | `call_timeout_seconds` | type=number, min=10, max=120 | `src/components/dialer/CreateCampaignDialog.tsx` |
@@ -1950,6 +1952,7 @@ _nenhum item encontrado_
 | `WEBHOOK_MAX_DELAY_MIN` | `100` | `src/lib/security-alerts-webhook.ts` |
 | `WEBHOOK_MAX_DELAY_MAX` | `60` | `src/lib/security-alerts-webhook.ts` |
 | `WEBHOOK_MAX_DELAY_DEFAULT` | `5` | `src/lib/security-alerts-webhook.ts` |
+| `SESSION_EXPIRED_EVENT` | `'app:session-expired'` | `src/lib/session-expiry.ts` |
 | `MAX_SYNC_HISTORY_ENTRIES` | `12` | `src/lib/sync-history.ts` |
 | `TRACE_HEADER` | `'x-request-id'` | `src/lib/tracing.ts` |
 | `TRACE_OP_HEADER` | `'x-trace-operation'` | `src/lib/tracing.ts` |
@@ -2652,7 +2655,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3521 testes em 376 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3535 testes em 379 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2837,6 +2840,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/health-score.property.test.ts` | 7 | computeHealth — property-based (1000 runs) · score sempre entre 0 e 100 · máximo absoluto = 100 quando tudo true · mínimo absoluto = 0 quando tudo false … |
 | `src/lib/__tests__/safe-number.instrumentation.test.ts` | 7 | safe-number instrumentation · emite evento com motivo e helper para input inválido · reporta clamp de min/max sem descartar o valor · propaga requestId ativo para os eventos … |
 | `src/lib/__tests__/security-alerts-webhook-queue.property.test.ts` | 7 | security-alerts-webhook-queue — property-based (fast-check) · enqueue nunca excede MAX_QUEUE (50) · clearWebhookQueue sempre esvazia · hashEndpoint é determinístico e sempre 12 chars hex … |
+| `src/lib/__tests__/session-expiry.test.ts` | 7 | isSessionExpiredError · reconhece o 401 do fetch do supabase-js · reconhece o PGRST301 do PostgREST mesmo sem status · reconhece a mensagem de JWT vencido de edge function … |
 | `src/lib/metrics/__tests__/mos.test.ts` | 7 | classifyMos · usa 3.5 como fronteira de ruim · separa mediano, bom e excelente · trata ausência e valores inválidos como unknown … |
 | `src/lib/mfa/__tests__/index.coverage.test.ts` | 7 | mfa (coverage) · returns disabled default when no settings row · maps existing settings row including backup codes · handles settings row with falsy/missing fields … |
 | `src/lib/security/__tests__/helmet-config.coverage.test.ts` | 7 | helmet-config (coverage) · DEFAULT_SECURITY_HEADERS has expected secure defaults · getSecurityHeaders returns defaults when no overrides · getSecurityHeaders merges overrides … |
@@ -2926,6 +2930,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
+| `src/components/auth/__tests__/SessionExpiredDialog.test.tsx` | 4 | sessão expirada · mantém o formulário preenchido e reautentica sem sair da tela · mostra o erro de credencial e mantém o diálogo aberto · renova sozinho quando o refresh token ainda vale |
 | `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 4 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado |
 | `src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx` | 4 | DialpadTab - rótulo acessível no apagar (A-123) · expõe  · ConferenceSection - rótulo acessível ao remover participante (A-123) · identifica o participante que será removido |
 | `src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx` | 4 | CoachingAssignmentsPanel - regra do coaching automático (A-131) · explica a regra com os números que vieram da edge · mostra a contagem atual de cada agente que ficou de fora · sem regra conhecida, orienta a rodar a geração |
@@ -2954,9 +2959,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
 | `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
-| `src/lib/__tests__/pendingCallWrites.test.ts` | 4 | pendingCallWrites · enfileira e retira em ordem FIFO · descarta o mais antigo quando chega a 20 itens · clear() esvazia a fila |
-| `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
-| … +76 linhas — lista completa em `context.json` | | |
+| … +79 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2966,6 +2969,7 @@ _nenhum item encontrado_
 
 | Chamada | Arquivo |
 |---|---|
+| `notifySessionExpired` | `src/App.tsx` |
 | `notify` | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `invoke(` | `src/components/calls/ActiveCallBar.tsx` |
 | `notifyOnDegrade` | `src/components/calls/CallQualityIndicator.tsx` |
@@ -3050,6 +3054,7 @@ _nenhum item encontrado_
 | `notify_on_critical` | `src/integrations/supabase/types.ts` |
 | `notify_on_warning` | `src/integrations/supabase/types.ts` |
 | `enqueue(` | `src/lib/pendingCallWrites.ts` |
+| `notifySessionExpired` | `src/lib/session-expiry.ts` |
 | `invoke(` | `src/lib/tracing.ts` |
 | `invoke(` | `src/lib/notifications/index.ts` |
 | `sendNotification` | `src/lib/notifications/index.ts` |

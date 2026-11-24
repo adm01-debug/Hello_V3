@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ca6e6dc109837f6ffb0e8a8bb60ccc62aea3c758",
+  "sha": "4a65b1f401e1bc3c72c9d7644cafe02ec9b702ca",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 16:49 UTC",
-  "files_total": 1777,
-  "code_files": 1573,
-  "code_lines": 192753
+  "generated_at": "2026-11-24 17:00 UTC",
+  "files_total": 1783,
+  "code_files": 1579,
+  "code_lines": 193252
  },
  "version": "1.3.2",
- "facts_hash": "b7267f1a2bf569e6",
+ "facts_hash": "05c3a0060b584067",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,8 +153,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 647,
-   ".ts": 645,
+   ".tsx": 651,
+   ".ts": 647,
    ".sql": 246,
    ".mjs": 28,
    ".py": 5,
@@ -32262,6 +32262,13 @@
     "file": "scripts/ai-context/cenarios.mjs"
    },
    {
+    "path": "/dashboard",
+    "component": "ProtectedRoute",
+    "guard": "ProtectedRoute",
+    "roles": [],
+    "file": "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx"
+   },
+   {
     "path": "/falso",
     "component": "A",
     "guard": "",
@@ -32281,6 +32288,13 @@
     "guard": "",
     "roles": [],
     "file": "scripts/ai-context/gerar.unit.mjs"
+   },
+   {
+    "path": "/login",
+    "component": "p",
+    "guard": "",
+    "roles": [],
+    "file": "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx"
    },
    {
     "path": "/old",
@@ -32369,7 +32383,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 373,
+  "components_count": 376,
   "hooks": [
    {
     "name": "useContacts",
@@ -32430,6 +32444,10 @@
    {
     "name": "useReauthContext",
     "file": "src/contexts/ReauthContext.tsx"
+   },
+   {
+    "name": "useSessionExpiry",
+    "file": "src/contexts/SessionExpiryContext.tsx"
    },
    {
     "name": "useTheme",
@@ -33276,6 +33294,14 @@
    },
    {
     "guard": "ProtectedRoute",
+    "file": "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx"
+   },
+   {
+    "guard": "ProtectedRoute",
+    "file": "src/components/auth/__tests__/SessionExpiredDialog.test.tsx"
+   },
+   {
+    "guard": "ProtectedRoute",
     "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx"
    }
   ]
@@ -33459,7 +33485,7 @@
   {
    "module": "src",
    "files": 3,
-   "lines": 170,
+   "lines": 185,
    "tables": [
     "webhook_flush_metrics"
    ],
@@ -33520,8 +33546,8 @@
   },
   {
    "module": "src/components",
-   "files": 373,
-   "lines": 44349,
+   "files": 376,
+   "lines": 44662,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33693,7 +33719,10 @@
     "src/components/auth/PermissionGate.tsx",
     "src/components/auth/ProtectedRoute.tsx",
     "src/components/auth/ReauthDialog.tsx",
+    "src/components/auth/SessionExpiredDialog.tsx",
     "src/components/auth/__tests__/PermissionGate.test.tsx",
+    "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx",
+    "src/components/auth/__tests__/SessionExpiredDialog.test.tsx",
     "src/components/blf/BlfLampCard.tsx",
     "src/components/blf/BlfSummaryBar.tsx",
     "src/components/call-history/CallDetailDialog.tsx",
@@ -33722,30 +33751,30 @@
     "src/components/calls/WebRTCCall.tsx",
     "src/components/calls/WebRTCMetricsPanel.tsx",
     "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
-    "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
-    "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
-    "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx"
+    "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx"
    ]
   },
   {
    "module": "src/contexts",
-   "files": 4,
-   "lines": 486,
+   "files": 5,
+   "lines": 588,
    "tables": [],
    "exports": [
     "AuthContext.tsx: UserRole, UserProfile, AuthProvider, useAuthContext",
     "CallContext.tsx: CallProvider, useCallContext",
     "ReauthContext.tsx: ReauthAction, REAUTH_TIMEOUT_MS, REAUTH_GRANT_TTL_MS, VerificationGrant, ReauthProvider, useReauthContext",
+    "SessionExpiryContext.tsx: SessionExpiryProvider, useSessionExpiry",
     "ThemeContext.tsx: ThemeMode, ThemeSkin, ThemeProvider, useTheme"
    ],
    "docs": [
     "AuthContext.tsx: eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule",
     "ReauthContext.tsx: eslint-disable react-refresh/only-export-components -- provider and hook deliberately share this module",
+    "SessionExpiryContext.tsx: eslint-disable react-refresh/only-export-components -- provider e hook compartilham o módulo",
     "ThemeContext.tsx: eslint-disable react-refresh/only-export-components -- file intentionally exports variants/hooks alongside components; HMR-only rule"
    ],
    "deps": [
     "@supabase/supabase-js",
+    "@tanstack/react-query",
     "react"
    ],
    "imports_modules": [
@@ -33757,6 +33786,7 @@
     "src/contexts/AuthContext.tsx",
     "src/contexts/CallContext.tsx",
     "src/contexts/ReauthContext.tsx",
+    "src/contexts/SessionExpiryContext.tsx",
     "src/contexts/ThemeContext.tsx"
    ]
   },
@@ -34085,8 +34115,8 @@
   },
   {
    "module": "src/lib",
-   "files": 179,
-   "lines": 21810,
+   "files": 181,
+   "lines": 21879,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -34132,8 +34162,8 @@
     "security-alerts-webhook-validation.ts: WEBHOOK_URL_MAX_LENGTH, WEBHOOK_SECRET_MIN_LENGTH, WEBHOOK_SECRET_MAX_LENGTH, WebhookDraft, WebhookField, WebhookValidationResult",
     "security-alerts-webhook.ts: WEBHOOK_MAX_ATTEMPTS_MIN, WEBHOOK_MAX_ATTEMPTS_MAX, WEBHOOK_MAX_ATTEMPTS_DEFAULT, WEBHOOK_BASE_DELAY_MIN, WEBHOOK_BASE_DELAY_MAX, WEBHOOK_BASE_DELAY_DEFAULT",
     "security-report-data.ts: SecurityFeature, SecurityDecision, securityFeatures, securityDecisions",
-    "sync-history.ts: MAX_SYNC_HISTORY_ENTRIES, SyncHistoryEntry, SyncHistoryStorageLike, buildSyncHistoryKey, sanitizeEntry, appendEntry",
-    "talkRatio.ts: TalkRatioSegment, TalkRatioComputation, classifyTalkRatio, computeTalkRatio"
+    "session-expiry.ts: SESSION_EXPIRED_EVENT, isSessionExpiredError, notifySessionExpired",
+    "sync-history.ts: MAX_SYNC_HISTORY_ENTRIES, SyncHistoryEntry, SyncHistoryStorageLike, buildSyncHistoryKey, sanitizeEntry, appendEntry"
    ],
    "docs": [
     "agent-assist-utils.ts: Utilitários puros para Real-Time Agent Assist. Sem efeitos colaterais — fáceis de testar.",
@@ -34210,6 +34240,7 @@
     "src/lib/security-alerts-webhook-validation.ts",
     "src/lib/security-alerts-webhook.ts",
     "src/lib/security-report-data.ts",
+    "src/lib/session-expiry.ts",
     "src/lib/sync-history.ts",
     "src/lib/talkRatio.ts",
     "src/lib/tracing.ts",
@@ -34250,8 +34281,7 @@
     "src/lib/__tests__/fixes-exhaustive.test.ts",
     "src/lib/__tests__/guard-edge-numeric.test.ts",
     "src/lib/__tests__/hash-endpoint.test.ts",
-    "src/lib/__tests__/health-score.property.test.ts",
-    "src/lib/__tests__/holdReminderSounds.coverage.test.tsx"
+    "src/lib/__tests__/health-score.property.test.ts"
    ]
   },
   {
@@ -39680,6 +39710,16 @@
    {
     "file": "src/components/auth/ReauthDialog.tsx",
     "field": "reauth-password-only",
+    "rules": "type=password"
+   },
+   {
+    "file": "src/components/auth/SessionExpiredDialog.tsx",
+    "field": "session-expired-email",
+    "rules": "type=email"
+   },
+   {
+    "file": "src/components/auth/SessionExpiredDialog.tsx",
+    "field": "session-expired-password",
     "rules": "type=password"
    },
    {
@@ -50788,6 +50828,11 @@
     "value": "5"
    },
    {
+    "file": "src/lib/session-expiry.ts",
+    "name": "SESSION_EXPIRED_EVENT",
+    "value": "'app:session-expired'"
+   },
+   {
     "file": "src/lib/sync-history.ts",
     "name": "MAX_SYNC_HISTORY_ENTRIES",
     "value": "12"
@@ -58046,6 +58091,34 @@
    {
     "file": "src/components/auth/__tests__/PermissionGate.test.tsx",
     "name": "usa requireAll na checagem por lista de permissoes"
+   },
+   {
+    "file": "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx",
+    "name": "ProtectedRoute com sessão expirada"
+   },
+   {
+    "file": "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx",
+    "name": "redireciona para /login quando o usuário não está autenticado"
+   },
+   {
+    "file": "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx",
+    "name": "mantém a tela montada enquanto o diálogo de sessão expirada está aberto"
+   },
+   {
+    "file": "src/components/auth/__tests__/SessionExpiredDialog.test.tsx",
+    "name": "sessão expirada"
+   },
+   {
+    "file": "src/components/auth/__tests__/SessionExpiredDialog.test.tsx",
+    "name": "mantém o formulário preenchido e reautentica sem sair da tela"
+   },
+   {
+    "file": "src/components/auth/__tests__/SessionExpiredDialog.test.tsx",
+    "name": "mostra o erro de credencial e mantém o diálogo aberto"
+   },
+   {
+    "file": "src/components/auth/__tests__/SessionExpiredDialog.test.tsx",
+    "name": "renova sozinho quando o refresh token ainda vale"
    },
    {
     "file": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
@@ -68444,6 +68517,34 @@
     "name": "blocks vbscript: protocol"
    },
    {
+    "file": "src/lib/__tests__/session-expiry.test.ts",
+    "name": "isSessionExpiredError"
+   },
+   {
+    "file": "src/lib/__tests__/session-expiry.test.ts",
+    "name": "reconhece o 401 do fetch do supabase-js"
+   },
+   {
+    "file": "src/lib/__tests__/session-expiry.test.ts",
+    "name": "reconhece o PGRST301 do PostgREST mesmo sem status"
+   },
+   {
+    "file": "src/lib/__tests__/session-expiry.test.ts",
+    "name": "reconhece a mensagem de JWT vencido de edge function"
+   },
+   {
+    "file": "src/lib/__tests__/session-expiry.test.ts",
+    "name": "não confunde erro de permissão nem falha genérica com sessão expirada"
+   },
+   {
+    "file": "src/lib/__tests__/session-expiry.test.ts",
+    "name": "notifySessionExpired"
+   },
+   {
+    "file": "src/lib/__tests__/session-expiry.test.ts",
+    "name": "emite o evento que o provider escuta"
+   },
+   {
     "file": "src/lib/__tests__/softphone-utils.test.ts",
     "name": "formatCallDuration"
    },
@@ -71699,6 +71800,10 @@
   "webhook_events": [],
   "side_effects": [
    {
+    "file": "src/App.tsx",
+    "call": "notifySessionExpired"
+   },
+   {
     "file": "src/components/callbacks/ScheduledCallbacksList.tsx",
     "call": "notify"
    },
@@ -72033,6 +72138,10 @@
    {
     "file": "src/lib/pendingCallWrites.ts",
     "call": "enqueue("
+   },
+   {
+    "file": "src/lib/session-expiry.ts",
+    "call": "notifySessionExpired"
    },
    {
     "file": "src/lib/tracing.ts",
@@ -87108,6 +87217,14 @@
    },
    {
     "guard": "ProtectedRoute",
+    "file": "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx"
+   },
+   {
+    "guard": "ProtectedRoute",
+    "file": "src/components/auth/__tests__/SessionExpiredDialog.test.tsx"
+   },
+   {
+    "guard": "ProtectedRoute",
     "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx"
    }
   ],
@@ -87118,6 +87235,13 @@
     "guard": "ProtectedRoute",
     "roles": [],
     "file": "scripts/ai-context/gerar.unit.mjs"
+   },
+   {
+    "path": "/dashboard",
+    "component": "ProtectedRoute",
+    "guard": "ProtectedRoute",
+    "roles": [],
+    "file": "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx"
    },
    {
     "path": "path",
@@ -90244,7 +90368,7 @@
   },
   "src/App.tsx": {
    "path": "src/App.tsx",
-   "lines": 124,
+   "lines": 139,
    "exports": [
     "default App"
    ],
@@ -90263,6 +90387,9 @@
    "temporal": [
     "gcTime: 30 * 60 * 1000,",
     "staleTime: 5 * 60 * 1000,"
+   ],
+   "side_effects": [
+    "notifySessionExpired"
    ]
   },
   "src/main.tsx": {
@@ -91106,7 +91233,7 @@
   },
   "src/components/auth/ProtectedRoute.tsx": {
    "path": "src/components/auth/ProtectedRoute.tsx",
-   "lines": 38,
+   "lines": 43,
    "exports": [
     "function ProtectedRoute"
    ]
@@ -91144,6 +91271,23 @@
     }
    ]
   },
+  "src/components/auth/SessionExpiredDialog.tsx": {
+   "path": "src/components/auth/SessionExpiredDialog.tsx",
+   "lines": 103,
+   "exports": [
+    "function SessionExpiredDialog"
+   ],
+   "html_constraints": [
+    {
+     "field": "session-expired-email",
+     "rules": "type=email"
+    },
+    {
+     "field": "session-expired-password",
+     "rules": "type=password"
+    }
+   ]
+  },
   "src/components/auth/__tests__/PermissionGate.test.tsx": {
    "path": "src/components/auth/__tests__/PermissionGate.test.tsx",
    "lines": 65,
@@ -91155,6 +91299,50 @@
     "respeita fallback explicito, inclusive null",
     "renderiza os filhos quando o modulo libera e quando nao se pede permissao",
     "usa requireAll na checagem por lista de permissoes"
+   ]
+  },
+  "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx": {
+   "path": "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx",
+   "lines": 60,
+   "is_test": true,
+   "routes": [
+    {
+     "path": "/login",
+     "component": "p",
+     "guard": "",
+     "roles": []
+    },
+    {
+     "path": "/dashboard",
+     "component": "ProtectedRoute",
+     "guard": "ProtectedRoute",
+     "roles": []
+    }
+   ],
+   "guards": [
+    "ProtectedRoute"
+   ],
+   "tests": [
+    "ProtectedRoute com sessão expirada",
+    "redireciona para /login quando o usuário não está autenticado",
+    "mantém a tela montada enquanto o diálogo de sessão expirada está aberto"
+   ]
+  },
+  "src/components/auth/__tests__/SessionExpiredDialog.test.tsx": {
+   "path": "src/components/auth/__tests__/SessionExpiredDialog.test.tsx",
+   "lines": 145,
+   "is_test": true,
+   "guards": [
+    "ProtectedRoute"
+   ],
+   "tests": [
+    "sessão expirada",
+    "mantém o formulário preenchido e reautentica sem sair da tela",
+    "mostra o erro de credencial e mantém o diálogo aberto",
+    "renova sozinho quando o refresh token ainda vale"
+   ],
+   "side_effects": [
+    "notifySessionExpired"
    ]
   },
   "src/components/blf/BlfLampCard.tsx": {
@@ -95963,6 +96151,18 @@
    ],
    "temporal": [
     "export const REAUTH_TIMEOUT_MS = 5 * 60 * 1000;"
+   ]
+  },
+  "src/contexts/SessionExpiryContext.tsx": {
+   "path": "src/contexts/SessionExpiryContext.tsx",
+   "lines": 102,
+   "exports": [
+    "function SessionExpiryProvider",
+    "function useSessionExpiry"
+   ],
+   "doc": "eslint-disable react-refresh/only-export-components -- provider e hook compartilham o módulo",
+   "hooks": [
+    "useSessionExpiry"
    ]
   },
   "src/contexts/ThemeContext.tsx": {
@@ -107725,6 +107925,25 @@
     }
    ]
   },
+  "src/lib/session-expiry.ts": {
+   "path": "src/lib/session-expiry.ts",
+   "lines": 30,
+   "exports": [
+    "const SESSION_EXPIRED_EVENT",
+    "function isSessionExpiredError",
+    "function notifySessionExpired"
+   ],
+   "params": [
+    {
+     "name": "SESSION_EXPIRED_EVENT",
+     "value": "'app:session-expired'"
+    }
+   ],
+   "doc": "Detecção central de sessão expirada. Um JWT vencido chega em formatos diferentes dependendo da camada: PostgREST devolve `{ code: 'PGRST301', message: 'JWT expired' }`, o `fetch` do supabase-js devolve `{ status: 401 }` e as edge functions devolvem 401 com mensagem própria. Sem um detector único, ca …",
+   "side_effects": [
+    "notifySessionExpired"
+   ]
+  },
   "src/lib/sync-history.ts": {
    "path": "src/lib/sync-history.ts",
    "lines": 183,
@@ -109796,6 +110015,23 @@
     "blocks javascript: protocol",
     "blocks data: protocol",
     "blocks vbscript: protocol"
+   ]
+  },
+  "src/lib/__tests__/session-expiry.test.ts": {
+   "path": "src/lib/__tests__/session-expiry.test.ts",
+   "lines": 39,
+   "is_test": true,
+   "tests": [
+    "isSessionExpiredError",
+    "reconhece o 401 do fetch do supabase-js",
+    "reconhece o PGRST301 do PostgREST mesmo sem status",
+    "reconhece a mensagem de JWT vencido de edge function",
+    "não confunde erro de permissão nem falha genérica com sessão expirada",
+    "notifySessionExpired",
+    "emite o evento que o provider escuta"
+   ],
+   "side_effects": [
+    "notifySessionExpired"
    ]
   },
   "src/lib/__tests__/softphone-utils.test.ts": {
@@ -123252,10 +123488,27 @@
   }
  },
  "git": {
-  "sha": "ca6e6dc109837f6ffb0e8a8bb60ccc62aea3c758",
+  "sha": "4a65b1f401e1bc3c72c9d7644cafe02ec9b702ca",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4a65b1f",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "feat: preserva o formulario e reautentica quando a sessao expira (#295)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/App.tsx",
+     "src/components/auth/ProtectedRoute.tsx",
+     "src/components/auth/SessionExpiredDialog.tsx",
+     "src/components/auth/__tests__/ProtectedRoute.sessionExpiry.test.tsx",
+     "src/components/auth/__tests__/SessionExpiredDialog.test.tsx",
+     "src/contexts/SessionExpiryContext.tsx",
+     "src/lib/__tests__/session-expiry.test.ts",
+     "src/lib/session-expiry.ts"
+    ]
+   },
    {
     "sha": "ca6e6dc",
     "date": "2026-11-24",
@@ -123730,27 +123983,6 @@
      "src/components/settings/SystemMaintenancePanel.tsx",
      "src/integrations/lovable/index.ts"
     ]
-   },
-   {
-    "sha": "d34fadc",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: veredito explicito nos catch que escondem escrita (etapas 194-195) (#262)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/telemetry/useTelemetry.ts",
-     "src/hooks/useCallSession.ts",
-     "src/hooks/useExtensionAudit.ts",
-     "src/hooks/useKnowledgeBase.ts",
-     "src/hooks/useMultiChannelCall.ts",
-     "src/hooks/useNotifications.ts",
-     "src/hooks/usePersistedTagFilter.ts",
-     "src/hooks/useQualityTrendAnalyzer.ts",
-     "src/hooks/useRingtoneSettings.ts",
-     "src/hooks/useSessionManager.ts",
-     "src/hooks/useVoicePreferences.ts",
-     "src/hooks/useVoipQualityMonitor.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -123775,7 +124007,7 @@
     3
    ],
    [
-    "src/hooks/useKnowledgeBase.ts",
+    "src/App.tsx",
     2
    ],
    [
@@ -123827,11 +124059,11 @@
     2
    ],
    [
-    "src/hooks/__tests__/useDialerFavorites.rollback.test.tsx",
+    "src/components/auth/ProtectedRoute.tsx",
     1
    ],
    [
-    "src/hooks/useDialerFavorites.ts",
+    "src/components/auth/SessionExpiredDialog.tsx",
     1
    ]
   ]

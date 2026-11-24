@@ -11,6 +11,7 @@
   "src/App.tsx": [
    "src/components/auth/ProtectedRoute.tsx",
    "src/components/auth/ReauthDialog.tsx",
+   "src/components/auth/SessionExpiredDialog.tsx",
    "src/components/error-boundary/ErrorBoundary.tsx",
    "src/components/gamification/AchievementNotificationProvider.tsx",
    "src/components/layout/AppLayout.tsx",
@@ -23,7 +24,9 @@
    "src/contexts/AuthContext.tsx",
    "src/contexts/CallContext.tsx",
    "src/contexts/ReauthContext.tsx",
+   "src/contexts/SessionExpiryContext.tsx",
    "src/contexts/ThemeContext.tsx",
+   "src/lib/session-expiry.ts",
    "src/routes/protectedRoutes.tsx",
    "src/routes/publicRoutes.tsx"
   ],
@@ -294,7 +297,8 @@
    "src/hooks/usePermissions.ts"
   ],
   "src/components/auth/ProtectedRoute.tsx": [
-   "src/contexts/AuthContext.tsx"
+   "src/contexts/AuthContext.tsx",
+   "src/contexts/SessionExpiryContext.tsx"
   ],
   "src/components/auth/ReauthDialog.tsx": [
    "src/components/ui/button.tsx",
@@ -305,6 +309,14 @@
    "src/contexts/AuthContext.tsx",
    "src/hooks/useMFA.ts",
    "src/hooks/useReauth.ts"
+  ],
+  "src/components/auth/SessionExpiredDialog.tsx": [
+   "src/components/ui/button.tsx",
+   "src/components/ui/dialog.tsx",
+   "src/components/ui/input.tsx",
+   "src/components/ui/label.tsx",
+   "src/contexts/AuthContext.tsx",
+   "src/contexts/SessionExpiryContext.tsx"
   ],
   "src/components/blf/BlfLampCard.tsx": [
    "src/components/ui/badge.tsx",
@@ -2207,6 +2219,12 @@
    "src/contexts/AuthContext.tsx",
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
+  ],
+  "src/contexts/SessionExpiryContext.tsx": [
+   "src/contexts/AuthContext.tsx",
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts",
+   "src/lib/session-expiry.ts"
   ],
   "src/hooks/auth/index.ts": [
    "src/hooks/auth/useAuthActions.ts",
