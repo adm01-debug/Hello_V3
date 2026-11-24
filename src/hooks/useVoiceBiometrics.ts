@@ -99,6 +99,10 @@ export function useVoicePrints() {
         setIsCapturing(false);
       }
     },
+    onSuccess: () => {
+      // verify-voice grava last_verified_at no voice_prints (supabase/functions/verify-voice/index.ts:70)
+      queryClient.invalidateQueries({ queryKey: ['voice-prints'] });
+    },
     onError: (err) => {
       log.error('verify failed', err);
       toast.error('Falha na verificação');

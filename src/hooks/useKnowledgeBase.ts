@@ -155,6 +155,8 @@ export function useUpsertArticle() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['kb-articles'] });
+      // O artigo aberto vem de useKbArticle -> ['kb-article', id]; sem isso a tela segue com o texto antigo.
+      queryClient.invalidateQueries({ queryKey: ['kb-article'] });
       toast.success('Artigo salvo');
     },
     onError: (err) => {

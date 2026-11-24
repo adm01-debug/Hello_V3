@@ -112,6 +112,22 @@ describe('useVoicePrints', () => {
     await waitFor(() => expect(toast.error).toHaveBeenCalledWith('Falha na verificação'));
   });
 
+  it('invalida a lista depois de verificar (o banco grava last_verified_at)', async () => {
+    invokeMock.mockResolvedValue({ data: { enrolled: true, match: true, confidence: 88 }, error: null });
+    const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    const invalidateSpy = vi.spyOn(qc, 'invalidateQueries');
+    const localWrapper = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={qc}>{children}</QueryClientProvider>
+    );
+
+    const { result } = renderHook(() => useVoicePrints(), { wrapper: localWrapper });
+    await waitFor(() => expect(result.current.voicePrints.length).toBe(1));
+    await act(async () => { await result.current.verify({}); });
+
+    const keys = invalidateSpy.mock.calls.map((c) => JSON.stringify((c[0] as { queryKey?: unknown })?.queryKey));
+    expect(keys).toContain(JSON.stringify(['voice-prints']));
+  });
+
   it('removes a voice print', async () => {
     const { result } = renderHook(() => useVoicePrints(), { wrapper });
     await waitFor(() => expect(result.current.voicePrints.length).toBe(1));
