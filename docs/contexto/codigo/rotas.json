@@ -344,8 +344,10 @@
     "extensions-overview-realtime"
    ],
    "flags": [],
-   "papeis": [],
-   "arquivos_puxados": 44
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 45
   },
   {
    "protegida": false,
@@ -1490,8 +1492,10 @@
     "coaching-updates"
    ],
    "flags": [],
-   "papeis": [],
-   "arquivos_puxados": 30
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 31
   },
   {
    "protegida": false,
@@ -2535,9 +2539,10 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [
-    "admin"
+    "admin",
+    "status"
    ],
-   "arquivos_puxados": 23
+   "arquivos_puxados": 24
   },
   {
    "protegida": false,
@@ -3522,8 +3527,10 @@
     "agents-status"
    ],
    "flags": [],
-   "papeis": [],
-   "arquivos_puxados": 33
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 34
   },
   {
    "protegida": false,
@@ -4018,8 +4025,10 @@
    ],
    "canais_realtime": [],
    "flags": [],
-   "papeis": [],
-   "arquivos_puxados": 13
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 14
   },
   {
    "protegida": false,
@@ -4144,9 +4153,10 @@
    ],
    "flags": [],
    "papeis": [
-    "admin"
+    "admin",
+    "status"
    ],
-   "arquivos_puxados": 20
+   "arquivos_puxados": 21
   },
   {
    "protegida": false,
@@ -4498,8 +4508,10 @@
    "edges": [],
    "canais_realtime": [],
    "flags": [],
-   "papeis": [],
-   "arquivos_puxados": 12
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 13
   },
   {
    "protegida": false,

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "d1b586c8157482d2841fea0612afa1b03e399db0",
+  "sha": "85a73de58e92c32fafe025b2aaac50d952589eb3",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 02:39 UTC",
-  "files_total": 1752,
-  "code_files": 1549,
-  "code_lines": 191914
+  "generated_at": "2026-11-24 02:55 UTC",
+  "files_total": 1753,
+  "code_files": 1550,
+  "code_lines": 192050
  },
  "version": "1.3.2",
- "facts_hash": "c612f3259aa267e6",
+ "facts_hash": "580634dad69d58f8",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 644,
-   ".tsx": 626,
+   ".tsx": 627,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -28087,7 +28087,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 33
+    "deps_count": 34
    },
    {
     "path": "",
@@ -28338,7 +28338,7 @@
     "rpc_transitive": [
      "log_audit_event"
     ],
-    "deps_count": 25
+    "deps_count": 26
    },
    {
     "path": "",
@@ -28600,7 +28600,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 23
+    "deps_count": 24
    },
    {
     "path": "",
@@ -29116,7 +29116,7 @@
      "score-call"
     ],
     "rpc_transitive": [],
-    "deps_count": 13
+    "deps_count": 14
    },
    {
     "path": "",
@@ -29149,7 +29149,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 20
+    "deps_count": 21
    },
    {
     "path": "",
@@ -29242,7 +29242,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 12
+    "deps_count": 13
    },
    {
     "path": "",
@@ -32188,7 +32188,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 362,
+  "components_count": 363,
   "hooks": [
    {
     "name": "useContacts",
@@ -33337,8 +33337,8 @@
   },
   {
    "module": "src/components",
-   "files": 362,
-   "lines": 43292,
+   "files": 363,
+   "lines": 43405,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33510,6 +33510,7 @@
     "src/components/auth/PermissionGate.tsx",
     "src/components/auth/ProtectedRoute.tsx",
     "src/components/auth/ReauthDialog.tsx",
+    "src/components/auth/__tests__/PermissionGate.test.tsx",
     "src/components/blf/BlfLampCard.tsx",
     "src/components/blf/BlfSummaryBar.tsx",
     "src/components/call-history/CallDetailDialog.tsx",
@@ -33541,8 +33542,7 @@
     "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
     "src/components/calls/__tests__/PostCallSummary.test.tsx",
     "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    "src/components/calls/live-transcription/TranscriptList.tsx",
-    "src/components/calls/live-transcription/TranscriptionHeader.tsx"
+    "src/components/calls/live-transcription/TranscriptList.tsx"
    ]
   },
   {
@@ -34073,7 +34073,7 @@
   {
    "module": "src/pages",
    "files": 141,
-   "lines": 21771,
+   "lines": 21794,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -57142,6 +57142,30 @@
    {
     "file": "src/components/admin/extensions/__tests__/HealthScoreBadge.test.tsx",
     "name": "boundary 49 vai para bad"
+   },
+   {
+    "file": "src/components/auth/__tests__/PermissionGate.test.tsx",
+    "name": "PermissionGate"
+   },
+   {
+    "file": "src/components/auth/__tests__/PermissionGate.test.tsx",
+    "name": "nao renderiza nada enquanto as permissoes carregam"
+   },
+   {
+    "file": "src/components/auth/__tests__/PermissionGate.test.tsx",
+    "name": "mostra o estado padrao de sem permissao quando nao ha fallback"
+   },
+   {
+    "file": "src/components/auth/__tests__/PermissionGate.test.tsx",
+    "name": "respeita fallback explicito, inclusive null"
+   },
+   {
+    "file": "src/components/auth/__tests__/PermissionGate.test.tsx",
+    "name": "renderiza os filhos quando o modulo libera e quando nao se pede permissao"
+   },
+   {
+    "file": "src/components/auth/__tests__/PermissionGate.test.tsx",
+    "name": "usa requireAll na checagem por lista de permissoes"
    },
    {
     "file": "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
@@ -93230,7 +93254,7 @@
   },
   "src/components/auth/PermissionGate.tsx": {
    "path": "src/components/auth/PermissionGate.tsx",
-   "lines": 50,
+   "lines": 54,
    "exports": [
     "function PermissionGate"
    ]
@@ -93273,6 +93297,19 @@
      "value": "totp",
      "kind": "compara"
     }
+   ]
+  },
+  "src/components/auth/__tests__/PermissionGate.test.tsx": {
+   "path": "src/components/auth/__tests__/PermissionGate.test.tsx",
+   "lines": 65,
+   "is_test": true,
+   "tests": [
+    "PermissionGate",
+    "nao renderiza nada enquanto as permissoes carregam",
+    "mostra o estado padrao de sem permissao quando nao ha fallback",
+    "respeita fallback explicito, inclusive null",
+    "renderiza os filhos quando o modulo libera e quando nao se pede permissao",
+    "usa requireAll na checagem por lista de permissoes"
    ]
   },
   "src/components/blf/BlfLampCard.tsx": {
@@ -97416,12 +97453,13 @@
   },
   "src/components/ui/empty-state.tsx": {
    "path": "src/components/ui/empty-state.tsx",
-   "lines": 327,
+   "lines": 371,
    "exports": [
     "interface EmptyStateAction",
     "interface EmptyStateProps",
     "function EmptySearchState",
     "function EmptyErrorState",
+    "function EmptyPermissionState",
     "function EmptyCallsState",
     "function EmptyContactsState",
     "function EmptyNotificationsState"
@@ -114464,7 +114502,7 @@
   },
   "src/pages/AgentRanking.tsx": {
    "path": "src/pages/AgentRanking.tsx",
-   "lines": 97,
+   "lines": 99,
    "exports": [
     "function AgentRanking"
    ],
@@ -115006,7 +115044,7 @@
   },
   "src/pages/IPWhitelist.tsx": {
    "path": "src/pages/IPWhitelist.tsx",
-   "lines": 216,
+   "lines": 213,
    "exports": [
     "function IPWhitelist"
    ]
@@ -115757,7 +115795,7 @@
   },
   "src/pages/Scorecards.tsx": {
    "path": "src/pages/Scorecards.tsx",
-   "lines": 252,
+   "lines": 255,
    "exports": [
     "function Scorecards"
    ],
@@ -115831,7 +115869,7 @@
   },
   "src/pages/SecurityMonitoring.tsx": {
    "path": "src/pages/SecurityMonitoring.tsx",
-   "lines": 216,
+   "lines": 237,
    "exports": [
     "default SecurityMonitoring"
    ],
@@ -125548,10 +125586,27 @@
   }
  },
  "git": {
-  "sha": "d1b586c8157482d2841fea0612afa1b03e399db0",
+  "sha": "85a73de58e92c32fafe025b2aaac50d952589eb3",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "85a73de",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/auth/PermissionGate.tsx",
+     "src/components/auth/__tests__/PermissionGate.test.tsx",
+     "src/components/ui/empty-state.tsx",
+     "src/pages/AgentRanking.tsx",
+     "src/pages/IPWhitelist.tsx",
+     "src/pages/Scorecards.tsx",
+     "src/pages/SecurityMonitoring.tsx",
+     "src/pages/SuccessPlans.tsx"
+    ]
+   },
    {
     "sha": "d1b586c",
     "date": "2026-11-23",
@@ -125946,17 +126001,6 @@
      "supabase/functions/chatbot-respond/__tests__/index.test.ts",
      "supabase/functions/chatbot-respond/index.ts"
     ]
-   },
-   {
-    "sha": "32923f9",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/embed-kb-article/__tests__/index.test.ts",
-     "supabase/functions/embed-kb-article/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125967,6 +126011,26 @@
    [
     "src/hooks/useMultiChannelCall.ts",
     3
+   ],
+   [
+    "src/pages/AgentRanking.tsx",
+    2
+   ],
+   [
+    "src/pages/IPWhitelist.tsx",
+    2
+   ],
+   [
+    "src/pages/Scorecards.tsx",
+    2
+   ],
+   [
+    "src/pages/SecurityMonitoring.tsx",
+    2
+   ],
+   [
+    "src/pages/SuccessPlans.tsx",
+    2
    ],
    [
     "src/hooks/useAgentRanking.ts",
@@ -125997,8 +126061,16 @@
     2
    ],
    [
-    "supabase/functions/embed-kb-article/index.ts",
-    2
+    "src/components/auth/PermissionGate.tsx",
+    1
+   ],
+   [
+    "src/components/auth/__tests__/PermissionGate.test.tsx",
+    1
+   ],
+   [
+    "src/components/ui/empty-state.tsx",
+    1
    ],
    [
     "src/hooks/__tests__/useIPWhitelist.coverage.test.tsx",
@@ -126009,35 +126081,7 @@
     1
    ],
    [
-    "src/pages/IPWhitelist.tsx",
-    1
-   ],
-   [
     "src/pages/__tests__/IPWhitelist.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useAlerts.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useAchievementNotifications.ts",
-    1
-   ],
-   [
-    "src/hooks/useAlerts.ts",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useConversations.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useGamification.coverage.test.tsx",
     1
    ]
   ]

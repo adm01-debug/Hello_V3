@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 449,
+ "total": 450,
  "orfaos": 17,
  "nomes_duplicados": {
   "KpiCards": [
@@ -643,6 +643,22 @@
    "dominio": "components/auth",
    "hooks_locais": [
     "usePasswordStrength"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 2,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/auth/PermissionGate.tsx",
+   "exports": [
+    "PermissionGate"
+   ],
+   "export_default": "PermissionGate",
+   "linhas": 54,
+   "dominio": "components/auth",
+   "hooks_locais": [
+    "usePermissions"
    ],
    "tabelas": [],
    "edges": [],
@@ -4381,18 +4397,19 @@
     "EmptyContactsState",
     "EmptyErrorState",
     "EmptyNotificationsState",
+    "EmptyPermissionState",
     "EmptySearchState",
     "EmptyState",
     "EmptyStateAction",
     "EmptyStateProps"
    ],
    "export_default": null,
-   "linhas": 327,
+   "linhas": 371,
    "dominio": "components/ui",
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 13,
+   "usado_por": 19,
    "orfao": false
   },
   {
@@ -5455,7 +5472,7 @@
     "AgentRanking"
    ],
    "export_default": "AgentRanking",
-   "linhas": 97,
+   "linhas": 99,
    "dominio": "pages",
    "hooks_locais": [
     "useAgentRanking",
@@ -6170,7 +6187,7 @@
     "IPWhitelist"
    ],
    "export_default": "IPWhitelist",
-   "linhas": 216,
+   "linhas": 213,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",
@@ -6879,7 +6896,7 @@
     "Scorecards"
    ],
    "export_default": "Scorecards",
-   "linhas": 252,
+   "linhas": 255,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
@@ -6917,7 +6934,7 @@
     "SecurityMonitoring"
    ],
    "export_default": "SecurityMonitoring",
-   "linhas": 216,
+   "linhas": 237,
    "dominio": "pages",
    "hooks_locais": [
     "useAuth",

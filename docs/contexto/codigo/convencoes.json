@@ -6,7 +6,7 @@
    "src/pages (105)"
   ],
   "componentes": [
-   "src/components (318)",
+   "src/components (319)",
    "src/pages (126)",
    "src/contexts (4)"
   ],
@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (358)",
+   "co-localizado (__tests__) (359)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -47,7 +47,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (449)"
+  ".tsx (450)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)",
    "fix: whitelist de IPs avisa quando a leitura falha em vez de parecer vazia (#216)",
    "fix: registrar falha de leitura onde o erro era descartado (#219)",
    "fix: nao gravar dado derivado quando a leitura falha (#218)",
-   "fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)",
-   "fix: paineis de seguranca alarmam quando a leitura falha (#215)"
+   "fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)"
   ]
  },
  "pr_template": null,

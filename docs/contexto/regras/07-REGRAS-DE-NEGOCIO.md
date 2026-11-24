@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d1b586c815` · branch `main` · 2026-11-24 02:39 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `85a73de58e` · branch `main` · 2026-11-24 02:55 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2466,7 +2466,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4286 testes em 372 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4292 testes em 373 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2673,6 +2673,7 @@ _nenhum item encontrado_
 | `e2e/calls.spec.ts` | 6 | Calls Flow · should display calls page · should display softphone component · should navigate to call history … |
 | `src/__tests__/rls/learning-completions.test.ts` | 6 | RLS — learning_completions · agente só vê próprias conclusões · supervisor vê todas · agente NÃO pode inserir conclusão de outro agente … |
 | `src/__tests__/rls/storage-recordings.test.ts` | 6 | Storage — call-recordings (ownership por path) · bucket é privado: anônimo é bloqueado · agente lê apenas próprias gravações · agente faz upload apenas no próprio prefixo … |
+| `src/components/auth/__tests__/PermissionGate.test.tsx` | 6 | PermissionGate · nao renderiza nada enquanto as permissoes carregam · mostra o estado padrao de sem permissao quando nao ha fallback · respeita fallback explicito, inclusive null … |
 | `src/components/calls/__tests__/PostCallSummary.test.tsx` | 6 | PostCallSummary · mostra mensagem quando não há amostras · agrega MOS, jitter, perda e classifica qualidade · classifica como Ruim quando MOS médio < 3.6 … |
 | `src/components/layout/__tests__/AppSidebar.test.tsx` | 6 | routeRoles (E088) · declara papéis para rota admin e undefined para rota aberta · AppSidebar — filtro por papel (E089) · agente não vê itens de rota com roles (Executivo, Logs de Auditoria) … |
 | `src/hooks/__tests__/useAudioOutputDevices.test.tsx` | 6 | useAudioOutputDevices · reporta não suportado quando setSinkId ausente · enumera dispositivos de saída e ignora inputs · persiste a preferência ao chamar setSinkId com sucesso … |
@@ -2769,8 +2770,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx` | 4 | useVoipAnomalies · classifies anomalies (outage/drift/spike) and builds ids · returns empty array when no anomalies present · throws on error |
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
-| `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
-| … +72 linhas — lista completa em `context.json` | | |
+| … +73 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

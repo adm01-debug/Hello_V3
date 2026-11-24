@@ -355,12 +355,12 @@
   {
    "modulo": "components/auth",
    "arquivos": 7,
-   "testes": 0,
-   "linhas": 1062,
+   "testes": 1,
+   "linhas": 1066,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 6,
+   "componentes": 7,
    "hooks_locais": [
     "useAuth",
     "useAuthActions",
@@ -399,7 +399,8 @@
    ],
    "flags": [],
    "papeis": [
-    "alert"
+    "alert",
+    "status"
    ],
    "diretos": {
     "edges": [],
@@ -836,7 +837,9 @@
     "VITE_SUPABASE_URL"
    ],
    "flags": [],
-   "papeis": [],
+   "papeis": [
+    "status"
+   ],
    "diretos": {
     "edges": [
      "generate-coaching-plan"
@@ -3127,7 +3130,7 @@
    "modulo": "components/ui",
    "arquivos": 56,
    "testes": 1,
-   "linhas": 5458,
+   "linhas": 5502,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5596,7 +5599,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 16729,
+   "linhas": 16752,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",

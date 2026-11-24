@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d1b586c8157482d2841fea0612afa1b03e399db0",
+  "commit": "85a73de58e92c32fafe025b2aaac50d952589eb3",
   "branch": "main",
-  "data_commit": "2026-11-23T23:39:06-03:00",
+  "data_commit": "2026-11-23T23:54:51-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "85a73de",
+    "data": "2026-11-23",
+    "assunto": "feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)"
+   },
    {
     "sha": "d1b586c",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "7375845",
     "data": "2026-11-23",
     "assunto": "chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)"
-   },
-   {
-    "sha": "cf78676",
-    "data": "2026-11-23",
-    "assunto": "fix: rate limit passa a falhar fechado nos endpoints que gastam dinheiro (E012) (#195)"
    }
   ],
-  "arquivos_mudados_7d": 1045,
+  "arquivos_mudados_7d": 1048,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 49
+    "mudancas": 50
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 49
+    "mudancas": 50
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -278,6 +278,10 @@
     "mudancas": 4
    },
    {
+    "arquivo": "src/pages/AgentRanking.tsx",
+    "mudancas": 4
+   },
+   {
     "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
     "mudancas": 4
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "supabase/functions/score-call/index.ts",
     "mudancas": 4
-   },
-   {
-    "arquivo": "supabase/functions/voip-load-test/index.ts",
-    "mudancas": 4
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 198
+    "commits": 199
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,21 +314,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1705,
-  "arquivos_codigo": 1303,
-  "linhas_codigo": 175902,
+  "arquivos_total": 1706,
+  "arquivos_codigo": 1304,
+  "linhas_codigo": 176038,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "modulos": 81,
-  "componentes": 449,
+  "componentes": 450,
   "hooks": 194,
   "edge_functions": 98,
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 382,
+  "testes": 383,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 362,
-   "linhas": 43292
+   "arquivos": 363,
+   "linhas": 43405
   },
   "src/contexts": {
    "arquivos": 4,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 141,
-   "linhas": 21771
+   "linhas": 21794
   },
   "src/routes": {
    "arquivos": 2,
@@ -605,6 +605,10 @@
    "linhas": 372
   },
   {
+   "arquivo": "src/components/ui/empty-state.tsx",
+   "linhas": 371
+  },
+  {
    "arquivo": "src/pages/TopicDetection.tsx",
    "linhas": 370
   },
@@ -635,10 +639,6 @@
   {
    "arquivo": "src/pages/CallFlowDesigner.tsx",
    "linhas": 351
-  },
-  {
-   "arquivo": "src/components/dialer/phone/PhoneQuickAccess.tsx",
-   "linhas": 346
   }
  ],
  "qualidade": {
