@@ -3614,7 +3614,7 @@
    "hooks_exportados": [
     "useScheduledCallbacks"
    ],
-   "linhas": 241,
+   "linhas": 258,
    "dominio": "hooks",
    "tabelas": [
     "scheduled_callbacks"

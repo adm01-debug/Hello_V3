@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `87d013e5d1` · branch `main` · 2026-11-24 03:24 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `60701bffac` · branch `main` · 2026-11-24 03:38 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2417,7 +2417,7 @@ _nenhum item encontrado_
 | Falha ao salvar regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao executar enforcement de SLA | `src/hooks/useSLA.ts` |
 | Falha ao salvar política | `src/hooks/useSLA.ts` |
-| … +260 linhas — lista completa em `context.json` | |
+| … +262 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2466,7 +2466,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4298 testes em 375 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4300 testes em 375 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2560,6 +2560,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useContacts.coverage.test.tsx` | 11 | useContacts (coverage) · fetches contacts on mount · fetchContacts with search filter · getContactByPhone success and not found … |
 | `src/hooks/__tests__/useGamification.coverage.test.tsx` | 11 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useLiveAssist.coverage.test.tsx` | 11 | useLiveAssist · is disabled (no fetch) without callSessionId · loads signals and subscribes to realtime when callSessionId present · analyze invokes edge function when throttle allows … |
+| `src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` | 11 | useScheduledCallbacks · loads pending callbacks and upcoming count on mount · fetchCallbacks with status filter and error branch · fetchUpcomingCount error branch … |
 | `src/hooks/__tests__/useSipCall.coverage.test.tsx` | 11 | useSipCall (coverage) · initial state is disconnected · connect succeeds and registers · connect with failover shows warning … |
 | `src/hooks/__tests__/useSuccessPlans.coverage.test.tsx` | 11 | useSuccessPlans · loads plans and milestones with accountId · loads plans without accountId · handles empty plans (no milestone fetch) … |
 | `src/hooks/auth/__tests__/useAuthSession.coverage.test.tsx` | 11 | withTimeout · resolves when the promise resolves first · rejects with message on timeout · useAuthSession … |
@@ -2603,7 +2604,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useQualityTrendAnalyzer.coverage.test.tsx` | 9 | useQualityTrendAnalyzer · não faz nada quando desabilitado · ignora MOS null ou não finito · detecta degradação progressiva e persiste alerta … |
 | `src/hooks/__tests__/useRecordings.coverage.test.tsx` | 9 | useRecordings · fetches recordings and filters · handles fetch error · plays, toggles pause/play, seeks, skips … |
 | `src/hooks/__tests__/useSLA.coverage.test.tsx` | 9 | useSLA · useSlaPolicies loads policies · useSlaPolicies surfaces error · useSlaCompliance computes compliance … |
-| `src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` | 9 | useScheduledCallbacks · loads pending callbacks and upcoming count on mount · fetchCallbacks with status filter and error branch · fetchUpcomingCount error branch … |
 | `src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx` | 9 | useSecurityDashboard · returns early without userId · loads data and computes full score · computes lower score branches (no mfa, many sessions, ip off, no alerts) … |
 | `src/hooks/__tests__/useShifts.coverage.test.tsx` | 9 | useShifts coverage · loads shifts and templates without weekStart · loads shifts with weekStart (gte/lt branch) · exposes CRUD mutations and runs createShift success … |
 | `src/lib/__tests__/device-identity.test.ts` | 9 | device-identity · sanitize sempre respeita o CHECK do banco (trim + limite) · sanitize é idempotente · sanitize rejeita não-strings … |

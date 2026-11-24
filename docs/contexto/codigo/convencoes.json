@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: confirma o retorno agendado com a data gravada e nao reporta escrita que nao gravou nada (#223)",
    "chore: suite de testes roda sem .env e sem configuracao manual (#224)",
    "fix: agente fica offline ao fechar o navegador (etapa 204) (#222)",
    "fix: telas do fluxo central distinguem falha de leitura de lista vazia (etapa 203) (#221)",
-   "feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)",
-   "fix: whitelist de IPs avisa quando a leitura falha em vez de parecer vazia (#216)"
+   "feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)"
   ]
  },
  "pr_template": null,

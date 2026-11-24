@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "87d013e5d1ec99de9aaf55032c8b965ffb395410",
+  "commit": "60701bffac18d9e4b470b8d63ae706c4bed98fa9",
   "branch": "main",
-  "data_commit": "2026-11-24T00:23:36-03:00",
+  "data_commit": "2026-11-24T00:38:11-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "60701bf",
+    "data": "2026-11-24",
+    "assunto": "fix: confirma o retorno agendado com a data gravada e nao reporta escrita que nao gravou nada (#223)"
+   },
    {
     "sha": "87d013e",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "581cd3a",
     "data": "2026-11-23",
     "assunto": "fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)"
-   },
-   {
-    "sha": "617d9e8",
-    "data": "2026-11-23",
-    "assunto": "fix: scripts destrutivos exigem DB_HOST explicito (#200)"
    }
   ],
-  "arquivos_mudados_7d": 1059,
+  "arquivos_mudados_7d": 1061,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 53
+    "mudancas": 54
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 51
+    "mudancas": 52
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 53
+    "mudancas": 54
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 202
+    "commits": 203
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1708,
   "arquivos_codigo": 1306,
-  "linhas_codigo": 176236,
+  "linhas_codigo": 176305,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 46879
+   "linhas": 46948
   },
   "src/integrations": {
    "arquivos": 3,

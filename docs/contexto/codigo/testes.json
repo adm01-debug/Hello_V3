@@ -1462,11 +1462,11 @@
   {
    "arquivo": "src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 194,
+   "linhas": 246,
    "testa": [
     "src/hooks/useScheduledCallbacks.ts"
    ],
-   "casos": 8
+   "casos": 10
   },
   {
    "arquivo": "src/hooks/__tests__/useScorecards.coverage.test.tsx",
