@@ -4736,7 +4736,12 @@
   ],
   "supabase/functions/chat-widget-session/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/rate-limit.ts"
+   "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/validator.ts",
+   "supabase/functions/chat-widget-session/schema.ts"
+  ],
+  "supabase/functions/chat-widget-session/schema_test.ts": [
+   "supabase/functions/chat-widget-session/schema.ts"
   ],
   "supabase/functions/chatbot-respond/index.ts": [
    "supabase/functions/_shared/auth.ts",
@@ -4744,7 +4749,12 @@
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/resilience.ts",
-   "supabase/functions/_shared/validate.ts"
+   "supabase/functions/_shared/validate.ts",
+   "supabase/functions/_shared/validator.ts",
+   "supabase/functions/chatbot-respond/schema.ts"
+  ],
+  "supabase/functions/chatbot-respond/schema_test.ts": [
+   "supabase/functions/chatbot-respond/schema.ts"
   ],
   "supabase/functions/check-alerts/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -4815,7 +4825,12 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/email-inbound/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/validator.ts",
+   "supabase/functions/email-inbound/schema.ts"
+  ],
+  "supabase/functions/email-inbound/schema_test.ts": [
+   "supabase/functions/email-inbound/schema.ts"
   ],
   "supabase/functions/embed-kb-article/index.ts": [
    "supabase/functions/_shared/auth.ts",

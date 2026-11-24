@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: teto em todo campo de texto das edges publicas que gastam dinheiro (E047) (#228)",
    "fix: prazo e 503 unico nas 11 edges de IA que chamavam o provedor direto (E209) (#227)",
    "fix: descarta pagina do historico que chega depois da troca de filtro (#225)",
    "feat: prazo de fetch nas chamadas externas das edges (#226)",
-   "fix: confirma o retorno agendado com a data gravada e nao reporta escrita que nao gravou nada (#223)",
-   "chore: suite de testes roda sem .env e sem configuracao manual (#224)"
+   "fix: confirma o retorno agendado com a data gravada e nao reporta escrita que nao gravou nada (#223)"
   ]
  },
  "pr_template": null,

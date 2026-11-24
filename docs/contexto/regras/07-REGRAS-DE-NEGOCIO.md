@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `51189721f0` · branch `main` · 2026-11-24 03:58 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `564451c0e0` · branch `main` · 2026-11-24 04:10 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1288,6 +1288,18 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
   ```ts
   { transcript: z.string().min(1, "Transcrição é obrigatória").max(10000), callInfo: z.object({ contactName: z.string().optional(), phone: z.string().optional(), duration: z.string().optional(), type: z.string().optional() }).optional() }
   ```
+- **ChatWidgetSessionSchema** (`supabase/functions/chat-widget-session/schema.ts`, z.object):
+  ```ts
+  { action: z.enum(['create', 'send_message', 'fetch_messages']).optional(), visitor_token: z.string().max(200).optional(), message: z.string().max(4000).optional(), visitor_name: z.string().max(200).optional(), visitor_email: z.string().max(254).optional(), origin_url: z.string().max(500).optional(), referrer: z.string().max(500).optional(), device_info: z.record(z.unknown()).optional(), }
+  ```
+- **ChatbotRespondSchema** (`supabase/functions/chatbot-respond/schema.ts`, z.object):
+  ```ts
+  { conversation_id: z.string().uuid('conversation_id invalido'), user_message: z.string().min(1, 'user_message obrigatorio').max(4000), visitor_token: z.string().max(200).optional(), }
+  ```
+- **EmailInboundSchema** (`supabase/functions/email-inbound/schema.ts`, z.object):
+  ```ts
+  { from: z.string().min(1).max(320), from_name: z.string().max(200).optional(), to: z.array(z.string().max(320)).max(50), cc: z.array(z.string().max(320)).max(50).optional(), subject: z.string().min(1).max(998), body_text: z.string().max(200000).optional(), body_html: z.string().max(500000).optional(), message_id: z.string().min(1).max(998), in_reply_to: z.string().max(998).optional(), headers: z.record(z.string().max(200)).optional(), }
+  ```
 - **phoneSchema** (`supabase/functions/whatsapp-inbound/schema.ts`, z.string, encadeia superRefine):
   ```ts
   
@@ -2467,7 +2479,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4305 testes em 375 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4307 testes em 375 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2705,6 +2717,7 @@ _nenhum item encontrado_
 | `supabase/functions/__tests__/optimistic-lock.test.ts` | 6 | optimistic-lock: migration canonica do trigger existe · optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT · optimistic-lock: incrementa a versao quando nao ha divergencia · optimistic-lock: conflito e auditado em optimistic_lock_conflicts … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
+| `supabase/functions/email-inbound/__tests__/index.test.ts` | 6 | email-inbound: sem message_id devolve 422 (sem chave nao ha idempotencia) · email-inbound: from/subject ausentes continuam devolvendo 400 · email-inbound: subject acima do teto devolve 422 com o campo apontado · email-inbound: ticket ja existente responde 200 idempotent_replay sem escrever … |
 | `supabase/functions/record-consent/__tests__/index.test.ts` | 6 | record-consent: OPTIONS devolve preflight · record-consent: sem Authorization responde 401 · record-consent: token invalido nao grava consentimento · record-consent: canal fora do enum nao e aceito … |
 | `supabase/functions/validate-ip/__tests__/index.test.ts` | 6 | validate-ip: CORS preflight retorna headers válidos · validate-ip: rejeita requisição sem Authorization header · validate-ip: extrai IP de cf-connecting-ip prioritariamente · validate-ip: fallback para x-forwarded-for quando cf/real ausentes … |
 | `supabase/functions/voip-sla-report/__tests__/index.test.ts` | 6 | voip-sla-report: exige Authorization · voip-sla-report: rejeita token inválido · voip-sla-report: rejeita period inválido · voip-sla-report: aceita period=day/week/month na shape … |
@@ -2745,7 +2758,7 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/security-headers-validator.coverage.test.ts` | 5 | security-headers-validator · returns all headers present when fetch succeeds · returns all headers absent when fetch rejects · handles a mixed set of present/absent headers … |
 | `src/pages/__tests__/Status.test.tsx` | 5 | Status — sem medição (E092) · mostra  · mostra  · Status — erro no carregamento (E093) … |
 | `supabase/functions/_shared/__tests__/rate-limit.test.ts` | 5 | rate-limit: DB liberado devolve allowed · rate-limit: DB bloqueando devolve allowed=false com motivo · rate-limit: erro do banco segue fail-open por padrao · rate-limit: erro do banco nega quando onError=deny … |
-| `supabase/functions/email-inbound/__tests__/index.test.ts` | 5 | email-inbound: sem message_id devolve 422 (sem chave nao ha idempotencia) · email-inbound: from/subject ausentes continuam devolvendo 400 · email-inbound: ticket ja existente responde 200 idempotent_replay sem escrever · email-inbound: primeira entrega cria conversa, ticket e mensagem … |
+| `supabase/functions/chatbot-respond/__tests__/index.test.ts` | 5 | chatbot-respond: sem visitor_token e sem sessao devolve 401 · chatbot-respond: corpo sem conversation_id devolve 400 · chatbot-respond: conversation_id que nao e UUID devolve 400 · chatbot-respond: user_message acima do teto devolve 422 com o campo apontado … |
 | `supabase/functions/notify-new-device/__tests__/index.test.ts` | 5 | notify-new-device: sem header Authorization devolve 401 · notify-new-device: header Authorization vazio tambem devolve 401 · notify-new-device: preflight OPTIONS responde com CORS da origem permitida · notify-new-device: HTML do aviso escapa todo valor vindo do corpo … |
 | `supabase/functions/score-call/index.test.ts` | 5 | computeWeightedTotal — limita a nota ao max_score do critério · computeWeightedTotal — nota negativa vira zero · computeWeightedTotal — soma ponderada normal · computeWeightedTotal — critério desconhecido é ignorado … |
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
@@ -2770,7 +2783,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useTrunkMetrics.coverage.test.tsx` | 4 | useTrunkMetrics · aggregates usage by trunk and by day · returns empty for no data with default days · throws on usage error |
 | `src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx` | 4 | useVoipAnomalies · classifies anomalies (outage/drift/spike) and builds ids · returns empty array when no anomalies present · throws on error |
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
-| `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | … +75 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)

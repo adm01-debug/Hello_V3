@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "51189721f046dd7e6fac205262a5590fb02d2a48",
+  "sha": "564451c0e0e7fce4bf63dba63c75fd71c800ed9d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 03:58 UTC",
-  "files_total": 1755,
-  "code_files": 1552,
-  "code_lines": 192478
+  "generated_at": "2026-11-24 04:10 UTC",
+  "files_total": 1761,
+  "code_files": 1558,
+  "code_lines": 192673
  },
  "version": "1.3.2",
- "facts_hash": "c6bb9f9f8c86eecf",
+ "facts_hash": "aab5582c751326de",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 644,
+   ".ts": 650,
    ".tsx": 629,
    ".sql": 245,
    ".mjs": 27,
@@ -29604,6 +29604,7 @@
     "auth": "service_role (ignora RLS) — NÃO valida usuário no código",
     "tables": [
      "agents",
+     "audit_logs",
      "chat_sessions",
      "conversation_messages",
      "conversations",
@@ -30153,6 +30154,7 @@
     "auth": "service_role (ignora RLS) — NÃO valida usuário no código",
     "tables": [
      "agents",
+     "audit_logs",
      "contacts",
      "conversation_messages",
      "conversations",
@@ -34274,8 +34276,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 194,
-   "lines": 22160,
+   "files": 200,
+   "lines": 22355,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34388,8 +34390,11 @@
     "local-supabase.ts: edgeLocalDisponivel, MOTIVO_IGNORADO",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
     "index.ts: TalkRatioStatus, talkRatioStatus",
+    "schema.ts: ChatWidgetSessionSchema, ChatWidgetSession",
     "index.ts: handler",
+    "schema.ts: ChatbotRespondSchema, ChatbotRespond",
     "index.ts: handler",
+    "schema.ts: EmailInboundSchema, EmailInbound",
     "index.ts: recordKb, handler",
     "index.ts: pickPolicy",
     "csv.ts: toCsv",
@@ -34402,10 +34407,7 @@
     "index.ts: handler",
     "index.ts: contemHtml, handler",
     "index.ts: detectAnomalies",
-    "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey",
-    "index.ts: ForecastDay, HistoryDay, buildHistory, forecastNextDays",
-    "index.ts: CapacityRecommendation, CapacityResult, buildRecommendations",
-    "index.ts: VoiceQAResponse"
+    "index.ts: AnomalyKind, AnomalyMetric, RemediationPlan, planRemediation, idempotencyKey"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -34473,7 +34475,11 @@
     "supabase/functions/bitrix-api/index.ts",
     "supabase/functions/bitrix-api/__tests__/index.test.ts",
     "supabase/functions/chat-widget-session/index.ts",
+    "supabase/functions/chat-widget-session/schema.ts",
+    "supabase/functions/chat-widget-session/schema_test.ts",
     "supabase/functions/chatbot-respond/index.ts",
+    "supabase/functions/chatbot-respond/schema.ts",
+    "supabase/functions/chatbot-respond/schema_test.ts",
     "supabase/functions/chatbot-respond/__tests__/index.test.ts",
     "supabase/functions/check-alerts/index.ts",
     "supabase/functions/check-calling-hours/index.ts",
@@ -34496,11 +34502,7 @@
     "supabase/functions/compute-deal-health/index.ts",
     "supabase/functions/compute-deal-health/__tests__/index.test.ts",
     "supabase/functions/data-lake-flush/index.ts",
-    "supabase/functions/database-backup/index.ts",
-    "supabase/functions/database-cleanup/index.ts",
-    "supabase/functions/detect-churn-risk/index.ts",
-    "supabase/functions/detect-key-moments/index.ts",
-    "supabase/functions/dialer-pacing-tick/index.ts"
+    "supabase/functions/database-backup/index.ts"
    ]
   },
   {
@@ -39094,6 +39096,30 @@
     "name": "AnalyzeCallSchema",
     "kind": "object",
     "body": "{ transcript: z.string().min(1, \"Transcrição é obrigatória\").max(10000), callInfo: z.object({ contactName: z.string().optional(), phone: z.string().optional(), duration: z.string().optional(), type: z.string().optional() }).optional() }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/chat-widget-session/schema.ts",
+    "name": "ChatWidgetSessionSchema",
+    "kind": "object",
+    "body": "{ action: z.enum(['create', 'send_message', 'fetch_messages']).optional(), visitor_token: z.string().max(200).optional(), message: z.string().max(4000).optional(), visitor_name: z.string().max(200).optional(), visitor_email: z.string().max(254).optional(), origin_url: z.string().max(500).optional(), referrer: z.string().max(500).optional(), device_info: z.record(z.unknown()).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/schema.ts",
+    "name": "ChatbotRespondSchema",
+    "kind": "object",
+    "body": "{ conversation_id: z.string().uuid('conversation_id invalido'), user_message: z.string().min(1, 'user_message obrigatorio').max(4000), visitor_token: z.string().max(200).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/email-inbound/schema.ts",
+    "name": "EmailInboundSchema",
+    "kind": "object",
+    "body": "{ from: z.string().min(1).max(320), from_name: z.string().max(200).optional(), to: z.array(z.string().max(320)).max(50), cc: z.array(z.string().max(320)).max(50).optional(), subject: z.string().min(1).max(998), body_text: z.string().max(200000).optional(), body_html: z.string().max(500000).optional(), message_id: z.string().min(1).max(998), in_reply_to: z.string().max(998).optional(), headers: z.record(z.string().max(200)).optional(), }",
     "refines": [],
     "chain": []
    },
@@ -72987,6 +73013,10 @@
    },
    {
     "file": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+    "name": "chatbot-respond: user_message acima do teto devolve 422 com o campo apontado"
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
     "name": "chatbot-respond: preflight OPTIONS responde com CORS da origem permitida"
    },
    {
@@ -73136,6 +73166,10 @@
    {
     "file": "supabase/functions/email-inbound/__tests__/index.test.ts",
     "name": "email-inbound: from/subject ausentes continuam devolvendo 400"
+   },
+   {
+    "file": "supabase/functions/email-inbound/__tests__/index.test.ts",
+    "name": "email-inbound: subject acima do teto devolve 422 com o campo apontado"
    },
    {
     "file": "supabase/functions/email-inbound/__tests__/index.test.ts",
@@ -118502,7 +118536,7 @@
   },
   "supabase/functions/chat-widget-session/index.ts": {
    "path": "supabase/functions/chat-widget-session/index.ts",
-   "lines": 184,
+   "lines": 198,
    "tables": [
     {
      "table": "chat_sessions",
@@ -118597,9 +118631,30 @@
    ],
    "uses_service_role": true
   },
+  "supabase/functions/chat-widget-session/schema.ts": {
+   "path": "supabase/functions/chat-widget-session/schema.ts",
+   "lines": 16,
+   "exports": [
+    "const ChatWidgetSessionSchema",
+    "type ChatWidgetSession"
+   ],
+   "zod": [
+    {
+     "name": "ChatWidgetSessionSchema",
+     "kind": "object",
+     "body": "{ action: z.enum(['create', 'send_message', 'fetch_messages']).optional(), visitor_token: z.string().max(200).optional(), message: z.string().max(4000).optional(), visitor_name: z.string().max(200).optional(), visitor_email: z.string().max(254).optional(), origin_url: z.string().max(500).optional(), referrer: z.string().max(500).optional(), device_info: z.record(z.unknown()).optional(), }",
+     "refines": [],
+     "chain": []
+    }
+   ]
+  },
+  "supabase/functions/chat-widget-session/schema_test.ts": {
+   "path": "supabase/functions/chat-widget-session/schema_test.ts",
+   "lines": 28
+  },
   "supabase/functions/chatbot-respond/index.ts": {
    "path": "supabase/functions/chatbot-respond/index.ts",
-   "lines": 272,
+   "lines": 289,
    "exports": [
     "function handler"
    ],
@@ -118756,9 +118811,30 @@
    ],
    "uses_service_role": true
   },
+  "supabase/functions/chatbot-respond/schema.ts": {
+   "path": "supabase/functions/chatbot-respond/schema.ts",
+   "lines": 11,
+   "exports": [
+    "const ChatbotRespondSchema",
+    "type ChatbotRespond"
+   ],
+   "zod": [
+    {
+     "name": "ChatbotRespondSchema",
+     "kind": "object",
+     "body": "{ conversation_id: z.string().uuid('conversation_id invalido'), user_message: z.string().min(1, 'user_message obrigatorio').max(4000), visitor_token: z.string().max(200).optional(), }",
+     "refines": [],
+     "chain": []
+    }
+   ]
+  },
+  "supabase/functions/chatbot-respond/schema_test.ts": {
+   "path": "supabase/functions/chatbot-respond/schema_test.ts",
+   "lines": 26
+  },
   "supabase/functions/chatbot-respond/__tests__/index.test.ts": {
    "path": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
-   "lines": 59,
+   "lines": 73,
    "is_test": true,
    "params": [
     {
@@ -118770,6 +118846,7 @@
     "chatbot-respond: sem visitor_token e sem sessao devolve 401",
     "chatbot-respond: corpo sem conversation_id devolve 400",
     "chatbot-respond: conversation_id que nao e UUID devolve 400",
+    "chatbot-respond: user_message acima do teto devolve 422 com o campo apontado",
     "chatbot-respond: preflight OPTIONS responde com CORS da origem permitida"
    ],
    "uses_service_role": true
@@ -119910,7 +119987,7 @@
   },
   "supabase/functions/email-inbound/index.ts": {
    "path": "supabase/functions/email-inbound/index.ts",
-   "lines": 224,
+   "lines": 228,
    "exports": [
     "function handler"
    ],
@@ -120019,9 +120096,30 @@
    ],
    "uses_service_role": true
   },
+  "supabase/functions/email-inbound/schema.ts": {
+   "path": "supabase/functions/email-inbound/schema.ts",
+   "lines": 18,
+   "exports": [
+    "const EmailInboundSchema",
+    "type EmailInbound"
+   ],
+   "zod": [
+    {
+     "name": "EmailInboundSchema",
+     "kind": "object",
+     "body": "{ from: z.string().min(1).max(320), from_name: z.string().max(200).optional(), to: z.array(z.string().max(320)).max(50), cc: z.array(z.string().max(320)).max(50).optional(), subject: z.string().min(1).max(998), body_text: z.string().max(200000).optional(), body_html: z.string().max(500000).optional(), message_id: z.string().min(1).max(998), in_reply_to: z.string().max(998).optional(), headers: z.record(z.string().max(200)).optional(), }",
+     "refines": [],
+     "chain": []
+    }
+   ]
+  },
+  "supabase/functions/email-inbound/schema_test.ts": {
+   "path": "supabase/functions/email-inbound/schema_test.ts",
+   "lines": 38
+  },
   "supabase/functions/email-inbound/__tests__/index.test.ts": {
    "path": "supabase/functions/email-inbound/__tests__/index.test.ts",
-   "lines": 138,
+   "lines": 147,
    "is_test": true,
    "env": [
     "SUPABASE_SERVICE_ROLE_KEY",
@@ -120030,6 +120128,7 @@
    "tests": [
     "email-inbound: sem message_id devolve 422 (sem chave nao ha idempotencia)",
     "email-inbound: from/subject ausentes continuam devolvendo 400",
+    "email-inbound: subject acima do teto devolve 422 com o campo apontado",
     "email-inbound: ticket ja existente responde 200 idempotent_replay sem escrever",
     "email-inbound: primeira entrega cria conversa, ticket e mensagem",
     "email-inbound: preflight OPTIONS responde com CORS da origem permitida"
@@ -125622,10 +125721,30 @@
   }
  },
  "git": {
-  "sha": "51189721f046dd7e6fac205262a5590fb02d2a48",
+  "sha": "564451c0e0e7fce4bf63dba63c75fd71c800ed9d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "564451c",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: teto em todo campo de texto das edges publicas que gastam dinheiro (E047) (#228)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/chat-widget-session/index.ts",
+     "supabase/functions/chat-widget-session/schema.ts",
+     "supabase/functions/chat-widget-session/schema_test.ts",
+     "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+     "supabase/functions/chatbot-respond/index.ts",
+     "supabase/functions/chatbot-respond/schema.ts",
+     "supabase/functions/chatbot-respond/schema_test.ts",
+     "supabase/functions/email-inbound/__tests__/index.test.ts",
+     "supabase/functions/email-inbound/index.ts",
+     "supabase/functions/email-inbound/schema.ts",
+     "supabase/functions/email-inbound/schema_test.ts"
+    ]
+   },
    {
     "sha": "5118972",
     "date": "2026-11-24",
@@ -126022,18 +126141,6 @@
      "scripts/cleanup-and-count.mjs",
      "scripts/fix-user-profile.mjs"
     ]
-   },
-   {
-    "sha": "4271aa3",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)",
-    "files": [
-     "bun.lock",
-     "docs/qa/05-PROGRESSO.md",
-     "package-lock.json",
-     "package.json"
-    ]
    }
   ],
   "hot_files": [
@@ -126044,6 +126151,10 @@
    [
     "src/hooks/useMultiChannelCall.ts",
     3
+   ],
+   [
+    "supabase/functions/chatbot-respond/index.ts",
+    2
    ],
    [
     "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
@@ -126090,31 +126201,27 @@
     2
    ],
    [
-    "supabase/functions/analyze-call/index.ts",
+    "supabase/functions/chat-widget-session/index.ts",
     1
    ],
    [
-    "supabase/functions/auto-scorecard/index.ts",
+    "supabase/functions/chat-widget-session/schema.ts",
     1
    ],
    [
-    "supabase/functions/chatbot-respond/index.ts",
+    "supabase/functions/chat-widget-session/schema_test.ts",
     1
    ],
    [
-    "supabase/functions/extract-crm-fields/index.ts",
+    "supabase/functions/chatbot-respond/__tests__/index.test.ts",
     1
    ],
    [
-    "supabase/functions/generate-coaching-plan/index.ts",
+    "supabase/functions/chatbot-respond/schema.ts",
     1
    ],
    [
-    "supabase/functions/generate-meeting-summary/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/realtime-analysis/index.ts",
+    "supabase/functions/chatbot-respond/schema_test.ts",
     1
    ]
   ]

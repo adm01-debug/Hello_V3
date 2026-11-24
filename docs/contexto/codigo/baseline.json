@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "51189721f046dd7e6fac205262a5590fb02d2a48",
+  "commit": "564451c0e0e7fce4bf63dba63c75fd71c800ed9d",
   "branch": "main",
-  "data_commit": "2026-11-24T00:58:19-03:00",
+  "data_commit": "2026-11-24T01:09:45-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "564451c",
+    "data": "2026-11-24",
+    "assunto": "fix: teto em todo campo de texto das edges publicas que gastam dinheiro (E047) (#228)"
+   },
    {
     "sha": "5118972",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "c1e7859",
     "data": "2026-11-23",
     "assunto": "feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)"
-   },
-   {
-    "sha": "6f3a7bf",
-    "data": "2026-11-23",
-    "assunto": "feat: discador preditivo passa pela barreira de DNC e horario legal (#203)"
    }
   ],
-  "arquivos_mudados_7d": 1063,
+  "arquivos_mudados_7d": 1070,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 57
+    "mudancas": 58
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 57
+    "mudancas": 58
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -290,18 +290,18 @@
     "mudancas": 4
    },
    {
-    "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
+    "arquivo": "supabase/functions/chatbot-respond/index.ts",
     "mudancas": 4
    },
    {
-    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
+    "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
     "mudancas": 4
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 206
+    "commits": 207
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1708,
-  "arquivos_codigo": 1306,
-  "linhas_codigo": 176466,
+  "arquivos_total": 1714,
+  "arquivos_codigo": 1312,
+  "linhas_codigo": 176661,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -519,8 +519,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 194,
-   "linhas": 22160
+   "arquivos": 200,
+   "linhas": 22355
   },
   "tailwind.config.ts": {
    "arquivos": 1,

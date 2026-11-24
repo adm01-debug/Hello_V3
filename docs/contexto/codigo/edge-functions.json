@@ -341,8 +341,8 @@
   {
    "nome": "chat-widget-session",
    "entrada": "supabase/functions/chat-widget-session/index.ts",
-   "arquivos": 1,
-   "linhas": 184,
+   "arquivos": 3,
+   "linhas": 242,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -363,7 +363,8 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
-    "rate-limit.ts"
+    "rate-limit.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -374,8 +375,8 @@
   {
    "nome": "chatbot-respond",
    "entrada": "supabase/functions/chatbot-respond/index.ts",
-   "arquivos": 1,
-   "linhas": 272,
+   "arquivos": 3,
+   "linhas": 326,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -405,7 +406,8 @@
     "cors.ts",
     "rate-limit.ts",
     "resilience.ts",
-    "validate.ts"
+    "validate.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useChatbot.ts"
@@ -1085,8 +1087,8 @@
   {
    "nome": "email-inbound",
    "entrada": "supabase/functions/email-inbound/index.ts",
-   "arquivos": 1,
-   "linhas": 224,
+   "arquivos": 3,
+   "linhas": 284,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",
@@ -1108,7 +1110,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],

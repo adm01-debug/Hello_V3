@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 922,
- "arestas": 3568,
+ "nos": 928,
+ "arestas": 3577,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -149,6 +149,10 @@
    "importado_por": 11
   },
   {
+   "arquivo": "supabase/functions/_shared/validator.ts",
+   "importado_por": 11
+  },
+  {
    "arquivo": "src/components/ui/dropdown-menu.tsx",
    "importado_por": 10
   },
@@ -158,10 +162,6 @@
   },
   {
    "arquivo": "src/components/ui/slider.tsx",
-   "importado_por": 10
-  },
-  {
-   "arquivo": "src/lib/dialer-favorite-tags.ts",
    "importado_por": 10
   }
  ],
@@ -213,6 +213,9 @@
   "src/lib/session/index.ts",
   "src/lib/validation/index.ts",
   "supabase/functions/analyze-call/analyze-call_test.ts",
+  "supabase/functions/chat-widget-session/schema_test.ts",
+  "supabase/functions/chatbot-respond/schema_test.ts",
+  "supabase/functions/email-inbound/schema_test.ts",
   "supabase/functions/generate-coaching-track/track-engine_test.ts",
   "supabase/functions/whatsapp-inbound/idempotency_test.ts",
   "supabase/functions/whatsapp-inbound/schema_test.ts"

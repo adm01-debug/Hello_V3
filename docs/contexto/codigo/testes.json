@@ -3053,11 +3053,11 @@
   {
    "arquivo": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 59,
+   "linhas": 73,
    "testa": [
     "supabase/functions/chatbot-respond/index.ts"
    ],
-   "casos": 4
+   "casos": 5
   },
   {
    "arquivo": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
@@ -3115,11 +3115,11 @@
   {
    "arquivo": "supabase/functions/email-inbound/__tests__/index.test.ts",
    "tipo": "unit",
-   "linhas": 138,
+   "linhas": 147,
    "testa": [
     "supabase/functions/email-inbound/index.ts"
    ],
-   "casos": 5
+   "casos": 6
   },
   {
    "arquivo": "supabase/functions/embed-kb-article/__tests__/index.test.ts",
