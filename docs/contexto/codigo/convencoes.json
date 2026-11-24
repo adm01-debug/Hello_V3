@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: guard de CI contra fetch sem prazo e migra os 5 ultimos fetch (#297)",
    "fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)",
    "feat: preserva o formulario e reautentica quando a sessao expira (#295)",
    "fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)",
-   "fix: separa o cache de notificacoes por usuario (etapa 221) (#293)",
-   "fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)"
+   "fix: separa o cache de notificacoes por usuario (etapa 221) (#293)"
   ]
  },
  "pr_template": null,

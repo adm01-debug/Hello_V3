@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "8aeb115129c8cf37611d35dcbe51815a8c9f3603",
+  "commit": "b6163308800aab54fd59830cbe71225a82af81a7",
   "branch": "main",
-  "data_commit": "2026-11-24T14:09:53-03:00",
+  "data_commit": "2026-11-24T14:22:14-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "b616330",
+    "data": "2026-11-24",
+    "assunto": "fix: guard de CI contra fetch sem prazo e migra os 5 ultimos fetch (#297)"
+   },
    {
     "sha": "8aeb115",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "9b4d4b9",
     "data": "2026-11-24",
     "assunto": "fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)"
-   },
-   {
-    "sha": "a7041fc",
-    "data": "2026-11-24",
-    "assunto": "chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)"
    }
   ],
-  "arquivos_mudados_7d": 1242,
+  "arquivos_mudados_7d": 1243,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 120
+    "mudancas": 121
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 120
+    "mudancas": 121
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -235,6 +235,10 @@
    },
    {
     "arquivo": "docs/edge-functions/README.md",
+    "mudancas": 7
+   },
+   {
+    "arquivo": "supabase/functions/validate-geo/index.ts",
     "mudancas": 7
    },
    {
@@ -274,10 +278,6 @@
     "mudancas": 6
    },
    {
-    "arquivo": "supabase/functions/validate-geo/index.ts",
-    "mudancas": 6
-   },
-   {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 6
    },
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 275
+    "commits": 276
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1736,
   "arquivos_codigo": 1332,
-  "linhas_codigo": 177269,
+  "linhas_codigo": 177296,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -384,7 +384,7 @@
   },
   "scripts/audit-edge-functions.ts": {
    "arquivos": 1,
-   "linhas": 268
+   "linhas": 290
   },
   "scripts/check-bundle-budget.mjs": {
    "arquivos": 1,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 212,
-   "linhas": 23796
+   "linhas": 23801
   },
   "tailwind.config.ts": {
    "arquivos": 1,

@@ -59,7 +59,7 @@
   {
    "arquivo": "scripts/audit-edge-functions.ts",
    "descricao": "* Auditoria estática das Edge Functions.",
-   "linhas": 268,
+   "linhas": 290,
    "env": [],
    "npm_scripts": [],
    "workflows": [

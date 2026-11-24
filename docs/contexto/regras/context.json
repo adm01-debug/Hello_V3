@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "8aeb115129c8cf37611d35dcbe51815a8c9f3603",
+  "sha": "b6163308800aab54fd59830cbe71225a82af81a7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 17:10 UTC",
+  "generated_at": "2026-11-24 17:22 UTC",
   "files_total": 1783,
   "code_files": 1579,
-  "code_lines": 193319
+  "code_lines": 193346
  },
  "version": "1.3.2",
- "facts_hash": "4e06e81382453ef0",
+ "facts_hash": "2d2ad4cd4b996b18",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -29608,9 +29608,7 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [
@@ -31353,9 +31351,7 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "http://ip-api.com/json/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [],
@@ -31455,9 +31451,7 @@
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://api.elevenlabs.io/v1/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [],
@@ -33371,7 +33365,7 @@
   {
    "module": "scripts",
    "files": 36,
-   "lines": 10180,
+   "lines": 10202,
    "tables": [
     "a",
     "contacts",
@@ -34520,7 +34514,7 @@
   {
    "module": "supabase/functions",
    "files": 212,
-   "lines": 23796,
+   "lines": 23801,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -38769,12 +38763,6 @@
    ]
   },
   "external": {
-   "http://ip-api.com": [
-    "supabase/functions/validate-geo/index.ts"
-   ],
-   "https://api.elevenlabs.io": [
-    "supabase/functions/voice-transcribe/index.ts"
-   ],
    "https://api.ipify.org": [
     "src/pages/Login.tsx"
    ],
@@ -38793,7 +38781,6 @@
     "src/pages/Login.tsx"
    ],
    "https://openrouter.ai": [
-    "supabase/functions/analyze-contact-profile/index.ts",
     "supabase/functions/analyze-live-utterance/index.ts"
    ]
   },
@@ -89143,10 +89130,14 @@
   },
   "scripts/audit-edge-functions.ts": {
    "path": "scripts/audit-edge-functions.ts",
-   "lines": 268,
+   "lines": 290,
    "rule_comments": [
     "R3 — service_role sem validação do chamador. Webhooks e crons são legítimos:",
-    "o caso intencional; esta regra NAO entra no baseline de propósito (warn silenciado"
+    "o caso intencional; esta regra NAO entra no baseline de propósito (warn silenciado",
+    "R11 — `fetch` de saída sem prazo. As etapas 208-211 zeraram o conjunto; esta",
+    "regra existe para a próxima edge não nascer sem prazo (o provedor fora do ar",
+    "achado novo aqui é sempre um bug novo. `// fetch-prazo-ok` silencia.",
+    "fetch-prazo-ok)`,"
    ],
    "doc": "!/usr/bin/env bun",
    "uses_service_role": true
@@ -115832,7 +115823,7 @@
   },
   "supabase/functions/analyze-contact-profile/index.ts": {
    "path": "supabase/functions/analyze-contact-profile/index.ts",
-   "lines": 100,
+   "lines": 101,
    "tables": [
     {
      "table": "contacts",
@@ -115866,9 +115857,6 @@
      "topics"
     ]
    },
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -118347,7 +118335,7 @@
   },
   "supabase/functions/fuzz-test-runner/index.ts": {
    "path": "supabase/functions/fuzz-test-runner/index.ts",
-   "lines": 142,
+   "lines": 143,
    "tables": [
     {
      "table": "user_roles",
@@ -120252,7 +120240,7 @@
   },
   "supabase/functions/validate-geo/index.ts": {
    "path": "supabase/functions/validate-geo/index.ts",
-   "lines": 208,
+   "lines": 209,
    "tables": [
     {
      "table": "geo_settings",
@@ -120281,9 +120269,6 @@
      "restriction_type"
     ]
    },
-   "external_urls": [
-    "http://ip-api.com/json/…"
-   ],
    "env": [
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
@@ -120435,10 +120420,7 @@
   },
   "supabase/functions/voice-transcribe/index.ts": {
    "path": "supabase/functions/voice-transcribe/index.ts",
-   "lines": 133,
-   "external_urls": [
-    "https://api.elevenlabs.io/v1/…"
-   ],
+   "lines": 134,
    "env": [
     "ELEVENLABS_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -121620,7 +121602,7 @@
   },
   "supabase/functions/voip-trunks-healthcheck/index.ts": {
    "path": "supabase/functions/voip-trunks-healthcheck/index.ts",
-   "lines": 185,
+   "lines": 186,
    "tables": [
     {
      "table": "voip_trunks",
@@ -123510,10 +123492,25 @@
   }
  },
  "git": {
-  "sha": "8aeb115129c8cf37611d35dcbe51815a8c9f3603",
+  "sha": "b6163308800aab54fd59830cbe71225a82af81a7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "b616330",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: guard de CI contra fetch sem prazo e migra os 5 ultimos fetch (#297)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "scripts/audit-edge-functions.ts",
+     "supabase/functions/analyze-contact-profile/index.ts",
+     "supabase/functions/fuzz-test-runner/index.ts",
+     "supabase/functions/validate-geo/index.ts",
+     "supabase/functions/voice-transcribe/index.ts",
+     "supabase/functions/voip-trunks-healthcheck/index.ts"
+    ]
+   },
    {
     "sha": "8aeb115",
     "date": "2026-11-24",
@@ -123984,24 +123981,6 @@
     "files": [
      "src/pages/Calls.tsx"
     ]
-   },
-   {
-    "sha": "ee1f100",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: rotulos acessiveis nos botoes-icone de discador, chamada, contatos e transcricao (etapas 259-261) (#267)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/calls/ActiveCallsIndicator.tsx",
-     "src/components/calls/ConferenceSection.tsx",
-     "src/components/calls/softphone/DialpadTab.tsx",
-     "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
-     "src/components/contacts/ContactCard.tsx",
-     "src/components/contacts/ContactDetailSheet.tsx",
-     "src/components/contacts/__tests__/ContactCard.test.tsx",
-     "src/components/recordings/TranscriptionDialog.tsx",
-     "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -124020,6 +123999,14 @@
    [
     "docs/estado/funcionalidades-planejadas.md",
     3
+   ],
+   [
+    "scripts/audit-edge-functions.ts",
+    2
+   ],
+   [
+    "supabase/functions/validate-geo/index.ts",
+    2
    ],
    [
     "src/hooks/useAuth.ts",
@@ -124050,10 +124037,6 @@
     2
    ],
    [
-    "src/components/recordings/TranscriptionDialog.tsx",
-    2
-   ],
-   [
     "src/hooks/useActiveCallsRealtime.ts",
     2
    ],
@@ -124078,11 +124061,7 @@
     2
    ],
    [
-    "src/hooks/__tests__/useAuth.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/components/auth/ProtectedRoute.tsx",
+    "supabase/functions/analyze-contact-profile/index.ts",
     1
    ]
   ]

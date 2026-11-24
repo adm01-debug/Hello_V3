@@ -98,7 +98,7 @@
    "nome": "analyze-contact-profile",
    "entrada": "supabase/functions/analyze-contact-profile/index.ts",
    "arquivos": 1,
-   "linhas": 100,
+   "linhas": 101,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -122,6 +122,7 @@
    "usa_shared": [
     "cors.ts",
     "rate-limit.ts",
+    "resilience.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -1423,7 +1424,7 @@
    "nome": "fuzz-test-runner",
    "entrada": "supabase/functions/fuzz-test-runner/index.ts",
    "arquivos": 1,
-   "linhas": 142,
+   "linhas": 143,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1444,7 +1445,8 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -2540,7 +2542,7 @@
    "nome": "validate-geo",
    "entrada": "supabase/functions/validate-geo/index.ts",
    "arquivos": 2,
-   "linhas": 324,
+   "linhas": 325,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2566,7 +2568,8 @@
     "client-ip.ts",
     "cors.ts",
     "errors.ts",
-    "rate-limit.ts"
+    "rate-limit.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useGeoBlocking.ts"
@@ -2692,7 +2695,7 @@
    "nome": "voice-transcribe",
    "entrada": "supabase/functions/voice-transcribe/index.ts",
    "arquivos": 1,
-   "linhas": 133,
+   "linhas": 134,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2710,7 +2713,8 @@
     "api.elevenlabs.io"
    ],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [
     "src/components/calls/live-transcription/useLiveTranscription.ts",
@@ -3307,7 +3311,7 @@
    "nome": "voip-trunks-healthcheck",
    "entrada": "supabase/functions/voip-trunks-healthcheck/index.ts",
    "arquivos": 1,
-   "linhas": 185,
+   "linhas": 186,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3332,7 +3336,8 @@
    "hosts_externos": [],
    "usa_shared": [
     "allowed-hosts.ts",
-    "cors.ts"
+    "cors.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useTrunkHealth.ts"

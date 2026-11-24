@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 944,
- "arestas": 3743,
+ "arestas": 3748,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -77,6 +77,10 @@
    "importado_por": 41
   },
   {
+   "arquivo": "supabase/functions/_shared/resilience.ts",
+   "importado_por": 34
+  },
+  {
    "arquivo": "supabase/functions/_shared/validate.ts",
    "importado_por": 34
   },
@@ -90,10 +94,6 @@
   },
   {
    "arquivo": "src/components/ui/progress.tsx",
-   "importado_por": 29
-  },
-  {
-   "arquivo": "supabase/functions/_shared/resilience.ts",
    "importado_por": 29
   },
   {
