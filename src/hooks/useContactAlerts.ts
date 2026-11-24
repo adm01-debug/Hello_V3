@@ -65,8 +65,13 @@ export const useContactAlerts = () => {
         a.id === alertId ? { ...a, is_read: true } : a
       ));
       setUnreadCount(prev => Math.max(0, prev - 1));
+      return { ok: true as const };
     } catch (err) {
+      // O catch sozinho e quase inalcancavel (o Postgrest resolve com { error }),
+      // mas e a rede para excecoes reais. O que o usuario precisa e saber que nao gravou.
       logger.error('Error marking alert as read:', err);
+      toast.error('Não foi possível marcar o alerta como lido');
+      return { ok: false as const, error: err };
     }
   }, []);
 
@@ -82,8 +87,11 @@ export const useContactAlerts = () => {
       setAlerts(prev => prev.map(a => ({ ...a, is_read: true })));
       setUnreadCount(0);
       toast.success('Todos os alertas marcados como lidos');
+      return { ok: true as const };
     } catch (err) {
       logger.error('Error marking all as read:', err);
+      toast.error('Não foi possível marcar os alertas como lidos');
+      return { ok: false as const, error: err };
     }
   }, []);
 
@@ -104,8 +112,11 @@ export const useContactAlerts = () => {
         a.id === alertId ? { ...a, is_actioned: true, actioned_at: new Date().toISOString() } : a
       ));
       toast.success('Alerta marcado como resolvido');
+      return { ok: true as const };
     } catch (err) {
       logger.error('Error marking alert as actioned:', err);
+      toast.error('Não foi possível marcar o alerta como resolvido');
+      return { ok: false as const, error: err };
     }
   }, []);
 
@@ -120,8 +131,11 @@ export const useContactAlerts = () => {
       
       setAlerts(prev => prev.filter(a => a.id !== alertId));
       toast.success('Alerta removido');
+      return { ok: true as const };
     } catch (err) {
       logger.error('Error deleting alert:', err);
+      toast.error('Não foi possível remover o alerta');
+      return { ok: false as const, error: err };
     }
   }, []);
 
@@ -139,6 +153,7 @@ export const useContactAlerts = () => {
       return data;
     } catch (err) {
       logger.error('Error checking for new alerts:', err);
+      toast.error('Não foi possível verificar novos alertas');
       return null;
     }
   }, [fetchAlerts]);
