@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "747a1613ecd33196fd1c2e688f861106d7c47f50",
+  "commit": "9d457f8dea9e0335499ac8c1413135dd93c2f527",
   "branch": "main",
-  "data_commit": "2026-11-23T23:13:12-03:00",
+  "data_commit": "2026-11-23T23:20:08-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "9d457f8",
+    "data": "2026-11-23",
+    "assunto": "fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)"
+   },
    {
     "sha": "747a161",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "22cb928",
     "data": "2026-11-23",
     "assunto": "fix: request-password-reset responde o mesmo corpo nos quatro caminhos (E031) (#192)"
-   },
-   {
-    "sha": "a5e32de",
-    "data": "2026-11-23",
-    "assunto": "fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)"
    }
   ],
-  "arquivos_mudados_7d": 1026,
+  "arquivos_mudados_7d": 1032,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 46
+    "mudancas": 47
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 40
+    "mudancas": 43
    },
    {
     "pasta": "src/lib/__tests__",
@@ -189,7 +189,7 @@
    },
    {
     "pasta": "src/pages/__tests__",
-    "mudancas": 9
+    "mudancas": 10
    },
    {
     "pasta": "docs/audits/pendencias-2026-07.md",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 46
+    "mudancas": 47
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 194
+    "commits": 195
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1703,
-  "arquivos_codigo": 1301,
-  "linhas_codigo": 175512,
+  "arquivos_total": 1704,
+  "arquivos_codigo": 1302,
+  "linhas_codigo": 175664,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 380,
+  "testes": 381,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 46543
+   "linhas": 46635
   },
   "src/integrations": {
    "arquivos": 3,
@@ -507,8 +507,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 139,
-   "linhas": 21636
+   "arquivos": 140,
+   "linhas": 21696
   },
   "src/routes": {
    "arquivos": 2,

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `747a1613ec` · branch `main` · 2026-11-24 02:13 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9d457f8dea` · branch `main` · 2026-11-24 02:20 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1585,7 +1585,7 @@ _nenhum item encontrado_
   ```
 - **Scorecards()** — `src/pages/Scorecards.tsx`
   ```
-  usePageTitle("Avaliações de Chamada"); const { templates, updateStatus, createTemplate, generateAIScorecard } = useScorecards(); const [templateId, setTemplateId] = useState(""); const [callId, setCallId] = useState(""); const [generating, setGenerating] = useState(false); const [creating, setCreating] = useState(false); const [newName, setNewName] = useState(""); const [newDesc, setNewDesc] = useState(""); const [newCriteria, setNewCriteria] = useState([ { label: "Abertura e identificação", des …
+  usePageTitle("Avaliações de Chamada"); const { templates, error, updateStatus, createTemplate, generateAIScorecard } = useScorecards(); const [templateId, setTemplateId] = useState(""); const [callId, setCallId] = useState(""); const [generating, setGenerating] = useState(false); const [creating, setCreating] = useState(false); const [newName, setNewName] = useState(""); const [newDesc, setNewDesc] = useState(""); const [newCriteria, setNewCriteria] = useState([ { label: "Abertura e identificaçã …
   ```
 - **generate()** — `src/pages/Scorecards.tsx`
   ```
@@ -2466,7 +2466,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4266 testes em 370 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4275 testes em 371 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2545,6 +2545,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/voice-preferences.test.ts` | 14 | voice-preferences (PBT) · clampTtsRate sempre devolve valor finito no intervalo permitido · nextTtsRate percorre apenas passos válidos · ciclo de velocidades é fechado e volta ao início … |
 | `src/lib/__tests__/webhook-health-utils.test.ts` | 14 | ratioColor · retorna muted quando attempts=0 · classifica faixas por ratio · aggregateEndpoints … |
 | `src/lib/notifications/__tests__/index.coverage.test.ts` | 14 | notifications · sendNotification · returns success when edge function succeeds · returns error when edge function returns error … |
+| `src/hooks/__tests__/useAgentRanking.coverage.test.tsx` | 13 | useAgentRanking (coverage) · exposes the read error instead of an empty ranking · clears the ranking error after the next successful read · fetches agent stats on mount and exposes data … |
 | `src/hooks/__tests__/useCallSession.coverage.test.tsx` | 13 | useCallSession · starts a session successfully · returns null on start error · addTranscript/addAnalysis no-op without session … |
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
 | `src/hooks/__tests__/useMeetingSummary.coverage.test.tsx` | 13 | useMeetingSummary · loads summary and runs generate/update/share · disabled when no callSessionId · generate handles skipped response … |
@@ -2556,10 +2557,10 @@ _nenhum item encontrado_
 | `src/lib/__tests__/security-alerts-webhook-validation.test.ts` | 12 | validateWebhookConfig · aceita config mínima válida sem erros nem avisos · aceita URL vazia (= remover config) · rejeita URL inválida: %s … |
 | `src/lib/security/__tests__/hsts-headers.coverage.test.ts` | 12 | buildHSTSHeader · builds header from default config · omits includeSubDomains and preload when false · includes only includeSubDomains when preload is false … |
 | `src/lib/validation/__tests__/zod-schemas.property.test.ts` | 12 | Zod schemas — property-based (1000 runs cada) · uuidSchema aceita UUIDs válidos · uuidSchema rejeita strings arbitrárias não-UUID · emailSchema aceita emails válidos … |
-| `src/hooks/__tests__/useAgentRanking.coverage.test.tsx` | 11 | useAgentRanking (coverage) · fetches agent stats on mount and exposes data · getGoalsForAgent returns saved goals and default fallback · checkGoalAchievements fires success toast when goals met … |
 | `src/hooks/__tests__/useContacts.coverage.test.tsx` | 11 | useContacts (coverage) · fetches contacts on mount · fetchContacts with search filter · getContactByPhone success and not found … |
 | `src/hooks/__tests__/useLiveAssist.coverage.test.tsx` | 11 | useLiveAssist · is disabled (no fetch) without callSessionId · loads signals and subscribes to realtime when callSessionId present · analyze invokes edge function when throttle allows … |
 | `src/hooks/__tests__/useSipCall.coverage.test.tsx` | 11 | useSipCall (coverage) · initial state is disconnected · connect succeeds and registers · connect with failover shows warning … |
+| `src/hooks/__tests__/useSuccessPlans.coverage.test.tsx` | 11 | useSuccessPlans · loads plans and milestones with accountId · loads plans without accountId · handles empty plans (no milestone fetch) … |
 | `src/hooks/auth/__tests__/useAuthSession.coverage.test.tsx` | 11 | withTimeout · resolves when the promise resolves first · rejects with message on timeout · useAuthSession … |
 | `src/lib/__tests__/holdReminderSounds.coverage.test.tsx` | 11 | holdReminderSounds · createNotificationSound plays two oscillators (timer branch) · createUrgentSound plays three beeps over time · formatHoldTime formats both branches … |
 | `src/lib/__tests__/tracing.coverage.test.ts` | 11 | tracing (coverage) · exports header name constants · returns undefined trace id/operation when no scope is active · withTrace generates id, sets operation, and clears on success … |
@@ -2575,6 +2576,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 10 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
 | `src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx` | 10 | useMultiChannelCallConference · startConference requires at least 2 calls · starts, adds, removes, toggles recording and ends conference · removeFromConference auto-ends when below 2 participants … |
 | `src/hooks/__tests__/useReauth.grant.test.tsx` | 10 | Reauth grant persistido (HMAC) · grava grant assinado no sessionStorage apos verificar · rehidrata lastVerified em nova montagem (nao exige reauth) · descarta grant com assinatura invalida … |
+| `src/hooks/__tests__/useScorecards.coverage.test.tsx` | 10 | useScorecards · loads templates and criteria without callSessionId · exposes the template read error instead of an empty model list · clears the template error on the next successful read … |
 | `src/hooks/__tests__/useTrackers.coverage.test.tsx` | 10 | useTrackers · loads trackers on mount (success) · logs error when load fails · createTracker success path … |
 | `src/hooks/auth/__tests__/useAuthActions.coverage.test.tsx` | 10 | useAuthActions · signIn success returns data and loads profile · signIn returns supabase error branch · signIn catch branch when request throws … |
 | `src/lib/__tests__/hash-endpoint.test.ts` | 10 | hashEndpoint · gera hash de exatamente 12 caracteres hexadecimais · é determinístico (mesma URL → mesmo hash) · diferencia URLs quase idênticas (path) … |
@@ -2603,7 +2605,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` | 9 | useScheduledCallbacks · loads pending callbacks and upcoming count on mount · fetchCallbacks with status filter and error branch · fetchUpcomingCount error branch … |
 | `src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx` | 9 | useSecurityDashboard · returns early without userId · loads data and computes full score · computes lower score branches (no mfa, many sessions, ip off, no alerts) … |
 | `src/hooks/__tests__/useShifts.coverage.test.tsx` | 9 | useShifts coverage · loads shifts and templates without weekStart · loads shifts with weekStart (gte/lt branch) · exposes CRUD mutations and runs createShift success … |
-| `src/hooks/__tests__/useSuccessPlans.coverage.test.tsx` | 9 | useSuccessPlans · loads plans and milestones with accountId · loads plans without accountId · handles empty plans (no milestone fetch) … |
 | `src/lib/__tests__/device-identity.test.ts` | 9 | device-identity · sanitize sempre respeita o CHECK do banco (trim + limite) · sanitize é idempotente · sanitize rejeita não-strings … |
 | `src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts` | 9 | voipProactiveSnapshot · isProactiveEnabled reflects localStorage pref · setProactiveEnabled writes the pref · shouldRunProactiveCheck false when disabled … |
 | `src/lib/security/__tests__/https-enforcer.coverage.test.ts` | 9 | https-enforcer · does not enforce on localhost · does not enforce on 127.0.0.1 · does not enforce when already https … |
@@ -2618,7 +2619,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCallRecording.coverage.test.tsx` | 8 | useCallRecording · starts recording successfully · handles start recording failure · stopAndSaveRecording returns null when no recorder … |
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
 | `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 8 | useIPWhitelist · does not fetch when not admin · fetches data when admin · validates IP format on addGlobalIP … |
-| `src/hooks/__tests__/useScorecards.coverage.test.tsx` | 8 | useScorecards · loads templates and criteria without callSessionId · loads scorecards and responses with callSessionId · clears responses when no scorecards … |
 | `src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx` | 8 | useSecurityMonitoringData · fetches logs, alerts and computes stats · erro de leitura vira alarme, nao tranquilidade · limpa o erro na leitura seguinte bem-sucedida … |
 | `src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx` | 8 | useSecurityNotifications · detects support and initial permission · requestPermission granted path · requestPermission denied path … |
 | `src/hooks/__tests__/useSessionManager.coverage.test.tsx` | 8 | useSessionManager · loads sessions and creates current session · revokes a non-current session · revokes the current session and signs out … |
@@ -2770,7 +2770,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
-| … +70 linhas — lista completa em `context.json` | | |
+| … +71 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

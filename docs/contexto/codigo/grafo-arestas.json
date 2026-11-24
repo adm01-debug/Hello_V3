@@ -2248,6 +2248,7 @@
   ],
   "src/hooks/useAgentRanking.ts": [
    "src/integrations/supabase/client.ts",
+   "src/lib/error-message.ts",
    "src/lib/logger.ts",
    "src/lib/safe-date.ts"
   ],
@@ -2750,6 +2751,7 @@
   ],
   "src/hooks/useScorecards.ts": [
    "src/integrations/supabase/client.ts",
+   "src/lib/error-message.ts",
    "src/lib/logger.ts"
   ],
   "src/hooks/useSecurityAlertNotifications.ts": [
@@ -2802,6 +2804,7 @@
   ],
   "src/hooks/useSuccessPlans.ts": [
    "src/integrations/supabase/client.ts",
+   "src/lib/error-message.ts",
    "src/lib/logger.ts"
   ],
   "src/hooks/useSupervisorPanel.ts": [

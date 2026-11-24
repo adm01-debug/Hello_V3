@@ -746,7 +746,7 @@
    "hooks_exportados": [
     "useAgentRanking"
    ],
-   "linhas": 319,
+   "linhas": 333,
    "dominio": "hooks",
    "tabelas": [
     "agent_goals",
@@ -3641,7 +3641,7 @@
    "hooks_exportados": [
     "useScorecards"
    ],
-   "linhas": 139,
+   "linhas": 150,
    "dominio": "hooks",
    "tabelas": [
     "call_scorecards",
@@ -3948,7 +3948,7 @@
    "hooks_exportados": [
     "useSuccessPlans"
    ],
-   "linhas": 102,
+   "linhas": 107,
    "dominio": "hooks",
    "tabelas": [
     "success_plan_milestones",
@@ -3966,7 +3966,7 @@
    "usado_por_arquivos": [
     "src/pages/SuccessPlans.tsx"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useSupervisorPanel.ts",

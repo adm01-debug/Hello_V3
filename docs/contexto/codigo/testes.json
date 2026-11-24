@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 380,
+ "total": 381,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 363
+  "unit": 364
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 356
+   "arquivos": 357
   },
   {
    "padrao": "e2e/",
@@ -394,11 +394,11 @@
   {
    "arquivo": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 178,
+   "linhas": 197,
    "testa": [
     "src/hooks/useAgentRanking.ts"
    ],
-   "casos": 10
+   "casos": 12
   },
   {
    "arquivo": "src/hooks/__tests__/useAgentStatus.coverage.test.tsx",
@@ -1453,11 +1453,11 @@
   {
    "arquivo": "src/hooks/__tests__/useScorecards.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 110,
+   "linhas": 132,
    "testa": [
     "src/hooks/useScorecards.ts"
    ],
-   "casos": 7
+   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
@@ -1575,11 +1575,11 @@
   {
    "arquivo": "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 158,
+   "linhas": 179,
    "testa": [
     "src/hooks/useSuccessPlans.ts"
    ],
-   "casos": 8
+   "casos": 10
   },
   {
    "arquivo": "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
@@ -2843,6 +2843,16 @@
    "casos": 3
   },
   {
+   "arquivo": "src/pages/__tests__/SuccessPlans.test.tsx",
+   "tipo": "unit",
+   "linhas": 37,
+   "testa": [
+    "src/hooks/useSuccessPlans.ts",
+    "src/pages/SuccessPlans.tsx"
+   ],
+   "casos": 2
+  },
+  {
    "arquivo": "src/pages/roles/__tests__/useRoles.test.ts",
    "tipo": "unit",
    "linhas": 171,
@@ -3561,7 +3571,7 @@
   "src/hooks/useShifts.ts": 2,
   "src/hooks/useSipCall.ts": 1,
   "src/hooks/useSkills.ts": 2,
-  "src/hooks/useSuccessPlans.ts": 1,
+  "src/hooks/useSuccessPlans.ts": 2,
   "src/hooks/useSupervisorPanel.ts": 1,
   "src/hooks/useSurveys.ts": 1,
   "src/hooks/useTalkRatio.ts": 1,
@@ -3679,6 +3689,7 @@
   "src/pages/SecurityMonitoring.tsx": 1,
   "src/pages/SecurityReport.tsx": 1,
   "src/pages/Status.tsx": 1,
+  "src/pages/SuccessPlans.tsx": 1,
   "src/pages/roles/useRoles.ts": 1,
   "src/routes/protectedRoutes.tsx": 1,
   "supabase/functions/_shared/allowed-hosts.ts": 1,
@@ -3795,7 +3806,6 @@
    "src/pages/Settings.tsx",
    "src/pages/ShiftSwapSuggestions.tsx",
    "src/pages/Skills.tsx",
-   "src/pages/SuccessPlans.tsx",
    "src/pages/TollFreeNumbers.tsx",
    "src/pages/TopicDetection.tsx",
    "src/pages/Trackers.tsx",

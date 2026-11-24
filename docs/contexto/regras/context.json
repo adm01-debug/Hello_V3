@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "747a1613ecd33196fd1c2e688f861106d7c47f50",
+  "sha": "9d457f8dea9e0335499ac8c1413135dd93c2f527",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 02:13 UTC",
-  "files_total": 1750,
-  "code_files": 1547,
-  "code_lines": 191524
+  "generated_at": "2026-11-24 02:20 UTC",
+  "files_total": 1751,
+  "code_files": 1548,
+  "code_lines": 191676
  },
  "version": "1.3.2",
- "facts_hash": "b66c0b5268034d79",
+ "facts_hash": "0bcb512cb7e7e60a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 644,
-   ".tsx": 624,
+   ".tsx": 625,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -28087,7 +28087,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 32
+    "deps_count": 33
    },
    {
     "path": "",
@@ -29116,7 +29116,7 @@
      "score-call"
     ],
     "rpc_transitive": [],
-    "deps_count": 12
+    "deps_count": 13
    },
    {
     "path": "",
@@ -29242,7 +29242,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 11
+    "deps_count": 12
    },
    {
     "path": "",
@@ -33595,7 +33595,7 @@
   {
    "module": "src/hooks",
    "files": 355,
-   "lines": 46543,
+   "lines": 46635,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34072,8 +34072,8 @@
   },
   {
    "module": "src/pages",
-   "files": 139,
-   "lines": 21636,
+   "files": 140,
+   "lines": 21696,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -55843,7 +55843,7 @@
     "file": "src/pages/Scorecards.tsx",
     "name": "Scorecards",
     "params": "",
-    "body": "usePageTitle(\"Avaliações de Chamada\"); const { templates, updateStatus, createTemplate, generateAIScorecard } = useScorecards(); const [templateId, setTemplateId] = useState(\"\"); const [callId, setCallId] = useState(\"\"); const [generating, setGenerating] = useState(false); const [creating, setCreating] = useState(false); const [newName, setNewName] = useState(\"\"); const [newDesc, setNewDesc] = useState(\"\"); const [newCriteria, setNewCriteria] = useState([ { label: \"Abertura e identificação\", des …"
+    "body": "usePageTitle(\"Avaliações de Chamada\"); const { templates, error, updateStatus, createTemplate, generateAIScorecard } = useScorecards(); const [templateId, setTemplateId] = useState(\"\"); const [callId, setCallId] = useState(\"\"); const [generating, setGenerating] = useState(false); const [creating, setCreating] = useState(false); const [newName, setNewName] = useState(\"\"); const [newDesc, setNewDesc] = useState(\"\"); const [newCriteria, setNewCriteria] = useState([ { label: \"Abertura e identificaçã …"
    },
    {
     "file": "src/pages/Scorecards.tsx",
@@ -57638,6 +57638,14 @@
    {
     "file": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
     "name": "useAgentRanking (coverage)"
+   },
+   {
+    "file": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
+    "name": "exposes the read error instead of an empty ranking"
+   },
+   {
+    "file": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
+    "name": "clears the ranking error after the next successful read"
    },
    {
     "file": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
@@ -63881,6 +63889,14 @@
    },
    {
     "file": "src/hooks/__tests__/useScorecards.coverage.test.tsx",
+    "name": "exposes the template read error instead of an empty model list"
+   },
+   {
+    "file": "src/hooks/__tests__/useScorecards.coverage.test.tsx",
+    "name": "clears the template error on the next successful read"
+   },
+   {
+    "file": "src/hooks/__tests__/useScorecards.coverage.test.tsx",
     "name": "loads scorecards and responses with callSessionId"
    },
    {
@@ -64710,6 +64726,14 @@
    {
     "file": "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
     "name": "handles empty plans (no milestone fetch)"
+   },
+   {
+    "file": "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
+    "name": "exposes the milestone read error, because a plan without milestones is not empty"
+   },
+   {
+    "file": "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
+    "name": "clears the milestone error after the next successful read"
    },
    {
     "file": "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
@@ -72506,6 +72530,18 @@
    {
     "file": "src/pages/__tests__/Status.test.tsx",
     "name": "sai do spinner e mostra mensagem de erro quando a consulta falha"
+   },
+   {
+    "file": "src/pages/__tests__/SuccessPlans.test.tsx",
+    "name": "SuccessPlans"
+   },
+   {
+    "file": "src/pages/__tests__/SuccessPlans.test.tsx",
+    "name": "shows the read error instead of "
+   },
+   {
+    "file": "src/pages/__tests__/SuccessPlans.test.tsx",
+    "name": "shows the genuine empty state when the read succeeded"
    },
    {
     "file": "src/pages/roles/__tests__/useRoles.test.ts",
@@ -98254,7 +98290,7 @@
   },
   "src/hooks/useAgentRanking.ts": {
    "path": "src/hooks/useAgentRanking.ts",
-   "lines": 319,
+   "lines": 333,
    "exports": [
     "interface AgentStats",
     "interface AgentGoals",
@@ -103324,7 +103360,7 @@
   },
   "src/hooks/useScorecards.ts": {
    "path": "src/hooks/useScorecards.ts",
-   "lines": 139,
+   "lines": 150,
    "exports": [
     "interface ScorecardTemplate",
     "interface ScorecardCriterion",
@@ -103937,7 +103973,7 @@
   },
   "src/hooks/useSuccessPlans.ts": {
    "path": "src/hooks/useSuccessPlans.ts",
-   "lines": 102,
+   "lines": 107,
    "exports": [
     "interface SuccessPlan",
     "interface SuccessMilestone",
@@ -105474,10 +105510,12 @@
   },
   "src/hooks/__tests__/useAgentRanking.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
-   "lines": 178,
+   "lines": 197,
    "is_test": true,
    "tests": [
     "useAgentRanking (coverage)",
+    "exposes the read error instead of an empty ranking",
+    "clears the ranking error after the next successful read",
     "fetches agent stats on mount and exposes data",
     "getGoalsForAgent returns saved goals and default fallback",
     "checkGoalAchievements fires success toast when goals met",
@@ -108019,11 +108057,13 @@
   },
   "src/hooks/__tests__/useScorecards.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useScorecards.coverage.test.tsx",
-   "lines": 110,
+   "lines": 132,
    "is_test": true,
    "tests": [
     "useScorecards",
     "loads templates and criteria without callSessionId",
+    "exposes the template read error instead of an empty model list",
+    "clears the template error on the next successful read",
     "loads scorecards and responses with callSessionId",
     "clears responses when no scorecards",
     "generateAIScorecard returns null without callSessionId",
@@ -108477,13 +108517,15 @@
   },
   "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
-   "lines": 158,
+   "lines": 179,
    "is_test": true,
    "tests": [
     "useSuccessPlans",
     "loads plans and milestones with accountId",
     "loads plans without accountId",
     "handles empty plans (no milestone fetch)",
+    "exposes the milestone read error, because a plan without milestones is not empty",
+    "clears the milestone error after the next successful read",
     "handles load error",
     "createPlan success",
     "createPlan error",
@@ -114359,7 +114401,7 @@
   },
   "src/pages/AgentRanking.tsx": {
    "path": "src/pages/AgentRanking.tsx",
-   "lines": 86,
+   "lines": 97,
    "exports": [
     "function AgentRanking"
    ],
@@ -115652,7 +115694,7 @@
   },
   "src/pages/Scorecards.tsx": {
    "path": "src/pages/Scorecards.tsx",
-   "lines": 244,
+   "lines": 252,
    "exports": [
     "function Scorecards"
    ],
@@ -115695,7 +115737,7 @@
     {
      "name": "Scorecards",
      "params": "",
-     "body": "usePageTitle(\"Avaliações de Chamada\"); const { templates, updateStatus, createTemplate, generateAIScorecard } = useScorecards(); const [templateId, setTemplateId] = useState(\"\"); const [callId, setCallId] = useState(\"\"); const [generating, setGenerating] = useState(false); const [creating, setCreating] = useState(false); const [newName, setNewName] = useState(\"\"); const [newDesc, setNewDesc] = useState(\"\"); const [newCriteria, setNewCriteria] = useState([ { label: \"Abertura e identificação\", des …"
+     "body": "usePageTitle(\"Avaliações de Chamada\"); const { templates, error, updateStatus, createTemplate, generateAIScorecard } = useScorecards(); const [templateId, setTemplateId] = useState(\"\"); const [callId, setCallId] = useState(\"\"); const [generating, setGenerating] = useState(false); const [creating, setCreating] = useState(false); const [newName, setNewName] = useState(\"\"); const [newDesc, setNewDesc] = useState(\"\"); const [newCriteria, setNewCriteria] = useState([ { label: \"Abertura e identificaçã …"
     },
     {
      "name": "generate",
@@ -115929,7 +115971,7 @@
   },
   "src/pages/SuccessPlans.tsx": {
    "path": "src/pages/SuccessPlans.tsx",
-   "lines": 68,
+   "lines": 72,
    "exports": [
     "function SuccessPlans"
    ],
@@ -116423,6 +116465,16 @@
     "mostra ",
     "Status — erro no carregamento (E093)",
     "sai do spinner e mostra mensagem de erro quando a consulta falha"
+   ]
+  },
+  "src/pages/__tests__/SuccessPlans.test.tsx": {
+   "path": "src/pages/__tests__/SuccessPlans.test.tsx",
+   "lines": 37,
+   "is_test": true,
+   "tests": [
+    "SuccessPlans",
+    "shows the read error instead of ",
+    "shows the genuine empty state when the read succeeded"
    ]
   },
   "src/pages/admin/DataExport.tsx": {
@@ -125422,10 +125474,29 @@
   }
  },
  "git": {
-  "sha": "747a1613ecd33196fd1c2e688f861106d7c47f50",
+  "sha": "9d457f8dea9e0335499ac8c1413135dd93c2f527",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "9d457f8",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
+     "src/hooks/__tests__/useScorecards.coverage.test.tsx",
+     "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
+     "src/hooks/useAgentRanking.ts",
+     "src/hooks/useScorecards.ts",
+     "src/hooks/useSuccessPlans.ts",
+     "src/pages/AgentRanking.tsx",
+     "src/pages/Scorecards.tsx",
+     "src/pages/SuccessPlans.tsx",
+     "src/pages/__tests__/SuccessPlans.test.tsx"
+    ]
+   },
    {
     "sha": "747a161",
     "date": "2026-11-23",
@@ -125805,17 +125876,6 @@
      "supabase/functions/notify-new-device/__tests__/index.test.ts",
      "supabase/functions/notify-new-device/index.ts"
     ]
-   },
-   {
-    "sha": "3d4db07",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "feat: modulo compartilhado de autenticacao de edge function (E005) (#186)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/_shared/__tests__/auth_test.ts",
-     "supabase/functions/_shared/auth.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125864,39 +125924,39 @@
     2
    ],
    [
-    "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
+    "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
     1
    ],
    [
-    "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
+    "src/hooks/__tests__/useScorecards.coverage.test.tsx",
     1
    ],
    [
-    "src/hooks/useSecurityDashboard.ts",
+    "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
     1
    ],
    [
-    "src/hooks/useSecurityMonitoringData.ts",
+    "src/hooks/useAgentRanking.ts",
     1
    ],
    [
-    "src/pages/SecurityDashboard.tsx",
+    "src/hooks/useScorecards.ts",
     1
    ],
    [
-    "src/pages/SecurityMonitoring.tsx",
+    "src/hooks/useSuccessPlans.ts",
     1
    ],
    [
-    "src/pages/__tests__/SecurityDashboard.test.tsx",
+    "src/pages/AgentRanking.tsx",
     1
    ],
    [
-    "src/pages/__tests__/SecurityMonitoring.test.tsx",
+    "src/pages/Scorecards.tsx",
     1
    ],
    [
-    "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "src/pages/SuccessPlans.tsx",
     1
    ]
   ]

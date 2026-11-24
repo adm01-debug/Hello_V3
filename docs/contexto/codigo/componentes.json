@@ -5455,7 +5455,7 @@
     "AgentRanking"
    ],
    "export_default": "AgentRanking",
-   "linhas": 86,
+   "linhas": 97,
    "dominio": "pages",
    "hooks_locais": [
     "useAgentRanking",
@@ -6879,7 +6879,7 @@
     "Scorecards"
    ],
    "export_default": "Scorecards",
-   "linhas": 244,
+   "linhas": 252,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
@@ -7060,7 +7060,7 @@
     "SuccessPlans"
    ],
    "export_default": "SuccessPlans",
-   "linhas": 68,
+   "linhas": 72,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
