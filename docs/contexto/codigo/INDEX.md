@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `9d457f8dea9e0335499ac8c1413135dd93c2f527` (2026-11-23T23:20:08-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ac329a7ec41f39460fb6880cc667d2fd97fa2f2e` (2026-11-23T23:27:18-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1704 |
 | arquivos_codigo | 1302 |
-| linhas_codigo | 175664 |
+| linhas_codigo | 175722 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,8 +370,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10004 nós · 25735 arestas · 782 comunidades · grafo do commit `9d457f8d`
-- comunidades maiores: card.tsx (258), react (200), vitest (176), client.ts (166), logger.ts (156), lucide-react (134), usePageTitle (128), utils.ts (127), @tanstack/react-query (122), ref_https (120), Tabela de funcionalidades (109), usePageTitle.ts (106)
+- 10005 nós · 25736 arestas · 777 comunidades · grafo do commit `ac329a7e`
+- comunidades maiores: lucide-react (287), client.ts (223), vitest (203), react (193), traceHeaders (183), usePageTitle (174), CallDetailDialog.tsx (169), badge.tsx (168), ref_https (119), Tabela de funcionalidades (114), cn (109), @tanstack/react-query (108)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `ac329a7` fix: nao gravar dado derivado quando a leitura falha (#218)
 - 2026-11-23 `9d457f8` fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)
 - 2026-11-23 `747a161` fix: paineis de seguranca alarmam quando a leitura falha (#215)
 - 2026-11-23 `d674460` fix: painel de fila mostra erro de leitura em vez de zeros (#214)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `9add2c1` fix: grava o desfecho real da chamada em call_sessions (#205)
 - 2026-11-23 `c1e7859` feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)
 - 2026-11-23 `6f3a7bf` feat: discador preditivo passa pela barreira de DNC e horario legal (#203)
-- 2026-11-23 `5eb9695` feat: barreira de DNC e horario legal dentro de initiateCall (#202)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

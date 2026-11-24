@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9d457f8dea` · branch `main` · 2026-11-24 02:20 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ac329a7ec4` · branch `main` · 2026-11-24 02:27 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2335,6 +2335,7 @@ _nenhum item encontrado_
 | Sessão expirada | `src/hooks/useDialerFavorites.ts` |
 | Falha ao atualizar status | `src/hooks/useExtensionsAdmin.ts` |
 | Nada para exportar | `src/hooks/useExtensionsAdmin.ts` |
+| Não foi possível atualizar as estatísticas da semana | `src/hooks/useGamification.ts` |
 | Erro ao atualizar configurações | `src/hooks/useGeoBlocking.ts` |
 | Erro ao remover país | `src/hooks/useGeoBlocking.ts` |
 | Erro ao validar IP | `src/hooks/useGeoBlocking.ts` |
@@ -2416,8 +2417,7 @@ _nenhum item encontrado_
 | Falha ao executar enforcement de SLA | `src/hooks/useSLA.ts` |
 | Falha ao salvar política | `src/hooks/useSLA.ts` |
 | Erro ao agendar callback | `src/hooks/useScheduledCallbacks.ts` |
-| Erro ao atualizar callback | `src/hooks/useScheduledCallbacks.ts` |
-| … +258 linhas — lista completa em `context.json` | |
+| … +259 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2466,7 +2466,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4275 testes em 371 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4278 testes em 371 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2530,12 +2530,12 @@ _nenhum item encontrado_
 | `src/lib/__tests__/utils.coverage.test.ts` | 16 | utils (coverage) · merges class names · dedups tailwind conflicts · handles conditional / falsy values … |
 | `src/hooks/__tests__/useAvatar.test.ts` | 15 | useAvatar · does not request a signed url when there is no path · resolves a signed url for an existing avatar · clears the url when signing fails … |
 | `src/hooks/__tests__/useCallSession.test.ts` | 15 | Call Session Logic · Session lifecycle · creates session with correct initial status · session ends with completed status … |
+| `src/hooks/__tests__/useConversations.coverage.test.tsx` | 15 | useConversations · fetches with filters applied · handles fetch error · useConversationMessages … |
 | `src/hooks/__tests__/useCrmFieldSuggestions.coverage.test.tsx` | 15 | useCrmFieldSuggestions · returns empty defaults when no callSessionId (query disabled, no channel) · fetches suggestions and computes pending, wires realtime channel · query error branch throws … |
 | `src/hooks/__tests__/useWavoipCall.coverage.test.tsx` | 15 | useWavoipCall · checks configuration on mount (connected) · checkConfiguration when not connected sets disconnected · checkConfiguration with supabase error sets error state … |
 | `src/lib/__tests__/call-queue.test.ts` | 15 | call-queue :: clampInt · sempre devolve inteiro dentro da faixa · usa o fallback para valores não finitos · call-queue :: normalizeQueueDraft … |
 | `src/lib/__tests__/safe-number.test.ts` | 15 | safe-number · safeParseInt · PBT: nunca retorna NaN, mesmo com entrada hostil · PBT: números válidos são truncados · PBT: respeita min/max clamp … |
 | `src/lib/__tests__/security-alerts-webhook.test.ts` | 15 | security-alerts-webhook · isValidHttpUrl · aceita http/https e rejeita esquemas inválidos · persistência (URL / retries) … |
-| `src/hooks/__tests__/useConversations.coverage.test.tsx` | 14 | useConversations · fetches with filters applied · handles fetch error · useConversationMessages … |
 | `src/hooks/__tests__/useReauth.coverage.test.tsx` | 14 | useReauth · needsReauth true sem verificação prévia · requestReauth marca isRequired · verifyWithPassword sucesso atualiza lastVerified e dispensa reauth … |
 | `src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx` | 14 | useSupervisorPanel (coverage) · loads active calls and queue metrics on mount · selecting a call fetches whisper history · sendWhisper errors when no call/message selected … |
 | `src/lib/__tests__/dnc-reconcile.test.ts` | 14 | normalizarTelefone · leva o numero BR para a forma canonica +55 · cai para digitos quando nao da para reconhecer a forma BR · reconciliarDNC … |
@@ -2558,6 +2558,7 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/hsts-headers.coverage.test.ts` | 12 | buildHSTSHeader · builds header from default config · omits includeSubDomains and preload when false · includes only includeSubDomains when preload is false … |
 | `src/lib/validation/__tests__/zod-schemas.property.test.ts` | 12 | Zod schemas — property-based (1000 runs cada) · uuidSchema aceita UUIDs válidos · uuidSchema rejeita strings arbitrárias não-UUID · emailSchema aceita emails válidos … |
 | `src/hooks/__tests__/useContacts.coverage.test.tsx` | 11 | useContacts (coverage) · fetches contacts on mount · fetchContacts with search filter · getContactByPhone success and not found … |
+| `src/hooks/__tests__/useGamification.coverage.test.tsx` | 11 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useLiveAssist.coverage.test.tsx` | 11 | useLiveAssist · is disabled (no fetch) without callSessionId · loads signals and subscribes to realtime when callSessionId present · analyze invokes edge function when throttle allows … |
 | `src/hooks/__tests__/useSipCall.coverage.test.tsx` | 11 | useSipCall (coverage) · initial state is disconnected · connect succeeds and registers · connect with failover shows warning … |
 | `src/hooks/__tests__/useSuccessPlans.coverage.test.tsx` | 11 | useSuccessPlans · loads plans and milestones with accountId · loads plans without accountId · handles empty plans (no milestone fetch) … |
@@ -2570,7 +2571,6 @@ _nenhum item encontrado_
 | `src/components/dialer/phone/__tests__/phone-dialer.test.ts` | 10 | phone-utils · sanitiza entrada removendo caracteres inválidos · formata número BR no display · valida se o número é discável … |
 | `src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx` | 10 | useAnomalyRemediation · applied success · idempotent_skip → info · dryRun → info … |
 | `src/hooks/__tests__/useDashboardGoals.coverage.test.tsx` | 10 | useDashboardGoals · fetches goals on mount · handles fetch error · opens dialog for new and for editing … |
-| `src/hooks/__tests__/useGamification.coverage.test.tsx` | 10 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useLiveTranslation.coverage.test.tsx` | 10 | useLiveTranslation · returns initial state · does nothing without callSessionId or empty text · queues short utterances below minWords without invoking … |
 | `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 10 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
 | `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 10 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
@@ -2721,6 +2721,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useExtensionsOverview.coverage.test.tsx` | 5 | useExtensionsOverview · aggregates agents with trunks, devices, profiles and calls · handles empty datasets · throws when agents query errors … |
 | `src/hooks/__tests__/useHoldSoundAlert.coverage.test.tsx` | 5 | useHoldSoundAlert · toggles sound and persists to localStorage · reads persisted disabled state · plays test sounds … |
 | `src/hooks/__tests__/useLearning.coverage.test.tsx` | 5 | useLearning · loads modules and completions · markComplete success shows toast · markComplete error shows toast … |
+| `src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx` | 5 | useMultiDeviceRing · loads devices and default settings, runs mutations · updateSettings updates existing record · não cria outra linha de configurações quando a leitura falha … |
 | `src/hooks/__tests__/useOptimisticLockConflicts.coverage.test.tsx` | 5 | useOptimisticLockConflicts · aggregates stats for default 24h period · applies table filter via eq · does not filter when tableFilter is  … |
 | `src/hooks/__tests__/useProfile.coverage.test.tsx` | 5 | useProfile · loads profile on mount · updates profile successfully · strips id/role from updates and rolls back on error … |
 | `src/hooks/__tests__/useQualityAlerts.coverage.test.tsx` | 5 | useQualityAlerts · does not alert when there are no metrics · does not alert when quality is good · alerts when quality_label is poor … |
@@ -2761,7 +2762,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
 | `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
-| `src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx` | 4 | useMultiDeviceRing · loads devices and default settings, runs mutations · updateSettings updates existing record · addDevice error path |
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
 | `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
 | `src/hooks/__tests__/useTalkRatio.test.ts` | 4 | useTalkRatio · estado inicial é vazio · analisa com sucesso · captura erro do backend |

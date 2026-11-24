@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: nao gravar dado derivado quando a leitura falha (#218)",
    "fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)",
    "fix: paineis de seguranca alarmam quando a leitura falha (#215)",
    "fix: painel de fila mostra erro de leitura em vez de zeros (#214)",
-   "fix: recomendacao de capacity registra leitura em vez de fingir aplicacao (#213)",
-   "Catalogo de seguranca declara a origem de cada estado (remove KPI literal) (#212)"
+   "fix: recomendacao de capacity registra leitura em vez de fingir aplicacao (#213)"
   ]
  },
  "pr_template": null,

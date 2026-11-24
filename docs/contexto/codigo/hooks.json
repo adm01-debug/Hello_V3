@@ -1784,7 +1784,7 @@
     "useSendMessage",
     "useUpdateConversation"
    ],
-   "linhas": 214,
+   "linhas": 221,
    "dominio": "hooks",
    "tabelas": [
     "conversation_messages",
@@ -2369,7 +2369,7 @@
    "hooks_exportados": [
     "useGamification"
    ],
-   "linhas": 309,
+   "linhas": 317,
    "dominio": "hooks",
    "tabelas": [
     "agent_badges",
@@ -2948,7 +2948,7 @@
    "hooks_exportados": [
     "useMultiDeviceRing"
    ],
-   "linhas": 85,
+   "linhas": 86,
    "dominio": "hooks",
    "tabelas": [
     "agent_devices",

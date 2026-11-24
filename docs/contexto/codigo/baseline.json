@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "9d457f8dea9e0335499ac8c1413135dd93c2f527",
+  "commit": "ac329a7ec41f39460fb6880cc667d2fd97fa2f2e",
   "branch": "main",
-  "data_commit": "2026-11-23T23:20:08-03:00",
+  "data_commit": "2026-11-23T23:27:18-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ac329a7",
+    "data": "2026-11-23",
+    "assunto": "fix: nao gravar dado derivado quando a leitura falha (#218)"
+   },
    {
     "sha": "9d457f8",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "ed1d324",
     "data": "2026-11-23",
     "assunto": "chore: remove xlsx, dependencia sem uso e com duas falhas altas sem correcao (E045) (#193)"
-   },
-   {
-    "sha": "22cb928",
-    "data": "2026-11-23",
-    "assunto": "fix: request-password-reset responde o mesmo corpo nos quatro caminhos (E031) (#192)"
    }
   ],
-  "arquivos_mudados_7d": 1032,
+  "arquivos_mudados_7d": 1038,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 43
+    "mudancas": 46
    },
    {
     "pasta": "src/lib/__tests__",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 195
+    "commits": 196
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1704,
   "arquivos_codigo": 1302,
-  "linhas_codigo": 175664,
+  "linhas_codigo": 175722,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 46635
+   "linhas": 46693
   },
   "src/integrations": {
    "arquivos": 3,
@@ -664,7 +664,7 @@
   },
   {
    "arquivo": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-   "linha": 131,
+   "linha": 136,
    "tipo": "XXX",
    "texto": "', message: 'fail' } }] });"
   },
