@@ -3,6 +3,7 @@ const log = logger.create('ScheduledCallbacks');
 import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { format } from 'date-fns';
 
 export interface ScheduledCallback {
   id: string;
@@ -30,6 +31,12 @@ export interface CreateCallbackInput {
   assigned_agent?: string;
   created_by?: string;
 }
+
+/** Data/hora como o servidor gravou o retorno - nunca a partir do que foi digitado. */
+const formatScheduledAt = (iso: string): string | null => {
+  const date = new Date(iso);
+  return Number.isNaN(date.getTime()) ? null : format(date, "dd/MM 'às' HH:mm");
+};
 
 export const useScheduledCallbacks = () => {
   const [callbacks, setCallbacks] = useState<ScheduledCallback[]>([]);
@@ -101,10 +108,12 @@ export const useScheduledCallbacks = () => {
         .single();
 
       if (error) throw error;
-      
-      toast.success('Callback agendado com sucesso');
+
+      const created = data as ScheduledCallback;
+      const when = formatScheduledAt(created.scheduled_at);
+      toast.success(when ? `Retorno agendado para ${when}` : 'Callback agendado com sucesso');
       await fetchCallbacks('pending');
-      return data as ScheduledCallback;
+      return created;
     } catch (err) {
       log.error('Error creating callback:', err);
       toast.error('Erro ao agendar callback');
@@ -125,8 +134,10 @@ export const useScheduledCallbacks = () => {
         .single();
 
       if (error) throw error;
-      
-      toast.success('Callback atualizado');
+
+      const saved = data as ScheduledCallback;
+      const when = updates.scheduled_at ? formatScheduledAt(saved.scheduled_at) : null;
+      toast.success(when ? `Retorno reagendado para ${when}` : 'Callback atualizado');
       await fetchCallbacks('pending');
       return data as ScheduledCallback;
     } catch (err) {
@@ -138,16 +149,18 @@ export const useScheduledCallbacks = () => {
 
   const completeCallback = useCallback(async (id: string): Promise<boolean> => {
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('scheduled_callbacks')
         .update({ 
           status: 'completed',
           completed_at: new Date().toISOString()
         })
-        .eq('id', id);
+        .eq('id', id)
+        .select('id');
 
       if (error) throw error;
-      
+      if (!data || data.length === 0) throw new Error('Nenhuma linha atualizada');
+
       toast.success('Callback marcado como concluído');
       await fetchCallbacks('pending');
       return true;
@@ -160,13 +173,15 @@ export const useScheduledCallbacks = () => {
 
   const cancelCallback = useCallback(async (id: string): Promise<boolean> => {
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('scheduled_callbacks')
         .update({ status: 'cancelled' })
-        .eq('id', id);
+        .eq('id', id)
+        .select('id');
 
       if (error) throw error;
-      
+      if (!data || data.length === 0) throw new Error('Nenhuma linha atualizada');
+
       toast.success('Callback cancelado');
       await fetchCallbacks('pending');
       return true;
@@ -179,13 +194,15 @@ export const useScheduledCallbacks = () => {
 
   const deleteCallback = useCallback(async (id: string): Promise<boolean> => {
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('scheduled_callbacks')
         .delete()
-        .eq('id', id);
+        .eq('id', id)
+        .select('id');
 
       if (error) throw error;
-      
+      if (!data || data.length === 0) throw new Error('Nenhuma linha removida');
+
       toast.success('Callback removido');
       await fetchCallbacks('pending');
       return true;
