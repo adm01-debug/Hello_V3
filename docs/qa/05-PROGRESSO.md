@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 116 |
+| `[x]` concluídas | 117 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **184** |
+| `[ ]` não iniciadas | **183** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -185,7 +185,7 @@
 - [ ] **138** — Remover os dois índices exatamente redundantes — onda 3 — Baixa — Banco 🔒
 - [ ] **139** — `CHECK` nas 11 colunas de tipo mais usadas em regra de negócio — onda 3 — Média — Banco 🔒
 - [ ] **140** — `CHECK` nas 11 colunas de tipo restantes — onda 3 — Baixa — Banco 🔒
-- [ ] **141** — Fazer `validate-geo` honrar o modo escolhido na tela — onda 3 — Alta — Edge Function
+- [x] **141** — Fazer `validate-geo` honrar o modo escolhido na tela — onda 3 — Alta — Edge Function · (regra de decisão isolada em `supabase/functions/validate-geo/decide.ts` — `decideGeoAccess` devolve `allowed`/`blocked`/`not_configured`/`unknown_country`/`invalid_mode`, normaliza caixa/espaços e recusa código inválido — com 9 testes Deno em `supabase/functions/__tests__/geo-decision.test.ts`; `index.ts:99-106` passou a ler `settings.mode` e a buscar a lista pelo tipo que o modo governa (`restriction_type` `'allowed'` na allowlist, `'blocked'` na blocklist) — antes filtrava por `'allow'`, valor que o CHECK `geo_restrictions_restriction_type_check` recusa, então a lista vinha sempre vazia e todo país passava; modo fora do domínio responde 403 com `console.error`; o log de auditoria grava o veredito (`Country in allowlist`, `Country not in allowlist`, `Country in blocklist`, `Country not in blocklist`). Achado A-214 corrigido junto: a tela gravava `restriction_type: 'allow'` (`useGeoBlocking.ts`), o que fazia "Adicionar país" falhar sempre — agora grava o tipo do modo, a lista exibida (`modeCountries`) filtra pelo mesmo tipo e `GeoBlocking.tsx` ganhou o seletor Whitelist/Blacklist (`updateSettings` com `{ mode }`) com copy, cards, faixa de status e estado vazio dinâmicos. Verificação em produção: deploy `validate-geo` **v23** (2026-11-24 08:33:22 UTC) e 6 respostas reais — allowlist com o país na lista → `200 {"allowed":true}` + log `Country in allowlist`; allowlist sem ele → `403` + `Country not in allowlist`; blocklist com ele → `403` + `Country in blocklist`; blocklist sem ele → `200` + `Country not in blocklist`; lista vazia → `200 "Blocklist not configured"` (fail-open preservado — a decisão continua na 142); produção devolvida ao estado original (`enabled=false, mode='allowlist', 0 países`, logs do teste apagados). Testes: `deno test -A` 9/9; `bunx vitest run src/hooks/__tests__/useGeoBlocking.coverage.test.tsx` 9/9 (caso novo garante `'allowed'` na allowlist e `'blocked'` na blocklist); `bunx tsc --noEmit` rc=0; `bunx eslint` nos 3 arquivos rc=0; `guard-edge-numeric` 98 arquivos/0 violações; `deno check` rc=0.)
 - [ ] **142** — Decidir o que fazer quando a lista geográfica está vazia — onda 3 — Alta — Edge Function 🔒
 - [ ] **143** — `TO authenticated` nas policies de dados de cliente (lote 2) — onda 3 — Média — Banco 🔒
 - [ ] **144** — `TO authenticated` nas policies operacionais (lote 3) — onda 3 — Média — Banco 🔒
@@ -380,7 +380,9 @@ Problema novo achado no caminho **não é corrigido na hora** — vira linha aqu
 | A-210 | 260 | `src/components/contacts/ContactDetailSheet.tsx:96` | Botão de **excluir** contato usa o ícone de lápis (`<Edit>`), igual ao de editar ao lado — o usuário que clica no lápis esperando editar pode apagar o contato. Agora tem `aria-label="Excluir contato"`, mas o ícone segue errado. | Alta (risco de perda de dado) |
 | A-211 | 263 | `src/components/calls/ActiveCallBar.tsx:318,322,326` | Três botões-ícone **sem `onClick`** (alto-falante, transferir, mais opções): parecem ativos, não fazem nada — ícone decorativo disfarçado de botão. Ganharam `aria-label` nesta PR (a varredura não deixa botão sem nome), mas o defeito funcional fica aqui. | Média |
 | A-212 | 263 | `src/components/calls/NextBestActionPanel.tsx:103` | O botão **"Ignorar"** chama `markUsed(s.id)` — a mesma ação do botão "usei essa sugestão": ignorar registra como usada e alimenta o aprendizado com o sinal errado (o rótulo acessível ficou com a intenção da tela, "Ignorar a sugestão"; é o comportamento que precisa mudar, não o rótulo). | Alta |
+| A-213 | 141 | `deno.lock` | `deno.lock` está dessincronizado do `package.json` (pin `react-router-dom@^7.13.1` vs `^7.18.6`; `xlsx` já removido) — qualquer `deno check`/`deno test` reescreve o arquivo, que entra no diff sem relação com a tarefa (restaurar com `git checkout -- deno.lock`). | Média (churn) |
 
+| A-215 | 141 | `bunx vitest run` (ambiente local) | 4 suítes falham com `TypeError: undefined is not an object (evaluating 'z.string')` — `validation-schemas`, `zod-schemas.property`, `useContacts.conflict`, `useContacts.coverage` — mas **todas as 3435 asserções passam**; reproduzido em worktree limpo de `origin/main` e o CI do mesmo commit está verde. É incompatibilidade do bun local (1.3.11) com o runner, não regressão. | Baixa (ruído local) |
 ---
 
 ## Etapas em que o código já não correspondia à evidência

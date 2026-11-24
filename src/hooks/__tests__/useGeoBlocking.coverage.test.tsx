@@ -29,7 +29,7 @@ function makeFrom(table: string, settingsData: unknown) {
   }
   if (table === 'geo_restrictions') {
     return {
-      select: vi.fn(() => ({ order: vi.fn().mockResolvedValue({ data: [{ id: 'r1', country_code: 'BR', country_name: 'Brasil', restriction_type: 'allow', reason: null, created_at: '', created_by: null }], error: null }) })),
+      select: vi.fn(() => ({ order: vi.fn().mockResolvedValue({ data: [{ id: 'r1', country_code: 'BR', country_name: 'Brasil', restriction_type: 'allowed', reason: null, created_at: '', created_by: null }], error: null }) })),
       insert: vi.fn().mockResolvedValue({ error: null }),
       delete: vi.fn(() => ({ eq: vi.fn().mockResolvedValue({ error: null }) })),
     };
@@ -50,7 +50,7 @@ describe('useGeoBlocking', () => {
   it('carrega settings, restrictions e logs', async () => {
     const { result } = renderHook(() => useGeoBlocking(), { wrapper });
     await waitFor(() => expect(result.current.settingsLoading).toBe(false));
-    await waitFor(() => expect(result.current.allowedCountries.length).toBeGreaterThan(0));
+    await waitFor(() => expect(result.current.modeCountries.length).toBeGreaterThan(0));
     expect(result.current.blockedLogs.length).toBe(1);
     expect(result.current.availableCountries.length).toBeGreaterThan(0);
   });
@@ -84,6 +84,35 @@ describe('useGeoBlocking', () => {
     await act(async () => {
       await expect(result.current.addCountry.mutateAsync()).rejects.toThrow();
     });
+  });
+
+  it('grava restriction_type conforme o modo e lista so o tipo do modo', async () => {
+    const payloads: Record<string, unknown>[] = [];
+    const custom = (settingsMode: string) => (table: string) => {
+      const base = makeFrom(table, { id: 's1', enabled: true, mode: settingsMode, log_blocked_attempts: true, notify_on_block: false });
+      if (table === 'geo_restrictions') {
+        base.insert = vi.fn((payload: Record<string, unknown>) => {
+          payloads.push(payload);
+          return Promise.resolve({ error: null });
+        });
+      }
+      return base;
+    };
+
+    fromMock.mockImplementation(custom('allowlist'));
+    const allow = renderHook(() => useGeoBlocking(), { wrapper });
+    await waitFor(() => expect(allow.result.current.settingsLoading).toBe(false));
+    act(() => { allow.result.current.setSelectedCountry('US'); });
+    await act(async () => { await allow.result.current.addCountry.mutateAsync(); });
+    expect(payloads[payloads.length - 1]).toMatchObject({ country_code: 'US', restriction_type: 'allowed' });
+
+    fromMock.mockImplementation(custom('blocklist'));
+    const block = renderHook(() => useGeoBlocking(), { wrapper });
+    await waitFor(() => expect(block.result.current.settingsLoading).toBe(false));
+    expect(block.result.current.modeCountries).toHaveLength(0);
+    act(() => { block.result.current.setSelectedCountry('PT'); });
+    await act(async () => { await block.result.current.addCountry.mutateAsync(); });
+    expect(payloads[payloads.length - 1]).toMatchObject({ country_code: 'PT', restriction_type: 'blocked' });
   });
 
   it('remove país', async () => {

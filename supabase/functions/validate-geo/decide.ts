@@ -40,6 +40,10 @@ function normalizarCodigos(lista: readonly string[]): Set<string> {
  *
  * - `allowlist`: permite apenas os paises da lista configurada.
  * - `blocklist`: bloqueia apenas os paises da lista configurada.
+ *
+ * A lista recebida ja vem filtrada pelo modo (`restriction_type='allowed'` na
+ * allowlist, `'blocked'` na blocklist), porque a coluna no banco so aceita esses
+ * dois valores.
  * - modo desconhecido: recusa explicita (nunca escolhe um modo em silencio).
  * - lista vazia: nao configura nada (comportamento com lista vazia e a etapa 142).
  * - pais desconhecido: segue o comportamento anterior (nao bloqueia por falta de dado).

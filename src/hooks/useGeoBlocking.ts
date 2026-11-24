@@ -56,6 +56,11 @@ export function useGeoBlocking() {
     },
   });
 
+  // `geo_settings.mode` so aceita 'allowlist'/'blocklist' (CHECK no banco).
+  const mode: 'allowlist' | 'blocklist' = settings?.mode === 'blocklist' ? 'blocklist' : 'allowlist';
+  const restrictionType = mode === 'blocklist' ? 'blocked' : 'allowed';
+  const listLabel = mode === 'blocklist' ? 'blacklist' : 'whitelist';
+
   const initializeSettings = useMutation({
     mutationFn: async () => {
       const { data, error } = await supabase.from('geo_settings').insert({ enabled: false, mode: 'allowlist', log_blocked_attempts: true, notify_on_block: false }).select().single();
@@ -79,10 +84,12 @@ export function useGeoBlocking() {
     mutationFn: async () => {
       const country = COUNTRIES.find(c => c.code === selectedCountry);
       if (!country) throw new Error('País não encontrado');
-      const { error } = await supabase.from('geo_restrictions').insert({ country_code: country.code, country_name: country.name, restriction_type: 'allow', reason: reason || null });
+      // O CHECK em produção recusa 'allow'/'block': gravar o valor errado fazia o
+      // botão "Adicionar" falhar sempre, sem nenhum país entrar na lista.
+      const { error } = await supabase.from('geo_restrictions').insert({ country_code: country.code, country_name: country.name, restriction_type: restrictionType, reason: reason || null });
       if (error) throw error;
     },
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['geo-restrictions'] }); setSelectedCountry(''); setReason(''); toast.success('País adicionado à whitelist'); },
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['geo-restrictions'] }); setSelectedCountry(''); setReason(''); toast.success(`País adicionado à ${listLabel}`); },
     onError: (error: Error) => { toast.error(error.message.includes('duplicate') ? 'Este país já está na lista' : 'Erro ao adicionar país'); },
   });
 
@@ -91,7 +98,7 @@ export function useGeoBlocking() {
       const { error } = await supabase.from('geo_restrictions').delete().eq('id', id);
       if (error) throw error;
     },
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['geo-restrictions'] }); toast.success('País removido da whitelist'); },
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['geo-restrictions'] }); toast.success(`País removido da ${listLabel}`); },
     onError: () => toast.error('Erro ao remover país'),
   });
 
@@ -114,15 +121,17 @@ export function useGeoBlocking() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settingsLoading, settings]);
 
-  const allowedCountries = restrictions.filter(r => r.restriction_type === 'allow');
-  const availableCountries = COUNTRIES.filter(c => !allowedCountries.some(r => r.country_code === c.code));
+  // Lista do modo atual: cada país aparece uma vez (UNIQUE em country_code), então o
+  // mesmo país não pode estar nas duas listas ao mesmo tempo.
+  const modeCountries = restrictions.filter(r => r.restriction_type === restrictionType);
+  const availableCountries = COUNTRIES.filter(c => !modeCountries.some(r => r.country_code === c.code));
   const blockedLogs = accessLogs.filter(log => log.action === 'blocked');
 
   return {
     settings, settingsLoading, restrictionsLoading,
     selectedCountry, setSelectedCountry, reason, setReason,
     testIp, setTestIp, testResult,
-    allowedCountries, availableCountries, blockedLogs,
+    mode, listLabel, modeCountries, availableCountries, blockedLogs,
     updateSettings, addCountry, removeCountry, testGeoValidation,
   };
 }

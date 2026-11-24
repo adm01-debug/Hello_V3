@@ -94,10 +94,13 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Lista de paises configurada na tela (o modo decide o sentido dela).
+    // A coluna `restriction_type` so aceita 'allowed'/'blocked' (CHECK no banco); o
+    // modo escolhido na tela decide qual das duas listas governa o acesso. Filtrar
+    // por 'allow' (valor que o CHECK recusa) deixava a lista sempre vazia.
     const { data: restrictedCountries } = await supabase
       .from('geo_restrictions')
-      .select('country_code');
+      .select('country_code')
+      .eq('restriction_type', settings.mode === 'blocklist' ? 'blocked' : 'allowed');
 
     const decision = decideGeoAccess(
       settings.mode,
