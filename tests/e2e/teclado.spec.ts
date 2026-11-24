@@ -291,21 +291,25 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
 
     // Ler o foco pelo locator aqui custa um snapshot da arvore ARIA inteira com o
     // modal saindo de cena, e o runner travava nesse passo ("sem resposta"). O
-    // evaluate leve na pagina mede a mesma coisa sem esse custo.
-    const final = await comPrazo(
+    // evaluate leve na pagina mede o mesmo sem esse custo. O overlay so sai do DOM
+    // no fim da animacao de fechamento, entao o retorno do foco e lido ate 5 s.
+    const lerFocoFinal = () =>
       page.evaluate(() => {
         const el = document.activeElement as HTMLElement | null;
-        if (!el) return { marcado: false, rotulo: '' };
+        if (!el) return false;
         const texto = `${el.getAttribute('aria-label') ?? ''} ${el.textContent ?? ''}`;
-        return {
-          marcado: el.getAttribute('data-marco273') === 'gatilho',
-          rotulo: texto.replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 120),
-        };
-      }),
-      15_000,
-      'ler-foco-final',
-    );
-    const devolveu = final.marcado || final.rotulo.includes('assistente de voz');
+        return (
+          el.getAttribute('data-marco273') === 'gatilho' ||
+          texto.replace(/\s+/g, ' ').trim().toLowerCase().includes('assistente de voz')
+        );
+      });
+
+    let devolveu = false;
+    const limiteFoco = Date.now() + 5_000;
+    while (!devolveu && Date.now() < limiteFoco) {
+      devolveu = await comPrazo(lerFocoFinal(), 15_000, 'ler-foco-final');
+      if (!devolveu) await new Promise((seguir) => setTimeout(seguir, 100));
+    }
     process.stdout.write(`ESC-273 dialogoFechou=true focoNoGatilho=${devolveu}\n`);
     expect(devolveu, 'o foco nao voltou ao gatilho depois de fechar com Esc').toBe(true);
     marco('fim');

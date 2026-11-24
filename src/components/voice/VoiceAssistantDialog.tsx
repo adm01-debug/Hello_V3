@@ -60,6 +60,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const textInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
+  const restoreTimerRef = useRef<number | null>(null);
   const wasOpenRef = useRef(false);
   const ttsEnabledRef = useRef(ttsEnabled);
   ttsEnabledRef.current = ttsEnabled;
@@ -177,6 +178,10 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   // overlay e, ao fechar, o foco ficava perdido no body.
   useEffect(() => {
     if (!open) return;
+    if (restoreTimerRef.current !== null) {
+      window.clearTimeout(restoreTimerRef.current);
+      restoreTimerRef.current = null;
+    }
     const anterior = document.activeElement;
     returnFocusRef.current = anterior instanceof HTMLElement ? anterior : null;
     containerRef.current?.focus();
@@ -198,6 +203,14 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       const alvo = returnFocusRef.current;
       returnFocusRef.current = null;
       if (alvo && document.contains(alvo)) alvo.focus();
+      // O conteudo do dialogo ainda sai do DOM durante a animacao de fechamento.
+      // Se o foco estava dentro dele, o navegador joga para o body e o gatilho
+      // perde o foco: devolve quando o overlay termina de sair.
+      if (restoreTimerRef.current !== null) window.clearTimeout(restoreTimerRef.current);
+      restoreTimerRef.current = window.setTimeout(() => {
+        restoreTimerRef.current = null;
+        if (alvo && document.contains(alvo) && document.activeElement === document.body) alvo.focus();
+      }, 400);
     };
   }, [open]);
 
