@@ -16,6 +16,17 @@ import { hasAdminCredentials } from './helpers/skipGuard';
  * problemas encontrados viram achados para a etapa 271.
  */
 
+interface Culpado {
+  /** elemento: tag + ate 3 classes + [left..right width pos/overflowX] */
+  el: string;
+  pos: string;
+  overflowX: string;
+  /** ja esta dentro de algum ancestral que recorta (overflow-x != visible) */
+  recortado: boolean;
+  /** cadeia de ancestrais, do pai ate o body */
+  ancestrais: string[];
+}
+
 interface Captura {
   tela: string;
   rota: string;
@@ -25,7 +36,9 @@ interface Captura {
   scrollWidth: number;
   clientWidth: number;
   transbordoPx: number;
-  culpados: string[];
+  culpados: Culpado[];
+  /** trilha body > ... > filho mais profundo: mostra em que nivel o eixo X esticou */
+  trilha: string[];
 }
 
 const TELAS = [
@@ -78,23 +91,72 @@ test.describe('Etapa 270 — telas internas em largura de celular', () => {
         const medida = await page.evaluate(() => {
           const raiz = document.documentElement;
           const viewport = raiz.clientWidth;
-          const culpados: string[] = [];
 
-          for (const elemento of Array.from(document.body.querySelectorAll('*'))) {
+          const descrever = (elemento: Element) => {
+            const bruto = (elemento as HTMLElement).className;
+            const classes =
+              typeof bruto === 'string'
+                ? bruto
+                    .trim()
+                    .split(/\s+/)
+                    .filter((c) => c && !c.includes(':'))
+                    .slice(0, 3)
+                    .join('.')
+                : '';
             const caixa = elemento.getBoundingClientRect();
-            if (caixa.width > 0 && caixa.right > viewport + 1) {
-              const primeiraClasse =
-                typeof elemento.className === 'string' ? elemento.className.split(' ')[0] : '';
-              const sufixo = primeiraClasse ? `.${primeiraClasse}` : '';
-              culpados.push(`${elemento.tagName.toLowerCase()}${sufixo}@${Math.round(caixa.right)}`);
-              if (culpados.length >= 5) break;
-            }
+            const estilo = getComputedStyle(elemento);
+            return (
+              `${elemento.tagName.toLowerCase()}${classes ? `.${classes}` : ''}` +
+              `[${Math.round(caixa.left)}..${Math.round(caixa.right)} ${Math.round(caixa.width)}w ` +
+              `${estilo.position}/${estilo.overflowX}]`
+            );
+          };
+
+          // Culpados: quem passa da borda, do pior (mais a direita) para o menor. Cada um
+          // vem com a cadeia de ancestrais, que e o que diz quem esticou o eixo X.
+          const culpados = Array.from(document.body.querySelectorAll('*'))
+            .filter((elemento) => {
+              const caixa = elemento.getBoundingClientRect();
+              return caixa.width > 0 && caixa.right > viewport + 1;
+            })
+            .sort((a, b) => b.getBoundingClientRect().right - a.getBoundingClientRect().right)
+            .slice(0, 5)
+            .map((elemento) => {
+              const ancestrais: string[] = [];
+              let pai = elemento.parentElement;
+              while (pai && ancestrais.length < 8) {
+                ancestrais.push(descrever(pai));
+                pai = pai.parentElement;
+              }
+              const estilo = getComputedStyle(elemento);
+              let recortado = false;
+              for (let a = elemento.parentElement; a && a !== document.body; a = a.parentElement) {
+                if (getComputedStyle(a).overflowX !== 'visible') {
+                  recortado = true;
+                  break;
+                }
+              }
+              return {
+                el: descrever(elemento),
+                pos: estilo.position,
+                overflowX: estilo.overflowX,
+                recortado,
+                ancestrais,
+              };
+            });
+
+          const trilha: string[] = [];
+          let nivel: Element | null = document.body;
+          while (nivel && trilha.length < 8) {
+            trilha.push(descrever(nivel));
+            nivel = nivel.firstElementChild;
           }
 
           return {
             scrollWidth: raiz.scrollWidth,
             clientWidth: viewport,
             culpados,
+            trilha,
             titulo: (document.querySelector('h1')?.textContent ?? '').trim(),
           };
         });
