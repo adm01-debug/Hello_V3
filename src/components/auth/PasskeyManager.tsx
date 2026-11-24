@@ -272,7 +272,7 @@ export function PasskeyManager() {
                 
                 {editingId !== passkey.id && (
                   <div className="flex items-center gap-2">
-                    <Button
+                    <Button aria-label="Renomear esta passkey"
                       variant="ghost"
                       size="icon"
                       onClick={() => {
@@ -284,7 +284,7 @@ export function PasskeyManager() {
                     </Button>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button variant="ghost" size="icon">
+                        <Button aria-label="Excluir esta passkey" variant="ghost" size="icon">
                           <Trash2 className="h-4 w-4 text-destructive" />
                         </Button>
                       </AlertDialogTrigger>

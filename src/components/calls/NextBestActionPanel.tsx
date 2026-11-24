@@ -91,7 +91,7 @@ export function NextBestActionPanel({ callSessionId, className }: NextBestAction
                     </div>
                     {!s.was_used && (
                       <div className="flex gap-1 shrink-0">
-                        <Button
+                        <Button aria-label="Marcar a sugestão como usada"
                           size="icon"
                           variant="ghost"
                           className="h-5 w-5"
@@ -100,7 +100,7 @@ export function NextBestActionPanel({ callSessionId, className }: NextBestAction
                         >
                           <Check className="h-3 w-3" />
                         </Button>
-                        <Button
+                        <Button aria-label="Ignorar a sugestão"
                           size="icon"
                           variant="ghost"
                           className="h-5 w-5"

@@ -172,7 +172,7 @@ export function CallSimulation() {
 
           {/* Controls */}
           <div className="flex items-center justify-center gap-2">
-            <Button
+            <Button aria-label="Reiniciar a simulação"
               variant="outline"
               size="icon"
               onClick={handleReset}

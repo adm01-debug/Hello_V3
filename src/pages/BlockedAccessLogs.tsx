@@ -44,7 +44,7 @@ const BlockedAccessLogs = () => {
               <SelectItem value="90">Últimos 90 dias</SelectItem>
             </SelectContent>
           </Select>
-          <Button variant="outline" size="icon" onClick={fetchLogs} disabled={loading}>
+          <Button aria-label="Atualizar a lista de bloqueios" variant="outline" size="icon" onClick={fetchLogs} disabled={loading}>
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
           </Button>
         </div>

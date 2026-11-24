@@ -101,7 +101,7 @@ export function NotificationList({
                   </div>
                   <div className="flex items-center gap-1 shrink-0">
                     {!n.is_read && (
-                      <Button
+                      <Button aria-label="Marcar a notificação como lida"
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8"
@@ -112,7 +112,7 @@ export function NotificationList({
                       </Button>
                     )}
                     {!n.is_archived && (
-                      <Button
+                      <Button aria-label="Arquivar a notificação"
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8"
@@ -122,7 +122,7 @@ export function NotificationList({
                         <Archive className="h-4 w-4" />
                       </Button>
                     )}
-                    <Button
+                    <Button aria-label="Excluir a notificação"
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8 text-destructive"

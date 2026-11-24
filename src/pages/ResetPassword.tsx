@@ -187,6 +187,7 @@ export default function ResetPassword() {
                     type="button"
                     variant="ghost"
                     size="icon"
+                    aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                     className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7"
                     onClick={() => setShowPassword(!showPassword)}
                   >
@@ -218,6 +219,7 @@ export default function ResetPassword() {
                     type="button"
                     variant="ghost"
                     size="icon"
+                    aria-label={showConfirmPassword ? 'Ocultar confirmação de senha' : 'Mostrar confirmação de senha'}
                     className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >

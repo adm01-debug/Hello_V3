@@ -83,7 +83,7 @@ export function ContactAlertsDropdown() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
+        <Button aria-label="Alertas de contatos" variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
             <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground">
@@ -102,7 +102,7 @@ export function ContactAlertsDropdown() {
             )}
           </div>
           <div className="flex gap-1">
-            <Button 
+            <Button aria-label="Verificar os alertas dos contatos" 
               variant="ghost" 
               size="icon" 
               className="h-8 w-8"
@@ -200,7 +200,7 @@ export function ContactAlertsDropdown() {
                     </div>
                     <div className="flex flex-col gap-1">
                       {!alert.is_actioned && (
-                        <Button
+                        <Button aria-label="Marcar o alerta como tratado"
                           variant="ghost"
                           size="icon"
                           className="h-6 w-6"
@@ -212,7 +212,7 @@ export function ContactAlertsDropdown() {
                           <Check className="h-3 w-3" />
                         </Button>
                       )}
-                      <Button
+                      <Button aria-label="Excluir o alerta"
                         variant="ghost"
                         size="icon"
                         className="h-6 w-6 text-destructive"

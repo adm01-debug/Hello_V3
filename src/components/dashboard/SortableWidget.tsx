@@ -40,7 +40,7 @@
      >
        {isEditing && (
          <div className="absolute -top-3 -right-3 z-10 flex gap-1">
-           <Button
+           <Button aria-label="Reordenar o widget"
              variant="secondary"
              size="icon"
              className="h-8 w-8 rounded-full shadow-lg border border-border/50 cursor-grab active:cursor-grabbing"
@@ -49,7 +49,7 @@
            >
              <DragHandle className="h-4 w-4" />
            </Button>
-           <Button
+           <Button aria-label="Remover o widget"
              variant="destructive"
              size="icon"
              className="h-8 w-8 rounded-full shadow-lg border border-destructive/20"

@@ -115,7 +115,7 @@ export default function IPWhitelist() {
                         <TableCell>{ip.description || '-'}</TableCell>
                         <TableCell><Badge variant={ip.is_cidr ? 'default' : 'secondary'}>{ip.is_cidr ? 'CIDR' : 'IP'}</Badge></TableCell>
                         <TableCell>{safeFormatDatePtBR(ip.created_at, 'dd/MM/yyyy HH:mm')}</TableCell>
-                        <TableCell><Button variant="ghost" size="icon" onClick={() => removeGlobalIP(ip.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell>
+                        <TableCell><Button aria-label="Remover o IP da lista global" variant="ghost" size="icon" onClick={() => removeGlobalIP(ip.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -170,7 +170,7 @@ export default function IPWhitelist() {
                           <TableCell className="font-mono">{ip.ip_address}</TableCell>
                           <TableCell>{ip.description || '-'}</TableCell>
                           <TableCell><Badge variant={ip.is_cidr ? 'default' : 'secondary'}>{ip.is_cidr ? 'CIDR' : 'IP'}</Badge></TableCell>
-                          <TableCell><Button variant="ghost" size="icon" onClick={() => removeUserIP(ip.id, selectedUserId)}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell>
+                          <TableCell><Button aria-label="Remover o IP do usuário" variant="ghost" size="icon" onClick={() => removeUserIP(ip.id, selectedUserId)}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

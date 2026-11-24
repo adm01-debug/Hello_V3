@@ -297,7 +297,7 @@ export function ActiveCallBar() {
 
             <div className="mx-2 h-6 w-px bg-border" />
 
-            <Button
+            <Button aria-label={muted ? 'Ativar o microfone' : 'Silenciar o microfone'} aria-pressed={muted}
               variant="ghost"
               size="icon"
               onClick={() => setMuted(!muted)}
@@ -306,7 +306,7 @@ export function ActiveCallBar() {
               {muted ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
             </Button>
 
-            <Button
+            <Button aria-label={onHold ? 'Retomar a chamada' : 'Colocar a chamada em espera'} aria-pressed={onHold}
               variant="ghost"
               size="icon"
               onClick={() => setOnHold(!onHold)}
@@ -315,15 +315,15 @@ export function ActiveCallBar() {
               {onHold ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
             </Button>
 
-            <Button variant="ghost" size="icon">
+            <Button aria-label="Ligar ou desligar o alto-falante" variant="ghost" size="icon">
               <Volume2 className="h-4 w-4" />
             </Button>
 
-            <Button variant="ghost" size="icon">
+            <Button aria-label="Transferir a chamada" variant="ghost" size="icon">
               <PhoneForwarded className="h-4 w-4" />
             </Button>
 
-            <Button variant="ghost" size="icon">
+            <Button aria-label="Mais opções da chamada" variant="ghost" size="icon">
               <MoreHorizontal className="h-4 w-4" />
             </Button>
 

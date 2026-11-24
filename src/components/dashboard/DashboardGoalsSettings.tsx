@@ -80,8 +80,8 @@ export const DashboardGoalsSettings = ({ onGoalsChange }: DashboardGoalsSettings
                     </div>
                     <div className="flex items-center gap-2">
                       <Switch checked={goal.is_active} onCheckedChange={() => handleToggleActive(goal)} />
-                      <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(goal)}><Pencil className="h-4 w-4" /></Button>
-                      <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => handleDelete(goal.id)}><Trash2 className="h-4 w-4" /></Button>
+                      <Button aria-label="Editar esta meta" variant="ghost" size="icon" onClick={() => handleOpenDialog(goal)}><Pencil className="h-4 w-4" /></Button>
+                      <Button aria-label="Excluir esta meta" variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => handleDelete(goal.id)}><Trash2 className="h-4 w-4" /></Button>
                     </div>
                   </div>
                 </div>

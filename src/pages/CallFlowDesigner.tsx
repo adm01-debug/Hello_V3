@@ -69,10 +69,10 @@ function FlowNodeCard({ node, onDelete, onConnect }: {
         <p className="text-xs opacity-60">{nodeType.label}</p>
       </div>
       <div className="flex items-center gap-1">
-        <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => onConnect(node.id)}>
+        <Button aria-label="Conectar este bloco" variant="ghost" size="icon" className="h-7 w-7" onClick={() => onConnect(node.id)}>
           <MoveRight className="h-3.5 w-3.5" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={() => onDelete(node.id)}>
+        <Button aria-label="Excluir este bloco" variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={() => onDelete(node.id)}>
           <Trash2 className="h-3.5 w-3.5" />
         </Button>
       </div>
@@ -158,7 +158,7 @@ function FlowCanvas({ flow, onUpdate }: { flow: CallFlow; onUpdate: (data: { nod
                 <div key={edge.id} className="flex items-center gap-2 ml-8 my-1">
                   <ArrowRight className="h-4 w-4 text-muted-foreground" />
                   <span className="text-xs text-muted-foreground">→ {targetNode?.label || 'Desconhecido'}</span>
-                  <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => deleteEdge(edge.id)}>
+                  <Button aria-label="Excluir esta conexão" variant="ghost" size="icon" className="h-5 w-5" onClick={() => deleteEdge(edge.id)}>
                     <Trash2 className="h-3 w-3" />
                   </Button>
                 </div>

@@ -95,7 +95,7 @@ export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps
             )}
           </CardTitle>
           <div className="flex items-center gap-1">
-            <Button
+            <Button aria-label={isExpanded ? 'Recolher a análise ao vivo' : 'Expandir a análise ao vivo'} aria-pressed={isExpanded}
               variant="ghost"
               size="icon"
               className="h-7 w-7"
@@ -103,7 +103,7 @@ export const LiveCallAnalysis = forwardRef<HTMLDivElement, LiveCallAnalysisProps
             >
               {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
             </Button>
-            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose}>
+            <Button aria-label="Fechar a análise ao vivo" variant="ghost" size="icon" className="h-7 w-7" onClick={onClose}>
               <X className="h-4 w-4" />
             </Button>
           </div>

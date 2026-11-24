@@ -106,7 +106,7 @@ export function HoldAlertsTable({ alerts, isLoading, onMarkAsRead }: Props) {
                     </TableCell>
                     <TableCell>
                       {!alert.is_read && (
-                        <Button size="icon" variant="ghost" onClick={() => onMarkAsRead(alert.id)} title="Marcar como lido">
+                        <Button aria-label="Marcar o alerta de espera como lido" size="icon" variant="ghost" onClick={() => onMarkAsRead(alert.id)} title="Marcar como lido">
                           <X className="h-4 w-4" />
                         </Button>
                       )}

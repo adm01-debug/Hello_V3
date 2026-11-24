@@ -126,7 +126,7 @@ export default function VoiceSecurity() {
                         </p>
                       )}
                     </div>
-                    <Button size="icon" variant="ghost" onClick={() => remove(vp.id)} title="Remover">
+                    <Button aria-label="Excluir esta frase-chave" size="icon" variant="ghost" onClick={() => remove(vp.id)} title="Remover">
                       <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>
                   </div>

@@ -309,7 +309,7 @@ function CallbackCard({
             <div className="flex items-center gap-1">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button 
+                  <Button aria-label={`Ligar agora para ${callback.caller_name}`} 
                     size="icon" 
                     variant="ghost" 
                     className="h-8 w-8 text-success hover:text-success hover:bg-success/10"
@@ -323,7 +323,7 @@ function CallbackCard({
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button size="icon" variant="ghost" className="h-8 w-8">
+                  <Button aria-label={`Mais opções do retorno de ${callback.caller_name}`} size="icon" variant="ghost" className="h-8 w-8">
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>

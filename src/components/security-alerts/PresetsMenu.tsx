@@ -61,7 +61,7 @@ export function PresetsMenu({
                   {p.q ? ` · "${p.q}"` : ""}
                 </div>
               </button>
-              <Button
+              <Button aria-label="Remover este preset"
                 variant="ghost"
                 size="icon"
                 className="h-7 w-7 shrink-0"
