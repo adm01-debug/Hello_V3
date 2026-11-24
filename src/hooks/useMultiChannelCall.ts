@@ -242,7 +242,11 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
           if (closeError) log.error('persistHoldEvent: falha ao fechar o hold', closeError);
         }
       }
-    } catch (error) { log.error('Error persisting hold event:', error); }
+    } catch (error) {
+      // Rede caindo no meio: o hold pode ficar sem ended_at e o calculo de espera
+      // do relatorio tolera isso (ver comentarios acima). Nao interrompe a chamada.
+      log.error('Error persisting hold event:', error);
+    }
   }, []);
 
   const toggleHold = useCallback((callId?: string) => {

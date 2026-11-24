@@ -111,7 +111,7 @@ Deno.serve(async (req) => {
     
     // Log blocked access
     if (!isAllowed) {
-      await supabase
+      const { error: ipBlockErr } = await supabase
         .from('blocked_access_logs')
         .insert({
           user_id: userId,
@@ -120,6 +120,7 @@ Deno.serve(async (req) => {
           reason: 'IP not in whitelist',
           user_agent: req.headers.get('user-agent')
         });
+      if (ipBlockErr) console.error('validate-ip: falha ao registrar bloqueio por IP', ipBlockErr);
       
       return new Response(
         JSON.stringify({ 

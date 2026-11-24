@@ -156,6 +156,8 @@ export function usePersistedTagFilter() {
             .eq('id', uid);
           if (error) throw error;
         } catch (error) {
+          // O filtro ja esta aplicado nesta tela; o sync e para os outros dispositivos.
+          // Avisar na tela seria ruido sobre uma perda que o usuario nao percebe.
           log.warn('Falha ao sincronizar filtro de etiquetas', { error });
         }
       })();

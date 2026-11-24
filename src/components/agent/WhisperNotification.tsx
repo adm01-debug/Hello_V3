@@ -15,6 +15,9 @@ import { supabase } from '@/integrations/supabase/client';
 
 import { safeToLocaleTimeString } from "@/lib/safe-date";
 import { activateOnKey } from "../../lib/a11y-clickable";
+import { logger } from '@/lib/logger';
+
+const log = logger.create('WhisperNotification');
 interface WhisperMessage {
   id: string;
   supervisor_name: string;
@@ -100,10 +103,16 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
   }, [agentName]);
 
   const markAsRead = async (whisperId: string) => {
-    await supabase
+    const { error } = await supabase
       .from('whisper_messages')
       .update({ is_read: true })
       .eq('id', whisperId);
+
+    if (error) {
+      // Mantem o aviso na tela: se nao foi gravado, ele volta no proximo carregamento.
+      log.error('Falha ao marcar sussurro como lido', error);
+      return;
+    }
 
     setWhispers(prev => prev.filter(w => w.id !== whisperId));
     
@@ -117,10 +126,15 @@ export const WhisperNotification = ({ agentName }: WhisperNotificationProps) => 
 
   const markAllAsRead = async () => {
     const ids = whispers.map(w => w.id);
-    await supabase
+    const { error } = await supabase
       .from('whisper_messages')
       .update({ is_read: true })
       .in('id', ids);
+
+    if (error) {
+      log.error('Falha ao marcar todos os sussurros como lidos', error);
+      return;
+    }
 
     setWhispers([]);
     setShowNotification(false);

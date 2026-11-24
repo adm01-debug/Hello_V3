@@ -97,6 +97,7 @@ export function useVoicePreferences(): UseVoicePreferences {
         .eq('id', uid);
       if (error) throw error;
     } catch (error) {
+      // Rede caindo no meio: a preferencia ja vale nesta sessao (ver pushToProfile).
       logger.warn('Falha ao sincronizar preferências de voz', { error });
     }
   }, []);
