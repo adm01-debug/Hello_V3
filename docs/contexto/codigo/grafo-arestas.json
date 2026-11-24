@@ -5152,11 +5152,13 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/voip-capacity-recommendations/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/voip-diagnostic-voice-qa/index.ts": [
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/voip-executive-narrative/index.ts": [

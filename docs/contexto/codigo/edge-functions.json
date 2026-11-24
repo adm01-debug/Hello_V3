@@ -2814,7 +2814,7 @@
    "nome": "voip-capacity-recommendations",
    "entrada": "supabase/functions/voip-capacity-recommendations/index.ts",
    "arquivos": 1,
-   "linhas": 190,
+   "linhas": 201,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2833,7 +2833,8 @@
    ],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useVoipCapacityRecommendations.ts"
@@ -2847,7 +2848,7 @@
    "nome": "voip-diagnostic-voice-qa",
    "entrada": "supabase/functions/voip-diagnostic-voice-qa/index.ts",
    "arquivos": 1,
-   "linhas": 191,
+   "linhas": 196,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",
@@ -2872,6 +2873,7 @@
    "usa_shared": [
     "cors.ts",
     "errors.ts",
+    "resilience.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [

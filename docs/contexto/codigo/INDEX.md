@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `94ed3023790bad630edd91d6f5a7a235137f85e2` (2026-11-24T05:01:16-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `9cc710b3b2818502df60ccefdac0e188e27828ab` (2026-11-24T05:05:01-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1733 |
 | arquivos_codigo | 1330 |
-| linhas_codigo | 179367 |
+| linhas_codigo | 179383 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10154 nós · 26740 arestas · 776 comunidades · grafo do commit `94ed3023`
-- comunidades maiores: lucide-react (305), client.ts (237), vitest (213), react (181), traceHeaders (158), protectedRoutes.tsx (157), cn (119), utils.ts (116), @tanstack/react-query (110), snapshot.py (102), usePageTitle (99), buildCorsHeaders (95)
+- 10154 nós · 26743 arestas · 763 comunidades · grafo do commit `9cc710b3`
+- comunidades maiores: lucide-react (305), client.ts (231), vitest (204), react (181), traceHeaders (157), protectedRoutes.tsx (157), cn (119), utils.ts (116), @tanstack/react-query (103), snapshot.py (102), usePageTitle (99), buildCorsHeaders (95)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (87)
+- docs/qa/05-PROGRESSO.md (88)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - src/hooks/useMultiChannelCall.ts (9)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `9cc710b` fix: orcamento de tempo na cadeia edge->edge e no QA de voz (etapa 211) (#265)
 - 2026-11-24 `94ed302` chore: verificacao dos timers de realtime nos hooks (etapa 216) (#266)
 - 2026-11-24 `55b1736` fix: avisar quando o alerta de contato nao foi gravado (etapa 189) (#259)
 - 2026-11-24 `43eafa2` fix: prazo de resposta nas edges de e-mail e integracao (etapa 210) (#264)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `6ba5cb0` fix: estatisticas da semana nao falham mais em silencio (etapa 185) (#252)
 - 2026-11-24 `ccbea6f` fix: falha na trilha de auditoria passa a ser visivel (etapa 182) (#249)
 - 2026-11-24 `e335d9d` feat: botao Ver Alertas abre a lista de alertas na propria tela (etapa 167) (#247)
-- 2026-11-24 `8aa5275` feat: estados de falha visiveis no softphone (etapa 233) (#246)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

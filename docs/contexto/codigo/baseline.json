@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "94ed3023790bad630edd91d6f5a7a235137f85e2",
+  "commit": "9cc710b3b2818502df60ccefdac0e188e27828ab",
   "branch": "main",
-  "data_commit": "2026-11-24T05:01:16-03:00",
+  "data_commit": "2026-11-24T05:05:01-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "9cc710b",
+    "data": "2026-11-24",
+    "assunto": "fix: orcamento de tempo na cadeia edge->edge e no QA de voz (etapa 211) (#265)"
+   },
    {
     "sha": "94ed302",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "b21f44f",
     "data": "2026-11-24",
     "assunto": "feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)"
-   },
-   {
-    "sha": "92474f7",
-    "data": "2026-11-24",
-    "assunto": "chore: remove o hook de conferencia orfao e defeituoso (etapa 158) (#237)"
    }
   ],
-  "arquivos_mudados_7d": 1132,
+  "arquivos_mudados_7d": 1133,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 87
+    "mudancas": 88
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 87
+    "mudancas": 88
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 240
+    "commits": 241
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1733,
   "arquivos_codigo": 1330,
-  "linhas_codigo": 179367,
+  "linhas_codigo": 179383,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 206,
-   "linhas": 23088
+   "linhas": 23104
   },
   "tailwind.config.ts": {
    "arquivos": 1,

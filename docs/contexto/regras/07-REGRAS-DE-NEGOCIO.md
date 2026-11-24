@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `94ed302379` · branch `main` · 2026-11-24 08:01 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9cc710b3b2` · branch `main` · 2026-11-24 08:05 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -3234,6 +3234,7 @@ _nenhum item encontrado_
 | Falha aberta por decisao de negocio: nao bloqueia o usuario se a checagem cair. | `supabase/functions/validate-geo/index.ts` |
 | Header e controlado pelo cliente: sem validação, a whitelist de IP é | `supabase/functions/validate-ip/index.ts` |
 | * Whitelist rígida — apenas ações não destrutivas. */ | `supabase/functions/voip-anomaly-remediation/index.ts` |
+| requisicao: o salto edge->edge recebe no maximo metade, senao as duas edges | `supabase/functions/voip-capacity-recommendations/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-executive-summary/index.ts` |
 | 3. Insere notificações na tabela (que deve disparar Realtime) | `supabase/functions/voip-failover-notifier/index.ts` |
 | JWT obrigatório, CORS centralizado, validação via _shared/validate. | `supabase/functions/voip-quality-alerts-summary/index.ts` |

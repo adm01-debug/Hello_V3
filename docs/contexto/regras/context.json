@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "94ed3023790bad630edd91d6f5a7a235137f85e2",
+  "sha": "9cc710b3b2818502df60ccefdac0e188e27828ab",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 08:01 UTC",
+  "generated_at": "2026-11-24 08:05 UTC",
   "files_total": 1780,
   "code_files": 1576,
-  "code_lines": 195379
+  "code_lines": 195395
  },
  "version": "1.3.2",
- "facts_hash": "813ea40ed2f6d67e",
+ "facts_hash": "37ba19f0e0c5dde5",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34299,7 +34299,7 @@
   {
    "module": "supabase/functions",
    "files": 206,
-   "lines": 23088,
+   "lines": 23104,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -43266,6 +43266,10 @@
    {
     "file": "supabase/functions/voip-anomaly-remediation/index.ts",
     "text": "* Whitelist rígida — apenas ações não destrutivas. */"
+   },
+   {
+    "file": "supabase/functions/voip-capacity-recommendations/index.ts",
+    "text": "requisicao: o salto edge->edge recebe no maximo metade, senao as duas edges"
    },
    {
     "file": "supabase/functions/voip-executive-summary/index.ts",
@@ -123996,7 +124000,7 @@
   },
   "supabase/functions/voip-capacity-recommendations/index.ts": {
    "path": "supabase/functions/voip-capacity-recommendations/index.ts",
-   "lines": 190,
+   "lines": 201,
    "exports": [
     "interface CapacityRecommendation",
     "interface CapacityResult",
@@ -124024,6 +124028,9 @@
      "value": "inactive",
      "kind": "filtra"
     }
+   ],
+   "rule_comments": [
+    "requisicao: o salto edge->edge recebe no maximo metade, senao as duas edges"
    ]
   },
   "supabase/functions/voip-capacity-recommendations/__tests__/index.test.ts": {
@@ -124038,7 +124045,7 @@
   },
   "supabase/functions/voip-diagnostic-voice-qa/index.ts": {
    "path": "supabase/functions/voip-diagnostic-voice-qa/index.ts",
-   "lines": 191,
+   "lines": 196,
    "exports": [
     "interface VoiceQAResponse"
    ],
@@ -126892,10 +126899,21 @@
   }
  },
  "git": {
-  "sha": "94ed3023790bad630edd91d6f5a7a235137f85e2",
+  "sha": "9cc710b3b2818502df60ccefdac0e188e27828ab",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "9cc710b",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: orcamento de tempo na cadeia edge->edge e no QA de voz (etapa 211) (#265)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/voip-capacity-recommendations/index.ts",
+     "supabase/functions/voip-diagnostic-voice-qa/index.ts"
+    ]
+   },
    {
     "sha": "94ed302",
     "date": "2026-11-24",
@@ -127296,65 +127314,15 @@
      "supabase/functions/whatsapp-inbound/index.ts",
      "supabase/functions/whatsapp-rewrite/index.ts"
     ]
-   },
-   {
-    "sha": "a3a8463",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: onda 3 da E050 - erro interno generico em 26 edges (#232)",
-    "files": [
-     "supabase/functions/approve-password-reset/index.ts",
-     "supabase/functions/chatbot-respond/index.ts",
-     "supabase/functions/check-goals/index.ts",
-     "supabase/functions/check-queue-metrics/index.ts",
-     "supabase/functions/data-lake-flush/index.ts",
-     "supabase/functions/detect-key-moments/index.ts",
-     "supabase/functions/enforce-sla/index.ts",
-     "supabase/functions/generate-coaching-plan/index.ts",
-     "supabase/functions/generate-coaching-track/index.ts",
-     "supabase/functions/generate-meeting-summary/index.ts",
-     "supabase/functions/global-load-test/index.ts",
-     "supabase/functions/request-password-reset/index.ts",
-     "supabase/functions/rls-audit/index.ts",
-     "supabase/functions/sync-crm-queue/index.ts",
-     "supabase/functions/teams-fetch-recordings/index.ts",
-     "supabase/functions/voip-diagnostic-voice-qa/index.ts",
-     "supabase/functions/voip-executive-narrative/index.ts",
-     "supabase/functions/voip-executive-summary/index.ts",
-     "supabase/functions/voip-load-test/index.ts",
-     "supabase/functions/voip-quality-heatmap/index.ts",
-     "supabase/functions/voip-recommendation-history/index.ts",
-     "supabase/functions/voip-recommendation-insights/index.ts",
-     "supabase/functions/voip-recommendation-simulate/index.ts",
-     "supabase/functions/voip-recommendations/index.ts",
-     "supabase/functions/voip-sla-report/index.ts",
-     "supabase/functions/voip-trunks-manage/index.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    26
+    27
    ],
    [
     "supabase/functions/data-lake-flush/index.ts",
-    4
-   ],
-   [
-    "supabase/functions/teams-fetch-recordings/index.ts",
-    3
-   ],
-   [
-    "supabase/functions/sync-crm-queue/index.ts",
-    3
-   ],
-   [
-    "supabase/functions/voip-trunks-manage/index.ts",
-    3
-   ],
-   [
-    "supabase/functions/approve-password-reset/index.ts",
     3
    ],
    [
@@ -127374,7 +127342,11 @@
     2
    ],
    [
-    "supabase/functions/enforce-sla/index.ts",
+    "supabase/functions/teams-fetch-recordings/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/sync-crm-queue/index.ts",
     2
    ],
    [
@@ -127382,15 +127354,11 @@
     2
    ],
    [
-    "supabase/functions/voip-load-test/index.ts",
+    "supabase/functions/voip-trunks-manage/index.ts",
     2
    ],
    [
-    "supabase/functions/chatbot-respond/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/request-password-reset/index.ts",
+    "supabase/functions/approve-password-reset/index.ts",
     2
    ],
    [
@@ -127398,20 +127366,36 @@
     2
    ],
    [
-    "supabase/functions/generate-coaching-track/index.ts",
-    2
-   ],
-   [
     "supabase/functions/ldap-sync/index.ts",
     2
    ],
    [
-    "supabase/functions/generate-coaching-plan/index.ts",
-    2
+    "supabase/functions/voip-capacity-recommendations/index.ts",
+    1
    ],
    [
-    "supabase/functions/generate-meeting-summary/index.ts",
-    2
+    "supabase/functions/voip-diagnostic-voice-qa/index.ts",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useContactAlerts.ts",
+    1
+   ],
+   [
+    "src/components/alerts/AlertsDropdown.tsx",
+    1
+   ],
+   [
+    "src/components/call-history/CallDetailDialog.tsx",
+    1
    ]
   ]
  }
