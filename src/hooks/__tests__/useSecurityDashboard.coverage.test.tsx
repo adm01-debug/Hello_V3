@@ -8,6 +8,9 @@ const alertRow = {
 };
 
 const state = {
+  ipError: null as { message: string } | null,
+  alertsError: null as { message: string } | null,
+  blockedError: null as { message: string } | null,
   ipEnabled: true as boolean,
   alerts: [alertRow] as unknown[],
   count: 3 as number | null,
@@ -57,13 +60,13 @@ vi.mock('@/integrations/supabase/client', () => ({
       const builder: Record<string, unknown> = {};
       builder.select = vi.fn(() => builder);
       builder.order = vi.fn(() => builder);
-      builder.limit = vi.fn(() => Promise.resolve({ data: state.alerts, error: null }));
+      builder.limit = vi.fn(() => Promise.resolve({ data: state.alertsError ? null : state.alerts, error: state.alertsError }));
       builder.eq = vi.fn(() => {
         if (table === 'user_ip_restrictions') return builder;
         // blocked_access_logs count query: eq is terminal
-        return Promise.resolve({ count: state.count, error: null });
+        return Promise.resolve({ count: state.count, error: state.blockedError });
       });
-      builder.maybeSingle = vi.fn(() => Promise.resolve({ data: { enabled: state.ipEnabled }, error: null }));
+      builder.maybeSingle = vi.fn(() => Promise.resolve({ data: state.ipError ? null : { enabled: state.ipEnabled }, error: state.ipError }));
       return builder;
     }),
   },
@@ -76,6 +79,9 @@ vi.mock('@/lib/logger', () => {
 });
 
 beforeEach(() => {
+  state.ipError = null;
+  state.alertsError = null;
+  state.blockedError = null;
   state.ipEnabled = true;
   state.alerts = [alertRow];
   state.count = 3;
@@ -146,6 +152,22 @@ describe('useSecurityDashboard', () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     await act(async () => { await result.current.loadSecurityData(); });
     expect(result.current.recentAlerts.length).toBe(1);
+  });
+
+  it('falha de leitura publica erro e nao fabrica pontuacao', async () => {
+    // Sem leitura confiavel nao existe score: antes a falha era engolida e a
+    // tela mostrava 0/100 "Fraco", que parece conta desprotegida.
+    state.alertsError = { message: 'permission denied for table security_alerts' };
+    const { result } = renderHook(() => useSecurityDashboard('u1'));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.error).toBe('permission denied for table security_alerts');
+    expect(result.current.securityScore.total).toBe(0);
+    expect(result.current.recentAlerts).toEqual([]);
+
+    state.alertsError = null;
+    await act(async () => { await result.current.loadSecurityData(); });
+    expect(result.current.error).toBeNull();
+    expect(result.current.securityScore.total).toBe(95);
   });
 
   it('exposes session manager and mfa fields', async () => {

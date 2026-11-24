@@ -21,7 +21,7 @@ const SecurityMonitoring = () => {
 
   const { profile, loading } = useAuth();
   const navigate = useNavigate();
-  const { recentLogs, alerts, stats, isLive, setIsLive, fetchData, resolveAlert } = useSecurityMonitoringData(profile?.email);
+  const { recentLogs, alerts, stats, isLive, setIsLive, fetchData, resolveAlert, error } = useSecurityMonitoringData(profile?.email);
 
   useEffect(() => {
     if (!loading && (!profile || profile.role !== 'admin')) navigate('/unauthorized');
@@ -65,6 +65,19 @@ const SecurityMonitoring = () => {
         </div>
       </div>
 
+      {error && (
+        <Card className="border-destructive bg-destructive/5">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-lg text-destructive"><ShieldAlert className="h-5 w-5" />Monitoramento indisponível</CardTitle>
+            <CardDescription>Não foi possível ler eventos e alertas: {error}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-sm text-muted-foreground">Enquanto isso não é resolvido, esta tela não sabe o que está acontecendo: as listas vazias abaixo significam leitura falhando, não ausência de eventos.</p>
+            <Button size="sm" variant="outline" onClick={fetchData}><RefreshCw className="h-4 w-4 mr-2" />Tentar novamente</Button>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Stats */}
       <div className="grid gap-4 md:grid-cols-6">
         {[
@@ -74,11 +87,11 @@ const SecurityMonitoring = () => {
           { label: 'Downloads', val: stats.downloadEvents, icon: Download },
           { label: 'Usuários Ativos', val: stats.uniqueUsers, icon: Users },
         ].map(s => (
-          <Card key={s.label}><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">{s.label}</CardTitle><s.icon className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{s.val}</div></CardContent></Card>
+          <Card key={s.label}><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">{s.label}</CardTitle><s.icon className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{error ? '—' : s.val}</div></CardContent></Card>
         ))}
-        <Card className={stats.criticalAlerts > 0 ? 'border-destructive/50 bg-destructive/5' : ''}>
-          <CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Alertas Críticos</CardTitle><ShieldAlert className={`h-4 w-4 ${stats.criticalAlerts > 0 ? 'text-destructive' : 'text-muted-foreground'}`} /></CardHeader>
-          <CardContent><div className={`text-2xl font-bold ${stats.criticalAlerts > 0 ? 'text-destructive' : ''}`}>{stats.criticalAlerts}</div></CardContent>
+        <Card className={!error && stats.criticalAlerts > 0 ? 'border-destructive/50 bg-destructive/5' : ''}>
+          <CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Alertas Críticos</CardTitle><ShieldAlert className={`h-4 w-4 ${!error && stats.criticalAlerts > 0 ? 'text-destructive' : 'text-muted-foreground'}`} /></CardHeader>
+          <CardContent><div className={`text-2xl font-bold ${!error && stats.criticalAlerts > 0 ? 'text-destructive' : ''}`}>{error ? '—' : stats.criticalAlerts}</div></CardContent>
         </Card>
       </div>
 
@@ -95,7 +108,7 @@ const SecurityMonitoring = () => {
             <CardContent>
               <ScrollArea className="h-[500px]">
                 <div className="space-y-2">
-                  {recentLogs.length === 0 ? <div className="text-center py-8 text-muted-foreground">Nenhum evento registrado</div> : recentLogs.map((log) => (
+                  {recentLogs.length === 0 ? <div className="text-center py-8 text-muted-foreground">{error ? 'Não foi possível carregar os eventos — não é o mesmo que não haver evento' : 'Nenhum evento registrado'}</div> : recentLogs.map((log) => (
                     <div key={log.id} className="flex items-center gap-4 p-3 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
                       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-muted">{getActionIcon(log.action)}</div>
                       <div className="flex-1 min-w-0">
@@ -117,7 +130,7 @@ const SecurityMonitoring = () => {
             <CardContent>
               <ScrollArea className="h-[500px]">
                 <div className="space-y-3">
-                  {alerts.length === 0 ? <div className="text-center py-8 text-muted-foreground"><CheckCircle2 className="h-12 w-12 mx-auto mb-2 text-success/50" /><p>Nenhum alerta</p></div> : alerts.map((alert) => (
+                  {alerts.length === 0 ? <div className="text-center py-8 text-muted-foreground">{error ? (<><XCircle className="h-12 w-12 mx-auto mb-2 text-destructive/50" /><p>Não foi possível carregar os alertas</p></>) : (<><CheckCircle2 className="h-12 w-12 mx-auto mb-2 text-success/50" /><p>Nenhum alerta</p></>)}</div> : alerts.map((alert) => (
                     <div key={alert.id} className={`p-4 rounded-lg border ${alert.is_resolved ? 'bg-muted/50 opacity-60' : alert.severity === 'critical' ? 'border-destructive/50 bg-destructive/5' : 'border-warning/50 bg-warning/5'}`}>
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-3">

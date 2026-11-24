@@ -252,7 +252,7 @@
 - [ ] **195** — Varrer os `catch` que escondem escrita, lote 2 — onda 5 — Média — Hooks + Frontend
 - [ ] **196** — Criar o guard que impede a volta das gravações cegas — onda 5 — Alta — CI 🔒
 - [x] **197** — Parar de transformar erro de consulta em zero no painel de fila — onda 5 — Alta — Hooks
-- [ ] **198** — Idem nos painéis de segurança — onda 5 — Alta — Hooks
+- [x] **198** — Idem nos painéis de segurança — onda 5 — Alta — Hooks
 - [ ] **199** — Idem na lista de IPs permitidos — onda 5 — Média — Hooks
 - [ ] **200** — Idem no ranking, nos scorecards e nos planos de sucesso — onda 5 — Média — Hooks
 - [ ] **201** — Varrer as consultas cegas restantes — onda 5 — Média — Hooks

@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useSessionManager } from '@/hooks/useSessionManager';
 import { useMFA } from '@/hooks/useMFA';
 import { logger } from '@/lib/logger';
+import { mensagemDeErro } from '@/lib/error-message';
 
 interface SecurityScore {
   total: number;
@@ -31,6 +32,7 @@ export function useSecurityDashboard(userId: string | undefined) {
   const [blockedAccess, setBlockedAccess] = useState<number>(0);
   const [ipRestrictionEnabled, setIpRestrictionEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const calculateSecurityScore = (ipEnabled: boolean, alerts: SecurityAlert[]) => {
     const score = { total: 0, mfa: 0, sessions: 0, ipRestriction: 0, recentActivity: 0 };
@@ -48,22 +50,34 @@ export function useSecurityDashboard(userId: string | undefined) {
     if (!userId) return;
     setIsLoading(true);
     try {
-      const { data: ipRestriction } = await supabase.from('user_ip_restrictions').select('enabled').eq('user_id', userId).maybeSingle();
-      setIpRestrictionEnabled(ipRestriction?.enabled || false);
+      const { data: ipRestriction, error: ipError } = await supabase.from('user_ip_restrictions').select('enabled').eq('user_id', userId).maybeSingle();
+      const { data: alerts, error: alertsError } = await supabase.from('security_alerts').select('*').order('created_at', { ascending: false }).limit(5);
+      const { count, error: blockedError } = await supabase.from('blocked_access_logs').select('*', { count: 'exact', head: true }).eq('user_id', userId);
 
-      const { data: alerts } = await supabase.from('security_alerts').select('*').order('created_at', { ascending: false }).limit(5);
+      // Sem leitura confiavel nao existe pontuacao: um score 0/100 "Fraco" por
+      // consulta falhando e pior que nao mostrar score nenhum.
+      const falhaLeitura = ipError || alertsError || blockedError;
+      if (falhaLeitura) {
+        setError(mensagemDeErro(falhaLeitura));
+        // Nao deixar de pe uma pontuacao calculada antes da falha.
+        setSecurityScore({ total: 0, mfa: 0, sessions: 0, ipRestriction: 0, recentActivity: 0 });
+        return;
+      }
+      setError(null);
+      setIpRestrictionEnabled(ipRestriction?.enabled || false);
       const mapped = (alerts || []).map((a) => ({
         id: a.id, type: a.alert_type, severity: a.severity as 'info' | 'warning' | 'critical',
         title: a.title, description: a.description, created_at: a.created_at, is_resolved: a.is_resolved,
       }));
       setRecentAlerts(mapped);
 
-      const { count } = await supabase.from('blocked_access_logs').select('*', { count: 'exact', head: true }).eq('user_id', userId);
       setBlockedAccess(count || 0);
 
       calculateSecurityScore(ipRestriction?.enabled || false, mapped);
     } catch (error) {
       logger.error('Error loading security data:', error);
+      setError(mensagemDeErro(error));
+      setSecurityScore({ total: 0, mfa: 0, sessions: 0, ipRestriction: 0, recentActivity: 0 });
     } finally {
       setIsLoading(false);
     }
@@ -75,12 +89,14 @@ export function useSecurityDashboard(userId: string | undefined) {
   }, [userId]);
 
   useEffect(() => {
-    if (!mfaLoading && userId) calculateSecurityScore(ipRestrictionEnabled, recentAlerts);
+    // Com erro de leitura nao se recalcula nota: a partir de alertas vazios o
+    // calculo devolvia uma pontuacao otimista fabricada.
+    if (!mfaLoading && userId && !error) calculateSecurityScore(ipRestrictionEnabled, recentAlerts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mfaSettings, sessions, ipRestrictionEnabled, mfaLoading]);
+  }, [mfaSettings, sessions, ipRestrictionEnabled, mfaLoading, error]);
 
   return {
-    securityScore, recentAlerts, blockedAccess, ipRestrictionEnabled, isLoading,
+    securityScore, recentAlerts, blockedAccess, ipRestrictionEnabled, isLoading, error,
     sessions, currentSessionId, sessionDurationHours, mfaSettings, mfaLoading,
     loadSecurityData,
   };
