@@ -6,6 +6,7 @@ CREATE OR REPLACE FUNCTION public.recalc_hold_time_from_events()
 RETURNS trigger
 LANGUAGE plpgsql
 VOLATILE
+SET search_path = public
 AS $$
 DECLARE
   v_session_id uuid;
