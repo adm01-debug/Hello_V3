@@ -6,6 +6,7 @@ const mockToast = vi.hoisted(() => ({
   success: vi.fn(),
   error: vi.fn(),
   info: vi.fn(),
+  warning: vi.fn(),
 }));
 vi.mock('sonner', () => ({ toast: mockToast }));
 
@@ -128,6 +129,7 @@ beforeEach(() => {
   mockToast.success.mockReset();
   mockToast.error.mockReset();
   mockToast.info.mockReset();
+  mockToast.warning.mockReset();
   mockSupabase.from.mockImplementation(() => makeFrom());
   mockSupabase.channel.mockImplementation(() => channelObj);
 });
@@ -464,5 +466,76 @@ describe('usePredictiveDialer', () => {
 
     unmount();
     expect(mockSupabase.removeChannel).toHaveBeenCalled();
+  });
+
+  it('pula o contato e grava o motivo quando o compliance bloqueia', async () => {
+    const updates: Array<Record<string, unknown>> = [];
+    mockSupabase.from.mockImplementation(() => {
+      const b = makeFrom();
+      b.update = vi.fn((patch: Record<string, unknown>) => {
+        updates.push(patch);
+        return { eq: vi.fn(() => Promise.resolve({ error: null })) };
+      });
+      return b;
+    });
+    const preDialCheck = vi.fn().mockResolvedValue({
+      canDial: false,
+      reasons: ['Numero na lista DNC', 'Fora do horario legal'],
+    });
+
+    const { result } = renderHook(() => usePredictiveDialer(preDialCheck));
+    await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
+
+    await act(async () => {
+      await result.current.dialContact(sampleQueueItem as never);
+    });
+
+    expect(preDialCheck).toHaveBeenCalledWith('5511999999999');
+    // Nada de `dialing`: o contato sai da fila com rastro auditavel.
+    expect(updates).toEqual([
+      { status: 'skipped', result: 'compliance: Numero na lista DNC · Fora do horario legal' },
+    ]);
+    expect(result.current.currentCall).toBeNull();
+    expect(mockToast.info).not.toHaveBeenCalled();
+    expect(mockToast.warning).toHaveBeenCalled();
+  });
+
+  it('disca normalmente quando o compliance aprova e mantem a tentativa', async () => {
+    const updates: Array<Record<string, unknown>> = [];
+    mockSupabase.from.mockImplementation(() => {
+      const b = makeFrom();
+      b.update = vi.fn((patch: Record<string, unknown>) => {
+        updates.push(patch);
+        return { eq: vi.fn(() => Promise.resolve({ error: null })) };
+      });
+      return b;
+    });
+    const preDialCheck = vi.fn().mockResolvedValue({ canDial: true, reasons: [] });
+
+    const { result } = renderHook(() => usePredictiveDialer(preDialCheck));
+    await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
+
+    await act(async () => {
+      await result.current.dialContact(sampleQueueItem as never);
+    });
+
+    expect(preDialCheck).toHaveBeenCalledTimes(1);
+    expect(updates[0]).toMatchObject({ status: 'dialing', attempts: 1 });
+    expect(result.current.currentCall).toBeTruthy();
+    expect(mockToast.warning).not.toHaveBeenCalled();
+  });
+
+  it('falha do preDialCheck nao bloqueia a campanha (fail-open ate a etapa 035)', async () => {
+    const preDialCheck = vi.fn().mockRejectedValue(new Error('rpc indisponivel'));
+
+    const { result } = renderHook(() => usePredictiveDialer(preDialCheck));
+    await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
+
+    await act(async () => {
+      await result.current.dialContact(sampleQueueItem as never);
+    });
+
+    expect(preDialCheck).toHaveBeenCalledTimes(1);
+    expect(result.current.currentCall).toBeTruthy();
   });
 });

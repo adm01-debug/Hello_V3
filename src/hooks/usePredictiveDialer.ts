@@ -10,6 +10,7 @@ import {
   apiFetchQueue,
   apiGetNextContact,
   apiMarkDialing,
+  apiMarkSkipped,
   apiPauseCampaign,
   apiRemoveFromQueue,
   apiStartCampaign,
@@ -34,12 +35,25 @@ export type {
 
 const log = logger.create('PredictiveDialer');
 
-export const usePredictiveDialer = () => {
+/**
+ * Checagem de DNC/horario legal antes de discar. Estruturalmente igual ao
+ * `preDialCheck` de `useDNCCompliance`, declarado aqui para o discador nao
+ * depender do hook de chamadas.
+ */
+export type PreDialCheck = (
+  phone: string,
+  regionCode?: string,
+) => Promise<{ canDial: boolean; reasons: string[] }>;
+
+export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
   const [campaigns, setCampaigns] = useState<DialerCampaign[]>([]);
   const [queue, setQueue] = useState<DialerQueueItem[]>([]);
   const [activeCampaign, setActiveCampaign] = useState<DialerCampaign | null>(null);
   const [isDialing, setIsDialing] = useState(false);
   const [currentCall, setCurrentCall] = useState<DialerQueueItem | null>(null);
+  // Incrementado quando um contato e pulado, para o laco automatico buscar o
+  // proximo em vez de ficar parado esperando currentCall mudar.
+  const [loopTick, setLoopTick] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const dialerIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -143,6 +157,28 @@ export const usePredictiveDialer = () => {
   }, []);
 
   const dialContact = useCallback(async (queueItem: DialerQueueItem): Promise<void> => {
+    // Barreira de compliance: o discador tambem e caminho de discagem, entao
+    // passa pela mesma checagem do softphone antes de marcar como `dialing`.
+    if (preDialCheck) {
+      try {
+        const { canDial, reasons } = await preDialCheck(queueItem.phone);
+        if (!canDial) {
+          const motivo = reasons.join(' · ') || 'bloqueado pela checagem de DNC/horario';
+          await apiMarkSkipped(queueItem, motivo);
+          log.warn(`Contato pulado por compliance: ${queueItem.phone} — ${motivo}`);
+          toast.warning(`Contato ${queueItem.name || queueItem.phone} pulado`, {
+            description: motivo,
+          });
+          // Re-arma o laco automatico: sem isto a campanha pararia no primeiro pulo.
+          setLoopTick((tick) => tick + 1);
+          return;
+        }
+      } catch (err) {
+        // Fail-open ate a etapa 035, que torna a checagem fail-closed no banco.
+        log.error('preDialCheck falhou; seguindo com a discagem', err);
+      }
+    }
+
     try {
       await apiMarkDialing(queueItem);
       setCurrentCall(queueItem);
@@ -152,7 +188,7 @@ export const usePredictiveDialer = () => {
     } catch (err) {
       log.error('Error dialing contact:', err);
     }
-  }, []);
+  }, [preDialCheck]);
 
   const completeCall = useCallback(
     async (
@@ -256,7 +292,7 @@ export const usePredictiveDialer = () => {
     return () => {
       if (dialerIntervalRef.current) clearTimeout(dialerIntervalRef.current);
     };
-  }, [isDialing, activeCampaign, currentCall, getNextContact, dialContact, pauseCampaign]);
+  }, [isDialing, activeCampaign, currentCall, loopTick, getNextContact, dialContact, pauseCampaign]);
 
   // Realtime
   useEffect(() => {

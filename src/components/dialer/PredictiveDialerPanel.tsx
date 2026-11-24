@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 import { ptBR } from 'date-fns/locale';
 import { usePredictiveDialer, DialerCampaign, DialerQueueItem } from '@/hooks/usePredictiveDialer';
+import { useDNCCompliance } from '@/hooks/useDNCCompliance';
 import { CreateCampaignDialog } from './CreateCampaignDialog';
 import { DialerControlPanel } from './DialerControlPanel';
 import { toast } from 'sonner';
@@ -88,7 +89,10 @@ function QueueItemCard({ item, index, onRemove, statusColor }: { item: DialerQue
 }
 
 export function PredictiveDialerPanel() {
-  const { campaigns, queue, isDialing, currentCall, fetchQueue, startCampaign, pauseCampaign, completeCall, deleteCampaign, removeFromQueue, setActiveCampaign } = usePredictiveDialer();
+  // A barreira de DNC/horario e injetada no discador: sem isto o laco
+  // automatico discaria para a fila inteira sem nenhuma checagem.
+  const { preDialCheck } = useDNCCompliance();
+  const { campaigns, queue, isDialing, currentCall, fetchQueue, startCampaign, pauseCampaign, completeCall, deleteCampaign, removeFromQueue, setActiveCampaign } = usePredictiveDialer(preDialCheck);
   const [selectedCampaignId, setSelectedCampaignId] = useState<string>('');
   const [callTimer, setCallTimer] = useState(0);
 

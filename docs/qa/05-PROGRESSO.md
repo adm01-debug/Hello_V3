@@ -72,7 +72,7 @@
 - [ ] **033** — Rate limit no login por passkey — onda 1 — Baixa — Edge Function
 - [ ] **034** — Mover a checagem de DNC e horário para dentro de `initiateCall` — onda 1 — Crítica — Hooks
 - [ ] **035** — Fazer a checagem de DNC e horário falhar fechado nos três níveis — onda 1 — Crítica — Hooks + Banco 🔒
-- [ ] **036** — Barreira de compliance no discador preditivo — onda 1 — Crítica — Hooks
+- [x] **036** — Barreira de compliance no discador preditivo — onda 1 — Crítica — Hooks
 - [ ] **037** — Barreira de compliance no servidor, não só no cliente — onda 1 — Crítica — Edge Function + Banco 🔒
 - [ ] **038** — Fazer a importação em lote de DNC verificar o resultado de verdade — onda 1 — Crítica — Hooks
 - [ ] **039** — Reconciliar a lista DNC depois da importação — onda 1 — Alta — Hooks

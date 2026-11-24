@@ -112,6 +112,21 @@ export async function apiMarkDialing(item: DialerQueueItem): Promise<void> {
     .eq('id', item.id);
 }
 
+/**
+ * Contato pulado pela barreira de compliance. Fica com rastro auditavel em
+ * `dialer_queue` (a coluna `result` guarda o motivo) e sai da fila de discagem,
+ * em vez de sumir sem registro.
+ */
+export async function apiMarkSkipped(item: DialerQueueItem, reason: string): Promise<void> {
+  await supabase
+    .from('dialer_queue')
+    .update({
+      status: 'skipped',
+      result: `compliance: ${reason}`,
+    })
+    .eq('id', item.id);
+}
+
 export async function apiUpdateQueueItem(
   id: string,
   patch: Partial<DialerQueueItem>,
