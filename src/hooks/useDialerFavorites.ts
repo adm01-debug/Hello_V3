@@ -130,7 +130,7 @@ export function useDialerFavorites() {
   });
 
   const reorderMutation = useMutation({
-    mutationFn: async (changes: Array<{ id: string; position: number }>) => {
+    mutationFn: async ({ changes }: { changes: Array<{ id: string; position: number }>; reordered: DialerFavorite[] }) => {
       if (changes.length === 0) return;
       // Atualizações individuais mantêm a RLS por linha e evitam upsert
       // (que exigiria reenviar user_id/phone e poderia colidir com a unicidade).
@@ -142,10 +142,17 @@ export function useDialerFavorites() {
       const failed = results.find((result) => result.error);
       if (failed?.error) throw failed.error;
     },
-    onError: (error: unknown) => {
+    onMutate: async ({ reordered }) => {
+      await queryClient.cancelQueries({ queryKey: QUERY_KEY });
+      const previous = queryClient.getQueryData<DialerFavorite[]>(QUERY_KEY);
+      queryClient.setQueryData<DialerFavorite[]>(QUERY_KEY, reordered);
+      return { previous };
+    },
+    onError: (error: unknown, _variables, context) => {
+      // Rollback pelo valor anterior: refetch pode falhar ou demorar e a ordem errada ficaria na tela.
+      if (context?.previous) queryClient.setQueryData(QUERY_KEY, context.previous);
       log.error('Falha ao reordenar favoritos', error);
       toast.error('Não foi possível salvar a nova ordem');
-      void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
     },
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
@@ -160,6 +167,14 @@ export function useDialerFavorites() {
       if (error) throw error;
       return { userId: auth.user?.id ?? null, target, tag };
     },
+    onMutate: async ({ id, tag }) => {
+      await queryClient.cancelQueries({ queryKey: QUERY_KEY });
+      const previous = queryClient.getQueryData<DialerFavorite[]>(QUERY_KEY);
+      queryClient.setQueryData<DialerFavorite[]>(QUERY_KEY, (old) =>
+        (old ?? []).map((favorite) => (favorite.id === id ? { ...favorite, tag } : favorite)),
+      );
+      return { previous };
+    },
     onSuccess: (result) => {
       const who = describeFavorite(result?.target?.label, result?.target?.phone);
       trackFavoriteChange(
@@ -168,10 +183,10 @@ export function useDialerFavorites() {
         result?.tag ? `${who} → ${result.tag}` : `${who} → sem etiqueta`,
       );
     },
-    onError: (error: unknown) => {
+    onError: (error: unknown, _variables, context) => {
+      if (context?.previous) queryClient.setQueryData(QUERY_KEY, context.previous);
       log.error('Falha ao atualizar etiqueta do favorito', error);
       toast.error('Não foi possível salvar a etiqueta');
-      void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
     },
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: QUERY_KEY });
@@ -184,13 +199,9 @@ export function useDialerFavorites() {
       const tag = normalizeTag(rawTag);
       const current = favorites.find((favorite) => favorite.id === id);
       if (!current || current.tag === tag) return;
-      queryClient.setQueryData<DialerFavorite[]>(
-        QUERY_KEY,
-        favorites.map((favorite) => (favorite.id === id ? { ...favorite, tag } : favorite)),
-      );
       tagMutation.mutate({ id, tag });
     },
-    [favorites, queryClient, tagMutation],
+    [favorites, tagMutation],
   );
 
   /** Move um favorito de posição, com atualização otimista no cache. */
@@ -199,7 +210,6 @@ export function useDialerFavorites() {
       const reordered = reorderFavorites(favorites, from, to);
       const changes = diffPositions(favorites, reordered);
       if (changes.length === 0) return;
-      queryClient.setQueryData<DialerFavorite[]>(QUERY_KEY, reordered);
       // `from`/`to` já foram saneados por `reorderFavorites`; recuperamos o
       // item efetivamente movido pela diferença entre as duas listas.
       const moved = reordered.find((favorite, index) => favorites[index]?.id !== favorite.id) ?? null;
@@ -212,9 +222,9 @@ export function useDialerFavorites() {
             }`
           : `${changes.length} posição(ões) atualizada(s)`,
       );
-      reorderMutation.mutate(changes);
+      reorderMutation.mutate({ changes, reordered });
     },
-    [favorites, queryClient, reorderMutation],
+    [favorites, userIdRef, reorderMutation],
   );
 
   const isFavorite = useCallback(
