@@ -3,10 +3,10 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1291)",
+   "TypeScript (1292)",
    "SQL (245)",
-   "Markdown (120)",
-   "JavaScript (29)",
+   "Markdown (121)",
+   "JavaScript (30)",
    "JSON (18)",
    "Python (5)",
    "YAML (3)",
@@ -292,7 +292,7 @@
   },
   {
    "pasta": "docs/estado",
-   "arquivos_md": 18
+   "arquivos_md": 19
   },
   {
    "pasta": "docs/pendencias",
@@ -755,7 +755,7 @@
   "papeis_no_codigo": [
    {
     "papel": "admin",
-    "ocorrencias": 37
+    "ocorrencias": 38
    },
    {
     "papel": "user",
@@ -763,7 +763,7 @@
    },
    {
     "papel": "agent",
-    "ocorrencias": 20
+    "ocorrencias": 21
    },
    {
     "papel": "system",

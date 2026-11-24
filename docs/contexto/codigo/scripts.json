@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 34,
+ "total": 35,
  "scripts": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -271,6 +271,15 @@
    "arquivo": "scripts/inventario/gerar-catalogo-edges.mjs",
    "descricao": "* Catalogo publico das edge functions -> docs/edge-functions/README.md",
    "linhas": 179,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/inventario/gerar-hooks-dormentes.mjs",
+   "descricao": "* Hooks dormentes -> docs/estado/hooks-dormentes.md (etapa 159 do plano de QA).",
+   "linhas": 249,
    "env": [],
    "npm_scripts": [],
    "workflows": [],

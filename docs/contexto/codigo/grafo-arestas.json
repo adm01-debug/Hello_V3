@@ -5,6 +5,9 @@
   "scripts/codemod-safe-number.mjs": [
    "src/lib/safe-number.ts"
   ],
+  "scripts/inventario/gerar-hooks-dormentes.mjs": [
+   "scripts/inventario/gerar-rotas.mjs"
+  ],
   "src/App.tsx": [
    "src/components/auth/ProtectedRoute.tsx",
    "src/components/auth/ReauthDialog.tsx",

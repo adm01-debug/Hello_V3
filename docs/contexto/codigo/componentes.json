@@ -6205,10 +6205,11 @@
     "Knowledge"
    ],
    "export_default": "Knowledge",
-   "linhas": 229,
+   "linhas": 308,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",
+    "useKbArticle",
     "useKbArticles",
     "useKbCategories",
     "usePageTitle",

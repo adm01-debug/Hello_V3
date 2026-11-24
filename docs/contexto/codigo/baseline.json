@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0526bc2481b8e1b0cfa9b5ef2ad1e94fe8a5cc22",
+  "commit": "b5df75fe0da31244a52c7265945b54ae3af8c2a9",
   "branch": "main",
-  "data_commit": "2026-11-24T03:46:30-03:00",
+  "data_commit": "2026-11-24T04:01:32-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "b5df75f",
+    "data": "2026-11-24",
+    "assunto": "feat: leitura do artigo da base de conhecimento (etapa 153) (#248)"
+   },
+   {
+    "sha": "a097cd7",
+    "data": "2026-11-24",
+    "assunto": "chore: inventario dos hooks dormentes e rotas.json atualizado (etapa 159) (#245)"
+   },
    {
     "sha": "0526bc2",
     "data": "2026-11-24",
@@ -121,19 +131,9 @@
     "sha": "e1e227d",
     "data": "2026-11-24",
     "assunto": "fix: agente fica offline ao fechar o navegador (etapa 204) (#222)"
-   },
-   {
-    "sha": "d2f80cb",
-    "data": "2026-11-24",
-    "assunto": "fix: telas do fluxo central distinguem falha de leitura de lista vazia (etapa 203) (#221)"
-   },
-   {
-    "sha": "85a73de",
-    "data": "2026-11-23",
-    "assunto": "feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)"
    }
   ],
-  "arquivos_mudados_7d": 1103,
+  "arquivos_mudados_7d": 1108,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 73
+    "mudancas": 75
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -177,7 +177,7 @@
    },
    {
     "pasta": "src/pages/__tests__",
-    "mudancas": 14
+    "mudancas": 15
    },
    {
     "pasta": "src/components/compliance",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 73
+    "mudancas": 75
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 223
+    "commits": 225
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1726,
-  "arquivos_codigo": 1324,
-  "linhas_codigo": 178141,
+  "arquivos_total": 1729,
+  "arquivos_codigo": 1326,
+  "linhas_codigo": 178537,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,10 +328,10 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 391,
+  "testes": 392,
   "workflows": 3,
-  "scripts": 34,
-  "docs_md": 120
+  "scripts": 35,
+  "docs_md": 121
  },
  "por_pasta": {
   "e2e/calls.spec.ts": {
@@ -431,8 +431,8 @@
    "linhas": 71
   },
   "scripts/inventario": {
-   "arquivos": 5,
-   "linhas": 1030
+   "arquivos": 6,
+   "linhas": 1279
   },
   "scripts/regras_negocio": {
    "arquivos": 3,
@@ -507,8 +507,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 144,
-   "linhas": 22140
+   "arquivos": 145,
+   "linhas": 22287
   },
   "src/routes": {
    "arquivos": 2,
@@ -643,7 +643,7 @@
  ],
  "qualidade": {
   "any": 12,
-  "console_log": 192,
+  "console_log": 194,
   "ts_ignore": 0,
   "eslint_disable": 1,
   "todos": 5,

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "0526bc2481b8e1b0cfa9b5ef2ad1e94fe8a5cc22",
+  "sha": "b5df75fe0da31244a52c7265945b54ae3af8c2a9",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 06:47 UTC",
-  "files_total": 1773,
-  "code_files": 1570,
-  "code_lines": 194153
+  "generated_at": "2026-11-24 07:01 UTC",
+  "files_total": 1776,
+  "code_files": 1572,
+  "code_lines": 194549
  },
  "version": "1.3.2",
- "facts_hash": "db2f1a9989e081bd",
+ "facts_hash": "965261600cf357ba",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,9 +154,9 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 657,
-   ".tsx": 634,
+   ".tsx": 635,
    ".sql": 245,
-   ".mjs": 27,
+   ".mjs": 28,
    ".py": 5,
    ".js": 2
   },
@@ -33168,8 +33168,8 @@
   },
   {
    "module": "scripts",
-   "files": 35,
-   "lines": 9840,
+   "files": 36,
+   "lines": 10089,
    "tables": [
     "a",
     "contacts",
@@ -33269,6 +33269,7 @@
     "scripts/inventario/banco.sql",
     "scripts/inventario/gerar-banco.mjs",
     "scripts/inventario/gerar-catalogo-edges.mjs",
+    "scripts/inventario/gerar-hooks-dormentes.mjs",
     "scripts/inventario/gerar-repo.mjs",
     "scripts/inventario/gerar-rotas.mjs",
     "scripts/inventario/mudou-conteudo.mjs",
@@ -34078,8 +34079,8 @@
   },
   {
    "module": "src/pages",
-   "files": 144,
-   "lines": 22140,
+   "files": 145,
+   "lines": 22287,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -53774,6 +53775,12 @@
     "kind": "compara"
    },
    {
+    "file": "src/pages/Knowledge.tsx",
+    "field": "status",
+    "value": "published",
+    "kind": "compara"
+   },
+   {
     "file": "src/pages/Marketplace.tsx",
     "field": "status",
     "value": "disponivel",
@@ -72938,6 +72945,22 @@
    {
     "file": "src/pages/__tests__/IPWhitelist.test.tsx",
     "name": "does not present an empty user table as "
+   },
+   {
+    "file": "src/pages/__tests__/Knowledge.reader.test.tsx",
+    "name": "Knowledge — leitura do artigo (etapa 153)"
+   },
+   {
+    "file": "src/pages/__tests__/Knowledge.reader.test.tsx",
+    "name": "agente abre o conteudo completo do artigo, nao so o resumo"
+   },
+   {
+    "file": "src/pages/__tests__/Knowledge.reader.test.tsx",
+    "name": "mostra o erro de carregamento com opcao de tentar de novo"
+   },
+   {
+    "file": "src/pages/__tests__/Knowledge.reader.test.tsx",
+    "name": "editor le o artigo e consegue ir para a edicao a partir dele"
    },
    {
     "file": "src/pages/__tests__/Login.lockout.test.tsx",
@@ -92472,6 +92495,14 @@
    ],
    "doc": "!/usr/bin/env node",
    "uses_service_role": true
+  },
+  "scripts/inventario/gerar-hooks-dormentes.mjs": {
+   "path": "scripts/inventario/gerar-hooks-dormentes.mjs",
+   "lines": 249,
+   "rule_comments": [
+    "# 4. Alcançados apenas pelo shell do app (layout, providers, serviços globais)',"
+   ],
+   "doc": "!/usr/bin/env node"
   },
   "scripts/inventario/gerar-repo.mjs": {
    "path": "scripts/inventario/gerar-repo.mjs",
@@ -115577,7 +115608,7 @@
   },
   "src/pages/Knowledge.tsx": {
    "path": "src/pages/Knowledge.tsx",
-   "lines": 229,
+   "lines": 308,
    "exports": [
     "function Knowledge"
    ],
@@ -115595,6 +115626,11 @@
     {
      "field": "role",
      "value": "supervisor",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "published",
      "kind": "compara"
     },
     {
@@ -117018,6 +117054,17 @@
     "alerts when the whitelist could not be read",
     "shows the genuine empty state when the read succeeded",
     "does not present an empty user table as "
+   ]
+  },
+  "src/pages/__tests__/Knowledge.reader.test.tsx": {
+   "path": "src/pages/__tests__/Knowledge.reader.test.tsx",
+   "lines": 68,
+   "is_test": true,
+   "tests": [
+    "Knowledge — leitura do artigo (etapa 153)",
+    "agente abre o conteudo completo do artigo, nao so o resumo",
+    "mostra o erro de carregamento com opcao de tentar de novo",
+    "editor le o artigo e consegue ir para a edicao a partir dele"
    ]
   },
   "src/pages/__tests__/Login.lockout.test.tsx": {
@@ -126530,10 +126577,33 @@
   }
  },
  "git": {
-  "sha": "0526bc2481b8e1b0cfa9b5ef2ad1e94fe8a5cc22",
+  "sha": "b5df75fe0da31244a52c7265945b54ae3af8c2a9",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "b5df75f",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "feat: leitura do artigo da base de conhecimento (etapa 153) (#248)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/pages/Knowledge.tsx",
+     "src/pages/__tests__/Knowledge.reader.test.tsx"
+    ]
+   },
+   {
+    "sha": "a097cd7",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: inventario dos hooks dormentes e rotas.json atualizado (etapa 159) (#245)",
+    "files": [
+     "docs/estado/hooks-dormentes.md",
+     "docs/qa/05-PROGRESSO.md",
+     "inventario/estado/rotas.json",
+     "scripts/inventario/gerar-hooks-dormentes.mjs"
+    ]
+   },
    {
     "sha": "0526bc2",
     "date": "2026-11-24",
@@ -126978,42 +127048,6 @@
      "src/hooks/useConversations.ts",
      "src/hooks/useGamification.ts",
      "src/hooks/useMultiDeviceRing.ts"
-    ]
-   },
-   {
-    "sha": "9d457f8",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
-     "src/hooks/__tests__/useScorecards.coverage.test.tsx",
-     "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx",
-     "src/hooks/useAgentRanking.ts",
-     "src/hooks/useScorecards.ts",
-     "src/hooks/useSuccessPlans.ts",
-     "src/pages/AgentRanking.tsx",
-     "src/pages/Scorecards.tsx",
-     "src/pages/SuccessPlans.tsx",
-     "src/pages/__tests__/SuccessPlans.test.tsx"
-    ]
-   },
-   {
-    "sha": "747a161",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: paineis de seguranca alarmam quando a leitura falha (#215)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
-     "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
-     "src/hooks/useSecurityDashboard.ts",
-     "src/hooks/useSecurityMonitoringData.ts",
-     "src/pages/SecurityDashboard.tsx",
-     "src/pages/SecurityMonitoring.tsx",
-     "src/pages/__tests__/SecurityDashboard.test.tsx",
-     "src/pages/__tests__/SecurityMonitoring.test.tsx"
     ]
    }
   ],
