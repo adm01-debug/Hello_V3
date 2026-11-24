@@ -232,7 +232,14 @@ export function useAlerts() {
 
   const createTestAlerts = async () => {
     let sessionId: string;
-    const { data: existingSession } = await supabase.from('call_sessions').select('id').limit(1).maybeSingle();
+    const { data: existingSession, error: existingError } = await supabase.from('call_sessions').select('id').limit(1).maybeSingle();
+    if (existingError) {
+      // Se a leitura falhou não há como saber se já existe sessão: criar uma nova
+      // poluiria o histórico com sessão de teste duplicada.
+      logger.error('Error reading session for test alerts:', existingError);
+      toast.error('Erro ao consultar a sessão de teste');
+      return;
+    }
     if (existingSession) {
       sessionId = existingSession.id;
     } else {

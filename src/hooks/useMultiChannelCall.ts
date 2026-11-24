@@ -230,8 +230,15 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
       if (action === 'start') {
         await supabase.from('hold_events').insert({ call_session_id: callSessionId, agent_name: agentName || null, started_at: new Date().toISOString() });
       } else {
-        const { data: ev } = await supabase.from('hold_events').select('id').eq('call_session_id', callSessionId).is('ended_at', null).order('started_at', { ascending: false }).limit(1).maybeSingle();
-        if (ev) await supabase.from('hold_events').update({ ended_at: new Date().toISOString(), duration_seconds: durationSeconds || 0 }).eq('id', ev.id);
+        const { data: ev, error: evError } = await supabase.from('hold_events').select('id').eq('call_session_id', callSessionId).is('ended_at', null).order('started_at', { ascending: false }).limit(1).maybeSingle();
+        if (evError) {
+          // Sem a leitura do hold aberto ele fica sem ended_at e a duração de espera
+          // do relatório vira lixo: registrar em vez de descartar.
+          log.error('persistHoldEvent: falha ao localizar o hold aberto', evError);
+        } else if (ev) {
+          const { error: closeError } = await supabase.from('hold_events').update({ ended_at: new Date().toISOString(), duration_seconds: durationSeconds || 0 }).eq('id', ev.id);
+          if (closeError) log.error('persistHoldEvent: falha ao fechar o hold', closeError);
+        }
       }
     } catch (error) { log.error('Error persisting hold event:', error); }
   }, []);

@@ -56,6 +56,21 @@ describe('useAchievementNotifications (coverage)', () => {
     maybeSingle.mockResolvedValueOnce(badgeResult).mockResolvedValueOnce(agentResult);
   });
 
+  it('não injeta badge inválida quando o enriquecimento falha', async () => {
+    const { result } = renderHook(() => useAchievementNotifications());
+    maybeSingle.mockReset();
+    maybeSingle
+      .mockResolvedValueOnce({ data: null, error: { message: 'permission denied' } })
+      .mockResolvedValueOnce(agentResult);
+
+    await act(async () => {
+      await handlers['badge-achievements']({ new: { id: 'ab9', agent_id: 'a1', badge_id: 'b1', earned_at: 'now' } });
+    });
+
+    expect(toast.success).not.toHaveBeenCalled();
+    expect(result.current.notifications).toEqual([]);
+  });
+
   it('subscribes to channels and exposes initial state', () => {
     const { result } = renderHook(() => useAchievementNotifications());
     expect(result.current.notifications).toEqual([]);

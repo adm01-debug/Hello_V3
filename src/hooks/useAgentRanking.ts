@@ -105,17 +105,20 @@ export function useAgentRanking() {
           className: "bg-success/10 border-success/20",
         });
 
-        const { data: session } = await supabase
+        const { data: session, error: sessionError } = await supabase
           .from('call_sessions').select('id').eq('agent_name', agent.name).limit(1).maybeSingle();
 
-        if (session) {
-          await supabase.from('call_alerts').insert({
+        if (sessionError) {
+          logger.error('Error finding session for goals alert:', sessionError);
+        } else if (session) {
+          const { error: alertError } = await supabase.from('call_alerts').insert({
             call_session_id: session.id,
             alert_type: 'goals_achieved',
             severity: 'info',
             title: `${agent.name} atingiu todas as metas!`,
             message: `Parabéns! O agente ${agent.name} completou todas as metas: ${agent.totalCalls} chamadas, ${agent.avgSatisfaction.toFixed(1)} satisfação, ${agent.avgPerformance.toFixed(1)} performance.`,
           });
+          if (alertError) logger.error('Error creating goals alert:', alertError);
         }
       }
     }
