@@ -124,6 +124,10 @@ Detalhe em `docs/agentes/<tema>.md`; divergiu da realidade → corrija no mesmo 
   **produção**. `bunx playwright test` hoje **não sobe** (porta 5173 ≠ 8080).
 - Guards antes da PR: `node scripts/ci/check-claude-md-integrity.mjs`,
   `node scripts/codemod-safe-number.mjs --check`, `node scripts/guard-edge-numeric.mjs --check`.
+- Orçamento de bundle: `node scripts/check-bundle-budget.mjs` (roda no job de CI) falha quando um
+  chunk passa do limite de `scripts/bundle-budget.json`. Os limites são fixados **à mão** a partir da
+  meta de produto (ver `_meta` no arquivo: <200 kB gzip por rota); `--update` regrava o baseline e
+  regravá-lo exige justificativa na PR.
 - **Proibido `parseInt`/`parseFloat`/`Number.parseInt`/`Number.parseFloat`** em `src/` — use
   `@/lib/safe-number`. É `error` no ESLint e o primeiro guard do CI.
 - Automação nova em `scripts/<nome>/` com README; nunca em `supabase/` (o CLI é dono) nem `src/` (entra no

@@ -1,13 +1,63 @@
 {
-  "generated_at": "2026-11-21T21:40:53.391Z",
+  "generated_at": "2026-11-24T13:04:41.683Z",
+  "_meta": {
+    "meta_produto": "Cada rota deve transferir < 200 kB gzip de JS/CSS. O limite '*' é a meta: chunk acima disso precisa ser dividido ou carregado sob demanda.",
+    "derivacao": "Limites fixados à mão na etapa 252 (2026-11-24) a partir do build medido, com folga de ~5%. Antes eram 1,1x o tamanho medido no modo --update, que só impedia crescimento de 10% e nunca cobrava a meta.",
+    "medido_em": "2026-11-24",
+    "formato_medido": "[gzip_kb, raw_kb]",
+    "medido": {
+      "index.js": [
+        271.1,
+        892.9
+      ],
+      "jspdf.es.min.js": [
+        123.2,
+        377
+      ],
+      "CartesianChart.js": [
+        97.3,
+        319.5
+      ],
+      "NetworkDiagnostics.js": [
+        60.3,
+        209
+      ],
+      "useSipCall.js": [
+        59.4,
+        255.5
+      ],
+      "index.es.js": [
+        51.8,
+        155.3
+      ],
+      "html2canvas.esm.js": [
+        46.3,
+        196.3
+      ],
+      "proxy.js": [
+        38.9,
+        119.1
+      ],
+      "SecurityAlerts.js": [
+        35.2,
+        106.8
+      ],
+      "index.css": [
+        22.3,
+        150.3
+      ]
+    },
+    "update": "--update continua regravando o baseline por conveniência; regravar exige justificativa na PR (ver AGENTS.md).",
+    "pendente": "index.js ainda está acima da meta de 200 kB — a etapa 251 levou o entry de 331,6 kB para 271,1 kB gzip. O teto de 285 kB reflete o tamanho atingido, não a meta; aperta em passos."
+  },
   "limits": {
     "*": {
-      "raw_kb": 1200,
-      "gzip_kb": 380
+      "raw_kb": 700,
+      "gzip_kb": 200
     },
     "index.js": {
-      "gzip_kb": 346,
-      "raw_kb": 1141
+      "gzip_kb": 285,
+      "raw_kb": 950
     },
     "jspdf.es.min.js": {
       "gzip_kb": 136,
