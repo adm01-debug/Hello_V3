@@ -97,12 +97,12 @@ function analisa(s, idx) {
   const expressao = s.slice(idx, fim === -1 ? Math.min(s.length, idx + 500) : fim + 1);
   if (!ESCRITAS.test(expressao)) return null;
 
-  let j = antesNaoEspaco(s, idx - 1);
+  const j = antesNaoEspaco(s, idx - 1);
   if (j < 0) return null;
   const prev = s[j];
 
   if (prev === "=") {
-    let k = antesNaoEspaco(s, j - 1);
+    const k = antesNaoEspaco(s, j - 1);
     if (k < 0) return null;
     if (s[k] === "}") {
       let depth = 0;
@@ -156,9 +156,9 @@ function checaPromiseAll(s, arquivo, linhasOrig, achados) {
     const comAwait = (bloco.match(/await\s+supabase/g) ?? []).length;
     if (comAwait === internos.length) continue; // todas as cadeias sao aguardadas: R1 cuida
 
-    let j = antesNaoEspaco(s, m.index - 1);
+    const j = antesNaoEspaco(s, m.index - 1);
     if (j >= 0 && s[j] === "=") {
-      let k = antesNaoEspaco(s, j - 1);
+      const k = antesNaoEspaco(s, j - 1);
       if (k >= 0 && s[k] === "]") continue; // const [a, b] = ... -> cada item e conferido depois
       if (s[k] === "}") {
         let depth = 0;
