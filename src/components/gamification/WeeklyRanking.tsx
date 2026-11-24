@@ -16,6 +16,7 @@ interface RankedAgent {
 export function WeeklyRanking() {
   const [ranking, setRanking] = useState<RankedAgent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchRanking() {
@@ -24,11 +25,18 @@ export function WeeklyRanking() {
         weekStart.setDate(weekStart.getDate() - weekStart.getDay());
         weekStart.setHours(0, 0, 0, 0);
 
-        const { data: stats } = await supabase
+        const { data: stats, error: statsError } = await supabase
           .from("agent_weekly_stats")
           .select("*, agents(name)")
           .gte("week_start", weekStart.toISOString().split("T")[0])
           .order("points_earned", { ascending: false });
+
+        if (statsError) {
+          // Ranking vazio por falha de consulta parece desempenho ("ninguém
+          // produziu nada"), não cegueira (A-009, etapa 201).
+          setError(statsError.message);
+          return;
+        }
 
         if (stats) {
           setRanking(
@@ -55,6 +63,14 @@ export function WeeklyRanking() {
     if (index === 2) return <Award className="h-5 w-5 text-amber-600" />;
     return <span className="text-sm font-bold text-muted-foreground">{index + 1}º</span>;
   };
+
+  if (error) {
+    return (
+      <p className="text-sm text-destructive text-center py-8">
+        Não foi possível carregar o ranking: {error}
+      </p>
+    );
+  }
 
   if (loading) {
     return <p className="text-muted-foreground text-center py-8">Carregando ranking...</p>;
