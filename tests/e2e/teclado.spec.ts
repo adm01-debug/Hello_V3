@@ -177,7 +177,34 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
     await expect(gatilho, 'o gatilho do assistente de voz nao existe no discador').toBeVisible();
     marco('gatilho-visivel');
 
-    // Chega ao gatilho so com Tab, como faria quem opera sem mouse.
+    // Quem opera sem mouse usa o skip-link: o sidebar inteiro tem 40+ paradas
+    // de foco antes do conteudo. Tab 1 -> skip-link, Enter -> foco no <main>,
+    // e a partir dai o Tab percorre so a tela do discador.
+    await comPrazo(page.keyboard.press('Tab'), 15_000, 'tab-skip-link');
+    const noSkip = await comPrazo(
+      page.evaluate(() => {
+        const el = document.activeElement as HTMLElement | null;
+        if (!el) return { classe: '', texto: '' };
+        return { classe: el.className ?? '', texto: (el.textContent ?? '').trim().slice(0, 60) };
+      }),
+      15_000,
+      'ler-skip-link',
+    );
+    process.stdout.write(`SKIP-273 classe="${noSkip.classe}" texto="${noSkip.texto}"\n`);
+    expect(noSkip.classe, 'o primeiro Tab nao alcancou o skip-link').toContain('skip-link');
+    marco('skip-link-focado');
+
+    await comPrazo(page.keyboard.press('Enter'), 15_000, 'enter-no-skip');
+    const noMain = await comPrazo(
+      page.evaluate(() => document.activeElement?.id ?? ''),
+      15_000,
+      'ler-main',
+    );
+    process.stdout.write(`SKIP-273 destino="${noMain}"\n`);
+    expect(noMain, 'o skip-link nao levou o foco ao conteudo principal').toBe('main-content');
+    marco('skip-link-usado');
+
+    // Do conteudo principal ate o gatilho, so com Tab.
     let achou = false;
     for (let i = 0; i < MAX_TABS; i += 1) {
       await comPrazo(page.keyboard.press('Tab'), 15_000, `tab-ate-gatilho-${i + 1}`);
